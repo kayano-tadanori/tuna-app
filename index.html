@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="国語マスター">
+  <meta name="theme-color" content="#c0392b">
+  <title>国語マスター｜灘中受験</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+<!-- =============== ニックネーム入力画面 =============== -->
+<div id="screen-nickname" class="screen active">
+  <div class="center-box">
+    <div class="app-logo">📚</div>
+    <h1 class="app-title">国語マスター</h1>
+    <p class="app-sub">灘中受験対策 1,500問</p>
+    <div class="nickname-form">
+      <input type="text" id="nickname-input" placeholder="ニックネームを入力" maxlength="10" autocomplete="off">
+      <button id="nickname-btn" class="btn-primary">はじめる</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== ホーム画面 =============== -->
+<div id="screen-home" class="screen">
+  <header class="top-bar">
+    <h1 class="top-title">国語マスター</h1>
+    <div class="user-info">
+      <span id="home-nickname"></span>
+      <button id="btn-ranking" class="icon-btn">🏆</button>
+    </div>
+  </header>
+
+  <main class="home-main">
+    <section class="section-label">カテゴリを選ぼう</section>
+    <div class="category-grid">
+      <button class="cat-card" data-cat="kotowaza">
+        <span class="cat-icon">📖</span>
+        <span class="cat-name">ことわざ</span>
+        <span class="cat-count">400問</span>
+        <span class="cat-rate" id="rate-kotowaza">--</span>
+      </button>
+      <button class="cat-card" data-cat="kanyoku">
+        <span class="cat-icon">✋</span>
+        <span class="cat-name">慣用句</span>
+        <span class="cat-count">400問</span>
+        <span class="cat-rate" id="rate-kanyoku">--</span>
+      </button>
+      <button class="cat-card" data-cat="yojijukugo">
+        <span class="cat-icon">🔡</span>
+        <span class="cat-name">四字熟語</span>
+        <span class="cat-count">400問</span>
+        <span class="cat-rate" id="rate-yojijukugo">--</span>
+      </button>
+      <button class="cat-card" data-cat="gairaigo">
+        <span class="cat-icon">🌍</span>
+        <span class="cat-name">外来語</span>
+        <span class="cat-count">300問</span>
+        <span class="cat-rate" id="rate-gairaigo">--</span>
+      </button>
+    </div>
+
+    <section class="section-label">モードを選ぼう</section>
+    <div class="mode-grid">
+      <button class="mode-btn" data-mode="flash">
+        <span class="mode-icon">🃏</span>
+        <span class="mode-name">フラッシュカード</span>
+        <span class="mode-desc">カードをめくって覚える</span>
+      </button>
+      <button class="mode-btn" data-mode="quiz">
+        <span class="mode-icon">✅</span>
+        <span class="mode-name">四択クイズ</span>
+        <span class="mode-desc">4つから正解を選ぶ</span>
+      </button>
+      <button class="mode-btn" data-mode="fill">
+        <span class="mode-icon">✏️</span>
+        <span class="mode-name">虫食い問題</span>
+        <span class="mode-desc">空欄に答えを書く</span>
+      </button>
+    </div>
+
+    <div class="action-row">
+      <button id="btn-weak" class="btn-secondary">📉 苦手問題のみ</button>
+      <button id="btn-progress" class="btn-secondary">📊 進捗を見る</button>
+      <button id="btn-custom" class="btn-secondary">➕ 問題を追加</button>
+    </div>
+
+    <div id="start-zone" class="start-zone hidden">
+      <div class="start-info">
+        <span id="start-cat-label"></span>
+        <span class="arrow">×</span>
+        <span id="start-mode-label"></span>
+      </div>
+      <div class="question-count-wrap">
+        <label>出題数：</label>
+        <select id="q-count">
+          <option value="10">10問</option>
+          <option value="20" selected>20問</option>
+          <option value="50">50問</option>
+          <option value="all">全問</option>
+        </select>
+      </div>
+      <button id="btn-start" class="btn-start">スタート！</button>
+    </div>
+  </main>
+</div>
+
+<!-- =============== フラッシュカード =============== -->
+<div id="screen-flash" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 id="flash-title" class="top-title"></h2>
+    <span id="flash-counter" class="counter"></span>
+  </header>
+  <div class="flash-area">
+    <div id="flash-card" class="flash-card">
+      <div class="flash-front">
+        <p id="flash-question" class="flash-question"></p>
+        <p class="flip-hint">タップして答えを見る</p>
+      </div>
+      <div class="flash-back">
+        <p id="flash-answer" class="flash-answer"></p>
+        <p id="flash-meaning" class="flash-meaning"></p>
+      </div>
+    </div>
+    <div id="flash-buttons" class="flash-buttons hidden">
+      <button id="btn-remember" class="btn-good">✓ 覚えた</button>
+      <button id="btn-again" class="btn-bad">↩ もう一度</button>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div id="flash-bar" class="progress-bar"></div>
+  </div>
+</div>
+
+<!-- =============== 四択クイズ =============== -->
+<div id="screen-quiz" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 id="quiz-title" class="top-title"></h2>
+    <span id="quiz-counter" class="counter"></span>
+  </header>
+  <div class="quiz-area">
+    <div class="quiz-score-row">
+      <span>正解：<b id="quiz-correct">0</b></span>
+      <span>不正解：<b id="quiz-wrong">0</b></span>
+    </div>
+    <div class="question-box">
+      <p id="quiz-question" class="quiz-question"></p>
+      <p id="quiz-meaning" class="quiz-meaning"></p>
+    </div>
+    <div id="quiz-choices" class="choices-grid"></div>
+    <div id="quiz-feedback" class="feedback hidden">
+      <p id="feedback-text"></p>
+      <p id="feedback-ans"></p>
+      <button id="btn-next-quiz" class="btn-next">次へ →</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 虫食い問題 =============== -->
+<div id="screen-fill" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 id="fill-title" class="top-title"></h2>
+    <span id="fill-counter" class="counter"></span>
+  </header>
+  <div class="quiz-area">
+    <div class="quiz-score-row">
+      <span>正解：<b id="fill-correct">0</b></span>
+      <span>不正解：<b id="fill-wrong">0</b></span>
+    </div>
+    <div class="question-box">
+      <p id="fill-question" class="quiz-question"></p>
+      <p id="fill-meaning" class="quiz-meaning"></p>
+    </div>
+    <div class="fill-input-wrap">
+      <input type="text" id="fill-input" placeholder="答えを入力" autocomplete="off" autocorrect="off" autocapitalize="off">
+      <button id="btn-fill-submit" class="btn-primary">答える</button>
+    </div>
+    <div id="fill-feedback" class="feedback hidden">
+      <p id="fill-feedback-text"></p>
+      <p id="fill-feedback-ans"></p>
+      <button id="btn-next-fill" class="btn-next">次へ →</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 結果画面 =============== -->
+<div id="screen-result" class="screen">
+  <div class="result-box">
+    <div id="result-emoji" class="result-emoji"></div>
+    <h2 class="result-title">結果</h2>
+    <div class="result-score">
+      <span id="result-correct"></span> / <span id="result-total"></span>
+    </div>
+    <div id="result-rate" class="result-rate"></div>
+    <p id="result-comment" class="result-comment"></p>
+    <div class="result-actions">
+      <button id="btn-result-home" class="btn-primary">ホームへ</button>
+      <button id="btn-result-retry" class="btn-secondary">もう一度</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 進捗画面 =============== -->
+<div id="screen-progress" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 class="top-title">📊 進捗</h2>
+  </header>
+  <div class="progress-main">
+    <div class="progress-user" id="progress-user"></div>
+    <div id="progress-cats"></div>
+    <section class="weak-section">
+      <h3>苦手問題（正解率50%以下）</h3>
+      <div id="weak-list"></div>
+    </section>
+  </div>
+</div>
+
+<!-- =============== ランキング画面 =============== -->
+<div id="screen-ranking" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 class="top-title">🏆 ランキング</h2>
+  </header>
+  <div class="ranking-main">
+    <div class="ranking-tabs">
+      <button class="tab-btn active" data-rcat="kotowaza">ことわざ</button>
+      <button class="tab-btn" data-rcat="kanyoku">慣用句</button>
+      <button class="tab-btn" data-rcat="yojijukugo">四字熟語</button>
+      <button class="tab-btn" data-rcat="gairaigo">外来語</button>
+    </div>
+    <div id="ranking-list" class="ranking-list"></div>
+  </div>
+</div>
+
+<!-- =============== 問題追加画面 =============== -->
+<div id="screen-custom" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 class="top-title">➕ 問題を追加</h2>
+  </header>
+  <div class="custom-main">
+    <div class="custom-form">
+      <label>カテゴリ
+        <select id="custom-cat">
+          <option value="kotowaza">ことわざ</option>
+          <option value="kanyoku">慣用句</option>
+          <option value="yojijukugo">四字熟語</option>
+          <option value="gairaigo">外来語</option>
+        </select>
+      </label>
+      <label>問題文（空欄は___で表す）
+        <input type="text" id="custom-question" placeholder="例：猿も___から落ちる">
+      </label>
+      <label>答え
+        <input type="text" id="custom-answer" placeholder="例：木">
+      </label>
+      <label>意味
+        <textarea id="custom-meaning" placeholder="例：名人でも失敗することがある" rows="2"></textarea>
+      </label>
+      <label>選択肢（カンマ区切りで3つ。答え以外）
+        <input type="text" id="custom-choices" placeholder="例：山,川,空">
+      </label>
+      <button id="btn-custom-add" class="btn-primary">追加する</button>
+    </div>
+    <div class="custom-list-wrap">
+      <h3>追加済みの問題</h3>
+      <div id="custom-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============== ローディング =============== -->
+<div id="loading" class="loading-overlay hidden">
+  <div class="spinner"></div>
+</div>
+
+<!-- =============== トースト通知 =============== -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
