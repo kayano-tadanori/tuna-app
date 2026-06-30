@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'kokugou-master-v1';
+const CACHE_NAME = 'oton-gakuen-v3';
 
 const ASSETS = [
   '/',
