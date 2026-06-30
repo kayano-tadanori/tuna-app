@@ -948,3 +948,142 @@ button { cursor: pointer; font-family: inherit; }
 
 /* スクロールバー（任意・WebKit） */
 ::-webkit-scrollbar { width: 0; background: transparent; }
+
+/* ===== タイトル画面 オットン画像 ===== */
+.app-logo-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(124, 92, 255, 0.5));
+  animation: float 3.5s ease-in-out infinite;
+}
+
+/* ===== 科目選択画面 ===== */
+.subject-main { padding: 16px; }
+
+.otton-small-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+.otton-small {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.otton-msg {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.subject-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius);
+  gap: 6px;
+  transition: border-color 0.15s, transform 0.12s, box-shadow 0.2s;
+  position: relative;
+  min-height: 130px;
+  justify-content: center;
+}
+.subject-card:not(.coming-soon):active {
+  transform: scale(0.97);
+  border-color: var(--accent);
+  box-shadow: var(--glow-accent);
+}
+.subject-card.coming-soon {
+  opacity: 0.5;
+  cursor: default;
+}
+.subject-icon { font-size: 2rem; }
+.subject-name { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+.subject-detail { font-size: 0.72rem; color: var(--sub); text-align: center; }
+.subject-count { font-size: 0.8rem; color: var(--accent2); font-weight: 700; }
+.coming-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(255, 209, 102, 0.12);
+  border: 1px solid rgba(255, 209, 102, 0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+/* ===== キャラクター紹介画面 ===== */
+.char-main {
+  padding: 20px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.otton-large {
+  width: min(80vw, 320px);
+  object-fit: contain;
+  filter: drop-shadow(0 0 32px rgba(124, 92, 255, 0.4));
+}
+.char-name-box { text-align: center; }
+.char-school { font-size: 0.85rem; color: var(--sub); font-weight: 700; letter-spacing: 0.1em; }
+.char-name {
+  font-size: 2rem;
+  font-weight: 900;
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.char-desc {
+  font-size: 0.95rem;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.8;
+}
+.char-voice {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--gold);
+  background: rgba(255, 209, 102, 0.1);
+  border: 2px solid rgba(255, 209, 102, 0.3);
+  border-radius: 30px;
+  padding: 10px 24px;
+}
+.char-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+.char-card {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.char-card-icon { font-size: 1.6rem; }
+.char-card-title { font-size: 0.85rem; font-weight: 800; color: var(--text); }
+.char-card-sub { font-size: 0.72rem; color: var(--sub); line-height: 1.4; }

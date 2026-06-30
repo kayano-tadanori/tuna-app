@@ -244,6 +244,22 @@ function initHome() {
 
 function maybeShowStart() {
   const zone = document.getElementById('start-zone');
+
+  // 外来語 × 虫食いの組み合わせは不可
+  const fillBtn = document.querySelector('.mode-btn[data-mode="fill"]');
+  if (state.selectedCat === 'gairaigo') {
+    fillBtn.disabled = true;
+    fillBtn.style.opacity = '0.35';
+    if (state.selectedMode === 'fill') {
+      state.selectedMode = null;
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
+      showToast('外来語は虫食い問題に対応していません');
+    }
+  } else {
+    fillBtn.disabled = false;
+    fillBtn.style.opacity = '';
+  }
+
   if (!state.selectedCat || !state.selectedMode) { zone.classList.add('hidden'); return; }
   zone.classList.remove('hidden');
   document.getElementById('start-cat-label').textContent = CATEGORIES[state.selectedCat].label;
@@ -702,16 +718,38 @@ async function boot() {
   const name = getNickname();
   if (name) {
     state.nickname = name;
-    // よく使うカテゴリをバックグラウンドでキャッシュ
     loadQuestions('kotowaza').catch(() => {});
     loadQuestions('kanyoku').catch(() => {});
     loadQuestions('yojijukugo').catch(() => {});
     loadQuestions('gairaigo').catch(() => {});
-    initHome();
-    showScreen('home');
+    initSubject();
+    showScreen('subject');
   } else {
     showScreen('nickname');
   }
+}
+
+function initSubject() {
+  document.getElementById('subject-nickname').textContent = state.nickname;
+
+  document.querySelectorAll('.subject-card').forEach(btn => {
+    btn.onclick = () => {
+      if (btn.classList.contains('coming-soon')) {
+        showToast('もうすぐ追加されます！工事中🚧');
+        return;
+      }
+      initHome();
+      showScreen('home');
+    };
+  });
+
+  document.getElementById('btn-subject-char').onclick = () => showScreen('character');
+  document.getElementById('btn-subject-change').onclick = () => {
+    localStorage.removeItem('nickname');
+    state.nickname = '';
+    document.getElementById('nickname-input').value = '';
+    showScreen('nickname');
+  };
 }
 
 document.addEventListener('DOMContentLoaded', boot);

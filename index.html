@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="国語マスター">
-  <meta name="theme-color" content="#c0392b">
-  <title>国語マスター｜灘中受験</title>
+  <meta name="apple-mobile-web-app-title" content="オトン学園">
+  <meta name="theme-color" content="#0f1d5c">
+  <title>オトン学園｜灘中合格への道</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -17,12 +17,81 @@
 <!-- =============== ニックネーム入力画面 =============== -->
 <div id="screen-nickname" class="screen active">
   <div class="center-box">
-    <div class="app-logo">📚</div>
-    <h1 class="app-title">国語マスター</h1>
-    <p class="app-sub">灘中受験対策 1,500問</p>
+    <img src="images/otton.png" alt="オットン" class="app-logo-img" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'">
+    <div id="logo-fallback" class="app-logo" style="display:none">🎓</div>
+    <h1 class="app-title">オトン学園</h1>
+    <p class="app-sub">灘中合格への道</p>
     <div class="nickname-form">
       <input type="text" id="nickname-input" placeholder="ニックネームを入力" maxlength="10" autocomplete="off">
-      <button id="nickname-btn" class="btn-primary">はじめる</button>
+      <button id="nickname-btn" class="btn-primary">はじめる！</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 科目選択画面 =============== -->
+<div id="screen-subject" class="screen">
+  <header class="top-bar">
+    <h1 class="top-title">オトン学園</h1>
+    <div class="user-info">
+      <span id="subject-nickname"></span>
+      <button id="btn-subject-char" class="icon-btn" title="キャラクター紹介">🎭</button>
+      <button id="btn-subject-change" class="icon-btn" title="ユーザー切替">👤</button>
+    </div>
+  </header>
+  <div class="subject-main">
+    <div class="otton-small-wrap">
+      <img src="images/otton.png" alt="オットン" class="otton-small" onerror="this.style.display='none'">
+      <p class="otton-msg">「科目を選んで、<br>今日も一緒に頑張ろうや！」</p>
+    </div>
+    <p class="section-label">科目を選ぼう！</p>
+    <div class="subject-grid">
+      <button class="subject-card" data-subject="kokugo">
+        <span class="subject-icon">📖</span>
+        <span class="subject-name">国語</span>
+        <span class="subject-detail">ことわざ・慣用句・四字熟語・外来語</span>
+        <span class="subject-count">1,500問</span>
+      </button>
+      <button class="subject-card coming-soon" data-subject="sansu">
+        <span class="subject-icon">🔢</span>
+        <span class="subject-name">算数</span>
+        <span class="subject-detail">計算・図形・文章題</span>
+        <span class="coming-badge">工事中🚧</span>
+      </button>
+      <button class="subject-card coming-soon" data-subject="rika">
+        <span class="subject-icon">🔬</span>
+        <span class="subject-name">理科</span>
+        <span class="subject-detail">物理・化学・生物・地学</span>
+        <span class="coming-badge">工事中🚧</span>
+      </button>
+      <button class="subject-card coming-soon" data-subject="shakai">
+        <span class="subject-icon">🗾</span>
+        <span class="subject-name">社会</span>
+        <span class="subject-detail">地理・歴史・公民</span>
+        <span class="coming-badge">工事中🚧</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== キャラクター紹介画面 =============== -->
+<div id="screen-character" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <h2 class="top-title">キャラクター紹介</h2>
+  </header>
+  <div class="char-main">
+    <img src="images/otton.png" alt="オットン" class="otton-large" onerror="this.style.display='none'">
+    <div class="char-name-box">
+      <p class="char-school">オトン学園</p>
+      <h2 class="char-name">オットン</h2>
+    </div>
+    <p class="char-desc">頼れるオトンのように、どっしり構えて、<br>子どもたちの可能性を信じ、支える存在。</p>
+    <p class="char-voice">「いつでも味方やで！」</p>
+    <div class="char-cards">
+      <div class="char-card"><span class="char-card-icon">💪</span><span class="char-card-title">どっしり支える</span><span class="char-card-sub">ブレない信頼感</span></div>
+      <div class="char-card"><span class="char-card-icon">🔥</span><span class="char-card-title">やる気を引き出す</span><span class="char-card-sub">一人ひとりの可能性を信じて</span></div>
+      <div class="char-card"><span class="char-card-icon">🤝</span><span class="char-card-title">ともに歩む</span><span class="char-card-sub">親身で熱いサポート</span></div>
+      <div class="char-card"><span class="char-card-icon">📈</span><span class="char-card-title">成績アップへ導く</span><span class="char-card-sub">目標達成まで伴走</span></div>
     </div>
   </div>
 </div>
