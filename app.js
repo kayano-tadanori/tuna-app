@@ -310,9 +310,8 @@ function renderFlash() {
 
   const total = state.sessionQs.length;
   document.getElementById('flash-counter').textContent = (state.current + 1) + ' / ' + total;
-  document.getElementById('flash-question').textContent = q.question;
-  document.getElementById('flash-answer').textContent = q.answer;
-  document.getElementById('flash-meaning').textContent = q.meaning || '';
+  document.getElementById('flash-question').textContent = q.answer;
+  document.getElementById('flash-answer').textContent = q.meaning || '';
 
   const card = document.getElementById('flash-card');
   card.classList.remove('flipped');
