@@ -704,8 +704,8 @@ document.getElementById('nickname-btn').onclick = () => {
   if (!val) { showToast('受験番号を入力してください'); return; }
   state.nickname = val;
   saveNickname(val);
-  initHome();
-  showScreen('home');
+  initSubject();
+  showScreen('subject');
 };
 
 document.getElementById('nickname-input').addEventListener('keydown', e => {
