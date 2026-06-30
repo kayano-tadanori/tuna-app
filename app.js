@@ -234,6 +234,12 @@ function initHome() {
   document.getElementById('btn-progress').onclick = showProgressScreen;
   document.getElementById('btn-custom').onclick = showCustomScreen;
   document.getElementById('btn-ranking').onclick = showRankingScreen;
+  document.getElementById('btn-change-user').onclick = () => {
+    localStorage.removeItem('nickname');
+    state.nickname = '';
+    document.getElementById('nickname-input').value = '';
+    showScreen('nickname');
+  };
 }
 
 function maybeShowStart() {
