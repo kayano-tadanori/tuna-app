@@ -698,7 +698,7 @@ document.querySelectorAll('.back-btn').forEach(btn => {
 
 document.getElementById('nickname-btn').onclick = () => {
   const val = document.getElementById('nickname-input').value.trim();
-  if (!val) { showToast('ニックネームを入力してください'); return; }
+  if (!val) { showToast('受験番号を入力してください'); return; }
   state.nickname = val;
   saveNickname(val);
   initHome();
