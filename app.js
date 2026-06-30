@@ -310,7 +310,10 @@ function renderFlash() {
 
   const total = state.sessionQs.length;
   document.getElementById('flash-counter').textContent = (state.current + 1) + ' / ' + total;
-  document.getElementById('flash-question').textContent = q.answer;
+  const filled = q.question.includes('___')
+    ? q.question.replace('___', q.answer)
+    : q.answer;
+  document.getElementById('flash-question').textContent = filled;
   document.getElementById('flash-answer').textContent = q.meaning || '';
 
   const card = document.getElementById('flash-card');
