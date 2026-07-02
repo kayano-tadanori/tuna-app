@@ -396,6 +396,13 @@ button { cursor: pointer; font-family: inherit; }
 .drill-result { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0; text-align: center; }
 .drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
+/* ── 算数ホーム：階層式ステップUI ── */
+.sansu-step { animation: stepIn 0.3s ease; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.step-badge { display: inline-block; background: var(--grad-brand); color: #fff; font-size: 0.62rem; font-weight: 900; letter-spacing: 0.08em; border-radius: 20px; padding: 2px 9px; margin-right: 8px; vertical-align: 1px; box-shadow: 0 0 12px rgba(79,124,255,0.35); }
+.cat-group-label { font-size: 0.78rem; font-weight: 800; color: var(--sub2); margin: 10px 2px 6px; }
+.diff-sub { display: block; font-size: 0.62rem; font-weight: 700; opacity: 0.85; margin-top: 2px; }
+
 /* ── オトンテトリス ── */
 .subject-card-game { border-color: rgba(160,107,255,0.35); }
 .subject-card-game .subject-icon { filter: drop-shadow(0 0 10px rgba(160,107,255,0.5)); }

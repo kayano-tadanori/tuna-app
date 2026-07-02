@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v9';
+const CACHE_NAME = 'oton-gakuen-v10';
 
 const ASSETS = [
   '/',
@@ -21,7 +21,10 @@ const ASSETS = [
   '/data/sansu_kisoku.json',
   '/data/sansu_tokusan.json',
   '/data/sansu_baai.json',
-  '/data/sansu_kazu.json'
+  '/data/sansu_kazu.json',
+  '/data/sansu_wariai.json',
+  '/data/sansu_hayasa.json',
+  '/data/sansu_rittai.json'
 ];
 
 // インストール時：全アセットをキャッシュ

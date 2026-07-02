@@ -787,10 +787,14 @@ const SANSU_FILES = {
   tokusan: 'data/sansu_tokusan.json',
   baai:    'data/sansu_baai.json',
   kazu:    'data/sansu_kazu.json',
+  wariai:  'data/sansu_wariai.json',
+  hayasa:  'data/sansu_hayasa.json',
+  rittai:  'data/sansu_rittai.json',
 };
 const SANSU_CAT_LABELS = {
-  keisan:'計算', bun:'文章題', zu:'図形', kisoku:'規則性',
-  tokusan:'特殊算', baai:'場合の数', kazu:'数の性質'
+  keisan:'計算', bun:'文章題', zu:'平面図形', kisoku:'規則性',
+  tokusan:'特殊算', baai:'場合の数', kazu:'数の性質',
+  wariai:'割合と比', hayasa:'速さ', rittai:'立体図形'
 };
 const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'灘中レベル' };
 const DRILL_TYPE_LABELS = {
@@ -820,7 +824,17 @@ async function loadSansuQuestions(cat, grade, diff) {
   return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
 }
 
-// ── 算数ホーム初期化 ────────────────────────────────────
+// ── 算数ホーム初期化（階層式ステップUI） ──────────────────
+function showSansuStep(id) {
+  const el = document.getElementById(id);
+  const wasHidden = el.classList.contains('hidden');
+  el.classList.remove('hidden');
+  if (wasHidden) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+}
+function hideSansuSteps(...ids) {
+  ids.forEach(id => document.getElementById(id).classList.add('hidden'));
+}
+
 function initSansuHome() {
   document.getElementById('sansu-nickname').textContent = state.nickname;
   sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
@@ -831,7 +845,7 @@ function initSansuHome() {
     b.onclick = () => showScreen('subject');
   });
 
-  // 学年ボタン
+  // STEP1: 学年
   document.querySelectorAll('.grade-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -842,37 +856,52 @@ function initSansuHome() {
       document.querySelectorAll('.juken-only').forEach(el => {
         el.classList.toggle('hidden', sansuState.grade < 4);
       });
+      // 受験専用カテゴリ選択中に小1〜3へ変えたら解除
+      if (sansuState.grade < 4 && ['kazu', 'rittai', 'wariai', 'hayasa', 'tokusan', 'baai'].includes(sansuState.cat)) {
+        sansuState.cat = null;
+        document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+        hideSansuSteps('sansu-step-diff');
+      }
+      showSansuStep('sansu-step-mode');
       updateSansuStart();
     };
   });
 
-  // モードボタン
+  // STEP2: モード
   document.querySelectorAll('.sansu-mode-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
       document.querySelectorAll('.sansu-mode-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.mode = btn.dataset.sansuMode;
-      document.getElementById('sansu-normal-opts').classList.toggle('hidden', sansuState.mode !== 'normal');
-      document.getElementById('sansu-drill-opts').classList.toggle('hidden', sansuState.mode !== 'drill');
+      if (sansuState.mode === 'normal') {
+        hideSansuSteps('sansu-step-dtype', 'sansu-step-time');
+        showSansuStep('sansu-step-cat');
+        if (sansuState.cat) showSansuStep('sansu-step-diff');
+      } else {
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff');
+        showSansuStep('sansu-step-dtype');
+        if (sansuState.drillType) showSansuStep('sansu-step-time');
+      }
       // ドリルは出題数不要
       document.getElementById('sansu-qcount-wrap').classList.toggle('hidden', sansuState.mode === 'drill');
       updateSansuStart();
     };
   });
 
-  // カテゴリボタン
+  // STEP3: カテゴリ
   document.querySelectorAll('.sansu-cat-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
       document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.cat = btn.dataset.scat;
+      showSansuStep('sansu-step-diff');
       updateSansuStart();
     };
   });
 
-  // 難易度ボタン
+  // STEP4: 難易度
   document.querySelectorAll('.diff-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -883,18 +912,19 @@ function initSansuHome() {
     };
   });
 
-  // ドリル種類ボタン
+  // STEP3': ドリル種類
   document.querySelectorAll('.drill-type-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
       document.querySelectorAll('.drill-type-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.drillType = btn.dataset.dtype;
+      showSansuStep('sansu-step-time');
       updateSansuStart();
     };
   });
 
-  // 時間ボタン
+  // STEP4': 時間
   document.querySelectorAll('.time-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -908,9 +938,8 @@ function initSansuHome() {
   // スタートボタン
   document.getElementById('sansu-btn-start').onclick = () => startSansuSession();
 
-  // オプションエリアを非表示
-  document.getElementById('sansu-normal-opts').classList.add('hidden');
-  document.getElementById('sansu-drill-opts').classList.add('hidden');
+  // 全ステップを初期状態（STEP1のみ表示）に
+  hideSansuSteps('sansu-step-mode', 'sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-time');
   document.getElementById('sansu-start-zone').classList.add('hidden');
 }
 

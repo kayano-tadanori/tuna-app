@@ -63,8 +63,8 @@
       <button class="subject-card" data-subject="sansu">
         <span class="subject-icon">🔢</span>
         <span class="subject-name">算数</span>
-        <span class="subject-detail">計算・図形・特殊算・文章題</span>
-        <span class="subject-count">2,400問</span>
+        <span class="subject-detail">計算・図形・割合・速さ・特殊算</span>
+        <span class="subject-count">3,360問</span>
       </button>
       <button class="subject-card coming-soon" data-subject="rika">
         <span class="subject-icon">🔬</span>
@@ -374,8 +374,8 @@
   </header>
   <main class="sansu-home-main">
 
-    <!-- 学年選択 -->
-    <section class="section-label">学年を選ぼう</section>
+    <!-- STEP1 学年選択 -->
+    <section class="section-label"><span class="step-badge">STEP 1</span>学年を選ぼう</section>
     <div class="grade-grid">
       <button class="grade-btn" data-grade="1">小1</button>
       <button class="grade-btn" data-grade="2">小2</button>
@@ -385,46 +385,64 @@
       <button class="grade-btn" data-grade="6">小6<span class="grade-sub">受験</span></button>
     </div>
 
-    <!-- モード選択 -->
-    <section class="section-label">モードを選ぼう</section>
-    <div class="sansu-mode-grid">
-      <button class="sansu-mode-btn" data-sansu-mode="normal">
-        <span class="mode-icon">📝</span>
-        <span class="mode-name">通常問題</span>
-        <span class="mode-desc">カテゴリ別に挑戦</span>
-      </button>
-      <button class="sansu-mode-btn" data-sansu-mode="drill">
-        <span class="mode-icon">⚡</span>
-        <span class="mode-name">計算ドリル</span>
-        <span class="mode-desc">四則演算を鍛える</span>
-      </button>
+    <!-- STEP2 モード選択 -->
+    <div id="sansu-step-mode" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>モードを選ぼう</section>
+      <div class="sansu-mode-grid">
+        <button class="sansu-mode-btn" data-sansu-mode="normal">
+          <span class="mode-icon">📝</span>
+          <span class="mode-name">通常問題</span>
+          <span class="mode-desc">カテゴリ別に挑戦</span>
+        </button>
+        <button class="sansu-mode-btn" data-sansu-mode="drill">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-name">計算ドリル</span>
+          <span class="mode-desc">四則演算を鍛える</span>
+        </button>
+      </div>
     </div>
 
-    <!-- 通常問題設定 -->
-    <div id="sansu-normal-opts" class="sansu-opts hidden">
-      <section class="section-label">カテゴリを選ぼう</section>
-      <div class="sansu-cat-grid" id="sansu-cat-grid">
+    <!-- STEP3 カテゴリ選択（通常問題・グループ分類） -->
+    <div id="sansu-step-cat" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 3</span>カテゴリを選ぼう</section>
+      <p class="cat-group-label">🔢 数と計算</p>
+      <div class="sansu-cat-grid">
         <button class="sansu-cat-btn" data-scat="keisan">計算</button>
-        <button class="sansu-cat-btn" data-scat="bun">文章題</button>
-        <button class="sansu-cat-btn" data-scat="zu">図形</button>
-        <button class="sansu-cat-btn" data-scat="kisoku">規則性</button>
-        <!-- 小4〜小6のみ表示 -->
-        <button class="sansu-cat-btn juken-only hidden" data-scat="tokusan">特殊算</button>
-        <button class="sansu-cat-btn juken-only hidden" data-scat="baai">場合の数</button>
         <button class="sansu-cat-btn juken-only hidden" data-scat="kazu">数の性質</button>
       </div>
-      <section class="section-label">難易度を選ぼう</section>
-      <div class="diff-grid">
-        <button class="diff-btn" data-diff="1">やさしい</button>
-        <button class="diff-btn" data-diff="2">難しい</button>
-        <button class="diff-btn" data-diff="3">チャレンジ</button>
-        <button class="diff-btn" data-diff="4">灘中レベル</button>
+      <p class="cat-group-label">📐 図形</p>
+      <div class="sansu-cat-grid">
+        <button class="sansu-cat-btn" data-scat="zu">平面図形</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="rittai">立体図形</button>
+      </div>
+      <p class="cat-group-label">📖 文章題</p>
+      <div class="sansu-cat-grid">
+        <button class="sansu-cat-btn" data-scat="bun">文章題</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="wariai">割合と比</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="hayasa">速さ</button>
+      </div>
+      <p class="cat-group-label">🎓 受験算数</p>
+      <div class="sansu-cat-grid">
+        <button class="sansu-cat-btn" data-scat="kisoku">規則性</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="tokusan">特殊算</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="baai">場合の数</button>
       </div>
     </div>
 
-    <!-- 計算ドリル設定 -->
-    <div id="sansu-drill-opts" class="sansu-opts hidden">
-      <section class="section-label">計算の種類</section>
+    <!-- STEP4 難易度選択（通常問題） -->
+    <div id="sansu-step-diff" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 4</span>難易度を選ぼう</section>
+      <div class="diff-grid">
+        <button class="diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
+        <button class="diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
+        <button class="diff-btn" data-diff="3">チャレンジ<span class="diff-sub">偏差値60</span></button>
+        <button class="diff-btn" data-diff="4">灘中レベル<span class="diff-sub">偏差値64+</span></button>
+      </div>
+    </div>
+
+    <!-- STEP3' 計算の種類（ドリル） -->
+    <div id="sansu-step-dtype" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 3</span>計算の種類を選ぼう</section>
       <div class="drill-type-grid">
         <button class="drill-type-btn" data-dtype="add">足し算</button>
         <button class="drill-type-btn" data-dtype="sub">引き算</button>
@@ -435,7 +453,11 @@
         <button class="drill-type-btn" data-dtype="fraction">分数</button>
         <button class="drill-type-btn" data-dtype="mix">ミックス</button>
       </div>
-      <section class="section-label">時間を選ぼう</section>
+    </div>
+
+    <!-- STEP4' 時間（ドリル） -->
+    <div id="sansu-step-time" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 4</span>時間を選ぼう</section>
       <div class="time-grid">
         <button class="time-btn" data-time="60">60秒</button>
         <button class="time-btn" data-time="90">90秒</button>
