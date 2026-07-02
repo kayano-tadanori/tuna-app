@@ -50,41 +50,50 @@
   <div class="subject-main">
     <div class="otton-small-wrap">
       <img src="images/otton.png" alt="オットン" class="otton-small" onerror="this.style.display='none'">
-      <p class="otton-msg">「科目を選んで、<br>今日も一緒に頑張ろうや！」</p>
+      <div class="otton-msg-block">
+        <p id="otton-date" class="otton-date"></p>
+        <p id="otton-msg" class="otton-msg">「科目を選んで、<br>今日も一緒に頑張ろうや！」</p>
+      </div>
     </div>
+
     <p class="section-label">科目を選ぼう！</p>
     <div class="subject-grid">
       <button class="subject-card" data-subject="kokugo">
-        <span class="subject-icon">📖</span>
+        <span class="subject-icon-wrap"><span class="subject-icon">📖</span></span>
         <span class="subject-name">国語</span>
-        <span class="subject-detail">ことわざ・慣用句・四字熟語・外来語</span>
+        <span class="subject-detail">ことわざ・慣用句<br>四字熟語・外来語</span>
         <span class="subject-count">1,500問</span>
       </button>
       <button class="subject-card" data-subject="sansu">
-        <span class="subject-icon">🔢</span>
+        <span class="subject-icon-wrap"><span class="subject-icon">🔢</span></span>
         <span class="subject-name">算数</span>
-        <span class="subject-detail">計算・図形・割合・速さ・特殊算</span>
+        <span class="subject-detail">計算・図形・割合<br>速さ・特殊算</span>
         <span class="subject-count">3,360問</span>
       </button>
       <button class="subject-card coming-soon" data-subject="rika">
-        <span class="subject-icon">🔬</span>
+        <span class="subject-icon-wrap"><span class="subject-icon">🔬</span></span>
         <span class="subject-name">理科</span>
-        <span class="subject-detail">物理・化学・生物・地学</span>
-        <span class="coming-badge">工事中🚧</span>
+        <span class="subject-detail">物理・化学<br>生物・地学</span>
+        <span class="coming-badge">🚧 じゅんび中</span>
       </button>
       <button class="subject-card coming-soon" data-subject="shakai">
-        <span class="subject-icon">🗾</span>
+        <span class="subject-icon-wrap"><span class="subject-icon">🗾</span></span>
         <span class="subject-name">社会</span>
-        <span class="subject-detail">地理・歴史・公民</span>
-        <span class="coming-badge">工事中🚧</span>
-      </button>
-      <button class="subject-card subject-card-game" data-subject="game">
-        <span class="subject-icon">🎮</span>
-        <span class="subject-name">息抜き</span>
-        <span class="subject-detail">オトンテトリス</span>
-        <span class="subject-count">ハイスコアに挑戦！</span>
+        <span class="subject-detail">地理・歴史<br>公民</span>
+        <span class="coming-badge">🚧 じゅんび中</span>
       </button>
     </div>
+
+    <p class="section-label">息抜きタイム</p>
+    <button class="subject-card subject-card-game" data-subject="game">
+      <span class="game-blocks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="game-icon">🎮</span>
+      <span class="game-text">
+        <span class="subject-name">オトンテトリス</span>
+        <span class="subject-detail">勉強のあいまにハイスコアに挑戦！</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
   </div>
 </div>
 

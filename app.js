@@ -734,6 +734,19 @@ async function boot() {
 function initSubject() {
   document.getElementById('subject-nickname').textContent = state.nickname;
 
+  // 日付とあいさつ（時間帯で変化）
+  const now = new Date();
+  const days = ['日', '月', '火', '水', '木', '金', '土'];
+  document.getElementById('otton-date').textContent =
+    `${now.getMonth() + 1}月${now.getDate()}日（${days[now.getDay()]}）`;
+  const h = now.getHours();
+  let msg;
+  if (h >= 5 && h < 10)       msg = '「おはようさん！<br>朝の勉強は頭に入るで！」';
+  else if (h >= 10 && h < 17) msg = '「科目を選んで、<br>今日も一緒に頑張ろうや！」';
+  else if (h >= 17 && h < 22) msg = '「おかえり！夜の勉強も<br>オトンが見守っとるで！」';
+  else                        msg = '「遅うまでえらいなあ。<br>無理せんとな！」';
+  document.getElementById('otton-msg').innerHTML = msg;
+
   document.querySelectorAll('.subject-card').forEach(btn => {
     btn.onclick = () => {
       if (btn.classList.contains('coming-soon')) {
