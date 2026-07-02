@@ -395,3 +395,26 @@ button { cursor: pointer; font-family: inherit; }
 .drill-question { font-size: 1.55rem; font-weight: 900; text-align: center; color: var(--text); letter-spacing: 0.04em; line-height: 1.35; }
 .drill-result { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0; text-align: center; }
 .drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* ── オトンテトリス ── */
+.subject-card-game { border-color: rgba(160,107,255,0.35); }
+.subject-card-game .subject-icon { filter: drop-shadow(0 0 10px rgba(160,107,255,0.5)); }
+.tetris-area { padding: 8px 16px calc(24px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; user-select: none; -webkit-user-select: none; }
+.tetris-info-row { display: flex; gap: 6px; }
+.tetris-info { flex: 1; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-xs); padding: 5px 4px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.tetris-info span { font-size: 0.62rem; color: var(--sub2); font-weight: 700; }
+.tetris-info b { font-size: 0.95rem; color: var(--accent2); font-weight: 900; }
+.tetris-main { display: flex; justify-content: center; align-items: flex-start; gap: 10px; position: relative; }
+#tetris-canvas { width: min(52vw, 200px); background: #0a1128; border: 1.5px solid var(--glass-border); border-radius: 10px; touch-action: none; }
+.tetris-side { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.tetris-next-label { font-size: 0.7rem; color: var(--sub2); font-weight: 700; }
+#tetris-next { width: 68px; height: 68px; background: #0a1128; border: 1.5px solid var(--glass-border); border-radius: 10px; }
+.tetris-overlay { position: absolute; inset: 0; background: rgba(8,14,32,0.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 5; }
+.tetris-overlay-emoji { font-size: 2.6rem; }
+.tetris-overlay-text { font-size: 1.2rem; font-weight: 900; color: var(--text); }
+.tetris-overlay-score { font-size: 1rem; font-weight: 800; color: var(--gold); }
+.tetris-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.tetris-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); font-size: 1.4rem; font-weight: 900; min-height: 54px; transition: background 0.1s, transform 0.08s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.tetris-btn:active { background: var(--card); transform: scale(0.92); }
+.tetris-btn-rot { background: rgba(160,107,255,0.18); border-color: rgba(160,107,255,0.4); color: #c9a8ff; }
+.tetris-btn-drop { grid-column: span 2; background: var(--grad-brand); border-color: var(--accent); color: #fff; font-size: 1.05rem; box-shadow: var(--glow-brand); }
