@@ -300,3 +300,95 @@ button { cursor: pointer; font-family: inherit; }
 ::-webkit-scrollbar { width: 0; background: transparent; }
 
 .app-logo-img { width: min(28vw,120px); height: min(28vw,120px); object-fit: contain; filter: drop-shadow(0 0 24px rgba(79,124,255,0.5)); animation: float 3.5s ease-in-out infinite; }
+
+/* ============================================================
+   算数モード
+   ============================================================ */
+
+/* ── 算数ホーム ── */
+.sansu-home-main { padding: 12px 16px calc(40px + var(--safe-b)); display: flex; flex-direction: column; gap: 4px; }
+
+/* 学年グリッド */
+.grade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 4px; }
+.grade-btn { position: relative; background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 14px 6px 10px; font-size: 1.1rem; font-weight: 900; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 62px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.grade-btn.selected { background: var(--grad-accent); border-color: var(--accent2); box-shadow: var(--glow-cyan); }
+.grade-btn:active { transform: scale(0.94); }
+.grade-sub { font-size: 0.65rem; font-weight: 700; color: var(--gold); letter-spacing: 0; }
+
+/* モード選択 */
+.sansu-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+.sansu-mode-btn { background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.9rem; font-weight: 700; min-height: 80px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.sansu-mode-btn .mode-icon { font-size: 1.6rem; }
+.sansu-mode-btn .mode-name { font-size: 0.9rem; font-weight: 900; }
+.sansu-mode-btn .mode-desc { font-size: 0.7rem; color: var(--sub2); }
+.sansu-mode-btn.selected { background: var(--grad-brand); border-color: var(--accent); box-shadow: var(--glow-brand); }
+.sansu-mode-btn:active { transform: scale(0.94); }
+
+/* 設定エリア共通 */
+.sansu-opts { display: flex; flex-direction: column; gap: 4px; }
+
+/* カテゴリグリッド */
+.sansu-cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.sansu-cat-btn { background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 12px 8px; font-size: 0.9rem; font-weight: 800; transition: background 0.15s, border-color 0.15s, transform 0.1s; min-height: 46px; }
+.sansu-cat-btn.selected { background: var(--grad-purple); border-color: #7c4fff; box-shadow: 0 0 18px rgba(124,79,255,0.4); }
+.sansu-cat-btn:active { transform: scale(0.94); }
+.sansu-cat-btn.juken-only { border-left: 3px solid var(--gold); }
+
+/* 難易度グリッド */
+.diff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.diff-btn { background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 12px 6px; font-size: 0.85rem; font-weight: 800; transition: background 0.15s, border-color 0.15s, transform 0.1s; min-height: 46px; }
+.diff-btn[data-diff="1"].selected { background: var(--grad-green); border-color: var(--green); box-shadow: var(--glow-green); }
+.diff-btn[data-diff="2"].selected { background: linear-gradient(135deg,#4f7cff,#38c8f0); border-color: var(--accent2); }
+.diff-btn[data-diff="3"].selected { background: var(--grad-gold); border-color: var(--gold); color: #080e20; box-shadow: var(--glow-gold); }
+.diff-btn[data-diff="4"].selected { background: var(--grad-red); border-color: var(--red); box-shadow: var(--glow-red); }
+.diff-btn:active { transform: scale(0.94); }
+
+/* ドリル計算種類 */
+.drill-type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.drill-type-btn { background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 10px 4px; font-size: 0.78rem; font-weight: 800; min-height: 42px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.drill-type-btn.selected { background: var(--grad-accent); border-color: var(--accent2); box-shadow: var(--glow-cyan); }
+.drill-type-btn:active { transform: scale(0.94); }
+
+/* 時間選択 */
+.time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.time-btn { background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 10px 4px; font-size: 0.85rem; font-weight: 800; min-height: 42px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.time-btn.selected { background: var(--grad-brand); border-color: var(--accent); box-shadow: var(--glow-brand); }
+.time-btn:active { transform: scale(0.94); }
+
+/* ── 算数クイズ ── */
+.sansu-quiz-area { padding: 12px 16px calc(40px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; }
+.sansu-badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge-grade { background: var(--grad-brand); color: #fff; border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; }
+.badge-diff { border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; }
+.badge-diff[data-level="1"] { background: var(--grad-green); color: #fff; }
+.badge-diff[data-level="2"] { background: var(--grad-accent); color: #fff; }
+.badge-diff[data-level="3"] { background: var(--grad-gold); color: #080e20; }
+.badge-diff[data-level="4"] { background: var(--grad-red); color: #fff; }
+.badge-type { background: var(--grad-purple); color: #fff; border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; }
+.sansu-question { font-size: 1.5rem; font-weight: 900; letter-spacing: 0.02em; line-height: 1.5; text-align: center; }
+
+/* ── テンキー共通 ── */
+.numpad-preview-wrap { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px 16px; }
+.numpad-preview-label { color: var(--sub2); font-size: 0.9rem; font-weight: 700; white-space: nowrap; }
+.numpad-preview { font-size: 1.8rem; font-weight: 900; color: var(--accent2); letter-spacing: 0.05em; flex: 1; min-width: 80px; }
+.remain-wrap { display: flex; align-items: center; gap: 10px; background: rgba(255,186,0,0.08); border: 1.5px solid rgba(255,186,0,0.25); border-radius: var(--radius); padding: 10px 16px; }
+.numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.numpad-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); font-size: 1.35rem; font-weight: 900; min-height: 56px; transition: background 0.1s, transform 0.08s; -webkit-tap-highlight-color: transparent; }
+.numpad-btn:active { background: var(--card); transform: scale(0.91); }
+.numpad-del { color: var(--red2); font-size: 1.5rem; }
+.numpad-rem { grid-column: span 1; font-size: 0.8rem; font-weight: 900; background: rgba(255,186,0,0.12); border-color: rgba(255,186,0,0.3); color: var(--gold); }
+.numpad-submit { grid-column: span 2; background: var(--grad-brand); border-color: var(--accent); color: #fff; font-size: 1.1rem; font-weight: 900; box-shadow: var(--glow-brand); }
+.numpad-submit:active { transform: scale(0.94); box-shadow: none; }
+
+/* ── 計算ドリル ── */
+.drill-area { padding: 8px 16px calc(40px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; }
+.drill-timer-wrap { display: flex; align-items: center; gap: 10px; }
+.drill-timer-bar-bg { flex: 1; height: 10px; background: rgba(79,124,255,0.15); border-radius: 6px; overflow: hidden; }
+.drill-timer-bar { height: 100%; background: var(--grad-accent); border-radius: 6px; transition: width 1s linear; }
+.drill-timer-sec { font-size: 1.4rem; font-weight: 900; color: var(--accent2); min-width: 2.5ch; text-align: right; }
+.drill-score-row { display: flex; justify-content: space-around; font-size: 0.9rem; font-weight: 700; color: var(--sub2); }
+.drill-score-row b { color: var(--accent2); }
+.drill-question-box { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-lg); padding: 20px 16px; min-height: 90px; display: flex; align-items: center; justify-content: center; }
+.drill-question { font-size: 2rem; font-weight: 900; text-align: center; color: var(--text); letter-spacing: 0.04em; line-height: 1.3; }
+.drill-result { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0; text-align: center; }
+.drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }

@@ -740,8 +740,14 @@ function initSubject() {
         showToast('もうすぐ追加されます！工事中🚧');
         return;
       }
-      initHome();
-      showScreen('home');
+      const subj = btn.dataset.subject;
+      if (subj === 'sansu') {
+        initSansuHome();
+        showScreen('sansu-home');
+      } else {
+        initHome();
+        showScreen('home');
+      }
     };
   });
 
@@ -764,4 +770,531 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW登録失敗:', e));
   });
+}
+
+// ============================================================
+// 算数モード
+// ============================================================
+
+const SANSU_FILES = {
+  keisan:  'data/sansu_keisan.json',
+  bun:     'data/sansu_bun.json',
+  zu:      'data/sansu_zu.json',
+  kisoku:  'data/sansu_kisoku.json',
+  tokusan: 'data/sansu_tokusan.json',
+  baai:    'data/sansu_baai.json',
+  kazu:    'data/sansu_kazu.json',
+};
+const SANSU_CAT_LABELS = {
+  keisan:'計算', bun:'文章題', zu:'図形', kisoku:'規則性',
+  tokusan:'特殊算', baai:'場合の数', kazu:'数の性質'
+};
+const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'灘中レベル' };
+const DRILL_TYPE_LABELS = {
+  add:'足し算', sub:'引き算', mul:'かけ算', div:'割り算',
+  divrem:'余りあり', decimal:'小数', fraction:'分数', mix:'ミックス'
+};
+
+const sansuCache = {};
+const sansuState = {
+  grade: null, diff: null, cat: null,
+  mode: null, // 'normal' | 'drill'
+  drillType: null, drillTime: null,
+  questions: [], current: 0, correct: 0, wrong: 0,
+  // ドリル
+  drillCorrect: 0, drillWrong: 0, drillTimerId: null, drillTimeLeft: 0,
+  // テンキー
+  inputVal: '', inputRemain: '', inputPhase: 'main', // 'main'|'remain'
+  isRemainMode: false,
+};
+
+async function loadSansuQuestions(cat, grade, diff) {
+  const key = cat;
+  if (!sansuCache[key]) {
+    const res = await fetch(SANSU_FILES[cat]);
+    sansuCache[key] = await res.json();
+  }
+  return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
+}
+
+// ── 算数ホーム初期化 ────────────────────────────────────
+function initSansuHome() {
+  document.getElementById('sansu-nickname').textContent = state.nickname;
+  sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
+  sansuState.mode = null; sansuState.drillType = null; sansuState.drillTime = null;
+
+  // 戻るボタン
+  document.querySelectorAll('[data-back="subject"]').forEach(b => {
+    b.onclick = () => showScreen('subject');
+  });
+
+  // 学年ボタン
+  document.querySelectorAll('.grade-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.grade = Number(btn.dataset.grade);
+      // 小4以上なら中学受験カテゴリ表示
+      document.querySelectorAll('.juken-only').forEach(el => {
+        el.classList.toggle('hidden', sansuState.grade < 4);
+      });
+      updateSansuStart();
+    };
+  });
+
+  // モードボタン
+  document.querySelectorAll('.sansu-mode-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.sansu-mode-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.mode = btn.dataset.sansuMode;
+      document.getElementById('sansu-normal-opts').classList.toggle('hidden', sansuState.mode !== 'normal');
+      document.getElementById('sansu-drill-opts').classList.toggle('hidden', sansuState.mode !== 'drill');
+      // ドリルは出題数不要
+      document.getElementById('sansu-qcount-wrap').classList.toggle('hidden', sansuState.mode === 'drill');
+      updateSansuStart();
+    };
+  });
+
+  // カテゴリボタン
+  document.querySelectorAll('.sansu-cat-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.cat = btn.dataset.scat;
+      updateSansuStart();
+    };
+  });
+
+  // 難易度ボタン
+  document.querySelectorAll('.diff-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.diff = Number(btn.dataset.diff);
+      updateSansuStart();
+    };
+  });
+
+  // ドリル種類ボタン
+  document.querySelectorAll('.drill-type-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.drill-type-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.drillType = btn.dataset.dtype;
+      updateSansuStart();
+    };
+  });
+
+  // 時間ボタン
+  document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.drillTime = Number(btn.dataset.time);
+      updateSansuStart();
+    };
+  });
+
+  // スタートボタン
+  document.getElementById('sansu-btn-start').onclick = () => startSansuSession();
+
+  // オプションエリアを非表示
+  document.getElementById('sansu-normal-opts').classList.add('hidden');
+  document.getElementById('sansu-drill-opts').classList.add('hidden');
+  document.getElementById('sansu-start-zone').classList.add('hidden');
+}
+
+function updateSansuStart() {
+  const zone = document.getElementById('sansu-start-zone');
+  const info = document.getElementById('sansu-start-info');
+  let ready = false;
+
+  if (sansuState.mode === 'normal') {
+    ready = sansuState.grade && sansuState.cat && sansuState.diff;
+    if (ready) {
+      info.textContent = `小${sansuState.grade} / ${SANSU_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
+    }
+  } else if (sansuState.mode === 'drill') {
+    ready = sansuState.grade && sansuState.drillType && sansuState.drillTime !== null;
+    if (ready) {
+      const timeStr = sansuState.drillTime === 0 ? '無制限' : `${sansuState.drillTime}秒`;
+      info.textContent = `小${sansuState.grade} / ${DRILL_TYPE_LABELS[sansuState.drillType]} / ${timeStr}`;
+    }
+  }
+
+  zone.classList.toggle('hidden', !ready);
+}
+
+async function startSansuSession() {
+  if (sansuState.mode === 'normal') {
+    showLoading();
+    try {
+      const all = await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+      if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
+      const countVal = document.getElementById('sansu-q-count').value;
+      const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
+      sansuState.questions = shuffle([...all]).slice(0, count);
+      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+      hideLoading();
+      startSansuQuiz();
+    } catch(e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+  } else {
+    startDrill();
+  }
+}
+
+// ── 算数クイズ（通常問題） ────────────────────────────
+function startSansuQuiz() {
+  const catLabel = SANSU_CAT_LABELS[sansuState.cat] || '算数';
+  document.getElementById('sansu-quiz-title').textContent = catLabel;
+  document.querySelectorAll('[data-back="sansu-home"]').forEach(b => b.onclick = () => { showScreen('sansu-home'); });
+  initNumpad('sq');
+  renderSansuQuiz();
+  showScreen('sansu-quiz');
+}
+
+function renderSansuQuiz() {
+  const total = sansuState.questions.length;
+  if (sansuState.current >= total) { endSansuSession(); return; }
+
+  const q = sansuState.questions[sansuState.current];
+  document.getElementById('sansu-quiz-counter').textContent = `${sansuState.current + 1}/${total}`;
+  document.getElementById('sq-question').textContent = q.question;
+  document.getElementById('sq-meaning').textContent = '';
+
+  // バッジ
+  document.getElementById('sq-grade-badge').textContent = `小${sansuState.grade}`;
+  const diffBadge = document.getElementById('sq-diff-badge');
+  diffBadge.textContent = DIFF_LABELS[sansuState.diff] || '';
+  diffBadge.dataset.level = sansuState.diff;
+  const typeBadge = document.getElementById('sq-type-badge');
+  if (q.type) { typeBadge.textContent = q.type; typeBadge.classList.remove('hidden'); }
+  else { typeBadge.classList.add('hidden'); }
+
+  // 余りあり判定
+  sansuState.isRemainMode = q.answer && q.answer.includes('余り');
+  document.getElementById('sq-remain-wrap').classList.toggle('hidden', !sansuState.isRemainMode);
+  document.querySelector('#sq-numpad .numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
+
+  // テンキーリセット
+  sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
+  updateNumpadPreview('sq');
+
+  // フィードバック非表示
+  document.getElementById('sq-feedback').classList.add('hidden');
+  document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
+}
+
+function submitSansuAnswer() {
+  const q = sansuState.questions[sansuState.current];
+  let userAnswer = sansuState.inputVal.trim();
+  if (sansuState.isRemainMode) {
+    userAnswer = `${sansuState.inputVal.trim()}余り${sansuState.inputRemain.trim()}`;
+  }
+  if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
+
+  const correct = checkSansuAnswer(userAnswer, q.answer);
+  recordResult(q.id, correct);
+
+  if (correct) { sansuState.correct++; document.getElementById('sq-correct').textContent = sansuState.correct; }
+  else { sansuState.wrong++; document.getElementById('sq-wrong').textContent = sansuState.wrong; }
+
+  const fb = document.getElementById('sq-feedback');
+  document.getElementById('sq-feedback-text').textContent = correct ? '✅ 正解！' : '❌ 不正解';
+  document.getElementById('sq-feedback-ans').textContent = correct ? (q.meaning || '') : `正解：${q.answer}　${q.meaning || ''}`;
+  document.getElementById('sq-meaning').textContent = '';
+  fb.classList.remove('hidden');
+  document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = true);
+
+  document.getElementById('sq-btn-next').onclick = () => {
+    sansuState.current++;
+    renderSansuQuiz();
+  };
+}
+
+function checkSansuAnswer(input, correct) {
+  const normalize = s => String(s).trim().replace(/\s/g, '').replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).toLowerCase();
+  return normalize(input) === normalize(correct);
+}
+
+function endSansuSession() {
+  const total = sansuState.questions.length;
+  const score = total > 0 ? Math.round(sansuState.correct / total * 100) : 0;
+  let emoji, comment;
+  if (score === 100) { emoji = '🏆'; comment = '満点！常在戦場！'; }
+  else if (score >= 80) { emoji = '⭐'; comment = 'よくできました！'; }
+  else if (score >= 60) { emoji = '👍'; comment = 'もう一息！'; }
+  else { emoji = '💪'; comment = 'もう一度チャレンジ！'; }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-correct').textContent = sansuState.correct;
+  document.getElementById('result-total').textContent = total;
+  document.getElementById('result-rate').textContent = `${score}点`;
+  document.getElementById('result-comment').textContent = comment;
+
+  document.getElementById('btn-result-home').onclick = () => { initSansuHome(); showScreen('sansu-home'); };
+  document.getElementById('btn-result-retry').onclick = () => {
+    sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    sansuState.questions = shuffle([...sansuState.questions]);
+    document.getElementById('sq-correct').textContent = '0';
+    document.getElementById('sq-wrong').textContent = '0';
+    startSansuQuiz();
+  };
+
+  showScreen('result');
+}
+
+// ── テンキー共通 ────────────────────────────────────────
+function initNumpad(prefix) {
+  const numpad = document.getElementById(`${prefix}-numpad`);
+  numpad.querySelectorAll('.numpad-btn').forEach(btn => {
+    btn.onclick = () => handleNumpadKey(prefix, btn.dataset.key);
+  });
+}
+
+function handleNumpadKey(prefix, key) {
+  if (key === 'submit') {
+    if (prefix === 'sq') submitSansuAnswer();
+    else if (prefix === 'drill') submitDrillAnswer();
+    return;
+  }
+  if (key === 'rem') {
+    sansuState.inputPhase = 'remain';
+    updateNumpadPreview(prefix);
+    return;
+  }
+  if (key === 'del') {
+    if (sansuState.inputPhase === 'remain') {
+      sansuState.inputRemain = sansuState.inputRemain.slice(0, -1);
+    } else {
+      sansuState.inputVal = sansuState.inputVal.slice(0, -1);
+    }
+    updateNumpadPreview(prefix);
+    return;
+  }
+  // 数字・小数点
+  if (sansuState.inputPhase === 'remain') {
+    if (key === '.') return; // 余りに小数点不要
+    sansuState.inputRemain += key;
+  } else {
+    if (key === '.' && sansuState.inputVal.includes('.')) return;
+    sansuState.inputVal += key;
+  }
+  updateNumpadPreview(prefix);
+}
+
+function updateNumpadPreview(prefix) {
+  const mainEl = document.getElementById(`${prefix}-preview`);
+  const remainEl = document.getElementById(`${prefix}-remain-preview`);
+  mainEl.textContent = sansuState.inputVal || '＿';
+  if (remainEl) remainEl.textContent = sansuState.inputRemain || '＿';
+}
+
+// ── 計算ドリル ──────────────────────────────────────────
+
+// 問題自動生成
+function generateDrillProblem() {
+  const g = sansuState.grade;
+  let type = sansuState.drillType;
+  if (type === 'mix') {
+    const types = getAvailableDrillTypes(g);
+    type = types[Math.floor(Math.random() * types.length)];
+  }
+
+  const rnd = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+  if (type === 'add') {
+    const ranges = [[1,9],[10,99],[100,500],[100,999],[1000,9999],[1000,9999]];
+    const [lo,hi] = ranges[g-1];
+    const a=rnd(lo,hi), b=rnd(1,hi);
+    return { question: `${a} ＋ ${b} ＝`, answer: String(a+b) };
+  }
+  if (type === 'sub') {
+    const ranges = [[1,9],[10,99],[100,500],[100,999],[1000,9999],[1000,9999]];
+    const [lo,hi] = ranges[g-1];
+    const b=rnd(lo,hi), a=b+rnd(1,hi);
+    return { question: `${a} － ${b} ＝`, answer: String(a-b) };
+  }
+  if (type === 'mul') {
+    if (g <= 2) { const a=rnd(2,9),b=rnd(2,9); return { question:`${a} × ${b} ＝`, answer:String(a*b) }; }
+    if (g === 3) { const a=rnd(2,9),b=rnd(10,50); return { question:`${a} × ${b} ＝`, answer:String(a*b) }; }
+    const a=rnd(10,99),b=rnd(10,99); return { question:`${a} × ${b} ＝`, answer:String(a*b) };
+  }
+  if (type === 'div') {
+    const d=rnd(2,9), q2=rnd(2,12), n=d*q2;
+    return { question:`${n} ÷ ${d} ＝`, answer:String(q2) };
+  }
+  if (type === 'divrem') {
+    const d=rnd(2,9), q2=rnd(2,12), r=rnd(1,d-1), n=d*q2+r;
+    return { question:`${n} ÷ ${d} ＝ □ あまり □`, answer:`${q2}余り${r}`, isRemain:true };
+  }
+  if (type === 'decimal') {
+    const a=(rnd(1,99)/10).toFixed(1), b=(rnd(1,99)/10).toFixed(1);
+    const ans=(parseFloat(a)+parseFloat(b)).toFixed(1).replace(/\.0$/,'');
+    return { question:`${a} ＋ ${b} ＝`, answer:ans };
+  }
+  if (type === 'fraction') {
+    const den=rnd(2,8), n1=rnd(1,den-1), n2=rnd(1,den-n1);
+    const num=n1+n2;
+    const g2 = (a,b) => b===0?a:g2(b,a%b);
+    const gc = g2(num,den);
+    const ans = gc===den ? String(num/gc) : `${num/gc}/${den/gc}`;
+    return { question:`${n1}/${den} ＋ ${n2}/${den} ＝`, answer:ans };
+  }
+  // fallback add
+  const a=rnd(1,9),b=rnd(1,9);
+  return { question:`${a} ＋ ${b} ＝`, answer:String(a+b) };
+}
+
+function getAvailableDrillTypes(grade) {
+  const base = ['add','sub'];
+  if (grade >= 2) base.push('mul');
+  if (grade >= 3) base.push('div','divrem');
+  if (grade >= 4) base.push('decimal');
+  if (grade >= 5) base.push('fraction');
+  return base;
+}
+
+function startDrill() {
+  sansuState.drillCorrect = 0; sansuState.drillWrong = 0;
+  sansuState.drillTimeLeft = sansuState.drillTime;
+  sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
+
+  document.getElementById('drill-correct').textContent = '0';
+  document.getElementById('drill-wrong').textContent = '0';
+  document.getElementById('drill-result').classList.add('hidden');
+  document.getElementById('drill-numpad').classList.remove('hidden');
+  document.getElementById('drill-timer-wrap').classList.toggle('hidden', sansuState.drillTime === 0);
+  document.getElementById('drill-score-label').textContent = '';
+  document.getElementById('drill-feedback').classList.add('hidden');
+
+  document.querySelectorAll('[data-back="sansu-home"]').forEach(b => b.onclick = () => {
+    clearInterval(sansuState.drillTimerId);
+    showScreen('sansu-home');
+  });
+
+  initNumpad('drill');
+  showScreen('drill');
+  renderDrillProblem();
+
+  // タイムアタックのみタイマー起動
+  if (sansuState.drillTime > 0) {
+    updateDrillTimer();
+    sansuState.drillTimerId = setInterval(() => {
+      sansuState.drillTimeLeft--;
+      updateDrillTimer();
+      if (sansuState.drillTimeLeft <= 0) {
+        clearInterval(sansuState.drillTimerId);
+        endDrill();
+      }
+    }, 1000);
+  }
+}
+
+function updateDrillTimer() {
+  document.getElementById('drill-timer-sec').textContent = sansuState.drillTimeLeft;
+  const pct = (sansuState.drillTimeLeft / sansuState.drillTime) * 100;
+  document.getElementById('drill-timer-bar').style.width = `${pct}%`;
+  document.getElementById('drill-timer-bar').style.background =
+    pct > 50 ? 'var(--grad-accent)' : pct > 20 ? 'var(--grad-gold)' : 'var(--grad-red)';
+}
+
+let _currentDrillQ = null;
+
+function renderDrillProblem() {
+  _currentDrillQ = generateDrillProblem();
+  document.getElementById('drill-question').textContent = _currentDrillQ.question;
+
+  sansuState.isRemainMode = !!_currentDrillQ.isRemain;
+  document.getElementById('drill-remain-wrap').classList.toggle('hidden', !sansuState.isRemainMode);
+  document.querySelector('#drill-numpad .numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
+
+  sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
+  updateNumpadPreview('drill');
+  document.getElementById('drill-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
+
+  // 無制限モードの場合フィードバックを非表示
+  if (sansuState.drillTime === 0) {
+    document.getElementById('drill-feedback').classList.add('hidden');
+  }
+}
+
+function submitDrillAnswer() {
+  if (!_currentDrillQ) return;
+  let userAnswer = sansuState.inputVal.trim();
+  if (sansuState.isRemainMode) userAnswer = `${sansuState.inputVal.trim()}余り${sansuState.inputRemain.trim()}`;
+  if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
+
+  const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer);
+
+  if (correct) {
+    sansuState.drillCorrect++;
+    document.getElementById('drill-correct').textContent = sansuState.drillCorrect;
+    // タイムアタックは即次の問題、無制限はフィードバック表示
+    if (sansuState.drillTime > 0) {
+      renderDrillProblem();
+    } else {
+      showDrillFeedback(true, _currentDrillQ.answer);
+    }
+  } else {
+    sansuState.drillWrong++;
+    document.getElementById('drill-wrong').textContent = sansuState.drillWrong;
+    showDrillFeedback(false, _currentDrillQ.answer);
+  }
+}
+
+function showDrillFeedback(correct, correctAnswer) {
+  const fb = document.getElementById('drill-feedback');
+  document.getElementById('drill-feedback-text').textContent = correct ? '✅ 正解！' : '❌ 不正解';
+  document.getElementById('drill-feedback-ans').textContent = correct ? '' : `正解：${correctAnswer}`;
+  fb.classList.remove('hidden');
+  document.getElementById('drill-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = true);
+  document.getElementById('drill-btn-next').onclick = () => {
+    fb.classList.add('hidden');
+    renderDrillProblem();
+  };
+  // タイムアタックの場合は短時間表示後自動次へ
+  if (sansuState.drillTime > 0) {
+    setTimeout(() => { fb.classList.add('hidden'); renderDrillProblem(); }, 800);
+  }
+}
+
+function endDrill() {
+  document.getElementById('drill-numpad').classList.add('hidden');
+  document.getElementById('drill-feedback').classList.add('hidden');
+
+  const score = sansuState.drillCorrect;
+  const total = sansuState.drillCorrect + sansuState.drillWrong;
+  const rate = total > 0 ? Math.round(score / total * 100) : 0;
+
+  let emoji, comment;
+  if (sansuState.drillTime === 0) {
+    // 無制限は正解率
+    if (rate === 100) { emoji = '🏆'; comment = '満点！常在戦場！'; }
+    else if (rate >= 80) { emoji = '⭐'; comment = 'よくできました！'; }
+    else if (rate >= 60) { emoji = '👍'; comment = 'もう一息！'; }
+    else { emoji = '💪'; comment = 'もう一度チャレンジ！'; }
+    document.getElementById('drill-result-score').textContent = `${rate}点（${score}/${total}問正解）`;
+  } else {
+    // タイムアタックは正解数がスコア
+    if (score >= 30) { emoji = '🏆'; comment = '常在戦場！すごい！'; }
+    else if (score >= 20) { emoji = '⭐'; comment = 'よくできました！'; }
+    else if (score >= 10) { emoji = '👍'; comment = 'もう一息！'; }
+    else { emoji = '💪'; comment = 'もう一度チャレンジ！'; }
+    document.getElementById('drill-result-score').textContent = `${score}点！（${sansuState.drillTime}秒で${score}問正解）`;
+  }
+
+  document.getElementById('drill-result-emoji').textContent = emoji;
+  document.getElementById('drill-result-comment').textContent = comment;
+  document.getElementById('drill-result').classList.remove('hidden');
+
+  document.getElementById('drill-btn-again').onclick = () => startDrill();
+  document.getElementById('drill-btn-home').onclick = () => { initSansuHome(); showScreen('sansu-home'); };
 }

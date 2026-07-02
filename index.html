@@ -60,11 +60,11 @@
         <span class="subject-detail">ことわざ・慣用句・四字熟語・外来語</span>
         <span class="subject-count">1,500問</span>
       </button>
-      <button class="subject-card coming-soon" data-subject="sansu">
+      <button class="subject-card" data-subject="sansu">
         <span class="subject-icon">🔢</span>
         <span class="subject-name">算数</span>
-        <span class="subject-detail">計算・図形・文章題</span>
-        <span class="coming-badge">工事中🚧</span>
+        <span class="subject-detail">計算・図形・特殊算・文章題</span>
+        <span class="subject-count">2,400問</span>
       </button>
       <button class="subject-card coming-soon" data-subject="rika">
         <span class="subject-icon">🔬</span>
@@ -353,6 +353,233 @@
     <div class="custom-list-wrap">
       <h3>追加済みの問題</h3>
       <div id="custom-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 算数ホーム =============== -->
+<div id="screen-sansu-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <h1 class="top-title">算数ドリル</h1>
+    <div class="user-info">
+      <span id="sansu-nickname"></span>
+    </div>
+  </header>
+  <main class="sansu-home-main">
+
+    <!-- 学年選択 -->
+    <section class="section-label">学年を選ぼう</section>
+    <div class="grade-grid">
+      <button class="grade-btn" data-grade="1">小1</button>
+      <button class="grade-btn" data-grade="2">小2</button>
+      <button class="grade-btn" data-grade="3">小3</button>
+      <button class="grade-btn" data-grade="4">小4<span class="grade-sub">受験</span></button>
+      <button class="grade-btn" data-grade="5">小5<span class="grade-sub">受験</span></button>
+      <button class="grade-btn" data-grade="6">小6<span class="grade-sub">受験</span></button>
+    </div>
+
+    <!-- モード選択 -->
+    <section class="section-label">モードを選ぼう</section>
+    <div class="sansu-mode-grid">
+      <button class="sansu-mode-btn" data-sansu-mode="normal">
+        <span class="mode-icon">📝</span>
+        <span class="mode-name">通常問題</span>
+        <span class="mode-desc">カテゴリ別に挑戦</span>
+      </button>
+      <button class="sansu-mode-btn" data-sansu-mode="drill">
+        <span class="mode-icon">⚡</span>
+        <span class="mode-name">計算ドリル</span>
+        <span class="mode-desc">四則演算を鍛える</span>
+      </button>
+    </div>
+
+    <!-- 通常問題設定 -->
+    <div id="sansu-normal-opts" class="sansu-opts hidden">
+      <section class="section-label">カテゴリを選ぼう</section>
+      <div class="sansu-cat-grid" id="sansu-cat-grid">
+        <button class="sansu-cat-btn" data-scat="keisan">計算</button>
+        <button class="sansu-cat-btn" data-scat="bun">文章題</button>
+        <button class="sansu-cat-btn" data-scat="zu">図形</button>
+        <button class="sansu-cat-btn" data-scat="kisoku">規則性</button>
+        <!-- 小4〜小6のみ表示 -->
+        <button class="sansu-cat-btn juken-only hidden" data-scat="tokusan">特殊算</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="baai">場合の数</button>
+        <button class="sansu-cat-btn juken-only hidden" data-scat="kazu">数の性質</button>
+      </div>
+      <section class="section-label">難易度を選ぼう</section>
+      <div class="diff-grid">
+        <button class="diff-btn" data-diff="1">やさしい</button>
+        <button class="diff-btn" data-diff="2">難しい</button>
+        <button class="diff-btn" data-diff="3">チャレンジ</button>
+        <button class="diff-btn" data-diff="4">灘中レベル</button>
+      </div>
+    </div>
+
+    <!-- 計算ドリル設定 -->
+    <div id="sansu-drill-opts" class="sansu-opts hidden">
+      <section class="section-label">計算の種類</section>
+      <div class="drill-type-grid">
+        <button class="drill-type-btn" data-dtype="add">足し算</button>
+        <button class="drill-type-btn" data-dtype="sub">引き算</button>
+        <button class="drill-type-btn" data-dtype="mul">かけ算</button>
+        <button class="drill-type-btn" data-dtype="div">割り算</button>
+        <button class="drill-type-btn" data-dtype="divrem">余りあり</button>
+        <button class="drill-type-btn" data-dtype="decimal">小数</button>
+        <button class="drill-type-btn" data-dtype="fraction">分数</button>
+        <button class="drill-type-btn" data-dtype="mix">ミックス</button>
+      </div>
+      <section class="section-label">時間を選ぼう</section>
+      <div class="time-grid">
+        <button class="time-btn" data-time="60">60秒</button>
+        <button class="time-btn" data-time="90">90秒</button>
+        <button class="time-btn" data-time="120">120秒</button>
+        <button class="time-btn" data-time="0">無制限</button>
+      </div>
+    </div>
+
+    <!-- スタートゾーン -->
+    <div id="sansu-start-zone" class="start-zone hidden">
+      <div class="start-info" id="sansu-start-info"></div>
+      <div class="question-count-wrap" id="sansu-qcount-wrap">
+        <label>出題数：
+          <select id="sansu-q-count">
+            <option value="10">10問</option>
+            <option value="20" selected>20問</option>
+            <option value="all">全問</option>
+          </select>
+        </label>
+      </div>
+      <button id="sansu-btn-start" class="btn-start">常在戦場！スタート！</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- =============== 算数クイズ（テンキー入力） =============== -->
+<div id="screen-sansu-quiz" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="sansu-home">‹ 戻る</button>
+    <h2 id="sansu-quiz-title" class="top-title">算数</h2>
+    <span id="sansu-quiz-counter" class="counter"></span>
+  </header>
+  <div class="sansu-quiz-area">
+    <div class="sansu-badge-row">
+      <span id="sq-grade-badge" class="badge-grade"></span>
+      <span id="sq-diff-badge" class="badge-diff"></span>
+      <span id="sq-type-badge" class="badge-type hidden"></span>
+    </div>
+    <div class="quiz-score-row">
+      <span>正解：<b id="sq-correct">0</b></span>
+      <span>不正解：<b id="sq-wrong">0</b></span>
+    </div>
+    <div class="question-box">
+      <p id="sq-question" class="quiz-question sansu-question"></p>
+      <p id="sq-meaning" class="quiz-meaning"></p>
+    </div>
+
+    <!-- テンキー入力 -->
+    <div class="numpad-preview-wrap">
+      <span class="numpad-preview-label">答え：</span>
+      <span id="sq-preview" class="numpad-preview">＿</span>
+    </div>
+    <!-- 余りあり用 -->
+    <div id="sq-remain-wrap" class="remain-wrap hidden">
+      <span class="numpad-preview-label">あまり：</span>
+      <span id="sq-remain-preview" class="numpad-preview">＿</span>
+    </div>
+
+    <div id="sq-feedback" class="feedback hidden">
+      <p id="sq-feedback-text"></p>
+      <p id="sq-feedback-ans"></p>
+      <button id="sq-btn-next" class="btn-next">次へ →</button>
+    </div>
+
+    <div id="sq-numpad" class="numpad">
+      <button class="numpad-btn" data-key="7">7</button>
+      <button class="numpad-btn" data-key="8">8</button>
+      <button class="numpad-btn" data-key="9">9</button>
+      <button class="numpad-btn" data-key="4">4</button>
+      <button class="numpad-btn" data-key="5">5</button>
+      <button class="numpad-btn" data-key="6">6</button>
+      <button class="numpad-btn" data-key="1">1</button>
+      <button class="numpad-btn" data-key="2">2</button>
+      <button class="numpad-btn" data-key="3">3</button>
+      <button class="numpad-btn" data-key=".">.</button>
+      <button class="numpad-btn" data-key="0">0</button>
+      <button class="numpad-btn numpad-del" data-key="del">⌫</button>
+      <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
+      <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 計算ドリル =============== -->
+<div id="screen-drill" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="sansu-home">‹ 戻る</button>
+    <h2 id="drill-title" class="top-title">計算ドリル</h2>
+    <span id="drill-score-label" class="counter"></span>
+  </header>
+  <div class="drill-area">
+    <!-- タイムアタック用タイマー -->
+    <div id="drill-timer-wrap" class="drill-timer-wrap">
+      <div class="drill-timer-bar-bg">
+        <div id="drill-timer-bar" class="drill-timer-bar"></div>
+      </div>
+      <span id="drill-timer-sec" class="drill-timer-sec">60</span>
+    </div>
+
+    <div class="drill-score-row">
+      <span>正解：<b id="drill-correct">0</b></span>
+      <span>不正解：<b id="drill-wrong">0</b></span>
+    </div>
+
+    <div class="drill-question-box">
+      <p id="drill-question" class="drill-question"></p>
+    </div>
+
+    <div class="numpad-preview-wrap">
+      <span class="numpad-preview-label">答え：</span>
+      <span id="drill-preview" class="numpad-preview">＿</span>
+    </div>
+    <div id="drill-remain-wrap" class="remain-wrap hidden">
+      <span class="numpad-preview-label">あまり：</span>
+      <span id="drill-remain-preview" class="numpad-preview">＿</span>
+    </div>
+
+    <div id="drill-feedback" class="feedback hidden">
+      <p id="drill-feedback-text"></p>
+      <p id="drill-feedback-ans"></p>
+      <button id="drill-btn-next" class="btn-next">次へ →</button>
+    </div>
+
+    <div id="drill-numpad" class="numpad">
+      <button class="numpad-btn" data-key="7">7</button>
+      <button class="numpad-btn" data-key="8">8</button>
+      <button class="numpad-btn" data-key="9">9</button>
+      <button class="numpad-btn" data-key="4">4</button>
+      <button class="numpad-btn" data-key="5">5</button>
+      <button class="numpad-btn" data-key="6">6</button>
+      <button class="numpad-btn" data-key="1">1</button>
+      <button class="numpad-btn" data-key="2">2</button>
+      <button class="numpad-btn" data-key="3">3</button>
+      <button class="numpad-btn" data-key=".">.</button>
+      <button class="numpad-btn" data-key="0">0</button>
+      <button class="numpad-btn numpad-del" data-key="del">⌫</button>
+      <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
+      <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
+    </div>
+
+    <!-- ドリル終了後の結果 -->
+    <div id="drill-result" class="drill-result hidden">
+      <div id="drill-result-emoji" class="result-emoji"></div>
+      <p id="drill-result-score" class="drill-result-score"></p>
+      <p id="drill-result-comment" class="result-comment"></p>
+      <div class="result-actions">
+        <button id="drill-btn-again" class="btn-primary">もう一度</button>
+        <button id="drill-btn-home" class="btn-secondary">ホームへ</button>
+      </div>
     </div>
   </div>
 </div>

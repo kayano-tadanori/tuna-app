@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v4';
+const CACHE_NAME = 'oton-gakuen-v5';
 
 const ASSETS = [
   '/',
@@ -14,7 +14,14 @@ const ASSETS = [
   '/data/kotowaza.json',
   '/data/kanyoku.json',
   '/data/yojijukugo.json',
-  '/data/gairaigo.json'
+  '/data/gairaigo.json',
+  '/data/sansu_keisan.json',
+  '/data/sansu_bun.json',
+  '/data/sansu_zu.json',
+  '/data/sansu_kisoku.json',
+  '/data/sansu_tokusan.json',
+  '/data/sansu_baai.json',
+  '/data/sansu_kazu.json'
 ];
 
 // インストール時：全アセットをキャッシュ

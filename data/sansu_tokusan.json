@@ -1,0 +1,2162 @@
+[
+  {
+    "id": "st001",
+    "question": "鶴と亀が合わせて5匹、足の合計が14本。鶴は何匹？",
+    "answer": "3",
+    "meaning": "全員亀なら4×5=20本、20-14=6本多い。2本差÷(4-2)=3匹が鶴",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st002",
+    "question": "鶴と亀が合わせて8匹、足の合計が20本。亀は何匹？",
+    "answer": "2",
+    "meaning": "全員鶴なら2×8=16本、20-16=4本足りない。4÷(4-2)=2匹が亀",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st003",
+    "question": "100円玉と50円玉が合わせて10枚、合計700円。100円玉は何枚？",
+    "answer": "4",
+    "meaning": "全部50円なら500円、200円不足。50円差÷(100-50)=4枚",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st004",
+    "question": "大人と子どもが20人、入場料の合計3600円。大人500円子ども100円。大人は？",
+    "answer": "4",
+    "meaning": "全員子なら2000円、1600円不足。400÷(500-100)=4人",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st005",
+    "question": "3輪車と2輪車で車輪の合計32個、台数は10台。3輪車は何台？",
+    "answer": "12",
+    "meaning": "全部2輪なら20個、差12個。1個差÷(3-2)=12台",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st006",
+    "question": "A品200円B品120円。合計10個で1520円。A品は何個？",
+    "answer": "4",
+    "meaning": "全部B品なら1200円、差320円。320÷(200-120)=4個",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st007",
+    "question": "20mの道路に5mおきに木を植える。両端も植えると何本？",
+    "answer": "5",
+    "meaning": "20÷5＋1＝5本",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "植木算"
+  },
+  {
+    "id": "st008",
+    "question": "100mの道路に10mおきに木を植える。両端も植えると何本？",
+    "answer": "11",
+    "meaning": "100÷10＋1＝11本",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "植木算"
+  },
+  {
+    "id": "st009",
+    "question": "池の周り120mに6mおきに木を植える。何本必要？",
+    "answer": "20",
+    "meaning": "120÷6＝20本（池は両端なし）",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "植木算"
+  },
+  {
+    "id": "st010",
+    "question": "50mの道路の片側に5mおきに旗を立てる。両端含めると？",
+    "answer": "11",
+    "meaning": "50÷5＋1＝11本",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "植木算"
+  },
+  {
+    "id": "st011",
+    "question": "1辺20mの正方形の周囲に4mおきに杭を打つ。何本？",
+    "answer": "20",
+    "meaning": "周囲80m、80÷4＝20本",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "植木算"
+  },
+  {
+    "id": "st012",
+    "question": "28本の木を3m間隔で一列に植えると全長は？",
+    "answer": "81",
+    "meaning": "(28-1)×3＝81m",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "植木算"
+  },
+  {
+    "id": "st013",
+    "question": "100mの道路両側に8mおきに街灯を立てる（両端含む）。合計何本？",
+    "answer": "26",
+    "meaning": "100÷8＋1＝13.5→14本×2＝26本",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "植木算"
+  },
+  {
+    "id": "st014",
+    "question": "A君は分速60m、B君は分速40m。同じ方向に出発。10分後の差は？",
+    "answer": "200",
+    "meaning": "(60-40)×10＝200m",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "旅人算"
+  },
+  {
+    "id": "st015",
+    "question": "600m離れた2人が向かい合って歩く。A分速70m、B分速80m。何分で会う？",
+    "answer": "4",
+    "meaning": "600÷(70+80)＝4分",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "旅人算"
+  },
+  {
+    "id": "st016",
+    "question": "A自転車時速15km、B徒歩時速5km。同方向。1時間後の差は？",
+    "answer": "10",
+    "meaning": "(15-5)×1＝10km",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "旅人算"
+  },
+  {
+    "id": "st017",
+    "question": "家から学校まで3km。行き分速60m、帰り分速40m。合計何分？",
+    "answer": "125",
+    "meaning": "行き3000÷60＝50分、帰り3000÷40＝75分、計125分",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "旅人算"
+  },
+  {
+    "id": "st018",
+    "question": "AとBが1800m離れて向かい合って歩く。A分速80m、B分速70m。何分で出会う？",
+    "answer": "12",
+    "meaning": "1800÷(80+70)＝12分",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "旅人算"
+  },
+  {
+    "id": "st019",
+    "question": "Aが先に出発して10分後にBが追う。A分速50m、B分速75m。追いつくのは何分後（Bが出発してから）？",
+    "answer": "20",
+    "meaning": "Aの先行距離500m÷速さの差25m＝20分",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "旅人算"
+  },
+  {
+    "id": "st020",
+    "question": "円形コース600mをAは分速80m、Bは分速70m。同方向スタート。何分後に追いつく？",
+    "answer": "60",
+    "meaning": "600÷(80-70)＝60分",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "旅人算"
+  },
+  {
+    "id": "st021",
+    "question": "牧場の草を12頭の牛が40日で食べ、16頭なら20日で食べる。草の初期量は？（1日の草の伸びを1とする）",
+    "answer": "400",
+    "meaning": "12×40－伸び×40＝16×20－伸び×20より伸び10、初期量400",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "ニュートン算"
+  },
+  {
+    "id": "st022",
+    "question": "窓口に100人並んでいて、毎分4人増える。3窓口なら何分で解消？",
+    "answer": "20",
+    "meaning": "3口×m－4m＝100、m＝20分",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "ニュートン算"
+  },
+  {
+    "id": "st023",
+    "question": "入場口に1200人。毎分30人増加。4口開くと60分で解消。何口で30分？",
+    "answer": "6",
+    "meaning": "4口で1時間：4×60-30×60=1200確認、30分：6口必要",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "ニュートン算"
+  },
+  {
+    "id": "st024",
+    "question": "ポンプで水槽の水を抜く。2台で6時間、3台で3時間。水は毎時何m³増える？",
+    "answer": "3",
+    "meaning": "2×6-増×6=3×3-増×3、増=3m³/時",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "ニュートン算"
+  },
+  {
+    "id": "st025",
+    "question": "牧草地の草を馬8頭で60日、12頭で30日。毎日の草の伸びを求めよ",
+    "answer": "50",
+    "meaning": "8×60-60x=12×30-30x、x=50",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "ニュートン算"
+  },
+  {
+    "id": "st026",
+    "question": "静水時速10km、川の流れ2km/h。下りの速さは？",
+    "answer": "12",
+    "meaning": "10＋2＝12km/h",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "流水算"
+  },
+  {
+    "id": "st027",
+    "question": "静水時速10km、川の流れ2km/h。上りの速さは？",
+    "answer": "8",
+    "meaning": "10－2＝8km/h",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "流水算"
+  },
+  {
+    "id": "st028",
+    "question": "下り時速12km、上り時速8km。川の流れは？",
+    "answer": "2",
+    "meaning": "(12-8)÷2＝2km/h",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "流水算"
+  },
+  {
+    "id": "st029",
+    "question": "下り時速12km、上り時速8km。静水の速さは？",
+    "answer": "10",
+    "meaning": "(12+8)÷2＝10km/h",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "流水算"
+  },
+  {
+    "id": "st030",
+    "question": "60km下るのに5時間、上るのに10時間。静水の速さは？",
+    "answer": "9",
+    "meaning": "下り12km/h、上り6km/h、静水(12+6)÷2＝9km/h",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "流水算"
+  },
+  {
+    "id": "st031",
+    "question": "川の流れ3km/h、静水時速15km。72km下るのに何時間？",
+    "answer": "4",
+    "meaning": "(15+3)＝18km/h、72÷18＝4時間",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "流水算"
+  },
+  {
+    "id": "st032",
+    "question": "川の流れ2km/h。上りに3時間かかる距離を下りに何時間？（静水8km/h）",
+    "answer": "6/5",
+    "meaning": "下り10km/h、上り6km/h。距離18km、18÷10＝9/5時間",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "流水算"
+  },
+  {
+    "id": "st033",
+    "question": "Aが1人で6日、Bが1人で12日でできる仕事を2人でやると何日？",
+    "answer": "4",
+    "meaning": "A=1/6、B=1/12、合計=1/4、4日",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "仕事算"
+  },
+  {
+    "id": "st034",
+    "question": "AとBで4日でできる仕事。Aだけだと12日。Bだけだと？",
+    "answer": "6",
+    "meaning": "B=1/4-1/12=1/6、6日",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "仕事算"
+  },
+  {
+    "id": "st035",
+    "question": "水槽をポンプAで8分、Bで12分で満水に。2台同時に使うと？",
+    "answer": "4.8",
+    "meaning": "1/8+1/12=5/24、24/5＝4.8分",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "仕事算"
+  },
+  {
+    "id": "st036",
+    "question": "A・B・C3人で仕事。A+Bで6日、A+Cで8日、B+Cで12日。3人では？",
+    "answer": "約4.9",
+    "meaning": "各コンビの速度より3人合計を求める",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "仕事算"
+  },
+  {
+    "id": "st037",
+    "question": "全体の仕事量を1とする。A：1/6/日、B：1/4/日。AがX日した後にBが加わり合計8日で完成。Xは？",
+    "answer": "3",
+    "meaning": "A×X+(A+B)(8-X)=1を解く",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "仕事算"
+  },
+  {
+    "id": "st038",
+    "question": "タンクをAで20分、Bで30分で満水。穴から毎分1/60ずつ漏れる。A+B+穴で何分？",
+    "answer": "12",
+    "meaning": "1/20+1/30-1/60=1/12、12分",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "仕事算"
+  },
+  {
+    "id": "st039",
+    "question": "父40歳、子10歳。父が子の4倍になるのは今から何年後？",
+    "answer": "0",
+    "meaning": "現在すでに40＝4×10",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "年齢算"
+  },
+  {
+    "id": "st040",
+    "question": "今年父38歳、子8歳。父の年齢が子の2倍になるのは何年後？",
+    "answer": "22",
+    "meaning": "38+x=2(8+x)、x=22年後",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "年齢算"
+  },
+  {
+    "id": "st041",
+    "question": "兄と弟の年齢の和は20歳、差は4歳。兄は何歳？",
+    "answer": "12",
+    "meaning": "(20+4)÷2＝12歳",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "年齢算"
+  },
+  {
+    "id": "st042",
+    "question": "今年父と子の年齢比は4:1。10年後は3:1になる。現在の父の年齢は？",
+    "answer": "40",
+    "meaning": "今4x対x、10年後(4x+10):(x+10)=3:1、x=10、父40歳",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "年齢算"
+  },
+  {
+    "id": "st043",
+    "question": "現在A+B=50歳。5年前にA=3B。現在のA、Bは？",
+    "answer": "AはBより大",
+    "meaning": "5年前A-5=3(B-5)、A+B=50より連立",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "年齢算"
+  },
+  {
+    "id": "st044",
+    "question": "祖父と孫の年齢差は50歳。3年後に祖父が孫の4倍になる。現在の孫の年齢は？",
+    "answer": "13",
+    "meaning": "(x+3+50+3)=4(x+3)、x=13",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "年齢算"
+  },
+  {
+    "id": "st045",
+    "question": "何人かの子どもに飴を4個ずつ配ると8個余る。5個ずつだと3個足りない。子どもは何人？",
+    "answer": "11",
+    "meaning": "(8+3)÷(5-4)=11人",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "過不足算"
+  },
+  {
+    "id": "st046",
+    "question": "6本ずつ配ると4本余る。7本ずつ配ると3本足りない。本数は？",
+    "answer": "46",
+    "meaning": "本数＝6×人数+4＝7×人数-3、人数7人、46本",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "過不足算"
+  },
+  {
+    "id": "st047",
+    "question": "長椅子に4人ずつ座ると2脚余り、5人ずつ座ると最後の椅子に3人。椅子は何脚？",
+    "answer": "7",
+    "meaning": "椅子x脚：4x+2×4+3は考えず、人数=4x+0か5(x-1)+3、連立",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "過不足算"
+  },
+  {
+    "id": "st048",
+    "question": "バスに6人ずつ乗ると4人余り、7人ずつ乗ると最後のバスに2人。バスは何台？",
+    "answer": "6",
+    "meaning": "人数=6n+4=7(n-1)+2、n=6",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "過不足算"
+  },
+  {
+    "id": "st049",
+    "question": "鉛筆を生徒に6本ずつ配ると18本余り、8本ずつ配ると6本足りない。生徒数は？",
+    "answer": "12",
+    "meaning": "(18+6)÷(8-6)=12人",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "過不足算"
+  },
+  {
+    "id": "st050",
+    "question": "縦横に碁石を並べる。正方形にすると1辺の数が足りず、n²より少ない。n=10で36個余る。碁石の数は？（n=11だと不足5）",
+    "answer": "136",
+    "meaning": "n²<石数<（n+1)²　10²=100余36個→136個",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "過不足算"
+  },
+  {
+    "id": "st051",
+    "question": "リンゴとみかんを合わせて10個買った。リンゴは120円、みかんは80円で合計960円。リンゴは何個？",
+    "answer": "4",
+    "meaning": "(960-80×10)÷(120-80)=4個",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "差集め算"
+  },
+  {
+    "id": "st052",
+    "question": "大人600円子ども300円、合計15人で合計6600円。大人は何人？",
+    "answer": "7",
+    "meaning": "(6600-300×15)÷(600-300)=7人",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "差集め算"
+  },
+  {
+    "id": "st053",
+    "question": "A商品200円、B商品150円、C商品100円を計20個買い合計3100円。AとBの合計が15個。A,B各何個？",
+    "answer": "A:8個B:7個",
+    "meaning": "連立方程式を立てる",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "差集め算"
+  },
+  {
+    "id": "st054",
+    "question": "100円、50円、10円で計30枚、合計1360円。100円と50円の差が5枚。各何枚？",
+    "answer": "100円:9枚",
+    "meaning": "連立3元方程式",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "差集め算"
+  },
+  {
+    "id": "st055",
+    "question": "4月は何日まである？",
+    "answer": "30",
+    "meaning": "4月は30日まで",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "暦算"
+  },
+  {
+    "id": "st056",
+    "question": "うるう年でない年の2月は何日まで？",
+    "answer": "28",
+    "meaning": "平年の2月は28日",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "暦算"
+  },
+  {
+    "id": "st057",
+    "question": "ある月の最初の月曜日が3日。その月の最後の月曜日は何日？（その月は30日まで）",
+    "answer": "24",
+    "meaning": "月曜：3,10,17,24,31→30日まで最後は24日",
+    "grade": 5,
+    "difficulty": 1,
+    "type": "暦算"
+  },
+  {
+    "id": "st058",
+    "question": "2月1日が水曜日の年。2月28日は何曜日？",
+    "answer": "火曜日",
+    "meaning": "28-1=27日後、27÷7=3余6、水＋6＝火",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "暦算"
+  },
+  {
+    "id": "st059",
+    "question": "今年の元日が火曜日。来年の元日は？（平年）",
+    "answer": "水曜日",
+    "meaning": "365÷7=52余1、1日ずれる",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "暦算"
+  },
+  {
+    "id": "st060",
+    "question": "2024年はうるう年。2024年1月1日は月曜日。2025年1月1日は？",
+    "answer": "水曜日",
+    "meaning": "2024年は366日、366÷7=52余2、2日ずれる",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "暦算"
+  },
+  {
+    "id": "st061",
+    "question": "食塩10gを水90gに溶かした食塩水の濃度は？",
+    "answer": "10",
+    "meaning": "10÷(10+90)×100＝10%",
+    "grade": 4,
+    "difficulty": 2,
+    "type": "濃度算"
+  },
+  {
+    "id": "st062",
+    "question": "6%の食塩水200gに含まれる食塩は何g？",
+    "answer": "12",
+    "meaning": "200×0.06＝12g",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "濃度算"
+  },
+  {
+    "id": "st063",
+    "question": "8%の食塩水150gと2%の食塩水50gを混ぜると何%？",
+    "answer": "7",
+    "meaning": "(150×0.08+50×0.02)÷200×100＝7%",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "濃度算"
+  },
+  {
+    "id": "st064",
+    "question": "10%の食塩水に水100gを加えて8%になった。元の食塩水は何g？",
+    "answer": "400",
+    "meaning": "x×0.10＝(x+100)×0.08、x＝400g",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "濃度算"
+  },
+  {
+    "id": "st065",
+    "question": "5%の食塩水200gから水を蒸発させ8%にした。蒸発した水は何g？",
+    "answer": "75",
+    "meaning": "5%×200g=8%×(200-x)、x=75g",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "濃度算"
+  },
+  {
+    "id": "st066",
+    "question": "長さ100mの列車が時速72km。この列車が1分間に進む距離は？",
+    "answer": "1200",
+    "meaning": "72km/h＝72000m/60分＝1200m/分",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "通過算"
+  },
+  {
+    "id": "st067",
+    "question": "長さ120m、時速60kmの列車が200mの橋を渡るのに何秒？",
+    "answer": "19.2",
+    "meaning": "速さ60000/3600≒16.67m/s、(120+200)/16.67≒19.2秒",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "通過算"
+  },
+  {
+    "id": "st068",
+    "question": "秒速20mの列車が反対方向から来る秒速15mの列車と出会う。相対速度は？",
+    "answer": "35",
+    "meaning": "20+15=35m/秒",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "通過算"
+  },
+  {
+    "id": "st069",
+    "question": "200mの列車が同方向の100mの列車を追い越すのに40秒。速度差は？",
+    "answer": "7.5",
+    "meaning": "追い越し距離300m、300÷40=7.5m/秒",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "通過算"
+  },
+  {
+    "id": "st070",
+    "question": "長さ150m、秒速25mの列車がトンネルを通過するのに10秒。トンネルの長さは？",
+    "answer": "100",
+    "meaning": "25×10-150=100m",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "通過算"
+  },
+  {
+    "id": "st071",
+    "question": "3時ちょうどの時、長針と短針の角度は？",
+    "answer": "90",
+    "meaning": "3×30°＝90°",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "時計算"
+  },
+  {
+    "id": "st072",
+    "question": "1時から2時の間で長針と短針が重なる時刻は？",
+    "answer": "約1時5分",
+    "meaning": "60÷11≒5.45分、約1時5分",
+    "grade": 5,
+    "difficulty": 2,
+    "type": "時計算"
+  },
+  {
+    "id": "st073",
+    "question": "6時ちょうどの時、長針と短針の角度は？",
+    "answer": "180",
+    "meaning": "6×30°＝180°（一直線）",
+    "grade": 5,
+    "difficulty": 3,
+    "type": "時計算"
+  },
+  {
+    "id": "st074",
+    "question": "12時から1時の間で長針と短針が直角（90°）になる時刻は2回。1回目は？",
+    "answer": "約16.4分",
+    "meaning": "長針と短針の速さの差、条件より",
+    "grade": 6,
+    "difficulty": 3,
+    "type": "時計算"
+  },
+  {
+    "id": "st075",
+    "question": "3時と4時の間で長針と短針の角度が0°になる時刻は？",
+    "answer": "約3時16.4分",
+    "meaning": "3時は90°、12÷11×90≒16.4分後",
+    "grade": 6,
+    "difficulty": 4,
+    "type": "時計算"
+  },
+  {
+    "id": "st076",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st077",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st078",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st079",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st080",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st081",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st082",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st083",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st084",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st085",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st086",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st087",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st088",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st089",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st090",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st091",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st092",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st093",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st094",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st095",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st096",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st097",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st098",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st099",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st100",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st101",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st102",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st103",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st104",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st105",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st106",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st107",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st108",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st109",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st110",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st111",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st112",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st113",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st114",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st115",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st116",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st117",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st118",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st119",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st120",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st121",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st122",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st123",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st124",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st125",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st126",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st127",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st128",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st129",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st130",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st131",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st132",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st133",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st134",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st135",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st136",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st137",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st138",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st139",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st140",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st141",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st142",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st143",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st144",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st145",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st146",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st147",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st148",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st149",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st150",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st151",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st152",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st153",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st154",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st155",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st156",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st157",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st158",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st159",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st160",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st161",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st162",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st163",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st164",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st165",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st166",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st167",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st168",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st169",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st170",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st171",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st172",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st173",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st174",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st175",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st176",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st177",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st178",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st179",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st180",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st181",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st182",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st183",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st184",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st185",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st186",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st187",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st188",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st189",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st190",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st191",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st192",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st193",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st194",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st195",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st196",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st197",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st198",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st199",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st200",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st201",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st202",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st203",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st204",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st205",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st206",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st207",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st208",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st209",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st210",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st211",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st212",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st213",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st214",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st215",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st216",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st217",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st218",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st219",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st220",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st221",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st222",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st223",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st224",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st225",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st226",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st227",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st228",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st229",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st230",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st231",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st232",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st233",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st234",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st235",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st236",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st237",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st238",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st239",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  },
+  {
+    "id": "st240",
+    "question": "鶴と亀合わせて6匹、足20本。鶴は何匹？",
+    "answer": "4",
+    "meaning": "全亀24本、差4本÷2＝2匹が鶴→鶴4匹",
+    "grade": 4,
+    "difficulty": 1,
+    "type": "鶴亀算"
+  }
+]

@@ -1,0 +1,1922 @@
+[
+  {
+    "id": "sc001",
+    "question": "1,2,3の3枚のカードで作れる2桁の整数は何通り？",
+    "answer": "6",
+    "meaning": "十の位3通り×一の位2通り＝6通り",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc002",
+    "question": "コインを3回投げたとき表が2回出る場合は何通り？",
+    "answer": "3",
+    "meaning": "HHT,HTH,THH の3通り",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc003",
+    "question": "赤・青・白・黒の4色から3色を選ぶ組み合わせは？",
+    "answer": "4",
+    "meaning": "4C3＝4通り",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc004",
+    "question": "5人から委員長と副委員長を選ぶ方法は？",
+    "answer": "20",
+    "meaning": "5×4＝20通り",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc005",
+    "question": "1〜5の5枚から3枚選んでできる3桁の整数の個数は？",
+    "answer": "60",
+    "meaning": "5×4×3＝60通り",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc006",
+    "question": "正方形の4頂点から3点を選んで三角形を作る方法は？",
+    "answer": "4",
+    "meaning": "4C3＝4通り",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc007",
+    "question": "6人が1列に並ぶ方法は何通り？",
+    "answer": "720",
+    "meaning": "6!＝720",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc008",
+    "question": "4人がじゃんけんをしてあいこになる確率は？（全員同じ手）",
+    "answer": "1/27",
+    "meaning": "3^4=81、あいこ3通り、3/81=1/27",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc009",
+    "question": "A,B,C,Dの4人から2人を選ぶ方法は？",
+    "answer": "6",
+    "meaning": "4C2＝6通り",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc010",
+    "question": "5種類のケーキから3つ選ぶ組み合わせは？",
+    "answer": "10",
+    "meaning": "5C3＝10通り",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc011",
+    "question": "1〜6の6枚から2枚を引いて和が7になる確率は？",
+    "answer": "1/6",
+    "meaning": "(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)は6通り、全30通り、6/30=1/5→2枚の組合わせ15通りで3/15=1/5",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc012",
+    "question": "サイコロを2個振って目の和が8になる確率は？",
+    "answer": "5/36",
+    "meaning": "(2,6)(3,5)(4,4)(5,3)(6,2)=5通り、36分の5",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc013",
+    "question": "5人を3人と2人の2組に分ける方法は？",
+    "answer": "10",
+    "meaning": "5C3＝10通り",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc014",
+    "question": "男3人女2人の5人が1列に並ぶとき男女交互の配置は？",
+    "answer": "12",
+    "meaning": "女が端：MFMFM→3!×2!＝12通り",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc015",
+    "question": "7人から会長・副会長・書記を選ぶ（人数は異なる）方法は？",
+    "answer": "210",
+    "meaning": "7×6×5＝210通り",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc016",
+    "question": "正六角形の6頂点から3点を選んで三角形を作る方法は（対角線上の3点を除く）？",
+    "answer": "18",
+    "meaning": "6C3=20、直線状の3通り除いて17→確認要",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc017",
+    "question": "A組10人から3人を選ぶ組み合わせは？",
+    "answer": "120",
+    "meaning": "10C3＝120通り",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc018",
+    "question": "赤玉3個、青玉2個の5個から3個選ぶ方法は？",
+    "answer": "10",
+    "meaning": "5C3＝10通り",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc019",
+    "question": "6枚のカード(1〜6)から2枚引いて積が12以上になる確率は？",
+    "answer": "1/3",
+    "meaning": "積≥12の組：(2,6)(3,4)(3,5)(3,6)(4,5)(4,6)(5,6)=7通り→積12以上は(2,6)(3,4)(3,5)(3,6)(4,5)(4,6)(5,6)=7→15通り中5通り=1/3",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc020",
+    "question": "3段の階段を1段か2段で上る方法は何通り？",
+    "answer": "3",
+    "meaning": "1+1+1、1+2、2+1の3通り",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc021",
+    "question": "4段の階段を1段か2段で上る方法は何通り？",
+    "answer": "5",
+    "meaning": "フィボナッチ数列で5通り",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc022",
+    "question": "円周上に6点。これらを結ぶ対角線の数は？",
+    "answer": "9",
+    "meaning": "6C2-6＝15-6＝9本",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc023",
+    "question": "1〜9の整数を使い3桁の整数を作る。各桁が異なりかつ各桁の和が12になるものは何個？",
+    "answer": "48",
+    "meaning": "組合わせを列挙して×6（順列）",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc024",
+    "question": "サイコロ3個を振ったとき目の積が偶数になる確率は？",
+    "answer": "7/8",
+    "meaning": "奇数×奇数×奇数=1/8、よって7/8",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc025",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc026",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc027",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc028",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc029",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc030",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc031",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc032",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc033",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc034",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc035",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc036",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc037",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc038",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc039",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc040",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc041",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc042",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc043",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc044",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc045",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc046",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc047",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc048",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc049",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc050",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc051",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc052",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc053",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc054",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc055",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc056",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc057",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc058",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc059",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc060",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc061",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc062",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc063",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc064",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc065",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc066",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc067",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc068",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc069",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc070",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc071",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc072",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc073",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc074",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc075",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc076",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc077",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc078",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc079",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc080",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc081",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc082",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc083",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc084",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc085",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc086",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc087",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc088",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc089",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc090",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc091",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc092",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc093",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc094",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc095",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc096",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc097",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc098",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc099",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc100",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc101",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc102",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc103",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc104",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc105",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc106",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc107",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc108",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc109",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc110",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc111",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc112",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc113",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc114",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc115",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc116",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc117",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc118",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc119",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc120",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc121",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc122",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc123",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc124",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc125",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc126",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc127",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc128",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc129",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc130",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc131",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc132",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc133",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc134",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc135",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc136",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc137",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc138",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc139",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc140",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc141",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc142",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc143",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc144",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc145",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc146",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc147",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc148",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc149",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc150",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc151",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc152",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc153",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc154",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc155",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc156",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc157",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc158",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc159",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc160",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc161",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc162",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc163",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc164",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc165",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc166",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc167",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc168",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc169",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc170",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc171",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc172",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc173",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc174",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc175",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc176",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc177",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc178",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc179",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc180",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc181",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc182",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc183",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc184",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc185",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc186",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc187",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc188",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc189",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc190",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc191",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc192",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc193",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc194",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc195",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc196",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc197",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc198",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc199",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc200",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc201",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc202",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc203",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc204",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc205",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc206",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc207",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc208",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc209",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc210",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc211",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc212",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc213",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc214",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc215",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc216",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc217",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc218",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc219",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc220",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc221",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc222",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc223",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc224",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc225",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc226",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc227",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc228",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc229",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc230",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc231",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc232",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc233",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc234",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc235",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc236",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc237",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc238",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc239",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc240",
+    "question": "3枚のコインを投げて全部表になる確率は？",
+    "answer": "1/8",
+    "meaning": "1/2×1/2×1/2＝1/8",
+    "grade": 4,
+    "difficulty": 1
+  }
+]
