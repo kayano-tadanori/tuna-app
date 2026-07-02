@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v5';
+const CACHE_NAME = 'oton-gakuen-v6';
 
 const ASSETS = [
   '/',
