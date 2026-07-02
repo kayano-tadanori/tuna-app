@@ -968,6 +968,9 @@ function renderSansuQuiz() {
   document.getElementById('sansu-quiz-counter').textContent = `${sansuState.current + 1}/${total}`;
   document.getElementById('sq-question').textContent = q.question;
   document.getElementById('sq-meaning').textContent = '';
+  const figEl = document.getElementById('sq-figure');
+  if (q.svg) { figEl.innerHTML = q.svg; figEl.classList.remove('hidden'); }
+  else { figEl.innerHTML = ''; figEl.classList.add('hidden'); }
 
   // バッジ
   document.getElementById('sq-grade-badge').textContent = `小${sansuState.grade}`;
