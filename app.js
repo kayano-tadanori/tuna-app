@@ -6,14 +6,25 @@ const CATEGORIES = {
   kotowaza:   { label: 'ことわざ',   file: 'data/kotowaza.json' },
   kanyoku:    { label: '慣用句',     file: 'data/kanyoku.json'  },
   yojijukugo: { label: '四字熟語', file: 'data/yojijukugo.json'},
-  gairaigo:   { label: '外来語',   file: 'data/gairaigo.json'  }
+  gairaigo:   { label: '外来語',   file: 'data/gairaigo.json'  },
+  kanji_kaki:     { label: '漢字の書き取り', file: 'data/kanji_kaki.json' },
+  kanji_yomi:     { label: '漢字の読み',     file: 'data/kanji_yomi.json' },
+  kokugo_keigo:   { label: '敬語・文法',     file: 'data/kokugo_keigo.json' },
+  kokugo_goi:     { label: '語い',           file: 'data/kokugo_goi.json' },
+  kokugo_bushu:   { label: '部首・画数',     file: 'data/kokugo_bushu.json' },
+  kokugo_bungaku: { label: '文学史・季語',   file: 'data/kokugo_bungaku.json' },
 };
+
+// 漢字カテゴリ（学年選択あり・専用UI）
+const KANJI_CATS = ['kanji_kaki', 'kanji_yomi'];
 
 const MODES = {
   flash: 'フラッシュカード',
   quiz:  '四択クイズ',
   fill:  '虫食い問題'
 };
+
+const KOKUGO_DIFF_LABELS = { 1: 'やさしい', 2: '難しい', 3: 'チャレンジ', 4: '灘中レベル', all: 'ぜんぶ' };
 
 // ============================================================
 // 状態管理
@@ -23,6 +34,8 @@ const state = {
   nickname: '',
   selectedCat: null,
   selectedMode: null,
+  selectedDiff: null,  // 1-4 | 'all'
+  grade: null,         // 漢字カテゴリ用
   weakOnly: false,
   questions: [],      // 読み込んだ全問題（データJSONのまま）
   sessionQs: [],      // 今回出題する問題リスト
@@ -187,18 +200,33 @@ function hideLoading() { document.getElementById('loading').classList.add('hidde
 function initHome() {
   state.selectedCat  = null;
   state.selectedMode = null;
+  state.selectedDiff = null;
+  state.grade        = null;
   state.weakOnly     = false;
   document.getElementById('start-zone').classList.add('hidden');
   document.getElementById('home-nickname').textContent = state.nickname;
+
+  // ステップを初期状態に
+  ['kokugo-step-grade', 'kokugo-step-mode', 'kokugo-step-diff'].forEach(id => {
+    document.getElementById(id).classList.add('hidden');
+  });
 
   // カテゴリ正解率表示（キャッシュ済みのみ）
   Object.keys(CATEGORIES).forEach(cat => {
     const rate = getCategoryRate(cat);
     const el = document.getElementById('rate-' + cat);
-    el.textContent = rate !== null ? rate + '% 正解' : '';
+    if (el) el.textContent = rate !== null ? rate + '% 正解' : '';
   });
 
-  // カテゴリ選択
+  // ステップ表示ヘルパー
+  const showStep = id => {
+    const el = document.getElementById(id);
+    const was = el.classList.contains('hidden');
+    el.classList.remove('hidden');
+    if (was) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  };
+
+  // STEP1: カテゴリ選択
   document.querySelectorAll('.cat-card').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -206,17 +234,54 @@ function initHome() {
       btn.classList.add('selected');
       state.selectedCat = btn.dataset.cat;
       state.weakOnly = false;
+      if (KANJI_CATS.includes(state.selectedCat)) {
+        // 漢字：学年→難易度（モードは固定）
+        state.selectedMode = state.selectedCat === 'kanji_kaki' ? 'kaki' : 'yomi';
+        document.getElementById('kokugo-step-mode').classList.add('hidden');
+        showStep('kokugo-step-grade');
+        if (state.grade) showStep('kokugo-step-diff');
+      } else {
+        // 言葉系：モード→難易度
+        if (['kaki', 'yomi'].includes(state.selectedMode)) state.selectedMode = null;
+        document.getElementById('kokugo-step-grade').classList.add('hidden');
+        showStep('kokugo-step-mode');
+        if (state.selectedMode) showStep('kokugo-step-diff');
+      }
       maybeShowStart();
     };
   });
 
-  // モード選択
+  // STEP2: 学年（漢字）
+  document.querySelectorAll('.kokugo-grade-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.grade = Number(btn.dataset.grade);
+      showStep('kokugo-step-diff');
+      maybeShowStart();
+    };
+  });
+
+  // STEP2': モード（言葉系）
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       state.selectedMode = btn.dataset.mode;
+      showStep('kokugo-step-diff');
+      maybeShowStart();
+    };
+  });
+
+  // STEP3: 難易度
+  document.querySelectorAll('.kokugo-diff-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.selectedDiff = btn.dataset.diff === 'all' ? 'all' : Number(btn.dataset.diff);
       maybeShowStart();
     };
   });
@@ -260,17 +325,36 @@ function maybeShowStart() {
     fillBtn.style.opacity = '';
   }
 
-  if (!state.selectedCat || !state.selectedMode) { zone.classList.add('hidden'); return; }
+  const isKanji = KANJI_CATS.includes(state.selectedCat);
+  const ready = isKanji
+    ? state.selectedCat && state.grade && state.selectedDiff
+    : state.selectedCat && state.selectedMode && state.selectedDiff;
+  if (!ready) { zone.classList.add('hidden'); return; }
+
   zone.classList.remove('hidden');
-  document.getElementById('start-cat-label').textContent = CATEGORIES[state.selectedCat].label;
-  document.getElementById('start-mode-label').textContent = MODES[state.selectedMode];
+  const catLabel = CATEGORIES[state.selectedCat].label + (isKanji ? `（小${state.grade}）` : '');
+  const modeLabel = (isKanji ? (state.selectedCat === 'kanji_kaki' ? '手書き' : 'ひらがな入力') : MODES[state.selectedMode])
+    + '・' + KOKUGO_DIFF_LABELS[state.selectedDiff];
+  document.getElementById('start-cat-label').textContent = catLabel;
+  document.getElementById('start-mode-label').textContent = modeLabel;
 }
 
 document.getElementById('btn-start').onclick = async () => {
   showLoading();
   try {
     const all = await loadQuestions(state.selectedCat);
-    let pool = state.weakOnly ? getWeakItems(state.selectedCat) : shuffle([...all]);
+    let pool = state.weakOnly ? getWeakItems(state.selectedCat) : [...all];
+
+    // 難易度フィルタ（「ぜんぶ」はフィルタなし）
+    if (state.selectedDiff && state.selectedDiff !== 'all') {
+      pool = pool.filter(q => q.difficulty === state.selectedDiff);
+    }
+    // 漢字カテゴリは学年フィルタ
+    if (KANJI_CATS.includes(state.selectedCat) && state.grade) {
+      pool = pool.filter(q => q.grade === state.grade);
+    }
+    pool = shuffle(pool);
+
     const countSel = document.getElementById('q-count').value;
     if (countSel !== 'all') pool = pool.slice(0, parseInt(countSel, 10));
     state.sessionQs = pool;
@@ -282,7 +366,9 @@ document.getElementById('btn-start').onclick = async () => {
 
     if (!pool.length) { showToast('問題がありません'); hideLoading(); return; }
 
-    if (state.selectedMode === 'flash') startFlash();
+    if (state.selectedCat === 'kanji_kaki') startKanji();
+    else if (state.selectedCat === 'kanji_yomi') startFill();
+    else if (state.selectedMode === 'flash') startFlash();
     else if (state.selectedMode === 'quiz') startQuiz();
     else startFill();
   } catch (e) {
@@ -446,7 +532,8 @@ function renderFill() {
   const total = state.sessionQs.length;
   document.getElementById('fill-counter').textContent = (state.current + 1) + ' / ' + total;
   document.getElementById('fill-question').textContent = q.question;
-  document.getElementById('fill-meaning').textContent  = q.meaning || '';
+  // 漢字の読みでは meaning に答えが含まれるため表示しない
+  document.getElementById('fill-meaning').textContent = state.selectedCat === 'kanji_yomi' ? '' : (q.meaning || '');
 
   const input = document.getElementById('fill-input');
   input.value = '';
@@ -493,6 +580,128 @@ document.getElementById('btn-next-fill').onclick = () => {
 };
 
 // ============================================================
+// 漢字の書き取り（手書きキャンバス＋自己採点）
+// ============================================================
+
+const kanjiPad = { canvas: null, ctx: null, drawing: false, strokes: [], current: [] };
+
+function initKanjiPad() {
+  const cv = document.getElementById('kanji-canvas');
+  kanjiPad.canvas = cv;
+  kanjiPad.ctx = cv.getContext('2d');
+
+  const pos = e => {
+    const r = cv.getBoundingClientRect();
+    return {
+      x: (e.clientX - r.left) * (cv.width / r.width),
+      y: (e.clientY - r.top) * (cv.height / r.height),
+    };
+  };
+  cv.onpointerdown = e => {
+    e.preventDefault();
+    cv.setPointerCapture(e.pointerId);
+    kanjiPad.drawing = true;
+    kanjiPad.current = [pos(e)];
+    drawKanjiPad();
+  };
+  cv.onpointermove = e => {
+    if (!kanjiPad.drawing) return;
+    kanjiPad.current.push(pos(e));
+    drawKanjiPad();
+  };
+  const up = e => {
+    if (!kanjiPad.drawing) return;
+    kanjiPad.drawing = false;
+    if (kanjiPad.current.length > 1) kanjiPad.strokes.push(kanjiPad.current);
+    kanjiPad.current = [];
+    drawKanjiPad();
+  };
+  cv.onpointerup = up;
+  cv.onpointercancel = up;
+
+  document.getElementById('kanji-undo').onclick = () => { kanjiPad.strokes.pop(); drawKanjiPad(); };
+  document.getElementById('kanji-clear').onclick = () => { kanjiPad.strokes = []; kanjiPad.current = []; drawKanjiPad(); };
+}
+
+function clearKanjiPad() {
+  kanjiPad.strokes = [];
+  kanjiPad.current = [];
+  drawKanjiPad();
+}
+
+function drawKanjiPad() {
+  const { canvas: cv, ctx } = kanjiPad;
+  if (!ctx) return;
+  // 背景
+  ctx.fillStyle = '#f8f6ef';
+  ctx.fillRect(0, 0, cv.width, cv.height);
+  // 十字ガイド（点線）
+  ctx.strokeStyle = 'rgba(120,120,120,0.35)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([7, 7]);
+  ctx.beginPath(); ctx.moveTo(cv.width / 2, 0); ctx.lineTo(cv.width / 2, cv.height); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, cv.height / 2); ctx.lineTo(cv.width, cv.height / 2); ctx.stroke();
+  ctx.setLineDash([]);
+  // ストローク
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 9;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const paint = pts => {
+    if (pts.length < 2) return;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
+  };
+  kanjiPad.strokes.forEach(paint);
+  paint(kanjiPad.current);
+}
+
+function startKanji() {
+  document.getElementById('kanji-title').textContent = `書き取り（小${state.grade}）`;
+  document.getElementById('kanji-correct').textContent = '0';
+  document.getElementById('kanji-wrong').textContent = '0';
+  if (!kanjiPad.ctx) initKanjiPad();
+  showScreen('kanji');
+  renderKanji();
+}
+
+function renderKanji() {
+  const q = state.sessionQs[state.current];
+  if (!q) { endSession(); return; }
+
+  document.getElementById('kanji-counter').textContent = `${state.current + 1} / ${state.sessionQs.length}`;
+  document.getElementById('kanji-question').textContent = q.question;
+  clearKanjiPad();
+
+  // 答えパネルを隠し、コントロールを表示
+  document.getElementById('kanji-answer').classList.add('hidden');
+  document.getElementById('kanji-controls').classList.remove('hidden');
+
+  document.getElementById('kanji-show').onclick = () => {
+    document.getElementById('kanji-answer-char').textContent = q.answer;
+    document.getElementById('kanji-answer-meaning').textContent = q.meaning || '';
+    document.getElementById('kanji-answer').classList.remove('hidden');
+    document.getElementById('kanji-controls').classList.add('hidden');
+  };
+  document.getElementById('kanji-ok').onclick = () => {
+    recordResult(q.id, true);
+    state.correct++;
+    document.getElementById('kanji-correct').textContent = state.correct;
+    state.current++;
+    renderKanji();
+  };
+  document.getElementById('kanji-ng').onclick = () => {
+    recordResult(q.id, false);
+    state.wrong++;
+    document.getElementById('kanji-wrong').textContent = state.wrong;
+    state.current++;
+    renderKanji();
+  };
+}
+
+// ============================================================
 // セッション終了・結果画面
 // ============================================================
 
@@ -518,6 +727,16 @@ function endSession() {
   }
   // ホーム用レート表示をクリア（再読み込み用）
   delete questionCache[state.selectedCat];
+
+  // 結果画面のボタンを国語用に結線（算数・理科・社会が上書きするため毎回再設定）
+  document.getElementById('btn-result-home').onclick = async () => {
+    await loadQuestions(state.selectedCat);
+    initHome();
+    showScreen('home');
+  };
+  document.getElementById('btn-result-retry').onclick = () => {
+    document.getElementById('btn-start').click();
+  };
 }
 
 document.getElementById('btn-result-home').onclick = async () => {

@@ -61,8 +61,8 @@
       <button class="subject-card" data-subject="kokugo">
         <span class="subject-icon-wrap"><span class="subject-icon">📖</span></span>
         <span class="subject-name">国語</span>
-        <span class="subject-detail">ことわざ・慣用句<br>四字熟語・外来語</span>
-        <span class="subject-count">1,500問</span>
+        <span class="subject-detail">漢字・ことわざ・慣用句<br>敬語・文法・文学史</span>
+        <span class="subject-count">3,500問</span>
       </button>
       <button class="subject-card" data-subject="sansu">
         <span class="subject-icon-wrap"><span class="subject-icon">🔢</span></span>
@@ -132,51 +132,122 @@
   </header>
 
   <main class="home-main">
-    <section class="section-label">カテゴリを選ぼう</section>
+    <section class="section-label"><span class="step-badge">STEP 1</span>カテゴリを選ぼう</section>
+    <p class="cat-group-label">✏️ 漢字</p>
+    <div class="category-grid">
+      <button class="cat-card" data-cat="kanji_kaki">
+        <span class="cat-icon">🖌️</span>
+        <span class="cat-name">漢字の書き取り</span>
+        <span class="cat-count">480問・手書き</span>
+        <span class="cat-rate" id="rate-kanji_kaki">--</span>
+      </button>
+      <button class="cat-card" data-cat="kanji_yomi">
+        <span class="cat-icon">📕</span>
+        <span class="cat-name">漢字の読み</span>
+        <span class="cat-count">480問</span>
+        <span class="cat-rate" id="rate-kanji_yomi">--</span>
+      </button>
+    </div>
+    <p class="cat-group-label">📖 言葉の知識</p>
     <div class="category-grid">
       <button class="cat-card" data-cat="kotowaza">
         <span class="cat-icon">📖</span>
         <span class="cat-name">ことわざ</span>
-        <span class="cat-count">400問</span>
+        <span class="cat-count">500問</span>
         <span class="cat-rate" id="rate-kotowaza">--</span>
       </button>
       <button class="cat-card" data-cat="kanyoku">
         <span class="cat-icon">✋</span>
         <span class="cat-name">慣用句</span>
-        <span class="cat-count">400問</span>
+        <span class="cat-count">500問</span>
         <span class="cat-rate" id="rate-kanyoku">--</span>
       </button>
       <button class="cat-card" data-cat="yojijukugo">
         <span class="cat-icon">🔡</span>
         <span class="cat-name">四字熟語</span>
-        <span class="cat-count">400問</span>
+        <span class="cat-count">500問</span>
         <span class="cat-rate" id="rate-yojijukugo">--</span>
       </button>
       <button class="cat-card" data-cat="gairaigo">
         <span class="cat-icon">🌍</span>
         <span class="cat-name">外来語</span>
-        <span class="cat-count">300問</span>
+        <span class="cat-count">400問</span>
         <span class="cat-rate" id="rate-gairaigo">--</span>
       </button>
     </div>
+    <p class="cat-group-label">📝 言葉のきまり</p>
+    <div class="category-grid">
+      <button class="cat-card" data-cat="kokugo_keigo">
+        <span class="cat-icon">🙇</span>
+        <span class="cat-name">敬語・文法</span>
+        <span class="cat-count">160問</span>
+        <span class="cat-rate" id="rate-kokugo_keigo">--</span>
+      </button>
+      <button class="cat-card" data-cat="kokugo_goi">
+        <span class="cat-icon">🔤</span>
+        <span class="cat-name">語い（類義・対義）</span>
+        <span class="cat-count">160問</span>
+        <span class="cat-rate" id="rate-kokugo_goi">--</span>
+      </button>
+      <button class="cat-card" data-cat="kokugo_bushu">
+        <span class="cat-icon">🖊️</span>
+        <span class="cat-name">部首・画数</span>
+        <span class="cat-count">160問</span>
+        <span class="cat-rate" id="rate-kokugo_bushu">--</span>
+      </button>
+      <button class="cat-card" data-cat="kokugo_bungaku">
+        <span class="cat-icon">🎑</span>
+        <span class="cat-name">文学史・季語</span>
+        <span class="cat-count">160問</span>
+        <span class="cat-rate" id="rate-kokugo_bungaku">--</span>
+      </button>
+    </div>
 
-    <section class="section-label">モードを選ぼう</section>
-    <div class="mode-grid">
-      <button class="mode-btn" data-mode="flash">
-        <span class="mode-icon">🃏</span>
-        <span class="mode-name">フラッシュカード</span>
-        <span class="mode-desc">カードをめくって覚える</span>
-      </button>
-      <button class="mode-btn" data-mode="quiz">
-        <span class="mode-icon">✅</span>
-        <span class="mode-name">四択クイズ</span>
-        <span class="mode-desc">4つから正解を選ぶ</span>
-      </button>
-      <button class="mode-btn" data-mode="fill">
-        <span class="mode-icon">✏️</span>
-        <span class="mode-name">虫食い問題</span>
-        <span class="mode-desc">空欄に答えを書く</span>
-      </button>
+    <!-- STEP2 学年（漢字のみ） -->
+    <div id="kokugo-step-grade" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>学年を選ぼう</section>
+      <div class="grade-grid">
+        <button class="kokugo-grade-btn grade-btn" data-grade="1">小1</button>
+        <button class="kokugo-grade-btn grade-btn" data-grade="2">小2</button>
+        <button class="kokugo-grade-btn grade-btn" data-grade="3">小3</button>
+        <button class="kokugo-grade-btn grade-btn" data-grade="4">小4</button>
+        <button class="kokugo-grade-btn grade-btn" data-grade="5">小5</button>
+        <button class="kokugo-grade-btn grade-btn" data-grade="6">小6</button>
+      </div>
+    </div>
+
+    <!-- STEP2' モード（言葉系のみ） -->
+    <div id="kokugo-step-mode" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>モードを選ぼう</section>
+      <div class="mode-grid">
+        <button class="mode-btn" data-mode="flash">
+          <span class="mode-icon">🃏</span>
+          <span class="mode-name">フラッシュカード</span>
+          <span class="mode-desc">カードをめくって覚える</span>
+        </button>
+        <button class="mode-btn" data-mode="quiz">
+          <span class="mode-icon">✅</span>
+          <span class="mode-name">四択クイズ</span>
+          <span class="mode-desc">4つから正解を選ぶ</span>
+        </button>
+        <button class="mode-btn" data-mode="fill">
+          <span class="mode-icon">✏️</span>
+          <span class="mode-name">虫食い問題</span>
+          <span class="mode-desc">空欄に答えを書く</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP3 難易度 -->
+    <div id="kokugo-step-diff" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 3</span>難易度を選ぼう</section>
+      <div class="diff-grid">
+        <button class="kokugo-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
+        <button class="kokugo-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
+        <button class="kokugo-diff-btn diff-btn" data-diff="3">チャレンジ<span class="diff-sub">偏差値60</span></button>
+        <button class="kokugo-diff-btn diff-btn" data-diff="4">灘中レベル<span class="diff-sub">偏差値64+</span></button>
+        <button class="kokugo-diff-btn diff-btn kokugo-diff-all" data-diff="all">ぜんぶ<span class="diff-sub">全難易度から出題</span></button>
+      </div>
     </div>
 
     <div class="action-row">
@@ -298,6 +369,45 @@
     <div class="result-actions">
       <button id="btn-result-home" class="btn-primary">ホームへ</button>
       <button id="btn-result-retry" class="btn-secondary">もう一度</button>
+    </div>
+  </div>
+</div>
+
+<!-- =============== 漢字の書き取り（手書き） =============== -->
+<div id="screen-kanji" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="home">‹ 戻る</button>
+    <h2 id="kanji-title" class="top-title">漢字の書き取り</h2>
+    <span id="kanji-counter" class="counter"></span>
+  </header>
+  <div class="kanji-area">
+    <div class="quiz-score-row">
+      <span>書けた：<b id="kanji-correct">0</b></span>
+      <span>書けなかった：<b id="kanji-wrong">0</b></span>
+    </div>
+    <div class="question-box">
+      <p id="kanji-question" class="kanji-question"></p>
+    </div>
+
+    <!-- 手書きキャンバス -->
+    <div class="kanji-canvas-wrap">
+      <canvas id="kanji-canvas" width="300" height="300"></canvas>
+    </div>
+    <div id="kanji-controls" class="kanji-controls">
+      <button id="kanji-undo" class="kanji-ctrl-btn">↩︎ 一画もどす</button>
+      <button id="kanji-clear" class="kanji-ctrl-btn">🗑 全部けす</button>
+      <button id="kanji-show" class="kanji-show-btn">答えを見る</button>
+    </div>
+
+    <!-- 答え・自己採点 -->
+    <div id="kanji-answer" class="kanji-answer hidden">
+      <p class="kanji-answer-label">正解は…</p>
+      <p id="kanji-answer-char" class="kanji-answer-char"></p>
+      <p id="kanji-answer-meaning" class="kanji-answer-meaning"></p>
+      <div class="kanji-judge-row">
+        <button id="kanji-ok" class="kanji-judge-btn kanji-ok">書けた ⭕</button>
+        <button id="kanji-ng" class="kanji-judge-btn kanji-ng">書けなかった ❌</button>
+      </div>
     </div>
   </div>
 </div>
