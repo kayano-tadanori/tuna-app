@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v12';
+const CACHE_NAME = 'oton-gakuen-v13';
 
 const ASSETS = [
   '/',
@@ -32,7 +32,11 @@ const ASSETS = [
   '/data/rika_mono.json',
   '/data/rika_suiyoueki.json',
   '/data/rika_denki.json',
-  '/data/rika_chikara.json'
+  '/data/rika_chikara.json',
+  '/data/shakai_kokudo.json',
+  '/data/shakai_sangyo.json',
+  '/data/shakai_rekishi.json',
+  '/data/shakai_komin.json'
 ];
 
 // インストール時：全アセットをキャッシュ

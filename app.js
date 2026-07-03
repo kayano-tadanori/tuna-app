@@ -760,6 +760,9 @@ function initSubject() {
       } else if (subj === 'rika') {
         initRikaHome();
         showScreen('rika-home');
+      } else if (subj === 'shakai') {
+        initShakaiHome();
+        showScreen('shakai-home');
       } else if (subj === 'game') {
         initTetris();
         showScreen('tetris');
@@ -830,6 +833,15 @@ const RIKA_CAT_LABELS = {
   mono:'もののせいしつ', suiyoueki:'水よう液', denki:'電気と磁石', chikara:'力のつり合い',
 };
 
+// 社会ファイル・ラベル
+const SHAKAI_FILES = {
+  kokudo:'data/shakai_kokudo.json', sangyo:'data/shakai_sangyo.json',
+  rekishi:'data/shakai_rekishi.json', komin:'data/shakai_komin.json',
+};
+const SHAKAI_CAT_LABELS = {
+  kokudo:'国土と自然', sangyo:'産業とくらし', rekishi:'日本の歴史', komin:'政治と国際',
+};
+
 const sansuCache = {};
 const sansuState = {
   subject: 'sansu', // 'sansu' | 'rika'
@@ -845,8 +857,9 @@ const sansuState = {
 };
 
 async function loadSansuQuestions(cat, grade, diff) {
-  const key = cat;
-  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES : SANSU_FILES;
+  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
+    : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+  const key = `${sansuState.subject}-${cat}`;
   if (!sansuCache[key]) {
     const res = await fetch(fileMap[cat]);
     sansuCache[key] = await res.json();
@@ -1080,6 +1093,81 @@ async function startRikaSession() {
   } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
 }
 
+// ── 社会ホーム（学年→カテゴリ→難易度の階層式） ──────────
+function initShakaiHome() {
+  sansuState.subject = 'shakai';
+  document.getElementById('shakai-nickname').textContent = state.nickname;
+  sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
+
+  document.querySelectorAll('#screen-shakai-home [data-back="subject"]').forEach(b => {
+    b.onclick = () => showScreen('subject');
+  });
+
+  // STEP1: 学年（小3〜6）
+  document.querySelectorAll('.shakai-grade-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.shakai-grade-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.grade = Number(btn.dataset.grade);
+      showSansuStep('shakai-step-cat');
+      updateShakaiStart();
+    };
+  });
+
+  // STEP2: カテゴリ
+  document.querySelectorAll('.shakai-cat-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.shakai-cat-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.cat = btn.dataset.hcat;
+      showSansuStep('shakai-step-diff');
+      updateShakaiStart();
+    };
+  });
+
+  // STEP3: 難易度
+  document.querySelectorAll('.shakai-diff-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.shakai-diff-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.diff = Number(btn.dataset.diff);
+      updateShakaiStart();
+    };
+  });
+
+  document.getElementById('shakai-btn-start').onclick = () => startShakaiSession();
+
+  hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
+  document.getElementById('shakai-start-zone').classList.add('hidden');
+}
+
+function updateShakaiStart() {
+  const zone = document.getElementById('shakai-start-zone');
+  const info = document.getElementById('shakai-start-info');
+  const ready = sansuState.grade && sansuState.cat && sansuState.diff;
+  if (ready) {
+    info.textContent = `小${sansuState.grade} / ${SHAKAI_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
+  }
+  zone.classList.toggle('hidden', !ready);
+}
+
+async function startShakaiSession() {
+  showLoading();
+  try {
+    const all = await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+    if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
+    const countVal = document.getElementById('shakai-q-count').value;
+    const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
+    sansuState.questions = shuffle([...all]).slice(0, count);
+    sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    hideLoading();
+    startSansuQuiz();
+  } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+}
+
 async function startSansuSession() {
   if (sansuState.mode === 'normal') {
     showLoading();
@@ -1099,11 +1187,19 @@ async function startSansuSession() {
 }
 
 // ── 算数・理科クイズ（通常問題） ──────────────────────
+function subjectCatLabels() {
+  return sansuState.subject === 'rika' ? RIKA_CAT_LABELS
+    : sansuState.subject === 'shakai' ? SHAKAI_CAT_LABELS : SANSU_CAT_LABELS;
+}
+function subjectHomeScreen() {
+  return sansuState.subject === 'rika' ? 'rika-home'
+    : sansuState.subject === 'shakai' ? 'shakai-home' : 'sansu-home';
+}
+
 function startSansuQuiz() {
-  const isRika = sansuState.subject === 'rika';
-  const catLabel = (isRika ? RIKA_CAT_LABELS : SANSU_CAT_LABELS)[sansuState.cat] || (isRika ? '理科' : '算数');
+  const catLabel = subjectCatLabels()[sansuState.cat] || '問題';
   document.getElementById('sansu-quiz-title').textContent = catLabel;
-  const homeScreen = isRika ? 'rika-home' : 'sansu-home';
+  const homeScreen = subjectHomeScreen();
   document.querySelectorAll('[data-back="sansu-home"]').forEach(b => b.onclick = () => { showScreen(homeScreen); });
   initNumpad('sq');
   renderSansuQuiz();
@@ -1232,6 +1328,7 @@ function endSansuSession() {
 
   document.getElementById('btn-result-home').onclick = () => {
     if (sansuState.subject === 'rika') { initRikaHome(); showScreen('rika-home'); }
+    else if (sansuState.subject === 'shakai') { initShakaiHome(); showScreen('shakai-home'); }
     else { initSansuHome(); showScreen('sansu-home'); }
   };
   document.getElementById('btn-result-retry').onclick = () => {

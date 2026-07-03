@@ -76,11 +76,11 @@
         <span class="subject-detail">生物・地学<br>化学・物理</span>
         <span class="subject-count">2,880問</span>
       </button>
-      <button class="subject-card coming-soon" data-subject="shakai">
+      <button class="subject-card" data-subject="shakai">
         <span class="subject-icon-wrap"><span class="subject-icon">🗾</span></span>
         <span class="subject-name">社会</span>
-        <span class="subject-detail">地理・歴史<br>公民</span>
-        <span class="coming-badge">🚧 じゅんび中</span>
+        <span class="subject-detail">地理・産業<br>歴史・公民</span>
+        <span class="subject-count">1,280問</span>
       </button>
     </div>
 
@@ -564,6 +564,70 @@
         </label>
       </div>
       <button id="rika-btn-start" class="btn-start">常在戦場！スタート！</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- =============== 社会ホーム =============== -->
+<div id="screen-shakai-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <h1 class="top-title">社会</h1>
+    <div class="user-info">
+      <span id="shakai-nickname"></span>
+    </div>
+  </header>
+  <main class="sansu-home-main">
+
+    <!-- STEP1 学年選択（社会は小3〜） -->
+    <section class="section-label"><span class="step-badge">STEP 1</span>学年を選ぼう</section>
+    <div class="grade-grid">
+      <button class="shakai-grade-btn grade-btn" data-grade="3">小3</button>
+      <button class="shakai-grade-btn grade-btn" data-grade="4">小4<span class="grade-sub">受験</span></button>
+      <button class="shakai-grade-btn grade-btn" data-grade="5">小5<span class="grade-sub">受験</span></button>
+      <button class="shakai-grade-btn grade-btn" data-grade="6">小6<span class="grade-sub">受験</span></button>
+    </div>
+
+    <!-- STEP2 カテゴリ選択 -->
+    <div id="shakai-step-cat" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <p class="cat-group-label">🗾 地理</p>
+      <div class="sansu-cat-grid">
+        <button class="shakai-cat-btn sansu-cat-btn" data-hcat="kokudo">国土と自然</button>
+        <button class="shakai-cat-btn sansu-cat-btn" data-hcat="sangyo">産業とくらし</button>
+      </div>
+      <p class="cat-group-label">📜 歴史・公民</p>
+      <div class="sansu-cat-grid">
+        <button class="shakai-cat-btn sansu-cat-btn" data-hcat="rekishi">日本の歴史</button>
+        <button class="shakai-cat-btn sansu-cat-btn" data-hcat="komin">政治と国際</button>
+      </div>
+    </div>
+
+    <!-- STEP3 難易度選択 -->
+    <div id="shakai-step-diff" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 3</span>難易度を選ぼう</section>
+      <div class="diff-grid">
+        <button class="shakai-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
+        <button class="shakai-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
+        <button class="shakai-diff-btn diff-btn" data-diff="3">チャレンジ<span class="diff-sub">偏差値60</span></button>
+        <button class="shakai-diff-btn diff-btn" data-diff="4">灘中レベル<span class="diff-sub">偏差値64+</span></button>
+      </div>
+    </div>
+
+    <!-- スタートゾーン -->
+    <div id="shakai-start-zone" class="start-zone hidden">
+      <div class="start-info" id="shakai-start-info"></div>
+      <div class="question-count-wrap">
+        <label>出題数：
+          <select id="shakai-q-count">
+            <option value="10">10問</option>
+            <option value="20" selected>20問</option>
+            <option value="all">全問</option>
+          </select>
+        </label>
+      </div>
+      <button id="shakai-btn-start" class="btn-start">常在戦場！スタート！</button>
     </div>
 
   </main>
