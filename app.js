@@ -757,6 +757,9 @@ function initSubject() {
       if (subj === 'sansu') {
         initSansuHome();
         showScreen('sansu-home');
+      } else if (subj === 'rika') {
+        initRikaHome();
+        showScreen('rika-home');
       } else if (subj === 'game') {
         initTetris();
         showScreen('tetris');
@@ -815,8 +818,21 @@ const DRILL_TYPE_LABELS = {
   divrem:'余りあり', decimal:'小数', fraction:'分数', mix:'ミックス'
 };
 
+// 理科ファイル・ラベル
+const RIKA_FILES = {
+  shokubutsu:'data/rika_shokubutsu.json', doubutsu:'data/rika_doubutsu.json',
+  sora:'data/rika_sora.json', daichi:'data/rika_daichi.json',
+  mono:'data/rika_mono.json', suiyoueki:'data/rika_suiyoueki.json',
+  denki:'data/rika_denki.json', chikara:'data/rika_chikara.json',
+};
+const RIKA_CAT_LABELS = {
+  shokubutsu:'植物', doubutsu:'動物と人体', sora:'天体と気象', daichi:'大地の変化',
+  mono:'もののせいしつ', suiyoueki:'水よう液', denki:'電気と磁石', chikara:'力のつり合い',
+};
+
 const sansuCache = {};
 const sansuState = {
+  subject: 'sansu', // 'sansu' | 'rika'
   grade: null, diff: null, cat: null,
   mode: null, // 'normal' | 'drill'
   drillType: null, drillTime: null,
@@ -830,8 +846,9 @@ const sansuState = {
 
 async function loadSansuQuestions(cat, grade, diff) {
   const key = cat;
+  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES : SANSU_FILES;
   if (!sansuCache[key]) {
-    const res = await fetch(SANSU_FILES[cat]);
+    const res = await fetch(fileMap[cat]);
     sansuCache[key] = await res.json();
   }
   return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
@@ -849,6 +866,7 @@ function hideSansuSteps(...ids) {
 }
 
 function initSansuHome() {
+  sansuState.subject = 'sansu';
   document.getElementById('sansu-nickname').textContent = state.nickname;
   sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
   sansuState.mode = null; sansuState.drillType = null; sansuState.drillTime = null;
@@ -858,8 +876,8 @@ function initSansuHome() {
     b.onclick = () => showScreen('subject');
   });
 
-  // STEP1: 学年
-  document.querySelectorAll('.grade-btn').forEach(btn => {
+  // STEP1: 学年（算数ホーム内に限定）
+  document.querySelectorAll('#screen-sansu-home .grade-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
       document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
@@ -902,11 +920,11 @@ function initSansuHome() {
     };
   });
 
-  // STEP3: カテゴリ
-  document.querySelectorAll('.sansu-cat-btn').forEach(btn => {
+  // STEP3: カテゴリ（算数ホーム内）
+  document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
-      document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.cat = btn.dataset.scat;
       showSansuStep('sansu-step-diff');
@@ -914,11 +932,11 @@ function initSansuHome() {
     };
   });
 
-  // STEP4: 難易度
-  document.querySelectorAll('.diff-btn').forEach(btn => {
+  // STEP4: 難易度（算数ホーム内）
+  document.querySelectorAll('#screen-sansu-home .diff-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
-      document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#screen-sansu-home .diff-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.diff = Number(btn.dataset.diff);
       updateSansuStart();
@@ -977,6 +995,91 @@ function updateSansuStart() {
   zone.classList.toggle('hidden', !ready);
 }
 
+// ── 理科ホーム（学年→カテゴリ→難易度の階層式） ──────────
+function initRikaHome() {
+  sansuState.subject = 'rika';
+  document.getElementById('rika-nickname').textContent = state.nickname;
+  sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
+
+  document.querySelectorAll('#screen-rika-home [data-back="subject"]').forEach(b => {
+    b.onclick = () => showScreen('subject');
+  });
+
+  // STEP1: 学年
+  document.querySelectorAll('.rika-grade-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.rika-grade-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.grade = Number(btn.dataset.grade);
+      // 小4以上のみ受験カテゴリ表示
+      document.querySelectorAll('.rika-juken-only').forEach(el => {
+        el.classList.toggle('hidden', sansuState.grade < 4);
+      });
+      // 小1〜3で受験カテゴリ選択中なら解除
+      if (sansuState.grade < 4 && ['daichi', 'suiyoueki', 'denki', 'chikara'].includes(sansuState.cat)) {
+        sansuState.cat = null;
+        document.querySelectorAll('.rika-cat-btn').forEach(b => b.classList.remove('selected'));
+        hideSansuSteps('rika-step-diff');
+      }
+      showSansuStep('rika-step-cat');
+      updateRikaStart();
+    };
+  });
+
+  // STEP2: カテゴリ
+  document.querySelectorAll('.rika-cat-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.rika-cat-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.cat = btn.dataset.rcat;
+      showSansuStep('rika-step-diff');
+      updateRikaStart();
+    };
+  });
+
+  // STEP3: 難易度
+  document.querySelectorAll('.rika-diff-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('.rika-diff-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.diff = Number(btn.dataset.diff);
+      updateRikaStart();
+    };
+  });
+
+  document.getElementById('rika-btn-start').onclick = () => startRikaSession();
+
+  hideSansuSteps('rika-step-cat', 'rika-step-diff');
+  document.getElementById('rika-start-zone').classList.add('hidden');
+}
+
+function updateRikaStart() {
+  const zone = document.getElementById('rika-start-zone');
+  const info = document.getElementById('rika-start-info');
+  const ready = sansuState.grade && sansuState.cat && sansuState.diff;
+  if (ready) {
+    info.textContent = `小${sansuState.grade} / ${RIKA_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
+  }
+  zone.classList.toggle('hidden', !ready);
+}
+
+async function startRikaSession() {
+  showLoading();
+  try {
+    const all = await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+    if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
+    const countVal = document.getElementById('rika-q-count').value;
+    const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
+    sansuState.questions = shuffle([...all]).slice(0, count);
+    sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    hideLoading();
+    startSansuQuiz();
+  } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+}
+
 async function startSansuSession() {
   if (sansuState.mode === 'normal') {
     showLoading();
@@ -995,11 +1098,13 @@ async function startSansuSession() {
   }
 }
 
-// ── 算数クイズ（通常問題） ────────────────────────────
+// ── 算数・理科クイズ（通常問題） ──────────────────────
 function startSansuQuiz() {
-  const catLabel = SANSU_CAT_LABELS[sansuState.cat] || '算数';
+  const isRika = sansuState.subject === 'rika';
+  const catLabel = (isRika ? RIKA_CAT_LABELS : SANSU_CAT_LABELS)[sansuState.cat] || (isRika ? '理科' : '算数');
   document.getElementById('sansu-quiz-title').textContent = catLabel;
-  document.querySelectorAll('[data-back="sansu-home"]').forEach(b => b.onclick = () => { showScreen('sansu-home'); });
+  const homeScreen = isRika ? 'rika-home' : 'sansu-home';
+  document.querySelectorAll('[data-back="sansu-home"]').forEach(b => b.onclick = () => { showScreen(homeScreen); });
   initNumpad('sq');
   renderSansuQuiz();
   showScreen('sansu-quiz');
@@ -1026,18 +1131,58 @@ function renderSansuQuiz() {
   if (q.type) { typeBadge.textContent = q.type; typeBadge.classList.remove('hidden'); }
   else { typeBadge.classList.add('hidden'); }
 
-  // 余りあり判定
-  sansuState.isRemainMode = q.answer && q.answer.includes('余り');
-  document.getElementById('sq-remain-wrap').classList.toggle('hidden', !sansuState.isRemainMode);
-  document.querySelector('#sq-numpad .numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
-
-  // テンキーリセット
-  sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
-  updateNumpadPreview('sq');
-
   // フィードバック非表示
   document.getElementById('sq-feedback').classList.add('hidden');
-  document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
+
+  const numpad = document.getElementById('sq-numpad');
+  const previewWrap = document.getElementById('sq-preview-wrap');
+  const remainWrap = document.getElementById('sq-remain-wrap');
+  const choicesWrap = document.getElementById('sq-choices');
+
+  if (q.choices && q.choices.length) {
+    // 4択モード：テンキー系を隠して選択肢を表示
+    numpad.classList.add('hidden');
+    previewWrap.classList.add('hidden');
+    remainWrap.classList.add('hidden');
+    choicesWrap.classList.remove('hidden');
+    choicesWrap.innerHTML = '';
+    shuffle([...q.choices]).forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'sq-choice-btn';
+      btn.textContent = ch;
+      btn.onclick = () => submitChoiceAnswer(ch, btn);
+      choicesWrap.appendChild(btn);
+    });
+  } else {
+    // テンキーモード
+    choicesWrap.classList.add('hidden');
+    numpad.classList.remove('hidden');
+    previewWrap.classList.remove('hidden');
+    sansuState.isRemainMode = q.answer && q.answer.includes('余り');
+    remainWrap.classList.toggle('hidden', !sansuState.isRemainMode);
+    numpad.querySelector('.numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
+    sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
+    updateNumpadPreview('sq');
+    numpad.querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
+  }
+}
+
+// 正誤フィードバックの共通表示
+function showSqFeedback(q, correct) {
+  recordResult(q.id, correct);
+  if (correct) { sansuState.correct++; document.getElementById('sq-correct').textContent = sansuState.correct; }
+  else { sansuState.wrong++; document.getElementById('sq-wrong').textContent = sansuState.wrong; }
+
+  const fb = document.getElementById('sq-feedback');
+  document.getElementById('sq-feedback-text').textContent = correct ? '✅ 正解！' : '❌ 不正解';
+  document.getElementById('sq-feedback-ans').textContent = correct ? (q.meaning || '') : `正解：${q.answer}　${q.meaning || ''}`;
+  document.getElementById('sq-meaning').textContent = '';
+  fb.classList.remove('hidden');
+
+  document.getElementById('sq-btn-next').onclick = () => {
+    sansuState.current++;
+    renderSansuQuiz();
+  };
 }
 
 function submitSansuAnswer() {
@@ -1049,22 +1194,20 @@ function submitSansuAnswer() {
   if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, q.answer);
-  recordResult(q.id, correct);
-
-  if (correct) { sansuState.correct++; document.getElementById('sq-correct').textContent = sansuState.correct; }
-  else { sansuState.wrong++; document.getElementById('sq-wrong').textContent = sansuState.wrong; }
-
-  const fb = document.getElementById('sq-feedback');
-  document.getElementById('sq-feedback-text').textContent = correct ? '✅ 正解！' : '❌ 不正解';
-  document.getElementById('sq-feedback-ans').textContent = correct ? (q.meaning || '') : `正解：${q.answer}　${q.meaning || ''}`;
-  document.getElementById('sq-meaning').textContent = '';
-  fb.classList.remove('hidden');
   document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = true);
+  showSqFeedback(q, correct);
+}
 
-  document.getElementById('sq-btn-next').onclick = () => {
-    sansuState.current++;
-    renderSansuQuiz();
-  };
+function submitChoiceAnswer(chosen, btn) {
+  const q = sansuState.questions[sansuState.current];
+  const correct = checkSansuAnswer(chosen, q.answer);
+  // 全ボタンを無効化し、正解を緑・誤答を赤で示す
+  document.querySelectorAll('#sq-choices .sq-choice-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === q.answer) b.classList.add('choice-correct');
+    else if (b === btn) b.classList.add('choice-wrong');
+  });
+  showSqFeedback(q, correct);
 }
 
 function checkSansuAnswer(input, correct) {
@@ -1087,7 +1230,10 @@ function endSansuSession() {
   document.getElementById('result-rate').textContent = `${score}点`;
   document.getElementById('result-comment').textContent = comment;
 
-  document.getElementById('btn-result-home').onclick = () => { initSansuHome(); showScreen('sansu-home'); };
+  document.getElementById('btn-result-home').onclick = () => {
+    if (sansuState.subject === 'rika') { initRikaHome(); showScreen('rika-home'); }
+    else { initSansuHome(); showScreen('sansu-home'); }
+  };
   document.getElementById('btn-result-retry').onclick = () => {
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
     sansuState.questions = shuffle([...sansuState.questions]);

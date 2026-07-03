@@ -70,11 +70,11 @@
         <span class="subject-detail">計算・図形・割合<br>速さ・特殊算</span>
         <span class="subject-count">3,360問</span>
       </button>
-      <button class="subject-card coming-soon" data-subject="rika">
+      <button class="subject-card" data-subject="rika">
         <span class="subject-icon-wrap"><span class="subject-icon">🔬</span></span>
         <span class="subject-name">理科</span>
-        <span class="subject-detail">物理・化学<br>生物・地学</span>
-        <span class="coming-badge">🚧 じゅんび中</span>
+        <span class="subject-detail">生物・地学<br>化学・物理</span>
+        <span class="subject-count">2,880問</span>
       </button>
       <button class="subject-card coming-soon" data-subject="shakai">
         <span class="subject-icon-wrap"><span class="subject-icon">🗾</span></span>
@@ -493,6 +493,82 @@
   </main>
 </div>
 
+<!-- =============== 理科ホーム =============== -->
+<div id="screen-rika-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <h1 class="top-title">理科</h1>
+    <div class="user-info">
+      <span id="rika-nickname"></span>
+    </div>
+  </header>
+  <main class="sansu-home-main">
+
+    <!-- STEP1 学年選択 -->
+    <section class="section-label"><span class="step-badge">STEP 1</span>学年を選ぼう</section>
+    <div class="grade-grid">
+      <button class="rika-grade-btn grade-btn" data-grade="1">小1</button>
+      <button class="rika-grade-btn grade-btn" data-grade="2">小2</button>
+      <button class="rika-grade-btn grade-btn" data-grade="3">小3</button>
+      <button class="rika-grade-btn grade-btn" data-grade="4">小4<span class="grade-sub">受験</span></button>
+      <button class="rika-grade-btn grade-btn" data-grade="5">小5<span class="grade-sub">受験</span></button>
+      <button class="rika-grade-btn grade-btn" data-grade="6">小6<span class="grade-sub">受験</span></button>
+    </div>
+
+    <!-- STEP2 カテゴリ選択（4分野） -->
+    <div id="rika-step-cat" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <p class="cat-group-label">🌱 生物</p>
+      <div class="sansu-cat-grid">
+        <button class="rika-cat-btn sansu-cat-btn" data-rcat="shokubutsu">植物</button>
+        <button class="rika-cat-btn sansu-cat-btn" data-rcat="doubutsu">動物と人体</button>
+      </div>
+      <p class="cat-group-label">🌍 地学</p>
+      <div class="sansu-cat-grid">
+        <button class="rika-cat-btn sansu-cat-btn" data-rcat="sora">天体と気象</button>
+        <button class="rika-cat-btn sansu-cat-btn rika-juken-only hidden" data-rcat="daichi">大地の変化</button>
+      </div>
+      <p class="cat-group-label">⚗️ 化学</p>
+      <div class="sansu-cat-grid">
+        <button class="rika-cat-btn sansu-cat-btn" data-rcat="mono">もののせいしつ</button>
+        <button class="rika-cat-btn sansu-cat-btn rika-juken-only hidden" data-rcat="suiyoueki">水よう液</button>
+      </div>
+      <p class="cat-group-label">⚡ 物理</p>
+      <div class="sansu-cat-grid">
+        <button class="rika-cat-btn sansu-cat-btn rika-juken-only hidden" data-rcat="denki">電気と磁石</button>
+        <button class="rika-cat-btn sansu-cat-btn rika-juken-only hidden" data-rcat="chikara">力のつり合い</button>
+      </div>
+    </div>
+
+    <!-- STEP3 難易度選択 -->
+    <div id="rika-step-diff" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 3</span>難易度を選ぼう</section>
+      <div class="diff-grid">
+        <button class="rika-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
+        <button class="rika-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
+        <button class="rika-diff-btn diff-btn" data-diff="3">チャレンジ<span class="diff-sub">偏差値60</span></button>
+        <button class="rika-diff-btn diff-btn" data-diff="4">灘中レベル<span class="diff-sub">偏差値64+</span></button>
+      </div>
+    </div>
+
+    <!-- スタートゾーン -->
+    <div id="rika-start-zone" class="start-zone hidden">
+      <div class="start-info" id="rika-start-info"></div>
+      <div class="question-count-wrap">
+        <label>出題数：
+          <select id="rika-q-count">
+            <option value="10">10問</option>
+            <option value="20" selected>20問</option>
+            <option value="all">全問</option>
+          </select>
+        </label>
+      </div>
+      <button id="rika-btn-start" class="btn-start">常在戦場！スタート！</button>
+    </div>
+
+  </main>
+</div>
+
 <!-- =============== 算数クイズ（テンキー入力） =============== -->
 <div id="screen-sansu-quiz" class="screen">
   <header class="top-bar">
@@ -517,7 +593,7 @@
     </div>
 
     <!-- テンキー入力 -->
-    <div class="numpad-preview-wrap">
+    <div id="sq-preview-wrap" class="numpad-preview-wrap">
       <span class="numpad-preview-label">答え：</span>
       <span id="sq-preview" class="numpad-preview">＿</span>
     </div>
@@ -532,6 +608,9 @@
       <p id="sq-feedback-ans"></p>
       <button id="sq-btn-next" class="btn-next">次へ →</button>
     </div>
+
+    <!-- 4択（理科など選択問題用） -->
+    <div id="sq-choices" class="sq-choices hidden"></div>
 
     <div id="sq-numpad" class="numpad">
       <button class="numpad-btn" data-key="7">7</button>

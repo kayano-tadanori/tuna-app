@@ -419,6 +419,14 @@ button { cursor: pointer; font-family: inherit; }
 .drill-result { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0; text-align: center; }
 .drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
+/* ── 4択ボタン（理科など） ── */
+.sq-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+.sq-choice-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); padding: 16px 12px; font-size: 0.98rem; font-weight: 800; line-height: 1.4; min-height: 60px; transition: background 0.12s, transform 0.08s, border-color 0.12s; -webkit-tap-highlight-color: transparent; }
+.sq-choice-btn:active { transform: scale(0.96); background: var(--card); }
+.sq-choice-btn:disabled { opacity: 0.9; }
+.sq-choice-btn.choice-correct { background: var(--grad-green); border-color: var(--green); color: #fff; box-shadow: var(--glow-green); }
+.sq-choice-btn.choice-wrong { background: var(--grad-red); border-color: var(--red); color: #fff; }
+
 /* ── 算数ホーム：階層式ステップUI ── */
 .sansu-step { animation: stepIn 0.3s ease; }
 @keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
