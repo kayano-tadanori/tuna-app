@@ -619,6 +619,10 @@ function initKanjiPad() {
   cv.onpointerup = up;
   cv.onpointercancel = up;
 
+  // iOS Safariはtouch-action:noneだけでは親のスクロールを止めきれないことがある
+  cv.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+  cv.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
   document.getElementById('kanji-undo').onclick = () => { kanjiPad.strokes.pop(); drawKanjiPad(); };
   document.getElementById('kanji-clear').onclick = () => { kanjiPad.strokes = []; kanjiPad.current = []; drawKanjiPad(); };
 }

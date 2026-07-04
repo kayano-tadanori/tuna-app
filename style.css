@@ -48,7 +48,7 @@ body {
   background-attachment: fixed;
 }
 
-.screen { display: none; position: fixed; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(32px + var(--safe-b)); }
+.screen { display: none; position: fixed; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: none; padding-bottom: calc(32px + var(--safe-b)); }
 .screen.active { display: block; animation: screenIn 0.38s cubic-bezier(0.2,0.8,0.2,1) both; }
 @keyframes screenIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 .hidden { display: none !important; }
@@ -420,22 +420,22 @@ button { cursor: pointer; font-family: inherit; }
 .drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 /* ── 漢字の書き取り（手書き） ── */
-.kanji-area { padding: 10px 16px calc(30px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.kanji-area { padding: 10px 16px calc(30px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; align-items: center; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .kanji-area .question-box { width: 100%; }
 .kanji-question { font-size: 1.1rem; font-weight: 900; line-height: 1.7; text-align: center; }
 .kanji-canvas-wrap { display: flex; justify-content: center; }
 #kanji-canvas { width: min(78vw, 300px); height: min(78vw, 300px); border-radius: 16px; border: 2px solid rgba(120,150,220,0.4); box-shadow: 0 6px 20px rgba(0,0,0,0.25); touch-action: none; background: #f8f6ef; }
 .kanji-controls { display: flex; gap: 8px; width: 100%; justify-content: center; }
-.kanji-ctrl-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 0.88rem; font-weight: 800; -webkit-tap-highlight-color: transparent; }
+.kanji-ctrl-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 0.88rem; font-weight: 800; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .kanji-ctrl-btn:active { transform: scale(0.95); }
-.kanji-show-btn { background: var(--grad-brand); border: 1.5px solid var(--accent); color: #fff; border-radius: var(--radius-sm); padding: 12px 18px; font-size: 0.95rem; font-weight: 900; box-shadow: var(--glow-brand); -webkit-tap-highlight-color: transparent; }
+.kanji-show-btn { background: var(--grad-brand); border: 1.5px solid var(--accent); color: #fff; border-radius: var(--radius-sm); padding: 12px 18px; font-size: 0.95rem; font-weight: 900; box-shadow: var(--glow-brand); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .kanji-show-btn:active { transform: scale(0.95); box-shadow: none; }
 .kanji-answer { width: 100%; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; animation: stepIn 0.25s ease; }
 .kanji-answer-label { font-size: 0.8rem; color: var(--sub2); font-weight: 700; }
 .kanji-answer-char { font-size: 3.2rem; font-weight: 900; color: var(--gold); letter-spacing: 0.1em; line-height: 1.2; text-align: center; }
 .kanji-answer-meaning { font-size: 0.88rem; color: var(--sub2); text-align: center; }
 .kanji-judge-row { display: flex; gap: 10px; width: 100%; margin-top: 6px; }
-.kanji-judge-btn { flex: 1; border-radius: var(--radius-sm); padding: 14px 8px; font-size: 1rem; font-weight: 900; border: 1.5px solid; -webkit-tap-highlight-color: transparent; }
+.kanji-judge-btn { flex: 1; border-radius: var(--radius-sm); padding: 14px 8px; font-size: 1rem; font-weight: 900; border: 1.5px solid; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .kanji-judge-btn:active { transform: scale(0.95); }
 .kanji-ok { background: var(--grad-green); border-color: var(--green); color: #fff; box-shadow: var(--glow-green); }
 .kanji-ng { background: var(--grad-red); border-color: var(--red); color: #fff; }
