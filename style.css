@@ -149,8 +149,8 @@ button { cursor: pointer; font-family: inherit; }
 .char-desc { font-size: 0.95rem; color: var(--sub2); text-align: center; line-height: 1.85; }
 .char-voice { font-size: 1.2rem; font-weight: 900; color: var(--gold); background: rgba(255,209,102,0.08); border: 2px solid rgba(255,186,0,0.30); border-radius: 32px; padding: 11px 26px; box-shadow: var(--glow-gold); }
 .char-divider { width: 100%; height: 1.5px; background: var(--glass-border); margin: 20px 0 8px; }
-.okan-img { filter: drop-shadow(0 4px 32px rgba(230,60,130,0.4)); }
-.chicchi-img { width: min(56vw,220px); filter: drop-shadow(0 4px 32px rgba(255,209,102,0.45)); }
+.okan-img { border-radius: 18px; filter: drop-shadow(0 4px 32px rgba(230,60,130,0.4)); animation: none; }
+.chicchi-img { border-radius: 18px; filter: drop-shadow(0 4px 32px rgba(255,209,102,0.45)); animation: none; }
 .char-name-pink { background: linear-gradient(135deg,#ff5c9e,#e63c82); -webkit-background-clip: text; background-clip: text; }
 .char-name-yellow { background: linear-gradient(135deg,#ffd166,#ff9d38); -webkit-background-clip: text; background-clip: text; }
 .char-realname { font-size: 0.85rem; color: var(--sub2); font-weight: 700; margin-top: 4px; }
