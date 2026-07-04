@@ -2911,6 +2911,22 @@ async function renderGradeCrowns(subject) {
   } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
 }
 
+// 難易度ボタン用: 全問クリアで✅、途中なら「12/20」の進み具合を表示
+function setDiffProgress(btn, cleared, total) {
+  let b = btn.querySelector('.clear-badge');
+  if (total > 0 && cleared >= total) {
+    if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; btn.appendChild(b); }
+    b.textContent = '✅';
+    b.classList.remove('diff-prog');
+  } else if (cleared > 0) {
+    if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; btn.appendChild(b); }
+    b.textContent = `${cleared}/${total}`;
+    b.classList.add('diff-prog');
+  } else if (b) {
+    b.remove();
+  }
+}
+
 // ── 難易度ボタンの✅（選択中の学年×単元で全問クリア） ──────
 async function ensureSansuFile(subject, cat) {
   const key = `${subject}-${cat}`;
@@ -2954,8 +2970,8 @@ async function renderDiffBadgesSansu() {
     // 非同期の間に選択が変わっていたら破棄
     if (sansuState.cat !== cat || sansuState.grade !== grade || sansuState.subject !== subject) return;
     btns.forEach(b => {
-      const info = byDiff[Number(b.dataset.diff)];
-      setClearBadge(b, !!(info && info.total > 0 && info.cleared >= info.total), '✅');
+      const info = byDiff[Number(b.dataset.diff)] || { total: 0, cleared: 0 };
+      setDiffProgress(b, info.cleared, info.total);
     });
   } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
 }
@@ -2988,10 +3004,10 @@ async function renderDiffBadgesKokugo() {
     });
     btns.forEach(b => {
       if (b.dataset.diff === 'all') {
-        setClearBadge(b, total > 0 && cleared >= total, '✅');
+        setDiffProgress(b, cleared, total);
       } else {
-        const info = byDiff[Number(b.dataset.diff)];
-        setClearBadge(b, !!(info && info.total > 0 && info.cleared >= info.total), '✅');
+        const info = byDiff[Number(b.dataset.diff)] || { total: 0, cleared: 0 };
+        setDiffProgress(b, info.cleared, info.total);
       }
     });
   } catch (e) { /* 無視 */ }

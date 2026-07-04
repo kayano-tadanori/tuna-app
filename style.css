@@ -560,6 +560,7 @@ button { cursor: pointer; font-family: inherit; }
 .cat-mix-btn.selected { background: linear-gradient(135deg,#8a5cff,#c860f0) !important; border-color: #c860f0 !important; }
 
 .clear-badge { position: absolute; top: 3px; right: 4px; font-size: 0.85rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); pointer-events: none; z-index: 2; }
+.clear-badge.diff-prog { font-size: 0.58rem; font-weight: 800; color: var(--sub2); background: rgba(255,255,255,0.08); border-radius: 8px; padding: 2px 5px; filter: none; }
 .sansu-cat-btn { position: relative; }
 .diff-btn { position: relative; }
 .cat-card .clear-badge { top: 6px; right: 6px; }
