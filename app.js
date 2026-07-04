@@ -181,6 +181,13 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const screen = document.getElementById('screen-' + id);
   if (screen) { screen.classList.add('active'); screen.scrollTop = 0; }
+  // プレイ時間計測（勉強画面に入ったら開始、出たら加算）
+  currentScreenId = id;
+  if (PLAY_SCREENS.includes(id)) {
+    if (!playStart) playStart = Date.now();
+  } else {
+    flushPlayTime();
+  }
 }
 
 // ============================================================
@@ -307,6 +314,10 @@ function initHome() {
   document.getElementById('btn-progress').onclick = showProgressScreen;
   document.getElementById('btn-custom').onclick = showCustomScreen;
   document.getElementById('btn-ranking').onclick = showRankingScreen;
+
+  // 終了バッジ（✅カテゴリ・👑漢字の学年）
+  renderCatBadges('kokugo');
+  renderGradeCrowns('kokugo');
 }
 
 function maybeShowStart() {
@@ -760,7 +771,10 @@ function endSession() {
                  '基礎から見直してみよう。君ならできる！';
 
   renderResultCheer(rate);
+  maybeAwardPerfect(rate, total);
   showScreen('result');
+  checkTitlePromotion();
+  pushAchievementToRanking();
 
   // Firestoreに保存
   if (state.nickname) {
@@ -1023,6 +1037,19 @@ async function boot() {
 function initSubject() {
   document.getElementById('subject-nickname').textContent = state.nickname;
 
+  // 称号バッジ・がんばりの記録カード
+  const ach = getAchievement();
+  const title = getTitleInfo(ach.titlePct);
+  document.getElementById('subject-title-badge').textContent = `${title.icon} ${title.name}`;
+  const lb = getLoginInfo();
+  document.getElementById('record-mini').textContent =
+    `達成率 ${Math.floor(ach.titlePct * 10) / 10}%・🔥${lb.streak || 0}日連続`;
+  document.getElementById('btn-record').onclick = () => { initRecord(); showScreen('record'); };
+
+  // ログインボーナス＆問題追加チェック（どちらも冪等）
+  checkNewQuestions();
+  checkLoginBonus();
+
   // 日付とあいさつ（時間帯で変化）
   const now = new Date();
   const days = ['日', '月', '火', '水', '木', '金', '土'];
@@ -1037,6 +1064,7 @@ function initSubject() {
   document.getElementById('otton-msg').innerHTML = msg;
 
   document.querySelectorAll('.subject-card').forEach(btn => {
+    if (btn.id === 'btn-record') return; // 記録カードは専用ハンドラ
     btn.onclick = () => {
       if (btn.classList.contains('coming-soon')) {
         showToast('もうすぐ追加されます！工事中🚧');
@@ -1275,6 +1303,10 @@ function initSansuHome() {
   // 全ステップを初期状態（STEP1のみ表示）に
   hideSansuSteps('sansu-step-mode', 'sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-time');
   document.getElementById('sansu-start-zone').classList.add('hidden');
+
+  // 終了バッジ（✅単元・👑学年）
+  renderCatBadges('sansu');
+  renderGradeCrowns('sansu');
 }
 
 function updateSansuStart() {
@@ -1357,6 +1389,9 @@ function initRikaHome() {
 
   hideSansuSteps('rika-step-cat', 'rika-step-diff');
   document.getElementById('rika-start-zone').classList.add('hidden');
+
+  renderCatBadges('rika');
+  renderGradeCrowns('rika');
 }
 
 function updateRikaStart() {
@@ -1372,7 +1407,9 @@ function updateRikaStart() {
 async function startRikaSession() {
   showLoading();
   try {
-    const all = await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+    const all = sansuState.cat === 'mix'
+      ? await loadMixQuestions(sansuState.grade, sansuState.diff)
+      : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
     if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
     const countVal = document.getElementById('rika-q-count').value;
     const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
@@ -1432,6 +1469,9 @@ function initShakaiHome() {
 
   hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
   document.getElementById('shakai-start-zone').classList.add('hidden');
+
+  renderCatBadges('shakai');
+  renderGradeCrowns('shakai');
 }
 
 function updateShakaiStart() {
@@ -1447,7 +1487,9 @@ function updateShakaiStart() {
 async function startShakaiSession() {
   showLoading();
   try {
-    const all = await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+    const all = sansuState.cat === 'mix'
+      ? await loadMixQuestions(sansuState.grade, sansuState.diff)
+      : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
     if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
     const countVal = document.getElementById('shakai-q-count').value;
     const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
@@ -1462,7 +1504,9 @@ async function startSansuSession() {
   if (sansuState.mode === 'normal') {
     showLoading();
     try {
-      const all = await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+      const all = sansuState.cat === 'mix'
+        ? await loadMixQuestions(sansuState.grade, sansuState.diff)
+        : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
       if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
       const countVal = document.getElementById('sansu-q-count').value;
       const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
@@ -1555,7 +1599,8 @@ function renderSansuQuiz() {
 
 // 正誤フィードバックの共通表示
 function showSqFeedback(q, correct) {
-  recordResult(q.id, correct);
+  // 教科間でIDが衝突するため subject_cat:id 形式で記録（ミックスは出身カテゴリq._cat）
+  recordResult(`${sansuState.subject}_${q._cat || sansuState.cat}:${q.id}`, correct);
   if (correct) { sansuState.correct++; document.getElementById('sq-correct').textContent = sansuState.correct; }
   else { sansuState.wrong++; document.getElementById('sq-wrong').textContent = sansuState.wrong; }
 
@@ -1616,6 +1661,7 @@ function endSansuSession() {
   document.getElementById('result-rate').textContent = `${score}点`;
   document.getElementById('result-comment').textContent = comment;
   renderResultCheer(score);
+  maybeAwardPerfect(score, total);
 
   document.getElementById('btn-result-home').onclick = () => {
     if (sansuState.subject === 'rika') { initRikaHome(); showScreen('rika-home'); }
@@ -1631,6 +1677,8 @@ function endSansuSession() {
   };
 
   showScreen('result');
+  checkTitlePromotion();
+  pushAchievementToRanking();
 }
 
 // ── テンキー共通 ────────────────────────────────────────
@@ -1877,6 +1925,13 @@ function endDrill() {
   document.getElementById('drill-result-comment').textContent = comment;
   document.getElementById('drill-result').classList.remove('hidden');
 
+  // 無制限モードで5問以上の満点ならアイテムボーナス
+  if (sansuState.drillTime === 0 && rate === 100 && total >= 5) {
+    const kind = randomItemKind();
+    addItem(kind, 1);
+    showToast(`${ITEM_DEFS[kind].icon} 満点ボーナス！「${ITEM_DEFS[kind].label}」ゲット！`, 3000);
+  }
+
   document.getElementById('drill-btn-again').onclick = () => startDrill();
   document.getElementById('drill-btn-home').onclick = () => { initSansuHome(); showScreen('sansu-home'); };
 }
@@ -1924,6 +1979,10 @@ function initTetris() {
     tUpdateSoundBtns();
   };
   tUpdateSoundBtns();
+  document.querySelectorAll('.t-item-btn').forEach(btn => {
+    btn.onclick = () => tUseItem(btn.dataset.item);
+  });
+  updateItemButtons();
   if (!tetris.controlsReady) { initTetrisControls(); tetris.controlsReady = true; }
   startTetris();
 }
@@ -1935,6 +1994,8 @@ function startTetris() {
   tetris.dropInterval = 800; tetris.lastDrop = 0;
   tetris.over = false; tetris.paused = false;
   tetris.next = null;
+  tetris.slowUntil = 0;
+  document.querySelectorAll('.t-item-btn').forEach(b => b.classList.remove('item-active'));
   document.getElementById('tetris-overlay').classList.add('hidden');
   document.getElementById('tetris-pause').textContent = '⏸';
   tSpawn();
@@ -2082,7 +2143,9 @@ function tGameOver() {
 function tLoop(ts) {
   if (tetris.over || tetris.paused) return;
   if (!tetris.lastDrop) tetris.lastDrop = ts;
-  if (ts - tetris.lastDrop > tetris.dropInterval) {
+  // スローアイテム効果中は落下1/3速
+  const slowFactor = performance.now() < (tetris.slowUntil || 0) ? 3 : 1;
+  if (ts - tetris.lastDrop > tetris.dropInterval * slowFactor) {
     tSoftDrop(false);
     tetris.lastDrop = ts;
   }
@@ -2443,4 +2506,532 @@ function tCharsCheer(lines) {
   tChars.mood = 'cheer';
   tChars.moodUntil = Date.now() + (lines >= 4 ? 3000 : 1500);
   tChars.bubble = lines >= 4 ? '4ライン！すごいで！' : T_CHEERS[Math.floor(Math.random() * T_CHEERS.length)];
+}
+
+// ============================================================
+// ゲーミフィケーション（達成率・称号・ログインボーナス・アイテム）
+// ============================================================
+
+// 教科→カテゴリ→問題数（データは静的なのでハードコード。問題追加時はここを更新）
+const QUESTION_COUNTS = {
+  kokugo: { kotowaza: 500, kanyoku: 500, yojijukugo: 500, gairaigo: 400, kanji_kaki: 480, kanji_yomi: 480,
+            kokugo_keigo: 160, kokugo_goi: 160, kokugo_bushu: 160, kokugo_bungaku: 160 },   // 3,500
+  sansu:  { keisan: 480, bun: 480, zu: 480, kisoku: 480, tokusan: 240, baai: 240, kazu: 240,
+            wariai: 240, hayasa: 240, rittai: 240 },                                         // 3,360
+  rika:   { shokubutsu: 480, doubutsu: 480, sora: 480, mono: 480, daichi: 240, suiyoueki: 240,
+            denki: 240, chikara: 240 },                                                      // 2,880
+  shakai: { kokudo: 320, sangyo: 320, rekishi: 320, komin: 320 },                            // 1,280
+};
+const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
+// 称号判定は灘中3教科（社会は表示のみ）
+const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika'];
+
+// 旧形式の素ID→カテゴリ振り分け表（衝突プレフィックスは複数カテゴリに寛大加算）
+const ID_PREFIX_MAP = {
+  k: ['kokugo:kotowaza'], y: ['kokugo:kanyoku'], j: ['kokugo:yojijukugo'], g: ['kokugo:gairaigo'],
+  kk: ['kokugo:kanji_kaki'], ky: ['kokugo:kanji_yomi'], kg: ['kokugo:kokugo_keigo'],
+  gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
+  sk: ['sansu:keisan', 'shakai:kokudo'],
+  sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
+  rd: ['rika:doubutsu', 'rika:denki'],
+  sb: ['sansu:bun'], sz: ['sansu:zu'], st: ['sansu:tokusan'], sc: ['sansu:baai'],
+  sn: ['sansu:kazu'], sw: ['sansu:wariai'], sh: ['sansu:hayasa'],
+  rp: ['rika:shokubutsu'], rk: ['rika:sora'], rg: ['rika:daichi'], rm: ['rika:mono'],
+  rs: ['rika:suiyoueki'], rc: ['rika:chikara'],
+  ss: ['shakai:sangyo'], sm: ['shakai:komin'],
+};
+
+const TITLES = [
+  { name: '普通の小学生', pct: 0,  icon: '🎒' },
+  { name: '優等生',       pct: 1,  icon: '📝' },
+  { name: 'Hクラス',      pct: 3,  icon: '📗' },
+  { name: 'Sクラス',      pct: 8,  icon: '📘' },
+  { name: '最レ受講生',   pct: 11, icon: '📙' },
+  { name: 'Vクラス',      pct: 15, icon: '📕' },
+  { name: '100傑',        pct: 30, icon: '🥉' },
+  { name: '灘合受講者',   pct: 50, icon: '🥈' },
+  { name: '10傑',         pct: 75, icon: '🥇' },
+  { name: 'スーパーウルトラ神ゴッド', pct: 95, icon: '👑' },
+];
+
+const ITEM_DEFS = {
+  bomb: { icon: '💣', label: 'ボム',   desc: '盤面の下2行を消す' },
+  slow: { icon: '🐢', label: 'スロー', desc: '15秒間ゆっくり落ちる' },
+};
+
+// ── 達成率の集計（一度でも正解した問題＝クリア） ──────────
+function buildClearedSets() {
+  const sets = {};
+  for (const [s, cats] of Object.entries(QUESTION_COUNTS)) {
+    for (const c of Object.keys(cats)) sets[`${s}:${c}`] = new Set();
+  }
+  const prog = getProgress();
+  for (const [key, p] of Object.entries(prog)) {
+    if (!p || !p.correct) continue;
+    const ci = key.indexOf(':');
+    if (ci > 0) {
+      // 新形式 subject_cat:id
+      const head = key.slice(0, ci);
+      const ui = head.indexOf('_');
+      if (ui < 0) continue;
+      const bucket = `${head.slice(0, ui)}:${head.slice(ui + 1)}`;
+      if (sets[bucket]) sets[bucket].add(key.slice(ci + 1));
+    } else {
+      // 旧素ID：プレフィックスで振り分け（Setなので新キーと重複しても二重計上されない）
+      const m = key.match(/^[a-zA-Z]+/);
+      if (!m) continue;
+      const targets = ID_PREFIX_MAP[m[0]];
+      if (targets) targets.forEach(b => { if (sets[b]) sets[b].add(key); });
+    }
+  }
+  return sets;
+}
+
+function getAchievement() {
+  const sets = buildClearedSets();
+  const subjects = {};
+  let titleCleared = 0, titleCount = 0;
+  for (const [s, cats] of Object.entries(QUESTION_COUNTS)) {
+    let sc = 0, st = 0;
+    const catInfo = {};
+    for (const [c, n] of Object.entries(cats)) {
+      const cleared = Math.min(sets[`${s}:${c}`].size, n);
+      catInfo[c] = { cleared, count: n, pct: n ? Math.floor((cleared / n) * 100) : 0 };
+      sc += cleared; st += n;
+    }
+    subjects[s] = { cleared: sc, count: st, pct: st ? Math.floor((sc / st) * 100) : 0, cats: catInfo };
+    if (TITLE_SUBJECTS.includes(s)) { titleCleared += sc; titleCount += st; }
+  }
+  const titlePct = titleCount ? (titleCleared / titleCount) * 100 : 0;
+  return { titlePct, titleCleared, titleCount, subjects };
+}
+
+function getTitleInfo(titlePct) {
+  let idx = 0;
+  for (let i = TITLES.length - 1; i >= 0; i--) {
+    if (titlePct >= TITLES[i].pct) { idx = i; break; }
+  }
+  const next = TITLES[idx + 1] || null;
+  return { idx, name: TITLES[idx].name, icon: TITLES[idx].icon,
+           next: next ? next.name : null, nextPct: next ? next.pct : null };
+}
+
+// ── 日付・プレイ時間 ──────────────────────────────────────
+function todayStr(d = new Date()) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function getPlayTimeData() {
+  return JSON.parse(localStorage.getItem('playTime') || '{"total":0,"byDate":{}}');
+}
+function addPlayTime(sec) {
+  sec = Math.min(Math.max(0, Math.round(sec)), 3600); // 放置ガード
+  if (!sec) return;
+  const pt = getPlayTimeData();
+  pt.total += sec;
+  const t = todayStr();
+  pt.byDate[t] = (pt.byDate[t] || 0) + sec;
+  const keys = Object.keys(pt.byDate).sort();
+  while (keys.length > 30) delete pt.byDate[keys.shift()]; // 直近30日のみ保持
+  localStorage.setItem('playTime', JSON.stringify(pt));
+}
+function getPlayTime() {
+  const pt = getPlayTimeData();
+  return { total: pt.total || 0, today: pt.byDate[todayStr()] || 0 };
+}
+function formatMinutes(sec) {
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min}分`;
+  return `${Math.floor(min / 60)}時間${min % 60}分`;
+}
+
+// プレイ時間の計測（勉強画面に入ったら開始、出たら加算。テトリスは含めない）
+const PLAY_SCREENS = ['flash', 'quiz', 'fill', 'kanji', 'sansu-quiz', 'drill'];
+let playStart = null;
+let currentScreenId = '';
+function flushPlayTime() {
+  if (playStart) { addPlayTime((Date.now() - playStart) / 1000); playStart = null; }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) flushPlayTime();
+  else if (PLAY_SCREENS.includes(currentScreenId) && !playStart) playStart = Date.now();
+});
+window.addEventListener('pagehide', flushPlayTime);
+
+// ── アイテム ──────────────────────────────────────────────
+function getItems() {
+  return JSON.parse(localStorage.getItem('items') || '{"bomb":0,"slow":0}');
+}
+function addItem(kind, n) {
+  const items = getItems();
+  items[kind] = Math.max(0, Math.min(99, (items[kind] || 0) + n));
+  localStorage.setItem('items', JSON.stringify(items));
+  return items[kind];
+}
+function randomItemKind() {
+  return Math.random() < 0.5 ? 'bomb' : 'slow';
+}
+
+// ── 汎用演出モーダル（連続表示はキューで順番に） ──────────
+const gamiQueue = [];
+function showGamiModal(data) {
+  const modal = document.getElementById('gami-modal');
+  if (!modal.classList.contains('hidden')) { gamiQueue.push(data); return; }
+  document.getElementById('gami-emoji').textContent = data.emoji || '🎉';
+  document.getElementById('gami-title').textContent = data.title || '';
+  const body = document.getElementById('gami-lines');
+  body.innerHTML = '';
+  (data.lines || []).forEach(l => {
+    const p = document.createElement('p');
+    p.textContent = l;
+    body.appendChild(p);
+  });
+  modal.classList.remove('hidden');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('gami-close').onclick = () => {
+    document.getElementById('gami-modal').classList.add('hidden');
+    if (gamiQueue.length) setTimeout(() => showGamiModal(gamiQueue.shift()), 150);
+  };
+});
+
+// ── ログインボーナス（initSubjectから毎回呼ばれても冪等） ──
+function getLoginInfo() {
+  return JSON.parse(localStorage.getItem('loginBonus') || 'null') || { lastDate: '', streak: 0, best: 0 };
+}
+function checkLoginBonus() {
+  const today = todayStr();
+  const lb = getLoginInfo();
+  if (lb.lastDate === today) return;
+  const yesterday = todayStr(new Date(Date.now() - 86400000));
+  lb.streak = lb.lastDate === yesterday ? lb.streak + 1 : 1;
+  lb.best = Math.max(lb.best || 0, lb.streak);
+  lb.lastDate = today;
+  localStorage.setItem('loginBonus', JSON.stringify(lb));
+
+  // 個数：通常1、3日連続=2、7の倍数=3、30日=5
+  let n = 1, note = '今日もようきたな！';
+  if (lb.streak === 30) { n = 5; note = '30日連続！ほんまにえらいで！'; }
+  else if (lb.streak >= 7 && lb.streak % 7 === 0) { n = 3; note = `${lb.streak}日連続はすごいで！`; }
+  else if (lb.streak === 3) { n = 2; note = '3日連続ボーナスや！'; }
+  const got = [];
+  for (let i = 0; i < n; i++) {
+    const kind = randomItemKind();
+    addItem(kind, 1);
+    got.push(ITEM_DEFS[kind].icon);
+  }
+  showGamiModal({
+    emoji: '🔥',
+    title: lb.streak >= 2 ? `${lb.streak}日連続ログイン！` : 'ログインボーナス！',
+    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, 'テトリスで使えるで！'],
+  });
+}
+
+// ── 問題追加の検知（総問題数が増えたらトースト） ──────────
+function checkNewQuestions() {
+  const total = Object.values(QUESTION_COUNTS)
+    .reduce((a, cats) => a + Object.values(cats).reduce((x, y) => x + y, 0), 0);
+  const seen = Number(localStorage.getItem('qTotalSeen') || 0);
+  if (seen && total > seen) {
+    showToast(`🎉 新しい問題が${(total - seen).toLocaleString()}問追加されたで！`, 3500);
+  }
+  if (total !== seen) localStorage.setItem('qTotalSeen', String(total));
+}
+
+// ── 称号昇格チェック ──────────────────────────────────────
+function checkTitlePromotion() {
+  const a = getAchievement();
+  const info = getTitleInfo(a.titlePct);
+  const seen = Number(localStorage.getItem('titleRank') || 0);
+  if (info.idx > seen) {
+    localStorage.setItem('titleRank', String(info.idx));
+    showGamiModal({
+      emoji: info.icon,
+      title: '称号アップ！',
+      lines: [`きみは今日から『${info.name}』や！`, 'この調子で全問制覇を目指そう！'],
+    });
+  } else if (info.idx < seen) {
+    localStorage.setItem('titleRank', String(info.idx));
+  }
+  return info;
+}
+
+// ── 100点報酬（5問以上のセッションのみ） ──────────────────
+function maybeAwardPerfect(pct, totalQ) {
+  const banner = document.getElementById('result-item-banner');
+  if (banner) banner.classList.add('hidden');
+  if (pct < 100 || totalQ < 5) return;
+  const kind = randomItemKind();
+  addItem(kind, 1);
+  if (banner) {
+    banner.textContent = `${ITEM_DEFS[kind].icon} 満点ボーナス！テトリスで使える「${ITEM_DEFS[kind].label}」をゲット！`;
+    banner.classList.remove('hidden');
+  }
+}
+
+// 達成率をFirestoreランキングへ（オフライン時はfirebase.js側でスキップ）
+function pushAchievementToRanking() {
+  if (!state.nickname || typeof saveAchievement !== 'function') return;
+  const a = getAchievement();
+  const t = getTitleInfo(a.titlePct);
+  saveAchievement(state.nickname, Math.round(a.titlePct * 10) / 10, a.titleCleared, t.idx);
+}
+
+// ── テトリスお助けアイテム ────────────────────────────────
+function updateItemButtons() {
+  const items = getItems();
+  document.querySelectorAll('.t-item-btn').forEach(btn => {
+    const kind = btn.dataset.item;
+    const n = items[kind] || 0;
+    const b = btn.querySelector('b');
+    if (b) b.textContent = n;
+    btn.disabled = n <= 0;
+  });
+}
+
+function tUseItem(kind) {
+  if (tetris.over || tetris.paused) return;
+  const items = getItems();
+  if ((items[kind] || 0) <= 0) return;
+
+  if (kind === 'bomb') {
+    const bottom = tetris.board.slice(T_ROWS - 2);
+    if (bottom.every(row => row.every(v => !v))) { showToast('下がカラやから今は使えへんで！'); return; }
+    tetris.board.splice(T_ROWS - 2, 2);
+    tetris.board.unshift(Array(T_COLS).fill(null), Array(T_COLS).fill(null));
+    tSfx('clear1');
+    tCharsCheer(1);
+  } else if (kind === 'slow') {
+    if (performance.now() < (tetris.slowUntil || 0)) { showToast('スローはもう効いてるで！'); return; }
+    tetris.slowUntil = performance.now() + 15000;
+    const btn = document.querySelector('.t-item-btn[data-item="slow"]');
+    if (btn) {
+      btn.classList.add('item-active');
+      setTimeout(() => btn.classList.remove('item-active'), 15000);
+    }
+    tSfx('rotate');
+  }
+  addItem(kind, -1);
+  updateItemButtons();
+  drawTetris();
+}
+
+// ── ミックス出題（算数・理科・社会） ──────────────────────
+SANSU_CAT_LABELS.mix = 'ミックス';
+RIKA_CAT_LABELS.mix = 'ミックス';
+SHAKAI_CAT_LABELS.mix = 'ミックス';
+
+async function loadMixQuestions(grade, diff) {
+  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
+    : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+  const cats = Object.keys(fileMap);
+  const lists = await Promise.all(cats.map(c => loadSansuQuestions(c, grade, diff).catch(() => [])));
+  const all = [];
+  lists.forEach((qs, i) => qs.forEach(q => all.push({ ...q, _cat: cats[i] })));
+  return all;
+}
+
+// ── 終了バッジ（単元✅・学年👑） ──────────────────────────
+function setClearBadge(btn, on, icon) {
+  let b = btn.querySelector('.clear-badge');
+  if (on) {
+    if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; btn.appendChild(b); }
+    b.textContent = icon;
+  } else if (b) {
+    b.remove();
+  }
+}
+
+function renderCatBadges(subject) {
+  const sets = buildClearedSets();
+  const counts = QUESTION_COUNTS[subject];
+  const conf = {
+    kokugo: ['#screen-home .cat-card', 'cat'],
+    sansu:  ['#screen-sansu-home .sansu-cat-btn', 'scat'],
+    rika:   ['.rika-cat-btn', 'rcat'],
+    shakai: ['.shakai-cat-btn', 'hcat'],
+  }[subject];
+  document.querySelectorAll(conf[0]).forEach(btn => {
+    const cat = btn.dataset[conf[1]];
+    if (!cat || cat === 'mix' || !counts[cat]) { setClearBadge(btn, false); return; }
+    const set = sets[`${subject}:${cat}`];
+    setClearBadge(btn, !!set && set.size >= counts[cat], '✅');
+  });
+}
+
+// 学年👑：その学年の全問題（教科内全カテゴリ）をコンプしたら表示
+async function renderGradeCrowns(subject) {
+  try {
+    const sets = buildClearedSets();
+    const byGrade = {};
+    if (subject === 'kokugo') {
+      // 国語は漢字2カテゴリの学年別のみ
+      for (const cat of KANJI_CATS) {
+        const qs = await loadQuestions(cat);
+        const set = sets[`kokugo:${cat}`];
+        qs.forEach(q => {
+          if (!q.grade) return;
+          if (!byGrade[q.grade]) byGrade[q.grade] = { total: 0, cleared: 0 };
+          byGrade[q.grade].total++;
+          if (set && set.has(q.id)) byGrade[q.grade].cleared++;
+        });
+      }
+    } else {
+      const fileMap = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+      for (const [cat, file] of Object.entries(fileMap)) {
+        const key = `${subject}-${cat}`;
+        if (!sansuCache[key]) {
+          const res = await fetch(file);
+          sansuCache[key] = await res.json();
+        }
+        const set = sets[`${subject}:${cat}`];
+        sansuCache[key].forEach(q => {
+          if (!q.grade) return;
+          if (!byGrade[q.grade]) byGrade[q.grade] = { total: 0, cleared: 0 };
+          byGrade[q.grade].total++;
+          if (set && set.has(q.id)) byGrade[q.grade].cleared++;
+        });
+      }
+    }
+    const btnSel = {
+      kokugo: '.kokugo-grade-btn',
+      sansu:  '#screen-sansu-home .grade-btn',
+      rika:   '.rika-grade-btn',
+      shakai: '.shakai-grade-btn',
+    }[subject];
+    document.querySelectorAll(btnSel).forEach(btn => {
+      const g = Number(btn.dataset.grade);
+      const info = byGrade[g];
+      setClearBadge(btn, !!(info && info.total > 0 && info.cleared >= info.total), '👑');
+    });
+  } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
+}
+
+// ── がんばりの記録画面 ────────────────────────────────────
+function gamiCatLabel(subject, cat) {
+  if (subject === 'kokugo') return (CATEGORIES[cat] || {}).label || cat;
+  const map = subject === 'rika' ? RIKA_CAT_LABELS : subject === 'shakai' ? SHAKAI_CAT_LABELS : SANSU_CAT_LABELS;
+  return map[cat] || cat;
+}
+
+function initRecord() {
+  const a = getAchievement();
+  const info = checkTitlePromotion();
+
+  // 称号ヒーロー
+  document.getElementById('record-title-icon').textContent = info.icon;
+  document.getElementById('record-title-name').textContent = info.name;
+  document.getElementById('record-nickname').textContent = state.nickname ? `${state.nickname} さん` : '';
+
+  // 達成率
+  document.getElementById('record-total-pct').textContent = Math.floor(a.titlePct * 10) / 10;
+  document.getElementById('record-total-bar').style.width = Math.min(100, a.titlePct) + '%';
+  document.getElementById('record-cleared').textContent =
+    `クリアした問題：${a.titleCleared.toLocaleString()} / ${a.titleCount.toLocaleString()}問（一度でも正解した問題）`;
+  const nextEl = document.getElementById('record-next');
+  if (info.next) {
+    const remain = Math.max(1, Math.ceil((info.nextPct / 100) * a.titleCount) - a.titleCleared);
+    nextEl.textContent = `次の称号『${info.next}』まで あと${remain.toLocaleString()}問！`;
+  } else {
+    nextEl.textContent = '最高称号を制覇！でんせつの小学生や！';
+  }
+
+  // 教科別（タップで単元内訳を開閉）
+  const subjEl = document.getElementById('record-subjects');
+  subjEl.innerHTML = '';
+  for (const [s, data] of Object.entries(a.subjects)) {
+    const wrap = document.createElement('div');
+    wrap.className = 'record-subject';
+
+    const head = document.createElement('div');
+    head.className = 'record-subj-head';
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = `${SUBJECT_LABELS[s]}${TITLE_SUBJECTS.includes(s) ? '' : '（称号判定外）'}`;
+    const numSpan = document.createElement('span');
+    numSpan.className = 'rs-num';
+    numSpan.textContent = `${data.cleared.toLocaleString()}/${data.count.toLocaleString()}（${data.pct}%）▾`;
+    head.appendChild(nameSpan); head.appendChild(numSpan);
+
+    const track = document.createElement('div');
+    track.className = 'bar-track';
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill';
+    fill.style.width = data.pct + '%';
+    track.appendChild(fill);
+
+    const catsDiv = document.createElement('div');
+    catsDiv.className = 'record-cats hidden';
+    for (const [c, ci] of Object.entries(data.cats)) {
+      const row = document.createElement('div');
+      row.className = 'record-cat-row';
+      row.innerHTML = `<span class="rc-name"></span><div class="bar-track"><div class="bar-fill"></div></div><span class="rc-num"></span>`;
+      row.querySelector('.rc-name').textContent = gamiCatLabel(s, c);
+      row.querySelector('.bar-fill').style.width = ci.pct + '%';
+      row.querySelector('.rc-num').textContent = `${ci.cleared}/${ci.count}${ci.cleared >= ci.count ? ' ✅' : ''}`;
+      catsDiv.appendChild(row);
+    }
+
+    wrap.onclick = () => catsDiv.classList.toggle('hidden');
+    wrap.appendChild(head); wrap.appendChild(track); wrap.appendChild(catsDiv);
+    subjEl.appendChild(wrap);
+  }
+
+  // 勉強時間
+  const pt = getPlayTime();
+  document.getElementById('record-time-today').textContent = formatMinutes(pt.today);
+  document.getElementById('record-time-total').textContent = formatMinutes(pt.total);
+
+  // 連続ログイン
+  const lb = getLoginInfo();
+  document.getElementById('record-login').textContent =
+    `🔥 ${lb.streak || 0}日連続べんきょう中！（最長 ${lb.best || 0}日）`;
+
+  // アイテム
+  const items = getItems();
+  const itemsEl = document.getElementById('record-items');
+  itemsEl.innerHTML = '';
+  for (const [kind, def] of Object.entries(ITEM_DEFS)) {
+    const div = document.createElement('div');
+    div.className = 'record-item';
+    div.innerHTML = `<span class="ri-icon"></span><span class="ri-count"></span><span class="ri-desc"></span>`;
+    div.querySelector('.ri-icon').textContent = def.icon;
+    div.querySelector('.ri-count').textContent = `${def.label} ×${items[kind] || 0}`;
+    div.querySelector('.ri-desc').textContent = def.desc;
+    itemsEl.appendChild(div);
+  }
+
+  // ランキング（Firestore・非同期）
+  const rankEl = document.getElementById('record-ranking');
+  rankEl.innerHTML = '<p class="record-rank-empty">読み込み中…</p>';
+  pushAchievementToRanking();
+  if (typeof getAchievementRanking === 'function') {
+    getAchievementRanking().then(renderRecordRanking).catch(() => renderRecordRanking(null));
+  } else {
+    renderRecordRanking(null);
+  }
+}
+
+function renderRecordRanking(list) {
+  const el = document.getElementById('record-ranking');
+  el.innerHTML = '';
+  if (!list) {
+    el.innerHTML = '<p class="record-rank-empty">オフラインでは見られへんで</p>';
+    return;
+  }
+  if (list.length === 0) {
+    el.innerHTML = '<p class="record-rank-empty">まだデータがないで。1回テストしてみよう！</p>';
+    return;
+  }
+  const medals = ['🥇', '🥈', '🥉'];
+  list.forEach((e, i) => {
+    const t = TITLES[e.titleIdx] || TITLES[0];
+    const div = document.createElement('div');
+    div.className = 'rank-item' + (e.nickname === state.nickname ? ' me' : '');
+    const numClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+    div.innerHTML = `<div class="rank-num ${numClass}"></div><div class="rank-name"></div><div class="rank-rate"></div>`;
+    div.querySelector('.rank-num').textContent = medals[i] || (i + 1);
+    div.querySelector('.rank-name').textContent = `${t.icon} ${e.nickname}${e.nickname === state.nickname ? ' ★' : ''}`;
+    div.querySelector('.rank-rate').textContent = `${e.pct}%`;
+    el.appendChild(div);
+  });
 }

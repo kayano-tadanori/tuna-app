@@ -43,6 +43,7 @@
   <header class="top-bar">
     <h1 class="top-title">オトン学園</h1>
     <div class="user-info">
+      <span id="subject-title-badge" class="title-badge"></span>
       <span id="subject-nickname"></span>
       <button id="btn-subject-char" class="icon-btn" title="キャラクター紹介">🎭</button>
       <button id="btn-subject-change" class="icon-btn" title="ユーザー切替">👤</button>
@@ -56,6 +57,15 @@
         <p id="otton-msg" class="otton-msg">「科目を選んで、<br>今日も一緒に頑張ろうや！」</p>
       </div>
     </div>
+
+    <button id="btn-record" class="subject-card subject-card-record">
+      <span class="record-card-icon">🏅</span>
+      <span class="record-card-text">
+        <span class="subject-name">がんばりの記録</span>
+        <span id="record-mini" class="subject-detail"></span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
 
     <p class="section-label">科目を選ぼう！</p>
     <div class="subject-grid">
@@ -417,6 +427,7 @@
       </div>
     </div>
     <div id="result-hanamaru" class="hanamaru hidden">💮</div>
+    <div id="result-item-banner" class="result-item-banner hidden"></div>
     <div class="result-actions">
       <button id="btn-result-home" class="btn-primary">ホームへ</button>
       <button id="btn-result-retry" class="btn-secondary">もう一度</button>
@@ -475,6 +486,60 @@
     <section class="weak-section">
       <h3>苦手問題（正解率50%以下）</h3>
       <div id="weak-list"></div>
+    </section>
+  </div>
+</div>
+
+<!-- =============== がんばりの記録 =============== -->
+<div id="screen-record" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <h2 class="top-title">🏅 がんばりの記録</h2>
+  </header>
+  <div class="record-main">
+    <div class="record-hero">
+      <div id="record-title-icon" class="record-title-icon"></div>
+      <p class="record-title-label">いまの称号</p>
+      <p id="record-title-name" class="record-title-name"></p>
+      <p id="record-nickname" class="record-nickname"></p>
+    </div>
+
+    <section class="record-section">
+      <h3 class="record-h">🎯 達成率（国語・算数・理科）</h3>
+      <div class="record-total-pct"><b id="record-total-pct">0</b><span>%</span></div>
+      <div class="bar-track"><div id="record-total-bar" class="bar-fill"></div></div>
+      <p id="record-cleared" class="record-note"></p>
+      <p id="record-next" class="record-next"></p>
+    </section>
+
+    <section class="record-section">
+      <h3 class="record-h">🏆 達成率ランキング</h3>
+      <div id="record-ranking" class="record-ranking"></div>
+    </section>
+
+    <section class="record-section">
+      <h3 class="record-h">📚 教科べつ達成率<span class="record-h-sub">タップで単元べつ</span></h3>
+      <div id="record-subjects"></div>
+      <p class="record-note">※称号は国語・算数・理科の達成率で判定するで</p>
+    </section>
+
+    <section class="record-section">
+      <h3 class="record-h">⏱ 勉強時間</h3>
+      <div class="record-tiles">
+        <div class="record-tile"><span>今日</span><b id="record-time-today">0分</b></div>
+        <div class="record-tile"><span>合計</span><b id="record-time-total">0分</b></div>
+      </div>
+    </section>
+
+    <section class="record-section">
+      <h3 class="record-h">🔥 連続ログイン</h3>
+      <p id="record-login" class="record-login"></p>
+    </section>
+
+    <section class="record-section">
+      <h3 class="record-h">🎁 お助けアイテム</h3>
+      <div id="record-items" class="record-items"></div>
+      <p class="record-note">100点満点かログインボーナスでもらえるで！テトリスで使おう！</p>
     </section>
   </div>
 </div>
@@ -575,6 +640,9 @@
     <!-- STEP3 カテゴリ選択（通常問題・グループ分類） -->
     <div id="sansu-step-cat" class="sansu-step hidden">
       <section class="section-label"><span class="step-badge">STEP 3</span>カテゴリを選ぼう</section>
+      <div class="sansu-cat-grid">
+        <button class="sansu-cat-btn cat-mix-btn" data-scat="mix">🔀 ミックス<span class="mix-sub">全単元から出題</span></button>
+      </div>
       <p class="cat-group-label">🔢 数と計算</p>
       <div class="sansu-cat-grid">
         <button class="sansu-cat-btn" data-scat="keisan">計算</button>
@@ -679,6 +747,9 @@
     <!-- STEP2 カテゴリ選択（4分野） -->
     <div id="rika-step-cat" class="sansu-step hidden">
       <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <div class="sansu-cat-grid">
+        <button class="rika-cat-btn sansu-cat-btn cat-mix-btn" data-rcat="mix">🔀 ミックス<span class="mix-sub">全単元から出題</span></button>
+      </div>
       <p class="cat-group-label">🌱 生物</p>
       <div class="sansu-cat-grid">
         <button class="rika-cat-btn sansu-cat-btn" data-rcat="shokubutsu">植物</button>
@@ -753,6 +824,9 @@
     <!-- STEP2 カテゴリ選択 -->
     <div id="shakai-step-cat" class="sansu-step hidden">
       <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <div class="sansu-cat-grid">
+        <button class="shakai-cat-btn sansu-cat-btn cat-mix-btn" data-hcat="mix">🔀 ミックス<span class="mix-sub">全単元から出題</span></button>
+      </div>
       <p class="cat-group-label">🗾 地理</p>
       <div class="sansu-cat-grid">
         <button class="shakai-cat-btn sansu-cat-btn" data-hcat="kokudo">国土と自然</button>
@@ -958,6 +1032,10 @@
       </div>
     </div>
     <canvas id="tetris-chars" width="320" height="76"></canvas>
+    <div class="tetris-items">
+      <button class="t-item-btn" data-item="bomb">💣<b id="t-item-bomb">0</b><span>下2行消す</span></button>
+      <button class="t-item-btn" data-item="slow">🐢<b id="t-item-slow">0</b><span>15秒スロー</span></button>
+    </div>
     <div class="tetris-controls">
       <button class="tetris-btn" data-t="left">◀</button>
       <button class="tetris-btn tetris-btn-rot" data-t="rotate">⟳</button>
@@ -975,6 +1053,16 @@
 
 <!-- =============== トースト通知 =============== -->
 <div id="toast" class="toast hidden"></div>
+
+<!-- =============== ごほうび演出モーダル =============== -->
+<div id="gami-modal" class="gami-modal hidden">
+  <div class="gami-card">
+    <p id="gami-emoji" class="gami-emoji"></p>
+    <p id="gami-title" class="gami-title"></p>
+    <div id="gami-lines" class="gami-lines"></div>
+    <button id="gami-close" class="btn-primary">やったー！</button>
+  </div>
+</div>
 
 <!-- Firebase SDK (compat) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>

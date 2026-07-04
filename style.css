@@ -493,6 +493,76 @@ button { cursor: pointer; font-family: inherit; }
 .diff-sub { display: block; font-size: 0.62rem; font-weight: 700; opacity: 0.85; margin-top: 2px; }
 
 /* ── オトンテトリス（息抜きバナー） ── */
+/* ── ゲーミフィケーション（称号・記録・モーダル・アイテム） ── */
+.title-badge { font-size: 0.68rem; font-weight: 900; background: rgba(255,209,102,0.12); border: 1px solid rgba(255,186,0,0.35); color: var(--gold); border-radius: 20px; padding: 4px 9px; white-space: nowrap; }
+.subject-card-record { flex-direction: row; min-height: 0; padding: 13px 16px; gap: 12px; align-items: center; margin-bottom: 4px; width: 100%; --sc-accent: var(--grad-gold); --sc-glow: rgba(255,186,0,0.15); border-color: rgba(255,186,0,0.3); }
+.record-card-icon { font-size: 1.7rem; line-height: 1; }
+.record-card-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex: 1; }
+.subject-card-record .subject-name { font-size: 1rem; }
+.subject-card-record .subject-detail { text-align: left; }
+
+.record-main { padding: 14px 16px calc(30px + var(--safe-b)); display: flex; flex-direction: column; gap: 14px; }
+.record-hero { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 0 4px; }
+.record-title-icon { font-size: 3.4rem; line-height: 1; filter: drop-shadow(0 0 24px rgba(255,186,0,0.45)); }
+.record-title-label { font-size: 0.72rem; color: var(--sub2); font-weight: 700; letter-spacing: 0.1em; }
+.record-title-name { font-size: 1.5rem; font-weight: 900; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; line-height: 1.3; }
+.record-nickname { font-size: 0.85rem; color: var(--sub2); font-weight: 700; }
+.record-section { background: var(--card); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 15px 16px; }
+.record-h { font-size: 0.9rem; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.record-h-sub { font-size: 0.68rem; color: var(--sub2); font-weight: 700; margin-left: auto; }
+.record-total-pct { text-align: center; margin-bottom: 8px; }
+.record-total-pct b { font-size: 2.6rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.record-total-pct span { font-size: 1.1rem; color: var(--sub2); font-weight: 800; }
+.record-next { font-size: 0.85rem; color: var(--gold); font-weight: 800; text-align: center; margin-top: 8px; }
+.record-note { font-size: 0.72rem; color: var(--sub2); margin-top: 8px; line-height: 1.6; }
+.record-ranking { display: flex; flex-direction: column; gap: 8px; }
+.record-rank-empty { font-size: 0.8rem; color: var(--sub2); text-align: center; padding: 8px 0; }
+.record-subject { margin-bottom: 10px; }
+.record-subject:last-child { margin-bottom: 0; }
+.record-subj-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 800; margin-bottom: 6px; }
+.record-subj-head .rs-num { color: var(--sub2); font-size: 0.75rem; font-weight: 700; }
+.record-cats { margin-top: 8px; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: var(--radius-xs); display: flex; flex-direction: column; gap: 7px; }
+.record-cat-row { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; }
+.record-cat-row .rc-name { width: 88px; flex-shrink: 0; color: var(--sub2); font-weight: 700; }
+.record-cat-row .bar-track { flex: 1; height: 7px; margin-bottom: 0; }
+.record-cat-row .rc-num { width: 74px; text-align: right; color: var(--sub2); flex-shrink: 0; }
+.record-tiles { display: flex; gap: 10px; }
+.record-tile { flex: 1; background: var(--card2); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.record-tile span { font-size: 0.72rem; color: var(--sub2); font-weight: 700; }
+.record-tile b { font-size: 1.15rem; font-weight: 900; color: var(--accent2); }
+.record-login { font-size: 1rem; font-weight: 900; }
+.record-items { display: flex; gap: 10px; }
+.record-item { flex: 1; background: var(--card2); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.record-item .ri-icon { font-size: 1.6rem; }
+.record-item .ri-count { font-size: 1rem; font-weight: 900; color: var(--gold); }
+.record-item .ri-desc { font-size: 0.62rem; color: var(--sub2); text-align: center; }
+
+.gami-modal { position: fixed; inset: 0; background: rgba(8,14,32,0.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 24px; }
+.gami-card { background: var(--card2); border: 1.5px solid rgba(255,186,0,0.4); border-radius: var(--radius-lg); padding: 26px 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; width: min(86vw, 340px); box-shadow: 0 12px 50px rgba(0,0,0,0.5), var(--glow-gold); animation: stepIn 0.3s cubic-bezier(0.2,1.3,0.4,1); }
+.gami-emoji { font-size: 3.2rem; line-height: 1; }
+.gami-title { font-size: 1.25rem; font-weight: 900; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
+.gami-lines { display: flex; flex-direction: column; gap: 4px; }
+.gami-lines p { font-size: 0.88rem; color: var(--text); font-weight: 700; text-align: center; line-height: 1.6; }
+#gami-close { margin-top: 8px; min-width: 160px; }
+
+.result-item-banner { background: rgba(255,209,102,0.1); border: 1.5px solid rgba(255,186,0,0.4); color: var(--gold); border-radius: var(--radius); padding: 11px 16px; font-size: 0.85rem; font-weight: 900; animation: stepIn 0.35s ease; }
+
+.tetris-items { display: flex; gap: 8px; justify-content: center; }
+.t-item-btn { display: flex; align-items: center; gap: 6px; background: var(--card2); border: 1.5px solid rgba(255,186,0,0.35); color: var(--text); border-radius: var(--radius-sm); padding: 8px 13px; font-size: 1.05rem; font-weight: 900; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.t-item-btn b { color: var(--gold); font-size: 0.95rem; }
+.t-item-btn span { font-size: 0.62rem; color: var(--sub2); font-weight: 700; }
+.t-item-btn:disabled { opacity: 0.35; }
+.t-item-btn.item-active { border-color: var(--green); box-shadow: var(--glow-green); }
+.t-item-btn:not(:disabled):active { transform: scale(0.94); }
+
+.cat-mix-btn { border-color: rgba(200,96,240,0.45) !important; background: rgba(200,96,240,0.08); }
+.cat-mix-btn .mix-sub { display: block; font-size: 0.62rem; color: var(--sub2); font-weight: 700; margin-top: 2px; }
+.cat-mix-btn.selected { background: linear-gradient(135deg,#8a5cff,#c860f0) !important; border-color: #c860f0 !important; }
+
+.clear-badge { position: absolute; top: 3px; right: 4px; font-size: 0.85rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); pointer-events: none; z-index: 2; }
+.sansu-cat-btn { position: relative; }
+.cat-card .clear-badge { top: 6px; right: 6px; }
+
 .subject-card-game {
   width: 100%; flex-direction: row; align-items: center; justify-content: flex-start;
   min-height: 0; padding: 16px 18px; gap: 14px; text-align: left;

@@ -110,5 +110,35 @@ async function getLeaderboard(category) {
   }
 }
 
+// ============================================================
+// 達成率ランキング（がんばりの記録）
+// ============================================================
+
+async function saveAchievement(nickname, pct, cleared, titleIdx) {
+  if (!firebaseReady || !nickname) return;
+  try {
+    await db.collection('achievement').doc(nickname).set({
+      pct, cleared, titleIdx,
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+  } catch (e) {
+    console.warn('達成率保存失敗:', e.message);
+  }
+}
+
+async function getAchievementRanking() {
+  if (!firebaseReady) return null;
+  try {
+    const snap = await db.collection('achievement')
+      .orderBy('pct', 'desc')
+      .limit(20)
+      .get();
+    return snap.docs.map(d => ({ nickname: d.id, ...d.data() }));
+  } catch (e) {
+    console.warn('達成率ランキング取得失敗:', e.message);
+    return null;
+  }
+}
+
 // DOM読み込み完了後に初期化
 document.addEventListener('DOMContentLoaded', initFirebase);
