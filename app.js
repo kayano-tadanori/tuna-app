@@ -1881,9 +1881,22 @@ const tetris = {
 
 function initTetris() {
   document.getElementById('tetris-best').textContent = localStorage.getItem('tetrisBest') || '0';
-  document.getElementById('tetris-back').onclick = () => { stopTetrisLoop(); showScreen('subject'); };
+  document.getElementById('tetris-back').onclick = () => { stopTetrisLoop(); tStopBgm(); tStopChars(); showScreen('subject'); };
   document.getElementById('tetris-pause').onclick = toggleTetrisPause;
   document.getElementById('tetris-restart').onclick = startTetris;
+  document.getElementById('tetris-bgm').onclick = () => {
+    tSound.bgm = !tSound.bgm;
+    localStorage.setItem('tetrisBgm', tSound.bgm ? '1' : '0');
+    if (tSound.bgm && !tetris.over && !tetris.paused) tStartBgm(); else tStopBgm();
+    tUpdateSoundBtns();
+  };
+  document.getElementById('tetris-sfx').onclick = () => {
+    tSound.sfx = !tSound.sfx;
+    localStorage.setItem('tetrisSfx', tSound.sfx ? '1' : '0');
+    if (tSound.sfx) tSfx('rotate'); // 確認音
+    tUpdateSoundBtns();
+  };
+  tUpdateSoundBtns();
   if (!tetris.controlsReady) { initTetrisControls(); tetris.controlsReady = true; }
   startTetris();
 }
@@ -1900,6 +1913,9 @@ function startTetris() {
   tSpawn();
   updateTetrisInfo();
   drawTetris();
+  tChars.mood = 'idle'; tChars.bubble = '';
+  tStartChars();
+  tStartBgm();
   tetris.rafId = requestAnimationFrame(tLoop);
 }
 
@@ -1914,8 +1930,10 @@ function toggleTetrisPause() {
   document.getElementById('tetris-pause').textContent = tetris.paused ? '▶' : '⏸';
   if (tetris.paused) {
     stopTetrisLoop();
+    tStopBgm();
   } else {
     tetris.lastDrop = 0;
+    tStartBgm();
     tetris.rafId = requestAnimationFrame(tLoop);
   }
 }
@@ -2005,14 +2023,27 @@ function tClearLines() {
     tetris.lines += cleared;
     tetris.level = Math.floor(tetris.lines / 10) + 1;
     tetris.dropInterval = Math.max(120, 800 - (tetris.level - 1) * 70);
+    tSfx(cleared >= 4 ? 'clear4' : 'clear1');
+    tCharsCheer(cleared);
   }
 }
 
 function tGameOver() {
   tetris.over = true;
   stopTetrisLoop();
+  tStopBgm();
   const prevBest = Number(localStorage.getItem('tetrisBest') || 0);
   const isNewBest = tetris.score > prevBest;
+  tSfx(isNewBest ? 'best' : 'over');
+  if (isNewBest) {
+    tChars.mood = 'cheer';
+    tChars.moodUntil = Date.now() + 5000;
+    tChars.bubble = 'ベスト更新や！すごいで！';
+  } else {
+    tChars.mood = 'idle';
+    tChars.bubble = 'ドンマイ！もう一回や！';
+    setTimeout(() => { if (tetris.over) tChars.bubble = ''; }, 4000);
+  }
   if (isNewBest) localStorage.setItem('tetrisBest', tetris.score);
   document.getElementById('tetris-best').textContent = Math.max(tetris.score, prevBest);
   document.getElementById('tetris-overlay-emoji').textContent = isNewBest ? '🏆' : '💥';
@@ -2107,11 +2138,11 @@ function drawTetrisNext() {
 
 function tetrisAction(act) {
   if (tetris.over || tetris.paused || !tetris.cur) return;
-  if (act === 'left' && !tCollide(tetris.cur.m, tetris.cur.x - 1, tetris.cur.y)) tetris.cur.x--;
-  else if (act === 'right' && !tCollide(tetris.cur.m, tetris.cur.x + 1, tetris.cur.y)) tetris.cur.x++;
-  else if (act === 'down') tSoftDrop(true);
-  else if (act === 'rotate') tTryRotate();
-  else if (act === 'drop') tHardDrop();
+  if (act === 'left' && !tCollide(tetris.cur.m, tetris.cur.x - 1, tetris.cur.y)) { tetris.cur.x--; tSfx('move'); }
+  else if (act === 'right' && !tCollide(tetris.cur.m, tetris.cur.x + 1, tetris.cur.y)) { tetris.cur.x++; tSfx('move'); }
+  else if (act === 'down') { tSfx('soft'); tSoftDrop(true); }
+  else if (act === 'rotate') { tSfx('rotate'); tTryRotate(); }
+  else if (act === 'drop') { tSfx('drop'); tHardDrop(); }
   updateTetrisInfo();
   drawTetris();
 }
@@ -2133,4 +2164,256 @@ function initTetrisControls() {
     btn.addEventListener('pointerleave', stopRepeat);
     btn.addEventListener('pointercancel', stopRepeat);
   });
+}
+
+// ============================================================
+// テトリス サウンド（Web Audioで自作・デフォルトOFF）
+// ============================================================
+
+const tSound = {
+  bgm: localStorage.getItem('tetrisBgm') === '1',
+  sfx: localStorage.getItem('tetrisSfx') === '1',
+  ctx: null, bgmTimer: null, step: 0,
+};
+
+function tAudioCtx() {
+  if (!tSound.ctx) tSound.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (tSound.ctx.state === 'suspended') tSound.ctx.resume();
+  return tSound.ctx;
+}
+
+function tTone(freq, dur, type, vol, delay, endFreq) {
+  const ac = tAudioCtx();
+  const t0 = ac.currentTime + (delay || 0);
+  const osc = ac.createOscillator();
+  const g = ac.createGain();
+  osc.type = type || 'square';
+  osc.frequency.setValueAtTime(freq, t0);
+  if (endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, t0 + dur);
+  g.gain.setValueAtTime(vol || 0.1, t0);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  osc.connect(g); g.connect(ac.destination);
+  osc.start(t0); osc.stop(t0 + dur + 0.05);
+}
+
+function tNote(n) {
+  const semis = { C: -9, D: -7, E: -5, F: -4, G: -2, A: 0, B: 2 };
+  return 440 * Math.pow(2, (semis[n[0]] + (Number(n[n.length - 1]) - 4) * 12) / 12);
+}
+
+function tSfx(kind) {
+  if (!tSound.sfx) return;
+  switch (kind) {
+    case 'move':   tTone(220, 0.05, 'square', 0.05); break;
+    case 'rotate': tTone(440, 0.07, 'square', 0.07); break;
+    case 'soft':   tTone(180, 0.04, 'triangle', 0.07); break;
+    case 'drop':   tTone(160, 0.15, 'square', 0.13, 0, 55); break;
+    case 'clear1': [660, 880].forEach((f, i) => tTone(f, 0.09, 'square', 0.11, i * 0.08)); break;
+    case 'clear4': [523, 659, 784, 1047, 1319].forEach((f, i) => tTone(f, 0.1, 'square', 0.12, i * 0.07)); break;
+    case 'over':   [392, 330, 262, 196].forEach((f, i) => tTone(f, 0.22, 'triangle', 0.13, i * 0.18)); break;
+    case 'best':   [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tTone(f, 0.12, 'square', 0.12, i * 0.1)); break;
+  }
+}
+
+// オリジナルのチップチューン風ループ（8分音符・0は休符）
+const T_MELODY = [
+  'A4','C5','E5','A5','G5','E5','F5','D5',
+  'E5','C5','D5','B4','C5','A4','B4','G4',
+  'A4','C5','E5','A5','B5','A5','G5','E5',
+  'F5','G5','A5','G5','E5','D5','C5','B4',
+  'A4','C5','E5','A5','G5','E5','F5','D5',
+  'E5','C5','D5','B4','C5','A4','B4','G4',
+  'C5','E5','G5','C6','B5','G5','A5','F5',
+  'E5','D5','C5','D5','E5',0,'A4',0,
+];
+const T_BASS = ['A2','F2','C3','G2','A2','F2','D3','E3',
+                'A2','F2','C3','G2','C3','G2','A2','A2'];
+
+function tStartBgm() {
+  tStopBgm();
+  if (!tSound.bgm) return;
+  tAudioCtx();
+  tSound.step = 0;
+  tSound.bgmTimer = setInterval(() => {
+    const n = T_MELODY[tSound.step % T_MELODY.length];
+    if (n) tTone(tNote(n), 0.18, 'square', 0.045);
+    if (tSound.step % 4 === 0) {
+      tTone(tNote(T_BASS[Math.floor(tSound.step / 4) % T_BASS.length]), 0.32, 'triangle', 0.08);
+    }
+    tSound.step++;
+  }, 220);
+}
+
+function tStopBgm() { clearInterval(tSound.bgmTimer); tSound.bgmTimer = null; }
+
+function tUpdateSoundBtns() {
+  document.getElementById('tetris-bgm').classList.toggle('on', tSound.bgm);
+  document.getElementById('tetris-sfx').classList.toggle('on', tSound.sfx);
+}
+
+// ============================================================
+// テトリス 応援キャラ（ドット絵：オットン・オカーン・チッチ）
+// ============================================================
+
+const T_SPRITES = {
+  otton: {
+    pal: { k: '#3a2a1e', w: '#ffffff', f: '#f5c9a2', e: '#222222', m: '#c0392b', s: '#4f7cff', p: '#233a7a', h: '#f5c9a2' },
+    idle: [
+      '............',
+      '...kkkkkk...',
+      '..kkkkkkkk..',
+      '..wwwwwwww..',
+      '..ffffffff..',
+      '..feffffef..',
+      '..ffffffff..',
+      '..fffmmfff..',
+      '...ffffff...',
+      '..ssssssss..',
+      '.hssssssssh.',
+      '.h.ssssss.h.',
+      '...pppppp...',
+      '...pp..pp...',
+    ],
+    cheer: [
+      '.h........h.',
+      '.h.kkkkkk.h.',
+      '..kkkkkkkk..',
+      '..wwwwwwww..',
+      '..ffffffff..',
+      '..feffffef..',
+      '..ffffffff..',
+      '..ffmmmmff..',
+      '...ffffff...',
+      '..ssssssss..',
+      '..ssssssss..',
+      '..ssssssss..',
+      '...pppppp...',
+      '...pp..pp...',
+    ],
+  },
+  okan: {
+    pal: { w: '#ffffff', k: '#6b4a2f', f: '#f5c9a2', e: '#222222', m: '#c0392b', v: '#e63c82', a: '#f7b6ce', h: '#f5c9a2' },
+    idle: [
+      '....wwww....',
+      '...wwwwww...',
+      '..wwwwwwww..',
+      '..kkkkkkkk..',
+      '..ffffffff..',
+      '..feffffef..',
+      '..ffffffff..',
+      '..fffmmfff..',
+      '...ffffff...',
+      '..vvvvvvvv..',
+      '.hvvvvvvvvh.',
+      '.h.aaaaaa.h.',
+      '...aaaaaa...',
+      '...aa..aa...',
+    ],
+    cheer: [
+      '.h........h.',
+      '.h..wwww..h.',
+      '..wwwwwwww..',
+      '..kkkkkkkk..',
+      '..ffffffff..',
+      '..feffffef..',
+      '..ffffffff..',
+      '..ffmmmmff..',
+      '...ffffff...',
+      '..vvvvvvvv..',
+      '..vvvvvvvv..',
+      '...aaaaaa...',
+      '...aaaaaa...',
+      '...aa..aa...',
+    ],
+  },
+  chicchi: {
+    pal: { y: '#ffd93b', d: '#e8b923', o: '#ff9d5c', r: '#e84a2e', e: '#222222', l: '#ff9d5c' },
+    idle: [
+      '..........',
+      '..........',
+      '..........',
+      '..........',
+      '...yyyy...',
+      '..yyyyyy..',
+      '..oooooo..',
+      '..oeooeo..',
+      '...rrrr...',
+      '..yyyyyy..',
+      '.dyyyyyyd.',
+      '.dyyyyyyd.',
+      '..yyyyyy..',
+      '...l..l...',
+    ],
+    cheer: [
+      '..........',
+      '..........',
+      '..........',
+      '..........',
+      '.d......d.',
+      '.d.yyyy.d.',
+      '..yyyyyy..',
+      '..oooooo..',
+      '..oeooeo..',
+      '...rrrr...',
+      '..yyyyyy..',
+      '..yyyyyy..',
+      '..yyyyyy..',
+      '...l..l...',
+    ],
+  },
+};
+
+const T_CHEERS = ['ええぞ！', 'やったな！', 'ナイスや！', 'その調子！', 'ピピッ♪', 'がんばってるやん！'];
+
+const tChars = { timer: null, tick: 0, mood: 'idle', moodUntil: 0, bubble: '' };
+
+function tDrawSprite(ctx, rows, pal, ox, oy, s) {
+  rows.forEach((row, r) => {
+    for (let c = 0; c < row.length; c++) {
+      const col = pal[row[c]];
+      if (col) { ctx.fillStyle = col; ctx.fillRect(ox + c * s, oy + r * s, s, s); }
+    }
+  });
+}
+
+function tDrawChars() {
+  const cv = document.getElementById('tetris-chars');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  if (tChars.mood === 'cheer' && Date.now() > tChars.moodUntil) { tChars.mood = 'idle'; tChars.bubble = ''; }
+
+  const s = 4;
+  [T_SPRITES.otton, T_SPRITES.okan, T_SPRITES.chicchi].forEach((sp, i) => {
+    const cheer = tChars.mood === 'cheer';
+    const frame = cheer && tChars.tick % 2 === 0 ? sp.cheer : sp.idle;
+    const bounce = cheer
+      ? (tChars.tick % 2 === 0 ? -5 : 0)
+      : Math.round(Math.sin((tChars.tick + i * 2) / 2) * 2);
+    const x = 32 + i * 104;
+    const y = cv.height - frame.length * s - 2 + bounce;
+    tDrawSprite(ctx, frame, sp.pal, x, y, s);
+  });
+
+  if (tChars.bubble) {
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = tChars.mood === 'cheer' ? '#ffd166' : '#9db2e8';
+    ctx.fillText(tChars.bubble, cv.width / 2, 13);
+  }
+  tChars.tick++;
+}
+
+function tStartChars() {
+  clearInterval(tChars.timer);
+  tChars.timer = setInterval(tDrawChars, 160);
+  tDrawChars();
+}
+
+function tStopChars() { clearInterval(tChars.timer); tChars.timer = null; }
+
+function tCharsCheer(lines) {
+  tChars.mood = 'cheer';
+  tChars.moodUntil = Date.now() + (lines >= 4 ? 3000 : 1500);
+  tChars.bubble = lines >= 4 ? '4ライン！すごいで！' : T_CHEERS[Math.floor(Math.random() * T_CHEERS.length)];
 }

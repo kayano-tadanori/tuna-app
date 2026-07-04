@@ -915,7 +915,11 @@
   <header class="top-bar">
     <button id="tetris-back" class="back-btn">‹ 戻る</button>
     <h2 class="top-title">オトンテトリス</h2>
-    <button id="tetris-pause" class="icon-btn">⏸</button>
+    <div class="tetris-head-btns">
+      <button id="tetris-bgm" class="icon-btn snd-btn" title="音楽">🎵</button>
+      <button id="tetris-sfx" class="icon-btn snd-btn" title="効果音">🔊</button>
+      <button id="tetris-pause" class="icon-btn">⏸</button>
+    </div>
   </header>
   <div class="tetris-area">
     <div class="tetris-info-row">
@@ -937,6 +941,7 @@
         <button id="tetris-restart" class="btn-primary">もう一回！</button>
       </div>
     </div>
+    <canvas id="tetris-chars" width="320" height="76"></canvas>
     <div class="tetris-controls">
       <button class="tetris-btn" data-t="left">◀</button>
       <button class="tetris-btn tetris-btn-rot" data-t="rotate">⟳</button>

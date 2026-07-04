@@ -492,6 +492,10 @@ button { cursor: pointer; font-family: inherit; }
 .game-blocks i:nth-child(3) { background: #28c88a; right: 22px; bottom: 12px; transform: rotate(25deg); }
 .game-blocks i:nth-child(4) { background: #ff4466; right: 62px; bottom: 20px; transform: rotate(-8deg); }
 .tetris-area { padding: 8px 16px calc(24px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; user-select: none; -webkit-user-select: none; }
+.tetris-head-btns { display: flex; gap: 2px; align-items: center; }
+.snd-btn { opacity: 0.3; transition: opacity 0.15s; }
+.snd-btn.on { opacity: 1; }
+#tetris-chars { width: min(84vw, 320px); height: auto; margin: 0 auto; display: block; image-rendering: pixelated; }
 .tetris-info-row { display: flex; gap: 6px; }
 .tetris-info { flex: 1; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-xs); padding: 5px 4px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
 .tetris-info span { font-size: 0.62rem; color: var(--sub2); font-weight: 700; }
