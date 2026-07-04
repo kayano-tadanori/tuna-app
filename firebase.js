@@ -140,5 +140,42 @@ async function getAchievementRanking() {
   }
 }
 
+// ============================================================
+// ミニゲームのスコアランキング（テトリス・おかんスイーパー）
+// ============================================================
+
+// better: 'max'=大きいほど良い（テトリス）, 'min'=小さいほど良い（スイーパーのタイム）
+async function saveGameScore(game, nickname, value, better) {
+  if (!firebaseReady || !nickname) return;
+  try {
+    const ref = db.collection('game_scores').doc(game).collection('scores').doc(nickname);
+    const snap = await ref.get();
+    if (snap.exists) {
+      const prev = snap.data().value;
+      if (better === 'max' ? value <= prev : value >= prev) return; // 自己ベストのみ更新
+    }
+    await ref.set({
+      value,
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (e) {
+    console.warn('ゲームスコア保存失敗:', e.message);
+  }
+}
+
+async function getGameRanking(game, dir) {
+  if (!firebaseReady) return null;
+  try {
+    const snap = await db.collection('game_scores').doc(game).collection('scores')
+      .orderBy('value', dir === 'min' ? 'asc' : 'desc')
+      .limit(10)
+      .get();
+    return snap.docs.map(d => ({ nickname: d.id, ...d.data() }));
+  } catch (e) {
+    console.warn('ゲームランキング取得失敗:', e.message);
+    return null;
+  }
+}
+
 // DOM読み込み完了後に初期化
 document.addEventListener('DOMContentLoaded', initFirebase);

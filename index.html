@@ -105,6 +105,14 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+    <button class="subject-card subject-card-game subject-card-mine" data-subject="mine">
+      <span class="game-icon">💣</span>
+      <span class="game-text">
+        <span class="subject-name">おかんスイーパー</span>
+        <span class="subject-detail">じらいをよけて ぜんぶ開けよう！</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
   </div>
 </div>
 
@@ -1008,6 +1016,7 @@
     <button id="tetris-back" class="back-btn">‹ 戻る</button>
     <h2 class="top-title">オトンテトリス</h2>
     <div class="tetris-head-btns">
+      <button id="tetris-rank" class="icon-btn" title="ランキング">🏆</button>
       <button id="tetris-bgm" class="icon-btn snd-btn" title="音楽">🎵</button>
       <button id="tetris-sfx" class="icon-btn snd-btn" title="効果音">🔊</button>
       <button id="tetris-pause" class="icon-btn">⏸</button>
@@ -1045,6 +1054,56 @@
       <button class="tetris-btn" data-t="down">▼</button>
       <button class="tetris-btn tetris-btn-drop" data-t="drop">⤓ 落とす</button>
     </div>
+  </div>
+</div>
+
+<!-- =============== おかんスイーパー =============== -->
+<div id="screen-mine" class="screen">
+  <header class="top-bar">
+    <button id="mine-back" class="back-btn">‹ 戻る</button>
+    <h2 class="top-title">おかんスイーパー</h2>
+    <div class="tetris-head-btns">
+      <button id="mine-rank" class="icon-btn" title="ランキング">🏆</button>
+      <button id="mine-bgm" class="icon-btn snd-btn" title="音楽">🎵</button>
+      <button id="mine-sfx" class="icon-btn snd-btn" title="効果音">🔊</button>
+    </div>
+  </header>
+  <div class="mine-area">
+    <div class="mine-diff-row">
+      <button class="mine-diff-btn" data-mdiff="easy">かんたん</button>
+      <button class="mine-diff-btn" data-mdiff="normal">ふつう</button>
+      <button class="mine-diff-btn" data-mdiff="hard">むずかしい</button>
+    </div>
+    <div class="tetris-info-row">
+      <div class="tetris-info"><span>💣のこり</span><b id="mine-left">0</b></div>
+      <div class="tetris-info"><span>⏱タイム</span><b id="mine-time">0</b></div>
+      <div class="tetris-info"><span>🏆ベスト</span><b id="mine-best">-</b></div>
+    </div>
+    <div class="mine-grid-wrap">
+      <div id="mine-grid" class="mine-grid"></div>
+      <div id="mine-overlay" class="tetris-overlay hidden">
+        <img id="mine-overlay-img" class="mine-overlay-img" src="images/okan-happy.png" alt="">
+        <p id="mine-overlay-text" class="tetris-overlay-text"></p>
+        <p id="mine-overlay-sub" class="tetris-overlay-score"></p>
+        <button id="mine-restart" class="btn-primary">もう一回！</button>
+      </div>
+    </div>
+    <canvas id="mine-chars" width="320" height="76"></canvas>
+    <div class="mine-ctrl-row">
+      <button id="mine-mode" class="mine-mode-btn">⛏ ほるモード</button>
+      <button class="t-item-btn" data-item="search">🔍<b id="m-item-search">0</b><span>安全マス</span></button>
+      <button class="t-item-btn" data-item="shield">🛡<b id="m-item-shield">0</b><span>1回セーフ</span></button>
+    </div>
+    <p class="mine-hint">長おしでも🚩を立てられるで</p>
+  </div>
+</div>
+
+<!-- =============== ゲームランキングモーダル =============== -->
+<div id="game-rank-modal" class="gami-modal hidden">
+  <div class="gami-card">
+    <p id="game-rank-title" class="gami-title">🏆 ランキング</p>
+    <div id="game-rank-list" class="record-ranking game-rank-list"></div>
+    <button id="game-rank-close" class="btn-primary">とじる</button>
   </div>
 </div>
 
