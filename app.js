@@ -720,6 +720,24 @@ function renderKanji() {
 // セッション終了・結果画面
 // ============================================================
 
+// 応援キャラ（オカーン・チッチ、満点時はオットンも）
+function renderResultCheer(pct) {
+  const perfect = pct >= 100;
+  document.getElementById('result-tensai').classList.toggle('hidden', !perfect);
+  document.getElementById('cheer-char-otton').classList.toggle('hidden', !perfect);
+  document.getElementById('result-hanamaru').classList.toggle('hidden', pct < 90);
+  document.getElementById('result-cheer').classList.toggle('jump', pct >= 80);
+
+  let okan, chicchi;
+  if (perfect)        { okan = '満点や！ようがんばった！'; chicchi = 'ピピーッ！！'; }
+  else if (pct >= 80) { okan = 'ようがんばった！'; chicchi = 'ええ感じやで〜！'; }
+  else if (pct >= 50) { okan = '復習したらもっと伸びるで！'; chicchi = 'ファイトやで！'; }
+  else                { okan = '大丈夫、まちがいは宝や！'; chicchi = 'ドンマイ！'; }
+  document.getElementById('cheer-bubble-okan').textContent = okan;
+  document.getElementById('cheer-bubble-chicchi').textContent = chicchi;
+  document.getElementById('cheer-bubble-otton').textContent = '天才や！';
+}
+
 function endSession() {
   const total = state.correct + state.wrong;
   const rate  = total > 0 ? Math.round((state.correct / total) * 100) : 0;
@@ -734,6 +752,7 @@ function endSession() {
     rate >= 50 ? 'もう少し！苦手問題を復習しよう' :
                  '基礎から見直してみよう。君ならできる！';
 
+  renderResultCheer(rate);
   showScreen('result');
 
   // Firestoreに保存
@@ -1589,6 +1608,7 @@ function endSansuSession() {
   document.getElementById('result-total').textContent = total;
   document.getElementById('result-rate').textContent = `${score}点`;
   document.getElementById('result-comment').textContent = comment;
+  renderResultCheer(score);
 
   document.getElementById('btn-result-home').onclick = () => {
     if (sansuState.subject === 'rika') { initRikaHome(); showScreen('rika-home'); }

@@ -268,7 +268,27 @@ button { cursor: pointer; font-family: inherit; }
 .fill-input-wrap .btn-primary { width: auto; padding: 14px 22px; font-size: 1rem; white-space: nowrap; }
 
 /* ===== 結果画面 ===== */
-.result-box { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100dvh; padding: 36px 24px calc(36px + var(--safe-b)); gap: 12px; text-align: center; background: radial-gradient(ellipse at 50% 30%,rgba(79,124,255,0.22),transparent 55%); }
+.result-box { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100dvh; padding: 36px 24px calc(36px + var(--safe-b)); gap: 12px; text-align: center; background: radial-gradient(ellipse at 50% 30%,rgba(79,124,255,0.22),transparent 55%); position: relative; }
+
+/* ── 結果画面の応援キャラ ── */
+.result-cheer { display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-top: 4px; }
+.cheer-char { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+.cheer-img { width: 84px; height: auto; animation: cheerBob 1.8s ease-in-out infinite; filter: drop-shadow(0 4px 14px rgba(0,0,0,0.35)); }
+.cheer-img-bird { width: 56px; }
+.cheer-char:nth-child(2) .cheer-img { animation-delay: 0.15s; }
+.cheer-char:nth-child(3) .cheer-img { animation-delay: 0.3s; }
+.result-cheer.jump .cheer-img { animation: cheerJump 0.6s ease-in-out infinite; }
+.result-cheer.jump .cheer-char:nth-child(2) .cheer-img { animation-delay: 0.1s; }
+.result-cheer.jump .cheer-char:nth-child(3) .cheer-img { animation-delay: 0.2s; }
+.cheer-bubble { background: #fff; color: #16224a; font-size: 0.72rem; font-weight: 800; border-radius: 12px; padding: 6px 9px; position: relative; max-width: 130px; text-align: center; line-height: 1.4; }
+.cheer-bubble::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #fff; }
+.cheer-bubble:empty { display: none; }
+@keyframes cheerBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes cheerJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+.tensai { font-size: 2.8rem; font-weight: 900; letter-spacing: 0.12em; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(255,186,0,0.55)); animation: tensaiPop 0.6s cubic-bezier(0.2,1.5,0.4,1) both; }
+@keyframes tensaiPop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.35); } 100% { transform: scale(1); opacity: 1; } }
+.hanamaru { position: absolute; top: 20%; right: 12%; font-size: 3.4rem; line-height: 1; animation: stampIn 0.5s 0.35s cubic-bezier(0.3,1.6,0.5,1) both; pointer-events: none; }
+@keyframes stampIn { 0% { transform: scale(3) rotate(-30deg); opacity: 0; } 100% { transform: scale(1) rotate(-12deg); opacity: 1; } }
 .result-emoji { font-size: 5rem; line-height: 1; filter: drop-shadow(0 0 30px rgba(255,186,0,0.45)); animation: resultBounce 0.6s cubic-bezier(0.2,0.8,0.2,1.4) both; }
 @keyframes resultBounce { 0% { transform:scale(0.5); opacity:0; } 60% { transform:scale(1.12); opacity:1; } 100% { transform:scale(1); } }
 .result-title { font-size: 0.82rem; font-weight: 800; color: var(--sub); letter-spacing: 0.18em; text-transform: uppercase; }
