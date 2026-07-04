@@ -364,6 +364,7 @@ button { cursor: pointer; font-family: inherit; }
 .diff-btn[data-diff="2"].selected { background: linear-gradient(135deg,#4f7cff,#38c8f0); border-color: var(--accent2); }
 .diff-btn[data-diff="3"].selected { background: var(--grad-gold); border-color: var(--gold); color: #080e20; box-shadow: var(--glow-gold); }
 .diff-btn[data-diff="4"].selected { background: var(--grad-red); border-color: var(--red); box-shadow: var(--glow-red); }
+.diff-btn[data-diff="all"].selected { background: linear-gradient(135deg,#8a5cff,#c860f0); border-color: #c860f0; box-shadow: 0 0 18px rgba(200,96,240,0.4); }
 .diff-btn:active { transform: scale(0.94); }
 
 /* ドリル計算種類 */
