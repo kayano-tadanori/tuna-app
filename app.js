@@ -441,26 +441,18 @@ document.getElementById('btn-remember').onclick = () => {
   recordResult(state.sessionQs[state.current].id, true);
   state.correct++;
   state.current++;
-  if (state.current >= state.sessionQs.length && state.retryQueue.length > 0) {
-    state.sessionQs = [...state.retryQueue];
-    state.retryQueue = [];
-    state.current = 0;
-    showToast('「もう一度」の問題をもう一周！');
-  }
   renderFlash();
 };
 
 document.getElementById('btn-again').onclick = () => {
-  recordResult(state.sessionQs[state.current].id, false);
+  const q = state.sessionQs[state.current];
+  recordResult(q.id, false);
   state.wrong++;
-  state.retryQueue.push(state.sessionQs[state.current]);
+  // 同じカードを3枚あとに差し込んでもう一度出す（残りが少なければ最後）
+  const insertAt = Math.min(state.current + 3, state.sessionQs.length);
+  state.sessionQs.splice(insertAt, 0, q);
   state.current++;
-  if (state.current >= state.sessionQs.length && state.retryQueue.length > 0) {
-    state.sessionQs = [...state.retryQueue];
-    state.retryQueue = [];
-    state.current = 0;
-    showToast('「もう一度」の問題をもう一周！');
-  }
+  showToast('このカードはすぐまた出ます');
   renderFlash();
 };
 
