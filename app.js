@@ -1595,6 +1595,7 @@ function renderSansuQuiz() {
     sansuState.isRemainMode = q.answer && q.answer.includes('余り');
     remainWrap.classList.toggle('hidden', !sansuState.isRemainMode);
     numpad.querySelector('.numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
+    numpad.querySelector('.numpad-frac').classList.toggle('hidden', !(q.answer && String(q.answer).includes('/')));
     sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
     updateNumpadPreview('sq');
     numpad.querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
@@ -1627,6 +1628,7 @@ function submitSansuAnswer() {
     userAnswer = `${sansuState.inputVal.trim()}余り${sansuState.inputRemain.trim()}`;
   }
   if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
+  if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, q.answer);
   document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = true);
@@ -1704,6 +1706,13 @@ function handleNumpadKey(prefix, key) {
     updateNumpadPreview(prefix);
     return;
   }
+  if (key === 'frac') {
+    // 分数の「／」：分子入力後に1回だけ・小数とは併用不可
+    if (!sansuState.inputVal || sansuState.inputVal.includes('/') || sansuState.inputVal.includes('.')) return;
+    sansuState.inputVal += '/';
+    updateNumpadPreview(prefix);
+    return;
+  }
   if (key === 'del') {
     if (sansuState.inputPhase === 'remain') {
       sansuState.inputRemain = sansuState.inputRemain.slice(0, -1);
@@ -1718,7 +1727,7 @@ function handleNumpadKey(prefix, key) {
     if (key === '.') return; // 余りに小数点不要
     sansuState.inputRemain += key;
   } else {
-    if (key === '.' && sansuState.inputVal.includes('.')) return;
+    if (key === '.' && (sansuState.inputVal.includes('.') || sansuState.inputVal.includes('/'))) return;
     sansuState.inputVal += key;
   }
   updateNumpadPreview(prefix);
@@ -1775,17 +1784,18 @@ function generateDrillProblem() {
     return { question:`${a} ＋ ${b} ＝`, answer:ans };
   }
   if (type === 'fraction') {
-    // テンキーで入力できるよう分数解答は禁止 → 分子だけ答える形式
-    const den=rnd(2,9);
+    // 分数はテンキーの「╱分数」キーで入力（約分した形で判定）
+    const den = rnd(3, 9);
+    let n1, n2, num, op;
     if (Math.random() < 0.5) {
-      // たし算: n1/den + n2/den = □/den
-      const n1=rnd(1,den-1), n2=rnd(1,den-n1);
-      return { question:`${n1}/${den} ＋ ${n2}/${den} ＝ □/${den}\n□に入る数は？`, answer:String(n1+n2) };
+      n1 = rnd(1, den - 1); n2 = rnd(1, den - n1); num = n1 + n2; op = '＋';
     } else {
-      // ひき算: n1/den − n2/den = □/den
-      const n2=rnd(1,den-1), diff=rnd(1,den-n2), n1=n2+diff;
-      return { question:`${n1}/${den} − ${n2}/${den} ＝ □/${den}\n□に入る数は？`, answer:String(diff) };
+      n2 = rnd(1, den - 2); num = rnd(1, den - 1 - n2); n1 = n2 + num; op = '−';
     }
+    const g2 = (a, b) => b === 0 ? a : g2(b, a % b);
+    const gc = g2(num, den);
+    const ans = gc === den ? String(num / gc) : `${num / gc}/${den / gc}`;
+    return { question: `${n1}/${den} ${op} ${n2}/${den} ＝\n（約分できるときは約分してね）`, answer: ans, isFrac: true };
   }
   // fallback add
   const a=rnd(1,9),b=rnd(1,9);
@@ -1854,6 +1864,7 @@ function renderDrillProblem() {
   sansuState.isRemainMode = !!_currentDrillQ.isRemain;
   document.getElementById('drill-remain-wrap').classList.toggle('hidden', !sansuState.isRemainMode);
   document.querySelector('#drill-numpad .numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
+  document.querySelector('#drill-numpad .numpad-frac').classList.toggle('hidden', !_currentDrillQ.isFrac);
 
   sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
   updateNumpadPreview('drill');
@@ -1870,6 +1881,7 @@ function submitDrillAnswer() {
   let userAnswer = sansuState.inputVal.trim();
   if (sansuState.isRemainMode) userAnswer = `${sansuState.inputVal.trim()}余り${sansuState.inputRemain.trim()}`;
   if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
+  if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer);
 
