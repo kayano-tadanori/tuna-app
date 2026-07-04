@@ -321,6 +321,7 @@ function initHome() {
 }
 
 function maybeShowStart() {
+  renderDiffBadgesKokugo();
   const zone = document.getElementById('start-zone');
 
   // 外来語 × 虫食いの組み合わせは不可
@@ -1310,6 +1311,7 @@ function initSansuHome() {
 }
 
 function updateSansuStart() {
+  renderDiffBadgesSansu();
   const zone = document.getElementById('sansu-start-zone');
   const info = document.getElementById('sansu-start-info');
   let ready = false;
@@ -1395,6 +1397,7 @@ function initRikaHome() {
 }
 
 function updateRikaStart() {
+  renderDiffBadgesSansu();
   const zone = document.getElementById('rika-start-zone');
   const info = document.getElementById('rika-start-info');
   const ready = sansuState.grade && sansuState.cat && sansuState.diff;
@@ -1475,6 +1478,7 @@ function initShakaiHome() {
 }
 
 function updateShakaiStart() {
+  renderDiffBadgesSansu();
   const zone = document.getElementById('shakai-start-zone');
   const info = document.getElementById('shakai-start-info');
   const ready = sansuState.grade && sansuState.cat && sansuState.diff;
@@ -2905,6 +2909,92 @@ async function renderGradeCrowns(subject) {
       setClearBadge(btn, !!(info && info.total > 0 && info.cleared >= info.total), '👑');
     });
   } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
+}
+
+// ── 難易度ボタンの✅（選択中の学年×単元で全問クリア） ──────
+async function ensureSansuFile(subject, cat) {
+  const key = `${subject}-${cat}`;
+  if (!sansuCache[key]) {
+    const fileMap = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+    const res = await fetch(fileMap[cat]);
+    sansuCache[key] = await res.json();
+  }
+  return sansuCache[key];
+}
+
+async function renderDiffBadgesSansu() {
+  const subject = sansuState.subject;
+  const btnSel = {
+    sansu: '#screen-sansu-home .diff-btn',
+    rika: '.rika-diff-btn',
+    shakai: '.shakai-diff-btn',
+  }[subject];
+  const btns = document.querySelectorAll(btnSel);
+  btns.forEach(b => setClearBadge(b, false));
+  const cat = sansuState.cat, grade = sansuState.grade;
+  if (!cat || !grade) return;
+  try {
+    const sets = buildClearedSets();
+    const byDiff = {};
+    const tally = (q, set) => {
+      if (q.grade !== grade) return;
+      const d = q.difficulty;
+      if (!byDiff[d]) byDiff[d] = { total: 0, cleared: 0 };
+      byDiff[d].total++;
+      if (set && set.has(q.id)) byDiff[d].cleared++;
+    };
+    const cats = cat === 'mix'
+      ? Object.keys(subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES)
+      : [cat];
+    for (const c of cats) {
+      const qs = await ensureSansuFile(subject, c);
+      const set = sets[`${subject}:${c}`];
+      qs.forEach(q => tally(q, set));
+    }
+    // 非同期の間に選択が変わっていたら破棄
+    if (sansuState.cat !== cat || sansuState.grade !== grade || sansuState.subject !== subject) return;
+    btns.forEach(b => {
+      const info = byDiff[Number(b.dataset.diff)];
+      setClearBadge(b, !!(info && info.total > 0 && info.cleared >= info.total), '✅');
+    });
+  } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
+}
+
+async function renderDiffBadgesKokugo() {
+  const btns = document.querySelectorAll('.kokugo-diff-btn');
+  btns.forEach(b => setClearBadge(b, false));
+  const cat = state.selectedCat;
+  if (!cat || !CATEGORIES[cat]) return;
+  const isKanji = KANJI_CATS.includes(cat);
+  const grade = state.grade;
+  if (isKanji && !grade) return;
+  try {
+    const qs = await loadQuestions(cat);
+    if (state.selectedCat !== cat || (isKanji && state.grade !== grade)) return;
+    const sets = buildClearedSets();
+    const set = sets[`kokugo:${cat}`];
+    const byDiff = {};
+    let total = 0, cleared = 0;
+    qs.forEach(q => {
+      if (q.id && q.id[0] === 'c') return;              // カスタム問題は対象外
+      if (isKanji && q.grade !== grade) return;
+      const ok = !!(set && set.has(q.id));
+      total++; if (ok) cleared++;
+      const d = q.difficulty;
+      if (!d) return;
+      if (!byDiff[d]) byDiff[d] = { total: 0, cleared: 0 };
+      byDiff[d].total++;
+      if (ok) byDiff[d].cleared++;
+    });
+    btns.forEach(b => {
+      if (b.dataset.diff === 'all') {
+        setClearBadge(b, total > 0 && cleared >= total, '✅');
+      } else {
+        const info = byDiff[Number(b.dataset.diff)];
+        setClearBadge(b, !!(info && info.total > 0 && info.cleared >= info.total), '✅');
+      }
+    });
+  } catch (e) { /* 無視 */ }
 }
 
 // ── がんばりの記録画面 ────────────────────────────────────
