@@ -1775,12 +1775,17 @@ function generateDrillProblem() {
     return { question:`${a} ＋ ${b} ＝`, answer:ans };
   }
   if (type === 'fraction') {
-    const den=rnd(2,8), n1=rnd(1,den-1), n2=rnd(1,den-n1);
-    const num=n1+n2;
-    const g2 = (a,b) => b===0?a:g2(b,a%b);
-    const gc = g2(num,den);
-    const ans = gc===den ? String(num/gc) : `${num/gc}/${den/gc}`;
-    return { question:`${n1}/${den} ＋ ${n2}/${den} ＝`, answer:ans };
+    // テンキーで入力できるよう分数解答は禁止 → 分子だけ答える形式
+    const den=rnd(2,9);
+    if (Math.random() < 0.5) {
+      // たし算: n1/den + n2/den = □/den
+      const n1=rnd(1,den-1), n2=rnd(1,den-n1);
+      return { question:`${n1}/${den} ＋ ${n2}/${den} ＝ □/${den}\n□に入る数は？`, answer:String(n1+n2) };
+    } else {
+      // ひき算: n1/den − n2/den = □/den
+      const n2=rnd(1,den-1), diff=rnd(1,den-n2), n1=n2+diff;
+      return { question:`${n1}/${den} − ${n2}/${den} ＝ □/${den}\n□に入る数は？`, answer:String(diff) };
+    }
   }
   // fallback add
   const a=rnd(1,9),b=rnd(1,9);

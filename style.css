@@ -452,7 +452,7 @@ button { cursor: pointer; font-family: inherit; }
 .drill-score-row { display: flex; justify-content: space-around; font-size: 0.9rem; font-weight: 700; color: var(--sub2); }
 .drill-score-row b { color: var(--accent2); }
 .drill-question-box { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-lg); padding: 16px; min-height: 110px; display: flex; align-items: center; justify-content: center; }
-.drill-question { font-size: 1.55rem; font-weight: 900; text-align: center; color: var(--text); letter-spacing: 0.04em; line-height: 1.35; }
+.drill-question { font-size: 1.55rem; font-weight: 900; text-align: center; color: var(--text); letter-spacing: 0.04em; line-height: 1.35; white-space: pre-line; }
 .drill-result { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0; text-align: center; }
 .drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
