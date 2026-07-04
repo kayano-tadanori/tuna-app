@@ -396,11 +396,28 @@ function renderFlash() {
 
   const total = state.sessionQs.length;
   document.getElementById('flash-counter').textContent = (state.current + 1) + ' / ' + total;
-  const filled = q.question.includes('___')
-    ? q.question.replace('___', q.answer)
-    : q.answer;
-  document.getElementById('flash-question').textContent = filled;
-  document.getElementById('flash-answer').textContent = q.meaning || '';
+  // 穴埋め形式は「完成形→意味」、質問形式（〜は？）は「問題文→答え＋解説」
+  const isFill = q.question.includes('___');
+  const isQType = !isFill && /[？?]/.test(q.question);
+  let front, back, backSub;
+  if (isFill) {
+    front = q.question.replace('___', q.answer);
+    back = q.meaning || '';
+    backSub = '';
+  } else {
+    // 質問形式（〜は？）や外来語（単語のみ）：問題文→答え＋解説
+    front = q.question;
+    back = q.answer;
+    backSub = (q.meaning && q.meaning !== q.answer) ? q.meaning : '';
+  }
+  const fq = document.getElementById('flash-question');
+  fq.textContent = front;
+  fq.classList.toggle('small', front.length > 16);
+  const fa = document.getElementById('flash-answer');
+  fa.textContent = back;
+  fa.classList.toggle('small', back.length > 12);
+  document.getElementById('flash-answer-sub').textContent = backSub;
+  document.querySelector('#flash-card .flip-hint').textContent = isQType ? 'タップして答えを見る' : 'タップして意味を見る';
 
   const card = document.getElementById('flash-card');
   card.classList.remove('flipped');
