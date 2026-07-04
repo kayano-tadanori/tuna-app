@@ -83,6 +83,11 @@ button { cursor: pointer; font-family: inherit; }
 .login-card input:focus { border-color: #0f2d6e; box-shadow: 0 0 0 3px rgba(15,45,110,0.12); }
 .btn-nyuugaku { width: 100%; min-height: 56px; padding: 16px; background: #0f2d6e; color: #fff; border: none; border-radius: var(--radius-sm); font-size: 1.2rem; font-weight: 900; letter-spacing: 0.08em; box-shadow: 0 6px 20px rgba(15,45,110,0.35); transition: transform 0.1s,box-shadow 0.15s; }
 .btn-nyuugaku:active { transform: translateY(2px) scale(0.98); box-shadow: 0 3px 10px rgba(15,45,110,0.3); }
+.nick-history { display: flex; flex-direction: column; gap: 8px; }
+.nick-history-label { font-size: 0.78rem; color: #8fa8cc; font-weight: 700; text-align: center; }
+.nick-history-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.nick-history-btn { background: #f5f8ff; border: 2px solid #c5d5ee; color: #0f2d6e; border-radius: 24px; padding: 12px 20px; font-size: 1rem; font-weight: 800; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.nick-history-btn:active { transform: scale(0.95); background: #e8efff; }
 
 /* 旧互換クラス */
 .center-box { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100dvh; padding: 32px 24px; gap: 14px; }

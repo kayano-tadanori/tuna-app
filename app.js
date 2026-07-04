@@ -66,8 +66,16 @@ async function loadQuestions(category) {
 // LocalStorage ユーティリティ
 // ============================================================
 
-function saveNickname(name) { localStorage.setItem('nickname', name); }
+function saveNickname(name) { localStorage.setItem('nickname', name); addNicknameHistory(name); }
 function getNickname() { return localStorage.getItem('nickname') || ''; }
+
+// 同じ端末で使った名前の履歴（最大5件・新しい順）
+function getNicknameHistory() { return JSON.parse(localStorage.getItem('nicknameHistory') || '[]'); }
+function addNicknameHistory(name) {
+  const h = getNicknameHistory().filter(n => n !== name);
+  h.unshift(name);
+  localStorage.setItem('nicknameHistory', JSON.stringify(h.slice(0, 5)));
+}
 
 function getProgress() {
   return JSON.parse(localStorage.getItem('progress') || '{}');
@@ -938,6 +946,33 @@ document.getElementById('nickname-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('nickname-btn').click();
 });
 
+function renderNicknameHistory() {
+  const box = document.getElementById('nickname-history');
+  const names = getNicknameHistory();
+  box.innerHTML = '';
+  if (names.length === 0) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  const label = document.createElement('p');
+  label.className = 'nick-history-label';
+  label.textContent = 'タップでログイン';
+  box.appendChild(label);
+  const row = document.createElement('div');
+  row.className = 'nick-history-row';
+  names.forEach(n => {
+    const b = document.createElement('button');
+    b.className = 'nick-history-btn';
+    b.textContent = '👤 ' + n;
+    b.onclick = () => {
+      state.nickname = n;
+      saveNickname(n);
+      initSubject();
+      showScreen('subject');
+    };
+    row.appendChild(b);
+  });
+  box.appendChild(row);
+}
+
 // ============================================================
 // 起動時処理
 // ============================================================
@@ -946,6 +981,7 @@ async function boot() {
   const name = getNickname();
   if (name) {
     state.nickname = name;
+    addNicknameHistory(name);
     loadQuestions('kotowaza').catch(() => {});
     loadQuestions('kanyoku').catch(() => {});
     loadQuestions('yojijukugo').catch(() => {});
@@ -953,6 +989,7 @@ async function boot() {
     initSubject();
     showScreen('subject');
   } else {
+    renderNicknameHistory();
     showScreen('nickname');
   }
 }
@@ -1004,6 +1041,7 @@ function initSubject() {
     localStorage.removeItem('nickname');
     state.nickname = '';
     document.getElementById('nickname-input').value = '';
+    renderNicknameHistory();
     showScreen('nickname');
   };
 }
