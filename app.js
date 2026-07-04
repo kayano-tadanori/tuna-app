@@ -721,16 +721,23 @@ function renderKanji() {
 // ============================================================
 
 // 応援キャラ（オカーン・チッチ、満点時はオットンも）
+// 80点以上=喜びポーズ(happy) / 80点未満=応援ポーズ(fight)
 function renderResultCheer(pct) {
   const perfect = pct >= 100;
+  const happy = pct >= 80;
   document.getElementById('result-tensai').classList.toggle('hidden', !perfect);
   document.getElementById('cheer-char-otton').classList.toggle('hidden', !perfect);
   document.getElementById('result-hanamaru').classList.toggle('hidden', pct < 90);
-  document.getElementById('result-cheer').classList.toggle('jump', pct >= 80);
+  document.getElementById('result-cheer').classList.toggle('jump', happy);
+
+  const pose = happy ? 'happy' : 'fight';
+  document.getElementById('cheer-img-okan').src = `images/okan-${pose}.png`;
+  document.getElementById('cheer-img-chicchi').src = `images/chicchi-${pose}.png`;
+  document.getElementById('cheer-img-otton').src = 'images/otton-happy.png';
 
   let okan, chicchi;
   if (perfect)        { okan = '満点や！ようがんばった！'; chicchi = 'ピピーッ！！'; }
-  else if (pct >= 80) { okan = 'ようがんばった！'; chicchi = 'ええ感じやで〜！'; }
+  else if (happy)     { okan = 'ようがんばった！'; chicchi = 'ええ感じやで〜！'; }
   else if (pct >= 50) { okan = '復習したらもっと伸びるで！'; chicchi = 'ファイトやで！'; }
   else                { okan = '大丈夫、まちがいは宝や！'; chicchi = 'ドンマイ！'; }
   document.getElementById('cheer-bubble-okan').textContent = okan;
