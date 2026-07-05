@@ -3980,7 +3980,8 @@ function mineUseItem(kind) {
 
 const J_W = 260, J_H = 420;
 const J_PLAYER_W = 24, J_PLAYER_H = 34, J_PLAYER_S = 2.4;
-const J_PLATFORM_W = 54, J_PLATFORM_H = 12;
+const J_PLATFORM_W = 54, J_PLATFORM_MIN_W = 30, J_PLATFORM_H = 12;
+const J_PLATFORM_SHRINK_SCORE = 300; // このスコアで最小幅まで縮む
 const J_GRAVITY = 0.32;
 const J_JUMP_V = -9.5;
 const J_ROCKET_V = -16;
@@ -3988,10 +3989,13 @@ const J_WING_V = -3;
 const J_WING_MS = 6000;
 const J_GAP_MIN = 60, J_GAP_MAX = 105;
 const J_SCROLL_Y = J_H * 0.42;
+const J_HAWK_MIN_SCORE = 15;
+const J_HAWK_SPEED = 1.8;
+const J_HAWK_SIZE = 26;
 
 const jumpState = {
   player: { x: J_W / 2 - J_PLAYER_W / 2, y: 0, vy: 0 },
-  platforms: [], coins: [],
+  platforms: [], coins: [], hawk: null, hawkCooldown: 0,
   spawnY: 0, score: 0, maxHeight: 0,
   over: false, dragging: false,
   rafId: null, controlsReady: false,
@@ -4001,12 +4005,19 @@ const jumpChars = makeCharStrip('jump-chars');
 
 function jRandGap() { return J_GAP_MIN + Math.random() * (J_GAP_MAX - J_GAP_MIN); }
 
+// 登るほど（スコアが上がるほど）足場が徐々に小さくなる
+function jPlatformWidth(score) {
+  const t = Math.min(score / J_PLATFORM_SHRINK_SCORE, 1);
+  return J_PLATFORM_W - t * (J_PLATFORM_W - J_PLATFORM_MIN_W);
+}
+
 function jGenPlatformAt(y) {
-  const x = Math.random() * (J_W - J_PLATFORM_W);
+  const w = jPlatformWidth(jumpState.score);
+  const x = Math.random() * (J_W - w);
   const moving = jumpState.score > 20 && Math.random() < 0.3;
-  jumpState.platforms.push({ x, y, w: J_PLATFORM_W, vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
+  jumpState.platforms.push({ x, y, w, vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
   if (Math.random() < 0.35) {
-    jumpState.coins.push({ x: x + J_PLATFORM_W / 2, y: y - 16, taken: false });
+    jumpState.coins.push({ x: x + w / 2, y: y - 16, taken: false });
   }
 }
 
@@ -4038,17 +4049,25 @@ function initJump() {
 
 function initJumpControls() {
   const cv = document.getElementById('jump-canvas');
+  const area = document.getElementById('screen-jump');
   const setFromEvent = e => {
     const r = cv.getBoundingClientRect();
     const relX = (e.clientX - r.left) * (cv.width / r.width);
     jumpState.player.x = Math.max(0, Math.min(J_W - J_PLAYER_W, relX - J_PLAYER_W / 2));
   };
-  cv.addEventListener('pointerdown', e => { e.preventDefault(); jumpState.dragging = true; setFromEvent(e); });
-  cv.addEventListener('pointermove', e => { if (jumpState.dragging) setFromEvent(e); });
+  // ボタン類（戻る・アイテム・もう一回等）の上は移動操作にしない
+  const isControl = e => !!e.target.closest('button');
+  area.addEventListener('pointerdown', e => {
+    if (isControl(e)) return;
+    e.preventDefault();
+    jumpState.dragging = true;
+    setFromEvent(e);
+  });
+  area.addEventListener('pointermove', e => { if (jumpState.dragging) setFromEvent(e); });
   const stop = () => { jumpState.dragging = false; };
-  cv.addEventListener('pointerup', stop);
-  cv.addEventListener('pointerleave', stop);
-  cv.addEventListener('pointercancel', stop);
+  area.addEventListener('pointerup', stop);
+  area.addEventListener('pointerleave', stop);
+  area.addEventListener('pointercancel', stop);
 }
 
 function startJump() {
@@ -4059,6 +4078,8 @@ function startJump() {
   jumpState.maxHeight = 0;
   jumpState.over = false;
   jumpState.wingUntil = 0;
+  jumpState.hawk = null;
+  jumpState.hawkCooldown = 150;
   document.querySelectorAll('#screen-jump .t-item-btn').forEach(b => b.classList.remove('item-active'));
   document.getElementById('jump-overlay').classList.add('hidden');
 
@@ -4129,6 +4150,32 @@ function jUpdatePhysics() {
     }
   });
 
+  // タカ（お邪魔キャラ）：一定スコア以降、時々画面を横切る。触れると突き落とされる
+  if (jumpState.hawk) {
+    const h = jumpState.hawk;
+    h.x += h.dir * J_HAWK_SPEED;
+    if (!wingOn &&
+        p.x + J_PLAYER_W > h.x - J_HAWK_SIZE / 2 && p.x < h.x + J_HAWK_SIZE / 2 &&
+        p.y + J_PLAYER_H > h.y - J_HAWK_SIZE / 2 && p.y < h.y + J_HAWK_SIZE / 2) {
+      p.vy = Math.max(p.vy, 6);
+      jSfx('hawkHit');
+      jumpChars.cheer('タカにやられた！', 1500);
+      jumpState.hawk = null;
+      jumpState.hawkCooldown = 150 + Math.random() * 150;
+    } else if (h.x < -J_HAWK_SIZE || h.x > J_W + J_HAWK_SIZE) {
+      jumpState.hawk = null;
+      jumpState.hawkCooldown = 200 + Math.random() * 200;
+    }
+  } else if (jumpState.score >= J_HAWK_MIN_SCORE) {
+    jumpState.hawkCooldown--;
+    if (jumpState.hawkCooldown <= 0) {
+      const dir = Math.random() < 0.5 ? 1 : -1;
+      jumpState.hawk = { x: dir === 1 ? -J_HAWK_SIZE : J_W + J_HAWK_SIZE, y: 40 + Math.random() * (J_H * 0.5), dir };
+      jSfx('hawkWarn');
+      jumpChars.cheer('🦅 タカや！気をつけて！', 1500);
+    }
+  }
+
   if (p.y < J_SCROLL_Y && p.vy < 0) {
     const dy = J_SCROLL_Y - p.y;
     p.y = J_SCROLL_Y;
@@ -4152,6 +4199,21 @@ function updateJumpInfo() {
   document.getElementById('jump-coins').textContent = getCoins();
 }
 
+// 足場を雲っぽいもこもこ形で描く（移動する足場は金色に色付け）
+function jDrawCloud(ctx, x, y, w, h, tinted) {
+  const r = h * 0.85;
+  ctx.fillStyle = tinted ? 'rgba(255,224,140,0.95)' : 'rgba(255,255,255,0.95)';
+  ctx.beginPath();
+  ctx.arc(x + r * 0.55, y + h * 0.5, r * 0.55, 0, Math.PI * 2);
+  ctx.arc(x + w * 0.38, y + h * 0.32, r * 0.65, 0, Math.PI * 2);
+  ctx.arc(x + w * 0.65, y + h * 0.32, r * 0.62, 0, Math.PI * 2);
+  ctx.arc(x + w - r * 0.55, y + h * 0.5, r * 0.5, 0, Math.PI * 2);
+  ctx.rect(x + r * 0.25, y + h * 0.42, Math.max(w - r * 0.5, 2), h * 0.58);
+  ctx.fill();
+  ctx.fillStyle = tinted ? 'rgba(230,170,60,0.45)' : 'rgba(170,195,230,0.5)';
+  ctx.fillRect(x + r * 0.25, y + h * 0.72, Math.max(w - r * 0.5, 2), h * 0.28);
+}
+
 function drawJump() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
@@ -4160,16 +4222,21 @@ function drawJump() {
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, cv.width, cv.height);
 
-  jumpState.platforms.forEach(plat => {
-    ctx.fillStyle = plat.vx ? '#ffd166' : '#38c8f0';
-    ctx.fillRect(plat.x, plat.y, plat.w, J_PLATFORM_H);
-    ctx.fillStyle = 'rgba(255,255,255,0.25)';
-    ctx.fillRect(plat.x, plat.y, plat.w, 3);
-  });
+  jumpState.platforms.forEach(plat => jDrawCloud(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, !!plat.vx));
 
   ctx.font = '16px sans-serif';
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   jumpState.coins.forEach(c => { if (!c.taken) ctx.fillText('🪙', c.x, c.y); });
+
+  if (jumpState.hawk) {
+    const h = jumpState.hawk;
+    ctx.save();
+    ctx.font = '26px sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText('🦅', 0, 0); }
+    else { ctx.fillText('🦅', h.x, h.y); }
+    ctx.restore();
+  }
 
   const wingOn = Date.now() < jumpState.wingUntil;
   const sp = T_SPRITES.chicchi;
@@ -4230,6 +4297,8 @@ function jSfx(kind) {
     case 'coin':   tTone(880, 0.05, 'square', 0.08); tTone(1320, 0.05, 'square', 0.06, 0.05); break;
     case 'wing':   [440, 660, 880].forEach((f, i) => tTone(f, 0.08, 'triangle', 0.09, i * 0.06)); break;
     case 'rocket': tTone(160, 0.3, 'sawtooth', 0.12, 0, 900); break;
+    case 'hawkWarn': tTone(1200, 0.12, 'sawtooth', 0.1, 0, 700); break;
+    case 'hawkHit':  tTone(120, 0.25, 'square', 0.18, 0, 40); break;
     case 'over':   [392, 330, 262, 196].forEach((f, i) => tTone(f, 0.22, 'triangle', 0.13, i * 0.18)); break;
     case 'best':   [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tTone(f, 0.12, 'square', 0.12, i * 0.1)); break;
   }
