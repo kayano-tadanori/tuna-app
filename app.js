@@ -2571,9 +2571,9 @@ function tCharsCheer(lines) {
 // ガチャ図鑑（コイン集め→キャラガチャ→図鑑コンプ）
 // ============================================================
 
-// 共有ドット絵テンプレート（プレースホルダ：全キャラでこの1形状をパレット差し替えして量産。
-// T_SPRITES同様 {pal, idle} 形式なので、将来は1体ずつ idle/pal を手描きに差し替え可能）
-const G_TEMPLATE = [
+// ドット絵の形状ライブラリ（モチーフ別）。ほとんどの形状は y/o/r/d/l/e の6キー役割で統一し、
+// gPalette()による自動配色と互換。フラッグシップ級は形状もパレットも専用デザイン。
+const G_TEMPLATE = [ // 鳥系（ひよこ）・汎用フォールバック
   '..........',
   '..........',
   '..........',
@@ -2588,6 +2588,200 @@ const G_TEMPLATE = [
   '.dyyyyyyd.',
   '..yyyyyy..',
   '...l..l...',
+];
+const G_SHAPE_ANIMAL = [ // 丸耳どうぶつ（ねこ・いぬ・たぬき・かえる・はむすたー等）
+  '..d....d..',
+  '.ddyyyydd.',
+  '.yyyyyyyy.',
+  '.yeyyyyey.',
+  '.yyorroyy.',
+  '.yyyyyyyy.',
+  '..yyyyyy..',
+  '.oyyyyyyo.',
+  '.oyyyyyyo.',
+  '..ll..ll..',
+  '..........',
+];
+const G_SHAPE_SHELL = [ // こうら系（かめ・かぶとむし・だんごむし）
+  '..dyyyyd..',
+  '.dyyyyyyd.',
+  'dyyyyyyyyd',
+  'oyyyyyyyyo',
+  'oyeyyyyeyo',
+  'oyyyyyyyyo',
+  '..llllll..',
+  '..l....l..',
+  '..........',
+];
+const G_SHAPE_FISH = [ // さかな（金魚）
+  '....oo....',
+  'dd.yyyyyy.',
+  'd.yyyyyye.',
+  'dd.yyyyyy.',
+  '....oo....',
+  '..........',
+];
+const G_SHAPE_OBJECT_TALL = [ // 縦長の道具（えんぴつ・じょうぎ・タイマー等）
+  '..oyyo..',
+  '.oyyyyo.',
+  '.yeyyey.',
+  '.yyrryy.',
+  '.yyyyyy.',
+  '.yyyyyy.',
+  '.yyyyyy.',
+  '.yyyyyy.',
+  '.yyyyyy.',
+  '.dddddd.',
+  '.ll..ll.',
+  '........',
+];
+const G_SHAPE_OBJECT_FLAT = [ // 平たい道具（消しゴム・ノート・カバン等）
+  '..dyyyyyyd..',
+  '.dyyyyyyyyd.',
+  'dyyeyyyyeyyd',
+  'dyyyyrryyyyd',
+  'dyyyyyyyyyyd',
+  '.dyyyyyyyyd.',
+  '..dllllll...',
+  '............',
+];
+const G_SHAPE_FOOD = [ // 食べもの・飲みもの（カレー・牛乳）
+  '..oyyyo..',
+  '.oyyyyyo.',
+  'oyyeyeyyo',
+  'oyyyrryyo',
+  'oyyyyyyyo',
+  '.ddddddd.',
+  '..dd.dd..',
+  '.........',
+];
+const G_SHAPE_VEHICLE = [ // 箱型の車両（ダンプ・ミキサー・ローラー・ブルドーザー等）
+  '...oyyyyo...',
+  '..oyyyyyyo..',
+  '..yeyyyyey..',
+  'dyyyyyyyyyyd',
+  'dyyyyrryyyyd',
+  'dyyyyyyyyyyd',
+  '..dddddddd..',
+  '.ll......ll.',
+  '............',
+];
+const G_SHAPE_PERSON_M = [ // 人物（男性コード：先生・スタッフ等）
+  '..oooooo..',
+  '.oyyyyyyo.',
+  '.yyeyyeyy.',
+  '.yyyrryyy.',
+  '.yyyyyyyy.',
+  '..dddddd..',
+  '.dddddddd.',
+  '.dddddddd.',
+  '.dddrrddd.',
+  '.dddddddd.',
+  '..llllll..',
+  '..ll..ll..',
+  '..........',
+];
+const G_SHAPE_PERSON_F = [ // 人物（女性コード：先生・スタッフ等）
+  '..oooooo..',
+  '.ooyyyyoo.',
+  '.oyeyyeyo.',
+  '.oyyyrryo.',
+  '.oyyyyyyo.',
+  '..dddddd..',
+  '.dddddddd.',
+  '.dddrrddd.',
+  '.dlllllld.',
+  'dlllllllld',
+  '..ll..ll..',
+  '..........',
+  '..........',
+];
+// 以下はキー文字が独自の専用デザイン（常に個別パレットとセットで使う）
+const G_SHAPE_CRANE = [ // クレーン車（クレーンキング専用）
+  'd.........',
+  'dooooooo..',
+  'd........l',
+  'd.........',
+  'd.........',
+  'dyyyyyyyd.',
+  'dyeyyyeyd.',
+  'dyyyyyyyd.',
+  'ddddddddd.',
+  '.ll....ll.',
+  '..........',
+  '..........',
+];
+const G_SHAPE_ROBE = [ // 女神・巫女風ローブ（合格の女神系専用）
+  '.....gg.....',
+  '...gg..gg...',
+  '..hhhhhhhh..',
+  '..hffffffh..',
+  '..hfeffefh..',
+  '..hffffffh..',
+  '..hhhhhhhh..',
+  '...rrrrrr...',
+  '..rrrrrrrr..',
+  '..rryyyyrr..',
+  '..rrrrrrrr..',
+  '...rrrrrr...',
+  '...rr..rr...',
+  '............',
+];
+const G_SHAPE_GUARD = [ // 警備員・門番系専用（帽子＋ベスト＋誘導灯）
+  '...cccccc...',
+  '..cccccccc..',
+  '..cffffffc..',
+  '..cfeffefc..',
+  '..cffffffc..',
+  '...vvvvvv..g',
+  '..vvssssvv.g',
+  '...vvvvvv..g',
+  '...bbbbbb...',
+  '...bbbbbb...',
+  '...pppppp...',
+  '...pp..pp...',
+  '............',
+];
+const G_SHAPE_DARUMA = [ // だるま（合格だるま大明神専用）
+  '..dyyyyd..',
+  '.dyyyyyyd.',
+  'dyyyyyyyyd',
+  'dyeyyyyeyd',
+  'dyyyrrryyd',
+  'dyyyyyyyyd',
+  'dyyyyyyyyd',
+  'dyyoooyyyd',
+  '.dyyyyyyd.',
+  '..dyyyyd..',
+];
+const G_SHAPE_DRAGON = [ // ちびドラゴン（赤本ドラゴン専用）
+  '...d....d...',
+  '..oyyyyyyo..',
+  '.oyeyyyeyo..',
+  '.oyyyrryyo..',
+  '..oyyyyyyo..',
+  '.ddoyyyyodd.',
+  '..oyyyyyyo..',
+  '..oyyyyyyo..',
+  '...dyyyyd...',
+  '....dyyd....',
+  '.....dd.....',
+];
+const G_SHAPE_ROBOT = [ // 重機合体ロボ（ケンセツンダー専用）
+  '..kk....kk..',
+  '..kkkkkkkk..',
+  '..oo....oo..',
+  '..oooooooo..',
+  '..kkkkkkkk..',
+  '..yyyyyyyy..',
+  '..bbbbbbbb..',
+  '..bbrrrrbb..',
+  '..bbbbbbbb..',
+  '..yyyyyyyy..',
+  '.kk......kk.',
+  'kkkkkkkkkkkk',
+  '............',
+  '............',
 ];
 
 function gHashStr(str) {
@@ -2617,15 +2811,80 @@ function gPalette(ch) {
     e: '#222222',
   };
 }
+
+// id→形状（モチーフに合わせて割り当て。未指定はG_TEMPLATEにフォールバック）
+const G_CHAR_SHAPE = {
+  piyo: G_TEMPLATE, chun: G_TEMPLATE, daiya_chicchi: G_TEMPLATE, god_chicchi: G_TEMPLATE,
+  nyankichi: G_SHAPE_ANIMAL, wanzou: G_SHAPE_ANIMAL, ponkichi: G_SHAPE_ANIMAL, kaerunosuke: G_SHAPE_ANIMAL, hamuta: G_SHAPE_ANIMAL,
+  kamekichi: G_SHAPE_SHELL, kabutomaru: G_SHAPE_SHELL, dangorou: G_SHAPE_SHELL, keshikasu: G_SHAPE_SHELL,
+  kingyohime: G_SHAPE_FISH,
+  enpitsu: G_SHAPE_OBJECT_TALL, jougi: G_SHAPE_OBJECT_TALL, recorder: G_SHAPE_OBJECT_TALL, cone: G_SHAPE_OBJECT_TALL,
+  scoop: G_SHAPE_OBJECT_TALL, timer: G_SHAPE_OBJECT_TALL, sharpbushi: G_SHAPE_OBJECT_TALL, compass: G_SHAPE_OBJECT_TALL,
+  hensachi: G_SHAPE_OBJECT_TALL, akapen: G_SHAPE_OBJECT_TALL,
+  keshigomu: G_SHAPE_OBJECT_FLAT, randoseru: G_SHAPE_OBJECT_FLAT, noteshi: G_SHAPE_OBJECT_FLAT, gunte: G_SHAPE_OBJECT_FLAT,
+  ankicard: G_SHAPE_OBJECT_FLAT, shukudai: G_SHAPE_OBJECT_FLAT, fusenhime: G_SHAPE_OBJECT_FLAT, kakomon: G_SHAPE_OBJECT_FLAT,
+  shitajiki: G_SHAPE_OBJECT_FLAT, jukubag: G_SHAPE_OBJECT_FLAT, helmet: G_SHAPE_OBJECT_FLAT, soroban: G_SHAPE_OBJECT_FLAT,
+  jisho: G_SHAPE_OBJECT_FLAT, tobibako: G_SHAPE_OBJECT_FLAT, manten: G_SHAPE_OBJECT_FLAT,
+  curry: G_SHAPE_FOOD, gyunyu: G_SHAPE_FOOD, jukuben: G_SHAPE_FOOD,
+  shovel: G_SHAPE_VEHICLE, dump: G_SHAPE_VEHICLE, mixer: G_SHAPE_VEHICLE, roller: G_SHAPE_VEHICLE, fork: G_SHAPE_VEHICLE, buru_musashi: G_SHAPE_VEHICLE,
+  kocho: G_SHAPE_PERSON_M, kyoto: G_SHAPE_PERSON_M, kinjiro: G_SHAPE_PERSON_M, jukucho: G_SHAPE_PERSON_M,
+  keisan_oni: G_SHAPE_PERSON_M, moshi: G_SHAPE_PERSON_M, jishu: G_SHAPE_PERSON_M, ojiin: G_SHAPE_PERSON_M,
+  genba_otton: G_SHAPE_PERSON_M, charisma: G_SHAPE_PERSON_M, sairekun: G_SHAPE_PERSON_M,
+  gold_otton: G_SHAPE_PERSON_M, hensachi70: G_SHAPE_PERSON_M, god_otton: G_SHAPE_PERSON_M,
+  kyushoku: G_SHAPE_PERSON_F, hoken: G_SHAPE_PERSON_F, tutor: G_SHAPE_PERSON_F, obaan: G_SHAPE_PERSON_F,
+  super_okan: G_SHAPE_PERSON_F, platina_okan: G_SHAPE_PERSON_F, god_okan: G_SHAPE_PERSON_F,
+  crane_king: G_SHAPE_CRANE,
+  a_hantei: G_SHAPE_ROBE, nada_megami: G_SHAPE_ROBE,
+  guard: G_SHAPE_GUARD, tunnel_mori: G_SHAPE_GUARD, nada_mon: G_SHAPE_GUARD,
+  goukaku_daruma: G_SHAPE_DARUMA,
+  akahon_dragon: G_SHAPE_DRAGON,
+  kensetsunder: G_SHAPE_ROBOT,
+};
+
+// id→固定パレット（フラッグシップ級・専用デザインの色。未指定は自動配色gPalette()）
+const G_CHAR_PAL = {
+  kinjiro: { o: '#8d6e3a', y: '#a67c4a', e: '#3a2a1a', r: '#6b5030', d: '#7a5a35', l: '#5a4025' },
+  guard: { c: '#1a3d6e', w: '#ffffff', f: '#f5c9a2', e: '#222222', v: '#ff9a2e', s: '#ffffff', b: '#274b7a', p: '#12283d', g: '#ff3b3b' },
+  obaan: { o: '#d8d8d8', y: '#f5c9a2', e: '#222222', r: '#e08a9a', d: '#b39ddb', l: '#8e7cc3' },
+  ojiin: { o: '#c9c9c9', y: '#f5c9a2', e: '#222222', r: '#8a8a8a', d: '#7a8b99', l: '#55636e' },
+  genba_otton: { o: '#ffd166', y: '#f5c9a2', e: '#222222', r: '#ff9a2e', d: '#1a3d6e', l: '#12283d' },
+  super_okan: { o: '#6b4a2f', y: '#f5c9a2', e: '#222222', r: '#ff4466', d: '#e63c82', l: '#c2185b' },
+  buru_musashi: { o: '#ffd166', y: '#b71c1c', e: '#222222', d: '#1a1a1a', r: '#ffd166', l: '#1a1a1a' },
+  tunnel_mori: { c: '#5a6b5a', w: '#8faa8f', f: '#c9b896', e: '#222222', v: '#4a6b4a', s: '#a8c9a8', b: '#3a4a3a', p: '#2a3a2a', g: '#7fff9a' },
+  akapen: { o: '#ff4466', y: '#ff6b81', e: '#222222', r: '#c0392b', d: '#8a8a8a', l: '#8a8a8a' },
+  nada_mon: { c: '#1a1a2e', w: '#555577', f: '#d9a066', e: '#ff0000', v: '#2a2a3e', s: '#8888aa', b: '#1a1a2e', p: '#0a0a1a', g: '#6666ff' },
+  charisma: { o: '#7c4fff', y: '#f5c9a2', e: '#222222', r: '#ffd166', d: '#2a1a4a', l: '#1a0f33' },
+  sairekun: { o: '#ffd166', y: '#f5c9a2', e: '#222222', r: '#c0392b', d: '#5e35b1', l: '#4527a0' },
+  a_hantei: { h: '#4a6fa5', f: '#f8d9c0', e: '#222222', r: '#e8f4ff', y: '#38c8f0', g: '#cceeff' },
+  manten: { d: '#ffd166', y: '#fffbe8', e: '#222222', r: '#ff4466', l: '#ffd166' },
+  gold_otton: { o: '#ffd700', y: '#ffe98a', e: '#222222', r: '#ff8f00', d: '#b8860b', l: '#8a6d00' },
+  crane_king: { d: '#37474f', o: '#ffd166', l: '#1a1a1a', y: '#38c8f0', e: '#222222' },
+  platina_okan: { o: '#e8e8e8', y: '#f5c9a2', e: '#222222', r: '#c0c0ff', d: '#dcdcff', l: '#b8b8e8' },
+  daiya_chicchi: { y: '#e0f7ff', o: '#a8e8ff', e: '#222222', r: '#5ec8e8', d: '#c8f0ff', l: '#7fd8f0' },
+  hensachi70: { o: '#f5f5f5', y: '#f0d0b0', e: '#222222', r: '#ffd166', d: '#fffaf0', l: '#e8c85a' },
+  akahon_dragon: { d: '#8b0000', o: '#c0392b', y: '#ff6b6b', e: '#ffd166', r: '#ffd166' },
+  goukaku_daruma: { d: '#1a1a1a', y: '#d32f2f', e: '#1a1a1a', r: '#fff8e1', o: '#ffd166' },
+  nada_megami: { h: '#3a1a5e', f: '#f8d9c0', e: '#222222', r: '#fff6e0', y: '#ffd166', g: '#ffe98a' },
+  kensetsunder: { k: '#1a1a1a', o: '#ff9a2e', b: '#4a5568', r: '#ff3b3b', y: '#ffd166' },
+  god_chicchi: { y: '#ffb3ff', o: '#b3ffec', e: '#222222', r: '#ffe066', d: '#b3d9ff', l: '#d9b3ff' },
+  god_okan: { o: '#fff2b3', y: '#fffaf0', e: '#222222', r: '#ffd166', d: '#ffe98a', l: '#ffca66' },
+  god_otton: { o: '#ffd700', y: '#fff2cc', e: '#222222', r: '#ff6b6b', d: '#66d9ff', l: '#b366ff' },
+};
+
 function gDrawChar(ctx, ch, ox, oy, s) {
-  tDrawSprite(ctx, G_TEMPLATE, gPalette(ch), ox, oy, s);
+  const rows = G_CHAR_SHAPE[ch.id] || G_TEMPLATE;
+  const pal = G_CHAR_PAL[ch.id] || gPalette(ch);
+  tDrawSprite(ctx, rows, pal, ox, oy, s);
 }
-const G_SILHOUETTE_PAL = { y: '#2a2f45', o: '#2a2f45', r: '#2a2f45', d: '#20243a', l: '#20243a', e: '#20243a' };
-function gDrawSilhouette(ctx, ox, oy, s) {
-  tDrawSprite(ctx, G_TEMPLATE, G_SILHOUETTE_PAL, ox, oy, s);
+function gDrawSilhouette(ctx, ch, ox, oy, s) {
+  const rows = G_CHAR_SHAPE[ch.id] || G_TEMPLATE;
+  const pal = G_CHAR_PAL[ch.id] || gPalette(ch);
+  const dark = {};
+  for (const k in pal) dark[k] = '#2a2f45';
+  tDrawSprite(ctx, rows, dark, ox, oy, s);
 }
 
-// キャラ図鑑マスタ（72体＋シークレット3体）
+// キャラ図鑑マスタ（75体＋シークレット3体）
 const GACHA_CHARS = [
   // ── N（どうぶつ・がくよう品・じゅく道具、33体） ──
   { id:'piyo',         name:'ピヨ太',         rarity:'N', desc:'チッチにあこがれるひよこ。',     voice:'ピヨッ！' },
@@ -2662,7 +2921,8 @@ const GACHA_CHARS = [
   { id:'shitajiki',    name:'下じきさん',     rarity:'N', desc:'ノートの下でしっかり支える。',   voice:'まかせて' },
   { id:'jukubag',      name:'塾バッグ大将',   rarity:'N', desc:'教材をぎっしり詰め込む。',       voice:'重いけど頑張る！' },
 
-  // ── R（工事・学校・じゅくスタッフ、20体） ──
+  // ── R（工事・学校・じゅくスタッフ、21体） ──
+  { id:'guard',        name:'警備員さん',     rarity:'R', desc:'現場の交通整理をしてくれる。',   voice:'とまってくださーい！' },
   { id:'helmet',       name:'ヘル男',         rarity:'R', desc:'現場の安全を守るヒーロー。',     voice:'ご安全に！' },
   { id:'shovel',       name:'ショベルくん',   rarity:'R', desc:'ミニユンボで土をすくう。',       voice:'ガガガッ！' },
   { id:'dump',         name:'ダンプ姫',       rarity:'R', desc:'荷台いっぱいの土砂を運ぶ。',     voice:'任せて！' },
@@ -2698,7 +2958,7 @@ const GACHA_CHARS = [
   { id:'a_hantei',     name:'A判定の女神',   rarity:'SR', desc:'合格をそっと後押しする。',       voice:'きっと大丈夫' },
   { id:'manten',       name:'満点答案',       rarity:'SR', desc:'赤字ゼロの奇跡の一枚。',         voice:'パーフェクトや' },
 
-  // ── UR（伝説級、7体） ──
+  // ── UR（伝説級、9体） ──
   { id:'gold_otton',    name:'ゴールドオットン', rarity:'UR', desc:'金色に輝く伝説の父。',         voice:'常在戦場、黄金の意志！' },
   { id:'crane_king',    name:'クレーンキング',   rarity:'UR', desc:'現場を見下ろす鋼鉄の王。',     voice:'つり上げたるで！' },
   { id:'platina_okan',  name:'プラチナオカーン', rarity:'UR', desc:'白金の割烹着をまとう母。',     voice:'愛情も無限大や' },
@@ -2706,6 +2966,8 @@ const GACHA_CHARS = [
   { id:'hensachi70',    name:'偏差値70仙人',     rarity:'UR', desc:'極限の領域に住む賢者。',       voice:'その先を見せたる' },
   { id:'akahon_dragon', name:'赤本ドラゴン',     rarity:'UR', desc:'過去問を食べて育った竜。',     voice:'全問暗記したで' },
   { id:'goukaku_daruma', name:'合格だるま大明神', rarity:'UR', desc:'願いを一つだけ叶える。',      voice:'目に魂を入れよ' },
+  { id:'nada_megami',   name:'灘中合格の大女神', rarity:'UR', desc:'灘中合格を約束する最強の女神。', voice:'きみの努力、ぜんぶ見てたで' },
+  { id:'kensetsunder',  name:'無敵重機ロボ ケンセツンダー', rarity:'UR', desc:'全部の重機が合体した伝説のロボ。', voice:'ケンセツンダー、参上！' },
 
   // ── シークレット（排出なし・図鑑コンプ報酬） ──
   { id:'god_chicchi', name:'神チッチ',   rarity:'UR', secret:true, desc:'N・Rを極めた者だけが出会える。', voice:'ピピーッ！！！' },
@@ -2909,7 +3171,7 @@ function initZukan() {
       label2.textContent = owned ? ch.name : '？？？';
       cell.appendChild(label2);
       const ctx = cv.getContext('2d');
-      if (owned) gDrawChar(ctx, ch, 8, 4, 6); else gDrawSilhouette(ctx, 8, 4, 6);
+      if (owned) gDrawChar(ctx, ch, 8, 4, 6); else gDrawSilhouette(ctx, ch, 8, 4, 6);
       cell.onclick = () => showZukanModal(ch, owned, g.owned[ch.id] || 0);
       row.appendChild(cell);
     });
@@ -2922,7 +3184,7 @@ function showZukanModal(ch, owned, count) {
   const cv = document.getElementById('zukan-modal-canvas');
   const ctx = cv.getContext('2d');
   ctx.clearRect(0, 0, cv.width, cv.height);
-  if (owned) gDrawChar(ctx, ch, cv.width / 2 - 55, 8, 10); else gDrawSilhouette(ctx, cv.width / 2 - 55, 8, 10);
+  if (owned) gDrawChar(ctx, ch, cv.width / 2 - 55, 8, 10); else gDrawSilhouette(ctx, ch, cv.width / 2 - 55, 8, 10);
   document.getElementById('zukan-modal-rarity').textContent = ch.secret ? 'シークレット' : ch.rarity;
   document.getElementById('zukan-modal-rarity').className = 'gacha-rarity-badge rarity-' + (ch.secret ? 'UR' : ch.rarity);
   document.getElementById('zukan-modal-name').textContent = owned ? ch.name : '？？？';
