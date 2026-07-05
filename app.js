@@ -1092,6 +1092,9 @@ function initSubject() {
       } else if (subj === 'mine') {
         initMine();
         showScreen('mine');
+      } else if (subj === 'jump') {
+        initJump();
+        showScreen('jump');
       } else if (subj === 'gacha') {
         initGacha();
         showScreen('gacha');
@@ -2983,6 +2986,8 @@ const ITEM_DEFS = {
   slow:   { icon: '🐢', label: 'スロー',   desc: 'テトリス：15秒ゆっくり' },
   search: { icon: '🔍', label: 'サーチ',   desc: 'スイーパー：安全なマスを1つ開く' },
   shield: { icon: '🛡', label: 'おまもり', desc: 'スイーパー：ゴキブリを1回セーフ' },
+  wing:   { icon: '🪽', label: 'つばさ',   desc: 'チッチジャンプ：6秒ミス無効で浮く' },
+  rocket: { icon: '🚀', label: 'ロケット', desc: 'チッチジャンプ：一気に高くジャンプ' },
 };
 
 // ── 達成率の集計（一度でも正解した問題＝クリア） ──────────
@@ -3086,7 +3091,7 @@ window.addEventListener('pagehide', flushPlayTime);
 
 // ── アイテム ──────────────────────────────────────────────
 function getItems() {
-  return JSON.parse(localStorage.getItem('items') || '{"bomb":0,"slow":0,"search":0,"shield":0}');
+  return JSON.parse(localStorage.getItem('items') || '{"bomb":0,"slow":0,"search":0,"shield":0,"wing":0,"rocket":0}');
 }
 function addItem(kind, n) {
   const items = getItems();
@@ -3967,6 +3972,294 @@ function mineUseItem(kind) {
     addItem(kind, -1);
     updateItemButtons();
   }
+}
+
+// ============================================================
+// チッチジャンプ（息抜きミニゲーム3）
+// ============================================================
+
+const J_W = 260, J_H = 420;
+const J_PLAYER_W = 24, J_PLAYER_H = 34, J_PLAYER_S = 2.4;
+const J_PLATFORM_W = 54, J_PLATFORM_H = 12;
+const J_GRAVITY = 0.32;
+const J_JUMP_V = -9.5;
+const J_ROCKET_V = -16;
+const J_WING_V = -3;
+const J_WING_MS = 6000;
+const J_GAP_MIN = 60, J_GAP_MAX = 105;
+const J_SCROLL_Y = J_H * 0.42;
+
+const jumpState = {
+  player: { x: J_W / 2 - J_PLAYER_W / 2, y: 0, vy: 0 },
+  platforms: [], coins: [],
+  spawnY: 0, score: 0, maxHeight: 0,
+  over: false, dragging: false,
+  rafId: null, controlsReady: false,
+};
+
+const jumpChars = makeCharStrip('jump-chars');
+
+function jRandGap() { return J_GAP_MIN + Math.random() * (J_GAP_MAX - J_GAP_MIN); }
+
+function jGenPlatformAt(y) {
+  const x = Math.random() * (J_W - J_PLATFORM_W);
+  const moving = jumpState.score > 20 && Math.random() < 0.3;
+  jumpState.platforms.push({ x, y, w: J_PLATFORM_W, vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
+  if (Math.random() < 0.35) {
+    jumpState.coins.push({ x: x + J_PLATFORM_W / 2, y: y - 16, taken: false });
+  }
+}
+
+function initJump() {
+  document.getElementById('jump-best').textContent = localStorage.getItem('jumpBest') || '0';
+  document.getElementById('jump-back').onclick = () => { stopJumpLoop(); jStopBgm(); jumpChars.stop(); showScreen('subject'); };
+  document.getElementById('jump-restart').onclick = startJump;
+  document.getElementById('jump-rank').onclick = () => showGameRanking('jump', 'チッチジャンプ', 'max');
+  document.getElementById('jump-bgm').onclick = () => {
+    tSound.bgm = !tSound.bgm;
+    localStorage.setItem('tetrisBgm', tSound.bgm ? '1' : '0');
+    if (tSound.bgm && !jumpState.over) jStartBgm(); else jStopBgm();
+    jUpdateSoundBtns();
+  };
+  document.getElementById('jump-sfx').onclick = () => {
+    tSound.sfx = !tSound.sfx;
+    localStorage.setItem('tetrisSfx', tSound.sfx ? '1' : '0');
+    if (tSound.sfx) jSfx('coin');
+    jUpdateSoundBtns();
+  };
+  jUpdateSoundBtns();
+  document.querySelectorAll('#screen-jump .t-item-btn').forEach(btn => {
+    btn.onclick = () => jumpUseItem(btn.dataset.item);
+  });
+  updateItemButtons();
+  if (!jumpState.controlsReady) { initJumpControls(); jumpState.controlsReady = true; }
+  startJump();
+}
+
+function initJumpControls() {
+  const cv = document.getElementById('jump-canvas');
+  const setFromEvent = e => {
+    const r = cv.getBoundingClientRect();
+    const relX = (e.clientX - r.left) * (cv.width / r.width);
+    jumpState.player.x = Math.max(0, Math.min(J_W - J_PLAYER_W, relX - J_PLAYER_W / 2));
+  };
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); jumpState.dragging = true; setFromEvent(e); });
+  cv.addEventListener('pointermove', e => { if (jumpState.dragging) setFromEvent(e); });
+  const stop = () => { jumpState.dragging = false; };
+  cv.addEventListener('pointerup', stop);
+  cv.addEventListener('pointerleave', stop);
+  cv.addEventListener('pointercancel', stop);
+}
+
+function startJump() {
+  stopJumpLoop();
+  jumpState.platforms = [];
+  jumpState.coins = [];
+  jumpState.score = 0;
+  jumpState.maxHeight = 0;
+  jumpState.over = false;
+  jumpState.wingUntil = 0;
+  document.querySelectorAll('#screen-jump .t-item-btn').forEach(b => b.classList.remove('item-active'));
+  document.getElementById('jump-overlay').classList.add('hidden');
+
+  const startPlatY = J_H - 40;
+  jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, vx: 0 });
+  jumpState.player.x = J_W / 2 - J_PLAYER_W / 2;
+  jumpState.player.y = startPlatY - J_PLAYER_H;
+  jumpState.player.vy = J_JUMP_V;
+
+  jumpState.spawnY = startPlatY - jRandGap();
+  while (jumpState.spawnY > -20) {
+    jGenPlatformAt(jumpState.spawnY);
+    jumpState.spawnY -= jRandGap();
+  }
+
+  updateJumpInfo();
+  drawJump();
+  jumpChars.idle();
+  jumpChars.start();
+  jStartBgm();
+  jumpState.rafId = requestAnimationFrame(jLoop);
+}
+
+function stopJumpLoop() { cancelAnimationFrame(jumpState.rafId); }
+
+function jLoop() {
+  if (jumpState.over) return;
+  jUpdatePhysics();
+  updateJumpInfo();
+  drawJump();
+  if (jumpState.player.y > J_H + 20) { jGameOver(); return; }
+  jumpState.rafId = requestAnimationFrame(jLoop);
+}
+
+function jUpdatePhysics() {
+  const p = jumpState.player;
+  const wingOn = Date.now() < jumpState.wingUntil;
+
+  if (wingOn) {
+    p.vy = J_WING_V;
+  } else {
+    p.vy += J_GRAVITY;
+    if (p.vy > 0) {
+      for (const plat of jumpState.platforms) {
+        if (p.x + J_PLAYER_W > plat.x && p.x < plat.x + plat.w &&
+            p.y + J_PLAYER_H >= plat.y && p.y + J_PLAYER_H <= plat.y + J_PLATFORM_H + 8) {
+          p.vy = J_JUMP_V;
+          jSfx('bounce');
+          break;
+        }
+      }
+    }
+  }
+  p.y += p.vy;
+
+  jumpState.platforms.forEach(plat => {
+    if (!plat.vx) return;
+    plat.x += plat.vx;
+    if (plat.x <= 0 || plat.x + plat.w >= J_W) plat.vx *= -1;
+  });
+
+  jumpState.coins.forEach(c => {
+    if (c.taken) return;
+    if (p.x + J_PLAYER_W > c.x - 9 && p.x < c.x + 9 && p.y + J_PLAYER_H > c.y - 9 && p.y < c.y + 9) {
+      c.taken = true;
+      addCoins(1);
+      jSfx('coin');
+    }
+  });
+
+  if (p.y < J_SCROLL_Y && p.vy < 0) {
+    const dy = J_SCROLL_Y - p.y;
+    p.y = J_SCROLL_Y;
+    jumpState.platforms.forEach(plat => { plat.y += dy; });
+    jumpState.coins.forEach(c => { c.y += dy; });
+    jumpState.spawnY += dy;
+    jumpState.maxHeight += dy;
+  }
+
+  jumpState.platforms = jumpState.platforms.filter(plat => plat.y < J_H + 30);
+  jumpState.coins = jumpState.coins.filter(c => !c.taken && c.y < J_H + 30);
+  while (jumpState.spawnY > -20) {
+    jGenPlatformAt(jumpState.spawnY);
+    jumpState.spawnY -= jRandGap();
+  }
+}
+
+function updateJumpInfo() {
+  jumpState.score = Math.floor(jumpState.maxHeight / 10);
+  document.getElementById('jump-score').textContent = jumpState.score;
+  document.getElementById('jump-coins').textContent = getCoins();
+}
+
+function drawJump() {
+  const cv = document.getElementById('jump-canvas');
+  const ctx = cv.getContext('2d');
+  const g = ctx.createLinearGradient(0, 0, 0, cv.height);
+  g.addColorStop(0, '#1a2f6e'); g.addColorStop(1, '#0a1128');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, cv.width, cv.height);
+
+  jumpState.platforms.forEach(plat => {
+    ctx.fillStyle = plat.vx ? '#ffd166' : '#38c8f0';
+    ctx.fillRect(plat.x, plat.y, plat.w, J_PLATFORM_H);
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.fillRect(plat.x, plat.y, plat.w, 3);
+  });
+
+  ctx.font = '16px sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  jumpState.coins.forEach(c => { if (!c.taken) ctx.fillText('🪙', c.x, c.y); });
+
+  const wingOn = Date.now() < jumpState.wingUntil;
+  const sp = T_SPRITES.chicchi;
+  if (wingOn) { ctx.save(); ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 12; }
+  tDrawSprite(ctx, wingOn ? sp.cheer : sp.idle, sp.pal, jumpState.player.x, jumpState.player.y, J_PLAYER_S);
+  if (wingOn) ctx.restore();
+}
+
+function jumpUseItem(kind) {
+  if (jumpState.over) return;
+  const items = getItems();
+  if ((items[kind] || 0) <= 0) return;
+
+  if (kind === 'wing') {
+    if (Date.now() < jumpState.wingUntil) { showToast('つばさはもう発動中やで！'); return; }
+    jumpState.wingUntil = Date.now() + J_WING_MS;
+    const btn = document.querySelector('#screen-jump .t-item-btn[data-item="wing"]');
+    if (btn) { btn.classList.add('item-active'); setTimeout(() => btn.classList.remove('item-active'), J_WING_MS); }
+    jSfx('wing');
+  } else if (kind === 'rocket') {
+    jumpState.player.vy = J_ROCKET_V;
+    jSfx('rocket');
+    jumpChars.cheer('ロケット発射や！', 1500);
+  }
+  addItem(kind, -1);
+  updateItemButtons();
+}
+
+function jGameOver() {
+  jumpState.over = true;
+  stopJumpLoop();
+  jStopBgm();
+  const prevBest = Number(localStorage.getItem('jumpBest') || 0);
+  const isNewBest = jumpState.score > prevBest;
+  jSfx(isNewBest ? 'best' : 'over');
+  if (isNewBest) {
+    jumpChars.state.mood = 'cheer';
+    jumpChars.state.moodUntil = Date.now() + 5000;
+    jumpChars.state.bubble = 'ベスト更新や！すごいで！';
+    localStorage.setItem('jumpBest', jumpState.score);
+  } else {
+    jumpChars.state.bubble = 'ドンマイ！もう一回や！';
+    setTimeout(() => { if (jumpState.over) jumpChars.state.bubble = ''; }, 4000);
+  }
+  if (jumpState.score > 0 && typeof saveGameScore === 'function') saveGameScore('jump', state.nickname, jumpState.score, 'max');
+  document.getElementById('jump-best').textContent = Math.max(jumpState.score, prevBest);
+  document.getElementById('jump-overlay-emoji').textContent = isNewBest ? '🏆' : '🐣';
+  document.getElementById('jump-overlay-text').textContent = isNewBest ? 'ベスト更新！' : 'おっこちた！';
+  document.getElementById('jump-overlay-score').textContent = `スコア ${jumpState.score}`;
+  document.getElementById('jump-overlay').classList.remove('hidden');
+}
+
+// ── サウンド（tSound設定・tTone/tNoteエンジンを共用） ──
+function jSfx(kind) {
+  if (!tSound.sfx) return;
+  switch (kind) {
+    case 'bounce': tTone(300, 0.06, 'square', 0.08, 0, 500); break;
+    case 'coin':   tTone(880, 0.05, 'square', 0.08); tTone(1320, 0.05, 'square', 0.06, 0.05); break;
+    case 'wing':   [440, 660, 880].forEach((f, i) => tTone(f, 0.08, 'triangle', 0.09, i * 0.06)); break;
+    case 'rocket': tTone(160, 0.3, 'sawtooth', 0.12, 0, 900); break;
+    case 'over':   [392, 330, 262, 196].forEach((f, i) => tTone(f, 0.22, 'triangle', 0.13, i * 0.18)); break;
+    case 'best':   [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tTone(f, 0.12, 'square', 0.12, i * 0.1)); break;
+  }
+}
+
+const J_MELODY = [
+  'E5', 0, 'G5', 0, 'C6', 0, 'G5', 0, 'A5', 0, 'C6', 0, 'E6', 0, 'C6', 0,
+  'D5', 0, 'F5', 0, 'A5', 0, 'F5', 0, 'G5', 0, 'B5', 0, 'D6', 0, 'B5', 0,
+];
+const J_BASS = ['C3', 'G2', 'A2', 'F2'];
+
+function jStartBgm() {
+  jStopBgm();
+  if (!tSound.bgm) return;
+  tAudioCtx();
+  jumpState.bgmStep = 0;
+  jumpState.bgmTimer = setInterval(() => {
+    const n = J_MELODY[jumpState.bgmStep % J_MELODY.length];
+    if (n) tTone(tNote(n), 0.16, 'triangle', 0.05);
+    if (jumpState.bgmStep % 8 === 0) {
+      tTone(tNote(J_BASS[Math.floor(jumpState.bgmStep / 8) % J_BASS.length]), 0.4, 'sine', 0.08);
+    }
+    jumpState.bgmStep++;
+  }, 200);
+}
+function jStopBgm() { clearInterval(jumpState.bgmTimer); jumpState.bgmTimer = null; }
+
+function jUpdateSoundBtns() {
+  document.getElementById('jump-bgm').classList.toggle('on', tSound.bgm);
+  document.getElementById('jump-sfx').classList.toggle('on', tSound.sfx);
 }
 
 // ============================================================

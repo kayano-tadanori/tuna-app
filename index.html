@@ -113,6 +113,14 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+    <button class="subject-card subject-card-game subject-card-jump" data-subject="jump">
+      <span class="game-icon">🐣</span>
+      <span class="game-text">
+        <span class="subject-name">チッチジャンプ</span>
+        <span class="subject-detail">足場をとんでどこまで高くいけるか！</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
     <button class="subject-card subject-card-game subject-card-gacha" data-subject="gacha">
       <span class="game-icon">🎰</span>
       <span class="game-text">
@@ -1105,6 +1113,41 @@
       <button class="t-item-btn" data-item="shield">🛡<b id="m-item-shield">0</b><span>1回セーフ</span></button>
     </div>
     <p class="mine-hint">長おしでも🚩を立てられるで</p>
+  </div>
+</div>
+
+<!-- =============== チッチジャンプ =============== -->
+<div id="screen-jump" class="screen">
+  <header class="top-bar">
+    <button id="jump-back" class="back-btn">‹ 戻る</button>
+    <h2 class="top-title">チッチジャンプ</h2>
+    <div class="tetris-head-btns">
+      <button id="jump-rank" class="icon-btn" title="ランキング">🏆</button>
+      <button id="jump-bgm" class="icon-btn snd-btn" title="音楽">🎵</button>
+      <button id="jump-sfx" class="icon-btn snd-btn" title="効果音">🔊</button>
+    </div>
+  </header>
+  <div class="jump-area">
+    <div class="tetris-info-row">
+      <div class="tetris-info"><span>スコア</span><b id="jump-score">0</b></div>
+      <div class="tetris-info"><span>🪙コイン</span><b id="jump-coins">0</b></div>
+      <div class="tetris-info"><span>ベスト</span><b id="jump-best">0</b></div>
+    </div>
+    <div class="jump-main">
+      <canvas id="jump-canvas" width="260" height="420"></canvas>
+      <div id="jump-overlay" class="tetris-overlay hidden">
+        <p id="jump-overlay-emoji" class="tetris-overlay-emoji">🐣</p>
+        <p id="jump-overlay-text" class="tetris-overlay-text">おっこちた！</p>
+        <p id="jump-overlay-score" class="tetris-overlay-score"></p>
+        <button id="jump-restart" class="btn-primary">もう一回！</button>
+      </div>
+    </div>
+    <canvas id="jump-chars" width="320" height="76"></canvas>
+    <div class="tetris-items">
+      <button class="t-item-btn" data-item="wing">🪽<b id="j-item-wing">0</b><span>6秒ミス無効</span></button>
+      <button class="t-item-btn" data-item="rocket">🚀<b id="j-item-rocket">0</b><span>一気にジャンプ</span></button>
+    </div>
+    <p class="mine-hint">画面をゆびでなぞって左右に動かそう</p>
   </div>
 </div>
 
