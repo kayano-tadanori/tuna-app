@@ -1054,6 +1054,7 @@
         <canvas id="tetris-next" width="80" height="80"></canvas>
       </div>
       <div id="tetris-overlay" class="tetris-overlay hidden">
+        <img id="tetris-overlay-img" class="mine-overlay-img hidden" src="images/otton-gameover.png" alt="">
         <p id="tetris-overlay-emoji" class="tetris-overlay-emoji">💥</p>
         <p id="tetris-overlay-text" class="tetris-overlay-text">ゲームオーバー</p>
         <p id="tetris-overlay-score" class="tetris-overlay-score"></p>
@@ -1130,12 +1131,13 @@
   <div class="jump-area">
     <div class="tetris-info-row">
       <div class="tetris-info"><span>スコア</span><b id="jump-score">0</b></div>
-      <div class="tetris-info"><span>🪙コイン</span><b id="jump-coins">0</b></div>
+      <div class="tetris-info"><span>⭐ボーナス</span><b id="jump-coins">0</b></div>
       <div class="tetris-info"><span>ベスト</span><b id="jump-best">0</b></div>
     </div>
     <div class="jump-main">
       <canvas id="jump-canvas" width="260" height="420"></canvas>
       <div id="jump-overlay" class="tetris-overlay hidden">
+        <img id="jump-overlay-img" class="mine-overlay-img hidden" src="images/chicchi-gameover.png" alt="">
         <p id="jump-overlay-emoji" class="tetris-overlay-emoji">🐣</p>
         <p id="jump-overlay-text" class="tetris-overlay-text">おっこちた！</p>
         <p id="jump-overlay-score" class="tetris-overlay-score"></p>

@@ -2176,7 +2176,9 @@ function tGameOver() {
   if (isNewBest) localStorage.setItem('tetrisBest', tetris.score);
   if (tetris.score > 0 && typeof saveGameScore === 'function') saveGameScore('tetris', state.nickname, tetris.score, 'max');
   document.getElementById('tetris-best').textContent = Math.max(tetris.score, prevBest);
-  document.getElementById('tetris-overlay-emoji').textContent = isNewBest ? '🏆' : '💥';
+  document.getElementById('tetris-overlay-emoji').classList.toggle('hidden', !isNewBest);
+  document.getElementById('tetris-overlay-emoji').textContent = '🏆';
+  document.getElementById('tetris-overlay-img').classList.toggle('hidden', isNewBest);
   document.getElementById('tetris-overlay-text').textContent = isNewBest ? 'ベスト更新！' : 'ゲームオーバー';
   document.getElementById('tetris-overlay-score').textContent = `スコア ${tetris.score}`;
   document.getElementById('tetris-overlay').classList.remove('hidden');
@@ -4198,7 +4200,7 @@ function mGameOver(boomIdx) {
     }
   });
   mineChars.state.bubble = 'ドンマイ！もう一回や！';
-  document.getElementById('mine-overlay-img').src = 'images/okan-fight.png';
+  document.getElementById('mine-overlay-img').src = 'images/okan-scared.png';
   document.getElementById('mine-overlay-text').textContent = 'ギョエーッ！';
   document.getElementById('mine-overlay-sub').textContent = 'もう一回チャレンジや！';
   document.getElementById('mine-overlay').classList.remove('hidden');
@@ -4254,11 +4256,15 @@ const J_SCROLL_Y = J_H * 0.42;
 const J_HAWK_MIN_SCORE = 15;
 const J_HAWK_SPEED = 1.8;
 const J_HAWK_SIZE = 26;
+const J_KNOCKBACK_VX = 4.5;
+const J_KNOCKBACK_VY = -4;
+const J_KNOCKBACK_FRICTION = 0.92;
+const J_STUN_MS = 500;
 
 const jumpState = {
-  player: { x: J_W / 2 - J_PLAYER_W / 2, y: 0, vy: 0 },
-  platforms: [], coins: [], hawk: null, hawkCooldown: 0,
-  spawnY: 0, score: 0, maxHeight: 0,
+  player: { x: J_W / 2 - J_PLAYER_W / 2, y: 0, vy: 0, vx: 0 },
+  platforms: [], coins: [], hawk: null, hawkCooldown: 0, stunUntil: 0,
+  spawnY: 0, score: 0, maxHeight: 0, starsCollected: 0,
   over: false, dragging: false,
   rafId: null, controlsReady: false,
 };
@@ -4313,6 +4319,7 @@ function initJumpControls() {
   const cv = document.getElementById('jump-canvas');
   const area = document.getElementById('screen-jump');
   const setFromEvent = e => {
+    if (Date.now() < jumpState.stunUntil) return; // タカに吹っ飛ばされている間は操作を受け付けない
     const r = cv.getBoundingClientRect();
     const relX = (e.clientX - r.left) * (cv.width / r.width);
     jumpState.player.x = Math.max(0, Math.min(J_W - J_PLAYER_W, relX - J_PLAYER_W / 2));
@@ -4338,10 +4345,12 @@ function startJump() {
   jumpState.coins = [];
   jumpState.score = 0;
   jumpState.maxHeight = 0;
+  jumpState.starsCollected = 0;
   jumpState.over = false;
   jumpState.wingUntil = 0;
   jumpState.hawk = null;
   jumpState.hawkCooldown = 150;
+  jumpState.stunUntil = 0;
   document.querySelectorAll('#screen-jump .t-item-btn').forEach(b => b.classList.remove('item-active'));
   document.getElementById('jump-overlay').classList.add('hidden');
 
@@ -4350,6 +4359,7 @@ function startJump() {
   jumpState.player.x = J_W / 2 - J_PLAYER_W / 2;
   jumpState.player.y = startPlatY - J_PLAYER_H;
   jumpState.player.vy = J_JUMP_V;
+  jumpState.player.vx = 0;
 
   jumpState.spawnY = startPlatY - jRandGap();
   while (jumpState.spawnY > -20) {
@@ -4397,6 +4407,13 @@ function jUpdatePhysics() {
   }
   p.y += p.vy;
 
+  if (p.vx) {
+    p.x += p.vx;
+    p.vx *= J_KNOCKBACK_FRICTION;
+    if (Math.abs(p.vx) < 0.1) p.vx = 0;
+    p.x = Math.max(0, Math.min(J_W - J_PLAYER_W, p.x));
+  }
+
   jumpState.platforms.forEach(plat => {
     if (!plat.vx) return;
     plat.x += plat.vx;
@@ -4407,22 +4424,25 @@ function jUpdatePhysics() {
     if (c.taken) return;
     if (p.x + J_PLAYER_W > c.x - 9 && p.x < c.x + 9 && p.y + J_PLAYER_H > c.y - 9 && p.y < c.y + 9) {
       c.taken = true;
-      addCoins(1);
+      jumpState.maxHeight += 30; // スコアボーナスのみ。ガチャ用コインとは切り離す（周回稼ぎ対策）
+      jumpState.starsCollected++;
       jSfx('coin');
     }
   });
 
-  // タカ（お邪魔キャラ）：一定スコア以降、時々画面を横切る。触れると突き落とされる
+  // タカ（お邪魔キャラ）：一定スコア以降、時々画面を横切る。触れると吹っ飛ばされる
   if (jumpState.hawk) {
     const h = jumpState.hawk;
     h.x += h.dir * J_HAWK_SPEED;
     if (!wingOn &&
         p.x + J_PLAYER_W > h.x - J_HAWK_SIZE / 2 && p.x < h.x + J_HAWK_SIZE / 2 &&
         p.y + J_PLAYER_H > h.y - J_HAWK_SIZE / 2 && p.y < h.y + J_HAWK_SIZE / 2) {
-      p.vy = Math.max(p.vy, 6);
-      jSfx('hawkHit');
-      jumpChars.cheer('タカにやられた！', 1500);
       jumpState.hawk = null;
+      p.vx = -h.dir * J_KNOCKBACK_VX;
+      p.vy = J_KNOCKBACK_VY;
+      jumpState.stunUntil = Date.now() + J_STUN_MS;
+      jSfx('hawkHit');
+      jumpChars.cheer('ふっとばされた！', 1200);
       jumpState.hawkCooldown = 150 + Math.random() * 150;
     } else if (h.x < -J_HAWK_SIZE || h.x > J_W + J_HAWK_SIZE) {
       jumpState.hawk = null;
@@ -4458,7 +4478,7 @@ function jUpdatePhysics() {
 function updateJumpInfo() {
   jumpState.score = Math.floor(jumpState.maxHeight / 10);
   document.getElementById('jump-score').textContent = jumpState.score;
-  document.getElementById('jump-coins').textContent = getCoins();
+  document.getElementById('jump-coins').textContent = jumpState.starsCollected;
 }
 
 // 足場を雲っぽいもこもこ形で描く（移動する足場は金色に色付け）
@@ -4488,7 +4508,7 @@ function drawJump() {
 
   ctx.font = '16px sans-serif';
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  jumpState.coins.forEach(c => { if (!c.taken) ctx.fillText('🪙', c.x, c.y); });
+  jumpState.coins.forEach(c => { if (!c.taken) ctx.fillText('⭐', c.x, c.y); });
 
   if (jumpState.hawk) {
     const h = jumpState.hawk;
@@ -4545,7 +4565,9 @@ function jGameOver() {
   }
   if (jumpState.score > 0 && typeof saveGameScore === 'function') saveGameScore('jump', state.nickname, jumpState.score, 'max');
   document.getElementById('jump-best').textContent = Math.max(jumpState.score, prevBest);
-  document.getElementById('jump-overlay-emoji').textContent = isNewBest ? '🏆' : '🐣';
+  document.getElementById('jump-overlay-emoji').classList.toggle('hidden', !isNewBest);
+  document.getElementById('jump-overlay-emoji').textContent = '🏆';
+  document.getElementById('jump-overlay-img').classList.toggle('hidden', isNewBest);
   document.getElementById('jump-overlay-text').textContent = isNewBest ? 'ベスト更新！' : 'おっこちた！';
   document.getElementById('jump-overlay-score').textContent = `スコア ${jumpState.score}`;
   document.getElementById('jump-overlay').classList.remove('hidden');
