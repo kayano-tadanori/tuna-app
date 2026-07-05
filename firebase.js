@@ -177,5 +177,32 @@ async function getGameRanking(game, dir) {
   }
 }
 
+// ============================================================
+// 端末データのクラウドバックアップ（コイン・ガチャ・アイテム等）
+// ============================================================
+
+async function saveLocalBackup(nickname, payload) {
+  if (!firebaseReady || !nickname) return;
+  try {
+    await db.collection('users').doc(nickname).collection('backup').doc('data').set({
+      ...payload,
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  } catch (e) {
+    console.warn('バックアップ保存失敗:', e.message);
+  }
+}
+
+async function getLocalBackup(nickname) {
+  if (!firebaseReady || !nickname) return null;
+  try {
+    const snap = await db.collection('users').doc(nickname).collection('backup').doc('data').get();
+    return snap.exists ? snap.data() : null;
+  } catch (e) {
+    console.warn('バックアップ取得失敗:', e.message);
+    return null;
+  }
+}
+
 // DOM読み込み完了後に初期化
 document.addEventListener('DOMContentLoaded', initFirebase);

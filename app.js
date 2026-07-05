@@ -1113,6 +1113,56 @@ function initSubject() {
     renderNicknameHistory();
     showScreen('nickname');
   };
+
+  checkCloudRestore();
+  backupLocalData();
+}
+
+// ============================================================
+// 端末データのクラウドバックアップ・復元（コイン・ガチャ・アイテム等）
+// ============================================================
+
+// Firestoreに保存しない一時データ（達成率等）を除く、端末にしか無いデータ一式
+const BACKUP_KEYS = [
+  'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
+  'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
+  'progress',
+];
+
+function backupLocalData() {
+  if (!state.nickname || typeof saveLocalBackup !== 'function') return;
+  const payload = {};
+  BACKUP_KEYS.forEach(k => {
+    const v = localStorage.getItem(k);
+    if (v !== null) payload[k] = v;
+  });
+  saveLocalBackup(state.nickname, payload);
+}
+
+// 端末にローカルデータがほぼ無い（新しい端末・キャッシュ消去後）状態で、
+// クラウドにバックアップがあれば復元をたずねる（一度断ったら同じニックネームでは聞き直さない）
+async function checkCloudRestore() {
+  if (!state.nickname || typeof getLocalBackup !== 'function') return;
+  const hasLocalData = !!localStorage.getItem('progress') || !!localStorage.getItem('gacha');
+  if (hasLocalData) return;
+  if (localStorage.getItem('restoreDeclined_' + state.nickname)) return;
+  const backup = await getLocalBackup(state.nickname);
+  if (!backup) return;
+  showRestoreConfirm(backup);
+}
+
+function showRestoreConfirm(backup) {
+  document.getElementById('restore-modal').classList.remove('hidden');
+  document.getElementById('restore-yes').onclick = () => {
+    BACKUP_KEYS.forEach(k => { if (backup[k] !== undefined) localStorage.setItem(k, backup[k]); });
+    document.getElementById('restore-modal').classList.add('hidden');
+    showToast('復元したで！');
+    location.reload();
+  };
+  document.getElementById('restore-no').onclick = () => {
+    localStorage.setItem('restoreDeclined_' + state.nickname, '1');
+    document.getElementById('restore-modal').classList.add('hidden');
+  };
 }
 
 document.addEventListener('DOMContentLoaded', boot);
@@ -3348,10 +3398,10 @@ function flushPlayTime() {
   if (playStart) { addPlayTime((Date.now() - playStart) / 1000); playStart = null; }
 }
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) flushPlayTime();
+  if (document.hidden) { flushPlayTime(); backupLocalData(); }
   else if (PLAY_SCREENS.includes(currentScreenId) && !playStart) playStart = Date.now();
 });
-window.addEventListener('pagehide', flushPlayTime);
+window.addEventListener('pagehide', () => { flushPlayTime(); backupLocalData(); });
 
 // ── アイテム ──────────────────────────────────────────────
 function getItems() {

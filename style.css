@@ -541,6 +541,8 @@ button { cursor: pointer; font-family: inherit; }
 
 .gami-modal { position: fixed; inset: 0; background: rgba(8,14,32,0.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; z-index: 300; padding: 24px; }
 .gami-card { background: var(--card2); border: 1.5px solid rgba(255,186,0,0.4); border-radius: var(--radius-lg); padding: 26px 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; width: min(86vw, 340px); box-shadow: 0 12px 50px rgba(0,0,0,0.5), var(--glow-gold); animation: stepIn 0.3s cubic-bezier(0.2,1.3,0.4,1); }
+.restore-btn-row { display: flex; gap: 10px; width: 100%; }
+.restore-btn-row button { flex: 1; }
 .gami-emoji { font-size: 3.2rem; line-height: 1; }
 .gami-title { font-size: 1.25rem; font-weight: 900; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
 .gami-lines { display: flex; flex-direction: column; gap: 4px; }
