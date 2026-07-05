@@ -113,6 +113,15 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+    <button class="subject-card subject-card-game subject-card-gacha" data-subject="gacha">
+      <span class="game-icon">🎰</span>
+      <span class="game-text">
+        <span class="subject-name">ガチャ図鑑</span>
+        <span class="subject-detail">コインでキャラをあつめよう！</span>
+      </span>
+      <span class="gacha-card-coins">🪙<b id="gacha-card-coins">0</b></span>
+      <span class="game-arrow">›</span>
+    </button>
   </div>
 </div>
 
@@ -436,6 +445,7 @@
     </div>
     <div id="result-hanamaru" class="hanamaru hidden">💮</div>
     <div id="result-item-banner" class="result-item-banner hidden"></div>
+    <div id="result-coin-banner" class="result-coin-banner hidden"></div>
     <div class="result-actions">
       <button id="btn-result-home" class="btn-primary">ホームへ</button>
       <button id="btn-result-retry" class="btn-secondary">もう一度</button>
@@ -1098,6 +1108,50 @@
   </div>
 </div>
 
+<!-- =============== ガチャ =============== -->
+<div id="screen-gacha" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <h2 class="top-title">🎰 ガチャ</h2>
+    <span class="gacha-coin-badge">🪙<b id="gacha-coins">0</b></span>
+  </header>
+  <div class="gacha-main">
+    <div id="gacha-capsule" class="gacha-capsule">
+      <canvas id="gacha-canvas" width="180" height="180"></canvas>
+    </div>
+    <div id="gacha-result" class="gacha-result hidden">
+      <div class="gacha-result-tags">
+        <span id="gacha-result-rarity" class="gacha-rarity-badge"></span>
+        <span id="gacha-result-tag" class="gacha-tag"></span>
+      </div>
+      <p id="gacha-result-name" class="gacha-result-name"></p>
+      <p id="gacha-result-desc" class="gacha-result-desc"></p>
+      <p id="gacha-result-count" class="gacha-result-count"></p>
+      <button id="gacha-btn-tap" class="btn-primary">次へ ›</button>
+    </div>
+    <div class="gacha-buttons">
+      <button id="gacha-btn-1" class="btn-primary">1回まわす 🪙30</button>
+      <button id="gacha-btn-10" class="btn-secondary">10れん 🪙270</button>
+    </div>
+    <button id="gacha-btn-zukan" class="gacha-zukan-link">📖 ずかんを見る</button>
+  </div>
+</div>
+
+<!-- =============== 図鑑 =============== -->
+<div id="screen-zukan" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="gacha">‹ 戻る</button>
+    <h2 class="top-title">📖 ずかん</h2>
+  </header>
+  <div class="zukan-main">
+    <div class="zukan-progress">
+      <div class="bar-track"><div id="zukan-bar" class="bar-fill"></div></div>
+      <p id="zukan-pct" class="zukan-pct"></p>
+    </div>
+    <div id="zukan-grid" class="zukan-grid"></div>
+  </div>
+</div>
+
 <!-- =============== ゲームランキングモーダル =============== -->
 <div id="game-rank-modal" class="gami-modal hidden">
   <div class="gami-card">
@@ -1122,6 +1176,19 @@
     <p id="gami-title" class="gami-title"></p>
     <div id="gami-lines" class="gami-lines"></div>
     <button id="gami-close" class="btn-primary">やったー！</button>
+  </div>
+</div>
+
+<!-- =============== 図鑑キャラ拡大モーダル =============== -->
+<div id="zukan-modal" class="gami-modal hidden">
+  <div class="gami-card">
+    <canvas id="zukan-modal-canvas" width="120" height="120"></canvas>
+    <span id="zukan-modal-rarity" class="gacha-rarity-badge"></span>
+    <p id="zukan-modal-name" class="gami-title"></p>
+    <p id="zukan-modal-desc" class="gami-lines"></p>
+    <p id="zukan-modal-voice" class="gami-lines"></p>
+    <p id="zukan-modal-count" class="record-note"></p>
+    <button id="zukan-modal-close" class="btn-primary">とじる</button>
   </div>
 </div>
 

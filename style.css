@@ -631,3 +631,62 @@ button { cursor: pointer; font-family: inherit; }
 .tetris-btn:active { background: var(--card); transform: scale(0.92); }
 .tetris-btn-rot { background: rgba(160,107,255,0.18); border-color: rgba(160,107,255,0.4); color: #c9a8ff; }
 .tetris-btn-drop { grid-column: span 2; background: var(--grad-brand); border-color: var(--accent); color: #fff; font-size: 1.05rem; box-shadow: var(--glow-brand); }
+
+/* ============================================================
+   ガチャ図鑑
+   ============================================================ */
+.subject-card-gacha { --sc-accent: linear-gradient(90deg,#ffd166,#ff9a44); --sc-glow: rgba(255,186,0,0.2); border-color: rgba(255,186,0,0.35); background: linear-gradient(120deg,rgba(140,90,10,0.35),rgba(180,60,180,0.18)); }
+.gacha-card-coins { display: flex; align-items: center; gap: 3px; font-size: 0.85rem; font-weight: 900; color: var(--gold); background: rgba(255,186,0,0.14); border: 1px solid rgba(255,186,0,0.3); border-radius: 20px; padding: 3px 10px; flex-shrink: 0; z-index: 1; }
+
+.result-coin-banner { background: rgba(255,209,102,0.1); border: 1.5px solid rgba(255,186,0,0.4); color: var(--gold); border-radius: var(--radius); padding: 11px 16px; font-size: 0.85rem; font-weight: 900; animation: stepIn 0.35s ease; }
+
+.gacha-coin-badge { display: flex; align-items: center; gap: 4px; font-size: 0.95rem; font-weight: 900; color: var(--gold); background: rgba(255,186,0,0.14); border: 1px solid rgba(255,186,0,0.32); border-radius: 20px; padding: 5px 12px; }
+.gacha-main { padding: 24px 16px calc(32px + var(--safe-b)); display: flex; flex-direction: column; align-items: center; gap: 18px; }
+
+.gacha-capsule { width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #4f7cff, #0f2d6e 70%); border: 4px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 30px rgba(79,124,255,0.35); }
+.gacha-capsule canvas { image-rendering: pixelated; }
+.gacha-capsule.shake-N   { animation: gachaShake 0.35s ease-in-out infinite; }
+.gacha-capsule.shake-R   { animation: gachaShake 0.3s ease-in-out infinite; background: radial-gradient(circle at 35% 30%, #38c8f0, #0f2d6e 70%); }
+.gacha-capsule.shake-SR  { animation: gachaShake 0.22s ease-in-out infinite; background: radial-gradient(circle at 35% 30%, #ffd166, #7a5a10 70%); box-shadow: 0 0 40px rgba(255,186,0,0.5); }
+.gacha-capsule.shake-UR  { animation: gachaShake 0.15s ease-in-out infinite; background: radial-gradient(circle at 35% 30%, #ff6be0, #4a1c7a 70%); box-shadow: 0 0 50px rgba(200,100,255,0.6); }
+.gacha-capsule.open-N, .gacha-capsule.open-R, .gacha-capsule.open-SR, .gacha-capsule.open-UR { animation: gachaFlash 0.4s ease; }
+@keyframes gachaShake { 0%,100% { transform: rotate(0deg) translateX(0); } 25% { transform: rotate(-6deg) translateX(-4px); } 75% { transform: rotate(6deg) translateX(4px); } }
+@keyframes gachaFlash { 0% { filter: brightness(1); } 40% { filter: brightness(2.4); } 100% { filter: brightness(1); } }
+
+.gacha-result { width: 100%; max-width: 300px; background: var(--card); backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: zoneIn 0.3s ease both; }
+.gacha-result-tags { display: flex; gap: 8px; align-items: center; }
+.gacha-rarity-badge { display: inline-block; font-size: 0.78rem; font-weight: 900; padding: 3px 12px; border-radius: 20px; letter-spacing: 0.05em; }
+.gacha-rarity-badge.rarity-N  { background: rgba(160,170,200,0.18); color: #b8c2dd; border: 1px solid rgba(160,170,200,0.4); }
+.gacha-rarity-badge.rarity-R  { background: rgba(56,200,240,0.16); color: var(--accent2); border: 1px solid rgba(56,200,240,0.4); }
+.gacha-rarity-badge.rarity-SR { background: rgba(255,186,0,0.16); color: var(--gold); border: 1px solid rgba(255,186,0,0.45); }
+.gacha-rarity-badge.rarity-UR { background: linear-gradient(90deg,rgba(255,107,224,0.22),rgba(160,107,255,0.22)); color: #ffb0f0; border: 1px solid rgba(255,107,224,0.5); }
+.gacha-tag { font-size: 0.78rem; font-weight: 900; padding: 3px 10px; border-radius: 20px; }
+.gacha-tag.new  { background: rgba(40,200,138,0.18); color: var(--green); border: 1px solid rgba(40,200,138,0.4); }
+.gacha-tag.dupe { background: rgba(255,186,0,0.16); color: var(--gold); border: 1px solid rgba(255,186,0,0.4); }
+.gacha-result-name { font-size: 1.2rem; font-weight: 900; }
+.gacha-result-desc { font-size: 0.82rem; color: var(--sub2); text-align: center; }
+.gacha-result-count { font-size: 0.75rem; color: var(--sub); font-weight: 700; }
+.gacha-result #gacha-btn-tap { margin-top: 6px; min-width: 140px; }
+
+.gacha-buttons { display: flex; gap: 10px; width: 100%; max-width: 320px; }
+.gacha-buttons button { flex: 1; }
+.gacha-zukan-link { background: none; border: none; color: var(--accent2); font-size: 0.9rem; font-weight: 800; padding: 8px 12px; }
+
+.zukan-main { padding: 16px 16px calc(32px + var(--safe-b)); display: flex; flex-direction: column; gap: 18px; }
+.zukan-progress { display: flex; flex-direction: column; gap: 6px; }
+.zukan-pct { text-align: center; font-size: 0.9rem; font-weight: 900; color: var(--accent2); }
+.zukan-rarity-h { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: -8px; }
+.zukan-rarity-h.rarity-N  { color: #b8c2dd; }
+.zukan-rarity-h.rarity-R  { color: var(--accent2); }
+.zukan-rarity-h.rarity-SR { color: var(--gold); }
+.zukan-rarity-h.rarity-UR { color: #ffb0f0; }
+.zukan-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.zukan-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-sm); padding: 8px 4px 10px; transition: transform 0.12s, border-color 0.18s; }
+.zukan-cell:active { transform: scale(0.95); border-color: var(--accent); }
+.zukan-cell canvas { image-rendering: pixelated; }
+.zukan-cell span { font-size: 0.68rem; font-weight: 700; color: var(--sub2); text-align: center; line-height: 1.25; }
+.zukan-cell.unowned span { color: var(--sub); opacity: 0.6; }
+.zukan-cell.unowned canvas { opacity: 0.55; }
+
+#zukan-modal-canvas { image-rendering: pixelated; background: rgba(0,0,0,0.15); border-radius: var(--radius-sm); }
+#zukan-modal-voice { color: var(--accent2); font-style: italic; }

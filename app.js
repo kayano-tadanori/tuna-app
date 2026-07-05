@@ -87,9 +87,11 @@ function saveProgress(prog) {
 function recordResult(id, correct) {
   const prog = getProgress();
   if (!prog[id]) prog[id] = { correct: 0, total: 0 };
+  const isFirst = correct && prog[id].correct === 0;
   prog[id].total++;
   if (correct) prog[id].correct++;
   saveProgress(prog);
+  if (correct) awardCoinForAnswer(id, isFirst);
 }
 
 function getRate(id) {
@@ -377,6 +379,7 @@ document.getElementById('btn-start').onclick = async () => {
     state.correct = 0;
     state.wrong   = 0;
     state.retryQueue = [];
+    coinSessionEarned = 0;
 
     if (!pool.length) { showToast('問題がありません'); hideLoading(); return; }
 
@@ -773,6 +776,7 @@ function endSession() {
 
   renderResultCheer(rate);
   maybeAwardPerfect(rate, total);
+  awardSessionCoins(rate, total);
   showScreen('result');
   checkTitlePromotion();
   pushAchievementToRanking();
@@ -1050,6 +1054,7 @@ function initSubject() {
   // ログインボーナス＆問題追加チェック（どちらも冪等）
   checkNewQuestions();
   checkLoginBonus();
+  document.getElementById('gacha-card-coins').textContent = getCoins();
 
   // 日付とあいさつ（時間帯で変化）
   const now = new Date();
@@ -1087,6 +1092,9 @@ function initSubject() {
       } else if (subj === 'mine') {
         initMine();
         showScreen('mine');
+      } else if (subj === 'gacha') {
+        initGacha();
+        showScreen('gacha');
       } else {
         initHome();
         showScreen('home');
@@ -1421,6 +1429,7 @@ async function startRikaSession() {
     const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
     sansuState.questions = shuffle([...all]).slice(0, count);
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    coinSessionEarned = 0;
     hideLoading();
     startSansuQuiz();
   } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
@@ -1502,6 +1511,7 @@ async function startShakaiSession() {
     const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
     sansuState.questions = shuffle([...all]).slice(0, count);
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    coinSessionEarned = 0;
     hideLoading();
     startSansuQuiz();
   } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
@@ -1519,6 +1529,7 @@ async function startSansuSession() {
       const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
       sansuState.questions = shuffle([...all]).slice(0, count);
       sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+      coinSessionEarned = 0;
       hideLoading();
       startSansuQuiz();
     } catch(e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
@@ -1671,6 +1682,7 @@ function endSansuSession() {
   document.getElementById('result-comment').textContent = comment;
   renderResultCheer(score);
   maybeAwardPerfect(score, total);
+  awardSessionCoins(score, total);
 
   document.getElementById('btn-result-home').onclick = () => {
     if (sansuState.subject === 'rika') { initRikaHome(); showScreen('rika-home'); }
@@ -1679,6 +1691,7 @@ function endSansuSession() {
   };
   document.getElementById('btn-result-retry').onclick = () => {
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    coinSessionEarned = 0;
     sansuState.questions = shuffle([...sansuState.questions]);
     document.getElementById('sq-correct').textContent = '0';
     document.getElementById('sq-wrong').textContent = '0';
@@ -2328,6 +2341,10 @@ function tSfx(kind) {
     case 'clear4': [523, 659, 784, 1047, 1319].forEach((f, i) => tTone(f, 0.1, 'square', 0.12, i * 0.07)); break;
     case 'over':   [392, 330, 262, 196].forEach((f, i) => tTone(f, 0.22, 'triangle', 0.13, i * 0.18)); break;
     case 'best':   [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tTone(f, 0.12, 'square', 0.12, i * 0.1)); break;
+    case 'gachaShake': [180, 220, 180, 220].forEach((f, i) => tTone(f, 0.06, 'square', 0.07, i * 0.12)); break;
+    case 'gachaOpen':  [440, 660, 880].forEach((f, i) => tTone(f, 0.1, 'triangle', 0.1, i * 0.08)); break;
+    case 'gachaSR':    [523, 659, 784, 1047, 1319].forEach((f, i) => tTone(f, 0.12, 'square', 0.13, i * 0.09)); break;
+    case 'gachaUR':    [392, 523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tTone(f, 0.14, 'square', 0.14, i * 0.08)); break;
   }
 }
 
@@ -2548,6 +2565,374 @@ function tCharsCheer(lines) {
 }
 
 // ============================================================
+// ガチャ図鑑（コイン集め→キャラガチャ→図鑑コンプ）
+// ============================================================
+
+// 共有ドット絵テンプレート（プレースホルダ：全キャラでこの1形状をパレット差し替えして量産。
+// T_SPRITES同様 {pal, idle} 形式なので、将来は1体ずつ idle/pal を手描きに差し替え可能）
+const G_TEMPLATE = [
+  '..........',
+  '..........',
+  '..........',
+  '..........',
+  '...yyyy...',
+  '..yyyyyy..',
+  '..oooooo..',
+  '..oeooeo..',
+  '...rrrr...',
+  '..yyyyyy..',
+  '.dyyyyyyd.',
+  '.dyyyyyyd.',
+  '..yyyyyy..',
+  '...l..l...',
+];
+
+function gHashStr(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  return h;
+}
+function gHslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  const toHex = x => Math.round(255 * x).toString(16).padStart(2, '0');
+  return `#${toHex(f(0))}${toHex(f(8))}${toHex(f(4))}`;
+}
+// レアリティが高いほど彩度・明度をリッチに
+const G_RARITY_TONE = { N: [50, 42], R: [62, 48], SR: [76, 54], UR: [90, 58] };
+function gPalette(ch) {
+  const hue = gHashStr(ch.id) % 360;
+  const [sat, light] = G_RARITY_TONE[ch.rarity] || G_RARITY_TONE.N;
+  return {
+    y: gHslToHex(hue, sat, Math.min(light + 18, 92)),
+    o: gHslToHex(hue, sat, light),
+    r: gHslToHex((hue + 30) % 360, sat, Math.max(light - 15, 25)),
+    d: gHslToHex(hue, sat, Math.max(light - 20, 18)),
+    l: gHslToHex((hue + 180) % 360, Math.min(sat + 10, 92), light),
+    e: '#222222',
+  };
+}
+function gDrawChar(ctx, ch, ox, oy, s) {
+  tDrawSprite(ctx, G_TEMPLATE, gPalette(ch), ox, oy, s);
+}
+const G_SILHOUETTE_PAL = { y: '#2a2f45', o: '#2a2f45', r: '#2a2f45', d: '#20243a', l: '#20243a', e: '#20243a' };
+function gDrawSilhouette(ctx, ox, oy, s) {
+  tDrawSprite(ctx, G_TEMPLATE, G_SILHOUETTE_PAL, ox, oy, s);
+}
+
+// キャラ図鑑マスタ（72体＋シークレット3体）
+const GACHA_CHARS = [
+  // ── N（どうぶつ・がくよう品・じゅく道具、33体） ──
+  { id:'piyo',         name:'ピヨ太',         rarity:'N', desc:'チッチにあこがれるひよこ。',     voice:'ピヨッ！' },
+  { id:'nyankichi',    name:'ニャン吉',       rarity:'N', desc:'気まぐれな学園の人気者。',       voice:'にゃんにゃん！' },
+  { id:'wanzou',       name:'ワン蔵',         rarity:'N', desc:'忠犬、いつも一緒に勉強する。',   voice:'ワンワン！' },
+  { id:'ponkichi',     name:'ぽん吉',         rarity:'N', desc:'ちょっとおっちょこちょい。',     voice:'ぽんぽこぽん！' },
+  { id:'kamekichi',    name:'カメ吉',         rarity:'N', desc:'コツコツ型、実は足がはやい。',   voice:'急がば回れやで' },
+  { id:'chun',         name:'チュン',         rarity:'N', desc:'朝はやくから鳴いてくれる。',     voice:'チュンチュン！' },
+  { id:'kaerunosuke',  name:'カエル之助',     rarity:'N', desc:'雨の日も元気いっぱい。',         voice:'ケロケロ！' },
+  { id:'hamuta',       name:'ハム太',         rarity:'N', desc:'ほおぶくろにお菓子満タン。',     voice:'キュッ！' },
+  { id:'kingyohime',   name:'金魚姫',         rarity:'N', desc:'水そうの中のお姫様。',           voice:'パクッ' },
+  { id:'kabutomaru',   name:'カブト丸',       rarity:'N', desc:'力持ちの甲虫の戦士。',           voice:'ガオー！' },
+  { id:'dangorou',     name:'ダンゴロウ',     rarity:'N', desc:'丸まって身を守る名人。',         voice:'コロン' },
+  { id:'keshigomu',    name:'消しゴムくん',   rarity:'N', desc:'まちがいをそっと消してくれる。', voice:'スッキリ！' },
+  { id:'enpitsu',      name:'えんぴつ君',     rarity:'N', desc:'芯をとがらせてやる気満々。',     voice:'書くで〜' },
+  { id:'randoseru',    name:'ランドセルさん', rarity:'N', desc:'6年間の相棒、頑丈自慢。',       voice:'背負ってこ！' },
+  { id:'noteshi',      name:'ノート氏',       rarity:'N', desc:'びっしり書き込まれた自信作。',   voice:'メモメモ' },
+  { id:'jougi',        name:'じょうぎマン',   rarity:'N', desc:'まっすぐ線を引くプロ。',         voice:'ピシッ！' },
+  { id:'recorder',     name:'リコーダーくん', rarity:'N', desc:'音楽の時間の主役。',             voice:'ピーヒャラ' },
+  { id:'cone',         name:'コーンくん',     rarity:'N', desc:'工事現場の道しるべ。',           voice:'こっちやで！' },
+  { id:'scoop',        name:'スコップくん',   rarity:'N', desc:'土をほるのが得意。',             voice:'ザクッ！' },
+  { id:'gunte',        name:'軍手くん',       rarity:'N', desc:'手を守る現場の相棒。',           voice:'がっちりや' },
+  { id:'curry',        name:'給食カレー',     rarity:'N', desc:'みんな大好き金曜日の主役。',     voice:'いいにおい〜' },
+  { id:'gyunyu',       name:'牛乳くん',       rarity:'N', desc:'給食の必須アイテム。',           voice:'ごくごく' },
+  { id:'jukuben',      name:'塾弁くん',       rarity:'N', desc:'塾の合間のエネルギー補給。',     voice:'おなかすいた〜' },
+  { id:'ankicard',     name:'暗記カードちゃん', rarity:'N', desc:'めくるたびに知識が増える。',   voice:'めくって！' },
+  { id:'shukudai',     name:'宿題プリント',   rarity:'N', desc:'毎日コツコツ配られる。',         voice:'やってや〜' },
+  { id:'fusenhime',    name:'ふせん姫',       rarity:'N', desc:'大事なページに貼りつく。',       voice:'ここ大事！' },
+  { id:'timer',        name:'タイマーくん',   rarity:'N', desc:'時間を計るお助け役。',           voice:'ピピッ、終了！' },
+  { id:'sharpbushi',   name:'シャーペン侍',   rarity:'N', desc:'芯を一本も無駄にしない。',       voice:'参る！' },
+  { id:'compass',      name:'コンパス伯爵',   rarity:'N', desc:'きれいな円を描く紳士。',         voice:'優雅にくるり' },
+  { id:'kakomon',      name:'過去問くん',     rarity:'N', desc:'本番の空気を教えてくれる。',     voice:'これ出るで' },
+  { id:'keshikasu',    name:'消しカス丸',     rarity:'N', desc:'気づけば机の上にいる。',         voice:'コロコロ' },
+  { id:'shitajiki',    name:'下じきさん',     rarity:'N', desc:'ノートの下でしっかり支える。',   voice:'まかせて' },
+  { id:'jukubag',      name:'塾バッグ大将',   rarity:'N', desc:'教材をぎっしり詰め込む。',       voice:'重いけど頑張る！' },
+
+  // ── R（工事・学校・じゅくスタッフ、20体） ──
+  { id:'helmet',       name:'ヘル男',         rarity:'R', desc:'現場の安全を守るヒーロー。',     voice:'ご安全に！' },
+  { id:'shovel',       name:'ショベルくん',   rarity:'R', desc:'ミニユンボで土をすくう。',       voice:'ガガガッ！' },
+  { id:'dump',         name:'ダンプ姫',       rarity:'R', desc:'荷台いっぱいの土砂を運ぶ。',     voice:'任せて！' },
+  { id:'mixer',        name:'ミキちゃん',     rarity:'R', desc:'コンクリートをまぜまぜ。',       voice:'ぐるぐる〜' },
+  { id:'roller',       name:'ローラー丸',     rarity:'R', desc:'道をぺったんこにならす。',       voice:'ゴロゴロ〜' },
+  { id:'fork',         name:'フォークン',     rarity:'R', desc:'重い荷物もひょいっと持ち上げ。', voice:'リフトアップ！' },
+  { id:'kocho',        name:'校長せんせい',   rarity:'R', desc:'朝礼のお話がちょっと長い。',     voice:'えー、それではー' },
+  { id:'kyoto',        name:'教頭せんせい',   rarity:'R', desc:'縁の下の力持ち。',               voice:'しっかりね' },
+  { id:'kyushoku',     name:'給食のおばちゃん', rarity:'R', desc:'おかわりをよそってくれる。',   voice:'おかわりある？' },
+  { id:'kinjiro',      name:'金次郎ぞう',     rarity:'R', desc:'歩きながら本を読む勤勉家。',     voice:'こつこつが一番や' },
+  { id:'hoken',        name:'ほけん室のせんせい', rarity:'R', desc:'けがも心もケアしてくれる。', voice:'だいじょうぶ？' },
+  { id:'soroban',      name:'そろばん仙人',   rarity:'R', desc:'暗算の達人、指がはやい。',       voice:'願いましては〜' },
+  { id:'jisho',        name:'辞書ハカセ',     rarity:'R', desc:'分厚い辞書を軽々めくる。',       voice:'調べてみよか' },
+  { id:'tobibako',     name:'とび箱マスター', rarity:'R', desc:'体育の日の主役。',               voice:'とべ！とべ！' },
+  { id:'jukucho',      name:'塾長せんせい',   rarity:'R', desc:'熱血指導で有名。',               voice:'気合いや！' },
+  { id:'tutor',        name:'チューターお姉さん', rarity:'R', desc:'やさしく質問に答えてくれる。', voice:'一緒に解こか' },
+  { id:'keisan_oni',   name:'計算テストの鬼', rarity:'R', desc:'制限時間はいつも厳しい。',       voice:'時間やで！' },
+  { id:'moshi',        name:'模試判定マン',   rarity:'R', desc:'A〜Eの判定を告げる。',           voice:'今回の判定は…' },
+  { id:'jishu',        name:'自習室のヌシ',   rarity:'R', desc:'誰よりも長く居座る。',           voice:'静かにするで' },
+  { id:'hensachi',     name:'偏差値くん',     rarity:'R', desc:'上下する数字そのもの。',         voice:'今日は上がったで！' },
+
+  // ── SR（家族・現場・じゅくエース、12体） ──
+  { id:'obaan',        name:'オバーン',       rarity:'SR', desc:'優しい笑顔のおばあちゃん。',     voice:'無理せんとな' },
+  { id:'ojiin',        name:'オジーン',       rarity:'SR', desc:'昔話が得意なおじいちゃん。',     voice:'わしの若い頃はな〜' },
+  { id:'genba_otton',  name:'現場オットン',   rarity:'SR', desc:'作業服姿の頼れる父。',           voice:'現場は任せとけ！' },
+  { id:'super_okan',   name:'スーパーオカーン', rarity:'SR', desc:'割烹着でなんでもこなす。',     voice:'おたま無双や！' },
+  { id:'buru_musashi', name:'ブル武蔵',       rarity:'SR', desc:'地面をならす力の化身。',         voice:'ならしたるで！' },
+  { id:'tunnel_mori',  name:'トンネル守',     rarity:'SR', desc:'山をつらぬく守り神。',           voice:'貫通や！' },
+  { id:'akapen',       name:'赤ペン先生',     rarity:'SR', desc:'びっしり丸をつけてくれる。',     voice:'よう書けたな' },
+  { id:'nada_mon',     name:'灘の門番',       rarity:'SR', desc:'合格の扉を守っている。',         voice:'覚悟はええか' },
+  { id:'charisma',     name:'カリスマ講師',   rarity:'SR', desc:'一言で教室の空気を変える。',     voice:'ここ、出るで' },
+  { id:'sairekun',     name:'最レ王',         rarity:'SR', desc:'最高レベル問題を極めた者。',     voice:'この程度朝飯前や' },
+  { id:'a_hantei',     name:'A判定の女神',   rarity:'SR', desc:'合格をそっと後押しする。',       voice:'きっと大丈夫' },
+  { id:'manten',       name:'満点答案',       rarity:'SR', desc:'赤字ゼロの奇跡の一枚。',         voice:'パーフェクトや' },
+
+  // ── UR（伝説級、7体） ──
+  { id:'gold_otton',    name:'ゴールドオットン', rarity:'UR', desc:'金色に輝く伝説の父。',         voice:'常在戦場、黄金の意志！' },
+  { id:'crane_king',    name:'クレーンキング',   rarity:'UR', desc:'現場を見下ろす鋼鉄の王。',     voice:'つり上げたるで！' },
+  { id:'platina_okan',  name:'プラチナオカーン', rarity:'UR', desc:'白金の割烹着をまとう母。',     voice:'愛情も無限大や' },
+  { id:'daiya_chicchi', name:'ダイヤチッチ',     rarity:'UR', desc:'ダイヤより硬い意志のひな。',   voice:'ピカーッ！' },
+  { id:'hensachi70',    name:'偏差値70仙人',     rarity:'UR', desc:'極限の領域に住む賢者。',       voice:'その先を見せたる' },
+  { id:'akahon_dragon', name:'赤本ドラゴン',     rarity:'UR', desc:'過去問を食べて育った竜。',     voice:'全問暗記したで' },
+  { id:'goukaku_daruma', name:'合格だるま大明神', rarity:'UR', desc:'願いを一つだけ叶える。',      voice:'目に魂を入れよ' },
+
+  // ── シークレット（排出なし・図鑑コンプ報酬） ──
+  { id:'god_chicchi', name:'神チッチ',   rarity:'UR', secret:true, desc:'N・Rを極めた者だけが出会える。', voice:'ピピーッ！！！' },
+  { id:'god_okan',    name:'神オカーン', rarity:'UR', secret:true, desc:'SR・URを極めた者だけが出会える。', voice:'全部お見通しやで' },
+  { id:'god_otton',   name:'神オットン', rarity:'UR', secret:true, desc:'ずかんコンプリートの証。',       voice:'灘中合格、間違いなしや！' },
+];
+
+const GACHA_RATES = { N: 60, R: 28, SR: 9, UR: 3 };
+const DUPE_REFUND = { N: 5, R: 10, SR: 20, UR: 50 };
+const GACHA_COST = 30, GACHA_COST_10 = 270;
+const GACHA_PITY = 30; // 30連引いてもURが出なければ次で確定
+const RARITY_ORDER = { N: 0, R: 1, SR: 2, UR: 3 };
+
+function charsByRarity(rarity) { return GACHA_CHARS.filter(c => c.rarity === rarity && !c.secret); }
+
+function getGacha() {
+  const g = JSON.parse(localStorage.getItem('gacha') || '{}');
+  return Object.assign({ owned: {}, pulls: 0, pityUR: 0, compRewarded: [], secretUnlocked: [] }, g);
+}
+function saveGachaData(g) { localStorage.setItem('gacha', JSON.stringify(g)); }
+
+function rollRarity() {
+  const r = Math.random() * 100;
+  if (r < GACHA_RATES.UR) return 'UR';
+  if (r < GACHA_RATES.UR + GACHA_RATES.SR) return 'SR';
+  if (r < GACHA_RATES.UR + GACHA_RATES.SR + GACHA_RATES.R) return 'R';
+  return 'N';
+}
+
+function rollGacha(g, forceRarity) {
+  const rarity = forceRarity || (g.pityUR >= GACHA_PITY - 1 ? 'UR' : rollRarity());
+  const pool = charsByRarity(rarity);
+  const unowned = pool.filter(c => !g.owned[c.id]);
+  const pick = unowned.length ? unowned[Math.floor(Math.random() * unowned.length)]
+                               : pool[Math.floor(Math.random() * pool.length)];
+  const isDupe = !!g.owned[pick.id];
+  g.owned[pick.id] = (g.owned[pick.id] || 0) + 1;
+  g.pulls++;
+  g.pityUR = rarity === 'UR' ? 0 : g.pityUR + 1;
+  return { char: pick, isDupe };
+}
+
+// n回ガチャを回す（コイン消費・保存込み）。10連はSR以上を1体保証
+function doGacha(n) {
+  const cost = n === 10 ? GACHA_COST_10 : GACHA_COST;
+  if (getCoins() < cost) { showToast('コインが足りへんで！勉強してためよう！'); return null; }
+  addCoins(-cost);
+  const g = getGacha();
+  const results = [];
+  let gotSRPlus = false;
+  for (let i = 0; i < n; i++) {
+    const forceRarity = (n === 10 && i === 9 && !gotSRPlus) ? (Math.random() < 0.3 ? 'UR' : 'SR') : null;
+    const res = rollGacha(g, forceRarity);
+    if (RARITY_ORDER[res.char.rarity] >= RARITY_ORDER.SR) gotSRPlus = true;
+    let refund = 0;
+    if (res.isDupe) { refund = DUPE_REFUND[res.char.rarity]; addCoins(refund); }
+    results.push({ char: res.char, isDupe: res.isDupe, refund });
+  }
+  saveGachaData(g);
+  return results;
+}
+
+// 図鑑コンプ報酬・シークレット解放（ガチャ結果表示後に呼ぶ。冪等）
+function checkZukanRewards() {
+  const g = getGacha();
+  const rewardMap = { N: 50, R: 80, SR: 100, UR: 150 };
+  ['N', 'R', 'SR', 'UR'].forEach(rarity => {
+    const pool = charsByRarity(rarity);
+    const owned = pool.filter(c => g.owned[c.id]).length;
+    if (owned >= pool.length && !g.compRewarded.includes(rarity)) {
+      g.compRewarded.push(rarity);
+      addCoins(rewardMap[rarity]);
+      showGamiModal({ emoji: '📖', title: `${rarity}レア図鑑コンプ！`, lines: [`${rarity}レアぜんぶ集めたで！`, `🪙${rewardMap[rarity]}まいゲット！`] });
+    }
+  });
+  const secretDefs = [
+    { id: 'god_chicchi', need: ['N', 'R'] },
+    { id: 'god_okan',    need: ['SR', 'UR'] },
+    { id: 'god_otton',   need: 'all' },
+  ];
+  const totalOwned = GACHA_CHARS.filter(c => !c.secret && g.owned[c.id]).length;
+  const totalAll = GACHA_CHARS.filter(c => !c.secret).length;
+  secretDefs.forEach(def => {
+    if (g.secretUnlocked.includes(def.id)) return;
+    const ok = def.need === 'all' ? totalOwned >= totalAll : def.need.every(r => g.compRewarded.includes(r));
+    if (ok) {
+      g.secretUnlocked.push(def.id);
+      g.owned[def.id] = 1;
+      const ch = GACHA_CHARS.find(c => c.id === def.id);
+      showGamiModal({ emoji: '✨', title: 'シークレット解放！', lines: [`${ch.name}が図鑑に加わった！`, `「${ch.voice}」`] });
+    }
+  });
+  saveGachaData(g);
+}
+
+// ── ガチャ画面 ────────────────────────────────────────────
+function initGacha() {
+  document.getElementById('gacha-coins').textContent = getCoins();
+  document.getElementById('gacha-btn-1').onclick = () => runGachaAnim(1);
+  document.getElementById('gacha-btn-10').onclick = () => runGachaAnim(10);
+  document.getElementById('gacha-btn-zukan').onclick = () => { initZukan(); showScreen('zukan'); };
+  document.querySelectorAll('#screen-gacha [data-back="subject"]').forEach(b => { b.onclick = () => showScreen('subject'); });
+  document.getElementById('gacha-capsule').className = 'gacha-capsule';
+  document.getElementById('gacha-result').classList.add('hidden');
+  const cv = document.getElementById('gacha-canvas');
+  cv.getContext('2d').clearRect(0, 0, cv.width, cv.height);
+}
+
+async function runGachaAnim(n) {
+  const cost = n === 10 ? GACHA_COST_10 : GACHA_COST;
+  if (getCoins() < cost) { showToast('コインが足りへんで！勉強してためよう！'); return; }
+  const btn1 = document.getElementById('gacha-btn-1'), btn10 = document.getElementById('gacha-btn-10');
+  btn1.disabled = true; btn10.disabled = true;
+
+  const results = doGacha(n);
+  document.getElementById('gacha-coins').textContent = getCoins();
+  if (!results) { btn1.disabled = false; btn10.disabled = false; return; }
+
+  const capsule = document.getElementById('gacha-capsule');
+  const maxRarity = results.reduce((m, r) => RARITY_ORDER[r.char.rarity] > RARITY_ORDER[m] ? r.char.rarity : m, 'N');
+  capsule.className = 'gacha-capsule shake-' + maxRarity;
+  tSfx('gachaShake');
+  await new Promise(r => setTimeout(r, { N: 800, R: 1200, SR: 1800, UR: 2500 }[maxRarity]));
+  capsule.classList.add('open-' + maxRarity);
+  tSfx(maxRarity === 'UR' ? 'gachaUR' : maxRarity === 'SR' ? 'gachaSR' : 'gachaOpen');
+  await new Promise(r => setTimeout(r, 350));
+
+  await showGachaResults(results);
+  checkZukanRewards();
+  document.getElementById('gacha-coins').textContent = getCoins();
+
+  capsule.className = 'gacha-capsule';
+  btn1.disabled = false; btn10.disabled = false;
+}
+
+function showGachaResults(results) {
+  return new Promise(resolveAll => {
+    const box = document.getElementById('gacha-result');
+    const cv = document.getElementById('gacha-canvas');
+    const ctx = cv.getContext('2d');
+    box.classList.remove('hidden');
+
+    let i = 0;
+    const showOne = () => {
+      const { char, isDupe, refund } = results[i];
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = { N: '#3a3f55', R: '#1c3f7a', SR: '#7a5a10', UR: '#4a1c7a' }[char.rarity];
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      gDrawChar(ctx, char, cv.width / 2 - 44, 14, 8);
+
+      const rarityEl = document.getElementById('gacha-result-rarity');
+      rarityEl.textContent = char.rarity;
+      rarityEl.className = 'gacha-rarity-badge rarity-' + char.rarity;
+      const tagEl = document.getElementById('gacha-result-tag');
+      tagEl.textContent = isDupe ? `かぶり！🪙+${refund}` : 'NEW!';
+      tagEl.className = 'gacha-tag ' + (isDupe ? 'dupe' : 'new');
+      document.getElementById('gacha-result-name').textContent = char.name;
+      document.getElementById('gacha-result-desc').textContent = char.desc;
+      document.getElementById('gacha-result-count').textContent = `${i + 1} / ${results.length}`;
+      const tapBtn = document.getElementById('gacha-btn-tap');
+      tapBtn.textContent = i === results.length - 1 ? 'かくにん！' : '次へ ›';
+      tapBtn.onclick = () => {
+        i++;
+        if (i < results.length) showOne();
+        else { box.classList.add('hidden'); resolveAll(); }
+      };
+    };
+    showOne();
+  });
+}
+
+// ── 図鑑画面 ──────────────────────────────────────────────
+function initZukan() {
+  const g = getGacha();
+  document.querySelectorAll('#screen-zukan [data-back="gacha"]').forEach(b => { b.onclick = () => { initGacha(); showScreen('gacha'); }; });
+
+  const totalOwned = GACHA_CHARS.filter(c => !c.secret && g.owned[c.id]).length;
+  const totalAll = GACHA_CHARS.filter(c => !c.secret).length;
+  document.getElementById('zukan-pct').textContent = `${totalOwned} / ${totalAll}`;
+  document.getElementById('zukan-bar').style.width = `${Math.round(totalOwned / totalAll * 100)}%`;
+
+  const grid = document.getElementById('zukan-grid');
+  grid.innerHTML = '';
+  [['N', 'N'], ['R', 'R'], ['SR', 'SR'], ['UR', 'UR'], ['秘', '？？？ シークレット']].forEach(([rarity, label]) => {
+    const list = rarity === '秘' ? GACHA_CHARS.filter(c => c.secret) : charsByRarity(rarity);
+    if (!list.length) return;
+    const h = document.createElement('h3');
+    h.className = 'zukan-rarity-h rarity-' + (rarity === '秘' ? 'UR' : rarity);
+    h.textContent = rarity === '秘' ? label : `${rarity}レア`;
+    grid.appendChild(h);
+    const row = document.createElement('div');
+    row.className = 'zukan-row';
+    list.forEach(ch => {
+      const owned = !!g.owned[ch.id];
+      const cell = document.createElement('button');
+      cell.className = 'zukan-cell' + (owned ? '' : ' unowned');
+      const cv = document.createElement('canvas');
+      cv.width = 64; cv.height = 64;
+      cell.appendChild(cv);
+      const label2 = document.createElement('span');
+      label2.textContent = owned ? ch.name : '？？？';
+      cell.appendChild(label2);
+      const ctx = cv.getContext('2d');
+      if (owned) gDrawChar(ctx, ch, 8, 4, 6); else gDrawSilhouette(ctx, 8, 4, 6);
+      cell.onclick = () => showZukanModal(ch, owned, g.owned[ch.id] || 0);
+      row.appendChild(cell);
+    });
+    grid.appendChild(row);
+  });
+}
+
+function showZukanModal(ch, owned, count) {
+  const modal = document.getElementById('zukan-modal');
+  const cv = document.getElementById('zukan-modal-canvas');
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  if (owned) gDrawChar(ctx, ch, cv.width / 2 - 55, 8, 10); else gDrawSilhouette(ctx, cv.width / 2 - 55, 8, 10);
+  document.getElementById('zukan-modal-rarity').textContent = ch.secret ? 'シークレット' : ch.rarity;
+  document.getElementById('zukan-modal-rarity').className = 'gacha-rarity-badge rarity-' + (ch.secret ? 'UR' : ch.rarity);
+  document.getElementById('zukan-modal-name').textContent = owned ? ch.name : '？？？';
+  document.getElementById('zukan-modal-desc').textContent = owned ? ch.desc : 'まだ出会っていない…';
+  document.getElementById('zukan-modal-voice').textContent = owned ? `「${ch.voice}」` : '';
+  document.getElementById('zukan-modal-count').textContent = owned ? `所持数：${count}` : '';
+  modal.classList.remove('hidden');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('zukan-modal-close').onclick = () => document.getElementById('zukan-modal').classList.add('hidden');
+});
+
+// ============================================================
 // ゲーミフィケーション（達成率・称号・ログインボーナス・アイテム）
 // ============================================================
 
@@ -2714,6 +3099,58 @@ function randomItemKind() {
   return kinds[Math.floor(Math.random() * kinds.length)];
 }
 
+// ── コイン（ガチャ用） ────────────────────────────────────
+function getCoins() {
+  return Math.max(0, Math.min(9999, Number(localStorage.getItem('coins') || 0)));
+}
+function addCoins(n) {
+  const v = Math.max(0, Math.min(9999, getCoins() + n));
+  localStorage.setItem('coins', String(v));
+  return v;
+}
+const COIN_DAILY_CAP = 100;
+const COIN_PER_Q_CAP = 2;
+function getCoinDaily() {
+  const d = JSON.parse(localStorage.getItem('coinDaily') || 'null');
+  if (!d || d.date !== todayStr()) return { date: todayStr(), earned: 0, perQ: {}, cappedNotified: false };
+  return d;
+}
+function saveCoinDaily(d) { localStorage.setItem('coinDaily', JSON.stringify(d)); }
+
+let coinSessionEarned = 0;
+
+// 正解のたびにrecordResultから呼ばれる。同一問題1日2枚まで・初正解+2ボーナス・1日上限100枚
+function awardCoinForAnswer(id, isFirst) {
+  const d = getCoinDaily();
+  const used = d.perQ[id] || 0;
+  if (used >= COIN_PER_Q_CAP || d.earned >= COIN_DAILY_CAP) { saveCoinDaily(d); return; }
+  const gain = Math.min(1 + (isFirst ? 2 : 0), COIN_DAILY_CAP - d.earned);
+  d.perQ[id] = used + 1;
+  d.earned += gain;
+  addCoins(gain);
+  coinSessionEarned += gain;
+  if (d.earned >= COIN_DAILY_CAP && !d.cappedNotified) {
+    d.cappedNotified = true;
+    showToast('🪙 今日はもう満タンや！また明日な！');
+  }
+  saveCoinDaily(d);
+}
+
+// セッション終了時（満点+10）。maybeAwardPerfectの直後に呼ぶ
+function awardSessionCoins(pct, totalQ) {
+  if (pct >= 100 && totalQ >= 5) { addCoins(10); coinSessionEarned += 10; }
+  const banner = document.getElementById('result-coin-banner');
+  if (banner) {
+    if (coinSessionEarned > 0) {
+      banner.textContent = `🪙 このセッションで${coinSessionEarned}まいゲット！（いま${getCoins()}まい）`;
+      banner.classList.remove('hidden');
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
+  coinSessionEarned = 0;
+}
+
 // ── 汎用演出モーダル（連続表示はキューで順番に） ──────────
 const gamiQueue = [];
 function showGamiModal(data) {
@@ -2762,10 +3199,11 @@ function checkLoginBonus() {
     addItem(kind, 1);
     got.push(ITEM_DEFS[kind].icon);
   }
+  addCoins(10);
   showGamiModal({
     emoji: '🔥',
     title: lb.streak >= 2 ? `${lb.streak}日連続ログイン！` : 'ログインボーナス！',
-    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, 'テトリスで使えるで！'],
+    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'テトリスで使えるで！'],
   });
 }
 
