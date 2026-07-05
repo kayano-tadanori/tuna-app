@@ -2982,7 +2982,7 @@ const ITEM_DEFS = {
   bomb:   { icon: '💣', label: 'ボム',     desc: 'テトリス：下2行を消す' },
   slow:   { icon: '🐢', label: 'スロー',   desc: 'テトリス：15秒ゆっくり' },
   search: { icon: '🔍', label: 'サーチ',   desc: 'スイーパー：安全なマスを1つ開く' },
-  shield: { icon: '🛡', label: 'おまもり', desc: 'スイーパー：地雷を1回セーフ' },
+  shield: { icon: '🛡', label: 'おまもり', desc: 'スイーパー：ゴキブリを1回セーフ' },
 };
 
 // ── 達成率の集計（一度でも正解した問題＝クリア） ──────────
@@ -3927,12 +3927,12 @@ function mGameOver(boomIdx) {
     if (c.mine) {
       const btn = document.getElementById('mine-grid').children[i];
       btn.className = 'mine-cell open' + (i === boomIdx ? ' boom' : '');
-      btn.textContent = '💣';
+      btn.textContent = '🪳';
     }
   });
   mineChars.state.bubble = 'ドンマイ！もう一回や！';
   document.getElementById('mine-overlay-img').src = 'images/okan-fight.png';
-  document.getElementById('mine-overlay-text').textContent = 'ドッカーン！';
+  document.getElementById('mine-overlay-text').textContent = 'ギョエーッ！';
   document.getElementById('mine-overlay-sub').textContent = 'もう一回チャレンジや！';
   document.getElementById('mine-overlay').classList.remove('hidden');
 }
@@ -3963,7 +3963,7 @@ function mineUseItem(kind) {
     mineState.shieldOn = true;
     document.querySelectorAll('#screen-mine .t-item-btn[data-item="shield"]').forEach(b => b.classList.add('item-active'));
     mSfx('flag');
-    showToast('🛡 おまもり発動！地雷を1回だけ防ぐで');
+    showToast('🛡 おまもり発動！ゴキブリを1回だけ防ぐで');
     addItem(kind, -1);
     updateItemButtons();
   }
