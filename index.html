@@ -921,49 +921,75 @@
       <span>正解：<b id="sq-correct">0</b></span>
       <span>不正解：<b id="sq-wrong">0</b></span>
     </div>
-    <div class="question-box">
-      <div id="sq-figure" class="sq-figure hidden"></div>
-      <p id="sq-question" class="quiz-question sansu-question"></p>
-      <p id="sq-meaning" class="quiz-meaning"></p>
+
+    <div class="quiz-toolbar">
+      <button id="sq-btn-write" class="tool-btn">✏️ 書き込み</button>
+      <button id="sq-btn-erase" class="tool-btn hidden">🧹 消す</button>
+      <button id="sq-btn-scratch" class="tool-btn">📝 計算用紙</button>
     </div>
 
-    <!-- テンキー入力 -->
-    <div id="sq-preview-wrap" class="numpad-preview-wrap">
-      <span class="numpad-preview-label">答え：</span>
-      <span id="sq-preview" class="numpad-preview">＿</span>
-    </div>
-    <!-- 余りあり用 -->
-    <div id="sq-remain-wrap" class="remain-wrap hidden">
-      <span class="numpad-preview-label">あまり：</span>
-      <span id="sq-remain-preview" class="numpad-preview">＿</span>
-    </div>
+    <div id="sq-slider" class="quiz-slider">
+      <div class="quiz-slide">
+        <div id="sq-question-box" class="question-box">
+          <div id="sq-figure" class="sq-figure hidden"></div>
+          <p id="sq-question" class="quiz-question sansu-question"></p>
+          <p id="sq-meaning" class="quiz-meaning"></p>
+          <canvas id="sq-write-canvas" class="write-canvas" width="320" height="220"></canvas>
+        </div>
 
-    <div id="sq-feedback" class="feedback hidden">
-      <p id="sq-feedback-text"></p>
-      <p id="sq-feedback-ans"></p>
-      <button id="sq-btn-next" class="btn-next">次へ →</button>
-    </div>
+        <div id="sq-input-area">
+          <!-- テンキー入力 -->
+          <div id="sq-preview-wrap" class="numpad-preview-wrap">
+            <span class="numpad-preview-label">答え：</span>
+            <span id="sq-preview" class="numpad-preview">＿</span>
+          </div>
+          <!-- 余りあり用 -->
+          <div id="sq-remain-wrap" class="remain-wrap hidden">
+            <span class="numpad-preview-label">あまり：</span>
+            <span id="sq-remain-preview" class="numpad-preview">＿</span>
+          </div>
 
-    <!-- 4択（理科など選択問題用） -->
-    <div id="sq-choices" class="sq-choices hidden"></div>
+          <div id="sq-feedback" class="feedback hidden">
+            <p id="sq-feedback-text"></p>
+            <p id="sq-feedback-ans"></p>
+            <button id="sq-btn-next" class="btn-next">次へ →</button>
+          </div>
 
-    <div id="sq-numpad" class="numpad">
-      <button class="numpad-btn" data-key="7">7</button>
-      <button class="numpad-btn" data-key="8">8</button>
-      <button class="numpad-btn" data-key="9">9</button>
-      <button class="numpad-btn" data-key="4">4</button>
-      <button class="numpad-btn" data-key="5">5</button>
-      <button class="numpad-btn" data-key="6">6</button>
-      <button class="numpad-btn" data-key="1">1</button>
-      <button class="numpad-btn" data-key="2">2</button>
-      <button class="numpad-btn" data-key="3">3</button>
-      <button class="numpad-btn" data-key=".">.</button>
-      <button class="numpad-btn" data-key="0">0</button>
-      <button class="numpad-btn numpad-del" data-key="del">⌫</button>
-      <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
-      <button class="numpad-btn numpad-frac hidden" data-key="frac">╱ 分数</button>
-      <button class="numpad-btn numpad-mixed hidden" data-key="mixedSep">と</button>
-      <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
+          <!-- 4択（理科など選択問題用） -->
+          <div id="sq-choices" class="sq-choices hidden"></div>
+
+          <div id="sq-numpad" class="numpad">
+            <button class="numpad-btn" data-key="7">7</button>
+            <button class="numpad-btn" data-key="8">8</button>
+            <button class="numpad-btn" data-key="9">9</button>
+            <button class="numpad-btn" data-key="4">4</button>
+            <button class="numpad-btn" data-key="5">5</button>
+            <button class="numpad-btn" data-key="6">6</button>
+            <button class="numpad-btn" data-key="1">1</button>
+            <button class="numpad-btn" data-key="2">2</button>
+            <button class="numpad-btn" data-key="3">3</button>
+            <button class="numpad-btn" data-key=".">.</button>
+            <button class="numpad-btn" data-key="0">0</button>
+            <button class="numpad-btn numpad-del" data-key="del">⌫</button>
+            <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
+            <button class="numpad-btn numpad-frac hidden" data-key="frac">╱ 分数</button>
+            <button class="numpad-btn numpad-mixed hidden" data-key="mixedSep">と</button>
+            <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-slide scratch-slide">
+        <div class="scratch-header">
+          <span class="scratch-label">📝 計算用紙</span>
+          <div class="scratch-tools">
+            <button id="sq-scratch-undo" class="tool-btn-sm">↩️ 1つ戻す</button>
+            <button id="sq-scratch-clear" class="tool-btn-sm">🧹 全部消す</button>
+          </div>
+        </div>
+        <canvas id="sq-scratch-canvas" class="scratch-canvas" width="320" height="420"></canvas>
+        <button id="sq-scratch-back" class="btn-secondary scratch-back-btn">← 問題にもどる</button>
+      </div>
     </div>
   </div>
 </div>
@@ -989,42 +1015,67 @@
       <span>不正解：<b id="drill-wrong">0</b></span>
     </div>
 
-    <div class="drill-question-box">
-      <p id="drill-question" class="drill-question"></p>
+    <div class="quiz-toolbar">
+      <button id="drill-btn-write" class="tool-btn">✏️ 書き込み</button>
+      <button id="drill-btn-erase" class="tool-btn hidden">🧹 消す</button>
+      <button id="drill-btn-scratch" class="tool-btn">📝 計算用紙</button>
     </div>
 
-    <div class="numpad-preview-wrap">
-      <span class="numpad-preview-label">答え：</span>
-      <span id="drill-preview" class="numpad-preview">＿</span>
-    </div>
-    <div id="drill-remain-wrap" class="remain-wrap hidden">
-      <span class="numpad-preview-label">あまり：</span>
-      <span id="drill-remain-preview" class="numpad-preview">＿</span>
-    </div>
+    <div id="drill-slider" class="quiz-slider">
+      <div class="quiz-slide">
+        <div id="drill-question-box" class="drill-question-box">
+          <p id="drill-question" class="drill-question"></p>
+          <canvas id="drill-write-canvas" class="write-canvas" width="320" height="160"></canvas>
+        </div>
 
-    <div id="drill-feedback" class="feedback hidden">
-      <p id="drill-feedback-text"></p>
-      <p id="drill-feedback-ans"></p>
-      <button id="drill-btn-next" class="btn-next">次へ →</button>
-    </div>
+        <div id="drill-input-area">
+          <div class="numpad-preview-wrap">
+            <span class="numpad-preview-label">答え：</span>
+            <span id="drill-preview" class="numpad-preview">＿</span>
+          </div>
+          <div id="drill-remain-wrap" class="remain-wrap hidden">
+            <span class="numpad-preview-label">あまり：</span>
+            <span id="drill-remain-preview" class="numpad-preview">＿</span>
+          </div>
 
-    <div id="drill-numpad" class="numpad">
-      <button class="numpad-btn" data-key="7">7</button>
-      <button class="numpad-btn" data-key="8">8</button>
-      <button class="numpad-btn" data-key="9">9</button>
-      <button class="numpad-btn" data-key="4">4</button>
-      <button class="numpad-btn" data-key="5">5</button>
-      <button class="numpad-btn" data-key="6">6</button>
-      <button class="numpad-btn" data-key="1">1</button>
-      <button class="numpad-btn" data-key="2">2</button>
-      <button class="numpad-btn" data-key="3">3</button>
-      <button class="numpad-btn" data-key=".">.</button>
-      <button class="numpad-btn" data-key="0">0</button>
-      <button class="numpad-btn numpad-del" data-key="del">⌫</button>
-      <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
-      <button class="numpad-btn numpad-frac hidden" data-key="frac">╱ 分数</button>
-      <button class="numpad-btn numpad-mixed hidden" data-key="mixedSep">と</button>
-      <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
+          <div id="drill-feedback" class="feedback hidden">
+            <p id="drill-feedback-text"></p>
+            <p id="drill-feedback-ans"></p>
+            <button id="drill-btn-next" class="btn-next">次へ →</button>
+          </div>
+
+          <div id="drill-numpad" class="numpad">
+            <button class="numpad-btn" data-key="7">7</button>
+            <button class="numpad-btn" data-key="8">8</button>
+            <button class="numpad-btn" data-key="9">9</button>
+            <button class="numpad-btn" data-key="4">4</button>
+            <button class="numpad-btn" data-key="5">5</button>
+            <button class="numpad-btn" data-key="6">6</button>
+            <button class="numpad-btn" data-key="1">1</button>
+            <button class="numpad-btn" data-key="2">2</button>
+            <button class="numpad-btn" data-key="3">3</button>
+            <button class="numpad-btn" data-key=".">.</button>
+            <button class="numpad-btn" data-key="0">0</button>
+            <button class="numpad-btn numpad-del" data-key="del">⌫</button>
+            <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
+            <button class="numpad-btn numpad-frac hidden" data-key="frac">╱ 分数</button>
+            <button class="numpad-btn numpad-mixed hidden" data-key="mixedSep">と</button>
+            <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-slide scratch-slide">
+        <div class="scratch-header">
+          <span class="scratch-label">📝 計算用紙</span>
+          <div class="scratch-tools">
+            <button id="drill-scratch-undo" class="tool-btn-sm">↩️ 1つ戻す</button>
+            <button id="drill-scratch-clear" class="tool-btn-sm">🧹 全部消す</button>
+          </div>
+        </div>
+        <canvas id="drill-scratch-canvas" class="scratch-canvas" width="320" height="420"></canvas>
+        <button id="drill-scratch-back" class="btn-secondary scratch-back-btn">← 問題にもどる</button>
+      </div>
     </div>
 
     <!-- ドリル終了後の結果 -->

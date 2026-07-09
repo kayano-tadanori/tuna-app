@@ -1643,6 +1643,7 @@ function startSansuQuiz() {
   const homeScreen = subjectHomeScreen();
   document.querySelectorAll('[data-back="sansu-home"]').forEach(b => b.onclick = () => { showScreen(homeScreen); });
   initNumpad('sq');
+  setupQuizExtras('sq');
   renderSansuQuiz();
   showScreen('sansu-quiz');
 }
@@ -1650,6 +1651,7 @@ function startSansuQuiz() {
 function renderSansuQuiz() {
   const total = sansuState.questions.length;
   if (sansuState.current >= total) { endSansuSession(); return; }
+  resetQuizExtras('sq');
 
   const q = sansuState.questions[sansuState.current];
   document.getElementById('sansu-quiz-counter').textContent = `${sansuState.current + 1}/${total}`;
@@ -1793,6 +1795,124 @@ function endSansuSession() {
   showScreen('result');
   checkTitlePromotion();
   pushAchievementToRanking();
+}
+
+// ── 問題への書き込み・計算用紙（算数・理科クイズ／ドリル共通） ──────────
+function createDrawPad(canvas, opts = {}) {
+  const grid = !!opts.grid;
+  const penColor = opts.penColor || '#1a1a1a';
+  const lineWidth = opts.lineWidth || 5;
+  const pad = { canvas, ctx: canvas.getContext('2d'), strokes: [], current: [], drawing: false };
+
+  const pos = e => {
+    const r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * (canvas.width / r.width), y: (e.clientY - r.top) * (canvas.height / r.height) };
+  };
+  canvas.onpointerdown = e => {
+    e.preventDefault();
+    canvas.setPointerCapture(e.pointerId);
+    pad.drawing = true;
+    pad.current = [pos(e)];
+    draw();
+  };
+  canvas.onpointermove = e => { if (!pad.drawing) return; pad.current.push(pos(e)); draw(); };
+  const up = () => {
+    if (!pad.drawing) return;
+    pad.drawing = false;
+    if (pad.current.length > 1) pad.strokes.push(pad.current);
+    pad.current = [];
+    draw();
+  };
+  canvas.onpointerup = up;
+  canvas.onpointercancel = up;
+  canvas.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+  canvas.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+  function draw() {
+    const { ctx } = pad;
+    if (grid) {
+      ctx.fillStyle = '#f8f6ef';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(120,120,120,0.18)';
+      ctx.lineWidth = 1;
+      const step = 24;
+      for (let x = step; x < canvas.width; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+      for (let y = step; y < canvas.height; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    ctx.strokeStyle = penColor;
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    const paint = pts => {
+      if (pts.length < 2) return;
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+    };
+    pad.strokes.forEach(paint);
+    paint(pad.current);
+  }
+  pad.clear = () => { pad.strokes = []; pad.current = []; draw(); };
+  pad.undo = () => { pad.strokes.pop(); draw(); };
+  draw();
+  return pad;
+}
+
+const drawPads = {}; // prefix('sq'|'drill') -> { write, scratch }
+
+// セッション開始時に1回だけ呼ぶ（ボタン結線・キャンバス初期化）
+function setupQuizExtras(prefix) {
+  if (drawPads[prefix]) return;
+  const writeCanvas = document.getElementById(`${prefix}-write-canvas`);
+  const scratchCanvas = document.getElementById(`${prefix}-scratch-canvas`);
+  const write = createDrawPad(writeCanvas, { penColor: '#ffe066', lineWidth: 4 });
+  const scratch = createDrawPad(scratchCanvas, { grid: true, penColor: '#1a1a1a', lineWidth: 4 });
+  drawPads[prefix] = { write, scratch };
+
+  const questionBox = document.getElementById(`${prefix}-question-box`);
+  const btnWrite = document.getElementById(`${prefix}-btn-write`);
+  const btnErase = document.getElementById(`${prefix}-btn-erase`);
+  const btnScratch = document.getElementById(`${prefix}-btn-scratch`);
+  const inputArea = document.getElementById(`${prefix}-input-area`);
+  const slider = document.getElementById(`${prefix}-slider`);
+
+  btnWrite.onclick = () => {
+    const active = questionBox.classList.toggle('write-active');
+    btnWrite.classList.toggle('active', active);
+    btnWrite.textContent = active ? '✅ 書き込み終了' : '✏️ 書き込み';
+    btnErase.classList.toggle('hidden', !active);
+    inputArea.classList.toggle('hidden', active);
+  };
+  btnErase.onclick = () => write.clear();
+  btnScratch.onclick = () => slider.scrollTo({ left: slider.clientWidth, behavior: 'smooth' });
+  document.getElementById(`${prefix}-scratch-back`).onclick = () => slider.scrollTo({ left: 0, behavior: 'smooth' });
+  document.getElementById(`${prefix}-scratch-undo`).onclick = () => scratch.undo();
+  document.getElementById(`${prefix}-scratch-clear`).onclick = () => scratch.clear();
+
+  // 計算用紙を表示中は「書き込み」系ボタンを隠す（問題を離れた状態で紛らわしいため）
+  const toolbar = slider.previousElementSibling;
+  slider.addEventListener('scroll', () => {
+    const onScratch = slider.scrollLeft > slider.clientWidth / 2;
+    if (toolbar && toolbar.classList.contains('quiz-toolbar')) toolbar.classList.toggle('hidden', onScratch);
+  });
+}
+
+// 問題が切り替わるたびに呼ぶ（書き込み・計算用紙をリセットし、問題画面に戻す）
+function resetQuizExtras(prefix) {
+  const pads = drawPads[prefix];
+  if (!pads) return;
+  pads.write.clear();
+  pads.scratch.clear();
+  document.getElementById(`${prefix}-question-box`).classList.remove('write-active');
+  const btnWrite = document.getElementById(`${prefix}-btn-write`);
+  btnWrite.classList.remove('active');
+  btnWrite.textContent = '✏️ 書き込み';
+  document.getElementById(`${prefix}-btn-erase`).classList.add('hidden');
+  document.getElementById(`${prefix}-input-area`).classList.remove('hidden');
+  document.getElementById(`${prefix}-slider`).scrollTo({ left: 0 });
 }
 
 // ── テンキー共通 ────────────────────────────────────────
@@ -1952,6 +2072,7 @@ function startDrill() {
   });
 
   initNumpad('drill');
+  setupQuizExtras('drill');
   showScreen('drill');
   renderDrillProblem();
 
@@ -1980,6 +2101,7 @@ function updateDrillTimer() {
 let _currentDrillQ = null;
 
 function renderDrillProblem() {
+  resetQuizExtras('drill');
   _currentDrillQ = generateDrillProblem();
   document.getElementById('drill-question').textContent = _currentDrillQ.question;
 

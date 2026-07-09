@@ -431,6 +431,24 @@ button { cursor: pointer; font-family: inherit; }
 .sq-figure svg { max-height: 120px; max-width: 100%; }
 .sansu-quiz-area .question-box { min-height: 170px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
 
+/* ── 書き込み・計算用紙（算数・理科クイズ／ドリル共通） ── */
+.quiz-toolbar { display: flex; gap: 8px; }
+.tool-btn { flex: 1; padding: 9px 6px; border-radius: var(--radius-sm); border: 1.5px solid var(--glass-border); background: var(--card2); color: var(--text); font-weight: 800; font-size: 0.74rem; -webkit-tap-highlight-color: transparent; }
+.tool-btn.active { background: var(--grad-brand); color: #fff; border-color: var(--accent); box-shadow: var(--glow-brand); }
+.quiz-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.quiz-slider::-webkit-scrollbar { display: none; }
+.quiz-slide { flex: 0 0 100%; min-width: 100%; scroll-snap-align: start; display: flex; flex-direction: column; gap: 10px; }
+.write-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; pointer-events: none; border-radius: inherit; }
+#sq-question-box.write-active .write-canvas,
+#drill-question-box.write-active .write-canvas { pointer-events: auto; }
+.drill-question-box { position: relative; }
+.scratch-header { display: flex; align-items: center; justify-content: space-between; }
+.scratch-label { font-size: 0.9rem; font-weight: 900; color: var(--text); }
+.scratch-tools { display: flex; gap: 6px; }
+.tool-btn-sm { padding: 6px 10px; border-radius: 20px; border: 1.5px solid var(--glass-border); background: var(--card2); color: var(--text); font-size: 0.7rem; font-weight: 800; -webkit-tap-highlight-color: transparent; }
+.scratch-canvas { width: 100%; aspect-ratio: 4 / 5; background: #f8f6ef; border-radius: var(--radius); touch-action: none; box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+.scratch-back-btn { width: 100%; }
+
 /* ── テンキー共通 ── */
 .numpad-preview-wrap { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px 16px; }
 .numpad-preview-label { color: var(--sub2); font-size: 0.9rem; font-weight: 700; white-space: nowrap; }
