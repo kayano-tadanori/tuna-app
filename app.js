@@ -1266,7 +1266,7 @@ const sansuState = {
   subject: 'sansu', // 'sansu' | 'rika'
   grade: null, diff: null, cat: null,
   mode: null, // 'normal' | 'drill'
-  drillType: null, drillTime: null,
+  drillType: null, drillDiff: null, drillTime: null,
   questions: [], current: 0, correct: 0, wrong: 0,
   // ドリル
   drillCorrect: 0, drillWrong: 0, drillTimerId: null, drillTimeLeft: 0,
@@ -1301,7 +1301,7 @@ function initSansuHome() {
   sansuState.subject = 'sansu';
   document.getElementById('sansu-nickname').textContent = state.nickname;
   sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
-  sansuState.mode = null; sansuState.drillType = null; sansuState.drillTime = null;
+  sansuState.mode = null; sansuState.drillType = null; sansuState.drillDiff = null; sansuState.drillTime = null;
 
   // 戻るボタン
   document.querySelectorAll('[data-back="subject"]').forEach(b => {
@@ -1325,6 +1325,7 @@ function initSansuHome() {
         document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
         hideSansuSteps('sansu-step-diff');
       }
+      refreshDrillTypeAvailability();
       showSansuStep('sansu-step-mode');
       updateSansuStart();
     };
@@ -1343,8 +1344,10 @@ function initSansuHome() {
         if (sansuState.cat) showSansuStep('sansu-step-diff');
       } else {
         hideSansuSteps('sansu-step-cat', 'sansu-step-diff');
+        refreshDrillTypeAvailability();
         showSansuStep('sansu-step-dtype');
-        if (sansuState.drillType) showSansuStep('sansu-step-time');
+        if (sansuState.drillType) showSansuStep('sansu-step-drilldiff');
+        if (sansuState.drillType && sansuState.drillDiff) showSansuStep('sansu-step-time');
       }
       // ドリルは出題数不要
       document.getElementById('sansu-qcount-wrap').classList.toggle('hidden', sansuState.mode === 'drill');
@@ -1364,11 +1367,11 @@ function initSansuHome() {
     };
   });
 
-  // STEP4: 難易度（算数ホーム内）
-  document.querySelectorAll('#screen-sansu-home .diff-btn').forEach(btn => {
+  // STEP4: 難易度（算数ホーム内・通常問題）
+  document.querySelectorAll('#sansu-step-diff .diff-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
-      document.querySelectorAll('#screen-sansu-home .diff-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#sansu-step-diff .diff-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.diff = Number(btn.dataset.diff);
       updateSansuStart();
@@ -1382,12 +1385,24 @@ function initSansuHome() {
       document.querySelectorAll('.drill-type-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.drillType = btn.dataset.dtype;
+      showSansuStep('sansu-step-drilldiff');
+      updateSansuStart();
+    };
+  });
+
+  // STEP4': 難易度（ドリル）
+  document.querySelectorAll('#sansu-step-drilldiff .diff-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => {
+      document.querySelectorAll('#sansu-step-drilldiff .diff-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.drillDiff = Number(btn.dataset.diff);
       showSansuStep('sansu-step-time');
       updateSansuStart();
     };
   });
 
-  // STEP4': 時間
+  // STEP5': 時間
   document.querySelectorAll('.time-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -1422,10 +1437,10 @@ function updateSansuStart() {
       info.textContent = `小${sansuState.grade} / ${SANSU_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
     }
   } else if (sansuState.mode === 'drill') {
-    ready = sansuState.grade && sansuState.drillType && sansuState.drillTime !== null;
+    ready = sansuState.grade && sansuState.drillType && sansuState.drillDiff && sansuState.drillTime !== null;
     if (ready) {
       const timeStr = sansuState.drillTime === 0 ? '無制限' : `${sansuState.drillTime}秒`;
-      info.textContent = `小${sansuState.grade} / ${DRILL_TYPE_LABELS[sansuState.drillType]} / ${timeStr}`;
+      info.textContent = `小${sansuState.grade} / ${DRILL_TYPE_LABELS[sansuState.drillType]} / ${DIFF_LABELS[sansuState.drillDiff]} / ${timeStr}`;
     }
   }
 
@@ -1983,10 +1998,49 @@ function updateNumpadPreview(prefix) {
 }
 
 // ── 計算ドリル ──────────────────────────────────────────
+// 学年(1〜6)×難易度(1〜4)で範囲を変える。添字は [grade-1][diff-1]
+const DRILL_ADDSUB_RANGE = [
+  [[1,5],[3,9],[5,15],[10,20]],
+  [[10,20],[15,40],[30,70],[50,99]],
+  [[50,150],[100,300],[200,600],[400,999]],
+  [[300,700],[500,1500],[1000,3000],[2000,4999]],
+  [[2000,5000],[4000,9999],[8000,15000],[12000,29999]],
+  [[10000,30000],[20000,50000],[40000,80000],[60000,99999]],
+];
+// [ [a範囲, b範囲], ... ]
+const DRILL_MUL_RANGE = [
+  [[[2,4],[2,4]], [[2,6],[2,6]], [[3,9],[3,9]], [[5,9],[5,9]]],
+  [[[2,9],[2,9]], [[5,9],[5,9]], [[10,20],[2,9]], [[10,30],[2,9]]],
+  [[[10,30],[2,9]], [[10,50],[2,9]], [[10,99],[2,15]], [[10,99],[10,30]]],
+  [[[10,50],[10,30]], [[10,99],[10,50]], [[10,99],[10,99]], [[100,300],[10,50]]],
+  [[[10,99],[10,99]], [[100,300],[10,50]], [[100,500],[10,99]], [[100,999],[10,99]]],
+  [[[100,500],[10,99]], [[100,999],[10,99]], [[100,999],[100,300]], [[100,999],[100,999]]],
+];
+// [ [除数範囲, 商範囲], ... ]（あまりありも共用、あまりは 1〜除数-1 で別途生成）
+const DRILL_DIV_RANGE = [
+  [[[2,5],[2,5]], [[2,9],[2,5]], [[2,9],[2,9]], [[2,9],[5,12]]],
+  [[[2,9],[2,9]], [[2,9],[5,12]], [[2,12],[5,15]], [[2,20],[5,20]]],
+  [[[2,12],[5,20]], [[2,20],[5,30]], [[2,30],[10,40]], [[2,50],[10,50]]],
+  [[[2,30],[10,50]], [[2,50],[10,99]], [[10,50],[10,99]], [[10,99],[10,99]]],
+  [[[10,50],[10,99]], [[10,99],[10,99]], [[10,99],[50,200]], [[10,99],[100,500]]],
+  [[[10,99],[50,200]], [[10,99],[100,500]], [[100,300],[10,99]], [[100,999],[10,99]]],
+];
+// 小数は小4以上のみ。{int:整数部の最大桁数, dec:小数点以下の桁数}
+const DRILL_DECIMAL_RANGE = [
+  [{int:1,dec:1}, {int:2,dec:1}, {int:2,dec:2}, {int:2,dec:2}],
+  [{int:2,dec:2}, {int:3,dec:1}, {int:3,dec:2}, {int:3,dec:2}],
+  [{int:3,dec:2}, {int:3,dec:2}, {int:4,dec:2}, {int:5,dec:2}],
+];
+// 分数は小5以上のみ。denは分母の範囲、allowImproperは答えが1を超える（帯分数）のを許すか
+const DRILL_FRAC_RANGE = [
+  [{den:[3,6],allowImproper:false}, {den:[3,9],allowImproper:false}, {den:[4,12],allowImproper:true}, {den:[4,12],allowImproper:true}],
+  [{den:[4,9],allowImproper:false}, {den:[4,12],allowImproper:true}, {den:[6,15],allowImproper:true}, {den:[6,15],allowImproper:true}],
+];
 
 // 問題自動生成
 function generateDrillProblem() {
   const g = sansuState.grade;
+  const d = sansuState.drillDiff || 1;
   let type = sansuState.drillType;
   if (type === 'mix') {
     const types = getAvailableDrillTypes(g);
@@ -1994,54 +2048,75 @@ function generateDrillProblem() {
   }
 
   const rnd = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const gcdFn = (a, b) => b === 0 ? a : gcdFn(b, a % b);
 
   if (type === 'add') {
-    const ranges = [[1,9],[10,99],[100,500],[100,999],[1000,9999],[1000,9999]];
-    const [lo,hi] = ranges[g-1];
-    const a=rnd(lo,hi), b=rnd(1,hi);
-    return { question: `${a} ＋ ${b} ＝`, answer: String(a+b) };
+    const [lo, hi] = DRILL_ADDSUB_RANGE[g - 1][d - 1];
+    const a = rnd(lo, hi), b = rnd(lo, hi);
+    return { question: `${a} ＋ ${b} ＝`, answer: String(a + b) };
   }
   if (type === 'sub') {
-    const ranges = [[1,9],[10,99],[100,500],[100,999],[1000,9999],[1000,9999]];
-    const [lo,hi] = ranges[g-1];
-    const b=rnd(lo,hi), a=b+rnd(1,hi);
-    return { question: `${a} － ${b} ＝`, answer: String(a-b) };
+    const [lo, hi] = DRILL_ADDSUB_RANGE[g - 1][d - 1];
+    const b = rnd(lo, hi), a = b + rnd(1, hi - lo + 1);
+    return { question: `${a} － ${b} ＝`, answer: String(a - b) };
   }
   if (type === 'mul') {
-    if (g <= 2) { const a=rnd(2,9),b=rnd(2,9); return { question:`${a} × ${b} ＝`, answer:String(a*b) }; }
-    if (g === 3) { const a=rnd(2,9),b=rnd(10,50); return { question:`${a} × ${b} ＝`, answer:String(a*b) }; }
-    const a=rnd(10,99),b=rnd(10,99); return { question:`${a} × ${b} ＝`, answer:String(a*b) };
+    const [[aLo, aHi], [bLo, bHi]] = DRILL_MUL_RANGE[g - 1][d - 1];
+    const a = rnd(aLo, aHi), b = rnd(bLo, bHi);
+    return { question: `${a} × ${b} ＝`, answer: String(a * b) };
   }
   if (type === 'div') {
-    const d=rnd(2,9), q2=rnd(2,12), n=d*q2;
-    return { question:`${n} ÷ ${d} ＝`, answer:String(q2) };
+    const [[dLo, dHi], [qLo, qHi]] = DRILL_DIV_RANGE[g - 1][d - 1];
+    const dv = rnd(dLo, dHi), q = rnd(qLo, qHi), n = dv * q;
+    return { question: `${n} ÷ ${dv} ＝`, answer: String(q) };
   }
   if (type === 'divrem') {
-    const d=rnd(2,9), q2=rnd(2,12), r=rnd(1,d-1), n=d*q2+r;
-    return { question:`${n} ÷ ${d} ＝ □ あまり □`, answer:`${q2}余り${r}`, isRemain:true };
+    const [[dLo, dHi], [qLo, qHi]] = DRILL_DIV_RANGE[g - 1][d - 1];
+    const dv = rnd(Math.max(dLo, 2), dHi), q = rnd(qLo, qHi), r = rnd(1, dv - 1), n = dv * q + r;
+    return { question: `${n} ÷ ${dv} ＝ □ あまり □`, answer: `${q}余り${r}`, isRemain: true };
   }
   if (type === 'decimal') {
-    const a=(rnd(1,99)/10).toFixed(1), b=(rnd(1,99)/10).toFixed(1);
-    const ans=(parseFloat(a)+parseFloat(b)).toFixed(1).replace(/\.0$/,'');
-    return { question:`${a} ＋ ${b} ＝`, answer:ans };
+    const gi = Math.min(Math.max(g, 4), 6) - 4;
+    const { int, dec } = DRILL_DECIMAL_RANGE[gi][d - 1];
+    const decDenom = Math.pow(10, dec);
+    const randDec = () => {
+      const v = rnd(1, Math.pow(10, int) * decDenom - 1);
+      return v / decDenom;
+    };
+    const a = randDec(), b = randDec();
+    const ans = Number((a + b).toFixed(dec)).toString();
+    return { question: `${a.toFixed(dec)} ＋ ${b.toFixed(dec)} ＝`, answer: ans };
   }
   if (type === 'fraction') {
-    // 分数はテンキーの「╱分数」キーで入力（約分した形で判定）
-    const den = rnd(3, 9);
+    // 分数はテンキーの「╱分数」「と」キーで入力（約分した形で判定）
+    const gi = Math.min(Math.max(g, 5), 6) - 5;
+    const cell = DRILL_FRAC_RANGE[gi][d - 1];
+    const den = rnd(cell.den[0], cell.den[1]);
     let n1, n2, num, op;
     if (Math.random() < 0.5) {
-      n1 = rnd(1, den - 1); n2 = rnd(1, den - n1); num = n1 + n2; op = '＋';
+      op = '＋';
+      n1 = rnd(1, den - 1);
+      n2 = cell.allowImproper ? rnd(1, den - 1) : rnd(1, den - n1);
+      num = n1 + n2;
     } else {
-      n2 = rnd(1, den - 2); num = rnd(1, den - 1 - n2); n1 = n2 + num; op = '−';
+      op = '−';
+      n1 = rnd(1, den - 1); n2 = rnd(1, n1);
+      num = n1 - n2;
     }
-    const g2 = (a, b) => b === 0 ? a : g2(b, a % b);
-    const gc = g2(num, den);
-    const ans = gc === den ? String(num / gc) : `${num / gc}/${den / gc}`;
-    return { question: `${n1}/${den} ${op} ${n2}/${den} ＝\n（約分できるときは約分してね）`, answer: ans, isFrac: true };
+    const gc = gcdFn(num, den) || 1;
+    const redNum = num / gc, redDen = den / gc;
+    if (redDen === 1) {
+      return { question: `${n1}/${den} ${op} ${n2}/${den} ＝\n（約分できるときは約分してね）`, answer: String(redNum), isFrac: true };
+    }
+    if (redNum > redDen) {
+      const whole = Math.floor(redNum / redDen), rem = redNum - whole * redDen;
+      return { question: `${n1}/${den} ${op} ${n2}/${den} ＝\n（約分できるときは約分してね）`, answer: `${whole}と${rem}/${redDen}`, isMixed: true, isFrac: true };
+    }
+    return { question: `${n1}/${den} ${op} ${n2}/${den} ＝\n（約分できるときは約分してね）`, answer: `${redNum}/${redDen}`, isFrac: true };
   }
   // fallback add
-  const a=rnd(1,9),b=rnd(1,9);
-  return { question:`${a} ＋ ${b} ＝`, answer:String(a+b) };
+  const a = rnd(1, 9), b = rnd(1, 9);
+  return { question: `${a} ＋ ${b} ＝`, answer: String(a + b) };
 }
 
 function getAvailableDrillTypes(grade) {
@@ -2051,6 +2126,25 @@ function getAvailableDrillTypes(grade) {
   if (grade >= 4) base.push('decimal');
   if (grade >= 5) base.push('fraction');
   return base;
+}
+
+// 学年に合わない計算の種類（例：小1の小数）をボタンごと隠す
+function refreshDrillTypeAvailability() {
+  if (!sansuState.grade) return;
+  const available = getAvailableDrillTypes(sansuState.grade);
+  document.querySelectorAll('.drill-type-btn').forEach(btn => {
+    const dtype = btn.dataset.dtype;
+    const ok = dtype === 'mix' || available.includes(dtype);
+    btn.classList.toggle('hidden', !ok);
+  });
+  // 選択中の種類が学年変更で選べなくなったら解除してやり直し
+  if (sansuState.drillType && sansuState.drillType !== 'mix' && !available.includes(sansuState.drillType)) {
+    sansuState.drillType = null;
+    sansuState.drillDiff = null;
+    document.querySelectorAll('.drill-type-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('#sansu-step-drilldiff .diff-btn').forEach(b => b.classList.remove('selected'));
+    hideSansuSteps('sansu-step-drilldiff', 'sansu-step-time');
+  }
 }
 
 function startDrill() {
