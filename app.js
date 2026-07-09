@@ -3531,7 +3531,7 @@ const QUESTION_COUNTS = {
   kokugo: { kotowaza: 500, kanyoku: 500, yojijukugo: 500, gairaigo: 400, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 160, kokugo_goi: 160, kokugo_bushu: 160, kokugo_bungaku: 160 },   // 3,500
   sansu:  { keisan: 480, bun: 480, zu: 480, kisoku: 480, tokusan: 240, baai: 320, kazu: 240,
-            wariai: 240, hayasa: 240, rittai: 240 },                                         // 3,440
+            wariai: 160, hayasa: 160, rittai: 160 },                                         // 3,200
   rika:   { shokubutsu: 480, doubutsu: 480, sora: 480, mono: 480, daichi: 240, suiyoueki: 240,
             denki: 240, chikara: 240 },                                                      // 2,880
   shakai: { kokudo: 320, sangyo: 320, rekishi: 320, komin: 320 },                            // 1,280

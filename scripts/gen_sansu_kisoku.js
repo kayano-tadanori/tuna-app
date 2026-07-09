@@ -104,12 +104,12 @@ function g4_d4() { // 群数列基礎：同じ数がk回ずつ繰り返される
 }
 
 // ===== 小5 =====
-function g5_d1() { // 群数列（等差数列をグループ分け）：(1)(2,3)(4,5,6)(7,8,9,10)... 第m群のk番目
-  const m = randInt(4, 12), k = randInt(1, m);
-  // 第m群の最初の数 = 1+2+...+(m-1)+1 = m(m-1)/2+1
-  const startOfGroup = m * (m - 1) / 2 + 1;
-  const value = startOfGroup + (k - 1);
-  return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。第${m}群の${k}番目の数を求めなさい。`, answer: String(value), meaning: `第${m}群の最初の数は${startOfGroup}` };
+function g5_d1() { // 周期性（曜日計算）。日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で答える（比較的やさしい）
+  const days = ['日', '月', '火', '水', '木', '金', '土'];
+  const startIdx = randInt(0, 6);
+  const n = randInt(20, 300);
+  const answerIdx = (startIdx + n) % 7;
+  return { question: `曜日を日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で表します。今日が${days[startIdx]}曜日（${startIdx}）のとき、${n}日後の曜日を番号で答えなさい。`, answer: String(answerIdx), meaning: `(${startIdx}＋${n})÷7のあまり＝${answerIdx}（${days[answerIdx]}曜日）` };
 }
 function g5_d2() { // 等比数列の和（初項a・公比r・項数n）
   const a = randInt(1, 5), r = pick([2, 3]), n = randInt(3, 6);
@@ -118,29 +118,22 @@ function g5_d2() { // 等比数列の和（初項a・公比r・項数n）
   if (sum > 100000) return null;
   return { question: `初項${a}、公比${r}の等比数列の、はじめから${n}項までの和を求めなさい。`, answer: String(sum), meaning: `${a}、${a * r}、${a * r * r}…の${n}項の和` };
 }
-function g5_d3() { // 周期性（曜日計算）。日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で答える
-  const days = ['日', '月', '火', '水', '木', '金', '土'];
-  const startIdx = randInt(0, 6);
-  const n = randInt(20, 300);
-  const answerIdx = (startIdx + n) % 7;
-  return { question: `曜日を日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で表します。今日が${days[startIdx]}曜日（${startIdx}）のとき、${n}日後の曜日を番号で答えなさい。`, answer: String(answerIdx), meaning: `(${startIdx}＋${n})÷7のあまり＝${answerIdx}（${days[answerIdx]}曜日）` };
-}
-function g5_d4() { // フィボナッチ的漸化式
+function g5_d3() { // フィボナッチ的漸化式
   const a1 = randInt(1, 5), a2 = randInt(1, 5), n = randInt(8, 15);
   const seq = [a1, a2];
   for (let i = 2; i < n; i++) seq.push(seq[i - 1] + seq[i - 2]);
   if (seq[n - 1] > 999999) return null;
   return { question: `${a1}、${a2}から始まり、前の2つの数の和が次の数になる数列があります。${n}番目の数を求めなさい。`, answer: String(seq[n - 1]), meaning: `${seq.slice(0, Math.min(n, 8)).join('、')}${n > 8 ? '…' : ''}` };
 }
-
-// ===== 小6 =====
-function g6_d1() { // 群数列（応用、大きい群番号）
-  const m = randInt(10, 25), k = randInt(1, m);
+function g5_d4() { // 群数列（等差数列をグループ分け、第m群のk番目）。小5では最も高度な技法として最終難易度に配置
+  const m = randInt(4, 12), k = randInt(1, m);
   const startOfGroup = m * (m - 1) / 2 + 1;
   const value = startOfGroup + (k - 1);
   return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。第${m}群の${k}番目の数を求めなさい。`, answer: String(value), meaning: `第${m}群の最初の数は${startOfGroup}` };
 }
-function g6_d2() { // 等差×定数の和の応用（偶数のみの和等）
+
+// ===== 小6 =====
+function g6_d1() { // 等差×定数の和の応用（偶数のみの和等）。小6のやさしいはSAPIX偏差値50以下の基礎レベルに揃える
   const N = randInt(20, 80);
   const kind = pick(['even', 'odd']);
   if (kind === 'even') {
@@ -149,6 +142,12 @@ function g6_d2() { // 等差×定数の和の応用（偶数のみの和等）
   }
   const count = N, last = 2 * count - 1;
   return { question: `1から${last}までの奇数をすべて足すといくつですか？`, answer: String(count * count), meaning: `1＋3＋…＋${last}＝${count}×${count}` };
+}
+function g6_d2() { // 群数列（第m群、小5より難しい範囲）
+  const m = randInt(4, 15), k = randInt(1, m);
+  const startOfGroup = m * (m - 1) / 2 + 1;
+  const value = startOfGroup + (k - 1);
+  return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。第${m}群の${k}番目の数を求めなさい。`, answer: String(value), meaning: `第${m}群の最初の数は${startOfGroup}` };
 }
 function g6_d3() { // 周期性の応用（1〜cycleのくり返し）
   const cycle = randInt(6, 11);
