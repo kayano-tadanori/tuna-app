@@ -67,6 +67,16 @@
       <span class="game-arrow">›</span>
     </button>
 
+    <button id="btn-updates" class="update-banner">
+      <span class="update-banner-icon">📢</span>
+      <span class="update-banner-text">
+        <span class="update-banner-label">アップデート情報</span>
+        <span id="update-banner-latest" class="update-banner-latest"></span>
+      </span>
+      <span id="update-banner-badge" class="update-badge hidden">NEW</span>
+      <span class="game-arrow">›</span>
+    </button>
+
     <p class="section-label">科目を選ぼう！</p>
     <div class="subject-grid">
       <button class="subject-card" data-subject="kokugo">
@@ -952,6 +962,7 @@
       <button class="numpad-btn numpad-del" data-key="del">⌫</button>
       <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
       <button class="numpad-btn numpad-frac hidden" data-key="frac">╱ 分数</button>
+      <button class="numpad-btn numpad-mixed hidden" data-key="mixedSep">と</button>
       <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
     </div>
   </div>
@@ -1012,6 +1023,7 @@
       <button class="numpad-btn numpad-del" data-key="del">⌫</button>
       <button class="numpad-btn numpad-rem hidden" data-key="rem">あまり</button>
       <button class="numpad-btn numpad-frac hidden" data-key="frac">╱ 分数</button>
+      <button class="numpad-btn numpad-mixed hidden" data-key="mixedSep">と</button>
       <button class="numpad-btn numpad-submit" data-key="submit">決定</button>
     </div>
 
@@ -1234,6 +1246,16 @@
     <p id="zukan-modal-voice" class="gami-lines"></p>
     <p id="zukan-modal-count" class="record-note"></p>
     <button id="zukan-modal-close" class="btn-primary">とじる</button>
+  </div>
+</div>
+
+<!-- =============== アップデート情報モーダル =============== -->
+<div id="update-modal" class="gami-modal hidden">
+  <div class="gami-card update-card">
+    <p class="gami-emoji">📢</p>
+    <p class="gami-title">アップデート情報</p>
+    <div id="update-list" class="update-list"></div>
+    <button id="update-close" class="btn-secondary">とじる</button>
   </div>
 </div>
 

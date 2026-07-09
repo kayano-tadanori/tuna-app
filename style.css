@@ -442,6 +442,7 @@ button { cursor: pointer; font-family: inherit; }
 .numpad-del { color: var(--red2); font-size: 1.2rem; }
 .numpad-rem { grid-column: span 1; font-size: 0.75rem; font-weight: 900; background: rgba(255,186,0,0.12); border-color: rgba(255,186,0,0.3); color: var(--gold); }
 .numpad-frac { grid-column: span 1; font-size: 0.75rem; font-weight: 900; background: rgba(200,96,240,0.12); border-color: rgba(200,96,240,0.35); color: #d9a6f2; }
+.numpad-mixed { grid-column: span 1; font-size: 0.9rem; font-weight: 900; background: rgba(96,180,240,0.12); border-color: rgba(96,180,240,0.35); color: #8fc8f5; }
 .numpad-submit { grid-column: span 2; background: var(--grad-brand); border-color: var(--accent); color: #fff; font-size: 0.95rem; font-weight: 900; box-shadow: var(--glow-brand); }
 .numpad-submit:active { transform: scale(0.94); box-shadow: none; }
 
@@ -502,6 +503,19 @@ button { cursor: pointer; font-family: inherit; }
 .record-card-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex: 1; }
 .subject-card-record .subject-name { font-size: 1rem; }
 .subject-card-record .subject-detail { text-align: left; }
+
+.update-banner { display: flex; flex-direction: row; align-items: center; gap: 10px; width: 100%; padding: 10px 16px; margin-bottom: 4px; background: var(--card2); border: 1.5px solid rgba(96,180,240,0.3); border-radius: var(--radius); color: var(--text); }
+.update-banner-icon { font-size: 1.3rem; line-height: 1; }
+.update-banner-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; flex: 1; min-width: 0; }
+.update-banner-label { font-size: 0.82rem; font-weight: 900; color: var(--text); }
+.update-banner-latest { font-size: 0.68rem; color: var(--sub2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.update-badge { font-size: 0.62rem; font-weight: 900; background: var(--grad-red); color: #fff; border-radius: 20px; padding: 2px 8px; letter-spacing: 0.03em; }
+.update-card { max-height: 78vh; }
+.update-list { width: 100%; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 50vh; padding-right: 2px; }
+.update-item { text-align: left; background: var(--card); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.update-item-date { font-size: 0.66rem; font-weight: 800; color: var(--accent2); margin-bottom: 3px; }
+.update-item-title { font-size: 0.88rem; font-weight: 900; color: var(--text); margin-bottom: 3px; }
+.update-item-body { font-size: 0.76rem; color: var(--sub2); line-height: 1.6; }
 
 .record-main { padding: 14px 16px calc(30px + var(--safe-b)); display: flex; flex-direction: column; gap: 14px; }
 .record-hero { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 0 4px; }

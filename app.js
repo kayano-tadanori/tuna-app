@@ -1116,6 +1116,42 @@ function initSubject() {
 
   checkCloudRestore();
   backupLocalData();
+  initUpdateBanner();
+}
+
+// ============================================================
+// アップデート情報（お知らせ）
+// ============================================================
+async function initUpdateBanner() {
+  try {
+    const res = await fetch('data/updates.json');
+    const updates = await res.json(); // 新しい順の配列
+    if (!updates.length) return;
+
+    document.getElementById('update-banner-latest').textContent = updates[0].title;
+    const lastSeen = localStorage.getItem('updateLastSeenDate') || '';
+    document.getElementById('update-banner-badge').classList.toggle('hidden', !(updates[0].date > lastSeen));
+
+    const listEl = document.getElementById('update-list');
+    listEl.innerHTML = updates.map(u => `
+      <div class="update-item">
+        <div class="update-item-date">${u.date}</div>
+        <div class="update-item-title">${u.title}</div>
+        <div class="update-item-body">${u.body}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('btn-updates').onclick = () => {
+      document.getElementById('update-modal').classList.remove('hidden');
+      localStorage.setItem('updateLastSeenDate', updates[0].date);
+      document.getElementById('update-banner-badge').classList.add('hidden');
+    };
+    document.getElementById('update-close').onclick = () => {
+      document.getElementById('update-modal').classList.add('hidden');
+    };
+  } catch (e) {
+    console.warn('アップデート情報の読み込みに失敗', e);
+  }
 }
 
 // ============================================================
@@ -1235,7 +1271,7 @@ const sansuState = {
   // ドリル
   drillCorrect: 0, drillWrong: 0, drillTimerId: null, drillTimeLeft: 0,
   // テンキー
-  inputVal: '', inputRemain: '', inputPhase: 'main', // 'main'|'remain'
+  inputVal: '', inputRemain: '', inputWhole: '', inputPhase: 'main', // 'main'|'remain'
   isRemainMode: false,
 };
 
@@ -1663,7 +1699,8 @@ function renderSansuQuiz() {
     remainWrap.classList.toggle('hidden', !sansuState.isRemainMode);
     numpad.querySelector('.numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
     numpad.querySelector('.numpad-frac').classList.toggle('hidden', !(q.answer && String(q.answer).includes('/')));
-    sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
+    numpad.querySelector('.numpad-mixed').classList.toggle('hidden', !(q.answer && String(q.answer).includes('と')));
+    sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputWhole = ''; sansuState.inputPhase = 'main';
     updateNumpadPreview('sq');
     numpad.querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
   }
@@ -1693,8 +1730,10 @@ function submitSansuAnswer() {
   let userAnswer = sansuState.inputVal.trim();
   if (sansuState.isRemainMode) {
     userAnswer = `${sansuState.inputVal.trim()}余り${sansuState.inputRemain.trim()}`;
+  } else if (sansuState.inputWhole) {
+    userAnswer = `${sansuState.inputWhole.trim()}と${sansuState.inputVal.trim()}`;
   }
-  if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
+  if (!userAnswer || userAnswer === '余り' || userAnswer === 'と') { showToast('答えを入力してください'); return; }
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, q.answer);
@@ -1782,9 +1821,21 @@ function handleNumpadKey(prefix, key) {
     updateNumpadPreview(prefix);
     return;
   }
+  if (key === 'mixedSep') {
+    // 帯分数の「と」：整数部を確定して分数部の入力に切り替える（1回だけ）
+    if (!sansuState.inputVal || sansuState.inputWhole || sansuState.inputVal.includes('/') || sansuState.inputVal.includes('.')) return;
+    sansuState.inputWhole = sansuState.inputVal;
+    sansuState.inputVal = '';
+    updateNumpadPreview(prefix);
+    return;
+  }
   if (key === 'del') {
     if (sansuState.inputPhase === 'remain') {
       sansuState.inputRemain = sansuState.inputRemain.slice(0, -1);
+    } else if (!sansuState.inputVal && sansuState.inputWhole) {
+      // 分数部が空の状態で削除→整数部の確定を取り消して編集に戻す
+      sansuState.inputVal = sansuState.inputWhole;
+      sansuState.inputWhole = '';
     } else {
       sansuState.inputVal = sansuState.inputVal.slice(0, -1);
     }
@@ -1805,7 +1856,9 @@ function handleNumpadKey(prefix, key) {
 function updateNumpadPreview(prefix) {
   const mainEl = document.getElementById(`${prefix}-preview`);
   const remainEl = document.getElementById(`${prefix}-remain-preview`);
-  mainEl.textContent = sansuState.inputVal || '＿';
+  mainEl.textContent = sansuState.inputWhole
+    ? `${sansuState.inputWhole}と${sansuState.inputVal || '＿'}`
+    : (sansuState.inputVal || '＿');
   if (remainEl) remainEl.textContent = sansuState.inputRemain || '＿';
 }
 
@@ -1934,8 +1987,9 @@ function renderDrillProblem() {
   document.getElementById('drill-remain-wrap').classList.toggle('hidden', !sansuState.isRemainMode);
   document.querySelector('#drill-numpad .numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
   document.querySelector('#drill-numpad .numpad-frac').classList.toggle('hidden', !_currentDrillQ.isFrac);
+  document.querySelector('#drill-numpad .numpad-mixed').classList.toggle('hidden', !_currentDrillQ.isMixed);
 
-  sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputPhase = 'main';
+  sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputWhole = ''; sansuState.inputPhase = 'main';
   updateNumpadPreview('drill');
   document.getElementById('drill-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
 
@@ -1949,7 +2003,8 @@ function submitDrillAnswer() {
   if (!_currentDrillQ) return;
   let userAnswer = sansuState.inputVal.trim();
   if (sansuState.isRemainMode) userAnswer = `${sansuState.inputVal.trim()}余り${sansuState.inputRemain.trim()}`;
-  if (!userAnswer || userAnswer === '余り') { showToast('答えを入力してください'); return; }
+  else if (sansuState.inputWhole) userAnswer = `${sansuState.inputWhole.trim()}と${sansuState.inputVal.trim()}`;
+  if (!userAnswer || userAnswer === '余り' || userAnswer === 'と') { showToast('答えを入力してください'); return; }
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer);
