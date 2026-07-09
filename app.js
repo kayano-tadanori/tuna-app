@@ -1315,12 +1315,14 @@ function initSansuHome() {
       document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.grade = Number(btn.dataset.grade);
-      // 小4以上なら中学受験カテゴリ表示
+      // カテゴリごとの履修開始学年（SAPIX/浜学園カリキュラム基準）に達したら表示
       document.querySelectorAll('.juken-only').forEach(el => {
-        el.classList.toggle('hidden', sansuState.grade < 4);
+        const minGrade = Number(el.dataset.minGrade) || 4;
+        el.classList.toggle('hidden', sansuState.grade < minGrade);
       });
-      // 受験専用カテゴリ選択中に小1〜3へ変えたら解除
-      if (sansuState.grade < 4 && ['kazu', 'rittai', 'wariai', 'hayasa', 'tokusan', 'baai'].includes(sansuState.cat)) {
+      // 学年変更で選択中カテゴリが履修範囲外になったら解除
+      const selectedCatBtn = document.querySelector(`.sansu-cat-btn[data-scat="${sansuState.cat}"]`);
+      if (selectedCatBtn && selectedCatBtn.classList.contains('juken-only') && sansuState.grade < (Number(selectedCatBtn.dataset.minGrade) || 4)) {
         sansuState.cat = null;
         document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
         hideSansuSteps('sansu-step-diff');
@@ -3528,8 +3530,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 500, kanyoku: 500, yojijukugo: 500, gairaigo: 400, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 160, kokugo_goi: 160, kokugo_bushu: 160, kokugo_bungaku: 160 },   // 3,500
-  sansu:  { keisan: 480, bun: 480, zu: 480, kisoku: 480, tokusan: 240, baai: 240, kazu: 240,
-            wariai: 240, hayasa: 240, rittai: 240 },                                         // 3,360
+  sansu:  { keisan: 480, bun: 480, zu: 480, kisoku: 480, tokusan: 240, baai: 320, kazu: 240,
+            wariai: 240, hayasa: 240, rittai: 240 },                                         // 3,440
   rika:   { shokubutsu: 480, doubutsu: 480, sora: 480, mono: 480, daichi: 240, suiyoueki: 240,
             denki: 240, chikara: 240 },                                                      // 2,880
   shakai: { kokudo: 320, sangyo: 320, rekishi: 320, komin: 320 },                            // 1,280
