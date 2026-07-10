@@ -78,23 +78,46 @@ function g3_d4() { // 1からNまでの和（大きめのN）
 }
 
 // ===== 小4 =====
-function g4_d1() { // 等差数列のn番目（大きいn）
+function g4_d1a() { // 等差数列のn番目（増加、大きいn）
   const start = randInt(1, 20), diff = randInt(3, 12), n = randInt(30, 100);
   const value = start + diff * (n - 1);
   return { question: `${start}から始まり、${diff}ずつ増えていく数列があります。${n}番目の数を求めなさい。`, answer: String(value), meaning: `${start}＋${diff}×(${n}－1)＝${value}` };
 }
-function g4_d2() { // 等差数列の和
+function g4_d1b() { // 等差数列のn番目（減少）
+  const start = randInt(200, 999), diff = randInt(3, 12), n = randInt(20, 60);
+  const value = start - diff * (n - 1);
+  if (value < 1) return null;
+  return { question: `${start}から始まり、${diff}ずつ減っていく数列があります。${n}番目の数を求めなさい。`, answer: String(value), meaning: `${start}－${diff}×(${n}－1)＝${value}` };
+}
+function g4_d1() { return Math.random() < 0.5 ? g4_d1a() : g4_d1b(); }
+
+function g4_d2a() { // 等差数列の和
   const start = randInt(1, 10), diff = randInt(2, 8), n = randInt(10, 30);
   const last = start + diff * (n - 1);
   const sum = n * (start + last) / 2;
   return { question: `${start}から始まり${diff}ずつ増えていく数列の、はじめから${n}番目までの和を求めなさい。`, answer: String(sum), meaning: `末項＝${last}、和＝(${start}＋${last})×${n}÷2＝${sum}` };
 }
-function g4_d3() { // 三角数のn番目
+function g4_d2b() { // 偶数だけの和（小さい範囲）
+  const count = randInt(5, 30);
+  const last = 2 * count;
+  const sum = count * (count + 1);
+  return { question: `2から${last}までの偶数をすべて足すといくつですか？`, answer: String(sum), meaning: `2＋4＋…＋${last}＝${count}×(${count}＋1)＝${sum}` };
+}
+function g4_d2() { return Math.random() < 0.5 ? g4_d2a() : g4_d2b(); }
+
+function g4_d3a() { // 三角数のn番目
   const n = randInt(10, 40);
   const value = n * (n + 1) / 2;
   return { question: `1、3、6、10、15…（1つずつ増える数を足していく数列）の${n}番目の数を求めなさい。`, answer: String(value), meaning: `${n}×(${n}＋1)÷2＝${value}` };
 }
-function g4_d4() { // 群数列基礎：同じ数がk回ずつ繰り返される（1,2,2,3,3,3,4,4,4,4...）
+function g4_d3b() { // 四角数（平方数）のn番目
+  const n = randInt(10, 40);
+  const value = n * n;
+  return { question: `1、4、9、16、25…（同じ数を2回かけた数の数列）の${n}番目の数を求めなさい。`, answer: String(value), meaning: `${n}×${n}＝${value}` };
+}
+function g4_d3() { return Math.random() < 0.5 ? g4_d3a() : g4_d3b(); }
+
+function g4_d4a() { // 群数列基礎：同じ数がk回ずつ繰り返される（1,2,2,3,3,3,4,4,4,4...）
   const n = randInt(10, 40);
   const seq = [];
   let num = 1;
@@ -102,54 +125,108 @@ function g4_d4() { // 群数列基礎：同じ数がk回ずつ繰り返される
   const value = seq[n - 1];
   return { question: `1、2、2、3、3、3、4、4、4、4…（nがn個ずつ並ぶ数列）の${n}番目の数を求めなさい。`, answer: String(value), meaning: `${n}番目は${value}` };
 }
+function g4_d4b() { // 周期パターン（1,1,2,1,2,3,1,2,3,4...）
+  const n = randInt(10, 45);
+  const seq = [];
+  let num = 1;
+  while (seq.length < n) { for (let i = 1; i <= num && seq.length < n; i++) seq.push(i); num++; }
+  const value = seq[n - 1];
+  return { question: `1、1、2、1、2、3、1、2、3、4…（1からkまでを順に並べ、kを1つずつ増やしていく数列）の${n}番目の数を求めなさい。`, answer: String(value), meaning: `${n}番目は${value}` };
+}
+function g4_d4() { return Math.random() < 0.5 ? g4_d4a() : g4_d4b(); }
 
 // ===== 小5 =====
-function g5_d1() { // 周期性（曜日計算）。日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で答える（比較的やさしい）
+function g5_d1a() { // 周期性（曜日計算、何日後）。日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で答える（比較的やさしい）
   const days = ['日', '月', '火', '水', '木', '金', '土'];
   const startIdx = randInt(0, 6);
   const n = randInt(20, 300);
   const answerIdx = (startIdx + n) % 7;
   return { question: `曜日を日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で表します。今日が${days[startIdx]}曜日（${startIdx}）のとき、${n}日後の曜日を番号で答えなさい。`, answer: String(answerIdx), meaning: `(${startIdx}＋${n})÷7のあまり＝${answerIdx}（${days[answerIdx]}曜日）` };
 }
-function g5_d2() { // 等比数列の和（初項a・公比r・項数n）
+function g5_d1b() { // 周期性（曜日計算、何日前）
+  const days = ['日', '月', '火', '水', '木', '金', '土'];
+  const startIdx = randInt(0, 6);
+  const n = randInt(20, 300);
+  const answerIdx = ((startIdx - n) % 7 + 7) % 7;
+  return { question: `曜日を日＝0、月＝1、火＝2、水＝3、木＝4、金＝5、土＝6の番号で表します。今日が${days[startIdx]}曜日（${startIdx}）のとき、${n}日前の曜日を番号で答えなさい。`, answer: String(answerIdx), meaning: `(${startIdx}－${n})を7で調整＝${answerIdx}（${days[answerIdx]}曜日）` };
+}
+function g5_d1() { return Math.random() < 0.5 ? g5_d1a() : g5_d1b(); }
+
+function g5_d2a() { // 等比数列の和（初項a・公比r・項数n）
   const a = randInt(1, 5), r = pick([2, 3]), n = randInt(3, 6);
   let sum = 0, term = a;
   for (let i = 0; i < n; i++) { sum += term; term *= r; }
   if (sum > 100000) return null;
   return { question: `初項${a}、公比${r}の等比数列の、はじめから${n}項までの和を求めなさい。`, answer: String(sum), meaning: `${a}、${a * r}、${a * r * r}…の${n}項の和` };
 }
-function g5_d3() { // フィボナッチ的漸化式
+function g5_d2b() { // 等比数列のn番目
+  const a = randInt(1, 5), r = pick([2, 3]), n = randInt(4, 10);
+  const value = a * Math.pow(r, n - 1);
+  if (value > 1000000) return null;
+  return { question: `初項${a}、公比${r}の等比数列の、${n}番目の数を求めなさい。`, answer: String(value), meaning: `${a}×${r}^${n - 1}＝${value}` };
+}
+function g5_d2() { return Math.random() < 0.5 ? g5_d2a() : g5_d2b(); }
+
+function g5_d3a() { // フィボナッチ的漸化式（前2項の和）
   const a1 = randInt(1, 5), a2 = randInt(1, 5), n = randInt(8, 15);
   const seq = [a1, a2];
   for (let i = 2; i < n; i++) seq.push(seq[i - 1] + seq[i - 2]);
   if (seq[n - 1] > 999999) return null;
   return { question: `${a1}、${a2}から始まり、前の2つの数の和が次の数になる数列があります。${n}番目の数を求めなさい。`, answer: String(seq[n - 1]), meaning: `${seq.slice(0, Math.min(n, 8)).join('、')}${n > 8 ? '…' : ''}` };
 }
-function g5_d4() { // 群数列（等差数列をグループ分け、第m群のk番目）。小5では最も高度な技法として最終難易度に配置
+function g5_d3b() { // トリボナッチ的漸化式（前3項の和）
+  const a1 = randInt(1, 3), a2 = randInt(1, 3), a3 = randInt(1, 3), n = randInt(7, 13);
+  const seq = [a1, a2, a3];
+  for (let i = 3; i < n; i++) seq.push(seq[i - 1] + seq[i - 2] + seq[i - 3]);
+  if (seq[n - 1] > 999999) return null;
+  return { question: `${a1}、${a2}、${a3}から始まり、前の3つの数の和が次の数になる数列があります。${n}番目の数を求めなさい。`, answer: String(seq[n - 1]), meaning: `${seq.slice(0, Math.min(n, 8)).join('、')}${n > 8 ? '…' : ''}` };
+}
+function g5_d3() { return Math.random() < 0.5 ? g5_d3a() : g5_d3b(); }
+
+function g5_d4a() { // 群数列（第m群のk番目）。小5では最も高度な技法として最終難易度に配置
   const m = randInt(4, 12), k = randInt(1, m);
   const startOfGroup = m * (m - 1) / 2 + 1;
   const value = startOfGroup + (k - 1);
   return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。第${m}群の${k}番目の数を求めなさい。`, answer: String(value), meaning: `第${m}群の最初の数は${startOfGroup}` };
 }
+function g5_d4b() { // 群数列（第m群の最後の数）
+  const m = randInt(4, 12);
+  const value = m * (m + 1) / 2;
+  return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。第${m}群の最後の数を求めなさい。`, answer: String(value), meaning: `第${m}群の最後の数＝1＋2＋…＋${m}＝${value}` };
+}
+function g5_d4() { return Math.random() < 0.5 ? g5_d4a() : g5_d4b(); }
 
 // ===== 小6 =====
-function g6_d1() { // 等差×定数の和の応用（偶数のみの和等）。小6のやさしいはSAPIX偏差値50以下の基礎レベルに揃える
+function g6_d1() { // 等差×定数の和の応用（偶数・奇数・3の倍数の和）。小6のやさしいはSAPIX偏差値50以下の基礎レベルに揃える
   const N = randInt(20, 80);
-  const kind = pick(['even', 'odd']);
+  const kind = pick(['even', 'odd', 'triple']);
   if (kind === 'even') {
     const count = N, last = 2 * count;
     return { question: `2から${last}までの偶数をすべて足すといくつですか？`, answer: String(count * (count + 1)), meaning: `2＋4＋…＋${last}＝${count}×(${count}＋1)` };
   }
+  if (kind === 'triple') {
+    const count = N, last = 3 * count;
+    const sum = count * (last + 3) / 2;
+    return { question: `3から${last}までの3の倍数をすべて足すといくつですか？`, answer: String(sum), meaning: `3＋6＋…＋${last}＝(3＋${last})×${count}÷2＝${sum}` };
+  }
   const count = N, last = 2 * count - 1;
   return { question: `1から${last}までの奇数をすべて足すといくつですか？`, answer: String(count * count), meaning: `1＋3＋…＋${last}＝${count}×${count}` };
 }
-function g6_d2() { // 群数列（第m群、小5より難しい範囲）
+function g6_d2a() { // 群数列（第m群のk番目、小5より難しい範囲）
   const m = randInt(4, 15), k = randInt(1, m);
   const startOfGroup = m * (m - 1) / 2 + 1;
   const value = startOfGroup + (k - 1);
   return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。第${m}群の${k}番目の数を求めなさい。`, answer: String(value), meaning: `第${m}群の最初の数は${startOfGroup}` };
 }
-function g6_d3() { // 周期性の応用（1〜cycleのくり返し）
+function g6_d2b() { // 群数列（ある数が第何群に含まれるか）
+  const m = randInt(4, 15), k = randInt(1, m);
+  const startOfGroup = m * (m - 1) / 2 + 1;
+  const value = startOfGroup + (k - 1);
+  return { question: `1｜2、3｜4、5、6｜7、8、9、10｜…のように1、2、3、4…個ずつに区切ります。${value}は第何群に入りますか？`, answer: String(m), meaning: `第${m}群は${startOfGroup}〜${startOfGroup + m - 1}` };
+}
+function g6_d2() { return Math.random() < 0.5 ? g6_d2a() : g6_d2b(); }
+
+function g6_d3a() { // 周期性の応用（1〜cycleのくり返し）
   const cycle = randInt(6, 11);
   const n = randInt(100, 999);
   const posInCycle = n % cycle;
@@ -157,7 +234,15 @@ function g6_d3() { // 周期性の応用（1〜cycleのくり返し）
   const oneCycle = Array.from({ length: cycle }, (_, i) => i + 1).join('、');
   return { question: `${oneCycle}をくり返し「${oneCycle}、${oneCycle}、…」のように並べます。${n}番目の数字を求めなさい。`, answer: String(idx), meaning: `${n}÷${cycle}のあまりで判断（あまり0のときは${cycle}）＝${idx}` };
 }
-function g6_d4() { // 灘中レベル：群数列（分数の数列）1/1, 1/2,2/1, 1/3,2/2,3/1... のn番目の分子
+function g6_d3b() { // 周期性の応用（アルファベットくり返し、番号で答える）
+  const cycle = randInt(4, 9);
+  const n = randInt(100, 999);
+  const posInCycle = n % cycle;
+  const idx = posInCycle === 0 ? cycle : posInCycle;
+  return { question: `1から${cycle}までの番号を「1、2、…、${cycle}、1、2、…、${cycle}、…」とくり返し並べます。${n}番目の番号を求めなさい。`, answer: String(idx), meaning: `${n}÷${cycle}のあまりで判断（あまり0のときは${cycle}）＝${idx}` };
+}
+function g6_d3() { return Math.random() < 0.5 ? g6_d3a() : g6_d3b(); }
+function g6_d4a() { // 灘中レベル：群数列（分数の数列）1/1, 1/2,2/1, 1/3,2/2,3/1... のn番目の分子
   const n = randInt(20, 90);
   // 第m群はm個の分数からなり、分子は1..m、分母はm..1
   let m = 1, cum = 0;
@@ -166,6 +251,15 @@ function g6_d4() { // 灘中レベル：群数列（分数の数列）1/1, 1/2,2
   const numerator = posInGroup, denominator = m - posInGroup + 1;
   return { question: `1/1｜1/2、2/1｜1/3、2/2、3/1｜1/4、2/3、3/2、4/1｜…のように分数を並べます。${n}番目の分数の分子を求めなさい。`, answer: String(numerator), meaning: `第${m}群の${posInGroup}番目：分子${numerator}／分母${denominator}` };
 }
+function g6_d4b() { // 灘中レベル：同じ分数群数列のn番目の分母を求める
+  const n = randInt(20, 90);
+  let m = 1, cum = 0;
+  while (cum + m < n) { cum += m; m++; }
+  const posInGroup = n - cum;
+  const numerator = posInGroup, denominator = m - posInGroup + 1;
+  return { question: `1/1｜1/2、2/1｜1/3、2/2、3/1｜1/4、2/3、3/2、4/1｜…のように分数を並べます。${n}番目の分数の分母を求めなさい。`, answer: String(denominator), meaning: `第${m}群の${posInGroup}番目：分子${numerator}／分母${denominator}` };
+}
+function g6_d4() { return Math.random() < 0.5 ? g6_d4a() : g6_d4b(); }
 
 const GENERATORS = {
   1: [g1_d1, g1_d2, g1_d3, g1_d4],
@@ -195,7 +289,8 @@ let idCounter = 1;
 for (let grade = 1; grade <= 6; grade++) {
   for (let diff = 1; diff <= 4; diff++) {
     const fn = GENERATORS[grade][diff - 1];
-    const items = genN(fn, 20);
+    const target = grade >= 4 ? 60 : 20;
+    const items = genN(fn, target);
     items.forEach(it => {
       all.push({ id: `sr${String(idCounter).padStart(3, '0')}`, question: it.question, answer: it.answer, meaning: it.meaning, grade, difficulty: diff });
       idCounter++;
