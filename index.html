@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0f1d5c">
   <title>オトン学園｜灘中合格への道</title>
   <meta property="og:title" content="オトン学園｜灘中合格への道">
-  <meta property="og:description" content="灘中合格を目指す！ことわざ・慣用句・四字熟語・外来語 1,500問の受験対策アプリ">
+  <meta property="og:description" content="灘中合格を目指す！ことわざ・慣用句・四字熟語・外来語など国語3,455問の受験対策アプリ">
   <meta property="og:image" content="https://kayano-tadanori.github.io/tuna-app/images/otton.png">
   <meta property="og:url" content="https://kayano-tadanori.github.io/tuna-app/">
   <meta property="og:type" content="website">
@@ -83,7 +83,7 @@
         <span class="subject-icon-wrap"><span class="subject-icon">📖</span></span>
         <span class="subject-name">国語</span>
         <span class="subject-detail">漢字・ことわざ・慣用句<br>敬語・文法・文学史</span>
-        <span class="subject-count">3,500問</span>
+        <span class="subject-count">3,455問</span>
       </button>
       <button class="subject-card" data-subject="sansu">
         <span class="subject-icon-wrap"><span class="subject-icon">🔢</span></span>
@@ -211,93 +211,94 @@
   </header>
 
   <main class="home-main">
-    <section class="section-label"><span class="step-badge">STEP 1</span>カテゴリを選ぼう</section>
-    <p class="cat-group-label">✏️ 漢字</p>
-    <div class="category-grid">
-      <button class="cat-card" data-cat="kanji_kaki">
-        <span class="cat-icon">🖌️</span>
-        <span class="cat-name">漢字の書き取り</span>
-        <span class="cat-count">480問・手書き</span>
-        <span class="cat-rate" id="rate-kanji_kaki">--</span>
-      </button>
-      <button class="cat-card" data-cat="kanji_yomi">
-        <span class="cat-icon">📕</span>
-        <span class="cat-name">漢字の読み</span>
-        <span class="cat-count">480問</span>
-        <span class="cat-rate" id="rate-kanji_yomi">--</span>
-      </button>
-    </div>
-    <p class="cat-group-label">📖 言葉の知識</p>
-    <div class="category-grid">
-      <button class="cat-card" data-cat="kotowaza">
-        <span class="cat-icon">📖</span>
-        <span class="cat-name">ことわざ</span>
-        <span class="cat-count">500問</span>
-        <span class="cat-rate" id="rate-kotowaza">--</span>
-      </button>
-      <button class="cat-card" data-cat="kanyoku">
-        <span class="cat-icon">✋</span>
-        <span class="cat-name">慣用句</span>
-        <span class="cat-count">500問</span>
-        <span class="cat-rate" id="rate-kanyoku">--</span>
-      </button>
-      <button class="cat-card" data-cat="yojijukugo">
-        <span class="cat-icon">🔡</span>
-        <span class="cat-name">四字熟語</span>
-        <span class="cat-count">500問</span>
-        <span class="cat-rate" id="rate-yojijukugo">--</span>
-      </button>
-      <button class="cat-card" data-cat="gairaigo">
-        <span class="cat-icon">🌍</span>
-        <span class="cat-name">外来語</span>
-        <span class="cat-count">400問</span>
-        <span class="cat-rate" id="rate-gairaigo">--</span>
-      </button>
-    </div>
-    <p class="cat-group-label">📝 言葉のきまり</p>
-    <div class="category-grid">
-      <button class="cat-card" data-cat="kokugo_keigo">
-        <span class="cat-icon">🙇</span>
-        <span class="cat-name">敬語・文法</span>
-        <span class="cat-count">160問</span>
-        <span class="cat-rate" id="rate-kokugo_keigo">--</span>
-      </button>
-      <button class="cat-card" data-cat="kokugo_goi">
-        <span class="cat-icon">🔤</span>
-        <span class="cat-name">語い（類義・対義）</span>
-        <span class="cat-count">160問</span>
-        <span class="cat-rate" id="rate-kokugo_goi">--</span>
-      </button>
-      <button class="cat-card" data-cat="kokugo_bushu">
-        <span class="cat-icon">🖊️</span>
-        <span class="cat-name">部首・画数</span>
-        <span class="cat-count">160問</span>
-        <span class="cat-rate" id="rate-kokugo_bushu">--</span>
-      </button>
-      <button class="cat-card" data-cat="kokugo_bungaku">
-        <span class="cat-icon">🎑</span>
-        <span class="cat-name">文学史・季語</span>
-        <span class="cat-count">160問</span>
-        <span class="cat-rate" id="rate-kokugo_bungaku">--</span>
-      </button>
+    <!-- STEP1 学年を選ぼう -->
+    <section class="section-label"><span class="step-badge">STEP 1</span>学年を選ぼう</section>
+    <div class="grade-grid">
+      <button class="kokugo-grade-btn grade-btn" data-grade="1">小1</button>
+      <button class="kokugo-grade-btn grade-btn" data-grade="2">小2</button>
+      <button class="kokugo-grade-btn grade-btn" data-grade="3">小3</button>
+      <button class="kokugo-grade-btn grade-btn" data-grade="4">小4</button>
+      <button class="kokugo-grade-btn grade-btn" data-grade="5">小5</button>
+      <button class="kokugo-grade-btn grade-btn" data-grade="6">小6</button>
     </div>
 
-    <!-- STEP2 学年（漢字のみ） -->
-    <div id="kokugo-step-grade" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 2</span>学年を選ぼう</section>
-      <div class="grade-grid">
-        <button class="kokugo-grade-btn grade-btn" data-grade="1">小1</button>
-        <button class="kokugo-grade-btn grade-btn" data-grade="2">小2</button>
-        <button class="kokugo-grade-btn grade-btn" data-grade="3">小3</button>
-        <button class="kokugo-grade-btn grade-btn" data-grade="4">小4</button>
-        <button class="kokugo-grade-btn grade-btn" data-grade="5">小5</button>
-        <button class="kokugo-grade-btn grade-btn" data-grade="6">小6</button>
+    <!-- STEP2 カテゴリを選ぼう -->
+    <div id="kokugo-step-cat" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <p class="cat-group-label">✏️ 漢字</p>
+      <div class="category-grid">
+        <button class="cat-card" data-cat="kanji_kaki" data-min-grade="1">
+          <span class="cat-icon">🖌️</span>
+          <span class="cat-name">漢字の書き取り</span>
+          <span class="cat-count">480問・手書き</span>
+          <span class="cat-rate" id="rate-kanji_kaki">--</span>
+        </button>
+        <button class="cat-card" data-cat="kanji_yomi" data-min-grade="1">
+          <span class="cat-icon">📕</span>
+          <span class="cat-name">漢字の読み</span>
+          <span class="cat-count">480問</span>
+          <span class="cat-rate" id="rate-kanji_yomi">--</span>
+        </button>
+      </div>
+      <p class="cat-group-label">📖 言葉の知識</p>
+      <div class="category-grid">
+        <button class="cat-card" data-cat="kotowaza" data-min-grade="3">
+          <span class="cat-icon">📖</span>
+          <span class="cat-name">ことわざ</span>
+          <span class="cat-count">500問</span>
+          <span class="cat-rate" id="rate-kotowaza">--</span>
+        </button>
+        <button class="cat-card" data-cat="kanyoku" data-min-grade="3">
+          <span class="cat-icon">✋</span>
+          <span class="cat-name">慣用句</span>
+          <span class="cat-count">498問</span>
+          <span class="cat-rate" id="rate-kanyoku">--</span>
+        </button>
+        <button class="cat-card" data-cat="yojijukugo" data-min-grade="4">
+          <span class="cat-icon">🔡</span>
+          <span class="cat-name">四字熟語</span>
+          <span class="cat-count">491問</span>
+          <span class="cat-rate" id="rate-yojijukugo">--</span>
+        </button>
+        <button class="cat-card" data-cat="gairaigo" data-min-grade="2">
+          <span class="cat-icon">🌍</span>
+          <span class="cat-name">外来語</span>
+          <span class="cat-count">366問</span>
+          <span class="cat-rate" id="rate-gairaigo">--</span>
+        </button>
+      </div>
+      <p class="cat-group-label">📝 言葉のきまり</p>
+      <div class="category-grid">
+        <button class="cat-card" data-cat="kokugo_keigo" data-min-grade="5">
+          <span class="cat-icon">🙇</span>
+          <span class="cat-name">敬語・文法</span>
+          <span class="cat-count">160問</span>
+          <span class="cat-rate" id="rate-kokugo_keigo">--</span>
+        </button>
+        <button class="cat-card" data-cat="kokugo_goi" data-min-grade="1">
+          <span class="cat-icon">🔤</span>
+          <span class="cat-name">語い（類義・対義）</span>
+          <span class="cat-count">160問</span>
+          <span class="cat-rate" id="rate-kokugo_goi">--</span>
+        </button>
+        <button class="cat-card" data-cat="kokugo_bushu" data-min-grade="2">
+          <span class="cat-icon">🖊️</span>
+          <span class="cat-name">部首・画数</span>
+          <span class="cat-count">160問</span>
+          <span class="cat-rate" id="rate-kokugo_bushu">--</span>
+        </button>
+        <button class="cat-card" data-cat="kokugo_bungaku" data-min-grade="3">
+          <span class="cat-icon">🎑</span>
+          <span class="cat-name">文学史・季語</span>
+          <span class="cat-count">160問</span>
+          <span class="cat-rate" id="rate-kokugo_bungaku">--</span>
+        </button>
       </div>
     </div>
 
-    <!-- STEP2' モード（言葉系のみ） -->
+    <!-- STEP3' モード（言葉系のみ） -->
     <div id="kokugo-step-mode" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 2</span>モードを選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 3</span>モードを選ぼう</section>
       <div class="mode-grid">
         <button class="mode-btn" data-mode="flash">
           <span class="mode-icon">🃏</span>
@@ -317,9 +318,9 @@
       </div>
     </div>
 
-    <!-- STEP3 難易度 -->
+    <!-- STEP4 難易度 -->
     <div id="kokugo-step-diff" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 3</span>難易度を選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 4</span>難易度を選ぼう</section>
       <div class="diff-grid">
         <button class="kokugo-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
         <button class="kokugo-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>

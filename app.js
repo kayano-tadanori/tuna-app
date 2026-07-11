@@ -224,9 +224,11 @@ function initHome() {
   document.getElementById('home-nickname').textContent = state.nickname;
 
   // ステップを初期状態に
-  ['kokugo-step-grade', 'kokugo-step-mode', 'kokugo-step-diff'].forEach(id => {
+  ['kokugo-step-cat', 'kokugo-step-mode', 'kokugo-step-diff'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
+  document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.cat-card').forEach(b => { b.classList.remove('selected'); b.classList.add('hidden'); });
 
   // カテゴリ正解率表示（キャッシュ済みのみ）
   Object.keys(CATEGORIES).forEach(cat => {
@@ -243,24 +245,53 @@ function initHome() {
     if (was) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
   };
 
-  // STEP1: カテゴリ選択
+  // STEP1: 学年選択
+  document.querySelectorAll('.kokugo-grade-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.grade = Number(btn.dataset.grade);
+
+      // 学年に応じてカテゴリの表示・非表示を切り替え
+      document.querySelectorAll('.cat-card').forEach(cb => {
+        const minGrade = Number(cb.dataset.minGrade || 1);
+        cb.classList.toggle('hidden', state.grade < minGrade);
+      });
+      // 選べなくなったカテゴリはリセット
+      if (state.selectedCat) {
+        const selBtn = document.querySelector(`.cat-card[data-cat="${state.selectedCat}"]`);
+        if (!selBtn || selBtn.classList.contains('hidden')) {
+          state.selectedCat = null;
+          state.selectedMode = null;
+          document.querySelectorAll('.cat-card').forEach(b => b.classList.remove('selected'));
+          document.getElementById('kokugo-step-mode').classList.add('hidden');
+        }
+      }
+      state.selectedDiff = null;
+      document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('kokugo-step-diff').classList.add('hidden');
+      showStep('kokugo-step-cat');
+      maybeShowStart();
+    };
+  });
+
+  // STEP2: カテゴリ選択
   document.querySelectorAll('.cat-card').forEach(btn => {
-    btn.classList.remove('selected');
     btn.onclick = () => {
       document.querySelectorAll('.cat-card').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       state.selectedCat = btn.dataset.cat;
       state.weakOnly = false;
       if (KANJI_CATS.includes(state.selectedCat)) {
-        // 漢字：学年→難易度（モードは固定）
+        // 漢字：モードは固定、そのまま難易度へ
         state.selectedMode = state.selectedCat === 'kanji_kaki' ? 'kaki' : 'yomi';
         document.getElementById('kokugo-step-mode').classList.add('hidden');
-        showStep('kokugo-step-grade');
-        if (state.grade) showStep('kokugo-step-diff');
+        showStep('kokugo-step-diff');
       } else {
         // 言葉系：モード→難易度
         if (['kaki', 'yomi'].includes(state.selectedMode)) state.selectedMode = null;
-        document.getElementById('kokugo-step-grade').classList.add('hidden');
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('kokugo-step-diff').classList.add('hidden');
         showStep('kokugo-step-mode');
         if (state.selectedMode) showStep('kokugo-step-diff');
       }
@@ -268,19 +299,7 @@ function initHome() {
     };
   });
 
-  // STEP2: 学年（漢字）
-  document.querySelectorAll('.kokugo-grade-btn').forEach(btn => {
-    btn.classList.remove('selected');
-    btn.onclick = () => {
-      document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      state.grade = Number(btn.dataset.grade);
-      showStep('kokugo-step-diff');
-      maybeShowStart();
-    };
-  });
-
-  // STEP2': モード（言葉系）
+  // STEP3': モード（言葉系）
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -292,7 +311,7 @@ function initHome() {
     };
   });
 
-  // STEP3: 難易度
+  // STEP4: 難易度
   document.querySelectorAll('.kokugo-diff-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -344,11 +363,11 @@ function maybeShowStart() {
   const isKanji = KANJI_CATS.includes(state.selectedCat);
   const ready = isKanji
     ? state.selectedCat && state.grade && state.selectedDiff
-    : state.selectedCat && state.selectedMode && state.selectedDiff;
+    : state.selectedCat && state.grade && state.selectedMode && state.selectedDiff;
   if (!ready) { zone.classList.add('hidden'); return; }
 
   zone.classList.remove('hidden');
-  const catLabel = CATEGORIES[state.selectedCat].label + (isKanji ? `（小${state.grade}）` : '');
+  const catLabel = CATEGORIES[state.selectedCat].label + `（小${state.grade}）`;
   const modeLabel = (isKanji ? (state.selectedCat === 'kanji_kaki' ? '手書き' : 'ひらがな入力') : MODES[state.selectedMode])
     + '・' + KOKUGO_DIFF_LABELS[state.selectedDiff];
   document.getElementById('start-cat-label').textContent = catLabel;
@@ -365,8 +384,8 @@ document.getElementById('btn-start').onclick = async () => {
     if (state.selectedDiff && state.selectedDiff !== 'all') {
       pool = pool.filter(q => q.difficulty === state.selectedDiff);
     }
-    // 漢字カテゴリは学年フィルタ
-    if (KANJI_CATS.includes(state.selectedCat) && state.grade) {
+    // 学年フィルタ（国語は全カテゴリで学年を選ぶ）
+    if (state.grade) {
       pool = pool.filter(q => q.grade === state.grade);
     }
     pool = shuffle(pool);
@@ -3528,8 +3547,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 教科→カテゴリ→問題数（データは静的なのでハードコード。問題追加時はここを更新）
 const QUESTION_COUNTS = {
-  kokugo: { kotowaza: 500, kanyoku: 500, yojijukugo: 500, gairaigo: 400, kanji_kaki: 480, kanji_yomi: 480,
-            kokugo_keigo: 160, kokugo_goi: 160, kokugo_bushu: 160, kokugo_bungaku: 160 },   // 3,500
+  kokugo: { kotowaza: 500, kanyoku: 498, yojijukugo: 491, gairaigo: 366, kanji_kaki: 480, kanji_yomi: 480,
+            kokugo_keigo: 160, kokugo_goi: 160, kokugo_bushu: 160, kokugo_bungaku: 160 },   // 3,455
   sansu:  { keisan: 960, bun: 960, zu: 960, kisoku: 960, tokusan: 720, baai: 800, kazu: 720,
             wariai: 480, hayasa: 480, rittai: 480 },                                         // 7,520
   rika:   { shokubutsu: 960, doubutsu: 956, sora: 862, mono: 960, daichi: 480, suiyoueki: 480,
@@ -3943,8 +3962,8 @@ async function renderGradeCrowns(subject) {
     const sets = buildClearedSets();
     const byGrade = {};
     if (subject === 'kokugo') {
-      // 国語は漢字2カテゴリの学年別のみ
-      for (const cat of KANJI_CATS) {
+      // 国語は全カテゴリの学年別集計
+      for (const cat of Object.keys(CATEGORIES)) {
         const qs = await loadQuestions(cat);
         const set = sets[`kokugo:${cat}`];
         qs.forEach(q => {
@@ -4057,17 +4076,17 @@ async function renderDiffBadgesKokugo() {
   if (!cat || !CATEGORIES[cat]) return;
   const isKanji = KANJI_CATS.includes(cat);
   const grade = state.grade;
-  if (isKanji && !grade) return;
+  if (!grade) return;
   try {
     const qs = await loadQuestions(cat);
-    if (state.selectedCat !== cat || (isKanji && state.grade !== grade)) return;
+    if (state.selectedCat !== cat || state.grade !== grade) return;
     const sets = buildClearedSets();
     const set = sets[`kokugo:${cat}`];
     const byDiff = {};
     let total = 0, cleared = 0;
     qs.forEach(q => {
       if (q.id && q.id[0] === 'c') return;              // カスタム問題は対象外
-      if (isKanji && q.grade !== grade) return;
+      if (q.grade !== grade) return;
       const ok = !!(set && set.has(q.id));
       total++; if (ok) cleared++;
       const d = q.difficulty;
