@@ -455,8 +455,8 @@ button { cursor: pointer; font-family: inherit; }
 .scratch-fs-header .scratch-label { margin-right: auto; }
 .scratch-fs-close { background: var(--card); }
 .scratch-fs-hint { font-size: 0.72rem; color: var(--sub2); padding: 0 14px 8px; line-height: 1.4; }
-.scratch-fs-viewport { flex: 1; overflow: hidden; touch-action: none; background: #f8f6ef; position: relative; }
-.scratch-fs-canvas { display: block; touch-action: none; transform-origin: 0 0; position: absolute; left: 0; top: 0; will-change: transform; }
+.scratch-fs-viewport { flex: 1; overflow: hidden; touch-action: none; background: var(--dark2); position: relative; }
+.scratch-fs-canvas { display: block; touch-action: none; transform-origin: 0 0; position: absolute; left: 0; top: 0; will-change: transform; outline: 3px solid rgba(79,124,255,0.65); outline-offset: -3px; box-shadow: 0 0 0 1px rgba(0,0,0,0.35), 0 10px 40px rgba(0,0,0,0.5); }
 
 /* ── テンキー共通 ── */
 .numpad-preview-wrap { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px 16px; }
