@@ -1838,13 +1838,14 @@ function createDrawPad(canvas, opts = {}) {
   const grid = !!opts.grid;
   const penColor = opts.penColor || '#1a1a1a';
   const lineWidth = opts.lineWidth || 5;
-  const pad = { canvas, ctx: canvas.getContext('2d'), strokes: [], current: [], drawing: false };
+  const pad = { canvas, ctx: canvas.getContext('2d'), strokes: [], current: [], drawing: false, suppressed: false };
 
   const pos = e => {
     const r = canvas.getBoundingClientRect();
     return { x: (e.clientX - r.left) * (canvas.width / r.width), y: (e.clientY - r.top) * (canvas.height / r.height) };
   };
   canvas.onpointerdown = e => {
+    if (pad.suppressed) return;
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
     pad.drawing = true;
@@ -1893,27 +1894,26 @@ function createDrawPad(canvas, opts = {}) {
   }
   pad.clear = () => { pad.strokes = []; pad.current = []; draw(); };
   pad.undo = () => { pad.strokes.pop(); draw(); };
+  // 描いている途中のストロークを、履歴に残さず取り消す（2本指ジェスチャー開始時などに使用）
+  pad.cancelCurrent = () => { pad.drawing = false; pad.current = []; draw(); };
   draw();
   return pad;
 }
 
-const drawPads = {}; // prefix('sq'|'drill') -> { write, scratch }
+const drawPads = {}; // prefix('sq'|'drill') -> { write }
 
 // セッション開始時に1回だけ呼ぶ（ボタン結線・キャンバス初期化）
 function setupQuizExtras(prefix) {
   if (drawPads[prefix]) return;
   const writeCanvas = document.getElementById(`${prefix}-write-canvas`);
-  const scratchCanvas = document.getElementById(`${prefix}-scratch-canvas`);
   const write = createDrawPad(writeCanvas, { penColor: '#ffe066', lineWidth: 4 });
-  const scratch = createDrawPad(scratchCanvas, { grid: true, penColor: '#1a1a1a', lineWidth: 4 });
-  drawPads[prefix] = { write, scratch };
+  drawPads[prefix] = { write };
 
   const questionBox = document.getElementById(`${prefix}-question-box`);
   const btnWrite = document.getElementById(`${prefix}-btn-write`);
   const btnErase = document.getElementById(`${prefix}-btn-erase`);
   const btnScratch = document.getElementById(`${prefix}-btn-scratch`);
   const inputArea = document.getElementById(`${prefix}-input-area`);
-  const slider = document.getElementById(`${prefix}-slider`);
 
   btnWrite.onclick = () => {
     const active = questionBox.classList.toggle('write-active');
@@ -1923,17 +1923,7 @@ function setupQuizExtras(prefix) {
     inputArea.classList.toggle('hidden', active);
   };
   btnErase.onclick = () => write.clear();
-  btnScratch.onclick = () => slider.scrollTo({ left: slider.clientWidth, behavior: 'smooth' });
-  document.getElementById(`${prefix}-scratch-back`).onclick = () => slider.scrollTo({ left: 0, behavior: 'smooth' });
-  document.getElementById(`${prefix}-scratch-undo`).onclick = () => scratch.undo();
-  document.getElementById(`${prefix}-scratch-clear`).onclick = () => scratch.clear();
-
-  // 計算用紙を表示中は「書き込み」系ボタンを隠す（問題を離れた状態で紛らわしいため）
-  const toolbar = slider.previousElementSibling;
-  slider.addEventListener('scroll', () => {
-    const onScratch = slider.scrollLeft > slider.clientWidth / 2;
-    if (toolbar && toolbar.classList.contains('quiz-toolbar')) toolbar.classList.toggle('hidden', onScratch);
-  });
+  btnScratch.onclick = () => openScratchFullscreen();
 }
 
 // 問題が切り替わるたびに呼ぶ（書き込み・計算用紙をリセットし、問題画面に戻す）
@@ -1941,14 +1931,133 @@ function resetQuizExtras(prefix) {
   const pads = drawPads[prefix];
   if (!pads) return;
   pads.write.clear();
-  pads.scratch.clear();
   document.getElementById(`${prefix}-question-box`).classList.remove('write-active');
   const btnWrite = document.getElementById(`${prefix}-btn-write`);
   btnWrite.classList.remove('active');
   btnWrite.textContent = '✏️ 書き込み';
   document.getElementById(`${prefix}-btn-erase`).classList.add('hidden');
   document.getElementById(`${prefix}-input-area`).classList.remove('hidden');
-  document.getElementById(`${prefix}-slider`).scrollTo({ left: 0 });
+  closeScratchFullscreen();
+  if (scratchPad) scratchPad.clear();
+}
+
+// ── 計算用紙（全画面・画面の4倍の広さ・2本指でパン＆ピンチズーム） ──────────
+let scratchPad = null;
+let scratchView = null; // { virtualW, virtualH, vw, vh, panX, panY, zoom }
+
+const SCRATCH_MIN_ZOOM = 0.5;
+const SCRATCH_MAX_ZOOM = 3;
+
+function scratchApplyTransform(canvas) {
+  const v = scratchView;
+  canvas.style.transform = `translate(${v.panX}px, ${v.panY}px) scale(${v.zoom})`;
+}
+
+function scratchClampView() {
+  const v = scratchView;
+  v.zoom = Math.min(SCRATCH_MAX_ZOOM, Math.max(SCRATCH_MIN_ZOOM, v.zoom));
+  const dispW = v.virtualW * v.zoom, dispH = v.virtualH * v.zoom;
+  // 表示中の紙が画面から大きくはみ出しすぎない程度に余裕を持たせてクランプ
+  const marginX = Math.max(dispW, v.vw) * 0.5;
+  const marginY = Math.max(dispH, v.vh) * 0.5;
+  v.panX = Math.min(marginX, Math.max(v.vw - dispW - marginX, v.panX));
+  v.panY = Math.min(marginY, Math.max(v.vh - dispH - marginY, v.panY));
+}
+
+function openScratchFullscreen() {
+  const overlay = document.getElementById('scratch-fullscreen');
+  const viewport = document.getElementById('scratch-fs-viewport');
+  const canvas = document.getElementById('scratch-fs-canvas');
+
+  if (!scratchPad) {
+    const dpr = window.devicePixelRatio || 1;
+    const vw = viewport.clientWidth || window.innerWidth;
+    const vh = viewport.clientHeight || window.innerHeight;
+    // 画面の縦横それぞれ2倍＝面積で4倍の仮想キャンバス
+    const virtualW = vw * 2;
+    const virtualH = vh * 2;
+    canvas.style.width = virtualW + 'px';
+    canvas.style.height = virtualH + 'px';
+    canvas.width = Math.round(virtualW * dpr);
+    canvas.height = Math.round(virtualH * dpr);
+    scratchPad = createDrawPad(canvas, { grid: true, penColor: '#1a1a1a', lineWidth: 4 * dpr });
+
+    // 初期表示：仮想キャンバスの中央が画面中央に来るように配置（zoom=1）
+    scratchView = { virtualW, virtualH, vw, vh, panX: -(virtualW - vw) / 2, panY: -(virtualH - vh) / 2, zoom: 1 };
+    scratchApplyTransform(canvas);
+
+    document.getElementById('fs-scratch-undo').onclick = () => scratchPad.undo();
+    document.getElementById('fs-scratch-clear').onclick = () => scratchPad.clear();
+    document.getElementById('fs-scratch-close').onclick = () => closeScratchFullscreen();
+    document.getElementById('fs-scratch-reset').onclick = () => {
+      scratchView.zoom = 1;
+      scratchView.panX = -(virtualW - vw) / 2;
+      scratchView.panY = -(virtualH - vh) / 2;
+      scratchApplyTransform(canvas);
+    };
+
+    // ── 2本指ジェスチャー（パン＋ピンチズーム） ──
+    const pointers = new Map(); // pointerId -> {x, y}（viewport基準の座標）
+    let gestureActive = false;
+    let prevMid = null, prevDist = null;
+
+    const viewportPos = e => {
+      const r = viewport.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+    const midOf = pts => ({ x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 });
+    const distOf = pts => Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+
+    viewport.addEventListener('pointerdown', e => {
+      pointers.set(e.pointerId, viewportPos(e));
+      if (pointers.size === 2) {
+        gestureActive = true;
+        scratchPad.suppressed = true; // キャンバス側の描画処理を止める
+        scratchPad.cancelCurrent(); // 描きかけの線があれば取り消す
+        const pts = [...pointers.values()];
+        prevMid = midOf(pts);
+        prevDist = distOf(pts);
+      }
+    }, { capture: true });
+
+    viewport.addEventListener('pointermove', e => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, viewportPos(e));
+      if (!gestureActive || pointers.size !== 2) return;
+      e.preventDefault();
+      const pts = [...pointers.values()];
+      const mid = midOf(pts);
+      const dist = distOf(pts);
+      const v = scratchView;
+      const newZoom = Math.min(SCRATCH_MAX_ZOOM, Math.max(SCRATCH_MIN_ZOOM, v.zoom * (dist / prevDist)));
+      // ピンチの中心点がそのまま同じ場所に留まるようパンを補正しつつ、指の移動分も加算
+      v.panX = mid.x - (newZoom / v.zoom) * (prevMid.x - v.panX);
+      v.panY = mid.y - (newZoom / v.zoom) * (prevMid.y - v.panY);
+      v.zoom = newZoom;
+      scratchApplyTransform(canvas);
+      prevMid = mid;
+      prevDist = dist;
+    }, { capture: true });
+
+    const endPointer = e => {
+      pointers.delete(e.pointerId);
+      if (pointers.size === 0 && gestureActive) {
+        gestureActive = false;
+        prevMid = null; prevDist = null;
+        scratchClampView();
+        scratchApplyTransform(canvas);
+        scratchPad.suppressed = false; // 描画を再開できるようにする
+      }
+    };
+    viewport.addEventListener('pointerup', endPointer, { capture: true });
+    viewport.addEventListener('pointercancel', endPointer, { capture: true });
+  }
+
+  overlay.classList.remove('hidden');
+}
+
+function closeScratchFullscreen() {
+  document.getElementById('scratch-fullscreen').classList.add('hidden');
 }
 
 // ── テンキー共通 ────────────────────────────────────────

@@ -990,18 +990,6 @@
           </div>
         </div>
       </div>
-
-      <div class="quiz-slide scratch-slide">
-        <div class="scratch-header">
-          <span class="scratch-label">📝 計算用紙</span>
-          <div class="scratch-tools">
-            <button id="sq-scratch-undo" class="tool-btn-sm">↩️ 1つ戻す</button>
-            <button id="sq-scratch-clear" class="tool-btn-sm">🧹 全部消す</button>
-          </div>
-        </div>
-        <canvas id="sq-scratch-canvas" class="scratch-canvas" width="320" height="420"></canvas>
-        <button id="sq-scratch-back" class="btn-secondary scratch-back-btn">← 問題にもどる</button>
-      </div>
     </div>
   </div>
 </div>
@@ -1077,17 +1065,6 @@
         </div>
       </div>
 
-      <div class="quiz-slide scratch-slide">
-        <div class="scratch-header">
-          <span class="scratch-label">📝 計算用紙</span>
-          <div class="scratch-tools">
-            <button id="drill-scratch-undo" class="tool-btn-sm">↩️ 1つ戻す</button>
-            <button id="drill-scratch-clear" class="tool-btn-sm">🧹 全部消す</button>
-          </div>
-        </div>
-        <canvas id="drill-scratch-canvas" class="scratch-canvas" width="320" height="420"></canvas>
-        <button id="drill-scratch-back" class="btn-secondary scratch-back-btn">← 問題にもどる</button>
-      </div>
     </div>
 
     <!-- ドリル終了後の結果 -->
@@ -1332,6 +1309,23 @@
       <button id="restore-yes" class="btn-primary">復元する</button>
       <button id="restore-no" class="btn-secondary">しない</button>
     </div>
+  </div>
+</div>
+
+<!-- =============== 計算用紙（全画面・パン対応） =============== -->
+<div id="scratch-fullscreen" class="scratch-fullscreen hidden">
+  <div class="scratch-fs-header">
+    <span class="scratch-label">📝 計算用紙</span>
+    <div class="scratch-tools">
+      <button id="fs-scratch-reset" class="tool-btn-sm">🔍 元にもどす</button>
+      <button id="fs-scratch-undo" class="tool-btn-sm">↩️ 1つ戻す</button>
+      <button id="fs-scratch-clear" class="tool-btn-sm">🧹 全部消す</button>
+    </div>
+    <button id="fs-scratch-close" class="tool-btn-sm scratch-fs-close">✕ とじる</button>
+  </div>
+  <p class="scratch-fs-hint">紙は画面の4倍の広さがあります。2本指でスクロールして移動、2本指を広げたりつまんだりして拡大・縮小できます。</p>
+  <div id="scratch-fs-viewport" class="scratch-fs-viewport">
+    <canvas id="scratch-fs-canvas" class="scratch-fs-canvas"></canvas>
   </div>
 </div>
 
