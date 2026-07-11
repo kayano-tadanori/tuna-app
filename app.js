@@ -1875,6 +1875,11 @@ function createDrawPad(canvas, opts = {}) {
       const step = 24;
       for (let x = step; x < canvas.width; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
       for (let y = step; y < canvas.height; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+      // 紙の端をはっきりさせる縁取り（ピクセルとして直接描くのでCSSに左右されない）
+      const bw = Math.max(4, Math.round(canvas.width / 100));
+      ctx.strokeStyle = '#4f7cff';
+      ctx.lineWidth = bw;
+      ctx.strokeRect(bw / 2, bw / 2, canvas.width - bw, canvas.height - bw);
     } else {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
