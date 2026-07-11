@@ -3534,7 +3534,7 @@ const QUESTION_COUNTS = {
             wariai: 480, hayasa: 480, rittai: 480 },                                         // 7,520
   rika:   { shokubutsu: 960, doubutsu: 956, sora: 862, mono: 960, daichi: 480, suiyoueki: 480,
             denki: 480, chikara: 480 },                                                      // 5,658
-  shakai: { kokudo: 320, sangyo: 320, rekishi: 320, komin: 320 },                            // 1,280
+  shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
 // 称号判定は灘中3教科（社会は表示のみ）
