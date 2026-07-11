@@ -1972,7 +1972,7 @@ function updateScratchDock() {
 scratchDockQuery.addEventListener('change', updateScratchDock);
 window.addEventListener('resize', updateScratchDock);
 
-const SCRATCH_MIN_ZOOM = 0.5;
+const SCRATCH_MIN_ZOOM = 0.25;
 const SCRATCH_MAX_ZOOM = 3;
 
 function scratchApplyTransform(canvas) {
@@ -2017,9 +2017,13 @@ function openScratchFullscreen() {
     document.getElementById('fs-scratch-clear').onclick = () => scratchPad.clear();
     document.getElementById('fs-scratch-close').onclick = () => closeScratchFullscreen();
     document.getElementById('fs-scratch-reset').onclick = () => {
-      scratchView.zoom = 1;
-      scratchView.panX = -(virtualW - vw) / 2;
-      scratchView.panY = -(virtualH - vh) / 2;
+      // そのときの実際の画面サイズに合わせて、紙全体が収まる縮小率にする
+      const curVw = viewport.clientWidth || scratchView.vw;
+      const curVh = viewport.clientHeight || scratchView.vh;
+      const fitZoom = Math.min(curVw / scratchView.virtualW, curVh / scratchView.virtualH, 1);
+      scratchView.zoom = Math.max(SCRATCH_MIN_ZOOM, fitZoom);
+      scratchView.panX = (curVw - scratchView.virtualW * scratchView.zoom) / 2;
+      scratchView.panY = (curVh - scratchView.virtualH * scratchView.zoom) / 2;
       scratchApplyTransform(canvas);
     };
 
