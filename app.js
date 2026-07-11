@@ -350,7 +350,7 @@ function initHome() {
     maybeShowStart();
   };
 
-  document.getElementById('btn-progress').onclick = showProgressScreen;
+  document.getElementById('btn-progress').onclick = () => showProgressScreen('kokugo');
   document.getElementById('btn-custom').onclick = showCustomScreen;
   document.getElementById('btn-ranking').onclick = showRankingScreen;
 
@@ -852,16 +852,19 @@ document.getElementById('btn-result-retry').onclick = () => {
 // 進捗画面
 // ============================================================
 
-async function showProgressScreen() {
+// subject を指定すると、その教科だけの進捗を表示する（未指定なら全教科まとめて表示）
+async function showProgressScreen(subject) {
   showScreen('progress');
-  document.getElementById('progress-user').textContent = state.nickname + ' さんの進捗';
+  const label = subject ? SUBJECT_LABELS[subject] : null;
+  document.getElementById('progress-user').textContent = state.nickname + ' さんの進捗' + (label ? `（${label}）` : '');
 
   const catsEl = document.getElementById('progress-cats');
   catsEl.innerHTML = '';
 
-  // 算数・理科・社会も含めて全教科をまとめて表示（クリアした問題は✅）
   const a = getAchievement();
-  for (const [s, data] of Object.entries(a.subjects)) {
+  const entries = subject ? [[subject, a.subjects[subject]]] : Object.entries(a.subjects);
+  for (const [s, data] of entries) {
+    if (!data) continue;
     const subjWrap = document.createElement('div');
     subjWrap.className = 'progress-subject';
     subjWrap.innerHTML = `<h3 class="progress-subject-name">${SUBJECT_LABELS[s]}</h3>`;
@@ -883,7 +886,32 @@ async function showProgressScreen() {
   // 苦手リスト
   const weakEl = document.getElementById('weak-list');
   weakEl.innerHTML = '';
-  if (state.selectedCat) {
+  if (subject && subject !== 'kokugo') {
+    // 算数・理科・社会：ホームで選択中のカテゴリの苦手問題を表示
+    if (!sansuState.cat || sansuState.cat === 'mix') {
+      weakEl.textContent = 'ホームでカテゴリを選んでから見てください';
+    } else {
+      const weaks = await getWeakItemsForCat(subject, sansuState.cat);
+      if (!weaks.length) {
+        weakEl.textContent = '苦手問題はまだありません。問題を解いてみよう！';
+      } else {
+        const prog = getProgress();
+        weaks.slice(0, 20).forEach(q => {
+          const p = prog[q.id] || {};
+          const r = p.total > 0 ? Math.round((p.correct / p.total) * 100) : 0;
+          const d = document.createElement('div');
+          d.className = 'weak-item';
+          d.innerHTML = `
+            <div class="w-q">${q.question}</div>
+            <div class="w-a">答え：${q.answer}</div>
+            <div class="w-r">正解率 ${r}%（${p.correct||0}/${p.total||0}）</div>
+          `;
+          weakEl.appendChild(d);
+        });
+      }
+    }
+  } else if (state.selectedCat) {
+    // 国語：ホームで選択中のカテゴリの苦手問題を表示
     getWeakItems(state.selectedCat).slice(0, 20).forEach(q => {
       const p = getProgress()[q.id] || {};
       const r = p.total > 0 ? Math.round((p.correct / p.total) * 100) : 0;
@@ -1470,7 +1498,7 @@ function initSansuHome() {
 
   // 苦手問題のみ／詳細な進捗
   document.getElementById('sansu-btn-weak').onclick = () => startSansuWeakSession();
-  document.getElementById('sansu-btn-progress').onclick = () => openProgressScreenFrom('sansu-home');
+  document.getElementById('sansu-btn-progress').onclick = () => openProgressScreenFrom('sansu-home', 'sansu');
 
   // 全ステップを初期状態（STEP1のみ表示）に
   hideSansuSteps('sansu-step-mode', 'sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-time');
@@ -1577,7 +1605,7 @@ function initRikaHome() {
   document.getElementById('rika-btn-start').onclick = () => startRikaSession();
 
   document.getElementById('rika-btn-weak').onclick = () => startSansuWeakSession();
-  document.getElementById('rika-btn-progress').onclick = () => openProgressScreenFrom('rika-home');
+  document.getElementById('rika-btn-progress').onclick = () => openProgressScreenFrom('rika-home', 'rika');
 
   hideSansuSteps('rika-step-topmode', 'rika-step-cat', 'rika-step-diff');
   document.querySelectorAll('.rika-topmode-btn').forEach(b => b.classList.remove('selected'));
@@ -1679,7 +1707,7 @@ function initShakaiHome() {
   document.getElementById('shakai-btn-start').onclick = () => startShakaiSession();
 
   document.getElementById('shakai-btn-weak').onclick = () => startSansuWeakSession();
-  document.getElementById('shakai-btn-progress').onclick = () => openProgressScreenFrom('shakai-home');
+  document.getElementById('shakai-btn-progress').onclick = () => openProgressScreenFrom('shakai-home', 'shakai');
 
   hideSansuSteps('shakai-step-topmode', 'shakai-step-cat', 'shakai-step-diff');
   document.querySelectorAll('.shakai-topmode-btn').forEach(b => b.classList.remove('selected'));
@@ -1780,10 +1808,10 @@ async function startSansuWeakSession() {
 }
 
 // 算数・理科・社会共通：進捗画面を開く（戻るボタンは呼び出し元の画面に戻す）
-function openProgressScreenFrom(screenId) {
+function openProgressScreenFrom(screenId, subject) {
   const backBtn = document.querySelector('#screen-progress .back-btn');
   if (backBtn) backBtn.dataset.back = screenId;
-  showProgressScreen();
+  showProgressScreen(subject);
 }
 
 function startSansuQuiz() {
