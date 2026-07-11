@@ -190,6 +190,7 @@ function showScreen(id) {
   } else {
     flushPlayTime();
   }
+  updateScratchDock();
 }
 
 // ============================================================
@@ -1942,13 +1943,34 @@ function resetQuizExtras(prefix) {
   btnWrite.textContent = '✏️ 書き込み';
   document.getElementById(`${prefix}-btn-erase`).classList.add('hidden');
   document.getElementById(`${prefix}-input-area`).classList.remove('hidden');
-  closeScratchFullscreen();
+  if (!scratchDocked) closeScratchFullscreen(); // ドッキング表示中は開いたままにする
   if (scratchPad) scratchPad.clear();
 }
 
 // ── 計算用紙（全画面・画面の4倍の広さ・2本指でパン＆ピンチズーム） ──────────
 let scratchPad = null;
 let scratchView = null; // { virtualW, virtualH, vw, vh, panX, panY, zoom }
+let scratchDocked = false; // 横向きタブレットなどで常時ドッキング表示中か
+
+const scratchDockQuery = window.matchMedia('(min-width: 700px) and (orientation: landscape)');
+
+// 算数・理科クイズ／計算ドリル画面で横向きの広い画面なら、計算用紙を常時ドッキング表示する
+function updateScratchDock() {
+  const overlay = document.getElementById('scratch-fullscreen');
+  const isQuizScreen = currentScreenId === 'sansu-quiz' || currentScreenId === 'drill';
+  const shouldDock = isQuizScreen && scratchDockQuery.matches;
+  if (shouldDock && !scratchDocked) {
+    scratchDocked = true;
+    overlay.classList.add('docked');
+    openScratchFullscreen();
+  } else if (!shouldDock && scratchDocked) {
+    scratchDocked = false;
+    overlay.classList.remove('docked');
+    closeScratchFullscreen();
+  }
+}
+scratchDockQuery.addEventListener('change', updateScratchDock);
+window.addEventListener('resize', updateScratchDock);
 
 const SCRATCH_MIN_ZOOM = 0.5;
 const SCRATCH_MAX_ZOOM = 3;

@@ -741,3 +741,34 @@ button { cursor: pointer; font-family: inherit; }
 .jump-area .tetris-info-row { width: 100%; }
 .jump-main { position: relative; }
 #jump-canvas { width: min(70vw, 260px); background: #0a1128; border: 1.5px solid var(--glass-border); border-radius: 10px; touch-action: none; image-rendering: pixelated; }
+
+/* ── 横向き（iPadなど広い画面）：計算用紙を常時ドッキング表示 ── */
+@media (min-width: 700px) and (orientation: landscape) {
+  #sq-btn-scratch, #drill-btn-scratch { display: none; }
+
+  #screen-sansu-quiz .sansu-quiz-area,
+  #screen-drill .drill-area {
+    max-width: none;
+    margin-right: 44vw;
+  }
+
+  .scratch-fullscreen.docked {
+    left: auto;
+    width: 44vw;
+    z-index: 50;
+    box-shadow: -8px 0 30px rgba(0,0,0,0.35);
+    border-left: 1.5px solid var(--glass-border);
+  }
+  .scratch-fullscreen.docked.hidden { display: flex; }
+  .scratch-fullscreen.docked .scratch-fs-close { display: none; }
+}
+
+/* ── 広い画面（iPad横向きなど）でコンテンツが間延びしないよう最大幅を設定 ── */
+.home-main, .sansu-home-main, .quiz-area, .flash-area, .kanji-area,
+.char-main, .custom-main, .gacha-main, .progress-main, .ranking-main,
+.record-main, .subject-main, .zukan-main, .tetris-main, .mine-area,
+.jump-area, .sansu-quiz-area, .drill-area {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
