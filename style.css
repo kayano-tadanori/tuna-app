@@ -301,6 +301,9 @@ button { cursor: pointer; font-family: inherit; }
 /* ===== 進捗 ===== */
 .progress-main { padding: 16px 16px 32px; }
 .progress-user { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; background: var(--grad-accent); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.progress-subject { margin-bottom: 8px; }
+.progress-subject-name { font-size: 0.82rem; font-weight: 900; color: var(--gold); letter-spacing: 0.04em; margin: 18px 2px 10px; }
+.progress-subject:first-child .progress-subject-name { margin-top: 0; }
 .progress-cat { background: var(--card); backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; }
 .progress-cat-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; color: var(--text); }
 .bar-track { height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden; margin-bottom: 6px; }
