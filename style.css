@@ -528,6 +528,7 @@ button { cursor: pointer; font-family: inherit; }
 /* ── オトンテトリス（息抜きバナー） ── */
 /* ── ゲーミフィケーション（称号・記録・モーダル・アイテム） ── */
 .title-badge { font-size: 0.68rem; font-weight: 900; background: rgba(255,209,102,0.12); border: 1px solid rgba(255,186,0,0.35); color: var(--gold); border-radius: 20px; padding: 4px 9px; white-space: nowrap; }
+.ticket-badge { font-size: 0.68rem; font-weight: 900; background: rgba(40,200,138,0.12); border: 1px solid rgba(40,200,138,0.35); color: var(--green); border-radius: 20px; padding: 3px 9px; white-space: nowrap; text-transform: none; letter-spacing: normal; }
 .subject-card-record { flex-direction: row; min-height: 0; padding: 13px 16px; gap: 12px; align-items: center; margin-bottom: 4px; width: 100%; --sc-accent: var(--grad-gold); --sc-glow: rgba(255,186,0,0.15); border-color: rgba(255,186,0,0.3); }
 .record-card-icon { font-size: 1.7rem; line-height: 1; }
 .record-card-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex: 1; }

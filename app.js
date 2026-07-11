@@ -814,6 +814,7 @@ function endSession() {
   renderResultCheer(rate);
   maybeAwardPerfect(rate, total);
   awardSessionCoins(rate, total);
+  awardSessionTicket(total);
   showScreen('result');
   checkTitlePromotion();
   pushAchievementToRanking();
@@ -1162,12 +1163,15 @@ function initSubject() {
         initShakaiHome();
         showScreen('shakai-home');
       } else if (subj === 'game') {
+        if (!spendGameTicket()) return;
         initTetris();
         showScreen('tetris');
       } else if (subj === 'mine') {
+        if (!spendGameTicket()) return;
         initMine();
         showScreen('mine');
       } else if (subj === 'jump') {
+        if (!spendGameTicket()) return;
         initJump();
         showScreen('jump');
       } else if (subj === 'gacha') {
@@ -1193,6 +1197,7 @@ function initSubject() {
   checkCloudRestore();
   backupLocalData();
   initUpdateBanner();
+  updateGameTicketBadge();
 }
 
 // ============================================================
@@ -1977,6 +1982,7 @@ function endSansuSession() {
   renderResultCheer(score);
   maybeAwardPerfect(score, total);
   awardSessionCoins(score, total);
+  awardSessionTicket(total);
 
   document.getElementById('btn-result-home').onclick = () => {
     if (sansuState.subject === 'rika') { initRikaHome(); showScreen('rika-home'); }
@@ -2588,6 +2594,7 @@ function endDrill() {
   const score = sansuState.drillCorrect;
   const total = sansuState.drillCorrect + sansuState.drillWrong;
   const rate = total > 0 ? Math.round(score / total * 100) : 0;
+  awardSessionTicket(total);
 
   let emoji, comment;
   if (sansuState.drillTime === 0) {
@@ -4069,6 +4076,50 @@ function awardSessionCoins(pct, totalQ) {
     }
   }
   coinSessionEarned = 0;
+}
+
+// ── 息抜きゲームの遊び券（勉強しないと遊べないようにする） ──
+function getGameTickets() {
+  return Math.max(0, Math.min(99, Number(localStorage.getItem('gameTickets') || 0)));
+}
+function addGameTickets(n) {
+  const v = Math.max(0, Math.min(99, getGameTickets() + n));
+  localStorage.setItem('gameTickets', String(v));
+  updateGameTicketBadge();
+  return v;
+}
+function updateGameTicketBadge() {
+  const el = document.getElementById('game-ticket-badge');
+  if (el) el.textContent = `🎟 ${getGameTickets()}枚`;
+}
+
+const TICKET_DAILY_CAP = 8;
+function getTicketDaily() {
+  const d = JSON.parse(localStorage.getItem('ticketDaily') || 'null');
+  if (!d || d.date !== todayStr()) return { date: todayStr(), earned: 0 };
+  return d;
+}
+function saveTicketDaily(d) { localStorage.setItem('ticketDaily', JSON.stringify(d)); }
+
+// セッション終了時（5問以上で1枚、1日8枚まで）に呼ぶ
+function awardSessionTicket(totalQ) {
+  if (totalQ < 5) return;
+  const d = getTicketDaily();
+  if (d.earned >= TICKET_DAILY_CAP) return;
+  d.earned += 1;
+  saveTicketDaily(d);
+  addGameTickets(1);
+  showToast(`🎟 遊び券を1まいゲット！（のこり${getGameTickets()}まい）`, 2500);
+}
+
+// 息抜きゲームに入る前に呼ぶ。券がなければ入れずtoastだけ出す
+function spendGameTicket() {
+  if (getGameTickets() <= 0) {
+    showToast('🎟 遊び券が足りないよ！問題を解いてゲットしよう！', 2500);
+    return false;
+  }
+  addGameTickets(-1);
+  return true;
 }
 
 // ── 汎用演出モーダル（連続表示はキューで順番に） ──────────
