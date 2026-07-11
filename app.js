@@ -1180,6 +1180,7 @@ function initSubject() {
     };
   });
 
+  document.getElementById('btn-subject-refresh').onclick = () => forceAppUpdate();
   document.getElementById('btn-subject-char').onclick = () => showScreen('character');
   document.getElementById('btn-subject-change').onclick = () => {
     localStorage.removeItem('nickname');
@@ -1286,6 +1287,28 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW登録失敗:', e));
   });
+  // 新しいservice workerが有効になったら自動でリロードして最新版を反映
+  let swControllerChanged = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (swControllerChanged) return;
+    swControllerChanged = true;
+    location.reload();
+  });
+}
+
+// 科目選択画面の「🔄 最新版に更新」ボタン：新しいバージョンがないかチェックし、
+// あればservice workerの更新→自動リロード（上のcontrollerchangeリスナー）で反映する
+async function forceAppUpdate() {
+  if (!('serviceWorker' in navigator)) { location.reload(); return; }
+  showToast('最新版をチェック中…');
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (!reg) { location.reload(); return; }
+    await reg.update();
+    setTimeout(() => showToast('最新の状態です！'), 1500);
+  } catch (e) {
+    location.reload();
+  }
 }
 
 // ============================================================
