@@ -222,9 +222,26 @@
       <button class="kokugo-grade-btn grade-btn" data-grade="6">小6</button>
     </div>
 
-    <!-- STEP2 カテゴリを選ぼう -->
+    <!-- STEP2 モードを選ぼう -->
+    <div id="kokugo-step-topmode" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>モードを選ぼう</section>
+      <div class="sansu-mode-grid">
+        <button class="kokugo-topmode-btn sansu-mode-btn" data-topmode="normal">
+          <span class="mode-icon">📝</span>
+          <span class="mode-name">通常問題</span>
+          <span class="mode-desc">カテゴリ別に挑戦</span>
+        </button>
+        <button class="kokugo-topmode-btn sansu-mode-btn" data-topmode="dict">
+          <span class="mode-icon">📔</span>
+          <span class="mode-name">辞書</span>
+          <span class="mode-desc">近日公開</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP3 カテゴリを選ぼう -->
     <div id="kokugo-step-cat" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 3</span>カテゴリを選ぼう</section>
       <p class="cat-group-label">✏️ 漢字</p>
       <div class="category-grid">
         <button class="cat-card" data-cat="kanji_kaki" data-min-grade="1">
@@ -296,9 +313,9 @@
       </div>
     </div>
 
-    <!-- STEP3' モード（言葉系のみ） -->
+    <!-- STEP4' モード（言葉系のみ） -->
     <div id="kokugo-step-mode" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 3</span>モードを選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 4</span>モードを選ぼう</section>
       <div class="mode-grid">
         <button class="mode-btn" data-mode="flash">
           <span class="mode-icon">🃏</span>
@@ -318,9 +335,9 @@
       </div>
     </div>
 
-    <!-- STEP4 難易度 -->
+    <!-- STEP5 難易度 -->
     <div id="kokugo-step-diff" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 4</span>難易度を選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 5</span>難易度を選ぼう</section>
       <div class="diff-grid">
         <button class="kokugo-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
         <button class="kokugo-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
@@ -671,6 +688,11 @@
           <span class="mode-name">計算ドリル</span>
           <span class="mode-desc">四則演算を鍛える</span>
         </button>
+        <button class="sansu-mode-btn" data-sansu-mode="tora">
+          <span class="mode-icon">📕</span>
+          <span class="mode-name">虎の巻</span>
+          <span class="mode-desc">近日公開</span>
+        </button>
       </div>
     </div>
 
@@ -797,9 +819,26 @@
       <button class="rika-grade-btn grade-btn" data-grade="6">小6<span class="grade-sub">受験</span></button>
     </div>
 
-    <!-- STEP2 カテゴリ選択（4分野） -->
+    <!-- STEP2 モードを選ぼう -->
+    <div id="rika-step-topmode" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>モードを選ぼう</section>
+      <div class="sansu-mode-grid">
+        <button class="rika-topmode-btn sansu-mode-btn" data-topmode="normal">
+          <span class="mode-icon">📝</span>
+          <span class="mode-name">通常問題</span>
+          <span class="mode-desc">カテゴリ別に挑戦</span>
+        </button>
+        <button class="rika-topmode-btn sansu-mode-btn" data-topmode="science">
+          <span class="mode-icon">🔬</span>
+          <span class="mode-name">サイエンス</span>
+          <span class="mode-desc">近日公開</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP3 カテゴリ選択（4分野） -->
     <div id="rika-step-cat" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 3</span>カテゴリを選ぼう</section>
       <div class="sansu-cat-grid">
         <button class="rika-cat-btn sansu-cat-btn cat-mix-btn" data-rcat="mix">🔀 ミックス<span class="mix-sub">全単元から出題</span></button>
       </div>
@@ -825,9 +864,9 @@
       </div>
     </div>
 
-    <!-- STEP3 難易度選択 -->
+    <!-- STEP4 難易度選択 -->
     <div id="rika-step-diff" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 3</span>難易度を選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 4</span>難易度を選ぼう</section>
       <div class="diff-grid">
         <button class="rika-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
         <button class="rika-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
@@ -879,9 +918,26 @@
       <button class="shakai-grade-btn grade-btn" data-grade="6">小6<span class="grade-sub">受験</span></button>
     </div>
 
-    <!-- STEP2 カテゴリ選択 -->
+    <!-- STEP2 モードを選ぼう -->
+    <div id="shakai-step-topmode" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">STEP 2</span>モードを選ぼう</section>
+      <div class="sansu-mode-grid">
+        <button class="shakai-topmode-btn sansu-mode-btn" data-topmode="normal">
+          <span class="mode-icon">📝</span>
+          <span class="mode-name">通常問題</span>
+          <span class="mode-desc">カテゴリ別に挑戦</span>
+        </button>
+        <button class="shakai-topmode-btn sansu-mode-btn" data-topmode="history">
+          <span class="mode-icon">🧭</span>
+          <span class="mode-name">人類のあゆみ</span>
+          <span class="mode-desc">近日公開</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP3 カテゴリ選択 -->
     <div id="shakai-step-cat" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 2</span>カテゴリを選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 3</span>カテゴリを選ぼう</section>
       <div class="sansu-cat-grid">
         <button class="shakai-cat-btn sansu-cat-btn cat-mix-btn" data-hcat="mix">🔀 ミックス<span class="mix-sub">全単元から出題</span></button>
       </div>
@@ -897,9 +953,9 @@
       </div>
     </div>
 
-    <!-- STEP3 難易度選択 -->
+    <!-- STEP4 難易度選択 -->
     <div id="shakai-step-diff" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 3</span>難易度を選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 4</span>難易度を選ぼう</section>
       <div class="diff-grid">
         <button class="shakai-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
         <button class="shakai-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>

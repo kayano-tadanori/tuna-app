@@ -225,10 +225,11 @@ function initHome() {
   document.getElementById('home-nickname').textContent = state.nickname;
 
   // ステップを初期状態に
-  ['kokugo-step-cat', 'kokugo-step-mode', 'kokugo-step-diff'].forEach(id => {
+  ['kokugo-step-topmode', 'kokugo-step-cat', 'kokugo-step-mode', 'kokugo-step-diff'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
   document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
   document.querySelectorAll('.cat-card').forEach(b => { b.classList.remove('selected'); b.classList.add('hidden'); });
 
   // カテゴリ正解率表示（キャッシュ済みのみ）
@@ -271,12 +272,28 @@ function initHome() {
       state.selectedDiff = null;
       document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('kokugo-step-diff').classList.add('hidden');
-      showStep('kokugo-step-cat');
+      document.getElementById('kokugo-step-cat').classList.add('hidden');
+      document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
+      showStep('kokugo-step-topmode');
       maybeShowStart();
     };
   });
 
-  // STEP2: カテゴリ選択
+  // STEP2: モード選択（通常問題 / 辞書）
+  document.querySelectorAll('.kokugo-topmode-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const topmode = btn.dataset.topmode;
+      if (topmode === 'normal') {
+        showStep('kokugo-step-cat');
+      } else {
+        showToast('もうすぐ追加されます！工事中🚧');
+      }
+    };
+  });
+
+  // STEP3: カテゴリ選択
   document.querySelectorAll('.cat-card').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.cat-card').forEach(b => b.classList.remove('selected'));
@@ -1374,12 +1391,15 @@ function initSansuHome() {
         hideSansuSteps('sansu-step-dtype', 'sansu-step-time');
         showSansuStep('sansu-step-cat');
         if (sansuState.cat) showSansuStep('sansu-step-diff');
-      } else {
+      } else if (sansuState.mode === 'drill') {
         hideSansuSteps('sansu-step-cat', 'sansu-step-diff');
         refreshDrillTypeAvailability();
         showSansuStep('sansu-step-dtype');
         if (sansuState.drillType) showSansuStep('sansu-step-drilldiff');
         if (sansuState.drillType && sansuState.drillDiff) showSansuStep('sansu-step-time');
+      } else {
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        showToast('もうすぐ追加されます！工事中🚧');
       }
       // ドリルは出題数不要
       document.getElementById('sansu-qcount-wrap').classList.toggle('hidden', sansuState.mode === 'drill');
@@ -1510,12 +1530,28 @@ function initRikaHome() {
         document.querySelectorAll('.rika-cat-btn').forEach(b => b.classList.remove('selected'));
         hideSansuSteps('rika-step-diff');
       }
-      showSansuStep('rika-step-cat');
+      hideSansuSteps('rika-step-cat');
+      document.querySelectorAll('.rika-topmode-btn').forEach(b => b.classList.remove('selected'));
+      showSansuStep('rika-step-topmode');
       updateRikaStart();
     };
   });
 
-  // STEP2: カテゴリ
+  // STEP2: モード
+  document.querySelectorAll('.rika-topmode-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.rika-topmode-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      if (btn.dataset.topmode === 'normal') {
+        showSansuStep('rika-step-cat');
+      } else {
+        hideSansuSteps('rika-step-cat', 'rika-step-diff');
+        showToast('もうすぐ追加されます！工事中🚧');
+      }
+    };
+  });
+
+  // STEP3: カテゴリ
   document.querySelectorAll('.rika-cat-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -1543,7 +1579,8 @@ function initRikaHome() {
   document.getElementById('rika-btn-weak').onclick = () => startSansuWeakSession();
   document.getElementById('rika-btn-progress').onclick = () => openProgressScreenFrom('rika-home');
 
-  hideSansuSteps('rika-step-cat', 'rika-step-diff');
+  hideSansuSteps('rika-step-topmode', 'rika-step-cat', 'rika-step-diff');
+  document.querySelectorAll('.rika-topmode-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('rika-start-zone').classList.add('hidden');
 
   renderCatBadges('rika');
@@ -1595,12 +1632,28 @@ function initShakaiHome() {
       document.querySelectorAll('.shakai-grade-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.grade = Number(btn.dataset.grade);
-      showSansuStep('shakai-step-cat');
+      hideSansuSteps('shakai-step-cat');
+      document.querySelectorAll('.shakai-topmode-btn').forEach(b => b.classList.remove('selected'));
+      showSansuStep('shakai-step-topmode');
       updateShakaiStart();
     };
   });
 
-  // STEP2: カテゴリ
+  // STEP2: モード
+  document.querySelectorAll('.shakai-topmode-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.shakai-topmode-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      if (btn.dataset.topmode === 'normal') {
+        showSansuStep('shakai-step-cat');
+      } else {
+        hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
+        showToast('もうすぐ追加されます！工事中🚧');
+      }
+    };
+  });
+
+  // STEP3: カテゴリ
   document.querySelectorAll('.shakai-cat-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -1628,7 +1681,8 @@ function initShakaiHome() {
   document.getElementById('shakai-btn-weak').onclick = () => startSansuWeakSession();
   document.getElementById('shakai-btn-progress').onclick = () => openProgressScreenFrom('shakai-home');
 
-  hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
+  hideSansuSteps('shakai-step-topmode', 'shakai-step-cat', 'shakai-step-diff');
+  document.querySelectorAll('.shakai-topmode-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('shakai-start-zone').classList.add('hidden');
 
   renderCatBadges('shakai');
