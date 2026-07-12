@@ -249,13 +249,11 @@
           <span class="cat-icon">🖌️</span>
           <span class="cat-name">漢字の書き取り</span>
           <span class="cat-count">480問・手書き</span>
-          <span class="cat-rate" id="rate-kanji_kaki">--</span>
         </button>
         <button class="cat-card" data-cat="kanji_yomi" data-min-grade="1">
           <span class="cat-icon">📕</span>
           <span class="cat-name">漢字の読み</span>
           <span class="cat-count">480問</span>
-          <span class="cat-rate" id="rate-kanji_yomi">--</span>
         </button>
       </div>
       <p class="cat-group-label">📖 言葉の知識</p>
@@ -264,25 +262,21 @@
           <span class="cat-icon">📖</span>
           <span class="cat-name">ことわざ</span>
           <span class="cat-count">654問</span>
-          <span class="cat-rate" id="rate-kotowaza">--</span>
         </button>
         <button class="cat-card" data-cat="kanyoku" data-min-grade="3">
           <span class="cat-icon">✋</span>
           <span class="cat-name">慣用句</span>
           <span class="cat-count">651問</span>
-          <span class="cat-rate" id="rate-kanyoku">--</span>
         </button>
         <button class="cat-card" data-cat="yojijukugo" data-min-grade="4">
           <span class="cat-icon">🔡</span>
           <span class="cat-name">四字熟語</span>
           <span class="cat-count">582問</span>
-          <span class="cat-rate" id="rate-yojijukugo">--</span>
         </button>
         <button class="cat-card" data-cat="gairaigo" data-min-grade="2">
           <span class="cat-icon">🌍</span>
           <span class="cat-name">外来語</span>
           <span class="cat-count">587問</span>
-          <span class="cat-rate" id="rate-gairaigo">--</span>
         </button>
       </div>
       <p class="cat-group-label">📝 言葉のきまり</p>
@@ -291,54 +285,28 @@
           <span class="cat-icon">🙇</span>
           <span class="cat-name">敬語・文法</span>
           <span class="cat-count">232問</span>
-          <span class="cat-rate" id="rate-kokugo_keigo">--</span>
         </button>
         <button class="cat-card" data-cat="kokugo_goi" data-min-grade="1">
           <span class="cat-icon">🔤</span>
           <span class="cat-name">語い（類義・対義）</span>
           <span class="cat-count">447問</span>
-          <span class="cat-rate" id="rate-kokugo_goi">--</span>
         </button>
         <button class="cat-card" data-cat="kokugo_bushu" data-min-grade="2">
           <span class="cat-icon">🖊️</span>
           <span class="cat-name">部首・画数</span>
           <span class="cat-count">389問</span>
-          <span class="cat-rate" id="rate-kokugo_bushu">--</span>
         </button>
         <button class="cat-card" data-cat="kokugo_bungaku" data-min-grade="3">
           <span class="cat-icon">🎑</span>
           <span class="cat-name">文学史・季語</span>
           <span class="cat-count">359問</span>
-          <span class="cat-rate" id="rate-kokugo_bungaku">--</span>
         </button>
       </div>
     </div>
 
-    <!-- STEP4' モード（言葉系のみ） -->
-    <div id="kokugo-step-mode" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 4</span>モードを選ぼう</section>
-      <div class="mode-grid">
-        <button class="mode-btn" data-mode="flash">
-          <span class="mode-icon">🃏</span>
-          <span class="mode-name">フラッシュカード</span>
-          <span class="mode-desc">カードをめくって覚える</span>
-        </button>
-        <button class="mode-btn" data-mode="quiz">
-          <span class="mode-icon">✅</span>
-          <span class="mode-name">四択クイズ</span>
-          <span class="mode-desc">4つから正解を選ぶ</span>
-        </button>
-        <button class="mode-btn" data-mode="fill">
-          <span class="mode-icon">✏️</span>
-          <span class="mode-name">虫食い問題</span>
-          <span class="mode-desc">空欄に答えを書く</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- STEP5 難易度 -->
+    <!-- STEP4 難易度 -->
     <div id="kokugo-step-diff" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 5</span>難易度を選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 4</span>難易度を選ぼう</section>
       <div class="diff-grid">
         <button class="kokugo-diff-btn diff-btn" data-diff="1">やさしい<span class="diff-sub">偏差値〜50</span></button>
         <button class="kokugo-diff-btn diff-btn" data-diff="2">難しい<span class="diff-sub">偏差値55</span></button>
@@ -374,34 +342,6 @@
   </main>
 </div>
 
-<!-- =============== フラッシュカード =============== -->
-<div id="screen-flash" class="screen">
-  <header class="top-bar">
-    <button class="back-btn" data-back="home">‹ 戻る</button>
-    <h2 id="flash-title" class="top-title"></h2>
-    <span id="flash-counter" class="counter"></span>
-  </header>
-  <div class="flash-area">
-    <div id="flash-card" class="flash-card">
-      <div class="flash-front">
-        <p id="flash-question" class="flash-question"></p>
-        <p class="flip-hint">タップして意味を見る</p>
-      </div>
-      <div class="flash-back">
-        <p id="flash-answer" class="flash-answer"></p>
-        <p id="flash-answer-sub" class="flash-answer-sub"></p>
-      </div>
-    </div>
-    <div id="flash-buttons" class="flash-buttons hidden">
-      <button id="btn-remember" class="btn-good">✓ 覚えた</button>
-      <button id="btn-again" class="btn-bad">↩ もう一度</button>
-    </div>
-  </div>
-  <div class="progress-bar-wrap">
-    <div id="flash-bar" class="progress-bar"></div>
-  </div>
-</div>
-
 <!-- =============== 四択クイズ =============== -->
 <div id="screen-quiz" class="screen">
   <header class="top-bar">
@@ -416,7 +356,6 @@
     </div>
     <div class="question-box">
       <p id="quiz-question" class="quiz-question"></p>
-      <p id="quiz-meaning" class="quiz-meaning"></p>
     </div>
     <div id="quiz-choices" class="choices-grid"></div>
     <div id="quiz-feedback" class="feedback hidden">
@@ -441,7 +380,6 @@
     </div>
     <div class="question-box">
       <p id="fill-question" class="quiz-question"></p>
-      <p id="fill-meaning" class="quiz-meaning"></p>
     </div>
     <div class="fill-input-wrap">
       <input type="text" id="fill-input" placeholder="答えを入力" autocomplete="off" autocorrect="off" autocapitalize="off">

@@ -19,9 +19,7 @@ const CATEGORIES = {
 const KANJI_CATS = ['kanji_kaki', 'kanji_yomi'];
 
 const MODES = {
-  flash: 'フラッシュカード',
-  quiz:  '四択クイズ',
-  fill:  '虫食い問題'
+  quiz: '四択クイズ'
 };
 
 const KOKUGO_DIFF_LABELS = { 1: 'やさしい', 2: '難しい', 3: 'チャレンジ', 4: '灘中レベル', all: 'ぜんぶ' };
@@ -41,9 +39,7 @@ const state = {
   sessionQs: [],      // 今回出題する問題リスト
   current: 0,         // セッション内の現在インデックス
   correct: 0,
-  wrong: 0,
-  retryQueue: [],     // フラッシュカードの「もう一度」キュー
-  flipped: false
+  wrong: 0
 };
 
 // ============================================================
@@ -98,18 +94,6 @@ function getRate(id) {
   const p = getProgress()[id];
   if (!p || p.total === 0) return null;
   return Math.round((p.correct / p.total) * 100);
-}
-
-function getCategoryRate(category) {
-  const qs = questionCache[category];
-  if (!qs || !qs.length) return null;
-  const prog = getProgress();
-  let c = 0, t = 0;
-  qs.forEach(q => {
-    const p = prog[q.id];
-    if (p && p.total > 0) { c += p.correct; t += p.total; }
-  });
-  return t > 0 ? Math.round((c / t) * 100) : null;
 }
 
 function getWeakItems(category) {
@@ -225,19 +209,12 @@ function initHome() {
   document.getElementById('home-nickname').textContent = state.nickname;
 
   // ステップを初期状態に
-  ['kokugo-step-topmode', 'kokugo-step-cat', 'kokugo-step-mode', 'kokugo-step-diff'].forEach(id => {
+  ['kokugo-step-topmode', 'kokugo-step-cat', 'kokugo-step-diff'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
   document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
   document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
   document.querySelectorAll('.cat-card').forEach(b => { b.classList.remove('selected'); b.classList.add('hidden'); });
-
-  // カテゴリ正解率表示（キャッシュ済みのみ）
-  Object.keys(CATEGORIES).forEach(cat => {
-    const rate = getCategoryRate(cat);
-    const el = document.getElementById('rate-' + cat);
-    if (el) el.textContent = rate !== null ? rate + '% 正解' : '';
-  });
 
   // ステップ表示ヘルパー
   const showStep = id => {
@@ -266,7 +243,6 @@ function initHome() {
           state.selectedCat = null;
           state.selectedMode = null;
           document.querySelectorAll('.cat-card').forEach(b => b.classList.remove('selected'));
-          document.getElementById('kokugo-step-mode').classList.add('hidden');
         }
       }
       state.selectedDiff = null;
@@ -300,30 +276,9 @@ function initHome() {
       btn.classList.add('selected');
       state.selectedCat = btn.dataset.cat;
       state.weakOnly = false;
-      if (KANJI_CATS.includes(state.selectedCat)) {
-        // 漢字：モードは固定、そのまま難易度へ
-        state.selectedMode = state.selectedCat === 'kanji_kaki' ? 'kaki' : 'yomi';
-        document.getElementById('kokugo-step-mode').classList.add('hidden');
-        showStep('kokugo-step-diff');
-      } else {
-        // 言葉系：モード→難易度
-        if (['kaki', 'yomi'].includes(state.selectedMode)) state.selectedMode = null;
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
-        document.getElementById('kokugo-step-diff').classList.add('hidden');
-        showStep('kokugo-step-mode');
-        if (state.selectedMode) showStep('kokugo-step-diff');
-      }
-      maybeShowStart();
-    };
-  });
-
-  // STEP3': モード（言葉系）
-  document.querySelectorAll('.mode-btn').forEach(btn => {
-    btn.classList.remove('selected');
-    btn.onclick = () => {
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      state.selectedMode = btn.dataset.mode;
+      // 漢字：モードは固定。言葉系：四択クイズで固定。どちらもそのまま難易度へ
+      state.selectedMode = state.selectedCat === 'kanji_kaki' ? 'kaki'
+        : state.selectedCat === 'kanji_yomi' ? 'yomi' : 'quiz';
       showStep('kokugo-step-diff');
       maybeShowStart();
     };
@@ -363,30 +318,13 @@ function maybeShowStart() {
   renderDiffBadgesKokugo();
   const zone = document.getElementById('start-zone');
 
-  // 外来語 × 虫食いの組み合わせは不可
-  const fillBtn = document.querySelector('.mode-btn[data-mode="fill"]');
-  if (state.selectedCat === 'gairaigo') {
-    fillBtn.disabled = true;
-    fillBtn.style.opacity = '0.35';
-    if (state.selectedMode === 'fill') {
-      state.selectedMode = null;
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
-      showToast('外来語は虫食い問題に対応していません');
-    }
-  } else {
-    fillBtn.disabled = false;
-    fillBtn.style.opacity = '';
-  }
-
   const isKanji = KANJI_CATS.includes(state.selectedCat);
-  const ready = isKanji
-    ? state.selectedCat && state.grade && state.selectedDiff
-    : state.selectedCat && state.grade && state.selectedMode && state.selectedDiff;
+  const ready = state.selectedCat && state.grade && state.selectedDiff;
   if (!ready) { zone.classList.add('hidden'); return; }
 
   zone.classList.remove('hidden');
   const catLabel = CATEGORIES[state.selectedCat].label + `（小${state.grade}）`;
-  const modeLabel = (isKanji ? (state.selectedCat === 'kanji_kaki' ? '手書き' : 'ひらがな入力') : MODES[state.selectedMode])
+  const modeLabel = (isKanji ? (state.selectedCat === 'kanji_kaki' ? '手書き' : 'ひらがな入力') : MODES.quiz)
     + '・' + KOKUGO_DIFF_LABELS[state.selectedDiff];
   document.getElementById('start-cat-label').textContent = catLabel;
   document.getElementById('start-mode-label').textContent = modeLabel;
@@ -415,99 +353,19 @@ document.getElementById('btn-start').onclick = async () => {
     state.current = 0;
     state.correct = 0;
     state.wrong   = 0;
-    state.retryQueue = [];
     coinSessionEarned = 0;
 
     if (!pool.length) { showToast('問題がありません'); hideLoading(); return; }
 
     if (state.selectedCat === 'kanji_kaki') startKanji();
     else if (state.selectedCat === 'kanji_yomi') startFill();
-    else if (state.selectedMode === 'flash') startFlash();
-    else if (state.selectedMode === 'quiz') startQuiz();
-    else startFill();
+    else startQuiz();
   } catch (e) {
     showToast('問題の読み込みに失敗しました');
     console.error(e);
   } finally {
     hideLoading();
   }
-};
-
-// ============================================================
-// フラッシュカード
-// ============================================================
-
-function startFlash() {
-  document.getElementById('flash-title').textContent = CATEGORIES[state.selectedCat].label;
-  showScreen('flash');
-  state.flipped = false;
-  renderFlash();
-}
-
-function renderFlash() {
-  const q = state.sessionQs[state.current];
-  if (!q) { endSession(); return; }
-
-  const total = state.sessionQs.length;
-  document.getElementById('flash-counter').textContent = (state.current + 1) + ' / ' + total;
-  // 穴埋め形式は「完成形→意味」、質問形式（〜は？）は「問題文→答え＋解説」
-  const isFill = q.question.includes('___');
-  const isQType = !isFill && /[？?]/.test(q.question);
-  let front, back, backSub;
-  if (isFill) {
-    front = q.question.replace('___', q.answer);
-    back = q.meaning || '';
-    backSub = '';
-  } else {
-    // 質問形式（〜は？）や外来語（単語のみ）：問題文→答え＋解説
-    front = q.question;
-    back = q.answer;
-    backSub = (q.meaning && q.meaning !== q.answer) ? q.meaning : '';
-  }
-  const fq = document.getElementById('flash-question');
-  fq.textContent = front;
-  fq.classList.toggle('small', front.length > 16);
-  const fa = document.getElementById('flash-answer');
-  fa.textContent = back;
-  fa.classList.toggle('small', back.length > 12);
-  document.getElementById('flash-answer-sub').textContent = backSub;
-  document.querySelector('#flash-card .flip-hint').textContent = isQType ? 'タップして答えを見る' : 'タップして意味を見る';
-
-  const card = document.getElementById('flash-card');
-  card.classList.remove('flipped');
-  state.flipped = false;
-  document.getElementById('flash-buttons').classList.add('hidden');
-
-  const pct = Math.round((state.current / total) * 100);
-  document.getElementById('flash-bar').style.width = pct + '%';
-}
-
-document.getElementById('flash-card').onclick = () => {
-  const card = document.getElementById('flash-card');
-  if (!state.flipped) {
-    card.classList.add('flipped');
-    state.flipped = true;
-    document.getElementById('flash-buttons').classList.remove('hidden');
-  }
-};
-
-document.getElementById('btn-remember').onclick = () => {
-  recordResult(state.sessionQs[state.current].id, true);
-  state.correct++;
-  state.current++;
-  renderFlash();
-};
-
-document.getElementById('btn-again').onclick = () => {
-  const q = state.sessionQs[state.current];
-  recordResult(q.id, false);
-  state.wrong++;
-  // 同じカードを3枚あとに差し込んでもう一度出す（残りが少なければ最後）
-  const insertAt = Math.min(state.current + 3, state.sessionQs.length);
-  state.sessionQs.splice(insertAt, 0, q);
-  state.current++;
-  showToast('このカードはすぐまた出ます');
-  renderFlash();
 };
 
 // ============================================================
@@ -528,8 +386,7 @@ function renderQuiz() {
 
   const total = state.sessionQs.length;
   document.getElementById('quiz-counter').textContent = (state.current + 1) + ' / ' + total;
-  document.getElementById('quiz-question').textContent = q.question;
-  document.getElementById('quiz-meaning').textContent  = q.meaning || '';
+  document.getElementById('quiz-question').innerHTML = q.question;
 
   const choices = buildChoices(q, state.questions);
   const grid = document.getElementById('quiz-choices');
@@ -567,7 +424,8 @@ function onQuizChoose(btn, chosen, q, grid) {
 
   const fb = document.getElementById('quiz-feedback');
   document.getElementById('feedback-text').textContent = correct ? '⭕ 正解！' : '❌ 不正解';
-  document.getElementById('feedback-ans').textContent = correct ? '' : '正解：' + q.answer;
+  const ansLine = correct ? '' : `正解：${q.answer}<br>`;
+  document.getElementById('feedback-ans').innerHTML = ansLine + (q.meaning || '');
   fb.classList.remove('hidden');
 }
 
@@ -594,9 +452,7 @@ function renderFill() {
 
   const total = state.sessionQs.length;
   document.getElementById('fill-counter').textContent = (state.current + 1) + ' / ' + total;
-  document.getElementById('fill-question').textContent = q.question;
-  // 漢字の読みでは meaning に答えが含まれるため表示しない
-  document.getElementById('fill-meaning').textContent = state.selectedCat === 'kanji_yomi' ? '' : (q.meaning || '');
+  document.getElementById('fill-question').innerHTML = q.question;
 
   const input = document.getElementById('fill-input');
   input.value = '';
@@ -629,7 +485,8 @@ function submitFill() {
 
   const fb = document.getElementById('fill-feedback');
   document.getElementById('fill-feedback-text').textContent = correct ? '⭕ 正解！' : '❌ 不正解';
-  document.getElementById('fill-feedback-ans').textContent  = correct ? '' : '正解：' + q.answer;
+  const ansLine = correct ? '' : `正解：${q.answer}<br>`;
+  document.getElementById('fill-feedback-ans').innerHTML = ansLine + (q.meaning || '');
   fb.classList.remove('hidden');
 }
 
@@ -748,7 +605,7 @@ function renderKanji() {
 
   document.getElementById('kanji-show').onclick = () => {
     document.getElementById('kanji-answer-char').textContent = q.answer;
-    document.getElementById('kanji-answer-meaning').textContent = q.meaning || '';
+    document.getElementById('kanji-answer-meaning').innerHTML = q.meaning || '';
     document.getElementById('kanji-answer').classList.remove('hidden');
     document.getElementById('kanji-controls').classList.add('hidden');
   };
@@ -3999,7 +3856,7 @@ function formatMinutes(sec) {
 }
 
 // プレイ時間の計測（勉強画面に入ったら開始、出たら加算。テトリスは含めない）
-const PLAY_SCREENS = ['flash', 'quiz', 'fill', 'kanji', 'sansu-quiz', 'drill'];
+const PLAY_SCREENS = ['quiz', 'fill', 'kanji', 'sansu-quiz', 'drill'];
 let playStart = null;
 let currentScreenId = '';
 function flushPlayTime() {
