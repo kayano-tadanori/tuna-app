@@ -244,7 +244,7 @@ function add(grade, diff, question, answer, meaning) {
 
   const t3 = [[500, 7, 2], [800, 6, 5], [600, 8, 4], [900, 5, 6], [400, 7, 5],
               [1000, 6, 8], [700, 8, 2], [1200, 5, 4], [300, 9, 1], [1500, 4, 6]];
-  t3.forEach(([teiin, wari, bu]) => { const rate = wari / 10 + bu / 100; const n = teiin * rate; add(6, 3, `定員${teiin}人の映画館に${wari}割${bu}分の客が入りました。入った人数は何人ですか？`, n, `${teiin}×${wari}割${bu}分＝${n}`); });
+  t3.forEach(([teiin, wari, bu]) => { const n = teiin * (wari * 10 + bu) / 100; add(6, 3, `定員${teiin}人の映画館に${wari}割${bu}分の客が入りました。入った人数は何人ですか？`, n, `${teiin}×${wari}割${bu}分＝${n}`); });
 
   const t4 = [[900, 1], [800, 2], [700, 3], [1800, 1], [1600, 2],
               [1400, 3], [1200, 4], [2400, 2], [2100, 3], [400, 2]];
