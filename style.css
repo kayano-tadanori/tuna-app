@@ -175,6 +175,28 @@ button { cursor: pointer; font-family: inherit; }
 .cat-card::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--cat-color,var(--accent)); border-radius: 0 0 var(--radius) var(--radius); }
 .cat-card:active { transform: scale(0.95); border-color: var(--cat-color,var(--accent)); box-shadow: 0 0 22px var(--cat-glow,rgba(79,124,255,0.35)); }
 .cat-card.selected { border-color: var(--cat-color,var(--accent)); box-shadow: 0 0 28px var(--cat-glow,rgba(79,124,255,0.4)); background: var(--card2); }
+
+/* ===== 虎の巻 ===== */
+.tora-main { padding: 16px 16px 28px; }
+.tora-intro { font-size: 0.86rem; color: var(--sub2); line-height: 1.6; margin-bottom: 16px; }
+.tora-cat-grid { margin-bottom: 8px; }
+.tora-cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; padding: 12px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); }
+.tora-nav-link { font-size: 0.78rem; font-weight: 700; color: var(--accent2); background: rgba(56,200,240,0.10); border: 1px solid rgba(56,200,240,0.30); border-radius: 20px; padding: 6px 12px; text-decoration: none; }
+.tora-nav-link:active { background: rgba(56,200,240,0.22); }
+.tora-cat-list { display: flex; flex-direction: column; gap: 16px; }
+.tora-card { background: var(--card); backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 18px 18px 20px; scroll-margin-top: 16px; }
+.tora-card-title { font-size: 1.05rem; font-weight: 900; color: var(--gold); margin-bottom: 10px; letter-spacing: 0.01em; }
+.tora-card-body { font-size: 0.92rem; color: var(--text); line-height: 1.85; }
+.tora-card-body p { margin: 0 0 10px; }
+.tora-card-body p:last-child { margin-bottom: 0; }
+.tora-card-body ul, .tora-card-body ol { margin: 6px 0 12px; padding-left: 1.4em; }
+.tora-card-body li { margin-bottom: 4px; }
+.tora-card-body strong { color: var(--accent2); font-weight: 900; }
+.tora-card-body table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 0.86rem; }
+.tora-card-body th, .tora-card-body td { border: 1px solid var(--glass-border); padding: 6px 8px; text-align: center; }
+.tora-card-body th { background: rgba(79,124,255,0.14); color: var(--text); font-weight: 800; }
+.tora-card-body svg { display: block; margin: 10px auto; max-width: 100%; max-height: 160px; }
+.tora-empty { color: var(--sub2); font-size: 0.9rem; text-align: center; padding: 30px 0; }
 .cat-icon { font-size: 2.1rem; line-height: 1; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.3)); }
 .cat-name { font-size: 1.0rem; font-weight: 900; color: var(--text); letter-spacing: 0.02em; }
 .cat-count { font-size: 0.70rem; color: var(--sub); font-weight: 600; }
@@ -754,7 +776,7 @@ button { cursor: pointer; font-family: inherit; }
 .home-main, .sansu-home-main, .quiz-area, .kanji-area,
 .char-main, .custom-main, .gacha-main, .progress-main, .ranking-main,
 .record-main, .subject-main, .zukan-main, .tetris-main, .mine-area,
-.jump-area, .sansu-quiz-area, .drill-area {
+.jump-area, .sansu-quiz-area, .drill-area, .tora-main {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;

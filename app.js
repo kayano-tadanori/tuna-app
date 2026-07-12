@@ -1310,6 +1310,10 @@ function initSansuHome() {
         showSansuStep('sansu-step-dtype');
         if (sansuState.drillType) showSansuStep('sansu-step-drilldiff');
         if (sansuState.drillType && sansuState.drillDiff) showSansuStep('sansu-step-time');
+      } else if (sansuState.mode === 'tora') {
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        initToraHome();
+        showScreen('tora-home');
       } else {
         hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
         showToast('もうすぐ追加されます！工事中🚧');
@@ -2483,6 +2487,95 @@ function endDrill() {
 
   document.getElementById('drill-btn-again').onclick = () => startDrill();
   document.getElementById('drill-btn-home').onclick = () => { initSansuHome(); showScreen('sansu-home'); };
+}
+
+// ============================================================
+// 虎の巻（中学受験算数の知識まとめ）
+// ============================================================
+
+const TORA_CATEGORIES = {
+  kioku:   { label: '暗記の宝庫', icon: '💎' },
+  keisan:  { label: '計算',       icon: '🧮' },
+  bun:     { label: '文章題',     icon: '📝' },
+  zu:      { label: '平面図形',   icon: '📐' },
+  kisoku:  { label: '規則性',     icon: '🔁' },
+  tokusan: { label: '特殊算',     icon: '🎯' },
+  baai:    { label: '場合の数',   icon: '🎲' },
+  kazu:    { label: '数の性質',   icon: '🔢' },
+  wariai:  { label: '割合と比',   icon: '⚖️' },
+  hayasa:  { label: '速さ',       icon: '🏃' },
+  rittai:  { label: '立体図形',   icon: '📦' },
+};
+
+let toraData = null;
+async function loadToraData() {
+  if (toraData) return toraData;
+  const res = await fetch('data/sansu_toranomaki.json');
+  toraData = await res.json();
+  return toraData;
+}
+
+async function initToraHome() {
+  showLoading();
+  try {
+    const data = await loadToraData();
+    const counts = {};
+    data.forEach(card => { counts[card.category] = (counts[card.category] || 0) + 1; });
+
+    const grid = document.getElementById('tora-cat-grid');
+    grid.innerHTML = '';
+    Object.entries(TORA_CATEGORIES).forEach(([cat, info]) => {
+      const n = counts[cat] || 0;
+      const btn = document.createElement('button');
+      btn.className = 'cat-card';
+      btn.dataset.toraCat = cat;
+      btn.innerHTML = `
+        <span class="cat-icon">${info.icon}</span>
+        <span class="cat-name">${info.label}</span>
+        <span class="cat-count">${n}件</span>
+      `;
+      btn.onclick = () => showToraCategory(cat);
+      grid.appendChild(btn);
+    });
+  } catch (e) {
+    showToast('虎の巻の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function showToraCategory(cat) {
+  showLoading();
+  try {
+    const data = await loadToraData();
+    const cards = data.filter(c => c.category === cat);
+    const info = TORA_CATEGORIES[cat] || { label: cat, icon: '📕' };
+
+    document.getElementById('tora-cat-title').textContent = `${info.icon} ${info.label}`;
+
+    const nav = document.getElementById('tora-cat-nav');
+    nav.innerHTML = cards.map((c, i) => `<a href="#tora-card-${i}" class="tora-nav-link">${c.title}</a>`).join('');
+
+    const list = document.getElementById('tora-cat-list');
+    if (!cards.length) {
+      list.innerHTML = '<p class="tora-empty">このカテゴリはまだ準備中です。</p>';
+    } else {
+      list.innerHTML = cards.map((c, i) => `
+        <section id="tora-card-${i}" class="tora-card">
+          <h3 class="tora-card-title">${c.title}</h3>
+          <div class="tora-card-body">${c.body}</div>
+        </section>
+      `).join('');
+    }
+
+    showScreen('tora-cat');
+  } catch (e) {
+    showToast('虎の巻の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
 }
 
 // ============================================================
