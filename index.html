@@ -773,9 +773,9 @@
           <span class="mode-desc">カテゴリ別に挑戦</span>
         </button>
         <button class="rika-topmode-btn sansu-mode-btn" data-topmode="science">
-          <span class="mode-icon">🔬</span>
-          <span class="mode-name">サイエンス</span>
-          <span class="mode-desc">近日公開</span>
+          <span class="mode-icon">👨‍🔬</span>
+          <span class="mode-name">はかせの図鑑</span>
+          <span class="mode-desc">図鑑でまとめて読む</span>
         </button>
       </div>
     </div>
@@ -1116,6 +1116,30 @@
   <main class="tora-main">
     <div id="tora-cat-nav" class="tora-cat-nav"></div>
     <div id="tora-cat-list" class="tora-cat-list"></div>
+  </main>
+</div>
+
+<!-- =============== サイエンス（ホーム：カテゴリ一覧） =============== -->
+<div id="screen-science-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="rika-home">‹ 戻る</button>
+    <h2 class="top-title">👨‍🔬 はかせの図鑑</h2>
+  </header>
+  <main class="tora-main">
+    <p class="tora-intro">中学受験理科で覚えておきたい図鑑・知識をまとめました。図やイラストを見ながら、楽しく確認しよう。</p>
+    <div id="science-cat-grid" class="category-grid tora-cat-grid"></div>
+  </main>
+</div>
+
+<!-- =============== サイエンス（カテゴリ詳細） =============== -->
+<div id="screen-science-cat" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="science-home">‹ 戻る</button>
+    <h2 id="science-cat-title" class="top-title"></h2>
+  </header>
+  <main class="tora-main">
+    <div id="science-cat-nav" class="tora-cat-nav"></div>
+    <div id="science-cat-list" class="tora-cat-list"></div>
   </main>
 </div>
 

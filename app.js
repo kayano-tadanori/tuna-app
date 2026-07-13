@@ -1476,6 +1476,10 @@ function initRikaHome() {
       btn.classList.add('selected');
       if (btn.dataset.topmode === 'normal') {
         showSansuStep('rika-step-cat');
+      } else if (btn.dataset.topmode === 'science') {
+        hideSansuSteps('rika-step-cat', 'rika-step-diff');
+        initScienceHome();
+        showScreen('science-home');
       } else {
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         showToast('もうすぐ追加されます！工事中🚧');
@@ -2587,6 +2591,91 @@ async function showToraCategory(cat) {
     showScreen('tora-cat');
   } catch (e) {
     showToast('虎の巻の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+// ============================================================
+// サイエンス（中学受験理科の図鑑・知識まとめ）
+// ============================================================
+
+const SCIENCE_CATEGORIES = {
+  shokubutsu: { label: '植物のからだ',       icon: '🌱' },
+  konchu:     { label: '昆虫・生き物のからだ', icon: '🐛' },
+  seiza:      { label: '星座・天体',         icon: '✨' },
+  daichi:     { label: '大地・地層',         icon: '🪨' },
+  mono:       { label: 'もの・水溶液',       icon: '🧪' },
+  denki:      { label: '電気・力',           icon: '⚡' },
+  zukan:      { label: '生き物・植物図鑑',   icon: '📖' },
+};
+
+let scienceData = null;
+async function loadScienceData() {
+  if (scienceData) return scienceData;
+  const res = await fetch('data/rika_science.json');
+  scienceData = await res.json();
+  return scienceData;
+}
+
+async function initScienceHome() {
+  showLoading();
+  try {
+    const data = await loadScienceData();
+    const counts = {};
+    data.forEach(card => { counts[card.category] = (counts[card.category] || 0) + 1; });
+
+    const grid = document.getElementById('science-cat-grid');
+    grid.innerHTML = '';
+    Object.entries(SCIENCE_CATEGORIES).forEach(([cat, info]) => {
+      const n = counts[cat] || 0;
+      const btn = document.createElement('button');
+      btn.className = 'cat-card';
+      btn.dataset.scienceCat = cat;
+      btn.innerHTML = `
+        <span class="cat-icon">${info.icon}</span>
+        <span class="cat-name">${info.label}</span>
+        <span class="cat-count">${n}件</span>
+      `;
+      btn.onclick = () => showScienceCategory(cat);
+      grid.appendChild(btn);
+    });
+  } catch (e) {
+    showToast('はかせの図鑑の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function showScienceCategory(cat) {
+  showLoading();
+  try {
+    const data = await loadScienceData();
+    const cards = data.filter(c => c.category === cat);
+    const info = SCIENCE_CATEGORIES[cat] || { label: cat, icon: '🔬' };
+
+    document.getElementById('science-cat-title').textContent = `${info.icon} ${info.label}`;
+
+    const nav = document.getElementById('science-cat-nav');
+    nav.innerHTML = cards.map((c, i) => `<a href="#science-card-${i}" class="tora-nav-link">${c.title}</a>`).join('');
+
+    const list = document.getElementById('science-cat-list');
+    if (!cards.length) {
+      list.innerHTML = '<p class="tora-empty">このカテゴリはまだ準備中です。</p>';
+    } else {
+      list.innerHTML = cards.map((c, i) => `
+        <section id="science-card-${i}" class="tora-card">
+          <h3 class="tora-card-title">${c.title}</h3>
+          <div class="tora-card-body">${c.body}</div>
+        </section>
+      `).join('');
+    }
+
+    showScreen('science-cat');
+  } catch (e) {
+    showToast('はかせの図鑑の読み込みに失敗しました');
     console.error(e);
   } finally {
     hideLoading();
