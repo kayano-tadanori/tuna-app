@@ -2709,6 +2709,7 @@ const SCIENCE_CATEGORIES = {
   daichi:     { label: '大地・地層',         icon: '🪨' },
   mono:       { label: 'もの・水溶液',       icon: '🧪' },
   denki:      { label: '電気・力',           icon: '⚡' },
+  hikari_oto: { label: '光・音の性質',       icon: '🔦' },
   zukan:      { label: '生き物・植物図鑑',   icon: '📖' },
 };
 
