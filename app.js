@@ -13,6 +13,7 @@ const CATEGORIES = {
   kokugo_goi:     { label: '語い',           file: 'data/kokugo_goi.json' },
   kokugo_bushu:   { label: '部首・画数',     file: 'data/kokugo_bushu.json' },
   kokugo_bungaku: { label: '文学史・季語',   file: 'data/kokugo_bungaku.json' },
+  tantei:         { label: 'こころの探偵',   file: 'data/kokugo_tantei.json' },
 };
 
 // 漢字カテゴリ（学年選択あり・専用UI）
@@ -255,16 +256,29 @@ function initHome() {
     };
   });
 
-  // STEP2: モード選択（通常問題 / 辞書）
+  // STEP2: モード選択（通常問題 / こころの探偵）
   document.querySelectorAll('.kokugo-topmode-btn').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       const topmode = btn.dataset.topmode;
       if (topmode === 'normal') {
+        state.selectedCat = null;
+        state.selectedMode = null;
+        document.querySelectorAll('.cat-card').forEach(b => b.classList.remove('selected'));
+        state.selectedDiff = null;
+        document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('kokugo-step-diff').classList.add('hidden');
         showStep('kokugo-step-cat');
-      } else {
-        showToast('もうすぐ追加されます！工事中🚧');
+        maybeShowStart();
+      } else if (topmode === 'tantei') {
+        state.selectedCat = 'tantei';
+        state.selectedMode = 'quiz';
+        state.selectedDiff = null;
+        document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('kokugo-step-cat').classList.add('hidden');
+        showStep('kokugo-step-diff');
+        maybeShowStart();
       }
     };
   });

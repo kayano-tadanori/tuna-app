@@ -230,6 +230,10 @@ button { cursor: pointer; font-family: inherit; }
 .question-box { background: linear-gradient(155deg,rgba(15,40,90,0.70),rgba(10,20,50,0.65)); backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); border: 1.5px solid rgba(79,124,255,0.22); border-radius: var(--radius); padding: 24px 20px 20px; margin-bottom: 16px; box-shadow: 0 10px 32px rgba(0,0,0,0.28); position: relative; }
 .question-box::before { content: "Q"; position: absolute; top: 12px; right: 14px; font-size: 0.68rem; font-weight: 900; color: var(--accent); letter-spacing: 0.06em; background: rgba(79,124,255,0.15); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(79,124,255,0.28); }
 .quiz-question { font-size: 1.55rem; font-weight: 900; line-height: 1.65; margin-bottom: 12px; color: var(--text); }
+.quiz-question .tantei-passage { font-size: 0.92rem; font-weight: 500; line-height: 1.9; color: var(--sub2); background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; text-align: left; }
+.quiz-question .tantei-passage strong { color: var(--gold); font-weight: 800; }
+.quiz-question .tantei-q { font-size: 1.15rem; font-weight: 900; line-height: 1.55; }
+.quiz-question .tantei-q::before { content: "🔍 "; }
 .quiz-meaning { font-size: 0.86rem; color: var(--sub2); line-height: 1.65; font-weight: 500; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; margin-top: 4px; }
 
 .choices-grid { display: flex; flex-direction: column; gap: 10px; }
