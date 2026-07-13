@@ -1227,7 +1227,39 @@
         <span class="cat-icon">⏳</span>
         <span class="cat-name">タイムトラベル日本史</span>
       </button>
+      <button class="cat-card" id="btn-open-sanken">
+        <span class="cat-icon">🏛️</span>
+        <span class="cat-name">三権タウン事件簿</span>
+      </button>
     </div>
+  </main>
+</div>
+
+<!-- =============== 三権タウン事件簿（事案選択） =============== -->
+<div id="screen-sanken-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="shakaigo-home">‹ 戻る</button>
+    <h2 class="top-title">🏛️ 三権タウン事件簿</h2>
+  </header>
+  <main class="tora-main">
+    <p class="tora-intro">いろいろな事案を、国会・内閣・裁判所の立場で体験しよう。世論に働きかけながら、実現を目指そう！</p>
+    <div id="sanken-home-grid" class="category-grid"></div>
+  </main>
+</div>
+
+<!-- =============== 三権タウン事件簿（プレイ画面） =============== -->
+<div id="screen-sanken-play" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="sanken-home">‹ 戻る</button>
+    <h2 id="sanken-title" class="top-title"></h2>
+  </header>
+  <main class="tora-main">
+    <div class="sanken-opinion-bar">
+      <span id="sanken-opinion-label" class="sanken-opinion-label">世論支持率 50%</span>
+      <div class="sanken-opinion-track"><div id="sanken-opinion-fill" class="sanken-opinion-fill" style="width:50%"></div></div>
+    </div>
+    <div id="sanken-body" class="sanken-body"></div>
+    <div id="sanken-result" class="lab-result hidden"></div>
   </main>
 </div>
 

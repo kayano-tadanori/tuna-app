@@ -3163,11 +3163,130 @@ const LAB_FORMULAS = {
 };
 
 // ============================================================
-// 社会でGO!（地図たんけん・タイムトラベル日本史）
+// 社会でGO!（地図たんけん・タイムトラベル日本史・三権タウン事件簿）
 // ============================================================
 
 document.getElementById('btn-open-mapquiz').onclick = () => { initMapQuiz(); showScreen('map-quiz'); };
 document.getElementById('btn-open-timeline').onclick = () => { initTimelineGame(); showScreen('timeline-game'); };
+document.getElementById('btn-open-sanken').onclick = () => { initSankenHome(); showScreen('sanken-home'); };
+
+// ── 三権タウン事件簿 ──────────────────────────────
+let sankenData = null;
+async function loadSankenData() {
+  if (sankenData) return sankenData;
+  const res = await fetch('data/sanken_cases.json');
+  sankenData = await res.json();
+  return sankenData;
+}
+
+async function initSankenHome() {
+  showLoading();
+  try {
+    const data = await loadSankenData();
+    const grid = document.getElementById('sanken-home-grid');
+    grid.innerHTML = '';
+    data.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'cat-card';
+      btn.innerHTML = `<span class="cat-icon">${c.icon}</span><span class="cat-name">${c.title}</span>`;
+      btn.onclick = () => startSankenCase(c.id);
+      grid.appendChild(btn);
+    });
+  } catch (e) {
+    showToast('読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+let sankenCase = null, sankenFlow = [], sankenFlowIdx = 0, sankenOpinion = 50;
+
+function startSankenCase(id) {
+  sankenCase = sankenData.find(c => c.id === id);
+  sankenOpinion = 50;
+  sankenFlow = [
+    { type: 'stage', data: sankenCase.stages[0] },
+    { type: 'stage', data: sankenCase.stages[1] },
+    { type: 'trouble', data: sankenCase.trouble },
+    { type: 'stage', data: sankenCase.stages[2] },
+    { type: 'ending' }
+  ];
+  sankenFlowIdx = 0;
+  document.getElementById('sanken-title').textContent = `${sankenCase.icon} ${sankenCase.title}`;
+  showScreen('sanken-play');
+  renderSankenStep();
+}
+
+function sankenUpdateOpinionBar() {
+  const fill = document.getElementById('sanken-opinion-fill');
+  fill.style.width = `${sankenOpinion}%`;
+  fill.style.background = sankenOpinion >= 65 ? '#4caf50' : sankenOpinion >= 40 ? '#ffd166' : '#ff5252';
+  document.getElementById('sanken-opinion-label').textContent = `世論支持率 ${sankenOpinion}%`;
+}
+
+function renderSankenStep() {
+  const step = sankenFlow[sankenFlowIdx];
+  sankenUpdateOpinionBar();
+  document.getElementById('sanken-result').classList.add('hidden');
+
+  if (step.type === 'ending') {
+    renderSankenEnding();
+    return;
+  }
+
+  const d = step.data;
+  const body = document.getElementById('sanken-body');
+  const badgeLabel = step.type === 'trouble' ? '📢 トラブル発生！' : `${d.branchIcon} ${d.branch}`;
+  body.innerHTML = `
+    <div class="sanken-branch-badge${step.type === 'trouble' ? ' sanken-trouble-badge' : ''}">${badgeLabel}</div>
+    ${d.role ? `<p class="sanken-role">${d.role}</p>` : ''}
+    <p class="sanken-narrative">${d.narrative}</p>
+    <p class="sanken-question">${d.question}</p>
+    <div id="sanken-options" class="lab-choice-grid sanken-options"></div>
+  `;
+  const optionsEl = document.getElementById('sanken-options');
+  d.options.forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'lab-choice-btn sanken-choice-btn';
+    b.innerHTML = `<span class="lab-choice-label">${opt.label}</span>`;
+    b.onclick = () => sankenChoose(opt);
+    optionsEl.appendChild(b);
+  });
+  setTimeout(() => body.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+}
+
+function sankenChoose(opt) {
+  sankenOpinion = Math.max(0, Math.min(100, sankenOpinion + (opt.opinionEffect || 0)));
+  sankenUpdateOpinionBar();
+  const resultEl = document.getElementById('sanken-result');
+  resultEl.classList.remove('hidden');
+  const d = opt.opinionEffect > 0 ? `世論支持率 +${opt.opinionEffect}` : opt.opinionEffect < 0 ? `世論支持率 ${opt.opinionEffect}` : '';
+  resultEl.innerHTML = `
+    ${d ? `<div class="lab-result-title">${d}</div>` : ''}
+    <div class="lab-result-text">${opt.outcome}</div>
+    <button id="sanken-next-btn" class="lab-run-btn" style="margin-top:12px">➡️ つぎへ</button>
+  `;
+  document.getElementById('sanken-next-btn').onclick = () => {
+    sankenFlowIdx++;
+    renderSankenStep();
+  };
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+}
+
+function renderSankenEnding() {
+  const ending = sankenCase.endings.find(e => sankenOpinion >= e.min) || sankenCase.endings[sankenCase.endings.length - 1];
+  const body = document.getElementById('sanken-body');
+  body.innerHTML = `
+    <div class="lab-result-icon" style="background:#ffd166">🏁</div>
+    <div class="lab-result-title">${ending.title}</div>
+    <div class="lab-result-text">${ending.text}</div>
+    <div class="lab-result-text sanken-summary"><strong>まとめ：</strong>${sankenCase.summary}</div>
+    <button id="sanken-again-btn" class="lab-run-btn" style="margin-top:14px">🔁 べつの事案をえらぶ</button>
+  `;
+  document.getElementById('sanken-again-btn').onclick = () => { initSankenHome(); showScreen('sanken-home'); };
+  setTimeout(() => body.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+}
 
 // ── タイムトラベル日本史 ──────────────────────────────
 const TIMELINE_ROUNDS = [

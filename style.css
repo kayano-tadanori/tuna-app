@@ -262,6 +262,22 @@ button { cursor: pointer; font-family: inherit; }
 .timeline-card.wrong { border-color: #ff5252; box-shadow: 0 0 14px rgba(255,82,82,0.4); }
 .timeline-card-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--grad-brand); color: #fff; font-size: 0.82rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
 
+/* ===== 三権タウン事件簿 ===== */
+.sanken-opinion-bar { margin-bottom: 16px; }
+.sanken-opinion-label { display: block; font-size: 0.8rem; font-weight: 800; color: var(--gold); margin-bottom: 6px; }
+.sanken-opinion-track { height: 12px; border-radius: 6px; background: rgba(255,255,255,0.08); overflow: hidden; }
+.sanken-opinion-fill { height: 100%; border-radius: 6px; transition: width 0.4s ease, background 0.4s ease; }
+.sanken-body { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; animation: labResultIn 0.3s ease; }
+.sanken-branch-badge { display: inline-block; font-size: 0.8rem; font-weight: 900; color: var(--gold); background: rgba(255,209,102,0.12); border: 1px solid rgba(255,186,0,0.35); border-radius: 20px; padding: 5px 12px; margin-bottom: 10px; }
+.sanken-trouble-badge { color: #ff8a80; background: rgba(255,82,82,0.12); border-color: rgba(255,82,82,0.35); }
+.sanken-role { font-size: 0.82rem; font-weight: 700; color: var(--sub2); margin-bottom: 8px; }
+.sanken-narrative { font-size: 0.9rem; line-height: 1.75; color: var(--text); margin-bottom: 10px; }
+.sanken-question { font-size: 1.0rem; font-weight: 900; color: var(--text); margin-bottom: 12px; }
+.sanken-options { grid-template-columns: 1fr; }
+.sanken-choice-btn { padding: 14px 16px; text-align: left; }
+.sanken-choice-btn .lab-choice-label { text-align: left; }
+.sanken-summary { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--glass-border); }
+
 /* ===== ニッポン地図たんけん ===== */
 .mapquiz-scorebar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .mapquiz-score { font-size: 0.86rem; font-weight: 800; color: var(--gold); }
