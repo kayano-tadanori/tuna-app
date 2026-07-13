@@ -30,6 +30,8 @@ const KOKUGO_DIFF_LABELS = { 1: 'やさしい', 2: '難しい', 3: 'チャレン
 const KOKUGO_CHAIN_FILE = 'data/kokugo_chain.json';
 let kokugoChainCache = null;
 async function loadKokugoChainQuestions(cat, grade) {
+  // 連鎖問題は灘中レベル（小5・小6の内容）。小4以下では出題しない
+  if (grade < CHAIN_MIN_GRADE) return [];
   if (!kokugoChainCache) {
     const res = await fetch(KOKUGO_CHAIN_FILE);
     kokugoChainCache = await res.json();
@@ -1280,10 +1282,49 @@ const CHAIN_FILES = {
   rika: 'data/rika_chain.json',
   shakai: 'data/shakai_chain.json',
 };
+// 連鎖問題を出題する最低学年（灘中レベル＝小5・小6の内容）
+const CHAIN_MIN_GRADE = 5;
+
+// 指定した教科・カテゴリ・学年で出題できる連鎖問題（step）の数を返す。
+// 難易度5ボタンの有効/無効判定に使う（0なら問題なし）
+async function countChainSteps(subject, cat, grade) {
+  if (grade < CHAIN_MIN_GRADE) return 0;
+  let data;
+  try {
+    if (subject === 'kokugo') {
+      if (!kokugoChainCache) kokugoChainCache = await (await fetch(KOKUGO_CHAIN_FILE)).json();
+      data = kokugoChainCache;
+    } else {
+      const key = `chain-${subject}`;
+      if (!sansuCache[key]) sansuCache[key] = await (await fetch(CHAIN_FILES[subject])).json();
+      data = sansuCache[key];
+    }
+  } catch { return 0; }
+  return data
+    .filter(c => cat === 'mix' || c.category === cat)
+    .reduce((n, c) => n + c.steps.length, 0);
+}
+
+// 難易度5（連鎖問題）ボタンの有効/無効を切り替える。
+// 問題が無ければロックし、その難易度が選択中なら選択を解除する
+async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) {
+  const chainBtn = [...btns].find(b => b.dataset.diff === '5');
+  if (!chainBtn) return;
+  const n = await countChainSteps(subject, cat, grade);
+  const locked = n === 0;
+  chainBtn.classList.toggle('diff-locked', locked);
+  chainBtn.disabled = locked;
+  if (locked && chainBtn.classList.contains('selected')) {
+    chainBtn.classList.remove('selected');
+    if (onLockSelected) onLockSelected();
+  }
+}
 
 // チェーン（連鎖問題）を読み込み、カテゴリでしぼって、chain単位はシャッフルしつつ
 // 各chain内のstep順は維持したまま平らな問題配列に展開する
 async function loadChainQuestions(subject, cat, grade) {
+  // 連鎖問題は灘中レベル（小5・小6の内容）。小4以下では出題しない
+  if (grade < CHAIN_MIN_GRADE) return [];
   const key = `chain-${subject}`;
   if (!sansuCache[key]) {
     const res = await fetch(CHAIN_FILES[subject]);
@@ -5461,6 +5502,12 @@ async function renderDiffBadgesSansu() {
       const info = byDiff[Number(b.dataset.diff)] || { total: 0, cleared: 0 };
       setDiffProgress(b, info.cleared, info.total);
     });
+    // 難易度5（連鎖問題）は問題が無ければロック
+    const zoneId = { sansu: 'sansu-start-zone', rika: 'rika-start-zone', shakai: 'shakai-start-zone' }[subject];
+    await updateChainDiffButton(btns, subject, cat, grade, () => {
+      sansuState.diff = null;
+      if (zoneId) document.getElementById(zoneId).classList.add('hidden');
+    });
   } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
 }
 
@@ -5497,6 +5544,11 @@ async function renderDiffBadgesKokugo() {
         const info = byDiff[Number(b.dataset.diff)] || { total: 0, cleared: 0 };
         setDiffProgress(b, info.cleared, info.total);
       }
+    });
+    // 難易度5（連鎖問題）は問題が無ければロック
+    await updateChainDiffButton(btns, 'kokugo', cat, grade, () => {
+      state.selectedDiff = null;
+      document.getElementById('start-zone').classList.add('hidden');
     });
   } catch (e) { /* 無視 */ }
 }
