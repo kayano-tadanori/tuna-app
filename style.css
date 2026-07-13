@@ -248,6 +248,28 @@ button { cursor: pointer; font-family: inherit; }
 .lab-result-title { font-size: 1.1rem; font-weight: 900; color: var(--gold); margin-bottom: 8px; animation: labTitlePop 0.4s ease 0.2s both; }
 @keyframes labTitlePop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 .lab-result-text { font-size: 0.86rem; color: var(--sub2); line-height: 1.7; text-align: left; }
+
+/* ===== タイムトラベル日本史 ===== */
+.timeline-cards { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.timeline-card { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-sm); color: var(--text); text-align: left; font-size: 0.86rem; font-weight: 700; line-height: 1.5; transition: transform 0.12s, border-color 0.15s, background 0.15s; }
+.timeline-card:active { transform: scale(0.98); }
+.timeline-card.selected { border-color: var(--gold); background: var(--card2); }
+.timeline-card.correct { border-color: #4caf50; box-shadow: 0 0 14px rgba(76,175,80,0.4); }
+.timeline-card.wrong { border-color: #ff5252; box-shadow: 0 0 14px rgba(255,82,82,0.4); }
+.timeline-card-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--grad-brand); color: #fff; font-size: 0.82rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+
+/* ===== ニッポン地図たんけん ===== */
+.mapquiz-scorebar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.mapquiz-score { font-size: 0.86rem; font-weight: 800; color: var(--gold); }
+.mapquiz-restart-btn { font-size: 0.76rem; font-weight: 700; color: var(--sub2); background: var(--card); border: 1px solid var(--glass-border); border-radius: 20px; padding: 6px 12px; }
+.mapquiz-question { font-size: 1.1rem; font-weight: 900; color: var(--text); text-align: center; margin-bottom: 12px; }
+.mapquiz-map-wrap { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px; margin-bottom: 14px; }
+.mapquiz-map-wrap svg { display: block; width: 100%; height: auto; max-height: 60vh; }
+.mapquiz-pref { fill: #4a5a8a; stroke: var(--dark); stroke-width: 0.5; cursor: pointer; transition: fill 0.15s; }
+.mapquiz-pref:active { fill: #6a7aba; }
+.mapquiz-pref.mapquiz-correct { fill: #ffd166; }
+.mapquiz-pref.mapquiz-wrong { fill: #ff5252; }
+.mapquiz-feedback { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 16px; text-align: center; animation: labResultIn 0.3s ease; }
 .cat-icon { font-size: 1.5rem; line-height: 1; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.3)); }
 .cat-name { font-size: 0.76rem; font-weight: 900; color: var(--text); letter-spacing: 0.01em; text-align: center; line-height: 1.2; }
 .cat-count { font-size: 0.6rem; color: var(--sub); font-weight: 600; }

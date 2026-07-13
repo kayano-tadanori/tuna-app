@@ -1590,6 +1590,9 @@ function initShakaiHome() {
         hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
         initNipponHome();
         showScreen('nippon-home');
+      } else if (btn.dataset.topmode === 'go') {
+        hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
+        showScreen('shakaigo-home');
       } else {
         hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
         showToast('もうすぐ追加されます！工事中🚧');
@@ -3074,6 +3077,228 @@ const LAB_FORMULAS = {
     };
   }
 };
+
+// ============================================================
+// 社会でGO!（地図たんけん・タイムトラベル日本史）
+// ============================================================
+
+document.getElementById('btn-open-mapquiz').onclick = () => { initMapQuiz(); showScreen('map-quiz'); };
+document.getElementById('btn-open-timeline').onclick = () => { initTimelineGame(); showScreen('timeline-game'); };
+
+// ── タイムトラベル日本史 ──────────────────────────────
+const TIMELINE_ROUNDS = [
+  { title: '縄文〜奈良時代', items: [
+    { label: '縄文時代：狩りや漁、木の実採集のくらしが広まる', order: 1 },
+    { label: '弥生時代：稲作が広まり、むらができる', order: 2 },
+    { label: '聖徳太子が摂政になり、十七条の憲法を定める', order: 3 },
+    { label: '大化の改新が始まる', order: 4 },
+    { label: '都が平城京（奈良）に移される', order: 5 }
+  ]},
+  { title: '奈良〜平安時代', items: [
+    { label: '都が平城京に移される', order: 1 },
+    { label: '都が平安京（京都）に移される', order: 2 },
+    { label: '藤原氏による摂関政治が全盛をむかえる', order: 3 },
+    { label: '平将門の乱がおこる', order: 4 },
+    { label: '源平の争いで平氏がほろびる', order: 5 }
+  ]},
+  { title: '平安〜鎌倉時代', items: [
+    { label: '平清盛が太政大臣になる', order: 1 },
+    { label: '壇ノ浦の戦いで平氏がほろびる', order: 2 },
+    { label: '源頼朝が征夷大将軍になり、鎌倉幕府が開かれる', order: 3 },
+    { label: '元寇（元軍の襲来）がおこる', order: 4 },
+    { label: '鎌倉幕府がほろびる', order: 5 }
+  ]},
+  { title: '鎌倉〜室町時代', items: [
+    { label: '鎌倉幕府がほろびる', order: 1 },
+    { label: '足利尊氏が征夷大将軍になり、室町幕府が開かれる', order: 2 },
+    { label: '足利義満が金閣を建てる', order: 3 },
+    { label: '応仁の乱がおこる', order: 4 },
+    { label: '戦国時代が始まる', order: 5 }
+  ]},
+  { title: '戦国の三英雄', items: [
+    { label: '織田信長が桶狭間の戦いで勝利する', order: 1 },
+    { label: '織田信長が本能寺の変でたおれる', order: 2 },
+    { label: '豊臣秀吉が全国を統一する', order: 3 },
+    { label: '関ヶ原の戦いがおこる', order: 4 },
+    { label: '徳川家康が征夷大将軍になり、江戸幕府を開く', order: 5 }
+  ]},
+  { title: '江戸時代', items: [
+    { label: '江戸幕府が開かれる', order: 1 },
+    { label: '参勤交代の制度が定められる', order: 2 },
+    { label: '鎖国が完成する（オランダ・中国以外との貿易を禁止）', order: 3 },
+    { label: '享保の改革が行われる（徳川吉宗）', order: 4 },
+    { label: '黒船（ペリー）が浦賀に来航する', order: 5 }
+  ]},
+  { title: '幕末〜明治時代', items: [
+    { label: 'ペリーが来航し、開国を求める', order: 1 },
+    { label: '日米和親条約が結ばれる', order: 2 },
+    { label: '江戸幕府がほろび、明治政府ができる（大政奉還）', order: 3 },
+    { label: '廃藩置県が行われる', order: 4 },
+    { label: '大日本帝国憲法が発布される', order: 5 }
+  ]},
+  { title: '明治〜大正時代', items: [
+    { label: '大日本帝国憲法が発布される', order: 1 },
+    { label: '日清戦争がおこる', order: 2 },
+    { label: '日露戦争がおこる', order: 3 },
+    { label: '第一次世界大戦が始まる', order: 4 },
+    { label: '大正デモクラシーの風潮が広まる', order: 5 }
+  ]},
+  { title: '昭和（戦前〜戦後）', items: [
+    { label: '満州事変がおこる', order: 1 },
+    { label: '日中戦争が始まる', order: 2 },
+    { label: '太平洋戦争が始まる', order: 3 },
+    { label: '太平洋戦争が終わる（日本が降伏する）', order: 4 },
+    { label: '日本国憲法が施行される', order: 5 }
+  ]},
+  { title: '戦後〜現代', items: [
+    { label: '日本国憲法が施行される', order: 1 },
+    { label: 'サンフランシスコ平和条約が結ばれ、独立を回復する', order: 2 },
+    { label: '東京オリンピックが開かれる（1964年）', order: 3 },
+    { label: '昭和から平成に元号が変わる', order: 4 },
+    { label: '平成から令和に元号が変わる', order: 5 }
+  ]}
+];
+
+let timelineRoundIdx = -1;
+let timelineDisplayItems = []; // シャッフルされた表示順
+let timelineAnswer = []; // タップした順（timelineDisplayItemsのインデックス配列）
+
+function initTimelineGame() {
+  timelineRoundIdx = Math.floor(Math.random() * TIMELINE_ROUNDS.length);
+  timelineStartRound();
+  document.getElementById('timeline-check-btn').onclick = timelineCheck;
+}
+
+function timelineStartRound() {
+  const round = TIMELINE_ROUNDS[timelineRoundIdx];
+  timelineDisplayItems = shuffle(round.items.map((item, i) => ({ ...item, origIndex: i })));
+  timelineAnswer = [];
+  document.getElementById('timeline-round-title').textContent = `📖 ${round.title}`;
+  document.getElementById('timeline-result').classList.add('hidden');
+  document.getElementById('timeline-result').innerHTML = '';
+  renderTimelineCards();
+}
+
+function renderTimelineCards() {
+  const wrap = document.getElementById('timeline-cards');
+  wrap.innerHTML = '';
+  timelineDisplayItems.forEach((item, i) => {
+    const pos = timelineAnswer.indexOf(i);
+    const btn = document.createElement('button');
+    btn.className = 'timeline-card' + (pos >= 0 ? ' selected' : '');
+    btn.innerHTML = `${pos >= 0 ? `<span class="timeline-card-num">${pos + 1}</span>` : ''}<span class="timeline-card-label">${item.label}</span>`;
+    btn.onclick = () => {
+      const idx = timelineAnswer.indexOf(i);
+      if (idx >= 0) {
+        timelineAnswer.splice(idx, 1);
+      } else if (timelineAnswer.length < timelineDisplayItems.length) {
+        timelineAnswer.push(i);
+      }
+      renderTimelineCards();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function timelineCheck() {
+  if (timelineAnswer.length < timelineDisplayItems.length) {
+    showToast('すべてのカードをタップして順番をつけてね');
+    return;
+  }
+  const wrap = document.getElementById('timeline-cards');
+  let correctCount = 0;
+  [...wrap.children].forEach((btn, i) => {
+    const item = timelineDisplayItems[timelineAnswer[i]];
+    const ok = item.order === i + 1;
+    if (ok) correctCount++;
+    btn.classList.add(ok ? 'correct' : 'wrong');
+  });
+  const round = TIMELINE_ROUNDS[timelineRoundIdx];
+  const correctOrderText = [...round.items].sort((a, b) => a.order - b.order).map((it, i) => `${i + 1}. ${it.label}`).join('<br>');
+  const resultEl = document.getElementById('timeline-result');
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = `
+    <div class="lab-result-title">${correctCount === timelineDisplayItems.length ? '🎉 ぜんぶ正解！' : `${correctCount} / ${timelineDisplayItems.length} 問正解`}</div>
+    <div class="lab-result-text">正しい順番：<br>${correctOrderText}</div>
+    <button id="timeline-next-btn" class="lab-run-btn" style="margin-top:12px">➡️ つぎのラウンドへ</button>
+  `;
+  document.getElementById('timeline-next-btn').onclick = () => {
+    timelineRoundIdx = (timelineRoundIdx + 1) % TIMELINE_ROUNDS.length;
+    timelineStartRound();
+  };
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+}
+
+// ── ニッポン地図たんけん ──────────────────────────────
+let mapQuizData = null; // { svgHtml, regions: {prefName: regionName} }
+let mapQuizScore = { correct: 0, total: 0 };
+let mapQuizTarget = null;
+
+async function loadMapQuizData() {
+  if (mapQuizData) return mapQuizData;
+  const [svgRes, regionsRes] = await Promise.all([
+    fetch('data/japan_map.svg'),
+    fetch('data/japan_pref_regions.json')
+  ]);
+  const svgHtml = await svgRes.text();
+  const regions = await regionsRes.json();
+  mapQuizData = { svgHtml, regions };
+  return mapQuizData;
+}
+
+async function initMapQuiz() {
+  showLoading();
+  try {
+    const data = await loadMapQuizData();
+    const wrap = document.getElementById('mapquiz-map-wrap');
+    wrap.innerHTML = data.svgHtml;
+    const svg = wrap.querySelector('svg');
+    if (svg) {
+      svg.querySelectorAll('[data-pref]').forEach(path => {
+        path.classList.add('mapquiz-pref');
+        path.onclick = () => mapQuizAnswer(path.dataset.pref);
+      });
+    }
+    mapQuizScore = { correct: 0, total: 0 };
+    document.getElementById('mapquiz-restart').onclick = () => { mapQuizScore = { correct: 0, total: 0 }; mapQuizNext(); };
+    mapQuizNext();
+  } catch (e) {
+    showToast('地図の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+function mapQuizNext() {
+  const prefs = Object.keys(mapQuizData.regions);
+  mapQuizTarget = prefs[Math.floor(Math.random() * prefs.length)];
+  document.getElementById('mapquiz-question').textContent = `❓「${mapQuizTarget}」はどこ？`;
+  document.getElementById('mapquiz-score').textContent = `せいかい ${mapQuizScore.correct} / ${mapQuizScore.total}`;
+  document.getElementById('mapquiz-feedback').classList.add('hidden');
+  const svg = document.querySelector('#mapquiz-map-wrap svg');
+  if (svg) svg.querySelectorAll('.mapquiz-pref').forEach(p => p.classList.remove('mapquiz-correct', 'mapquiz-wrong'));
+}
+
+function mapQuizAnswer(pref) {
+  const svg = document.querySelector('#mapquiz-map-wrap svg');
+  const feedback = document.getElementById('mapquiz-feedback');
+  const ok = pref === mapQuizTarget;
+  mapQuizScore.total++;
+  if (ok) mapQuizScore.correct++;
+  const targetPath = svg.querySelector(`[data-pref="${mapQuizTarget}"]`);
+  const tappedPath = svg.querySelector(`[data-pref="${pref}"]`);
+  if (targetPath) targetPath.classList.add('mapquiz-correct');
+  if (!ok && tappedPath) tappedPath.classList.add('mapquiz-wrong');
+  feedback.classList.remove('hidden');
+  const region = mapQuizData.regions[mapQuizTarget] || '';
+  feedback.innerHTML = ok
+    ? `<div class="lab-result-title">🎉 せいかい！</div><div class="lab-result-text">「${mapQuizTarget}」は${region}にあります。</div><button id="mapquiz-next-btn" class="lab-run-btn" style="margin-top:10px">➡️ つぎの問題</button>`
+    : `<div class="lab-result-title">❌ ざんねん…</div><div class="lab-result-text">正解は「${mapQuizTarget}」（${region}）でした。金色に光っている場所です。</div><button id="mapquiz-next-btn" class="lab-run-btn" style="margin-top:10px">➡️ つぎの問題</button>`;
+  document.getElementById('mapquiz-next-btn').onclick = mapQuizNext;
+  document.getElementById('mapquiz-score').textContent = `せいかい ${mapQuizScore.correct} / ${mapQuizScore.total}`;
+  setTimeout(() => feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+}
 
 // ============================================================
 // オトンテトリス（息抜きミニゲーム）

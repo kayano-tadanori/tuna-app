@@ -881,6 +881,11 @@
           <span class="mode-name">ニッポンのあゆみ</span>
           <span class="mode-desc">図鑑でまとめて読む</span>
         </button>
+        <button class="shakai-topmode-btn sansu-mode-btn" data-topmode="go">
+          <span class="mode-icon">🎮</span>
+          <span class="mode-name">社会でGO!</span>
+          <span class="mode-desc">地図と歴史で遊ぼう</span>
+        </button>
       </div>
     </div>
 
@@ -1202,6 +1207,59 @@
     <div id="lab-calc-vars" class="lab-vars"></div>
     <button id="lab-run-btn" class="lab-run-btn hidden">🧪 じっけん スタート！</button>
     <div id="lab-result" class="lab-result hidden"></div>
+  </main>
+</div>
+
+<!-- =============== 社会でGO!（ホーム：ゲーム一覧） =============== -->
+<div id="screen-shakaigo-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="shakai-home">‹ 戻る</button>
+    <h2 class="top-title">🎮 社会でGO!</h2>
+  </header>
+  <main class="tora-main">
+    <p class="tora-intro">地図と歴史を体で覚えよう！遊びながら社会の力をきたえるゲームだよ。</p>
+    <div class="category-grid">
+      <button class="cat-card" id="btn-open-mapquiz">
+        <span class="cat-icon">🗾</span>
+        <span class="cat-name">ニッポン地図たんけん</span>
+      </button>
+      <button class="cat-card" id="btn-open-timeline">
+        <span class="cat-icon">⏳</span>
+        <span class="cat-name">タイムトラベル日本史</span>
+      </button>
+    </div>
+  </main>
+</div>
+
+<!-- =============== ニッポン地図たんけん =============== -->
+<div id="screen-map-quiz" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="shakaigo-home">‹ 戻る</button>
+    <h2 class="top-title">🗾 ニッポン地図たんけん</h2>
+  </header>
+  <main class="tora-main">
+    <div class="mapquiz-scorebar">
+      <span id="mapquiz-score">せいかい 0 / 0</span>
+      <button id="mapquiz-restart" class="mapquiz-restart-btn">🔄 さいしょから</button>
+    </div>
+    <p id="mapquiz-question" class="mapquiz-question"></p>
+    <div id="mapquiz-map-wrap" class="mapquiz-map-wrap"></div>
+    <div id="mapquiz-feedback" class="mapquiz-feedback hidden"></div>
+  </main>
+</div>
+
+<!-- =============== タイムトラベル日本史 =============== -->
+<div id="screen-timeline-game" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="shakaigo-home">‹ 戻る</button>
+    <h2 class="top-title">⏳ タイムトラベル日本史</h2>
+  </header>
+  <main class="tora-main">
+    <p class="tora-intro">出来事を、古い順にタップしよう！タップした順番に番号がつくよ。</p>
+    <p id="timeline-round-title" class="lab-control-label"></p>
+    <div id="timeline-cards" class="timeline-cards"></div>
+    <button id="timeline-check-btn" class="lab-run-btn">✅ こたえあわせ</button>
+    <div id="timeline-result" class="lab-result hidden"></div>
   </main>
 </div>
 
