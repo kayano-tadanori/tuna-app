@@ -14,6 +14,7 @@ const CATEGORIES = {
   kokugo_bushu:   { label: '部首・画数',     file: 'data/kokugo_bushu.json' },
   kokugo_bungaku: { label: '文学史・季語',   file: 'data/kokugo_bungaku.json' },
   tantei:         { label: 'こころの探偵',   file: 'data/kokugo_tantei.json' },
+  youyaku:        { label: '要約記者',       file: 'data/kokugo_youyaku.json' },
 };
 
 // 漢字カテゴリ（学年選択あり・専用UI）
@@ -271,8 +272,8 @@ function initHome() {
         document.getElementById('kokugo-step-diff').classList.add('hidden');
         showStep('kokugo-step-cat');
         maybeShowStart();
-      } else if (topmode === 'tantei') {
-        state.selectedCat = 'tantei';
+      } else if (topmode === 'tantei' || topmode === 'youyaku') {
+        state.selectedCat = topmode;
         state.selectedMode = 'quiz';
         state.selectedDiff = null;
         document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
