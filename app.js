@@ -1115,6 +1115,7 @@ async function initUpdateBanner() {
 const BACKUP_KEYS = [
   'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
   'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
+  'mapquizBest', 'timelineBest',
   'progress',
 ];
 
@@ -3365,9 +3366,19 @@ const TIMELINE_ROUNDS = [
 let timelineRoundIdx = -1;
 let timelineDisplayItems = []; // シャッフルされた表示順
 let timelineAnswer = []; // タップした順（timelineDisplayItemsのインデックス配列）
+let timelineTotalScore = 0;
+const TIMELINE_POINTS_PER_CARD = 20;
+const TIMELINE_PERFECT_BONUS = 50;
+
+function timelineUpdateScoreLabel() {
+  const best = Number(localStorage.getItem('timelineBest') || 0);
+  document.getElementById('timeline-score').textContent = `🏆 ${timelineTotalScore}てん（さいこう ${Math.max(best, timelineTotalScore)}）`;
+}
 
 function initTimelineGame() {
   timelineRoundIdx = Math.floor(Math.random() * TIMELINE_ROUNDS.length);
+  timelineTotalScore = 0;
+  timelineUpdateScoreLabel();
   timelineStartRound();
   document.getElementById('timeline-check-btn').onclick = timelineCheck;
 }
@@ -3379,6 +3390,7 @@ function timelineStartRound() {
   document.getElementById('timeline-round-title').textContent = `📖 ${round.title}`;
   document.getElementById('timeline-result').classList.add('hidden');
   document.getElementById('timeline-result').innerHTML = '';
+  timelineUpdateScoreLabel();
   renderTimelineCards();
 }
 
@@ -3418,10 +3430,18 @@ function timelineCheck() {
   });
   const round = TIMELINE_ROUNDS[timelineRoundIdx];
   const correctOrderText = [...round.items].sort((a, b) => a.order - b.order).map((it, i) => `${i + 1}. ${it.label}`).join('<br>');
+  const isPerfect = correctCount === timelineDisplayItems.length;
+  const roundScore = correctCount * TIMELINE_POINTS_PER_CARD + (isPerfect ? TIMELINE_PERFECT_BONUS : 0);
+  timelineTotalScore += roundScore;
+  const best = Number(localStorage.getItem('timelineBest') || 0);
+  const isNewBest = timelineTotalScore > best;
+  if (isNewBest) localStorage.setItem('timelineBest', timelineTotalScore);
+  timelineUpdateScoreLabel();
+
   const resultEl = document.getElementById('timeline-result');
   resultEl.classList.remove('hidden');
   resultEl.innerHTML = `
-    <div class="lab-result-title">${correctCount === timelineDisplayItems.length ? '🎉 ぜんぶ正解！' : `${correctCount} / ${timelineDisplayItems.length} 問正解`}</div>
+    <div class="lab-result-title">${isPerfect ? '🎉 ぜんぶ正解！' : `${correctCount} / ${timelineDisplayItems.length} 問正解`} ＋${roundScore}てん${isPerfect ? '（パーフェクトボーナス+' + TIMELINE_PERFECT_BONUS + '）' : ''}${isNewBest ? '<br>🏆 自己ベスト更新！' : ''}</div>
     <div class="lab-result-text">正しい順番：<br>${correctOrderText}</div>
     <button id="timeline-next-btn" class="lab-run-btn" style="margin-top:12px">➡️ つぎのラウンドへ</button>
   `;
@@ -3434,8 +3454,10 @@ function timelineCheck() {
 
 // ── ニッポン地図たんけん ──────────────────────────────
 let mapQuizData = null; // { svgHtml, regions: {prefName: regionName} }
-let mapQuizScore = { correct: 0, total: 0 };
+let mapQuizScore = { correct: 0, total: 0, points: 0, streak: 0 };
 let mapQuizTarget = null;
+const MAPQUIZ_BASE_POINTS = 10;
+const MAPQUIZ_STREAK_BONUS = 5;
 
 async function loadMapQuizData() {
   if (mapQuizData) return mapQuizData;
@@ -3469,7 +3491,7 @@ async function initMapQuiz() {
         path.onclick = () => mapQuizAnswer(path.dataset.pref);
       });
     }
-    mapQuizScore = { correct: 0, total: 0 };
+    mapQuizScore = { correct: 0, total: 0, points: 0, streak: 0 };
     if (!mapQuizZoomCtl) {
       mapQuizZoomCtl = createPinchZoomController(
         document.getElementById('mapquiz-map-viewport'),
@@ -3479,7 +3501,7 @@ async function initMapQuiz() {
     }
     mapQuizZoomCtl.reset();
     mapQuizUpdateZoomLabel();
-    document.getElementById('mapquiz-restart').onclick = () => { mapQuizScore = { correct: 0, total: 0 }; mapQuizNext(); };
+    document.getElementById('mapquiz-restart').onclick = () => { mapQuizScore = { correct: 0, total: 0, points: 0, streak: 0 }; mapQuizNext(); };
     document.getElementById('mapquiz-zoom-in').onclick = () => {
       mapQuizZoomCtl.state.zoom = Math.min(mapQuizZoomCtl.state.maxZoom, mapQuizZoomCtl.state.zoom + MAPQUIZ_ZOOM_STEP);
       mapQuizZoomCtl.apply();
@@ -3503,11 +3525,16 @@ async function initMapQuiz() {
   }
 }
 
+function mapQuizUpdateScoreLabel() {
+  const best = Number(localStorage.getItem('mapquizBest') || 0);
+  document.getElementById('mapquiz-score').textContent = `🏆 ${mapQuizScore.points}てん（さいこう ${Math.max(best, mapQuizScore.points)}）・せいかい ${mapQuizScore.correct}/${mapQuizScore.total}`;
+}
+
 function mapQuizNext() {
   const prefs = Object.keys(mapQuizData.regions);
   mapQuizTarget = prefs[Math.floor(Math.random() * prefs.length)];
   document.getElementById('mapquiz-question').textContent = `❓「${mapQuizTarget}」はどこ？`;
-  document.getElementById('mapquiz-score').textContent = `せいかい ${mapQuizScore.correct} / ${mapQuizScore.total}`;
+  mapQuizUpdateScoreLabel();
   document.getElementById('mapquiz-feedback').classList.add('hidden');
   const svg = document.querySelector('#mapquiz-map-wrap svg');
   if (svg) svg.querySelectorAll('.mapquiz-pref').forEach(p => p.classList.remove('mapquiz-correct', 'mapquiz-wrong'));
@@ -3518,7 +3545,19 @@ function mapQuizAnswer(pref) {
   const feedback = document.getElementById('mapquiz-feedback');
   const ok = pref === mapQuizTarget;
   mapQuizScore.total++;
-  if (ok) mapQuizScore.correct++;
+  let gained = 0;
+  if (ok) {
+    mapQuizScore.correct++;
+    mapQuizScore.streak++;
+    gained = MAPQUIZ_BASE_POINTS + (mapQuizScore.streak - 1) * MAPQUIZ_STREAK_BONUS;
+    mapQuizScore.points += gained;
+  } else {
+    mapQuizScore.streak = 0;
+  }
+  const best = Number(localStorage.getItem('mapquizBest') || 0);
+  const isNewBest = mapQuizScore.points > best;
+  if (isNewBest) localStorage.setItem('mapquizBest', mapQuizScore.points);
+
   const targetPath = svg.querySelector(`[data-pref="${mapQuizTarget}"]`);
   const tappedPath = svg.querySelector(`[data-pref="${pref}"]`);
   if (targetPath) targetPath.classList.add('mapquiz-correct');
@@ -3526,10 +3565,10 @@ function mapQuizAnswer(pref) {
   feedback.classList.remove('hidden');
   const region = mapQuizData.regions[mapQuizTarget] || '';
   feedback.innerHTML = ok
-    ? `<div class="lab-result-title">🎉 せいかい！</div><div class="lab-result-text">「${mapQuizTarget}」は${region}にあります。</div><button id="mapquiz-next-btn" class="lab-run-btn" style="margin-top:10px">➡️ つぎの問題</button>`
-    : `<div class="lab-result-title">❌ ざんねん…</div><div class="lab-result-text">正解は「${mapQuizTarget}」（${region}）でした。金色に光っている場所です。</div><button id="mapquiz-next-btn" class="lab-run-btn" style="margin-top:10px">➡️ つぎの問題</button>`;
+    ? `<div class="lab-result-title">🎉 せいかい！ +${gained}てん${mapQuizScore.streak >= 2 ? `（${mapQuizScore.streak}連続！）` : ''}${isNewBest ? '<br>🏆 自己ベスト更新！' : ''}</div><div class="lab-result-text">「${mapQuizTarget}」は${region}にあります。</div><button id="mapquiz-next-btn" class="lab-run-btn" style="margin-top:10px">➡️ つぎの問題</button>`
+    : `<div class="lab-result-title">❌ ざんねん…（連続記録リセット）</div><div class="lab-result-text">正解は「${mapQuizTarget}」（${region}）でした。金色に光っている場所です。</div><button id="mapquiz-next-btn" class="lab-run-btn" style="margin-top:10px">➡️ つぎの問題</button>`;
   document.getElementById('mapquiz-next-btn').onclick = mapQuizNext;
-  document.getElementById('mapquiz-score').textContent = `せいかい ${mapQuizScore.correct} / ${mapQuizScore.total}`;
+  mapQuizUpdateScoreLabel();
   setTimeout(() => feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
 }
 
