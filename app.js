@@ -3246,6 +3246,16 @@ async function loadMapQuizData() {
   return mapQuizData;
 }
 
+let mapQuizZoom = 1;
+const MAPQUIZ_ZOOM_MIN = 1, MAPQUIZ_ZOOM_MAX = 4, MAPQUIZ_ZOOM_STEP = 0.5;
+
+function mapQuizApplyZoom() {
+  const wrap = document.getElementById('mapquiz-map-wrap');
+  wrap.style.transform = `scale(${mapQuizZoom})`;
+  wrap.style.transformOrigin = 'top center';
+  document.getElementById('mapquiz-zoom-label').textContent = `${Math.round(mapQuizZoom * 100)}%`;
+}
+
 async function initMapQuiz() {
   showLoading();
   try {
@@ -3260,7 +3270,25 @@ async function initMapQuiz() {
       });
     }
     mapQuizScore = { correct: 0, total: 0 };
+    mapQuizZoom = 1;
+    mapQuizApplyZoom();
+    document.getElementById('mapquiz-map-viewport').scrollTop = 0;
+    document.getElementById('mapquiz-map-viewport').scrollLeft = 0;
     document.getElementById('mapquiz-restart').onclick = () => { mapQuizScore = { correct: 0, total: 0 }; mapQuizNext(); };
+    document.getElementById('mapquiz-zoom-in').onclick = () => {
+      mapQuizZoom = Math.min(MAPQUIZ_ZOOM_MAX, mapQuizZoom + MAPQUIZ_ZOOM_STEP);
+      mapQuizApplyZoom();
+    };
+    document.getElementById('mapquiz-zoom-out').onclick = () => {
+      mapQuizZoom = Math.max(MAPQUIZ_ZOOM_MIN, mapQuizZoom - MAPQUIZ_ZOOM_STEP);
+      mapQuizApplyZoom();
+    };
+    document.getElementById('mapquiz-zoom-reset').onclick = () => {
+      mapQuizZoom = 1;
+      mapQuizApplyZoom();
+      const vp = document.getElementById('mapquiz-map-viewport');
+      vp.scrollTop = 0; vp.scrollLeft = 0;
+    };
     mapQuizNext();
   } catch (e) {
     showToast('地図の読み込みに失敗しました');

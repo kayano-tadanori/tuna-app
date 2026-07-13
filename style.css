@@ -263,8 +263,14 @@ button { cursor: pointer; font-family: inherit; }
 .mapquiz-score { font-size: 0.86rem; font-weight: 800; color: var(--gold); }
 .mapquiz-restart-btn { font-size: 0.76rem; font-weight: 700; color: var(--sub2); background: var(--card); border: 1px solid var(--glass-border); border-radius: 20px; padding: 6px 12px; }
 .mapquiz-question { font-size: 1.1rem; font-weight: 900; color: var(--text); text-align: center; margin-bottom: 12px; }
-.mapquiz-map-wrap { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px; margin-bottom: 14px; }
-.mapquiz-map-wrap svg { display: block; width: 100%; height: auto; max-height: 60vh; }
+.mapquiz-zoom-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.mapquiz-zoom-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--grad-brand); color: #fff; font-size: 1.15rem; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.mapquiz-zoom-btn:active { transform: scale(0.9); }
+.mapquiz-zoom-label { font-size: 0.8rem; font-weight: 800; color: var(--gold); min-width: 44px; text-align: center; }
+.mapquiz-zoom-reset-btn { margin-left: auto; font-size: 0.76rem; font-weight: 700; color: var(--sub2); background: var(--card); border: 1px solid var(--glass-border); border-radius: 20px; padding: 6px 12px; flex-shrink: 0; }
+.mapquiz-map-viewport { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px; margin-bottom: 14px; overflow: auto; max-height: 60vh; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; }
+.mapquiz-map-wrap { transition: transform 0.15s ease; }
+.mapquiz-map-wrap svg { display: block; width: 100%; height: auto; }
 .mapquiz-pref { fill: #4a5a8a; stroke: var(--dark); stroke-width: 0.5; cursor: pointer; transition: fill 0.15s; }
 .mapquiz-pref:active { fill: #6a7aba; }
 .mapquiz-pref.mapquiz-correct { fill: #ffd166; }
