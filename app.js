@@ -2991,16 +2991,19 @@ const LAB_FORMULAS = {
     const angle = balanced ? 0 : (tiltLeft ? -12 : 12);
     const lr = 8 + Math.min(20, v.lw / 3);
     const rr = 8 + Math.min(20, v.rw / 3);
+    const unit = 15;
+    const lx = 120 - v.ld * unit;
+    const rx = 120 + v.rd * unit;
     const svg = `<svg viewBox="0 0 240 150" style="display:block;margin:0 auto;max-width:260px">
       <rect width="240" height="150" fill="#eef2ff"/>
       <polygon points="110,120 130,120 120,100" fill="#4f9eff"/>
       <g class="lab-lever-arm" style="--lab-angle:${angle}deg">
-        <rect x="30" y="97" width="180" height="6" rx="3" fill="#8ecbff"/>
-        <circle cx="40" cy="100" r="${lr}" fill="#ff8fa3"/>
-        <circle cx="200" cy="100" r="${rr}" fill="#ffd166"/>
+        <rect x="${lx}" y="97" width="${rx - lx}" height="6" rx="3" fill="#8ecbff"/>
+        <circle cx="${lx}" cy="100" r="${lr}" fill="#ff8fa3"/>
+        <circle cx="${rx}" cy="100" r="${rr}" fill="#ffd166"/>
       </g>
-      <text x="40" y="40" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">左 ${v.ld}×${v.lw}=${lm}</text>
-      <text x="200" y="40" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">右 ${v.rd}×${v.rw}=${rm}</text>
+      <text x="${lx}" y="40" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">左 ${v.ld}×${v.lw}=${lm}</text>
+      <text x="${rx}" y="40" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">右 ${v.rd}×${v.rw}=${rm}</text>
     </svg>`;
     return {
       svg,
