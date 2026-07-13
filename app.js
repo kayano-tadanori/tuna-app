@@ -24,7 +24,36 @@ const MODES = {
   quiz: '四択クイズ'
 };
 
-const KOKUGO_DIFF_LABELS = { 1: 'やさしい', 2: '難しい', 3: 'チャレンジ', 4: '灘中レベル', all: 'ぜんぶ' };
+const KOKUGO_DIFF_LABELS = { 1: 'やさしい', 2: '難しい', 3: 'チャレンジ', 4: '激ムズ', 5: '灘中レベル', all: 'ぜんぶ' };
+
+// 国語：連鎖問題（灘中レベル＝難易度5）
+const KOKUGO_CHAIN_FILE = 'data/kokugo_chain.json';
+let kokugoChainCache = null;
+async function loadKokugoChainQuestions(cat, grade) {
+  if (!kokugoChainCache) {
+    const res = await fetch(KOKUGO_CHAIN_FILE);
+    kokugoChainCache = await res.json();
+  }
+  const chains = shuffle(kokugoChainCache.filter(c => c.category === cat));
+  const out = [];
+  chains.forEach(chain => {
+    chain.steps.forEach((step, i) => {
+      const intro = i === 0
+        ? `<div class="tantei-passage">📘 <strong>${chain.title}</strong><br>${chain.intro}</div>`
+        : '';
+      out.push({
+        id: `${chain.id}_s${i + 1}`,
+        question: `${intro}<div class="tantei-q">(${i + 1}) ${step.question}</div>`,
+        answer: step.answer,
+        choices: step.choices,
+        meaning: step.meaning,
+        difficulty: 5,
+        grade: chain.grade || grade,
+      });
+    });
+  });
+  return out;
+}
 
 // ============================================================
 // 状態管理
@@ -348,21 +377,29 @@ function maybeShowStart() {
 document.getElementById('btn-start').onclick = async () => {
   showLoading();
   try {
-    const all = await loadQuestions(state.selectedCat);
-    let pool = state.weakOnly ? getWeakItems(state.selectedCat) : [...all];
+    const isChain = state.selectedDiff === 5;
+    let pool;
+    let all;
+    if (isChain) {
+      pool = await loadKokugoChainQuestions(state.selectedCat, state.grade);
+      all = pool;
+    } else {
+      all = await loadQuestions(state.selectedCat);
+      pool = state.weakOnly ? getWeakItems(state.selectedCat) : [...all];
 
-    // 難易度フィルタ（「ぜんぶ」はフィルタなし）
-    if (state.selectedDiff && state.selectedDiff !== 'all') {
-      pool = pool.filter(q => q.difficulty === state.selectedDiff);
-    }
-    // 学年フィルタ（国語は全カテゴリで学年を選ぶ）
-    if (state.grade) {
-      pool = pool.filter(q => q.grade === state.grade);
-    }
-    pool = shuffle(pool);
+      // 難易度フィルタ（「ぜんぶ」はフィルタなし）
+      if (state.selectedDiff && state.selectedDiff !== 'all') {
+        pool = pool.filter(q => q.difficulty === state.selectedDiff);
+      }
+      // 学年フィルタ（国語は全カテゴリで学年を選ぶ）
+      if (state.grade) {
+        pool = pool.filter(q => q.grade === state.grade);
+      }
+      pool = shuffle(pool);
 
-    const countSel = document.getElementById('q-count').value;
-    if (countSel !== 'all') pool = pool.slice(0, parseInt(countSel, 10));
+      const countSel = document.getElementById('q-count').value;
+      if (countSel !== 'all') pool = pool.slice(0, parseInt(countSel, 10));
+    }
     state.sessionQs = pool;
     state.questions  = all;
     state.current = 0;
@@ -1210,7 +1247,7 @@ const SANSU_CAT_LABELS = {
   tokusan:'特殊算', baai:'場合の数', kazu:'数の性質',
   wariai:'割合と比', hayasa:'速さ', rittai:'立体図形'
 };
-const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'灘中レベル' };
+const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'激ムズ', 5:'灘中レベル' };
 const DRILL_TYPE_LABELS = {
   add:'足し算', sub:'引き算', mul:'かけ算', div:'割り算',
   divrem:'余りあり', decimal:'小数', fraction:'分数', mix:'ミックス'
@@ -1236,6 +1273,41 @@ const SHAKAI_FILES = {
 const SHAKAI_CAT_LABELS = {
   kokudo:'国土と自然', sangyo:'産業とくらし', rekishi:'日本の歴史', komin:'政治と国際',
 };
+
+// 連鎖問題（難易度5・灘中レベル）ファイル
+const CHAIN_FILES = {
+  sansu: 'data/sansu_chain.json',
+  rika: 'data/rika_chain.json',
+  shakai: 'data/shakai_chain.json',
+};
+
+// チェーン（連鎖問題）を読み込み、カテゴリでしぼって、chain単位はシャッフルしつつ
+// 各chain内のstep順は維持したまま平らな問題配列に展開する
+async function loadChainQuestions(subject, cat, grade) {
+  const key = `chain-${subject}`;
+  if (!sansuCache[key]) {
+    const res = await fetch(CHAIN_FILES[subject]);
+    sansuCache[key] = await res.json();
+  }
+  const chains = shuffle(sansuCache[key].filter(c => cat === 'mix' || c.category === cat));
+  const out = [];
+  chains.forEach(chain => {
+    chain.steps.forEach((step, i) => {
+      out.push({
+        id: `${chain.id}_s${i + 1}`,
+        question: `(${i + 1}) ${step.question}`,
+        chainIntro: i === 0 ? `📘 ${chain.title}\n${chain.intro}` : '',
+        answer: step.answer,
+        choices: step.choices,
+        meaning: step.meaning,
+        difficulty: 5,
+        grade: chain.grade || grade,
+        _cat: chain.category,
+      });
+    });
+  });
+  return out;
+}
 
 const sansuCache = {};
 const sansuState = {
@@ -1542,13 +1614,20 @@ function updateRikaStart() {
 async function startRikaSession() {
   showLoading();
   try {
-    const all = sansuState.cat === 'mix'
-      ? await loadMixQuestions(sansuState.grade, sansuState.diff)
-      : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+    const isChain = sansuState.diff === 5;
+    const all = isChain
+      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade)
+      : sansuState.cat === 'mix'
+        ? await loadMixQuestions(sansuState.grade, sansuState.diff)
+        : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
     if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
-    const countVal = document.getElementById('rika-q-count').value;
-    const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
-    sansuState.questions = shuffle([...all]).slice(0, count);
+    if (isChain) {
+      sansuState.questions = all;
+    } else {
+      const countVal = document.getElementById('rika-q-count').value;
+      const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
+      sansuState.questions = shuffle([...all]).slice(0, count);
+    }
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
     coinSessionEarned = 0;
     hideLoading();
@@ -1651,13 +1730,20 @@ function updateShakaiStart() {
 async function startShakaiSession() {
   showLoading();
   try {
-    const all = sansuState.cat === 'mix'
-      ? await loadMixQuestions(sansuState.grade, sansuState.diff)
-      : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+    const isChain = sansuState.diff === 5;
+    const all = isChain
+      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade)
+      : sansuState.cat === 'mix'
+        ? await loadMixQuestions(sansuState.grade, sansuState.diff)
+        : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
     if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
-    const countVal = document.getElementById('shakai-q-count').value;
-    const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
-    sansuState.questions = shuffle([...all]).slice(0, count);
+    if (isChain) {
+      sansuState.questions = all;
+    } else {
+      const countVal = document.getElementById('shakai-q-count').value;
+      const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
+      sansuState.questions = shuffle([...all]).slice(0, count);
+    }
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
     coinSessionEarned = 0;
     hideLoading();
@@ -1669,13 +1755,20 @@ async function startSansuSession() {
   if (sansuState.mode === 'normal') {
     showLoading();
     try {
-      const all = sansuState.cat === 'mix'
-        ? await loadMixQuestions(sansuState.grade, sansuState.diff)
-        : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
+      const isChain = sansuState.diff === 5;
+      const all = isChain
+        ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade)
+        : sansuState.cat === 'mix'
+          ? await loadMixQuestions(sansuState.grade, sansuState.diff)
+          : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
       if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
-      const countVal = document.getElementById('sansu-q-count').value;
-      const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
-      sansuState.questions = shuffle([...all]).slice(0, count);
+      if (isChain) {
+        sansuState.questions = all;
+      } else {
+        const countVal = document.getElementById('sansu-q-count').value;
+        const count = countVal === 'all' ? all.length : Math.min(Number(countVal), all.length);
+        sansuState.questions = shuffle([...all]).slice(0, count);
+      }
       sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
       coinSessionEarned = 0;
       hideLoading();
@@ -1754,6 +1847,9 @@ function renderSansuQuiz() {
   document.getElementById('sansu-quiz-counter').textContent = `${sansuState.current + 1}/${total}`;
   document.getElementById('sq-question').textContent = q.question;
   document.getElementById('sq-meaning').textContent = '';
+  const introEl = document.getElementById('sq-chain-intro');
+  if (q.chainIntro) { introEl.textContent = q.chainIntro; introEl.classList.remove('hidden'); }
+  else { introEl.textContent = ''; introEl.classList.add('hidden'); }
   const figEl = document.getElementById('sq-figure');
   if (q.svg) { figEl.innerHTML = q.svg; figEl.classList.remove('hidden'); }
   else { figEl.innerHTML = ''; figEl.classList.add('hidden'); }

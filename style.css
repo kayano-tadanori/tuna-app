@@ -496,6 +496,9 @@ button { cursor: pointer; font-family: inherit; }
 .diff-btn[data-diff="2"].selected { background: linear-gradient(135deg,#4f7cff,#38c8f0); border-color: var(--accent2); }
 .diff-btn[data-diff="3"].selected { background: var(--grad-gold); border-color: var(--gold); color: #080e20; box-shadow: var(--glow-gold); }
 .diff-btn[data-diff="4"].selected { background: var(--grad-red); border-color: var(--red); box-shadow: var(--glow-red); }
+.diff-btn[data-diff="5"] { background: linear-gradient(135deg,#ffd166,#ff6b6b,#8a5cff); background-size: 200% 200%; border-color: #ffd166; color: #080e20; }
+.diff-btn[data-diff="5"].selected { animation: diff5glow 1.6s ease-in-out infinite; box-shadow: 0 0 20px rgba(255,209,102,0.6); }
+@keyframes diff5glow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 .diff-btn[data-diff="all"].selected { background: linear-gradient(135deg,#8a5cff,#c860f0); border-color: #c860f0; box-shadow: 0 0 18px rgba(200,96,240,0.4); }
 .diff-btn:active { transform: scale(0.94); }
 
@@ -520,6 +523,7 @@ button { cursor: pointer; font-family: inherit; }
 .badge-diff[data-level="2"] { background: var(--grad-accent); color: #fff; }
 .badge-diff[data-level="3"] { background: var(--grad-gold); color: #080e20; }
 .badge-diff[data-level="4"] { background: var(--grad-red); color: #fff; }
+.badge-diff[data-level="5"] { background: linear-gradient(135deg,#ffd166,#ff6b6b,#8a5cff); color: #080e20; }
 .badge-type { background: var(--grad-purple); color: #fff; border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; }
 .sansu-question { font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; line-height: 1.6; text-align: center; }
 .sq-figure { text-align: center; margin: 4px 0 2px; line-height: 0; }
