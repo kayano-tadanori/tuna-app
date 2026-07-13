@@ -2776,39 +2776,9 @@ async function showNipponCategory(cat) {
 // 実験室（中学受験理科のバーチャル実験）
 // ============================================================
 
-function pixelSvg(rows, palette) {
-  const w = rows[0].length, h = rows.length;
-  let rects = '';
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const ch = rows[y][x];
-      if (ch === '.' || !palette[ch]) continue;
-      rects += `<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[ch]}"/>`;
-    }
-  }
-  return `<svg viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" style="display:block;width:100%;height:100%">${rects}</svg>`;
-}
-
-const OTTON_LAB_PALETTE = { B: '#4fc3ff', H: '#e5484d', S: '#f0c090', K: '#241f1a', M: '#5a3b22', W: '#f5f5f5' };
-const OTTON_LAB_ROWS = [
-  '..BB....BB..',
-  '..BBHHHHBB..',
-  '...HHHHHH...',
-  '..SSSSSSSS..',
-  '..SSSSSSSS..',
-  '.SSSKKKKSSS.',
-  '.SSSSSSSSSS.',
-  '.SSSMMMMSSS.',
-  '.SSSSSSSSSS.',
-  '..SSSSSSSS..',
-  '..WWWWWWWW..',
-  '.WWWWWWWWWW.',
-  'WWWWWWWWWWWW',
-  'WWWWWWWWWWWW'
-];
-
-function renderOttonSprite() {
-  return pixelSvg(OTTON_LAB_ROWS, OTTON_LAB_PALETTE);
+function renderOttonSprite(mood) {
+  const src = mood === 'excited' ? 'images/otton-happy.png' : 'images/otton.png';
+  return `<img src="${src}" alt="オットン" class="lab-otton-img" onerror="this.style.display='none'">`;
 }
 
 function renderLabBenchScene() {
@@ -2889,7 +2859,7 @@ async function showLabDetail(id) {
     labVarValues = {};
 
     const ottonEl = document.getElementById('lab-otton-portrait');
-    ottonEl.innerHTML = renderOttonSprite();
+    ottonEl.innerHTML = renderOttonSprite('idle');
     ottonEl.classList.remove('lab-otton-running', 'lab-otton-excited');
     document.getElementById('lab-otton-speech').textContent = 'じゅんびOK！道具を選んでね。';
 
@@ -2970,6 +2940,7 @@ function labFinishRunning(speech) {
   const ottonEl = document.getElementById('lab-otton-portrait');
   ottonEl.classList.remove('lab-otton-running');
   ottonEl.classList.add('lab-otton-excited');
+  ottonEl.innerHTML = renderOttonSprite('excited');
   document.getElementById('lab-otton-speech').textContent = speech;
   const resultEl = document.getElementById('lab-result');
   resultEl.classList.remove('hidden');
