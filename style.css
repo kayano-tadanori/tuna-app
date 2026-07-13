@@ -200,6 +200,15 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ===== 実験室 ===== */
 .lab-detail-main { padding-bottom: 32px; }
+.lab-bench-banner { border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; border: 1.5px solid var(--glass-border); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.lab-otton-wrap { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 14px; }
+.lab-otton-portrait { width: 56px; height: 66px; flex-shrink: 0; transition: transform 0.2s; }
+.lab-otton-portrait.lab-otton-running { animation: labOttonWobble 0.5s ease-in-out infinite; }
+.lab-otton-portrait.lab-otton-excited { animation: labOttonBounce 0.5s ease; }
+.lab-otton-speech { position: relative; flex: 1; font-size: 0.82rem; font-weight: 700; color: var(--text); background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 14px; padding: 8px 12px; }
+.lab-otton-speech::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: rgba(255,255,255,0.05); border-left: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+@keyframes labOttonWobble { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@keyframes labOttonBounce { 0% { transform: scale(1) translateY(0); } 30% { transform: scale(1.15) translateY(-8px); } 60% { transform: scale(0.96) translateY(2px); } 100% { transform: scale(1) translateY(0); } }
 .lab-control-label { font-size: 0.86rem; font-weight: 800; color: var(--sub2); margin: 4px 0 10px; }
 .lab-choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin-bottom: 18px; }
 .lab-choice-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 6px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-sm); color: var(--text); transition: transform 0.12s, border-color 0.15s, background 0.15s; }

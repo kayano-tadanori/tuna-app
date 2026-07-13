@@ -2776,6 +2776,73 @@ async function showNipponCategory(cat) {
 // 実験室（中学受験理科のバーチャル実験）
 // ============================================================
 
+function pixelSvg(rows, palette) {
+  const w = rows[0].length, h = rows.length;
+  let rects = '';
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const ch = rows[y][x];
+      if (ch === '.' || !palette[ch]) continue;
+      rects += `<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[ch]}"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" style="display:block;width:100%;height:100%">${rects}</svg>`;
+}
+
+const OTTON_LAB_PALETTE = { B: '#4fc3ff', H: '#e5484d', S: '#f0c090', K: '#241f1a', M: '#5a3b22', W: '#f5f5f5' };
+const OTTON_LAB_ROWS = [
+  '..BB....BB..',
+  '..BBHHHHBB..',
+  '...HHHHHH...',
+  '..SSSSSSSS..',
+  '..SSSSSSSS..',
+  '.SSSKKKKSSS.',
+  '.SSSSSSSSSS.',
+  '.SSSMMMMSSS.',
+  '.SSSSSSSSSS.',
+  '..SSSSSSSS..',
+  '..WWWWWWWW..',
+  '.WWWWWWWWWW.',
+  'WWWWWWWWWWWW',
+  'WWWWWWWWWWWW'
+];
+
+function renderOttonSprite() {
+  return pixelSvg(OTTON_LAB_ROWS, OTTON_LAB_PALETTE);
+}
+
+function renderLabBenchScene() {
+  const bottles = [
+    { x: 190, color: '#ff6b6b', h: 26 },
+    { x: 215, color: '#4fd1c5', h: 34 },
+    { x: 240, color: '#ffd166', h: 22 },
+    { x: 263, color: '#a78bfa', h: 30 }
+  ];
+  const bottleEls = bottles.map(b => `
+    <rect x="${b.x}" y="${70 - b.h}" width="16" height="${b.h}" rx="3" fill="${b.color}" fill-opacity="0.85"/>
+    <rect x="${b.x + 4}" y="${70 - b.h - 6}" width="8" height="8" fill="#cfd8dc"/>
+  `).join('');
+  const planks = Array.from({ length: 8 }).map((_, i) => `<line x1="${i * 40}" y1="80" x2="${i * 40}" y2="118" stroke="#5a3d24" stroke-width="1"/>`).join('');
+  return `<svg viewBox="0 0 300 118" shape-rendering="crispEdges" style="display:block;width:100%;height:auto">
+    <rect width="300" height="118" fill="#1a2340"/>
+    <rect x="18" y="14" width="46" height="36" fill="#0e1830" stroke="#4f9eff" stroke-width="2"/>
+    <rect x="18" y="30" width="46" height="2" fill="#4f9eff"/>
+    <rect x="39" y="14" width="2" height="36" fill="#4f9eff"/>
+    <rect x="20" y="16" width="42" height="32" fill="#ffe9a8" fill-opacity="0.18"/>
+    <rect x="170" y="70" width="120" height="2" fill="#8d6e63"/>
+    ${bottleEls}
+    <rect x="0" y="80" width="300" height="38" fill="#7a4a2a"/>
+    ${planks}
+    <rect x="30" y="60" width="26" height="20" fill="#37474f"/>
+    <rect x="38" y="46" width="10" height="16" fill="#455a64"/>
+    <polygon points="43,30 38,46 48,46" fill="#ff8c42"/>
+    <polygon points="43,36 40,46 46,46" fill="#ffd166"/>
+    <rect x="90" y="58" width="24" height="22" rx="4" fill="#8ecbff" fill-opacity="0.55" stroke="#4f9eff" stroke-width="1.5"/>
+    <circle cx="97" cy="70" r="2" fill="#fff"/>
+    <circle cx="104" cy="65" r="1.5" fill="#fff"/>
+  </svg>`;
+}
+
 let labData = null;
 async function loadLabData() {
   if (labData) return labData;
@@ -2790,6 +2857,7 @@ let labVarValues = {};
 async function initLabHome() {
   showLoading();
   try {
+    document.getElementById('lab-bench-banner').innerHTML = renderLabBenchScene();
     const data = await loadLabData();
     const grid = document.getElementById('lab-home-grid');
     grid.innerHTML = '';
@@ -2819,6 +2887,11 @@ async function showLabDetail(id) {
     if (!exp) { showToast('実験が見つかりません'); hideLoading(); return; }
     labCurrentExp = exp;
     labVarValues = {};
+
+    const ottonEl = document.getElementById('lab-otton-portrait');
+    ottonEl.innerHTML = renderOttonSprite();
+    ottonEl.classList.remove('lab-otton-running', 'lab-otton-excited');
+    document.getElementById('lab-otton-speech').textContent = 'じゅんびOK！道具を選んでね。';
 
     document.getElementById('lab-detail-title').textContent = `${exp.icon} ${exp.title}`;
     document.getElementById('lab-detail-intro').textContent = exp.intro;
@@ -2884,16 +2957,35 @@ async function showLabDetail(id) {
   }
 }
 
-function runLabChoice(i) {
-  const opt = labCurrentExp.options[i];
+function labStartRunning() {
+  const ottonEl = document.getElementById('lab-otton-portrait');
+  ottonEl.classList.remove('lab-otton-excited');
+  ottonEl.classList.add('lab-otton-running');
+  document.getElementById('lab-otton-speech').textContent = 'じっけん中…どうなるかな？';
+  const resultEl = document.getElementById('lab-result');
+  resultEl.classList.add('hidden');
+}
+
+function labFinishRunning(speech) {
+  const ottonEl = document.getElementById('lab-otton-portrait');
+  ottonEl.classList.remove('lab-otton-running');
+  ottonEl.classList.add('lab-otton-excited');
+  document.getElementById('lab-otton-speech').textContent = speech;
   const resultEl = document.getElementById('lab-result');
   resultEl.classList.remove('hidden');
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+}
+
+function runLabChoice(i) {
+  const opt = labCurrentExp.options[i];
+  labStartRunning();
+  const resultEl = document.getElementById('lab-result');
   resultEl.innerHTML = `
     <div class="lab-result-icon" style="background:${opt.color || '#4f9eff'}">${opt.resultIcon || opt.icon || '🔬'}</div>
     <div class="lab-result-title">${opt.resultTitle}</div>
     <div class="lab-result-text">${opt.resultText}</div>
   `;
-  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+  setTimeout(() => labFinishRunning('できた！見てみて！'), 900);
 }
 
 function runLabCalc() {
@@ -2901,14 +2993,14 @@ function runLabCalc() {
   const fn = LAB_FORMULAS[exp.formula];
   if (!fn) return;
   const r = fn(labVarValues);
+  labStartRunning();
   const resultEl = document.getElementById('lab-result');
-  resultEl.classList.remove('hidden');
   resultEl.innerHTML = `
     <div class="lab-result-svg">${r.svg}</div>
     <div class="lab-result-title">${r.title}</div>
     <div class="lab-result-text">${r.text}</div>
   `;
-  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+  setTimeout(() => labFinishRunning('できた！見てみて！'), 900);
 }
 
 const LAB_FORMULAS = {
