@@ -1480,6 +1480,10 @@ function initRikaHome() {
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         initScienceHome();
         showScreen('science-home');
+      } else if (btn.dataset.topmode === 'lab') {
+        hideSansuSteps('rika-step-cat', 'rika-step-diff');
+        initLabHome();
+        showScreen('lab-home');
       } else {
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         showToast('もうすぐ追加されます！工事中🚧');
@@ -2767,6 +2771,220 @@ async function showNipponCategory(cat) {
     hideLoading();
   }
 }
+
+// ============================================================
+// 実験室（中学受験理科のバーチャル実験）
+// ============================================================
+
+let labData = null;
+async function loadLabData() {
+  if (labData) return labData;
+  const res = await fetch('data/rika_lab.json');
+  labData = await res.json();
+  return labData;
+}
+
+let labCurrentExp = null;
+let labVarValues = {};
+
+async function initLabHome() {
+  showLoading();
+  try {
+    const data = await loadLabData();
+    const grid = document.getElementById('lab-home-grid');
+    grid.innerHTML = '';
+    data.forEach(exp => {
+      const btn = document.createElement('button');
+      btn.className = 'cat-card';
+      btn.innerHTML = `
+        <span class="cat-icon">${exp.icon}</span>
+        <span class="cat-name">${exp.title}</span>
+      `;
+      btn.onclick = () => showLabDetail(exp.id);
+      grid.appendChild(btn);
+    });
+  } catch (e) {
+    showToast('実験室の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function showLabDetail(id) {
+  showLoading();
+  try {
+    const data = await loadLabData();
+    const exp = data.find(x => x.id === id);
+    if (!exp) { showToast('実験が見つかりません'); hideLoading(); return; }
+    labCurrentExp = exp;
+    labVarValues = {};
+
+    document.getElementById('lab-detail-title').textContent = `${exp.icon} ${exp.title}`;
+    document.getElementById('lab-detail-intro').textContent = exp.intro;
+    document.getElementById('lab-control-label').textContent = exp.controlLabel || '';
+
+    const resultEl = document.getElementById('lab-result');
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+
+    const optionsEl = document.getElementById('lab-choice-options');
+    const varsEl = document.getElementById('lab-calc-vars');
+    const runBtn = document.getElementById('lab-run-btn');
+    optionsEl.innerHTML = '';
+    varsEl.innerHTML = '';
+    runBtn.classList.add('hidden');
+    optionsEl.classList.add('hidden');
+    varsEl.classList.add('hidden');
+
+    if (exp.type === 'choice') {
+      optionsEl.classList.remove('hidden');
+      exp.options.forEach((opt, i) => {
+        const b = document.createElement('button');
+        b.className = 'lab-choice-btn';
+        b.innerHTML = `<span class="lab-choice-icon">${opt.icon || '🔬'}</span><span class="lab-choice-label">${opt.label}</span>`;
+        b.onclick = () => runLabChoice(i);
+        optionsEl.appendChild(b);
+      });
+    } else if (exp.type === 'calc') {
+      varsEl.classList.remove('hidden');
+      exp.vars.forEach(v => {
+        labVarValues[v.id] = v.default;
+        const row = document.createElement('div');
+        row.className = 'lab-var-row';
+        row.innerHTML = `
+          <span class="lab-var-label">${v.label}</span>
+          <div class="lab-var-ctrl">
+            <button class="lab-var-btn" data-dir="-1">−</button>
+            <span class="lab-var-value" id="lab-var-${v.id}">${v.default}${v.unit || ''}</span>
+            <button class="lab-var-btn" data-dir="1">＋</button>
+          </div>
+        `;
+        const [minusBtn, plusBtn] = row.querySelectorAll('.lab-var-btn');
+        const update = dir => {
+          let nv = labVarValues[v.id] + dir * v.step;
+          nv = Math.min(v.max, Math.max(v.min, nv));
+          labVarValues[v.id] = nv;
+          document.getElementById(`lab-var-${v.id}`).textContent = `${nv}${v.unit || ''}`;
+        };
+        minusBtn.onclick = () => update(-1);
+        plusBtn.onclick = () => update(1);
+        varsEl.appendChild(row);
+      });
+      runBtn.classList.remove('hidden');
+      runBtn.onclick = runLabCalc;
+    }
+
+    showScreen('lab-detail');
+  } catch (e) {
+    showToast('実験の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+function runLabChoice(i) {
+  const opt = labCurrentExp.options[i];
+  const resultEl = document.getElementById('lab-result');
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = `
+    <div class="lab-result-icon" style="background:${opt.color || '#4f9eff'}">${opt.resultIcon || opt.icon || '🔬'}</div>
+    <div class="lab-result-title">${opt.resultTitle}</div>
+    <div class="lab-result-text">${opt.resultText}</div>
+  `;
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+}
+
+function runLabCalc() {
+  const exp = labCurrentExp;
+  const fn = LAB_FORMULAS[exp.formula];
+  if (!fn) return;
+  const r = fn(labVarValues);
+  const resultEl = document.getElementById('lab-result');
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = `
+    <div class="lab-result-svg">${r.svg}</div>
+    <div class="lab-result-title">${r.title}</div>
+    <div class="lab-result-text">${r.text}</div>
+  `;
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 30);
+}
+
+const LAB_FORMULAS = {
+  lever(v) {
+    const lm = v.ld * v.lw, rm = v.rd * v.rw;
+    const balanced = lm === rm;
+    const tiltLeft = lm > rm;
+    const angle = balanced ? 0 : (tiltLeft ? -12 : 12);
+    const lr = 8 + Math.min(20, v.lw / 3);
+    const rr = 8 + Math.min(20, v.rw / 3);
+    const svg = `<svg viewBox="0 0 240 150" style="display:block;margin:0 auto;max-width:260px">
+      <rect width="240" height="150" fill="#eef2ff"/>
+      <polygon points="110,120 130,120 120,100" fill="#4f9eff"/>
+      <g transform="rotate(${angle} 120 100)">
+        <rect x="30" y="97" width="180" height="6" rx="3" fill="#8ecbff"/>
+        <circle cx="40" cy="100" r="${lr}" fill="#ff8fa3"/>
+        <circle cx="200" cy="100" r="${rr}" fill="#ffd166"/>
+      </g>
+      <text x="40" y="40" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">左 ${v.ld}×${v.lw}=${lm}</text>
+      <text x="200" y="40" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">右 ${v.rd}×${v.rw}=${rm}</text>
+    </svg>`;
+    return {
+      svg,
+      title: balanced ? '⚖️ つり合った！' : (tiltLeft ? '⬅️ 左にかたむいた' : '➡️ 右にかたむいた'),
+      text: balanced
+        ? `左は「うでの長さ${v.ld}×おもり${v.lw}g＝${lm}」、右は「${v.rd}×${v.rw}＝${rm}」で、同じ数字になったのでつり合いました。てこは「支点からの距離×おもりの重さ」が左右で等しいときにつり合います。`
+        : `左は${v.ld}×${v.lw}＝${lm}、右は${v.rd}×${v.rw}＝${rm}で、${tiltLeft ? '左' : '右'}の方が大きいので${tiltLeft ? '左' : '右'}にかたむきます。数字が同じになるように、うでの長さかおもりを調整してみよう。`
+    };
+  },
+  spring(v) {
+    const ext = Math.round((v.force / 10) * 2 * 10) / 10;
+    const svg = `<svg viewBox="0 0 160 200" style="display:block;margin:0 auto;max-width:180px">
+      <rect width="160" height="200" fill="#eef2ff"/>
+      <rect x="70" y="10" width="20" height="10" fill="#8d6e63"/>
+      <path d="M80,20 L65,32 L95,44 L65,56 L95,68 L65,80 L80,${90 + ext * 3}" stroke="#4f9eff" stroke-width="3" fill="none"/>
+      <circle cx="80" cy="${104 + ext * 3}" r="14" fill="#ffd166"/>
+      <text x="80" y="${108 + ext * 3}" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a2340">${v.force}g</text>
+    </svg>`;
+    return {
+      svg,
+      title: `📏 のびは ${ext}cm`,
+      text: `このばねは10gで2cmのびる性質があります。ばねののびは、つるしたおもりの重さに比例します（フックの法則）。${v.force}gをつるすと、${v.force}÷10×2＝${ext}cmのびます。`
+    };
+  },
+  pendulum(v) {
+    const period = (2 * Math.PI * Math.sqrt(v.length / 100 / 9.8)).toFixed(1);
+    const dx = Math.min(60, v.length * 0.6), dy = Math.min(90, v.length * 0.9);
+    const svg = `<svg viewBox="0 0 200 180" style="display:block;margin:0 auto;max-width:220px">
+      <rect width="200" height="180" fill="#eef2ff"/>
+      <circle cx="100" cy="20" r="5" fill="#4f9eff"/>
+      <line x1="100" y1="20" x2="${100 + dx}" y2="${20 + dy}" stroke="#8ecbff" stroke-width="2"/>
+      <circle cx="${100 + dx}" cy="${20 + dy}" r="12" fill="#ff8fa3"/>
+      <text x="100" y="165" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">糸の長さ ${v.length}cm</text>
+    </svg>`;
+    return {
+      svg,
+      title: `⏱️ 1往復 約${period}秒`,
+      text: `振り子が1往復する時間は、糸の長さだけで決まり、おもりの重さやふれはばには関係しません。糸を長くするほど1往復する時間は長くなります（糸の長さ${v.length}cmのとき、約${period}秒）。`
+    };
+  },
+  buoyancy(v) {
+    const density = Math.round((v.weight / v.volume) * 100) / 100;
+    const floats = density < 1;
+    const svg = `<svg viewBox="0 0 200 160" style="display:block;margin:0 auto;max-width:220px">
+      <rect width="200" height="160" fill="#dff3ff"/>
+      <rect y="70" width="200" height="90" fill="#7fc7ff"/>
+      <rect x="80" y="${floats ? 50 : 90}" width="40" height="40" fill="#ffd166"/>
+      <text x="100" y="145" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a2340">重さ${v.weight}g／体積${v.volume}cm³</text>
+    </svg>`;
+    return {
+      svg,
+      title: floats ? '🎈 浮いた！' : '⬇️ しずんだ…',
+      text: `密度（1cm³あたりの重さ）は ${v.weight}g ÷ ${v.volume}cm³ ＝ ${density}g/cm³ です。水の密度（1g/cm³）より${floats ? '小さい' : '大きい'}ので、この物体は${floats ? '浮きます' : 'しずみます'}。`
+    };
+  }
+};
 
 // ============================================================
 // オトンテトリス（息抜きミニゲーム）

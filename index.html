@@ -777,6 +777,11 @@
           <span class="mode-name">はかせの図鑑</span>
           <span class="mode-desc">図鑑でまとめて読む</span>
         </button>
+        <button class="rika-topmode-btn sansu-mode-btn" data-topmode="lab">
+          <span class="mode-icon">🧪</span>
+          <span class="mode-name">実験室</span>
+          <span class="mode-desc">実験して確かめよう</span>
+        </button>
       </div>
     </div>
 
@@ -1164,6 +1169,34 @@
   <main class="tora-main">
     <div id="nippon-cat-nav" class="tora-cat-nav"></div>
     <div id="nippon-cat-list" class="tora-cat-list"></div>
+  </main>
+</div>
+
+<!-- =============== 実験室（ホーム：実験一覧） =============== -->
+<div id="screen-lab-home" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="rika-home">‹ 戻る</button>
+    <h2 class="top-title">🧪 実験室</h2>
+  </header>
+  <main class="tora-main">
+    <p class="tora-intro">中学受験理科の実験を、自分で選んで確かめてみよう。「じっけん」ボタンをおして結果を見てみよう！</p>
+    <div id="lab-home-grid" class="category-grid"></div>
+  </main>
+</div>
+
+<!-- =============== 実験室（実験詳細） =============== -->
+<div id="screen-lab-detail" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="lab-home">‹ 戻る</button>
+    <h2 id="lab-detail-title" class="top-title"></h2>
+  </header>
+  <main class="tora-main lab-detail-main">
+    <p id="lab-detail-intro" class="tora-intro"></p>
+    <p id="lab-control-label" class="lab-control-label"></p>
+    <div id="lab-choice-options" class="lab-choice-grid"></div>
+    <div id="lab-calc-vars" class="lab-vars"></div>
+    <button id="lab-run-btn" class="lab-run-btn hidden">🧪 じっけん スタート！</button>
+    <div id="lab-result" class="lab-result hidden"></div>
   </main>
 </div>
 

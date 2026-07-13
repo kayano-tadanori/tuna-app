@@ -1,0 +1,54 @@
+[
+  {
+    "id": "exp_teko",
+    "type": "calc",
+    "formula": "lever",
+    "icon": "⚖️",
+    "title": "てこのつり合い",
+    "intro": "てこは「支点からの距離×おもりの重さ」が左右で同じになるとつり合います。左右のうでの長さとおもりの重さを変えて、つり合う組み合わせを探してみよう。",
+    "controlLabel": "左右のうでの長さとおもりの重さを調整しよう",
+    "vars": [
+      { "id": "ld", "label": "左のうでの長さ", "unit": "", "min": 1, "max": 6, "step": 1, "default": 3 },
+      { "id": "lw", "label": "左のおもり", "unit": "g", "min": 10, "max": 60, "step": 10, "default": 30 },
+      { "id": "rd", "label": "右のうでの長さ", "unit": "", "min": 1, "max": 6, "step": 1, "default": 3 },
+      { "id": "rw", "label": "右のおもり", "unit": "g", "min": 10, "max": 60, "step": 10, "default": 30 }
+    ]
+  },
+  {
+    "id": "exp_bane",
+    "type": "calc",
+    "formula": "spring",
+    "icon": "📏",
+    "title": "ばねののび（フックの法則）",
+    "intro": "ばねは、つるすおもりの重さに比例してのびます。このばねは「10gで2cmのびる」性質があります。おもりの重さを変えて、のびの変化を確かめよう。",
+    "controlLabel": "つるすおもりの重さを変えよう",
+    "vars": [
+      { "id": "force", "label": "おもりの重さ", "unit": "g", "min": 10, "max": 100, "step": 10, "default": 30 }
+    ]
+  },
+  {
+    "id": "exp_furiko",
+    "type": "calc",
+    "formula": "pendulum",
+    "icon": "⏱️",
+    "title": "振り子の周期",
+    "intro": "振り子が1往復する時間（周期）は、糸の長さだけで決まります。おもりの重さやふれはばを変えても周期は変わりません。糸の長さを変えて確かめよう。",
+    "controlLabel": "糸の長さを変えよう",
+    "vars": [
+      { "id": "length", "label": "糸の長さ", "unit": "cm", "min": 10, "max": 100, "step": 10, "default": 50 }
+    ]
+  },
+  {
+    "id": "exp_furyoku",
+    "type": "calc",
+    "formula": "buoyancy",
+    "icon": "🎈",
+    "title": "浮力（浮くかしずむか）",
+    "intro": "物体が水に浮くかしずむかは、密度（1cm³あたりの重さ）で決まります。水の密度は1g/cm³です。物体の重さと体積を変えて、浮くかしずむか確かめよう。",
+    "controlLabel": "物体の重さと体積を変えよう",
+    "vars": [
+      { "id": "weight", "label": "物体の重さ", "unit": "g", "min": 10, "max": 200, "step": 10, "default": 50 },
+      { "id": "volume", "label": "物体の体積", "unit": "cm³", "min": 10, "max": 200, "step": 10, "default": 100 }
+    ]
+  }
+]
