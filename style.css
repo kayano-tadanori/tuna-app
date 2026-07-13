@@ -372,11 +372,11 @@ button { cursor: pointer; font-family: inherit; }
 .grade-sub { font-size: 0.65rem; font-weight: 700; color: var(--gold); letter-spacing: 0; }
 
 /* モード選択 */
-.sansu-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
-.sansu-mode-btn { background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.9rem; font-weight: 700; min-height: 80px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
-.sansu-mode-btn .mode-icon { font-size: 1.6rem; }
-.sansu-mode-btn .mode-name { font-size: 0.9rem; font-weight: 900; }
-.sansu-mode-btn .mode-desc { font-size: 0.7rem; color: var(--sub2); }
+.sansu-mode-grid { display: flex; gap: 10px; margin-bottom: 4px; }
+.sansu-mode-btn { flex: 1 1 0; min-width: 0; background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.9rem; font-weight: 700; min-height: 80px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.sansu-mode-btn .mode-icon { font-size: 1.5rem; }
+.sansu-mode-btn .mode-name { font-size: 0.78rem; font-weight: 900; text-align: center; }
+.sansu-mode-btn .mode-desc { font-size: 0.62rem; color: var(--sub2); text-align: center; }
 .sansu-mode-btn.selected { background: var(--grad-brand); border-color: var(--accent); box-shadow: var(--glow-brand); }
 .sansu-mode-btn:active { transform: scale(0.94); }
 
