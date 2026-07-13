@@ -2062,9 +2062,14 @@ function openScratchFullscreen() {
     const virtualH = vh * 2;
     canvas.style.width = virtualW + 'px';
     canvas.style.height = virtualH + 'px';
-    canvas.width = Math.round(virtualW * dpr);
-    canvas.height = Math.round(virtualH * dpr);
-    scratchPad = createDrawPad(canvas, { grid: true, penColor: '#1a1a1a', lineWidth: 4 * dpr });
+    // 古いiPad等では巨大なcanvas（縦横×dprで1000万px超）が確保できず、
+    // キャンバスが真っ白のまま描画されないことがあるため、実際のピクセル数に上限を設ける
+    const MAX_CANVAS_PIXELS = 4000000;
+    const rawPixels = virtualW * dpr * virtualH * dpr;
+    const effDpr = rawPixels > MAX_CANVAS_PIXELS ? dpr * Math.sqrt(MAX_CANVAS_PIXELS / rawPixels) : dpr;
+    canvas.width = Math.round(virtualW * effDpr);
+    canvas.height = Math.round(virtualH * effDpr);
+    scratchPad = createDrawPad(canvas, { grid: true, penColor: '#1a1a1a', lineWidth: 4 * effDpr });
 
     // 初期表示：仮想キャンバスの中央が画面中央に来るように配置（zoom=1）
     scratchView = { virtualW, virtualH, vw, vh, panX: -(virtualW - vw) / 2, panY: -(virtualH - vh) / 2, zoom: 1 };
