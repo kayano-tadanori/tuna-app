@@ -1582,6 +1582,10 @@ function initShakaiHome() {
       btn.classList.add('selected');
       if (btn.dataset.topmode === 'normal') {
         showSansuStep('shakai-step-cat');
+      } else if (btn.dataset.topmode === 'history') {
+        hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
+        initNipponHome();
+        showScreen('nippon-home');
       } else {
         hideSansuSteps('shakai-step-cat', 'shakai-step-diff');
         showToast('もうすぐ追加されます！工事中🚧');
@@ -2676,6 +2680,88 @@ async function showScienceCategory(cat) {
     showScreen('science-cat');
   } catch (e) {
     showToast('はかせの図鑑の読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+// ============================================================
+// ニッポンのあゆみ（中学受験社会の図鑑・知識まとめ）
+// ============================================================
+
+const NIPPON_CATEGORIES = {
+  kokudo: { label: '国土と自然',   icon: '🗾' },
+  sangyo: { label: '産業とくらし', icon: '🏭' },
+  rekishi: { label: '日本の歴史',  icon: '⛩️' },
+  komin:  { label: '政治と国際',   icon: '🏛️' },
+};
+
+let nipponData = null;
+async function loadNipponData() {
+  if (nipponData) return nipponData;
+  const res = await fetch('data/shakai_nippon.json');
+  nipponData = await res.json();
+  return nipponData;
+}
+
+async function initNipponHome() {
+  showLoading();
+  try {
+    const data = await loadNipponData();
+    const counts = {};
+    data.forEach(card => { counts[card.category] = (counts[card.category] || 0) + 1; });
+
+    const grid = document.getElementById('nippon-cat-grid');
+    grid.innerHTML = '';
+    Object.entries(NIPPON_CATEGORIES).forEach(([cat, info]) => {
+      const n = counts[cat] || 0;
+      const btn = document.createElement('button');
+      btn.className = 'cat-card';
+      btn.dataset.nipponCat = cat;
+      btn.innerHTML = `
+        <span class="cat-icon">${info.icon}</span>
+        <span class="cat-name">${info.label}</span>
+        <span class="cat-count">${n}件</span>
+      `;
+      btn.onclick = () => showNipponCategory(cat);
+      grid.appendChild(btn);
+    });
+  } catch (e) {
+    showToast('ニッポンのあゆみの読み込みに失敗しました');
+    console.error(e);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function showNipponCategory(cat) {
+  showLoading();
+  try {
+    const data = await loadNipponData();
+    const cards = data.filter(c => c.category === cat);
+    const info = NIPPON_CATEGORIES[cat] || { label: cat, icon: '🧭' };
+
+    document.getElementById('nippon-cat-title').textContent = `${info.icon} ${info.label}`;
+
+    const nav = document.getElementById('nippon-cat-nav');
+    nav.innerHTML = cards.map((c, i) => `<a href="#nippon-card-${i}" class="tora-nav-link">${c.title}</a>`).join('');
+
+    const list = document.getElementById('nippon-cat-list');
+    if (!cards.length) {
+      list.innerHTML = '<p class="tora-empty">このカテゴリはまだ準備中です。</p>';
+    } else {
+      list.innerHTML = cards.map((c, i) => `
+        <section id="nippon-card-${i}" class="tora-card">
+          <h3 class="tora-card-title">${c.title}</h3>
+          <div class="tora-card-body">${c.body}</div>
+        </section>
+      `).join('');
+    }
+
+    showScreen('nippon-cat');
+  } catch (e) {
+    showToast('ニッポンのあゆみの読み込みに失敗しました');
     console.error(e);
   } finally {
     hideLoading();
