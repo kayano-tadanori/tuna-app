@@ -2980,12 +2980,15 @@ const LAB_FORMULAS = {
     const balanced = lm === rm;
     const tiltLeft = lm > rm;
     const angle = balanced ? 0 : (tiltLeft ? -12 : 12);
+    const over = angle === 0 ? 0 : angle * 1.4;
+    const settle = angle === 0 ? 0 : angle * 0.85;
     const lr = 8 + Math.min(20, v.lw / 3);
     const rr = 8 + Math.min(20, v.rw / 3);
     const svg = `<svg viewBox="0 0 240 150" style="display:block;margin:0 auto;max-width:260px">
       <rect width="240" height="150" fill="#eef2ff"/>
       <polygon points="110,120 130,120 120,100" fill="#4f9eff"/>
-      <g transform="rotate(${angle} 120 100)">
+      <g transform="rotate(0 120 100)">
+        <animateTransform attributeName="transform" type="rotate" values="0 120 100;${over} 120 100;${settle} 120 100;${angle} 120 100" keyTimes="0;0.45;0.75;1" dur="0.9s" fill="freeze" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1;0.3 0 0.7 1"/>
         <rect x="30" y="97" width="180" height="6" rx="3" fill="#8ecbff"/>
         <circle cx="40" cy="100" r="${lr}" fill="#ff8fa3"/>
         <circle cx="200" cy="100" r="${rr}" fill="#ffd166"/>
@@ -3003,12 +3006,21 @@ const LAB_FORMULAS = {
   },
   spring(v) {
     const ext = Math.round((v.force / 10) * 2 * 10) / 10;
+    const pathOf = e => `M80,20 L65,32 L95,44 L65,56 L95,68 L65,80 L80,${90 + e * 3}`;
+    const d0 = pathOf(0), dOver = pathOf(ext * 1.3), dFinal = pathOf(ext);
+    const cy0 = 104, cyOver = 104 + ext * 1.3 * 3, cyFinal = 104 + ext * 3;
     const svg = `<svg viewBox="0 0 160 200" style="display:block;margin:0 auto;max-width:180px">
       <rect width="160" height="200" fill="#eef2ff"/>
       <rect x="70" y="10" width="20" height="10" fill="#8d6e63"/>
-      <path d="M80,20 L65,32 L95,44 L65,56 L95,68 L65,80 L80,${90 + ext * 3}" stroke="#4f9eff" stroke-width="3" fill="none"/>
-      <circle cx="80" cy="${104 + ext * 3}" r="14" fill="#ffd166"/>
-      <text x="80" y="${108 + ext * 3}" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a2340">${v.force}g</text>
+      <path d="${d0}" stroke="#4f9eff" stroke-width="3" fill="none">
+        <animate attributeName="d" values="${d0};${dOver};${dFinal}" keyTimes="0;0.6;1" dur="0.7s" fill="freeze"/>
+      </path>
+      <circle cx="80" cy="${cy0}" r="14" fill="#ffd166">
+        <animate attributeName="cy" values="${cy0};${cyOver};${cyFinal}" keyTimes="0;0.6;1" dur="0.7s" fill="freeze"/>
+      </circle>
+      <text x="80" y="${cy0 + 4}" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a2340">${v.force}g
+        <animate attributeName="y" values="${cy0 + 4};${cyOver + 4};${cyFinal + 4}" keyTimes="0;0.6;1" dur="0.7s" fill="freeze"/>
+      </text>
     </svg>`;
     return {
       svg,
@@ -3018,27 +3030,38 @@ const LAB_FORMULAS = {
   },
   pendulum(v) {
     const period = (2 * Math.PI * Math.sqrt(v.length / 100 / 9.8)).toFixed(1);
-    const dx = Math.min(60, v.length * 0.6), dy = Math.min(90, v.length * 0.9);
+    const len = Math.min(150, 20 + v.length * 1.3);
     const svg = `<svg viewBox="0 0 200 180" style="display:block;margin:0 auto;max-width:220px">
       <rect width="200" height="180" fill="#eef2ff"/>
       <circle cx="100" cy="20" r="5" fill="#4f9eff"/>
-      <line x1="100" y1="20" x2="${100 + dx}" y2="${20 + dy}" stroke="#8ecbff" stroke-width="2"/>
-      <circle cx="${100 + dx}" cy="${20 + dy}" r="12" fill="#ff8fa3"/>
+      <g transform="rotate(-30 100 20)">
+        <animateTransform attributeName="transform" type="rotate" values="-30 100 20;30 100 20;-30 100 20" keyTimes="0;0.5;1" dur="${period}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+        <line x1="100" y1="20" x2="100" y2="${20 + len}" stroke="#8ecbff" stroke-width="2"/>
+        <circle cx="100" cy="${20 + len}" r="12" fill="#ff8fa3"/>
+      </g>
       <text x="100" y="165" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a2340">糸の長さ ${v.length}cm</text>
     </svg>`;
     return {
       svg,
       title: `⏱️ 1往復 約${period}秒`,
-      text: `振り子が1往復する時間は、糸の長さだけで決まり、おもりの重さやふれはばには関係しません。糸を長くするほど1往復する時間は長くなります（糸の長さ${v.length}cmのとき、約${period}秒）。`
+      text: `振り子が1往復する時間は、糸の長さだけで決まり、おもりの重さやふれはばには関係しません。糸を長くするほど1往復する時間は長くなります（糸の長さ${v.length}cmのとき、約${period}秒）。絵の揺れる速さも、この周期に合わせています。`
     };
   },
   buoyancy(v) {
     const density = Math.round((v.weight / v.volume) * 100) / 100;
     const floats = density < 1;
+    const finalY = floats ? 50 : 90;
+    const overY = floats ? 42 : 100;
     const svg = `<svg viewBox="0 0 200 160" style="display:block;margin:0 auto;max-width:220px">
       <rect width="200" height="160" fill="#dff3ff"/>
       <rect y="70" width="200" height="90" fill="#7fc7ff"/>
-      <rect x="80" y="${floats ? 50 : 90}" width="40" height="40" fill="#ffd166"/>
+      <ellipse cx="100" cy="70" rx="0" ry="3" fill="none" stroke="#fff" stroke-width="2" opacity="0.7">
+        <animate attributeName="rx" values="0;40;70" dur="1.4s" begin="0.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;0.3;0" dur="1.4s" begin="0.6s" repeatCount="indefinite"/>
+      </ellipse>
+      <rect x="80" y="0" width="40" height="40" fill="#ffd166">
+        <animate attributeName="y" values="0;${overY};${finalY}" keyTimes="0;0.6;1" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1"/>
+      </rect>
       <text x="100" y="145" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a2340">重さ${v.weight}g／体積${v.volume}cm³</text>
     </svg>`;
     return {
