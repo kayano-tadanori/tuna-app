@@ -55,7 +55,7 @@ body {
 
 .top-bar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 8px; padding: calc(16px + var(--safe-t)) 16px 15px; background: rgba(8,14,32,0.82); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--glass-border); }
 .top-title { flex: 1; font-size: 1.1rem; font-weight: 800; text-align: center; letter-spacing: 0.04em; background: var(--grad-accent); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.top-logo-img { flex: 1; width: 100%; height: auto; max-height: 92px; max-width: 94%; object-fit: contain; margin: 0 auto; }
+.top-logo-img { flex: 1; width: auto; height: auto; max-height: 74px; max-width: 94%; object-fit: contain; margin: 0 auto; }
 .back-btn { background: none; border: none; color: var(--accent2); font-size: 1rem; font-weight: 700; padding: 8px 10px; cursor: pointer; min-width: 64px; min-height: 44px; border-radius: var(--radius-xs); transition: background 0.15s,transform 0.1s; }
 .back-btn:active { background: rgba(56,200,240,0.12); transform: scale(0.94); }
 .counter { font-size: 0.82rem; color: var(--sub); font-weight: 700; min-width: 56px; text-align: right; letter-spacing: 0.02em; }
