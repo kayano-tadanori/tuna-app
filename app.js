@@ -2954,6 +2954,9 @@ function labFinishRunning(speech) {
 
 function runLabChoice(i) {
   const opt = labCurrentExp.options[i];
+  document.querySelectorAll('#lab-choice-options .lab-choice-btn').forEach((b, bi) => {
+    b.classList.toggle('selected', bi === i);
+  });
   labStartRunning();
   const resultEl = document.getElementById('lab-result');
   resultEl.innerHTML = `
