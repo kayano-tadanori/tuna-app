@@ -2156,6 +2156,90 @@ function closeScratchFullscreen() {
   document.getElementById('scratch-fullscreen').classList.add('hidden');
 }
 
+// ── 汎用：指1本でパン・2本指でピンチズーム（地図・図の拡大表示で共用） ──────
+function createPinchZoomController(viewport, content, opts = {}) {
+  const state = { zoom: opts.initialZoom || 1, panX: 0, panY: 0, minZoom: opts.minZoom || 1, maxZoom: opts.maxZoom || 5 };
+  const apply = () => { content.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.zoom})`; };
+  const reset = () => { state.zoom = opts.initialZoom || 1; state.panX = 0; state.panY = 0; apply(); };
+
+  const pointers = new Map();
+  let mode = null; // 'pan' | 'pinch'
+  let lastPt = null, prevMid = null, prevDist = null;
+
+  const pos = e => { const r = viewport.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  const midOf = pts => ({ x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 });
+  const distOf = pts => Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+
+  viewport.addEventListener('pointerdown', e => {
+    viewport.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, pos(e));
+    if (pointers.size === 1) {
+      mode = 'pan'; lastPt = pos(e);
+    } else if (pointers.size === 2) {
+      mode = 'pinch';
+      const pts = [...pointers.values()];
+      prevMid = midOf(pts); prevDist = distOf(pts);
+    }
+  });
+  viewport.addEventListener('pointermove', e => {
+    if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, pos(e));
+    if (mode === 'pan' && pointers.size === 1) {
+      e.preventDefault();
+      const p = pos(e);
+      state.panX += p.x - lastPt.x;
+      state.panY += p.y - lastPt.y;
+      lastPt = p;
+      apply();
+    } else if (mode === 'pinch' && pointers.size === 2) {
+      e.preventDefault();
+      const pts = [...pointers.values()];
+      const mid = midOf(pts), dist = distOf(pts);
+      const newZoom = Math.min(state.maxZoom, Math.max(state.minZoom, state.zoom * (dist / prevDist)));
+      state.panX = mid.x - (newZoom / state.zoom) * (prevMid.x - state.panX);
+      state.panY = mid.y - (newZoom / state.zoom) * (prevMid.y - state.panY);
+      state.zoom = newZoom;
+      apply();
+      prevMid = mid; prevDist = dist;
+    }
+  });
+  const endPointer = e => {
+    pointers.delete(e.pointerId);
+    if (pointers.size === 1) { mode = 'pan'; lastPt = [...pointers.values()][0]; }
+    else if (pointers.size === 0) { mode = null; }
+  };
+  viewport.addEventListener('pointerup', endPointer);
+  viewport.addEventListener('pointercancel', endPointer);
+
+  apply();
+  return { apply, reset, state };
+}
+
+// ── 図の拡大表示（虎の巻・はかせの図鑑・ニッポンのあゆみのカード内の図を共通でタップ拡大） ──
+let diagramViewerController = null;
+function openDiagramViewer(svgEl) {
+  const overlay = document.getElementById('diagram-viewer');
+  const content = document.getElementById('diagram-viewer-content');
+  content.innerHTML = svgEl.outerHTML;
+  const innerSvg = content.querySelector('svg');
+  if (innerSvg) { innerSvg.style.width = '100%'; innerSvg.style.height = 'auto'; innerSvg.style.maxHeight = 'none'; innerSvg.style.cursor = 'default'; }
+  if (!diagramViewerController) {
+    diagramViewerController = createPinchZoomController(
+      document.getElementById('diagram-viewer-viewport'),
+      content,
+      { minZoom: 1, maxZoom: 6 }
+    );
+    document.getElementById('diagram-viewer-close').onclick = () => overlay.classList.add('hidden');
+    document.getElementById('diagram-viewer-reset').onclick = () => diagramViewerController.reset();
+  }
+  diagramViewerController.reset();
+  overlay.classList.remove('hidden');
+}
+document.addEventListener('click', e => {
+  const svg = e.target.closest('.tora-card-body svg');
+  if (svg) openDiagramViewer(svg);
+});
+
 // ── テンキー共通 ────────────────────────────────────────
 function initNumpad(prefix) {
   const numpad = document.getElementById(`${prefix}-numpad`);
@@ -2590,7 +2674,7 @@ async function showToraCategory(cat) {
     document.getElementById('tora-cat-title').textContent = `${info.icon} ${info.label}`;
 
     const nav = document.getElementById('tora-cat-nav');
-    nav.innerHTML = cards.map((c, i) => `<a href="#tora-card-${i}" class="tora-nav-link">${c.title}</a>`).join('');
+    nav.innerHTML = cards.map((c, i) => `<a href="#tora-card-${i}" class="tora-nav-link">${c.title}</a>`).join('') + '<p class="tora-card-zoom-hint">🔍 図をタップすると拡大できます</p>';
 
     const list = document.getElementById('tora-cat-list');
     if (!cards.length) {
@@ -2675,7 +2759,7 @@ async function showScienceCategory(cat) {
     document.getElementById('science-cat-title').textContent = `${info.icon} ${info.label}`;
 
     const nav = document.getElementById('science-cat-nav');
-    nav.innerHTML = cards.map((c, i) => `<a href="#science-card-${i}" class="tora-nav-link">${c.title}</a>`).join('');
+    nav.innerHTML = cards.map((c, i) => `<a href="#science-card-${i}" class="tora-nav-link">${c.title}</a>`).join('') + '<p class="tora-card-zoom-hint">🔍 図をタップすると拡大できます</p>';
 
     const list = document.getElementById('science-cat-list');
     if (!cards.length) {
@@ -2757,7 +2841,7 @@ async function showNipponCategory(cat) {
     document.getElementById('nippon-cat-title').textContent = `${info.icon} ${info.label}`;
 
     const nav = document.getElementById('nippon-cat-nav');
-    nav.innerHTML = cards.map((c, i) => `<a href="#nippon-card-${i}" class="tora-nav-link">${c.title}</a>`).join('');
+    nav.innerHTML = cards.map((c, i) => `<a href="#nippon-card-${i}" class="tora-nav-link">${c.title}</a>`).join('') + '<p class="tora-card-zoom-hint">🔍 図をタップすると拡大できます</p>';
 
     const list = document.getElementById('nippon-cat-list');
     if (!cards.length) {
@@ -3246,14 +3330,11 @@ async function loadMapQuizData() {
   return mapQuizData;
 }
 
-let mapQuizZoom = 1;
-const MAPQUIZ_ZOOM_MIN = 1, MAPQUIZ_ZOOM_MAX = 4, MAPQUIZ_ZOOM_STEP = 0.5;
+let mapQuizZoomCtl = null;
+const MAPQUIZ_ZOOM_STEP = 0.5;
 
-function mapQuizApplyZoom() {
-  const wrap = document.getElementById('mapquiz-map-wrap');
-  wrap.style.transform = `scale(${mapQuizZoom})`;
-  wrap.style.transformOrigin = 'top center';
-  document.getElementById('mapquiz-zoom-label').textContent = `${Math.round(mapQuizZoom * 100)}%`;
+function mapQuizUpdateZoomLabel() {
+  document.getElementById('mapquiz-zoom-label').textContent = `${Math.round(mapQuizZoomCtl.state.zoom * 100)}%`;
 }
 
 async function initMapQuiz() {
@@ -3270,24 +3351,29 @@ async function initMapQuiz() {
       });
     }
     mapQuizScore = { correct: 0, total: 0 };
-    mapQuizZoom = 1;
-    mapQuizApplyZoom();
-    document.getElementById('mapquiz-map-viewport').scrollTop = 0;
-    document.getElementById('mapquiz-map-viewport').scrollLeft = 0;
+    if (!mapQuizZoomCtl) {
+      mapQuizZoomCtl = createPinchZoomController(
+        document.getElementById('mapquiz-map-viewport'),
+        document.getElementById('mapquiz-map-wrap'),
+        { minZoom: 1, maxZoom: 4 }
+      );
+    }
+    mapQuizZoomCtl.reset();
+    mapQuizUpdateZoomLabel();
     document.getElementById('mapquiz-restart').onclick = () => { mapQuizScore = { correct: 0, total: 0 }; mapQuizNext(); };
     document.getElementById('mapquiz-zoom-in').onclick = () => {
-      mapQuizZoom = Math.min(MAPQUIZ_ZOOM_MAX, mapQuizZoom + MAPQUIZ_ZOOM_STEP);
-      mapQuizApplyZoom();
+      mapQuizZoomCtl.state.zoom = Math.min(mapQuizZoomCtl.state.maxZoom, mapQuizZoomCtl.state.zoom + MAPQUIZ_ZOOM_STEP);
+      mapQuizZoomCtl.apply();
+      mapQuizUpdateZoomLabel();
     };
     document.getElementById('mapquiz-zoom-out').onclick = () => {
-      mapQuizZoom = Math.max(MAPQUIZ_ZOOM_MIN, mapQuizZoom - MAPQUIZ_ZOOM_STEP);
-      mapQuizApplyZoom();
+      mapQuizZoomCtl.state.zoom = Math.max(mapQuizZoomCtl.state.minZoom, mapQuizZoomCtl.state.zoom - MAPQUIZ_ZOOM_STEP);
+      mapQuizZoomCtl.apply();
+      mapQuizUpdateZoomLabel();
     };
     document.getElementById('mapquiz-zoom-reset').onclick = () => {
-      mapQuizZoom = 1;
-      mapQuizApplyZoom();
-      const vp = document.getElementById('mapquiz-map-viewport');
-      vp.scrollTop = 0; vp.scrollLeft = 0;
+      mapQuizZoomCtl.reset();
+      mapQuizUpdateZoomLabel();
     };
     mapQuizNext();
   } catch (e) {

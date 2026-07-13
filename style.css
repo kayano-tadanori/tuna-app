@@ -195,7 +195,11 @@ button { cursor: pointer; font-family: inherit; }
 .tora-card-body table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 0.86rem; }
 .tora-card-body th, .tora-card-body td { border: 1px solid var(--glass-border); padding: 6px 8px; text-align: center; }
 .tora-card-body th { background: rgba(79,124,255,0.14); color: var(--text); font-weight: 800; }
-.tora-card-body svg { display: block; margin: 10px auto; width: 100%; max-width: 100%; height: auto; }
+.tora-card-body svg { display: block; margin: 10px auto; width: 100%; max-width: 100%; height: auto; cursor: zoom-in; }
+.tora-card-body svg:active { opacity: 0.85; }
+.tora-card-zoom-hint { font-size: 0.68rem; color: var(--sub2); text-align: center; margin: -4px 0 8px; }
+.diagram-viewer-content { position: absolute; left: 0; top: 0; width: 100%; touch-action: none; will-change: transform; transform-origin: 0 0; }
+.diagram-viewer-content svg { display: block; width: 100%; height: auto; }
 .tora-empty { color: var(--sub2); font-size: 0.9rem; text-align: center; padding: 30px 0; }
 
 /* ===== 実験室 ===== */
@@ -268,8 +272,8 @@ button { cursor: pointer; font-family: inherit; }
 .mapquiz-zoom-btn:active { transform: scale(0.9); }
 .mapquiz-zoom-label { font-size: 0.8rem; font-weight: 800; color: var(--gold); min-width: 44px; text-align: center; }
 .mapquiz-zoom-reset-btn { margin-left: auto; font-size: 0.76rem; font-weight: 700; color: var(--sub2); background: var(--card); border: 1px solid var(--glass-border); border-radius: 20px; padding: 6px 12px; flex-shrink: 0; }
-.mapquiz-map-viewport { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 10px; margin-bottom: 14px; overflow: auto; max-height: 60vh; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; }
-.mapquiz-map-wrap { transition: transform 0.15s ease; }
+.mapquiz-map-viewport { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; touch-action: none; position: relative; height: 55vh; min-height: 320px; }
+.mapquiz-map-wrap { position: absolute; left: 0; top: 0; width: 100%; padding: 10px; box-sizing: border-box; transform-origin: 0 0; will-change: transform; }
 .mapquiz-map-wrap svg { display: block; width: 100%; height: auto; }
 .mapquiz-pref { fill: #4a5a8a; stroke: var(--dark); stroke-width: 0.5; cursor: pointer; transition: fill 0.15s; }
 .mapquiz-pref:active { fill: #6a7aba; }

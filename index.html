@@ -1520,6 +1520,18 @@
   </div>
 </div>
 
+<div id="diagram-viewer" class="scratch-fullscreen hidden">
+  <div class="scratch-fs-header">
+    <span class="scratch-label">🔍 図を拡大表示</span>
+    <button id="diagram-viewer-reset" class="tool-btn-sm">🔍 元にもどす</button>
+    <button id="diagram-viewer-close" class="tool-btn-sm scratch-fs-close">✕ とじる</button>
+  </div>
+  <p class="scratch-fs-hint">指1本でドラッグして移動、2本指でつまんで拡大・縮小できます。</p>
+  <div id="diagram-viewer-viewport" class="scratch-fs-viewport">
+    <div id="diagram-viewer-content" class="diagram-viewer-content"></div>
+  </div>
+</div>
+
 <!-- Firebase SDK (compat) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
