@@ -31,12 +31,12 @@ const KOKUGO_CHAIN_FILE = 'data/kokugo_chain.json';
 let kokugoChainCache = null;
 async function loadKokugoChainQuestions(cat, grade) {
   // 連鎖問題は灘中レベル（小5・小6の内容）。小4以下では出題しない
-  if (grade < CHAIN_MIN_GRADE) return [];
+  if (grade < chainMinGrade('kokugo')) return [];
   if (!kokugoChainCache) {
     const res = await fetch(KOKUGO_CHAIN_FILE);
     kokugoChainCache = await res.json();
   }
-  const chains = shuffle(kokugoChainCache.filter(c => c.category === cat));
+  const chains = shuffle(kokugoChainCache.filter(c => c.category === cat && chainInGrade(c, grade)));
   const out = [];
   chains.forEach(chain => {
     chain.steps.forEach((step, i) => {
@@ -1282,13 +1282,46 @@ const CHAIN_FILES = {
   rika: 'data/rika_chain.json',
   shakai: 'data/shakai_chain.json',
 };
-// 連鎖問題を出題する最低学年（灘中レベル＝小5・小6の内容）
-const CHAIN_MIN_GRADE = 5;
+// 連鎖問題を出題する最低学年（教科ごと）。算数は小3から、理科などは小5から
+const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5 };
+function chainMinGrade(subject) { return CHAIN_MIN_GRADE[subject] ?? 5; }
+
+// 連鎖問題を「その学年までの履修範囲」でしぼるための判定。
+// chain.grade（その問題の対象学年）が選択学年以下なら出題対象
+function chainInGrade(chain, grade) { return (chain.grade || grade) <= grade; }
+
+// 答えが数値系（整数・小数・分数・帯分数・余り）ならテンキー入力にする。
+// それ以外（語句）は4択のまま。
+function isNumpadAnswer(a) {
+  a = String(a).trim();
+  return /^\d+(\.\d+)?$/.test(a)            // 整数・小数
+      || /^\d+\/\d+$/.test(a)               // 分数
+      || /^\d+と\d+\/\d+$/.test(a)          // 帯分数
+      || /余り/.test(a);                     // 余りあり
+}
+
+// 連鎖問題1件（chain）を、フラットな問題オブジェクトの配列に展開する。
+// 数値答えはchoicesを外してテンキー入力にする
+function expandChain(chain, grade) {
+  return chain.steps.map((step, i) => ({
+    id: `${chain.id}_s${i + 1}`,
+    question: `(${i + 1}) ${step.question}`,
+    chainIntro: i === 0 ? `📘 ${chain.title}\n${chain.intro}` : '',
+    // 図：設問ごとのsvg優先。無ければ最初の設問だけchainの共通図を表示
+    svg: step.svg || (i === 0 ? chain.svg : '') || '',
+    answer: step.answer,
+    choices: isNumpadAnswer(step.answer) ? undefined : step.choices,
+    meaning: step.meaning,
+    difficulty: 5,
+    grade: chain.grade || grade,
+    _cat: chain.category,
+  }));
+}
 
 // 指定した教科・カテゴリ・学年で出題できる連鎖問題（step）の数を返す。
 // 難易度5ボタンの有効/無効判定に使う（0なら問題なし）
 async function countChainSteps(subject, cat, grade) {
-  if (grade < CHAIN_MIN_GRADE) return 0;
+  if (grade < chainMinGrade(subject)) return 0;
   let data;
   try {
     if (subject === 'kokugo') {
@@ -1301,7 +1334,7 @@ async function countChainSteps(subject, cat, grade) {
     }
   } catch { return 0; }
   return data
-    .filter(c => cat === 'mix' || c.category === cat)
+    .filter(c => (cat === 'mix' || c.category === cat) && chainInGrade(c, grade))
     .reduce((n, c) => n + c.steps.length, 0);
 }
 
@@ -1323,29 +1356,17 @@ async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) 
 // チェーン（連鎖問題）を読み込み、カテゴリでしぼって、chain単位はシャッフルしつつ
 // 各chain内のstep順は維持したまま平らな問題配列に展開する
 async function loadChainQuestions(subject, cat, grade) {
-  // 連鎖問題は灘中レベル（小5・小6の内容）。小4以下では出題しない
-  if (grade < CHAIN_MIN_GRADE) return [];
+  // 連鎖問題は灘中レベル。教科ごとの最低学年より下では出題しない
+  if (grade < chainMinGrade(subject)) return [];
   const key = `chain-${subject}`;
   if (!sansuCache[key]) {
     const res = await fetch(CHAIN_FILES[subject]);
     sansuCache[key] = await res.json();
   }
-  const chains = shuffle(sansuCache[key].filter(c => cat === 'mix' || c.category === cat));
+  const chains = shuffle(sansuCache[key].filter(c => (cat === 'mix' || c.category === cat) && chainInGrade(c, grade)));
   const out = [];
   chains.forEach(chain => {
-    chain.steps.forEach((step, i) => {
-      out.push({
-        id: `${chain.id}_s${i + 1}`,
-        question: `(${i + 1}) ${step.question}`,
-        chainIntro: i === 0 ? `📘 ${chain.title}\n${chain.intro}` : '',
-        answer: step.answer,
-        choices: step.choices,
-        meaning: step.meaning,
-        difficulty: 5,
-        grade: chain.grade || grade,
-        _cat: chain.category,
-      });
-    });
+    expandChain(chain, grade).forEach(q => out.push(q));
   });
   return out;
 }
