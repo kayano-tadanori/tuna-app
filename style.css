@@ -210,6 +210,20 @@ button { cursor: pointer; font-family: inherit; }
 .lab-otton-speech::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: rgba(255,255,255,0.05); border-left: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
 @keyframes labOttonWobble { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
 @keyframes labOttonBounce { 0% { transform: scale(1) translateY(0); } 30% { transform: scale(1.15) translateY(-8px); } 60% { transform: scale(0.96) translateY(2px); } 100% { transform: scale(1) translateY(0); } }
+
+/* 実験結果アニメーション（CSSトランジション方式。SafariでのSMIL不具合を回避） */
+.lab-lever-arm { transform-origin: 120px 100px; transform: rotate(0deg); transition: transform 0.9s cubic-bezier(.34,1.4,.5,1); }
+.lab-result.lab-anim-run .lab-lever-arm { transform: rotate(var(--lab-angle, 0deg)); }
+.lab-spring-coil { transform-origin: 80px 20px; transform: scaleY(1); transition: transform 0.7s cubic-bezier(.34,1.4,.5,1); }
+.lab-result.lab-anim-run .lab-spring-coil { transform: scaleY(var(--lab-scale, 1)); }
+.lab-spring-weight { transform: translateY(0); transition: transform 0.7s cubic-bezier(.34,1.4,.5,1); }
+.lab-result.lab-anim-run .lab-spring-weight { transform: translateY(var(--lab-ty, 0px)); }
+.lab-pendulum-arm { transform-origin: 100px 20px; animation: labPendulumSwing 2s ease-in-out infinite; }
+@keyframes labPendulumSwing { 0%,100% { transform: rotate(-30deg); } 50% { transform: rotate(30deg); } }
+.lab-buoy-obj { transform: translateY(0); transition: transform 0.8s cubic-bezier(.34,1.4,.5,1); }
+.lab-result.lab-anim-run .lab-buoy-obj { transform: translateY(var(--lab-ty, 0px)); }
+.lab-ripple { transform-box: fill-box; transform-origin: center; opacity: 0; animation: labRipple 1.6s ease-out 0.7s infinite; }
+@keyframes labRipple { 0% { transform: scale(0.3); opacity: 0.7; } 100% { transform: scale(2.4); opacity: 0; } }
 .lab-control-label { font-size: 0.86rem; font-weight: 800; color: var(--sub2); margin: 4px 0 10px; }
 .lab-choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin-bottom: 18px; }
 .lab-choice-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 6px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-sm); color: var(--text); transition: transform 0.12s, border-color 0.15s, background 0.15s; }
