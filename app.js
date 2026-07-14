@@ -1933,7 +1933,10 @@ function renderSansuQuiz() {
   const remainWrap = document.getElementById('sq-remain-wrap');
   const choicesWrap = document.getElementById('sq-choices');
 
-  if (q.choices && q.choices.length) {
+  // 理科の数値で答える問題は、4択ではなくテンキー入力にする
+  const forceNumpad = sansuState.subject === 'rika' && isNumpadAnswer(q.answer);
+
+  if (q.choices && q.choices.length && !forceNumpad) {
     // 4択モード：テンキー系を隠して選択肢を表示
     numpad.classList.add('hidden');
     previewWrap.classList.add('hidden');
