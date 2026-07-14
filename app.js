@@ -2869,7 +2869,9 @@ async function showToraCategory(cat) {
 const SCIENCE_CATEGORIES = {
   shokubutsu: { label: '植物のからだ',       icon: '🌱' },
   konchu:     { label: '昆虫・生き物のからだ', icon: '🐛' },
+  jintai:     { label: '人体のしくみ',       icon: '🫀' },
   seiza:      { label: '星座・天体',         icon: '✨' },
+  tenki:      { label: '天気・気象',         icon: '🌦️' },
   daichi:     { label: '大地・地層',         icon: '🪨' },
   mono:       { label: 'もの・水溶液',       icon: '🧪' },
   denki:      { label: '電気・力',           icon: '⚡' },
