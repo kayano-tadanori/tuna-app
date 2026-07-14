@@ -1261,10 +1261,12 @@ const RIKA_FILES = {
   sora:'data/rika_sora.json', daichi:'data/rika_daichi.json',
   mono:'data/rika_mono.json', suiyoueki:'data/rika_suiyoueki.json',
   denki:'data/rika_denki.json', chikara:'data/rika_chikara.json',
+  hikari_oto:'data/rika_hikarioto.json',
 };
 const RIKA_CAT_LABELS = {
   shokubutsu:'植物', doubutsu:'動物と人体', sora:'天体と気象', daichi:'大地の変化',
   mono:'もののせいしつ', suiyoueki:'水よう液', denki:'電気と磁石', chikara:'力のつり合い',
+  hikari_oto:'光と音',
 };
 
 // 社会ファイル・ラベル
@@ -1592,7 +1594,7 @@ function initRikaHome() {
         el.classList.toggle('hidden', sansuState.grade < 4);
       });
       // 小1〜3で受験カテゴリ選択中なら解除
-      if (sansuState.grade < 4 && ['daichi', 'suiyoueki', 'denki', 'chikara'].includes(sansuState.cat)) {
+      if (sansuState.grade < 4 && ['daichi', 'suiyoueki', 'denki', 'chikara', 'hikari_oto'].includes(sansuState.cat)) {
         sansuState.cat = null;
         document.querySelectorAll('.rika-cat-btn').forEach(b => b.classList.remove('selected'));
         hideSansuSteps('rika-step-diff');
@@ -4967,8 +4969,8 @@ const QUESTION_COUNTS = {
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
   sansu:  { keisan: 960, bun: 960, zu: 960, kisoku: 960, tokusan: 720, baai: 800, kazu: 720,
             wariai: 480, hayasa: 480, rittai: 480 },                                         // 7,520
-  rika:   { shokubutsu: 960, doubutsu: 956, sora: 862, mono: 960, daichi: 480, suiyoueki: 480,
-            denki: 480, chikara: 480 },                                                      // 5,658
+  rika:   { shokubutsu: 960, doubutsu: 956, sora: 862, mono: 906, daichi: 480, suiyoueki: 480,
+            denki: 480, chikara: 480, hikari_oto: 107 },                                     // 5,711
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
@@ -4986,7 +4988,7 @@ const ID_PREFIX_MAP = {
   sb: ['sansu:bun'], sz: ['sansu:zu'], st: ['sansu:tokusan'], sc: ['sansu:baai'],
   sn: ['sansu:kazu'], sw: ['sansu:wariai'], sh: ['sansu:hayasa'],
   rp: ['rika:shokubutsu'], rk: ['rika:sora'], rg: ['rika:daichi'], rm: ['rika:mono'],
-  rs: ['rika:suiyoueki'], rc: ['rika:chikara'],
+  rs: ['rika:suiyoueki'], rc: ['rika:chikara'], ho: ['rika:hikari_oto'],
   ss: ['shakai:sangyo'], sm: ['shakai:komin'],
 };
 
