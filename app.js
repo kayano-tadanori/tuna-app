@@ -1367,8 +1367,11 @@ async function loadChainQuestions(subject, cat, grade) {
     sansuCache[key] = await res.json();
   }
   const chains = shuffle(sansuCache[key].filter(c => (cat === 'mix' || c.category === cat) && chainInGrade(c, grade)));
+  // 灘中レベル（連鎖問題）は1連鎖＝3問で重いので、1セッションは3連鎖(9問)まで。
+  // 3連鎖に満たなければ1連鎖(3問)で終了し、ちょうど3問か9問で区切る。
+  const nChains = chains.length >= 3 ? 3 : 1;
   const out = [];
-  chains.forEach(chain => {
+  chains.slice(0, nChains).forEach(chain => {
     expandChain(chain, grade).forEach(q => out.push(q));
   });
   return out;
@@ -4970,10 +4973,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { keisan: 1040, bun: 1040, zu: 1040, kisoku: 1104, tokusan: 770, baai: 880, kazu: 761,
-            wariai: 695, hayasa: 480, rittai: 480 },                                         // 8,290
-  rika:   { shokubutsu: 960, doubutsu: 852, jintai: 104, sora: 711, tenki: 175, mono: 792, kitai: 114,
-            daichi: 480, suiyoueki: 480, denki: 480, chikara: 480, hikari_oto: 107 },        // 5,735
+  sansu:  { keisan: 1140, bun: 1100, zu: 1100, kisoku: 1104, tokusan: 830, baai: 880, kazu: 821,
+            wariai: 695, hayasa: 480, rittai: 480 },                                         // 8,630
+  rika:   { shokubutsu: 960, doubutsu: 852, jintai: 104, sora: 711, tenki: 207, mono: 792, kitai: 114,
+            daichi: 480, suiyoueki: 480, denki: 480, chikara: 480, hikari_oto: 107 },        // 5,767
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
