@@ -6141,7 +6141,8 @@ const J_ICE_DRIFT = 1.7;       // 氷雲：着地するとツルッとすべる
 const J_BREAK_FADE_MS = 260;   // こわれ雲：踏んだあと消えるまで
 const J_BARRIER_MS = 6000;     // オカーンのおにぎりバリア時間
 const J_MILESTONE_STEP = 50;   // 到達演出（○m）の間隔
-const J_GOAL = 2000;           // ゴール：2000mで月に到着（エンディング）
+const J_GOAL = 2500;           // ゴール：2500mで月に到着（エンディング）
+const J_STATION_M = 2000;      // 2000mあたりで宇宙ステーションが背景を通過
 // 高度で変わる空（スコア＝m のしきい値・上下グラデ色）。宇宙は1500m、月は2000m
 const J_SKY_TIERS = [
   { min: 0,    top: '#1a2f6e', bot: '#0a1128' }, // 昼
@@ -6440,6 +6441,37 @@ function updateJumpInfo() {
   document.getElementById('jump-coins').textContent = jumpState.starsCollected;
 }
 
+// 宇宙ステーション（2000mあたりの背景を通過する）
+function jDrawSpaceStation(ctx, cx, cy, now) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(Math.sin(now / 1600) * 0.06);
+  // トラス（中央の横棒）
+  ctx.strokeStyle = '#9aa5c8'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(-46, 0); ctx.lineTo(46, 0); ctx.stroke();
+  // ソーラーパネル（左右）
+  const panel = (px) => {
+    ctx.fillStyle = '#173463'; ctx.fillRect(px - 16, -13, 32, 26);
+    ctx.strokeStyle = '#3a6fc0'; ctx.lineWidth = 1;
+    for (let i = 1; i < 4; i++) { ctx.beginPath(); ctx.moveTo(px - 16 + i * 8, -13); ctx.lineTo(px - 16 + i * 8, 13); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(px - 16, 0); ctx.lineTo(px + 16, 0); ctx.stroke();
+    ctx.strokeStyle = '#5a8fe0'; ctx.lineWidth = 1.2; ctx.strokeRect(px - 16, -13, 32, 26);
+  };
+  panel(-30); panel(30);
+  // 中央モジュール（白い円筒）
+  ctx.fillStyle = '#e6e9f2'; ctx.fillRect(-11, -6, 22, 12);
+  ctx.fillStyle = '#cdd6f4'; ctx.fillRect(-11, -6, 22, 3);
+  ctx.strokeStyle = '#aab4d4'; ctx.lineWidth = 1; ctx.strokeRect(-11, -6, 22, 12);
+  // 先端のドッキング部＋アンテナ
+  ctx.fillStyle = '#dfe4f0'; ctx.beginPath(); ctx.arc(0, -12, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#9aa5c8'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0, -12); ctx.lineTo(0, -23); ctx.stroke();
+  ctx.fillStyle = '#cdd6f4'; ctx.beginPath(); ctx.arc(0, -25, 2, 0, Math.PI * 2); ctx.fill();
+  // 点滅ライト（赤）
+  if (Math.floor(now / 500) % 2 === 0) { ctx.fillStyle = '#ff6b6b'; ctx.beginPath(); ctx.arc(0, 7, 2, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+}
+
 // 足場を雲っぽいもこもこ形で描く。タイプごとに色を変える
 const J_CLOUD_COLORS = {
   normal: ['rgba(255,255,255,0.95)', 'rgba(170,195,230,0.5)'],
@@ -6497,6 +6529,17 @@ function drawJump() {
       ctx.fillStyle = '#ffffff';
       ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
     });
+    ctx.globalAlpha = 1;
+  }
+
+  // 宇宙ステーション：2000mあたりを背景でゆっくり通過（上→下へスクロール）
+  const stBand = 200; // ±200mの範囲で見える
+  if (jumpState.score > J_STATION_M - stBand && jumpState.score < J_STATION_M + stBand) {
+    const tt = (jumpState.score - (J_STATION_M - stBand)) / (stBand * 2); // 0..1
+    const stX = J_W * 0.66 + Math.sin(now / 2200) * 10;
+    const stY = -30 + tt * (J_H + 60);
+    ctx.globalAlpha = Math.min(1, Math.min(tt, 1 - tt) * 5 + 0.2); // 端でうっすらフェード
+    jDrawSpaceStation(ctx, stX, stY, now);
     ctx.globalAlpha = 1;
   }
 
