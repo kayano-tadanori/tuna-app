@@ -5146,8 +5146,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { keisan: 874, bun: 79, zu: 547, kisoku: 605, tokusan: 251, baai: 339, kazu: 400,
-            wariai: 167, hayasa: 168, rittai: 256 },                                         // 3,686
+  sansu:  { keisan: 874, bun: 353, zu: 547, kisoku: 605, tokusan: 251, baai: 339, kazu: 400,
+            wariai: 167, hayasa: 168, rittai: 256 },                                         // 3,960
   rika:   { shokubutsu: 960, doubutsu: 869, jintai: 105, sora: 733, tenki: 217, mono: 804, kitai: 145,
             daichi: 490, suiyoueki: 512, denki: 482, chikara: 552, hikari_oto: 192 },        // 6,061
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
