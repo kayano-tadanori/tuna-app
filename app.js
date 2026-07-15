@@ -4988,10 +4988,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { keisan: 874, bun: 1100, zu: 541, kisoku: 605, tokusan: 466, baai: 888, kazu: 400,
-            wariai: 537, hayasa: 397, rittai: 256 },                                         // 6,064
-  rika:   { shokubutsu: 960, doubutsu: 855, jintai: 105, sora: 728, tenki: 215, mono: 796, kitai: 116,
-            daichi: 481, suiyoueki: 488, denki: 481, chikara: 536, hikari_oto: 138 },        // 5,899
+  sansu:  { keisan: 874, bun: 1100, zu: 547, kisoku: 605, tokusan: 466, baai: 888, kazu: 400,
+            wariai: 537, hayasa: 397, rittai: 256 },                                         // 6,070
+  rika:   { shokubutsu: 960, doubutsu: 855, jintai: 105, sora: 731, tenki: 215, mono: 798, kitai: 116,
+            daichi: 481, suiyoueki: 488, denki: 481, chikara: 538, hikari_oto: 145 },        // 5,913
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
