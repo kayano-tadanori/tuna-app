@@ -1,279 +1,2745 @@
 [
   {
     "id": "sc3001",
-    "question": "シャツが3種類、ぼうしが2種類あります。シャツとぼうしの組み合わせは全部で何通りですか。",
+    "question": "シャツが3種類、ぼうしが2種類あります。組み合わせは全部で何通りですか。",
     "answer": "6",
-    "meaning": "シャツ3通りのそれぞれにぼうし2通りなので、3×2＝6通りです。",
+    "meaning": "3×2＝6通りです。",
     "grade": 3,
-    "difficulty": 1,
-    "svg": "<svg viewBox='0 0 200 110' style='display:block;margin:6px auto;max-width:230px'><circle cx='20' cy='55' r='4' fill='#eef2ff'/><line x1='24' y1='55' x2='70' y2='20' stroke='#ffd166' stroke-width='1.2'/><circle cx='74' cy='20' r='3' fill='#ffd166'/><text x='80' y='23' font-size='8' fill='#ffd166'>シャツ1</text><line x1='24' y1='55' x2='70' y2='55' stroke='#ffd166' stroke-width='1.2'/><circle cx='74' cy='55' r='3' fill='#ffd166'/><text x='80' y='58' font-size='8' fill='#ffd166'>シャツ2</text><line x1='24' y1='55' x2='70' y2='90' stroke='#ffd166' stroke-width='1.2'/><circle cx='74' cy='90' r='3' fill='#ffd166'/><text x='80' y='93' font-size='8' fill='#ffd166'>シャツ3</text><text x='120' y='14' font-size='9' fill='#9aa5c8'>シャツ3通り×ぼうし2通り</text></svg>"
+    "difficulty": 1
   },
   {
     "id": "sc3002",
-    "question": "赤・青・黄の3色のおはじきを、横一列にならべます。ならべ方は全部で何通りですか。",
-    "answer": "6",
-    "meaning": "3個のならべ方は3×2×1＝6通りです。",
+    "question": "シャツが2種類、ぼうしが4種類あります。組み合わせは全部で何通りですか。",
+    "answer": "8",
+    "meaning": "2×4＝8通りです。",
     "grade": 3,
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "sc3003",
-    "question": "10円玉と50円玉と100円玉が1枚ずつあります。これらを使ってちょうど支払える金額は何通りですか（1枚も使わない場合は除く）。",
-    "answer": "7",
-    "meaning": "各硬貨を使う・使わないで2×2×2＝8通り、全部使わない1通りを除いて7通りです。",
+    "question": "シャツが4種類、ぼうしが2種類あります。組み合わせは全部で何通りですか。",
+    "answer": "8",
+    "meaning": "4×2＝8通りです。",
     "grade": 3,
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "sc3004",
-    "question": "1、2、3の3枚のカードから2枚を選んでならべ、2けたの整数をつくります。整数は何通りできますか。",
+    "question": "ケーキが2種類、飲み物が3種類あります。1つずつ選ぶ組み合わせは何通りですか。",
     "answer": "6",
-    "meaning": "十の位に3通り、一の位に残り2通りで、3×2＝6通りです。",
+    "meaning": "2×3＝6通りです。",
     "grade": 3,
-    "difficulty": 3
+    "difficulty": 1
   },
   {
     "id": "sc3005",
-    "question": "A・B・C・Dの4人から2人を選んで、委員長と副委員長を決めます。決め方は何通りですか。",
-    "answer": "12",
-    "meaning": "委員長に4通り、副委員長に残り3通りで、4×3＝12通りです。",
-    "grade": 4,
-    "difficulty": 2
+    "question": "ケーキが3種類、飲み物が3種類あります。1つずつ選ぶ組み合わせは何通りですか。",
+    "answer": "9",
+    "meaning": "3×3＝9通りです。",
+    "grade": 3,
+    "difficulty": 1
   },
   {
     "id": "sc3006",
-    "question": "碁ばんの目のような道を、スタートからゴールまで遠回りせずに進みます。図のように右に2区画・上に2区画のとき、行き方は何通りですか。",
-    "answer": "6",
-    "meaning": "右2回・上2回の並べ方なので、4か所から上を選ぶ場所を決めて、6通りです。",
-    "grade": 4,
-    "difficulty": 3,
-    "svg": "<svg viewBox='0 0 120 90' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='20' x2='90' y2='20' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='50' x2='90' y2='50' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='80' x2='90' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='20' x2='30' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='60' y1='20' x2='60' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='90' y1='20' x2='90' y2='80' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='80' r='5' fill='#ffd166'/><text x='18' y='84' font-size='10' fill='#ffd166'>ス</text><circle cx='90' cy='20' r='5' fill='#ff6b6b'/><text x='96' y='24' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+    "question": "ケーキが2種類、飲み物が5種類あります。1つずつ選ぶ組み合わせは何通りですか。",
+    "answer": "10",
+    "meaning": "2×5＝10通りです。",
+    "grade": 3,
+    "difficulty": 1
   },
   {
     "id": "sc3007",
-    "question": "5人の中から、そうじ当番を2人選びます。選び方は何通りですか。",
-    "answer": "10",
-    "meaning": "5人から2人の選び方は、5×4÷2＝10通りです。",
-    "grade": 4,
-    "difficulty": 3
+    "question": "3人が横一列にならびます。ならび方は全部で何通りですか。",
+    "answer": "6",
+    "meaning": "3！＝3×2×1＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
   },
   {
     "id": "sc3008",
-    "question": "大小2つのさいころを同時に投げます。目の出方は全部で何通りですか。",
-    "answer": "36",
-    "meaning": "大のさいころ6通り、小のさいころ6通りで、6×6＝36通りです。",
-    "grade": 4,
+    "question": "4人が横一列にならびます。ならび方は全部で何通りですか。",
+    "answer": "24",
+    "meaning": "4！＝4×3×2×1＝24通りです。",
+    "grade": 3,
     "difficulty": 2
   },
   {
     "id": "sc3009",
-    "question": "0、1、2、3の4枚のカードから3枚を選んで3けたの整数をつくります。整数は何通りできますか。",
-    "answer": "18",
-    "meaning": "百の位は0を除く3通り、十の位は残り3通り、一の位は残り2通りで、3×3×2＝18通りです。",
-    "grade": 4,
-    "difficulty": 4
+    "question": "1、2、3の3枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
+    "answer": "6",
+    "meaning": "十の位3通り、一の位2通りで3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
   },
   {
     "id": "sc3010",
-    "question": "碁ばんの目の道を、右に3区画・上に2区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
-    "answer": "10",
-    "meaning": "右3回・上2回の並べ方で、5か所から上2か所を選び、10通りです。",
-    "grade": 5,
-    "difficulty": 3,
-    "svg": "<svg viewBox='0 0 150 90' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='20' x2='120' y2='20' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='50' x2='120' y2='50' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='80' x2='120' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='20' x2='30' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='60' y1='20' x2='60' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='90' y1='20' x2='90' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='120' y1='20' x2='120' y2='80' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='80' r='5' fill='#ffd166'/><text x='18' y='84' font-size='10' fill='#ffd166'>ス</text><circle cx='120' cy='20' r='5' fill='#ff6b6b'/><text x='126' y='24' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+    "question": "2、3、4の3枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
+    "answer": "6",
+    "meaning": "十の位3通り、一の位2通りで3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
   },
   {
     "id": "sc3011",
-    "question": "6人の中から、代表を3人選びます。選び方は何通りですか。",
-    "answer": "20",
-    "meaning": "6人から3人の選び方は6×5×4÷(3×2×1)＝20通りです。",
-    "grade": 5,
-    "difficulty": 3
+    "question": "1、3、5の3枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
+    "answer": "6",
+    "meaning": "十の位3通り、一の位2通りで3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
   },
   {
     "id": "sc3012",
-    "question": "5チームでリーグ戦（総当たり戦）を行います。試合数は全部で何試合ですか。",
-    "answer": "10",
-    "meaning": "5チームから2チームを選ぶ組み合わせなので、5×4÷2＝10試合です。",
-    "grade": 5,
-    "difficulty": 4
+    "question": "10円玉、50円玉、100円玉が1枚ずつあります。これらを使ってちょうど支払える金額は何通りですか（0円は除く）。",
+    "answer": "7",
+    "meaning": "各硬貨を使う/使わないで2×2×2＝8通り、全部使わない1通りを除いて7通りです。",
+    "grade": 3,
+    "difficulty": 3
   },
   {
     "id": "sc3013",
-    "question": "1、2、3、4、5の5枚のカードから2枚選んで2けたの整数をつくります。偶数は何通りできますか。",
-    "answer": "8",
-    "meaning": "一の位は偶数の2か4の2通り、十の位は残り4通りで、2×4＝8通りです。",
-    "grade": 5,
+    "question": "10円玉、50円玉、500円玉が1枚ずつあります。これらを使ってちょうど支払える金額は何通りですか（0円は除く）。",
+    "answer": "7",
+    "meaning": "各硬貨を使う/使わないで2×2×2＝8通り、全部使わない1通りを除いて7通りです。",
+    "grade": 3,
     "difficulty": 3
   },
   {
     "id": "sc3014",
-    "question": "正三角形の3つの頂点を、赤・青・黄・緑の4色から選んでぬり分けます。となり合う頂点は同じ色にしません。ぬり方は何通りですか。",
-    "answer": "24",
-    "meaning": "1つ目4通り、2つ目は残り3通り、3つ目は残り2通りで、4×3×2＝24通りです。",
-    "grade": 5,
-    "difficulty": 4
+    "question": "50円玉、100円玉、500円玉が1枚ずつあります。これらを使ってちょうど支払える金額は何通りですか（0円は除く）。",
+    "answer": "7",
+    "meaning": "各硬貨を使う/使わないで2×2×2＝8通り、全部使わない1通りを除いて7通りです。",
+    "grade": 3,
+    "difficulty": 3
   },
   {
     "id": "sc3015",
-    "question": "碁ばんの目の道を、右に3区画・上に3区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
-    "answer": "20",
-    "meaning": "右3回・上3回の並べ方で、6か所から上3か所を選び、20通りです。",
-    "grade": 6,
-    "difficulty": 3,
-    "svg": "<svg viewBox='0 0 150 120' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='20' x2='120' y2='20' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='50' x2='120' y2='50' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='80' x2='120' y2='80' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='110' x2='120' y2='110' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='20' x2='30' y2='110' stroke='#eef2ff' stroke-width='1'/><line x1='60' y1='20' x2='60' y2='110' stroke='#eef2ff' stroke-width='1'/><line x1='90' y1='20' x2='90' y2='110' stroke='#eef2ff' stroke-width='1'/><line x1='120' y1='20' x2='120' y2='110' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='110' r='5' fill='#ffd166'/><text x='18' y='114' font-size='10' fill='#ffd166'>ス</text><circle cx='120' cy='20' r='5' fill='#ff6b6b'/><text x='126' y='24' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+    "question": "赤・青など3色から1色、丸・四角など2種類の形から1つを選びます。組み合わせは何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
   },
   {
     "id": "sc3016",
-    "question": "男子4人、女子3人の中から、代表を3人選びます。少なくとも女子が1人入る選び方は何通りですか。",
-    "answer": "31",
-    "meaning": "全体の選び方は7人から3人で35通り。女子が1人も入らない（男子だけ）のは4人から3人で4通り。35－4＝31通りです。",
-    "grade": 6,
-    "difficulty": 4
+    "question": "赤・青など4色から1色、丸・四角など2種類の形から1つを選びます。組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "4×2＝8通りです。",
+    "grade": 3,
+    "difficulty": 3
   },
   {
     "id": "sc3017",
-    "question": "8チームでトーナメント戦（勝ちぬき戦）を行います。優勝が決まるまでの試合数は全部で何試合ですか。",
-    "answer": "7",
-    "meaning": "トーナメントでは1試合ごとに1チームが負けます。優勝以外の7チームが負けるので、7試合です。",
-    "grade": 6,
-    "difficulty": 4
+    "question": "赤・青など3色から1色、丸・四角など3種類の形から1つを選びます。組み合わせは何通りですか。",
+    "answer": "9",
+    "meaning": "3×3＝9通りです。",
+    "grade": 3,
+    "difficulty": 3
   },
   {
     "id": "sc3018",
-    "question": "1、2、3、4、5の5枚のカードから3枚選んで3けたの整数をつくります。整数は全部で何通りできますか。",
-    "answer": "60",
-    "meaning": "百の位5通り、十の位4通り、一の位3通りで、5×4×3＝60通りです。",
-    "grade": 6,
+    "question": "5人が横一列にならびます。ならび方は全部で何通りですか。",
+    "answer": "120",
+    "meaning": "5！＝120通りです。",
+    "grade": 3,
     "difficulty": 4
   },
   {
     "id": "sc3019",
-    "question": "7人の中から、係を2人選びます。選び方は何通りですか。",
-    "answer": "21",
-    "meaning": "7人から2人の選び方は7×6÷2＝21通りです。",
-    "grade": 6,
-    "difficulty": 3
+    "question": "1、2、3、4の4枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
+    "answer": "12",
+    "meaning": "十の位4通り、一の位3通りで4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 4
   },
   {
     "id": "sc3020",
-    "question": "ケーキが2種類、飲み物が3種類あります。ケーキと飲み物を1つずつ選ぶ組み合わせは何通りですか。",
-    "answer": "6",
-    "meaning": "2×3＝6通りです。",
+    "question": "2、3、4、5の4枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
+    "answer": "12",
+    "meaning": "十の位4通り、一の位3通りで4×3＝12通りです。",
     "grade": 3,
-    "difficulty": 1,
-    "svg": "<svg viewBox='0 0 200 80' style='display:block;margin:6px auto;max-width:230px'><circle cx='20' cy='40' r='4' fill='#eef2ff'/><line x1='24' y1='40' x2='70' y2='20' stroke='#ffd166' stroke-width='1.2'/><circle cx='74' cy='20' r='3' fill='#ffd166'/><text x='80' y='23' font-size='8' fill='#ffd166'>ケーキ1</text><line x1='24' y1='40' x2='70' y2='60' stroke='#ffd166' stroke-width='1.2'/><circle cx='74' cy='60' r='3' fill='#ffd166'/><text x='80' y='63' font-size='8' fill='#ffd166'>ケーキ2</text><text x='120' y='14' font-size='9' fill='#9aa5c8'>ケーキ2通り×飲み物3通り</text></svg>"
+    "difficulty": 4
   },
   {
     "id": "sc3021",
-    "question": "A・B・Cの3人が一列にならびます。ならび方は全部で何通りですか。",
-    "answer": "6",
-    "meaning": "3×2×1＝6通りです。",
-    "grade": 4,
-    "difficulty": 1
+    "question": "1、2、4、5の4枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
+    "answer": "12",
+    "meaning": "十の位4通り、一の位3通りで4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 4
   },
   {
     "id": "sc3022",
-    "question": "コインを3回投げます。表と裏の出方は全部で何通りですか。",
-    "answer": "8",
-    "meaning": "1回ごとに表・裏の2通りなので、2×2×2＝8通りです。",
-    "grade": 5,
-    "difficulty": 2
+    "question": "4色から2色を選びます。選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "4色から2色は4×3÷2＝6通りです。",
+    "grade": 3,
+    "difficulty": 4
   },
   {
     "id": "sc3023",
-    "question": "4人の中から、そうじ当番を1人選びます。選び方は何通りですか。",
-    "answer": "4",
-    "meaning": "4人から1人なので4通りです。",
-    "grade": 5,
-    "difficulty": 1
+    "question": "5色から2色を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5色から2色は5×4÷2＝10通りです。",
+    "grade": 3,
+    "difficulty": 4
   },
   {
     "id": "sc3024",
-    "question": "6人が円いテーブルにすわります…ではなく、6人から2人の当番を選ぶと何通りですか。",
+    "question": "6色から2色を選びます。選び方は何通りですか。",
     "answer": "15",
-    "meaning": "6人から2人の選び方は6×5÷2＝15通りです。",
-    "grade": 6,
-    "difficulty": 2
+    "meaning": "6色から2色は6×5÷2＝15通りです。",
+    "grade": 3,
+    "difficulty": 4
   },
   {
     "id": "sc3025",
-    "question": "5種類のパンから1個、3種類の飲み物から1個を選びます。組み合わせは何通りですか。",
-    "answer": "15",
-    "meaning": "5×3＝15通りです。",
-    "grade": 6,
-    "difficulty": 1
+    "question": "4人から2人を選んで、委員長と副委員長を決めます。決め方は何通りですか。",
+    "answer": "12",
+    "meaning": "委員長4通り、副委員長3通りで4×3＝12通りです。",
+    "grade": 4,
+    "difficulty": 2
   },
   {
     "id": "sc3026",
-    "question": "0、1、2、3の4枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
-    "answer": "9",
-    "meaning": "十の位は0を除く3通り、一の位は残り3通りで、3×3＝9通りです。",
+    "question": "5人から2人を選んで、委員長と副委員長を決めます。決め方は何通りですか。",
+    "answer": "20",
+    "meaning": "委員長5通り、副委員長4通りで5×4＝20通りです。",
     "grade": 4,
-    "difficulty": 4
+    "difficulty": 2
   },
   {
     "id": "sc3027",
-    "question": "赤・青・黄・緑の4色から2色を選びます。選び方は何通りですか。",
-    "answer": "6",
-    "meaning": "4色から2色を選ぶので、4×3÷2＝6通りです。",
-    "grade": 3,
-    "difficulty": 3
+    "question": "6人から2人を選んで、委員長と副委員長を決めます。決め方は何通りですか。",
+    "answer": "30",
+    "meaning": "委員長6通り、副委員長5通りで6×5＝30通りです。",
+    "grade": 4,
+    "difficulty": 2
   },
   {
     "id": "sc3028",
-    "question": "A・B・C・Dの4人が横一列にならびます。ならび方は全部で何通りですか。",
-    "answer": "24",
-    "meaning": "4×3×2×1＝24通りです。",
-    "grade": 3,
-    "difficulty": 4
-  },
-  {
-    "id": "sc3029",
-    "question": "1、2、3、4の4枚のカードから2枚選んで2けたの整数をつくります。整数は何通りできますか。",
-    "answer": "12",
-    "meaning": "十の位4通り、一の位は残り3通りで、4×3＝12通りです。",
-    "grade": 3,
-    "difficulty": 4
-  },
-  {
-    "id": "sc3030",
-    "question": "シャツ4種類とズボン3種類から1つずつ選ぶ組み合わせは何通りですか。",
+    "question": "シャツが4種類、くつが3種類あります。1つずつ選ぶ組み合わせは何通りですか。",
     "answer": "12",
     "meaning": "4×3＝12通りです。",
     "grade": 4,
     "difficulty": 1
   },
   {
+    "id": "sc3029",
+    "question": "シャツが5種類、くつが3種類あります。1つずつ選ぶ組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "5×3＝15通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3030",
+    "question": "シャツが3種類、くつが3種類あります。1つずつ選ぶ組み合わせは何通りですか。",
+    "answer": "9",
+    "meaning": "3×3＝9通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
     "id": "sc3031",
-    "question": "3種類のアイスクリームから1個を選びます。選び方は何通りですか。",
-    "answer": "3",
-    "meaning": "3種類なので3通りです。",
-    "grade": 5,
+    "question": "3人が一列にならびます。ならび方は全部で何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 4,
     "difficulty": 1
   },
   {
     "id": "sc3032",
-    "question": "大中小3つのさいころを同時に投げます。目の出方は全部で何通りですか。",
-    "answer": "216",
-    "meaning": "6×6×6＝216通りです。",
-    "grade": 5,
-    "difficulty": 2
+    "question": "4人が一列にならびます。ならび方は全部で何通りですか。",
+    "answer": "24",
+    "meaning": "24通りです。",
+    "grade": 4,
+    "difficulty": 1
   },
   {
     "id": "sc3033",
-    "question": "8人の中から代表を1人選びます。選び方は何通りですか。",
-    "answer": "8",
-    "meaning": "8人から1人なので8通りです。",
-    "grade": 6,
+    "question": "5人が一列にならびます。ならび方は全部で何通りですか。",
+    "answer": "120",
+    "meaning": "120通りです。",
+    "grade": 4,
     "difficulty": 1
   },
   {
     "id": "sc3034",
-    "question": "2色の帽子、3種類のシャツ、2種類のくつを1つずつ選びます。組み合わせは全部で何通りですか。",
+    "question": "碁ばんの目の道を、右に2区画・上に2区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "6",
+    "meaning": "右2回・上2回の並べ方で、4か所から上2か所を選び6通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 116 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3035",
+    "question": "碁ばんの目の道を、右に3区画・上に2区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "10",
+    "meaning": "右3回・上2回の並べ方で、5か所から上2か所を選び10通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3036",
+    "question": "碁ばんの目の道を、右に2区画・上に3区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "10",
+    "meaning": "右2回・上3回の並べ方で、5か所から上3か所を選び10通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 116 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3037",
+    "question": "5人の中から、そうじ当番を2人選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3038",
+    "question": "6人の中から、そうじ当番を2人選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3039",
+    "question": "7人の中から、そうじ当番を2人選びます。選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "7×6÷2＝21通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3040",
+    "question": "大小2つのさいころを同時に投げます。目の出方は全部で何通りですか。",
+    "answer": "36",
+    "meaning": "6×6＝36通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3041",
+    "question": "大小3つのさいころを同時に投げます。目の出方は全部で何通りですか。",
+    "answer": "216",
+    "meaning": "6×6×6＝216通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3042",
+    "question": "1、2、3の3枚のカードを全部ならべて3けたの整数をつくります。整数は何通りできますか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3043",
+    "question": "2、3、4の3枚のカードを全部ならべて3けたの整数をつくります。整数は何通りできますか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3044",
+    "question": "3、4、5の3枚のカードを全部ならべて3けたの整数をつくります。整数は何通りできますか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3045",
+    "question": "0、1、2、3の4枚のカードから3枚選んで3けたの整数をつくります。整数は何通りできますか。",
+    "answer": "18",
+    "meaning": "百の位は0を除く3通り、十の位3通り、一の位2通りで3×3×2＝18通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3046",
+    "question": "0、2、3、4の4枚のカードから3枚選んで3けたの整数をつくります。整数は何通りできますか。",
+    "answer": "18",
+    "meaning": "百の位は0を除く3通り、十の位3通り、一の位2通りで3×3×2＝18通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3047",
+    "question": "0、1、3、5の4枚のカードから3枚選んで3けたの整数をつくります。整数は何通りできますか。",
+    "answer": "18",
+    "meaning": "百の位は0を除く3通り、十の位3通り、一の位2通りで3×3×2＝18通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3051",
+    "question": "5人の中から代表を2人選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5人から2人の選び方は10通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3052",
+    "question": "6人の中から代表を3人選びます。選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "6人から3人の選び方は20通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3053",
+    "question": "7人の中から代表を3人選びます。選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "7人から3人の選び方は35通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3054",
+    "question": "碁ばんの目の道を、右に4区画・上に2区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "15",
+    "meaning": "右4回・上2回の並べ方で15通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3055",
+    "question": "碁ばんの目の道を、右に3区画・上に3区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "20",
+    "meaning": "右3回・上3回の並べ方で20通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3056",
+    "question": "6人の中から、代表を3人選びます。選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "6人から3人の選び方は20通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3057",
+    "question": "7人の中から、代表を3人選びます。選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "7人から3人の選び方は35通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3058",
+    "question": "6人の中から、代表を4人選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6人から4人の選び方は15通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3059",
+    "question": "5チームでリーグ戦（総当たり戦）を行います。試合数は全部で何試合ですか。",
+    "answer": "10",
+    "meaning": "5チームから2チームを選ぶので10試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3060",
+    "question": "6チームでリーグ戦（総当たり戦）を行います。試合数は全部で何試合ですか。",
+    "answer": "15",
+    "meaning": "6チームから2チームを選ぶので15試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3061",
+    "question": "4チームでリーグ戦（総当たり戦）を行います。試合数は全部で何試合ですか。",
+    "answer": "6",
+    "meaning": "4チームから2チームを選ぶので6試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3062",
+    "question": "1、2、3、4、5の5枚のカードから2枚選んで2けたの整数をつくります。偶数は何通りできますか。",
+    "answer": "8",
+    "meaning": "一の位は偶数の2通り、十の位は残り4通りで2×4＝8通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3063",
+    "question": "1、2、3、4、6の5枚のカードから2枚選んで2けたの整数をつくります。偶数は何通りできますか。",
+    "answer": "12",
+    "meaning": "一の位は偶数の3通り、十の位は残り4通りで3×4＝12通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3064",
+    "question": "2、3、4、5、6の5枚のカードから2枚選んで2けたの整数をつくります。偶数は何通りできますか。",
+    "answer": "12",
+    "meaning": "一の位は偶数の3通り、十の位は残り4通りで3×4＝12通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3065",
+    "question": "正四角形の4つの頂点を、赤・青・黄・緑の4色から選び、となり合う頂点は同じ色にしないでぬり分けます…ではなく、4つの頂点を4色から1つずつ選んで全部ちがう色にぬる方法は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2×1＝24通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3066",
+    "question": "正三角形の3つの頂点を、赤・青・黄・緑の4色から選び、となり合う頂点は同じ色にしないでぬり分けます…ではなく、3つの頂点を4色から1つずつ選んで全部ちがう色にぬる方法は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3067",
+    "question": "3人から2人を選んで、リレーの第1走者と第2走者を決めます。決め方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3068",
+    "question": "4人から2人を選んで、リレーの第1走者と第2走者を決めます。決め方は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3069",
+    "question": "5人から2人を選んで、リレーの第1走者と第2走者を決めます。決め方は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3070",
+    "question": "コインを2回投げます。表と裏の出方は全部で何通りですか。",
+    "answer": "4",
+    "meaning": "2×2＝4通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3071",
+    "question": "コインを3回投げます。表と裏の出方は全部で何通りですか。",
+    "answer": "8",
+    "meaning": "2×2×2＝8通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3072",
+    "question": "4種類のジュースから2種類を選びます。選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "4×3÷2＝6通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3073",
+    "question": "5種類のジュースから2種類を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3074",
+    "question": "6種類のジュースから2種類を選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3075",
+    "question": "シャツが3種類、かばんが2種類あります。組み合わせは何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3076",
+    "question": "シャツが2種類、かばんが4種類あります。組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "2×4＝8通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3077",
+    "question": "シャツが5種類、かばんが2種類あります。組み合わせは何通りですか。",
+    "answer": "10",
+    "meaning": "5×2＝10通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3078",
+    "question": "碁ばんの目の道を、右に4区画・上に3区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "35",
+    "meaning": "7か所から上3か所を選び35通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3079",
+    "question": "碁ばんの目の道を、右に3区画・上に4区画進んでゴールに行きます。遠回りしない行き方は何通りですか。",
+    "answer": "35",
+    "meaning": "7か所から上4か所を選び35通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='114' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3080",
+    "question": "男子4人、女子3人の中から代表を3人選びます。少なくとも女子が1人入る選び方は何通りですか。",
+    "answer": "31",
+    "meaning": "全体35通りから男子だけ4通りを引いて31通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3081",
+    "question": "男子5人、女子3人の中から代表を3人選びます。少なくとも女子が1人入る選び方は何通りですか。",
+    "answer": "46",
+    "meaning": "全体56通りから男子だけ10通りを引いて46通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3082",
+    "question": "男子5人、女子2人の中から代表を3人選びます。少なくとも女子が1人入る選び方は何通りですか。",
+    "answer": "25",
+    "meaning": "全体35通りから男子だけ10通りを引いて25通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3083",
+    "question": "8チームでトーナメント戦（勝ちぬき戦）を行います。優勝が決まるまでの試合数は何試合ですか。",
+    "answer": "7",
+    "meaning": "1試合で1チーム負けます。優勝以外の7チームが負けるので7試合です。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3084",
+    "question": "16チームでトーナメント戦（勝ちぬき戦）を行います。優勝が決まるまでの試合数は何試合ですか。",
+    "answer": "15",
+    "meaning": "1試合で1チーム負けます。優勝以外の15チームが負けるので15試合です。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3085",
+    "question": "4チームでトーナメント戦（勝ちぬき戦）を行います。優勝が決まるまでの試合数は何試合ですか。",
+    "answer": "3",
+    "meaning": "1試合で1チーム負けます。優勝以外の3チームが負けるので3試合です。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3086",
+    "question": "5枚のカード（数字は全部ちがう）から3枚選んで3けたの整数をつくります。整数は全部で何通りですか。",
+    "answer": "60",
+    "meaning": "5×4×3＝60通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3087",
+    "question": "6枚のカード（数字は全部ちがう）から3枚選んで3けたの整数をつくります。整数は全部で何通りですか。",
+    "answer": "120",
+    "meaning": "6×5×4＝120通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3088",
+    "question": "4枚のカード（数字は全部ちがう）から3枚選んで3けたの整数をつくります。整数は全部で何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3089",
+    "question": "7人の中から、係を2人選びます。選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "7人から2人の選び方は21通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3090",
+    "question": "8人の中から、係を2人選びます。選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "8人から2人の選び方は28通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3091",
+    "question": "6人の中から、係を3人選びます。選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "6人から3人の選び方は20通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3092",
+    "question": "7人から2人を選んで、委員長と副委員長を決めます。決め方は何通りですか。",
+    "answer": "42",
+    "meaning": "7×6＝42通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3093",
+    "question": "シャツ3種類、くつ2種類、ぼうし2種類から1つずつ選ぶ組み合わせは何通りですか。",
+    "answer": "12",
+    "meaning": "3×2×2＝12通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3094",
+    "question": "シャツ2種類、くつ3種類、ぼうし2種類から1つずつ選ぶ組み合わせは何通りですか。",
     "answer": "12",
     "meaning": "2×3×2＝12通りです。",
     "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3095",
+    "question": "シャツ3種類、くつ3種類、ぼうし2種類から1つずつ選ぶ組み合わせは何通りですか。",
+    "answer": "18",
+    "meaning": "3×3×2＝18通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3096",
+    "question": "5人から2人の当番を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5人から2人の選び方は10通りです。",
+    "grade": 6,
     "difficulty": 2
+  },
+  {
+    "id": "sc3097",
+    "question": "6人から2人の当番を選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6人から2人の選び方は15通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3098",
+    "question": "7人から3人の当番を選びます。選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "7人から3人の選び方は35通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3099",
+    "question": "大中2つのさいころを投げます。目の出方は全部で何通りですか。",
+    "answer": "36",
+    "meaning": "36通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3100",
+    "question": "大中小3つのさいころを投げます。目の出方は全部で何通りですか。",
+    "answer": "216",
+    "meaning": "216通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3101",
+    "question": "1つのさいころを投げます。目の出方は全部で何通りですか。",
+    "answer": "6",
+    "meaning": "1〜6の6通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3102",
+    "question": "1つのサイコロを投げます。目の出方は全部で何通りですか。",
+    "answer": "6",
+    "meaning": "1〜6の6通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3103",
+    "question": "1つのダイスを投げます。目の出方は全部で何通りですか。",
+    "answer": "6",
+    "meaning": "1〜6の6通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3104",
+    "question": "パンが2種類、ジュースが4種類あります。1つずつ選ぶと何通りですか。",
+    "answer": "8",
+    "meaning": "2×4＝8通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3105",
+    "question": "パンが3種類、ジュースが4種類あります。1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "3×4＝12通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3106",
+    "question": "パンが4種類、ジュースが3種類あります。1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3107",
+    "question": "かばんが2種類、うわぎが5種類あります。組み合わせは何通りですか。",
+    "answer": "10",
+    "meaning": "2×5＝10通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3108",
+    "question": "かばんが3種類、うわぎが5種類あります。組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "3×5＝15通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3109",
+    "question": "かばんが4種類、うわぎが4種類あります。組み合わせは何通りですか。",
+    "answer": "16",
+    "meaning": "4×4＝16通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3110",
+    "question": "表と裏があるコインを2回投げます。出方は全部で何通りですか。",
+    "answer": "4",
+    "meaning": "2×2＝4通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3111",
+    "question": "表と裏があるメダルを2回投げます。出方は全部で何通りですか。",
+    "answer": "4",
+    "meaning": "2×2＝4通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3112",
+    "question": "表と裏があるおはじきを2回投げます。出方は全部で何通りですか。",
+    "answer": "4",
+    "meaning": "2×2＝4通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3113",
+    "question": "3、4、5の3枚のカードから2枚選んで2けたの整数をつくると何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3114",
+    "question": "2、4、6の3枚のカードから2枚選んで2けたの整数をつくると何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3115",
+    "question": "1、5、7の3枚のカードから2枚選んで2けたの整数をつくると何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3116",
+    "question": "ケーキが3種類、飲み物が5種類あります。1つずつ選ぶと何通りですか。",
+    "answer": "15",
+    "meaning": "3×5＝15通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3117",
+    "question": "ケーキが4種類、飲み物が5種類あります。1つずつ選ぶと何通りですか。",
+    "answer": "20",
+    "meaning": "4×5＝20通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3118",
+    "question": "ケーキが3種類、飲み物が6種類あります。1つずつ選ぶと何通りですか。",
+    "answer": "18",
+    "meaning": "3×6＝18通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3119",
+    "question": "4種類のおかしから2種類を選びます。選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "4×3÷2＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3120",
+    "question": "5種類のおかしから2種類を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3121",
+    "question": "3種類のおかしから2種類を選びます。選び方は何通りですか。",
+    "answer": "3",
+    "meaning": "3×2÷2＝3通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3122",
+    "question": "赤白青の3色のカードを横一列にならべます。ならべ方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3123",
+    "question": "桃黄緑の3色のカードを横一列にならべます。ならべ方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3124",
+    "question": "金銀銅の3色のカードを横一列にならべます。ならべ方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3125",
+    "question": "2、3、4、5の4枚から3枚選んで3けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3126",
+    "question": "1、3、4、6の4枚から3枚選んで3けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3127",
+    "question": "2、3、5、7の4枚から3枚選んで3けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3128",
+    "question": "5人から2人の代表を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3129",
+    "question": "6人から2人の代表を選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3130",
+    "question": "7人から2人の代表を選びます。選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "7×6÷2＝21通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3131",
+    "question": "シャツが4種類、うわぎが4種類あります。組み合わせは何通りですか。",
+    "answer": "16",
+    "meaning": "4×4＝16通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3132",
+    "question": "シャツが5種類、うわぎが4種類あります。組み合わせは何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3133",
+    "question": "シャツが6種類、うわぎが3種類あります。組み合わせは何通りですか。",
+    "answer": "18",
+    "meaning": "6×3＝18通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3134",
+    "question": "シャツ3種類、くつ2種類、ぼうし2種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "3×2×2＝12通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3135",
+    "question": "シャツ2種類、くつ3種類、ぼうし2種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "2×3×2＝12通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3136",
+    "question": "シャツ2種類、くつ2種類、ぼうし3種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "2×2×3＝12通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3137",
+    "question": "5種類の色から2色を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3138",
+    "question": "6種類の色から2色を選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3139",
+    "question": "4種類の色から2色を選びます。選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "4×3÷2＝6通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3140",
+    "question": "3人から3人を選んで、1等・2等・3等を決めます。決め方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3141",
+    "question": "4人から3人を選んで、1等・2等・3等を決めます。決め方は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3142",
+    "question": "5人から2人を選んで、1等・2等を決めます。決め方は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3143",
+    "question": "碁ばんの目の道を右に3区画・上に2区画進みます。遠回りしない行き方は何通りですか。",
+    "answer": "10",
+    "meaning": "5か所から2か所選び10通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3144",
+    "question": "碁ばんの目の道を右に2区画・上に3区画進みます。遠回りしない行き方は何通りですか。",
+    "answer": "10",
+    "meaning": "5か所から3か所選び10通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 116 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3145",
+    "question": "碁ばんの目の道を右に4区画・上に2区画進みます。遠回りしない行き方は何通りですか。",
+    "answer": "15",
+    "meaning": "6か所から2か所選び15通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3146",
+    "question": "6人から掃除当番を2人選びます。選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3147",
+    "question": "7人から掃除当番を2人選びます。選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3148",
+    "question": "8人から掃除当番を2人選びます。選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "28通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3149",
+    "question": "6種類のジュースから3種類を選ぶ選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "6人から3人と同じで20通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3150",
+    "question": "7種類のジュースから3種類を選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "7人から3人と同じで35通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3151",
+    "question": "5種類のジュースから3種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5人から3人と同じで10通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3152",
+    "question": "4種類のケーキから2種類を選びます。選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3153",
+    "question": "5種類のケーキから2種類を選びます。選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3154",
+    "question": "6種類のケーキから3種類を選びます。選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3155",
+    "question": "3人から2人を選んで役を決めます。決め方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3156",
+    "question": "4人から2人を選んで役を決めます。決め方は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3157",
+    "question": "4人から3人を選んで役を決めます。決め方は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3158",
+    "question": "6人から係を2人選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3159",
+    "question": "7人から係を2人選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3160",
+    "question": "8人から係を2人選ぶ選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "28通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3161",
+    "question": "4人から3人を選んで一列にならべる方法は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3162",
+    "question": "5人から3人を選んで一列にならべる方法は何通りですか。",
+    "answer": "60",
+    "meaning": "5×4×3＝60通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3163",
+    "question": "6人から3人を選んで一列にならべる方法は何通りですか。",
+    "answer": "120",
+    "meaning": "6×5×4＝120通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3164",
+    "question": "碁ばんの目の道を右に4・上に2進みます。遠回りしない行き方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3165",
+    "question": "碁ばんの目の道を右に3・上に3進みます。遠回りしない行き方は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3166",
+    "question": "碁ばんの目の道を右に5・上に2進みます。遠回りしない行き方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 200 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='170' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='170' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='170' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='170' y1='18' x2='170' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='170' cy='18' r='5' fill='#ff6b6b'/><text x='176' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3167",
+    "question": "7人から代表を3人選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3168",
+    "question": "8人から代表を3人選ぶ選び方は何通りですか。",
+    "answer": "56",
+    "meaning": "56通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3169",
+    "question": "7人から代表を4人選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3170",
+    "question": "6チームで総当たり戦をします。試合数は何試合ですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3171",
+    "question": "7チームで総当たり戦をします。試合数は何試合ですか。",
+    "answer": "21",
+    "meaning": "7×6÷2＝21試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3172",
+    "question": "8チームで総当たり戦をします。試合数は何試合ですか。",
+    "answer": "28",
+    "meaning": "8×7÷2＝28試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3173",
+    "question": "5枚のカード（数字は全部ちがう）から3枚並べて3けたの整数をつくると何通りですか。",
+    "answer": "60",
+    "meaning": "5×4×3＝60通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3174",
+    "question": "6枚のカード（数字は全部ちがう）から3枚並べて3けたの整数をつくると何通りですか。",
+    "answer": "120",
+    "meaning": "6×5×4＝120通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3175",
+    "question": "4枚のカード（数字は全部ちがう）から3枚並べて3けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 5,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3176",
+    "question": "6人から2人の当番を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3177",
+    "question": "7人から2人の当番を選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3178",
+    "question": "8人から2人の当番を選ぶ選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "28通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3179",
+    "question": "4人が一列にならびます。ならび方は何通りですか。",
+    "answer": "24",
+    "meaning": "24通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3180",
+    "question": "5人が一列にならびます。ならび方は何通りですか。",
+    "answer": "120",
+    "meaning": "120通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3181",
+    "question": "4人から2人を選んで役職を決めます。決め方は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3182",
+    "question": "5人から3人を選んで役職を決めます。決め方は何通りですか。",
+    "answer": "60",
+    "meaning": "5×4×3＝60通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3183",
+    "question": "6人から3人を選んで役職を決めます。決め方は何通りですか。",
+    "answer": "120",
+    "meaning": "6×5×4＝120通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3184",
+    "question": "碁ばんの目の道を右に2・上に4進む遠回りしない行き方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 6,
+    "difficulty": 2,
+    "svg": "<svg viewBox='0 0 116 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3185",
+    "question": "碁ばんの目の道を右に3・上に3進む遠回りしない行き方は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 6,
+    "difficulty": 2,
+    "svg": "<svg viewBox='0 0 144 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3186",
+    "question": "碁ばんの目の道を右に4・上に2進む遠回りしない行き方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 6,
+    "difficulty": 2,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3187",
+    "question": "7人から3人の委員を選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3188",
+    "question": "8人から3人の委員を選ぶ選び方は何通りですか。",
+    "answer": "56",
+    "meaning": "56通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3189",
+    "question": "9人から2人の委員を選ぶ選び方は何通りですか。",
+    "answer": "36",
+    "meaning": "36通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3190",
+    "question": "碁ばんの目の道を右に4・上に4進む遠回りしない行き方は何通りですか。",
+    "answer": "70",
+    "meaning": "8か所から4か所選び70通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='142' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3191",
+    "question": "碁ばんの目の道を右に5・上に4進む遠回りしない行き方は何通りですか。",
+    "answer": "126",
+    "meaning": "9か所から4か所選び126通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 200 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='170' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='170' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='170' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='170' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='170' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='170' y1='18' x2='170' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='170' cy='18' r='5' fill='#ff6b6b'/><text x='176' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3192",
+    "question": "男子5人、女子3人から2人選ぶとき、少なくとも1人は女子になる選び方は何通りですか。",
+    "answer": "18",
+    "meaning": "全体28から男子だけ10を引き18通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3193",
+    "question": "男子4人、女子3人から2人選ぶとき、少なくとも1人は女子になる選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "全体21から男子だけ6を引き15通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3194",
+    "question": "男子6人、女子2人から2人選ぶとき、少なくとも1人は女子になる選び方は何通りですか。",
+    "answer": "13",
+    "meaning": "全体28から男子だけ15を引き13通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3195",
+    "question": "4人でトーナメント（勝ちぬき戦）をします。優勝までの試合数は何試合ですか。",
+    "answer": "3",
+    "meaning": "4－1＝3試合です。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3196",
+    "question": "8人でトーナメント（勝ちぬき戦）をします。優勝までの試合数は何試合ですか。",
+    "answer": "7",
+    "meaning": "8－1＝7試合です。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3197",
+    "question": "16人でトーナメント（勝ちぬき戦）をします。優勝までの試合数は何試合ですか。",
+    "answer": "15",
+    "meaning": "16－1＝15試合です。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3198",
+    "question": "のみもの2種類、おかし6種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "2×6＝12通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3199",
+    "question": "のみもの3種類、おかし6種類から1つずつ選ぶと何通りですか。",
+    "answer": "18",
+    "meaning": "3×6＝18通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3200",
+    "question": "のみもの4種類、おかし5種類から1つずつ選ぶと何通りですか。",
+    "answer": "20",
+    "meaning": "4×5＝20通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3201",
+    "question": "ぼうし3種類、リボン3種類の組み合わせは何通りですか。",
+    "answer": "9",
+    "meaning": "3×3＝9通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3202",
+    "question": "ぼうし2種類、リボン4種類の組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "2×4＝8通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3203",
+    "question": "ぼうし4種類、リボン2種類の組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "4×2＝8通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3204",
+    "question": "くだもの3種類、やさい4種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "3×4＝12通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3205",
+    "question": "くだもの2種類、やさい5種類から1つずつ選ぶと何通りですか。",
+    "answer": "10",
+    "meaning": "2×5＝10通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3206",
+    "question": "くだもの4種類、やさい3種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3207",
+    "question": "1、2、4の3枚から2枚並べて2けたの整数をつくると何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3208",
+    "question": "3、5、6の3枚から2枚並べて2けたの整数をつくると何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3209",
+    "question": "2、5、7の3枚から2枚並べて2けたの整数をつくると何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3210",
+    "question": "5種類の色えんぴつから2本を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3211",
+    "question": "6種類の色えんぴつから2本を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3212",
+    "question": "4種類の色えんぴつから2本を選ぶ選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "4×3÷2＝6通りです。",
+    "grade": 3,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3213",
+    "question": "ぼうし4種類、シャツ4種類の組み合わせは何通りですか。",
+    "answer": "16",
+    "meaning": "4×4＝16通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3214",
+    "question": "ぼうし3種類、シャツ5種類の組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "3×5＝15通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3215",
+    "question": "ぼうし5種類、シャツ3種類の組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "5×3＝15通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3216",
+    "question": "1、2、3、4の4枚から2枚並べて2けたの整数をつくると何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3217",
+    "question": "2、3、5、6の4枚から2枚並べて2けたの整数をつくると何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3218",
+    "question": "1、4、5、7の4枚から2枚並べて2けたの整数をつくると何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3219",
+    "question": "5種類の花から2種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "5×4÷2＝10通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3220",
+    "question": "6種類の花から2種類を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "6×5÷2＝15通りです。",
+    "grade": 3,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3221",
+    "question": "アイス4種類、トッピング4種類の組み合わせは何通りですか。",
+    "answer": "16",
+    "meaning": "4×4＝16通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3222",
+    "question": "アイス5種類、トッピング3種類の組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "5×3＝15通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3223",
+    "question": "アイス3種類、トッピング5種類の組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "3×5＝15通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3224",
+    "question": "5人から2人を選んで役を決めます。決め方は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3225",
+    "question": "6人から掃除係を2人選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3226",
+    "question": "7人から掃除係を2人選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3227",
+    "question": "5人から掃除係を2人選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3228",
+    "question": "右に2区画・上に4区画進む碁ばんの道順は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 116 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3229",
+    "question": "右に4区画・上に2区画進む碁ばんの道順は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3230",
+    "question": "右に3区画・上に3区画進む碁ばんの道順は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 4,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3231",
+    "question": "1、2、3、4の4枚を全部並べて4けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2×1＝24通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3232",
+    "question": "2、3、4、5の4枚を全部並べて4けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2×1＝24通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3233",
+    "question": "1、2、3、5の4枚を全部並べて4けたの整数をつくると何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2×1＝24通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3234",
+    "question": "6人から4人を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3235",
+    "question": "5人から4人を選ぶ選び方は何通りですか。",
+    "answer": "5",
+    "meaning": "5通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3236",
+    "question": "7人から4人を選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3237",
+    "question": "3種類のパンから2種類を選ぶ選び方は何通りですか。",
+    "answer": "3",
+    "meaning": "3通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3238",
+    "question": "4種類のパンから2種類を選ぶ選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3239",
+    "question": "5種類のパンから3種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 4,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3240",
+    "question": "5種類のケーキから2種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3241",
+    "question": "6種類のケーキから3種類を選ぶ選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3242",
+    "question": "7種類のケーキから2種類を選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3243",
+    "question": "3人から3人を選び一列に並べる方法は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2×1＝6通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3244",
+    "question": "4人から3人を選び一列に並べる方法は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3245",
+    "question": "5人から3人を選び一列に並べる方法は何通りですか。",
+    "answer": "60",
+    "meaning": "5×4×3＝60通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3246",
+    "question": "7人から代表を2人選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3247",
+    "question": "8人から代表を2人選ぶ選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "28通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3248",
+    "question": "9人から代表を2人選ぶ選び方は何通りですか。",
+    "answer": "36",
+    "meaning": "36通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3249",
+    "question": "右に3・上に2進む碁ばんの道順は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3250",
+    "question": "右に2・上に4進む碁ばんの道順は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 116 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3251",
+    "question": "右に4・上に3進む碁ばんの道順は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3252",
+    "question": "8人から委員を3人選ぶ選び方は何通りですか。",
+    "answer": "56",
+    "meaning": "56通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3253",
+    "question": "9人から委員を3人選ぶ選び方は何通りですか。",
+    "answer": "84",
+    "meaning": "84通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3254",
+    "question": "7人から委員を3人選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3255",
+    "question": "8人から4人を選ぶ選び方は何通りですか。",
+    "answer": "70",
+    "meaning": "70通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3256",
+    "question": "4種類のジュースから2種類を選ぶ選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3257",
+    "question": "5種類のジュースから2種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3260",
+    "question": "色3種類、形3種類、大きさ2種類から1つずつ選ぶと何通りですか。",
+    "answer": "18",
+    "meaning": "3×3×2＝18通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3261",
+    "question": "色2種類、形2種類、大きさ3種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "2×2×3＝12通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3262",
+    "question": "色4種類、形2種類、大きさ2種類から1つずつ選ぶと何通りですか。",
+    "answer": "16",
+    "meaning": "4×2×2＝16通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3263",
+    "question": "6人から3人の係を選ぶ選び方は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3264",
+    "question": "7人から3人の係を選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3265",
+    "question": "8人から3人の係を選ぶ選び方は何通りですか。",
+    "answer": "56",
+    "meaning": "56通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3266",
+    "question": "右に4・上に2進む碁ばんの道順は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 6,
+    "difficulty": 2,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3267",
+    "question": "8人から2人を選ぶ選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "28通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3268",
+    "question": "9人から3人を選ぶ選び方は何通りですか。",
+    "answer": "84",
+    "meaning": "84通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3269",
+    "question": "10人から2人を選ぶ選び方は何通りですか。",
+    "answer": "45",
+    "meaning": "45通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3270",
+    "question": "5枚の数字カード（全部ちがう）から4枚並べて4けたの整数をつくると何通りですか。",
+    "answer": "120",
+    "meaning": "5×4×3×2＝120通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3271",
+    "question": "6枚の数字カード（全部ちがう）から3枚並べて3けたの整数をつくると何通りですか。",
+    "answer": "120",
+    "meaning": "6×5×4＝120通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3272",
+    "question": "7枚の数字カード（全部ちがう）から3枚並べて3けたの整数をつくると何通りですか。",
+    "answer": "210",
+    "meaning": "7×6×5＝210通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3273",
+    "question": "赤玉6個、白玉3個から2個選ぶとき、少なくとも1個は白玉になる選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "全体36から赤だけ15を引き21通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3274",
+    "question": "赤玉5個、白玉4個から2個選ぶとき、少なくとも1個は白玉になる選び方は何通りですか。",
+    "answer": "26",
+    "meaning": "全体36から赤だけ10を引き26通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3275",
+    "question": "赤玉7個、白玉2個から2個選ぶとき、少なくとも1個は白玉になる選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "全体36から赤だけ21を引き15通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3276",
+    "question": "8人から5人を選ぶ選び方は何通りですか。",
+    "answer": "56",
+    "meaning": "56通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3277",
+    "question": "くつ2種類、くつ下4種類の組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "2×4＝8通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3278",
+    "question": "くつ4種類、くつ下2種類の組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "4×2＝8通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3279",
+    "question": "くつ3種類、くつ下4種類の組み合わせは何通りですか。",
+    "answer": "12",
+    "meaning": "3×4＝12通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3280",
+    "question": "ハンカチ3種類、シール3種類の組み合わせは何通りですか。",
+    "answer": "9",
+    "meaning": "3×3＝9通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3281",
+    "question": "ハンカチ2種類、シール5種類の組み合わせは何通りですか。",
+    "answer": "10",
+    "meaning": "2×5＝10通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3282",
+    "question": "ハンカチ5種類、シール2種類の組み合わせは何通りですか。",
+    "answer": "10",
+    "meaning": "5×2＝10通りです。",
+    "grade": 3,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3283",
+    "question": "えんぴつ4種類、けしゴム3種類の組み合わせは何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3284",
+    "question": "えんぴつ3種類、けしゴム4種類の組み合わせは何通りですか。",
+    "answer": "12",
+    "meaning": "3×4＝12通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3285",
+    "question": "えんぴつ5種類、けしゴム3種類の組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "5×3＝15通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3286",
+    "question": "4種類の花から3種類を選ぶ選び方は何通りですか。",
+    "answer": "4",
+    "meaning": "4通りです。",
+    "grade": 3,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3287",
+    "question": "ペン4種類、ノート3種類の組み合わせは何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3288",
+    "question": "ペン5種類、ノート3種類の組み合わせは何通りですか。",
+    "answer": "15",
+    "meaning": "5×3＝15通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3289",
+    "question": "ペン3種類、ノート4種類の組み合わせは何通りですか。",
+    "answer": "12",
+    "meaning": "3×4＝12通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3290",
+    "question": "5種類のおかしから2種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3291",
+    "question": "6種類のおかしから2種類を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3292",
+    "question": "4種類のおかしから2種類を選ぶ選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 4,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3293",
+    "question": "5種類の色から2色を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3294",
+    "question": "6種類の色から2色を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3295",
+    "question": "7種類の色から2色を選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3296",
+    "question": "3人から2人を選んで一列に並べる方法は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3297",
+    "question": "4人から3人を選んで一列に並べる方法は何通りですか。",
+    "answer": "24",
+    "meaning": "4×3×2＝24通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3298",
+    "question": "5人から2人を選んで一列に並べる方法は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 4,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3299",
+    "question": "7種類の花から2種類を選ぶ選び方は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3300",
+    "question": "8種類の花から2種類を選ぶ選び方は何通りですか。",
+    "answer": "28",
+    "meaning": "28通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3301",
+    "question": "3人から2人を選び、順番に賞をわたします。わたし方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3302",
+    "question": "4人から2人を選び、順番に賞をわたします。わたし方は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3303",
+    "question": "5人から3人を選び、順番に賞をわたします。わたし方は何通りですか。",
+    "answer": "60",
+    "meaning": "5×4×3＝60通りです。",
+    "grade": 4,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3304",
+    "question": "4種類の花から2種類を選ぶ選び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3305",
+    "question": "3人から2人を選び、班長と副班長を決めます。決め方は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3306",
+    "question": "4人から2人を選び、班長と副班長を決めます。決め方は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3307",
+    "question": "5人から2人を選び、班長と副班長を決めます。決め方は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 5,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3308",
+    "question": "3人が一列に並びます。並び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3309",
+    "question": "4人が一列に並びます。並び方は何通りですか。",
+    "answer": "24",
+    "meaning": "24通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3310",
+    "question": "右に4区画・上に2区画進む碁ばんの道は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 84' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='74' r='5' fill='#ffd166'/><text x='18' y='78' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3311",
+    "question": "右に3区画・上に3区画進む碁ばんの道は何通りですか。",
+    "answer": "20",
+    "meaning": "20通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 144 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='114' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='114' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='114' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='114' cy='18' r='5' fill='#ff6b6b'/><text x='120' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3312",
+    "question": "右に2区画・上に5区画進む碁ばんの道は何通りですか。",
+    "answer": "21",
+    "meaning": "21通りです。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 116 168' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='86' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='86' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='86' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='158' x2='86' y2='158' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='158' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='158' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='158' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='158' r='5' fill='#ffd166'/><text x='18' y='162' font-size='10' fill='#ffd166'>ス</text><circle cx='86' cy='18' r='5' fill='#ff6b6b'/><text x='92' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3314",
+    "question": "6種類のケーキから2種類を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3315",
+    "question": "5種類のケーキから3種類を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3316",
+    "question": "3人が一列に並ぶ並び方は何通りですか。",
+    "answer": "6",
+    "meaning": "6通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3317",
+    "question": "4人が一列に並ぶ並び方は何通りですか。",
+    "answer": "24",
+    "meaning": "24通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3318",
+    "question": "5人が一列に並ぶ並び方は何通りですか。",
+    "answer": "120",
+    "meaning": "120通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3319",
+    "question": "4人から班長と副班長を選ぶ決め方は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3320",
+    "question": "5人から班長と副班長を選ぶ決め方は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3321",
+    "question": "6人から班長と副班長を選ぶ決め方は何通りですか。",
+    "answer": "30",
+    "meaning": "6×5＝30通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3322",
+    "question": "5種類の色から3色を選ぶ選び方は何通りですか。",
+    "answer": "10",
+    "meaning": "10通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3323",
+    "question": "3人から2人を選び、賞を順にわたす方法は何通りですか。",
+    "answer": "6",
+    "meaning": "3×2＝6通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3324",
+    "question": "4人から2人を選び、賞を順にわたす方法は何通りですか。",
+    "answer": "12",
+    "meaning": "4×3＝12通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3325",
+    "question": "5人から2人を選び、賞を順にわたす方法は何通りですか。",
+    "answer": "20",
+    "meaning": "5×4＝20通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3326",
+    "question": "右に4区画・上に3区画進む碁ばんの道は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 172 112' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='142' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='142' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='142' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='102' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='102' r='5' fill='#ffd166'/><text x='18' y='106' font-size='10' fill='#ffd166'>ス</text><circle cx='142' cy='18' r='5' fill='#ff6b6b'/><text x='148' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3327",
+    "question": "右に5区画・上に4区画進む碁ばんの道は何通りですか。",
+    "answer": "126",
+    "meaning": "126通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 200 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='170' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='170' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='170' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='170' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='170' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='170' y1='18' x2='170' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='170' cy='18' r='5' fill='#ff6b6b'/><text x='176' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3328",
+    "question": "右に6区画・上に4区画進む碁ばんの道は何通りですか。",
+    "answer": "210",
+    "meaning": "210通りです。",
+    "grade": 6,
+    "difficulty": 3,
+    "svg": "<svg viewBox='0 0 228 140' style='display:block;margin:6px auto;max-width:230px'><line x1='30' y1='18' x2='198' y2='18' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='46' x2='198' y2='46' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='74' x2='198' y2='74' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='102' x2='198' y2='102' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='130' x2='198' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='30' y1='18' x2='30' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='58' y1='18' x2='58' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='86' y1='18' x2='86' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='114' y1='18' x2='114' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='142' y1='18' x2='142' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='170' y1='18' x2='170' y2='130' stroke='#eef2ff' stroke-width='1'/><line x1='198' y1='18' x2='198' y2='130' stroke='#eef2ff' stroke-width='1'/><circle cx='30' cy='130' r='5' fill='#ffd166'/><text x='18' y='134' font-size='10' fill='#ffd166'>ス</text><circle cx='198' cy='18' r='5' fill='#ff6b6b'/><text x='204' y='22' font-size='10' fill='#ff6b6b'>ゴ</text></svg>"
+  },
+  {
+    "id": "sc3329",
+    "question": "9種類の花から2種類を選ぶ選び方は何通りですか。",
+    "answer": "36",
+    "meaning": "36通りです。",
+    "grade": 6,
+    "difficulty": 3
+  },
+  {
+    "id": "sc3330",
+    "question": "シャツ3種類、ズボン2種類、ぼうし2種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "3×2×2＝12通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3331",
+    "question": "シャツ2種類、ズボン3種類、ぼうし2種類から1つずつ選ぶと何通りですか。",
+    "answer": "12",
+    "meaning": "2×3×2＝12通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3332",
+    "question": "シャツ4種類、ズボン2種類、ぼうし2種類から1つずつ選ぶと何通りですか。",
+    "answer": "16",
+    "meaning": "4×2×2＝16通りです。",
+    "grade": 5,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3333",
+    "question": "8チームでトーナメント戦をします。優勝までの試合数は何試合ですか。",
+    "answer": "7",
+    "meaning": "8－1＝7試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3334",
+    "question": "16チームでトーナメント戦をします。優勝までの試合数は何試合ですか。",
+    "answer": "15",
+    "meaning": "16－1＝15試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3335",
+    "question": "4チームでトーナメント戦をします。優勝までの試合数は何試合ですか。",
+    "answer": "3",
+    "meaning": "4－1＝3試合です。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3336",
+    "question": "男子4人、女子2人から2人選ぶとき、少なくとも1人は女子になる選び方は何通りですか。",
+    "answer": "9",
+    "meaning": "全体15から男子だけ6を引き9通りです。",
+    "grade": 5,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3337",
+    "question": "くつ2種類、かばん4種類の組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "2×4＝8通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3338",
+    "question": "くつ3種類、かばん3種類の組み合わせは何通りですか。",
+    "answer": "9",
+    "meaning": "3×3＝9通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3339",
+    "question": "くつ4種類、かばん2種類の組み合わせは何通りですか。",
+    "answer": "8",
+    "meaning": "4×2＝8通りです。",
+    "grade": 6,
+    "difficulty": 1
+  },
+  {
+    "id": "sc3340",
+    "question": "コインを3回投げます。出方は全部で何通りですか。",
+    "answer": "8",
+    "meaning": "8通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3341",
+    "question": "コインを4回投げます。出方は全部で何通りですか。",
+    "answer": "16",
+    "meaning": "16通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3342",
+    "question": "コインを5回投げます。出方は全部で何通りですか。",
+    "answer": "32",
+    "meaning": "32通りです。",
+    "grade": 6,
+    "difficulty": 2
+  },
+  {
+    "id": "sc3343",
+    "question": "7人から4人の委員を選ぶ選び方は何通りですか。",
+    "answer": "35",
+    "meaning": "35通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3344",
+    "question": "8人から4人の委員を選ぶ選び方は何通りですか。",
+    "answer": "70",
+    "meaning": "70通りです。",
+    "grade": 6,
+    "difficulty": 4
+  },
+  {
+    "id": "sc3345",
+    "question": "6人から4人の委員を選ぶ選び方は何通りですか。",
+    "answer": "15",
+    "meaning": "15通りです。",
+    "grade": 6,
+    "difficulty": 4
   }
 ]
