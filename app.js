@@ -1026,8 +1026,20 @@ async function boot() {
   }
 }
 
+// 科目カードの問題数を QUESTION_COUNTS から自動計算して表示（ハードコードしない）
+function refreshSubjectCounts() {
+  document.querySelectorAll('.subject-card[data-subject]').forEach(card => {
+    const cats = QUESTION_COUNTS[card.dataset.subject];
+    if (!cats) return;
+    const total = Object.values(cats).reduce((a, b) => a + b, 0);
+    const el = card.querySelector('.subject-count');
+    if (el) el.textContent = `${total.toLocaleString()}問`;
+  });
+}
+
 function initSubject() {
   document.getElementById('subject-nickname').textContent = state.nickname;
+  refreshSubjectCounts();
 
   // 称号バッジ・がんばりの記録カード
   const ach = getAchievement();
