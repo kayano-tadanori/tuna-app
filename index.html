@@ -1419,20 +1419,22 @@
       <div class="tetris-info"><span>⭐ボーナス</span><b id="jump-coins">0</b></div>
       <div class="tetris-info"><span>ベスト</span><b id="jump-best">0</b></div>
     </div>
-    <div class="jump-main">
-      <canvas id="jump-canvas" width="260" height="420"></canvas>
-      <div id="jump-overlay" class="tetris-overlay hidden">
-        <img id="jump-overlay-img" class="mine-overlay-img hidden" src="images/chicchi-gameover.png" alt="">
-        <p id="jump-overlay-emoji" class="tetris-overlay-emoji">🐣</p>
-        <p id="jump-overlay-text" class="tetris-overlay-text">おっこちた！</p>
-        <p id="jump-overlay-score" class="tetris-overlay-score"></p>
-        <button id="jump-restart" class="btn-primary">もう一回！</button>
-      </div>
-    </div>
     <canvas id="jump-chars" width="320" height="76"></canvas>
-    <div class="tetris-items">
-      <button class="t-item-btn" data-item="wing">🪽<b id="j-item-wing">0</b><span>6秒ミス無効</span></button>
-      <button class="t-item-btn" data-item="rocket">🚀<b id="j-item-rocket">0</b><span>一気にジャンプ</span></button>
+    <div class="jump-play-row">
+      <div class="jump-items-left">
+        <button class="t-item-btn" data-item="wing">🪽<b id="j-item-wing">0</b><span>6秒ミス無効</span></button>
+        <button class="t-item-btn" data-item="rocket">🚀<b id="j-item-rocket">0</b><span>一気にジャンプ</span></button>
+      </div>
+      <div class="jump-main">
+        <canvas id="jump-canvas" width="260" height="420"></canvas>
+        <div id="jump-overlay" class="tetris-overlay hidden">
+          <img id="jump-overlay-img" class="mine-overlay-img hidden" src="images/chicchi-gameover.png" alt="">
+          <p id="jump-overlay-emoji" class="tetris-overlay-emoji">🐣</p>
+          <p id="jump-overlay-text" class="tetris-overlay-text">おっこちた！</p>
+          <p id="jump-overlay-score" class="tetris-overlay-score"></p>
+          <button id="jump-restart" class="btn-primary">もう一回！</button>
+        </div>
+      </div>
     </div>
     <p class="mine-hint">ゆびでなぞって左右に。🌀バネ雲で大ジャンプ、💥こわれ雲は1回きり、🍙おにぎりでバリア！🦅タカにご用心。</p>
   </div>
