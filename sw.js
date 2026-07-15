@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v144';
+const CACHE_NAME = 'oton-gakuen-v145';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -85,24 +85,41 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// フェッチ：キャッシュ優先、なければネット
+// フェッチ戦略：
+//  ・アプリ本体（HTML/JS/JSONデータ）はネット優先＝更新を即反映。失敗時のみキャッシュ。
+//  ・画像などの静的ファイルはキャッシュ優先＝速さ重視。
+// これで「古いキャッシュが残って更新が見えない」問題を防ぐ。
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(res => {
-        // 正常レスポンスのみキャッシュに追加
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  const isCore = req.mode === 'navigate' || /\.(html|js|json)$/.test(url.pathname);
+
+  if (isCore) {
+    // ネット優先。取れたら最新をキャッシュへ更新。オフラインならキャッシュ→最後にindex.html
+    event.respondWith(
+      fetch(req).then(res => {
         if (res && res.status === 200 && res.type === 'basic') {
           const clone = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
         }
         return res;
-      }).catch(() => {
-        // オフライン時のフォールバック（HTMLの場合はindex.htmlを返す）
-        if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('./index.html');
+      }).catch(() =>
+        caches.match(req).then(cached =>
+          cached || (req.mode === 'navigate' ? caches.match('./index.html') : undefined)
+        )
+      )
+    );
+  } else {
+    // 画像・SVG・フォント等はキャッシュ優先
+    event.respondWith(
+      caches.match(req).then(cached => cached || fetch(req).then(res => {
+        if (res && res.status === 200 && res.type === 'basic') {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
         }
-      });
-    })
-  );
+        return res;
+      }))
+    );
+  }
 });
