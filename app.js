@@ -1229,11 +1229,20 @@ async function initUpdateBanner() {
     document.getElementById('update-banner-badge').classList.toggle('hidden', !(updates[0].date > lastSeen));
 
     const listEl = document.getElementById('update-list');
-    listEl.innerHTML = updates.map(u => `
+    // 日付ごとにまとめて要約表示（1日1カード・その日の変更点をタイトルで箇条書き）
+    const days = [];
+    const dmap = {};
+    for (const u of updates) {
+      if (!dmap[u.date]) { dmap[u.date] = { date: u.date, ver: u.ver || '', items: [] }; days.push(dmap[u.date]); }
+      if (u.ver && !dmap[u.date].ver) dmap[u.date].ver = u.ver; // その日の最新（先頭）のバージョン
+      dmap[u.date].items.push(u);
+    }
+    listEl.innerHTML = days.map(d => `
       <div class="update-item">
-        <div class="update-item-date">${u.date}${u.ver ? ` <span class="update-item-ver">${u.ver}</span>` : ''}</div>
-        <div class="update-item-title">${u.title}</div>
-        <div class="update-item-body">${u.body}</div>
+        <div class="update-item-date">${d.date}${d.ver ? ` <span class="update-item-ver">${d.ver}</span>` : ''}</div>
+        <ul class="update-day-list" style="margin:6px 0 0;padding-left:1.15em;line-height:1.6">
+          ${d.items.map(u => `<li style="margin:3px 0">${u.title}</li>`).join('')}
+        </ul>
       </div>
     `).join('');
 
