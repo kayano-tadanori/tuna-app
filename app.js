@@ -4279,6 +4279,39 @@ const T_SPRITES = {
       '..yyyyyy..',
       '...l..l...',
     ],
+    // 羽ばたき（下→上の2コマ）。頭・体はそのままで、翼（d）だけ体の横で動かす
+    flapDown: [
+      '..........',
+      '..........',
+      '..........',
+      '..........',
+      '...yyyy...',
+      '..yyyyyy..',
+      '..oooooo..',
+      '..oeooeo..',
+      '...rrrr...',
+      '..yyyyyy..',
+      '..yyyyyy..',
+      '.dyyyyyyd.',
+      'ddyyyyyydd',
+      '.d.l..l.d.',
+    ],
+    flapUp: [
+      '..........',
+      '..........',
+      '..........',
+      '..........',
+      '...yyyy...',
+      '..yyyyyy..',
+      '..oooooo..',
+      '..oeooeo..',
+      '.d.rrrr.d.',
+      'ddyyyyyydd',
+      '.dyyyyyyd.',
+      '..yyyyyy..',
+      '..yyyyyy..',
+      '...l..l...',
+    ],
   },
 };
 
@@ -6499,8 +6532,11 @@ function drawJump() {
   }
   const sp = T_SPRITES.chicchi;
   const glow = wingOn || barrierOn;
+  // 羽ばたき：上がっているとき（vy<0）やつばさ発動中は速く、落下中はゆっくりパタパタ
+  const flapMs = wingOn ? 70 : (jumpState.player.vy < 0 ? 90 : 150);
+  const frame = Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown;
   if (glow) { ctx.save(); ctx.shadowColor = wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = 12; }
-  tDrawSprite(ctx, glow ? sp.cheer : sp.idle, sp.pal, px, py, J_PLAYER_S);
+  tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
   if (glow) ctx.restore();
 
   // 到達演出のバナー
