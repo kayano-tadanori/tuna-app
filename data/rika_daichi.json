@@ -6930,5 +6930,95 @@
     "difficulty": 3,
     "svg": "<svg viewBox=\"0 0 210 72\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"40\" y=\"14\" width=\"120\" height=\"16\" fill=\"#c9975b\" opacity=\"0.35\" stroke=\"#cdd6f4\" stroke-width=\"0.6\"/><text x=\"166\" y=\"26\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">れき（大）</text><rect x=\"40\" y=\"30\" width=\"120\" height=\"16\" fill=\"#ffd166\" opacity=\"0.35\" stroke=\"#cdd6f4\" stroke-width=\"0.6\"/><text x=\"166\" y=\"42\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">砂（中）</text><rect x=\"40\" y=\"46\" width=\"120\" height=\"16\" fill=\"#38d9a9\" opacity=\"0.35\" stroke=\"#cdd6f4\" stroke-width=\"0.6\"/><text x=\"166\" y=\"58\" fill=\"#38d9a9\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">どろ（小）</text></svg>",
     "id": "rg481"
+  },
+  {
+    "question": "ある地震で、P波は秒速8km、S波は秒速4kmで伝わりました。ある地点で初期微動（P波が来てからS波が来るまでのゆれ）が10秒続きました。この地点から震源までの距離は何kmですか？",
+    "answer": "80",
+    "choices": [
+      "80",
+      "10",
+      "40",
+      "120"
+    ],
+    "meaning": "初期微動継続時間＝S波の到達時間－P波の到達時間＝距離÷4－距離÷8＝距離÷8。10＝距離÷8 より距離＝10×8＝80km。初期微動が長いほど震源は遠い！",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 94\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"46\" x2=\"20\" y2=\"46\" /><path d=\"M20 46 L70 46 L73 41 L76 51 L79 41 L82 51 L85 41 L88 51 L91 41 L94 51 L97 41 L100 51 L103 41 L106 51 L109 41 L112 51 L115 41 L118 51 L121 41 L124 51 L127 41 L130 51 L133 41 L136 51 L139 41 L142 51 L143 31 L146 61 L149 31 L152 61 L155 31 L158 61 L161 31 L164 61 L167 31 L170 61 L173 31 L176 61 L179 31 L182 61 L185 31 L188 61 L191 31 L194 61 L197 31 L200 61 L203 31 L206 61 L209 31 L212 61 L215 31 L218 61 L221 31 L224 61 L227 31 L230 61\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"18\" x2=\"70\" y2=\"64\" stroke=\"#38d9a9\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"70\" y=\"14\" fill=\"#38d9a9\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波</text><line x1=\"140\" y1=\"18\" x2=\"140\" y2=\"68\" stroke=\"#ff6b6b\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"140\" y=\"14\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波</text><line x1=\"70\" y1=\"72\" x2=\"140\" y2=\"72\" stroke=\"#ffd166\" stroke-width=\"1\"/><text x=\"105\" y=\"84\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">初期微動継続時間</text></svg>",
+    "id": "rg482"
+  },
+  {
+    "question": "ある地震で、P波は秒速8km、S波は秒速4kmで伝わりました。ある地点で初期微動（P波が来てからS波が来るまでのゆれ）が15秒続きました。この地点から震源までの距離は何kmですか？",
+    "answer": "120",
+    "choices": [
+      "120",
+      "15",
+      "60",
+      "160"
+    ],
+    "meaning": "初期微動継続時間＝S波の到達時間－P波の到達時間＝距離÷4－距離÷8＝距離÷8。15＝距離÷8 より距離＝15×8＝120km。初期微動が長いほど震源は遠い！",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 94\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"46\" x2=\"20\" y2=\"46\" /><path d=\"M20 46 L70 46 L73 41 L76 51 L79 41 L82 51 L85 41 L88 51 L91 41 L94 51 L97 41 L100 51 L103 41 L106 51 L109 41 L112 51 L115 41 L118 51 L121 41 L124 51 L127 41 L130 51 L133 41 L136 51 L139 41 L142 51 L143 31 L146 61 L149 31 L152 61 L155 31 L158 61 L161 31 L164 61 L167 31 L170 61 L173 31 L176 61 L179 31 L182 61 L185 31 L188 61 L191 31 L194 61 L197 31 L200 61 L203 31 L206 61 L209 31 L212 61 L215 31 L218 61 L221 31 L224 61 L227 31 L230 61\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"18\" x2=\"70\" y2=\"64\" stroke=\"#38d9a9\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"70\" y=\"14\" fill=\"#38d9a9\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波</text><line x1=\"140\" y1=\"18\" x2=\"140\" y2=\"68\" stroke=\"#ff6b6b\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"140\" y=\"14\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波</text><line x1=\"70\" y1=\"72\" x2=\"140\" y2=\"72\" stroke=\"#ffd166\" stroke-width=\"1\"/><text x=\"105\" y=\"84\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">初期微動継続時間</text></svg>",
+    "id": "rg483"
+  },
+  {
+    "question": "ある地震で、P波は秒速8km、S波は秒速4kmで伝わりました。ある地点で初期微動（P波が来てからS波が来るまでのゆれ）が5秒続きました。この地点から震源までの距離は何kmですか？",
+    "answer": "40",
+    "choices": [
+      "40",
+      "5",
+      "20",
+      "80"
+    ],
+    "meaning": "初期微動継続時間＝S波の到達時間－P波の到達時間＝距離÷4－距離÷8＝距離÷8。5＝距離÷8 より距離＝5×8＝40km。初期微動が長いほど震源は遠い！",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 94\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"46\" x2=\"20\" y2=\"46\" /><path d=\"M20 46 L70 46 L73 41 L76 51 L79 41 L82 51 L85 41 L88 51 L91 41 L94 51 L97 41 L100 51 L103 41 L106 51 L109 41 L112 51 L115 41 L118 51 L121 41 L124 51 L127 41 L130 51 L133 41 L136 51 L139 41 L142 51 L143 31 L146 61 L149 31 L152 61 L155 31 L158 61 L161 31 L164 61 L167 31 L170 61 L173 31 L176 61 L179 31 L182 61 L185 31 L188 61 L191 31 L194 61 L197 31 L200 61 L203 31 L206 61 L209 31 L212 61 L215 31 L218 61 L221 31 L224 61 L227 31 L230 61\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"18\" x2=\"70\" y2=\"64\" stroke=\"#38d9a9\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"70\" y=\"14\" fill=\"#38d9a9\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波</text><line x1=\"140\" y1=\"18\" x2=\"140\" y2=\"68\" stroke=\"#ff6b6b\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"140\" y=\"14\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波</text><line x1=\"70\" y1=\"72\" x2=\"140\" y2=\"72\" stroke=\"#ffd166\" stroke-width=\"1\"/><text x=\"105\" y=\"84\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">初期微動継続時間</text></svg>",
+    "id": "rg484"
+  },
+  {
+    "question": "ある地震で、P波は秒速8km、S波は秒速4kmで伝わりました。ある地点で初期微動（P波が来てからS波が来るまでのゆれ）が20秒続きました。この地点から震源までの距離は何kmですか？",
+    "answer": "160",
+    "choices": [
+      "160",
+      "20",
+      "80",
+      "200"
+    ],
+    "meaning": "初期微動継続時間＝S波の到達時間－P波の到達時間＝距離÷4－距離÷8＝距離÷8。20＝距離÷8 より距離＝20×8＝160km。初期微動が長いほど震源は遠い！",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 94\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"46\" x2=\"20\" y2=\"46\" /><path d=\"M20 46 L70 46 L73 41 L76 51 L79 41 L82 51 L85 41 L88 51 L91 41 L94 51 L97 41 L100 51 L103 41 L106 51 L109 41 L112 51 L115 41 L118 51 L121 41 L124 51 L127 41 L130 51 L133 41 L136 51 L139 41 L142 51 L143 31 L146 61 L149 31 L152 61 L155 31 L158 61 L161 31 L164 61 L167 31 L170 61 L173 31 L176 61 L179 31 L182 61 L185 31 L188 61 L191 31 L194 61 L197 31 L200 61 L203 31 L206 61 L209 31 L212 61 L215 31 L218 61 L221 31 L224 61 L227 31 L230 61\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"18\" x2=\"70\" y2=\"64\" stroke=\"#38d9a9\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"70\" y=\"14\" fill=\"#38d9a9\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波</text><line x1=\"140\" y1=\"18\" x2=\"140\" y2=\"68\" stroke=\"#ff6b6b\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"140\" y=\"14\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波</text><line x1=\"70\" y1=\"72\" x2=\"140\" y2=\"72\" stroke=\"#ffd166\" stroke-width=\"1\"/><text x=\"105\" y=\"84\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">初期微動継続時間</text></svg>",
+    "id": "rg485"
+  },
+  {
+    "question": "ある地震で、P波は秒速8km、S波は秒速4kmで伝わりました。ある地点で初期微動（P波が来てからS波が来るまでのゆれ）が8秒続きました。この地点から震源までの距離は何kmですか？",
+    "answer": "64",
+    "choices": [
+      "64",
+      "8",
+      "32",
+      "104"
+    ],
+    "meaning": "初期微動継続時間＝S波の到達時間－P波の到達時間＝距離÷4－距離÷8＝距離÷8。8＝距離÷8 より距離＝8×8＝64km。初期微動が長いほど震源は遠い！",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 94\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"46\" x2=\"20\" y2=\"46\" /><path d=\"M20 46 L70 46 L73 41 L76 51 L79 41 L82 51 L85 41 L88 51 L91 41 L94 51 L97 41 L100 51 L103 41 L106 51 L109 41 L112 51 L115 41 L118 51 L121 41 L124 51 L127 41 L130 51 L133 41 L136 51 L139 41 L142 51 L143 31 L146 61 L149 31 L152 61 L155 31 L158 61 L161 31 L164 61 L167 31 L170 61 L173 31 L176 61 L179 31 L182 61 L185 31 L188 61 L191 31 L194 61 L197 31 L200 61 L203 31 L206 61 L209 31 L212 61 L215 31 L218 61 L221 31 L224 61 L227 31 L230 61\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"18\" x2=\"70\" y2=\"64\" stroke=\"#38d9a9\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"70\" y=\"14\" fill=\"#38d9a9\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波</text><line x1=\"140\" y1=\"18\" x2=\"140\" y2=\"68\" stroke=\"#ff6b6b\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"140\" y=\"14\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波</text><line x1=\"70\" y1=\"72\" x2=\"140\" y2=\"72\" stroke=\"#ffd166\" stroke-width=\"1\"/><text x=\"105\" y=\"84\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">初期微動継続時間</text></svg>",
+    "id": "rg486"
+  },
+  {
+    "question": "ある地震で、P波は秒速8km、S波は秒速4kmで伝わりました。ある地点で初期微動（P波が来てからS波が来るまでのゆれ）が12秒続きました。この地点から震源までの距離は何kmですか？",
+    "answer": "96",
+    "choices": [
+      "96",
+      "12",
+      "48",
+      "136"
+    ],
+    "meaning": "初期微動継続時間＝S波の到達時間－P波の到達時間＝距離÷4－距離÷8＝距離÷8。12＝距離÷8 より距離＝12×8＝96km。初期微動が長いほど震源は遠い！",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 94\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"46\" x2=\"20\" y2=\"46\" /><path d=\"M20 46 L70 46 L73 41 L76 51 L79 41 L82 51 L85 41 L88 51 L91 41 L94 51 L97 41 L100 51 L103 41 L106 51 L109 41 L112 51 L115 41 L118 51 L121 41 L124 51 L127 41 L130 51 L133 41 L136 51 L139 41 L142 51 L143 31 L146 61 L149 31 L152 61 L155 31 L158 61 L161 31 L164 61 L167 31 L170 61 L173 31 L176 61 L179 31 L182 61 L185 31 L188 61 L191 31 L194 61 L197 31 L200 61 L203 31 L206 61 L209 31 L212 61 L215 31 L218 61 L221 31 L224 61 L227 31 L230 61\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"70\" y1=\"18\" x2=\"70\" y2=\"64\" stroke=\"#38d9a9\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"70\" y=\"14\" fill=\"#38d9a9\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波</text><line x1=\"140\" y1=\"18\" x2=\"140\" y2=\"68\" stroke=\"#ff6b6b\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"140\" y=\"14\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波</text><line x1=\"70\" y1=\"72\" x2=\"140\" y2=\"72\" stroke=\"#ffd166\" stroke-width=\"1\"/><text x=\"105\" y=\"84\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">初期微動継続時間</text></svg>",
+    "id": "rg487"
   }
 ]
