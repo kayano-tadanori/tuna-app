@@ -4312,6 +4312,23 @@ const T_SPRITES = {
       '..yyyyyy..',
       '...l..l...',
     ],
+    // ロケット噴射中の加速ポーズ（翼を後ろにすぼめ、体は流線形、足は下にそろえる）
+    rocket: [
+      '.d......d.',
+      '..d....d..',
+      '...yyyy...',
+      '..yyyyyy..',
+      '..oooooo..',
+      '..oeooeo..',
+      '...rrrr...',
+      '.dyyyyyyd.',
+      '..yyyyyy..',
+      '..yyyyyy..',
+      '..yyyyyy..',
+      '...yyyy...',
+      '....yy....',
+      '....ll....',
+    ],
   },
 };
 
@@ -6669,6 +6686,32 @@ function jDrawMeteor(ctx, x, y, w, h, type, seed) {
   else if (type === 'break') { ctx.strokeStyle = 'rgba(20,15,12,0.75)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx - 6, cy - 3); ctx.lineTo(cx - 1, cy + 1); ctx.lineTo(cx + 3, cy - 2); ctx.lineTo(cx + 7, cy + 2); ctx.stroke(); }
 }
 
+// チッチのお尻からのジェット噴射（fx,fy＝噴射口。下向きに炎）
+function jDrawJet(ctx, fx, fy, now) {
+  const flick = 0.7 + 0.3 * Math.sin(now / 45) + 0.12 * Math.sin(now / 13);
+  const len = 22 * flick, w = 7;
+  const flame = (ww, ll, col) => {
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.moveTo(fx - ww, fy);
+    ctx.quadraticCurveTo(fx - ww * 0.5, fy + ll * 0.6, fx, fy + ll);
+    ctx.quadraticCurveTo(fx + ww * 0.5, fy + ll * 0.6, fx + ww, fy);
+    ctx.quadraticCurveTo(fx, fy - 3, fx - ww, fy);
+    ctx.closePath(); ctx.fill();
+  };
+  flame(w, len, 'rgba(255,140,40,0.9)');                 // 外炎（オレンジ）
+  flame(w * 0.62, len * 0.78, 'rgba(255,214,90,0.95)');  // 中炎（黄）
+  flame(w * 0.32, len * 0.5, 'rgba(190,235,255,0.95)');  // 芯（白青）
+  // 火花
+  ctx.fillStyle = 'rgba(255,190,90,0.9)';
+  for (let i = 0; i < 3; i++) {
+    const t = (now / 60 + i * 0.5);
+    ctx.beginPath();
+    ctx.arc(fx + Math.sin(t * 5 + i) * 6, fy + len * (0.5 + (t % 1) * 0.7), 1.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
 function drawJump() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
@@ -6768,7 +6811,19 @@ function drawJump() {
 
   const wingOn = now < jumpState.wingUntil;
   const barrierOn = now < jumpState.barrierUntil;
+  const rocketOn = now < jumpState.rocketUntil;
   const px = jumpState.player.x, py = jumpState.player.y;
+  // ロケット噴射：お尻からジェット炎＋スピードライン
+  if (rocketOn) {
+    jDrawJet(ctx, px + J_PLAYER_W / 2, py + J_PLAYER_H - 4, now);
+    ctx.strokeStyle = 'rgba(185,225,255,0.7)'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    for (let i = 0; i < 2; i++) {
+      const lx = px + (i ? J_PLAYER_W + 5 : -5);
+      const off = (now / 22 + i * 9) % 16;
+      ctx.beginPath(); ctx.moveTo(lx, py + 8 + off); ctx.lineTo(lx, py + 18 + off); ctx.stroke();
+    }
+    ctx.lineCap = 'butt';
+  }
   // おにぎりバリアの輪（残り時間が短くなると点滅）
   if (barrierOn) {
     const left = jumpState.barrierUntil - now;
@@ -6781,11 +6836,11 @@ function drawJump() {
     }
   }
   const sp = T_SPRITES.chicchi;
-  const glow = wingOn || barrierOn;
-  // 羽ばたき：いつも速くバタバタ。つばさ発動中はさらに速く
+  const glow = wingOn || barrierOn || rocketOn;
+  // 羽ばたき：いつも速くバタバタ。つばさ発動中はさらに速く。ロケット中は加速ポーズ
   const flapMs = wingOn ? 45 : 65;
-  const frame = Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown;
-  if (glow) { ctx.save(); ctx.shadowColor = wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = 12; }
+  const frame = rocketOn ? sp.rocket : (Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown);
+  if (glow) { ctx.save(); ctx.shadowColor = rocketOn ? '#ff8c3a' : wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = 12; }
   tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
   if (glow) ctx.restore();
 
