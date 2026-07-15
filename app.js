@@ -6202,7 +6202,7 @@ function jGenPlatformAt(y) {
   else if (r < (score > 10 ? 0.14 : 0.08)) type = 'spring';
   // 動く足場はふつうの雲だけ（特殊足場は止めておく：難しすぎ防止）
   const moving = type === 'normal' && score > 20 && Math.random() < 0.3;
-  jumpState.platforms.push({ x, y, w, type, used: false, breakAt: 0, vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
+  jumpState.platforms.push({ x, y, w, type, used: false, breakAt: 0, seed: Math.random(), vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
   // アイテム抽選：まれにオカーンのおにぎり🍙、そこそこ⭐
   const ir = Math.random();
   if (ir < 0.05) jumpState.coins.push({ x: x + w / 2, y: y - 16, taken: false, kind: 'onigiri' });
@@ -6283,7 +6283,7 @@ function startJump() {
   ov.classList.add('hidden'); ov.classList.remove('ending');
 
   const startPlatY = J_H - 40;
-  jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, type: 'normal', used: false, breakAt: 0, vx: 0 });
+  jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, type: 'normal', used: false, breakAt: 0, seed: Math.random(), vx: 0 });
   jumpState.player.x = J_W / 2 - J_PLAYER_W / 2;
   jumpState.player.y = startPlatY - J_PLAYER_H;
   jumpState.player.vy = J_JUMP_V;
@@ -6562,6 +6562,46 @@ function jDrawCloud(ctx, x, y, w, h, type) {
   }
 }
 
+// 宇宙の足場は隕石（岩）。seedで大きさ・形・クレーターがバラける
+function jDrawMeteor(ctx, x, y, w, h, type, seed) {
+  const cx = x + w / 2, cy = y + h / 2 + 2;
+  const rxBase = w / 2 + 3;
+  const ry = h / 2 + 4 + seed * 4;   // 縦の大きさをseedでばらつかせる
+  let base, dark, edge;
+  if (type === 'spring') { base = '#5a7a5f'; dark = '#3c563f'; edge = '#8fe0a5'; }
+  else if (type === 'break') { base = '#6b5f57'; dark = '#463d36'; edge = '#9a8b80'; }
+  else if (type === 'ice') { base = '#7f9fc0'; dark = '#56769c'; edge = '#cfe8ff'; }
+  else if (type === 'moving') { base = '#8a7a5c'; dark = '#65563d'; edge = '#e0c089'; }
+  else { base = '#7a736e'; dark = '#4e4844'; edge = '#a89f98'; }
+  // 不規則な岩の輪郭
+  const pts = 11;
+  ctx.beginPath();
+  for (let i = 0; i <= pts; i++) {
+    const a = (i / pts) * Math.PI * 2;
+    const wob = 0.72 + 0.28 * Math.sin(seed * 30 + i * 1.7);
+    const px = cx + Math.cos(a) * rxBase * wob;
+    const py = cy + Math.sin(a) * ry * (0.72 + 0.28 * Math.cos(seed * 17 + i * 2.1));
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = base; ctx.fill();
+  ctx.strokeStyle = edge; ctx.lineWidth = 1.2; ctx.stroke();
+  // クレーター
+  ctx.fillStyle = dark;
+  const nc = 2 + Math.floor(seed * 3);
+  for (let k = 0; k < nc; k++) {
+    const ca = seed * 40 + k * 2.3;
+    const cr = rxBase * (0.16 + (Math.sin(seed * 13 + k) * 0.5 + 0.5) * 0.18);
+    ctx.beginPath();
+    ctx.ellipse(cx + Math.cos(ca) * rxBase * 0.35, cy + Math.sin(ca) * ry * 0.35, cr, cr * 0.7, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // タイプの目じるし（雲と同じ位置）
+  if (type === 'spring') { ctx.fillStyle = '#8fe0a5'; ctx.beginPath(); ctx.moveTo(cx, cy - 5); ctx.lineTo(cx - 4, cy + 2); ctx.lineTo(cx + 4, cy + 2); ctx.closePath(); ctx.fill(); }
+  else if (type === 'ice') { ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.beginPath(); ctx.arc(cx - 4, cy - 2, 1.2, 0, Math.PI * 2); ctx.arc(cx + 5, cy + 1, 1, 0, Math.PI * 2); ctx.fill(); }
+  else if (type === 'break') { ctx.strokeStyle = 'rgba(20,15,12,0.75)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx - 6, cy - 3); ctx.lineTo(cx - 1, cy + 1); ctx.lineTo(cx + 3, cy - 2); ctx.lineTo(cx + 7, cy + 2); ctx.stroke(); }
+}
+
 function drawJump() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
@@ -6611,10 +6651,12 @@ function drawJump() {
     ctx.globalAlpha = 1;
   }
 
+  const inSpace = jumpState.score >= J_SPACE_M;
   jumpState.platforms.forEach(plat => {
     const type = plat.used ? 'break' : (plat.vx && plat.type === 'normal' ? 'moving' : plat.type);
     if (plat.used) { ctx.save(); ctx.globalAlpha = Math.max(0, 1 - (now - plat.breakAt) / J_BREAK_FADE_MS); }
-    jDrawCloud(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type);
+    if (inSpace) jDrawMeteor(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type, plat.seed != null ? plat.seed : 0.5);
+    else jDrawCloud(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type);
     if (plat.used) ctx.restore();
   });
 
