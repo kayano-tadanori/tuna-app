@@ -1121,6 +1121,87 @@ function initSubject() {
   backupLocalData();
   initUpdateBanner();
   updateGameTicketBadge();
+  initDebugTool();
+}
+
+// ============================================================
+// 管理ツール（デバッグ・保護者用）：ホームのロゴ長押しで開く
+// ============================================================
+function renderDebugItems() {
+  const items = getItems();
+  const el = document.getElementById('debug-items');
+  if (!el) return;
+  el.innerHTML = Object.entries(ITEM_DEFS).map(([k, d]) => `
+    <div class="debug-item">
+      <span class="debug-item-name">${d.icon} ${d.label}</span>
+      <span class="debug-item-count" id="debug-cnt-${k}">${items[k] || 0}</span>
+      <button class="debug-give" data-give="${k}" data-n="1">＋1</button>
+      <button class="debug-give" data-give="${k}" data-n="10">＋10</button>
+      <button class="debug-give" data-give="${k}" data-n="99">MAX</button>
+      <button class="debug-give" data-give="${k}" data-n="0">0</button>
+    </div>`).join('');
+  const coinEl = document.getElementById('debug-coin-now');
+  if (coinEl) coinEl.textContent = getCoins();
+}
+
+let debugReturnScreen = 'subject';
+function openDebugTool() {
+  debugReturnScreen = currentScreenId || 'subject';
+  bindDebugHandlers();
+  renderDebugItems();
+  showScreen('debug');
+}
+
+// ボタン類の結線（開くたびに呼んでも安全＝冪等）
+function bindDebugHandlers() {
+  const backBtn = document.getElementById('debug-back');
+  if (backBtn) backBtn.onclick = () => showScreen(debugReturnScreen);
+
+  const itemsEl = document.getElementById('debug-items');
+  if (itemsEl && !itemsEl.dataset.dbgBound) {
+    itemsEl.dataset.dbgBound = '1';
+    itemsEl.addEventListener('click', e => {
+      const b = e.target.closest('.debug-give');
+      if (!b) return;
+      const kind = b.dataset.give, n = Number(b.dataset.n);
+      if (n === 0) { const it = getItems(); it[kind] = 0; localStorage.setItem('items', JSON.stringify(it)); }
+      else addItem(kind, n);
+      renderDebugItems();
+      if (typeof updateItemButtons === 'function') updateItemButtons();
+    });
+  }
+  const allmax = document.getElementById('debug-allmax');
+  if (allmax) allmax.onclick = () => {
+    Object.keys(ITEM_DEFS).forEach(k => addItem(k, 99));
+    renderDebugItems();
+    if (typeof updateItemButtons === 'function') updateItemButtons();
+    showToast('全アイテムをMAXにしました');
+  };
+  document.querySelectorAll('.debug-coin-btn').forEach(b => {
+    b.onclick = () => {
+      const n = Number(b.dataset.coin);
+      if (n === 0) localStorage.setItem('coins', '0');
+      else if (n === 9999) localStorage.setItem('coins', '9999');
+      else addCoins(n);
+      renderDebugItems();
+    };
+  });
+}
+
+function initDebugTool() {
+  // メニュー上部のロゴを長押し（約0.9秒）で管理ツールを開く
+  const logo = document.querySelector('.top-logo-img');
+  if (logo && !logo.dataset.dbgBound) {
+    logo.dataset.dbgBound = '1';
+    let timer = null;
+    const start = e => { if (e) e.preventDefault(); clearTimeout(timer); timer = setTimeout(openDebugTool, 900); };
+    const cancel = () => { clearTimeout(timer); timer = null; };
+    logo.addEventListener('pointerdown', start);
+    logo.addEventListener('pointerup', cancel);
+    logo.addEventListener('pointerleave', cancel);
+    logo.addEventListener('pointercancel', cancel);
+  }
+  bindDebugHandlers();
 }
 
 // ============================================================

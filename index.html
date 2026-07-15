@@ -1484,6 +1484,32 @@
   </div>
 </div>
 
+<!-- =============== 管理ツール（デバッグ・保護者用） =============== -->
+<div id="screen-debug" class="screen">
+  <header class="top-bar">
+    <button id="debug-back" class="back-btn">‹ 戻る</button>
+    <h2 class="top-title">🛠 管理ツール</h2>
+  </header>
+  <div class="debug-main">
+    <p class="debug-note">デバッグ・確認用。アイテムやコインを付与できます（この端末のみ）。</p>
+    <div class="debug-section">
+      <h3 class="debug-h">🎁 アイテム付与</h3>
+      <div id="debug-items"></div>
+      <button id="debug-allmax" class="btn-secondary">全アイテムをMAX（99）にする</button>
+    </div>
+    <div class="debug-section">
+      <h3 class="debug-h">🪙 コイン（現在 <b id="debug-coin-now">0</b>）</h3>
+      <div class="debug-row">
+        <button class="debug-coin-btn" data-coin="100">+100</button>
+        <button class="debug-coin-btn" data-coin="1000">+1000</button>
+        <button class="debug-coin-btn" data-coin="9999">MAX</button>
+        <button class="debug-coin-btn" data-coin="0">0にする</button>
+      </div>
+    </div>
+    <p class="debug-note">※メニュー上部のロゴ（オトン学園）を長押しで開けます。</p>
+  </div>
+</div>
+
 <!-- =============== ゲームランキングモーダル =============== -->
 <div id="game-rank-modal" class="gami-modal hidden">
   <div class="gami-card">
