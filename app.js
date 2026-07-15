@@ -6142,7 +6142,7 @@ const J_PLATFORM_SHRINK_SCORE = 300; // このスコアで最小幅まで縮む
 const J_GRAVITY = 0.32;
 const J_JUMP_V = -9.5;
 const J_ROCKET_V = -17;         // ロケット発射の初速
-const J_ROCKET_MS = 480;        // 噴射している時間（この間は落下中でも上へ）
+const J_ROCKET_MS = 850;        // 噴射している時間（この間は落下中でも上へ・炎も出る）
 const J_ROCKET_THRUST_V = -13;  // 噴射中の上向き速度（重力に負けない）
 const J_WING_V = -3;
 const J_WING_MS = 6000;
@@ -6689,7 +6689,7 @@ function jDrawMeteor(ctx, x, y, w, h, type, seed) {
 // チッチのお尻からのジェット噴射（fx,fy＝噴射口。下向きに炎）
 function jDrawJet(ctx, fx, fy, now) {
   const flick = 0.7 + 0.3 * Math.sin(now / 45) + 0.12 * Math.sin(now / 13);
-  const len = 22 * flick, w = 7;
+  const len = 27 * flick, w = 8;
   const flame = (ww, ll, col) => {
     ctx.fillStyle = col;
     ctx.beginPath();
@@ -6815,7 +6815,7 @@ function drawJump() {
   const px = jumpState.player.x, py = jumpState.player.y;
   // ロケット噴射：お尻からジェット炎＋スピードライン
   if (rocketOn) {
-    jDrawJet(ctx, px + J_PLAYER_W / 2, py + J_PLAYER_H - 4, now);
+    jDrawJet(ctx, px + J_PLAYER_W / 2, py + J_PLAYER_H - 2, now);
     ctx.strokeStyle = 'rgba(185,225,255,0.7)'; ctx.lineWidth = 2; ctx.lineCap = 'round';
     for (let i = 0; i < 2; i++) {
       const lx = px + (i ? J_PLAYER_W + 5 : -5);
@@ -6840,7 +6840,7 @@ function drawJump() {
   // 羽ばたき：いつも速くバタバタ。つばさ発動中はさらに速く。ロケット中は加速ポーズ
   const flapMs = wingOn ? 45 : 65;
   const frame = rocketOn ? sp.rocket : (Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown);
-  if (glow) { ctx.save(); ctx.shadowColor = rocketOn ? '#ff8c3a' : wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = 12; }
+  if (glow) { ctx.save(); ctx.shadowColor = rocketOn ? '#ff8c3a' : wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = rocketOn ? 6 : 12; }
   tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
   if (glow) ctx.restore();
 
@@ -7154,7 +7154,12 @@ function jSfx(kind) {
     case 'bounce': tTone(300, 0.06, 'square', 0.08, 0, 500); break;
     case 'coin':   tTone(880, 0.05, 'square', 0.08); tTone(1320, 0.05, 'square', 0.06, 0.05); break;
     case 'wing':   [440, 660, 880].forEach((f, i) => tTone(f, 0.08, 'triangle', 0.09, i * 0.06)); break;
-    case 'rocket': tTone(160, 0.3, 'sawtooth', 0.12, 0, 900); break;
+    case 'rocket':
+      tTone(110, 0.85, 'sawtooth', 0.13, 0, 55);   // 低い轟音（ゴォー…）
+      tTone(220, 0.85, 'square', 0.05, 0, 130);     // 中音のうなり
+      tTone(1400, 0.55, 'sawtooth', 0.06, 0, 320);  // シューッという噴射
+      tTone(320, 0.2, 'sawtooth', 0.1, 0, 1200);    // 発射の「キュイン」
+      break;
     case 'hawkWarn': tTone(1200, 0.12, 'sawtooth', 0.1, 0, 700); break;
     case 'hawkHit':  tTone(120, 0.25, 'square', 0.18, 0, 40); break;
     case 'spring':   [660, 990, 1320].forEach((f, i) => tTone(f, 0.08, 'square', 0.09, i * 0.05)); break;
