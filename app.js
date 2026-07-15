@@ -113,6 +113,23 @@ function saveProgress(prog) {
   localStorage.setItem('progress', JSON.stringify(prog));
 }
 
+// 2026-07-15の大改修で 速さ(sh)・割合(sw)・数の性質(sn)・特殊算(st) は問題を作り直し
+// （IDを振り直した）ため、古い正解/不正解の記録が別の問題に残ってしまう。
+// これらのカテゴリの進捗だけを一度きりリセットする（他教科・他カテゴリは維持）。
+(function resetProgressForRebuiltCategories() {
+  try {
+    if (localStorage.getItem('progressResetV128')) return;
+    const prog = JSON.parse(localStorage.getItem('progress') || '{}');
+    let removed = 0;
+    for (const id of Object.keys(prog)) {
+      if (/^(sh|sw|sn|st)\d/.test(id)) { delete prog[id]; removed++; }
+    }
+    localStorage.setItem('progress', JSON.stringify(prog));
+    localStorage.setItem('progressResetV128', '1');
+    if (removed) console.log(`作り直したカテゴリの進捗を${removed}件リセットしました。`);
+  } catch (e) { /* localStorage不可時は無視 */ }
+})();
+
 function recordResult(id, correct) {
   const prog = getProgress();
   if (!prog[id]) prog[id] = { correct: 0, total: 0 };

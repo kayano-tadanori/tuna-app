@@ -7,7 +7,7 @@ const FILE = path.join(__dirname, '..', 'data', 'sansu_rittai.json');
 const old = JSON.parse(fs.readFileSync(FILE, 'utf8'));
 
 let maxId = Math.max(...old.map(q => Number(q.id.slice(2))));
-const nid = () => 'sr' + String(++maxId).padStart(3, '0');
+const nid = () => 'sd' + String(++maxId).padStart(3, '0');
 const BL = '#4f9eff', YE = '#ffd166', WT = '#cdd6f4';
 const S = (vb, body) => `<svg viewBox="0 0 ${vb}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto">${body}</svg>`;
 const lbl = (x, y, s) => `<text x="${x}" y="${y}" fill="${YE}" font-size="12" text-anchor="middle" font-family="sans-serif" font-weight="bold">${s}</text>`;
