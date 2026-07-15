@@ -1142,6 +1142,8 @@ function renderDebugItems() {
     </div>`).join('');
   const coinEl = document.getElementById('debug-coin-now');
   if (coinEl) coinEl.textContent = getCoins();
+  const tkEl = document.getElementById('debug-ticket-now');
+  if (tkEl) tkEl.textContent = getGameTickets();
 }
 
 let debugReturnScreen = 'subject';
@@ -1186,6 +1188,15 @@ function bindDebugHandlers() {
       renderDebugItems();
     };
   });
+  document.querySelectorAll('.debug-ticket-btn').forEach(b => {
+    b.onclick = () => {
+      const n = Number(b.dataset.ticket);
+      if (n === 0) { localStorage.setItem('gameTickets', '0'); updateGameTicketBadge(); }
+      else if (n === 99) { localStorage.setItem('gameTickets', '99'); updateGameTicketBadge(); }
+      else addGameTickets(n);
+      renderDebugItems();
+    };
+  });
 }
 
 function initDebugTool() {
@@ -1194,7 +1205,7 @@ function initDebugTool() {
   if (logo && !logo.dataset.dbgBound) {
     logo.dataset.dbgBound = '1';
     let timer = null;
-    const start = e => { if (e) e.preventDefault(); clearTimeout(timer); timer = setTimeout(openDebugTool, 900); };
+    const start = e => { if (e) e.preventDefault(); clearTimeout(timer); timer = setTimeout(openDebugTool, 5000); };
     const cancel = () => { clearTimeout(timer); timer = null; };
     logo.addEventListener('pointerdown', start);
     logo.addEventListener('pointerup', cancel);

@@ -655,8 +655,8 @@ button { cursor: pointer; font-family: inherit; }
 .debug-item:last-child { border-bottom: none; }
 .debug-item-name { flex: 1; font-size: 0.84rem; font-weight: 700; color: var(--text); }
 .debug-item-count { min-width: 26px; text-align: right; font-weight: 900; color: var(--gold); margin-right: 4px; }
-.debug-give, .debug-coin-btn { background: var(--card2); border: 1px solid var(--glass-border); color: var(--text); border-radius: 8px; padding: 6px 9px; font-weight: 800; font-size: 0.78rem; -webkit-tap-highlight-color: transparent; }
-.debug-give:active, .debug-coin-btn:active { transform: scale(0.94); }
+.debug-give, .debug-coin-btn, .debug-ticket-btn { background: var(--card2); border: 1px solid var(--glass-border); color: var(--text); border-radius: 8px; padding: 6px 9px; font-weight: 800; font-size: 0.78rem; -webkit-tap-highlight-color: transparent; }
+.debug-give:active, .debug-coin-btn:active, .debug-ticket-btn:active { transform: scale(0.94); }
 .debug-row { display: flex; gap: 8px; flex-wrap: wrap; }
 #debug-allmax { margin-top: 10px; width: 100%; }
 .top-logo-img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
