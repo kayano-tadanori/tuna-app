@@ -6532,8 +6532,8 @@ function drawJump() {
   }
   const sp = T_SPRITES.chicchi;
   const glow = wingOn || barrierOn;
-  // 羽ばたき：上がっているとき（vy<0）やつばさ発動中は速く、落下中はゆっくりパタパタ
-  const flapMs = wingOn ? 70 : (jumpState.player.vy < 0 ? 90 : 150);
+  // 羽ばたき：いつも速くバタバタ。つばさ発動中はさらに速く
+  const flapMs = wingOn ? 45 : 65;
   const frame = Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown;
   if (glow) { ctx.save(); ctx.shadowColor = wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = 12; }
   tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
