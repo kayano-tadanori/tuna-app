@@ -643,6 +643,7 @@ button { cursor: pointer; font-family: inherit; }
 .update-list { width: 100%; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 50vh; padding-right: 2px; }
 .update-item { text-align: left; background: var(--card); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 10px 12px; }
 .update-item-date { font-size: 0.66rem; font-weight: 800; color: var(--accent2); margin-bottom: 3px; }
+.update-item-ver { display: inline-block; margin-left: 4px; padding: 1px 6px; border-radius: 999px; background: rgba(255,186,0,0.16); border: 1px solid rgba(255,186,0,0.4); color: var(--gold); font-size: 0.6rem; font-weight: 900; vertical-align: middle; }
 .update-item-title { font-size: 0.88rem; font-weight: 900; color: var(--text); margin-bottom: 3px; }
 .update-item-body { font-size: 0.76rem; color: var(--sub2); line-height: 1.6; white-space: pre-wrap; }
 

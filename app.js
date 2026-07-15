@@ -1139,7 +1139,7 @@ async function initUpdateBanner() {
     const listEl = document.getElementById('update-list');
     listEl.innerHTML = updates.map(u => `
       <div class="update-item">
-        <div class="update-item-date">${u.date}</div>
+        <div class="update-item-date">${u.date}${u.ver ? ` <span class="update-item-ver">${u.ver}</span>` : ''}</div>
         <div class="update-item-title">${u.title}</div>
         <div class="update-item-body">${u.body}</div>
       </div>
