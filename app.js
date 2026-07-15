@@ -6142,7 +6142,8 @@ const J_BREAK_FADE_MS = 260;   // こわれ雲：踏んだあと消えるまで
 const J_BARRIER_MS = 6000;     // オカーンのおにぎりバリア時間
 const J_MILESTONE_STEP = 50;   // 到達演出（○m）の間隔
 const J_GOAL = 3000;           // ゴール：3000mで月に到着（エンディング）
-const J_SPACE_M = 1500;        // これ以上は宇宙（じゃま役がタカ→宇宙人に変わる）
+const J_BALLOON_M = 1000;      // 1000m〜：じゃま役が気球に
+const J_SPACE_M = 1500;        // これ以上は宇宙（じゃま役が宇宙人に変わる）
 const J_STATION_M = 2000;      // 2000mあたりで宇宙ステーションが背景を通過
 const J_UFO_M = 2500;          // 2500mあたりでUFOが背景を通過
 const J_SHOOT_M = 2500;        // 2500m超で多めの流れ星が邪魔をしてくる
@@ -6410,7 +6411,8 @@ function jUpdatePhysics() {
       const dir = Math.random() < 0.5 ? 1 : -1;
       jumpState.hawk = { x: dir === 1 ? -J_HAWK_SIZE : J_W + J_HAWK_SIZE, y: 40 + Math.random() * (J_H * 0.5), dir };
       jSfx('hawkWarn');
-      jumpChars.cheer(jumpState.score >= J_SPACE_M ? '👽 宇宙人や！じゃまするで！' : '🦅 タカや！気をつけて！', 1500);
+      const s = jumpState.score;
+      jumpChars.cheer(s >= J_SPACE_M ? '👽 宇宙人や！じゃまするで！' : s >= J_BALLOON_M ? '🎈 気球や！ぶつからんように！' : '🦅 タカや！気をつけて！', 1500);
     }
   }
 
@@ -6534,6 +6536,31 @@ function jDrawUFO(ctx, cx, cy, now) {
     ctx.beginPath(); ctx.arc(-16 + i * 8, 8, 2.2, 0, Math.PI * 2); ctx.fill();
   }
   ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+// 気球（1000〜1500mのじゃま役。横切って邪魔してくる）
+function jDrawBalloon(ctx, x, y, now) {
+  ctx.save();
+  ctx.translate(x, y + Math.sin(now / 600) * 1.5);
+  const rx = 13, ry = 16, cy = -4;
+  // ふうせん（しま模様）
+  ctx.save();
+  ctx.beginPath(); ctx.ellipse(0, cy, rx, ry, 0, 0, Math.PI * 2); ctx.clip();
+  const cols = ['#ff6b6b', '#ffd166', '#4f9eff', '#38d9a9'];
+  const bw = 2 * rx / cols.length;
+  for (let i = 0; i < cols.length; i++) { ctx.fillStyle = cols[i]; ctx.fillRect(-rx + i * bw, cy - ry, bw + 0.6, 2 * ry); }
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(0, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
+  // 首（下のすぼまり）
+  ctx.fillStyle = '#e0c089';
+  ctx.beginPath(); ctx.moveTo(-4, cy + ry - 2); ctx.lineTo(4, cy + ry - 2); ctx.lineTo(3, cy + ry + 3); ctx.lineTo(-3, cy + ry + 3); ctx.closePath(); ctx.fill();
+  // ロープ＋かご
+  ctx.strokeStyle = 'rgba(220,220,230,0.85)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-3, cy + ry + 3); ctx.lineTo(-4, cy + ry + 10); ctx.moveTo(3, cy + ry + 3); ctx.lineTo(4, cy + ry + 10); ctx.stroke();
+  ctx.fillStyle = '#8a5a2b'; ctx.fillRect(-5, cy + ry + 10, 10, 7);
+  ctx.fillStyle = '#6e4620'; ctx.fillRect(-5, cy + ry + 10, 10, 2);
   ctx.restore();
 }
 
@@ -6717,14 +6744,20 @@ function drawJump() {
 
   if (jumpState.hawk) {
     const h = jumpState.hawk;
-    // 宇宙（1500m以上）ではじゃま役がタカ→宇宙人に
-    const emoji = jumpState.score >= J_SPACE_M ? '👽' : '🦅';
-    ctx.save();
-    ctx.font = '26px sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText(emoji, 0, 0); }
-    else { ctx.fillText(emoji, h.x, h.y); }
-    ctx.restore();
+    const s = jumpState.score;
+    if (s >= J_BALLOON_M && s < J_SPACE_M) {
+      // 1000〜1500mは気球
+      jDrawBalloon(ctx, h.x, h.y, now);
+    } else {
+      // 〜1000mはタカ、宇宙（1500m以上）は宇宙人
+      const emoji = s >= J_SPACE_M ? '👽' : '🦅';
+      ctx.save();
+      ctx.font = '26px sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText(emoji, 0, 0); }
+      else { ctx.fillText(emoji, h.x, h.y); }
+      ctx.restore();
+    }
   }
 
   const wingOn = now < jumpState.wingUntil;
