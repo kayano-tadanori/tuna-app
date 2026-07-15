@@ -6699,7 +6699,7 @@ function jDrawFlag(ctx, x, y) {
   ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 22, y + 5); ctx.lineTo(x, y + 11); ctx.closePath(); ctx.fill();
 }
 
-// 月のうさぎ（お餅つき）。gy＝月面の高さ、xを中心に描く
+// 月のうさぎ（2羽でお餅つき：つき手＋返し手）。gy＝月面の高さ
 function jDrawMoonRabbit(ctx, x, gy, now) {
   const t = Math.sin(now / 240);
   const up = t > 0 ? t : 0;        // 杵をふり上げる量 0..1
@@ -6710,31 +6710,45 @@ function jDrawMoonRabbit(ctx, x, gy, now) {
   ctx.fillStyle = '#f4f4fa';
   ctx.beginPath(); ctx.ellipse(x + 19, gy + 1, 9, 4, 0, 0, Math.PI * 2); ctx.fill();
 
-  // うさぎ本体（白）
+  // ── つき手うさぎ（左・立って杵をふる）──
   const bob = up * 3;
   const rx = x - 7, ry = gy - 20 - bob;    // 頭の中心あたり
   ctx.fillStyle = '#f2f2f7';
   ctx.beginPath(); ctx.ellipse(rx, ry + 13, 8, 11, 0, 0, Math.PI * 2); ctx.fill();   // 体
   ctx.beginPath(); ctx.arc(rx, ry, 6.5, 0, Math.PI * 2); ctx.fill();                 // 頭
-  // 耳
   [[-3, -0.18], [3, 0.18]].forEach(([ex, rot]) => {
     ctx.save(); ctx.translate(rx + ex, ry - 4); ctx.rotate(rot);
     ctx.fillStyle = '#f2f2f7'; ctx.beginPath(); ctx.ellipse(0, -8, 2.6, 8, 0, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#ff9db1'; ctx.beginPath(); ctx.ellipse(0, -8, 1.1, 5, 0, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   });
-  // 目
   ctx.fillStyle = '#e84a2e'; ctx.beginPath(); ctx.arc(rx + 2.5, ry, 1.3, 0, Math.PI * 2); ctx.fill();
-
-  // 杵（きね）：お餅の上で上下、腕でつながる
+  // 杵（きね）
   const kineY = gy - 26 - up * 14;
   ctx.strokeStyle = '#c9975b'; ctx.lineWidth = 3;
   ctx.beginPath(); ctx.moveTo(x + 19, kineY + 8); ctx.lineTo(x + 19, gy - 2); ctx.stroke();   // 柄
   ctx.fillStyle = '#e0c089';
   ctx.fillRect(x + 14, kineY, 10, 8);                                                          // 杵の頭
-  // 腕（体から柄へ）
   ctx.strokeStyle = '#f2f2f7'; ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.moveTo(rx + 5, ry + 10); ctx.lineTo(x + 17, kineY + 6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(rx + 5, ry + 10); ctx.lineTo(x + 17, kineY + 6); ctx.stroke();   // 腕
+
+  // ── 返し手うさぎ（右・しゃがんでお餅をこねる。杵が上がった時に手を入れる）──
+  const tx = x + 41, ty = gy - 4;
+  ctx.fillStyle = '#e6e6ef';
+  ctx.beginPath(); ctx.ellipse(tx, ty, 7, 6.5, 0, 0, Math.PI * 2); ctx.fill();       // 体（しゃがみ）
+  ctx.beginPath(); ctx.arc(tx - 1, ty - 6, 5.5, 0, Math.PI * 2); ctx.fill();         // 頭
+  [[-2, -0.5], [2.5, -0.95]].forEach(([ex, rot]) => {
+    ctx.save(); ctx.translate(tx - 1 + ex, ty - 9); ctx.rotate(rot);
+    ctx.fillStyle = '#e6e6ef'; ctx.beginPath(); ctx.ellipse(0, -5, 2.2, 6.5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ff9db1'; ctx.beginPath(); ctx.ellipse(0, -5, 0.9, 4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  });
+  ctx.fillStyle = '#e84a2e'; ctx.beginPath(); ctx.arc(tx - 3, ty - 6, 1.2, 0, Math.PI * 2); ctx.fill();
+  // 腕：杵が上がっている時（up大）だけお餅へ手を入れ、下りる時は引っこめる
+  const handX = x + 21 + (1 - up) * 9;
+  const handY = gy + 1 + (1 - up) * 3;
+  ctx.strokeStyle = '#e6e6ef'; ctx.lineWidth = 2.6;
+  ctx.beginPath(); ctx.moveTo(tx - 3, ty + 1); ctx.lineTo(handX, handY); ctx.stroke();
 }
 
 function jDrawEnding() {
