@@ -6699,16 +6699,40 @@ function jDrawFlag(ctx, x, y) {
   ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 22, y + 5); ctx.lineTo(x, y + 11); ctx.closePath(); ctx.fill();
 }
 
-// 月のうさぎ（2羽でお餅つき：つき手＋返し手）。gy＝月面の高さ
+// 角丸パス（roundRint 未対応ブラウザでも動くよう自前で）
+function jRoundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+// 月のうさぎ（2羽でお餅つき：つき手＋返し手）＋湯気・伸びる餅・セリフ
 function jDrawMoonRabbit(ctx, x, gy, now) {
   const t = Math.sin(now / 240);
   const up = t > 0 ? t : 0;        // 杵をふり上げる量 0..1
+  const kineY = gy - 26 - up * 14; // 杵の高さ（先に計算：伸びる餅に使う）
   // うす（臼）とお餅
   ctx.fillStyle = '#5b3d28';
   ctx.beginPath();
   ctx.moveTo(x + 9, gy); ctx.lineTo(x + 29, gy); ctx.lineTo(x + 26, gy + 13); ctx.lineTo(x + 12, gy + 13); ctx.closePath(); ctx.fill();
   ctx.fillStyle = '#f4f4fa';
   ctx.beginPath(); ctx.ellipse(x + 19, gy + 1, 9, 4, 0, 0, Math.PI * 2); ctx.fill();
+  // お餅が杵に伸びる（杵が上がるほど伸びる）
+  if (up > 0.12) {
+    const topY = kineY + 8;
+    const midY = (gy + 1 + topY) / 2;
+    ctx.fillStyle = '#f4f4fa';
+    ctx.beginPath();
+    ctx.moveTo(x + 13, gy + 1);
+    ctx.quadraticCurveTo(x + 15, midY, x + 17, topY);
+    ctx.lineTo(x + 21, topY);
+    ctx.quadraticCurveTo(x + 23, midY, x + 25, gy + 1);
+    ctx.closePath(); ctx.fill();
+  }
 
   // ── つき手うさぎ（左・立って杵をふる）──
   const bob = up * 3;
@@ -6724,7 +6748,6 @@ function jDrawMoonRabbit(ctx, x, gy, now) {
   });
   ctx.fillStyle = '#e84a2e'; ctx.beginPath(); ctx.arc(rx + 2.5, ry, 1.3, 0, Math.PI * 2); ctx.fill();
   // 杵（きね）
-  const kineY = gy - 26 - up * 14;
   ctx.strokeStyle = '#c9975b'; ctx.lineWidth = 3;
   ctx.beginPath(); ctx.moveTo(x + 19, kineY + 8); ctx.lineTo(x + 19, gy - 2); ctx.stroke();   // 柄
   ctx.fillStyle = '#e0c089';
@@ -6749,6 +6772,33 @@ function jDrawMoonRabbit(ctx, x, gy, now) {
   const handY = gy + 1 + (1 - up) * 3;
   ctx.strokeStyle = '#e6e6ef'; ctx.lineWidth = 2.6;
   ctx.beginPath(); ctx.moveTo(tx - 3, ty + 1); ctx.lineTo(handX, handY); ctx.stroke();
+
+  // ── 湯気（お餅からゆらゆら立ちのぼる）──
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 2.4; ctx.lineCap = 'round';
+  for (let s = 0; s < 3; s++) {
+    const phase = (now / 900 + s * 0.33) % 1;   // 0→1でのぼる
+    const baseY = gy - 6 - phase * 28;
+    const bx = x + 13 + s * 6;
+    const sway = 4 * Math.sin(now / 200 + s * 2);
+    ctx.globalAlpha = 0.7 * (1 - phase);
+    ctx.beginPath();
+    ctx.moveTo(bx, baseY);
+    ctx.quadraticCurveTo(bx + sway, baseY - 7, bx - sway * 0.5, baseY - 14);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1; ctx.lineCap = 'butt';
+
+  // ── うさぎのセリフ（数秒ごとに切りかわる）──
+  const lines = ['ぺったん♪', 'よいしょ！', 'いらっしゃい', 'おいしいよ', 'もちどうぞ'];
+  const msg = lines[Math.floor(now / 2600) % lines.length];
+  ctx.font = 'bold 11px sans-serif';
+  const bw = ctx.measureText(msg).width + 14;
+  const bx = x - 4, by = gy - 54;
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  jRoundRect(ctx, bx, by, bw, 18, 6); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(bx + 12, by + 18); ctx.lineTo(bx + 8, by + 25); ctx.lineTo(bx + 19, by + 18); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#3a2a1e'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.fillText(msg, bx + 7, by + 9);
 }
 
 function jDrawEnding() {
@@ -6777,7 +6827,7 @@ function jDrawEnding() {
   // チッチ（月面でぴょこぴょこ喜ぶ）＋旗
   const sp = T_SPRITES.chicchi;
   const bob = Math.abs(Math.sin(now / 220)) * 5;
-  const cx = J_W / 2 - (10 * J_PLAYER_S) / 2;
+  const cx = J_W / 2 - (10 * J_PLAYER_S) / 2 + 16;   // うさぎ＆吹き出しに場所をゆずって少し右へ
   const cy = J_H - 182 - bob;
   jDrawFlag(ctx, cx + 30, cy - 2);
   const frame = Math.floor(now / 160) % 2 ? sp.cheer : sp.flapUp;
