@@ -6124,7 +6124,9 @@ const J_PLATFORM_W = 54, J_PLATFORM_MIN_W = 30, J_PLATFORM_H = 12;
 const J_PLATFORM_SHRINK_SCORE = 300; // このスコアで最小幅まで縮む
 const J_GRAVITY = 0.32;
 const J_JUMP_V = -9.5;
-const J_ROCKET_V = -16;
+const J_ROCKET_V = -17;         // ロケット発射の初速
+const J_ROCKET_MS = 480;        // 噴射している時間（この間は落下中でも上へ）
+const J_ROCKET_THRUST_V = -13;  // 噴射中の上向き速度（重力に負けない）
 const J_WING_V = -3;
 const J_WING_MS = 6000;
 const J_GAP_MIN = 60, J_GAP_MAX = 105;
@@ -6271,6 +6273,7 @@ function startJump() {
   jumpState.over = false;
   jumpState.wingUntil = 0;
   jumpState.barrierUntil = 0;
+  jumpState.rocketUntil = 0;
   jumpState.ending = false;
   jumpState.hawk = null;
   jumpState.shooters = [];
@@ -6326,9 +6329,12 @@ function jUpdatePhysics() {
   const now = Date.now();
   const wingOn = now < jumpState.wingUntil;
   const barrierOn = now < jumpState.barrierUntil;
+  const rocketOn = now < jumpState.rocketUntil;
 
   if (wingOn) {
     p.vy = J_WING_V;
+  } else if (rocketOn) {
+    p.vy = J_ROCKET_THRUST_V;   // 噴射中は落下中でも強制的に上へ吹っ飛ぶ
   } else {
     p.vy += J_GRAVITY;
     if (p.vy > 0) {
@@ -6808,7 +6814,11 @@ function jumpUseItem(kind) {
     if (btn) { btn.classList.add('item-active'); setTimeout(() => btn.classList.remove('item-active'), J_WING_MS); }
     jSfx('wing');
   } else if (kind === 'rocket') {
+    // 落下中でも一気に上へ。初速＋しばらく噴射（重力に負けない）
+    jumpState.rocketUntil = Date.now() + J_ROCKET_MS;
     jumpState.player.vy = J_ROCKET_V;
+    const btn = document.querySelector('#screen-jump .t-item-btn[data-item="rocket"]');
+    if (btn) { btn.classList.add('item-active'); setTimeout(() => btn.classList.remove('item-active'), J_ROCKET_MS); }
     jSfx('rocket');
     jumpChars.cheer('ロケット発射や！', 1500);
   }
