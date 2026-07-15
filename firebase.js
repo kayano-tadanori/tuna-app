@@ -204,5 +204,27 @@ async function getLocalBackup(nickname) {
   }
 }
 
+// 管理ツールからの「プレゼント（アイテム・コイン・遊び券）付与予約」を取得／消化。
+// users/{nickname}/backup/grants に書かれた予約を、アプリ起動時に1回だけ取り込む。
+// backup/{doc} なので既存のセキュリティルールで許可済み（新しいルール不要）。
+async function getPendingGrants(nickname) {
+  if (!firebaseReady || !nickname) return null;
+  try {
+    const snap = await db.collection('users').doc(nickname).collection('backup').doc('grants').get();
+    return snap.exists ? snap.data() : null;
+  } catch (e) {
+    console.warn('付与予約の取得失敗:', e.message);
+    return null;
+  }
+}
+async function clearPendingGrants(nickname) {
+  if (!firebaseReady || !nickname) return;
+  try {
+    await db.collection('users').doc(nickname).collection('backup').doc('grants').delete();
+  } catch (e) {
+    console.warn('付与予約の削除失敗:', e.message);
+  }
+}
+
 // DOM読み込み完了後に初期化
 document.addEventListener('DOMContentLoaded', initFirebase);

@@ -1118,6 +1118,7 @@ function initSubject() {
   };
 
   checkCloudRestore();
+  applyPendingGrants();
   backupLocalData();
   initUpdateBanner();
   updateGameTicketBadge();
@@ -1283,6 +1284,28 @@ function backupLocalData() {
 
 // 端末にローカルデータがほぼ無い（新しい端末・キャッシュ消去後）状態で、
 // クラウドにバックアップがあれば復元をたずねる（一度断ったら同じニックネームでは聞き直さない）
+// 管理ツール（保護者用）からの「プレゼント」付与予約を取り込む。
+// クラウドの users/{nickname}/backup/grants を読み、アイテム・コイン・遊び券を
+// ローカルに加算 → 予約を削除（1回だけ反映）。能動ユーザーでも確実に届く。
+async function applyPendingGrants() {
+  if (!state.nickname || typeof getPendingGrants !== 'function') return;
+  let g;
+  try { g = await getPendingGrants(state.nickname); } catch (e) { return; }
+  if (!g) return;
+  const msg = [];
+  if (g.items) {
+    for (const [k, v] of Object.entries(g.items)) {
+      const c = Number(v);
+      if (c > 0 && ITEM_DEFS[k]) { addItem(k, c); msg.push(`${ITEM_DEFS[k].icon}×${c}`); }
+    }
+  }
+  if (g.coins) { const c = Number(g.coins); if (c > 0) { addCoins(c); msg.push(`🪙×${c}`); } }
+  if (g.tickets) { const c = Number(g.tickets); if (c > 0) { addGameTickets(c); msg.push(`🎟×${c}`); } }
+  await clearPendingGrants(state.nickname);
+  backupLocalData();
+  if (msg.length) showToast('🎁 プレゼントがとどいたよ！ ' + msg.join(' '));
+}
+
 async function checkCloudRestore() {
   if (!state.nickname || typeof getLocalBackup !== 'function') return;
   const hasLocalData = !!localStorage.getItem('progress') || !!localStorage.getItem('gacha');
