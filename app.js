@@ -6141,8 +6141,10 @@ const J_ICE_DRIFT = 1.7;       // 氷雲：着地するとツルッとすべる
 const J_BREAK_FADE_MS = 260;   // こわれ雲：踏んだあと消えるまで
 const J_BARRIER_MS = 6000;     // オカーンのおにぎりバリア時間
 const J_MILESTONE_STEP = 50;   // 到達演出（○m）の間隔
-const J_GOAL = 2500;           // ゴール：2500mで月に到着（エンディング）
+const J_GOAL = 3000;           // ゴール：3000mで月に到着（エンディング）
+const J_SPACE_M = 1500;        // これ以上は宇宙（じゃま役がタカ→宇宙人に変わる）
 const J_STATION_M = 2000;      // 2000mあたりで宇宙ステーションが背景を通過
+const J_UFO_M = 2500;          // 2500mあたりでUFOが背景を通過
 // 高度で変わる空（スコア＝m のしきい値・上下グラデ色）。宇宙は1500m、月は2000m
 const J_SKY_TIERS = [
   { min: 0,    top: '#1a2f6e', bot: '#0a1128' }, // 昼
@@ -6404,7 +6406,7 @@ function jUpdatePhysics() {
       const dir = Math.random() < 0.5 ? 1 : -1;
       jumpState.hawk = { x: dir === 1 ? -J_HAWK_SIZE : J_W + J_HAWK_SIZE, y: 40 + Math.random() * (J_H * 0.5), dir };
       jSfx('hawkWarn');
-      jumpChars.cheer('🦅 タカや！気をつけて！', 1500);
+      jumpChars.cheer(jumpState.score >= J_SPACE_M ? '👽 宇宙人や！じゃまするで！' : '🦅 タカや！気をつけて！', 1500);
     }
   }
 
@@ -6472,6 +6474,56 @@ function jDrawSpaceStation(ctx, cx, cy, now) {
   ctx.restore();
 }
 
+// UFO（2500mあたりの背景を通過する空飛ぶ円盤）
+function jDrawUFO(ctx, cx, cy, now) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(Math.sin(now / 1300) * 0.05);
+  // 下向きビーム（うっすら）
+  ctx.fillStyle = 'rgba(120,255,180,0.12)';
+  ctx.beginPath(); ctx.moveTo(-10, 6); ctx.lineTo(10, 6); ctx.lineTo(22, 44); ctx.lineTo(-22, 44); ctx.closePath(); ctx.fill();
+  // 円盤の本体
+  ctx.fillStyle = '#8791b0';
+  ctx.beginPath(); ctx.ellipse(0, 4, 26, 9, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#c8d0e8';
+  ctx.beginPath(); ctx.ellipse(0, 2, 26, 7, 0, 0, Math.PI * 2); ctx.fill();
+  // ドーム
+  ctx.fillStyle = 'rgba(160,220,255,0.85)';
+  ctx.beginPath(); ctx.ellipse(0, 0, 12, 10, 0, Math.PI, 0); ctx.fill();
+  ctx.strokeStyle = 'rgba(200,235,255,0.8)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(0, 0, 12, 10, 0, Math.PI, 0); ctx.stroke();
+  // 下の点滅ライト
+  const cols = ['#ff6b6b', '#ffd166', '#38d9a9', '#ffd166', '#ff6b6b'];
+  for (let i = 0; i < 5; i++) {
+    ctx.globalAlpha = (Math.floor(now / 180) + i) % 5 === 0 ? 1 : 0.5;
+    ctx.fillStyle = cols[i];
+    ctx.beginPath(); ctx.arc(-16 + i * 8, 8, 2.2, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+// 街のビル群（スタート地点の背景。登るほど下へスクロールして消える）
+function jDrawCity(ctx, W, H, off, alpha, now) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  const baseY = H + off;
+  // [x, 高さ, 幅]
+  const blds = [[2, 74, 26], [32, 50, 22], [58, 100, 30], [92, 62, 20], [116, 116, 30], [150, 46, 24], [178, 88, 28], [210, 66, 22], [236, 96, 24]];
+  blds.forEach(([bx, bh, bw], idx) => {
+    ctx.fillStyle = '#141b33';
+    ctx.fillRect(bx, baseY - bh, bw, bh);
+    // 灯りのついた窓
+    ctx.fillStyle = 'rgba(255,214,120,0.85)';
+    for (let wy = baseY - bh + 6; wy < baseY - 5; wy += 9) {
+      for (let wx = bx + 4; wx < bx + bw - 3; wx += 8) {
+        if (((wx * 3 + wy * 7 + idx * 5) % 4) < 2) ctx.fillRect(wx, wy, 3, 4);
+      }
+    }
+  });
+  ctx.restore();
+}
+
 // 足場を雲っぽいもこもこ形で描く。タイプごとに色を変える
 const J_CLOUD_COLORS = {
   normal: ['rgba(255,255,255,0.95)', 'rgba(170,195,230,0.5)'],
@@ -6521,6 +6573,11 @@ function drawJump() {
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, cv.width, cv.height);
 
+  // スタート地点の街並み（低いところだけ。登るほど下へスクロールしてフェード）
+  if (jumpState.score < 450) {
+    jDrawCity(ctx, J_W, J_H, jumpState.score * 0.6, Math.max(0, 1 - jumpState.score / 450), now);
+  }
+
   // 夜〜宇宙でまたたく星（夜＝650mに近づくと現れる）
   const nightFactor = Math.min(Math.max((jumpState.score - 450) / 200, 0), 1);
   if (nightFactor > 0 && jumpState.stars) {
@@ -6543,6 +6600,17 @@ function drawJump() {
     ctx.globalAlpha = 1;
   }
 
+  // UFO：2500mあたりを背景でゆっくり通過
+  const ufoBand = 200;
+  if (jumpState.score > J_UFO_M - ufoBand && jumpState.score < J_UFO_M + ufoBand) {
+    const tt = (jumpState.score - (J_UFO_M - ufoBand)) / (ufoBand * 2);
+    const ux = J_W * 0.34 + Math.sin(now / 1700) * 16; // 左寄りをふらふら
+    const uy = -30 + tt * (J_H + 60);
+    ctx.globalAlpha = Math.min(1, Math.min(tt, 1 - tt) * 5 + 0.2);
+    jDrawUFO(ctx, ux, uy, now);
+    ctx.globalAlpha = 1;
+  }
+
   jumpState.platforms.forEach(plat => {
     const type = plat.used ? 'break' : (plat.vx && plat.type === 'normal' ? 'moving' : plat.type);
     if (plat.used) { ctx.save(); ctx.globalAlpha = Math.max(0, 1 - (now - plat.breakAt) / J_BREAK_FADE_MS); }
@@ -6556,11 +6624,13 @@ function drawJump() {
 
   if (jumpState.hawk) {
     const h = jumpState.hawk;
+    // 宇宙（1500m以上）ではじゃま役がタカ→宇宙人に
+    const emoji = jumpState.score >= J_SPACE_M ? '👽' : '🦅';
     ctx.save();
     ctx.font = '26px sans-serif';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText('🦅', 0, 0); }
-    else { ctx.fillText('🦅', h.x, h.y); }
+    if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText(emoji, 0, 0); }
+    else { ctx.fillText(emoji, h.x, h.y); }
     ctx.restore();
   }
 
