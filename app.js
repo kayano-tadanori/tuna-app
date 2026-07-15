@@ -6249,7 +6249,8 @@ function initJump() {
   };
   jUpdateSoundBtns();
   document.querySelectorAll('#screen-jump .t-item-btn').forEach(btn => {
-    btn.onclick = () => jumpUseItem(btn.dataset.item);
+    // pointerdownで即発動。操作（ドラッグ）中でも別の指でアイテムを使えるように
+    btn.onpointerdown = e => { e.preventDefault(); e.stopPropagation(); jumpUseItem(btn.dataset.item); };
   });
   updateItemButtons();
   if (!jumpState.controlsReady) { initJumpControls(); jumpState.controlsReady = true; }
@@ -6267,14 +6268,18 @@ function initJumpControls() {
   };
   // ボタン類（戻る・アイテム・もう一回等）の上は移動操作にしない
   const isControl = e => !!e.target.closest('button');
+  // 操作している指を pointerId で覚えておき、別の指（アイテム操作など）で移動が止まらないようにする
+  let dragId = null;
   area.addEventListener('pointerdown', e => {
     if (isControl(e)) return;
     e.preventDefault();
+    dragId = e.pointerId;
     jumpState.dragging = true;
     setFromEvent(e);
   });
-  area.addEventListener('pointermove', e => { if (jumpState.dragging) setFromEvent(e); });
-  const stop = () => { jumpState.dragging = false; };
+  area.addEventListener('pointermove', e => { if (jumpState.dragging && e.pointerId === dragId) setFromEvent(e); });
+  // 操作中の指以外が離れても移動は止めない
+  const stop = e => { if (e && dragId !== null && e.pointerId !== dragId) return; jumpState.dragging = false; dragId = null; };
   area.addEventListener('pointerup', stop);
   area.addEventListener('pointerleave', stop);
   area.addEventListener('pointercancel', stop);
@@ -6869,6 +6874,8 @@ function jumpUseItem(kind) {
     if (btn) { btn.classList.add('item-active'); setTimeout(() => btn.classList.remove('item-active'), J_WING_MS); }
     jSfx('wing');
   } else if (kind === 'rocket') {
+    // 噴射中はもう1個消費しない（連打しても数は減らない）
+    if (Date.now() < jumpState.rocketUntil) return;
     // 落下中でも一気に上へ。初速＋しばらく噴射（重力に負けない）
     jumpState.rocketUntil = Date.now() + J_ROCKET_MS;
     jumpState.player.vy = J_ROCKET_V;
