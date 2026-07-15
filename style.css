@@ -772,6 +772,12 @@ button { cursor: pointer; font-family: inherit; }
 .tetris-overlay-emoji { font-size: 2.6rem; }
 .tetris-overlay-text { font-size: 1.2rem; font-weight: 900; color: var(--text); }
 .tetris-overlay-score { font-size: 1rem; font-weight: 800; color: var(--gold); }
+/* 月到着エンディング：月面シーンをキャンバスに見せ、ボタンだけ下に出す */
+.tetris-overlay.ending { background: none; backdrop-filter: none; -webkit-backdrop-filter: none; justify-content: flex-end; padding-bottom: 20px; }
+.tetris-overlay.ending .tetris-overlay-emoji,
+.tetris-overlay.ending .tetris-overlay-text,
+.tetris-overlay.ending .tetris-overlay-score,
+.tetris-overlay.ending .mine-overlay-img { display: none; }
 .tetris-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .tetris-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); font-size: 1.4rem; font-weight: 900; min-height: 54px; transition: background 0.1s, transform 0.08s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .tetris-btn:active { background: var(--card); transform: scale(0.92); }

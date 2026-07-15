@@ -6141,6 +6141,7 @@ const J_ICE_DRIFT = 1.7;       // 氷雲：着地するとツルッとすべる
 const J_BREAK_FADE_MS = 260;   // こわれ雲：踏んだあと消えるまで
 const J_BARRIER_MS = 6000;     // オカーンのおにぎりバリア時間
 const J_MILESTONE_STEP = 50;   // 到達演出（○m）の間隔
+const J_GOAL = 3000;           // ゴール：3000mで月に到着（エンディング）
 // 高度で変わる空（スコア＝m のしきい値・上下グラデ色）。宇宙は2000mのごほうび
 const J_SKY_TIERS = [
   { min: 0,    top: '#1a2f6e', bot: '#0a1128' }, // 昼
@@ -6265,6 +6266,7 @@ function startJump() {
   jumpState.over = false;
   jumpState.wingUntil = 0;
   jumpState.barrierUntil = 0;
+  jumpState.ending = false;
   jumpState.hawk = null;
   jumpState.hawkCooldown = 150;
   jumpState.stunUntil = 0;
@@ -6274,7 +6276,8 @@ function startJump() {
   // 夜・宇宙でまたたく星（背景用）
   jumpState.stars = Array.from({ length: 44 }, () => ({ x: Math.random() * J_W, y: Math.random() * J_H, r: Math.random() * 1.2 + 0.4 }));
   document.querySelectorAll('#screen-jump .t-item-btn').forEach(b => b.classList.remove('item-active'));
-  document.getElementById('jump-overlay').classList.add('hidden');
+  const ov = document.getElementById('jump-overlay');
+  ov.classList.add('hidden'); ov.classList.remove('ending');
 
   const startPlatY = J_H - 40;
   jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, type: 'normal', used: false, breakAt: 0, vx: 0 });
@@ -6301,9 +6304,11 @@ function stopJumpLoop() { cancelAnimationFrame(jumpState.rafId); }
 
 function jLoop() {
   if (jumpState.over) return;
+  if (jumpState.ending) { jDrawEnding(); jumpState.rafId = requestAnimationFrame(jLoop); return; }
   jUpdatePhysics();
   updateJumpInfo();
   drawJump();
+  if (jumpState.score >= J_GOAL) { jReachMoon(); jumpState.rafId = requestAnimationFrame(jLoop); return; }
   if (jumpState.player.y > J_H + 20) { jGameOver(); return; }
   jumpState.rafId = requestAnimationFrame(jLoop);
 }
@@ -6422,8 +6427,8 @@ function jUpdatePhysics() {
 
 function updateJumpInfo() {
   jumpState.score = Math.floor(jumpState.maxHeight / 10);
-  // 到達演出：○mごとに家族が応援
-  if (jumpState.score >= jumpState.nextMilestone) {
+  // 到達演出：○mごとに家族が応援（ゴール手前まで）
+  if (jumpState.score >= jumpState.nextMilestone && jumpState.nextMilestone < J_GOAL) {
     const m = jumpState.nextMilestone;
     jumpState.milestoneText = `⛰ ${m}m とうたつ！`;
     jumpState.milestoneUntil = Date.now() + 1600;
@@ -6595,7 +6600,117 @@ function jGameOver() {
   document.getElementById('jump-overlay-img').classList.toggle('hidden', isNewBest);
   document.getElementById('jump-overlay-text').textContent = isNewBest ? 'ベスト更新！' : 'おっこちた！';
   document.getElementById('jump-overlay-score').textContent = `スコア ${jumpState.score}`;
-  document.getElementById('jump-overlay').classList.remove('hidden');
+  const ov = document.getElementById('jump-overlay');
+  ov.classList.remove('ending'); ov.classList.remove('hidden');
+}
+
+// ============================================================
+// エンディング：3000mで月に到着（地球が見える）
+// ============================================================
+function jReachMoon() {
+  if (jumpState.ending) return;
+  jumpState.ending = true;
+  jStopBgm();
+  jSfx('moon');
+  const prevBest = Number(localStorage.getItem('jumpBest') || 0);
+  if (jumpState.score > prevBest) localStorage.setItem('jumpBest', jumpState.score);
+  document.getElementById('jump-best').textContent = Math.max(jumpState.score, prevBest);
+  if (jumpState.score > 0 && typeof saveGameScore === 'function') saveGameScore('jump', state.nickname, jumpState.score, 'max');
+  jumpChars.state.mood = 'cheer';
+  jumpChars.state.moodUntil = Date.now() + 8000;
+  jumpChars.state.bubble = 'チッチ：月についたピヨ〜！🌙';
+  // オーバーレイは「もう一回」ボタンだけ出す（月面シーンはキャンバスに描く）
+  const ov = document.getElementById('jump-overlay');
+  ov.classList.add('ending'); ov.classList.remove('hidden');
+}
+
+// 地球（青い惑星）
+function jDrawEarth(ctx, cx, cy, r, now) {
+  // 大気のグロー
+  const glow = ctx.createRadialGradient(cx, cy, r * 0.85, cx, cy, r * 1.4);
+  glow.addColorStop(0, 'rgba(120,180,255,0.4)');
+  glow.addColorStop(1, 'rgba(120,180,255,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(cx, cy, r * 1.4, 0, Math.PI * 2); ctx.fill();
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+  // 海
+  const oc = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+  oc.addColorStop(0, '#3a86e0'); oc.addColorStop(1, '#1b4fa0');
+  ctx.fillStyle = oc; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+  // 大陸
+  ctx.fillStyle = '#3fae6b';
+  [[-14, -12, 15, 11], [11, -5, 14, 10], [-5, 15, 13, 10], [17, 16, 9, 8], [-20, 6, 8, 7]]
+    .forEach(([dx, dy, rx, ry]) => { ctx.beginPath(); ctx.ellipse(cx + dx, cy + dy, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); });
+  // 雲
+  ctx.fillStyle = 'rgba(255,255,255,0.55)';
+  [[-8, -16, 11, 4], [12, 9, 12, 4], [-16, 3, 8, 3]]
+    .forEach(([dx, dy, w, h]) => { ctx.beginPath(); ctx.ellipse(cx + dx, cy + dy, w, h, 0, 0, Math.PI * 2); ctx.fill(); });
+  ctx.restore();
+  // ふち
+  ctx.strokeStyle = 'rgba(170,205,255,0.5)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+}
+
+// 月面（下から3分の1くらい。ボタンより上にチッチが立てる高さ）
+function jDrawMoonGround(ctx, W, H) {
+  const top = H - 150;
+  ctx.fillStyle = '#c9ccd6';
+  ctx.beginPath();
+  ctx.moveTo(0, top + 18);
+  ctx.quadraticCurveTo(W * 0.5, top - 14, W, top + 18);
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = 'rgba(150,155,172,0.6)';
+  [[42, top + 32, 10], [95, top + 46, 7], [150, top + 28, 9], [205, top + 42, 8], [232, top + 20, 6], [118, top + 54, 6]]
+    .forEach(([x, y, rr]) => { ctx.beginPath(); ctx.ellipse(x, y, rr, rr * 0.5, 0, 0, Math.PI * 2); ctx.fill(); });
+}
+
+// 月に立てる旗
+function jDrawFlag(ctx, x, y) {
+  ctx.strokeStyle = '#e8e8ef'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + 32); ctx.stroke();
+  ctx.fillStyle = '#ff6688';
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 22, y + 5); ctx.lineTo(x, y + 11); ctx.closePath(); ctx.fill();
+}
+
+function jDrawEnding() {
+  const cv = document.getElementById('jump-canvas');
+  const ctx = cv.getContext('2d');
+  const now = Date.now();
+  // 宇宙の背景
+  const g = ctx.createLinearGradient(0, 0, 0, cv.height);
+  g.addColorStop(0, '#05010f'); g.addColorStop(1, '#000000');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height);
+  // 星
+  if (jumpState.stars) {
+    jumpState.stars.forEach((s, i) => {
+      ctx.globalAlpha = 0.4 + 0.6 * Math.abs(Math.sin(now / 400 + i));
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+  // 地球（お空に大きく見える）
+  jDrawEarth(ctx, 84, 132, 44, now);
+  // 月面
+  jDrawMoonGround(ctx, cv.width, cv.height);
+  // チッチ（月面でぴょこぴょこ喜ぶ）＋旗
+  const sp = T_SPRITES.chicchi;
+  const bob = Math.abs(Math.sin(now / 220)) * 5;
+  const cx = J_W / 2 - (10 * J_PLAYER_S) / 2;
+  const cy = J_H - 182 - bob;
+  jDrawFlag(ctx, cx + 30, cy - 2);
+  const frame = Math.floor(now / 160) % 2 ? sp.cheer : sp.flapUp;
+  ctx.save(); ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 10;
+  tDrawSprite(ctx, frame, sp.pal, cx, cy, J_PLAYER_S);
+  ctx.restore();
+  // お祝いテキスト
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(0, 22, J_W, 68);
+  ctx.fillStyle = '#ffd166'; ctx.font = 'bold 21px sans-serif';
+  ctx.fillText('🌙 月にとうちゃく！', J_W / 2, 46);
+  ctx.fillStyle = '#ffffff'; ctx.font = 'bold 15px sans-serif';
+  ctx.fillText(`${J_GOAL}m 達成！おめでとう！`, J_W / 2, 74);
 }
 
 // ── サウンド（tSound設定・tTone/tNoteエンジンを共用） ──
@@ -6612,6 +6727,7 @@ function jSfx(kind) {
     case 'break':    tTone(220, 0.14, 'sawtooth', 0.12, 0, 70); break;
     case 'onigiri':  [523, 659, 784, 1047].forEach((f, i) => tTone(f, 0.1, 'triangle', 0.1, i * 0.06)); break;
     case 'milestone':[784, 988, 1175, 1568].forEach((f, i) => tTone(f, 0.11, 'square', 0.1, i * 0.07)); break;
+    case 'moon':     [523, 659, 784, 1047, 1319, 1047, 1319, 1568].forEach((f, i) => tTone(f, 0.16, 'square', 0.12, i * 0.13)); break;
     case 'over':   [392, 330, 262, 196].forEach((f, i) => tTone(f, 0.22, 'triangle', 0.13, i * 0.18)); break;
     case 'best':   [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tTone(f, 0.12, 'square', 0.12, i * 0.1)); break;
   }
