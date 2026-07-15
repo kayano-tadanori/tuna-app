@@ -6624,31 +6624,57 @@ function jReachMoon() {
   ov.classList.add('ending'); ov.classList.remove('hidden');
 }
 
-// 地球（青い惑星）
+// 地球（青い惑星）— 球の陰影・大陸・極の氷・雲つきでそれらしく
 function jDrawEarth(ctx, cx, cy, r, now) {
   // 大気のグロー
-  const glow = ctx.createRadialGradient(cx, cy, r * 0.85, cx, cy, r * 1.4);
-  glow.addColorStop(0, 'rgba(120,180,255,0.4)');
-  glow.addColorStop(1, 'rgba(120,180,255,0)');
+  const glow = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.45);
+  glow.addColorStop(0, 'rgba(130,190,255,0.45)');
+  glow.addColorStop(1, 'rgba(130,190,255,0)');
   ctx.fillStyle = glow;
-  ctx.beginPath(); ctx.arc(cx, cy, r * 1.4, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, cy, r * 1.45, 0, Math.PI * 2); ctx.fill();
+
   ctx.save();
   ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
-  // 海
-  const oc = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
-  oc.addColorStop(0, '#3a86e0'); oc.addColorStop(1, '#1b4fa0');
+
+  // 海（左上を明るく＝球の立体感）
+  const oc = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.4, r * 0.2, cx, cy, r * 1.15);
+  oc.addColorStop(0, '#4aa3f0'); oc.addColorStop(0.6, '#2e77d8'); oc.addColorStop(1, '#123a86');
   ctx.fillStyle = oc; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r);
-  // 大陸
-  ctx.fillStyle = '#3fae6b';
-  [[-14, -12, 15, 11], [11, -5, 14, 10], [-5, 15, 13, 10], [17, 16, 9, 8], [-20, 6, 8, 7]]
-    .forEach(([dx, dy, rx, ry]) => { ctx.beginPath(); ctx.ellipse(cx + dx, cy + dy, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); });
-  // 雲
-  ctx.fillStyle = 'rgba(255,255,255,0.55)';
-  [[-8, -16, 11, 4], [12, 9, 12, 4], [-16, 3, 8, 3]]
-    .forEach(([dx, dy, w, h]) => { ctx.beginPath(); ctx.ellipse(cx + dx, cy + dy, w, h, 0, 0, Math.PI * 2); ctx.fill(); });
+
+  // 大陸（不規則な陸地。r基準の相対座標で描く）
+  const land = (pts, fill) => {
+    ctx.fillStyle = fill; ctx.beginPath();
+    pts.forEach(([dx, dy], i) => { const x = cx + dx * r, y = cy + dy * r; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.closePath(); ctx.fill();
+  };
+  const G1 = '#3fae5c', G2 = '#2f8f4a';
+  // アフリカ／ユーラシア風（中央〜右）
+  land([[-0.12, -0.5], [0.18, -0.52], [0.42, -0.22], [0.34, 0.08], [0.5, 0.32], [0.26, 0.56], [0.06, 0.32], [-0.08, 0.5], [-0.22, 0.16], [-0.06, -0.08], [-0.26, -0.28]], G1);
+  // 南アメリカ風（左下）
+  land([[-0.54, -0.02], [-0.34, -0.12], [-0.28, 0.2], [-0.42, 0.52], [-0.58, 0.34], [-0.6, 0.08]], G1);
+  // 北の陸地・島（上）
+  land([[-0.34, -0.58], [-0.08, -0.66], [0.02, -0.48], [-0.24, -0.44]], G2);
+  land([[0.48, 0.04], [0.6, -0.02], [0.58, 0.2], [0.44, 0.22]], G2);
+
+  // 極の氷（上下の白）
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.beginPath(); ctx.ellipse(cx, cy - r * 0.9, r * 0.5, r * 0.17, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(cx, cy + r * 0.9, r * 0.56, r * 0.19, 0, 0, Math.PI * 2); ctx.fill();
+
+  // 雲（白いうずまき）
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  [[-0.22, -0.18, 0.3, 0.08, -0.5], [0.26, 0.16, 0.32, 0.09, 0.4], [0.02, 0.46, 0.22, 0.07, 0.15]]
+    .forEach(([dx, dy, w, h, rot]) => { ctx.save(); ctx.translate(cx + dx * r, cy + dy * r); ctx.rotate(rot); ctx.beginPath(); ctx.ellipse(0, 0, w * r, h * r, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
+
+  // 球の陰（右下を暗く＝立体感）
+  const sh = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.35, r * 0.5, cx, cy, r * 1.1);
+  sh.addColorStop(0, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,25,0.42)');
+  ctx.fillStyle = sh; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+
   ctx.restore();
-  // ふち
-  ctx.strokeStyle = 'rgba(170,205,255,0.5)'; ctx.lineWidth = 1.5;
+
+  // 大気のふち
+  ctx.strokeStyle = 'rgba(185,218,255,0.7)'; ctx.lineWidth = 1.5;
   ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
 }
 
