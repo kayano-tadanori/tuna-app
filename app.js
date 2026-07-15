@@ -6699,6 +6699,44 @@ function jDrawFlag(ctx, x, y) {
   ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 22, y + 5); ctx.lineTo(x, y + 11); ctx.closePath(); ctx.fill();
 }
 
+// 月のうさぎ（お餅つき）。gy＝月面の高さ、xを中心に描く
+function jDrawMoonRabbit(ctx, x, gy, now) {
+  const t = Math.sin(now / 240);
+  const up = t > 0 ? t : 0;        // 杵をふり上げる量 0..1
+  // うす（臼）とお餅
+  ctx.fillStyle = '#5b3d28';
+  ctx.beginPath();
+  ctx.moveTo(x + 9, gy); ctx.lineTo(x + 29, gy); ctx.lineTo(x + 26, gy + 13); ctx.lineTo(x + 12, gy + 13); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#f4f4fa';
+  ctx.beginPath(); ctx.ellipse(x + 19, gy + 1, 9, 4, 0, 0, Math.PI * 2); ctx.fill();
+
+  // うさぎ本体（白）
+  const bob = up * 3;
+  const rx = x - 7, ry = gy - 20 - bob;    // 頭の中心あたり
+  ctx.fillStyle = '#f2f2f7';
+  ctx.beginPath(); ctx.ellipse(rx, ry + 13, 8, 11, 0, 0, Math.PI * 2); ctx.fill();   // 体
+  ctx.beginPath(); ctx.arc(rx, ry, 6.5, 0, Math.PI * 2); ctx.fill();                 // 頭
+  // 耳
+  [[-3, -0.18], [3, 0.18]].forEach(([ex, rot]) => {
+    ctx.save(); ctx.translate(rx + ex, ry - 4); ctx.rotate(rot);
+    ctx.fillStyle = '#f2f2f7'; ctx.beginPath(); ctx.ellipse(0, -8, 2.6, 8, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ff9db1'; ctx.beginPath(); ctx.ellipse(0, -8, 1.1, 5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  });
+  // 目
+  ctx.fillStyle = '#e84a2e'; ctx.beginPath(); ctx.arc(rx + 2.5, ry, 1.3, 0, Math.PI * 2); ctx.fill();
+
+  // 杵（きね）：お餅の上で上下、腕でつながる
+  const kineY = gy - 26 - up * 14;
+  ctx.strokeStyle = '#c9975b'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(x + 19, kineY + 8); ctx.lineTo(x + 19, gy - 2); ctx.stroke();   // 柄
+  ctx.fillStyle = '#e0c089';
+  ctx.fillRect(x + 14, kineY, 10, 8);                                                          // 杵の頭
+  // 腕（体から柄へ）
+  ctx.strokeStyle = '#f2f2f7'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(rx + 5, ry + 10); ctx.lineTo(x + 17, kineY + 6); ctx.stroke();
+}
+
 function jDrawEnding() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
@@ -6720,6 +6758,8 @@ function jDrawEnding() {
   jDrawEarth(ctx, 84, 132, 44, now);
   // 月面
   jDrawMoonGround(ctx, cv.width, cv.height);
+  // 月のうさぎ（お餅つき）
+  jDrawMoonRabbit(ctx, 48, J_H - 132, now);
   // チッチ（月面でぴょこぴょこ喜ぶ）＋旗
   const sp = T_SPRITES.chicchi;
   const bob = Math.abs(Math.sin(now / 220)) * 5;
