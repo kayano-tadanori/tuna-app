@@ -6141,13 +6141,13 @@ const J_ICE_DRIFT = 1.7;       // 氷雲：着地するとツルッとすべる
 const J_BREAK_FADE_MS = 260;   // こわれ雲：踏んだあと消えるまで
 const J_BARRIER_MS = 6000;     // オカーンのおにぎりバリア時間
 const J_MILESTONE_STEP = 50;   // 到達演出（○m）の間隔
-const J_GOAL = 3000;           // ゴール：3000mで月に到着（エンディング）
-// 高度で変わる空（スコア＝m のしきい値・上下グラデ色）。宇宙は2000mのごほうび
+const J_GOAL = 2000;           // ゴール：2000mで月に到着（エンディング）
+// 高度で変わる空（スコア＝m のしきい値・上下グラデ色）。宇宙は1500m、月は2000m
 const J_SKY_TIERS = [
   { min: 0,    top: '#1a2f6e', bot: '#0a1128' }, // 昼
-  { min: 300,  top: '#7a3f2e', bot: '#2c1636' }, // 夕やけ
-  { min: 800,  top: '#0e1230', bot: '#05060f' }, // 夜
-  { min: 2000, top: '#0a0512', bot: '#000000' }, // 宇宙
+  { min: 250,  top: '#7a3f2e', bot: '#2c1636' }, // 夕やけ
+  { min: 650,  top: '#0e1230', bot: '#05060f' }, // 夜
+  { min: 1500, top: '#0a0512', bot: '#000000' }, // 宇宙
 ];
 const J_MILESTONE_CHEERS = [
   'オットン：ようやったチッチ！', 'オカーン：その調子や〜！', 'チッチ：ピピーッ！！',
@@ -6489,8 +6489,8 @@ function drawJump() {
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, cv.width, cv.height);
 
-  // 夜〜宇宙でまたたく星（夜＝800mに近づくと現れる）
-  const nightFactor = Math.min(Math.max((jumpState.score - 600) / 200, 0), 1);
+  // 夜〜宇宙でまたたく星（夜＝650mに近づくと現れる）
+  const nightFactor = Math.min(Math.max((jumpState.score - 450) / 200, 0), 1);
   if (nightFactor > 0 && jumpState.stars) {
     jumpState.stars.forEach((s, i) => {
       ctx.globalAlpha = nightFactor * (0.5 + 0.5 * Math.sin(now / 350 + i));
