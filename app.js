@@ -1540,9 +1540,16 @@ function initSansuHome() {
         const minGrade = Number(el.dataset.minGrade) || 4;
         el.classList.toggle('hidden', sansuState.grade < minGrade);
       });
+      // 上限学年つきカテゴリ（文章題は小1〜4のみ。小5〜6は特殊算・割合と比・速さでカバー）
+      document.querySelectorAll('.sansu-cat-btn[data-max-grade]').forEach(el => {
+        const maxGrade = Number(el.dataset.maxGrade);
+        el.classList.toggle('hidden', sansuState.grade > maxGrade);
+      });
       // 学年変更で選択中カテゴリが履修範囲外になったら解除
       const selectedCatBtn = document.querySelector(`.sansu-cat-btn[data-scat="${sansuState.cat}"]`);
-      if (selectedCatBtn && selectedCatBtn.classList.contains('juken-only') && sansuState.grade < (Number(selectedCatBtn.dataset.minGrade) || 4)) {
+      const outOfMin = selectedCatBtn && selectedCatBtn.classList.contains('juken-only') && sansuState.grade < (Number(selectedCatBtn.dataset.minGrade) || 4);
+      const outOfMax = selectedCatBtn && selectedCatBtn.dataset.maxGrade && sansuState.grade > Number(selectedCatBtn.dataset.maxGrade);
+      if (outOfMin || outOfMax) {
         sansuState.cat = null;
         document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
         hideSansuSteps('sansu-step-diff');
@@ -5130,8 +5137,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { keisan: 874, bun: 1100, zu: 547, kisoku: 605, tokusan: 466, baai: 888, kazu: 400,
-            wariai: 537, hayasa: 397, rittai: 256 },                                         // 6,070
+  sansu:  { keisan: 874, bun: 79, zu: 547, kisoku: 605, tokusan: 466, baai: 888, kazu: 400,
+            wariai: 537, hayasa: 397, rittai: 256 },                                         // 5,049
   rika:   { shokubutsu: 960, doubutsu: 855, jintai: 105, sora: 733, tenki: 217, mono: 804, kitai: 145,
             daichi: 490, suiyoueki: 512, denki: 482, chikara: 552, hikari_oto: 192 },        // 6,047
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
