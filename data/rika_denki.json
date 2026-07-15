@@ -6890,5 +6890,65 @@
     "meaning": "電熱線の発熱量(温度上昇)は電流の2乗に比例します。電流を2.5倍にすると、上がる温度は4℃×(2.5×2.5)=25℃になります。よって答えは25です。",
     "grade": 6,
     "difficulty": 4
+  },
+  {
+    "question": "かん電池2個を直列につないで豆電球1個を光らせると、電池1個のときと比べて明るさはどうなりますか？",
+    "answer": "明るくなる",
+    "choices": [
+      "明るくなる",
+      "暗くなる",
+      "変わらない",
+      "消える"
+    ],
+    "meaning": "直列つなぎは電圧が2倍になるので、豆電球は明るくなります（ただし電池は早く消耗します）。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox=\"0 0 210 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"34\" y=\"28\" width=\"150\" height=\"66\" rx=\"6\" fill=\"none\" stroke=\"#38d9a9\" stroke-width=\"2\"/><line x1=\"76\" y1=\"85\" x2=\"76\" y2=\"103\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><line x1=\"84\" y1=\"89\" x2=\"84\" y2=\"99\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><line x1=\"106\" y1=\"85\" x2=\"106\" y2=\"103\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><line x1=\"114\" y1=\"89\" x2=\"114\" y2=\"99\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><circle cx=\"184\" cy=\"61\" r=\"11\" fill=\"#ffd166\" opacity=\"0.5\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"177\" y1=\"54\" x2=\"191\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"191\" y1=\"54\" x2=\"177\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"105\" y=\"78\" fill=\"#38d9a9\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">電池2個 直列</text></svg>",
+    "id": "rd481"
+  },
+  {
+    "question": "かん電池2個を並列につないで豆電球1個を光らせると、電池1個のときと比べて明るさはどうなりますか？",
+    "answer": "ほとんど変わらない",
+    "choices": [
+      "ほとんど変わらない",
+      "2倍明るい",
+      "暗くなる",
+      "消える"
+    ],
+    "meaning": "並列つなぎは電圧が1個ぶんのままなので明るさは変わりませんが、電池が長もちします。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox=\"0 0 210 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"34\" y=\"28\" width=\"150\" height=\"66\" rx=\"6\" fill=\"none\" stroke=\"#38d9a9\" stroke-width=\"2\"/><line x1=\"76\" y1=\"37\" x2=\"76\" y2=\"55\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><line x1=\"84\" y1=\"41\" x2=\"84\" y2=\"51\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><line x1=\"76\" y1=\"67\" x2=\"76\" y2=\"85\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><line x1=\"84\" y1=\"71\" x2=\"84\" y2=\"81\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><line x1=\"80\" y1=\"37\" x2=\"80\" y2=\"28\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><circle cx=\"184\" cy=\"61\" r=\"11\" fill=\"#ffd166\" opacity=\"0.5\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"177\" y1=\"54\" x2=\"191\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"191\" y1=\"54\" x2=\"177\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"105\" y=\"78\" fill=\"#38d9a9\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">電池2個 並列</text></svg>",
+    "id": "rd482"
+  },
+  {
+    "question": "豆電球2個を直列につなぐと、豆電球1個のときと比べて明るさはどうなりますか？",
+    "answer": "暗くなる",
+    "choices": [
+      "暗くなる",
+      "明るくなる",
+      "変わらない",
+      "消える"
+    ],
+    "meaning": "豆電球を直列にすると1個あたりにかかる電圧が減るので、それぞれ暗くなります。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox=\"0 0 210 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"34\" y=\"28\" width=\"150\" height=\"66\" rx=\"6\" fill=\"none\" stroke=\"#38d9a9\" stroke-width=\"2\"/><line x1=\"86\" y1=\"85\" x2=\"86\" y2=\"103\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><line x1=\"94\" y1=\"89\" x2=\"94\" y2=\"99\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><circle cx=\"150\" cy=\"28\" r=\"11\" fill=\"#ffd166\" opacity=\"0.5\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"143\" y1=\"21\" x2=\"157\" y2=\"35\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"157\" y1=\"21\" x2=\"143\" y2=\"35\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><circle cx=\"184\" cy=\"61\" r=\"11\" fill=\"#ffd166\" opacity=\"0.5\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"177\" y1=\"54\" x2=\"191\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"191\" y1=\"54\" x2=\"177\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"105\" y=\"78\" fill=\"#38d9a9\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">豆電球2個</text></svg>",
+    "id": "rd483"
+  },
+  {
+    "question": "豆電球2個を並列につなぐと、それぞれの明るさは豆電球1個のときと比べてどうなりますか？",
+    "answer": "変わらない",
+    "choices": [
+      "変わらない",
+      "暗くなる",
+      "明るくなる",
+      "消える"
+    ],
+    "meaning": "並列だとどちらの豆電球にも電池ぜんぶの電圧がかかるので、明るさは1個のときと変わりません。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox=\"0 0 210 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"34\" y=\"28\" width=\"150\" height=\"66\" rx=\"6\" fill=\"none\" stroke=\"#38d9a9\" stroke-width=\"2\"/><line x1=\"86\" y1=\"85\" x2=\"86\" y2=\"103\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><line x1=\"94\" y1=\"89\" x2=\"94\" y2=\"99\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><circle cx=\"150\" cy=\"28\" r=\"11\" fill=\"#ffd166\" opacity=\"0.5\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"143\" y1=\"21\" x2=\"157\" y2=\"35\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"157\" y1=\"21\" x2=\"143\" y2=\"35\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><circle cx=\"184\" cy=\"61\" r=\"11\" fill=\"#ffd166\" opacity=\"0.5\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"177\" y1=\"54\" x2=\"191\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"191\" y1=\"54\" x2=\"177\" y2=\"68\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"105\" y=\"78\" fill=\"#38d9a9\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">豆電球2個</text></svg>",
+    "id": "rd484"
   }
 ]

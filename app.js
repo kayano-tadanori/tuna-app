@@ -4990,8 +4990,8 @@ const QUESTION_COUNTS = {
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
   sansu:  { keisan: 874, bun: 1100, zu: 541, kisoku: 605, tokusan: 466, baai: 888, kazu: 400,
             wariai: 537, hayasa: 397, rittai: 256 },                                         // 6,064
-  rika:   { shokubutsu: 960, doubutsu: 855, jintai: 105, sora: 719, tenki: 215, mono: 796, kitai: 116,
-            daichi: 481, suiyoueki: 488, denki: 477, chikara: 530, hikari_oto: 135 },        // 5,877
+  rika:   { shokubutsu: 960, doubutsu: 855, jintai: 105, sora: 728, tenki: 215, mono: 796, kitai: 116,
+            daichi: 481, suiyoueki: 488, denki: 481, chikara: 536, hikari_oto: 138 },        // 5,899
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
