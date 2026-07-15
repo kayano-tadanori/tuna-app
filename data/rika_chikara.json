@@ -7848,5 +7848,125 @@
     "difficulty": 2,
     "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><polygon points=\"106,92 134,92 120,62 \" fill=\"#cdd6f4\" opacity=\"0.5\"/><line x1=\"120\" y1=\"62\" x2=\"120\" y2=\"34\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"60\" y1=\"34\" x2=\"180\" y2=\"34\" stroke=\"#cdd6f4\" stroke-width=\"2.5\"/><line x1=\"60\" y1=\"34\" x2=\"60\" y2=\"52\" stroke=\"#cdd6f4\"/><path d=\"M42 52 a18 9 0 0 0 36 0 Z\" fill=\"#ffd166\" opacity=\"0.4\" stroke=\"#ffd166\"/><text x=\"60\" y=\"74\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">品物</text><line x1=\"180\" y1=\"34\" x2=\"180\" y2=\"52\" stroke=\"#cdd6f4\"/><path d=\"M162 52 a18 9 0 0 0 36 0 Z\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"180\" y=\"74\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">分銅</text></svg>",
     "id": "rc539"
+  },
+  {
+    "question": "ブランコ（振り子）が1往復する時間は、おもに何によって変わりますか？",
+    "answer": "ひも（くさり）の長さ",
+    "choices": [
+      "ひも（くさり）の長さ",
+      "おもりの重さ",
+      "ふれはば",
+      "人の身長"
+    ],
+    "meaning": "振り子が1往復する時間（周期）は「ひもの長さ」だけで決まります。おもりの重さやふれはばを変えても、周期は変わりません（振り子の等時性）。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc540"
+  },
+  {
+    "question": "同じ振り子で、おもりだけを2倍の重さにすると、1往復する時間はどうなりますか？",
+    "answer": "変わらない",
+    "choices": [
+      "変わらない",
+      "2倍になる",
+      "半分になる",
+      "止まる"
+    ],
+    "meaning": "周期はひもの長さだけで決まるので、おもりの重さを変えても1往復の時間は変わりません。",
+    "grade": 5,
+    "difficulty": 3,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc541"
+  },
+  {
+    "question": "1往復に1秒かかる振り子があります。ひもの長さを4倍にすると、1往復は何秒になりますか？（周期は長さを2倍にすると2倍になる関係を使う）",
+    "answer": "2",
+    "choices": [
+      "2",
+      "4",
+      "1",
+      "3"
+    ],
+    "meaning": "振り子の周期は「長さを□²倍にすると□倍」。長さ4倍＝2²倍なので周期は2倍。1×2＝2秒です。",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc542"
+  },
+  {
+    "question": "1往復に1秒かかる振り子があります。ひもの長さを9倍にすると、1往復は何秒になりますか？（周期は長さを3倍にすると3倍になる関係を使う）",
+    "answer": "3",
+    "choices": [
+      "3",
+      "9",
+      "1",
+      "4"
+    ],
+    "meaning": "振り子の周期は「長さを□²倍にすると□倍」。長さ9倍＝3²倍なので周期は3倍。1×3＝3秒です。",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc543"
+  },
+  {
+    "question": "1往復に2秒かかる振り子があります。ひもの長さを4倍にすると、1往復は何秒になりますか？（周期は長さを2倍にすると2倍になる関係を使う）",
+    "answer": "4",
+    "choices": [
+      "4",
+      "8",
+      "2",
+      "5"
+    ],
+    "meaning": "振り子の周期は「長さを□²倍にすると□倍」。長さ4倍＝2²倍なので周期は2倍。2×2＝4秒です。",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc544"
+  },
+  {
+    "question": "1往復に1秒かかる振り子があります。ひもの長さを16倍にすると、1往復は何秒になりますか？（周期は長さを4倍にすると4倍になる関係を使う）",
+    "answer": "4",
+    "choices": [
+      "4",
+      "16",
+      "1",
+      "5"
+    ],
+    "meaning": "振り子の周期は「長さを□²倍にすると□倍」。長さ16倍＝4²倍なので周期は4倍。1×4＝4秒です。",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc545"
+  },
+  {
+    "question": "1往復に3秒かかる振り子があります。ひもの長さを4倍にすると、1往復は何秒になりますか？（周期は長さを2倍にすると2倍になる関係を使う）",
+    "answer": "6",
+    "choices": [
+      "6",
+      "12",
+      "3",
+      "7"
+    ],
+    "meaning": "振り子の周期は「長さを□²倍にすると□倍」。長さ4倍＝2²倍なので周期は2倍。3×2＝6秒です。",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc546"
+  },
+  {
+    "question": "1往復に2秒かかる振り子があります。ひもの長さを9倍にすると、1往復は何秒になりますか？（周期は長さを3倍にすると3倍になる関係を使う）",
+    "answer": "6",
+    "choices": [
+      "6",
+      "18",
+      "2",
+      "7"
+    ],
+    "meaning": "振り子の周期は「長さを□²倍にすると□倍」。長さ9倍＝3²倍なので周期は3倍。2×3＝6秒です。",
+    "grade": 6,
+    "difficulty": 4,
+    "svg": "<svg viewBox=\"0 0 240 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"60\" y1=\"20\" x2=\"180\" y2=\"20\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"120\" y1=\"20\" x2=\"76\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"76\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"164\" y2=\"66\" stroke=\"#9aa5c8\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"164\" cy=\"66\" r=\"8\" fill=\"#9aa5c8\" opacity=\"0.4\"/><line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"82\" stroke=\"#c9975b\" stroke-width=\"2\"/><circle cx=\"120\" cy=\"82\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.7\"/><path d=\"M76 66 A50 50 0 0 1 164 66\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"144\" y=\"54\" fill=\"#c9975b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ひもの長さ</text></svg>",
+    "id": "rc547"
   }
 ]
