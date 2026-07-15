@@ -6103,6 +6103,37 @@ const J_KNOCKBACK_VX = 4.5;
 const J_KNOCKBACK_VY = -4;
 const J_KNOCKBACK_FRICTION = 0.92;
 const J_STUN_MS = 500;
+const J_SPRING_V = -15.5;      // バネ雲：ふつうより高く飛ぶ
+const J_ICE_DRIFT = 1.7;       // 氷雲：着地するとツルッとすべる
+const J_BREAK_FADE_MS = 260;   // こわれ雲：踏んだあと消えるまで
+const J_BARRIER_MS = 6000;     // オカーンのおにぎりバリア時間
+const J_MILESTONE_STEP = 50;   // 到達演出（○m）の間隔
+// 高度で変わる空（スコアしきい値・上下グラデ色）
+const J_SKY_TIERS = [
+  { min: 0,   top: '#1a2f6e', bot: '#0a1128' }, // 昼
+  { min: 90,  top: '#7a3f2e', bot: '#2c1636' }, // 夕やけ
+  { min: 200, top: '#0e1230', bot: '#05060f' }, // 夜
+  { min: 340, top: '#0a0512', bot: '#000000' }, // 宇宙
+];
+const J_MILESTONE_CHEERS = [
+  'オットン：ようやったチッチ！', 'オカーン：その調子や〜！', 'チッチ：ピピーッ！！',
+  'オットン：まだまだいけるで！', 'オカーン：えらいぞ〜！', 'チッチ：たかいピヨ〜！',
+];
+
+function jLerpHex(a, b, t) {
+  const pa = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16));
+  const pb = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16));
+  return '#' + pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, '0')).join('');
+}
+// スコアから空の色（ティア間をなめらかに補間）を返す
+function jSkyColors(score) {
+  let i = 0;
+  for (let k = 0; k < J_SKY_TIERS.length; k++) if (score >= J_SKY_TIERS[k].min) i = k;
+  const cur = J_SKY_TIERS[i], nxt = J_SKY_TIERS[i + 1];
+  if (!nxt) return [cur.top, cur.bot];
+  const t = Math.min((score - cur.min) / (nxt.min - cur.min), 1);
+  return [jLerpHex(cur.top, nxt.top, t), jLerpHex(cur.bot, nxt.bot, t)];
+}
 
 const jumpState = {
   player: { x: J_W / 2 - J_PLAYER_W / 2, y: 0, vy: 0, vx: 0 },
@@ -6123,13 +6154,22 @@ function jPlatformWidth(score) {
 }
 
 function jGenPlatformAt(y) {
-  const w = jPlatformWidth(jumpState.score);
+  const score = jumpState.score;
+  const w = jPlatformWidth(score);
   const x = Math.random() * (J_W - w);
-  const moving = jumpState.score > 20 && Math.random() < 0.3;
-  jumpState.platforms.push({ x, y, w, vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
-  if (Math.random() < 0.35) {
-    jumpState.coins.push({ x: x + w / 2, y: y - 16, taken: false });
-  }
+  // 足場タイプの抽選：登るほど特殊足場が出やすくなる
+  let type = 'normal';
+  const r = Math.random();
+  if (score > 45 && r < 0.14) type = 'ice';
+  else if (score > 28 && r < 0.28) type = 'break';
+  else if (r < (score > 10 ? 0.14 : 0.08)) type = 'spring';
+  // 動く足場はふつうの雲だけ（特殊足場は止めておく：難しすぎ防止）
+  const moving = type === 'normal' && score > 20 && Math.random() < 0.3;
+  jumpState.platforms.push({ x, y, w, type, used: false, breakAt: 0, vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
+  // アイテム抽選：まれにオカーンのおにぎり🍙、そこそこ⭐
+  const ir = Math.random();
+  if (ir < 0.05) jumpState.coins.push({ x: x + w / 2, y: y - 16, taken: false, kind: 'onigiri' });
+  else if (ir < 0.38) jumpState.coins.push({ x: x + w / 2, y: y - 16, taken: false, kind: 'star' });
 }
 
 function initJump() {
@@ -6191,14 +6231,20 @@ function startJump() {
   jumpState.starsCollected = 0;
   jumpState.over = false;
   jumpState.wingUntil = 0;
+  jumpState.barrierUntil = 0;
   jumpState.hawk = null;
   jumpState.hawkCooldown = 150;
   jumpState.stunUntil = 0;
+  jumpState.nextMilestone = J_MILESTONE_STEP;
+  jumpState.milestoneText = '';
+  jumpState.milestoneUntil = 0;
+  // 夜・宇宙でまたたく星（背景用）
+  jumpState.stars = Array.from({ length: 44 }, () => ({ x: Math.random() * J_W, y: Math.random() * J_H, r: Math.random() * 1.2 + 0.4 }));
   document.querySelectorAll('#screen-jump .t-item-btn').forEach(b => b.classList.remove('item-active'));
   document.getElementById('jump-overlay').classList.add('hidden');
 
   const startPlatY = J_H - 40;
-  jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, vx: 0 });
+  jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, type: 'normal', used: false, breakAt: 0, vx: 0 });
   jumpState.player.x = J_W / 2 - J_PLAYER_W / 2;
   jumpState.player.y = startPlatY - J_PLAYER_H;
   jumpState.player.vy = J_JUMP_V;
@@ -6231,7 +6277,9 @@ function jLoop() {
 
 function jUpdatePhysics() {
   const p = jumpState.player;
-  const wingOn = Date.now() < jumpState.wingUntil;
+  const now = Date.now();
+  const wingOn = now < jumpState.wingUntil;
+  const barrierOn = now < jumpState.barrierUntil;
 
   if (wingOn) {
     p.vy = J_WING_V;
@@ -6239,10 +6287,18 @@ function jUpdatePhysics() {
     p.vy += J_GRAVITY;
     if (p.vy > 0) {
       for (const plat of jumpState.platforms) {
+        if (plat.used) continue; // こわれ雲は一度きり
         if (p.x + J_PLAYER_W > plat.x && p.x < plat.x + plat.w &&
             p.y + J_PLAYER_H >= plat.y && p.y + J_PLAYER_H <= plat.y + J_PLATFORM_H + 8) {
-          p.vy = J_JUMP_V;
-          jSfx('bounce');
+          if (plat.type === 'spring') {
+            p.vy = J_SPRING_V; jSfx('spring'); jumpChars.cheer('びよーん！', 800);
+          } else if (plat.type === 'break') {
+            p.vy = J_JUMP_V; plat.used = true; plat.breakAt = now; jSfx('break');
+          } else if (plat.type === 'ice') {
+            p.vy = J_JUMP_V; p.vx = (Math.random() < 0.5 ? -1 : 1) * J_ICE_DRIFT; jSfx('bounce');
+          } else {
+            p.vy = J_JUMP_V; jSfx('bounce');
+          }
           break;
         }
       }
@@ -6267,9 +6323,15 @@ function jUpdatePhysics() {
     if (c.taken) return;
     if (p.x + J_PLAYER_W > c.x - 9 && p.x < c.x + 9 && p.y + J_PLAYER_H > c.y - 9 && p.y < c.y + 9) {
       c.taken = true;
-      jumpState.maxHeight += 30; // スコアボーナスのみ。ガチャ用コインとは切り離す（周回稼ぎ対策）
-      jumpState.starsCollected++;
-      jSfx('coin');
+      if (c.kind === 'onigiri') {
+        jumpState.barrierUntil = now + J_BARRIER_MS;
+        jSfx('onigiri');
+        jumpChars.cheer('オカーンのおにぎり！バリアや！', 1400);
+      } else {
+        jumpState.maxHeight += 30; // スコアボーナスのみ。ガチャ用コインとは切り離す（周回稼ぎ対策）
+        jumpState.starsCollected++;
+        jSfx('coin');
+      }
     }
   });
 
@@ -6277,9 +6339,15 @@ function jUpdatePhysics() {
   if (jumpState.hawk) {
     const h = jumpState.hawk;
     h.x += h.dir * J_HAWK_SPEED;
-    if (!wingOn &&
-        p.x + J_PLAYER_W > h.x - J_HAWK_SIZE / 2 && p.x < h.x + J_HAWK_SIZE / 2 &&
-        p.y + J_PLAYER_H > h.y - J_HAWK_SIZE / 2 && p.y < h.y + J_HAWK_SIZE / 2) {
+    const hitHawk = p.x + J_PLAYER_W > h.x - J_HAWK_SIZE / 2 && p.x < h.x + J_HAWK_SIZE / 2 &&
+        p.y + J_PLAYER_H > h.y - J_HAWK_SIZE / 2 && p.y < h.y + J_HAWK_SIZE / 2;
+    if (hitHawk && (wingOn || barrierOn)) {
+      // つばさ・バリア中はタカをはね返す
+      jumpState.hawk = null;
+      jSfx('onigiri');
+      jumpChars.cheer('バリアではね返した！', 1000);
+      jumpState.hawkCooldown = 180 + Math.random() * 150;
+    } else if (hitHawk) {
       jumpState.hawk = null;
       p.vx = -h.dir * J_KNOCKBACK_VX;
       p.vy = J_KNOCKBACK_VY;
@@ -6310,7 +6378,8 @@ function jUpdatePhysics() {
     jumpState.maxHeight += dy;
   }
 
-  jumpState.platforms = jumpState.platforms.filter(plat => plat.y < J_H + 30);
+  jumpState.platforms = jumpState.platforms.filter(plat =>
+    plat.y < J_H + 30 && !(plat.used && now - plat.breakAt > J_BREAK_FADE_MS));
   jumpState.coins = jumpState.coins.filter(c => !c.taken && c.y < J_H + 30);
   while (jumpState.spawnY > -20) {
     jGenPlatformAt(jumpState.spawnY);
@@ -6320,14 +6389,31 @@ function jUpdatePhysics() {
 
 function updateJumpInfo() {
   jumpState.score = Math.floor(jumpState.maxHeight / 10);
+  // 到達演出：○mごとに家族が応援
+  if (jumpState.score >= jumpState.nextMilestone) {
+    const m = jumpState.nextMilestone;
+    jumpState.milestoneText = `⛰ ${m}m とうたつ！`;
+    jumpState.milestoneUntil = Date.now() + 1600;
+    jSfx('milestone');
+    jumpChars.cheer(J_MILESTONE_CHEERS[(m / J_MILESTONE_STEP - 1) % J_MILESTONE_CHEERS.length], 1600);
+    jumpState.nextMilestone += J_MILESTONE_STEP;
+  }
   document.getElementById('jump-score').textContent = jumpState.score;
   document.getElementById('jump-coins').textContent = jumpState.starsCollected;
 }
 
-// 足場を雲っぽいもこもこ形で描く（移動する足場は金色に色付け）
-function jDrawCloud(ctx, x, y, w, h, tinted) {
+// 足場を雲っぽいもこもこ形で描く。タイプごとに色を変える
+const J_CLOUD_COLORS = {
+  normal: ['rgba(255,255,255,0.95)', 'rgba(170,195,230,0.5)'],
+  moving: ['rgba(255,224,140,0.95)', 'rgba(230,170,60,0.45)'],
+  spring: ['rgba(120,240,170,0.96)', 'rgba(46,180,110,0.5)'],
+  break:  ['rgba(206,198,214,0.9)', 'rgba(140,130,155,0.55)'],
+  ice:    ['rgba(200,236,255,0.97)', 'rgba(120,195,240,0.55)'],
+};
+function jDrawCloud(ctx, x, y, w, h, type) {
   const r = h * 0.85;
-  ctx.fillStyle = tinted ? 'rgba(255,224,140,0.95)' : 'rgba(255,255,255,0.95)';
+  const [main, base] = J_CLOUD_COLORS[type] || J_CLOUD_COLORS.normal;
+  ctx.fillStyle = main;
   ctx.beginPath();
   ctx.arc(x + r * 0.55, y + h * 0.5, r * 0.55, 0, Math.PI * 2);
   ctx.arc(x + w * 0.38, y + h * 0.32, r * 0.65, 0, Math.PI * 2);
@@ -6335,23 +6421,57 @@ function jDrawCloud(ctx, x, y, w, h, tinted) {
   ctx.arc(x + w - r * 0.55, y + h * 0.5, r * 0.5, 0, Math.PI * 2);
   ctx.rect(x + r * 0.25, y + h * 0.42, Math.max(w - r * 0.5, 2), h * 0.58);
   ctx.fill();
-  ctx.fillStyle = tinted ? 'rgba(230,170,60,0.45)' : 'rgba(170,195,230,0.5)';
+  ctx.fillStyle = base;
   ctx.fillRect(x + r * 0.25, y + h * 0.72, Math.max(w - r * 0.5, 2), h * 0.28);
+  const cx = x + w / 2, cy = y + h * 0.5;
+  if (type === 'spring') {
+    // 上向き三角（ジャンプ台の目じるし）
+    ctx.fillStyle = '#1b6b45';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - 5); ctx.lineTo(cx - 4, cy + 2); ctx.lineTo(cx + 4, cy + 2); ctx.closePath(); ctx.fill();
+  } else if (type === 'break') {
+    // ヒビ
+    ctx.strokeStyle = 'rgba(90,80,100,0.8)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - 6, cy - 3); ctx.lineTo(cx - 1, cy + 1); ctx.lineTo(cx + 3, cy - 2); ctx.lineTo(cx + 7, cy + 2); ctx.stroke();
+  } else if (type === 'ice') {
+    // きらっと光る点
+    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+    ctx.beginPath(); ctx.arc(cx - 4, cy - 2, 1.2, 0, Math.PI * 2); ctx.arc(cx + 5, cy + 1, 1, 0, Math.PI * 2); ctx.fill();
+  }
 }
 
 function drawJump() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
+  const now = Date.now();
+  // 高度で変わる空
+  const [skyTop, skyBot] = jSkyColors(jumpState.score);
   const g = ctx.createLinearGradient(0, 0, 0, cv.height);
-  g.addColorStop(0, '#1a2f6e'); g.addColorStop(1, '#0a1128');
+  g.addColorStop(0, skyTop); g.addColorStop(1, skyBot);
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, cv.width, cv.height);
 
-  jumpState.platforms.forEach(plat => jDrawCloud(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, !!plat.vx));
+  // 夜〜宇宙でまたたく星
+  const nightFactor = Math.min(Math.max((jumpState.score - 140) / 100, 0), 1);
+  if (nightFactor > 0 && jumpState.stars) {
+    jumpState.stars.forEach((s, i) => {
+      ctx.globalAlpha = nightFactor * (0.5 + 0.5 * Math.sin(now / 350 + i));
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  jumpState.platforms.forEach(plat => {
+    const type = plat.used ? 'break' : (plat.vx && plat.type === 'normal' ? 'moving' : plat.type);
+    if (plat.used) { ctx.save(); ctx.globalAlpha = Math.max(0, 1 - (now - plat.breakAt) / J_BREAK_FADE_MS); }
+    jDrawCloud(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type);
+    if (plat.used) ctx.restore();
+  });
 
   ctx.font = '16px sans-serif';
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  jumpState.coins.forEach(c => { if (!c.taken) ctx.fillText('⭐', c.x, c.y); });
+  jumpState.coins.forEach(c => { if (!c.taken) ctx.fillText(c.kind === 'onigiri' ? '🍙' : '⭐', c.x, c.y); });
 
   if (jumpState.hawk) {
     const h = jumpState.hawk;
@@ -6363,11 +6483,37 @@ function drawJump() {
     ctx.restore();
   }
 
-  const wingOn = Date.now() < jumpState.wingUntil;
+  const wingOn = now < jumpState.wingUntil;
+  const barrierOn = now < jumpState.barrierUntil;
+  const px = jumpState.player.x, py = jumpState.player.y;
+  // おにぎりバリアの輪（残り時間が短くなると点滅）
+  if (barrierOn) {
+    const left = jumpState.barrierUntil - now;
+    const blink = left > 1500 || Math.floor(now / 150) % 2 === 0;
+    if (blink) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,140,190,0.85)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(px + J_PLAYER_W / 2, py + J_PLAYER_H / 2, 23, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    }
+  }
   const sp = T_SPRITES.chicchi;
-  if (wingOn) { ctx.save(); ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 12; }
-  tDrawSprite(ctx, wingOn ? sp.cheer : sp.idle, sp.pal, jumpState.player.x, jumpState.player.y, J_PLAYER_S);
-  if (wingOn) ctx.restore();
+  const glow = wingOn || barrierOn;
+  if (glow) { ctx.save(); ctx.shadowColor = wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = 12; }
+  tDrawSprite(ctx, glow ? sp.cheer : sp.idle, sp.pal, px, py, J_PLAYER_S);
+  if (glow) ctx.restore();
+
+  // 到達演出のバナー
+  if (now < jumpState.milestoneUntil) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0, J_H * 0.33, J_W, 34);
+    ctx.font = 'bold 19px sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ffd166';
+    ctx.fillText(jumpState.milestoneText, J_W / 2, J_H * 0.33 + 17);
+    ctx.restore();
+  }
 }
 
 function jumpUseItem(kind) {
@@ -6426,6 +6572,10 @@ function jSfx(kind) {
     case 'rocket': tTone(160, 0.3, 'sawtooth', 0.12, 0, 900); break;
     case 'hawkWarn': tTone(1200, 0.12, 'sawtooth', 0.1, 0, 700); break;
     case 'hawkHit':  tTone(120, 0.25, 'square', 0.18, 0, 40); break;
+    case 'spring':   [660, 990, 1320].forEach((f, i) => tTone(f, 0.08, 'square', 0.09, i * 0.05)); break;
+    case 'break':    tTone(220, 0.14, 'sawtooth', 0.12, 0, 70); break;
+    case 'onigiri':  [523, 659, 784, 1047].forEach((f, i) => tTone(f, 0.1, 'triangle', 0.1, i * 0.06)); break;
+    case 'milestone':[784, 988, 1175, 1568].forEach((f, i) => tTone(f, 0.11, 'square', 0.1, i * 0.07)); break;
     case 'over':   [392, 330, 262, 196].forEach((f, i) => tTone(f, 0.22, 'triangle', 0.13, i * 0.18)); break;
     case 'best':   [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tTone(f, 0.12, 'square', 0.12, i * 0.1)); break;
   }
