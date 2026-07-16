@@ -358,6 +358,7 @@ function maybeShowStart() {
   const zone = document.getElementById('start-zone');
 
   const isKanji = KANJI_CATS.includes(state.selectedCat);
+  setChainCountOptions('q-count', state.selectedDiff === 5);
   const ready = state.selectedCat && state.grade && state.selectedDiff;
   if (!ready) { zone.classList.add('hidden'); return; }
 
@@ -1515,6 +1516,25 @@ function fillChains(chains, grade, maxQuestions, expand = expandChain) {
   return out;
 }
 
+// 発見算・ガチ（連鎖問題）を選んだときは「出題数」を「1セット(3問)／3セット(9問)」に
+// 切りかえる。通常の難易度に戻したら、元の出題数リストへ復帰する。
+// 連鎖は3問で1セット。値はfillChainsに渡す「問数」なので 1セット=3・3セット=9。
+const _qCountOrig = {};
+function setChainCountOptions(selectId, isChain) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  if (_qCountOrig[selectId] === undefined) _qCountOrig[selectId] = sel.innerHTML;
+  const nowChain = sel.dataset.qmode === 'chain';
+  if (isChain && !nowChain) {
+    sel.dataset.qmode = 'chain';
+    sel.innerHTML = '<option value="3">1セット（3問）</option>'
+      + '<option value="9" selected>3セット（9問）</option>';
+  } else if (!isChain && nowChain) {
+    sel.dataset.qmode = 'normal';
+    sel.innerHTML = _qCountOrig[selectId];
+  }
+}
+
 const sansuCache = {};
 const sansuState = {
   subject: 'sansu', // 'sansu' | 'rika'
@@ -1723,6 +1743,7 @@ function updateSansuStart() {
     }
   }
 
+  setChainCountOptions('sansu-q-count', sansuState.mode === 'normal' && sansuState.diff === 5);
   zone.classList.toggle('hidden', !ready);
 }
 
@@ -1826,6 +1847,7 @@ function updateRikaStart() {
   if (ready) {
     info.textContent = `小${sansuState.grade} / ${RIKA_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
   }
+  setChainCountOptions('rika-q-count', sansuState.diff === 5);
   zone.classList.toggle('hidden', !ready);
 }
 
@@ -1942,6 +1964,7 @@ function updateShakaiStart() {
   if (ready) {
     info.textContent = `小${sansuState.grade} / ${SHAKAI_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
   }
+  setChainCountOptions('shakai-q-count', sansuState.diff === 5);
   zone.classList.toggle('hidden', !ready);
 }
 
