@@ -3254,5 +3254,687 @@
         "meaning": "①上下12・横まわり35は、それぞれ2枚ずつ。②(12＋35)×2＝94cm²です。よって、答えは94です。"
       }
     ]
+  },
+  {
+    "id": "sc_chain_77",
+    "category": "zu",
+    "grade": 6,
+    "title": "影で高さをはかる",
+    "intro": "よく晴れた日、地面に垂直に立てた1.2mの棒の影の長さは0.8mでした。同じ時刻、木や建物の影も同じ割合になります。",
+    "svg": "<svg viewBox=\"0 0 280 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"120\" x2=\"260\" y2=\"120\" stroke=\"#8b7355\" stroke-width=\"2\"/><line x1=\"50\" y1=\"120\" x2=\"50\" y2=\"80\" stroke=\"#06d6a0\" stroke-width=\"3\"/><line x1=\"50\" y1=\"120\" x2=\"78\" y2=\"120\" stroke=\"#1e1e2e\" stroke-width=\"4\"/><text x=\"50\" y=\"72\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">棒1.2m</text><text x=\"64\" y=\"134\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">影0.8m</text><line x1=\"170\" y1=\"120\" x2=\"170\" y2=\"52\" stroke=\"#38d9a9\" stroke-width=\"4\"/><line x1=\"170\" y1=\"120\" x2=\"230\" y2=\"120\" stroke=\"#1e1e2e\" stroke-width=\"4\"/><text x=\"170\" y=\"44\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">木 ?m</text><text x=\"200\" y=\"134\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">影6m</text><text x=\"140\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同時刻 → 高さ:影 は一定</text></svg>",
+    "steps": [
+      {
+        "question": "棒の高さは、影の長さの何倍ですか。",
+        "answer": "1.5",
+        "choices": [
+          "1.5",
+          "0.8",
+          "2",
+          "1.2"
+        ],
+        "meaning": "①1.2÷0.8。②1.5倍です。同時刻ならどの物も高さは影の1.5倍。よって、答えは1.5です。"
+      },
+      {
+        "question": "影が6mの木の高さは何mですか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "6",
+          "12",
+          "7.5"
+        ],
+        "meaning": "①高さ＝影×1.5。②6×1.5＝9mです。よって、答えは9です。"
+      },
+      {
+        "question": "同じ時刻、影が14mの建物の高さは何mですか。",
+        "answer": "21",
+        "choices": [
+          "21",
+          "28",
+          "18",
+          "20"
+        ],
+        "meaning": "①14×1.5。②21mです。よって、答えは21です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_78",
+    "category": "zu",
+    "grade": 6,
+    "title": "相似な図形の面積",
+    "intro": "形が同じで大きさだけちがう2つの三角形（相似な三角形）があります。対応する辺の比は 2：3 です。",
+    "svg": "<svg viewBox=\"0 0 260 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><polygon points=\"40,140 100,140 70,96\" fill=\"#4f9eff\" opacity=\"0.2\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"70\" y=\"155\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">小 (辺2)</text><polygon points=\"140,140 230,140 185,74\" fill=\"#06d6a0\" opacity=\"0.2\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><text x=\"186\" y=\"155\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">大 (辺3)</text><text x=\"130\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">相似比 2：3</text></svg>",
+    "steps": [
+      {
+        "question": "対応する辺の比は 2：3 です。まわりの長さの比も同じですか、いちばん簡単な比で答えなさい。",
+        "answer": "2:3",
+        "choices": [
+          "2:3",
+          "4:9",
+          "3:2",
+          "1:2"
+        ],
+        "meaning": "①長さの比は相似比と同じ。②2：3です。よって、答えは2:3です。"
+      },
+      {
+        "question": "2つの三角形の面積の比を、いちばん簡単な比で答えなさい。",
+        "answer": "4:9",
+        "choices": [
+          "4:9",
+          "2:3",
+          "6:9",
+          "8:27"
+        ],
+        "meaning": "①面積の比は相似比を2回かける（2×2：3×3）。②4：9です。よって、答えは4:9です。"
+      },
+      {
+        "question": "小さいほうの面積が20cm²のとき、大きいほうの面積は何cm²ですか。",
+        "answer": "45",
+        "choices": [
+          "45",
+          "30",
+          "40",
+          "90"
+        ],
+        "meaning": "①面積比4：9。②20が4にあたるから1あたり5、大は5×9＝45cm²です。よって、答えは45です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_79",
+    "category": "kisoku",
+    "grade": 6,
+    "title": "2をかけ続けた数の一の位",
+    "intro": "2を何回もかけていきます。2、2×2＝4、2×2×2＝8、… このときの「一の位の数字」に注目します。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2 → 4 → 8 → 16 → 32 → 64 …</text><text x=\"140\" y=\"72\" fill=\"#4f9eff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">一の位：2 4 8 6 2 4 8 6 …</text><text x=\"140\" y=\"100\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4つでくり返す</text></svg>",
+    "steps": [
+      {
+        "question": "2を4回かけた数（16）の一の位はいくつですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "8",
+          "2",
+          "4"
+        ],
+        "meaning": "①2,4,8,16。②一の位は6です。よって、答えは6です。"
+      },
+      {
+        "question": "一の位は 2・4・8・6 の4つでくり返します。2を6回かけた数の一の位はいくつですか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "6",
+          "8",
+          "2"
+        ],
+        "meaning": "①6÷4＝1あまり2 → くり返しの2番目。②4です。よって、答えは4です。"
+      },
+      {
+        "question": "2を20回かけた数の一の位はいくつですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "2",
+          "4",
+          "8"
+        ],
+        "meaning": "①20÷4＝5あまり0 → くり返しの4番目。②6です。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_80",
+    "category": "kisoku",
+    "grade": 6,
+    "title": "三角数のふしぎ",
+    "intro": "1, 3, 6, 10, 15, … は「三角数」で、n番目は 1＋2＋…＋n です。となり合う2つの三角数の和を調べます。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"22\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">三角数：1・3・6・10・15 …</text><circle cx=\"110\" cy=\"50\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"101\" cy=\"68\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"119\" cy=\"68\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"92\" cy=\"86\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"110\" cy=\"86\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"128\" cy=\"86\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"83\" cy=\"104\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"101\" cy=\"104\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"119\" cy=\"104\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><circle cx=\"137\" cy=\"104\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.6\"/><text x=\"210\" y=\"90\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">2つ合わせると\n四角数(平方数)</text></svg>",
+    "steps": [
+      {
+        "question": "10番目の三角数はいくつですか。",
+        "answer": "55",
+        "choices": [
+          "55",
+          "45",
+          "66",
+          "50"
+        ],
+        "meaning": "①1＋2＋…＋10＝(1＋10)×10÷2。②55です。よって、答えは55です。"
+      },
+      {
+        "question": "11番目の三角数はいくつですか。",
+        "answer": "66",
+        "choices": [
+          "66",
+          "55",
+          "78",
+          "60"
+        ],
+        "meaning": "①(1＋11)×11÷2。②66です。よって、答えは66です。"
+      },
+      {
+        "question": "10番目と11番目の三角数の和（55＋66）は、ある数を2回かけた数（□×□）になります。□はいくつですか。",
+        "answer": "11",
+        "choices": [
+          "11",
+          "10",
+          "12",
+          "121"
+        ],
+        "meaning": "①55＋66＝121。②121＝11×11だから□は11です（となり合う三角数の和は平方数）。よって、答えは11です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_81",
+    "category": "kisoku",
+    "grade": 6,
+    "title": "ふえ方がふえる数列",
+    "intro": "1, 2, 4, 7, 11, 16, … という数の列があります。となりとの差が 1, 2, 3, 4, 5, … と1ずつ大きくなっています。",
+    "svg": "<svg viewBox=\"0 0 280 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"22\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">差が 1,2,3,4,5… とふえる</text><text x=\"30\" y=\"66\" fill=\"#ffd166\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><path d=\"M40 54 Q50 40 60 54\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.2\"/><text x=\"50\" y=\"44\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">+□</text><text x=\"70\" y=\"66\" fill=\"#ffd166\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><path d=\"M80 54 Q90 40 100 54\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.2\"/><text x=\"90\" y=\"44\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">+□</text><text x=\"110\" y=\"66\" fill=\"#ffd166\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><path d=\"M120 54 Q130 40 140 54\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.2\"/><text x=\"130\" y=\"44\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">+□</text><text x=\"150\" y=\"66\" fill=\"#ffd166\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><path d=\"M160 54 Q170 40 180 54\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.2\"/><text x=\"170\" y=\"44\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">+□</text><text x=\"190\" y=\"66\" fill=\"#ffd166\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">11</text><path d=\"M200 54 Q210 40 220 54\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.2\"/><text x=\"210\" y=\"44\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">+□</text><text x=\"230\" y=\"66\" fill=\"#ffd166\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">16</text><text x=\"264\" y=\"66\" fill=\"#cdd6f4\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\">…</text></svg>",
+    "steps": [
+      {
+        "question": "16の次の数はいくつですか。",
+        "answer": "22",
+        "choices": [
+          "22",
+          "21",
+          "20",
+          "23"
+        ],
+        "meaning": "①差は1,2,3,4,5の次で6。②16＋6＝22です。よって、答えは22です。"
+      },
+      {
+        "question": "10番目の数はいくつですか。",
+        "answer": "46",
+        "choices": [
+          "46",
+          "45",
+          "37",
+          "55"
+        ],
+        "meaning": "①10番目＝1＋(差1〜9の和)＝1＋(1＋9)×9÷2＝1＋45。②46です。よって、答えは46です。"
+      },
+      {
+        "question": "この数列で、はじめて100より大きくなるのは第何項ですか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "14",
+          "16",
+          "13"
+        ],
+        "meaning": "①第N項＝1＋(1〜(N−1)の和)。第14項＝1＋91＝92、第15項＝1＋105＝106>100。②第15項です。よって、答えは15です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_82",
+    "category": "tokusan",
+    "grade": 6,
+    "title": "水そうの排水（ニュートン算）",
+    "intro": "水そうに、毎分8Lずつ水が流れこんでいます。いま水そうには500Lの水が入っています。ここでポンプで水をくみ出します。ポンプ1台は毎分28Lくみ出します。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"90\" y=\"44\" width=\"100\" height=\"80\" fill=\"#4f9eff\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><text x=\"140\" y=\"90\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">500L</text><path d=\"M70 40 q10 -8 22 0\" stroke=\"#06d6a0\" stroke-width=\"2.5\" fill=\"none\"/><polygon points=\"92,40 84,36 84,44\" fill=\"#06d6a0\"/><text x=\"60\" y=\"34\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"end\" font-family=\"sans-serif\">流入 毎分8L</text><path d=\"M190 120 q20 6 30 -6\" stroke=\"#ff6b6b\" stroke-width=\"2.5\" fill=\"none\"/><polygon points=\"220,114 214,122 224,122\" fill=\"#ff6b6b\"/><text x=\"232\" y=\"120\" fill=\"#ff6b6b\" font-size=\"8.5\" text-anchor=\"start\" font-family=\"sans-serif\">ポンプ\n毎分28L</text></svg>",
+    "steps": [
+      {
+        "question": "ポンプ1台のとき、水そうの水は1分間に何L減りますか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "36",
+          "28",
+          "8"
+        ],
+        "meaning": "①くみ出す28Lから流れこむ8Lを引く。②28−8＝20L減ります。よって、答えは20です。"
+      },
+      {
+        "question": "水そうが空になるのは何分後ですか。",
+        "answer": "25",
+        "choices": [
+          "25",
+          "20",
+          "18",
+          "30"
+        ],
+        "meaning": "①500Lを毎分20Lずつ減らす。②500÷20＝25分後です。よって、答えは25です。"
+      },
+      {
+        "question": "ポンプを2台（毎分56L）にすると、水は1分間に何L減りますか。",
+        "answer": "48",
+        "choices": [
+          "48",
+          "56",
+          "40",
+          "20"
+        ],
+        "meaning": "①56−8。②48L減ります（流入8Lを引くのを忘れない）。よって、答えは48です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_83",
+    "category": "tokusan",
+    "grade": 6,
+    "title": "仕事ののべ算",
+    "intro": "ある仕事は、8人で働くとちょうど15日で終わります。人数がちがっても、1人が1日にする仕事の量は同じとします。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8人 × 15日 の仕事</text><rect x=\"40\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"66\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"92\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"118\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"144\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"170\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"196\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"222\" y=\"40\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"40\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"66\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"92\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"118\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"144\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"170\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"196\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"222\" y=\"56\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"40\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"66\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"92\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"118\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"144\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"170\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"196\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"222\" y=\"72\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"40\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"66\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"92\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"118\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"144\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"170\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"196\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><rect x=\"222\" y=\"88\" width=\"22\" height=\"12\" fill=\"#4f9eff\" opacity=\"0.3\" stroke=\"#4f9eff\" stroke-width=\"0.5\"/><text x=\"140\" y=\"120\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">仕事全体 ＝ 人 × 日（のべ）</text></svg>",
+    "steps": [
+      {
+        "question": "この仕事全体の量は「何人日」ですか。（1人が1日する量を1とする）",
+        "answer": "120",
+        "choices": [
+          "120",
+          "23",
+          "112",
+          "128"
+        ],
+        "meaning": "①8人×15日。②120人日です。よって、答えは120です。"
+      },
+      {
+        "question": "同じ仕事を10人でやると、何日で終わりますか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "10",
+          "15",
+          "8"
+        ],
+        "meaning": "①120人日を10人で。②120÷10＝12日です。よって、答えは12です。"
+      },
+      {
+        "question": "はじめの6日を8人で働き、残りを12人で働くと、全部で何日かかりますか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "11",
+          "13",
+          "10"
+        ],
+        "meaning": "①8人×6日＝48人日おわり、残り120−48＝72人日。②72÷12＝6日、合計6＋6＝12日です。よって、答えは12です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_84",
+    "category": "tokusan",
+    "grade": 6,
+    "title": "お金のやりとり（倍数算）",
+    "intro": "姉と妹の持っているお金の比は 5：3 です。姉が妹に400円あげたところ、比が 3：5 に変わりました。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"22\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">はじめ 姉：妹 ＝ 5：3</text><rect x=\"40\" y=\"36\" width=\"150\" height=\"18\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"49\" fill=\"#4f9eff\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">姉</text><rect x=\"40\" y=\"60\" width=\"90\" height=\"18\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"32\" y=\"73\" fill=\"#06d6a0\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">妹</text><text x=\"140\" y=\"104\" fill=\"#ff6b6b\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">400円あげる → 3：5</text><text x=\"140\" y=\"130\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2人の合計は変わらない</text></svg>",
+    "steps": [
+      {
+        "question": "やりとりをしても2人の合計は変わりません。合計は比でいくつにあたりますか。",
+        "answer": "8",
+        "choices": [
+          "8",
+          "2",
+          "15",
+          "5"
+        ],
+        "meaning": "①はじめ5＋3＝8、あとも3＋5＝8。②合計は比で8のまま変わりません。よって、答えは8です。"
+      },
+      {
+        "question": "姉は比で5から3に、2だけ減りました。この「比の2」が400円です。比の1は何円ですか。",
+        "answer": "200",
+        "choices": [
+          "200",
+          "400",
+          "100",
+          "800"
+        ],
+        "meaning": "①比の2が400円。②400÷2＝200円です。よって、答えは200です。"
+      },
+      {
+        "question": "姉がはじめに持っていたお金は何円ですか。",
+        "answer": "1000",
+        "choices": [
+          "1000",
+          "600",
+          "1600",
+          "800"
+        ],
+        "meaning": "①姉ははじめ比で5。②5×200＝1000円です。よって、答えは1000です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_85",
+    "category": "kazu",
+    "grade": 6,
+    "title": "かけ算の答えの終わりの0",
+    "intro": "1×2×3×……×20（1から20までをすべてかけた数）の、終わりに0がいくつ並ぶかを考えます。0は「2×5」で1個できます。2は5よりたくさんあるので、5が何個あるかで決まります。",
+    "svg": "<svg viewBox=\"0 0 268 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1〜20（○＝5の倍数）</text><rect x=\"18\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"28.6\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><rect x=\"42.2\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"52.800000000000004\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><rect x=\"66.4\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"77\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><rect x=\"90.6\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"101.19999999999999\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"114.8\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><circle cx=\"125.39999999999999\" cy=\"50.5\" r=\"9\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><text x=\"125.39999999999999\" y=\"54.5\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><rect x=\"139\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"149.6\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"163.2\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"173.79999999999998\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text><rect x=\"187.4\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"198\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"211.6\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"222.2\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"235.79999999999998\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><circle cx=\"246.39999999999998\" cy=\"50.5\" r=\"9\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><text x=\"246.39999999999998\" y=\"54.5\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><rect x=\"18\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"28.6\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">11</text><rect x=\"42.2\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"52.800000000000004\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">12</text><rect x=\"66.4\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"77\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">13</text><rect x=\"90.6\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"101.19999999999999\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">14</text><rect x=\"114.8\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><circle cx=\"125.39999999999999\" cy=\"74.5\" r=\"9\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><text x=\"125.39999999999999\" y=\"78.5\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">15</text><rect x=\"139\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"149.6\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">16</text><rect x=\"163.2\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"173.79999999999998\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">17</text><rect x=\"187.4\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"198\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">18</text><rect x=\"211.6\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"222.2\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">19</text><rect x=\"235.79999999999998\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><circle cx=\"246.39999999999998\" cy=\"74.5\" r=\"9\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><text x=\"246.39999999999998\" y=\"78.5\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">20</text></svg>",
+    "steps": [
+      {
+        "question": "1から20までに、5の倍数（5を1個ふくむ数）は何個ありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "5",
+          "3",
+          "10"
+        ],
+        "meaning": "①5,10,15,20。②4個です。よって、答えは4です。"
+      },
+      {
+        "question": "そのうち、25の倍数（5を2個ふくむ数）は何個ありますか。",
+        "answer": "0",
+        "choices": [
+          "0",
+          "1",
+          "4",
+          "2"
+        ],
+        "meaning": "①25は20より大きいので、1〜20に25の倍数はない。②0個です。よって、答えは0です。"
+      },
+      {
+        "question": "では、1×2×…×20 の終わりには0が何個並びますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "5",
+          "2",
+          "8"
+        ],
+        "meaning": "①0の数＝ふくまれる5の個数。5の倍数4個＋25の倍数0個＝4個。②0は4個並びます。よって、答えは4です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_86",
+    "category": "wariai",
+    "grade": 6,
+    "title": "仕入れ・定価・売値",
+    "intro": "ある品物を1個1000円で仕入れました。仕入れねの2割の利益を見こんで定価をつけましたが、売れないので定価の1割引きで売りました。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"40\" y=\"46\" width=\"60\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"70\" y=\"40\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">仕入 1000</text><text x=\"70\" y=\"61\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1000</text><rect x=\"40\" y=\"82\" width=\"72\" height=\"22\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"76\" y=\"76\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">定価(＋2割)</text><text x=\"76\" y=\"97\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">?</text><rect x=\"40\" y=\"118\" width=\"66\" height=\"22\" fill=\"#ffd166\" opacity=\"0.4\" stroke=\"#ffd166\"/><text x=\"73\" y=\"112\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">売値(定価の1割引)</text><text x=\"73\" y=\"133\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">?</text></svg>",
+    "steps": [
+      {
+        "question": "定価は何円ですか。",
+        "answer": "1200",
+        "choices": [
+          "1200",
+          "1020",
+          "1100",
+          "1002"
+        ],
+        "meaning": "①仕入れ1000の2割は200。②1000＋200＝1200円です。よって、答えは1200です。"
+      },
+      {
+        "question": "定価の1割引きの売値は何円ですか。",
+        "answer": "1080",
+        "choices": [
+          "1080",
+          "1180",
+          "1000",
+          "960"
+        ],
+        "meaning": "①1200の1割は120。②1200−120＝1080円です。よって、答えは1080です。"
+      },
+      {
+        "question": "実際の利益は、仕入れねの何％ですか。",
+        "answer": "8",
+        "choices": [
+          "8",
+          "10",
+          "20",
+          "18"
+        ],
+        "meaning": "①利益＝1080−1000＝80円。②80は1000の8％です。よって、答えは8です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_87",
+    "category": "wariai",
+    "grade": 6,
+    "title": "食塩を加えて濃くする",
+    "intro": "濃さ10％の食塩水200gに食塩を加えて、濃さ20％の食塩水にします。（水の重さは変わらないことに注目します）",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><path d=\"M60 40 v54 a4 4 0 0 0 4 4 h52 a4 4 0 0 0 4 -4 v-54\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><rect x=\"60\" y=\"58\" width=\"60\" height=\"36\" fill=\"#4f9eff\" opacity=\"0.3\"/><text x=\"90\" y=\"108\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">10% 200g</text><text x=\"150\" y=\"60\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">食塩を加える →</text><text x=\"150\" y=\"84\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">20%にしたい</text><text x=\"140\" y=\"24\" fill=\"#ffd166\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水の重さは変わらない！</text></svg>",
+    "steps": [
+      {
+        "question": "はじめの食塩水200gに、食塩は何gふくまれていますか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "10",
+          "40",
+          "18"
+        ],
+        "meaning": "①200の10％。②20gです。よって、答えは20です。"
+      },
+      {
+        "question": "水は何gですか。（食塩を加えても水は変わりません）",
+        "answer": "180",
+        "choices": [
+          "180",
+          "160",
+          "200",
+          "190"
+        ],
+        "meaning": "①200−20。②180gです。よって、答えは180です。"
+      },
+      {
+        "question": "20％にするには食塩を何g加えればよいですか。（水180gが全体の80％になればよい）",
+        "answer": "25",
+        "choices": [
+          "25",
+          "20",
+          "40",
+          "45"
+        ],
+        "meaning": "①20％なら水は80％。全体＝180÷0.8＝225g。②加える食塩＝225−200＝25gです。よって、答えは25です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_88",
+    "category": "wariai",
+    "grade": 6,
+    "title": "3つの数の比（連比）",
+    "intro": "A：B＝2：3、B：C＝4：5 のとき、A：B：C を求めます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"30\" fill=\"#4f9eff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A：B ＝ 2：3</text><text x=\"140\" y=\"60\" fill=\"#06d6a0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B：C ＝ 4：5</text><text x=\"140\" y=\"96\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">Bをそろえる（3と4→12）</text></svg>",
+    "steps": [
+      {
+        "question": "Bを3と4の最小公倍数12にそろえます。A：B＝2：3 を、B＝12になるように直すとA：B＝？",
+        "answer": "8:12",
+        "choices": [
+          "8:12",
+          "2:3",
+          "6:12",
+          "8:15"
+        ],
+        "meaning": "①3を12にするには×4。②A：B＝2×4：3×4＝8：12です。よって、答えは8:12です。"
+      },
+      {
+        "question": "同じように B：C＝4：5 を、B＝12になるように直すと B：C＝？",
+        "answer": "12:15",
+        "choices": [
+          "12:15",
+          "4:5",
+          "12:20",
+          "8:15"
+        ],
+        "meaning": "①4を12にするには×3。②B：C＝4×3：5×3＝12：15です。よって、答えは12:15です。"
+      },
+      {
+        "question": "A：B：C を、いちばん簡単な比で答えなさい。",
+        "answer": "8:12:15",
+        "choices": [
+          "8:12:15",
+          "2:3:5",
+          "8:12:20",
+          "6:12:15"
+        ],
+        "meaning": "①Bを12にそろえると A＝8、B＝12、C＝15。②A：B：C＝8：12：15です。よって、答えは8:12:15です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_89",
+    "category": "hayasa",
+    "grade": 6,
+    "title": "鉄橋をわたる電車（通過算）",
+    "intro": "長さ120mの電車が、時速72kmで走っています。長さ200mの鉄橋をわたります。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"40\" y=\"60\" width=\"140\" height=\"6\" fill=\"#8b7355\"/><text x=\"110\" y=\"82\" fill=\"#8b7355\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">鉄橋 200m</text><rect x=\"30\" y=\"42\" width=\"70\" height=\"16\" rx=\"4\" fill=\"#4f9eff\" opacity=\"0.5\" stroke=\"#4f9eff\"/><text x=\"65\" y=\"54\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">電車120m</text><path d=\"M100 34 h30\" stroke=\"#ffd166\" stroke-width=\"2\"/><polygon points=\"132,34 124,30 124,38\" fill=\"#ffd166\"/><text x=\"115\" y=\"28\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">時速72km</text><text x=\"140\" y=\"112\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">わたり終わるまで＝橋＋電車を進む</text></svg>",
+    "steps": [
+      {
+        "question": "時速72kmは秒速何mですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "72",
+          "12",
+          "36"
+        ],
+        "meaning": "①72km＝72000m、1時間＝3600秒。②72000÷3600＝秒速20mです。よって、答えは20です。"
+      },
+      {
+        "question": "電車が鉄橋をわたり始めてからわたり終わるまでに進む長さは何mですか。",
+        "answer": "320",
+        "choices": [
+          "320",
+          "200",
+          "120",
+          "80"
+        ],
+        "meaning": "①先頭が橋に入ってから最後尾が出るまで＝橋＋電車。②200＋120＝320mです。よって、答えは320です。"
+      },
+      {
+        "question": "わたり終わるまでに何秒かかりますか。",
+        "answer": "16",
+        "choices": [
+          "16",
+          "10",
+          "20",
+          "18"
+        ],
+        "meaning": "①320mを秒速20mで。②320÷20＝16秒です。よって、答えは16です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_90",
+    "category": "hayasa",
+    "grade": 6,
+    "title": "川をのぼる船（流水算）",
+    "intro": "静かな水の上では分速200mで進む船があります。この船が川を「のぼる」ときは、流れにおされて分速150mになりました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"20\" y=\"70\" width=\"240\" height=\"30\" fill=\"#4f9eff\" opacity=\"0.25\"/><path d=\"M40 85 h40 M120 85 h40 M200 85 h30\" stroke=\"#4f9eff\" stroke-width=\"1\" opacity=\"0.6\"/><text x=\"240\" y=\"66\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">流れ →</text><polygon points=\"90,72 130,72 120,84 100,84\" fill=\"#ffd166\" opacity=\"0.7\"/><path d=\"M120 66 h-40\" stroke=\"#06d6a0\" stroke-width=\"2\"/><polygon points=\"78,66 86,62 86,70\" fill=\"#06d6a0\"/><text x=\"105\" y=\"58\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">のぼり 分速150m</text><text x=\"140\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">静水 分速200m</text></svg>",
+    "steps": [
+      {
+        "question": "川の流れの速さは分速何mですか。",
+        "answer": "50",
+        "choices": [
+          "50",
+          "350",
+          "150",
+          "100"
+        ],
+        "meaning": "①のぼり＝静水−流れ。②200−150＝分速50mです。よって、答えは50です。"
+      },
+      {
+        "question": "この船が川を「くだる」ときの速さは分速何mですか。",
+        "answer": "250",
+        "choices": [
+          "250",
+          "150",
+          "200",
+          "350"
+        ],
+        "meaning": "①くだり＝静水＋流れ。②200＋50＝分速250mです。よって、答えは250です。"
+      },
+      {
+        "question": "川を1500mのぼるのに何分かかりますか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "6",
+          "15",
+          "7.5"
+        ],
+        "meaning": "①のぼりは分速150m。②1500÷150＝10分です。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_91",
+    "category": "hayasa",
+    "grade": 6,
+    "title": "時計の長針と短針（時計算）",
+    "intro": "3時ちょうどのときの、時計の長針（分針）と短針を考えます。長針は1分で6度、短針は1分で0.5度進みます。",
+    "svg": "<svg viewBox=\"0 0 240 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><circle cx=\"120\" cy=\"100\" r=\"70\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.6\"/><line x1=\"120\" y1=\"36\" x2=\"120\" y2=\"30\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"152\" y1=\"44.57437415779592\" x2=\"155\" y2=\"39.37822173508929\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"175.42562584220406\" y1=\"68\" x2=\"180.6217782649107\" y2=\"65\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"184\" y1=\"100\" x2=\"190\" y2=\"100\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"175.42562584220408\" y1=\"132\" x2=\"180.62177826491072\" y2=\"135\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"152\" y1=\"155.42562584220408\" x2=\"155\" y2=\"160.62177826491072\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"120\" y1=\"164\" x2=\"120\" y2=\"170\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"88.00000000000001\" y1=\"155.42562584220408\" x2=\"85.00000000000001\" y2=\"160.62177826491072\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"64.57437415779594\" y1=\"132.00000000000003\" x2=\"59.378221735089305\" y2=\"135.00000000000003\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"56\" y1=\"100.00000000000001\" x2=\"50\" y2=\"100.00000000000001\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"64.57437415779593\" y1=\"68\" x2=\"59.3782217350893\" y2=\"65\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"87.99999999999997\" y1=\"44.57437415779594\" x2=\"84.99999999999997\" y2=\"39.378221735089305\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"120\" y1=\"100\" x2=\"120\" y2=\"44\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/><line x1=\"120\" y1=\"100\" x2=\"164\" y2=\"100\" stroke=\"#ff6b6b\" stroke-width=\"3\"/><text x=\"120\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3時ちょうど</text><text x=\"120\" y=\"190\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">長針は1分で6°・短針は0.5°</text></svg>",
+    "steps": [
+      {
+        "question": "3時ちょうどのとき、長針と短針がつくる角度は何度ですか。",
+        "answer": "90",
+        "choices": [
+          "90",
+          "60",
+          "120",
+          "30"
+        ],
+        "meaning": "①短針は3、長針は12。文字ばん3つ分。②30×3＝90度です。よって、答えは90です。"
+      },
+      {
+        "question": "長針は短針より、1分間に何度多く進みますか。",
+        "answer": "5.5",
+        "choices": [
+          "5.5",
+          "6",
+          "0.5",
+          "5"
+        ],
+        "meaning": "①6−0.5。②5.5度です。よって、答えは5.5です。"
+      },
+      {
+        "question": "3時何分に長針と短針が重なりますか。（90度を1分に5.5度ずつちぢめる）",
+        "answer": "16と4/11",
+        "meaning": "①90÷5.5＝900÷55＝180/11＝16と4/11。②3時16と4/11分です。よって、答えは16と4/11です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_92",
+    "category": "rittai",
+    "grade": 6,
+    "title": "色をぬった立方体",
+    "intro": "1辺3cmの立方体（小さい立方体27個でできている）の、外側の表面全体に色をぬります。そのあと、27個の小さい立方体にばらばらにします。",
+    "svg": "<svg viewBox=\"0 0 240 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"60\" y=\"70\" width=\"96\" height=\"96\" fill=\"#4f9eff\" opacity=\"0.14\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"60,70 92,38 188,38 156,70\" fill=\"#4f9eff\" opacity=\"0.1\" stroke=\"#4f9eff\" stroke-width=\"1\"/><polygon points=\"156,70 188,38 188,134 156,166\" fill=\"#4f9eff\" opacity=\"0.08\" stroke=\"#4f9eff\" stroke-width=\"1\"/><line x1=\"92\" y1=\"70\" x2=\"92\" y2=\"166\" stroke=\"#4f9eff\" stroke-width=\"0.7\" opacity=\"0.6\"/><line x1=\"60\" y1=\"102\" x2=\"156\" y2=\"102\" stroke=\"#4f9eff\" stroke-width=\"0.7\" opacity=\"0.6\"/><line x1=\"124\" y1=\"70\" x2=\"124\" y2=\"166\" stroke=\"#4f9eff\" stroke-width=\"0.7\" opacity=\"0.6\"/><line x1=\"60\" y1=\"134\" x2=\"156\" y2=\"134\" stroke=\"#4f9eff\" stroke-width=\"0.7\" opacity=\"0.6\"/><text x=\"120\" y=\"30\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1辺3個（27個）外側に色</text></svg>",
+    "steps": [
+      {
+        "question": "3つの面に色がつく小さな立方体（角にあるもの）は何個ですか。",
+        "answer": "8",
+        "choices": [
+          "8",
+          "6",
+          "12",
+          "4"
+        ],
+        "meaning": "①立方体の角は8か所。②角の8個は3面が外を向く。よって、答えは8です。"
+      },
+      {
+        "question": "2つの面だけに色がつく小さな立方体（辺のまん中）は何個ですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "8",
+          "6",
+          "24"
+        ],
+        "meaning": "①辺は12本、それぞれ角以外に1個ずつ。②12個です。よって、答えは12です。"
+      },
+      {
+        "question": "どの面にも色がつかない小さな立方体（内部）は何個ですか。",
+        "answer": "1",
+        "choices": [
+          "1",
+          "0",
+          "6",
+          "3"
+        ],
+        "meaning": "①外側を1皮むくと1辺1個の立方体。②中心の1個だけ色がつきません。よって、答えは1です。"
+      }
+    ]
   }
 ]
