@@ -3,130 +3,130 @@
     "id": "rchain01",
     "category": "sora",
     "grade": 6,
-    "title": "月の公転周期を求めよう",
-    "intro": "月の満ち欠けの周期（新月から次の新月まで＝会合周期）は29.5日です。地球が太陽のまわりを1周する日数を360日として計算するものとします。",
+    "title": "満ち欠けの周期と、月が1周する時間",
+    "intro": "月が満月から次の満月になるまで（満ち欠けの周期）は29.5日です。でも、これは月が地球のまわりをちょうど1周する時間（公転周期）とは少しちがいます。地球も太陽のまわりを動いているからです。地球は1日に約1°動く（360日で360°）とします。",
     "steps": [
       {
-        "question": "月が地球のまわりを1周する公転周期（恒星周期）は約何日ですか。1÷（1÷29.5＋1÷360）で計算し、小数第2位を四捨五入して小数第1位まで答えなさい。",
+        "question": "地球は1日に約1°動きます。29.5日の間に、地球は太陽のまわりを約何度動きますか。",
+        "answer": "29.5",
+        "choices": [
+          "29.5",
+          "30",
+          "15",
+          "360"
+        ],
+        "meaning": "①1°×29.5日。②約29.5°です。よって、答えは29.5です。"
+      },
+      {
+        "question": "月が「次の満月」になるには、360°＋地球が動いた29.5°＝約389.5°回らないといけません。では、月が本当に1周（360°）する時間（公転周期）は、29.5日より長いですか、短いですか。",
+        "answer": "短い",
+        "choices": [
+          "短い",
+          "長い",
+          "同じ",
+          "わからない"
+        ],
+        "meaning": "①29.5日で389.5°も回る＝360°ならもっと少ない日数。②公転周期は29.5日より短いです。よって、答えは短いです。"
+      },
+      {
+        "question": "月は29.5日で389.5°回ります。では360°回る（1周する）のにかかる日数は約何日ですか。（29.5×360÷389.5、小数第2位を四捨五入）",
         "answer": "27.3",
         "choices": [
           "27.3",
           "29.5",
-          "30.7",
-          "25.3"
+          "25.0",
+          "31.4"
         ],
-        "meaning": "月の会合周期（満ち欠けの周期）は、公転周期（恒星周期）よりも少し長くなります。これは、月が地球を1周する間に地球自身も太陽のまわりを少し動いてしまうためです。①1÷29.5＋1÷360＝0.036676…②1÷0.036676…＝約27.3日です。よって、答えは27.3です。"
-      },
-      {
-        "question": "(1)で求めた公転周期をもとにすると、月が地球のまわりを10周するのにかかる日数は約何日ですか。整数で答えなさい。",
-        "answer": "273",
-        "choices": [
-          "273",
-          "295",
-          "300",
-          "260"
-        ],
-        "meaning": "①(1)で求めた公転周期は27.3日なので、②27.3×10＝273日です。よって、答えは273です。"
-      },
-      {
-        "question": "地球が360日で360度公転するとすれば、月が公転周期27.3日で1周する間に、地球は約何度公転しますか。小数第1位を四捨五入して整数で答えなさい。",
-        "answer": "27",
-        "choices": [
-          "27",
-          "30",
-          "24",
-          "33"
-        ],
-        "meaning": "①地球は360日で360度公転するので、1日あたり360÷360＝1度公転します。②27.3日では、1×27.3＝27.3度となり、四捨五入すると27度です。会合周期が公転周期より長いのは、この地球の動いた分だけ月がさらに追いつく必要があるためです。よって、答えは27です。"
+        "meaning": "①29.5×360÷389.5＝27.26…。②約27.3日です（満ち欠けの29.5日より短い）。よって、答えは27.3です。"
       }
     ],
-    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><circle cx=\"36\" cy=\"66\" r=\"12\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"50.0\" y1=\"66.0\" x2=\"54.0\" y2=\"66.0\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"45.9\" y1=\"75.9\" x2=\"48.7\" y2=\"78.7\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"36.0\" y1=\"80.0\" x2=\"36.0\" y2=\"84.0\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"26.1\" y1=\"75.9\" x2=\"23.3\" y2=\"78.7\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"22.0\" y1=\"66.0\" x2=\"18.0\" y2=\"66.0\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"26.1\" y1=\"56.1\" x2=\"23.3\" y2=\"53.3\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"36.0\" y1=\"52.0\" x2=\"36.0\" y2=\"48.0\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"45.9\" y1=\"56.1\" x2=\"48.7\" y2=\"53.3\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"150\" cy=\"66\" r=\"10\" fill=\"#4f9eff\" opacity=\"0.7\"/><text x=\"150\" y=\"90\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">地球</text><ellipse cx=\"150\" cy=\"66\" rx=\"46\" ry=\"30\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><circle cx=\"196\" cy=\"66\" r=\"5\" fill=\"#eef2ff\"/><text x=\"210\" y=\"62\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\">月</text><text x=\"150\" y=\"20\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">会合周期29.5日 と 公転周期</text><text x=\"150\" y=\"116\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">月が1周する間に地球も動く</text></svg>"
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">満月 → 29.5日 → 次の満月</text><circle cx=\"34\" cy=\"74\" r=\"11\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"47.0\" y1=\"74.0\" x2=\"51.0\" y2=\"74.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"43.2\" y1=\"83.2\" x2=\"46.0\" y2=\"86.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"34.0\" y1=\"87.0\" x2=\"34.0\" y2=\"91.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"24.8\" y1=\"83.2\" x2=\"22.0\" y2=\"86.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"21.0\" y1=\"74.0\" x2=\"17.0\" y2=\"74.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"24.8\" y1=\"64.8\" x2=\"22.0\" y2=\"62.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"34.0\" y1=\"61.0\" x2=\"34.0\" y2=\"57.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"43.2\" y1=\"64.8\" x2=\"46.0\" y2=\"62.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><circle cx=\"150\" cy=\"74\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.8\"/><text x=\"150\" y=\"96\" fill=\"#4f9eff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">地球</text><ellipse cx=\"150\" cy=\"74\" rx=\"52\" ry=\"30\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 2\"/><circle cx=\"202\" cy=\"74\" r=\"5\" fill=\"#f9e2af\"/><text x=\"214\" y=\"70\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">月</text><path d=\"M150 44 q26 -8 44 8\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.2\"/><polygon points=\"194,52 186,49 189,56\" fill=\"#06d6a0\"/><text x=\"140\" y=\"118\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">地球も動くので、月は360°より多く回る</text></svg>"
   },
   {
     "id": "rchain02",
     "category": "sora",
     "grade": 6,
-    "title": "天球と星の動き",
-    "intro": "京都市（北緯35度）で北の空を観測すると、北極星がほとんど動かずに見えます。北の空の星は、北極星を中心に反時計回りに回転して見えます。",
+    "title": "北の空の星を追いかける",
+    "intro": "北の空では、北極星はほとんど動かず、まわりの星は北極星を中心に反時計回りに回って見えます（1時間に15°）。ある星Xが、午後8時にちょうど北極星の真上に見えました。",
     "steps": [
       {
-        "question": "京都市で北極星を観測すると、地平線からの高度はおよそ何度になりますか。",
-        "answer": "35",
-        "choices": [
-          "35",
-          "55",
-          "90",
-          "45"
-        ],
-        "meaning": "北極星が見える高度は、観測地の緯度とほぼ等しくなります。①京都市は北緯35度なので、②北極星の高度もおよそ35度です。よって、答えは35です。"
-      },
-      {
-        "question": "ある星を午後8時に観測すると、北極星の真上（0度の位置）に見えました。3時間後の午後11時に観測すると、日周運動によって何度回転した位置に見えますか（1時間に15度動くものとします）。",
-        "answer": "45",
-        "choices": [
-          "45",
-          "30",
-          "60",
-          "15"
-        ],
-        "meaning": "①北の空の星は1時間に15度、反時計回りに回転して見えます。②3時間では15×3＝45度回転します。よって、答えは45です。"
-      },
-      {
-        "question": "同じ星を、2か月後の同じ午後8時に観測すると、年周運動によってさらに何度回転した位置に見えますか（1か月に30度動くものとします）。",
+        "question": "星Xは1時間に15°回ります。4時間後の真夜中0時には、真上の位置から何度回った位置にありますか。",
         "answer": "60",
         "choices": [
           "60",
-          "30",
-          "90",
-          "45"
+          "45",
+          "75",
+          "30"
         ],
-        "meaning": "①星の見える位置は、季節による年周運動でも変化し、1か月に30度動きます。②2か月では30×2＝60度回転します。よって、答えは60です。"
+        "meaning": "①15°×4時間。②60°回った位置です。よって、答えは60です。"
+      },
+      {
+        "question": "真上（0時の位置）から反時計回りに60°回ると、星Xは北極星の右がわ・左がわのどちらにきますか。",
+        "answer": "左がわ",
+        "choices": [
+          "左がわ",
+          "右がわ",
+          "真上のまま",
+          "真下"
+        ],
+        "meaning": "①反時計回りは真上→左へ回る。②左がわにきます。よって、答えは左がわです。"
+      },
+      {
+        "question": "星Xが、北極星のちょうど真下（真上から180°回った位置）にくるのは、午後8時から何時間後ですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "6",
+          "9",
+          "24"
+        ],
+        "meaning": "①180°÷15°＝12。②12時間後（次の日の朝8時）です。よって、答えは12です。"
       }
     ],
-    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"130\" y=\"134\" fill=\"#8b7355\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">地平線</text><circle cx=\"130\" cy=\"66\" r=\"3\" fill=\"#ffd166\"/><text x=\"130\" y=\"56\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">北極星</text><circle cx=\"130\" cy=\"66\" r=\"40\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"2 3\"/><circle cx=\"130\" cy=\"66\" r=\"55\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"2 3\"/><circle cx=\"130\" cy=\"66\" r=\"70\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"2 3\"/><path d=\"M100 30 a55 55 0 0 1 30 -10\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"100,30 106,24 108,33\" fill=\"#4f9eff\"/><line x1=\"130\" y1=\"120\" x2=\"130\" y2=\"66\" stroke=\"#06d6a0\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><text x=\"150\" y=\"100\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\">高度35°</text><text x=\"130\" y=\"20\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">北の空：北極星中心に反時計回り</text></svg>"
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">北の空：北極星を中心に反時計回り</text><line x1=\"20\" y1=\"130\" x2=\"240\" y2=\"130\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"130\" y=\"143\" fill=\"#8b7355\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">地平線（北）</text><circle cx=\"130\" cy=\"74\" r=\"3\" fill=\"#ffd166\"/><text x=\"146\" y=\"78\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">北極星</text><circle cx=\"130\" cy=\"74\" r=\"42\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"2 3\"/><text x=\"130\" y=\"36\" fill=\"#f9e2af\" font-size=\"12\" text-anchor=\"middle\">★</text><text x=\"130\" y=\"26\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">星X（午後8時＝真上）</text><path d=\"M112 40 a42 42 0 0 0 -18 26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><polygon points=\"94,66 92,57 100,61\" fill=\"#4f9eff\"/><text x=\"70\" y=\"84\" fill=\"#4f9eff\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">反時計回り</text></svg>"
   },
   {
     "id": "rchain03",
     "category": "hikari_oto",
     "grade": 5,
-    "title": "光の性質を調べる実験",
-    "intro": "太郎くんはピンホールカメラを作り、光の性質を調べる実験をしました。",
+    "title": "ピンホールカメラの像の大きさ",
+    "intro": "ピンホールカメラは、小さな穴を通った光がスクリーンにさかさの像をうつします。像の大きさは「穴からスクリーンまでのきょり」に比例します。穴からスクリーンまで15cmのとき、像の高さは4cmでした。",
     "steps": [
       {
-        "question": "ピンホールカメラで、物体から穴までのきょりを変えずに、穴からスクリーンまでのきょりを3cmから12cmに変えました。スクリーンにうつる像の大きさは、はじめの何倍になりますか。",
-        "answer": "4",
+        "question": "穴からスクリーンまでのきょりを15cmから30cm（2倍）にすると、像の高さは何cmになりますか。",
+        "answer": "8",
         "choices": [
+          "8",
           "4",
-          "3",
           "2",
-          "12"
+          "6"
         ],
-        "meaning": "ピンホールカメラの像の大きさは、穴からスクリーンまでのきょりに比例します。①12÷3＝4倍になります。よって、答えは4です。"
+        "meaning": "①きょりが2倍なら像も2倍。②4×2＝8cmです。よって、答えは8です。"
       },
       {
-        "question": "次に、焦点きょりが6cmのとつレンズを使って、物体と同じ大きさの倒立の実像をつくろうと思います。物体をレンズから何cm離せばよいですか（物体を焦点きょりのちょうど2倍の位置に置くと、同じ大きさの実像ができます）。",
-        "answer": "12",
+        "question": "像の高さを12cmにするには、穴からスクリーンまでのきょりを何cmにすればよいですか。",
+        "answer": "45",
         "choices": [
-          "12",
-          "6",
-          "18",
-          "24"
+          "45",
+          "30",
+          "60",
+          "36"
         ],
-        "meaning": "①焦点きょりが6cmなので、②物体を6×2＝12cmの位置に置けば、同じ大きさの実像ができます。よって、答えは12です。"
+        "meaning": "①像が4→12で3倍なら、きょりも3倍。②15×3＝45cmです。よって、答えは45です。"
       },
       {
-        "question": "レンズの位置を変えずに、物体を焦点きょり（6cm）よりレンズに近い、レンズから4cmの位置に置き直すと、スクリーンには実像ができません。かわりにレンズごしに見える、実物より大きい像を何といいますか。",
-        "answer": "虚像",
+        "question": "スクリーンを遠ざけると像は大きくなりますが、像の明るさはどうなりますか。",
+        "answer": "暗くなる",
         "choices": [
-          "虚像",
-          "実像",
-          "倒立像",
-          "縮小像"
+          "暗くなる",
+          "明るくなる",
+          "変わらない",
+          "消える"
         ],
-        "meaning": "物体を焦点きょりより内側（レンズに近い位置）に置くと、光がレンズを通ったあと1点に集まらず、スクリーンに実像はできません。かわりに、レンズごしに見ると実物より大きい、上下左右が逆さまでない「虚像」が見えます。よって、答えは虚像です。"
+        "meaning": "①同じ光が広い像に広がる。②うすくなって暗くなります。よって、答えは暗くなるです。"
       }
     ],
-    "svg": "<svg viewBox='0 0 220 150' style='display:block;margin:6px auto;max-width:240px'><line x1='15' y1='70' x2='205' y2='70' stroke='#eef2ff' stroke-width='1' stroke-dasharray='3,3'/><ellipse cx='110' cy='70' rx='12' ry='40' fill='none' stroke='#eef2ff' stroke-width='2'/><line x1='20' y1='45' x2='110' y2='45' stroke='#ffd166' stroke-width='1.5'/><line x1='110' y1='45' x2='185' y2='70' stroke='#ffd166' stroke-width='1.5'/><line x1='20' y1='95' x2='110' y2='95' stroke='#ffd166' stroke-width='1.5'/><line x1='110' y1='95' x2='185' y2='70' stroke='#ffd166' stroke-width='1.5'/><circle cx='185' cy='70' r='3' fill='#ff6b6b'/><text x='170' y='60' font-size='11' fill='#ff6b6b'>焦点</text><text x='95' y='125' font-size='11' fill='#eef2ff' text-anchor='middle'>とつレンズ</text></svg>"
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ピンホールカメラ</text><line x1=\"30\" y1=\"70\" x2=\"70\" y2=\"70\" stroke=\"#9399b2\" stroke-width=\"0.7\" stroke-dasharray=\"2 2\"/><line x1=\"45\" y1=\"70\" x2=\"45\" y2=\"48\" stroke=\"#ffd166\" stroke-width=\"2.5\"/><polygon points=\"45,48 41,55 49,55\" fill=\"#ffd166\"/><text x=\"45\" y=\"90\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">物</text><line x1=\"150\" y1=\"40\" x2=\"150\" y2=\"100\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><circle cx=\"150\" cy=\"70\" r=\"2\" fill=\"#181825\"/><text x=\"150\" y=\"34\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">穴</text><line x1=\"240\" y1=\"40\" x2=\"240\" y2=\"100\" stroke=\"#9399b2\" stroke-width=\"1.5\"/><line x1=\"240\" y1=\"70\" x2=\"240\" y2=\"92\" stroke=\"#ff6b6b\" stroke-width=\"2.5\"/><polygon points=\"240,92 236,85 244,85\" fill=\"#ff6b6b\"/><text x=\"240\" y=\"34\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">スクリーン</text><line x1=\"45\" y1=\"48\" x2=\"150\" y2=\"70\" stroke=\"#f9e2af\" stroke-width=\"0.7\"/><line x1=\"150\" y1=\"70\" x2=\"240\" y2=\"92\" stroke=\"#f9e2af\" stroke-width=\"0.7\"/><text x=\"195\" y=\"112\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">穴→スクリーン 15cm→？</text></svg>"
   },
   {
     "id": "rchain04",
@@ -348,44 +348,44 @@
     "id": "rchain09",
     "category": "daichi",
     "grade": 5,
-    "title": "地層の重なりと化石",
-    "intro": "ある崖に、下から順にA層（れき岩）、B層（砂岩）、C層（でい岩）、D層（石灰岩、サンゴの化石をふくむ）の4つの地層が重なって見られました。地層はじゃまされることなく、下から順に積もったものとします。",
+    "title": "流水のはたらきと地層",
+    "intro": "川が運んできたつぶは、海に出るとしずんでたまります。つぶが大きい（重い）ものほど早くしずんで岸の近くに、小さい（軽い）ものほど遠くの沖まで運ばれてたまります。れき（大）・砂（中）・どろ（小）で考えます。",
     "steps": [
       {
-        "question": "この崖で、最も古い時代に積もった地層はどれですか。",
-        "answer": "A層",
+        "question": "れき・砂・どろのうち、河口にいちばん近い浅いところにたまるのはどれですか。",
+        "answer": "れき",
         "choices": [
-          "A層",
-          "B層",
-          "C層",
-          "D層"
+          "れき",
+          "砂",
+          "どろ",
+          "化石"
         ],
-        "meaning": "地層はじゃまされずに積もると、下にあるものほど古い時代に積もったことになります（地層累重の法則）。①最も下にあるのはA層なので、②A層が最も古い時代の地層です。よって、答えはA層です。"
+        "meaning": "①大きく重いつぶほど早くしずむ＝岸の近く。②れきです。よって、答えはれきです。"
       },
       {
-        "question": "れき・砂・どろは、つぶが大きいものほど河口や岸に近い浅い場所に、つぶが小さいものほど沖の深い場所に積もりやすい性質があります。A層（れき岩）からC層（でい岩）にかけて、この場所が堆積した環境はどのように変化したと考えられますか。",
-        "answer": "しだいに深くなった",
+        "question": "いちばん沖（深いところ）まで運ばれてたまるのはどれですか。",
+        "answer": "どろ",
         "choices": [
-          "しだいに深くなった",
-          "しだいに浅くなった",
-          "変化しなかった",
-          "浅い→深い→浅いをくり返した"
+          "どろ",
+          "砂",
+          "れき",
+          "岩"
         ],
-        "meaning": "①A層はれき岩（つぶが大きい＝浅い場所）、②C層はでい岩（つぶが小さい＝深い場所）です。③つぶがれき→砂→どろと小さくなっているので、堆積した場所はしだいに深くなったと考えられます。よって、答えはしだいに深くなったです。"
+        "meaning": "①小さく軽いつぶほど遠くまで運ばれる。②どろです。よって、答えはどろです。"
       },
       {
-        "question": "D層にふくまれるサンゴの化石のように、地層が積もった当時の環境（浅く、あたたかい海）を知る手がかりになる化石を何といいますか。",
-        "answer": "示相化石",
+        "question": "ある地層を下から見ると「れき→砂→どろ」の順に重なっていました。この地層がたまる間、この場所の海の深さはどう変化したと考えられますか。",
+        "answer": "だんだん深くなった",
         "choices": [
-          "示相化石",
-          "示準化石",
-          "標準化石",
-          "指標化石"
+          "だんだん深くなった",
+          "だんだん浅くなった",
+          "変わらなかった",
+          "わからない"
         ],
-        "meaning": "堆積した当時の環境（気候や水深など）を知る手がかりになる化石を示相化石といいます（地層の時代を知る手がかりになる化石は示準化石といい、区別されます）。よって、答えは示相化石です。"
+        "meaning": "①下（古い）がれき＝浅い、上（新しい）がどろ＝深い。②だんだん深くなったと考えられます（岸→沖へ）。よって、答えはだんだん深くなったです。"
       }
     ],
-    "svg": "<svg viewBox='0 0 220 150' style='display:block;margin:6px auto;max-width:240px'><rect x='45' y='28' width='120' height='20' fill='none' stroke='#eef2ff' stroke-width='1.5'/><text x='172' y='42' font-size='11' fill='#ffd166'>D</text><rect x='45' y='48' width='120' height='20' fill='none' stroke='#eef2ff' stroke-width='1.5'/><text x='172' y='62' font-size='11' fill='#ffd166'>C</text><rect x='45' y='68' width='120' height='20' fill='none' stroke='#eef2ff' stroke-width='1.5'/><text x='172' y='82' font-size='11' fill='#ffd166'>B</text><rect x='45' y='88' width='120' height='20' fill='none' stroke='#eef2ff' stroke-width='1.5'/><text x='172' y='102' font-size='11' fill='#ffd166'>A</text><text x='105' y='125' font-size='10' fill='#eef2ff' text-anchor='middle'>下ほど古い</text></svg>"
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">川 → 海：つぶの大きさとたい積</text><polygon points=\"20,40 70,40 60,70 20,70\" fill=\"#8b7355\" opacity=\"0.5\"/><text x=\"40\" y=\"56\" fill=\"#f5e0c3\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">陸</text><path d=\"M60 46 l14 6 l-14 6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><rect x=\"20\" y=\"72\" width=\"240\" height=\"46\" fill=\"#4f9eff\" opacity=\"0.12\"/><rect x=\"60\" y=\"88\" width=\"60\" height=\"30\" fill=\"#9399b2\" opacity=\"0.6\"/><text x=\"90\" y=\"106\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">れき</text><rect x=\"120\" y=\"96\" width=\"70\" height=\"22\" fill=\"#a6adc8\" opacity=\"0.55\"/><text x=\"155\" y=\"110\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">砂</text><rect x=\"190\" y=\"104\" width=\"70\" height=\"14\" fill=\"#bac2de\" opacity=\"0.5\"/><text x=\"225\" y=\"114\" fill=\"#1e1e2e\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">どろ</text><text x=\"70\" y=\"84\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">岸に近い</text><text x=\"225\" y=\"96\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">沖（深い）</text></svg>"
   },
   {
     "id": "rchain10",
@@ -520,42 +520,42 @@
     "id": "rchain13",
     "category": "sora",
     "grade": 5,
-    "title": "星の動き",
-    "svg": "<svg viewBox='0 0 220 150' style='display:block;margin:6px auto;max-width:240px'><line x1='15' y1='120' x2='205' y2='120' stroke='#eef2ff' stroke-width='1.5'/><path d='M35,120 A75,75 0 0 1 185,120' fill='none' stroke='#ffd166' stroke-width='1.5' stroke-dasharray='4,3'/><circle cx='60' cy='95' r='3' fill='#ffd166'/><circle cx='110' cy='47' r='3' fill='#ffd166'/><circle cx='160' cy='95' r='3' fill='#ffd166'/><text x='30' y='138' font-size='11' fill='#eef2ff'>東</text><text x='183' y='138' font-size='11' fill='#eef2ff'>西</text><text x='103' y='40' font-size='10' fill='#ffd166'>南</text></svg>",
-    "intro": "空の星は、時間がたつと東からのぼり、南の空を通って西へしずみます。1時間に約15度ずつ動いて見えます（日周運動）。",
+    "title": "星が毎日少しずつ早くなるわけ",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">公転で、星が毎日少しずつ早くなる</text><circle cx=\"140\" cy=\"80\" r=\"12\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"154.0\" y1=\"80.0\" x2=\"158.0\" y2=\"80.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"149.9\" y1=\"89.9\" x2=\"152.7\" y2=\"92.7\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"140.0\" y1=\"94.0\" x2=\"140.0\" y2=\"98.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"130.1\" y1=\"89.9\" x2=\"127.3\" y2=\"92.7\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"126.0\" y1=\"80.0\" x2=\"122.0\" y2=\"80.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"130.1\" y1=\"70.1\" x2=\"127.3\" y2=\"67.3\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"140.0\" y1=\"66.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"149.9\" y1=\"70.1\" x2=\"152.7\" y2=\"67.3\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><circle cx=\"140\" cy=\"80\" r=\"46\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><circle cx=\"186\" cy=\"80\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.75\"/><circle cx=\"140\" cy=\"34\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.75\"/><circle cx=\"94\" cy=\"80\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.75\"/><circle cx=\"140\" cy=\"126\" r=\"6\" fill=\"#4f9eff\" opacity=\"0.75\"/><path d=\"M176 52 a46 46 0 0 1 -34 -18\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><polygon points=\"142,34 150,37 146,43\" fill=\"#06d6a0\"/><text x=\"140\" y=\"84\" fill=\"#0000\" font-size=\"1\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"200\" y=\"100\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">1年で360°</text><text x=\"140\" y=\"100\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">地球</text></svg>",
+    "intro": "同じ時刻に見える星の位置は、日がたつと少しずつ西へずれていきます。これは地球が太陽のまわりを回っている（公転）ためで、1年（約360日）でちょうど1周（360°）ぶんずれます。星は1時間に15°動きます。",
     "steps": [
       {
-        "question": "星は3時間で約何度動きますか。",
-        "answer": "45",
+        "question": "同じ時刻に見える星は、1年（360日）で360°西へずれます。1か月（30日）では約何度ずれますか。",
+        "answer": "30",
         "choices": [
-          "45",
           "30",
+          "15",
           "60",
+          "90"
+        ],
+        "meaning": "①360°÷12か月。②約30°ずれます。よって、答えは30です。"
+      },
+      {
+        "question": "星は1時間に15°動きます。1か月で30°西へずれるということは、同じ星が南中する時刻は1か月で約何時間早くなりますか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "1",
+          "4",
+          "3"
+        ],
+        "meaning": "①30°ぶん早く南中＝30÷15時間。②約2時間早くなります。よって、答えは2です。"
+      },
+      {
+        "question": "1か月（30日）で2時間（120分）早くなるなら、1日では約何分早くなりますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "2",
+          "6",
           "15"
         ],
-        "meaning": "①星は1時間に約15度動きます。②15×3＝45度です。よって、答えは45です。"
-      },
-      {
-        "question": "東の地平線からのぼった星が真南にくるまで約6時間かかりました。この間に星は約何度動きましたか。",
-        "answer": "90",
-        "choices": [
-          "90",
-          "75",
-          "120",
-          "60"
-        ],
-        "meaning": "①1時間に15度なので、②15×6＝90度動きます。よって、答えは90です。"
-      },
-      {
-        "question": "同じ星を1か月後の同じ時刻に見ると、約30度西へずれて見えます（年周運動）。3か月後の同じ時刻には約何度ずれて見えますか。",
-        "answer": "90",
-        "choices": [
-          "90",
-          "60",
-          "120",
-          "30"
-        ],
-        "meaning": "①1か月で約30度ずれます。②30×3＝90度です。よって、答えは90です。"
+        "meaning": "①120分÷30日。②約4分ずつ早くなります（これが「星は毎日約4分早い」の正体）。よって、答えは4です。"
       }
     ]
   },
