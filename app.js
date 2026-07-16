@@ -2990,7 +2990,9 @@ async function initToraHome() {
   try {
     const data = await loadToraData();
     const toraGrade = toraGradeNow();
-    document.getElementById('tora-grade-label').textContent = `いまは小${toraGrade}の巻物まで出ているよ（学年は算数ホームで変えられます）。`;
+    // 旧HTMLキャッシュと混在してもカード表示を止めないようガード
+    const label = document.getElementById('tora-grade-label');
+    if (label) label.textContent = `いまは小${toraGrade}の巻物まで出ているよ（学年は算数ホームで変えられます）。`;
 
     const grid = document.getElementById('tora-cat-grid');
     grid.innerHTML = '';
