@@ -2980,24 +2980,46 @@ async function loadToraData() {
   return toraData;
 }
 
+// 選んだ学年（localStorageに保存して次回も同じ学年で開く）
+let toraGrade = Number(localStorage.getItem('toraGrade')) || null;
+// その学年で読める巻物 = 学年以下のカード（小6は全部＝復習にも使える）
+const toraVisible = (data, grade) => data.filter(c => (c.grade || 6) <= grade);
+
 async function initToraHome() {
   showLoading();
   try {
     const data = await loadToraData();
-    const counts = {};
-    data.forEach(card => { counts[card.category] = (counts[card.category] || 0) + 1; });
+
+    // 学年ボタン
+    document.querySelectorAll('.tora-grade-btn').forEach(btn => {
+      btn.classList.toggle('selected', Number(btn.dataset.tgrade) === toraGrade);
+      btn.onclick = () => {
+        toraGrade = Number(btn.dataset.tgrade);
+        localStorage.setItem('toraGrade', toraGrade);
+        initToraHome();
+      };
+    });
 
     const grid = document.getElementById('tora-cat-grid');
+    const hint = document.getElementById('tora-grade-hint');
     grid.innerHTML = '';
+    if (!toraGrade) { hint.classList.remove('hidden'); return; }
+    hint.classList.add('hidden');
+
+    const visible = toraVisible(data, toraGrade);
+    const counts = {};
+    visible.forEach(card => { counts[card.category] = (counts[card.category] || 0) + 1; });
+
     Object.entries(TORA_CATEGORIES).forEach(([cat, info]) => {
       const n = counts[cat] || 0;
+      if (n === 0) return; // その学年で読める巻物がないカテゴリは出さない
       const btn = document.createElement('button');
       btn.className = 'cat-card';
       btn.dataset.toraCat = cat;
       btn.innerHTML = `
         <span class="cat-icon">${info.icon}</span>
         <span class="cat-name">${info.label}</span>
-        <span class="cat-count">${n}件</span>
+        <span class="cat-count">${n}巻</span>
       `;
       btn.onclick = () => showToraCategory(cat);
       grid.appendChild(btn);
@@ -3014,13 +3036,17 @@ async function showToraCategory(cat) {
   showLoading();
   try {
     const data = await loadToraData();
-    const cards = data.filter(c => c.category === cat);
+    // 学年でしぼり、やさしい学年の巻から順にならべる
+    const cards = toraVisible(data, toraGrade || 6)
+      .filter(c => c.category === cat)
+      .sort((a, b) => (a.grade || 6) - (b.grade || 6));
     const info = TORA_CATEGORIES[cat] || { label: cat, icon: '📕' };
 
     document.getElementById('tora-cat-title').textContent = `${info.icon} ${info.label}`;
 
+    const chip = g => `<span class="tora-grade-chip tora-grade-chip-g${g}">小${g}</span>`;
     const nav = document.getElementById('tora-cat-nav');
-    nav.innerHTML = cards.map((c, i) => `<a href="#tora-card-${i}" class="tora-nav-link">${c.title}</a>`).join('') + '<p class="tora-card-zoom-hint">🔍 図をタップすると拡大できます</p>';
+    nav.innerHTML = cards.map((c, i) => `<a href="#tora-card-${i}" class="tora-nav-link">${chip(c.grade || 6)}${c.title}</a>`).join('') + '<p class="tora-card-zoom-hint">🔍 図をタップすると拡大できます</p>';
 
     const list = document.getElementById('tora-cat-list');
     if (!cards.length) {
@@ -3028,7 +3054,7 @@ async function showToraCategory(cat) {
     } else {
       list.innerHTML = cards.map((c, i) => `
         <section id="tora-card-${i}" class="tora-card">
-          <h3 class="tora-card-title">${c.title}</h3>
+          <h3 class="tora-card-title">${chip(c.grade || 6)}${c.title}</h3>
           <div class="tora-card-body">${c.body}</div>
         </section>
       `).join('');
