@@ -1440,8 +1440,8 @@ function expandChain(chain, grade) {
     id: `${chain.id}_s${i + 1}`,
     question: `(${i + 1}) ${step.question}`,
     chainIntro: i === 0 ? `📘 ${chain.title}\n${chain.intro}` : '',
-    // 図：設問ごとのsvg優先。無ければ最初の設問だけchainの共通図を表示
-    svg: step.svg || (i === 0 ? chain.svg : '') || '',
+    // 図：設問ごとのsvg優先。無ければchainの共通図を全設問(①②③)で表示（②③でも図を見て考えられるように）
+    svg: step.svg || chain.svg || '',
     answer: step.answer,
     choices: isNumpadAnswer(step.answer) ? undefined : step.choices,
     meaning: step.meaning,
