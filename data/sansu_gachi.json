@@ -724,5 +724,731 @@
         "meaning": "①「負けたチーム＝63」は変わらないが、引き分けの試合は「誰も消えない試合」。②消える試合63＋消えない試合3＝66試合です。対応の考え方は、例外が起きたときこそ強い！よって、答えは66です。"
       }
     ]
+  },
+  {
+    "id": "sg_gachi_25",
+    "category": "baai",
+    "grade": 3,
+    "title": "50円ぴったりの払い方",
+    "intro": "10円玉と5円玉がたくさんあります。ちょうど50円を払います（使わない種類があってもOK）。",
+    "svg": "<svg viewBox=\"0 0 260 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10円玉と5円玉だけで、50円ぴったり払う</text><circle cx=\"45\" cy=\"52\" r=\"14\" fill=\"#c9946a\" opacity=\"0.85\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/><text x=\"45\" y=\"56\" fill=\"#3a2413\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><circle cx=\"79\" cy=\"52\" r=\"14\" fill=\"#c9946a\" opacity=\"0.85\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/><text x=\"79\" y=\"56\" fill=\"#3a2413\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><circle cx=\"113\" cy=\"52\" r=\"14\" fill=\"#c9946a\" opacity=\"0.85\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/><text x=\"113\" y=\"56\" fill=\"#3a2413\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><circle cx=\"147\" cy=\"52\" r=\"14\" fill=\"#c9946a\" opacity=\"0.85\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/><text x=\"147\" y=\"56\" fill=\"#3a2413\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><circle cx=\"181\" cy=\"52\" r=\"14\" fill=\"#c9946a\" opacity=\"0.85\" stroke=\"#8b5a2b\" stroke-width=\"1.5\"/><text x=\"181\" y=\"56\" fill=\"#3a2413\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><circle cx=\"62\" cy=\"94\" r=\"11\" fill=\"#d9c26a\" opacity=\"0.9\" stroke=\"#9a7b1a\" stroke-width=\"1.5\"/><circle cx=\"62\" cy=\"94\" r=\"3.5\" fill=\"#181825\"/><text x=\"77\" y=\"98\" fill=\"#e8d9a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><circle cx=\"96\" cy=\"94\" r=\"11\" fill=\"#d9c26a\" opacity=\"0.9\" stroke=\"#9a7b1a\" stroke-width=\"1.5\"/><circle cx=\"96\" cy=\"94\" r=\"3.5\" fill=\"#181825\"/><text x=\"111\" y=\"98\" fill=\"#e8d9a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><circle cx=\"130\" cy=\"94\" r=\"11\" fill=\"#d9c26a\" opacity=\"0.9\" stroke=\"#9a7b1a\" stroke-width=\"1.5\"/><circle cx=\"130\" cy=\"94\" r=\"3.5\" fill=\"#181825\"/><text x=\"145\" y=\"98\" fill=\"#e8d9a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><circle cx=\"164\" cy=\"94\" r=\"11\" fill=\"#d9c26a\" opacity=\"0.9\" stroke=\"#9a7b1a\" stroke-width=\"1.5\"/><circle cx=\"164\" cy=\"94\" r=\"3.5\" fill=\"#181825\"/><text x=\"179\" y=\"98\" fill=\"#e8d9a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><text x=\"130\" y=\"124\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">使わない種類があってもよい</text></svg>",
+    "steps": [
+      {
+        "question": "10円玉を4まい使うとき、5円玉は何まいですか。",
+        "answer": "2",
+        "meaning": "①10円×4＝40円。のこりは50−40＝10円。②5円玉は10÷5＝2まいです。よって、答えは2です。"
+      },
+      {
+        "question": "払い方をもれなく数えるための、いちばんよい作戦はどれですか。",
+        "answer": "10円玉のまい数を0まいから順に決めて、5円玉を計算する",
+        "choices": [
+          "10円玉のまい数を0まいから順に決めて、5円玉を計算する",
+          "思いついたじゅんに書き出す",
+          "5円玉をぜったい使わないことにする",
+          "合計が50円をこえたらやめる"
+        ],
+        "meaning": "①10円玉のまい数を決めると、5円玉のまい数は自動で決まる（のこり÷5）。②0まい、1まい、2まい…と順に調べれば、もれもダブりもなし！よって、答えは10円玉のまい数を0まいから順に決めて、5円玉を計算するです。"
+      },
+      {
+        "question": "払い方は全部で何通りありますか。",
+        "answer": "6",
+        "meaning": "①10円玉は0・1・2・3・4・5まいの6通りで、それぞれ5円玉が10・8・6・4・2・0まいと決まる。②「10円玉0まい（ぜんぶ5円玉）」と「5円玉0まい」をわすれずに数えて6通りです（コンピュータの全さがしでも6通り）。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_26",
+    "category": "bun",
+    "grade": 3,
+    "title": "てんびんと3つの分銅",
+    "intro": "上皿てんびんと、1g・3g・9gの分銅が1つずつあります。分銅は左右どちらの皿にのせてもOKです。砂糖をぴったり量ります。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">上皿てんびんと分銅（1g・3g・9g）</text><polygon points=\"129,100 141,100 135,82\" fill=\"#ffd166\"/><line x1=\"65\" y1=\"64\" x2=\"205\" y2=\"64\" stroke=\"#cdd6f4\" stroke-width=\"2.5\"/><line x1=\"135\" y1=\"64\" x2=\"135\" y2=\"82\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"65\" y1=\"64\" x2=\"55\" y2=\"78\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"65\" y1=\"64\" x2=\"75\" y2=\"78\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"47\" y=\"78\" width=\"36\" height=\"6\" rx=\"2\" fill=\"#9399b2\"/><line x1=\"205\" y1=\"64\" x2=\"195\" y2=\"78\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"205\" y1=\"64\" x2=\"215\" y2=\"78\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"187\" y=\"78\" width=\"36\" height=\"6\" rx=\"2\" fill=\"#9399b2\"/><path d=\"M56 78 q9 -12 18 0\" fill=\"rgba(238,242,255,0.5)\"/><text x=\"65\" y=\"74\" fill=\"#eef2ff\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">砂糖</text><polygon points=\"40,128 62,128 58,112 44,112\" fill=\"#8a5cff\" opacity=\"0.6\"/><text x=\"51\" y=\"124\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1g</text><polygon points=\"70,128 92,128 88,112 74,112\" fill=\"#8a5cff\" opacity=\"0.6\"/><text x=\"81\" y=\"124\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3g</text><polygon points=\"104,128 126,128 122,112 108,112\" fill=\"#8a5cff\" opacity=\"0.6\"/><text x=\"115\" y=\"124\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9g</text><text x=\"190\" y=\"122\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">分銅はどちらの皿にも</text><text x=\"190\" y=\"133\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">のせてよい！</text></svg>",
+    "steps": [
+      {
+        "question": "1gと3gの分銅を同じ皿にのせると、何gの砂糖が量れますか。",
+        "answer": "4",
+        "meaning": "①分銅の合計は1＋3＝4g。②反対の皿に砂糖をのせてつり合えば4gです。よって、答えは4です。"
+      },
+      {
+        "question": "では2gの砂糖は、どうやって量りますか。",
+        "answer": "砂糖と1gを同じ皿にのせ、反対に3gをのせる",
+        "choices": [
+          "砂糖と1gを同じ皿にのせ、反対に3gをのせる",
+          "1gの分銅を半分にわる",
+          "3gの分銅だけでだいたいで量る",
+          "2gは量れない"
+        ],
+        "meaning": "①砂糖＋1g＝3gでつり合えば、砂糖は3−1＝2g。②分銅を「砂糖側」にのせると、引き算が作れるのが大発見！よって、答えは砂糖と1gを同じ皿にのせ、反対に3gをのせるです。"
+      },
+      {
+        "question": "7gの砂糖を量りたい。砂糖と同じ皿にのせる分銅は何gですか。",
+        "answer": "3",
+        "meaning": "①砂糖7g＋3g＝10g、反対の皿に9g＋1g＝10gでつり合う！②つまり砂糖側に3g、反対側に9gと1g。この置き方は1通りしかありません（全部の置き方をコンピュータでしらべても、これだけ）。よって、答えは3です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_27",
+    "category": "zu",
+    "grade": 3,
+    "title": "かくれた正方形をさがせ",
+    "intro": "たて3マス×よこ3マスの図があります。この図の中にある「正方形」を、大きさに関係なくぜんぶ数えます。",
+    "svg": "<svg viewBox=\"0 0 240 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">この図の中に「正方形」は全部でいくつ？</text><line x1=\"66\" y1=\"28\" x2=\"156\" y2=\"28\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"66\" y1=\"28\" x2=\"66\" y2=\"118\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"66\" y1=\"58\" x2=\"156\" y2=\"58\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"96\" y1=\"28\" x2=\"96\" y2=\"118\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"66\" y1=\"88\" x2=\"156\" y2=\"88\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"126\" y1=\"28\" x2=\"126\" y2=\"118\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"66\" y1=\"118\" x2=\"156\" y2=\"118\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"156\" y1=\"28\" x2=\"156\" y2=\"118\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"120\" y=\"140\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">小さい正方形だけじゃないよ…！</text></svg>",
+    "steps": [
+      {
+        "question": "いちばん小さい正方形（1マスの正方形）は、いくつありますか。",
+        "answer": "9",
+        "meaning": "①たて3列×よこ3列。②3×3＝9こです。よって、答えは9です。"
+      },
+      {
+        "question": "2×2マスの正方形は、いくつありますか。",
+        "answer": "4",
+        "meaning": "①2×2の正方形は、左上のかどが置ける場所を数える。よこに2か所、たてに2か所。②2×2＝4こです（ずらしながら数えるのがコツ）。よって、答えは4です。"
+      },
+      {
+        "question": "この図の中の正方形は、ぜんぶで何こですか。",
+        "answer": "14",
+        "meaning": "①大きさべつに数える：1マスが9こ、2×2が4こ、そして図全体（3×3）が1こ。②9＋4＋1＝14こです。「9こ」と答えると大きい正方形のかくれんぼに引っかかっています。よって、答えは14です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_28",
+    "category": "kisoku",
+    "grade": 3,
+    "title": "数ピラミッド",
+    "intro": "となり合う2つの数をたすと、その上のマスの数になります（3だんのピラミッド）。",
+    "svg": "<svg viewBox=\"0 0 250 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"14\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">となり合う2つの数の和が、上のマスに入る</text><rect x=\"108\" y=\"30\" width=\"34\" height=\"26\" rx=\"4\" fill=\"rgba(255,209,102,0.2)\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><text x=\"125\" y=\"48\" fill=\"#eef2ff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">？</text><rect x=\"88\" y=\"62\" width=\"34\" height=\"26\" rx=\"4\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"105\" y=\"80\" fill=\"#eef2ff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><rect x=\"128\" y=\"62\" width=\"34\" height=\"26\" rx=\"4\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"145\" y=\"80\" fill=\"#eef2ff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><rect x=\"68\" y=\"94\" width=\"34\" height=\"26\" rx=\"4\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"85\" y=\"112\" fill=\"#eef2ff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><rect x=\"108\" y=\"94\" width=\"34\" height=\"26\" rx=\"4\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"125\" y=\"112\" fill=\"#eef2ff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><rect x=\"148\" y=\"94\" width=\"34\" height=\"26\" rx=\"4\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"165\" y=\"112\" fill=\"#eef2ff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text></svg>",
+    "steps": [
+      {
+        "question": "下のだんが左から2・3・4のとき、いちばん上の数はいくつですか。",
+        "answer": "12",
+        "meaning": "①2だん目は2＋3＝5と、3＋4＝7。②いちばん上は5＋7＝12です。よって、答えは12です。"
+      },
+      {
+        "question": "①をよく見ると、いちばん上の12＝2＋3＋3＋4。下の3つの数のうち、2回たされているのはどれですか。",
+        "answer": "真ん中の数",
+        "choices": [
+          "真ん中の数",
+          "左はしの数",
+          "右はしの数",
+          "3つとも2回"
+        ],
+        "meaning": "①真ん中の3は、左の「2＋3」にも右の「3＋4」にも入っている。②つまり、いちばん上＝はし＋真ん中×2＋はし。真ん中だけ2回たされます。よって、答えは真ん中の数です。"
+      },
+      {
+        "question": "下のだんが左から3・□・5で、いちばん上が20のとき、□はいくつですか。",
+        "answer": "6",
+        "meaning": "①いちばん上＝3＋□×2＋5＝20。②□×2＝20−8＝12だから、□＝6です（たしかめ：3,6,5→9,11→20）。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_29",
+    "category": "zu",
+    "grade": 3,
+    "title": "時計の文字ばんを半分こ",
+    "intro": "時計の文字ばんには1〜12の数があります。1本のまっすぐな直線で文字ばんを2つに分けて、どちらのグループも数の和が同じになるようにします。",
+    "svg": "<svg viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"14\" fill=\"#cdd6f4\" font-size=\"8.6\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">文字盤を1本の直線で2つに分け、和を同じに</text><circle cx=\"120\" cy=\"92\" r=\"62\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.6\"/><text x=\"146\" y=\"50.966679003209194\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><text x=\"165.03332099679082\" y=\"70\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><text x=\"172\" y=\"96\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"165.03332099679082\" y=\"122\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><text x=\"146\" y=\"141.0333209967908\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><text x=\"120\" y=\"148\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><text x=\"94.00000000000001\" y=\"141.03332099679082\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><text x=\"74.96667900320918\" y=\"122\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><text x=\"68\" y=\"96\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><text x=\"74.9666790032092\" y=\"70\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><text x=\"93.99999999999997\" y=\"50.9666790032092\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">11</text><text x=\"119.99999999999999\" y=\"44\" fill=\"#eef2ff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">12</text><line x1=\"60\" y1=\"64\" x2=\"180\" y2=\"120\" stroke=\"#ff6b6b\" stroke-width=\"1.2\" stroke-dasharray=\"5 4\" opacity=\"0.7\"/><text x=\"120\" y=\"158\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">直線の場所はどこ？（図の線はテキトーだよ）</text></svg>",
+    "steps": [
+      {
+        "question": "1から12まで、ぜんぶたすといくつですか。",
+        "answer": "78",
+        "meaning": "①1＋12＝13、2＋11＝13…と、はしとはしをペアにすると13が6組。②13×6＝78です。よって、答えは78です。"
+      },
+      {
+        "question": "2つのグループの和を同じにするなら、1つのグループの和はいくつですか。",
+        "answer": "39",
+        "meaning": "①78を半分に分ける。②78÷2＝39です。よって、答えは39です。"
+      },
+      {
+        "question": "和が39ずつになる直線は、どこを通りますか。",
+        "answer": "「3と4の間」と「9と10の間」",
+        "choices": [
+          "「3と4の間」と「9と10の間」",
+          "「12と1の間」と「6と7の間」",
+          "「2と3の間」と「8と9の間」",
+          "どこで分けても39になる"
+        ],
+        "meaning": "①となり合う6つの数の和が39になる場所をさがす。4＋5＋6＋7＋8＋9＝39！②だから「3と4の間」から「9と10の間」へ直線を引く（12,1,2,3,10,11側も39）。ほかの分け方は全部ずれます（6通り全部しらべても、ここだけ）。よって、答えは「3と4の間」と「9と10の間」です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_30",
+    "category": "kisoku",
+    "grade": 3,
+    "title": "9の段のひみつ",
+    "intro": "九九の9の段（9、18、27、36…81）を、じーっと見てみます。何かかくれたきまりがあるようです。",
+    "svg": "<svg viewBox=\"0 0 250 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9の段には ひみつがある</text><text x=\"75\" y=\"42\" fill=\"#eef2ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9×1=9</text><text x=\"170\" y=\"42\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"75\" y=\"62\" fill=\"#eef2ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9×2=18</text><text x=\"170\" y=\"62\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1+8=?</text><text x=\"75\" y=\"82\" fill=\"#eef2ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9×3=27</text><text x=\"170\" y=\"82\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2+7=?</text><text x=\"75\" y=\"102\" fill=\"#eef2ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9×4=36</text><text x=\"170\" y=\"102\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3+6=?</text><text x=\"125\" y=\"124\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">答えの「十の位＋一の位」に注目！</text></svg>",
+    "steps": [
+      {
+        "question": "9×7はいくつですか。",
+        "answer": "63",
+        "meaning": "①9×7＝63。②です。よって、答えは63です。"
+      },
+      {
+        "question": "9の段の答えの「十の位＋一の位」を計算すると（18→1＋8、27→2＋7…）、どうなっていますか。",
+        "answer": "いつも9になる",
+        "choices": [
+          "いつも9になる",
+          "だんだん大きくなる",
+          "偶数と奇数がこうごに出る",
+          "きまりはない"
+        ],
+        "meaning": "①1＋8＝9、2＋7＝9、3＋6＝9、…、6＋3＝9（63も！）。②9＝10−1なので、9をたすたびに十の位が1ふえて一の位が1へる→和は9のまま。よって、答えはいつも9になるです。"
+      },
+      {
+        "question": "9×□の答えは、十の位が5でした。□はいくつですか。",
+        "answer": "6",
+        "meaning": "①十の位が5なら、ひみつのきまりから一の位は9−5＝4。つまり答えは54。②54÷9＝6だから□＝6です（9の段で十の位が5になるのは54だけ）。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_31",
+    "category": "zu",
+    "grade": 4,
+    "title": "サイコロタワーのかくれた顔",
+    "intro": "サイコロを転がして調べると、1の裏は6、2の裏は5でした。サイコロを2つ、机の上にたてに重ねてタワーにします。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">サイコロを2つ、たてに重ねる</text><rect x=\"85\" y=\"84\" width=\"44\" height=\"44\" rx=\"5\" fill=\"rgba(238,242,255,0.9)\" stroke=\"#9399b2\" stroke-width=\"1.2\"/><polygon points=\"85,84 97,72 141,72 129,84\" fill=\"rgba(238,242,255,0.65)\" stroke=\"#9399b2\" stroke-width=\"1\"/><polygon points=\"129,84 141,72 141,116 129,128\" fill=\"rgba(147,153,178,0.5)\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"85\" y=\"34\" width=\"44\" height=\"44\" rx=\"5\" fill=\"rgba(238,242,255,0.9)\" stroke=\"#9399b2\" stroke-width=\"1.2\"/><polygon points=\"85,34 97,22 141,22 129,34\" fill=\"rgba(238,242,255,0.65)\" stroke=\"#9399b2\" stroke-width=\"1\"/><polygon points=\"129,34 141,22 141,66 129,78\" fill=\"rgba(147,153,178,0.5)\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"113\" y=\"32\" fill=\"#080e20\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><circle cx=\"107\" cy=\"106\" r=\"4\" fill=\"#080e20\"/><text x=\"190\" y=\"50\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">上面は「3」</text><text x=\"190\" y=\"70\" fill=\"#ff6b6b\" font-size=\"8.5\" text-anchor=\"start\" font-family=\"sans-serif\">かくれた水平の面</text><text x=\"190\" y=\"82\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">（上の底・下の上下）</text><text x=\"130\" y=\"146\" fill=\"#9399b2\" font-size=\"7.8\" text-anchor=\"middle\" font-family=\"sans-serif\">サイコロを転がして調べると、1の裏は6、2の裏は5だった</text></svg>",
+    "steps": [
+      {
+        "question": "では、3の裏はいくつですか。",
+        "answer": "4",
+        "meaning": "①1と6、2と5がペア。残った数字は3と4。②3の裏は4です。どのペアも「たすと7」になっています。よって、答えは4です。"
+      },
+      {
+        "question": "タワーには「かくれた水平の面」が3つあります（上のサイコロの底、下のサイコロの上面と底面）。下のサイコロの上面と底面の目の和はいくつですか。",
+        "answer": "7",
+        "meaning": "①上面と底面は裏どうしのペア。②ペアの和はかならず7です（どんな向きで置いても！）。よって、答えは7です。"
+      },
+      {
+        "question": "いちばん上の面が「3」のとき、かくれた水平の3つの面の目の合計はいくつですか。",
+        "answer": "11",
+        "meaning": "①上のサイコロの底＝3の裏＝4。②下のサイコロの上下＝7（向きに関係なく）。合計4＋7＝11。下のサイコロがどんな向きでも答えが変わらないのがこの問題のひみつです（全部の向きで機械確認済み）。よって、答えは11です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_32",
+    "category": "kazu",
+    "grade": 4,
+    "title": "払えない金額のなぞ",
+    "intro": "3円切手と5円切手がたくさんあります。組み合わせて「ちょうど」の金額を作ります（おつりはなし）。8円＝3＋5のように作れる金額と、作れない金額があります。",
+    "svg": "<svg viewBox=\"0 0 260 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3円切手と5円切手が たくさんある</text><rect x=\"58\" y=\"36\" width=\"40\" height=\"48\" rx=\"3\" fill=\"rgba(79,158,255,0.2)\" stroke=\"rgb(79,158,255)\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"78\" y=\"66\" fill=\"#eef2ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3円</text><rect x=\"162\" y=\"36\" width=\"40\" height=\"48\" rx=\"3\" fill=\"rgba(255,107,107,0.2)\" stroke=\"rgb(255,107,107)\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"182\" y=\"66\" fill=\"#eef2ff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5円</text><text x=\"130\" y=\"112\" fill=\"#ffd166\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">組み合わせて「ちょうど」払えない金額がある…？</text></svg>",
+    "steps": [
+      {
+        "question": "9円を3円切手だけで作ると、何まいですか。",
+        "answer": "3",
+        "meaning": "①9÷3＝3。②3まいです（10円は5＋5、11円は3＋3＋5で作れる）。よって、答えは3です。"
+      },
+      {
+        "question": "7円は作れますか。",
+        "answer": "作れない",
+        "choices": [
+          "作れない",
+          "3円と5円で作れる",
+          "3円3まいで作れる",
+          "5円2まいで作れる"
+        ],
+        "meaning": "①3の倍数（3,6,9…）でも、5をふくむ組（5,8,10,11…）でもない。②3×□＋5×○＝7になる組はありません（3+3=6、3+5=8で7をとびこえる）。よって、答えは作れないです。"
+      },
+      {
+        "question": "作れない金額のうち、いちばん大きいのは何円ですか。",
+        "answer": "7",
+        "meaning": "①8＝3＋5、9＝3×3、10＝5×5と、8・9・10の3つが連続で作れた。②連続3つ作れたら、あとはそれぞれに3円をたせば11、12、13…と全部作れる！だから作れないのは7円が最後です（1,2,4,7だけ。機械で40円まで全確認済み）。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_33",
+    "category": "kisoku",
+    "grade": 4,
+    "title": "ケーキはまっすぐ3回切ると？",
+    "intro": "まるいケーキを、まっすぐな線で切ります（切った後に重ねたり動かしたりはしません）。できるだけ多くの切れはしに分けたい！",
+    "svg": "<svg viewBox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">まるいケーキを、まっすぐな線で切る</text><circle cx=\"125\" cy=\"86\" r=\"48\" fill=\"rgba(249,226,175,0.25)\" stroke=\"#f9e2af\" stroke-width=\"2\"/><line x1=\"79\" y1=\"66\" x2=\"171\" y2=\"100\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><line x1=\"107\" y1=\"40\" x2=\"151\" y2=\"130\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"125\" y=\"148\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2回でもう4切れ。3回目をどこに引く？</text></svg>",
+    "steps": [
+      {
+        "question": "1回切ると何切れになりますか。",
+        "answer": "2",
+        "meaning": "①1本の線でケーキは2つに分かれる。②2切れです。よって、答えは2です。"
+      },
+      {
+        "question": "2回切ると、最大で何切れにできますか。",
+        "answer": "4",
+        "meaning": "①2本目の線を1本目と交わるように引くと、線が交わるたびに切れはしがふえる。②十字に切れば4切れです。よって、答えは4です。"
+      },
+      {
+        "question": "3回切ると、最大で何切れにできますか。",
+        "answer": "7",
+        "meaning": "①3本目の線を、前の2本の両方と交わるように（ただし1点で3本が集まらないように）引く。線と交わるたびに1切れずつ余分にふえるので、3本目は3切れぶんふえる。②4＋3＝7切れです（中心を通して6切れ、はよくあるひっかけ）。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_34",
+    "category": "kazu",
+    "grade": 4,
+    "title": "アイ＋イア のひみつ",
+    "intro": "2けたの数「アイ」と、その数字を入れかえた「イア」をたします。同じ文字は同じ数字です（例：47と74）。",
+    "svg": "<svg viewBox=\"0 0 250 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ文字は同じ数字</text><rect x=\"62\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(79,158,255,0.15)\" stroke=\"rgb(79,158,255)\" stroke-width=\"1.5\"/><text x=\"75\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ア</text><rect x=\"92\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(6,214,160,0.15)\" stroke=\"rgb(6,214,160)\" stroke-width=\"1.5\"/><text x=\"105\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">イ</text><text x=\"130\" y=\"56\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">＋</text><rect x=\"142\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(6,214,160,0.15)\" stroke=\"rgb(6,214,160)\" stroke-width=\"1.5\"/><text x=\"155\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">イ</text><rect x=\"172\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(79,158,255,0.15)\" stroke=\"rgb(79,158,255)\" stroke-width=\"1.5\"/><text x=\"185\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ア</text><text x=\"125\" y=\"82\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">＝</text><rect x=\"82\" y=\"91\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(255,209,102,0.15)\" stroke=\"rgb(255,209,102)\" stroke-width=\"1.5\"/><text x=\"95\" y=\"110\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><rect x=\"112\" y=\"91\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(255,209,102,0.15)\" stroke=\"rgb(255,209,102)\" stroke-width=\"1.5\"/><text x=\"125\" y=\"110\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><rect x=\"142\" y=\"91\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(255,209,102,0.15)\" stroke=\"rgb(255,209,102)\" stroke-width=\"1.5\"/><text x=\"155\" y=\"110\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text></svg>",
+    "steps": [
+      {
+        "question": "47＋74はいくつですか。",
+        "answer": "121",
+        "meaning": "①47＋74＝121。②です（11×11＝121…おや？）。よって、答えは121です。"
+      },
+      {
+        "question": "「アイ＋イア」の答えには、いつも成り立つひみつがあります。どれですか。",
+        "answer": "かならず11の倍数になる",
+        "choices": [
+          "かならず11の倍数になる",
+          "かならず偶数になる",
+          "かならず100より大きくなる",
+          "かならず一の位が1になる"
+        ],
+        "meaning": "①アイ＝ア×10＋イ、イア＝イ×10＋ア。たすと（ア＋イ）×10＋（ア＋イ）＝（ア＋イ）×11。②だから答えはいつも11の倍数！（47＋74＝121＝11×11、ア＋イ＝4＋7＝11。全部の組で機械確認済み）。よって、答えはかならず11の倍数になるです。"
+      },
+      {
+        "question": "アイ＋イア＝132のとき、ア＋イはいくつですか。",
+        "answer": "12",
+        "meaning": "①答え＝（ア＋イ）×11なので、132÷11。②ア＋イ＝12です（アとイそのものは39、48、57…といろいろあるのに、和だけはピタリと決まる！）。よって、答えは12です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_35",
+    "category": "baai",
+    "grade": 4,
+    "title": "握手のふしぎな法則",
+    "intro": "パーティーで5人（A〜E）が握手をします。だれが何回握手するかはいろいろですが、じつは「ぜったいに起こらないこと」があります。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5人がおたがいに握手をする</text><line x1=\"130.0\" y1=\"42.0\" x2=\"173.7\" y2=\"73.8\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"42.0\" x2=\"157.0\" y2=\"125.2\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"42.0\" x2=\"103.0\" y2=\"125.2\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"42.0\" x2=\"86.3\" y2=\"73.8\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"173.7\" y1=\"73.8\" x2=\"157.0\" y2=\"125.2\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"173.7\" y1=\"73.8\" x2=\"103.0\" y2=\"125.2\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"173.7\" y1=\"73.8\" x2=\"86.3\" y2=\"73.8\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"157.0\" y1=\"125.2\" x2=\"103.0\" y2=\"125.2\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"157.0\" y1=\"125.2\" x2=\"86.3\" y2=\"73.8\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><line x1=\"103.0\" y1=\"125.2\" x2=\"86.3\" y2=\"73.8\" stroke=\"#39456b\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><circle cx=\"130.0\" cy=\"42.0\" r=\"11\" fill=\"rgba(79,158,255,0.3)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"130\" y=\"46\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><circle cx=\"173.7\" cy=\"73.8\" r=\"11\" fill=\"rgba(79,158,255,0.3)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"173.74859974957707\" y=\"77.78521825875242\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><circle cx=\"157.0\" cy=\"125.2\" r=\"11\" fill=\"rgba(79,158,255,0.3)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"157.03812160545377\" y=\"129.21478174124758\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><circle cx=\"103.0\" cy=\"125.2\" r=\"11\" fill=\"rgba(79,158,255,0.3)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"102.96187839454623\" y=\"129.21478174124758\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">D</text><circle cx=\"86.3\" cy=\"73.8\" r=\"11\" fill=\"rgba(79,158,255,0.3)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"86.25140025042293\" y=\"77.78521825875241\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">E</text><text x=\"130\" y=\"148\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">「全員がちょうど3回ずつ」って、できるのかな？</text></svg>",
+    "steps": [
+      {
+        "question": "まず3人で、全員がおたがいに1回ずつ握手すると、握手は全部で何回起きますか。",
+        "answer": "3",
+        "meaning": "①AとB、AとC、BとC。②3回です。よって、答えは3です。"
+      },
+      {
+        "question": "「全員の握手した回数をぜんぶたした合計」には、ひみつがあります。どれですか。",
+        "answer": "かならず偶数になる",
+        "choices": [
+          "かならず偶数になる",
+          "かならず奇数になる",
+          "かならず人数と同じになる",
+          "ひみつはない"
+        ],
+        "meaning": "①握手が1回起こるたびに、2人の回数が1ずつふえる＝合計は2ふえる。②0から2ずつふえるので、合計はいつも偶数です。よって、答えはかならず偶数になるです。"
+      },
+      {
+        "question": "5人全員が「ちょうど3回ずつ」握手することはできますか。",
+        "answer": "できない",
+        "choices": [
+          "できない",
+          "できる",
+          "6人ならできない",
+          "運がよければできる"
+        ],
+        "meaning": "①もしできたら合計は3×5＝15回ぶん。②でも合計はかならず偶数のはず。15は奇数だから矛盾！ぜったいにできません（5人の組み合わせ1024通りをコンピュータで全部しらべても1つもなし）。よって、答えはできないです。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_36",
+    "category": "baai",
+    "grade": 4,
+    "title": "コインを2枚ずつうら返す",
+    "intro": "コインが3枚、ぜんぶ「表」でならんでいます。1回の操作で、かならず2枚同時にうら返します（同じ2枚でも、ちがう2枚でもOK）。操作は何回してもかまいません。",
+    "svg": "<svg viewBox=\"0 0 260 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"8.6\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">コイン3枚、ぜんぶ「表」。1回に2枚同時にうら返す</text><circle cx=\"70\" cy=\"58\" r=\"20\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1.5\"/><text x=\"70\" y=\"63\" fill=\"#3a2413\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">表</text><circle cx=\"130\" cy=\"58\" r=\"20\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1.5\"/><text x=\"130\" y=\"63\" fill=\"#3a2413\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">表</text><circle cx=\"190\" cy=\"58\" r=\"20\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1.5\"/><text x=\"190\" y=\"63\" fill=\"#3a2413\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">表</text><text x=\"130\" y=\"104\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ぜんぶ「うら」にできる…？（何回やってもいいよ）</text></svg>",
+    "steps": [
+      {
+        "question": "表・表・表から、2枚をうら返すと、表は何枚になりますか。",
+        "answer": "1",
+        "meaning": "①表の2枚がうらになる。②表は3−2＝1枚です。よって、答えは1です。"
+      },
+      {
+        "question": "1回の操作で、「表の枚数」はどう変わりますか。",
+        "answer": "2へるか、2ふえるか、変わらないかのどれか",
+        "choices": [
+          "2へるか、2ふえるか、変わらないかのどれか",
+          "かならず1ずつへる",
+          "かならず2ずつへる",
+          "自由に変えられる"
+        ],
+        "meaning": "①表2枚を返せば−2、うら2枚を返せば＋2、表とうらを1枚ずつ返せば±0。②どの場合も変化は偶数！だから表の枚数の「偶数・奇数」は永遠に変わりません。よって、答えは2へるか、2ふえるか、変わらないかのどれかです。"
+      },
+      {
+        "question": "3枚ぜんぶを「うら」（表0枚）にすることはできますか。",
+        "answer": "ぜったいにできない",
+        "choices": [
+          "ぜったいにできない",
+          "3回やればできる",
+          "100回くらいやればできる",
+          "運がよければできる"
+        ],
+        "meaning": "①いま表は3枚＝奇数。操作しても奇数のまま（3→1→3→1…）。②表0枚は偶数だから、何万回やってもたどりつけません（コンピュータの全さがしでも到達できるのは1枚と3枚だけ）。よって、答えはぜったいにできないです。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_37",
+    "category": "kazu",
+    "grade": 5,
+    "title": "あまりで当てる数当てマジック",
+    "intro": "「ぼくの好きな数はね、3で割ると2あまって、5で割ると3あまるんだ」。このヒントだけで数を当てます。",
+    "svg": "<svg viewBox=\"0 0 270 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"15\" fill=\"#cdd6f4\" font-size=\"8.6\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ぼくの誕生日の数字は…？（あまりヒントで当てる）</text><text x=\"24\" y=\"46\" fill=\"#4f9eff\" font-size=\"9.5\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">3で割ると2あまる →</text><text x=\"160\" y=\"46\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\">2, 5, 8, 11, 14, …</text><text x=\"24\" y=\"74\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">5で割ると3あまる →</text><text x=\"160\" y=\"74\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\">3, 8, 13, 18, 23, …</text><circle cx=\"185\" cy=\"43\" r=\"10\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"185\" cy=\"71\" r=\"10\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><text x=\"135\" y=\"112\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">両方に出てくる数はどれ？次はいつ出てくる？</text></svg>",
+    "steps": [
+      {
+        "question": "3で割ると2あまる数を小さい順にならべると、2、5、…。3番目の数はいくつですか。",
+        "answer": "8",
+        "meaning": "①2から3ずつふえる：2、5、8。②3番目は8です。よって、答えは8です。"
+      },
+      {
+        "question": "5で割ると3あまる数は3、8、13、18…。両方のヒントに合う、いちばん小さい数はいくつですか。",
+        "answer": "8",
+        "meaning": "①2つの列（2,5,8,11…と3,8,13…）を見くらべる。②最初に両方へ出てくるのは8です（8÷3＝2あまり2、8÷5＝1あまり3でぴったり）。よって、答えは8です。"
+      },
+      {
+        "question": "両方のヒントに合う数は、8の次はいくつですか。",
+        "answer": "23",
+        "meaning": "①次に両方に出てくるのは、8に「3と5の最小公倍数15」をたした数。3ずつと5ずつの列がまた出会うのは15ごとだから。②8＋15＝23です（機械の全さがしでも次は23）。よって、答えは23です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_38",
+    "category": "kazu",
+    "grade": 5,
+    "title": "消えた1まいをさがせ",
+    "intro": "1〜30のページ番号がついたノートがあります（紙1まいの表と裏が、連続する2ページになっています）。だれかが1まいだけ破りました。残ったページ番号を全部たすと418でした。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1〜30ページのノートから、1まいだけ破れた</text><path d=\"M60 40 L125 34 L125 116 L60 122 Z\" fill=\"rgba(238,242,255,0.10)\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><path d=\"M130 34 L195 40 L195 122 L130 116 Z\" fill=\"rgba(238,242,255,0.10)\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><path d=\"M150 44 L188 48 L182 74 L190 96 L154 110 Z\" fill=\"rgba(255,107,107,0.2)\" stroke=\"#ff6b6b\" stroke-width=\"1.2\" stroke-dasharray=\"4 2\"/><text x=\"92\" y=\"82\" fill=\"#9399b2\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\">…</text><text x=\"168\" y=\"80\" fill=\"#ff6b6b\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">？</text><text x=\"130\" y=\"136\" fill=\"#ffd166\" font-size=\"8.6\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">残ったページ番号の合計は418。破れたのは何ページ？</text></svg>",
+    "steps": [
+      {
+        "question": "破れる前の、1から30までの合計はいくつですか。",
+        "answer": "465",
+        "meaning": "①1＋30＝31、2＋29＝31…と両はしからペアにすると31が15組。②31×15＝465です。よって、答えは465です。"
+      },
+      {
+        "question": "破れた2ページの番号の和はいくつですか。",
+        "answer": "47",
+        "meaning": "①もとの合計から残りの合計を引く。②465−418＝47です。よって、答えは47です。"
+      },
+      {
+        "question": "破れた2ページは連続する数です。小さいほうのページ番号はいくつですか。",
+        "answer": "23",
+        "meaning": "①連続する2数の和が47。□＋(□＋1)＝47→□＝23。②破れたのは23・24ページです（23は奇数なので、ちゃんと紙のおもて面。つじつまも合う！）。よって、答えは23です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_39",
+    "category": "zu",
+    "grade": 5,
+    "title": "L字の土地を1本の線で半分に",
+    "intro": "L字の形をした土地があります（横6・たて4の長方形から、右上の横3・たて2を切り取った形。面積の単位は考えません）。この土地を、1本のまっすぐな直線で、面積がちょうど半分ずつになるように分けます。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">L字の土地を、1本の直線で半分こしたい</text><path d=\"M55 30 h72 v48 h72 v48 h-144 Z\" fill=\"rgba(6,214,160,0.15)\" stroke=\"#06d6a0\" stroke-width=\"1.8\"/><text x=\"91\" y=\"24\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><text x=\"47\" y=\"78\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><text x=\"163\" y=\"72\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><text x=\"207\" y=\"102\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><line x1=\"127\" y1=\"30\" x2=\"127\" y2=\"78\" stroke=\"#06d6a0\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><text x=\"130\" y=\"144\" fill=\"#ffd166\" font-size=\"8.6\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">たった1本のまっすぐな線で、面積を二等分できる？</text></svg>",
+    "steps": [
+      {
+        "question": "L字の土地全体の面積はいくつですか。",
+        "answer": "18",
+        "meaning": "①大きい長方形6×4＝24から、切り取った3×2＝6を引く。②24−6＝18です。よって、答えは18です。"
+      },
+      {
+        "question": "長方形には「どんな向きの直線でも、ある1点さえ通れば必ず面積を二等分できる」という点があります。それはどこですか。",
+        "answer": "対角線が交わる点（真ん中）",
+        "choices": [
+          "対角線が交わる点（真ん中）",
+          "1つの頂点",
+          "長い辺の真ん中だけ",
+          "そんな点はない"
+        ],
+        "meaning": "①長方形は真ん中の点を中心に、180°回してもぴったり重なる形（点対称）。②だから真ん中を通る直線は、どんな向きでも半分こにします。よって、答えは対角線が交わる点（真ん中）です。"
+      },
+      {
+        "question": "L字を2つの長方形（左の3×4と右下の3×2）に分けて考えると、両方いっぺんに半分にする直線が見つかります。どんな直線ですか。",
+        "answer": "2つの長方形の真ん中どうしを通る直線",
+        "choices": [
+          "2つの長方形の真ん中どうしを通る直線",
+          "L字のかどを通るななめの直線",
+          "たてにまっすぐ2等分する直線",
+          "そんな直線は引けない"
+        ],
+        "meaning": "①左の長方形の真ん中と、右下の長方形の真ん中を、1本の直線で結ぶ。②この直線はどちらの長方形も半分にするので、合計のL字も半分（9と9）！（コンピュータの細かいマス目計算でも50.0%ずつを確認済み）。よって、答えは2つの長方形の真ん中どうしを通る直線です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_40",
+    "category": "kisoku",
+    "grade": 5,
+    "title": "ハノイの塔",
+    "intro": "3本の棒と、大きさのちがう円盤があります。ルールは2つ：1回に動かせる円盤は1枚だけ。小さい円盤の上に大きい円盤はのせられない。左の棒の円盤ぜんぶを右の棒へ動かします。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"7.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ハノイの塔：1回に1枚・小さい円盤の上に大きい円盤はダメ</text><line x1=\"60\" y1=\"50\" x2=\"60\" y2=\"110\" stroke=\"#8b7355\" stroke-width=\"4\"/><line x1=\"135\" y1=\"50\" x2=\"135\" y2=\"110\" stroke=\"#8b7355\" stroke-width=\"4\"/><line x1=\"210\" y1=\"50\" x2=\"210\" y2=\"110\" stroke=\"#8b7355\" stroke-width=\"4\"/><rect x=\"30\" y=\"110\" width=\"210\" height=\"6\" rx=\"2\" fill=\"#8b7355\"/><rect x=\"28\" y=\"96\" width=\"64\" height=\"12\" rx=\"5\" fill=\"#4f9eff\" opacity=\"0.8\"/><rect x=\"36\" y=\"82\" width=\"48\" height=\"12\" rx=\"5\" fill=\"#06d6a0\" opacity=\"0.8\"/><rect x=\"44\" y=\"68\" width=\"32\" height=\"12\" rx=\"5\" fill=\"#ffd166\" opacity=\"0.8\"/><rect x=\"51\" y=\"54\" width=\"18\" height=\"12\" rx=\"5\" fill=\"#ff6b6b\" opacity=\"0.8\"/><path d=\"M95 60 q40 -18 80 0\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/><polygon points=\"175,60 167,56 168,64\" fill=\"#cdd6f4\"/><text x=\"135\" y=\"134\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4枚ぜんぶを右の棒へ。最少何回？</text></svg>",
+    "steps": [
+      {
+        "question": "円盤2枚なら、最少何回で動かせますか。",
+        "answer": "3",
+        "meaning": "①小を真ん中へ→大を右へ→小を右へ。②3回です。よって、答えは3です。"
+      },
+      {
+        "question": "円盤3枚なら、最少何回ですか。",
+        "answer": "7",
+        "meaning": "①いちばん大きい円盤を右へ動かすには、その上の2枚を先に真ん中へどかす（3回）→大を右へ（1回）→2枚をのせ直す（3回）。②3＋1＋3＝7回です（コンピュータの全さがしでも最少7回）。よって、答えは7です。"
+      },
+      {
+        "question": "円盤4枚なら、最少何回ですか。",
+        "answer": "15",
+        "meaning": "①同じ考えで「3枚をどかす（7回）→大を動かす（1回）→3枚をのせ直す（7回）」。②7＋1＋7＝15回です。「前の回数×2＋1」がずっと続く（3→7→15→31…）のがこのパズルの心臓部。よって、答えは15です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_41",
+    "category": "baai",
+    "grade": 5,
+    "title": "まっ暗な部屋のくつ下",
+    "intro": "引き出しに赤いくつ下5まいと青いくつ下5まいが、バラバラに入っています。部屋はまっ暗で、色は見えません。手に取ったくつ下は返せません。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">まっ暗な部屋で、引き出しからくつ下をとる</text><rect x=\"45\" y=\"34\" width=\"170\" height=\"72\" rx=\"8\" fill=\"rgba(139,115,85,0.25)\" stroke=\"#8b7355\" stroke-width=\"1.6\"/><rect x=\"115\" y=\"42\" width=\"30\" height=\"6\" rx=\"3\" fill=\"#8b7355\"/><path d=\"M58 52 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#ff6b6b\" opacity=\"0.85\"/><path d=\"M78 52 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#ff6b6b\" opacity=\"0.85\"/><path d=\"M98 52 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#ff6b6b\" opacity=\"0.85\"/><path d=\"M118 52 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#ff6b6b\" opacity=\"0.85\"/><path d=\"M138 52 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#ff6b6b\" opacity=\"0.85\"/><path d=\"M58 76 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#4f9eff\" opacity=\"0.85\"/><path d=\"M78 76 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#4f9eff\" opacity=\"0.85\"/><path d=\"M98 76 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#4f9eff\" opacity=\"0.85\"/><path d=\"M118 76 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#4f9eff\" opacity=\"0.85\"/><path d=\"M138 76 v14 q0 8 8 8 h6 q6 0 6 -6 q0 -4 -4 -5 l-6 -2 v-9 Z\" fill=\"#4f9eff\" opacity=\"0.85\"/><text x=\"130\" y=\"126\" fill=\"#ffd166\" font-size=\"8.4\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">赤5足ぶん・青5足ぶん（10まい）。見ないで何まいとる？</text></svg>",
+    "steps": [
+      {
+        "question": "2まいとったとき、同じ色のペアにならないことがあります。それはどんなときですか。",
+        "answer": "赤1まいと青1まいのとき",
+        "choices": [
+          "赤1まいと青1まいのとき",
+          "赤2まいのとき",
+          "青2まいのとき",
+          "2まいなら必ずペアになる"
+        ],
+        "meaning": "①2まいの組み合わせは「赤赤」「青青」「赤青」の3パターン。②「赤青」だけペアになりません。運が悪いとこうなる、というのがポイント。よって、答えは赤1まいと青1まいのときです。"
+      },
+      {
+        "question": "何まいとれば、色が見えなくても「必ず」同じ色のペアができますか。",
+        "answer": "3",
+        "meaning": "①いちばん運が悪くても、2まいで赤1・青1。②3まい目は赤か青のどちらかなので、必ずどちらかとペアになる！色が2種類しかないのに3まいあるから、同じ色が必ずダブる（はとの巣の考え方）。よって、答えは3です。"
+      },
+      {
+        "question": "では「必ず赤のペア」がほしいときは、何まいとればよいですか。",
+        "answer": "7",
+        "meaning": "①いちばん運が悪い場合を考える：先に青が5まいぜんぶ出て、そのあと赤1まい…ここまで6まいでまだ赤ペアなし。②7まい目は必ず赤（青はもうない）。だから7まいです（最悪の場合を機械でしらべても7）。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_42",
+    "category": "zu",
+    "grade": 5,
+    "title": "正五角形はしきつめられない",
+    "intro": "正三角形・正方形・正六角形は、平面にすきまなくしきつめられます。では正五角形は？　多角形の内角の和は「（角の数−2）×180°」で求められます。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">正五角形をすきまなく しきつめられる？</text><polygon points=\"100.0,44.0 128.5,64.7 117.6,98.3 82.4,98.3 71.5,64.7\" fill=\"rgba(138,92,255,0.2)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><polygon points=\"169.6,35.7 180.5,69.3 152.0,90.0 123.5,69.3 134.4,35.7\" fill=\"rgba(138,92,255,0.2)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><polygon points=\"168.5,117.3 140.0,138.0 111.5,117.3 122.4,83.7 157.6,83.7\" fill=\"rgba(138,92,255,0.2)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><path d=\"M128 84 a12 12 0 0 1 10 8\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"168\" y=\"96\" fill=\"#ff6b6b\" font-size=\"9.5\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">すきま！</text><text x=\"130\" y=\"144\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1つの角は何度？ 1点のまわりは360°</text></svg>",
+    "steps": [
+      {
+        "question": "正五角形の1つの角は何度ですか。",
+        "answer": "108",
+        "meaning": "①内角の和は(5−2)×180＝540°。②1つの角は540÷5＝108°です。よって、答えは108です。"
+      },
+      {
+        "question": "しきつめられるかどうかは、「1つの点のまわり（360°）に角をすきまなく集められるか」で決まります。108°の角を1点に集めると、どうなりますか。",
+        "answer": "3つで324°になり、36°のすきまが残る",
+        "choices": [
+          "3つで324°になり、36°のすきまが残る",
+          "4つでちょうど360°になる",
+          "3つでちょうど360°になる",
+          "108°の角は1点に集められない"
+        ],
+        "meaning": "①108×3＝324°で、360°まであと36°たりない。108×4＝432°でこえてしまう。②つまり108°では360°をぴったり作れません。よって、答えは3つで324°になり、36°のすきまが残るです。"
+      },
+      {
+        "question": "正六角形（1つの角120°）がしきつめられる理由はどれですか。",
+        "answer": "120°×3でちょうど360°になるから",
+        "choices": [
+          "120°×3でちょうど360°になるから",
+          "角が6つあるから",
+          "面積が大きいから",
+          "辺の長さが全部同じだから"
+        ],
+        "meaning": "①120×3＝360°ぴったり！1点のまわりに3つの正六角形がすきまなく集まれる。②しきつめの正体は「角度が360°の約数（を作れる）かどうか」でした。ハチの巣が六角形なのはこのためです。よって、答えは120°×3でちょうど360°になるからです。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_43",
+    "category": "kazu",
+    "grade": 6,
+    "title": "1が2026個ならんだ数",
+    "intro": "1を2026個ならべた巨大な数「111…1」を考えます。ふつうの計算機には入りきらないこの数、でも「3で割り切れるか」は計算しなくても分かります。",
+    "svg": "<svg viewBox=\"0 0 270 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1を2026個ならべた数</text><text x=\"135\" y=\"52\" fill=\"#ffd166\" font-size=\"20\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">111111…1111</text><path d=\"M52 62 q83 16 166 0\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"135\" y=\"86\" fill=\"#06d6a0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1が2026個</text><text x=\"135\" y=\"108\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">この巨大な数は、3で割り切れる…？</text></svg>",
+    "steps": [
+      {
+        "question": "まず小さく実験。111111（1が6個）の数字をぜんぶたすと、いくつですか。",
+        "answer": "6",
+        "meaning": "①1＋1＋1＋1＋1＋1＝6。②数字の和が3の倍数なら、もとの数も3で割り切れる（3の倍数の見分け方）。6は3の倍数なので111111は3で割り切れます。よって、答えは6です。"
+      },
+      {
+        "question": "「1をn個ならべた数」が3で割り切れるのは、どんなときですか。",
+        "answer": "nが3の倍数のとき",
+        "choices": [
+          "nが3の倍数のとき",
+          "nが偶数のとき",
+          "いつでも割り切れる",
+          "nが9より大きいとき"
+        ],
+        "meaning": "①数字の和＝1×n＝n。②だから「nが3の倍数」がそのまま条件になります（1の個数だけ見ればよい！）。よって、答えはnが3の倍数のときです。"
+      },
+      {
+        "question": "では、1をならべて「9で割り切れる数」を作ります。最少で1を何個ならべればよいですか。",
+        "answer": "9",
+        "meaning": "①9で割り切れる条件は「数字の和が9の倍数」。数字の和＝n。②n＝9、つまり111111111（1が9個）が最少です（コンピュータの確認でも9個が最初。ちなみに2026は3の倍数でないので、1が2026個の数は3で割り切れません）。よって、答えは9です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_44",
+    "category": "kazu",
+    "grade": 6,
+    "title": "はかり1回でニセ袋を当てろ",
+    "intro": "金貨の袋が10個。本物の金貨は1枚10gですが、1つの袋だけぜんぶニセ物（1枚9g）です。デジタルはかり（重さの数字が出る）を、たった1回だけ使って、ニセ物の袋を見つけます。金貨は袋から何枚でも出せます。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"8.4\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10個の袋。1袋だけ、中の金貨が全部9g（他は10g）</text><path d=\"M19 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"28\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><path d=\"M43 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"52\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><path d=\"M67 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"76\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><path d=\"M91 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"100\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><path d=\"M115 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"124\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><path d=\"M139 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"148\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><path d=\"M163 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"172\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><path d=\"M187 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"196\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><path d=\"M211 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"220\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><path d=\"M235 44 q9 -12 18 0 v20 q0 6 -6 6 h-6 q-6 0 -6 -6 Z\" fill=\"rgba(201,148,106,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1\"/><text x=\"244\" y=\"62\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><rect x=\"95\" y=\"92\" width=\"80\" height=\"18\" rx=\"4\" fill=\"rgba(6,214,160,0.2)\" stroke=\"#06d6a0\" stroke-width=\"1.4\"/><text x=\"135\" y=\"105\" fill=\"#06d6a0\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">デジタルはかり</text><text x=\"135\" y=\"132\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">使えるのはたった1回！ 袋から金貨を出して のせ方を工夫しよう</text></svg>",
+    "steps": [
+      {
+        "question": "ひらめきの一手：袋1から1枚、袋2から2枚、…、袋10から10枚出して、ぜんぶまとめてはかりにのせます。全部本物なら合計何gですか。",
+        "answer": "550",
+        "meaning": "①枚数は1＋2＋…＋10＝55枚。②10g×55＝550gです。よって、答えは550です。"
+      },
+      {
+        "question": "この作戦がうまくいく理由はどれですか。",
+        "answer": "袋ごとに出した枚数がちがうので、足りないグラム数が袋の番号になる",
+        "choices": [
+          "袋ごとに出した枚数がちがうので、足りないグラム数が袋の番号になる",
+          "金貨をたくさんのせるほど正確になる",
+          "ニセ物は色がちがうから",
+          "10回はかったのと同じことになるから"
+        ],
+        "meaning": "①ニセ物の袋kからはk枚出ている。ニセ物は1枚につき1g軽いので、全体はちょうどkグラム軽くなる。②袋1なら1g、袋2なら2g…と、足りない量が全部ちがう＝1回で見分けられる！（10通りぜんぶ機械確認済み）。よって、答えは袋ごとに出した枚数がちがうので、足りないグラム数が袋の番号になるです。"
+      },
+      {
+        "question": "はかりの表示は547gでした。ニセ物はどの袋ですか（番号で答えよ）。",
+        "answer": "3",
+        "meaning": "①550−547＝3g足りない。②ニセ物1枚で1g軽いから、3枚ぶん＝3枚出した袋3がニセ物です。よって、答えは3です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_45",
+    "category": "zu",
+    "grade": 6,
+    "title": "面積めいろ",
+    "intro": "大きな長方形が、たての線1本とよこの線1本で4つの長方形に分けられています。3つの面積は12・18・10。辺の長さはどこにも書かれていません。？の面積を求めます。",
+    "svg": "<svg viewBox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">面積めいろ：4つの長方形（角は全部直角）</text><rect x=\"60\" y=\"28\" width=\"52\" height=\"62\" fill=\"rgba(79,158,255,0.15)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"86\" y=\"63\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">12</text><rect x=\"112\" y=\"28\" width=\"78\" height=\"62\" fill=\"rgba(6,214,160,0.15)\" stroke=\"#06d6a0\" stroke-width=\"1.4\"/><text x=\"151\" y=\"63\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">18</text><rect x=\"60\" y=\"90\" width=\"52\" height=\"52\" fill=\"rgba(255,209,102,0.15)\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><text x=\"86\" y=\"120\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10</text><rect x=\"112\" y=\"90\" width=\"78\" height=\"52\" fill=\"rgba(255,107,107,0.15)\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><text x=\"151\" y=\"120\" fill=\"#ff6b6b\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">？</text><text x=\"125\" y=\"146\" fill=\"#9399b2\" font-size=\"8.4\" text-anchor=\"middle\" font-family=\"sans-serif\">数字は面積。辺の長さはどこにも書いていない！</text></svg>",
+    "steps": [
+      {
+        "question": "上の2部屋（12と18）は高さが同じです。横はばの比はいくつ対いくつですか（もっとも簡単な整数比で、12の部屋：18の部屋。答えは「2対3」の形の左の数）。",
+        "answer": "2",
+        "meaning": "①高さが同じ長方形の面積の比は、横はばの比と同じ。②12：18＝2：3です。よって、答えは2です。"
+      },
+      {
+        "question": "下の2部屋（10と？）の横はばの比はどうなっていますか。",
+        "answer": "上と同じ2：3",
+        "choices": [
+          "上と同じ2：3",
+          "面積が小さいので1：2",
+          "10：15とは限らない",
+          "高さが分からないので決められない"
+        ],
+        "meaning": "①下の2部屋は、上の2部屋と同じたての線で分けられている。②だから横はばの比も同じ2：3です（長さの値は分からなくても、比だけは受けつがれる！）。よって、答えは上と同じ2：3です。"
+      },
+      {
+        "question": "？の面積はいくつですか。",
+        "answer": "15",
+        "meaning": "①下の2部屋は高さが同じで横はばの比が2：3だから、面積の比も2：3。②10：？＝2：3より？＝15です（例えば横2と3、たて6と5の長方形なら12・18・10・15でぴったり合う）。よって、答えは15です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_46",
+    "category": "baai",
+    "grade": 6,
+    "title": "階段の上り方は何通り？",
+    "intro": "階段を、1段ずつか、2段とばしで上ります（まぜてもOK）。たとえば3段なら「1・1・1」「1・2」「2・1」の3通りです。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">階段を1段ずつ か 2段とばしで上る</text><rect x=\"30\" y=\"112\" width=\"25\" height=\"11\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"55\" y=\"101\" width=\"25\" height=\"22\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"80\" y=\"90\" width=\"25\" height=\"33\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"105\" y=\"79\" width=\"25\" height=\"44\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"130\" y=\"68\" width=\"25\" height=\"55\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"155\" y=\"57\" width=\"25\" height=\"66\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"180\" y=\"46\" width=\"25\" height=\"77\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><rect x=\"205\" y=\"35\" width=\"25\" height=\"88\" fill=\"rgba(79,158,255,0.18)\" stroke=\"#4f9eff\" stroke-width=\"0.9\"/><text x=\"60\" y=\"50\" fill=\"#eef2ff\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\">🚶</text><path d=\"M52 78 q12 -14 24 -11\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><polygon points=\"76,67 68,66 71,73\" fill=\"#06d6a0\"/><path d=\"M52 78 q25 -26 49 -22\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><polygon points=\"101,56 93,54 95,62\" fill=\"#ffd166\"/><text x=\"130\" y=\"134\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10段の上り方は全部で何通り？</text></svg>",
+    "steps": [
+      {
+        "question": "4段の上り方は何通りですか（がんばって書き出そう）。",
+        "answer": "5",
+        "meaning": "①1111、112、121、211、22。②5通りです。よって、答えは5です。"
+      },
+      {
+        "question": "全部書き出さずに数えるうまい方法があります。「n段の上り方」を一発で求める式はどれですか。",
+        "answer": "（n−1段の上り方）＋（n−2段の上り方）",
+        "choices": [
+          "（n−1段の上り方）＋（n−2段の上り方）",
+          "（n−1段の上り方）×2",
+          "n×(n−1)÷2",
+          "2のn乗"
+        ],
+        "meaning": "①最後の一歩で場合分けする：最後が1段なら「n−1段まで」の上り方、最後が2段なら「n−2段まで」の上り方。②この2つに分ければもれもダブりもない！3段＝2段(2通り)＋1段(1通り)＝3通りで確かに合う。よって、答えは（n−1段の上り方）＋（n−2段の上り方）です。"
+      },
+      {
+        "question": "10段の上り方は何通りですか。",
+        "answer": "89",
+        "meaning": "①1、2、3、5、8、13、21、34、55、89…と前2つをたしていく。②10段目は89通りです（コンピュータの全数えでも89。この数の列は「フィボナッチ数列」という有名な列です）。よって、答えは89です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_47",
+    "category": "kisoku",
+    "grade": 6,
+    "title": "板チョコ割りの最少回数",
+    "intro": "6×4の板チョコ（24かけら分）があります。1回の「パキッ」で、1つのかたまりを線にそって2つに割れます（重ねて割るのはナシ）。24個のかけらにバラバラにします。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6×4の板チョコを、24個のかけらに割る</text><rect x=\"55\" y=\"28\" width=\"150\" height=\"80\" rx=\"4\" fill=\"rgba(139,90,43,0.5)\" stroke=\"#8b5a2b\" stroke-width=\"1.6\"/><line x1=\"80\" y1=\"28\" x2=\"80\" y2=\"108\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"105\" y1=\"28\" x2=\"105\" y2=\"108\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"130\" y1=\"28\" x2=\"130\" y2=\"108\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"155\" y1=\"28\" x2=\"155\" y2=\"108\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"180\" y1=\"28\" x2=\"180\" y2=\"108\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"55\" y1=\"48\" x2=\"205\" y2=\"48\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"55\" y1=\"68\" x2=\"205\" y2=\"68\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><line x1=\"55\" y1=\"88\" x2=\"205\" y2=\"88\" stroke=\"#f2d2a9\" stroke-width=\"1.2\" opacity=\"0.55\"/><text x=\"130\" y=\"130\" fill=\"#ffd166\" font-size=\"8.2\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1回の「パキッ」で、1つのかけらを2つに割れる。最少何回？</text></svg>",
+    "steps": [
+      {
+        "question": "まず2×2（4かけら）の板チョコなら、何回で4個にできますか。",
+        "answer": "3",
+        "meaning": "①半分に割って（1回）2×1が2枚。それぞれを割って（2回）。②合計3回です。よって、答えは3です。"
+      },
+      {
+        "question": "割る順番を工夫すれば、回数をへらせるでしょうか。",
+        "answer": "へらせない。1回で1個しかふえないから、回数はいつも「かけら数−1」",
+        "choices": [
+          "へらせない。1回で1個しかふえないから、回数はいつも「かけら数−1」",
+          "大きく割ればへらせる",
+          "ななめに割ればへらせる",
+          "運がよければへらせる"
+        ],
+        "meaning": "①「パキッ」1回で、かたまりの数はちょうど1つふえる（1つが2つになる）。②1枚から24個にするには、23回ふやすしかない。どんな順番で割っても同じ！（2×3の板の全部の割り順をコンピュータで調べても、全部5回＝6−1回でした）。よって、答えはへらせない。1回で1個しかふえないから、回数はいつも「かけら数−1」です。"
+      },
+      {
+        "question": "6×4の板チョコを24個のかけらにするには、何回割りますか。",
+        "answer": "23",
+        "meaning": "①かけら数−1の法則。②24−1＝23回です。順番の工夫を考え始めたら、この問題の「わな」にはまっています。よって、答えは23です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_48",
+    "category": "rittai",
+    "grade": 6,
+    "title": "ころがるサイコロの上面",
+    "intro": "サイコロ（上面1・南面2・東面3。向かい合う面の和は7）を、マス目の上ですべらせずにころがします。「東へころがす」＝東どなりのマスへたおすこと。",
+    "svg": "<svg viewBox=\"0 0 270 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">サイコロをマス目の上でころがす（すべらせない）</text><rect x=\"60\" y=\"34\" width=\"34\" height=\"34\" fill=\"rgba(79,158,255,0.07)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"60\" y=\"68\" width=\"34\" height=\"34\" fill=\"rgba(79,158,255,0.07)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"94\" y=\"34\" width=\"34\" height=\"34\" fill=\"rgba(79,158,255,0.07)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"94\" y=\"68\" width=\"34\" height=\"34\" fill=\"rgba(79,158,255,0.07)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"128\" y=\"34\" width=\"34\" height=\"34\" fill=\"rgba(79,158,255,0.07)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"128\" y=\"68\" width=\"34\" height=\"34\" fill=\"rgba(79,158,255,0.07)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"63\" y=\"71\" width=\"28\" height=\"28\" rx=\"4\" fill=\"rgba(238,242,255,0.9)\"/><circle cx=\"77\" cy=\"85\" r=\"4\" fill=\"#080e20\"/><path d=\"M98 85 h26\" stroke=\"#06d6a0\" stroke-width=\"1.6\"/><polygon points=\"126,85 119,81 119,89\" fill=\"#06d6a0\"/><text x=\"111\" y=\"77\" fill=\"#06d6a0\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">東</text><path d=\"M145 64 v-22\" stroke=\"#ffd166\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"155\" y=\"51\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">北</text><text x=\"220\" y=\"118\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">上面1・南面2・東面3</text><text x=\"135\" y=\"144\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">東→北→西→南 と四角く1周して元のマスへ。上面はもどる？</text></svg>",
+    "steps": [
+      {
+        "question": "東へ2回ころがすと、上面はいくつになりますか。",
+        "answer": "6",
+        "meaning": "①1回目：上面1は東へたおれて東面に、西面4が上面に。②2回目：同じ向きに回って、底面だった6が上面に来ます（1→4→6→3→1のくり返し）。よって、答えは6です。"
+      },
+      {
+        "question": "東へ4回ころがすと、上面はいくつですか。",
+        "answer": "1",
+        "meaning": "①同じ向きのころがりは4回で1周（1→4→6→3→1）。②上面は1にもどります。よって、答えは1です。"
+      },
+      {
+        "question": "では「東→北→西→南」と四角く1周して元のマスにもどると、上面はいくつですか。",
+        "answer": "4",
+        "meaning": "①「場所が元にもどれば向きももどる」と思ったら大まちがい！②実際にたどると、東で4が上→北で2が上→西で1が上→南で4が上。答えは4です（コンピュータのシミュレーションで確認済み。回る向きの組み合わせで向きだけが90°ねじれて残る、立体ならではのふしぎ）。よって、答えは4です。"
+      }
+    ]
   }
 ]
