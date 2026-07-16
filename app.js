@@ -29,7 +29,7 @@ const KOKUGO_DIFF_LABELS = { 1: 'やさしい', 2: '難しい', 3: 'チャレン
 // 国語：連鎖問題（灘中レベル＝難易度5）
 const KOKUGO_CHAIN_FILE = 'data/kokugo_chain.json';
 let kokugoChainCache = null;
-async function loadKokugoChainQuestions(cat, grade) {
+async function loadKokugoChainQuestions(cat, grade, maxQuestions = 'all') {
   // 連鎖問題は灘中レベル（小5・小6の内容）。小4以下では出題しない
   if (grade < chainMinGrade('kokugo')) return [];
   if (!kokugoChainCache) {
@@ -37,24 +37,17 @@ async function loadKokugoChainQuestions(cat, grade) {
     kokugoChainCache = await res.json();
   }
   const chains = shuffle(kokugoChainCache.filter(c => c.category === cat && chainInGrade(c, grade)));
-  const out = [];
-  chains.forEach(chain => {
-    chain.steps.forEach((step, i) => {
-      const intro = i === 0
-        ? `<div class="tantei-passage">📘 <strong>${chain.title}</strong><br>${chain.intro}</div>`
-        : '';
-      out.push({
-        id: `${chain.id}_s${i + 1}`,
-        question: `${intro}<div class="tantei-q">(${i + 1}) ${step.question}</div>`,
-        answer: step.answer,
-        choices: step.choices,
-        meaning: step.meaning,
-        difficulty: 5,
-        grade: chain.grade || grade,
-      });
-    });
-  });
-  return out;
+  const expand = (chain, g) => chain.steps.map((step, i) => ({
+    id: `${chain.id}_s${i + 1}`,
+    question: `${i === 0 ? `<div class="tantei-passage">📘 <strong>${chain.title}</strong><br>${chain.intro}</div>` : ''}<div class="tantei-q">(${i + 1}) ${step.question}</div>`,
+    answer: step.answer,
+    choices: step.choices,
+    meaning: step.meaning,
+    difficulty: 5,
+    grade: chain.grade || g,
+  }));
+  // 出題数に合わせて連鎖を丸ごと詰める
+  return fillChains(chains, grade, maxQuestions, expand);
 }
 
 // ============================================================
@@ -383,7 +376,7 @@ document.getElementById('btn-start').onclick = async () => {
     let pool;
     let all;
     if (isChain) {
-      pool = await loadKokugoChainQuestions(state.selectedCat, state.grade);
+      pool = await loadKokugoChainQuestions(state.selectedCat, state.grade, document.getElementById('q-count').value);
       all = pool;
     } else {
       all = await loadQuestions(state.selectedCat);
@@ -1425,9 +1418,10 @@ const CHAIN_FILES = {
 const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5 };
 function chainMinGrade(subject) { return CHAIN_MIN_GRADE[subject] ?? 5; }
 
-// 連鎖問題を「その学年までの履修範囲」でしぼるための判定。
-// chain.grade（その問題の対象学年）が選択学年以下なら出題対象
-function chainInGrade(chain, grade) { return (chain.grade || grade) <= grade; }
+// 連鎖問題（灘中レベル）は、選んだ学年"ぴったり"の問題だけ出す。
+// 通常問題は q.grade === grade で学年一致なので、それに合わせる。
+// 以前は累積(<=)だったため、小3の灘問題が小4〜小6でも同じように出ていた（学年で変わらないバグ）。
+function chainInGrade(chain, grade) { return (chain.grade || grade) === grade; }
 
 // 答えが数値系（整数・小数・分数・帯分数・余り）ならテンキー入力にする。
 // それ以外（語句）は4択のまま。
@@ -1494,7 +1488,7 @@ async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) 
 
 // チェーン（連鎖問題）を読み込み、カテゴリでしぼって、chain単位はシャッフルしつつ
 // 各chain内のstep順は維持したまま平らな問題配列に展開する
-async function loadChainQuestions(subject, cat, grade) {
+async function loadChainQuestions(subject, cat, grade, maxQuestions = 'all') {
   // 連鎖問題は灘中レベル。教科ごとの最低学年より下では出題しない
   if (grade < chainMinGrade(subject)) return [];
   const key = `chain-${subject}`;
@@ -1503,13 +1497,21 @@ async function loadChainQuestions(subject, cat, grade) {
     sansuCache[key] = await res.json();
   }
   const chains = shuffle(sansuCache[key].filter(c => (cat === 'mix' || c.category === cat) && chainInGrade(c, grade)));
-  // 灘中レベル（連鎖問題）は1連鎖＝3問で重いので、1セッションは3連鎖(9問)まで。
-  // 3連鎖に満たなければ1連鎖(3問)で終了し、ちょうど3問か9問で区切る。
-  const nChains = chains.length >= 3 ? 3 : 1;
+  // 選んだ出題数（問数）に合わせて連鎖を「丸ごと」詰める。1連鎖(①②③)は途中で切らない。
+  return fillChains(chains, grade, maxQuestions);
+}
+
+// 連鎖の配列を、出題数(maxQuestions)に収まるだけ丸ごと展開する共通処理。
+// 1連鎖は途中で分割しない。連鎖があるかぎり最低1連鎖は返す。
+function fillChains(chains, grade, maxQuestions, expand = expandChain) {
+  const max = maxQuestions === 'all' ? Infinity : Number(maxQuestions);
   const out = [];
-  chains.slice(0, nChains).forEach(chain => {
-    expandChain(chain, grade).forEach(q => out.push(q));
-  });
+  for (const chain of chains) {
+    const steps = expand(chain, grade);
+    if (out.length > 0 && out.length + steps.length > max) break;
+    steps.forEach(q => out.push(q));
+    if (out.length >= max) break;
+  }
   return out;
 }
 
@@ -1827,7 +1829,7 @@ async function startRikaSession() {
   try {
     const isChain = sansuState.diff === 5;
     const all = isChain
-      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade)
+      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('rika-q-count').value)
       : sansuState.cat === 'mix'
         ? await loadMixQuestions(sansuState.grade, sansuState.diff)
         : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
@@ -1943,7 +1945,7 @@ async function startShakaiSession() {
   try {
     const isChain = sansuState.diff === 5;
     const all = isChain
-      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade)
+      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('shakai-q-count').value)
       : sansuState.cat === 'mix'
         ? await loadMixQuestions(sansuState.grade, sansuState.diff)
         : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
@@ -1968,7 +1970,7 @@ async function startSansuSession() {
     try {
       const isChain = sansuState.diff === 5;
       const all = isChain
-        ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade)
+        ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('sansu-q-count').value)
         : sansuState.cat === 'mix'
           ? await loadMixQuestions(sansuState.grade, sansuState.diff)
           : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
