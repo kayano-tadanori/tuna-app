@@ -501,6 +501,9 @@ button { cursor: pointer; font-family: inherit; }
 @keyframes diff5glow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 .diff-btn.diff-locked { opacity: 0.4; filter: grayscale(0.6); pointer-events: none; }
 .diff-btn.diff-locked .diff-sub::after { content: "（問題なし）"; }
+/* 灘中レベル（ガチ）＝工事中。押せるが「準備中」を出すだけ */
+.diff-btn.diff-gachi { border-style: dashed; border-color: rgba(255,209,102,0.45); background: repeating-linear-gradient(45deg, rgba(255,209,102,0.06) 0 10px, rgba(255,107,107,0.06) 10px 20px); color: #cbd3e6; }
+.diff-btn.diff-gachi .diff-sub { color: #ffcf6a; font-weight: 800; }
 .diff-btn[data-diff="all"].selected { background: linear-gradient(135deg,#8a5cff,#c860f0); border-color: #c860f0; box-shadow: 0 0 18px rgba(200,96,240,0.4); }
 .diff-btn:active { transform: scale(0.94); }
 

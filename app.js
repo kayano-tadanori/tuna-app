@@ -1641,6 +1641,11 @@ function initSansuHome() {
   document.querySelectorAll('#sansu-step-diff .diff-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
+      // 灘中レベル（ガチ）は工事中：選択させず、お知らせだけ出す
+      if (btn.dataset.diff === 'gachi') {
+        showToast('🚧「灘中レベル（ガチ）」は ただいま工事中です。パズルみたいな もっと手ごたえのある問題を準備中！');
+        return;
+      }
       document.querySelectorAll('#sansu-step-diff .diff-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.diff = Number(btn.dataset.diff);
