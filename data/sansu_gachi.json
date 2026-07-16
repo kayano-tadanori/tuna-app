@@ -352,5 +352,197 @@
         "meaning": "①真ん中を通る線は、よこ・たて・ななめ2本の4本ある。4本の和は15×4＝60。②この60は、9つの数ぜんぶの和45に、真ん中だけをあと3回たしたもの。60−45＝15が真ん中3回分だから、真ん中は15÷3＝5です（コンピュータで全部の入れ方をしらべても、真ん中はかならず5）。よって、答えは5です。"
       }
     ]
+  },
+  {
+    "id": "sg_gachi_13",
+    "category": "kazu",
+    "grade": 5,
+    "title": "記号【n】のなぞ",
+    "intro": "新しい記号を作ります。【n】＝「nの約数の個数」。たとえば【6】は、6の約数が1・2・3・6の4個なので、【6】＝4です。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">【n】＝nの約数の個数 という記号を作る</text><circle cx=\"40\" cy=\"56\" r=\"13\" fill=\"rgba(79,158,255,0.2)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"40\" y=\"60\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><circle cx=\"78\" cy=\"56\" r=\"13\" fill=\"rgba(79,158,255,0.2)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"78\" y=\"60\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><circle cx=\"116\" cy=\"56\" r=\"13\" fill=\"rgba(79,158,255,0.2)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"116\" y=\"60\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><circle cx=\"154\" cy=\"56\" r=\"13\" fill=\"rgba(79,158,255,0.2)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"154\" y=\"60\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><circle cx=\"192\" cy=\"56\" r=\"13\" fill=\"rgba(79,158,255,0.2)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"192\" y=\"60\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><circle cx=\"230\" cy=\"56\" r=\"13\" fill=\"rgba(79,158,255,0.2)\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"230\" y=\"60\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">12</text><path d=\"M40 42 Q135 6 230 42\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><path d=\"M78 42 Q135 18 192 42\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><path d=\"M116 42 Q135 30 154 42\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><text x=\"135\" y=\"90\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">12の約数は かけてペア：1×12、2×6、3×4</text><text x=\"135\" y=\"112\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">【12】＝6。では【16】は…？ 1×16、2×8、4×4！</text><text x=\"135\" y=\"130\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">ペアがくずれるのは どんな数？</text></svg>",
+    "steps": [
+      {
+        "question": "【12】はいくつですか。",
+        "answer": "6",
+        "meaning": "①12の約数は1・2・3・4・6・12。②数えると6個です。よって、答えは6です。"
+      },
+      {
+        "question": "【12】＝6、【6】＝4、【10】＝4…と、約数の個数はたいてい偶数です。ところが【16】は5で奇数！【n】が奇数になるのは、nがどんな数のときですか。",
+        "answer": "同じ数を2回かけた数（平方数）",
+        "choices": [
+          "同じ数を2回かけた数（平方数）",
+          "奇数",
+          "素数",
+          "4の倍数"
+        ],
+        "meaning": "①約数は「かけてnになるペア」（12なら1×12、2×6、3×4）だから、ふつうは偶数個。②16は1×16、2×8、4×4——最後のペアが「4×4」で同じ数どうし！ペアがくずれて1個分になるのは、n＝同じ数×同じ数（平方数）のときだけです。よって、答えは同じ数を2回かけた数（平方数）です。"
+      },
+      {
+        "question": "1から50までの整数のうち、【n】が奇数になるnは何個ありますか。",
+        "answer": "7",
+        "meaning": "①平方数を数えればよい。1、4、9、16、25、36、49。②7×7＝49までの7個です（8×8＝64は50をこえる。コンピュータで【1】〜【50】を全部数えても7個）。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_14",
+    "category": "kazu",
+    "grade": 5,
+    "title": "水くみパズル",
+    "intro": "5Lと3Lの入れ物が1つずつあります。目もりはありません。水道から何回でも水をくめて、何回でもすてられます。水をうつして「ちょうど4L」を作ります。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5Lと3Lの入れ物だけで「4L」を作る</text><text x=\"130\" y=\"32\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">水道はある（何回でもくめる・すてられる）</text><path d=\"M62 46 L62 112 a6 6 0 0 0 6 6 h46 a6 6 0 0 0 6 -6 L120 46\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#cdd6f4\" stroke-width=\"1.6\"/><text x=\"91\" y=\"134\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5L</text><path d=\"M158 66 L158 112 a6 6 0 0 0 6 6 h32 a6 6 0 0 0 6 -6 L202 66\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#cdd6f4\" stroke-width=\"1.6\"/><text x=\"180\" y=\"134\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3L</text><path d=\"M126 76 q14 -8 26 6\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.6\"/><polygon points=\"152,82 144,80 148,74\" fill=\"#06d6a0\"/><text x=\"138\" y=\"64\" fill=\"#06d6a0\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">うつす</text></svg>",
+    "steps": [
+      {
+        "question": "まず5Lを満タンにして、3Lの入れ物がいっぱいになるまでうつすと、5Lの入れ物には何L残りますか。",
+        "answer": "2",
+        "meaning": "①5Lから3Lをうつす。②5−3＝2Lが残ります。目もりがなくても「いっぱいまでうつす」ことで正確な量が作れるのがポイント。よって、答えは2です。"
+      },
+      {
+        "question": "その2Lを3Lの入れ物に入れ（3L側は2L入り）、5Lをまた満タンにして、3Lの入れ物がいっぱいになるまでうつします。5Lの入れ物には何L残りますか。",
+        "answer": "4",
+        "meaning": "①3L側はあと1Lで満タン。②5Lから1Lだけ出ていくので、5−1＝4L！ちょうど4Lの完成です。よって、答えは4です。"
+      },
+      {
+        "question": "では入れ物を「6Lと4L」にかえて、同じように「ちょうど5L」は作れますか。",
+        "answer": "作れない",
+        "choices": [
+          "作れない",
+          "作れる",
+          "10回以上かかるが作れる",
+          "水をこぼせば作れる"
+        ],
+        "meaning": "①6も4も2の倍数。満タン・からっぽ・うつす、どの操作をしても、できる量はぜんぶ2の倍数のまま（2の倍数＋2の倍数は2の倍数）。②5は2の倍数ではないので、何回やっても絶対に作れません（コンピュータで全状態をさがしても5Lは出てきません）。よって、答えは作れないです。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_15",
+    "category": "kisoku",
+    "grade": 5,
+    "title": "1か4の石とりゲーム",
+    "intro": "石が19こ。2人でこうたいにとります。1回にとれるのは「1こ」か「4こ」だけ（2こ・3こはダメ）。さいごの1こをとった人の勝ちです。先手はあなた！",
+    "svg": "<svg viewBox=\"0 0 270 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"15\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">こうたいに石をとる。とれるのは「1こ」か「4こ」だけ！</text><ellipse cx=\"30\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"54\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"78\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"102\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"126\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"150\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"174\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"198\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"222\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"246\" cy=\"48\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"30\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"54\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"78\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"102\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"126\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"150\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"174\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"198\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><ellipse cx=\"222\" cy=\"74\" rx=\"9\" ry=\"7.5\" fill=\"#9399b2\" opacity=\"0.85\" stroke=\"#6c7086\" stroke-width=\"1\"/><text x=\"135\" y=\"104\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">石は19こ。さいごの1こをとったら勝ち。先手はあなた！</text><text x=\"135\" y=\"122\" fill=\"#ff6b6b\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">（2こ・3ことるのは できない）</text></svg>",
+    "steps": [
+      {
+        "question": "まずじっけん。石5こで自分の番だと負けです。自分が1ことると残り4こ。相手は何ことって勝ちますか。",
+        "answer": "4",
+        "meaning": "①残り4こなら、相手は4こまとめてとれる。②さいごの石をとった相手の勝ちです（自分が4ことれば残り1こで、相手が1ことって勝ち。5こをわたされたら、どうやっても負け！）。よって、答えは4です。"
+      },
+      {
+        "question": "負けになる石の数を小さいじゅんにならべると2、5、7、10、12、15、17…。この数たちにきょうつうする せいしつはどれですか。",
+        "answer": "5で割ったあまりが0か2",
+        "choices": [
+          "5で割ったあまりが0か2",
+          "5の倍数",
+          "偶数と奇数がこうごに出る",
+          "3ずつと2ずつこうごにふえる"
+        ],
+        "meaning": "①5で割ってみると、2÷5＝あまり2、5÷5＝あまり0、7÷5＝あまり2、10÷5＝あまり0…。②あまりが0か2の数がちょうど負け形です（1と4という取り方の組み合わせで、5このかたまりが基本になるため）。「5の倍数」だけでは2、7、12、17がぬけるので不十分。よって、答えは5で割ったあまりが0か2です。"
+      },
+      {
+        "question": "石19こ。先手のあなたがかならず勝つには、さいしょに何ことればよいですか。",
+        "answer": "4",
+        "meaning": "①19−1＝18は、5で割るとあまり3なので負け形ではない（相手にチャンスが残る）。②19−4＝15は5で割るとあまり0＝負け形！だから4ことって15こをわたすのが唯一の必勝手です（後退解析で機械確認済み）。よって、答えは4です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_16",
+    "category": "kisoku",
+    "grade": 5,
+    "title": "九九の表の2×2",
+    "intro": "九九の表（1×1〜9×9）から、2×2の正方形（4つの数）を切り取って、その和を考えます。",
+    "svg": "<svg viewBox=\"0 0 270 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">九九の表から「2×2の正方形」を切り取る</text><text x=\"51\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><text x=\"73\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><text x=\"95\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"117\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><text x=\"139\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><text x=\"161\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><text x=\"183\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><text x=\"205\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><text x=\"227\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><line x1=\"40\" y1=\"42\" x2=\"238\" y2=\"42\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"54\" x2=\"238\" y2=\"54\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"66\" x2=\"238\" y2=\"66\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"78\" x2=\"238\" y2=\"78\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"90\" x2=\"238\" y2=\"90\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"102\" x2=\"238\" y2=\"102\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"114\" x2=\"238\" y2=\"114\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"126\" x2=\"238\" y2=\"126\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"138\" x2=\"238\" y2=\"138\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"150\" x2=\"238\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"42\" x2=\"40\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"62\" y1=\"42\" x2=\"62\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"84\" y1=\"42\" x2=\"84\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"106\" y1=\"42\" x2=\"106\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"128\" y1=\"42\" x2=\"128\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"150\" y1=\"42\" x2=\"150\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"172\" y1=\"42\" x2=\"172\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"194\" y1=\"42\" x2=\"194\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"216\" y1=\"42\" x2=\"216\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"238\" y1=\"42\" x2=\"238\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><text x=\"30\" y=\"51\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><text x=\"30\" y=\"63\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><text x=\"30\" y=\"75\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><text x=\"30\" y=\"87\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><text x=\"30\" y=\"99\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><text x=\"30\" y=\"111\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><text x=\"30\" y=\"123\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text><text x=\"30\" y=\"135\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><text x=\"30\" y=\"147\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"62\" y=\"54\" width=\"22\" height=\"12\" fill=\"rgba(6,214,160,0.30)\"/><text x=\"73\" y=\"63\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><rect x=\"84\" y=\"54\" width=\"22\" height=\"12\" fill=\"rgba(6,214,160,0.30)\"/><text x=\"95\" y=\"63\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><rect x=\"62\" y=\"66\" width=\"22\" height=\"12\" fill=\"rgba(6,214,160,0.30)\"/><text x=\"73\" y=\"75\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><rect x=\"84\" y=\"66\" width=\"22\" height=\"12\" fill=\"rgba(6,214,160,0.30)\"/><text x=\"95\" y=\"75\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><rect x=\"62\" y=\"54\" width=\"44\" height=\"24\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.5\"/><text x=\"135\" y=\"152\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">中の4つの数の和を考える</text></svg>",
+    "steps": [
+      {
+        "question": "2〜3の段、2〜3の列の2×2（4・6・6・9）の和はいくつですか。",
+        "answer": "25",
+        "meaning": "①4＋6＝10、6＋9＝15。②10＋15＝25です。よって、答えは25です。"
+      },
+      {
+        "question": "25＝5×5＝(2＋3)×(2＋3)。じつは2×2の和には、いつでも成り立つひみつがあります。どれですか。",
+        "answer": "（2つの段の和）×（2つの列の和）になる",
+        "choices": [
+          "（2つの段の和）×（2つの列の和）になる",
+          "真ん中の数の4倍になる",
+          "かならず5の倍数になる",
+          "4つの数の積の半分になる"
+        ],
+        "meaning": "①たとえば4＋6＋6＋9で、上の行は2×(2＋3)、下の行は3×(2＋3)。②あわせると(2＋3)×(2＋3)。段がr、r＋1、列がc、c＋1なら、和＝(r＋r＋1)×(c＋c＋1)です（表の全部の場所で機械確認済み）。よって、答えは（2つの段の和）×（2つの列の和）になるです。"
+      },
+      {
+        "question": "2×2の和がちょうど120になる場所は、表の中に何か所ありますか。",
+        "answer": "0",
+        "meaning": "①和＝(となり合う2つの段の和)×(となり合う2つの列の和)。となり合う2数の和はかならず奇数（偶数＋奇数）！②奇数×奇数＝奇数なのに、120は偶数。だから1か所もありません（全部の場所をしらべても0）。「ありそうで、絶対にない」を見破るのがこの問題の本丸です。よって、答えは0です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_17",
+    "category": "zu",
+    "grade": 5,
+    "title": "一筆書きのひみつ",
+    "intro": "一筆書き＝ペンを紙からはなさず、全部の線をちょうど1回ずつなぞること（通った点は何度通ってもOK）。図1は正方形に対角線を1本ひいた形、図2は「田」の字です。",
+    "svg": "<svg viewBox=\"0 0 270 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"8.2\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">一筆書き：同じ線を2度なぞらず、全部の線を1回ずつ</text><rect x=\"40\" y=\"40\" width=\"58\" height=\"58\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><line x1=\"40\" y1=\"40\" x2=\"98\" y2=\"98\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><circle cx=\"40\" cy=\"40\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"98\" cy=\"40\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"40\" cy=\"98\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"98\" cy=\"98\" r=\"3.5\" fill=\"#ffd166\"/><text x=\"69\" y=\"120\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">図1：正方形＋対角線</text><rect x=\"172\" y=\"40\" width=\"58\" height=\"58\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><line x1=\"201\" y1=\"40\" x2=\"201\" y2=\"98\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><line x1=\"172\" y1=\"69\" x2=\"230\" y2=\"69\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><circle cx=\"172\" cy=\"40\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"230\" cy=\"40\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"172\" cy=\"98\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"230\" cy=\"98\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"201\" cy=\"40\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"201\" cy=\"98\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"172\" cy=\"69\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"230\" cy=\"69\" r=\"3.5\" fill=\"#ffd166\"/><circle cx=\"201\" cy=\"69\" r=\"3.5\" fill=\"#ffd166\"/><text x=\"201\" y=\"120\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">図2：田の字</text><text x=\"135\" y=\"142\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">点に集まる線の数（本数）に注目してみよう</text></svg>",
+    "steps": [
+      {
+        "question": "図1で、集まる線の数が奇数本になっている点（奇点）はいくつありますか。",
+        "answer": "2",
+        "meaning": "①対角線のはしの2つの角は、辺2本＋対角線1本＝3本で奇数。②残りの2つの角は2本で偶数。奇点は2つです。よって、答えは2です。"
+      },
+      {
+        "question": "とちゅうで通る点は「入る線」と「出る線」がペアになるので、線は偶数本のはず。奇数本の点があってもよいのは、どんな点だけですか。",
+        "answer": "書きはじめと書きおわりの点",
+        "choices": [
+          "書きはじめと書きおわりの点",
+          "図の真ん中の点",
+          "いちばん上の点",
+          "そんな点はゆるされない"
+        ],
+        "meaning": "①スタートは「出る」だけが1本多く、ゴールは「入る」だけが1本多い。②だから奇点がゆるされるのは、はじめとおわりの2か所だけ（奇点0個なら出発点にもどる一筆書き）。図1は奇点2つ→その2点から書けばOK！よって、答えは書きはじめと書きおわりの点です。"
+      },
+      {
+        "question": "「田」の字の奇点を数えて、一筆書きできるか答えよう。",
+        "answer": "できない（奇点が4つ）",
+        "choices": [
+          "できない（奇点が4つ）",
+          "できる（奇点が2つ）",
+          "できる（奇点が0こ）",
+          "できない（奇点が6つ）"
+        ],
+        "meaning": "①田の字の辺の真ん中の点4つは、線が3本ずつ集まる奇点（角は2本、中央は4本で偶数）。②奇点が4つ＝はじめとおわり（2か所）ではたりない。だから絶対に一筆書きできません（コンピュータで全部のなぞり方をためしても不可能）。よって、答えはできない（奇点が4つ）です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_18",
+    "category": "kazu",
+    "grade": 5,
+    "title": "覆面算 AB×A＝CCC",
+    "intro": "2けたの数「AB」に、その十の位の数字「A」をかけたら、答えが「CCC」（同じ数字が3つならぶ3けたの数）になりました。同じ文字は同じ数字です。",
+    "svg": "<svg viewBox=\"0 0 250 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"15\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ文字は同じ数字（A・B・Cは全部ちがう）</text><rect x=\"72\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(79,158,255,0.15)\" stroke=\"rgb(79,158,255)\" stroke-width=\"1.5\"/><text x=\"85\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><rect x=\"102\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(79,158,255,0.15)\" stroke=\"rgb(79,158,255)\" stroke-width=\"1.5\"/><text x=\"115\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><text x=\"140\" y=\"56\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">×</text><rect x=\"152\" y=\"35\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(79,158,255,0.15)\" stroke=\"rgb(79,158,255)\" stroke-width=\"1.5\"/><text x=\"165\" y=\"54\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><text x=\"125\" y=\"82\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">＝</text><rect x=\"82\" y=\"91\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(255,107,107,0.15)\" stroke=\"rgb(255,107,107)\" stroke-width=\"1.5\"/><text x=\"95\" y=\"110\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><rect x=\"112\" y=\"91\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(255,107,107,0.15)\" stroke=\"rgb(255,107,107)\" stroke-width=\"1.5\"/><text x=\"125\" y=\"110\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><rect x=\"142\" y=\"91\" width=\"26\" height=\"26\" rx=\"5\" fill=\"rgba(255,107,107,0.15)\" stroke=\"rgb(255,107,107)\" stroke-width=\"1.5\"/><text x=\"155\" y=\"110\" fill=\"#eef2ff\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text></svg>",
+    "steps": [
+      {
+        "question": "CCCの形の数（111、222、…、999）は、ぜんぶ111の倍数です。111を割り切れる2けたの数を見つけよう。111÷37はいくつですか。",
+        "answer": "3",
+        "meaning": "①111＝3×37。②111÷37＝3です。つまりCCC＝C×3×37と分解できます。よって、答えは3です。"
+      },
+      {
+        "question": "CCC＝C×3×37。37は素数（1と37でしか割り切れない）です。AB×A＝CCCのとき、37はどこにかくれていますか。",
+        "answer": "ABが37の倍数",
+        "choices": [
+          "ABが37の倍数",
+          "Aが37の倍数",
+          "Cが37の倍数",
+          "どこにもない"
+        ],
+        "meaning": "①37は素数なので、かけ算のどちらかの数を割り切るしかない。②Aは1けた（9以下）だから37で割り切れない→ABの方が37の倍数！2けたの37の倍数は37と74だけです。よって、答えはABが37の倍数です。"
+      },
+      {
+        "question": "ABはいくつですか。",
+        "answer": "37",
+        "meaning": "①候補は37か74。AB＝37ならA＝3で、37×3＝111＝CCC（C＝1）でぴったり！②AB＝74ならA＝7で、74×7＝518→CCCの形ではない。だから37だけ（10〜99の全探索でも解はこれ1つ）。よって、答えは37です。"
+      }
+    ]
   }
 ]
