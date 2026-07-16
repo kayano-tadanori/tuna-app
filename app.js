@@ -2980,8 +2980,8 @@ async function loadToraData() {
   return toraData;
 }
 
-// 選んだ学年（localStorageに保存して次回も同じ学年で開く）
-let toraGrade = Number(localStorage.getItem('toraGrade')) || null;
+// 学年は算数ホーム(STEP1)で選択済みのものを使う（虎の巻で選び直させない）
+const toraGradeNow = () => sansuState.grade || 6;
 // その学年で読める巻物 = 学年以下のカード（小6は全部＝復習にも使える）
 const toraVisible = (data, grade) => data.filter(c => (c.grade || 6) <= grade);
 
@@ -2989,22 +2989,11 @@ async function initToraHome() {
   showLoading();
   try {
     const data = await loadToraData();
-
-    // 学年ボタン
-    document.querySelectorAll('.tora-grade-btn').forEach(btn => {
-      btn.classList.toggle('selected', Number(btn.dataset.tgrade) === toraGrade);
-      btn.onclick = () => {
-        toraGrade = Number(btn.dataset.tgrade);
-        localStorage.setItem('toraGrade', toraGrade);
-        initToraHome();
-      };
-    });
+    const toraGrade = toraGradeNow();
+    document.getElementById('tora-grade-label').textContent = `いまは小${toraGrade}の巻物まで出ているよ（学年は算数ホームで変えられます）。`;
 
     const grid = document.getElementById('tora-cat-grid');
-    const hint = document.getElementById('tora-grade-hint');
     grid.innerHTML = '';
-    if (!toraGrade) { hint.classList.remove('hidden'); return; }
-    hint.classList.add('hidden');
 
     const visible = toraVisible(data, toraGrade);
     const counts = {};
@@ -3037,7 +3026,7 @@ async function showToraCategory(cat) {
   try {
     const data = await loadToraData();
     // 学年でしぼり、やさしい学年の巻から順にならべる
-    const cards = toraVisible(data, toraGrade || 6)
+    const cards = toraVisible(data, toraGradeNow())
       .filter(c => c.category === cat)
       .sort((a, b) => (a.grade || 6) - (b.grade || 6));
     const info = TORA_CATEGORIES[cat] || { label: cat, icon: '📕' };
