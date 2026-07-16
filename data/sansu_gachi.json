@@ -1,0 +1,176 @@
+[
+  {
+    "id": "sg_gachi_1",
+    "category": "kazu",
+    "grade": 4,
+    "title": "虫食い算のひみつ",
+    "intro": "筆算の□に数字を入れて、正しい計算にします。7□3＋2□8＝1001。□に入る数字の組は、じつは1つではありません。",
+    "svg": "<svg viewBox=\"0 0 240 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"18\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">□に数字を入れて正しい筆算に</text><text x=\"120\" y=\"48\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"139\" y=\"32\" width=\"22\" height=\"22\" rx=\"4\" fill=\"rgba(255,209,102,0.15)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><text x=\"150\" y=\"48\" fill=\"#ffd166\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">□</text><text x=\"180\" y=\"48\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"88\" y=\"78\" fill=\"#cdd6f4\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">＋</text><text x=\"120\" y=\"78\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><rect x=\"139\" y=\"62\" width=\"22\" height=\"22\" rx=\"4\" fill=\"rgba(255,209,102,0.15)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><text x=\"150\" y=\"78\" fill=\"#ffd166\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">□</text><text x=\"180\" y=\"78\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><line x1=\"80\" y1=\"92\" x2=\"196\" y2=\"92\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><text x=\"90\" y=\"118\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><text x=\"120\" y=\"118\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">0</text><text x=\"150\" y=\"118\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">0</text><text x=\"180\" y=\"118\" fill=\"#eef2ff\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><text x=\"120\" y=\"142\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">答えは1001。□は2か所</text></svg>",
+    "steps": [
+      {
+        "question": "□の組を1つ見つけよう。上の□（7□3の□）が1のとき、下の□（2□8の□）はいくつなら計算が合いますか。",
+        "answer": "8",
+        "meaning": "①713＋2□8＝1001になる□を探す。②1001−713＝288なので下の□は8（713＋288＝1001）です。よって、答えは8です。"
+      },
+      {
+        "question": "□の組は他にもあります。どの組でも「上の□＋下の□」は同じ数になります。いくつですか。",
+        "answer": "9",
+        "meaning": "①一の位は3＋8＝11で繰り上がり1。十の位は □＋□＋1 の一の位が0になる必要がある。②だから□＋□＝9（繰り上がって100の位へ1おくる）。(1,8)も(2,7)も(9,0)も和は9です。よって、答えは9です。"
+      },
+      {
+        "question": "□に入る数字の組（上の□, 下の□）は、全部で何通りありますか。",
+        "answer": "10",
+        "meaning": "①和が9になる0〜9の組を数える。(0,9)(1,8)(2,7)…(9,0)。②0を忘れずに数えると10通りです（9通りは0のペアの数え忘れ）。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_2",
+    "category": "kisoku",
+    "grade": 4,
+    "title": "30を言ったら負けゲーム",
+    "intro": "2人で交代に、1から順に数を言います。1回に言えるのは続きの数を1個・2個・3個のどれか（例：「1,2」→「3,4,5」→「6」…）。30を言ってしまった人の負けです。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">交代で1〜3個ずつ数を言う。30を言ったら負け！</text><rect x=\"9\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"20\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><rect x=\"35\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"46\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><rect x=\"61\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"72\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><rect x=\"87\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"98\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"113\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"124\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"139\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"150\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"165\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"176\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text><rect x=\"191\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"202\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"217\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"228\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"243\" y=\"27\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"254\" y=\"40\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text><rect x=\"9\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"20\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">11</text><rect x=\"35\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"46\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">12</text><rect x=\"61\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"72\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">13</text><rect x=\"87\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"98\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">14</text><rect x=\"113\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"124\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">15</text><rect x=\"139\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"150\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">16</text><rect x=\"165\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"176\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">17</text><rect x=\"191\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"202\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">18</text><rect x=\"217\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"228\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">19</text><rect x=\"243\" y=\"55\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"254\" y=\"68\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">20</text><rect x=\"9\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"20\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">21</text><rect x=\"35\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"46\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">22</text><rect x=\"61\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"72\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">23</text><rect x=\"87\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"98\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">24</text><rect x=\"113\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"124\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">25</text><rect x=\"139\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"150\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">26</text><rect x=\"165\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"176\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">27</text><rect x=\"191\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"202\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">28</text><rect x=\"217\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#39456b\" stroke-width=\"1\"/><text x=\"228\" y=\"96\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">29</text><rect x=\"243\" y=\"83\" width=\"22\" height=\"19\" rx=\"3\" fill=\"rgba(255,107,107,0.35)\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"254\" y=\"96\" fill=\"#ff6b6b\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">30</text><text x=\"140\" y=\"125\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">「1,2」「3,4,5」のように続きの数を1〜3個言う</text></svg>",
+    "steps": [
+      {
+        "question": "相手に30を言わせるには、自分が29で言い終わればよい。では、29で言い終わるために、その前の自分の番ではいくつで言い終わればよいですか。",
+        "answer": "25",
+        "meaning": "①相手が1個なら26、2個なら27、3個なら28まで言う。どの場合も自分は29まで言えるためには、25で終わっていればよい。②25で終われば、相手が26〜28のどこまで言っても、自分は29でぴったり終われます。よって、答えは25です。"
+      },
+      {
+        "question": "勝てる「言い終わりの数」は29、25、21…と続きます。この数たちに共通する性質はどれですか。",
+        "answer": "4で割ると1あまる数",
+        "choices": [
+          "4で割ると1あまる数",
+          "奇数",
+          "4の倍数",
+          "5で割ると1あまる数"
+        ],
+        "meaning": "①29、25、21、17、13、9、5、1はどれも4ずつ差。②4で割ると1あまる数です。「奇数」は罠：27も奇数ですが27で終わると相手が29まで言えて負けます。よって、答えは4で割ると1あまる数です。"
+      },
+      {
+        "question": "先手のあなたが必勝するには、最初の番でいくつまで言えばよいですか。",
+        "answer": "1",
+        "meaning": "①安全な言い終わりは「4で割ると1あまる数」。最初の番で作れるのは1、2、3のうち…②1だけが「4で割ると1あまる数」。だから最初は「1」とだけ言うのが必勝です（後退解析で機械確認済み）。よって、答えは1です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_3",
+    "category": "kisoku",
+    "grade": 4,
+    "title": "九九の表の十字",
+    "intro": "九九の表（1×1〜9×9）の上に、たて・よこに5マスの「十字」を置きます（真ん中＋上下左右）。十字が表からはみ出す場所には置けません。",
+    "svg": "<svg viewBox=\"0 0 270 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">九九の表と「十字」</text><text x=\"51\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><text x=\"30\" y=\"44\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"73\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><text x=\"30\" y=\"56\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"95\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"30\" y=\"68\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"117\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><text x=\"30\" y=\"80\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"139\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><text x=\"30\" y=\"92\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"161\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><text x=\"30\" y=\"104\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"183\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><text x=\"30\" y=\"116\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"205\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><text x=\"30\" y=\"128\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"227\" y=\"38\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><text x=\"30\" y=\"140\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><line x1=\"40\" y1=\"42\" x2=\"238\" y2=\"42\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"54\" x2=\"238\" y2=\"54\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"66\" x2=\"238\" y2=\"66\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"78\" x2=\"238\" y2=\"78\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"90\" x2=\"238\" y2=\"90\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"102\" x2=\"238\" y2=\"102\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"114\" x2=\"238\" y2=\"114\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"126\" x2=\"238\" y2=\"126\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"138\" x2=\"238\" y2=\"138\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"150\" x2=\"238\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"40\" y1=\"42\" x2=\"40\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"62\" y1=\"42\" x2=\"62\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"84\" y1=\"42\" x2=\"84\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"106\" y1=\"42\" x2=\"106\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"128\" y1=\"42\" x2=\"128\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"150\" y1=\"42\" x2=\"150\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"172\" y1=\"42\" x2=\"172\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"194\" y1=\"42\" x2=\"194\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"216\" y1=\"42\" x2=\"216\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><line x1=\"238\" y1=\"42\" x2=\"238\" y2=\"150\" stroke=\"#39456b\" stroke-width=\"0.6\"/><text x=\"30\" y=\"51\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><text x=\"30\" y=\"63\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><text x=\"30\" y=\"75\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><text x=\"30\" y=\"87\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><text x=\"30\" y=\"99\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><text x=\"30\" y=\"111\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><text x=\"30\" y=\"123\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text><text x=\"30\" y=\"135\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><text x=\"30\" y=\"147\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"106\" y=\"66\" width=\"22\" height=\"12\" fill=\"rgba(255,209,102,0.45)\"/><text x=\"117\" y=\"75\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">12</text><rect x=\"106\" y=\"54\" width=\"22\" height=\"12\" fill=\"rgba(79,158,255,0.35)\"/><text x=\"117\" y=\"63\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><rect x=\"106\" y=\"78\" width=\"22\" height=\"12\" fill=\"rgba(79,158,255,0.35)\"/><text x=\"117\" y=\"87\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">16</text><rect x=\"84\" y=\"66\" width=\"22\" height=\"12\" fill=\"rgba(79,158,255,0.35)\"/><text x=\"95\" y=\"75\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><rect x=\"128\" y=\"66\" width=\"22\" height=\"12\" fill=\"rgba(79,158,255,0.35)\"/><text x=\"139\" y=\"75\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">15</text><text x=\"135\" y=\"152\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">たて・よこに十字の5マス（はみ出す場所では作れない）</text></svg>",
+    "steps": [
+      {
+        "question": "真ん中を12（3の段の4）にした十字の5つの数（12、上8、下16、左9、右15）の和はいくつですか。",
+        "answer": "60",
+        "meaning": "①8＋16＝24、9＋15＝24、真ん中12。②24＋24＋12＝60です。よって、答えは60です。"
+      },
+      {
+        "question": "十字の和は、いつでも真ん中の数の何倍になりますか。",
+        "answer": "5",
+        "meaning": "①上と下の和は真ん中の2倍（8＋16＝24＝12×2）。左と右の和も真ん中の2倍。②2倍＋2倍＋真ん中1つ＝5倍です。よって、答えは5です。"
+      },
+      {
+        "question": "十字の5つの数の和が90になる置き方は、表の中に全部で何か所ありますか。",
+        "answer": "2",
+        "meaning": "①和が90なら真ん中は90÷5＝18。九九で18になるマスは2×9、3×6、6×3、9×2の4か所。②でも2×9と9×2は表のはしなので十字がはみ出して作れない！残るのは3×6と6×3の2か所です（全探索で機械確認済み）。よって、答えは2です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_4",
+    "category": "baai",
+    "grade": 4,
+    "title": "にせ金貨をさがせ",
+    "intro": "見た目がそっくりな金貨が9枚。1枚だけ軽い「にせ物」がまじっています。使えるのは天秤（てんびん）だけ。左右にのせて、どちらが軽いか・つり合うかが分かります。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9枚のうち1枚だけ軽いにせ金貨</text><polygon points=\"129,96 141,96 135,78\" fill=\"#ffd166\"/><line x1=\"65\" y1=\"60\" x2=\"205\" y2=\"60\" stroke=\"#cdd6f4\" stroke-width=\"2.5\"/><line x1=\"135\" y1=\"60\" x2=\"135\" y2=\"78\" stroke=\"#cdd6f4\" stroke-width=\"2\"/><line x1=\"65\" y1=\"60\" x2=\"55\" y2=\"76\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"65\" y1=\"60\" x2=\"75\" y2=\"76\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"50\" y=\"76\" width=\"30\" height=\"6\" rx=\"2\" fill=\"#9399b2\"/><line x1=\"205\" y1=\"60\" x2=\"195\" y2=\"76\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"205\" y1=\"60\" x2=\"215\" y2=\"76\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"190\" y=\"76\" width=\"30\" height=\"6\" rx=\"2\" fill=\"#9399b2\"/><circle cx=\"45\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"45\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><circle cx=\"67\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"67\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><circle cx=\"89\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"89\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><circle cx=\"123\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"123\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><circle cx=\"145\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><circle cx=\"167\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"167\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><circle cx=\"201\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"201\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><circle cx=\"223\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"223\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8</text><circle cx=\"245\" cy=\"112\" r=\"9\" fill=\"#ffd166\" opacity=\"0.8\" stroke=\"#c99700\" stroke-width=\"1\"/><text x=\"245\" y=\"115\" fill=\"#080e20\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><text x=\"135\" y=\"135\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">3枚ずつ3グループに分けられる</text></svg>",
+    "steps": [
+      {
+        "question": "まず3枚で練習。3枚のうち1枚が軽いとき、天秤に1枚と1枚をのせて「つり合った」。にせ物はどれですか。",
+        "answer": "のせなかった1枚",
+        "choices": [
+          "のせなかった1枚",
+          "左にのせた1枚",
+          "右にのせた1枚",
+          "わからない"
+        ],
+        "meaning": "①のせた2枚がつり合った＝この2枚は本物どうし。②残るはのせなかった1枚。天秤にのせなくても情報が得られるのがポイントです。よって、答えはのせなかった1枚です。"
+      },
+      {
+        "question": "天秤を1回使うと、結果は「左が上がる」「右が上がる」「つり合う」の何通りに分かれますか。",
+        "answer": "3",
+        "meaning": "①天秤の結果は3通り。②つまり1回の天秤で、候補を最大3つのグループにまで絞れます（3枚までなら1回で特定できる理由）。よって、答えは3です。"
+      },
+      {
+        "question": "9枚のうち1枚だけ軽いにせ物を、天秤何回で必ず見つけられますか（最少の回数）。",
+        "answer": "2",
+        "meaning": "①1回では3通りにしか分けられないので9枚は無理。②9枚を3枚×3グループに分け、1回目（3枚vs3枚）でどのグループか特定→2回目（1枚vs1枚）で1枚に特定。3×3＝9で2回です。よって、答えは2です。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_5",
+    "category": "zu",
+    "grade": 4,
+    "title": "ドミノはしきつめられる？",
+    "intro": "4×4のマス目から、向かい合う角の2マスを切り取った14マスの板があります。この板に、2マス分のドミノ（1×2の長方形）を7枚、重ならないようにしきつめられるか考えます。",
+    "svg": "<svg viewBox=\"0 0 250 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"125\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">角2マスを切り取った盤にドミノ7枚</text><rect x=\"55\" y=\"26\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"59\" y1=\"30\" x2=\"77\" y2=\"48\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><line x1=\"77\" y1=\"30\" x2=\"59\" y2=\"48\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><rect x=\"81\" y=\"26\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"107\" y=\"26\" width=\"26\" height=\"26\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"133\" y=\"26\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"55\" y=\"52\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"81\" y=\"52\" width=\"26\" height=\"26\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"107\" y=\"52\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"133\" y=\"52\" width=\"26\" height=\"26\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"55\" y=\"78\" width=\"26\" height=\"26\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"81\" y=\"78\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"107\" y=\"78\" width=\"26\" height=\"26\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"133\" y=\"78\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"55\" y=\"104\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"81\" y=\"104\" width=\"26\" height=\"26\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"107\" y=\"104\" width=\"26\" height=\"26\" fill=\"rgba(20,26,48,0.9)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><rect x=\"133\" y=\"104\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"137\" y1=\"108\" x2=\"155\" y2=\"126\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><line x1=\"155\" y1=\"108\" x2=\"137\" y2=\"126\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><rect x=\"185\" y=\"52\" width=\"20\" height=\"40\" rx=\"3\" fill=\"rgba(6,214,160,0.25)\" stroke=\"#06d6a0\" stroke-width=\"1.5\"/><line x1=\"185\" y1=\"72\" x2=\"205\" y2=\"72\" stroke=\"#06d6a0\" stroke-width=\"1\"/><text x=\"195\" y=\"106\" fill=\"#06d6a0\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ドミノ</text><text x=\"195\" y=\"117\" fill=\"#06d6a0\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">(2マス分)</text><text x=\"125\" y=\"152\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">×印の2マスは使えない。残り14マスに7枚入る？</text></svg>",
+    "steps": [
+      {
+        "question": "板を白と黒の市松もよう（交互）にぬります。切り取った角の2マスは同じ色でした。白いマスは何マスありますか（図の白いマスを数えよう）。",
+        "answer": "6",
+        "meaning": "①4×4の市松は白8黒8。②切り取った角2つは同じ色（白）なので、白は8−2＝6マス、黒は8マスです。よって、答えは6です。"
+      },
+      {
+        "question": "ドミノ1枚はとなり合う2マスをおおうので、必ず白1マスと黒1マスをおおいます。7枚しきつめたとすると、白は何マスおおわれますか。",
+        "answer": "7",
+        "meaning": "①どこに置いても、となり合う2マスは必ず白と黒。②7枚なら白7マス・黒7マスをおおうはずです。よって、答えは7です。"
+      },
+      {
+        "question": "白いマスは6つしかないのに、しきつめには白が7マス必要でした。この板にドミノ7枚をしきつめることは？",
+        "answer": "絶対にできない",
+        "choices": [
+          "絶対にできない",
+          "工夫すればできる",
+          "運がよければできる",
+          "あと1枚あればできる"
+        ],
+        "meaning": "①白は6マスしかないのに、7枚のドミノは白を7マス必要とする。矛盾！②だから、どんなに工夫しても絶対にできません（コンピュータの全探索でも0通りを確認済み）。「できない」を計算で証明できるのがこの問題の深さです。よって、答えは絶対にできないです。"
+      }
+    ]
+  },
+  {
+    "id": "sg_gachi_6",
+    "category": "kazu",
+    "grade": 4,
+    "title": "カードで最大の積を作れ",
+    "intro": "1・3・5・7・9の5枚のカードがあります。このうち4枚を使って「2けた×2けた」のかけ算を作り、答え（積）をできるだけ大きくします。",
+    "svg": "<svg viewBox=\"0 0 260 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"14\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">カードをならべて「2けた×2けた」</text><rect x=\"26\" y=\"28\" width=\"28\" height=\"38\" rx=\"5\" fill=\"#eef2ff\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"40\" y=\"53\" fill=\"#080e20\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><rect x=\"64\" y=\"28\" width=\"28\" height=\"38\" rx=\"5\" fill=\"#eef2ff\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"78\" y=\"53\" fill=\"#080e20\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><rect x=\"102\" y=\"28\" width=\"28\" height=\"38\" rx=\"5\" fill=\"#eef2ff\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"116\" y=\"53\" fill=\"#080e20\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><rect x=\"140\" y=\"28\" width=\"28\" height=\"38\" rx=\"5\" fill=\"#eef2ff\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"154\" y=\"53\" fill=\"#080e20\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"178\" y=\"28\" width=\"28\" height=\"38\" rx=\"5\" fill=\"#eef2ff\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"192\" y=\"53\" fill=\"#080e20\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><rect x=\"59\" y=\"86\" width=\"22\" height=\"26\" rx=\"4\" fill=\"rgba(138,92,255,0.15)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><rect x=\"85\" y=\"86\" width=\"22\" height=\"26\" rx=\"4\" fill=\"rgba(138,92,255,0.15)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><text x=\"120\" y=\"105\" fill=\"#cdd6f4\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">×</text><rect x=\"133\" y=\"86\" width=\"22\" height=\"26\" rx=\"4\" fill=\"rgba(138,92,255,0.15)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><rect x=\"159\" y=\"86\" width=\"22\" height=\"26\" rx=\"4\" fill=\"rgba(138,92,255,0.15)\" stroke=\"#8a5cff\" stroke-width=\"1.5\"/><text x=\"210\" y=\"105\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">＝ 最大に！</text></svg>",
+    "steps": [
+      {
+        "question": "まず1・3・5・7の4枚で練習。71×53と73×51では、どちらが大きい？大きいほうの積を答えよう。",
+        "answer": "3763",
+        "meaning": "①71×53＝3763、73×51＝3723。②大きいのは71×53＝3763。十の位（7と5）が同じでも、一の位の付け方で差が出ます。よって、答えは3763です。"
+      },
+      {
+        "question": "積を大きくする分け方のコツはどれですか。",
+        "answer": "2つの数の差が小さくなるように分ける",
+        "choices": [
+          "2つの数の差が小さくなるように分ける",
+          "2つの数の差が大きくなるように分ける",
+          "一の位に大きい数字を置く",
+          "4枚の合計を大きくする"
+        ],
+        "meaning": "①71×53（差18）＞73×51（差22）。和が同じなら、差が小さいほど積は大きい（正方形に近い長方形ほど面積が大きいのと同じ）。②だから大きい一の位は、小さい十の位のほうにつけます。よって、答えは2つの数の差が小さくなるように分けるです。"
+      },
+      {
+        "question": "では本番。1・3・5・7・9の5枚から4枚を選んで作れる、いちばん大きい積はいくつですか。",
+        "answer": "6975",
+        "meaning": "①どの4枚を選ぶか：1を捨てて9・7・5・3（大きい4枚）。十の位は9と7。②コツを使うと93×75（差18）＞95×73（差22）。93×75＝6975です（全探索で最大を機械確認済み。95×73＝6935は惜しい2位）。よって、答えは6975です。"
+      }
+    ]
+  }
+]

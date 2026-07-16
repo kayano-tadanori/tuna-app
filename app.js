@@ -1379,7 +1379,7 @@ const SANSU_CAT_LABELS = {
   tokusan:'特殊算', baai:'場合の数', kazu:'数の性質',
   wariai:'割合と比', hayasa:'速さ', rittai:'立体図形'
 };
-const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'激ムズ', 5:'灘中レベル' };
+const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'激ムズ', 5:'灘中レベル', gachi:'灘中レベル（ガチ）' };
 const DRILL_TYPE_LABELS = {
   add:'足し算', sub:'引き算', mul:'かけ算', div:'割り算',
   divrem:'余りあり', decimal:'小数', fraction:'分数', mix:'ミックス'
@@ -1414,9 +1414,10 @@ const CHAIN_FILES = {
   sansu: 'data/sansu_chain.json',
   rika: 'data/rika_chain.json',
   shakai: 'data/shakai_chain.json',
+  gachi: 'data/sansu_gachi.json',  // 灘中レベル（ガチ）＝算数のパズル連鎖
 };
 // 連鎖問題を出題する最低学年（教科ごと）。算数は小3から、理科などは小5から
-const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5 };
+const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5, gachi: 3 };
 function chainMinGrade(subject) { return CHAIN_MIN_GRADE[subject] ?? 5; }
 
 // 連鎖問題（灘中レベル）は、選んだ学年"ぴったり"の問題だけ出す。
@@ -1475,15 +1476,20 @@ async function countChainSteps(subject, cat, grade) {
 // 難易度5（連鎖問題）ボタンの有効/無効を切り替える。
 // 問題が無ければロックし、その難易度が選択中なら選択を解除する
 async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) {
-  const chainBtn = [...btns].find(b => b.dataset.diff === '5');
-  if (!chainBtn) return;
-  const n = await countChainSteps(subject, cat, grade);
-  const locked = n === 0;
-  chainBtn.classList.toggle('diff-locked', locked);
-  chainBtn.disabled = locked;
-  if (locked && chainBtn.classList.contains('selected')) {
-    chainBtn.classList.remove('selected');
-    if (onLockSelected) onLockSelected();
+  // 難易度5＝発見算。算数はさらに 'gachi'（ガチ＝パズル連鎖、別ファイル）もロック管理する
+  const targets = [{ diff: '5', subj: subject }];
+  if (subject === 'sansu') targets.push({ diff: 'gachi', subj: 'gachi' });
+  for (const t of targets) {
+    const chainBtn = [...btns].find(b => b.dataset.diff === t.diff);
+    if (!chainBtn) continue;
+    const n = await countChainSteps(t.subj, cat, grade);
+    const locked = n === 0;
+    chainBtn.classList.toggle('diff-locked', locked);
+    chainBtn.disabled = locked;
+    if (locked && chainBtn.classList.contains('selected')) {
+      chainBtn.classList.remove('selected');
+      if (onLockSelected) onLockSelected();
+    }
   }
 }
 
@@ -1661,14 +1667,10 @@ function initSansuHome() {
   document.querySelectorAll('#sansu-step-diff .diff-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
-      // 灘中レベル（ガチ）は工事中：選択させず、お知らせだけ出す
-      if (btn.dataset.diff === 'gachi') {
-        showToast('🚧「灘中レベル（ガチ）」は ただいま工事中です。パズルみたいな もっと手ごたえのある問題を準備中！');
-        return;
-      }
       document.querySelectorAll('#sansu-step-diff .diff-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      sansuState.diff = Number(btn.dataset.diff);
+      // 'gachi'（灘中レベル・ガチ＝パズル連鎖）は文字列のまま持つ
+      sansuState.diff = btn.dataset.diff === 'gachi' ? 'gachi' : Number(btn.dataset.diff);
       updateSansuStart();
     };
   });
@@ -1743,7 +1745,7 @@ function updateSansuStart() {
     }
   }
 
-  setChainCountOptions('sansu-q-count', sansuState.mode === 'normal' && sansuState.diff === 5);
+  setChainCountOptions('sansu-q-count', sansuState.mode === 'normal' && (sansuState.diff === 5 || sansuState.diff === 'gachi'));
   zone.classList.toggle('hidden', !ready);
 }
 
@@ -1996,9 +1998,9 @@ async function startSansuSession() {
   if (sansuState.mode === 'normal') {
     showLoading();
     try {
-      const isChain = sansuState.diff === 5;
+      const isChain = sansuState.diff === 5 || sansuState.diff === 'gachi';
       const all = isChain
-        ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('sansu-q-count').value)
+        ? await loadChainQuestions(sansuState.diff === 'gachi' ? 'gachi' : sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('sansu-q-count').value)
         : sansuState.cat === 'mix'
           ? await loadMixQuestions(sansuState.grade, sansuState.diff)
           : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);

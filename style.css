@@ -502,8 +502,9 @@ button { cursor: pointer; font-family: inherit; }
 .diff-btn.diff-locked { opacity: 0.4; filter: grayscale(0.6); pointer-events: none; }
 .diff-btn.diff-locked .diff-sub::after { content: "（問題なし）"; }
 /* 灘中レベル（ガチ）＝工事中。押せるが「準備中」を出すだけ */
-.diff-btn.diff-gachi { border-style: dashed; border-color: rgba(255,209,102,0.45); background: repeating-linear-gradient(45deg, rgba(255,209,102,0.06) 0 10px, rgba(255,107,107,0.06) 10px 20px); color: #cbd3e6; }
-.diff-btn.diff-gachi .diff-sub { color: #ffcf6a; font-weight: 800; }
+.diff-btn.diff-gachi { border-color: rgba(138,92,255,0.55); background: linear-gradient(135deg, rgba(138,92,255,0.14), rgba(255,107,107,0.10)); color: #e6e9f5; }
+.diff-btn.diff-gachi .diff-sub { color: #c9b3ff; font-weight: 800; }
+.diff-btn.diff-gachi.selected { background: linear-gradient(135deg,#8a5cff,#ff6b6b); border-color: #8a5cff; box-shadow: 0 0 18px rgba(138,92,255,0.45); color: #fff; }
 .diff-btn[data-diff="all"].selected { background: linear-gradient(135deg,#8a5cff,#c860f0); border-color: #c860f0; box-shadow: 0 0 18px rgba(200,96,240,0.4); }
 .diff-btn:active { transform: scale(0.94); }
 
@@ -529,6 +530,7 @@ button { cursor: pointer; font-family: inherit; }
 .badge-diff[data-level="3"] { background: var(--grad-gold); color: #080e20; }
 .badge-diff[data-level="4"] { background: var(--grad-red); color: #fff; }
 .badge-diff[data-level="5"] { background: linear-gradient(135deg,#ffd166,#ff6b6b,#8a5cff); color: #080e20; }
+.badge-diff[data-level="gachi"] { background: linear-gradient(135deg,#8a5cff,#ff6b6b 50%,#080e20); color: #fff; }
 .badge-type { background: var(--grad-purple); color: #fff; border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; }
 .sansu-question { font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; line-height: 1.6; text-align: center; }
 .sq-figure { text-align: center; margin: 6px 0 4px; line-height: 0; }
