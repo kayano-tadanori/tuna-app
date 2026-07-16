@@ -2450,5 +2450,908 @@
         "meaning": "①1か月で2時間早い×3か月＝6時間早い。②午後10時−6時間＝午後4時ごろです。よって、答えは4です。"
       }
     ]
+  },
+  {
+    "id": "rchain58",
+    "category": "chikara",
+    "grade": 5,
+    "title": "ばねののびと重さ",
+    "intro": "何もつるさないと長さ10cm（自然長）のばねがあります。20gのおもりをつるすと2cmのびました。ばねののびは、つるした重さに比例します。",
+    "svg": "<svg viewBox=\"0 0 220 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"110\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">のび∝重さ（自然長10cm）</text><line x1=\"60\" y1=\"30\" x2=\"140\" y2=\"30\" stroke=\"#9399b2\" stroke-width=\"3\"/><path d=\"M100 34 l16 4 l-16 5\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><path d=\"M100 43 l16 4 l-16 5\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><path d=\"M100 52 l16 4 l-16 5\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><path d=\"M100 61 l16 4 l-16 5\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><path d=\"M100 70 l16 4 l-16 5\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><rect x=\"86\" y=\"86\" width=\"30\" height=\"20\" rx=\"3\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#4f9eff\"/><text x=\"101\" y=\"99\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">20g</text><line x1=\"160\" y1=\"30\" x2=\"160\" y2=\"110\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"156\" y1=\"30\" x2=\"164\" y2=\"30\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"168\" y=\"33\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"start\" font-family=\"sans-serif\">0cm</text><line x1=\"156\" y1=\"50\" x2=\"164\" y2=\"50\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"168\" y=\"53\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"start\" font-family=\"sans-serif\">2cm</text><line x1=\"156\" y1=\"70\" x2=\"164\" y2=\"70\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"168\" y=\"73\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"start\" font-family=\"sans-serif\">4cm</text><line x1=\"156\" y1=\"90\" x2=\"164\" y2=\"90\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"168\" y=\"93\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"start\" font-family=\"sans-serif\">6cm</text><text x=\"101\" y=\"78\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">のび2cm</text></svg>",
+    "steps": [
+      {
+        "question": "40gのおもりをつるすと、ばねは何cmのびますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "2",
+          "6",
+          "8"
+        ],
+        "meaning": "①重さが2倍ならのびも2倍。②2×2＝4cmです。よって、答えは4です。"
+      },
+      {
+        "question": "60gのおもりをつるすと、ばね全体の長さ（自然長＋のび）は何cmになりますか。",
+        "answer": "16",
+        "choices": [
+          "16",
+          "6",
+          "12",
+          "18"
+        ],
+        "meaning": "①のびは60g→6cm、自然長10cmをたす。②10＋6＝16cmです（自然長を忘れない）。よって、答えは16です。"
+      },
+      {
+        "question": "ばね全体の長さが13cmになったとき、つるしたおもりは何gですか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "26",
+          "40",
+          "20"
+        ],
+        "meaning": "①のび＝13−10＝3cm。②20gで2cmだから3cmは20×(3/2)＝30gです。よって、答えは30です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain59",
+    "category": "chikara",
+    "grade": 5,
+    "title": "モビールのつり合い（2段）",
+    "intro": "軽い棒とひもでモビールを作ります。棒は「支点からのきょり×重さ」が左右で等しいとき水平になります（棒の重さは考えません）。下の棒は、支点から左に12cmのところに20g、右に8cmのところに□gのおもりがついています。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2段のモビール</text><line x1=\"140\" y1=\"26\" x2=\"140\" y2=\"40\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"80\" y1=\"40\" x2=\"200\" y2=\"40\" stroke=\"#cdd6f4\" stroke-width=\"2.5\"/><polygon points=\"134,40 146,40 140,30\" fill=\"#ffd166\"/><text x=\"140\" y=\"26\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">上の棒</text><line x1=\"80\" y1=\"40\" x2=\"80\" y2=\"56\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"68\" y=\"56\" width=\"24\" height=\"16\" rx=\"2\" fill=\"#f38ba8\" opacity=\"0.6\"/><text x=\"80\" y=\"68\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">100g</text><line x1=\"200\" y1=\"40\" x2=\"200\" y2=\"78\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"160\" y1=\"78\" x2=\"230\" y2=\"78\" stroke=\"#cdd6f4\" stroke-width=\"2.5\"/><polygon points=\"194,78 206,78 200,68\" fill=\"#ffd166\"/><text x=\"200\" y=\"92\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">下の棒</text><line x1=\"160\" y1=\"78\" x2=\"160\" y2=\"92\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"149\" y=\"92\" width=\"22\" height=\"15\" rx=\"2\" fill=\"#4f9eff\" opacity=\"0.6\"/><text x=\"160\" y=\"104\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">20g</text><line x1=\"230\" y1=\"78\" x2=\"230\" y2=\"92\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"220\" y=\"92\" width=\"20\" height=\"15\" rx=\"2\" fill=\"#4f9eff\" opacity=\"0.6\"/><text x=\"230\" y=\"104\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">□g</text><text x=\"162\" y=\"74\" fill=\"#06d6a0\" font-size=\"7\" text-anchor=\"start\" font-family=\"sans-serif\">12cm</text><text x=\"228\" y=\"74\" fill=\"#06d6a0\" font-size=\"7\" text-anchor=\"end\" font-family=\"sans-serif\">8cm</text></svg>",
+    "steps": [
+      {
+        "question": "下の棒がつり合うとき、右のおもり□は何gですか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "20",
+          "15",
+          "40"
+        ],
+        "meaning": "①左20g×12＝240、右は□×8＝240。②□＝240÷8＝30gです。よって、答えは30です。"
+      },
+      {
+        "question": "下の棒全体の重さ（20g＋30g）は何gですか。",
+        "answer": "50",
+        "choices": [
+          "50",
+          "40",
+          "30",
+          "60"
+        ],
+        "meaning": "①下の棒につくおもりの合計。②20＋30＝50gです。よって、答えは50です。"
+      },
+      {
+        "question": "この下の棒（50g）は上の棒の右はしにかかります。上の棒の支点から右10cmに下の棒、左□cmに100gがつくと、上の棒がつり合うのは□が何cmのときですか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "10",
+          "2",
+          "20"
+        ],
+        "meaning": "①右は50g×10＝500、左は100g×□＝500。②□＝500÷100＝5cmです。よって、答えは5です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain60",
+    "category": "chikara",
+    "grade": 6,
+    "title": "太さがちがう棒の重心",
+    "intro": "太さが一様でない棒AB（Aのほうが太い）があります。長さは60cm、全体の重さは300gです。両はしA・Bをばねばかりでつるすと、Aのばねばかりは200g、Bのばねばかりは100gを示しました。重さは「重心」という1点に集まっていると考えます。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">太さがちがう棒の重心をさがす</text><line x1=\"50\" y1=\"34\" x2=\"50\" y2=\"48\" stroke=\"#f9e2af\" stroke-width=\"1.4\"/><rect x=\"37\" y=\"48\" width=\"26\" height=\"13\" rx=\"2\" fill=\"#f9e2af\" opacity=\"0.75\"/><text x=\"50\" y=\"57\" fill=\"#1e1e2e\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">200g</text><line x1=\"230\" y1=\"34\" x2=\"230\" y2=\"48\" stroke=\"#f9e2af\" stroke-width=\"1.4\"/><rect x=\"217\" y=\"48\" width=\"26\" height=\"13\" rx=\"2\" fill=\"#f9e2af\" opacity=\"0.75\"/><text x=\"230\" y=\"57\" fill=\"#1e1e2e\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">100g</text><line x1=\"50\" y1=\"60\" x2=\"230\" y2=\"60\" stroke=\"#9399b2\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><path d=\"M50 74 Q140 88 230 82 L230 96 Q140 104 50 100 Z\" fill=\"#8b7355\" opacity=\"0.55\" stroke=\"#8b7355\"/><text x=\"50\" y=\"122\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A(太)</text><text x=\"230\" y=\"122\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B(細)</text><line x1=\"106\" y1=\"70\" x2=\"106\" y2=\"108\" stroke=\"#ff6b6b\" stroke-width=\"1.6\" stroke-dasharray=\"3 2\"/><text x=\"106\" y=\"138\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">重心＝？</text></svg>",
+    "steps": [
+      {
+        "question": "2本のばねばかりの合計は何gですか（これは棒全体の重さと同じ）。",
+        "answer": "300",
+        "choices": [
+          "300",
+          "200",
+          "400",
+          "100"
+        ],
+        "meaning": "①200＋100。②300g＝棒全体の重さです。よって、答えは300です。"
+      },
+      {
+        "question": "重心はA端から何cmの位置にありますか。（ばねばかりの比 A:B＝200:100＝2:1、重心は重い側に近く A端:B端＝1:2）",
+        "answer": "20",
+        "choices": [
+          "20",
+          "30",
+          "40",
+          "15"
+        ],
+        "meaning": "①ばねばかりが2:1なら、重心までのきょりは逆に1:2。②60を1:2に分けてA端から60×(1/3)＝20cmです。よって、答えは20です。"
+      },
+      {
+        "question": "重心はB端からは何cmの位置ですか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "20",
+          "30",
+          "45"
+        ],
+        "meaning": "①全体60cmからA端の20cmを引く。②60−20＝40cmです（A側が太いので重心はA寄り）。よって、答えは40です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain61",
+    "category": "suiyoueki",
+    "grade": 5,
+    "title": "水よう液の仲間分け",
+    "intro": "3つの水よう液A・B・Cは、うすい塩酸・食塩水・うすい水酸化ナトリウム水よう液のどれかです。調べると、Aは青色リトマス紙を赤くした。Bはどちらのリトマス紙も変わらなかった。Cは赤色リトマス紙を青くしました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">リトマス紙で仲間分け</text><path d=\"M50 44 h20 v34 a10 10 0 0 1 -20 0 Z\" fill=\"#ff6b6b\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"60\" y=\"40\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><text x=\"60\" y=\"98\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">青→赤</text><path d=\"M130 44 h20 v34 a10 10 0 0 1 -20 0 Z\" fill=\"#a6e3a1\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"140\" y=\"40\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><text x=\"140\" y=\"98\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">変化なし</text><path d=\"M210 44 h20 v34 a10 10 0 0 1 -20 0 Z\" fill=\"#4f9eff\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"220\" y=\"40\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><text x=\"220\" y=\"98\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">赤→青</text></svg>",
+    "steps": [
+      {
+        "question": "青色リトマス紙を赤くしたAは、酸性・中性・アルカリ性のどれですか。",
+        "answer": "酸性",
+        "choices": [
+          "酸性",
+          "中性",
+          "アルカリ性",
+          "わからない"
+        ],
+        "meaning": "①青→赤にするのは酸性の性質。②Aは酸性（うすい塩酸）です。よって、答えは酸性です。"
+      },
+      {
+        "question": "どちらのリトマス紙も変えなかったBは何性ですか。",
+        "answer": "中性",
+        "choices": [
+          "中性",
+          "酸性",
+          "アルカリ性",
+          "気体"
+        ],
+        "meaning": "①リトマス紙が変わらないのは中性。②Bは中性（食塩水）です。よって、答えは中性です。"
+      },
+      {
+        "question": "赤色リトマス紙を青くしたC（アルカリ性）にBTBえきを入れると、何色になりますか。",
+        "answer": "青色",
+        "choices": [
+          "青色",
+          "黄色",
+          "緑色",
+          "赤色"
+        ],
+        "meaning": "①BTBはアルカリ性で青。②Cは青色になります（酸性は黄・中性は緑）。よって、答えは青色です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain62",
+    "category": "suiyoueki",
+    "grade": 5,
+    "title": "食塩とミョウバンの溶け方のちがい",
+    "intro": "水100gにとける最大量は、食塩が20℃で36g・60℃で37g（温度でほとんど変わらない）、ミョウバンが20℃で12g・60℃で57g（温度で大きく変わる）です。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水100gにとける最大量（g）</text><line x1=\"60\" y1=\"40\" x2=\"60\" y2=\"106\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"60\" y1=\"106\" x2=\"250\" y2=\"106\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"100\" y=\"118\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">20℃</text><text x=\"210\" y=\"118\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">60℃</text><polyline points=\"100,94 210,49\" fill=\"none\" stroke=\"#cba6f7\" stroke-width=\"2\"/><text x=\"224\" y=\"49\" fill=\"#cba6f7\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">ミョウバン</text><polyline points=\"100,70 210,69\" fill=\"none\" stroke=\"#89dceb\" stroke-width=\"2\"/><text x=\"224\" y=\"69\" fill=\"#89dceb\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">食塩</text><circle cx=\"100\" cy=\"94\" r=\"2.3\" fill=\"#ffd166\"/><circle cx=\"210\" cy=\"49\" r=\"2.3\" fill=\"#ffd166\"/><circle cx=\"100\" cy=\"70\" r=\"2.3\" fill=\"#ffd166\"/><circle cx=\"210\" cy=\"69\" r=\"2.3\" fill=\"#ffd166\"/></svg>",
+    "steps": [
+      {
+        "question": "60℃の水100gにミョウバンを57gとかし、20℃まで冷やすと、結晶は何g出てきますか。",
+        "answer": "45",
+        "choices": [
+          "45",
+          "12",
+          "57",
+          "38"
+        ],
+        "meaning": "①60℃で57g、20℃で12gしかとけない。②57−12＝45g出ます。よって、答えは45です。"
+      },
+      {
+        "question": "同じように60℃の水100gに食塩を37gとかして20℃に冷やすと、結晶は何g出ますか。",
+        "answer": "1",
+        "choices": [
+          "1",
+          "25",
+          "17",
+          "0"
+        ],
+        "meaning": "①食塩は20℃でも36gとける。②37−36＝1gしか出ません。よって、答えは1です。"
+      },
+      {
+        "question": "冷やして結晶を取り出すのに向いているのは、食塩とミョウバンのどちらですか。",
+        "answer": "ミョウバン",
+        "choices": [
+          "ミョウバン",
+          "食塩",
+          "どちらも同じ",
+          "どちらも無理"
+        ],
+        "meaning": "①温度で溶ける量が大きく変わるほど、冷やして多く取り出せる。②ミョウバンです。よって、答えはミョウバンです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain63",
+    "category": "suiyoueki",
+    "grade": 5,
+    "title": "とかしても重さは変わらない",
+    "intro": "ものを水にとかしても、なくなったわけではありません。水よう液の重さ＝とかしたものの重さ＋水の重さ で、全体の重さは変わりません。水95gに食塩5gを全部とかしました。",
+    "svg": "<svg viewBox=\"0 0 240 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水95g ＋ 食塩5g → ？</text><path d=\"M96 48 L99 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L142 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"99\" y=\"42\" width=\"40\" height=\"62\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"119\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"119\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水95g＋食塩5g</text><text x=\"120\" y=\"86\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">重さは？</text></svg>",
+    "steps": [
+      {
+        "question": "できた食塩水全体の重さは何gですか。",
+        "answer": "100",
+        "choices": [
+          "100",
+          "95",
+          "90",
+          "105"
+        ],
+        "meaning": "①とかしても重さは消えない。②95＋5＝100gです。よって、答えは100です。"
+      },
+      {
+        "question": "この食塩水の濃さは何％ですか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "5.3",
+          "4.8",
+          "10"
+        ],
+        "meaning": "①5÷100×100。②5％です。よって、答えは5です。"
+      },
+      {
+        "question": "この食塩水100gを加熱して水を全部蒸発させると、あとに残る食塩は何gですか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "0",
+          "100",
+          "95"
+        ],
+        "meaning": "①水は蒸発するが食塩は残る。②とかした5gがそのまま残ります。よって、答えは5です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain64",
+    "category": "suiyoueki",
+    "grade": 6,
+    "title": "中和とできる食塩の量",
+    "intro": "うすい塩酸20cm³に、水酸化ナトリウム水よう液を少しずつ加えます。塩酸20cm³は水酸化ナトリウム25cm³でちょうど中性になり、その液を蒸発させると食塩が1.2gできます。中性になるまでは、加えた水酸化ナトリウムに比例して食塩ができます。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">加えたNaOHとできる食塩</text><line x1=\"44\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"44\" y1=\"120\" x2=\"44\" y2=\"34\" stroke=\"#9399b2\" stroke-width=\"1\"/><polyline points=\"44.0,120.0 142.0,51.2 240.0,51.2\" fill=\"none\" stroke=\"#f38ba8\" stroke-width=\"2.2\"/><circle cx=\"44.0\" cy=\"120.0\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"142.0\" cy=\"51.2\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"240.0\" cy=\"51.2\" r=\"2.6\" fill=\"#ffd166\"/><text x=\"240\" y=\"133\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">NaOH cm³</text><text x=\"46\" y=\"31\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">食塩 g</text><text x=\"189.04\" y=\"45.2\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">中性の後は増えない</text></svg>",
+    "steps": [
+      {
+        "question": "水酸化ナトリウムを25cm³加えたとき、液は何性ですか。",
+        "answer": "中性",
+        "choices": [
+          "中性",
+          "酸性",
+          "アルカリ性",
+          "気体"
+        ],
+        "meaning": "①ちょうど過不足なく反応。②中性です。よって、答えは中性です。"
+      },
+      {
+        "question": "水酸化ナトリウムを15cm³しか加えていないとき、液は何性ですか。",
+        "answer": "酸性",
+        "choices": [
+          "酸性",
+          "中性",
+          "アルカリ性",
+          "中和"
+        ],
+        "meaning": "①中性に必要な25cm³より少ない＝塩酸が余る。②酸性です。よって、答えは酸性です。"
+      },
+      {
+        "question": "水酸化ナトリウムを10cm³だけ加えた液を蒸発させると、食塩は何gできていますか。",
+        "answer": "0.48",
+        "choices": [
+          "0.48",
+          "1.2",
+          "0.6",
+          "0.3"
+        ],
+        "meaning": "①食塩は中性まで加えたNaOHに比例。②1.2×(10/25)＝0.48gです。よって、答えは0.48です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain65",
+    "category": "suiyoueki",
+    "grade": 6,
+    "title": "水を蒸発させて濃さを変える",
+    "intro": "こさ（濃度）8％の食塩水が250gあります。「とけている食塩の重さは、水を蒸発させても変わらない」ことを使って考えます。",
+    "svg": "<svg viewBox=\"0 0 240 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8％ → 10％にするには？</text><path d=\"M50 48 L53 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L96 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"53\" y=\"38\" width=\"40\" height=\"66\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"73\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8％</text><text x=\"73\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">250g</text><text x=\"128\" y=\"82\" fill=\"#cdd6f4\" font-size=\"14\" text-anchor=\"middle\">蒸発→</text><path d=\"M160 48 L163 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L206 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"163\" y=\"54\" width=\"40\" height=\"50\" fill=\"#f38ba8\" opacity=\"0.4\"/><text x=\"183\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10％</text><text x=\"183\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">？g</text></svg>",
+    "steps": [
+      {
+        "question": "この食塩水にとけている食塩は何gですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "25",
+          "18",
+          "30"
+        ],
+        "meaning": "①250×0.08。②20gです。よって、答えは20です。"
+      },
+      {
+        "question": "水を蒸発させて濃さ10％にするには、食塩水全体を何gにすればよいですか。",
+        "answer": "200",
+        "choices": [
+          "200",
+          "180",
+          "225",
+          "250"
+        ],
+        "meaning": "①食塩20gは変わらず、20が全体の10％になればよい。②20÷0.1＝200gです。よって、答えは200です。"
+      },
+      {
+        "question": "そのとき、蒸発させる水は何gですか。",
+        "answer": "50",
+        "choices": [
+          "50",
+          "25",
+          "45",
+          "30"
+        ],
+        "meaning": "①はじめ250g→200gにする。②250−200＝50gの水を蒸発させます。よって、答えは50です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain66",
+    "category": "suiyoueki",
+    "grade": 6,
+    "title": "混じった水よう液から取り出す",
+    "intro": "ミョウバンは水100gに20℃で12gまで、食塩は水100gに20℃で36gまでとけます。60℃の水100gに、食塩30gとミョウバン50gの両方をとかしました。この水よう液を20℃まで冷やします。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">冷やして片方だけ取り出す</text><path d=\"M50 48 L53 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L96 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"53\" y=\"44\" width=\"40\" height=\"60\" fill=\"#b4befe\" opacity=\"0.4\"/><text x=\"73\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">60℃</text><text x=\"73\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">食塩30・ミョウバン50</text><text x=\"128\" y=\"80\" fill=\"#cdd6f4\" font-size=\"14\" text-anchor=\"middle\">冷やす→</text><path d=\"M170 48 L173 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L216 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"173\" y=\"58\" width=\"40\" height=\"46\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"193\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">20℃</text><text x=\"193\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">結晶が出る</text><polygon points=\"180,96 184,104 176,104\" fill=\"#cba6f7\"/><polygon points=\"190,96 194,104 186,104\" fill=\"#cba6f7\"/><polygon points=\"200,96 204,104 196,104\" fill=\"#cba6f7\"/></svg>",
+    "steps": [
+      {
+        "question": "20℃に冷やしたとき、食塩は結晶になって出てきますか。（食塩は20℃で36gまでとけ、今は30g）",
+        "answer": "出てこない",
+        "choices": [
+          "出てこない",
+          "出てくる",
+          "半分出る",
+          "ぜんぶ出る"
+        ],
+        "meaning": "①食塩30gは20℃でも全部とけたまま（36gまでOK）。②出てきません。よって、答えは出てこないです。"
+      },
+      {
+        "question": "20℃に冷やすと、ミョウバンは何g結晶になって出てきますか。",
+        "answer": "38",
+        "choices": [
+          "38",
+          "12",
+          "50",
+          "18"
+        ],
+        "meaning": "①ミョウバンは20℃で12gまで。②50−12＝38g出ます。よって、答えは38です。"
+      },
+      {
+        "question": "出てきた結晶は、ほとんど食塩とミョウバンのどちらですか。",
+        "answer": "ミョウバン",
+        "choices": [
+          "ミョウバン",
+          "食塩",
+          "両方半分ずつ",
+          "砂糖"
+        ],
+        "meaning": "①食塩は出ず、ミョウバンだけ結晶になる。②ミョウバンです（溶け方のちがいで分けられる）。よって、答えはミョウバンです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain67",
+    "category": "denki",
+    "grade": 5,
+    "title": "電磁石のN極とS極",
+    "intro": "コイルに電流を流すと電磁石になり、両はしがN極とS極になります。電流の向きを反対にすると、N極とS極も入れかわります。方位磁針のN極（色つきの針）は、電磁石のS極に引きよせられます（N極どうし・S極どうしはしりぞけ合います）。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">電磁石の極</text><rect x=\"80\" y=\"54\" width=\"110\" height=\"22\" fill=\"#9399b2\" opacity=\"0.4\"/><ellipse cx=\"92\" cy=\"65\" rx=\"8\" ry=\"17\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><ellipse cx=\"114\" cy=\"65\" rx=\"8\" ry=\"17\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><ellipse cx=\"136\" cy=\"65\" rx=\"8\" ry=\"17\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><ellipse cx=\"158\" cy=\"65\" rx=\"8\" ry=\"17\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><ellipse cx=\"180\" cy=\"65\" rx=\"8\" ry=\"17\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><text x=\"66\" y=\"68\" fill=\"#cba6f7\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">？極</text><text x=\"204\" y=\"68\" fill=\"#4f9eff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">N極</text><circle cx=\"235\" cy=\"95\" r=\"10\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><line x1=\"235\" y1=\"95\" x2=\"243\" y2=\"90\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"235\" y=\"112\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">方位磁針</text></svg>",
+    "steps": [
+      {
+        "question": "電磁石の右はしがN極のとき、左はしは何極ですか。",
+        "answer": "S極",
+        "choices": [
+          "S極",
+          "N極",
+          "極はない",
+          "両方N極"
+        ],
+        "meaning": "①電磁石は両はしがちがう極になる。②右がNなら左はS極です。よって、答えはS極です。"
+      },
+      {
+        "question": "電流の向きを反対にすると、右はしは何極になりますか。",
+        "answer": "S極",
+        "choices": [
+          "S極",
+          "N極",
+          "変わらない",
+          "極が消える"
+        ],
+        "meaning": "①電流を反対にすると極も入れかわる。②右のNはS極になります。よって、答えはS極です。"
+      },
+      {
+        "question": "電磁石の右はし（N極）に、別の磁石のN極を近づけると、どうなりますか。",
+        "answer": "しりぞけ合う",
+        "choices": [
+          "しりぞけ合う",
+          "引き合う",
+          "何も起きない",
+          "くっつく"
+        ],
+        "meaning": "①N極どうしはしりぞけ合う。②しりぞけ合います。よって、答えはしりぞけ合うです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain68",
+    "category": "denki",
+    "grade": 5,
+    "title": "電池のつなぎ方と長もち",
+    "intro": "かん電池1個と豆電球1個をつなぐと、豆電球はふつうの明るさで光り、電池は4時間もちました。かん電池を2個使うつなぎ方を考えます。直列つなぎは明るいが電池の減りが速く、並列つなぎは明るさは1個と同じですが長もちします。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">直列と並列</text><text x=\"72\" y=\"34\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">直列（2個）</text><line x1=\"52\" y1=\"58\" x2=\"52\" y2=\"74\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"58\" y1=\"62\" x2=\"58\" y2=\"70\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"78\" y1=\"58\" x2=\"78\" y2=\"74\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"84\" y1=\"62\" x2=\"84\" y2=\"70\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"105\" cy=\"66\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M100 61 l10 10 M110 61 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><line x1=\"200\" y1=\"40\" x2=\"200\" y2=\"96\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/><text x=\"232\" y=\"34\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">並列（2個）</text><line x1=\"220\" y1=\"46\" x2=\"220\" y2=\"62\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"226\" y1=\"50\" x2=\"226\" y2=\"58\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"220\" y1=\"72\" x2=\"220\" y2=\"88\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"226\" y1=\"76\" x2=\"226\" y2=\"84\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"258\" cy=\"66\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M253 61 l10 10 M263 61 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/></svg>",
+    "steps": [
+      {
+        "question": "かん電池2個を直列につなぐと、豆電球の明るさは1個のときとくらべてどうなりますか。",
+        "answer": "明るくなる",
+        "choices": [
+          "明るくなる",
+          "暗くなる",
+          "変わらない",
+          "消える"
+        ],
+        "meaning": "①直列は電圧が2倍で電流が増える。②明るくなります。よって、答えは明るくなるです。"
+      },
+      {
+        "question": "かん電池2個を並列につなぐと、豆電球の明るさは1個のときとくらべてどうなりますか。",
+        "answer": "変わらない",
+        "choices": [
+          "変わらない",
+          "明るくなる",
+          "暗くなる",
+          "消える"
+        ],
+        "meaning": "①並列は電圧が1個ぶんのまま。②明るさは変わりません。よって、答えは変わらないです。"
+      },
+      {
+        "question": "かん電池2個を並列につなぐと、電池は何時間もちますか。（2個で分担するので長もち）",
+        "answer": "8",
+        "choices": [
+          "8",
+          "4",
+          "2",
+          "16"
+        ],
+        "meaning": "①2個が半分ずつ電流を出す＝2倍長もち。②4×2＝8時間です。よって、答えは8です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain69",
+    "category": "denki",
+    "grade": 5,
+    "title": "電流の近道（ショート）",
+    "intro": "電流は、通りやすい道（抵抗の小さい道）へ多く流れます。豆電球の両はしを、豆電球を通らない導線でつなぐ（近道を作る）と、電流はほとんど近道へ流れ、その豆電球には流れません。豆電球AとBが直列につながれた回路があります。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">豆電球Bに近道をつけると？</text><rect x=\"55\" y=\"46\" width=\"170\" height=\"56\" rx=\"6\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"66\" x2=\"55\" y2=\"82\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"61\" y1=\"70\" x2=\"61\" y2=\"78\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"110\" cy=\"46\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M105 41 l10 10 M115 41 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"110\" y=\"32\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><circle cx=\"180\" cy=\"46\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M175 41 l10 10 M185 41 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"180\" y=\"32\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><path d=\"M160 46 q20 -22 40 0\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"2\"/><text x=\"180\" y=\"22\" fill=\"#06d6a0\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">近道</text></svg>",
+    "steps": [
+      {
+        "question": "豆電球Bの両はしを抵抗のない導線でつなぐ（近道を作る）と、豆電球Bはどうなりますか。",
+        "answer": "消える",
+        "choices": [
+          "消える",
+          "明るくなる",
+          "変わらない",
+          "点めつする"
+        ],
+        "meaning": "①電流は近道へ流れBをよけるのでBには流れない。②消えます。よって、答えは消えるです。"
+      },
+      {
+        "question": "そのとき、豆電球Aの明るさはどうなりますか。",
+        "answer": "明るくなる",
+        "choices": [
+          "明るくなる",
+          "暗くなる",
+          "変わらない",
+          "消える"
+        ],
+        "meaning": "①Bのぶんの抵抗がなくなり、回路全体の電流が増える。②Aは明るくなります。よって、答えは明るくなるです。"
+      },
+      {
+        "question": "AもBも両方に近道をつけて、電池を導線だけでつなぐと、どうなりますか。",
+        "answer": "ショートする",
+        "choices": [
+          "ショートする",
+          "明るくなる",
+          "安全になる",
+          "何も起きない"
+        ],
+        "meaning": "①抵抗がなく大きな電流が流れ電池が熱くなる。②ショートする（危険）状態です。よって、答えはショートするです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain70",
+    "category": "denki",
+    "grade": 6,
+    "title": "電熱線で水をあたためる",
+    "intro": "電熱線を水に入れて電流を流すと、水があたたまります。同じ電熱線では、上がる温度は「電流を流した時間」に比例します。水100gに電熱線を入れ、5分間電流を流すと、水温が10℃上がりました。",
+    "svg": "<svg viewBox=\"0 0 240 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">電熱線で水をあたためる</text><path d=\"M70 54 L74 116 a4 4 0 0 0 4 4 h44 a4 4 0 0 0 4 -4 L130 54\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><rect x=\"74\" y=\"78\" width=\"52\" height=\"42\" fill=\"#4f9eff\" opacity=\"0.3\"/><path d=\"M88 86 h24\" stroke=\"#ff6b6b\" stroke-width=\"2\" fill=\"none\"/><path d=\"M88 94 h24\" stroke=\"#ff6b6b\" stroke-width=\"2\" fill=\"none\"/><path d=\"M88 102 h24\" stroke=\"#ff6b6b\" stroke-width=\"2\" fill=\"none\"/><path d=\"M88 110 h24\" stroke=\"#ff6b6b\" stroke-width=\"2\" fill=\"none\"/><text x=\"100\" y=\"132\" fill=\"#89dceb\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水100g</text><rect x=\"150\" y=\"60\" width=\"8\" height=\"56\" rx=\"4\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><circle cx=\"154\" cy=\"116\" r=\"6\" fill=\"#ff6b6b\" opacity=\"0.6\"/><text x=\"190\" y=\"84\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">5分で</text><text x=\"190\" y=\"100\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">+10℃</text></svg>",
+    "steps": [
+      {
+        "question": "同じ電熱線・水100gで、15分間電流を流すと、水温は何℃上がりますか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "20",
+          "15",
+          "25"
+        ],
+        "meaning": "①時間が3倍なら上がる温度も3倍。②10×3＝30℃です。よって、答えは30です。"
+      },
+      {
+        "question": "同じ電熱線で、水を200gにして5分間流すと、水温は何℃上がりますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "10",
+          "20",
+          "2"
+        ],
+        "meaning": "①水の量が2倍なら、上がる温度は半分。②10÷2＝5℃です。よって、答えは5です。"
+      },
+      {
+        "question": "水100gの水温を24℃上げるには、何分間電流を流せばよいですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "10",
+          "24",
+          "15"
+        ],
+        "meaning": "①5分で10℃なので、24℃は24÷10×5。②12分です。よって、答えは12です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain71",
+    "category": "denki",
+    "grade": 6,
+    "title": "直列と並列がまじった回路",
+    "intro": "同じ豆電球を使います。豆電球1個をかん電池につないだときの明るさを「1」とします。豆電球を直列につなぐほど電流が減って暗くなり、並列の枝はそれぞれ電池に直接つながって明るさをたもちます。回路には、豆電球Pが1個で電池につながる枝と、豆電球QとRが直列につながる枝があり、2つの枝は並列です。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P（1個）と Q-R（2個直列）が並列</text><line x1=\"46\" y1=\"76\" x2=\"46\" y2=\"92\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"52\" y1=\"80\" x2=\"52\" y2=\"88\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><rect x=\"46\" y=\"50\" width=\"200\" height=\"68\" rx=\"6\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><line x1=\"146\" y1=\"50\" x2=\"146\" y2=\"118\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><circle cx=\"96\" cy=\"50\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M91 45 l10 10 M101 45 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"96\" y=\"36\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P</text><circle cx=\"196\" cy=\"50\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M191 45 l10 10 M201 45 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"196\" y=\"36\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">Q</text><circle cx=\"196\" cy=\"118\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M191 113 l10 10 M201 113 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"196\" y=\"104\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">R</text><text x=\"230\" y=\"84\" fill=\"#0000\" font-size=\"1\" text-anchor=\"middle\" font-family=\"sans-serif\"></text></svg>",
+    "steps": [
+      {
+        "question": "豆電球QとRのように2個を直列にすると、1個あたりの明るさは「1」とくらべてどうなりますか。",
+        "answer": "暗くなる",
+        "choices": [
+          "暗くなる",
+          "明るくなる",
+          "変わらない",
+          "消える"
+        ],
+        "meaning": "①直列2個は電流が半分になる。②暗くなります。よって、答えは暗くなるです。"
+      },
+      {
+        "question": "豆電球P（1個だけの枝）の明るさは「1」とくらべてどうですか。",
+        "answer": "同じ",
+        "choices": [
+          "同じ",
+          "明るい",
+          "暗い",
+          "消える"
+        ],
+        "meaning": "①Pは電池に直接1個でつながる枝。②明るさは「1」で同じです。よって、答えは同じです。"
+      },
+      {
+        "question": "この回路で、いちばん明るい豆電球はどれですか。",
+        "answer": "P",
+        "choices": [
+          "P",
+          "Q",
+          "R",
+          "QとR"
+        ],
+        "meaning": "①Pは1、QとRは暗い。②いちばん明るいのはPです。よって、答えはPです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain72",
+    "category": "denki",
+    "grade": 6,
+    "title": "ちがう豆電球の電流の分かれ方",
+    "intro": "電流の流れやすさがちがう2つの豆電球XとYを並列につなぎます。同じ電池につなぐと、流れやすいXにはYの2倍の電流が流れます。並列の部分に、全部で「9」の電流が流れこみます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">並列：電流は流れやすい方へ多く</text><line x1=\"46\" y1=\"70\" x2=\"46\" y2=\"86\" stroke=\"#ffd166\" stroke-width=\"3\"/><line x1=\"52\" y1=\"74\" x2=\"52\" y2=\"82\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><rect x=\"46\" y=\"46\" width=\"200\" height=\"66\" rx=\"6\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><line x1=\"146\" y1=\"46\" x2=\"146\" y2=\"112\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><circle cx=\"96\" cy=\"46\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M91 41 l10 10 M101 41 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"96\" y=\"32\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">X</text><circle cx=\"196\" cy=\"46\" r=\"10\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><path d=\"M191 41 l10 10 M201 41 l-10 10\" stroke=\"#ff6b6b\" stroke-width=\"1\"/><text x=\"196\" y=\"32\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">Y</text><text x=\"96\" y=\"108\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">流れやすい</text><text x=\"140\" y=\"128\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">全体の電流 ＝ 9</text></svg>",
+    "steps": [
+      {
+        "question": "XとYに流れる電流の比は2:1です。豆電球Xに流れる電流はいくつですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "3",
+          "4.5",
+          "9"
+        ],
+        "meaning": "①全体9を2:1に分ける。②9×(2/3)＝6です。よって、答えは6です。"
+      },
+      {
+        "question": "豆電球Yに流れる電流はいくつですか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "6",
+          "4.5",
+          "2"
+        ],
+        "meaning": "①9×(1/3)。②3です（6＋3＝9で合う）。よって、答えは3です。"
+      },
+      {
+        "question": "明るいのは、電流が多く流れるXとYのどちらですか。",
+        "answer": "X",
+        "choices": [
+          "X",
+          "Y",
+          "同じ",
+          "どちらも消える"
+        ],
+        "meaning": "①電流が多いほど明るい。②X（6）のほうが明るいです。よって、答えはXです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain73",
+    "category": "sora",
+    "grade": 5,
+    "title": "季節による太陽の動き",
+    "intro": "太陽の通り道は季節でちがいます。夏至の日は南中高度が高く（頭の真上に近い）、昼が長くなります。冬至の日は南中高度が低く、昼が短くなります。春分・秋分はその中間です。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">太陽の通り道（季節でちがう）</text><line x1=\"20\" y1=\"118\" x2=\"260\" y2=\"118\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"30\" y=\"131\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">東</text><text x=\"250\" y=\"131\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">西</text><text x=\"140\" y=\"131\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">南</text><path d=\"M40 118 A120 78 0 0 1 240 118\" fill=\"none\" stroke=\"#ff9e64\" stroke-width=\"1.6\"/><text x=\"232\" y=\"44\" fill=\"#ff9e64\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">夏至</text><path d=\"M50 118 A110 56 0 0 1 230 118\" fill=\"none\" stroke=\"#f9e2af\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"226\" y=\"66\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">春秋分</text><path d=\"M64 118 A96 32 0 0 1 216 118\" fill=\"none\" stroke=\"#89b4fa\" stroke-width=\"1.4\"/><text x=\"210\" y=\"92\" fill=\"#89b4fa\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">冬至</text><circle cx=\"140\" cy=\"46\" r=\"8\" fill=\"#ff9e64\" opacity=\"0.9\"/><line x1=\"150.0\" y1=\"46.0\" x2=\"154.0\" y2=\"46.0\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"147.1\" y1=\"53.1\" x2=\"149.9\" y2=\"55.9\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"140.0\" y1=\"56.0\" x2=\"140.0\" y2=\"60.0\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"132.9\" y1=\"53.1\" x2=\"130.1\" y2=\"55.9\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"130.0\" y1=\"46.0\" x2=\"126.0\" y2=\"46.0\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"132.9\" y1=\"38.9\" x2=\"130.1\" y2=\"36.1\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"32.0\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/><line x1=\"147.1\" y1=\"38.9\" x2=\"149.9\" y2=\"36.1\" stroke=\"#ff9e64\" stroke-width=\"1.3\"/></svg>",
+    "steps": [
+      {
+        "question": "1年のうち、太陽の南中高度（正午の高さ）がいちばん高いのはいつですか。",
+        "answer": "夏至",
+        "choices": [
+          "夏至",
+          "冬至",
+          "春分",
+          "秋分"
+        ],
+        "meaning": "①夏至は太陽が頭の真上に近い。②夏至です。よって、答えは夏至です。"
+      },
+      {
+        "question": "昼の長さ（日の出から日の入りまで）がいちばん短いのはいつですか。",
+        "answer": "冬至",
+        "choices": [
+          "冬至",
+          "夏至",
+          "春分",
+          "秋分"
+        ],
+        "meaning": "①冬至は太陽の通り道が短い。②冬至です。よって、答えは冬至です。"
+      },
+      {
+        "question": "夏至の日、太陽は真東より北寄り・南寄りのどちらからのぼりますか。",
+        "answer": "北寄り",
+        "choices": [
+          "北寄り",
+          "南寄り",
+          "ちょうど真東",
+          "真西"
+        ],
+        "meaning": "①夏至は日の出が真東より北にずれる。②北寄りです。よって、答えは北寄りです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain74",
+    "category": "sora",
+    "grade": 5,
+    "title": "季節でかわる星座",
+    "intro": "同じ時刻に南の空に見える星座は、地球が太陽のまわりを回る（公転）ため、季節によってかわります。オリオン座は冬の夜、さそり座は夏の夜に南の空高く見えます。星は同じ時刻で見ると、1か月に約30°ずつ西へずれます。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">季節で見える星座がかわる</text><circle cx=\"140\" cy=\"78\" r=\"12\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"154.0\" y1=\"78.0\" x2=\"158.0\" y2=\"78.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"149.9\" y1=\"87.9\" x2=\"152.7\" y2=\"90.7\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"140.0\" y1=\"92.0\" x2=\"140.0\" y2=\"96.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"130.1\" y1=\"87.9\" x2=\"127.3\" y2=\"90.7\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"126.0\" y1=\"78.0\" x2=\"122.0\" y2=\"78.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"130.1\" y1=\"68.1\" x2=\"127.3\" y2=\"65.3\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"140.0\" y1=\"64.0\" x2=\"140.0\" y2=\"60.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"149.9\" y1=\"68.1\" x2=\"152.7\" y2=\"65.3\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><circle cx=\"210\" cy=\"78\" r=\"7\" fill=\"#4f9eff\" opacity=\"0.7\"/><text x=\"210\" y=\"67\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">春</text><circle cx=\"140\" cy=\"128\" r=\"7\" fill=\"#4f9eff\" opacity=\"0.7\"/><text x=\"140\" y=\"117\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">夏</text><text x=\"140\" y=\"146\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">さそり</text><circle cx=\"70\" cy=\"78\" r=\"7\" fill=\"#4f9eff\" opacity=\"0.7\"/><text x=\"70\" y=\"67\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">秋</text><circle cx=\"140\" cy=\"28\" r=\"7\" fill=\"#4f9eff\" opacity=\"0.7\"/><text x=\"140\" y=\"17\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">冬</text><text x=\"140\" y=\"46\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">オリオン</text><ellipse cx=\"140\" cy=\"78\" rx=\"70\" ry=\"50\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 3\"/></svg>",
+    "steps": [
+      {
+        "question": "冬の午後8時に南の空高く見えたオリオン座は、3か月後（春）の午後8時にはどちらへずれて見えますか。",
+        "answer": "西",
+        "choices": [
+          "西",
+          "東",
+          "真上",
+          "動かない"
+        ],
+        "meaning": "①星は月がたつと同じ時刻で西へずれる。②西です。よって、答えは西です。"
+      },
+      {
+        "question": "星は1か月に約30°ずれます。3か月では約何度ずれますか。",
+        "answer": "90",
+        "choices": [
+          "90",
+          "60",
+          "120",
+          "30"
+        ],
+        "meaning": "①30°×3か月。②90°です。よって、答えは90です。"
+      },
+      {
+        "question": "さそり座（夏）とオリオン座（冬）を、同じ夜に同時に南の空高く見ることはできますか。",
+        "answer": "できない",
+        "choices": [
+          "できない",
+          "できる",
+          "毎晩見える",
+          "春だけできる"
+        ],
+        "meaning": "①見える季節が正反対。②同時には見られません。よって、答えはできないです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain75",
+    "category": "sora",
+    "grade": 5,
+    "title": "月の満ち欠けの順序と日数",
+    "intro": "月は、新月→三日月→上弦の月→満月→下弦の月→新月 の順に形が変わり、これを約30日でくり返します。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">月の満ち欠け（約30日で1周）</text><circle cx=\"40\" cy=\"66\" r=\"15\" fill=\"#313244\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"40\" y=\"95\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">新月</text><circle cx=\"100\" cy=\"66\" r=\"15\" fill=\"#313244\" stroke=\"#9399b2\" stroke-width=\"1\"/><path d=\"M100 51 A 15 15 0 0 1 100 81 A 8.25 15 0 0 0 100 51 Z\" fill=\"#f9e2af\"/><text x=\"100\" y=\"95\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">三日月</text><circle cx=\"160\" cy=\"66\" r=\"15\" fill=\"#313244\" stroke=\"#9399b2\" stroke-width=\"1\"/><path d=\"M160 51 A 15 15 0 0 1 160 81 Z\" fill=\"#f9e2af\"/><text x=\"160\" y=\"95\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">上弦</text><circle cx=\"220\" cy=\"66\" r=\"15\" fill=\"#f9e2af\"/><text x=\"220\" y=\"95\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">満月</text></svg>",
+    "steps": [
+      {
+        "question": "新月から次の満月になるまで、およそ何日かかりますか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "30",
+          "7",
+          "3"
+        ],
+        "meaning": "①1周30日の半分。②約15日です。よって、答えは15です。"
+      },
+      {
+        "question": "三日月は、新月から数えておよそ何日目に見える月ですか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "7",
+          "15",
+          "1"
+        ],
+        "meaning": "①名前のとおり新月の約3日後。②3日目です。よって、答えは3です。"
+      },
+      {
+        "question": "満ち欠けが新月→満月→新月と1周するのに、およそ何日かかりますか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "15",
+          "365",
+          "7"
+        ],
+        "meaning": "①満ち欠けの1周期。②約30日（正しくは約29.5日）です。よって、答えは30です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain76",
+    "category": "sora",
+    "grade": 6,
+    "title": "金星の見え方（明けの明星・宵の明星）",
+    "intro": "金星は、地球より内側（太陽に近い側）を回る惑星です。そのため金星は真夜中には見えず、明け方の東の空か、夕方の西の空にしか見えません。明け方に見える金星を「明けの明星」、夕方に見える金星を「宵の明星」といいます。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">内側を回る金星</text><circle cx=\"70\" cy=\"78\" r=\"12\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"84.0\" y1=\"78.0\" x2=\"88.0\" y2=\"78.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"79.9\" y1=\"87.9\" x2=\"82.7\" y2=\"90.7\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"70.0\" y1=\"92.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"60.1\" y1=\"87.9\" x2=\"57.3\" y2=\"90.7\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"56.0\" y1=\"78.0\" x2=\"52.0\" y2=\"78.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"60.1\" y1=\"68.1\" x2=\"57.3\" y2=\"65.3\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"70.0\" y1=\"64.0\" x2=\"70.0\" y2=\"60.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"79.9\" y1=\"68.1\" x2=\"82.7\" y2=\"65.3\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><circle cx=\"70\" cy=\"78\" r=\"34\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 2\"/><circle cx=\"70\" cy=\"78\" r=\"66\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 2\"/><circle cx=\"104\" cy=\"78\" r=\"5\" fill=\"#f9e2af\"/><text x=\"104\" y=\"64\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">金星</text><circle cx=\"136\" cy=\"78\" r=\"7\" fill=\"#4f9eff\"/><text x=\"150\" y=\"82\" fill=\"#4f9eff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">地球</text><text x=\"70\" y=\"128\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">金星は太陽の近くにしか見えない</text></svg>",
+    "steps": [
+      {
+        "question": "夕方、西の空に見える金星を何といいますか。",
+        "answer": "宵の明星",
+        "choices": [
+          "宵の明星",
+          "明けの明星",
+          "流れ星",
+          "北極星"
+        ],
+        "meaning": "①夕方（宵）に見えるから。②宵の明星です。よって、答えは宵の明星です。"
+      },
+      {
+        "question": "真夜中に、金星を空高く見ることはできますか。",
+        "answer": "できない",
+        "choices": [
+          "できない",
+          "できる",
+          "満月の夜だけできる",
+          "毎晩できる"
+        ],
+        "meaning": "①金星は太陽の近く（内側）にあるので、太陽と反対の真夜中には来られない。②できません。よって、答えはできないです。"
+      },
+      {
+        "question": "金星が真夜中に見えないのは、金星が地球の公転の内側・外側のどちらを回っているからですか。",
+        "answer": "内側",
+        "choices": [
+          "内側",
+          "外側",
+          "同じ道",
+          "止まっている"
+        ],
+        "meaning": "①太陽に近い内側を回るから、いつも太陽の近くに見える。②内側です。よって、答えは内側です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain77",
+    "category": "sora",
+    "grade": 6,
+    "title": "日食と月食",
+    "intro": "太陽・月・地球が一直線にならぶと、日食や月食が起こります。日食は「太陽－月－地球」の順にならび、月が太陽をかくすとき。月食は「太陽－地球－月」の順にならび、月が地球のかげに入るときに起こります。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">一直線にならぶと食が起こる</text><text x=\"20\" y=\"44\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">日食：</text><circle cx=\"70\" cy=\"44\" r=\"8\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"80.0\" y1=\"44.0\" x2=\"84.0\" y2=\"44.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"77.1\" y1=\"51.1\" x2=\"79.9\" y2=\"53.9\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"70.0\" y1=\"54.0\" x2=\"70.0\" y2=\"58.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"62.9\" y1=\"51.1\" x2=\"60.1\" y2=\"53.9\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"60.0\" y1=\"44.0\" x2=\"56.0\" y2=\"44.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"62.9\" y1=\"36.9\" x2=\"60.1\" y2=\"34.1\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"70.0\" y1=\"34.0\" x2=\"70.0\" y2=\"30.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"77.1\" y1=\"36.9\" x2=\"79.9\" y2=\"34.1\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><circle cx=\"120\" cy=\"44\" r=\"5\" fill=\"#9399b2\"/><text x=\"120\" y=\"30\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">月</text><circle cx=\"170\" cy=\"44\" r=\"8\" fill=\"#4f9eff\"/><text x=\"170\" y=\"30\" fill=\"#4f9eff\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">地球</text><text x=\"20\" y=\"100\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">月食：</text><circle cx=\"70\" cy=\"100\" r=\"8\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"80.0\" y1=\"100.0\" x2=\"84.0\" y2=\"100.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"77.1\" y1=\"107.1\" x2=\"79.9\" y2=\"109.9\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"70.0\" y2=\"114.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"62.9\" y1=\"107.1\" x2=\"60.1\" y2=\"109.9\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"60.0\" y1=\"100.0\" x2=\"56.0\" y2=\"100.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"62.9\" y1=\"92.9\" x2=\"60.1\" y2=\"90.1\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"70.0\" y1=\"90.0\" x2=\"70.0\" y2=\"86.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"77.1\" y1=\"92.9\" x2=\"79.9\" y2=\"90.1\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><circle cx=\"140\" cy=\"100\" r=\"8\" fill=\"#4f9eff\"/><text x=\"140\" y=\"86\" fill=\"#4f9eff\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">地球</text><circle cx=\"200\" cy=\"100\" r=\"5\" fill=\"#9399b2\"/><text x=\"200\" y=\"86\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">月</text><line x1=\"60\" y1=\"44\" x2=\"180\" y2=\"44\" stroke=\"#9399b2\" stroke-width=\"0.6\" stroke-dasharray=\"2 2\"/><line x1=\"60\" y1=\"100\" x2=\"210\" y2=\"100\" stroke=\"#9399b2\" stroke-width=\"0.6\" stroke-dasharray=\"2 2\"/></svg>",
+    "steps": [
+      {
+        "question": "日食が起こるとき、月は新月・満月のどちらですか。",
+        "answer": "新月",
+        "choices": [
+          "新月",
+          "満月",
+          "上弦の月",
+          "下弦の月"
+        ],
+        "meaning": "①日食は月が太陽と同じ方向（太陽－月－地球）＝新月のとき。②新月です。よって、答えは新月です。"
+      },
+      {
+        "question": "月食が起こるとき、月は新月・満月のどちらですか。",
+        "answer": "満月",
+        "choices": [
+          "満月",
+          "新月",
+          "三日月",
+          "半月"
+        ],
+        "meaning": "①月食は月が太陽と反対（太陽－地球－月）＝満月のとき。②満月です。よって、答えは満月です。"
+      },
+      {
+        "question": "日食のとき、太陽・月・地球はどの順にならんでいますか。",
+        "answer": "太陽-月-地球",
+        "choices": [
+          "太陽-月-地球",
+          "太陽-地球-月",
+          "月-太陽-地球",
+          "地球-太陽-月"
+        ],
+        "meaning": "①月が太陽をかくす＝間に月。②太陽-月-地球の順です。よって、答えは太陽-月-地球です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain78",
+    "category": "sora",
+    "grade": 6,
+    "title": "太陽の南中高度の計算",
+    "intro": "太陽の南中高度（正午の太陽の高さ）は、その土地の緯度と季節で決まります。春分・秋分の日は「90°−緯度」、夏至の日はそれより23.4°高く、冬至の日はそれより23.4°低くなります。京都（北緯35°）で考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">南中高度＝90−緯度（±23.4）</text><line x1=\"40\" y1=\"100\" x2=\"240\" y2=\"100\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"40\" y=\"113\" fill=\"#8b7355\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">地平線</text><circle cx=\"60\" cy=\"100\" r=\"4\" fill=\"#cdd6f4\"/><text x=\"60\" y=\"116\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">観測者</text><line x1=\"60\" y1=\"100\" x2=\"200\" y2=\"52\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"205\" cy=\"49\" r=\"8\" fill=\"#ffd166\" opacity=\"0.9\"/><line x1=\"215.0\" y1=\"49.0\" x2=\"219.0\" y2=\"49.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"212.1\" y1=\"56.1\" x2=\"214.9\" y2=\"58.9\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"205.0\" y1=\"59.0\" x2=\"205.0\" y2=\"63.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"197.9\" y1=\"56.1\" x2=\"195.1\" y2=\"58.9\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"195.0\" y1=\"49.0\" x2=\"191.0\" y2=\"49.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"197.9\" y1=\"41.9\" x2=\"195.1\" y2=\"39.1\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"205.0\" y1=\"39.0\" x2=\"205.0\" y2=\"35.0\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><line x1=\"212.1\" y1=\"41.9\" x2=\"214.9\" y2=\"39.1\" stroke=\"#ffd166\" stroke-width=\"1.3\"/><path d=\"M110 100 A50 50 0 0 0 96 82\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><text x=\"120\" y=\"90\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">南中高度</text></svg>",
+    "steps": [
+      {
+        "question": "春分の日の、京都（北緯35°）の太陽の南中高度は何度ですか。",
+        "answer": "55",
+        "choices": [
+          "55",
+          "35",
+          "65",
+          "45"
+        ],
+        "meaning": "①90−緯度＝90−35。②55°です。よって、答えは55です。"
+      },
+      {
+        "question": "夏至の日の南中高度は何度ですか。（春分より23.4°高い）",
+        "answer": "78.4",
+        "choices": [
+          "78.4",
+          "55",
+          "31.6",
+          "68.4"
+        ],
+        "meaning": "①55＋23.4。②78.4°です。よって、答えは78.4です。"
+      },
+      {
+        "question": "冬至の日の南中高度は何度ですか。（春分より23.4°低い）",
+        "answer": "31.6",
+        "choices": [
+          "31.6",
+          "55",
+          "78.4",
+          "21.6"
+        ],
+        "meaning": "①55−23.4。②31.6°です（冬は太陽が低い）。よって、答えは31.6です。"
+      }
+    ]
   }
 ]
