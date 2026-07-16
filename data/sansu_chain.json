@@ -3936,5 +3936,564 @@
         "meaning": "①外側を1皮むくと1辺1個の立方体。②中心の1個だけ色がつきません。よって、答えは1です。"
       }
     ]
+  },
+  {
+    "id": "sc_chain_93",
+    "category": "baai",
+    "grade": 3,
+    "title": "2人のじゃんけん",
+    "intro": "たろうさんとはなこさんが、じゃんけんを1回します。それぞれ「グー・チョキ・パー」のどれかを出します。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">✊ ✌ ✋ の どれかを出す</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2人の 出し方は 何通り？</text><text x=\"140\" y=\"104\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">あいこ＝2人が同じ手</text></svg>",
+    "steps": [
+      {
+        "question": "2人の手の出し方は、全部で何通りありますか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "6",
+          "3",
+          "12"
+        ],
+        "meaning": "①たろう3通り×はなこ3通り。②3×3＝9通りです。よって、答えは9です。"
+      },
+      {
+        "question": "あいこ（2人が同じ手）になるのは何通りですか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "6",
+          "9",
+          "2"
+        ],
+        "meaning": "①グーどうし・チョキどうし・パーどうしの3通り。よって、答えは3です。"
+      },
+      {
+        "question": "どちらかが勝つ（勝負がつく）のは何通りですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "3",
+          "9",
+          "4"
+        ],
+        "meaning": "①全部9通りから、あいこ3通りをのぞく。②9−3＝6通りです。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_94",
+    "category": "baai",
+    "grade": 3,
+    "title": "コインで作る金額",
+    "intro": "10円玉2枚と、5円玉3枚があります。これらの一部（または全部）を使って作れる金額を考えます。（0円は数えません）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"42\" fill=\"#ffd166\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10円 10円 ｜ 5円 5円 5円</text><text x=\"140\" y=\"78\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">作れる金額は 何種類？</text><text x=\"140\" y=\"106\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ金額はまとめて1つ</text></svg>",
+    "steps": [
+      {
+        "question": "10円玉の使い方は「0枚・1枚・2枚」の何通りありますか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "4",
+          "1"
+        ],
+        "meaning": "①0枚・1枚・2枚。②3通りです。よって、答えは3です。"
+      },
+      {
+        "question": "5円玉の使い方は何通りありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "3",
+          "5",
+          "2"
+        ],
+        "meaning": "①0・1・2・3枚。②4通りです。よって、答えは4です。"
+      },
+      {
+        "question": "作れる金額は、全部で何種類ありますか。（0円はのぞく）",
+        "answer": "7",
+        "choices": [
+          "7",
+          "12",
+          "11",
+          "6"
+        ],
+        "meaning": "①作れる金額は5,10,15,20,25,30,35。②3×4＝12通りだが同じ金額が重なるので、実際は7種類です。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_95",
+    "category": "baai",
+    "grade": 3,
+    "title": "サイコロの目",
+    "intro": "サイコロを1回投げます。1から6のどれかの目が出ます。",
+    "svg": "<svg viewBox=\"0 0 268 72\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">サイコロの目（青=偶数 / ○=3の倍数）</text><rect x=\"18\" y=\"40\" width=\"37.333333333333336\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"36.66666666666667\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><rect x=\"58.333333333333336\" y=\"40\" width=\"37.333333333333336\" height=\"21\" fill=\"#4f9eff\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"77\" y=\"54.5\" fill=\"#4f9eff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><rect x=\"98.66666666666667\" y=\"40\" width=\"37.333333333333336\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><circle cx=\"117.33333333333334\" cy=\"50.5\" r=\"9\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><text x=\"117.33333333333334\" y=\"54.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><rect x=\"139\" y=\"40\" width=\"37.333333333333336\" height=\"21\" fill=\"#4f9eff\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"157.66666666666666\" y=\"54.5\" fill=\"#4f9eff\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><rect x=\"179.33333333333334\" y=\"40\" width=\"37.333333333333336\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"198\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"219.66666666666669\" y=\"40\" width=\"37.333333333333336\" height=\"21\" fill=\"#4f9eff\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><circle cx=\"238.33333333333334\" cy=\"50.5\" r=\"9\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><text x=\"238.33333333333334\" y=\"54.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6</text></svg>",
+    "steps": [
+      {
+        "question": "偶数の目は何通りありますか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "4",
+          "6"
+        ],
+        "meaning": "①2・4・6。②3通りです。よって、答えは3です。"
+      },
+      {
+        "question": "3の倍数の目は何通りありますか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "3",
+          "1",
+          "6"
+        ],
+        "meaning": "①3・6。②2通りです。よって、答えは2です。"
+      },
+      {
+        "question": "偶数か3の倍数（どちらか）の目は何通りありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "5",
+          "3",
+          "6"
+        ],
+        "meaning": "①偶数3＋3の倍数2。②6は両方に数えているので1回引く：3＋2−1＝4通り（2,3,4,6）です。よって、答えは4です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_96",
+    "category": "baai",
+    "grade": 3,
+    "title": "トーナメントの試合数",
+    "intro": "何チームかがトーナメント（勝ちぬき戦）で戦い、優勝を1チーム決めます。1試合すると、必ず1チームが負けて消えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"44\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1試合 → 1チームが負けて消える</text><text x=\"140\" y=\"78\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">優勝が決まるまでの 試合数は？</text><text x=\"140\" y=\"106\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">負けたチームの数 ＝ 試合数</text></svg>",
+    "steps": [
+      {
+        "question": "4チームで戦うと、優勝が決まるまでに何試合しますか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "4",
+          "6",
+          "2"
+        ],
+        "meaning": "①優勝1チーム以外の3チームが負ける。②1試合で1チーム負けるので3試合です。よって、答えは3です。"
+      },
+      {
+        "question": "8チームなら何試合ですか。",
+        "answer": "7",
+        "choices": [
+          "7",
+          "8",
+          "4",
+          "6"
+        ],
+        "meaning": "①8チームのうち7チームが負ける。②7試合です。よって、答えは7です。"
+      },
+      {
+        "question": "64チームなら何試合ですか。",
+        "answer": "63",
+        "choices": [
+          "63",
+          "64",
+          "32",
+          "128"
+        ],
+        "meaning": "①64−1＝63チームが負ける。②63試合です。よって、答えは63です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_97",
+    "category": "baai",
+    "grade": 4,
+    "title": "リレーの走る順番",
+    "intro": "4人（A・B・C・D）でリレーをします。走る順番の決め方を考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A B C D の 4人でリレー</text><text x=\"140\" y=\"72\" fill=\"#4f9eff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1走 → 2走 → 3走 → 4走(アンカー)</text><text x=\"140\" y=\"100\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">Aをアンカーに固定すると？</text></svg>",
+    "steps": [
+      {
+        "question": "Aさんを必ずアンカー（4走）にするとき、残り3人（B・C・D）を1〜3走に並べる並べ方は何通りですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "3",
+          "4",
+          "24"
+        ],
+        "meaning": "①3人を並べる：3×2×1。②6通りです。よって、答えは6です。"
+      },
+      {
+        "question": "Aさんを必ず1走にするときも、残り3人の並べ方は何通りですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "3",
+          "9",
+          "12"
+        ],
+        "meaning": "①やはり残り3人を並べる。②3×2×1＝6通りです（固定する場所がどこでも同じ）。よって、答えは6です。"
+      },
+      {
+        "question": "固定をなくし、4人が自由に走順を決めると何通りですか。",
+        "answer": "24",
+        "choices": [
+          "24",
+          "12",
+          "16",
+          "6"
+        ],
+        "meaning": "①4×3×2×1。②24通りです。よって、答えは24です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_98",
+    "category": "baai",
+    "grade": 4,
+    "title": "2つのサイコロの積",
+    "intro": "大小2つのサイコロを投げ、出た目をかけ算します。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">大の目 × 小の目</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">積が奇数になるのは どんなとき？</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">奇数×奇数だけが 奇数</text></svg>",
+    "steps": [
+      {
+        "question": "2つのサイコロの目の出方は全部で何通りですか。",
+        "answer": "36",
+        "choices": [
+          "36",
+          "12",
+          "30",
+          "21"
+        ],
+        "meaning": "①6×6。②36通りです。よって、答えは36です。"
+      },
+      {
+        "question": "積が奇数になるのは何通りですか。（奇数×奇数のときだけ奇数）",
+        "answer": "9",
+        "choices": [
+          "9",
+          "18",
+          "6",
+          "12"
+        ],
+        "meaning": "①奇数の目は1,3,5の3通り。②奇数×奇数＝3×3＝9通りです。よって、答えは9です。"
+      },
+      {
+        "question": "積が偶数になるのは何通りですか。",
+        "answer": "27",
+        "choices": [
+          "27",
+          "18",
+          "9",
+          "30"
+        ],
+        "meaning": "①全部36から奇数の9をひく。②36−9＝27通りです（少なくとも一方が偶数）。よって、答えは27です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_99",
+    "category": "baai",
+    "grade": 4,
+    "title": "となり合う2人",
+    "intro": "5人（A・B・C・D・E）が1列にならびます。AさんとBさんがとなり合うならび方を考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"42\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A B C D E の 5人が1列に</text><text x=\"140\" y=\"76\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">AとBを「1つのかたまり」にする</text><text x=\"140\" y=\"104\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">［AB］C D E → 4つを並べる</text></svg>",
+    "steps": [
+      {
+        "question": "5人が1列にならぶならび方は全部で何通りですか。",
+        "answer": "120",
+        "choices": [
+          "120",
+          "60",
+          "24",
+          "25"
+        ],
+        "meaning": "①5×4×3×2×1。②120通りです。よって、答えは120です。"
+      },
+      {
+        "question": "AとBをとなり合わせ（1つのかたまり）にして並べると何通りですか。",
+        "answer": "48",
+        "choices": [
+          "48",
+          "24",
+          "96",
+          "120"
+        ],
+        "meaning": "①［AB］とC・D・Eの4つを並べる＝24通り、ABの中でAB・BAの2通り。②24×2＝48通りです。よって、答えは48です。"
+      },
+      {
+        "question": "AとBがとなり合わないならび方は何通りですか。",
+        "answer": "72",
+        "choices": [
+          "72",
+          "96",
+          "48",
+          "60"
+        ],
+        "meaning": "①全部120から、となり合う48をひく。②120−48＝72通りです。よって、答えは72です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_100",
+    "category": "baai",
+    "grade": 5,
+    "title": "丸いテーブルの席（円順列）",
+    "intro": "4人が丸いテーブルのまわりにすわります。ぐるっと回して同じになるすわり方は、同じとみなします。",
+    "svg": "<svg viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><circle cx=\"120\" cy=\"90\" r=\"50\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><circle cx=\"120.0\" cy=\"40.0\" r=\"12\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"120\" y=\"44\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><circle cx=\"170.0\" cy=\"90.0\" r=\"12\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"170\" y=\"94\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><circle cx=\"120.0\" cy=\"140.0\" r=\"12\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"120\" y=\"144\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><circle cx=\"70.0\" cy=\"90.0\" r=\"12\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"70\" y=\"94\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">D</text><text x=\"120\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">回すと同じは同じ（円順列）</text></svg>",
+    "steps": [
+      {
+        "question": "4人を「1列」に並べる並べ方は何通りですか。",
+        "answer": "24",
+        "choices": [
+          "24",
+          "12",
+          "6",
+          "16"
+        ],
+        "meaning": "①4×3×2×1。②24通りです。よって、答えは24です。"
+      },
+      {
+        "question": "丸いテーブルでは、1つのすわり方を回転させると4通りが同じになります。円のすわり方は何通りですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "24",
+          "4",
+          "12"
+        ],
+        "meaning": "①4通りずつ同じものを数えている。②24÷4＝6通りです。よって、答えは6です。"
+      },
+      {
+        "question": "同じように、5人が丸いテーブルにすわるすわり方は何通りですか。",
+        "answer": "24",
+        "choices": [
+          "24",
+          "120",
+          "20",
+          "25"
+        ],
+        "meaning": "①5人を1列は120通り、回転で5通りずつ同じ。②120÷5＝24通りです。よって、答えは24です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_101",
+    "category": "baai",
+    "grade": 5,
+    "title": "6人を2組に分ける",
+    "intro": "6人を、3人ずつの2つの組に分けます。2つの組に区別（A組・B組など）はありません。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">6人 → 3人 ＋ 3人</text><text x=\"140\" y=\"74\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">まず 6人から3人を選ぶ</text><text x=\"140\" y=\"102\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">組に区別がない点に注意</text></svg>",
+    "steps": [
+      {
+        "question": "6人から3人を選ぶ選び方は何通りですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "18",
+          "10",
+          "120"
+        ],
+        "meaning": "①6×5×4÷(3×2×1)。②20通りです。よって、答えは20です。"
+      },
+      {
+        "question": "3人を選ぶと、残りの3人はもう1つの組に決まります。「区別しない2組」では、同じ分け方を何回ずつ数えていますか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "3",
+          "1",
+          "6"
+        ],
+        "meaning": "①「①で選んだ3人」と「残り3人」を入れかえても同じ分け方。②2回ずつ数えています。よって、答えは2です。"
+      },
+      {
+        "question": "2組への分け方は本当は何通りですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "20",
+          "40",
+          "15"
+        ],
+        "meaning": "①20通りは2回ずつ数えている。②20÷2＝10通りです。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_102",
+    "category": "baai",
+    "grade": 5,
+    "title": "5の倍数を作る",
+    "intro": "0・1・2・3・4・5 の6枚のカードから3枚を選んでならべ、3けたの整数を作ります。そのうち5の倍数（一の位が0か5）は何個かを考えます。（百の位に0は置けません）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"38\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">□ □ □（5の倍数 ＝ 一の位が0か5）</text><text x=\"140\" y=\"70\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">一の位が0のとき / 5のときで場合分け</text><text x=\"140\" y=\"98\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">一の位5のときは 百の位に0が置けない</text></svg>",
+    "steps": [
+      {
+        "question": "一の位が0のとき、百の位と十の位の並べ方は何通りですか。（残り5枚から2枚）",
+        "answer": "20",
+        "choices": [
+          "20",
+          "16",
+          "25",
+          "10"
+        ],
+        "meaning": "①百の位は残り5枚、十の位は残り4枚。②5×4＝20通りです。よって、答えは20です。"
+      },
+      {
+        "question": "一の位が5のとき、3けたの整数は何個できますか。（百の位に0は置けない）",
+        "answer": "16",
+        "choices": [
+          "16",
+          "20",
+          "12",
+          "25"
+        ],
+        "meaning": "①百の位は0と5以外で4通り、十の位は残り4通り。②4×4＝16個です。よって、答えは16です。"
+      },
+      {
+        "question": "5の倍数は全部で何個できますか。",
+        "answer": "36",
+        "choices": [
+          "36",
+          "40",
+          "32",
+          "25"
+        ],
+        "meaning": "①一の位0が20個、一の位5が16個。②20＋16＝36個です。よって、答えは36です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_103",
+    "category": "baai",
+    "grade": 6,
+    "title": "8人から3人を選ぶ",
+    "intro": "8人の中から、そうじ当番の3人を選びます。（順番は考えません）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8人から 3人を選ぶ</text><text x=\"140\" y=\"74\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">まず 順番つきで 8×7×6</text><text x=\"140\" y=\"102\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ3人を 何回も数えている</text></svg>",
+    "steps": [
+      {
+        "question": "8人から3人を「順番つき」で選ぶと何通りですか。",
+        "answer": "336",
+        "choices": [
+          "336",
+          "512",
+          "56",
+          "24"
+        ],
+        "meaning": "①1人目8通り、2人目7通り、3人目6通り。②8×7×6＝336通りです。よって、答えは336です。"
+      },
+      {
+        "question": "同じ3人の組を、並べる順番のちがいで何回ずつ数えていますか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "3",
+          "2",
+          "8"
+        ],
+        "meaning": "①3人の並べ方は3×2×1。②6回ずつ数えています。よって、答えは6です。"
+      },
+      {
+        "question": "3人の選び方（組）は何通りですか。",
+        "answer": "56",
+        "choices": [
+          "56",
+          "112",
+          "48",
+          "336"
+        ],
+        "meaning": "①336通りは6回ずつ数えている。②336÷6＝56通りです。よって、答えは56です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_104",
+    "category": "baai",
+    "grade": 6,
+    "title": "3人のじゃんけん",
+    "intro": "3人（A・B・C）が同時にじゃんけんを1回します。それぞれグー・チョキ・パーのどれかを出します。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"38\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A B C が ✊✌✋ を出す</text><text x=\"140\" y=\"68\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">あいこ ＝ 全員同じ or 全員バラバラ</text><text x=\"140\" y=\"96\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">勝負がつく＝あいこ以外</text></svg>",
+    "steps": [
+      {
+        "question": "3人の手の出し方は全部で何通りですか。",
+        "answer": "27",
+        "choices": [
+          "27",
+          "9",
+          "18",
+          "6"
+        ],
+        "meaning": "①各自3通りが3人。②3×3×3＝27通りです。よって、答えは27です。"
+      },
+      {
+        "question": "あいこになるのは何通りですか。（全員同じ手＝3通り、全員バラバラ＝グチパの並び＝6通り）",
+        "answer": "9",
+        "choices": [
+          "9",
+          "6",
+          "3",
+          "12"
+        ],
+        "meaning": "①全員同じ3通り＋全員ちがう(3×2×1)6通り。②3＋6＝9通りです。よって、答えは9です。"
+      },
+      {
+        "question": "勝負がつく（あいこでない）のは何通りですか。",
+        "answer": "18",
+        "choices": [
+          "18",
+          "9",
+          "24",
+          "21"
+        ],
+        "meaning": "①全部27からあいこ9をひく。②27−9＝18通りです。よって、答えは18です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_105",
+    "category": "baai",
+    "grade": 6,
+    "title": "同じ数字を使える3けた",
+    "intro": "0・1・2 の3種類の数字を使って、3けたの整数を作ります。同じ数字を何回使ってもかまいません。（百の位に0は置けません）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">0・1・2（同じ数字くり返しOK）</text><text x=\"140\" y=\"72\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">百の位｜十の位｜一の位</text><text x=\"140\" y=\"100\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">百の位だけ 0がダメ</text></svg>",
+    "steps": [
+      {
+        "question": "百の位に置ける数字は何通りですか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "3",
+          "1",
+          "0"
+        ],
+        "meaning": "①0は置けないので1か2。②2通りです。よって、答えは2です。"
+      },
+      {
+        "question": "十の位と一の位は、それぞれ0・1・2が使えます。この2けたの並べ方は何通りですか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "6",
+          "8",
+          "12"
+        ],
+        "meaning": "①十の位3通り×一の位3通り（同じ数字OK）。②3×3＝9通りです。よって、答えは9です。"
+      },
+      {
+        "question": "3けたの整数は全部で何個作れますか。",
+        "answer": "18",
+        "choices": [
+          "18",
+          "27",
+          "12",
+          "9"
+        ],
+        "meaning": "①百の位2通り×(十・一)9通り。②2×9＝18個です。よって、答えは18です。"
+      }
+    ]
   }
 ]
