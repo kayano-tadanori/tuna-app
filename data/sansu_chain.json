@@ -6621,5 +6621,515 @@
         "meaning": "①全部で11個のうち既約が4個。②11−4＝7個（分子が2,3,4,6,8,9,10）です。よって、答えは7です。"
       }
     ]
+  },
+  {
+    "id": "sc_chain_156",
+    "category": "wariai",
+    "grade": 5,
+    "title": "セールの値引き",
+    "intro": "定価2000円の服が、3割引きで売られています。（1割＝10分の1）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">定価 2000円</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3割引き（定価の30％を引く）</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">売値はいくら？</text></svg>",
+    "steps": [
+      {
+        "question": "3割引きの「引く金額」は何円ですか。",
+        "answer": "600",
+        "choices": [
+          "600",
+          "300",
+          "700",
+          "1400"
+        ],
+        "meaning": "①2000の3割＝2000×0.3。②600円です。よって、答えは600です。"
+      },
+      {
+        "question": "売値は何円ですか。",
+        "answer": "1400",
+        "choices": [
+          "1400",
+          "600",
+          "1700",
+          "1200"
+        ],
+        "meaning": "①定価2000から600引く。②2000−600＝1400円です。よって、答えは1400です。"
+      },
+      {
+        "question": "さらにレジで100円引きになりました。実際にはらう金額は何円ですか。",
+        "answer": "1300",
+        "choices": [
+          "1300",
+          "1400",
+          "1500",
+          "1200"
+        ],
+        "meaning": "①1400からさらに100引く。②1300円です。よって、答えは1300です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_157",
+    "category": "wariai",
+    "grade": 5,
+    "title": "3人で比に分ける",
+    "intro": "3600円を、A・B・Cの3人で A：B：C＝2：3：4 の割合になるように分けます。",
+    "svg": "<svg viewBox=\"0 0 280 188\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3600円を 2：3：4 に</text><rect x=\"40\" y=\"46\" width=\"60\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><rect x=\"40\" y=\"80\" width=\"90\" height=\"22\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"32\" y=\"95\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><rect x=\"40\" y=\"114\" width=\"120\" height=\"22\" fill=\"#ffd166\" opacity=\"0.4\" stroke=\"#ffd166\"/><text x=\"32\" y=\"129\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">C</text></svg>",
+    "steps": [
+      {
+        "question": "比の数（2・3・4）を全部たすといくつですか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "7",
+          "10",
+          "24"
+        ],
+        "meaning": "①2＋3＋4。②9です（全体を9等分すると考える）。よって、答えは9です。"
+      },
+      {
+        "question": "比の「1」にあたる金額は何円ですか。",
+        "answer": "400",
+        "choices": [
+          "400",
+          "360",
+          "450",
+          "900"
+        ],
+        "meaning": "①全体3600円を比の合計9で分ける。②3600÷9＝400円です。よって、答えは400です。"
+      },
+      {
+        "question": "Cさんがもらう金額は何円ですか。",
+        "answer": "1600",
+        "choices": [
+          "1600",
+          "1200",
+          "800",
+          "1440"
+        ],
+        "meaning": "①Cは比で4。②4×400＝1600円です。よって、答えは1600です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_158",
+    "category": "wariai",
+    "grade": 5,
+    "title": "めがねの人（もとにする量）",
+    "intro": "あるクラスで、めがねをかけている人は12人です。これはクラス全体のちょうど3割にあたります。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">めがねの人 ＝ 12人</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">これが クラス全体の 3割</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">クラス全体は 何人？</text></svg>",
+    "steps": [
+      {
+        "question": "クラス全体の「1割」は何人ですか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "3",
+          "6",
+          "12"
+        ],
+        "meaning": "①3割が12人なので、1割は12÷3。②4人です。よって、答えは4です。"
+      },
+      {
+        "question": "クラス全体は何人ですか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "30",
+          "36",
+          "120"
+        ],
+        "meaning": "①1割が4人なので、全体（10割）は4×10。②40人です。よって、答えは40です。"
+      },
+      {
+        "question": "めがねをかけていない人は何人ですか。",
+        "answer": "28",
+        "choices": [
+          "28",
+          "30",
+          "24",
+          "36"
+        ],
+        "meaning": "①全体40からめがねの12を引く。②40−12＝28人です。よって、答えは28です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_159",
+    "category": "wariai",
+    "grade": 6,
+    "title": "水を蒸発させて濃く",
+    "intro": "8％の食塩水300gから水を蒸発させて、12％の食塩水にします。（水は減りますが、食塩の重さは変わりません）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"36\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">8％ 食塩水 300g</text><text x=\"140\" y=\"66\" fill=\"#ff6b6b\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水を蒸発 → 12％にする</text><text x=\"140\" y=\"96\" fill=\"#ffd166\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">食塩の重さは 変わらない！</text></svg>",
+    "steps": [
+      {
+        "question": "はじめの食塩水にふくまれる食塩は何gですか。",
+        "answer": "24",
+        "choices": [
+          "24",
+          "36",
+          "30",
+          "8"
+        ],
+        "meaning": "①300の8％。②300×0.08＝24gです。よって、答えは24です。"
+      },
+      {
+        "question": "食塩24gのままで12％にすると、食塩水全体は何gになりますか。",
+        "answer": "200",
+        "choices": [
+          "200",
+          "288",
+          "150",
+          "250"
+        ],
+        "meaning": "①12％で食塩が24gなら、全体＝24÷0.12。②200gです。よって、答えは200です。"
+      },
+      {
+        "question": "蒸発させた水は何gですか。",
+        "answer": "100",
+        "choices": [
+          "100",
+          "88",
+          "112",
+          "76"
+        ],
+        "meaning": "①300gが200gになった。②300−200＝100gの水を蒸発させました。よって、答えは100です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_160",
+    "category": "wariai",
+    "grade": 6,
+    "title": "何割引きまで損しない",
+    "intro": "原価800円の品物に、25％の利益を見こんで定価をつけました。安売りをしても、売値が原価（800円）を下回らなければ損はしません。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">原価 800円 → 25％の利益で定価</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">売値が 800円以上なら 損しない</text></svg>",
+    "steps": [
+      {
+        "question": "定価は何円ですか。",
+        "answer": "1000",
+        "choices": [
+          "1000",
+          "825",
+          "1025",
+          "1200"
+        ],
+        "meaning": "①原価800の25％は200。②800＋200＝1000円です。よって、答えは1000です。"
+      },
+      {
+        "question": "原価800円は、定価1000円の何％にあたりますか。",
+        "answer": "80",
+        "choices": [
+          "80",
+          "75",
+          "25",
+          "20"
+        ],
+        "meaning": "①800÷1000×100。②80％です。よって、答えは80です。"
+      },
+      {
+        "question": "損をしないためには、定価の何％引きまでにすればよいですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "25",
+          "80",
+          "15"
+        ],
+        "meaning": "①売値が定価の80％（＝原価）までならOK。②100−80＝20％引きまでです。よって、答えは20です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_161",
+    "category": "wariai",
+    "grade": 6,
+    "title": "お金を使ったあとの比",
+    "intro": "兄と弟の持っているお金の比は、はじめ 3：2 でした。兄が500円使ったところ、兄と弟の比が 1：1（同じ）になりました。（弟のお金は変わっていません）",
+    "svg": "<svg viewBox=\"0 0 280 154\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">はじめ 兄：弟＝3：2</text><rect x=\"40\" y=\"46\" width=\"150\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">兄</text><rect x=\"40\" y=\"80\" width=\"100\" height=\"22\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"32\" y=\"95\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">弟</text><text x=\"46\" y=\"120\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">兄が500円使う → 1：1</text></svg>",
+    "steps": [
+      {
+        "question": "弟のお金は変わりません。兄は比で3から2（弟と同じ）に減りました。減った「比の1」が500円です。比の1は何円ですか。",
+        "answer": "500",
+        "choices": [
+          "500",
+          "250",
+          "1000",
+          "300"
+        ],
+        "meaning": "①兄が使った500円が、比の3−2＝1にあたる。②比の1は500円です。よって、答えは500です。"
+      },
+      {
+        "question": "はじめ、兄は何円持っていましたか。",
+        "answer": "1500",
+        "choices": [
+          "1500",
+          "1000",
+          "2000",
+          "1200"
+        ],
+        "meaning": "①兄ははじめ比で3。②3×500＝1500円です。よって、答えは1500です。"
+      },
+      {
+        "question": "はじめ、弟は何円持っていましたか。",
+        "answer": "1000",
+        "choices": [
+          "1000",
+          "1500",
+          "750",
+          "500"
+        ],
+        "meaning": "①弟は比で2。②2×500＝1000円です（兄1500−500＝1000で弟と同じ）。よって、答えは1000です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_162",
+    "category": "hayasa",
+    "grade": 5,
+    "title": "池のまわりで出会う",
+    "intro": "1周1200mの池のまわりを、AさんとBさんが同じ場所から反対向きに同時に歩き始めます。Aさんは分速70m、Bさんは分速50mです。",
+    "svg": "<svg viewBox=\"0 0 260 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><circle cx=\"130\" cy=\"88\" r=\"54\" fill=\"#4f9eff\" opacity=\"0.12\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><circle cx=\"130\" cy=\"34\" r=\"5\" fill=\"#ffd166\"/><text x=\"130\" y=\"26\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">スタート</text><path d=\"M138 38 a54 54 0 0 1 18 10\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><path d=\"M122 38 a54 54 0 0 0 -18 10\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"2\"/><text x=\"180\" y=\"70\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\">A 分速70m</text><text x=\"80\" y=\"70\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"end\" font-family=\"sans-serif\">B 分速50m</text><text x=\"130\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1周1200m・反対向き</text></svg>",
+    "steps": [
+      {
+        "question": "2人は反対向きなので、1分間に合わせて何m近づきますか（2人の間がちぢまりますか）。",
+        "answer": "120",
+        "choices": [
+          "120",
+          "20",
+          "60",
+          "100"
+        ],
+        "meaning": "①反対向きは速さの和だけ近づく。②70＋50＝120mです。よって、答えは120です。"
+      },
+      {
+        "question": "2人がはじめて出会うのは、出発してから何分後ですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "12",
+          "20",
+          "6"
+        ],
+        "meaning": "①1周1200mを1分に120mずつちぢめる。②1200÷120＝10分後です。よって、答えは10です。"
+      },
+      {
+        "question": "出会った地点は、Aさんが歩いた道のりで何mの所ですか。",
+        "answer": "700",
+        "choices": [
+          "700",
+          "500",
+          "600",
+          "1200"
+        ],
+        "meaning": "①Aは分速70mで10分。②70×10＝700mです。よって、答えは700です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_163",
+    "category": "hayasa",
+    "grade": 5,
+    "title": "往復の平均の速さ",
+    "intro": "A町とB町の間（120km）を、行きは時速40km、帰りは時速60kmで往復しました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"34\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A町 ⇄ B町（120km）</text><text x=\"140\" y=\"64\" fill=\"#4f9eff\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">行き 時速40km / 帰り 時速60km</text><text x=\"140\" y=\"94\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">往復の平均の速さは？</text><text x=\"140\" y=\"116\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">（40と60の平均50ではない！）</text></svg>",
+    "steps": [
+      {
+        "question": "行きにかかった時間は何時間ですか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "4",
+          "1.5"
+        ],
+        "meaning": "①120÷40。②3時間です。よって、答えは3です。"
+      },
+      {
+        "question": "帰りにかかった時間は何時間ですか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "3",
+          "1",
+          "2.5"
+        ],
+        "meaning": "①120÷60。②2時間です。よって、答えは2です。"
+      },
+      {
+        "question": "往復の平均の速さは時速何kmですか。（全体の道のり÷全体の時間）",
+        "answer": "48",
+        "choices": [
+          "48",
+          "50",
+          "45",
+          "52"
+        ],
+        "meaning": "①往復240kmを、かかった時間5時間で。②240÷5＝時速48kmです（40と60の平均50ではない）。よって、答えは48です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_164",
+    "category": "hayasa",
+    "grade": 5,
+    "title": "歩はばと歩数",
+    "intro": "たろうさんは、1歩の歩はばが75cmで、1分間に80歩あるきます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1歩 75cm ・ 1分に 80歩</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1分間に 何m 進む？</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">（100cm ＝ 1m）</text></svg>",
+    "steps": [
+      {
+        "question": "たろうさんは1分間に何m進みますか。",
+        "answer": "60",
+        "choices": [
+          "60",
+          "600",
+          "6000",
+          "155"
+        ],
+        "meaning": "①75cm×80歩＝6000cm。②6000cm＝60mです（分速60m）。よって、答えは60です。"
+      },
+      {
+        "question": "3km（3000m）進むのに何分かかりますか。",
+        "answer": "50",
+        "choices": [
+          "50",
+          "40",
+          "60",
+          "30"
+        ],
+        "meaning": "①分速60mで3000m。②3000÷60＝50分です。よって、答えは50です。"
+      },
+      {
+        "question": "30分あるくと何m進みますか。",
+        "answer": "1800",
+        "choices": [
+          "1800",
+          "1500",
+          "2400",
+          "900"
+        ],
+        "meaning": "①分速60m×30分。②60×30＝1800mです。よって、答えは1800です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_165",
+    "category": "hayasa",
+    "grade": 6,
+    "title": "2つの列車のすれちがい",
+    "intro": "長さ150mの列車Aが秒速25m、長さ120mの列車Bが秒速20mで、反対向きに走ってすれちがいます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"20\" y=\"50\" width=\"90\" height=\"16\" rx=\"4\" fill=\"#4f9eff\" opacity=\"0.5\" stroke=\"#4f9eff\"/><text x=\"65\" y=\"62\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A 150m</text><path d=\"M112 44 h26\" stroke=\"#ffd166\" stroke-width=\"2\"/><polygon points=\"140,44 132,40 132,48\" fill=\"#ffd166\"/><rect x=\"170\" y=\"74\" width=\"90\" height=\"16\" rx=\"4\" fill=\"#ff6b6b\" opacity=\"0.5\" stroke=\"#ff6b6b\"/><text x=\"215\" y=\"86\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B 120m</text><path d=\"M168 96 h-26\" stroke=\"#ffd166\" stroke-width=\"2\"/><polygon points=\"140,96 148,92 148,100\" fill=\"#ffd166\"/><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A 秒速25m ← → B 秒速20m（反対向き）</text><text x=\"140\" y=\"118\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">すれちがう＝2つの長さの分だけ進む</text></svg>",
+    "steps": [
+      {
+        "question": "すれちがい始めてからすれちがい終わるまでに、2つの列車が合わせて進む長さは何mですか。",
+        "answer": "270",
+        "choices": [
+          "270",
+          "150",
+          "120",
+          "30"
+        ],
+        "meaning": "①先頭が出会ってから最後尾がはなれるまで＝両方の長さの合計。②150＋120＝270mです。よって、答えは270です。"
+      },
+      {
+        "question": "反対向きなので、2つの列車は1秒間に合わせて何m近づきますか。",
+        "answer": "45",
+        "choices": [
+          "45",
+          "5",
+          "50",
+          "25"
+        ],
+        "meaning": "①反対向きは速さの和。②25＋20＝45mです。よって、答えは45です。"
+      },
+      {
+        "question": "すれちがい終わるまでに何秒かかりますか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "9",
+          "5",
+          "10"
+        ],
+        "meaning": "①270mを1秒に45mずつちぢめる。②270÷45＝6秒です。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_166",
+    "category": "hayasa",
+    "grade": 6,
+    "title": "川を上る船・下る船（流水算）",
+    "intro": "ある船が同じ川を進むと、上るときは分速120m、下るときは分速180mでした。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"20\" y=\"60\" width=\"240\" height=\"30\" fill=\"#4f9eff\" opacity=\"0.22\"/><path d=\"M40 75 h30 M110 75 h30 M190 75 h30\" stroke=\"#4f9eff\" stroke-width=\"1\" opacity=\"0.6\"/><text x=\"248\" y=\"56\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">流れ →</text><text x=\"90\" y=\"46\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">上り 分速120m</text><text x=\"200\" y=\"108\" fill=\"#ff6b6b\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">下り 分速180m</text><text x=\"140\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">静水の速さと 流れの速さは？</text></svg>",
+    "steps": [
+      {
+        "question": "静水（流れのない水）でのこの船の速さは分速何mですか。（上りと下りの平均）",
+        "answer": "150",
+        "choices": [
+          "150",
+          "300",
+          "60",
+          "120"
+        ],
+        "meaning": "①上り＝静水−流れ、下り＝静水＋流れ。2つの平均が静水の速さ。②(120＋180)÷2＝分速150mです。よって、答えは150です。"
+      },
+      {
+        "question": "川の流れの速さは分速何mですか。（上りと下りの差の半分）",
+        "answer": "30",
+        "choices": [
+          "30",
+          "60",
+          "50",
+          "15"
+        ],
+        "meaning": "①下り−上り＝流れの2つ分。②(180−120)÷2＝分速30mです。よって、答えは30です。"
+      },
+      {
+        "question": "この川を3600m下るのに何分かかりますか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "30",
+          "24",
+          "18"
+        ],
+        "meaning": "①下りは分速180m。②3600÷180＝20分です。よって、答えは20です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_167",
+    "category": "hayasa",
+    "grade": 6,
+    "title": "長針と短針が直角",
+    "intro": "2時ちょうどから、時計の長針と短針がはじめて直角（90度）になる時こくを求めます。長針は1分で6度、短針は1分で0.5度進みます。",
+    "svg": "<svg viewBox=\"0 0 240 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><circle cx=\"120\" cy=\"100\" r=\"70\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.6\"/><line x1=\"120\" y1=\"36\" x2=\"120\" y2=\"30\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"152\" y1=\"44.57437415779592\" x2=\"155\" y2=\"39.37822173508929\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"175.42562584220406\" y1=\"68\" x2=\"180.6217782649107\" y2=\"65\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"184\" y1=\"100\" x2=\"190\" y2=\"100\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"175.42562584220408\" y1=\"132\" x2=\"180.62177826491072\" y2=\"135\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"152\" y1=\"155.42562584220408\" x2=\"155\" y2=\"160.62177826491072\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"120\" y1=\"164\" x2=\"120\" y2=\"170\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"88.00000000000001\" y1=\"155.42562584220408\" x2=\"85.00000000000001\" y2=\"160.62177826491072\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"64.57437415779594\" y1=\"132.00000000000003\" x2=\"59.378221735089305\" y2=\"135.00000000000003\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"56\" y1=\"100.00000000000001\" x2=\"50\" y2=\"100.00000000000001\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"64.57437415779593\" y1=\"68\" x2=\"59.3782217350893\" y2=\"65\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"87.99999999999997\" y1=\"44.57437415779594\" x2=\"84.99999999999997\" y2=\"39.378221735089305\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"120\" y1=\"100\" x2=\"120\" y2=\"44\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/><line x1=\"120\" y1=\"100\" x2=\"158.1051177665153\" y2=\"78\" stroke=\"#ff6b6b\" stroke-width=\"3\"/><text x=\"120\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2時ちょうど</text><text x=\"120\" y=\"190\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">長針6°/分・短針0.5°/分</text></svg>",
+    "steps": [
+      {
+        "question": "2時ちょうどのとき、長針（12）と短針（2）の間の角度は何度ですか。",
+        "answer": "60",
+        "choices": [
+          "60",
+          "90",
+          "30",
+          "120"
+        ],
+        "meaning": "①文字ばん2つ分。②30×2＝60度です。よって、答えは60です。"
+      },
+      {
+        "question": "直角（90度）になるには、長針は短針より合わせて何度多く進む必要がありますか。（短針に60度おくれ→追いついて、さらに90度先へ）",
+        "answer": "150",
+        "choices": [
+          "150",
+          "90",
+          "30",
+          "210"
+        ],
+        "meaning": "①いまの60度差をうめて（60度）、さらに90度先へ。②60＋90＝150度多く進みます。よって、答えは150です。"
+      },
+      {
+        "question": "長針は1分に短針より5.5度多く進みます。直角になるのは2時何分ですか。（帯分数で）",
+        "answer": "27と3/11",
+        "meaning": "①150÷5.5＝1500÷55＝300/11＝27と3/11。②2時27と3/11分です。よって、答えは27と3/11です。"
+      }
+    ]
   }
 ]
