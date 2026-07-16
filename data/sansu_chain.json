@@ -5853,5 +5853,773 @@
         "meaning": "①2−1＝1、3−2＝1…どれも1。②分母は分子より1大きいので、番号が大きくなるほど分数は1に近づきます。よって、答えは1です。"
       }
     ]
+  },
+  {
+    "id": "sc_chain_138",
+    "category": "tokusan",
+    "grade": 4,
+    "title": "姉と弟の年令",
+    "intro": "今、姉は20才、弟は8才です。姉の年令が弟の年令のちょうど3倍だったのは何年前かを考えます。",
+    "svg": "<svg viewBox=\"0 0 280 154\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">今の年令（差は変わらない）</text><rect x=\"40\" y=\"46\" width=\"200\" height=\"22\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\"/><text x=\"32\" y=\"61\" fill=\"#ff6b6b\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">姉</text><rect x=\"40\" y=\"80\" width=\"80\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"95\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">弟</text><text x=\"46\" y=\"120\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">← この差は 何年たっても 同じ</text></svg>",
+    "steps": [
+      {
+        "question": "今、姉と弟の年令の差は何才ですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "28",
+          "3",
+          "6"
+        ],
+        "meaning": "①20−8。②12才（この差は昔も今も変わらない）です。よって、答えは12です。"
+      },
+      {
+        "question": "姉が弟の3倍だったとき、差（12才）は弟の年令の2倍にあたります。そのときの弟は何才でしたか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "4",
+          "8",
+          "12"
+        ],
+        "meaning": "①姉＝弟の3倍なら差＝3倍−1倍＝2倍。差12が弟の2倍なので、弟＝12÷2＝6才です。よって、答えは6です。"
+      },
+      {
+        "question": "それは今から何年前ですか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "6",
+          "3",
+          "4"
+        ],
+        "meaning": "①今の弟8才、そのとき6才。②8−6＝2年前です。よって、答えは2です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_139",
+    "category": "tokusan",
+    "grade": 4,
+    "title": "ノートと鉛筆（消去算）",
+    "intro": "文ぼう具店で、ノート2冊と鉛筆3本を買うと440円、ノート2冊と鉛筆5本を買うと560円でした。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"34\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">📓📓 ＋ ✏✏✏ ＝ 440円</text><text x=\"140\" y=\"68\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">📓📓 ＋ ✏✏✏✏✏ ＝ 560円</text><text x=\"140\" y=\"102\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ノートは同じ数 → 引くと消える</text></svg>",
+    "steps": [
+      {
+        "question": "2つの買い方のちがいは鉛筆2本です。代金の差は何円ですか。",
+        "answer": "120",
+        "choices": [
+          "120",
+          "560",
+          "100",
+          "1000"
+        ],
+        "meaning": "①ノート2冊は同じなので引くと消える。②560−440＝120円（鉛筆2本分）です。よって、答えは120です。"
+      },
+      {
+        "question": "鉛筆1本は何円ですか。",
+        "answer": "60",
+        "choices": [
+          "60",
+          "120",
+          "40",
+          "30"
+        ],
+        "meaning": "①120÷2。②60円です。よって、答えは60です。"
+      },
+      {
+        "question": "ノート1冊は何円ですか。",
+        "answer": "130",
+        "choices": [
+          "130",
+          "120",
+          "110",
+          "260"
+        ],
+        "meaning": "①ノート2冊＝440−鉛筆3本(180)＝260。②260÷2＝130円です。よって、答えは130です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_140",
+    "category": "tokusan",
+    "grade": 4,
+    "title": "池のまわりの木（植木算）",
+    "intro": "1周が600mの池のまわりに、20mおきに木を植えます。（池のまわりは輪になっています）",
+    "svg": "<svg viewBox=\"0 0 260 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><ellipse cx=\"130\" cy=\"92\" rx=\"58\" ry=\"44\" fill=\"#4f9eff\" opacity=\"0.15\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><circle cx=\"188.0\" cy=\"92.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"180.2\" cy=\"114.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"159.0\" cy=\"130.1\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"130.0\" cy=\"136.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"101.0\" cy=\"130.1\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"79.8\" cy=\"114.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"72.0\" cy=\"92.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"79.8\" cy=\"70.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"101.0\" cy=\"53.9\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"130.0\" cy=\"48.0\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"159.0\" cy=\"53.9\" r=\"4\" fill=\"#06d6a0\"/><circle cx=\"180.2\" cy=\"70.0\" r=\"4\" fill=\"#06d6a0\"/><text x=\"130\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1周600m・20mおき（輪）</text><text x=\"130\" y=\"96\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">池</text></svg>",
+    "steps": [
+      {
+        "question": "木と木の間（20mの区間）は、1周にいくつありますか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "31",
+          "29",
+          "20"
+        ],
+        "meaning": "①600÷20。②30個です。よって、答えは30です。"
+      },
+      {
+        "question": "木は全部で何本植えますか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "31",
+          "29",
+          "32"
+        ],
+        "meaning": "①輪になっている（両はしがつながる）ので、木の本数＝間の数。②30本です（一直線の道より1本少ない）。よって、答えは30です。"
+      },
+      {
+        "question": "20mおきではなく10mおきにすると、木は何本になりますか。",
+        "answer": "60",
+        "choices": [
+          "60",
+          "30",
+          "61",
+          "59"
+        ],
+        "meaning": "①間は600÷10＝60個、輪なので本数＝間の数。②60本です。よって、答えは60です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_141",
+    "category": "tokusan",
+    "grade": 5,
+    "title": "10円玉と50円玉（つるかめ）",
+    "intro": "10円玉と50円玉が合わせて20枚あり、金額の合計は600円です。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"11.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10円玉 と 50円玉 合わせて 20枚</text><text x=\"140\" y=\"74\" fill=\"#ff6b6b\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">金額は 合計 600円</text><text x=\"140\" y=\"102\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">もし全部10円玉だったら？</text></svg>",
+    "steps": [
+      {
+        "question": "もし20枚全部が10円玉だとすると、金額は何円ですか。",
+        "answer": "200",
+        "choices": [
+          "200",
+          "600",
+          "1000",
+          "500"
+        ],
+        "meaning": "①10×20。②200円です。よって、答えは200です。"
+      },
+      {
+        "question": "本当は600円です。全部10円と考えたときより何円多いですか。",
+        "answer": "400",
+        "choices": [
+          "400",
+          "600",
+          "200",
+          "500"
+        ],
+        "meaning": "①600−200。②400円多いです。よって、答えは400です。"
+      },
+      {
+        "question": "50円玉は何枚ありますか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "8",
+          "12",
+          "20"
+        ],
+        "meaning": "①10円玉1枚を50円玉にかえると40円ふえる。②400÷40＝10枚です。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_142",
+    "category": "tokusan",
+    "grade": 5,
+    "title": "2本の管でプール（仕事算）",
+    "intro": "プールを満水にするのに、A管だけなら15分、B管だけなら10分かかります。プール全体の水の量を「30」とおいて考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"30\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">プール全体 ＝ 30（15と10の最小公倍数）</text><rect x=\"30\" y=\"46\" width=\"220\" height=\"18\" fill=\"#4f9eff\" opacity=\"0.25\" stroke=\"#4f9eff\"/><text x=\"140\" y=\"88\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A管:15分  B管:10分</text><text x=\"140\" y=\"112\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1分に入る水の量は？</text></svg>",
+    "steps": [
+      {
+        "question": "A管は1分間にいくつの水を入れますか。（全体は30）",
+        "answer": "2",
+        "choices": [
+          "2",
+          "15",
+          "3",
+          "1"
+        ],
+        "meaning": "①全体30を15分で。②30÷15＝2ずつです。よって、答えは2です。"
+      },
+      {
+        "question": "B管は1分間にいくつ入れますか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "10",
+          "5"
+        ],
+        "meaning": "①30÷10。②3ずつです。よって、答えは3です。"
+      },
+      {
+        "question": "A管とB管を同時に使うと、何分で満水になりますか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "5",
+          "8",
+          "12"
+        ],
+        "meaning": "①2＋3＝5ずつ入る。②30÷5＝6分です。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_143",
+    "category": "tokusan",
+    "grade": 5,
+    "title": "テストの平均が変わる",
+    "intro": "4人のグループのテストの平均点は72点でした。あとから1人が加わったので、5人の平均点は74点になりました。",
+    "svg": "<svg viewBox=\"0 0 280 154\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">平均72点 → 74点</text><rect x=\"40\" y=\"46\" width=\"150\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">4人</text><rect x=\"40\" y=\"80\" width=\"160\" height=\"22\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"32\" y=\"95\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">5人</text></svg>",
+    "steps": [
+      {
+        "question": "4人の合計点は何点ですか。",
+        "answer": "288",
+        "choices": [
+          "288",
+          "284",
+          "296",
+          "360"
+        ],
+        "meaning": "①平均×人数。②72×4＝288点です。よって、答えは288です。"
+      },
+      {
+        "question": "5人の合計点は何点ですか。",
+        "answer": "370",
+        "choices": [
+          "370",
+          "360",
+          "380",
+          "288"
+        ],
+        "meaning": "①74×5。②370点です。よって、答えは370です。"
+      },
+      {
+        "question": "あとから加わった人の点数は何点ですか。",
+        "answer": "82",
+        "choices": [
+          "82",
+          "80",
+          "74",
+          "72"
+        ],
+        "meaning": "①5人合計370−4人合計288。②370−288＝82点です。よって、答えは82です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_144",
+    "category": "tokusan",
+    "grade": 6,
+    "title": "行列とチケット売り場（ニュートン算）",
+    "intro": "コンサートのチケット売り場に、毎分4人ずつ人が行列に加わります。売り場が開く前、すでに60人が並んでいました。窓口1つは毎分10人にチケットを売ります。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"34\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">はじめ 60人・毎分4人 加わる</text><text x=\"140\" y=\"66\" fill=\"#ff6b6b\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">窓口1つ：毎分10人 さばく</text><text x=\"140\" y=\"98\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">行列は 毎分 何人 減る？</text></svg>",
+    "steps": [
+      {
+        "question": "窓口1つのとき、行列は毎分何人ずつ減りますか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "14",
+          "10",
+          "4"
+        ],
+        "meaning": "①さばく10人から加わる4人を引く。②10−4＝6人ずつ減ります。よって、答えは6です。"
+      },
+      {
+        "question": "行列がなくなるのは、売り場が開いてから何分後ですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "6",
+          "15",
+          "12"
+        ],
+        "meaning": "①60人を毎分6人ずつ減らす。②60÷6＝10分後です。よって、答えは10です。"
+      },
+      {
+        "question": "窓口を2つ（毎分20人）にすると、行列は毎分何人ずつ減りますか。",
+        "answer": "16",
+        "choices": [
+          "16",
+          "20",
+          "10",
+          "24"
+        ],
+        "meaning": "①20−4。②16人ずつ減ります（加わる4人を引くのを忘れずに）。よって、答えは16です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_145",
+    "category": "tokusan",
+    "grade": 6,
+    "title": "とちゅうで交代する仕事",
+    "intro": "ある仕事を、Aさんは10日、Bさんは15日で終わらせます。仕事全体を「30」とおきます。はじめの4日をAさんが1人でやり、残りをBさんが1人でやります。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"30\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">仕事全体 ＝ 30（10と15の最小公倍数）</text><rect x=\"30\" y=\"46\" width=\"220\" height=\"18\" fill=\"#4f9eff\" opacity=\"0.25\" stroke=\"#4f9eff\"/><text x=\"140\" y=\"88\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">はじめ4日 A → 残り B</text><text x=\"140\" y=\"112\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A:1日3・B:1日2</text></svg>",
+    "steps": [
+      {
+        "question": "Aさんは1日にいくつ仕事を進めますか。（全体は30）",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "10",
+          "5"
+        ],
+        "meaning": "①30÷10。②3ずつです。よって、答えは3です。"
+      },
+      {
+        "question": "はじめの4日間でAさんがした仕事の量はいくつですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "10",
+          "15",
+          "9"
+        ],
+        "meaning": "①1日3ずつ×4日。②12です。よって、答えは12です。"
+      },
+      {
+        "question": "残りをBさん（1日2）がやると、全部で何日かかりますか。",
+        "answer": "13",
+        "choices": [
+          "13",
+          "12",
+          "14",
+          "11"
+        ],
+        "meaning": "①残り30−12＝18を、Bが1日2ずつ→18÷2＝9日。②4＋9＝13日です。よって、答えは13です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_146",
+    "category": "tokusan",
+    "grade": 6,
+    "title": "クラス全体の平均（加重平均）",
+    "intro": "あるクラスは男子20人・女子10人です。テストの平均点は、男子が60点、女子が72点でした。",
+    "svg": "<svg viewBox=\"0 0 280 134\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">クラス 男子20人・女子10人</text><rect x=\"70\" y=\"46\" width=\"150\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"60\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">男子</text><text x=\"145\" y=\"61\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">平均60点</text><rect x=\"70\" y=\"80\" width=\"110\" height=\"22\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\"/><text x=\"60\" y=\"95\" fill=\"#ff6b6b\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">女子</text><text x=\"125\" y=\"95\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">平均72点</text><text x=\"140\" y=\"120\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">クラス全体(30人)の平均は？</text></svg>",
+    "steps": [
+      {
+        "question": "男子20人の合計点は何点ですか。",
+        "answer": "1200",
+        "choices": [
+          "1200",
+          "600",
+          "1320",
+          "1400"
+        ],
+        "meaning": "①60×20。②1200点です。よって、答えは1200です。"
+      },
+      {
+        "question": "女子10人の合計点は何点ですか。",
+        "answer": "720",
+        "choices": [
+          "720",
+          "660",
+          "780",
+          "360"
+        ],
+        "meaning": "①72×10。②720点です。よって、答えは720です。"
+      },
+      {
+        "question": "クラス全体（30人）の平均点は何点ですか。",
+        "answer": "64",
+        "choices": [
+          "64",
+          "66",
+          "62",
+          "68"
+        ],
+        "meaning": "①合計1200＋720＝1920を30人で。②1920÷30＝64点です（単純に(60+72)÷2＝66ではない点に注意）。よって、答えは64です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_147",
+    "category": "kazu",
+    "grade": 4,
+    "title": "素数をさがす",
+    "intro": "素数（そすう）とは、1とその数自身のほかに約数をもたない数（2, 3, 5, 7, …）です。1は素数ではありません。",
+    "svg": "<svg viewBox=\"0 0 268 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1〜20（緑＝素数）</text><rect x=\"18\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"28.6\" y=\"54.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><rect x=\"42.2\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"52.800000000000004\" y=\"54.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><rect x=\"66.4\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"77\" y=\"54.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><rect x=\"90.6\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"101.19999999999999\" y=\"54.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"114.8\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"125.39999999999999\" y=\"54.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5</text><rect x=\"139\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"149.6\" y=\"54.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"163.2\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"173.79999999999998\" y=\"54.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"187.4\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"198\" y=\"54.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"211.6\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"222.2\" y=\"54.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"235.79999999999998\" y=\"40\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"246.39999999999998\" y=\"54.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text><rect x=\"18\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"28.6\" y=\"78.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">11</text><rect x=\"42.2\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"52.800000000000004\" y=\"78.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">12</text><rect x=\"66.4\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"77\" y=\"78.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">13</text><rect x=\"90.6\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"101.19999999999999\" y=\"78.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">14</text><rect x=\"114.8\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"125.39999999999999\" y=\"78.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">15</text><rect x=\"139\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"149.6\" y=\"78.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">16</text><rect x=\"163.2\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"173.79999999999998\" y=\"78.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">17</text><rect x=\"187.4\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"198\" y=\"78.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">18</text><rect x=\"211.6\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"#06d6a0\" opacity=\"0.22\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"222.2\" y=\"78.5\" fill=\"#06d6a0\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">19</text><rect x=\"235.79999999999998\" y=\"64\" width=\"21.2\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"246.39999999999998\" y=\"78.5\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">20</text></svg>",
+    "steps": [
+      {
+        "question": "1から10までに素数は何個ありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "5",
+          "3",
+          "2"
+        ],
+        "meaning": "①2・3・5・7。②4個です（1は素数ではない）。よって、答えは4です。"
+      },
+      {
+        "question": "11から20までに素数は何個ありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "3",
+          "5",
+          "2"
+        ],
+        "meaning": "①11・13・17・19。②4個です。よって、答えは4です。"
+      },
+      {
+        "question": "1から20までに素数は全部で何個ありますか。",
+        "answer": "8",
+        "choices": [
+          "8",
+          "9",
+          "7",
+          "10"
+        ],
+        "meaning": "①1〜10で4個、11〜20で4個。②4＋4＝8個です。よって、答えは8です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_148",
+    "category": "kazu",
+    "grade": 4,
+    "title": "平方数と約数",
+    "intro": "同じ数を2回かけた数（1×1, 2×2, 3×3, …＝1, 4, 9, 16, 25, …）を平方数（へいほうすう）といいます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#ffd166\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1・4・9・16・25 … （□×□）</text><text x=\"140\" y=\"74\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">平方数は 約数の個数が とくべつ</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9の約数：1・3・9</text></svg>",
+    "steps": [
+      {
+        "question": "1から30までに平方数は何個ありますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "4",
+          "6",
+          "3"
+        ],
+        "meaning": "①1,4,9,16,25。②5個です（36は30より大きい）。よって、答えは5です。"
+      },
+      {
+        "question": "9の約数（1・3・9）は何個ありますか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "4",
+          "9"
+        ],
+        "meaning": "①1・3・9。②3個（奇数個）です。よって、答えは3です。"
+      },
+      {
+        "question": "平方数は約数の個数が「奇数個」になります。16の約数は何個ありますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "4",
+          "6",
+          "8"
+        ],
+        "meaning": "①1・2・4・8・16。②5個（奇数個）です。よって、答えは5です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_149",
+    "category": "kazu",
+    "grade": 4,
+    "title": "9でわりきれる数",
+    "intro": "各位（くらい）の数字をたした和が9の倍数になると、その数は9でわりきれます。（例：234 → 2＋3＋4＝9）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">234 → 2＋3＋4 ＝ 9</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">各位の和が9の倍数 → 9でわりきれる</text></svg>",
+    "steps": [
+      {
+        "question": "234の各位の数字の和はいくつですか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "8",
+          "10",
+          "18"
+        ],
+        "meaning": "①2＋3＋4。②9です。よって、答えは9です。"
+      },
+      {
+        "question": "各位の和が9なので、234は9でわりきれます。234÷9はいくつですか。",
+        "answer": "26",
+        "choices": [
+          "26",
+          "24",
+          "27",
+          "23"
+        ],
+        "meaning": "①234÷9。②26です。よって、答えは26です。"
+      },
+      {
+        "question": "1998の各位の数字の和はいくつですか。（和が9の倍数なら9でわりきれます）",
+        "answer": "27",
+        "choices": [
+          "27",
+          "26",
+          "18",
+          "28"
+        ],
+        "meaning": "①1＋9＋9＋8。②27（9の倍数）なので1998も9でわりきれます。よって、答えは27です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_150",
+    "category": "kazu",
+    "grade": 5,
+    "title": "2つのバスの発車",
+    "intro": "バスターミナルから、A系統は9分ごと、B系統は12分ごとに発車します。ある時こく、A・Bが同時に発車しました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A系統：9分ごと / B系統：12分ごと</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">次に同時発車するのは？</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">9と12の最小公倍数を考える</text></svg>",
+    "steps": [
+      {
+        "question": "9と12の最小公倍数はいくつですか。",
+        "answer": "36",
+        "choices": [
+          "36",
+          "108",
+          "18",
+          "72"
+        ],
+        "meaning": "①9の倍数9,18,27,36…、12の倍数12,24,36…。②はじめて共通するのは36です。よって、答えは36です。"
+      },
+      {
+        "question": "同時発車したあと、次に同時発車するのは何分後ですか。",
+        "answer": "36",
+        "choices": [
+          "36",
+          "21",
+          "72",
+          "108"
+        ],
+        "meaning": "①36分ごとに同時発車。②36分後です。よって、答えは36です。"
+      },
+      {
+        "question": "同時発車した時こくから2時間（120分）の間に、同時発車は最初をふくめて何回ありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "3",
+          "5",
+          "2"
+        ],
+        "meaning": "①0分・36分・72分・108分（144分は120をこえる）。②4回です。よって、答えは4です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_151",
+    "category": "kazu",
+    "grade": 5,
+    "title": "連続する数の和",
+    "intro": "連続する整数（例：10, 11, 12, 13, 14）をたした和について考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10 ＋ 11 ＋ 12 ＋ 13 ＋ 14</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">まん中は 12</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">和は まん中の何倍？</text></svg>",
+    "steps": [
+      {
+        "question": "10＋11＋12＋13＋14 の和はいくつですか。",
+        "answer": "60",
+        "choices": [
+          "60",
+          "50",
+          "65",
+          "72"
+        ],
+        "meaning": "①両はし10＋14＝24、それが2組と まん中12 → 24×2＋12。②60です。よって、答えは60です。"
+      },
+      {
+        "question": "この和60は、まん中の数12の何倍ですか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "4",
+          "6",
+          "3"
+        ],
+        "meaning": "①60÷12。②5倍です（連続する5つの数の和はまん中の5倍）。よって、答えは5です。"
+      },
+      {
+        "question": "連続する5つの整数の和が100のとき、まん中の数はいくつですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "25",
+          "18",
+          "50"
+        ],
+        "meaning": "①和はまん中の5倍。②100÷5＝20です。よって、答えは20です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_152",
+    "category": "kazu",
+    "grade": 5,
+    "title": "3でわると2・4でわると3",
+    "intro": "3でわると2あまり、4でわると3あまる整数を考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#4f9eff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3でわると 2あまる</text><text x=\"140\" y=\"68\" fill=\"#06d6a0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">4でわると 3あまる</text><text x=\"140\" y=\"96\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3と4の最小公倍数は12</text></svg>",
+    "steps": [
+      {
+        "question": "3でわると2あまる整数のうち、いちばん小さい正の数はいくつですか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "5",
+          "3",
+          "1"
+        ],
+        "meaning": "①2,5,8,11…。②最小は2（2÷3＝0あまり2）です。よって、答えは2です。"
+      },
+      {
+        "question": "2・5・8・11・…のうち、4でわると3あまるのは最初どれですか。",
+        "answer": "11",
+        "choices": [
+          "11",
+          "5",
+          "8",
+          "2"
+        ],
+        "meaning": "①2÷4=あまり2、5÷4=あまり1、8÷4=あまり0、11÷4＝2あまり3 ○。②11です。よって、答えは11です。"
+      },
+      {
+        "question": "両方をみたす次の数は、11の次はいくつですか。",
+        "answer": "23",
+        "choices": [
+          "23",
+          "15",
+          "22",
+          "35"
+        ],
+        "meaning": "①3と4の最小公倍数12ごとにくり返す。②11＋12＝23です。よって、答えは23です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_153",
+    "category": "kazu",
+    "grade": 6,
+    "title": "約数の個数から数を考える",
+    "intro": "数の「約数の個数」に注目します。約数がちょうど2個の数は「素数」、ちょうど3個の数は「素数を2回かけた数（素数の平方）」です。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"36\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">約数2個＝素数 / 約数3個＝素数×素数</text><text x=\"140\" y=\"66\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">120 ＝ 2×2×2×3×5</text><text x=\"140\" y=\"96\" fill=\"#9399b2\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">約数の個数は？</text></svg>",
+    "steps": [
+      {
+        "question": "120＝2×2×2×3×5 の約数は何個ありますか。（2は0〜3個の4通り、3は2通り、5は2通り）",
+        "answer": "16",
+        "choices": [
+          "16",
+          "10",
+          "12",
+          "30"
+        ],
+        "meaning": "①4通り×2通り×2通り。②4×2×2＝16個です。よって、答えは16です。"
+      },
+      {
+        "question": "約数がちょうど3個の数は「素数の平方」です。100以下にいくつありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "5",
+          "3",
+          "10"
+        ],
+        "meaning": "①2×2＝4、3×3＝9、5×5＝25、7×7＝49（11×11＝121は100超）。②4個です。よって、答えは4です。"
+      },
+      {
+        "question": "約数がちょうど2個の数は素数です。20以下に何個ありますか。",
+        "answer": "8",
+        "choices": [
+          "8",
+          "9",
+          "7",
+          "10"
+        ],
+        "meaning": "①2,3,5,7,11,13,17,19。②8個です。よって、答えは8です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_154",
+    "category": "kazu",
+    "grade": 6,
+    "title": "3でも5でもわりきれない数",
+    "intro": "1から100までの整数のうち、3でも5でもわりきれない数が何個あるかを考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1〜100 の整数</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3の倍数・5の倍数を のぞく</text><text x=\"140\" y=\"102\" fill=\"#9399b2\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">両方に数えた15の倍数に注意</text></svg>",
+    "steps": [
+      {
+        "question": "1から100までに、3の倍数は何個ありますか。",
+        "answer": "33",
+        "choices": [
+          "33",
+          "30",
+          "34",
+          "20"
+        ],
+        "meaning": "①100÷3＝33あまり1。②33個です。よって、答えは33です。"
+      },
+      {
+        "question": "5の倍数は何個ありますか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "25",
+          "10",
+          "33"
+        ],
+        "meaning": "①100÷5。②20個です。よって、答えは20です。"
+      },
+      {
+        "question": "3でも5でもわりきれない数は何個ありますか。（15の倍数は6個あります）",
+        "answer": "53",
+        "choices": [
+          "53",
+          "47",
+          "54",
+          "52"
+        ],
+        "meaning": "①3か5の倍数＝33＋20−6＝47個。②100−47＝53個です。よって、答えは53です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_155",
+    "category": "kazu",
+    "grade": 6,
+    "title": "分数を約分する",
+    "intro": "分数を、これ以上約分できない形（既約分数）にすることを考えます。分母が12の分数について調べます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">36/48 を約分すると？</text><text x=\"140\" y=\"74\" fill=\"#ffd166\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">分母と分子の 最大公約数でわる</text></svg>",
+    "steps": [
+      {
+        "question": "36/48 をこれ以上約分できない分数にすると、いくつですか。分数で答えなさい。",
+        "answer": "3/4",
+        "meaning": "①36と48の最大公約数は12。②36÷12／48÷12＝3/4です。よって、答えは3/4です。"
+      },
+      {
+        "question": "分母が12の分数（1/12〜11/12）のうち、これ以上約分できない（既約な）ものは何個ありますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "6",
+          "5",
+          "11"
+        ],
+        "meaning": "①分子が12と共通の約数をもたない数＝1,5,7,11。②4個です。よって、答えは4です。"
+      },
+      {
+        "question": "分母が12の分数（1/12〜11/12）のうち、約分できるものは何個ありますか。",
+        "answer": "7",
+        "choices": [
+          "7",
+          "4",
+          "6",
+          "8"
+        ],
+        "meaning": "①全部で11個のうち既約が4個。②11−4＝7個（分子が2,3,4,6,8,9,10）です。よって、答えは7です。"
+      }
+    ]
   }
 ]
