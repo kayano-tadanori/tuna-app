@@ -1160,5 +1160,1295 @@
         "meaning": "①太さで2倍、長さで半分。②2×半分＝もとと同じです。よって、答えは同じです。"
       }
     ]
+  },
+  {
+    "id": "rchain28",
+    "category": "hikari_oto",
+    "grade": 6,
+    "title": "合わせ鏡と像の数",
+    "intro": "2まいの鏡を角度をつけて合わせ、その間に物を置くと、鏡にうつる像がいくつも見えます。像の数は「360÷（鏡の間の角度）−1」で求められます。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"20\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">合わせ鏡：像は何個？</text><line x1=\"70\" y1=\"105\" x2=\"70\" y2=\"35\" stroke=\"#4f9eff\" stroke-width=\"4\"/><line x1=\"70\" y1=\"105\" x2=\"185\" y2=\"105\" stroke=\"#4f9eff\" stroke-width=\"4\"/><path d=\"M84 105 a14 14 0 0 0 -14 -14\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><text x=\"96\" y=\"96\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">角度</text><circle cx=\"115\" cy=\"75\" r=\"5\" fill=\"#ffd166\"/><text x=\"115\" y=\"66\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">物</text><circle cx=\"150\" cy=\"55\" r=\"3.5\" fill=\"#9399b2\"/><circle cx=\"120\" cy=\"45\" r=\"3.5\" fill=\"#9399b2\"/><circle cx=\"165\" cy=\"80\" r=\"3.5\" fill=\"#9399b2\"/><text x=\"200\" y=\"60\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">像（うつった物）</text></svg>",
+    "steps": [
+      {
+        "question": "鏡を90°に合わせると、像は何個見えますか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "4",
+          "2",
+          "5"
+        ],
+        "meaning": "①360÷90−1。②4−1＝3個です。よって、答えは3です。"
+      },
+      {
+        "question": "鏡を60°に合わせると、像は何個見えますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "6",
+          "4",
+          "3"
+        ],
+        "meaning": "①360÷60−1。②6−1＝5個です。角度を小さくすると像が増えます。よって、答えは5です。"
+      },
+      {
+        "question": "像をちょうど7個にするには、鏡の角度を何度にすればよいですか。",
+        "answer": "45",
+        "choices": [
+          "45",
+          "51",
+          "40",
+          "60"
+        ],
+        "meaning": "①像7個なら360÷角度＝8。②角度＝360÷8＝45°です（逆から計算）。よって、答えは45です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain29",
+    "category": "hikari_oto",
+    "grade": 6,
+    "title": "弦の長さと音の高さ",
+    "intro": "同じ弦（げん）を、はじく部分の長さを変えて鳴らします。弦は短いほど速くふるえて高い音が出ます。1秒間のふるえる回数（振動数）は、弦の長さに反比例します。長さ60cmのとき振動数は200回でした。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"20\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">弦は短いほど高い音（振動数∝1÷長さ）</text><rect x=\"30\" y=\"80\" width=\"220\" height=\"10\" fill=\"#8b7355\" opacity=\"0.6\"/><polygon points=\"46,80 54,80 50,66 Z\" fill=\"#cdd6f4\"/><polygon points=\"226,80 234,80 230,66 Z\" fill=\"#cdd6f4\"/><line x1=\"50\" y1=\"66\" x2=\"230\" y2=\"66\" stroke=\"#eef2ff\" stroke-width=\"1.4\"/><line x1=\"50\" y1=\"94\" x2=\"230\" y2=\"94\" stroke=\"#06d6a0\" stroke-width=\"1\"/><line x1=\"50\" y1=\"90\" x2=\"50\" y2=\"98\" stroke=\"#06d6a0\" stroke-width=\"1\"/><line x1=\"230\" y1=\"90\" x2=\"230\" y2=\"98\" stroke=\"#06d6a0\" stroke-width=\"1\"/><text x=\"140\" y=\"108\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">弦の長さ60cm → 振動数200回</text></svg>",
+    "steps": [
+      {
+        "question": "弦の長さを30cm（半分）にすると、振動数は何回になりますか。",
+        "answer": "400",
+        "choices": [
+          "400",
+          "100",
+          "200",
+          "600"
+        ],
+        "meaning": "①長さが半分＝反比例で振動数は2倍。②200×2＝400回です。よって、答えは400です。"
+      },
+      {
+        "question": "弦の長さを20cmにすると、振動数は何回になりますか。",
+        "answer": "600",
+        "choices": [
+          "600",
+          "400",
+          "300",
+          "500"
+        ],
+        "meaning": "①長さが60→20で3分の1＝振動数3倍。②200×3＝600回です。よって、答えは600です。"
+      },
+      {
+        "question": "振動数を250回にするには、弦の長さを何cmにすればよいですか。",
+        "answer": "48",
+        "choices": [
+          "48",
+          "50",
+          "45",
+          "40"
+        ],
+        "meaning": "①長さ×振動数は一定（60×200＝12000）。②12000÷250＝48cmです。よって、答えは48です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain30",
+    "category": "hikari_oto",
+    "grade": 6,
+    "title": "とつレンズの倍率と実像",
+    "intro": "とつレンズの前に、高さ2cmのろうそくを立てます。ろうそくをレンズから15cmはなして置くと、反対側のスクリーンに、レンズから30cmの位置にはっきりした実像（さかさの像）ができました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"18\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">とつレンズと実像</text><line x1=\"20\" y1=\"78\" x2=\"260\" y2=\"78\" stroke=\"#9399b2\" stroke-width=\"0.8\" stroke-dasharray=\"3 2\"/><ellipse cx=\"140\" cy=\"78\" rx=\"9\" ry=\"34\" fill=\"#4f9eff\" opacity=\"0.25\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"90\" y1=\"78\" x2=\"90\" y2=\"56\" stroke=\"#ffd166\" stroke-width=\"2.5\"/><polygon points=\"90,56 86,62 94,62\" fill=\"#ffd166\"/><text x=\"90\" y=\"96\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">物 2cm</text><line x1=\"215\" y1=\"78\" x2=\"215\" y2=\"122\" stroke=\"#ff6b6b\" stroke-width=\"2.5\"/><polygon points=\"215,122 211,116 219,116\" fill=\"#ff6b6b\"/><text x=\"215\" y=\"50\" fill=\"#ff6b6b\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">実像</text><text x=\"90\" y=\"114\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">15cm</text><text x=\"178\" y=\"114\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">30cm</text></svg>",
+    "steps": [
+      {
+        "question": "実像の倍率（像までのきょり÷物までのきょり）は何倍ですか。",
+        "answer": "2",
+        "choices": [
+          "2",
+          "3",
+          "1",
+          "0.5"
+        ],
+        "meaning": "①像30cm÷物15cm。②2倍です。よって、答えは2です。"
+      },
+      {
+        "question": "高さ2cmのろうそくの実像は、高さ何cmになりますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "2",
+          "6",
+          "1"
+        ],
+        "meaning": "①倍率が2倍なので、像の高さも2倍。②2×2＝4cmです。よって、答えは4です。"
+      },
+      {
+        "question": "ろうそくをレンズに少し近づける（焦点に近づける）と、実像ができる位置はどうなりますか。",
+        "answer": "遠くなる",
+        "choices": [
+          "遠くなる",
+          "近くなる",
+          "変わらない",
+          "消える"
+        ],
+        "meaning": "①物を焦点に近づけるほど像は大きく、位置は遠くなる。②遠くなるです。よって、答えは遠くなるです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain31",
+    "category": "mono",
+    "grade": 5,
+    "title": "金属の重さと体積（密度）",
+    "intro": "ある金属のかたまりは、体積が50cm³で、重さが400gでした。同じ金属なら、1cm³あたりの重さ（密度）はいつも同じです。",
+    "svg": "<svg viewBox=\"0 0 240 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"20\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">金属のかたまり</text><polygon points=\"78,46 138,46 146,38 86,38\" fill=\"#9399b2\" opacity=\"0.5\"/><polygon points=\"138,46 146,38 146,88 138,96\" fill=\"#9399b2\" opacity=\"0.35\"/><rect x=\"78\" y=\"46\" width=\"60\" height=\"50\" fill=\"#9399b2\" opacity=\"0.5\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"108\" y=\"74\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"120\" y=\"76\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">体積 50cm³</text><text x=\"120\" y=\"112\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">重さ 400g</text></svg>",
+    "steps": [
+      {
+        "question": "この金属の密度（1cm³あたりの重さ）は何gですか。",
+        "answer": "8",
+        "choices": [
+          "8",
+          "6",
+          "10",
+          "5"
+        ],
+        "meaning": "①重さ÷体積＝400÷50。②8gです。よって、答えは8です。"
+      },
+      {
+        "question": "同じ金属で、体積20cm³のかたまりの重さは何gですか。",
+        "answer": "160",
+        "choices": [
+          "160",
+          "140",
+          "180",
+          "200"
+        ],
+        "meaning": "①1cm³が8gなので8×20。②160gです。よって、答えは160です。"
+      },
+      {
+        "question": "同じ金属で、重さ280gのかたまりの体積は何cm³ですか。",
+        "answer": "35",
+        "choices": [
+          "35",
+          "30",
+          "40",
+          "28"
+        ],
+        "meaning": "①重さ÷密度＝280÷8。②35cm³です。よって、答えは35です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain32",
+    "category": "mono",
+    "grade": 5,
+    "title": "水がこおると体積は？",
+    "intro": "水はこおって氷になると、体積が約1.1倍にふえます（ただし重さは変わりません）。水100cm³（重さ100g）で考えます。",
+    "svg": "<svg viewBox=\"0 0 240 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"18\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水 → 氷（体積がふえる）</text><path d=\"M40 50 L44 108 a4 4 0 0 0 4 4 h32 a4 4 0 0 0 4 -4 L88 50\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><rect x=\"44\" y=\"64\" width=\"40\" height=\"44\" fill=\"#4f9eff\" opacity=\"0.4\"/><text x=\"64\" y=\"44\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水100cm³</text><text x=\"64\" y=\"0\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"120\" y=\"82\" fill=\"#cdd6f4\" font-size=\"16\" text-anchor=\"middle\">→</text><path d=\"M150 50 L154 108 a4 4 0 0 0 4 4 h32 a4 4 0 0 0 4 -4 L198 50\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><rect x=\"154\" y=\"56\" width=\"40\" height=\"52\" fill=\"#89dceb\" opacity=\"0.4\"/><path d=\"M154 56 q20 -8 40 0\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"174\" y=\"44\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">氷</text><text x=\"174\" y=\"0\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"174\" y=\"124\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">体積は？</text></svg>",
+    "steps": [
+      {
+        "question": "水100gが氷になると、重さは何gになりますか。",
+        "answer": "100",
+        "choices": [
+          "100",
+          "110",
+          "90",
+          "111"
+        ],
+        "meaning": "①こおっても重さは変わらない。②100gのままです。よって、答えは100です。"
+      },
+      {
+        "question": "水100cm³が氷になると、体積は約何cm³になりますか。",
+        "answer": "110",
+        "choices": [
+          "110",
+          "100",
+          "90",
+          "120"
+        ],
+        "meaning": "①体積は1.1倍にふえる。②100×1.1＝110cm³です。よって、答えは110です。"
+      },
+      {
+        "question": "その氷がとけて水にもどると、体積は約何cm³になりますか。",
+        "answer": "100",
+        "choices": [
+          "100",
+          "110",
+          "90",
+          "105"
+        ],
+        "meaning": "①とければ元の水にもどる。②100cm³です（ひっかけ注意）。よって、答えは100です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain33",
+    "category": "mono",
+    "grade": 6,
+    "title": "湯と水を混ぜた温度",
+    "intro": "水は「重さ×上がった（下がった）温度」だけの熱をやりとりします。あたたかい湯と冷たい水を混ぜると、〈湯が失った熱〉＝〈水が得た熱〉になって、同じ温度で落ち着きます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"18\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">湯と水を混ぜると何℃？</text><path d=\"M50 50 L54 108 a4 4 0 0 0 4 4 h32 a4 4 0 0 0 4 -4 L98 50\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><rect x=\"54\" y=\"58\" width=\"40\" height=\"50\" fill=\"#ff6b6b\" opacity=\"0.4\"/><text x=\"74\" y=\"44\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">湯80℃</text><text x=\"74\" y=\"0\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"74\" y=\"128\" fill=\"#0000\" font-size=\"1\" text-anchor=\"middle\" font-family=\"sans-serif\"></text><text x=\"118\" y=\"86\" fill=\"#cdd6f4\" font-size=\"15\" text-anchor=\"middle\">＋</text><path d=\"M150 50 L154 108 a4 4 0 0 0 4 4 h32 a4 4 0 0 0 4 -4 L198 50\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><rect x=\"154\" y=\"68\" width=\"40\" height=\"40\" fill=\"#4f9eff\" opacity=\"0.4\"/><text x=\"174\" y=\"44\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水20℃</text><text x=\"174\" y=\"0\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"222\" y=\"86\" fill=\"#cdd6f4\" font-size=\"15\" text-anchor=\"middle\">→</text><text x=\"258\" y=\"84\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">?℃</text></svg>",
+    "steps": [
+      {
+        "question": "80℃の湯100gと、20℃の水100gを混ぜると、何℃になりますか。",
+        "answer": "50",
+        "choices": [
+          "50",
+          "60",
+          "40",
+          "55"
+        ],
+        "meaning": "①重さが同じなので、ちょうど真ん中の温度。②(80+20)÷2＝50℃です。よって、答えは50です。"
+      },
+      {
+        "question": "80℃の湯100gと、20℃の水300gを混ぜると、何℃になりますか。",
+        "answer": "35",
+        "choices": [
+          "35",
+          "40",
+          "30",
+          "45"
+        ],
+        "meaning": "①湯100×(80−□)＝水300×(□−20)。②8000−100□＝300□−6000→400□＝14000→□＝35℃です。よって、答えは35です。"
+      },
+      {
+        "question": "20℃の水100gに、90℃の湯を混ぜて、全体を40℃にしたい。90℃の湯を何g混ぜればよいですか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "50",
+          "30",
+          "60"
+        ],
+        "meaning": "①湯□×(90−40)＝水100×(40−20)。②50□＝2000→□＝40gです。よって、答えは40です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain34",
+    "category": "mono",
+    "grade": 6,
+    "title": "2つの金属を混ぜた合金の密度",
+    "intro": "金属Aは1cm³が3g、金属Bは1cm³が8gです。この2つを組み合わせて、1つのかたまり（合金）を作ります。",
+    "svg": "<svg viewBox=\"0 0 260 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"18\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">合金の密度＝全体の重さ÷全体の体積</text><polygon points=\"45,50 91,50 99,42 53,42\" fill=\"#f9e2af\" opacity=\"0.5\"/><polygon points=\"91,50 99,42 99,86 91,94\" fill=\"#f9e2af\" opacity=\"0.35\"/><rect x=\"45\" y=\"50\" width=\"46\" height=\"44\" fill=\"#f9e2af\" opacity=\"0.5\" stroke=\"#f9e2af\" stroke-width=\"1\"/><text x=\"68\" y=\"75\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A 3g</text><text x=\"118\" y=\"78\" fill=\"#cdd6f4\" font-size=\"14\" text-anchor=\"middle\">＋</text><polygon points=\"140,50 186,50 194,42 148,42\" fill=\"#94e2d5\" opacity=\"0.5\"/><polygon points=\"186,50 194,42 194,86 186,94\" fill=\"#94e2d5\" opacity=\"0.35\"/><rect x=\"140\" y=\"50\" width=\"46\" height=\"44\" fill=\"#94e2d5\" opacity=\"0.5\" stroke=\"#94e2d5\" stroke-width=\"1\"/><text x=\"163\" y=\"75\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B 8g</text><text x=\"210\" y=\"78\" fill=\"#cdd6f4\" font-size=\"14\" text-anchor=\"middle\">→</text><text x=\"244\" y=\"78\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">合金</text></svg>",
+    "steps": [
+      {
+        "question": "Aを10cm³とBを10cm³合わせたかたまりの重さは何gですか。",
+        "answer": "110",
+        "choices": [
+          "110",
+          "80",
+          "55",
+          "100"
+        ],
+        "meaning": "①A:3×10＝30g、B:8×10＝80g。②30＋80＝110gです。よって、答えは110です。"
+      },
+      {
+        "question": "そのかたまり（体積20cm³・重さ110g）の1cm³あたりの重さは何gですか。",
+        "answer": "5.5",
+        "choices": [
+          "5.5",
+          "5",
+          "6",
+          "4.5"
+        ],
+        "meaning": "①全体の重さ÷全体の体積＝110÷20。②5.5gです。よって、答えは5.5です。"
+      },
+      {
+        "question": "別の合金は、体積40cm³で重さが200gでした。1cm³あたり何gですか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "4",
+          "5.5",
+          "8"
+        ],
+        "meaning": "①200÷40。②5gです。よって、答えは5です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain35",
+    "category": "mono",
+    "grade": 6,
+    "title": "氷を湯気に変えるのに必要な熱",
+    "intro": "0℃の氷を加熱します。氷1gを0℃の水にとかすには80カロリー、水1gの温度を1℃上げるには1カロリーの熱が必要です。0℃の氷100gで考えます。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">氷 → 水 → 温度上昇</text><line x1=\"40\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"40\" y1=\"120\" x2=\"40\" y2=\"30\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"30\" y=\"118\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">0</text><text x=\"30\" y=\"50\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">100</text><text x=\"22\" y=\"78\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">温度</text><line x1=\"40\" y1=\"120\" x2=\"130\" y2=\"120\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/><line x1=\"130\" y1=\"120\" x2=\"220\" y2=\"46\" stroke=\"#ff6b6b\" stroke-width=\"2.5\"/><text x=\"85\" y=\"134\" fill=\"#4f9eff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">とける間(一定)</text><text x=\"185\" y=\"100\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">水があたたまる</text></svg>",
+    "steps": [
+      {
+        "question": "0℃の氷100gを、全部0℃の水にするのに必要な熱は何カロリーですか。",
+        "answer": "8000",
+        "choices": [
+          "8000",
+          "800",
+          "10000",
+          "100"
+        ],
+        "meaning": "①氷1gに80カロリー×100g。②8000カロリーです。よって、答えは8000です。"
+      },
+      {
+        "question": "その0℃の水100gを、100℃まで上げるのに必要な熱は何カロリーですか。",
+        "answer": "10000",
+        "choices": [
+          "10000",
+          "8000",
+          "1000",
+          "18000"
+        ],
+        "meaning": "①水100g×100℃×1カロリー。②10000カロリーです。よって、答えは10000です。"
+      },
+      {
+        "question": "0℃の氷100gを、100℃の水にするまでに必要な熱は、合計何カロリーですか。",
+        "answer": "18000",
+        "choices": [
+          "18000",
+          "10000",
+          "8000",
+          "80000"
+        ],
+        "meaning": "①とかす8000＋あたためる10000。②18000カロリーです。よって、答えは18000です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain36",
+    "category": "kitai",
+    "grade": 5,
+    "title": "アルミニウムと塩酸で出る水素",
+    "intro": "アルミニウム0.2gに塩酸を加えると水素が発生します。アルミニウム0.2gがちょうど全部とけるのに塩酸が20cm³必要で、そのとき水素が240cm³発生します。アルミニウムはつねに0.2gとします。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">塩酸の量と水素の発生</text><line x1=\"44\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"44\" y1=\"120\" x2=\"44\" y2=\"34\" stroke=\"#9399b2\" stroke-width=\"1\"/><polyline points=\"44.0,120.0 142.0,51.2 240.0,51.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.2\"/><circle cx=\"44.0\" cy=\"120.0\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"142.0\" cy=\"51.2\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"240.0\" cy=\"51.2\" r=\"2.6\" fill=\"#ffd166\"/><text x=\"240\" y=\"133\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">塩酸cm³</text><text x=\"46\" y=\"31\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">水素cm³</text><text x=\"191\" y=\"45.2\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">↑ここで頭打ち</text></svg>",
+    "steps": [
+      {
+        "question": "塩酸を10cm³だけ加えると、水素は何cm³発生しますか。",
+        "answer": "120",
+        "choices": [
+          "120",
+          "240",
+          "60",
+          "100"
+        ],
+        "meaning": "①塩酸が半分＝反応するアルミも半分。②240の半分で120cm³です。よって、答えは120です。"
+      },
+      {
+        "question": "塩酸を30cm³に増やすと、水素は何cm³発生しますか。",
+        "answer": "240",
+        "choices": [
+          "240",
+          "360",
+          "300",
+          "480"
+        ],
+        "meaning": "①アルミ0.2gは塩酸20cm³で全部とけ切る。②それ以上塩酸を増やしても水素は240cm³のまま（頭打ち）です。よって、答えは240です。"
+      },
+      {
+        "question": "水素を240cm³より多く出すには、何を増やせばよいですか。",
+        "answer": "アルミニウム",
+        "choices": [
+          "アルミニウム",
+          "塩酸",
+          "水",
+          "空気"
+        ],
+        "meaning": "①塩酸を増やしても頭打ち＝足りないのはアルミの方。②アルミニウムを増やすです。よって、答えはアルミニウムです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain37",
+    "category": "kitai",
+    "grade": 5,
+    "title": "気体を性質で見分ける",
+    "intro": "4つの気体A・B・C・Dは、酸素・二酸化炭素・水素・アンモニアのどれかです。Aは石灰水を白くにごらせる。Bはそれ自身は燃えないが、ものを燃やすはたらきがある。Cは空気より軽く、火を近づけるとポンと音を立てて燃える。Dはつんとしたにおいがある。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"18\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">性質から気体を当てる</text><rect x=\"36\" y=\"42\" width=\"8\" height=\"10\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><path d=\"M30 52 h20 v34 a5 5 0 0 1 -5 5 h-10 a5 5 0 0 1 -5 -5 Z\" fill=\"#4f9eff\" opacity=\"0.15\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"40\" y=\"78\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><rect x=\"98\" y=\"42\" width=\"8\" height=\"10\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><path d=\"M92 52 h20 v34 a5 5 0 0 1 -5 5 h-10 a5 5 0 0 1 -5 -5 Z\" fill=\"#4f9eff\" opacity=\"0.15\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"102\" y=\"78\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><rect x=\"160\" y=\"42\" width=\"8\" height=\"10\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><path d=\"M154 52 h20 v34 a5 5 0 0 1 -5 5 h-10 a5 5 0 0 1 -5 -5 Z\" fill=\"#4f9eff\" opacity=\"0.15\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"164\" y=\"78\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><rect x=\"222\" y=\"42\" width=\"8\" height=\"10\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><path d=\"M216 52 h20 v34 a5 5 0 0 1 -5 5 h-10 a5 5 0 0 1 -5 -5 Z\" fill=\"#4f9eff\" opacity=\"0.15\" stroke=\"#cdd6f4\" stroke-width=\"1.2\"/><text x=\"226\" y=\"78\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">D</text><text x=\"140\" y=\"108\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">石灰水／燃やす／ポンと燃える／におい</text></svg>",
+    "steps": [
+      {
+        "question": "石灰水を白くにごらせる気体Aは何ですか。",
+        "answer": "二酸化炭素",
+        "choices": [
+          "二酸化炭素",
+          "酸素",
+          "水素",
+          "アンモニア"
+        ],
+        "meaning": "①石灰水を白くにごらせるのは二酸化炭素の性質。②Aは二酸化炭素です。よって、答えは二酸化炭素です。"
+      },
+      {
+        "question": "ものを燃やすはたらきがある気体Bは何ですか。",
+        "answer": "酸素",
+        "choices": [
+          "酸素",
+          "二酸化炭素",
+          "水素",
+          "アンモニア"
+        ],
+        "meaning": "①ものを燃やす助けをするのは酸素。②Bは酸素です。よって、答えは酸素です。"
+      },
+      {
+        "question": "ポンと音を立てて燃える気体Cは何ですか。（残ったDは自動的にアンモニア）",
+        "answer": "水素",
+        "choices": [
+          "水素",
+          "アンモニア",
+          "酸素",
+          "二酸化炭素"
+        ],
+        "meaning": "①ポンと燃えて空気より軽いのは水素。②Cは水素、残るDはつんとにおうアンモニアです。よって、答えは水素です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain38",
+    "category": "kitai",
+    "grade": 6,
+    "title": "気体の重さと集め方",
+    "intro": "気体にも重さがあります。同じ体積（1L）で比べると、空気は1.29g、二酸化炭素は1.98g、水素は0.09gです。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ体積1Lの重さ比べ</text><rect x=\"90\" y=\"40\" width=\"98\" height=\"14\" fill=\"#9399b2\" opacity=\"0.55\" rx=\"2\"/><text x=\"84\" y=\"51\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"end\" font-family=\"sans-serif\">空気</text><text x=\"191.72727272727272\" y=\"51\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">1.29g</text><rect x=\"90\" y=\"66\" width=\"150\" height=\"14\" fill=\"#ff6b6b\" opacity=\"0.55\" rx=\"2\"/><text x=\"84\" y=\"77\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"end\" font-family=\"sans-serif\">二酸化炭素</text><text x=\"244\" y=\"77\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">1.98g</text><rect x=\"90\" y=\"92\" width=\"7\" height=\"14\" fill=\"#4f9eff\" opacity=\"0.55\" rx=\"2\"/><text x=\"84\" y=\"103\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"end\" font-family=\"sans-serif\">水素</text><text x=\"100.81818181818181\" y=\"103\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">0.09g</text><text x=\"140\" y=\"122\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">重い気体は下に、軽い気体は上にたまる</text></svg>",
+    "steps": [
+      {
+        "question": "二酸化炭素1Lは、空気1Lより重いですか、軽いですか。",
+        "answer": "重い",
+        "choices": [
+          "重い",
+          "軽い",
+          "同じ",
+          "わからない"
+        ],
+        "meaning": "①1.98g＞1.29g。②空気より重いです。よって、答えは重いです。"
+      },
+      {
+        "question": "二酸化炭素は、同じ体積の空気の約何倍の重さですか。（1.98÷1.29、小数第1位まで）",
+        "answer": "1.5",
+        "choices": [
+          "1.5",
+          "1.3",
+          "2",
+          "0.7"
+        ],
+        "meaning": "①1.98÷1.29＝1.53…。②約1.5倍です。よって、答えは1.5です。"
+      },
+      {
+        "question": "二酸化炭素は空気より重いので、集めるときに適した方法は何ですか。",
+        "answer": "下方置換",
+        "choices": [
+          "下方置換",
+          "上方置換",
+          "水上置換",
+          "空気置換"
+        ],
+        "meaning": "①重い気体は下にたまる。②びんの下にたまる下方置換が適しています。よって、答えは下方置換です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain39",
+    "category": "kitai",
+    "grade": 6,
+    "title": "スチールウールを燃やすと重さは？",
+    "intro": "スチールウール（鉄）を空気中で燃やすと、鉄が酸素と結びつくため、燃えたあとは重くなります。鉄10gを完全に燃やすと、重さが14gになりました。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"18\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">鉄＋酸素 → 重くなる</text><rect x=\"40\" y=\"50\" width=\"70\" height=\"34\" rx=\"4\" fill=\"#9399b2\" opacity=\"0.4\" stroke=\"#9399b2\"/><text x=\"75\" y=\"70\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">鉄10g</text><text x=\"75\" y=\"100\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">燃やす前</text><text x=\"150\" y=\"72\" fill=\"#cdd6f4\" font-size=\"15\" text-anchor=\"middle\">→</text><text x=\"150\" y=\"96\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">＋酸素</text><rect x=\"185\" y=\"50\" width=\"70\" height=\"34\" rx=\"4\" fill=\"#ff6b6b\" opacity=\"0.4\" stroke=\"#ff6b6b\"/><text x=\"220\" y=\"70\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">14g</text><text x=\"220\" y=\"100\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">燃やした後</text></svg>",
+    "steps": [
+      {
+        "question": "鉄10gに結びついた酸素の重さは何gですか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "10",
+          "14",
+          "24"
+        ],
+        "meaning": "①ふえた重さ＝結びついた酸素。②14−10＝4gです。よって、答えは4です。"
+      },
+      {
+        "question": "鉄20gを完全に燃やすと、燃えたあとの重さは何gになりますか。",
+        "answer": "28",
+        "choices": [
+          "28",
+          "24",
+          "18",
+          "34"
+        ],
+        "meaning": "①鉄が2倍なら結びつく酸素も2倍（8g）。②20＋8＝28gです。よって、答えは28です。"
+      },
+      {
+        "question": "燃やしたあと35gになりました。燃やす前の鉄は何gでしたか。",
+        "answer": "25",
+        "choices": [
+          "25",
+          "31",
+          "30",
+          "21"
+        ],
+        "meaning": "①鉄:酸素:合計＝10:4:14。②合計35は14の2.5倍なので鉄は10×2.5＝25gです。よって、答えは25です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain40",
+    "category": "kitai",
+    "grade": 6,
+    "title": "石灰石と塩酸の過不足",
+    "intro": "石灰石に塩酸を加えると二酸化炭素が発生します。石灰石1gと塩酸25cm³がちょうど反応し、そのとき二酸化炭素が240cm³発生します。石灰石2gを用意します。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">塩酸の量とCO₂（石灰石2g）</text><line x1=\"44\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"44\" y1=\"120\" x2=\"44\" y2=\"34\" stroke=\"#9399b2\" stroke-width=\"1\"/><polyline points=\"44.0,120.0 174.7,51.2 240.0,51.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.2\"/><circle cx=\"44.0\" cy=\"120.0\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"174.7\" cy=\"51.2\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"240.0\" cy=\"51.2\" r=\"2.6\" fill=\"#ffd166\"/><text x=\"240\" y=\"133\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">塩酸cm³</text><text x=\"46\" y=\"31\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">CO₂cm³</text><text x=\"208.64\" y=\"45.2\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">↑石灰石が全部反応</text></svg>",
+    "steps": [
+      {
+        "question": "石灰石2gを全部反応させるには、塩酸は何cm³必要ですか。",
+        "answer": "50",
+        "choices": [
+          "50",
+          "25",
+          "75",
+          "100"
+        ],
+        "meaning": "①1gに25cm³なので2g分。②25×2＝50cm³です。よって、答えは50です。"
+      },
+      {
+        "question": "石灰石2gに塩酸を100cm³加えると、二酸化炭素は何cm³発生しますか。",
+        "answer": "480",
+        "choices": [
+          "480",
+          "960",
+          "600",
+          "720"
+        ],
+        "meaning": "①石灰石2gは塩酸50cm³で全部反応＝上限。②2×240＝480cm³で頭打ち（塩酸は余る）です。よって、答えは480です。"
+      },
+      {
+        "question": "二酸化炭素を600cm³発生させるには、石灰石は何g必要ですか。",
+        "answer": "2.5",
+        "choices": [
+          "2.5",
+          "2",
+          "3",
+          "5"
+        ],
+        "meaning": "①1gで240cm³なので600÷240。②2.5g必要です。よって、答えは2.5です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain41",
+    "category": "suiyoueki",
+    "grade": 5,
+    "title": "食塩水の濃さ",
+    "intro": "濃さ（濃度）＝とけているものの重さ÷全体（水よう液全部）の重さ×100 です。水180gに食塩20gをとかしました。",
+    "svg": "<svg viewBox=\"0 0 240 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"120\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">食塩水の濃さ</text><path d=\"M96 48 L99 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L142 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"99\" y=\"38\" width=\"40\" height=\"66\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"119\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><text x=\"119\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水180g＋食塩20g</text><text x=\"120\" y=\"84\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">濃さ？</text></svg>",
+    "steps": [
+      {
+        "question": "この食塩水の濃さは何％ですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "11",
+          "20",
+          "9"
+        ],
+        "meaning": "①20÷(180＋20)×100＝20÷200×100。②10％です（水だけで割らない）。よって、答えは10です。"
+      },
+      {
+        "question": "この食塩水に、さらに水を200g加えると、濃さは何％になりますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "10",
+          "4",
+          "6"
+        ],
+        "meaning": "①食塩の20gは変わらず、全体は200＋200＝400g。②20÷400×100＝5％です。よって、答えは5です。"
+      },
+      {
+        "question": "はじめの食塩水200gから、水を100g蒸発させると、濃さは何％になりますか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "10",
+          "15",
+          "30"
+        ],
+        "meaning": "①食塩20gはそのまま、全体は200−100＝100g。②20÷100×100＝20％です。よって、答えは20です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain42",
+    "category": "suiyoueki",
+    "grade": 5,
+    "title": "冷やして出てくる結晶",
+    "intro": "ある物質は、水100gに、60℃では最大60g、20℃では最大20gまでしかとけません。60℃の水100gに、この物質を60gとかしました。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">とける最大量と温度</text><line x1=\"44\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"44\" y1=\"120\" x2=\"44\" y2=\"34\" stroke=\"#9399b2\" stroke-width=\"1\"/><polyline points=\"93.0,98.5 191.0,55.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.2\"/><circle cx=\"93.0\" cy=\"98.5\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"191.0\" cy=\"55.5\" r=\"2.6\" fill=\"#ffd166\"/><text x=\"240\" y=\"133\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">温度℃</text><text x=\"46\" y=\"31\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">とける量g</text><text x=\"142\" y=\"71\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">温度が高いほど多くとける</text></svg>",
+    "steps": [
+      {
+        "question": "この液を20℃まで冷やすと、とけきれずに出てくる結晶は何gですか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "20",
+          "60",
+          "30"
+        ],
+        "meaning": "①60℃で60g、20℃では20gしかとけない。②60−20＝40gが出てきます。よって、答えは40です。"
+      },
+      {
+        "question": "そのとき、20℃の液にとけたまま残っている物質は何gですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "40",
+          "60",
+          "0"
+        ],
+        "meaning": "①20℃でとける最大量。②20gが残ってとけています。よって、答えは20です。"
+      },
+      {
+        "question": "別に、60℃の水200gに120gとかして20℃に冷やすと、結晶は何g出ますか。",
+        "answer": "80",
+        "choices": [
+          "80",
+          "40",
+          "100",
+          "60"
+        ],
+        "meaning": "①水200gは20℃で40gまでとける。②120−40＝80g出ます。よって、答えは80です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain43",
+    "category": "suiyoueki",
+    "grade": 6,
+    "title": "2つの食塩水を混ぜる",
+    "intro": "濃さのちがう食塩水を混ぜます。混ぜたあとの濃さ＝〈食塩の合計〉÷〈全体の重さ〉×100 です。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10％と5％を混ぜると？</text><path d=\"M40 48 L43 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L86 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"43\" y=\"40\" width=\"40\" height=\"64\" fill=\"#f38ba8\" opacity=\"0.4\"/><text x=\"63\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10％</text><text x=\"63\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">200g</text><text x=\"118\" y=\"80\" fill=\"#cdd6f4\" font-size=\"15\" text-anchor=\"middle\">＋</text><path d=\"M150 48 L153 104 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L196 48\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"153\" y=\"54\" width=\"40\" height=\"50\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"173\" y=\"42\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5％</text><text x=\"173\" y=\"122\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">300g</text><text x=\"222\" y=\"80\" fill=\"#cdd6f4\" font-size=\"15\" text-anchor=\"middle\">→</text><text x=\"258\" y=\"80\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">?％</text></svg>",
+    "steps": [
+      {
+        "question": "10％の食塩水200gには、食塩が何gとけていますか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "10",
+          "30",
+          "18"
+        ],
+        "meaning": "①200×0.1。②20gです。よって、答えは20です。"
+      },
+      {
+        "question": "5％の食塩水300gには、食塩が何gとけていますか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "20",
+          "10",
+          "25"
+        ],
+        "meaning": "①300×0.05。②15gです。よって、答えは15です。"
+      },
+      {
+        "question": "この2つを全部混ぜると、濃さは何％になりますか。",
+        "answer": "7",
+        "choices": [
+          "7",
+          "7.5",
+          "6",
+          "8"
+        ],
+        "meaning": "①食塩合計35g、全体500g。②35÷500×100＝7％です。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain44",
+    "category": "suiyoueki",
+    "grade": 6,
+    "title": "冷やす・蒸発させて結晶を取り出す",
+    "intro": "ある物質は、水100gに、80℃では最大50g、20℃では最大10gとけます。80℃の水100gに、この物質をとけるだけ（50g）とかしました。",
+    "svg": "<svg viewBox=\"0 0 260 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">とける最大量と温度</text><line x1=\"44\" y1=\"120\" x2=\"240\" y2=\"120\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"44\" y1=\"120\" x2=\"44\" y2=\"34\" stroke=\"#9399b2\" stroke-width=\"1\"/><polyline points=\"87.6,105.7 218.2,48.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.2\"/><circle cx=\"87.6\" cy=\"105.7\" r=\"2.6\" fill=\"#ffd166\"/><circle cx=\"218.2\" cy=\"48.3\" r=\"2.6\" fill=\"#ffd166\"/><text x=\"240\" y=\"133\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">温度℃</text><text x=\"46\" y=\"31\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">とける量g</text><text x=\"152.8888888888889\" y=\"71\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">この差が結晶になる</text></svg>",
+    "steps": [
+      {
+        "question": "この液を20℃まで冷やすと、出てくる結晶は何gですか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "10",
+          "50",
+          "30"
+        ],
+        "meaning": "①80℃で50g、20℃で10g。②50−10＝40g出ます。よって、答えは40です。"
+      },
+      {
+        "question": "①のあと、20℃の液（水100g・物質10g）から水を50g蒸発させると、さらに何g出ますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "10",
+          "2",
+          "7"
+        ],
+        "meaning": "①水が50gになると20℃では10×(50/100)＝5gしかとけない。②10−5＝5g出ます。よって、答えは5です。"
+      },
+      {
+        "question": "はじめの80℃の液から、80℃のまま水を20g蒸発させると、結晶は何g出ますか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "20",
+          "5",
+          "40"
+        ],
+        "meaning": "①水80gは80℃で50×(80/100)＝40gまでとける。②50−40＝10g出ます。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain45",
+    "category": "tenki",
+    "grade": 5,
+    "title": "空気が上がると雲ができる",
+    "intro": "空気は上へ行くほど温度が下がり、100m上がるごとに約1℃下がります。地上（0m）で25℃の空気が上しょうします。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">上がると冷えて雲ができる</text><polygon points=\"60,130 150,40 240,130\" fill=\"#8b7355\" opacity=\"0.3\" stroke=\"#8b7355\"/><g opacity=\"0.75\"><ellipse cx=\"150\" cy=\"66\" rx=\"14.4\" ry=\"8.1\" fill=\"#cdd6f4\"/><ellipse cx=\"139.2\" cy=\"68.7\" rx=\"9\" ry=\"6.3\" fill=\"#cdd6f4\"/><ellipse cx=\"160.8\" cy=\"68.7\" rx=\"9\" ry=\"6.3\" fill=\"#cdd6f4\"/></g><line x1=\"40\" y1=\"130\" x2=\"40\" y2=\"45\" stroke=\"#9399b2\" stroke-width=\"1\"/><polygon points=\"40,45 36,53 44,53\" fill=\"#9399b2\"/><text x=\"34\" y=\"128\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">0m</text><text x=\"34\" y=\"70\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">1000m</text><text x=\"255\" y=\"128\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\">25℃</text><text x=\"180\" y=\"60\" fill=\"#4f9eff\" font-size=\"8.5\" text-anchor=\"start\" font-family=\"sans-serif\">冷えて雲</text></svg>",
+    "steps": [
+      {
+        "question": "地上25℃の空気が1000m上がると、温度は何℃になりますか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "10",
+          "20",
+          "5"
+        ],
+        "meaning": "①1000m÷100×1℃＝10℃下がる。②25−10＝15℃です。よって、答えは15です。"
+      },
+      {
+        "question": "この空気の露点（水てきができ始める温度）が15℃のとき、雲ができ始めるのは地上から何mの高さですか。",
+        "answer": "1000",
+        "choices": [
+          "1000",
+          "1500",
+          "500",
+          "2000"
+        ],
+        "meaning": "①温度が15℃になる高さを探す。②25℃→15℃は10℃下がる＝1000mです。よって、答えは1000です。"
+      },
+      {
+        "question": "その空気がさらに上がって2000mになると、温度は何℃になりますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "10",
+          "15",
+          "0"
+        ],
+        "meaning": "①2000m÷100＝20℃下がる。②25−20＝5℃です。よって、答えは5です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain46",
+    "category": "tenki",
+    "grade": 5,
+    "title": "海風と陸風",
+    "intro": "陸（砂）は海（水）よりあたたまりやすく、冷めやすい性質があります。あたたかい空気は軽くなって上へ動き、そこへまわりの空気が流れこみます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">昼：陸があたたまる</text><circle cx=\"240\" cy=\"40\" r=\"12\" fill=\"#ffd166\" opacity=\"0.85\"/><line x1=\"254.0\" y1=\"40.0\" x2=\"258.0\" y2=\"40.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"249.9\" y1=\"49.9\" x2=\"252.7\" y2=\"52.7\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"240.0\" y1=\"54.0\" x2=\"240.0\" y2=\"58.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"230.1\" y1=\"49.9\" x2=\"227.3\" y2=\"52.7\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"226.0\" y1=\"40.0\" x2=\"222.0\" y2=\"40.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"230.1\" y1=\"30.1\" x2=\"227.3\" y2=\"27.3\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"240.0\" y1=\"26.0\" x2=\"240.0\" y2=\"22.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"249.9\" y1=\"30.1\" x2=\"252.7\" y2=\"27.3\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><rect x=\"20\" y=\"90\" width=\"130\" height=\"30\" fill=\"#4f9eff\" opacity=\"0.35\"/><text x=\"85\" y=\"110\" fill=\"#cbe3ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">海</text><rect x=\"150\" y=\"86\" width=\"110\" height=\"34\" fill=\"#8b7355\" opacity=\"0.5\"/><text x=\"205\" y=\"108\" fill=\"#f5e0c3\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">陸</text><line x1=\"120\" y1=\"78\" x2=\"175\" y2=\"78\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><polygon points=\"175,78 168,74 168,82\" fill=\"#ffd166\"/><text x=\"148\" y=\"72\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">風</text><line x1=\"205\" y1=\"82\" x2=\"205\" y2=\"52\" stroke=\"#ff6b6b\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><polygon points=\"205,52 201,59 209,59\" fill=\"#ff6b6b\"/></svg>",
+    "steps": [
+      {
+        "question": "昼、太陽であたたまって空気が上へ動くのは、海と陸のどちらの上ですか。",
+        "answer": "陸",
+        "choices": [
+          "陸",
+          "海",
+          "同じ",
+          "空"
+        ],
+        "meaning": "①陸はあたたまりやすい。②陸の上の空気が先にあたたまって上がります。よって、答えは陸です。"
+      },
+      {
+        "question": "昼、地上の風はどちら向きに吹きますか。",
+        "answer": "海から陸",
+        "choices": [
+          "海から陸",
+          "陸から海",
+          "吹かない",
+          "上から下"
+        ],
+        "meaning": "①陸の空気が上がった分、海から空気が流れこむ。②海から陸（海風）です。よって、答えは海から陸です。"
+      },
+      {
+        "question": "夜は陸のほうが早く冷めます。夜、地上の風はどちら向きに吹きますか。",
+        "answer": "陸から海",
+        "choices": [
+          "陸から海",
+          "海から陸",
+          "吹かない",
+          "下から上"
+        ],
+        "meaning": "①夜は逆に海のほうがあたたかく、海の上で空気が上がる。②陸から海（陸風）です。よって、答えは陸から海です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain47",
+    "category": "tenki",
+    "grade": 6,
+    "title": "フェーン現象（山を越える空気）",
+    "intro": "空気は、雲がないときは100mごとに1℃下がり、雲があるとき（しめった空気）は100mごとに0.5℃下がります。下る（下降する）ときは雲がなければ100mごとに1℃上がります。地上0mで20℃の空気が、高さ2000mの山を越えます。高さ1000mから山頂まで雲ができて雨を降らせ、山頂で雲は消えます。",
+    "svg": "<svg viewBox=\"0 0 280 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">フェーン現象</text><polygon points=\"40,135 150,35 260,135\" fill=\"#8b7355\" opacity=\"0.3\" stroke=\"#8b7355\"/><g opacity=\"0.75\"><ellipse cx=\"120\" cy=\"62\" rx=\"12.8\" ry=\"7.2\" fill=\"#cdd6f4\"/><ellipse cx=\"110.4\" cy=\"64.4\" rx=\"8\" ry=\"5.6000000000000005\" fill=\"#cdd6f4\"/><ellipse cx=\"129.6\" cy=\"64.4\" rx=\"8\" ry=\"5.6000000000000005\" fill=\"#cdd6f4\"/></g><line x1=\"60\" y1=\"120\" x2=\"130\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><polygon points=\"130,60 121,62 126,68\" fill=\"#4f9eff\"/><text x=\"70\" y=\"100\" fill=\"#4f9eff\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">上る</text><line x1=\"170\" y1=\"55\" x2=\"245\" y2=\"120\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><polygon points=\"245,120 236,116 240,124\" fill=\"#ff6b6b\"/><text x=\"232\" y=\"96\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"end\" font-family=\"sans-serif\">下る（かわく）</text><text x=\"45\" y=\"132\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">0m 20℃</text><text x=\"150\" y=\"30\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">山頂2000m</text></svg>",
+    "steps": [
+      {
+        "question": "地上0m（20℃）から、雲ができ始める1000mまで上がると、温度は何℃になりますか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "15",
+          "5",
+          "12"
+        ],
+        "meaning": "①雲なしなので100mごとに1℃、1000mで10℃下がる。②20−10＝10℃です。よって、答えは10です。"
+      },
+      {
+        "question": "1000m（10℃）から山頂2000mまで、雲がある空気として上がると、山頂の温度は何℃ですか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "0",
+          "10",
+          "2"
+        ],
+        "meaning": "①雲ありは100mごとに0.5℃、1000mで5℃下がる。②10−5＝5℃です。よって、答えは5です。"
+      },
+      {
+        "question": "山頂2000m（5℃）から、雲のない空気として反対側の0mまで下ると、ふもとの温度は何℃ですか。",
+        "answer": "25",
+        "choices": [
+          "25",
+          "20",
+          "15",
+          "30"
+        ],
+        "meaning": "①下りは雲なしで100mごとに1℃上がる、2000mで20℃上がる。②5＋20＝25℃（もとより高温でかわいた風）です。よって、答えは25です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain48",
+    "category": "tenki",
+    "grade": 6,
+    "title": "飽和水じょう気量の表と露点",
+    "intro": "空気1m³にふくめる水じょう気の最大量（飽和水じょう気量）は、10℃で9.4g、20℃で17.3g、30℃で30.4gです。気温30℃で、1m³に17.3gの水じょう気をふくむ空気があります。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">飽和水じょう気量（g/m³）</text><rect x=\"70\" y=\"38\" width=\"46\" height=\"15\" fill=\"#4f9eff\" opacity=\"0.5\" rx=\"2\"/><text x=\"64\" y=\"50\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"end\" font-family=\"sans-serif\">10℃</text><text x=\"120.38157894736842\" y=\"50\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">9.4g</text><rect x=\"70\" y=\"64\" width=\"85\" height=\"15\" fill=\"#4f9eff\" opacity=\"0.5\" rx=\"2\"/><text x=\"64\" y=\"76\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"end\" font-family=\"sans-serif\">20℃</text><text x=\"159.36184210526318\" y=\"76\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">17.3g</text><rect x=\"70\" y=\"90\" width=\"150\" height=\"15\" fill=\"#4f9eff\" opacity=\"0.5\" rx=\"2\"/><text x=\"64\" y=\"102\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"end\" font-family=\"sans-serif\">30℃</text><text x=\"224\" y=\"102\" fill=\"#eef2ff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">30.4g</text><text x=\"140\" y=\"122\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">いまの空気：30℃で17.3gふくむ</text></svg>",
+    "steps": [
+      {
+        "question": "この空気（30℃で17.3g）の湿度は何％ですか。（小数第1位を四捨五入）",
+        "answer": "57",
+        "choices": [
+          "57",
+          "60",
+          "50",
+          "43"
+        ],
+        "meaning": "①17.3÷30.4×100＝56.9…。②約57％です。よって、答えは57です。"
+      },
+      {
+        "question": "この空気を冷やしていくと、何℃で水てきができ始めますか（露点）。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "10",
+          "30",
+          "17"
+        ],
+        "meaning": "①ふくむ17.3gが「最大」になる温度をさがす。②20℃の飽和が17.3gなので露点は20℃です。よって、答えは20です。"
+      },
+      {
+        "question": "さらに10℃まで冷やすと、1m³あたり何gの水てきが出てきますか。",
+        "answer": "7.9",
+        "choices": [
+          "7.9",
+          "8.9",
+          "9.4",
+          "17.3"
+        ],
+        "meaning": "①10℃では9.4gしかふくめない。②17.3−9.4＝7.9gが水てきになります。よって、答えは7.9です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain49",
+    "category": "tenki",
+    "grade": 6,
+    "title": "降水量の計算",
+    "intro": "雨の量（降水量）は、雨がどこにも流れず全部たまったときの深さをmmで表します。降水量1mmは、1m²（たて1m×横1m）の地面に1Lの水がたまるのと同じです（1000L＝1m³）。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">降水量1mm＝1m²に1L</text><line x1=\"70\" y1=\"40\" x2=\"62\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"90\" y1=\"40\" x2=\"82\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"110\" y1=\"40\" x2=\"102\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"130\" y1=\"40\" x2=\"122\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"150\" y1=\"40\" x2=\"142\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"170\" y1=\"40\" x2=\"162\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"190\" y1=\"40\" x2=\"182\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"210\" y1=\"40\" x2=\"202\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><rect x=\"90\" y=\"90\" width=\"100\" height=\"24\" fill=\"#8b7355\" opacity=\"0.35\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><text x=\"140\" y=\"106\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1m × 1m</text><text x=\"140\" y=\"82\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">雨</text></svg>",
+    "steps": [
+      {
+        "question": "降水量が1mmのとき、1m²の地面に何Lの水がたまりますか。",
+        "answer": "1",
+        "choices": [
+          "1",
+          "10",
+          "100",
+          "1000"
+        ],
+        "meaning": "①降水量1mm＝1m²に1L（決まり）。②1Lです。よって、答えは1です。"
+      },
+      {
+        "question": "降水量20mmのとき、面積100m²の屋根に降る水は、全部で何Lですか。",
+        "answer": "2000",
+        "choices": [
+          "2000",
+          "200",
+          "20000",
+          "120"
+        ],
+        "meaning": "①1m²あたり20L×100m²。②2000Lです。よって、答えは2000です。"
+      },
+      {
+        "question": "その2000Lの水を、深さ2mのタンクにためると、底面積は何m²必要ですか。",
+        "answer": "1",
+        "choices": [
+          "1",
+          "2",
+          "4",
+          "0.5"
+        ],
+        "meaning": "①2000L＝2m³。②体積2m³÷深さ2m＝底面積1m²です。よって、答えは1です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain50",
+    "category": "daichi",
+    "grade": 5,
+    "title": "地震のゆれと震源までの距離",
+    "intro": "地震では、はじめの小さなゆれ（P波）が秒速8kmで、あとの大きなゆれ（S波）が秒速4kmで伝わります。震源から120kmはなれた地点で考えます。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">震源からP波・S波が伝わる</text><circle cx=\"45\" cy=\"70\" r=\"6\" fill=\"#ff6b6b\"/><text x=\"45\" y=\"92\" fill=\"#ff6b6b\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">震源</text><circle cx=\"45\" cy=\"70\" r=\"24\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><circle cx=\"45\" cy=\"70\" r=\"44\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"2 3\"/><line x1=\"45\" y1=\"70\" x2=\"235\" y2=\"70\" stroke=\"#9399b2\" stroke-width=\"1\"/><rect x=\"228\" y=\"60\" width=\"14\" height=\"12\" fill=\"#f9e2af\"/><text x=\"235\" y=\"92\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">観測点</text><text x=\"140\" y=\"64\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">120km</text></svg>",
+    "steps": [
+      {
+        "question": "P波（秒速8km）が観測点に届くのは、地震発生から何秒後ですか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "30",
+          "20",
+          "12"
+        ],
+        "meaning": "①120÷8。②15秒後です。よって、答えは15です。"
+      },
+      {
+        "question": "S波（秒速4km）が届くのは、地震発生から何秒後ですか。",
+        "answer": "30",
+        "choices": [
+          "30",
+          "15",
+          "60",
+          "24"
+        ],
+        "meaning": "①120÷4。②30秒後です。よって、答えは30です。"
+      },
+      {
+        "question": "小さなゆれが始まってから大きなゆれが始まるまで（初期微動継続時間）は何秒ですか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "30",
+          "45",
+          "10"
+        ],
+        "meaning": "①S波30秒−P波15秒。②15秒です（この時間が長いほど震源は遠い）。よって、答えは15です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain51",
+    "category": "daichi",
+    "grade": 5,
+    "title": "柱状図と地層の傾き",
+    "intro": "はなれた3地点A・B・Cでボーリング調査をしました。3地点とも地面の高さ（標高）は同じで、どこにも同じ火山灰の層（かぎ層）があります。かぎ層の上面までの深さは、Aで10m、Bで20m、Cで30mでした。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ標高・かぎ層の深さ比べ</text><rect x=\"40\" y=\"34\" width=\"34\" height=\"86\" fill=\"#8b7355\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><rect x=\"40\" y=\"60\" width=\"34\" height=\"7\" fill=\"#f38ba8\" opacity=\"0.8\"/><text x=\"57\" y=\"30\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><rect x=\"123\" y=\"34\" width=\"34\" height=\"86\" fill=\"#8b7355\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><rect x=\"123\" y=\"86\" width=\"34\" height=\"7\" fill=\"#f38ba8\" opacity=\"0.8\"/><text x=\"140\" y=\"30\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><rect x=\"206\" y=\"34\" width=\"34\" height=\"86\" fill=\"#8b7355\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><rect x=\"206\" y=\"112\" width=\"34\" height=\"7\" fill=\"#f38ba8\" opacity=\"0.8\"/><text x=\"223\" y=\"30\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><text x=\"57\" y=\"134\" fill=\"#f38ba8\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">深10m</text><text x=\"140\" y=\"134\" fill=\"#f38ba8\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">深20m</text><text x=\"223\" y=\"134\" fill=\"#f38ba8\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">深30m</text></svg>",
+    "steps": [
+      {
+        "question": "かぎ層がいちばん深いところにあるのはどの地点ですか。",
+        "answer": "C",
+        "choices": [
+          "C",
+          "B",
+          "A",
+          "同じ"
+        ],
+        "meaning": "①深さ10・20・30mを比べる。②いちばん深いのは30mのCです。よって、答えはCです。"
+      },
+      {
+        "question": "かぎ層がいちばん浅い（地表に近い）のはどの地点ですか。",
+        "answer": "A",
+        "choices": [
+          "A",
+          "B",
+          "C",
+          "同じ"
+        ],
+        "meaning": "①いちばん浅いのは10m。②Aです。よって、答えはAです。"
+      },
+      {
+        "question": "A→B→Cの向きに、この地層は上がっていますか、下がっていますか。",
+        "answer": "下がっている",
+        "choices": [
+          "下がっている",
+          "上がっている",
+          "水平",
+          "わからない"
+        ],
+        "meaning": "①A→B→Cでかぎ層が深く＝低くなる。②A→Cに向かって下がっています。よって、答えは下がっているです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain52",
+    "category": "daichi",
+    "grade": 6,
+    "title": "2つの記録から地震発生時刻を求める",
+    "intro": "P波は秒速8km、S波は秒速4kmで伝わります。ある地点Xで、P波が9時0分10秒、S波が9時0分20秒に届きました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"16\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">地点Xの地震計の記録</text><line x1=\"30\" y1=\"70\" x2=\"250\" y2=\"70\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"110\" y1=\"62\" x2=\"110\" y2=\"78\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"110\" y=\"94\" fill=\"#4f9eff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">P波 10秒</text><path d=\"M170 70 l4 -14 l8 28 l8 -24 l6 18 l4 -8\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"185\" y=\"100\" fill=\"#ff6b6b\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">S波 20秒</text><line x1=\"110\" y1=\"46\" x2=\"170\" y2=\"46\" stroke=\"#06d6a0\" stroke-width=\"1\"/><text x=\"140\" y=\"42\" fill=\"#06d6a0\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">継続時間</text></svg>",
+    "steps": [
+      {
+        "question": "地点Xの初期微動継続時間（P波が届いてからS波が届くまで）は何秒ですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "20",
+          "30",
+          "5"
+        ],
+        "meaning": "①20秒−10秒。②10秒です。よって、答えは10です。"
+      },
+      {
+        "question": "この地震では「震源までの距離(km)＝継続時間(秒)×8」です。Xの震源からの距離は何kmですか。",
+        "answer": "80",
+        "choices": [
+          "80",
+          "40",
+          "100",
+          "160"
+        ],
+        "meaning": "①継続時間10秒×8。②80kmです。よって、答えは80です。"
+      },
+      {
+        "question": "P波は秒速8kmなので80kmを進むのに時間がかかります。地震が発生したのは9時0分何秒ですか。",
+        "answer": "0",
+        "choices": [
+          "0",
+          "5",
+          "2",
+          "10"
+        ],
+        "meaning": "①P波が80kmに届く時間＝80÷8＝10秒。②P波到着9時0分10秒−10秒＝9時0分0秒です。よって、答えは0です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain53",
+    "category": "daichi",
+    "grade": 6,
+    "title": "柱状図の標高をそろえて考える",
+    "intro": "3地点A・B・Cで同じかぎ層を調べました。地表の標高はAが100m、Bが90m、Cが80mです。かぎ層の上面までの深さは、Aで15m、Bで10m、Cで5mでした。かぎ層の「標高」＝地表の標高−深さ で求めます。",
+    "svg": "<svg viewBox=\"0 0 280 145\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">標高をそろえて傾きを見る</text><rect x=\"40\" y=\"34\" width=\"34\" height=\"88\" fill=\"#8b7355\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><rect x=\"40\" y=\"57\" width=\"34\" height=\"7\" fill=\"#f38ba8\" opacity=\"0.8\"/><text x=\"57\" y=\"30\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A(100m)</text><rect x=\"123\" y=\"49\" width=\"34\" height=\"73\" fill=\"#8b7355\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><rect x=\"123\" y=\"64\" width=\"34\" height=\"7\" fill=\"#f38ba8\" opacity=\"0.8\"/><text x=\"140\" y=\"45\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B(90m)</text><rect x=\"206\" y=\"64\" width=\"34\" height=\"58\" fill=\"#8b7355\" opacity=\"0.25\" stroke=\"#cdd6f4\" stroke-width=\"1\"/><rect x=\"206\" y=\"72\" width=\"34\" height=\"7\" fill=\"#f38ba8\" opacity=\"0.8\"/><text x=\"223\" y=\"60\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C(80m)</text><text x=\"140\" y=\"138\" fill=\"#f38ba8\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">かぎ層の標高：A>B>C（右下がり）</text></svg>",
+    "steps": [
+      {
+        "question": "Aのかぎ層の標高は何mですか。（100−15）",
+        "answer": "85",
+        "choices": [
+          "85",
+          "90",
+          "80",
+          "75"
+        ],
+        "meaning": "①地表100m−深さ15m。②85mです。よって、答えは85です。"
+      },
+      {
+        "question": "Bのかぎ層の標高は何mですか。（90−10）",
+        "answer": "80",
+        "choices": [
+          "80",
+          "85",
+          "75",
+          "90"
+        ],
+        "meaning": "①90−10。②80mです。（Cは80−5＝75m）よって、答えは80です。"
+      },
+      {
+        "question": "A(85m)・B(80m)・C(75m)を見ると、かぎ層はA→Cに向かってどうなっていますか。",
+        "answer": "下がっている",
+        "choices": [
+          "下がっている",
+          "上がっている",
+          "水平",
+          "わからない"
+        ],
+        "meaning": "①標高85→80→75と低くなる。②A→Cに向かって下がっています（深さだけ見ると逆に見えるひっかけに注意）。よって、答えは下がっているです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain54",
+    "category": "daichi",
+    "grade": 6,
+    "title": "地層のできた順を推理する",
+    "intro": "ある崖に、下から地層A・B・Cが重なり、それらを切るように断層Fと、マグマが入りこんだ岩脈Mがあります。「あとからできたものほど、他のものを切る（ずらす）」という決まりで順番を考えます。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">切っている方が新しい</text><rect x=\"40\" y=\"40\" width=\"200\" height=\"22\" fill=\"#f9e2af\" opacity=\"0.4\"/><text x=\"52\" y=\"55\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><rect x=\"40\" y=\"62\" width=\"200\" height=\"22\" fill=\"#94e2d5\" opacity=\"0.4\"/><text x=\"52\" y=\"77\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><rect x=\"40\" y=\"84\" width=\"200\" height=\"22\" fill=\"#f5c2e7\" opacity=\"0.4\"/><text x=\"52\" y=\"99\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><line x1=\"150\" y1=\"34\" x2=\"185\" y2=\"112\" stroke=\"#ff6b6b\" stroke-width=\"2.5\"/><text x=\"196\" y=\"100\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">断層F</text><line x1=\"90\" y1=\"112\" x2=\"105\" y2=\"34\" stroke=\"#cba6f7\" stroke-width=\"4\"/><text x=\"78\" y=\"30\" fill=\"#cba6f7\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">岩脈M</text></svg>",
+    "steps": [
+      {
+        "question": "地層A・B・Cのうち、いちばん古い（先に積もった）のはどれですか。",
+        "answer": "A",
+        "choices": [
+          "A",
+          "B",
+          "C",
+          "同時"
+        ],
+        "meaning": "①ふつう下の地層ほど先に積もる。②いちばん下のAが最も古いです。よって、答えはAです。"
+      },
+      {
+        "question": "断層FはCをずらしています。断層Fができたのは、地層Cができた「あと」ですか「前」ですか。",
+        "answer": "あと",
+        "choices": [
+          "あと",
+          "前",
+          "同時",
+          "わからない"
+        ],
+        "meaning": "①Cを切って（ずらして）いる＝Cより新しい。②Cができたあとです。よって、答えはあとです。"
+      },
+      {
+        "question": "岩脈Mは断層Fを切っています。岩脈Mと断層F、あとにできたのはどちらですか。",
+        "answer": "岩脈M",
+        "choices": [
+          "岩脈M",
+          "断層F",
+          "同時",
+          "A"
+        ],
+        "meaning": "①切っている方が新しい＝岩脈Mが断層Fを切る。②岩脈Mがあとです。よって、答えは岩脈Mです。"
+      }
+    ]
+  },
+  {
+    "id": "rchain55",
+    "category": "sora",
+    "grade": 5,
+    "title": "月の満ち欠けと見える時刻",
+    "intro": "月は太陽の光を受けて光り、地球のまわりを約1か月かけて回ります。満月は、太陽とちょうど反対の方向にあるときに見えます。月も星と同じように、東からのぼり南の空を通って西へしずみます。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">満月の動き（東→南→西）</text><line x1=\"20\" y1=\"115\" x2=\"260\" y2=\"115\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"30\" y=\"128\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">東</text><text x=\"140\" y=\"128\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">南</text><text x=\"250\" y=\"128\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">西</text><path d=\"M30 115 A130 80 0 0 1 250 115\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><circle cx=\"140\" cy=\"48\" r=\"12\" fill=\"#f9e2af\"/><text x=\"140\" y=\"40\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">満月(南中)</text></svg>",
+    "steps": [
+      {
+        "question": "満月が南の空でいちばん高くなる（南中する）のは、およそ何時ごろですか。",
+        "answer": "真夜中(0時ごろ)",
+        "choices": [
+          "真夜中(0時ごろ)",
+          "正午",
+          "夕方6時",
+          "朝6時"
+        ],
+        "meaning": "①満月は太陽と正反対＝太陽が真下（真夜中）のとき南中。②真夜中(0時ごろ)です。よって、答えは真夜中(0時ごろ)です。"
+      },
+      {
+        "question": "その満月が西の地平線にしずむのは、およそ何時ごろですか。",
+        "answer": "朝6時ごろ",
+        "choices": [
+          "朝6時ごろ",
+          "真夜中",
+          "正午",
+          "夕方6時"
+        ],
+        "meaning": "①東出→南中(0時)→西没は、南中の約6時間後。②朝6時ごろです。よって、答えは朝6時ごろです。"
+      },
+      {
+        "question": "満月の日から数えて、次に新月になるのはおよそ何日後ですか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "30",
+          "7",
+          "3"
+        ],
+        "meaning": "①満ち欠けの1周が約30日、満月→新月はその半分。②約15日後です。よって、答えは15です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain56",
+    "category": "sora",
+    "grade": 5,
+    "title": "太陽と影の動き",
+    "intro": "晴れた日、地面に垂直に立てた棒の影を調べます。太陽は東→南→西と動き、影は太陽と反対側にできます。太陽が高いほど影は短くなります。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">棒の影と太陽</text><circle cx=\"210\" cy=\"50\" r=\"12\" fill=\"#ffd166\" opacity=\"0.85\"/><line x1=\"224.0\" y1=\"50.0\" x2=\"228.0\" y2=\"50.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"219.9\" y1=\"59.9\" x2=\"222.7\" y2=\"62.7\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"210.0\" y1=\"64.0\" x2=\"210.0\" y2=\"68.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"200.1\" y1=\"59.9\" x2=\"197.3\" y2=\"62.7\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"196.0\" y1=\"50.0\" x2=\"192.0\" y2=\"50.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"200.1\" y1=\"40.1\" x2=\"197.3\" y2=\"37.3\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"210.0\" y1=\"36.0\" x2=\"210.0\" y2=\"32.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"219.9\" y1=\"40.1\" x2=\"222.7\" y2=\"37.3\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"20\" y1=\"110\" x2=\"260\" y2=\"110\" stroke=\"#8b7355\" stroke-width=\"2\"/><line x1=\"120\" y1=\"110\" x2=\"120\" y2=\"60\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><text x=\"120\" y=\"52\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">棒</text><polygon points=\"120,110 70,110 120,100\" fill=\"#4f9eff\" opacity=\"0.4\"/><text x=\"88\" y=\"124\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">影</text><text x=\"45\" y=\"124\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">西</text><text x=\"255\" y=\"124\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">東</text></svg>",
+    "steps": [
+      {
+        "question": "太陽が真南（南中）にきたとき、棒の影はどの方角にのびますか。",
+        "answer": "北",
+        "choices": [
+          "北",
+          "南",
+          "東",
+          "西"
+        ],
+        "meaning": "①影は太陽と反対側。②太陽が南なら影は北です。よって、答えは北です。"
+      },
+      {
+        "question": "棒の影がいちばん短くなるのは、1日のうちいつごろですか。",
+        "answer": "正午ごろ",
+        "choices": [
+          "正午ごろ",
+          "朝",
+          "夕方",
+          "真夜中"
+        ],
+        "meaning": "①太陽が高いほど影は短い。②太陽が最も高い正午ごろ（南中）です。よって、答えは正午ごろです。"
+      },
+      {
+        "question": "朝、太陽は東の空にあります。このとき棒の影はどの方角にのびますか。",
+        "answer": "西",
+        "choices": [
+          "西",
+          "東",
+          "北",
+          "南"
+        ],
+        "meaning": "①影は太陽と反対側。②太陽が東なら影は西です。よって、答えは西です。"
+      }
+    ]
+  },
+  {
+    "id": "rchain57",
+    "category": "sora",
+    "grade": 6,
+    "title": "星が南中する時刻の計算",
+    "intro": "星は1時間に15°、東から西へ動いて見えます（日周運動）。また、同じ時刻に見える星の位置は、1か月に30°ずつ西へずれます（年周運動）。ある星が、1月15日の午後10時にちょうど南中（真南）しました。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"15\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">南の空：星の南中</text><line x1=\"20\" y1=\"105\" x2=\"260\" y2=\"105\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"30\" y=\"118\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">東</text><text x=\"140\" y=\"118\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">南</text><text x=\"250\" y=\"118\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">西</text><path d=\"M30 105 A130 70 0 0 1 250 105\" fill=\"none\" stroke=\"#9399b2\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"140\" y=\"46\" fill=\"#f9e2af\" font-size=\"13\" text-anchor=\"middle\">★</text><text x=\"140\" y=\"34\" fill=\"#f9e2af\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">南中 午後10時</text><line x1=\"140\" y1=\"52\" x2=\"185\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><polygon points=\"185,60 177,58 180,65\" fill=\"#4f9eff\"/><text x=\"205\" y=\"60\" fill=\"#4f9eff\" font-size=\"8\" text-anchor=\"start\" font-family=\"sans-serif\">1時間で15°</text></svg>",
+    "steps": [
+      {
+        "question": "同じ夜、午後11時には、この星は南中の位置から西へ何度動いて見えますか。",
+        "answer": "15",
+        "choices": [
+          "15",
+          "30",
+          "10",
+          "45"
+        ],
+        "meaning": "①1時間で15°動く。②午後10時→11時の1時間で15°西へ。よって、答えは15です。"
+      },
+      {
+        "question": "1か月後の2月15日、この星が南中するのは午後何時ごろですか。（1か月で30°西へ＝2時間早い）",
+        "answer": "8",
+        "choices": [
+          "8",
+          "10",
+          "12",
+          "6"
+        ],
+        "meaning": "①30°÷15°/時＝2時間早く南中。②午後10時−2時間＝午後8時ごろです。よって、答えは8です。"
+      },
+      {
+        "question": "3か月後の4月15日には、この星が南中するのは午後何時ごろですか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "6",
+          "8",
+          "2"
+        ],
+        "meaning": "①1か月で2時間早い×3か月＝6時間早い。②午後10時−6時間＝午後4時ごろです。よって、答えは4です。"
+      }
+    ]
   }
 ]
