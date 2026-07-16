@@ -2406,5 +2406,853 @@
         "meaning": "①4＋6×□≦100 → □は0〜16の17個。②17個です。よって、答えは17です。"
       }
     ]
+  },
+  {
+    "id": "sc_chain_57",
+    "category": "zu",
+    "grade": 5,
+    "title": "畑の中の十字の道",
+    "intro": "たて12m・よこ16mの長方形の畑に、幅2mの道が、たてに1本・よこに1本、十字に通っています。道をのぞいた畑（作物を植える部分）の面積を求めます。",
+    "svg": "<svg viewBox=\"0 0 280 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"40\" y=\"40\" width=\"200\" height=\"130\" fill=\"#06d6a0\" opacity=\"0.18\" stroke=\"#06d6a0\" stroke-width=\"1.3\"/><rect x=\"112\" y=\"40\" width=\"24\" height=\"130\" fill=\"#8b7355\" opacity=\"0.5\"/><rect x=\"40\" y=\"96\" width=\"200\" height=\"24\" fill=\"#8b7355\" opacity=\"0.5\"/><text x=\"140\" y=\"26\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">たて12m・よこ16m・道幅2m</text><text x=\"140\" y=\"190\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">道を はしに寄せて考える</text></svg>",
+    "steps": [
+      {
+        "question": "道を畑のはしに寄せると、作物の部分のたては何mになりますか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "12",
+          "14",
+          "8"
+        ],
+        "meaning": "①たて12mから道幅2mをのぞく。②12−2＝10mです（道を寄せると1つの長方形になる）。よって、答えは10です。"
+      },
+      {
+        "question": "同じように、作物の部分のよこは何mになりますか。",
+        "answer": "14",
+        "choices": [
+          "14",
+          "16",
+          "12",
+          "10"
+        ],
+        "meaning": "①よこ16mから道幅2mをのぞく。②16−2＝14mです。よって、答えは14です。"
+      },
+      {
+        "question": "作物を植える部分の面積は何m²ですか。",
+        "answer": "140",
+        "choices": [
+          "140",
+          "192",
+          "160",
+          "120"
+        ],
+        "meaning": "①道を寄せると10m×14mの長方形。②10×14＝140m²です。よって、答えは140です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_58",
+    "category": "zu",
+    "grade": 5,
+    "title": "平行四辺形と三角形",
+    "intro": "底辺8cm・高さ5cmの平行四辺形ABCDがあります。",
+    "svg": "<svg viewBox=\"0 0 260 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><polygon points=\"90,40 240,40 200,130 50,130\" fill=\"#4f9eff\" opacity=\"0.14\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><line x1=\"90\" y1=\"40\" x2=\"50\" y2=\"130\" stroke=\"#ffd166\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><text x=\"165\" y=\"34\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\">底辺 8cm</text><text x=\"214\" y=\"85\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\">高さ5cm</text></svg>",
+    "steps": [
+      {
+        "question": "平行四辺形の面積は何cm²ですか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "20",
+          "13",
+          "45"
+        ],
+        "meaning": "①平行四辺形の面積＝底辺×高さ。②8×5＝40cm²です。よって、答えは40です。"
+      },
+      {
+        "question": "対角線で2つの三角形に分けると、三角形1つの面積は何cm²ですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "40",
+          "10",
+          "16"
+        ],
+        "meaning": "①対角線は平行四辺形を同じ2つに分ける。②40÷2＝20cm²です。よって、答えは20です。"
+      },
+      {
+        "question": "その三角形の底辺を半分（4cm）にすると（高さは同じ5cm）、面積は何cm²ですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "20",
+          "5",
+          "8"
+        ],
+        "meaning": "①高さが同じなら、底辺が半分になると面積も半分。②20÷2＝10cm²（4×5÷2）です。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_59",
+    "category": "zu",
+    "grade": 5,
+    "title": "正六角形の角",
+    "intro": "正六角形（6つの辺と角がすべて等しい六角形）の角について考えます。多角形の外角の和は、どんな多角形でも360度です。",
+    "svg": "<svg viewBox=\"0 0 240 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><polygon points=\"120.0,34.0 173.7,65.0 173.7,127.0 120.0,158.0 66.3,127.0 66.3,65.0\" fill=\"#4f9eff\" opacity=\"0.12\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"120\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">正六角形（外角の和＝360°）</text></svg>",
+    "steps": [
+      {
+        "question": "正六角形の1つの外角は何度ですか。",
+        "answer": "60",
+        "choices": [
+          "60",
+          "120",
+          "45",
+          "72"
+        ],
+        "meaning": "①外角の和360°を6等分。②360÷6＝60度です。よって、答えは60です。"
+      },
+      {
+        "question": "正六角形の1つの内角は何度ですか。",
+        "answer": "120",
+        "choices": [
+          "120",
+          "60",
+          "108",
+          "150"
+        ],
+        "meaning": "①内角＋外角＝180°。②180−60＝120度です。よって、答えは120です。"
+      },
+      {
+        "question": "正六角形の内角の和は何度ですか。",
+        "answer": "720",
+        "choices": [
+          "720",
+          "540",
+          "360",
+          "900"
+        ],
+        "meaning": "①内角120°が6つ。②120×6＝720度（(6−2)×180でも720）です。よって、答えは720です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_60",
+    "category": "kisoku",
+    "grade": 5,
+    "title": "組に分けた数列",
+    "intro": "1 ｜ 2 3 ｜ 4 5 6 ｜ 7 8 9 10 ｜ …… のように、数を「1組目に1個、2組目に2個、3組目に3個…」と組に分けてならべます。",
+    "svg": "<svg viewBox=\"0 0 280 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#ffd166\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1 ｜ 2 3 ｜ 4 5 6 ｜ 7 8 9 10 ｜ …</text><text x=\"140\" y=\"76\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">n組目には n個の数</text></svg>",
+    "steps": [
+      {
+        "question": "4組目の最後の数はいくつですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "9",
+          "11",
+          "15"
+        ],
+        "meaning": "①4組目の最後は、1〜4組の個数の合計＝1＋2＋3＋4番目の数。②1＋2＋3＋4＝10です。よって、答えは10です。"
+      },
+      {
+        "question": "5組目には数が何個ありますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "4",
+          "6",
+          "10"
+        ],
+        "meaning": "①n組目にはn個。②5組目は5個です。よって、答えは5です。"
+      },
+      {
+        "question": "5組目の最初の数はいくつですか。",
+        "answer": "11",
+        "choices": [
+          "11",
+          "10",
+          "15",
+          "12"
+        ],
+        "meaning": "①4組目の最後が10。②その次だから11です。よって、答えは11です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_61",
+    "category": "kisoku",
+    "grade": 5,
+    "title": "碁石の四角数",
+    "intro": "碁石を正方形の形にすきまなくならべます。1番目は1個、2番目は2×2＝4個、3番目は3×3＝9個…と大きくしていきます。",
+    "svg": "<svg viewBox=\"0 0 260 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"20\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1個 → 4個 → 9個 → 16個 …</text><circle cx=\"84\" cy=\"40\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"108\" cy=\"40\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"132\" cy=\"40\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"40\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"84\" cy=\"64\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"108\" cy=\"64\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"132\" cy=\"64\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"64\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"84\" cy=\"88\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"108\" cy=\"88\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"132\" cy=\"88\" r=\"9\" fill=\"#4f9eff\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"88\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"84\" cy=\"112\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"108\" cy=\"112\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"132\" cy=\"112\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"112\" r=\"9\" fill=\"#ff6b6b\" opacity=\"0.6\" stroke=\"#cdd6f4\" stroke-width=\"0.7\"/><text x=\"130\" y=\"150\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">赤＝3番目→4番目でふえるL字</text></svg>",
+    "steps": [
+      {
+        "question": "4番目の四角数（4×4）は何個ですか。",
+        "answer": "16",
+        "choices": [
+          "16",
+          "12",
+          "20",
+          "8"
+        ],
+        "meaning": "①4×4。②16個です。よって、答えは16です。"
+      },
+      {
+        "question": "3番目（9個）から4番目（16個）へは、L字の形に何個ふえますか。",
+        "answer": "7",
+        "choices": [
+          "7",
+          "5",
+          "9",
+          "6"
+        ],
+        "meaning": "①16−9。②7個ふえます（ふえる数は3,5,7…の奇数）。よって、答えは7です。"
+      },
+      {
+        "question": "4番目から5番目（5×5）へは何個ふえますか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "7",
+          "11",
+          "8"
+        ],
+        "meaning": "①5×5＝25、25−16。②9個です（次の奇数）。よって、答えは9です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_62",
+    "category": "kisoku",
+    "grade": 5,
+    "title": "数を表にならべる",
+    "intro": "1から順に、1つの行に5個ずつ数を書いていきます。（1行目は1〜5、2行目は6〜10、…）",
+    "svg": "<svg viewBox=\"0 0 268 144\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5個ずつ行にならべた表</text><rect x=\"18\" y=\"40\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"40.7\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><rect x=\"66.4\" y=\"40\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"89.10000000000001\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><rect x=\"114.8\" y=\"40\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"137.5\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><rect x=\"163.2\" y=\"40\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"185.89999999999998\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"211.6\" y=\"40\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"234.29999999999998\" y=\"54.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"18\" y=\"64\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"40.7\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"66.4\" y=\"64\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"89.10000000000001\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text><rect x=\"114.8\" y=\"64\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"137.5\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"163.2\" y=\"64\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"185.89999999999998\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"211.6\" y=\"64\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"234.29999999999998\" y=\"78.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text><rect x=\"18\" y=\"88\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"40.7\" y=\"102.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">11</text><rect x=\"66.4\" y=\"88\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"89.10000000000001\" y=\"102.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">12</text><rect x=\"114.8\" y=\"88\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"137.5\" y=\"102.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">13</text><rect x=\"163.2\" y=\"88\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"185.89999999999998\" y=\"102.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">14</text><rect x=\"211.6\" y=\"88\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"234.29999999999998\" y=\"102.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">15</text><rect x=\"18\" y=\"112\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"40.7\" y=\"126.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">16</text><rect x=\"66.4\" y=\"112\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"89.10000000000001\" y=\"126.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">17</text><rect x=\"114.8\" y=\"112\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"137.5\" y=\"126.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">18</text><rect x=\"163.2\" y=\"112\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"185.89999999999998\" y=\"126.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">19</text><rect x=\"211.6\" y=\"112\" width=\"45.4\" height=\"21\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.6\"/><text x=\"234.29999999999998\" y=\"126.5\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\">20</text></svg>",
+    "steps": [
+      {
+        "question": "3行目の左から2番目の数はいくつですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "11",
+          "13",
+          "7"
+        ],
+        "meaning": "①2行目までで5×2＝10個。②その次の行の2番目だから10＋2＝12です。よって、答えは12です。"
+      },
+      {
+        "question": "23は何行目にありますか。",
+        "answer": "5",
+        "choices": [
+          "5",
+          "4",
+          "6",
+          "23"
+        ],
+        "meaning": "①1行に5個。②(23−1)÷5＝4あまり2 → 5行目です。よって、答えは5です。"
+      },
+      {
+        "question": "23は、その行の左から何番目ですか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "2",
+          "4",
+          "5"
+        ],
+        "meaning": "①4行目までで20個。②23−20＝3番目です。よって、答えは3です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_63",
+    "category": "baai",
+    "grade": 5,
+    "title": "0を含むカードの数",
+    "intro": "0・1・2・3 の4枚のカードから3枚を選んでならべ、3けたの整数を作ります。同じカードは1回だけ。（百の位に0は置けません）",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">□ □ □（百の位に0はダメ）</text><rect x=\"48\" y=\"46\" width=\"44\" height=\"42\" rx=\"4\" fill=\"#4f9eff\" opacity=\"0.12\" stroke=\"#4f9eff\"/><text x=\"70\" y=\"104\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">百の位</text><rect x=\"118\" y=\"46\" width=\"44\" height=\"42\" rx=\"4\" fill=\"#4f9eff\" opacity=\"0.12\" stroke=\"#4f9eff\"/><text x=\"140\" y=\"104\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">十の位</text><rect x=\"188\" y=\"46\" width=\"44\" height=\"42\" rx=\"4\" fill=\"#4f9eff\" opacity=\"0.12\" stroke=\"#4f9eff\"/><text x=\"210\" y=\"104\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">一の位</text><text x=\"70\" y=\"71\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">0以外</text><g fill=\"#ffd166\"><text x=\"186\" y=\"122\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\">0</text><text x=\"202\" y=\"122\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><text x=\"218\" y=\"122\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><text x=\"234\" y=\"122\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text></g></svg>",
+    "steps": [
+      {
+        "question": "百の位に置けるカードは何通りですか。",
+        "answer": "3",
+        "choices": [
+          "3",
+          "4",
+          "2",
+          "1"
+        ],
+        "meaning": "①0は百の位に置けないので1・2・3の3通り。よって、答えは3です。"
+      },
+      {
+        "question": "百の位を決めたあと、十の位と一の位の並べ方は何通りですか。（残り3枚から2枚）",
+        "answer": "6",
+        "choices": [
+          "6",
+          "9",
+          "3",
+          "12"
+        ],
+        "meaning": "①十の位は残り3枚、一の位は残り2枚。②3×2＝6通りです。よって、答えは6です。"
+      },
+      {
+        "question": "3けたの整数は全部で何個作れますか。",
+        "answer": "18",
+        "choices": [
+          "18",
+          "24",
+          "12",
+          "27"
+        ],
+        "meaning": "①百の位3通り×(十・一)6通り。②3×6＝18個です（4×3×2＝24としないよう注意）。よって、答えは18です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_64",
+    "category": "baai",
+    "grade": 5,
+    "title": "5人から選ぶ",
+    "intro": "5人の中から係を選びます。選び方を考えます。",
+    "svg": "<svg viewBox=\"0 0 280 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"26\" fill=\"#cdd6f4\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">👤👤👤👤👤 の5人</text><text x=\"140\" y=\"60\" fill=\"#4f9eff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2人を「順番つき」で選ぶ → 5×4</text><text x=\"140\" y=\"86\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じ2人を2回ずつ数えている</text></svg>",
+    "steps": [
+      {
+        "question": "5人から2人を、順番をつけて（1番目・2番目）選ぶと何通りですか。",
+        "answer": "20",
+        "choices": [
+          "20",
+          "10",
+          "25",
+          "9"
+        ],
+        "meaning": "①1番目5通り、2番目4通り。②5×4＝20通りです。よって、答えは20です。"
+      },
+      {
+        "question": "順番を考えず、ただ2人を選ぶ選び方は何通りですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "20",
+          "5",
+          "4"
+        ],
+        "meaning": "①AとBの2人を「AB」「BA」と2回数えている。②20÷2＝10通りです。よって、答えは10です。"
+      },
+      {
+        "question": "5人から3人を選ぶ選び方は何通りですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "20",
+          "15",
+          "6"
+        ],
+        "meaning": "①5人から3人を選ぶのは、「選ばない2人」を選ぶのと同じ。②2人を選ぶ選び方と同じで10通りです。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_65",
+    "category": "baai",
+    "grade": 5,
+    "title": "2つのサイコロ",
+    "intro": "大小2つのサイコロを同時に投げます。それぞれ1〜6の目が出ます。",
+    "svg": "<svg viewBox=\"0 0 280 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"20\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">目の和の表（たて＋よこ）</text><text x=\"92\" y=\"42\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><text x=\"54\" y=\"68\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><text x=\"124\" y=\"42\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><text x=\"54\" y=\"88\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><text x=\"156\" y=\"42\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><text x=\"54\" y=\"108\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><text x=\"188\" y=\"42\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><text x=\"54\" y=\"128\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><text x=\"220\" y=\"42\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><text x=\"54\" y=\"148\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><text x=\"252\" y=\"42\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><text x=\"54\" y=\"168\" fill=\"#06d6a0\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"76\" y=\"52\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"92\" y=\"66\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><rect x=\"108\" y=\"52\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"124\" y=\"66\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><rect x=\"140\" y=\"52\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"156\" y=\"66\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"172\" y=\"52\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"188\" y=\"66\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"204\" y=\"52\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"220\" y=\"66\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"236\" y=\"52\" width=\"32\" height=\"20\" fill=\"#ffd166\" opacity=\"0.3\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"252\" y=\"66\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"76\" y=\"72\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"92\" y=\"86\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><rect x=\"108\" y=\"72\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"124\" y=\"86\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"140\" y=\"72\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"156\" y=\"86\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"172\" y=\"72\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"188\" y=\"86\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"204\" y=\"72\" width=\"32\" height=\"20\" fill=\"#ffd166\" opacity=\"0.3\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"220\" y=\"86\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"236\" y=\"72\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"252\" y=\"86\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"76\" y=\"92\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"92\" y=\"106\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><rect x=\"108\" y=\"92\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"124\" y=\"106\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"140\" y=\"92\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"156\" y=\"106\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"172\" y=\"92\" width=\"32\" height=\"20\" fill=\"#ffd166\" opacity=\"0.3\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"188\" y=\"106\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"204\" y=\"92\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"220\" y=\"106\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"236\" y=\"92\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"252\" y=\"106\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"76\" y=\"112\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"92\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><rect x=\"108\" y=\"112\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"124\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"140\" y=\"112\" width=\"32\" height=\"20\" fill=\"#ffd166\" opacity=\"0.3\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"156\" y=\"126\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"172\" y=\"112\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"188\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"204\" y=\"112\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"220\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"236\" y=\"112\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"252\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text><rect x=\"76\" y=\"132\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"92\" y=\"146\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><rect x=\"108\" y=\"132\" width=\"32\" height=\"20\" fill=\"#ffd166\" opacity=\"0.3\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"124\" y=\"146\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"140\" y=\"132\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"156\" y=\"146\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"172\" y=\"132\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"188\" y=\"146\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"204\" y=\"132\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"220\" y=\"146\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text><rect x=\"236\" y=\"132\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"252\" y=\"146\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">11</text><rect x=\"76\" y=\"152\" width=\"32\" height=\"20\" fill=\"#ffd166\" opacity=\"0.3\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"92\" y=\"166\" fill=\"#ffd166\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7</text><rect x=\"108\" y=\"152\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"124\" y=\"166\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><rect x=\"140\" y=\"152\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"156\" y=\"166\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><rect x=\"172\" y=\"152\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"188\" y=\"166\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text><rect x=\"204\" y=\"152\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"220\" y=\"166\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">11</text><rect x=\"236\" y=\"152\" width=\"32\" height=\"20\" fill=\"none\" opacity=\"1\" stroke=\"#45475a\" stroke-width=\"0.5\"/><text x=\"252\" y=\"166\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">12</text></svg>",
+    "steps": [
+      {
+        "question": "2つのサイコロの目の出方は、全部で何通りですか。",
+        "answer": "36",
+        "choices": [
+          "36",
+          "12",
+          "30",
+          "21"
+        ],
+        "meaning": "①大6通り×小6通り。②6×6＝36通りです。よって、答えは36です。"
+      },
+      {
+        "question": "目の和が7になるのは何通りですか。",
+        "answer": "6",
+        "choices": [
+          "6",
+          "5",
+          "7",
+          "4"
+        ],
+        "meaning": "①(1,6)(2,5)(3,4)(4,3)(5,2)(6,1)。②6通りです。よって、答えは6です。"
+      },
+      {
+        "question": "目の和が5以下になるのは何通りですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "6",
+          "12",
+          "9"
+        ],
+        "meaning": "①和2は1通り、和3は2通り、和4は3通り、和5は4通り。②1＋2＋3＋4＝10通りです。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_66",
+    "category": "tokusan",
+    "grade": 5,
+    "title": "2人でする仕事",
+    "intro": "ある仕事を、Aさんは6日、Bさんは12日で終わらせることができます。仕事全体の量を「12」とおいて考えます。",
+    "svg": "<svg viewBox=\"0 0 280 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">仕事全体 ＝ 12（6と12の最小公倍数）</text><rect x=\"30\" y=\"44\" width=\"220\" height=\"20\" fill=\"#4f9eff\" opacity=\"0.25\" stroke=\"#4f9eff\"/><text x=\"140\" y=\"58\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">全体の仕事量 12</text><text x=\"90\" y=\"92\" fill=\"#06d6a0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\">A：6日で終わる</text><text x=\"190\" y=\"92\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\">B：12日で終わる</text><text x=\"140\" y=\"116\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1日にする量は？</text></svg>",
+    "steps": [
+      {
+        "question": "Aさんは1日に、仕事をいくつずつ進めますか。（全体は12）",
+        "answer": "2",
+        "choices": [
+          "2",
+          "6",
+          "3",
+          "1"
+        ],
+        "meaning": "①全体12を6日で。②12÷6＝2ずつです。よって、答えは2です。"
+      },
+      {
+        "question": "Bさんは1日にいくつずつ進めますか。",
+        "answer": "1",
+        "choices": [
+          "1",
+          "2",
+          "12",
+          "4"
+        ],
+        "meaning": "①全体12を12日で。②12÷12＝1ずつです。よって、答えは1です。"
+      },
+      {
+        "question": "2人でいっしょにすると、何日で仕事が終わりますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "3",
+          "6",
+          "9"
+        ],
+        "meaning": "①2人で1日に2＋1＝3ずつ。②12÷3＝4日です。よって、答えは4です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_67",
+    "category": "tokusan",
+    "grade": 5,
+    "title": "テストの平均点",
+    "intro": "国語・算数・理科の3教科のテストの平均点は80点でした。国語は70点、算数は85点でした。",
+    "svg": "<svg viewBox=\"0 0 280 188\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">平均80点（理科は？）</text><rect x=\"40\" y=\"46\" width=\"140\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">国</text><rect x=\"40\" y=\"80\" width=\"170\" height=\"22\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"32\" y=\"95\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">算</text><rect x=\"40\" y=\"114\" width=\"170\" height=\"22\" fill=\"#ffd166\" opacity=\"0.4\" stroke=\"#ffd166\"/><text x=\"32\" y=\"129\" fill=\"#ffd166\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">理</text></svg>",
+    "steps": [
+      {
+        "question": "3教科の合計点は何点ですか。",
+        "answer": "240",
+        "choices": [
+          "240",
+          "235",
+          "160",
+          "245"
+        ],
+        "meaning": "①平均×教科数＝合計。②80×3＝240点です。よって、答えは240です。"
+      },
+      {
+        "question": "国語と算数の合計は何点ですか。",
+        "answer": "155",
+        "choices": [
+          "155",
+          "150",
+          "160",
+          "165"
+        ],
+        "meaning": "①70＋85。②155点です。よって、答えは155です。"
+      },
+      {
+        "question": "理科は何点でしたか。",
+        "answer": "85",
+        "choices": [
+          "85",
+          "80",
+          "90",
+          "75"
+        ],
+        "meaning": "①3教科合計240から国算155をひく。②240−155＝85点です。よって、答えは85です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_68",
+    "category": "kazu",
+    "grade": 5,
+    "title": "正方形のタイルしきつめ",
+    "intro": "たて48cm・よこ36cmの長方形の床に、同じ大きさの正方形のタイルをすきまなくしきつめます。できるだけ大きいタイルを使います。",
+    "svg": "<svg viewBox=\"0 0 280 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"40\" y=\"40\" width=\"120\" height=\"90\" fill=\"#4f9eff\" opacity=\"0.18\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><rect x=\"40\" y=\"40\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"70\" y=\"40\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"40\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"130\" y=\"40\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"40\" y=\"70\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"70\" y=\"70\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"70\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"130\" y=\"70\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"40\" y=\"100\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"70\" y=\"100\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"100\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><rect x=\"130\" y=\"100\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"0.8\"/><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">たて48cm・よこ36cm</text><text x=\"100\" y=\"148\" fill=\"#ffd166\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">いちばん大きい正方形タイルは？</text></svg>",
+    "steps": [
+      {
+        "question": "いちばん大きいタイルの1辺は何cmですか。（48と36の最大公約数）",
+        "answer": "12",
+        "choices": [
+          "12",
+          "6",
+          "24",
+          "4"
+        ],
+        "meaning": "①48と36の最大公約数を求める。②48＝12×4、36＝12×3 → 12cmです。よって、答えは12です。"
+      },
+      {
+        "question": "1辺12cmのタイルは、たて（48cm）に何枚ならびますか。",
+        "answer": "4",
+        "choices": [
+          "4",
+          "3",
+          "6",
+          "12"
+        ],
+        "meaning": "①48÷12。②4枚です。よって、答えは4です。"
+      },
+      {
+        "question": "床全体には、タイルは全部で何枚必要ですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "16",
+          "9",
+          "24"
+        ],
+        "meaning": "①たて4枚、よこ36÷12＝3枚。②4×3＝12枚です。よって、答えは12です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_69",
+    "category": "kazu",
+    "grade": 5,
+    "title": "約数を対にする",
+    "intro": "36の約数について、「かけると36になる2つの数」の組で考えます。（例：1×36、2×18…）",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"10.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">36の約数を 積が36になる組に</text><text x=\"110\" y=\"48\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><text x=\"126\" y=\"48\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">×</text><text x=\"150\" y=\"48\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">36</text><text x=\"110\" y=\"66\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><text x=\"126\" y=\"66\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">×</text><text x=\"150\" y=\"66\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">18</text><text x=\"110\" y=\"84\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"126\" y=\"84\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">×</text><text x=\"150\" y=\"84\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">12</text><text x=\"110\" y=\"102\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">4</text><text x=\"126\" y=\"102\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">×</text><text x=\"150\" y=\"102\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">9</text><text x=\"110\" y=\"120\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><text x=\"126\" y=\"120\" fill=\"#9399b2\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">×</text><text x=\"150\" y=\"120\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">6</text><text x=\"210\" y=\"90\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">6×6 は\n真ん中で1個</text></svg>",
+    "steps": [
+      {
+        "question": "かけて36になるとき、1と組になる数はいくつですか。",
+        "answer": "36",
+        "choices": [
+          "36",
+          "18",
+          "6",
+          "1"
+        ],
+        "meaning": "①1×□＝36。②36です。よって、答えは36です。"
+      },
+      {
+        "question": "2と組になる数はいくつですか。",
+        "answer": "18",
+        "choices": [
+          "18",
+          "12",
+          "9",
+          "6"
+        ],
+        "meaning": "①2×□＝36。②36÷2＝18です。よって、答えは18です。"
+      },
+      {
+        "question": "36の約数は全部で何個ありますか。",
+        "answer": "9",
+        "choices": [
+          "9",
+          "8",
+          "10",
+          "6"
+        ],
+        "meaning": "①1-36,2-18,3-12,4-9 で8個、さらに6×6の6が1個。②8＋1＝9個です（平方数は約数が奇数個）。よって、答えは9です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_70",
+    "category": "kazu",
+    "grade": 5,
+    "title": "2つのあまり",
+    "intro": "7でわると3あまり、5でわると2あまる整数を考えます。",
+    "svg": "<svg viewBox=\"0 0 280 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"40\" fill=\"#4f9eff\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">7でわると 3あまる</text><text x=\"140\" y=\"68\" fill=\"#06d6a0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">5でわると 2あまる</text><text x=\"140\" y=\"96\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">両方みたす数を さがす</text></svg>",
+    "steps": [
+      {
+        "question": "7でわると3あまる整数のうち、いちばん小さい2けたの数はいくつですか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "17",
+          "3",
+          "13"
+        ],
+        "meaning": "①3,10,17…（7ずつ）。②2けたで最小は10です。よって、答えは10です。"
+      },
+      {
+        "question": "「7でわると3あまる数」10・17・24…のうち、5でわると2あまるのは最初どれですか。",
+        "answer": "17",
+        "choices": [
+          "17",
+          "10",
+          "24",
+          "31"
+        ],
+        "meaning": "①10÷5＝2あまり0、17÷5＝3あまり2 ○。②17です。よって、答えは17です。"
+      },
+      {
+        "question": "両方をみたす次の数は、17の次はいくつですか。",
+        "answer": "52",
+        "choices": [
+          "52",
+          "34",
+          "47",
+          "42"
+        ],
+        "meaning": "①7と5の最小公倍数35ごとにくり返す。②17＋35＝52です。よって、答えは52です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_71",
+    "category": "wariai",
+    "grade": 5,
+    "title": "本を読むなぞ（相当算）",
+    "intro": "ある本を、1日目に全体の3分の1を読み、2日目に「残りの半分」を読んだところ、まだ40ページ残っています。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">全体を3等分して考える</text><rect x=\"40\" y=\"46\" width=\"210\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">全体</text><text x=\"160\" y=\"102\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1日目1/3・2日目1/3・残り40ページ</text></svg>",
+    "steps": [
+      {
+        "question": "1日目に全体の3分の1を読むと、残りは全体のどれだけですか。分数で答えなさい。",
+        "answer": "2/3",
+        "meaning": "①全体1から1/3をひく。②1−1/3＝2/3です。よって、答えは2/3です。"
+      },
+      {
+        "question": "2日目に「残りの半分」を読みました。2日目に読んだのは全体のどれだけですか。分数で答えなさい。",
+        "answer": "1/3",
+        "meaning": "①残り2/3の半分＝2/3×1/2。②1/3です。よって、答えは1/3です。"
+      },
+      {
+        "question": "残りの40ページは全体の3分の1にあたります。この本は全部で何ページですか。",
+        "answer": "120",
+        "choices": [
+          "120",
+          "80",
+          "60",
+          "160"
+        ],
+        "meaning": "①1−1/3−1/3＝1/3が40ページ。②40×3＝120ページです。よって、答えは120です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_72",
+    "category": "wariai",
+    "grade": 5,
+    "title": "比で分けるお金",
+    "intro": "兄と弟でお金を、兄：弟＝3：2の割合で分けると、兄は弟より600円多くなりました。",
+    "svg": "<svg viewBox=\"0 0 280 154\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"24\" fill=\"#cdd6f4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">兄：弟＝3：2</text><rect x=\"40\" y=\"46\" width=\"180\" height=\"22\" fill=\"#4f9eff\" opacity=\"0.4\" stroke=\"#4f9eff\"/><text x=\"32\" y=\"61\" fill=\"#4f9eff\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">兄</text><rect x=\"40\" y=\"80\" width=\"120\" height=\"22\" fill=\"#06d6a0\" opacity=\"0.4\" stroke=\"#06d6a0\"/><text x=\"32\" y=\"95\" fill=\"#06d6a0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">弟</text><text x=\"46\" y=\"120\" fill=\"#ff6b6b\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" font-weight=\"bold\">← この差が 600円</text></svg>",
+    "steps": [
+      {
+        "question": "兄と弟の比（3と2）の差は、いくつですか。",
+        "answer": "1",
+        "choices": [
+          "1",
+          "5",
+          "2",
+          "3"
+        ],
+        "meaning": "①3−2。②比の差は1です。よって、答えは1です。"
+      },
+      {
+        "question": "比の「1」にあたる金額は何円ですか。",
+        "answer": "600",
+        "choices": [
+          "600",
+          "300",
+          "1200",
+          "200"
+        ],
+        "meaning": "①比の差1が、実際の差600円。②比の1＝600円です。よって、答えは600です。"
+      },
+      {
+        "question": "兄と弟のお金は合わせて何円ですか。",
+        "answer": "3000",
+        "choices": [
+          "3000",
+          "1800",
+          "2400",
+          "1500"
+        ],
+        "meaning": "①全体は比で3＋2＝5。②5×600＝3000円です。よって、答えは3000です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_73",
+    "category": "hayasa",
+    "grade": 5,
+    "title": "兄が弟を追いかける",
+    "intro": "弟が分速60mで家を出発しました。その12分後に、兄が分速100mで同じ道を追いかけます。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"20\" y1=\"70\" x2=\"260\" y2=\"70\" stroke=\"#8b7355\" stroke-width=\"2\"/><circle cx=\"30\" cy=\"70\" r=\"6\" fill=\"#06d6a0\"/><text x=\"30\" y=\"92\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">家</text><circle cx=\"150\" cy=\"70\" r=\"6\" fill=\"#4f9eff\"/><text x=\"150\" y=\"58\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">弟(先に720m)</text><text x=\"140\" y=\"24\" fill=\"#06d6a0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">弟 分速60m（12分先に出発）</text><text x=\"140\" y=\"108\" fill=\"#4f9eff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">兄 分速100m で追いかける</text></svg>",
+    "steps": [
+      {
+        "question": "兄が出発するとき、弟は家から何m先にいますか。",
+        "answer": "720",
+        "choices": [
+          "720",
+          "600",
+          "1200",
+          "480"
+        ],
+        "meaning": "①弟は分速60mで12分歩いた。②60×12＝720mです。よって、答えは720です。"
+      },
+      {
+        "question": "2人の間のきょりは、1分間に何mちぢまりますか。",
+        "answer": "40",
+        "choices": [
+          "40",
+          "160",
+          "60",
+          "100"
+        ],
+        "meaning": "①追いかけるので速さの差だけちぢまる。②100−60＝40mです。よって、答えは40です。"
+      },
+      {
+        "question": "兄が弟に追いつくのは、兄が出発してから何分後ですか。",
+        "answer": "18",
+        "choices": [
+          "18",
+          "12",
+          "20",
+          "15"
+        ],
+        "meaning": "①720mの差を1分に40mずつちぢめる。②720÷40＝18分後です。よって、答えは18です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_74",
+    "category": "hayasa",
+    "grade": 5,
+    "title": "行きと帰りの速さ",
+    "intro": "同じ道を、行きは分速60m、帰りは分速90mで歩きました。行きと帰りで進むきょりは同じです。",
+    "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><line x1=\"30\" y1=\"56\" x2=\"250\" y2=\"56\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"250,56 240,51 240,61\" fill=\"#4f9eff\"/><text x=\"140\" y=\"44\" fill=\"#4f9eff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">行き 分速60m</text><line x1=\"250\" y1=\"84\" x2=\"30\" y2=\"84\" stroke=\"#06d6a0\" stroke-width=\"2\"/><polygon points=\"30,84 40,79 40,89\" fill=\"#06d6a0\"/><text x=\"140\" y=\"104\" fill=\"#06d6a0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">帰り 分速90m（同じ道）</text><text x=\"140\" y=\"22\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じきょり → 時間は速さの逆比</text></svg>",
+    "steps": [
+      {
+        "question": "行きと帰りの速さの比を、いちばん簡単な整数の比で答えなさい。",
+        "answer": "2:3",
+        "choices": [
+          "2:3",
+          "3:2",
+          "1:2",
+          "6:9"
+        ],
+        "meaning": "①60：90。②両方30でわって2：3です。よって、答えは2:3です。"
+      },
+      {
+        "question": "同じきょりを進むので、かかる時間の比はどうなりますか。",
+        "answer": "3:2",
+        "choices": [
+          "3:2",
+          "2:3",
+          "1:1",
+          "5:2"
+        ],
+        "meaning": "①きょりが同じなら、時間は速さの逆の比。②速さ2：3の逆で3：2です。よって、答えは3:2です。"
+      },
+      {
+        "question": "行きに15分かかりました。帰りは何分かかりますか。",
+        "answer": "10",
+        "choices": [
+          "10",
+          "15",
+          "22",
+          "9"
+        ],
+        "meaning": "①時間の比は行き：帰り＝3：2。②15分が比の3だから、比の1は5分、帰りは5×2＝10分です。よって、答えは10です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_75",
+    "category": "rittai",
+    "grade": 5,
+    "title": "くりぬいた立方体",
+    "intro": "1辺6cmの立方体があります。この立方体の中心を、たて2cm・よこ2cmの四角い穴で、まっすぐ反対側までくりぬきます（穴の長さは6cm）。",
+    "svg": "<svg viewBox=\"0 0 240 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"60\" y=\"50\" width=\"90\" height=\"90\" fill=\"#4f9eff\" opacity=\"0.14\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"60,50 86,24 176,24 150,50\" fill=\"#4f9eff\" opacity=\"0.1\" stroke=\"#4f9eff\" stroke-width=\"1\"/><polygon points=\"150,50 176,24 176,114 150,140\" fill=\"#4f9eff\" opacity=\"0.08\" stroke=\"#4f9eff\" stroke-width=\"1\"/><rect x=\"90\" y=\"80\" width=\"30\" height=\"30\" fill=\"#1e1e2e\" stroke=\"#ff6b6b\" stroke-width=\"1.2\"/><text x=\"120\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1辺6cm・2×2の穴を貫通</text></svg>",
+    "steps": [
+      {
+        "question": "もとの立方体の体積は何cm³ですか。",
+        "answer": "216",
+        "choices": [
+          "216",
+          "36",
+          "18",
+          "196"
+        ],
+        "meaning": "①6×6×6。②216cm³です。よって、答えは216です。"
+      },
+      {
+        "question": "くりぬいた穴（たて2・よこ2・長さ6）の体積は何cm³ですか。",
+        "answer": "24",
+        "choices": [
+          "24",
+          "12",
+          "36",
+          "20"
+        ],
+        "meaning": "①2×2×6。②24cm³です。よって、答えは24です。"
+      },
+      {
+        "question": "残った立体の体積は何cm³ですか。",
+        "answer": "192",
+        "choices": [
+          "192",
+          "200",
+          "180",
+          "188"
+        ],
+        "meaning": "①全体からくりぬきをひく。②216−24＝192cm³です。よって、答えは192です。"
+      }
+    ]
+  },
+  {
+    "id": "sc_chain_76",
+    "category": "rittai",
+    "grade": 5,
+    "title": "直方体の表面積",
+    "intro": "たて3cm・よこ4cm・高さ5cmの直方体があります。表面全体の面積（表面積）を求めます。",
+    "svg": "<svg viewBox=\"0 0 240 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><rect x=\"60\" y=\"54\" width=\"88\" height=\"66\" fill=\"#4f9eff\" opacity=\"0.14\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"60,54 84,30 172,30 148,54\" fill=\"#4f9eff\" opacity=\"0.1\" stroke=\"#4f9eff\" stroke-width=\"1\"/><polygon points=\"148,54 172,30 172,96 148,120\" fill=\"#4f9eff\" opacity=\"0.08\" stroke=\"#4f9eff\" stroke-width=\"1\"/><text x=\"104\" y=\"136\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">よこ4</text><text x=\"46\" y=\"87\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">たて3</text><text x=\"178\" y=\"97\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"start\" font-family=\"sans-serif\">高さ5</text><text x=\"120\" y=\"22\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">たて3・よこ4・高さ5</text></svg>",
+    "steps": [
+      {
+        "question": "上の面（たて3×よこ4）の面積は何cm²ですか。",
+        "answer": "12",
+        "choices": [
+          "12",
+          "15",
+          "20",
+          "7"
+        ],
+        "meaning": "①3×4。②12cm²（上と下で2枚）です。よって、答えは12です。"
+      },
+      {
+        "question": "横まわりの面は2種類あります。3×5の面と4×5の面、その2つの合計は何cm²ですか。",
+        "answer": "35",
+        "choices": [
+          "35",
+          "20",
+          "15",
+          "47"
+        ],
+        "meaning": "①3×5＝15、4×5＝20。②15＋20＝35cm²です。よって、答えは35です。"
+      },
+      {
+        "question": "直方体の表面積は全部で何cm²ですか。",
+        "answer": "94",
+        "choices": [
+          "94",
+          "47",
+          "84",
+          "100"
+        ],
+        "meaning": "①上下12・横まわり35は、それぞれ2枚ずつ。②(12＋35)×2＝94cm²です。よって、答えは94です。"
+      }
+    ]
   }
 ]
