@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>おかん学園｜塾スケジュール</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="おかん学園">
+<meta name="theme-color" content="#db2777">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: #f8fafc; color: #1e293b;
+    display: flex; flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+  }
+  header {
+    background: #db2777; color: #fff;
+    padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  header .backLink {
+    color: #fbcfe8; font-size: 12px; font-weight: 700; text-decoration: none;
+    padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.12); white-space: nowrap;
+  }
+  header .titleWrap { text-align: center; line-height: 1.25; }
+  header .titleWrap .t1 { font-size: 17px; font-weight: 800; }
+  header .titleWrap .t2 { font-size: 10px; font-weight: 700; color: #fbcfe8; letter-spacing: .1em; }
+  header .spacer { width: 74px; }
+
+  /* ---- 月ナビ＋タブ ---- */
+  #topBar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 10px; background: #fff; border-bottom: 1px solid #e2e8f0; flex-shrink: 0;
+  }
+  .navBtn {
+    border: none; background: #fce7f3; color: #db2777; font-size: 16px; font-weight: 800;
+    width: 34px; height: 34px; border-radius: 10px; cursor: pointer;
+  }
+  #ymLabel { font-size: 16px; font-weight: 800; min-width: 108px; text-align: center; }
+  #todayBtn {
+    border: 1.5px solid #db2777; background: #fff; color: #db2777;
+    font-size: 12px; font-weight: 800; padding: 7px 10px; border-radius: 999px; cursor: pointer;
+  }
+  .grow { flex: 1; }
+  .tab {
+    border: none; background: #f1f5f9; color: #64748b; font-size: 13px; font-weight: 800;
+    padding: 8px 12px; border-radius: 10px; cursor: pointer;
+  }
+  .tab.on { background: #db2777; color: #fff; }
+
+  main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+  /* ---- カレンダー ---- */
+  #dowRow {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    background: #475569; color: #fff; font-size: 11px; font-weight: 800; text-align: center;
+    position: sticky; top: 0; z-index: 2;
+  }
+  #dowRow div { padding: 5px 0; }
+  #dowRow .sun { color: #fda4af; }
+  #dowRow .sat { color: #93c5fd; }
+  #calGrid { display: grid; grid-template-columns: repeat(7, 1fr); background: #fff; }
+  .cell {
+    min-height: 92px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #f1f5f9;
+    padding: 2px 1px; cursor: pointer; overflow: hidden;
+  }
+  .cell.other { background: #f8fafc; }
+  .cell .dnum {
+    font-size: 11px; font-weight: 700; color: #475569; text-align: center; margin-bottom: 2px;
+  }
+  .cell.other .dnum { color: #cbd5e1; }
+  .cell .dnum .sunT { color: #e11d48; }
+  .cell .dnum .satT { color: #2563eb; }
+  .cell .dnum .todayC {
+    display: inline-block; min-width: 20px; height: 20px; line-height: 20px;
+    background: #db2777; color: #fff; border-radius: 50%;
+  }
+  .cell.sel { outline: 2px solid #475569; outline-offset: -2px; }
+  .chipE {
+    font-size: 9.5px; font-weight: 700; line-height: 1.35;
+    border-radius: 4px; padding: 1px 3px; margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .chipMore { font-size: 9px; color: #94a3b8; font-weight: 800; text-align: center; }
+
+  /* ---- ToDoビュー ---- */
+  #todoView { display: none; padding: 12px 14px 120px; }
+  .todoItem {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px;
+    padding: 12px; margin-bottom: 8px;
+  }
+  .todoItem .cbox {
+    width: 24px; height: 24px; border-radius: 50%; border: 2px solid #cbd5e1;
+    background: #fff; flex-shrink: 0; cursor: pointer; font-size: 14px; line-height: 20px; text-align: center; color: #fff;
+  }
+  .todoItem.done .cbox { background: #10b981; border-color: #10b981; }
+  .todoItem .tt { flex: 1; font-size: 14px; font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+  .todoItem.done .tt { color: #94a3b8; text-decoration: line-through; }
+  .dueChip {
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 999px;
+    background: #f1f5f9; color: #64748b; flex-shrink: 0;
+  }
+  .dueChip.today { background: #ffedd5; color: #c2410c; }
+  .dueChip.over { background: #fee2e2; color: #dc2626; }
+  .tDel { border: none; background: none; color: #cbd5e1; font-size: 15px; cursor: pointer; padding: 4px; }
+  .secLabel { font-size: 12px; font-weight: 800; color: #94a3b8; margin: 14px 2px 8px; }
+  .emptyMsg { text-align: center; color: #94a3b8; font-size: 13px; padding: 30px 0; line-height: 1.8; }
+
+  /* ---- 浮き＋ボタン ---- */
+  #fab {
+    position: fixed; right: 18px; bottom: calc(24px + env(safe-area-inset-bottom));
+    width: 58px; height: 58px; border-radius: 50%;
+    border: none; background: #db2777; color: #fff; font-size: 28px; font-weight: 800;
+    box-shadow: 0 6px 18px rgba(219,39,119,.4); cursor: pointer; z-index: 5;
+  }
+  #fab:active { transform: scale(.94); }
+
+  /* ---- シート共通 ---- */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(30,41,59,.45);
+    display: none; align-items: flex-end; justify-content: center; z-index: 30;
+  }
+  .overlay.open { display: flex; }
+  .sheet {
+    background: #fff; width: 100%; max-width: 480px; max-height: 80vh;
+    border-radius: 20px 20px 0 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
+  }
+  .sheetHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .sheetHead h2 { font-size: 15px; font-weight: 800; }
+  .closeBtn {
+    border: none; background: #f1f5f9; color: #64748b; font-size: 14px; font-weight: 800;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  }
+  .dayRow {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 4px; border-bottom: 1px solid #f1f5f9; cursor: pointer;
+  }
+  .dayRow .bar { width: 5px; height: 34px; border-radius: 3px; flex-shrink: 0; }
+  .dayRow .dt { flex: 1; min-width: 0; }
+  .dayRow .dt .n { font-size: 14px; font-weight: 800; overflow-wrap: anywhere; }
+  .dayRow .dt .s { font-size: 11px; color: #94a3b8; font-weight: 700; }
+  .dayRow .arrow { color: #cbd5e1; font-weight: 800; }
+  .skipBtn {
+    border: 1.5px solid #cbd5e1; background: #fff; color: #64748b;
+    font-size: 10px; font-weight: 800; padding: 5px 8px; border-radius: 8px; cursor: pointer; flex-shrink: 0;
+  }
+  .sheetBtns { display: flex; gap: 10px; margin-top: 14px; }
+  .btn {
+    flex: 1; padding: 13px; border: none; border-radius: 12px;
+    font-size: 14px; font-weight: 800; cursor: pointer;
+  }
+  .btnPink { background: #db2777; color: #fff; }
+  .btnGray { background: #e2e8f0; color: #475569; }
+  .btnDanger { background: #fee2e2; color: #dc2626; }
+
+  /* ---- フォーム ---- */
+  .fLabel { font-size: 12px; font-weight: 800; color: #64748b; margin: 12px 2px 5px; }
+  .fInput {
+    width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+    font-size: 15px; font-family: inherit; background: #fff; color: inherit;
+  }
+  .fRow { display: flex; gap: 10px; }
+  .fRow > * { flex: 1; }
+  .palette { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sw {
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 3px solid transparent;
+  }
+  .sw.on { border-color: #1e293b; }
+</style>
+</head>
+<body>
+<header>
+  <a class="backLink" href="./">← おかん学園</a>
+  <div class="titleWrap"><div class="t1">塾スケジュール</div><div class="t2">よてい＆やること</div></div>
+  <div class="spacer"></div>
+</header>
+
+<div id="topBar">
+  <button class="navBtn" id="prevM">‹</button>
+  <span id="ymLabel"></span>
+  <button class="navBtn" id="nextM">›</button>
+  <button id="todayBtn">今日</button>
+  <span class="grow"></span>
+  <button class="tab on" id="tabCal">📅</button>
+  <button class="tab" id="tabTodo">✅<span id="todoBadge"></span></button>
+</div>
+
+<main>
+  <div id="calView">
+    <div id="dowRow">
+      <div class="sun">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="sat">土</div>
+    </div>
+    <div id="calGrid"></div>
+    <div style="height:110px"></div>
+  </div>
+  <div id="todoView"></div>
+</main>
+
+<button id="fab">＋</button>
+
+<!-- その日の一覧シート -->
+<div class="overlay" id="daySheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="dayTitle"></h2><button class="closeBtn" data-close="daySheet">✕</button></div>
+    <div id="dayList"></div>
+    <div class="sheetBtns">
+      <button class="btn btnPink" id="dayAddEvent">＋ 予定</button>
+      <button class="btn btnGray" id="dayAddTodo">＋ やること</button>
+    </div>
+  </div>
+</div>
+
+<!-- 予定フォーム -->
+<div class="overlay" id="evSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="evTitle">予定を追加</h2><button class="closeBtn" data-close="evSheet">✕</button></div>
+    <p class="fLabel">なまえ（例：つな マスタ／パート13／弁当）</p>
+    <input class="fInput" id="evName" placeholder="よていの名前" autocomplete="off">
+    <div class="fRow">
+      <div>
+        <p class="fLabel">日付</p>
+        <input class="fInput" type="date" id="evDate">
+      </div>
+      <div>
+        <p class="fLabel">時間（なくてもOK）</p>
+        <input class="fInput" type="time" id="evTime">
+      </div>
+    </div>
+    <p class="fLabel">くり返し</p>
+    <select class="fInput" id="evRepeat">
+      <option value="none">くり返さない（この日だけ）</option>
+      <option value="weekly">毎週この曜日</option>
+    </select>
+    <p class="fLabel">色</p>
+    <div class="palette" id="evPalette"></div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="evDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="evSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- やることフォーム -->
+<div class="overlay" id="tdSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2>やることを追加</h2><button class="closeBtn" data-close="tdSheet">✕</button></div>
+    <p class="fLabel">やること（例：計算ドリルNo.12 直し）</p>
+    <input class="fInput" id="tdName" placeholder="やることの内容" autocomplete="off">
+    <p class="fLabel">期限（なくてもOK）</p>
+    <input class="fInput" type="date" id="tdDue">
+    <div class="sheetBtns">
+      <button class="btn btnPink" id="tdSave">追加</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+
+const $ = id => document.getElementById(id);
+const KEY = 'okan_sched_v1';
+const COLORS = ['#4fc3f7', '#2196f3', '#b39ddb', '#673ab7', '#e91e63', '#f48fb1',
+                '#ffb300', '#8bc34a', '#26a69a', '#ef5350'];
+const DOWS = ['日', '月', '火', '水', '木', '金', '土'];
+
+let db = load();
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY));
+    if (d && d.events && d.weekly && d.todos) return d;
+  } catch (e) { /* fallthrough */ }
+  return { events: [], weekly: [], todos: [] };
+}
+function save() { localStorage.setItem(KEY, JSON.stringify(db)); }
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+// 文字色：背景の明るさで白黒を切り替え
+function textOn(hex) {
+  const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? '#1e293b' : '#ffffff';
+}
+
+const fmt = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const todayStr = () => fmt(new Date());
+
+let ym = (() => { const n = new Date(); return { y: n.getFullYear(), m: n.getMonth() }; })();
+let selDate = todayStr();
+
+// ---------- その日の項目を集める ----------
+function itemsOf(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const list = [];
+  for (const w of db.weekly) {
+    if (w.dow === d.getDay() && !(w.except || []).includes(dateStr)) {
+      list.push({ kind: 'weekly', ...w });
+    }
+  }
+  for (const e of db.events) {
+    if (e.date === dateStr) list.push({ kind: 'event', ...e });
+  }
+  list.sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'));
+  return list;
+}
+function todosDue(dateStr) {
+  return db.todos.filter(t => !t.done && t.due === dateStr);
+}
+
+// ---------- カレンダー描画 ----------
+function renderCal() {
+  $('ymLabel').textContent = `${ym.y}年${ym.m + 1}月`;
+  const grid = $('calGrid');
+  grid.innerHTML = '';
+  const first = new Date(ym.y, ym.m, 1);
+  const start = new Date(first);
+  start.setDate(1 - first.getDay());
+  const tStr = todayStr();
+  for (let i = 0; i < 42; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const ds = fmt(d);
+    const cell = document.createElement('div');
+    cell.className = 'cell' + (d.getMonth() !== ym.m ? ' other' : '') + (ds === selDate ? ' sel' : '');
+    const num = document.createElement('div');
+    num.className = 'dnum';
+    const span = document.createElement('span');
+    span.textContent = d.getDate();
+    if (ds === tStr) span.className = 'todayC';
+    else if (d.getDay() === 0) span.className = 'sunT';
+    else if (d.getDay() === 6) span.className = 'satT';
+    num.appendChild(span);
+    cell.appendChild(num);
+
+    const items = itemsOf(ds);
+    const due = todosDue(ds);
+    const MAX = 5;
+    items.slice(0, MAX).forEach(it => {
+      const c = document.createElement('div');
+      c.className = 'chipE';
+      c.style.background = it.color;
+      c.style.color = textOn(it.color);
+      c.textContent = (it.time ? it.time.replace(/^0/, '') + ' ' : '') + it.title;
+      cell.appendChild(c);
+    });
+    const over = items.length - MAX;
+    if (over > 0) {
+      const m = document.createElement('div');
+      m.className = 'chipMore'; m.textContent = `+${over}`;
+      cell.appendChild(m);
+    }
+    if (due.length) {
+      const c = document.createElement('div');
+      c.className = 'chipE';
+      c.style.background = '#fef3c7'; c.style.color = '#92400e';
+      c.textContent = `✅やること${due.length}`;
+      cell.appendChild(c);
+    }
+    cell.onclick = () => { selDate = ds; renderCal(); openDaySheet(ds); };
+    grid.appendChild(cell);
+  }
+}
+
+// ---------- その日のシート ----------
+function openDaySheet(ds) {
+  const d = new Date(ds + 'T00:00:00');
+  $('dayTitle').textContent = `${d.getMonth() + 1}月${d.getDate()}日(${DOWS[d.getDay()]})`;
+  const list = $('dayList');
+  list.innerHTML = '';
+  const items = itemsOf(ds);
+  const due = db.todos.filter(t => t.due === ds);
+  if (!items.length && !due.length) {
+    list.innerHTML = '<p class="emptyMsg">この日の予定はありません</p>';
+  }
+  for (const it of items) {
+    const row = document.createElement('div');
+    row.className = 'dayRow';
+    const bar = document.createElement('div');
+    bar.className = 'bar'; bar.style.background = it.color;
+    const dt = document.createElement('div');
+    dt.className = 'dt';
+    dt.innerHTML = `<div class="n"></div><div class="s"></div>`;
+    dt.querySelector('.n').textContent = it.title;
+    dt.querySelector('.s').textContent = (it.time || '終日') + (it.kind === 'weekly' ? '・毎週' + DOWS[it.dow] : '');
+    row.append(bar, dt);
+    if (it.kind === 'weekly') {
+      const skip = document.createElement('button');
+      skip.className = 'skipBtn'; skip.textContent = 'この日だけ休み';
+      skip.onclick = ev => {
+        ev.stopPropagation();
+        const w = db.weekly.find(x => x.id === it.id);
+        w.except = w.except || []; w.except.push(ds);
+        save(); renderAll(); openDaySheet(ds);
+      };
+      row.appendChild(skip);
+    }
+    const ar = document.createElement('span');
+    ar.className = 'arrow'; ar.textContent = '›';
+    row.appendChild(ar);
+    row.onclick = () => { closeAll(); openEvForm(it, ds); };
+    list.appendChild(row);
+  }
+  for (const t of due) {
+    const row = document.createElement('div');
+    row.className = 'dayRow';
+    row.innerHTML = `<div class="bar" style="background:#f59e0b"></div>
+      <div class="dt"><div class="n"></div><div class="s">やること${t.done ? '・完了' : ''}</div></div>`;
+    row.querySelector('.n').textContent = (t.done ? '✔ ' : '') + t.title;
+    row.onclick = () => { switchTab('todo'); closeAll(); };
+    list.appendChild(row);
+  }
+  $('daySheet').classList.add('open');
+}
+
+// ---------- 予定フォーム ----------
+let editing = null;   // {kind,id} 編集中
+let evColor = COLORS[0];
+
+function buildPalette() {
+  const p = $('evPalette');
+  p.innerHTML = '';
+  for (const c of COLORS) {
+    const s = document.createElement('div');
+    s.className = 'sw' + (c === evColor ? ' on' : '');
+    s.style.background = c;
+    s.onclick = () => { evColor = c; buildPalette(); };
+    p.appendChild(s);
+  }
+}
+
+function openEvForm(item, ds) {
+  editing = item ? { kind: item.kind, id: item.id } : null;
+  $('evTitle').textContent = item ? '予定を編集' : '予定を追加';
+  $('evName').value = item ? item.title : '';
+  $('evDate').value = ds || selDate;
+  $('evTime').value = item ? (item.time || '') : '';
+  $('evRepeat').value = item ? (item.kind === 'weekly' ? 'weekly' : 'none') : 'none';
+  evColor = item ? item.color : COLORS[Math.floor(Math.random() * COLORS.length)];
+  $('evDelete').style.display = item ? '' : 'none';
+  buildPalette();
+  $('evSheet').classList.add('open');
+}
+
+$('evSave').onclick = () => {
+  const title = $('evName').value.trim();
+  const date = $('evDate').value;
+  if (!title || !date) { alert('なまえと日付を入れてください'); return; }
+  const time = $('evTime').value;
+  const weekly = $('evRepeat').value === 'weekly';
+  // 既存を消してから入れ直し（種別が変わる編集にも対応）
+  if (editing) {
+    db.events = db.events.filter(e => e.id !== editing.id);
+    db.weekly = db.weekly.filter(w => w.id !== editing.id);
+  }
+  const dow = new Date(date + 'T00:00:00').getDay();
+  if (weekly) db.weekly.push({ id: uid(), dow, time, title, color: evColor, except: [] });
+  else db.events.push({ id: uid(), date, time, title, color: evColor });
+  editing = null;
+  save(); closeAll(); renderAll();
+};
+
+$('evDelete').onclick = () => {
+  if (!editing) return;
+  const isWeekly = db.weekly.some(w => w.id === editing.id);
+  if (isWeekly && !confirm('毎週のくり返しごと削除します。よろしいですか？\n（この日だけ休みたいときは「この日だけ休み」を使ってください）')) return;
+  db.events = db.events.filter(e => e.id !== editing.id);
+  db.weekly = db.weekly.filter(w => w.id !== editing.id);
+  editing = null;
+  save(); closeAll(); renderAll();
+};
+
+// ---------- やること ----------
+function renderTodos() {
+  const v = $('todoView');
+  v.innerHTML = '';
+  const open = db.todos.filter(t => !t.done)
+    .sort((a, b) => (a.due || '9999').localeCompare(b.due || '9999'));
+  const done = db.todos.filter(t => t.done);
+  $('todoBadge').textContent = open.length ? ` ${open.length}` : '';
+
+  if (!open.length && !done.length) {
+    v.innerHTML = '<p class="emptyMsg">やることはまだありません。<br>＋ボタンで追加してください</p>';
+    return;
+  }
+  const t0 = todayStr();
+  const mk = t => {
+    const item = document.createElement('div');
+    item.className = 'todoItem' + (t.done ? ' done' : '');
+    const cb = document.createElement('button');
+    cb.className = 'cbox'; cb.textContent = t.done ? '✔' : '';
+    cb.onclick = () => { t.done = !t.done; save(); renderAll(); };
+    const tt = document.createElement('div');
+    tt.className = 'tt'; tt.textContent = t.title;
+    item.append(cb, tt);
+    if (t.due) {
+      const d = document.createElement('span');
+      d.className = 'dueChip' + (t.due < t0 && !t.done ? ' over' : t.due === t0 ? ' today' : '');
+      const dd = new Date(t.due + 'T00:00:00');
+      d.textContent = (t.due < t0 && !t.done ? '期限切れ ' : '') + `${dd.getMonth() + 1}/${dd.getDate()}`;
+      item.appendChild(d);
+    }
+    const del = document.createElement('button');
+    del.className = 'tDel'; del.textContent = '🗑';
+    del.onclick = () => { if (confirm('このやることを削除しますか？')) { db.todos = db.todos.filter(x => x.id !== t.id); save(); renderAll(); } };
+    item.appendChild(del);
+    return item;
+  };
+  if (open.length) {
+    const s = document.createElement('p'); s.className = 'secLabel'; s.textContent = `やること（${open.length}）`;
+    v.appendChild(s);
+    open.forEach(t => v.appendChild(mk(t)));
+  }
+  if (done.length) {
+    const s = document.createElement('p'); s.className = 'secLabel'; s.textContent = `完了（${done.length}）`;
+    v.appendChild(s);
+    done.forEach(t => v.appendChild(mk(t)));
+  }
+}
+
+$('tdSave').onclick = () => {
+  const title = $('tdName').value.trim();
+  if (!title) { alert('内容を入れてください'); return; }
+  db.todos.push({ id: uid(), title, due: $('tdDue').value || '', done: false });
+  save(); closeAll(); renderAll();
+};
+
+// ---------- ナビ・タブ ----------
+let tab = 'cal';
+function switchTab(t) {
+  tab = t;
+  $('tabCal').classList.toggle('on', t === 'cal');
+  $('tabTodo').classList.toggle('on', t === 'todo');
+  $('calView').style.display = t === 'cal' ? '' : 'none';
+  $('todoView').style.display = t === 'todo' ? 'block' : 'none';
+}
+$('tabCal').onclick = () => switchTab('cal');
+$('tabTodo').onclick = () => switchTab('todo');
+
+$('prevM').onclick = () => { ym.m--; if (ym.m < 0) { ym.m = 11; ym.y--; } renderCal(); };
+$('nextM').onclick = () => { ym.m++; if (ym.m > 11) { ym.m = 0; ym.y++; } renderCal(); };
+$('todayBtn').onclick = () => {
+  const n = new Date();
+  ym = { y: n.getFullYear(), m: n.getMonth() };
+  selDate = todayStr();
+  renderCal();
+};
+
+$('fab').onclick = () => {
+  if (tab === 'cal') openEvForm(null, selDate);
+  else { $('tdName').value = ''; $('tdDue').value = ''; $('tdSheet').classList.add('open'); }
+};
+$('dayAddEvent').onclick = () => { const ds = selDate; closeAll(); openEvForm(null, ds); };
+$('dayAddTodo').onclick = () => {
+  const ds = selDate; closeAll();
+  $('tdName').value = ''; $('tdDue').value = ds;
+  $('tdSheet').classList.add('open');
+};
+
+function closeAll() {
+  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
+}
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => closeAll());
+document.querySelectorAll('.overlay').forEach(o =>
+  o.addEventListener('click', e => { if (e.target === e.currentTarget) closeAll(); }));
+
+function renderAll() { renderCal(); renderTodos(); }
+renderAll();
+</script>
+</body>
+</html>
