@@ -1,9 +1,10 @@
 // おかん学園（プリント消しゴム） Service Worker
-const CACHE_NAME = 'okan-gakuen-v2';
+const CACHE_NAME = 'okan-gakuen-v3';
 const ASSETS = [
   './',
   './index.html',
   './eraser.html',
+  './updates.json',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
@@ -26,6 +27,17 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  // アップデート情報は常に最新を取りに行く（オフライン時のみキャッシュ）
+  if (event.request.url.includes('updates.json')) {
+    event.respondWith(
+      fetch(event.request).then(res => {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return res;
+      }).catch(() => caches.match(event.request))
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then(cached =>
       cached ||

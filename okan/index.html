@@ -82,6 +82,54 @@
     margin-top: 22px; text-align: center;
     font-size: 11px; color: #94a3b8; line-height: 1.7;
   }
+
+  /* ── アップデート情報 ── */
+  .updBanner {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px;
+    padding: 12px 14px; margin-bottom: 18px; cursor: pointer;
+    font-family: inherit; text-align: left;
+    box-shadow: 0 2px 10px rgba(30,41,59,.05);
+  }
+  .updBanner:active { transform: scale(.98); }
+  .updBanner .ico { font-size: 20px; flex-shrink: 0; }
+  .updBanner .txt { flex: 1; min-width: 0; }
+  .updBanner .lbl { display: block; font-size: 10px; font-weight: 800; color: #db2777; letter-spacing: .06em; }
+  .updBanner .latest {
+    display: block; font-size: 12px; font-weight: 700; color: #475569;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .updBanner .newBadge {
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 999px;
+    background: #db2777; color: #fff; flex-shrink: 0;
+  }
+  .updBanner .arrow { color: #db2777; font-size: 18px; font-weight: 800; }
+  .hidden { display: none !important; }
+
+  #updModal {
+    position: fixed; inset: 0; background: rgba(30,41,59,.45);
+    display: none; align-items: flex-end; justify-content: center; z-index: 30;
+  }
+  #updModal.open { display: flex; }
+  .updSheet {
+    background: #fff; width: 100%; max-width: 480px; max-height: 78vh;
+    border-radius: 20px 20px 0 0; display: flex; flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .updSheet .sheetHead {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px 10px; border-bottom: 1.5px solid #f1f5f9; flex-shrink: 0;
+  }
+  .updSheet .sheetHead h2 { font-size: 15px; font-weight: 800; color: #db2777; }
+  .updSheet .closeBtn {
+    border: none; background: #f1f5f9; color: #64748b; font-size: 14px; font-weight: 800;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  }
+  .updList { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 18px 20px; }
+  .updItem { padding: 14px 0; border-bottom: 1px solid #f1f5f9; }
+  .updItem .d { font-size: 10px; font-weight: 800; color: #94a3b8; letter-spacing: .05em; margin-bottom: 4px; }
+  .updItem .t { font-size: 13px; font-weight: 800; margin-bottom: 6px; line-height: 1.5; }
+  .updItem .b { font-size: 12px; color: #475569; line-height: 1.75; }
 </style>
 </head>
 <body>
@@ -95,6 +143,16 @@
     <span class="face">👩</span>
     <p>「おかえり！<br>今日は何をしよか？」</p>
   </div>
+
+  <button class="updBanner" id="updBanner">
+    <span class="ico">📢</span>
+    <span class="txt">
+      <span class="lbl">アップデート情報</span>
+      <span class="latest" id="updLatest">読み込み中…</span>
+    </span>
+    <span class="newBadge hidden" id="updNew">NEW</span>
+    <span class="arrow">›</span>
+  </button>
 
   <p class="sectionLabel">メニュー</p>
   <div class="menu">
@@ -134,8 +192,56 @@
 
   <p class="privacy">🔒 おかん学園のデータはすべてこのスマホの中だけに保存されます。<br>外部のサーバーには送信されません。</p>
 </main>
+<div id="updModal">
+  <div class="updSheet">
+    <div class="sheetHead">
+      <h2>📢 おかん学園のアップデート</h2>
+      <button class="closeBtn" id="updClose">✕</button>
+    </div>
+    <div class="updList" id="updList"></div>
+  </div>
+</div>
+
 <script>
+'use strict';
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
+// アップデート情報（おかん学園専用: okan/updates.json）
+const SEEN_KEY = 'okan_updates_seen';
+let updates = [];
+
+fetch('updates.json', { cache: 'no-cache' })
+  .then(r => r.json())
+  .then(list => {
+    updates = list;
+    const latest = list[0];
+    document.getElementById('updLatest').textContent = latest ? latest.title : 'まだありません';
+    if (latest && localStorage.getItem(SEEN_KEY) !== latest.date + latest.ver) {
+      document.getElementById('updNew').classList.remove('hidden');
+    }
+  })
+  .catch(() => { document.getElementById('updLatest').textContent = '読み込めませんでした'; });
+
+document.getElementById('updBanner').onclick = () => {
+  const listEl = document.getElementById('updList');
+  listEl.innerHTML = '';
+  for (const u of updates) {
+    const item = document.createElement('div');
+    item.className = 'updItem';
+    const d = document.createElement('p'); d.className = 'd'; d.textContent = u.date + '　' + (u.ver || '');
+    const t = document.createElement('p'); t.className = 't'; t.textContent = u.title;
+    const b = document.createElement('p'); b.className = 'b'; b.textContent = u.body;
+    item.append(d, t, b);
+    listEl.appendChild(item);
+  }
+  document.getElementById('updModal').classList.add('open');
+  if (updates[0]) localStorage.setItem(SEEN_KEY, updates[0].date + updates[0].ver);
+  document.getElementById('updNew').classList.add('hidden');
+};
+document.getElementById('updClose').onclick = () => document.getElementById('updModal').classList.remove('open');
+document.getElementById('updModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
 </script>
 </body>
 </html>
