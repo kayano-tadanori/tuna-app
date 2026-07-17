@@ -161,6 +161,16 @@
     font-size: 14px; margin-bottom: 12px; font-family: inherit;
   }
   .sheet .sheetBtns { display: flex; gap: 10px; }
+  .sheet h3 {
+    font-size: 13px; font-weight: 800; color: #db2777;
+    margin: 16px 0 6px; padding-top: 12px; border-top: 1px solid #f1f5f9;
+  }
+  .sheet h3:first-of-type { margin-top: 6px; border-top: none; padding-top: 0; }
+  .sheet ol, .sheet ul { margin: 0 0 10px 18px; font-size: 12px; color: #475569; line-height: 1.9; }
+  .helpLink {
+    border: none; background: none; color: #db2777; font-size: 14px; font-weight: 700;
+    text-decoration: underline; cursor: pointer; padding: 6px;
+  }
 </style>
 </head>
 <body>
@@ -175,6 +185,7 @@
     <button class="bigBtn" id="camBtn">📷 プリントを撮影</button>
     <button class="bigBtn sub" id="libBtn">🖼 写真から選ぶ</button>
     <p class="tip">影が入らないよう、明るい場所で<br>プリントの真上から撮ってください。<br>鉛筆・シャーペン・赤や青のペンの<br>書き込みを消してまっさらに戻します。</p>
+    <button class="helpLink" id="helpBtn">❓ 使い方を見る</button>
   </div>
 
   <div id="editor">
@@ -201,6 +212,7 @@
         <span class="grow"></span>
         <button class="chip" id="zoomOut">➖</button>
         <button class="chip" id="zoomIn">➕🔍</button>
+        <button class="chip" id="helpBtn2">❓</button>
       </div>
       <div class="aiRow">
         <button id="aiBtn">✨ AIで消す（実験・Gemini）</button>
@@ -218,12 +230,56 @@
 <div id="loading"><div class="spinner"></div><p id="loadingMsg">処理中…</p></div>
 <div id="toast"></div>
 
+<div class="modalOverlay" id="helpModal">
+  <div class="sheet">
+    <h2>❓ プリント消しゴムの使い方</h2>
+
+    <h3>📷 基本の流れ</h3>
+    <ol>
+      <li>「プリントを撮影」で解き終わったプリントを撮る（明るい場所で、影が入らないよう真上から）</li>
+      <li>自動で手書きが消えます。消え残りがあれば「消し具合」を右（強）へ</li>
+      <li>「保存・共有」→ 写真に保存、またはプリント（AirPrint）でまっさらなプリントに！</li>
+    </ol>
+
+    <h3>🎚 ボタンの意味</h3>
+    <ul>
+      <li><b>枠を守る</b>：解答欄の枠・表・罫線を消さずに残します。消し具合を強にしても枠は消えません</li>
+      <li><b>ゴミ取り</b>：細かい点々の消しカスを掃除します</li>
+      <li><b>白黒くっきり</b>：印刷を濃くはっきりさせます（うすいグレーの印刷はそのまま残ります）</li>
+      <li><b>色ペンも消す</b>：赤や青のペン・丸つけを消します。赤を残したいときはOFFに</li>
+    </ul>
+
+    <h3>👆 指で手直し</h3>
+    <ul>
+      <li><b>🧽けす</b>：消え残った字を指でこすって消す（黒ペンの字もこれで消せます）</li>
+      <li><b>🖌もどす</b>：消えすぎた枠や印刷を指でこすって元に戻す</li>
+      <li><b>⚫小/中/大</b>：指の太さを変える　<b>↺</b>：手直しを全部やり直す</li>
+      <li><b>➕🔍/➖</b>：拡大・縮小。拡大中は「✋うごかす」で画面を動かせます</li>
+      <li><b>押すと元画像</b>：押している間だけ撮った写真が見えます。見比べに便利</li>
+    </ul>
+
+    <h3>✨ AIで消す（実験）</h3>
+    <p>GoogleのAI「Gemini」が写真を描き直して手書きを消します。自動処理で消せない黒ペンの書き込みにも効果的。使うには無料のAPIキーが必要です（⚙️から設定。作り方は設定画面に書いてあります）。</p>
+    <p class="warn">⚠️ AIを使うときだけ写真がGoogleに送信されます。また、AIは画像を描き直すため印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください。</p>
+
+    <div class="sheetBtns">
+      <button class="btn" id="helpClose" style="background:#db2777;color:#fff">閉じる</button>
+    </div>
+  </div>
+</div>
+
 <div class="modalOverlay" id="aiModal">
   <div class="sheet">
     <h2>✨ AI消しゴム（実験）の設定</h2>
-    <p>GoogleのAI「Gemini」に写真を送って、手書きだけを消した画像を作ってもらいます。使うには無料で作れるAPIキーが必要です。<br>
-    <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studioでキーを作る →</a><br>
-    （Googleアカウントでログイン →「APIキーを作成」→ できたキーをコピーして下に貼り付け）</p>
+    <p>GoogleのAI「Gemini」に写真を送って、手書きだけを消した画像を作ってもらいます。使うには無料で作れるAPIキーが必要です。</p>
+    <h3>キーの作り方（最初の1回だけ）</h3>
+    <ol>
+      <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> を開く</li>
+      <li>Googleアカウントでログイン</li>
+      <li>「APIキーを作成」を押す</li>
+      <li>できたキー（AIza…で始まる文字列）をコピーして、下の欄に貼り付けて「保存して使う」</li>
+    </ol>
+    <p>あとは写真を撮って「✨AIで消す」を押すだけ（10〜30秒待ちます）。家庭で使う枚数なら無料枠でまず足ります。</p>
     <p class="warn">⚠️ 使う前に知っておいてください<br>
     ・このボタンを使うときだけ、写真がGoogleのサーバーに送信されます<br>
     ・AIは画像を描き直すため、印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください<br>
@@ -389,6 +445,14 @@ function openAiModal() {
   $('aiKeyInput').value = localStorage.getItem(AI_KEY) || '';
   $('aiModal').classList.add('open');
 }
+
+// ---------- 使い方ガイド ----------
+$('helpBtn').onclick = () => $('helpModal').classList.add('open');
+$('helpBtn2').onclick = () => $('helpModal').classList.add('open');
+$('helpClose').onclick = () => $('helpModal').classList.remove('open');
+$('helpModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
 
 async function aiErase(key) {
   loading(true, 'AIが消しています…（10〜30秒）');
