@@ -1080,15 +1080,15 @@ function initSubject() {
         initShakaiHome();
         showScreen('shakai-home');
       } else if (subj === 'game') {
-        if (!spendGameTicket()) return;
+        if (!hasGameTicket()) return;
         initTetris();
         showScreen('tetris');
       } else if (subj === 'mine') {
-        if (!spendGameTicket()) return;
+        if (!hasGameTicket()) return;
         initMine();
         showScreen('mine');
       } else if (subj === 'jump') {
-        if (!spendGameTicket()) return;
+        if (!hasGameTicket()) return;
         initJump();
         showScreen('jump');
       } else if (subj === 'gacha') {
@@ -3990,6 +3990,7 @@ function initTetris() {
 }
 
 function startTetris() {
+  if (!spendGameTicket()) return; // 1プレイ＝遊び券1まい
   stopTetrisLoop();
   tetris.board = Array.from({ length: T_ROWS }, () => Array(T_COLS).fill(null));
   tetris.score = 0; tetris.lines = 0; tetris.level = 1;
@@ -5472,13 +5473,20 @@ function awardSessionTicket(totalQ) {
   showToast(`🎟 遊び券を1まいゲット！（のこり${getGameTickets()}まい）`, 2500);
 }
 
-// 息抜きゲームに入る前に呼ぶ。券がなければ入れずtoastだけ出す
-function spendGameTicket() {
+// 券を持っているか確認だけする（消費しない）。入口のガードに使う
+function hasGameTicket() {
   if (getGameTickets() <= 0) {
     showToast('🎟 遊び券が足りないよ！問題を解いてゲットしよう！', 2500);
     return false;
   }
+  return true;
+}
+
+// 1プレイ開始ごとに1枚消費する（リスタート・難易度変更での再スタートも1プレイ）
+function spendGameTicket() {
+  if (!hasGameTicket()) return false;
   addGameTickets(-1);
+  showToast(`🎟 遊び券を1まい使ったよ（のこり${getGameTickets()}まい）`, 1800);
   return true;
 }
 
@@ -6072,6 +6080,7 @@ function updateMineModeBtn() {
 }
 
 function startMine() {
+  if (!spendGameTicket()) return; // 1プレイ＝遊び券1まい
   const lv = MINE_LEVELS[mineState.diff];
   mineState.cols = lv.cols; mineState.rows = lv.rows; mineState.mines = lv.mines;
   mineState.board = Array.from({ length: lv.rows * lv.cols }, () => ({ mine: false, open: false, flag: false, num: 0 }));
@@ -6466,6 +6475,7 @@ function initJumpControls() {
 }
 
 function startJump() {
+  if (!spendGameTicket()) return; // 1プレイ＝遊び券1まい
   stopJumpLoop();
   jumpState.platforms = [];
   jumpState.coins = [];
