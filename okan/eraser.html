@@ -215,7 +215,7 @@
         <button class="chip" id="helpBtn2">❓</button>
       </div>
       <div class="aiRow">
-        <button id="aiBtn">✨ AIで消す（実験・Gemini）</button>
+        <button id="aiBtn">✨ AIで消す（実験）</button>
         <button id="aiCfg" title="AIの設定">⚙️</button>
       </div>
       <div class="btnRow">
@@ -259,8 +259,8 @@
     </ul>
 
     <h3>✨ AIで消す（実験）</h3>
-    <p>GoogleのAI「Gemini」が写真を描き直して手書きを消します。自動処理で消せない黒ペンの書き込みにも効果的。使うには無料のAPIキーが必要です（⚙️から設定。作り方は設定画面に書いてあります）。</p>
-    <p class="warn">⚠️ AIを使うときだけ写真がGoogleに送信されます。また、AIは画像を描き直すため印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください。</p>
+    <p>AIが写真を描き直して手書きを消します。自動処理で消せない黒ペンの書き込みにも効果的。Gemini（無料枠あり）とChatGPT（OpenAI・従量課金）から選べます。使うにはAPIキーが必要です（⚙️から設定。作り方は設定画面に書いてあります）。</p>
+    <p class="warn">⚠️ AIを使うときだけ写真が選んだAIの会社（GoogleまたはOpenAI）に送信されます。また、AIは画像を描き直すため印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください。</p>
 
     <div class="sheetBtns">
       <button class="btn" id="helpClose" style="background:#db2777;color:#fff">閉じる</button>
@@ -271,17 +271,34 @@
 <div class="modalOverlay" id="aiModal">
   <div class="sheet">
     <h2>✨ AI消しゴム（実験）の設定</h2>
-    <p>GoogleのAI「Gemini」に写真を送って、手書きだけを消した画像を作ってもらいます。使うには無料で作れるAPIキーが必要です。</p>
-    <h3>キーの作り方（最初の1回だけ）</h3>
-    <ol>
-      <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> を開く</li>
-      <li>Googleアカウントでログイン</li>
-      <li>「APIキーを作成」を押す</li>
-      <li>できたキー（AIza…で始まる文字列）をコピーして、下の欄に貼り付けて「保存して使う」</li>
-    </ol>
-    <p>あとは写真を撮って「✨AIで消す」を押すだけ（10〜30秒待ちます）。家庭で使う枚数なら無料枠でまず足ります。</p>
+    <p>AIに写真を送って、手書きだけを消した画像を作ってもらいます。使うAIを選んでください。</p>
+    <div class="chipRow" style="margin-bottom:10px">
+      <button class="chip engine on" data-engine="gemini">Gemini（無料枠あり）</button>
+      <button class="chip engine" data-engine="openai">ChatGPT（OpenAI）</button>
+    </div>
+    <div id="guideGemini">
+      <h3>Geminiキーの作り方（最初の1回だけ・無料）</h3>
+      <ol>
+        <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> を開く</li>
+        <li>Googleアカウントでログイン</li>
+        <li>「APIキーを作成」を押す</li>
+        <li>できたキー（AIza…で始まる文字列）をコピーして、下の欄に貼り付けて「保存して使う」</li>
+      </ol>
+      <p>家庭で使う枚数なら無料枠でまず足ります。</p>
+    </div>
+    <div id="guideOpenai" style="display:none">
+      <h3>OpenAIキーの作り方</h3>
+      <p>※ChatGPT Plusの契約では使えません。開発者向けのAPIキーが別に必要で、基本は従量課金です（1枚 約1〜20円。新規登録では無料クレジットが付く場合があります）。</p>
+      <ol>
+        <li><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a> を開く</li>
+        <li>ChatGPTと同じアカウントでログイン</li>
+        <li>「Create new secret key」でキーを作成</li>
+        <li>できたキー（sk-…で始まる文字列）をコピーして、下の欄に貼り付けて「保存して使う」</li>
+      </ol>
+      <p>エラーが出る場合は、クレジットの購入（Billing）や組織の確認（Verify Organization）が必要なことがあります。</p>
+    </div>
     <p class="warn">⚠️ 使う前に知っておいてください<br>
-    ・このボタンを使うときだけ、写真がGoogleのサーバーに送信されます<br>
+    ・このボタンを使うときだけ、写真が選んだAIの会社（GoogleまたはOpenAI）のサーバーに送信されます<br>
     ・AIは画像を描き直すため、印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください<br>
     ・APIキーはこのスマホの中だけに保存されます</p>
     <input type="password" id="aiKeyInput" placeholder="APIキー（AIza…）を貼り付け" autocomplete="off">
@@ -412,9 +429,13 @@ function loading(on, msg) {
   $('loadingMsg').textContent = msg || '処理中…';
 }
 
-// ---------- AI消しゴム（Gemini） ----------
-const AI_KEY = 'okan_gemini_key';
-const AI_MODELS = ['gemini-3.1-flash-image', 'gemini-2.5-flash-image']; // 先頭が失敗したら次へ
+// ---------- AI消しゴム（Gemini / OpenAI） ----------
+const AI_ENGINE = 'okan_ai_engine';
+const AI_KEYS = { gemini: 'okan_gemini_key', openai: 'okan_openai_key' };
+const AI_PLACEHOLDER = { gemini: 'APIキー（AIza…）を貼り付け', openai: 'APIキー（sk-…）を貼り付け' };
+const GEMINI_MODELS = ['gemini-3.1-flash-image', 'gemini-2.5-flash-image']; // 先頭が失敗したら次へ
+const OPENAI_MODELS = ['gpt-image-1.5', 'gpt-image-1'];
+let aiEngine = localStorage.getItem(AI_ENGINE) || 'gemini';
 const AI_PROMPT =
   'この写真は学習プリントです。手書きの書き込み（鉛筆・シャーペン・ボールペン・赤ペンの丸つけ・メモなど）を' +
   'すべて完全に消してください。印刷された問題文・数字・記号・枠線・罫線・図・イラストは' +
@@ -423,7 +444,7 @@ const AI_PROMPT =
 
 $('aiBtn').onclick = () => {
   if (!origCanvas) return;
-  const key = localStorage.getItem(AI_KEY);
+  const key = localStorage.getItem(AI_KEYS[aiEngine]);
   if (!key) { openAiModal(); return; }
   aiErase(key);
 };
@@ -435,14 +456,29 @@ $('aiModal').addEventListener('click', e => {
 $('aiSave').onclick = () => {
   const k = $('aiKeyInput').value.trim();
   if (!k) { toast('APIキーを入力してください'); return; }
-  localStorage.setItem(AI_KEY, k);
+  localStorage.setItem(AI_KEYS[aiEngine], k);
   $('aiModal').classList.remove('open');
   toast('保存しました');
   if (origCanvas) aiErase(k);
 };
 
+document.querySelectorAll('.chip.engine').forEach(btn => {
+  btn.onclick = () => setEngine(btn.dataset.engine);
+});
+
+function setEngine(en) {
+  aiEngine = en;
+  localStorage.setItem(AI_ENGINE, en);
+  document.querySelectorAll('.chip.engine').forEach(b =>
+    b.classList.toggle('on', b.dataset.engine === en));
+  $('guideGemini').style.display = en === 'gemini' ? '' : 'none';
+  $('guideOpenai').style.display = en === 'openai' ? '' : 'none';
+  $('aiKeyInput').value = localStorage.getItem(AI_KEYS[en]) || '';
+  $('aiKeyInput').placeholder = AI_PLACEHOLDER[en];
+}
+
 function openAiModal() {
-  $('aiKeyInput').value = localStorage.getItem(AI_KEY) || '';
+  setEngine(aiEngine);
   $('aiModal').classList.add('open');
 }
 
@@ -455,7 +491,7 @@ $('helpModal').addEventListener('click', e => {
 });
 
 async function aiErase(key) {
-  loading(true, 'AIが消しています…（10〜30秒）');
+  loading(true, 'AIが消しています…（10〜60秒）');
   try {
     // 送信用に縮小したJPEGを作る
     const maxS = 1536;
@@ -463,12 +499,21 @@ async function aiErase(key) {
     const c = document.createElement('canvas');
     c.width = Math.round(W * sc); c.height = Math.round(H * sc);
     c.getContext('2d').drawImage(origCanvas, 0, 0, c.width, c.height);
-    const b64 = c.toDataURL('image/jpeg', 0.85).split(',')[1];
+    const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85));
+    const b64 = await new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => res(String(fr.result).split(',')[1]);
+      fr.onerror = rej;
+      fr.readAsDataURL(blob);
+    });
 
+    const models = aiEngine === 'openai' ? OPENAI_MODELS : GEMINI_MODELS;
     let lastErr = null;
-    for (const model of AI_MODELS) {
+    for (const model of models) {
       try {
-        const img64 = await callGemini(key, model, b64);
+        const img64 = aiEngine === 'openai'
+          ? await callOpenAIWithRetry(key, model, blob)
+          : await callGemini(key, model, b64);
         const img = new Image();
         await new Promise((res, rej) => {
           img.onload = res;
@@ -538,6 +583,63 @@ async function callGemini(key, model, b64) {
     const d = p.inlineData || p.inline_data;
     if (d && d.data) return d.data;
   }
+  const err = new Error('no image');
+  err.userMsg = 'AIが画像を返しませんでした。もう一度試してください';
+  throw err;
+}
+
+// input_fidelity(元画像に忠実モード)が使えないモデルなら外して再試行
+async function callOpenAIWithRetry(key, model, blob) {
+  try {
+    return await callOpenAI(key, model, blob, true);
+  } catch (e) {
+    if (e.retryNoFidelity) return await callOpenAI(key, model, blob, false);
+    throw e;
+  }
+}
+
+async function callOpenAI(key, model, blob, useFidelity) {
+  const fd = new FormData();
+  fd.append('model', model);
+  fd.append('image', blob, 'print.jpg');
+  fd.append('prompt', AI_PROMPT);
+  fd.append('size', 'auto');
+  fd.append('quality', 'medium');
+  if (useFidelity) fd.append('input_fidelity', 'high');
+
+  const ctrl = new AbortController();
+  const tm = setTimeout(() => ctrl.abort(), 120000);
+  let res;
+  try {
+    res = await fetch('https://api.openai.com/v1/images/edits', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + key },
+      signal: ctrl.signal,
+      body: fd
+    });
+  } catch (e) {
+    const err = new Error('network');
+    err.userMsg = e.name === 'AbortError' ? 'AIの応答が時間切れになりました' : '通信に失敗しました。電波を確認してください';
+    throw err;
+  } finally {
+    clearTimeout(tm);
+  }
+  if (!res.ok) {
+    let msg = '';
+    try { msg = (await res.json()).error?.message || ''; } catch (e) { /* ignore */ }
+    const err = new Error('http ' + res.status + ' ' + msg);
+    const lower = msg.toLowerCase();
+    if (res.status === 404 || lower.includes('model')) err.notFound = true;
+    else if (res.status === 400 && lower.includes('input_fidelity')) err.retryNoFidelity = true;
+    else if (res.status === 401) { err.userMsg = 'APIキーが正しくないようです'; err.badKey = true; }
+    else if (res.status === 403) { err.userMsg = '組織の確認（Verify Organization）が必要かもしれません。platform.openai.comで確認してください'; }
+    else if (res.status === 429) { err.userMsg = 'クレジット不足か利用上限です。platform.openai.comのBillingを確認してください'; }
+    else err.userMsg = 'AI処理に失敗しました（エラー' + res.status + '）';
+    throw err;
+  }
+  const json = await res.json();
+  const item = json.data && json.data[0];
+  if (item && item.b64_json) return item.b64_json;
   const err = new Error('no image');
   err.userMsg = 'AIが画像を返しませんでした。もう一度試してください';
   throw err;
