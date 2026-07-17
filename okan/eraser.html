@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>おかん学園｜プリント消しゴム</title>
+<meta name="description" content="プリントを撮影して、鉛筆の手書き部分だけを消すアプリ">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="おかん学園">
+<meta name="theme-color" content="#db2777">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior: none;
+  }
+  header {
+    background: #db2777;
+    color: #fff;
+    padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  header .backLink {
+    color: #fbcfe8; font-size: 12px; font-weight: 700; text-decoration: none;
+    padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.12);
+    white-space: nowrap;
+  }
+  header .titleWrap { text-align: center; line-height: 1.25; }
+  header .titleWrap .t1 { font-size: 17px; font-weight: 800; }
+  header .titleWrap .t2 { font-size: 10px; font-weight: 700; color: #fbcfe8; letter-spacing: .1em; }
+  header .spacer { width: 74px; }
+  main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ---- 初期画面 ---- */
+  #home {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 18px; padding: 24px;
+  }
+  #home .tip {
+    color: #64748b; font-size: 13px; line-height: 1.7; text-align: center;
+  }
+  .bigBtn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; max-width: 340px;
+    padding: 18px;
+    border: none; border-radius: 16px;
+    font-size: 18px; font-weight: 700;
+    background: #db2777; color: #fff;
+    box-shadow: 0 4px 12px rgba(219,39,119,.3);
+    cursor: pointer;
+  }
+  .bigBtn.sub { background: #fff; color: #db2777; border: 2px solid #db2777; box-shadow: none; }
+  .bigBtn:active { transform: scale(.97); }
+
+  /* ---- 編集画面 ---- */
+  #editor { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+  #canvasWrap {
+    flex: 1; overflow: auto; -webkit-overflow-scrolling: touch;
+    background: #cbd5e1; display: flex; align-items: flex-start; justify-content: center;
+    padding: 8px;
+  }
+  #outCanvas { max-width: 100%; height: auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+
+  #controls {
+    flex-shrink: 0;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .row { display: flex; align-items: center; gap: 10px; }
+  .row label { font-size: 13px; font-weight: 700; color: #475569; white-space: nowrap; }
+  input[type=range] { flex: 1; accent-color: #db2777; height: 30px; }
+  .rangeEnd { font-size: 12px; color: #94a3b8; }
+
+  .chipRow { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;
+    border: 1.5px solid #cbd5e1; background: #fff; color: #475569; cursor: pointer;
+  }
+  .chip.on { background: #fce7f3; border-color: #db2777; color: #db2777; }
+
+  .btnRow { display: flex; gap: 10px; }
+  .btn {
+    flex: 1; padding: 14px; border: none; border-radius: 12px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .btn:active { transform: scale(.97); }
+  #saveBtn { background: #db2777; color: #fff; flex: 2; }
+  #newBtn { background: #e2e8f0; color: #475569; }
+  #compareBtn { background: #fff; border: 1.5px solid #cbd5e1; color: #475569; user-select: none; -webkit-user-select: none; }
+  #compareBtn.holding { background: #fef3c7; border-color: #f59e0b; color: #b45309; }
+
+  /* ---- ローディング ---- */
+  #loading {
+    position: fixed; inset: 0; background: rgba(255,255,255,.85);
+    display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px;
+    z-index: 10;
+  }
+  .spinner {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 4px solid #fce7f3; border-top-color: #db2777;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading p { font-size: 14px; font-weight: 700; color: #db2777; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    background: #1e293b; color: #fff; font-size: 13px; font-weight: 700;
+    padding: 10px 18px; border-radius: 999px; opacity: 0; transition: opacity .3s;
+    pointer-events: none; z-index: 20; white-space: nowrap;
+  }
+  #toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header>
+  <a class="backLink" href="./">← おかん学園</a>
+  <div class="titleWrap"><div class="t1">おかん学園</div><div class="t2">プリント消しゴム</div></div>
+  <div class="spacer"></div>
+</header>
+<main>
+  <div id="home">
+    <div style="font-size:56px">📄✏️</div>
+    <button class="bigBtn" id="camBtn">📷 プリントを撮影</button>
+    <button class="bigBtn sub" id="libBtn">🖼 写真から選ぶ</button>
+    <p class="tip">影が入らないよう、明るい場所で<br>プリントの真上から撮ってください。<br>鉛筆・シャーペンの書き込みを消して<br>まっさらなプリントに戻します。</p>
+  </div>
+
+  <div id="editor">
+    <div id="canvasWrap"><canvas id="outCanvas"></canvas></div>
+    <div id="controls">
+      <div class="row">
+        <label>消し具合</label>
+        <span class="rangeEnd">弱</span>
+        <input type="range" id="strength" min="0" max="100" value="60">
+        <span class="rangeEnd">強</span>
+      </div>
+      <div class="chipRow">
+        <button class="chip on" id="despeckleChip">ゴミ取り</button>
+        <button class="chip on" id="crispChip">白黒くっきり</button>
+      </div>
+      <div class="btnRow">
+        <button class="btn" id="compareBtn">押すと元画像</button>
+        <button class="btn" id="newBtn">別の写真</button>
+        <button class="btn" id="saveBtn">保存・共有</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="loading"><div class="spinner"></div><p>処理中…</p></div>
+<div id="toast"></div>
+
+<input type="file" accept="image/*" capture="environment" id="camIn" hidden>
+<input type="file" accept="image/*" id="libIn" hidden>
+
+<script>
+'use strict';
+
+const MAX_SIDE = 2200;   // 処理する最大辺（メモリと速度のバランス）
+const BG_SCALE = 8;      // 背景推定用の縮小率
+
+const $ = id => document.getElementById(id);
+const outCanvas = $('outCanvas');
+const outCtx = outCanvas.getContext('2d');
+
+let W = 0, H = 0;
+let normGray = null;     // 照明ムラ補正済みグレー (Uint8ClampedArray)
+let origCanvas = null;   // 元画像（比較表示用）
+let outData = null;      // 出力用ImageData
+let renderQueued = false;
+
+// ---------- UI ----------
+$('camBtn').onclick = () => $('camIn').click();
+$('libBtn').onclick = () => $('libIn').click();
+$('camIn').onchange = e => { if (e.target.files[0]) openImage(e.target.files[0]); e.target.value = ''; };
+$('libIn').onchange = e => { if (e.target.files[0]) openImage(e.target.files[0]); e.target.value = ''; };
+
+$('strength').addEventListener('input', queueRender);
+$('despeckleChip').onclick = function () { this.classList.toggle('on'); queueRender(); };
+$('crispChip').onclick = function () { this.classList.toggle('on'); queueRender(); };
+
+// 押している間だけ元画像を表示
+const cmpBtn = $('compareBtn');
+function showOrig(on) {
+  cmpBtn.classList.toggle('holding', on);
+  if (!origCanvas) return;
+  if (on) outCtx.drawImage(origCanvas, 0, 0);
+  else if (outData) outCtx.putImageData(outData, 0, 0);
+}
+cmpBtn.addEventListener('pointerdown', e => { e.preventDefault(); showOrig(true); });
+cmpBtn.addEventListener('pointerup', () => showOrig(false));
+cmpBtn.addEventListener('pointerleave', () => showOrig(false));
+cmpBtn.addEventListener('contextmenu', e => e.preventDefault());
+
+$('newBtn').onclick = () => {
+  $('editor').style.display = 'none';
+  $('home').style.display = 'flex';
+  normGray = null; origCanvas = null; outData = null;
+};
+
+$('saveBtn').onclick = saveImage;
+
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tm);
+  t._tm = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function loading(on) { $('loading').style.display = on ? 'flex' : 'none'; }
+
+// ---------- 画像読み込み ----------
+async function openImage(file) {
+  loading(true);
+  try {
+    const img = await loadImg(file);
+    // 縮小して作業キャンバスへ（<img>経由なのでEXIFの向きはブラウザが処理）
+    const scale = Math.min(1, MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+    W = Math.round(img.naturalWidth * scale);
+    H = Math.round(img.naturalHeight * scale);
+
+    origCanvas = document.createElement('canvas');
+    origCanvas.width = W; origCanvas.height = H;
+    origCanvas.getContext('2d').drawImage(img, 0, 0, W, H);
+
+    outCanvas.width = W; outCanvas.height = H;
+
+    // 重い前処理はUI描画を待ってから
+    await new Promise(r => setTimeout(r, 30));
+    precompute();
+
+    $('home').style.display = 'none';
+    $('editor').style.display = 'flex';
+    render();
+  } catch (err) {
+    toast('読み込みに失敗しました');
+    console.error(err);
+  } finally {
+    loading(false);
+  }
+}
+
+function loadImg(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('image load error')); };
+    img.src = url;
+  });
+}
+
+// ---------- 前処理：グレー化 → 照明ムラ補正 ----------
+function precompute() {
+  const src = origCanvas.getContext('2d').getImageData(0, 0, W, H);
+  const d = src.data;
+  const gray = new Uint8ClampedArray(W * H);
+  for (let i = 0, p = 0; i < d.length; i += 4, p++) {
+    gray[p] = (d[i] * 77 + d[i + 1] * 151 + d[i + 2] * 28) >> 8;
+  }
+
+  // 背景（紙の明るさ）を縮小画像で推定：max膨張で文字を消してからぼかす
+  const sw = Math.max(1, Math.round(W / BG_SCALE));
+  const sh = Math.max(1, Math.round(H / BG_SCALE));
+  const small = new Uint8ClampedArray(sw * sh);
+  for (let y = 0; y < sh; y++) {
+    const sy = Math.min(H - 1, Math.round(y * H / sh));
+    for (let x = 0; x < sw; x++) {
+      const sx = Math.min(W - 1, Math.round(x * W / sw));
+      small[y * sw + x] = gray[sy * W + sx];
+    }
+  }
+  let bg = small;
+  for (let k = 0; k < 3; k++) bg = maxFilter3(bg, sw, sh);
+  const r = Math.max(2, Math.round(Math.min(sw, sh) / 12));
+  bg = boxBlur(bg, sw, sh, r);
+  bg = boxBlur(bg, sw, sh, r);
+
+  // 補正：gray / 背景 で紙を白基準に揃える
+  normGray = new Uint8ClampedArray(W * H);
+  for (let y = 0; y < H; y++) {
+    const by = Math.min(sh - 1, (y * sh / H) | 0);
+    for (let x = 0; x < W; x++) {
+      const b = bg[by * sw + Math.min(sw - 1, (x * sw / W) | 0)] || 1;
+      normGray[y * W + x] = Math.min(255, (gray[y * W + x] * 250 / b) | 0);
+    }
+  }
+}
+
+function maxFilter3(a, w, h) {
+  const out = new Uint8ClampedArray(w * h);
+  for (let y = 0; y < h; y++) {
+    const y0 = Math.max(0, y - 1), y1 = Math.min(h - 1, y + 1);
+    for (let x = 0; x < w; x++) {
+      const x0 = Math.max(0, x - 1), x1 = Math.min(w - 1, x + 1);
+      let m = 0;
+      for (let yy = y0; yy <= y1; yy++)
+        for (let xx = x0; xx <= x1; xx++)
+          if (a[yy * w + xx] > m) m = a[yy * w + xx];
+      out[y * w + x] = m;
+    }
+  }
+  return out;
+}
+
+function boxBlur(a, w, h, r) {
+  const tmp = new Float32Array(w * h);
+  const out = new Uint8ClampedArray(w * h);
+  // 横方向
+  for (let y = 0; y < h; y++) {
+    let sum = 0;
+    const row = y * w;
+    for (let x = -r; x <= r; x++) sum += a[row + Math.min(w - 1, Math.max(0, x))];
+    for (let x = 0; x < w; x++) {
+      tmp[row + x] = sum / (2 * r + 1);
+      sum += a[row + Math.min(w - 1, x + r + 1)] - a[row + Math.max(0, x - r)];
+    }
+  }
+  // 縦方向
+  for (let x = 0; x < w; x++) {
+    let sum = 0;
+    for (let y = -r; y <= r; y++) sum += tmp[Math.min(h - 1, Math.max(0, y)) * w + x];
+    for (let y = 0; y < h; y++) {
+      out[y * w + x] = sum / (2 * r + 1);
+      sum += tmp[Math.min(h - 1, y + r + 1) * w + x] - tmp[Math.max(0, y - r) * w + x];
+    }
+  }
+  return out;
+}
+
+// ---------- しきい値処理 → 描画 ----------
+function queueRender() {
+  if (renderQueued) return;
+  renderQueued = true;
+  requestAnimationFrame(() => { renderQueued = false; render(); });
+}
+
+function render() {
+  if (!normGray) return;
+  // スライダー右（強）ほどしきい値を下げて多く消す
+  const s = +$('strength').value;              // 0..100
+  const T = Math.round(160 - s * 1.2);         // 160(弱)〜40(強)
+  const crisp = $('crispChip').classList.contains('on');
+  const despeckle = $('despeckleChip').classList.contains('on');
+  const n = W * H;
+
+  // 残す画素のマスク
+  let mask = new Uint8Array(n);
+  for (let i = 0; i < n; i++) mask[i] = normGray[i] < T ? 1 : 0;
+
+  if (despeckle) mask = removeSpecks(mask, W, H);
+
+  if (!outData) outData = outCtx.createImageData(W, H);
+  const d = outData.data;
+  for (let i = 0, p = 0; i < n; i++, p += 4) {
+    let v;
+    if (!mask[i]) v = 255;
+    else if (crisp) v = 0;
+    else v = Math.min(200, normGray[i]);       // 濃淡を残すモード
+    d[p] = d[p + 1] = d[p + 2] = v;
+    d[p + 3] = 255;
+  }
+  outCtx.putImageData(outData, 0, 0);
+}
+
+// 孤立した点（近傍に仲間が1つ以下）を2回のパスで除去
+function removeSpecks(mask, w, h) {
+  let m = mask;
+  for (let pass = 0; pass < 2; pass++) {
+    const out = new Uint8Array(w * h);
+    for (let y = 0; y < h; y++) {
+      const y0 = Math.max(0, y - 1), y1 = Math.min(h - 1, y + 1);
+      for (let x = 0; x < w; x++) {
+        const i = y * w + x;
+        if (!m[i]) continue;
+        let cnt = -1; // 自分の分を引く
+        for (let yy = y0; yy <= y1; yy++) {
+          const row = yy * w;
+          const x0 = Math.max(0, x - 1), x1 = Math.min(w - 1, x + 1);
+          for (let xx = x0; xx <= x1; xx++) cnt += m[row + xx];
+        }
+        if (cnt >= 2) out[i] = 1;
+      }
+    }
+    m = out;
+  }
+  return m;
+}
+
+// ---------- 保存・共有 ----------
+async function saveImage() {
+  if (!outData) return;
+  showOrig(false);
+  const blob = await new Promise(r => outCanvas.toBlob(r, 'image/png'));
+  if (!blob) { toast('保存に失敗しました'); return; }
+  const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const file = new File([blob], `print_${stamp}.png`, { type: 'image/png' });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file] });
+      toast('共有しました');
+    } catch (e) {
+      if (e.name !== 'AbortError') toast('共有をキャンセルしました');
+    }
+  } else {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = file.name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    toast('ダウンロードしました');
+  }
+}
+
+// ---------- Service Worker ----------
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+</body>
+</html>

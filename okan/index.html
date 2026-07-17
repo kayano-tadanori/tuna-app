@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>おかん学園</title>
+<meta name="description" content="おかん学園 — プリント消しゴム・プリント管理・塾スケジュール・成績管理">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="おかん学園">
+<meta name="theme-color" content="#db2777">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: linear-gradient(160deg, #fdf2f8 0%, #f1f5f9 60%);
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  header {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    color: #fff;
+    padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  header .backLink {
+    color: #fbcfe8; font-size: 12px; font-weight: 700; text-decoration: none;
+    padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.12);
+    white-space: nowrap;
+  }
+  header .titleWrap { text-align: center; line-height: 1.25; }
+  header .titleWrap .t1 { font-size: 17px; font-weight: 800; }
+  header .titleWrap .t2 { font-size: 10px; font-weight: 700; color: #fbcfe8; letter-spacing: .1em; }
+  header .spacer { width: 74px; }
+
+  main { flex: 1; padding: 20px 16px 28px; max-width: 480px; width: 100%; margin: 0 auto; }
+
+  .hello {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 1.5px solid #fbcfe8; border-radius: 16px;
+    padding: 14px 16px; margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(219,39,119,.08);
+  }
+  .hello .face { font-size: 34px; }
+  .hello p { font-size: 13px; font-weight: 700; line-height: 1.6; color: #475569; }
+
+  .sectionLabel { font-size: 13px; font-weight: 800; color: #db2777; margin: 0 2px 10px; letter-spacing: .05em; }
+
+  .menu { display: flex; flex-direction: column; gap: 12px; }
+  .card {
+    display: flex; align-items: center; gap: 14px;
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 16px;
+    padding: 16px; text-decoration: none; color: inherit;
+    box-shadow: 0 2px 10px rgba(30,41,59,.05);
+    position: relative;
+  }
+  .card.active { border-color: #f9a8d4; }
+  .card.active:active { transform: scale(.97); border-color: #db2777; }
+  .card .icon {
+    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+    background: #fce7f3;
+  }
+  .card .txt { flex: 1; min-width: 0; }
+  .card .txt .name { display: block; font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+  .card .txt .desc { display: block; font-size: 12px; color: #64748b; line-height: 1.5; }
+  .card .arrow { color: #db2777; font-size: 20px; font-weight: 800; }
+  .card.soon { opacity: .62; }
+  .card.soon .icon { background: #f1f5f9; filter: grayscale(1); }
+  .badge {
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 999px;
+    background: #e2e8f0; color: #64748b; flex-shrink: 0;
+  }
+  .privacy {
+    margin-top: 22px; text-align: center;
+    font-size: 11px; color: #94a3b8; line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="backLink" href="../">← オトン学園</a>
+  <div class="titleWrap"><div class="t1">おかん学園</div><div class="t2">おうちサポート</div></div>
+  <div class="spacer"></div>
+</header>
+<main>
+  <div class="hello">
+    <span class="face">👩</span>
+    <p>「おかえり！<br>今日は何をしよか？」</p>
+  </div>
+
+  <p class="sectionLabel">メニュー</p>
+  <div class="menu">
+    <a class="card active" href="eraser.html">
+      <span class="icon">🧹</span>
+      <span class="txt">
+        <span class="name">プリント消しゴム</span>
+        <span class="desc">プリントを撮影して、鉛筆の書き込みだけを消してまっさらに戻す</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <div class="card soon">
+      <span class="icon">🗂</span>
+      <span class="txt">
+        <span class="name">プリント管理</span>
+        <span class="desc">スキャンしたプリントを科目別に整理・保管</span>
+      </span>
+      <span class="badge">準備中</span>
+    </div>
+    <div class="card soon">
+      <span class="icon">📅</span>
+      <span class="txt">
+        <span class="name">塾スケジュール</span>
+        <span class="desc">授業・テスト・イベントの予定管理</span>
+      </span>
+      <span class="badge">準備中</span>
+    </div>
+    <div class="card soon">
+      <span class="icon">📊</span>
+      <span class="txt">
+        <span class="name">成績管理</span>
+        <span class="desc">テストの点数・偏差値の記録とグラフ</span>
+      </span>
+      <span class="badge">準備中</span>
+    </div>
+  </div>
+
+  <p class="privacy">🔒 おかん学園のデータはすべてこのスマホの中だけに保存されます。<br>外部のサーバーには送信されません。</p>
+</main>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
