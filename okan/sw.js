@@ -1,5 +1,5 @@
 // おかん学園（プリント消しゴム） Service Worker
-const CACHE_NAME = 'okan-gakuen-v4';
+const CACHE_NAME = 'okan-gakuen-v5';
 const ASSETS = [
   './',
   './index.html',

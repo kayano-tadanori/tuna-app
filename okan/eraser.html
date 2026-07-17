@@ -129,6 +129,38 @@
     pointer-events: none; z-index: 20; white-space: nowrap;
   }
   #toast.show { opacity: 1; }
+
+  /* ---- AI消しゴム ---- */
+  .aiRow { display: flex; gap: 8px; }
+  #aiBtn {
+    flex: 1; padding: 11px; border: none; border-radius: 12px;
+    font-size: 14px; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, #7c3aed, #db2777); cursor: pointer;
+  }
+  #aiBtn:active { transform: scale(.97); }
+  #aiCfg {
+    width: 44px; border: 1.5px solid #cbd5e1; border-radius: 12px;
+    background: #fff; font-size: 16px; cursor: pointer;
+  }
+  .modalOverlay {
+    position: fixed; inset: 0; background: rgba(30,41,59,.45);
+    display: none; align-items: flex-end; justify-content: center; z-index: 30;
+  }
+  .modalOverlay.open { display: flex; }
+  .sheet {
+    background: #fff; width: 100%; max-width: 480px; max-height: 82vh;
+    border-radius: 20px 20px 0 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
+  }
+  .sheet h2 { font-size: 15px; font-weight: 800; color: #7c3aed; margin-bottom: 10px; }
+  .sheet p { font-size: 12px; color: #475569; line-height: 1.75; margin-bottom: 10px; }
+  .sheet .warn { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 10px; padding: 10px 12px; color: #92400e; }
+  .sheet a { color: #7c3aed; font-weight: 700; }
+  .sheet input {
+    width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+    font-size: 14px; margin-bottom: 12px; font-family: inherit;
+  }
+  .sheet .sheetBtns { display: flex; gap: 10px; }
 </style>
 </head>
 <body>
@@ -170,6 +202,10 @@
         <button class="chip" id="zoomOut">➖</button>
         <button class="chip" id="zoomIn">➕🔍</button>
       </div>
+      <div class="aiRow">
+        <button id="aiBtn">✨ AIで消す（実験・Gemini）</button>
+        <button id="aiCfg" title="AIの設定">⚙️</button>
+      </div>
       <div class="btnRow">
         <button class="btn" id="compareBtn">押すと元画像</button>
         <button class="btn" id="newBtn">別の写真</button>
@@ -179,8 +215,26 @@
   </div>
 </main>
 
-<div id="loading"><div class="spinner"></div><p>処理中…</p></div>
+<div id="loading"><div class="spinner"></div><p id="loadingMsg">処理中…</p></div>
 <div id="toast"></div>
+
+<div class="modalOverlay" id="aiModal">
+  <div class="sheet">
+    <h2>✨ AI消しゴム（実験）の設定</h2>
+    <p>GoogleのAI「Gemini」に写真を送って、手書きだけを消した画像を作ってもらいます。使うには無料で作れるAPIキーが必要です。<br>
+    <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studioでキーを作る →</a><br>
+    （Googleアカウントでログイン →「APIキーを作成」→ できたキーをコピーして下に貼り付け）</p>
+    <p class="warn">⚠️ 使う前に知っておいてください<br>
+    ・このボタンを使うときだけ、写真がGoogleのサーバーに送信されます<br>
+    ・AIは画像を描き直すため、印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください<br>
+    ・APIキーはこのスマホの中だけに保存されます</p>
+    <input type="password" id="aiKeyInput" placeholder="APIキー（AIza…）を貼り付け" autocomplete="off">
+    <div class="sheetBtns">
+      <button class="btn" id="aiCancel" style="background:#e2e8f0;color:#475569">閉じる</button>
+      <button class="btn" id="aiSave" style="background:#7c3aed;color:#fff;flex:2">保存して使う</button>
+    </div>
+  </div>
+</div>
 
 <input type="file" accept="image/*" capture="environment" id="camIn" hidden>
 <input type="file" accept="image/*" id="libIn" hidden>
@@ -297,7 +351,133 @@ function toast(msg) {
   t._tm = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-function loading(on) { $('loading').style.display = on ? 'flex' : 'none'; }
+function loading(on, msg) {
+  $('loading').style.display = on ? 'flex' : 'none';
+  $('loadingMsg').textContent = msg || '処理中…';
+}
+
+// ---------- AI消しゴム（Gemini） ----------
+const AI_KEY = 'okan_gemini_key';
+const AI_MODELS = ['gemini-3.1-flash-image', 'gemini-2.5-flash-image']; // 先頭が失敗したら次へ
+const AI_PROMPT =
+  'この写真は学習プリントです。手書きの書き込み（鉛筆・シャーペン・ボールペン・赤ペンの丸つけ・メモなど）を' +
+  'すべて完全に消してください。印刷された問題文・数字・記号・枠線・罫線・図・イラストは' +
+  '一切変えず、そのままの位置・内容で残してください。紙面は白くきれいにして、' +
+  '書き込みをする前のまっさらな印刷プリントの画像として出力してください。';
+
+$('aiBtn').onclick = () => {
+  if (!origCanvas) return;
+  const key = localStorage.getItem(AI_KEY);
+  if (!key) { openAiModal(); return; }
+  aiErase(key);
+};
+$('aiCfg').onclick = openAiModal;
+$('aiCancel').onclick = () => $('aiModal').classList.remove('open');
+$('aiModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+$('aiSave').onclick = () => {
+  const k = $('aiKeyInput').value.trim();
+  if (!k) { toast('APIキーを入力してください'); return; }
+  localStorage.setItem(AI_KEY, k);
+  $('aiModal').classList.remove('open');
+  toast('保存しました');
+  if (origCanvas) aiErase(k);
+};
+
+function openAiModal() {
+  $('aiKeyInput').value = localStorage.getItem(AI_KEY) || '';
+  $('aiModal').classList.add('open');
+}
+
+async function aiErase(key) {
+  loading(true, 'AIが消しています…（10〜30秒）');
+  try {
+    // 送信用に縮小したJPEGを作る
+    const maxS = 1536;
+    const sc = Math.min(1, maxS / Math.max(W, H));
+    const c = document.createElement('canvas');
+    c.width = Math.round(W * sc); c.height = Math.round(H * sc);
+    c.getContext('2d').drawImage(origCanvas, 0, 0, c.width, c.height);
+    const b64 = c.toDataURL('image/jpeg', 0.85).split(',')[1];
+
+    let lastErr = null;
+    for (const model of AI_MODELS) {
+      try {
+        const img64 = await callGemini(key, model, b64);
+        const img = new Image();
+        await new Promise((res, rej) => {
+          img.onload = res;
+          img.onerror = () => rej(new Error('AI画像の読み込みに失敗'));
+          img.src = 'data:image/png;base64,' + img64;
+        });
+        outCtx.fillStyle = '#ffffff';
+        outCtx.fillRect(0, 0, W, H);
+        outCtx.drawImage(img, 0, 0, W, H);
+        outData = outCtx.getImageData(0, 0, W, H);
+        toast('AIで消しました。印刷が変わってないか確認を');
+        return;
+      } catch (e) {
+        if (e.notFound) { lastErr = e; continue; } // このモデルが無ければ次へ
+        throw e;
+      }
+    }
+    throw lastErr || new Error('ai failed');
+  } catch (e) {
+    console.error(e);
+    toast(e.userMsg || 'AI処理に失敗しました');
+    if (e.badKey) openAiModal();
+  } finally {
+    loading(false);
+  }
+}
+
+async function callGemini(key, model, b64) {
+  const ctrl = new AbortController();
+  const tm = setTimeout(() => ctrl.abort(), 90000);
+  let res;
+  try {
+    res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+      signal: ctrl.signal,
+      body: JSON.stringify({
+        contents: [{ parts: [
+          { text: AI_PROMPT },
+          { inline_data: { mime_type: 'image/jpeg', data: b64 } }
+        ] }],
+        generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
+      })
+    });
+  } catch (e) {
+    const err = new Error('network');
+    err.userMsg = e.name === 'AbortError' ? 'AIの応答が時間切れになりました' : '通信に失敗しました。電波を確認してください';
+    throw err;
+  } finally {
+    clearTimeout(tm);
+  }
+  if (!res.ok) {
+    const err = new Error('http ' + res.status);
+    if (res.status === 404) err.notFound = true;
+    else if (res.status === 400 || res.status === 401 || res.status === 403) {
+      err.userMsg = 'APIキーが正しくないようです'; err.badKey = true;
+    } else if (res.status === 429) {
+      err.userMsg = '利用上限に達したようです。しばらくしてから試してください';
+    } else {
+      err.userMsg = 'AI処理に失敗しました（エラー' + res.status + '）';
+    }
+    throw err;
+  }
+  const json = await res.json();
+  const parts = (json.candidates && json.candidates[0] && json.candidates[0].content && json.candidates[0].content.parts) || [];
+  for (const p of parts) {
+    const d = p.inlineData || p.inline_data;
+    if (d && d.data) return d.data;
+  }
+  const err = new Error('no image');
+  err.userMsg = 'AIが画像を返しませんでした。もう一度試してください';
+  throw err;
+}
 
 // ---------- 手直しブラシ ----------
 let drawing = false, lastPt = null;
