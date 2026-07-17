@@ -57,7 +57,7 @@
         <p id="otton-date" class="otton-date"></p>
         <p id="otton-msg" class="otton-msg">「科目を選んで、<br>今日も一緒に頑張ろうや！」</p>
       </div>
-      <span class="okan-switch kouji"><span class="okan-switch-icon">🚧</span>おかん<br>学園<span class="okan-switch-note">工事中</span></span>
+      <span class="okan-switch kouji" id="okan-kouji"><span class="okan-switch-icon">🚧</span>おかん<br>学園<span class="okan-switch-note">工事中</span></span>
     </div>
 
     <button id="btn-record" class="subject-card subject-card-record">
@@ -1619,5 +1619,26 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="firebase.js"></script>
 <script src="app.js"></script>
+<script>
+// 工事中のおかん学園ボタン：1秒長押しで入れる隠し入口
+(function () {
+  const el = document.getElementById('okan-kouji');
+  if (!el) return;
+  let tm = null;
+  el.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    el.classList.add('holding');
+    tm = setTimeout(() => { location.href = 'okan/'; }, 1000);
+  });
+  const cancel = () => {
+    el.classList.remove('holding');
+    if (tm) { clearTimeout(tm); tm = null; }
+  };
+  el.addEventListener('pointerup', cancel);
+  el.addEventListener('pointerleave', cancel);
+  el.addEventListener('pointercancel', cancel);
+  el.addEventListener('contextmenu', e => e.preventDefault());
+})();
+</script>
 </body>
 </html>
