@@ -1,0 +1,452 @@
+[
+  {
+    "id": "rg_gachi_1",
+    "category": "chikara",
+    "grade": 5,
+    "title": "実験てこの3個づけパズル",
+    "intro": "実験用てこ（左右に1・2・3の穴）と、10g・20g・30gのおもりが1個ずつあります。おもりは1つの穴に1個だけ。3個ぜんぶを別々の穴につるして、てこを水平につり合わせたい。",
+    "svg": "<svg viewBox=\"0 0 280 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"140\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">実験用てこ（穴は左右に1・2・3）</text><polygon points=\"132,96 148,96 140,76\" fill=\"#ffd166\"/><line x1=\"30\" y1=\"72\" x2=\"250\" y2=\"72\" stroke=\"#cdd6f4\" stroke-width=\"3\"/><circle cx=\"44\" cy=\"72\" r=\"3.5\" fill=\"#181825\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"44\" y=\"60\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><circle cx=\"76\" cy=\"72\" r=\"3.5\" fill=\"#181825\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"76\" y=\"60\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><circle cx=\"108\" cy=\"72\" r=\"3.5\" fill=\"#181825\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"108\" y=\"60\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><circle cx=\"172\" cy=\"72\" r=\"3.5\" fill=\"#181825\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"172\" y=\"60\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><circle cx=\"204\" cy=\"72\" r=\"3.5\" fill=\"#181825\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"204\" y=\"60\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><circle cx=\"236\" cy=\"72\" r=\"3.5\" fill=\"#181825\" stroke=\"#9399b2\" stroke-width=\"1\"/><text x=\"236\" y=\"60\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"60\" y=\"46\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">左</text><text x=\"220\" y=\"46\" fill=\"#ff6b6b\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">右</text><rect x=\"30\" y=\"108\" width=\"32\" height=\"18\" rx=\"3\" fill=\"#4f9eff\" opacity=\"0.5\" stroke=\"#4f9eff\"/><text x=\"46\" y=\"121\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">10g</text><rect x=\"124\" y=\"108\" width=\"32\" height=\"18\" rx=\"3\" fill=\"#06d6a0\" opacity=\"0.5\" stroke=\"#06d6a0\"/><text x=\"140\" y=\"121\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">20g</text><rect x=\"218\" y=\"108\" width=\"32\" height=\"18\" rx=\"3\" fill=\"#f38ba8\" opacity=\"0.5\" stroke=\"#f38ba8\"/><text x=\"234\" y=\"121\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">30g</text><text x=\"140\" y=\"138\" fill=\"#ffd166\" font-size=\"8.2\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">この3つを「別々の穴」に全部つるして、つり合わせたい</text></svg>",
+    "steps": [
+      {
+        "question": "まず2個で実験。10gを右の3の穴につるした。30gだけでつり合わせるなら、左のどの番号の穴？",
+        "answer": "1",
+        "meaning": "①右は10×3＝30のかたむき。②左も30にしたい。30gなら30×1＝30で、左の1の穴です。よって、答えは1です。"
+      },
+      {
+        "question": "3個ぜんぶを使う。10gを右の3につるしたとき、残りの20gと30gはどこ？",
+        "answer": "20gを左の3、30gを右の1",
+        "choices": [
+          "20gを左の3、30gを右の1",
+          "20gを左の1、30gを左の2",
+          "20gを右の2、30gを左の1",
+          "30gを左の3、20gを右の1"
+        ],
+        "meaning": "①右は10×3＝30。20gと30gで左右の差をちょうど30にする。②20gを左の3（左60）、30gを右の1（右30）→右合計30＋30＝60で左右60ずつ、つり合った！ほかの選択肢は計算が合いません。よって、答えは20gを左の3、30gを右の1です。"
+      },
+      {
+        "question": "3個ぜんぶを別々の穴につるしてつり合う置き方は、左右を入れかえたものも数えて、全部で何通り？",
+        "answer": "2",
+        "meaning": "①コンピュータで全部の置き方（6×5×4＝120通り）を調べると——②つり合うのはたったの2通り（②の置き方と、その左右逆だけ）！120分の2しかない奇跡のバランスです。よって、答えは2です。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_2",
+    "category": "suiyoueki",
+    "grade": 5,
+    "title": "食塩水の交換マジック",
+    "intro": "Aのビーカーに10%の食塩水100g、Bのビーカーに2%の食塩水100g。2本のスプーンで、同じ重さずつを「同時に」すくって入れかえます。",
+    "svg": "<svg viewBox=\"0 0 270 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2つの食塩水をスプーンで同時に交換する</text><path d=\"M50 40 L53 92 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L96 40\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"53\" y=\"58\" width=\"40\" height=\"37\" fill=\"#f38ba8\" opacity=\"0.4\"/><text x=\"73\" y=\"34\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A：10%・100g</text><text x=\"73\" y=\"112\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><path d=\"M175 40 L178 92 a3 3 0 0 0 3 3 h34 a3 3 0 0 0 3 -3 L221 40\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"178\" y=\"58\" width=\"40\" height=\"37\" fill=\"#89dceb\" opacity=\"0.4\"/><text x=\"198\" y=\"34\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B：2%・100g</text><text x=\"198\" y=\"112\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\"></text><path d=\"M100 56 q35 -18 70 0\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.5\"/><polygon points=\"170,56 162,52 163,60\" fill=\"#06d6a0\"/><path d=\"M170 84 q-35 18 -70 0\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><polygon points=\"100,84 108,88 107,80\" fill=\"#ffd166\"/><text x=\"135\" y=\"46\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">同時に</text><text x=\"135\" y=\"128\" fill=\"#9399b2\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">同じ重さずつ すくって入れかえる</text></svg>",
+    "steps": [
+      {
+        "question": "25gずつ同時に交換した。Aの濃度は何%になった？",
+        "answer": "8",
+        "meaning": "①Aに残る食塩：75gぶんの7.5g＋Bから来る25gぶんの0.5g＝8g。②Aは100gで食塩8g→8%です。よって、答えは8です。"
+      },
+      {
+        "question": "交換の前とあとで、ぜったいに変わらないものはどれ？",
+        "answer": "2つの食塩水の食塩の合計（12g）",
+        "choices": [
+          "2つの食塩水の食塩の合計（12g）",
+          "Aの濃度",
+          "それぞれの食塩の量",
+          "濃度の差"
+        ],
+        "meaning": "①食塩はAとBの間を行き来するだけで、消えたり増えたりしない。②合計は最初の10g＋2g＝12gのまま（不変量）。よって、答えは2つの食塩水の食塩の合計（12g）です。"
+      },
+      {
+        "question": "50gずつ（半分ずつ）同時に交換すると、AもBも同じ濃度になる。何%？",
+        "answer": "6",
+        "meaning": "①半分ずつ入れかえると、AもBも「元のAの半分＋元のBの半分」で中身が同じ組成になる。②合計の食塩12gが200gに均等だから12÷200＝6%（10%と2%のちょうど平均）。コンピュータの計算でも両方ぴったり6%です。よって、答えは6です。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_3",
+    "category": "denki",
+    "grade": 5,
+    "title": "階段スイッチのなぞ",
+    "intro": "階段の電気は、上のスイッチAでも下のスイッチBでも、つけたり消したりできます（どちらを「パチン」としても、つく⇔消えるが切りかわる）。いま電気は消えています。",
+    "svg": "<svg viewBox=\"0 0 270 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">階段の電気：上と下、どちらのスイッチでも操作できる</text><circle cx=\"135\" cy=\"46\" r=\"13\" fill=\"rgba(255,209,102,0.5)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"151.0\" y1=\"46.0\" x2=\"156.0\" y2=\"46.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"143.0\" y1=\"59.9\" x2=\"145.5\" y2=\"64.2\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"127.0\" y1=\"59.9\" x2=\"124.5\" y2=\"64.2\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"119.0\" y1=\"46.0\" x2=\"114.0\" y2=\"46.0\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"127.0\" y1=\"32.1\" x2=\"124.5\" y2=\"27.8\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><line x1=\"143.0\" y1=\"32.1\" x2=\"145.5\" y2=\"27.8\" stroke=\"#ffd166\" stroke-width=\"1.4\"/><rect x=\"46\" y=\"80\" width=\"28\" height=\"34\" rx=\"4\" fill=\"rgba(148,153,178,0.2)\" stroke=\"#9399b2\" stroke-width=\"1.3\"/><rect x=\"54\" y=\"88\" width=\"12\" height=\"18\" rx=\"2\" fill=\"#4f9eff\"/><text x=\"60\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">上のスイッチA</text><rect x=\"196\" y=\"80\" width=\"28\" height=\"34\" rx=\"4\" fill=\"rgba(148,153,178,0.2)\" stroke=\"#9399b2\" stroke-width=\"1.3\"/><rect x=\"204\" y=\"88\" width=\"12\" height=\"18\" rx=\"2\" fill=\"#4f9eff\"/><text x=\"210\" y=\"126\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">下のスイッチB</text><path d=\"M74 92 q30 -22 48 -32\" fill=\"none\" stroke=\"#39456b\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><path d=\"M196 92 q-30 -22 -48 -32\" fill=\"none\" stroke=\"#39456b\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/></svg>",
+    "steps": [
+      {
+        "question": "Aを1回、Bを1回、あわせて2回パチンとした。電気はどうなっている？",
+        "answer": "消えている",
+        "choices": [
+          "消えている",
+          "ついている",
+          "Aの向きによる",
+          "こわれる"
+        ],
+        "meaning": "①1回目でつき、2回目で消える。②どちらのスイッチかは関係なく、パチンのたびに切りかわるだけ。2回で元どおりです。よって、答えは消えているです。"
+      },
+      {
+        "question": "電気の状態を決めているのは何？",
+        "answer": "パチンとした合計回数が偶数か奇数か",
+        "choices": [
+          "パチンとした合計回数が偶数か奇数か",
+          "AとBのどちらを押したか",
+          "最後に押したのがAかBか",
+          "押す速さ"
+        ],
+        "meaning": "①パチン1回ごとに「つく⇔消える」が入れかわる。②だから合計回数だけが問題：偶数回なら元どおり（消えたまま）、奇数回ならついている。誰がどのスイッチを押したかは関係なし！よって、答えはパチンとした合計回数が偶数か奇数かです。"
+      },
+      {
+        "question": "家族がかわるがわる、AとBをあわせて7回パチンとした。電気は？",
+        "answer": "ついている",
+        "choices": [
+          "ついている",
+          "消えている",
+          "7回では決まらない",
+          "最後の1回による"
+        ],
+        "meaning": "①消えた状態から奇数回（7回）切りかわった。②消→つ→消→つ→消→つ→消→つ、で「ついている」。コンピュータで7回シミュレーションしても同じです。よって、答えはついているです。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_4",
+    "category": "chikara",
+    "grade": 5,
+    "title": "ふりこの時間の法則さがし",
+    "intro": "ふりこが1往復する時間を実験しました。おもりの重さやふれはばを変えても1往復の時間は変わらず、糸の長さを変えたときだけ記録のように変わりました。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"14\" fill=\"#cdd6f4\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ふりこの実験の記録</text><line x1=\"45\" y1=\"30\" x2=\"105\" y2=\"30\" stroke=\"#9399b2\" stroke-width=\"3\"/><line x1=\"75\" y1=\"30\" x2=\"60\" y2=\"86\" stroke=\"#cdd6f4\" stroke-width=\"1.4\"/><circle cx=\"60\" cy=\"92\" r=\"8\" fill=\"#4f9eff\" opacity=\"0.8\"/><path d=\"M60 92 q15 8 32 2\" fill=\"none\" stroke=\"#39456b\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/><rect x=\"120\" y=\"44\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.13)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"138\" y=\"60\" fill=\"#4f9eff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">長さ</text><rect x=\"156\" y=\"44\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.13)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"174\" y=\"60\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">25cm</text><rect x=\"192\" y=\"44\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.13)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"210\" y=\"60\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">100cm</text><rect x=\"228\" y=\"44\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.13)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"246\" y=\"60\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">225cm</text><rect x=\"120\" y=\"68\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.06)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"138\" y=\"84\" fill=\"#4f9eff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1往復</text><rect x=\"156\" y=\"68\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.06)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"174\" y=\"84\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">1秒</text><rect x=\"192\" y=\"68\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.06)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"210\" y=\"84\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">2秒</text><rect x=\"228\" y=\"68\" width=\"36\" height=\"24\" fill=\"rgba(79,158,255,0.06)\" stroke=\"#39456b\" stroke-width=\"0.8\"/><text x=\"246\" y=\"84\" fill=\"#eef2ff\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\">？秒</text><text x=\"135\" y=\"118\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">おもりの重さやふれはばを変えても、1往復の時間は</text><text x=\"135\" y=\"132\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">変わらなかった（実験ずみ）</text></svg>",
+    "steps": [
+      {
+        "question": "長さ25cmで1秒、100cmで2秒。長さが4倍になると、1往復の時間は何倍？",
+        "answer": "2",
+        "meaning": "①100÷25＝4倍の長さで、時間は1秒→2秒。②つまり4倍で2倍です。よって、答えは2です。"
+      },
+      {
+        "question": "この実験から見つかる法則はどれ？",
+        "answer": "時間を2倍にするには長さを4倍（2×2倍）にする",
+        "choices": [
+          "時間を2倍にするには長さを4倍（2×2倍）にする",
+          "時間は長さに比例する（2倍なら2倍）",
+          "時間はおもりの重さで決まる",
+          "長さを4倍にすると時間も4倍"
+        ],
+        "meaning": "①「4倍で2倍」——時間の倍率を2回かけたものが長さの倍率（2×2＝4）。②比例なら4倍で4倍のはずなので違う。おもりの重さは実験で「変わらない」と確認済み。よって、答えは時間を2倍にするには長さを4倍（2×2倍）にするです。"
+      },
+      {
+        "question": "1往復3秒のふりこを作りたい。糸の長さは何cm？",
+        "answer": "225",
+        "meaning": "①時間が1秒→3秒は3倍。法則から長さは3×3＝9倍。②25×9＝225cmです（コンピュータの計算でも225cmでちょうど3秒）。よって、答えは225です。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_5",
+    "category": "tenki",
+    "grade": 5,
+    "title": "気温グラフ探偵",
+    "intro": "同じ場所の、別の2日間（A日とB日）の気温グラフがあります。どちらか一方は雲ひとつない晴れ、もう一方は一日中くもりでした。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"13\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ある2日間の気温グラフ（同じ場所）</text><line x1=\"40\" y1=\"118\" x2=\"250\" y2=\"118\" stroke=\"#9399b2\" stroke-width=\"1\"/><line x1=\"40\" y1=\"118\" x2=\"40\" y2=\"26\" stroke=\"#9399b2\" stroke-width=\"1\"/><polyline points=\"40,82.8 57,86.0 74,82.8 91,74.0 108,62.0 125,50.0 142,41.2 159,38.0 176,41.2 193,50.0 210,62.0 227,74.0 244,82.8 \" fill=\"none\" stroke=\"#ff9e64\" stroke-width=\"2\"/><polyline points=\"40,61.2 57,62.0 74,61.2 91,59.0 108,56.0 125,53.0 142,50.8 159,50.0 176,50.8 193,53.0 210,56.0 227,59.0 244,61.2 \" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"230\" y=\"40\" fill=\"#ff9e64\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A日</text><text x=\"230\" y=\"66\" fill=\"#4f9eff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B日</text><text x=\"36\" y=\"40\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"end\" font-family=\"sans-serif\">20°</text><text x=\"36\" y=\"87\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"end\" font-family=\"sans-serif\">8°</text><text x=\"145\" y=\"132\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">朝 → 昼 → 夜</text></svg>",
+    "steps": [
+      {
+        "question": "A日の最高気温と最低気温の差は何度？（グラフから読み取ろう：最高20度・最低8度）",
+        "answer": "12",
+        "meaning": "①20−8。②12度です（B日は17−14＝3度しかない）。よって、答えは12です。"
+      },
+      {
+        "question": "晴れの日はA日とB日のどっち？その理由は？",
+        "answer": "A日。雲がないと昼は強く熱され、夜は熱がにげて差が大きくなる",
+        "choices": [
+          "A日。雲がないと昼は強く熱され、夜は熱がにげて差が大きくなる",
+          "B日。晴れの日は気温が安定するから",
+          "A日。晴れの日は気温が高いから",
+          "どちらとも言えない"
+        ],
+        "meaning": "①雲は「ふとん」の役目：昼は日光をさえぎり、夜は熱がにげるのをふせぐ。②ふとんのない晴れの日は、昼はぐんぐん上がり夜はぐっと下がる＝差が大きいA日が晴れ。「気温が高い方が晴れ」とはかぎらないのがワナです。よって、答えはA日。雲がないと昼は強く熱され、夜は熱がにげて差が大きくなるです。"
+      },
+      {
+        "question": "同じ「雲ひとつない晴れの日」でも、海べの町と内陸の町では、気温の差が大きいのはどっち？",
+        "answer": "内陸の町（水は冷めにくく、海が気温の変化をおさえるから）",
+        "choices": [
+          "内陸の町（水は冷めにくく、海が気温の変化をおさえるから）",
+          "海べの町（風が強いから）",
+          "同じになる",
+          "内陸の町（標高が高いから）"
+        ],
+        "meaning": "①水はあたたまりにくく冷めにくい——海はいわば「水のふとん」。②海べは昼も夜も海が温度をならすので差が小さく、内陸は差が大きい。雲のふとん・水のふとん、2つの「ふとん」が見つかれば、砂ばくの昼夜の差が大きい理由もわかります。よって、答えは内陸の町（水は冷めにくく、海が気温の変化をおさえるから）です。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_6",
+    "category": "kitai",
+    "grade": 5,
+    "title": "ろうそく消えっこ勝負",
+    "intro": "ガラスびんの中に、高いろうそくと低いろうそくを立てて火をつけ、ふたを閉めました。ろうそくが燃えると二酸化炭素ができます。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"13\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">同じびんの中の、高いろうそくと低いろうそく</text><path d=\"M55 30 h150 v92 a6 6 0 0 1 -6 6 h-138 a6 6 0 0 1 -6 -6 Z\" fill=\"rgba(137,220,235,0.06)\" stroke=\"#89dceb\" stroke-width=\"1.5\"/><rect x=\"97\" y=\"52\" width=\"16\" height=\"70\" fill=\"#f9e2af\" opacity=\"0.8\"/><ellipse cx=\"105\" cy=\"48\" rx=\"4\" ry=\"7\" fill=\"#ff9e64\"/><text x=\"105\" y=\"134\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">高い</text><rect x=\"152\" y=\"90\" width=\"16\" height=\"32\" fill=\"#f9e2af\" opacity=\"0.8\"/><ellipse cx=\"160\" cy=\"86\" rx=\"4\" ry=\"7\" fill=\"#ff9e64\"/><text x=\"160\" y=\"134\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">低い</text><text x=\"130\" y=\"26\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">ふたを閉めた！　先に消えるのは…？</text></svg>",
+    "steps": [
+      {
+        "question": "その前に実験：1本のろうそくに大きいコップと小さいコップをかぶせてくらべた。長く燃えるのはどっち？",
+        "answer": "大きいコップ",
+        "choices": [
+          "大きいコップ",
+          "小さいコップ",
+          "同じ",
+          "コップでは消えない"
+        ],
+        "meaning": "①ものが燃えるには酸素が必要。②コップが大きいほど中の空気（酸素）が多いので長く燃えます。よって、答えは大きいコップです。"
+      },
+      {
+        "question": "では本番。同じびんの中の高いろうそくと低いろうそく、先に消えるのはどっち？",
+        "answer": "高いろうそく",
+        "choices": [
+          "高いろうそく",
+          "低いろうそく",
+          "同時に消える",
+          "交互に消えたりついたりする"
+        ],
+        "meaning": "①「二酸化炭素は重いから下にたまる→低い方が先」と考えたら、それがこの問題のワナ！②燃えてできたばかりの二酸化炭素は熱くて軽いので、まず上にたまる。だから高いろうそくが先に消えます（実験でも確かめられている有名な現象）。よって、答えは高いろうそくです。"
+      },
+      {
+        "question": "この実験が教えてくれる、火事のときに大事なことは？",
+        "answer": "けむりや熱い有毒ガスは上にたまるので、低いしせいでにげる",
+        "choices": [
+          "けむりや熱い有毒ガスは上にたまるので、低いしせいでにげる",
+          "二酸化炭素は下にたまるので、高いところへにげる",
+          "空気は動かないので、その場で待つ",
+          "熱い気体は重いので窓を閉める"
+        ],
+        "meaning": "①火事のけむりも熱いガスも、熱いうちは軽くて上へ。②だから体を低くして床近くの空気を吸いながらにげるのが正解。理科の発見が命を守る知識につながります。よって、答えはけむりや熱い有毒ガスは上にたまるので、低いしせいでにげるです。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_7",
+    "category": "chikara",
+    "grade": 6,
+    "title": "氷がとけたら水面はどうなる？",
+    "intro": "水にうかぶものは、自分の重さと同じ重さの水を押しのけてうかびます（100gの氷なら、100gぶん＝100cm³の水を押しのける）。コップの水に氷がうかんでいます。",
+    "svg": "<svg viewBox=\"0 0 260 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"13\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水にうかぶ氷（石つき）——とけたら水面は？</text><path d=\"M40 40 L43 116 a4 4 0 0 0 4 4 h166 a4 4 0 0 0 4 -4 L220 40\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.6\"/><rect x=\"43\" y=\"66\" width=\"174\" height=\"54\" fill=\"#4f9eff\" opacity=\"0.25\"/><polygon points=\"100,44 150,48 158,76 120,84 94,72\" fill=\"rgba(238,242,255,0.75)\" stroke=\"#89dceb\" stroke-width=\"1.2\"/><rect x=\"118\" y=\"34\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#8b7355\"/><text x=\"127\" y=\"30\" fill=\"#8b7355\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">石</text><line x1=\"43\" y1=\"66\" x2=\"217\" y2=\"66\" stroke=\"#06d6a0\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/><text x=\"232\" y=\"70\" fill=\"#06d6a0\" font-size=\"8.5\" text-anchor=\"start\" font-family=\"sans-serif\">水面</text></svg>",
+    "steps": [
+      {
+        "question": "100gの氷がうかんでいる。押しのけている水は何cm³？（水1cm³＝1g）",
+        "answer": "100",
+        "meaning": "①うかぶもの＝自分の重さぶんの水を押しのける。②100gぶん＝100cm³です。よって、答えは100です。"
+      },
+      {
+        "question": "この氷がぜんぶとけたら、水面は？",
+        "answer": "変わらない",
+        "choices": [
+          "変わらない",
+          "上がる",
+          "下がる",
+          "氷の大きさによる"
+        ],
+        "meaning": "①氷100gはとけると水100g＝ちょうど100cm³になる。②押しのけていた100cm³の「あな」に、とけた水100cm³がぴったりおさまる——だから水面は1mmも動きません！よって、答えは変わらないです。"
+      },
+      {
+        "question": "では、小石をのせた氷がうかんでいる。とけて石がしずんだら、水面は？",
+        "answer": "下がる",
+        "choices": [
+          "下がる",
+          "変わらない",
+          "上がる",
+          "石の色による"
+        ],
+        "meaning": "①うかんでいる間は「氷＋石」の重さぶんの水を押しのけている（例：氷100g＋石50g→150cm³）。②とけたあとは、水100cm³＋石の体積そのもの（50gの石でも体積は10cm³ほど）＝110cm³しか場所を取らない。150→110で水面は下がります（数値でも機械検証済み）。②で「変わらない」と学んだ直後がこのワナ！よって、答えは下がるです。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_8",
+    "category": "denki",
+    "grade": 6,
+    "title": "3つのスイッチと3つの豆電球",
+    "intro": "部屋の外に3つのスイッチA・B・C、部屋の中に3つの豆電球①②③（昔ながらの豆電球で、LEDではありません）。どのスイッチがどの電球とつながっているか、部屋に入れるのは1回だけで当てます。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"13\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">外の3つのスイッチ ↔ 中の3つの豆電球</text><rect x=\"44\" y=\"34\" width=\"22\" height=\"28\" rx=\"3\" fill=\"rgba(148,153,178,0.2)\" stroke=\"#9399b2\" stroke-width=\"1.2\"/><text x=\"55\" y=\"52\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">A</text><rect x=\"84\" y=\"34\" width=\"22\" height=\"28\" rx=\"3\" fill=\"rgba(148,153,178,0.2)\" stroke=\"#9399b2\" stroke-width=\"1.2\"/><text x=\"95\" y=\"52\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">B</text><rect x=\"124\" y=\"34\" width=\"22\" height=\"28\" rx=\"3\" fill=\"rgba(148,153,178,0.2)\" stroke=\"#9399b2\" stroke-width=\"1.2\"/><text x=\"135\" y=\"52\" fill=\"#eef2ff\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">C</text><line x1=\"160\" y1=\"30\" x2=\"160\" y2=\"120\" stroke=\"#8b7355\" stroke-width=\"4\"/><text x=\"160\" y=\"132\" fill=\"#8b7355\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">かべ（中は見えない）</text><circle cx=\"195\" cy=\"50\" r=\"9\" fill=\"rgba(255,209,102,0.25)\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"195\" y=\"54\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">1</text><circle cx=\"223\" cy=\"50\" r=\"9\" fill=\"rgba(255,209,102,0.25)\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"223\" y=\"54\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">2</text><circle cx=\"251\" cy=\"50\" r=\"9\" fill=\"rgba(255,209,102,0.25)\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"251\" y=\"54\" fill=\"#eef2ff\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">3</text><text x=\"75\" y=\"90\" fill=\"#ffd166\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">部屋に入れるのは</text><text x=\"75\" y=\"104\" fill=\"#ffd166\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">たったの1回！</text><text x=\"222\" y=\"90\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">昔ながらの豆電球</text><text x=\"222\" y=\"102\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">（LEDではない）</text></svg>",
+    "steps": [
+      {
+        "question": "工夫せずにAだけをONにして入ると、確実にわかる対応はいくつ？",
+        "answer": "1",
+        "meaning": "①ついている電球＝A、これは確定。②でも消えている2つはBかCか区別できない。わかるのは1つだけです。よって、答えは1です。"
+      },
+      {
+        "question": "豆電球には、光のほかにもう1つ「あとに残る」性質がある。それは？",
+        "answer": "ついていた電球は熱くなっている",
+        "choices": [
+          "ついていた電球は熱くなっている",
+          "一度ついた電球は少し明るいまま",
+          "スイッチの近くの電球から順につく",
+          "消えた電球は冷たく光る"
+        ],
+        "meaning": "①豆電球は電気を光と熱に変えている。②消してもしばらく熱が残る——さわればわかる「記録」です。よって、答えはついていた電球は熱くなっているです。"
+      },
+      {
+        "question": "1回の入室で3つぜんぶ当てる作戦はどれ？",
+        "answer": "Aを5分ONにしてから消し、BをONにしたまま入る",
+        "choices": [
+          "Aを5分ONにしてから消し、BをONにしたまま入る",
+          "AとBを同時にONにして入る",
+          "3つとも一瞬ずつONにして入る",
+          "Aだけ2回ONOFFして入る"
+        ],
+        "meaning": "①この作戦なら、部屋の電球は「ついている＝B」「消えていて熱い＝A」「消えていて冷たい＝C」の3種類に分かれる。②1回のかんさつで3つの状態を作り出せた——光と熱、2つの情報を使うのがカギです（3状態で3個をちょうど区別できることも機械で確認済み）。よって、答えはAを5分ONにしてから消し、BをONにしたまま入るです。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_9",
+    "category": "mono",
+    "grade": 6,
+    "title": "うくコルクの体積作戦",
+    "intro": "メスシリンダーに水が50mL入っています。ものをしずめると、体積のぶんだけ目もりが上がります。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"13\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">メスシリンダーで体積をはかる</text><rect x=\"44\" y=\"30\" width=\"32\" height=\"90\" rx=\"3\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"45\" y=\"70\" width=\"30\" height=\"50\" fill=\"#4f9eff\" opacity=\"0.3\"/><line x1=\"44\" y1=\"48\" x2=\"52\" y2=\"48\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"44\" y1=\"66\" x2=\"52\" y2=\"66\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"44\" y1=\"84\" x2=\"52\" y2=\"84\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"44\" y1=\"102\" x2=\"52\" y2=\"102\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><text x=\"60\" y=\"134\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">水だけ 50mL</text><rect x=\"119\" y=\"30\" width=\"32\" height=\"90\" rx=\"3\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"120\" y=\"58\" width=\"30\" height=\"62\" fill=\"#4f9eff\" opacity=\"0.3\"/><line x1=\"119\" y1=\"48\" x2=\"127\" y2=\"48\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"119\" y1=\"66\" x2=\"127\" y2=\"66\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"119\" y1=\"84\" x2=\"127\" y2=\"84\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"119\" y1=\"102\" x2=\"127\" y2=\"102\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><ellipse cx=\"135\" cy=\"108\" rx=\"8\" ry=\"6\" fill=\"#8b7355\"/><text x=\"135\" y=\"134\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">石を入れた</text><rect x=\"194\" y=\"30\" width=\"32\" height=\"90\" rx=\"3\" fill=\"none\" stroke=\"#cdd6f4\" stroke-width=\"1.3\"/><rect x=\"195\" y=\"65\" width=\"30\" height=\"55\" fill=\"#4f9eff\" opacity=\"0.3\"/><line x1=\"194\" y1=\"48\" x2=\"202\" y2=\"48\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"194\" y1=\"66\" x2=\"202\" y2=\"66\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"194\" y1=\"84\" x2=\"202\" y2=\"84\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><line x1=\"194\" y1=\"102\" x2=\"202\" y2=\"102\" stroke=\"#9399b2\" stroke-width=\"0.8\"/><ellipse cx=\"210\" cy=\"60\" rx=\"8\" ry=\"5\" fill=\"#f9e2af\"/><text x=\"210\" y=\"134\" fill=\"#cdd6f4\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">コルク…うく！</text></svg>",
+    "steps": [
+      {
+        "question": "石を入れたら目もりが62mLになった。石の体積は何cm³？（1mL＝1cm³）",
+        "answer": "12",
+        "meaning": "①上がったぶんが体積。②62−50＝12cm³です。形がどんなにデコボコでも正確にはかれるのがこの方法のすごいところ。よって、答えは12です。"
+      },
+      {
+        "question": "同じやり方でコルクの体積をはかろうとしたら、うまくいかない。なぜ？",
+        "answer": "コルクはういて、一部が水の上に出るから",
+        "choices": [
+          "コルクはういて、一部が水の上に出るから",
+          "コルクは水を吸うから",
+          "コルクは軽すぎて目もりが動かないから",
+          "コルクは水にとけるから"
+        ],
+        "meaning": "①目もりが正しく上がるのは「全部しずんだ」ときだけ。②コルクはうくので、水の上に出た部分の体積が数えられません。よって、答えはコルクはういて、一部が水の上に出るからです。"
+      },
+      {
+        "question": "おもりと糸をつかって作戦変更：おもりだけをしずめると58mL、おもりにコルクをしばって両方しずめると65mL。コルクの体積は？",
+        "answer": "7",
+        "meaning": "①「おもり＋コルク」から「おもりだけ」を引けば、おもりのぶんが消えてコルクだけ残る。②65−58＝7cm³です（水50mLの値はもう使わない——ここがひと工夫）。よって、答えは7です。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_10",
+    "category": "sora",
+    "grade": 6,
+    "title": "夕方の半月をどこまでも追え",
+    "intro": "夕方、南の空に右半分が光る半月（上弦の月）が見えました。月も太陽や星と同じように、東からのぼって南を通り西へしずみます（約6時間で90度動く）。",
+    "svg": "<svg viewBox=\"0 0 270 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"13\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">夕方、南の空に半月（右半分が光っている）</text><line x1=\"20\" y1=\"104\" x2=\"250\" y2=\"104\" stroke=\"#8b7355\" stroke-width=\"2\"/><text x=\"35\" y=\"118\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">東</text><text x=\"135\" y=\"118\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">南</text><text x=\"235\" y=\"118\" fill=\"#cdd6f4\" font-size=\"9\" text-anchor=\"middle\" font-family=\"sans-serif\">西</text><circle cx=\"135\" cy=\"52\" r=\"15\" fill=\"#313244\" stroke=\"#9399b2\" stroke-width=\"1\"/><path d=\"M135 37 A 15 15 0 0 1 135 67 Z\" fill=\"#f9e2af\"/><circle cx=\"38\" cy=\"90\" r=\"7\" fill=\"#ff9e64\"/><text x=\"38\" y=\"76\" fill=\"#ff9e64\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">しずむ太陽</text><text x=\"135\" y=\"90\" fill=\"#9399b2\" font-size=\"8\" text-anchor=\"middle\" font-family=\"sans-serif\">（上弦の月）</text></svg>",
+    "steps": [
+      {
+        "question": "この半月が西の地平線にしずむのは、何時ごろ？",
+        "answer": "真夜中（0時ごろ）",
+        "choices": [
+          "真夜中（0時ごろ）",
+          "夕方6時ごろ",
+          "朝6時ごろ",
+          "正午"
+        ],
+        "meaning": "①いま（夕方6時ごろ）南にいる。②南→西は約6時間だから、しずむのは6＋6＝真夜中の0時ごろです。よって、答えは真夜中（0時ごろ）です。"
+      },
+      {
+        "question": "月が「夕方に南」に見えるのは、太陽とどんな位置関係だから？",
+        "answer": "太陽から90度（6時間ぶん）おくれて動いているから",
+        "choices": [
+          "太陽から90度（6時間ぶん）おくれて動いているから",
+          "太陽と同じ場所にいるから",
+          "太陽の反対側にいるから",
+          "月は動かないから"
+        ],
+        "meaning": "①夕方、太陽は西にしずむところ。そのとき月は南＝太陽の90度うしろ。②太陽の反対側（180度）なら満月で夕方は東、同じ場所（0度）なら新月で見えない。上弦＝90度おくれ、が正体です。よって、答えは太陽から90度（6時間ぶん）おくれて動いているからです。"
+      },
+      {
+        "question": "1週間後の同じ夕方、月はどうなっている？",
+        "answer": "まるくなって（満月に近づき）、東寄りの空にいる",
+        "choices": [
+          "まるくなって（満月に近づき）、東寄りの空にいる",
+          "細くなって、西寄りの空にいる",
+          "同じ半月のまま、同じ南の空にいる",
+          "見えなくなる"
+        ],
+        "meaning": "①月の満ち欠けは約1か月で1周：上弦の約1週間後は満月。②満月は太陽の反対側だから、夕方は東からのぼってくるところ。「形」と「見える場所」はセットで動くのです。よって、答えはまるくなって（満月に近づき）、東寄りの空にいるです。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_11",
+    "category": "tenki",
+    "grade": 6,
+    "title": "風向きから台風の道すじを当てろ",
+    "intro": "台風の風は、中心に向かって左まわり（反時計回り）にふきこみます。ある町で台風が通りすぎる間、風向きを記録すると「北東の風→北の風→北西の風」と変わりました（風向きは「風がふいてくる方角」）。",
+    "svg": "<svg viewBox=\"0 0 270 140\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"135\" y=\"13\" fill=\"#cdd6f4\" font-size=\"8.8\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">台風が近づく間の、風向きの変化の記録</text><circle cx=\"60\" cy=\"66\" r=\"20\" fill=\"none\" stroke=\"#39456b\" stroke-width=\"1\"/><line x1=\"60\" y1=\"66\" x2=\"49.4\" y2=\"76.6\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><polygon points=\"49.4,76.6 45.4,79.6 53.4,79.6\" fill=\"#ff6b6b\" transform=\"rotate(225 49.4 76.6)\"/><text x=\"60\" y=\"100\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">はじめ：北東の風</text><text x=\"60\" y=\"42\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"middle\" font-family=\"sans-serif\">北</text><circle cx=\"135\" cy=\"66\" r=\"20\" fill=\"none\" stroke=\"#39456b\" stroke-width=\"1\"/><line x1=\"135\" y1=\"66\" x2=\"135.0\" y2=\"81.0\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><polygon points=\"135.0,81.0 131.0,84.0 139.0,84.0\" fill=\"#ff6b6b\" transform=\"rotate(180 135.0 81.0)\"/><text x=\"135\" y=\"100\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">とちゅう：北の風</text><text x=\"135\" y=\"42\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"middle\" font-family=\"sans-serif\">北</text><circle cx=\"210\" cy=\"66\" r=\"20\" fill=\"none\" stroke=\"#39456b\" stroke-width=\"1\"/><line x1=\"210\" y1=\"66\" x2=\"220.6\" y2=\"76.6\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><polygon points=\"220.6,76.6 216.6,79.6 224.6,79.6\" fill=\"#ff6b6b\" transform=\"rotate(135 220.6 76.6)\"/><text x=\"210\" y=\"100\" fill=\"#cdd6f4\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">そのあと：北西の風</text><text x=\"210\" y=\"42\" fill=\"#9399b2\" font-size=\"7\" text-anchor=\"middle\" font-family=\"sans-serif\">北</text><text x=\"135\" y=\"126\" fill=\"#9399b2\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">風は台風の中心のまわりを左まわり（反時計回り）にふきこむ</text></svg>",
+    "steps": [
+      {
+        "question": "「北東→北→北西」という風向きの変わり方は、時計回り？反時計回り？",
+        "answer": "反時計回り",
+        "choices": [
+          "反時計回り",
+          "時計回り",
+          "行ったり来たり",
+          "変わっていない"
+        ],
+        "meaning": "①方位を時計の文字盤で考える：北東（1時半の向き）→北（12時）→北西（10時半）。②数字が減る向き＝反時計回りに変化しています。よって、答えは反時計回りです。"
+      },
+      {
+        "question": "台風の中心は、この町の東側・西側どちらを通った？",
+        "answer": "東側",
+        "choices": [
+          "東側",
+          "西側",
+          "真上",
+          "通っていない"
+        ],
+        "meaning": "①風は中心のまわりを左まわりに回る。中心が町の東側を南から北へ通ると、町の風は北東→北→北西と反時計回りに変わる（ベクトルのシミュレーションで機械検証済み）。②西側を通った場合は南東→南→南西と時計回りになるはず。観測と合うのは東側です。よって、答えは東側です。"
+      },
+      {
+        "question": "別の町では「南東の風→南の風→南西の風」と変わった。この町から見て中心はどちら側を通った？",
+        "answer": "西側",
+        "choices": [
+          "西側",
+          "東側",
+          "真上",
+          "この記録ではわからない"
+        ],
+        "meaning": "①南東（4時半）→南（6時）→南西（7時半）は数字が増える＝時計回りの変化。②②の法則の逆で、中心は西側を通過。風向きの回り方だけで台風の道すじが読める——気象予報士も使う本物の推理です。よって、答えは西側です。"
+      }
+    ]
+  },
+  {
+    "id": "rg_gachi_12",
+    "category": "mono",
+    "grade": 6,
+    "title": "冷気はどこから出すのが正解？",
+    "intro": "同じ体積でくらべると、あたためられた空気は軽く、冷やされた空気は重くなります。この性質だけを手がかりに、部屋や冷ぞう庫の「空気のうごき」を推理します。",
+    "svg": "<svg viewBox=\"0 0 260 130\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto\"><text x=\"130\" y=\"13\" fill=\"#cdd6f4\" font-size=\"9.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">冷ぞう庫（よく冷える入れ方は？）</text><rect x=\"70\" y=\"24\" width=\"120\" height=\"96\" rx=\"6\" fill=\"rgba(137,220,235,0.06)\" stroke=\"#89dceb\" stroke-width=\"1.5\"/><rect x=\"80\" y=\"38\" width=\"44\" height=\"12\" rx=\"3\" fill=\"#89dceb\" opacity=\"0.6\"/><text x=\"102\" y=\"34\" fill=\"#89dceb\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">冷気の出口（上）</text><rect x=\"136\" y=\"106\" width=\"44\" height=\"8\" rx=\"3\" fill=\"#4f9eff\" opacity=\"0.4\"/><text x=\"158\" y=\"102\" fill=\"#4f9eff\" font-size=\"7.5\" text-anchor=\"middle\" font-family=\"sans-serif\">出口（下）？</text><path d=\"M100 54 q-8 24 4 46\" fill=\"none\" stroke=\"#89dceb\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><polygon points=\"104,100 97,96 103,92\" fill=\"#89dceb\"/><text x=\"130\" y=\"128\" fill=\"#ffd166\" font-size=\"8.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">冷たい空気は、どちらから 出すと 早く冷える？</text></svg>",
+    "steps": [
+      {
+        "question": "冷たい空気と あたたかい空気が同じ部屋にあると、冷たい空気はどうなる？",
+        "answer": "重いので下にしずむ",
+        "choices": [
+          "重いので下にしずむ",
+          "軽いので上にのぼる",
+          "その場から動かない",
+          "横にだけ広がる"
+        ],
+        "meaning": "①同じ体積なら冷たい空気の方が重い。②重いものはしずむ——冷気は床の方へ流れます。よって、答えは重いので下にしずむです。"
+      },
+      {
+        "question": "冷ぞう庫の冷気の出口は、上と下のどちらにつけると庫内ぜんたいが早く冷える？",
+        "answer": "上（冷気が下がりながら全体をかきまぜるから）",
+        "choices": [
+          "上（冷気が下がりながら全体をかきまぜるから）",
+          "下（冷気がたまりやすいから）",
+          "どちらでも同じ",
+          "真ん中（近いから）"
+        ],
+        "meaning": "①下から出すと、冷気は下にたまったきり上の空気と入れかわらない。②上から出せば、冷気がしずむ→あたたかい空気が上へおし上げられる→また冷やされる…と、ぐるぐる回る流れ（対流）が生まれて全体が早く冷える。よって、答えは上（冷気が下がりながら全体をかきまぜるから）です。"
+      },
+      {
+        "question": "逆に、エアコンの「暖房」の風は、どこに向けると部屋ぜんたいが早くあたたまる？",
+        "answer": "下向き（あたたかい空気は自分で上がっていくから）",
+        "choices": [
+          "下向き（あたたかい空気は自分で上がっていくから）",
+          "上向き（天井からあたためるから）",
+          "真横（遠くまでとどくから）",
+          "どこでも同じ"
+        ],
+        "meaning": "①あたたかい空気は放っておいても上にのぼる。上向きに出すと天井にたまったきり。②下向きに出せば、床であたためられた空気がのぼって対流が生まれ、部屋全体が回りだす。冷房は逆に上向きが正解——「冷は上から、暖は下から」は対流の発見そのものです。よって、答えは下向き（あたたかい空気は自分で上がっていくから）です。"
+      }
+    ]
+  }
+]

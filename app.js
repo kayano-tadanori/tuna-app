@@ -1415,9 +1415,10 @@ const CHAIN_FILES = {
   rika: 'data/rika_chain.json',
   shakai: 'data/shakai_chain.json',
   gachi: 'data/sansu_gachi.json',  // 灘中レベル（ガチ）＝算数のパズル連鎖
+  rikagachi: 'data/rika_gachi.json', // 灘中レベル（ガチ）＝理科のパズル連鎖
 };
 // 連鎖問題を出題する最低学年（教科ごと）。算数は小3から、理科などは小5から
-const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5, gachi: 3 };
+const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5, gachi: 3, rikagachi: 5 };
 function chainMinGrade(subject) { return CHAIN_MIN_GRADE[subject] ?? 5; }
 
 // 連鎖問題（灘中レベル）は、選んだ学年"ぴったり"の問題だけ出す。
@@ -1479,6 +1480,7 @@ async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) 
   // 難易度5＝発見算。算数はさらに 'gachi'（ガチ＝パズル連鎖、別ファイル）もロック管理する
   const targets = [{ diff: '5', subj: subject }];
   if (subject === 'sansu') targets.push({ diff: 'gachi', subj: 'gachi' });
+  if (subject === 'rika') targets.push({ diff: 'gachi', subj: 'rikagachi' });
   for (const t of targets) {
     const chainBtn = [...btns].find(b => b.dataset.diff === t.diff);
     if (!chainBtn) continue;
@@ -1823,7 +1825,7 @@ function initRikaHome() {
     btn.onclick = () => {
       document.querySelectorAll('.rika-diff-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      sansuState.diff = Number(btn.dataset.diff);
+      sansuState.diff = btn.dataset.diff === 'gachi' ? 'gachi' : Number(btn.dataset.diff);
       updateRikaStart();
     };
   });
@@ -1849,16 +1851,16 @@ function updateRikaStart() {
   if (ready) {
     info.textContent = `小${sansuState.grade} / ${RIKA_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
   }
-  setChainCountOptions('rika-q-count', sansuState.diff === 5);
+  setChainCountOptions('rika-q-count', sansuState.diff === 5 || sansuState.diff === 'gachi');
   zone.classList.toggle('hidden', !ready);
 }
 
 async function startRikaSession() {
   showLoading();
   try {
-    const isChain = sansuState.diff === 5;
+    const isChain = sansuState.diff === 5 || sansuState.diff === 'gachi';
     const all = isChain
-      ? await loadChainQuestions(sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('rika-q-count').value)
+      ? await loadChainQuestions(sansuState.diff === 'gachi' ? 'rikagachi' : sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('rika-q-count').value)
       : sansuState.cat === 'mix'
         ? await loadMixQuestions(sansuState.grade, sansuState.diff)
         : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
