@@ -205,6 +205,8 @@
 <script>
 'use strict';
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+// 端末にデータを保持するようOSへ依頼（容量整理時の自動削除を防ぐ）
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
 
 // アップデート情報（おかん学園専用: okan/updates.json）
 const SEEN_KEY = 'okan_updates_seen';

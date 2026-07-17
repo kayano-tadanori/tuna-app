@@ -1087,6 +1087,8 @@ async function saveImage() {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
+// 端末にデータを保持するようOSへ依頼（容量整理時の自動削除を防ぐ）
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
 </script>
 </body>
 </html>
