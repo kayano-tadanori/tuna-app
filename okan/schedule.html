@@ -276,7 +276,7 @@
         <datalist id="whoList"></datalist>
       </div>
       <div>
-        <p class="fLabel">受講No（なくてもOK）</p>
+        <p class="fLabel">受講No（次回のNo・毎回自動で進みます）</p>
         <select class="fInput" id="rgNo"><option value="">なし</option></select>
       </div>
     </div>
@@ -387,6 +387,42 @@ function load() {
 })();
 
 const timeRange = it => it.time ? it.time + (it.timeEnd ? '-' + it.timeEnd : '') : '';
+
+// 受講Noの自動進行：noAnchor（基準日）のNoを起点に、実施日ごとに+1（休みの週は進まない）
+function computeNo(w, dateStr) {
+  if (!w.no) return '';
+  const m = String(w.no).match(/(\d+)/);
+  if (!m || !w.noAnchor) return w.no;
+  let n = +m[1];
+  const d = new Date(dateStr + 'T00:00:00');
+  const a = new Date(w.noAnchor + 'T00:00:00');
+  if (d > a) {
+    const cur = new Date(a);
+    for (let i = 0; i < 400; i++) {
+      cur.setDate(cur.getDate() + 1);
+      if (cur > d) break;
+      if (occursOn(w, fmt(cur), cur)) n++;
+    }
+  } else if (d < a) {
+    const cur = new Date(d);
+    for (let i = 0; i < 400 && cur < a; i++) {
+      if (occursOn(w, fmt(cur), cur)) n--;
+      cur.setDate(cur.getDate() + 1);
+    }
+  }
+  return n >= 1 ? 'No.' + n : '';
+}
+
+// 今日以降で最初にこの登録が実施される日
+function nextOccurrence(w) {
+  const cur = new Date(todayStr() + 'T00:00:00');
+  for (let i = 0; i < 400; i++) {
+    const cs = fmt(cur);
+    if (occursOn(w, cs, cur)) return cs;
+    cur.setDate(cur.getDate() + 1);
+  }
+  return '';
+}
 function save() { localStorage.setItem(KEY, JSON.stringify(db)); }
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
@@ -517,10 +553,11 @@ function openDaySheet(ds) {
     const dt = document.createElement('div');
     dt.className = 'dt';
     dt.innerHTML = `<div class="n"></div><div class="s"></div>`;
+    const dispNo = it.kind === 'weekly' ? computeNo(it, ds) : (it.no || '');
     dt.querySelector('.n').textContent = labelOf(it);
     dt.querySelector('.s').textContent = (timeRange(it) || '終日')
       + (it.kind === 'weekly' ? '・' + repeatLabel(it) : '')
-      + (it.no ? '・' + it.no : '')
+      + (dispNo ? '・' + dispNo : '')
       + (it.bento ? '・🍱弁当' : '');
     row.append(bar, dt);
     if (it.kind === 'weekly') {
@@ -710,6 +747,7 @@ $('rgSave').onclick = () => {
     repeat.nth = [...document.querySelectorAll('#rgNthChips .tab.on')].map(b => +b.dataset.nth);
     if (!repeat.nth.length) { alert('第何週かを選んでください'); return; }
   }
+  const prev = regEditing ? db.weekly.find(w => w.id === regEditing) : null;
   const item = {
     id: regEditing || uid(),
     who: $('rgWho').value.trim(),
@@ -721,8 +759,16 @@ $('rgSave').onclick = () => {
     bento: $('rgBento').checked,
     repeat,
     color: rgColor,
-    except: regEditing ? (db.weekly.find(w => w.id === regEditing) || {}).except || [] : []
+    except: prev ? (prev.except || []) : []
   };
+  // 受講Noの基準日：Noを新しく入れた／変えたときは「今日以降の最初の実施日」＝そのNoの回
+  if (item.no) {
+    const noChanged = !prev || prev.no !== item.no || !prev.noAnchor ||
+      prev.dow !== item.dow || JSON.stringify(prev.repeat) !== JSON.stringify(repeat);
+    item.noAnchor = noChanged ? nextOccurrence(item) : prev.noAnchor;
+  } else {
+    item.noAnchor = '';
+  }
   db.weekly = db.weekly.filter(w => w.id !== item.id);
   db.weekly.push(item);
   regEditing = null;

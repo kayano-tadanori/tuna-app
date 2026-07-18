@@ -1,5 +1,5 @@
 // おかん学園 Service Worker
-const CACHE_NAME = 'okan-gakuen-v14';
+const CACHE_NAME = 'okan-gakuen-v15';
 const ASSETS = [
   './',
   './index.html',
