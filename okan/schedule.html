@@ -38,7 +38,9 @@
   #topBar {
     display: flex; align-items: center; gap: 6px;
     padding: 8px 10px; background: #fff; border-bottom: 1px solid #e2e8f0; flex-shrink: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
   }
+  #topBar > * { flex-shrink: 0; }
   .navBtn {
     border: none; background: #fce7f3; color: #db2777; font-size: 16px; font-weight: 800;
     width: 34px; height: 34px; border-radius: 10px; cursor: pointer;
@@ -51,7 +53,8 @@
   .grow { flex: 1; }
   .tab {
     border: none; background: #f1f5f9; color: #64748b; font-size: 13px; font-weight: 800;
-    padding: 8px 12px; border-radius: 10px; cursor: pointer;
+    padding: 8px 10px; border-radius: 10px; cursor: pointer;
+    white-space: nowrap; flex-shrink: 0;
   }
   .tab.on { background: #db2777; color: #fff; }
 

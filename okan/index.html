@@ -345,7 +345,8 @@ async function buildExportObj(withSched, withPrints) {
     obj.prints = [];
     for (const r of await idbAllPrints()) {
       obj.prints.push({
-        id: r.id, subject: r.subject, no: r.no, type: r.type, date: r.date,
+        id: r.id, grade: r.grade || '', month: r.month || '',
+        subject: r.subject, no: r.no, type: r.type, date: r.date,
         blob: await blobToB64(r.blob), blobType: r.blob.type,
         thumb: r.thumb ? await blobToB64(r.thumb) : null, thumbType: r.thumb ? r.thumb.type : null
       });
@@ -385,7 +386,8 @@ async function importDataObj(obj) {
   if (obj.prints) {
     for (const p of obj.prints) {
       await idbPutPrint({
-        id: p.id, subject: p.subject, no: p.no, type: p.type, date: p.date,
+        id: p.id, grade: p.grade || '', month: p.month || '',
+        subject: p.subject, no: p.no, type: p.type, date: p.date,
         blob: b64ToBlob(p.blob, p.blobType),
         thumb: p.thumb ? b64ToBlob(p.thumb, p.thumbType) : null
       });

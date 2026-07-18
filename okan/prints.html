@@ -164,8 +164,8 @@
   <div class="chipRow">
     <select class="typeSel" id="typeSel">
       <option value="all">授業の種類：全部</option>
-      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
-      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+      <option>マスター</option><option>最レ</option><option>季節講習</option>
+      <option>公開学力</option><option>模試</option><option>その他</option>
     </select>
     <button class="chip" id="importBtn" style="background:#db2777;border-color:#db2777;color:#fff">📥 取り込み</button>
   </div>
@@ -187,21 +187,34 @@
     <img id="dtImg" alt="プリント">
     <div style="display:flex;gap:8px">
       <div style="flex:1">
+        <p class="fLabel">学年</p>
+        <select class="fInput" id="dtGrade">
+          <option value="">なし</option><option>小1</option><option>小2</option><option>小3</option>
+          <option>小4</option><option>小5</option><option>小6</option>
+        </select>
+      </div>
+      <div style="flex:1">
         <p class="fLabel">科目</p>
         <select class="fInput" id="dtSubject">
           <option>算数</option><option>国語</option><option>理科</option><option>社会</option><option>その他</option>
         </select>
       </div>
-      <div style="flex:1">
-        <p class="fLabel">No</p>
-        <select class="fInput" id="dtNo"><option value="">なし</option></select>
-      </div>
     </div>
     <p class="fLabel">授業の種類</p>
     <select class="fInput" id="dtType">
-      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
-      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+      <option>マスター</option><option>最レ</option><option>季節講習</option>
+      <option>公開学力</option><option>模試</option><option>その他</option>
     </select>
+    <div style="display:flex;gap:8px">
+      <div style="flex:1" id="dtNoWrap">
+        <p class="fLabel">No</p>
+        <select class="fInput" id="dtNo"><option value="">なし</option></select>
+      </div>
+      <div style="flex:1;display:none" id="dtMonthWrap">
+        <p class="fLabel">何月のもの？</p>
+        <select class="fInput" id="dtMonth"><option value="">なし</option></select>
+      </div>
+    </div>
     <div class="sheetBtns">
       <button class="btn btnDanger" id="dtDelete">削除</button>
       <button class="btn btnGray" id="dtPrint">🖨 印刷</button>
@@ -216,21 +229,32 @@
     <p id="impCount" style="font-size:12px;color:#64748b;margin-bottom:6px"></p>
     <div style="display:flex;gap:8px">
       <div style="flex:1">
+        <p class="fLabel">学年</p>
+        <select class="fInput" id="impGrade">
+          <option value="">なし</option><option>小1</option><option>小2</option><option>小3</option>
+          <option>小4</option><option>小5</option><option>小6</option>
+        </select>
+      </div>
+      <div style="flex:1">
         <p class="fLabel">科目</p>
         <select class="fInput" id="impSubject">
           <option>算数</option><option>国語</option><option>理科</option><option>社会</option><option>その他</option>
         </select>
       </div>
-      <div style="flex:1">
-        <p class="fLabel">No</p>
-        <select class="fInput" id="impNo"><option value="">なし</option></select>
-      </div>
     </div>
     <p class="fLabel">授業の種類</p>
     <select class="fInput" id="impType">
-      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
-      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+      <option>マスター</option><option>最レ</option><option>季節講習</option>
+      <option>公開学力</option><option>模試</option><option>その他</option>
     </select>
+    <div id="impNoWrap">
+      <p class="fLabel">No</p>
+      <select class="fInput" id="impNo"><option value="">なし</option></select>
+    </div>
+    <div id="impMonthWrap" style="display:none">
+      <p class="fLabel">何月のもの？</p>
+      <select class="fInput" id="impMonth"><option value="">なし</option></select>
+    </div>
     <div class="sheetBtns">
       <button class="btn btnGray" id="impCancel">やめる</button>
       <button class="btn btnPink" id="impSave">取り込む</button>
@@ -249,6 +273,7 @@ if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
 const $ = id => document.getElementById(id);
 const SUBJ_COLORS = { '算数': '#2563eb', '国語': '#dc2626', '理科': '#059669', '社会': '#d97706', 'その他': '#64748b' };
 
+const NO_TYPES = ['マスター', '最レ', '季節講習'];   // No.を付ける種類（それ以外は月）
 for (const sel of [$('dtNo'), $('impNo')]) {
   for (let i = 1; i <= 50; i++) {
     const o = document.createElement('option');
@@ -256,6 +281,20 @@ for (const sel of [$('dtNo'), $('impNo')]) {
     sel.appendChild(o);
   }
 }
+for (const sel of [$('dtMonth'), $('impMonth')]) {
+  for (let m = 1; m <= 12; m++) {
+    const o = document.createElement('option');
+    o.value = m + '月'; o.textContent = m + '月';
+    sel.appendChild(o);
+  }
+}
+function updateCond(typeSel, noWrap, monthWrap) {
+  const isNo = NO_TYPES.includes(typeSel.value);
+  noWrap.style.display = isNo ? '' : 'none';
+  monthWrap.style.display = isNo ? 'none' : '';
+}
+$('impType').onchange = () => updateCond($('impType'), $('impNoWrap'), $('impMonthWrap'));
+$('dtType').onchange = () => updateCond($('dtType'), $('dtNoWrap'), $('dtMonthWrap'));
 
 function idbOpen() {
   return new Promise((res, rej) => {
@@ -269,7 +308,7 @@ async function idbAll() {
   const d = await idbOpen();
   return new Promise((res, rej) => {
     const q = d.transaction('prints').objectStore('prints').getAll();
-    q.onsuccess = () => res(q.result || []);
+    q.onsuccess = () => res((q.result || []).map(r => ({ grade: '', month: '', ...r })));
     q.onerror = () => rej(q.error);
   });
 }
@@ -335,7 +374,7 @@ function render() {
     badges.className = 'badges';
     const sb = document.createElement('span');
     sb.className = 'bdg'; sb.style.background = SUBJ_COLORS[r.subject] || '#64748b';
-    sb.textContent = r.subject + (r.no ? ' ' + r.no : '');
+    sb.textContent = [r.grade, r.subject, r.no || r.month].filter(Boolean).join(' ');
     badges.appendChild(sb);
     const tp = document.createElement('div');
     tp.className = 'bdgType'; tp.textContent = r.type;
@@ -401,23 +440,35 @@ let dtRec = null;
 function openDetail(r) {
   dtRec = r;
   $('dtImg').src = URL.createObjectURL(r.blob);
+  $('dtGrade').value = r.grade || '';
   $('dtSubject').value = r.subject;
+  // 旧種類名は選択肢に補完して選べるようにする
+  const tSel = $('dtType');
+  if (r.type && ![...tSel.options].some(o => o.value === r.type)) {
+    const o = document.createElement('option');
+    o.value = r.type; o.textContent = r.type; tSel.appendChild(o);
+  }
+  tSel.value = r.type;
   const noSel = $('dtNo');
   if (r.no && ![...noSel.options].some(o => o.value === r.no)) {
     const o = document.createElement('option');
     o.value = r.no; o.textContent = r.no; noSel.appendChild(o);
   }
   noSel.value = r.no || '';
-  $('dtType').value = r.type;
+  $('dtMonth').value = r.month || '';
+  updateCond(tSel, $('dtNoWrap'), $('dtMonthWrap'));
   $('dtSheet').classList.add('open');
 }
 $('dtClose').onclick = () => $('dtSheet').classList.remove('open');
 $('dtSheet').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
 $('dtSave').onclick = async () => {
   if (!dtRec) return;
+  dtRec.grade = $('dtGrade').value;
   dtRec.subject = $('dtSubject').value;
-  dtRec.no = $('dtNo').value;
   dtRec.type = $('dtType').value;
+  const isNo = NO_TYPES.includes(dtRec.type);
+  dtRec.no = isNo ? $('dtNo').value : '';
+  dtRec.month = isNo ? '' : $('dtMonth').value;
   await idbPut(dtRec);
   recs = await idbAll();
   $('dtSheet').classList.remove('open');
@@ -457,6 +508,7 @@ $('impFile').onchange = e => {
 function importFiles(files) {
   impFiles = files;
   $('impCount').textContent = `選んだ${files.length}枚に同じ情報を付けて取り込みます（あとで1枚ずつ直せます）`;
+  updateCond($('impType'), $('impNoWrap'), $('impMonthWrap'));
   $('impSheet').classList.add('open');
 }
 $('impClose').onclick = $('impCancel').onclick = () => $('impSheet').classList.remove('open');
@@ -473,7 +525,10 @@ function loadImgFile(file) {
 }
 
 $('impSave').onclick = async () => {
-  const subject = $('impSubject').value, no = $('impNo').value, type = $('impType').value;
+  const grade = $('impGrade').value, subject = $('impSubject').value, type = $('impType').value;
+  const isNo = NO_TYPES.includes(type);
+  const no = isNo ? $('impNo').value : '';
+  const month = isNo ? '' : $('impMonth').value;
   let okCount = 0;
   for (const f of impFiles) {
     try {
@@ -486,7 +541,7 @@ $('impSave').onclick = async () => {
       const thumb = await new Promise(r => tc.toBlob(r, 'image/jpeg', 0.8));
       await idbPut({
         id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-        subject, no, type,
+        grade, subject, type, no, month,
         date: new Date().toISOString().slice(0, 10),
         blob: f, thumb
       });

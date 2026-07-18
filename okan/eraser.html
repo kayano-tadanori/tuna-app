@@ -73,7 +73,9 @@
     touch-action: none; overscroll-behavior: contain;
   }
   #canvasWrap.zoomed { justify-content: flex-start; }
-  #outCanvas { max-width: 100%; height: auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); touch-action: none; }
+  #canvasBox { position: relative; display: inline-block; font-size: 0; }
+  #outCanvas { max-width: 100%; height: auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); touch-action: none; display: block; }
+  #ovCanvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
 
   #controls {
     flex-shrink: 0;
@@ -203,7 +205,7 @@
   </div>
 
   <div id="editor">
-    <div id="canvasWrap"><canvas id="outCanvas"></canvas></div>
+    <div id="canvasWrap"><div id="canvasBox"><canvas id="outCanvas"></canvas><canvas id="ovCanvas"></canvas></div></div>
     <div id="controls">
       <div class="row">
         <label>消し具合</label>
@@ -221,12 +223,19 @@
         <button class="chip mode on" data-mode="pan">✋うごかす</button>
         <button class="chip mode" data-mode="erase">🧽けす</button>
         <button class="chip mode" data-mode="restore">🖌もどす</button>
+        <button class="chip mode" data-mode="protect">🛡ワク</button>
         <button class="chip" id="brushSize">⚫中</button>
         <button class="chip" id="resetManual">↺</button>
         <span class="grow"></span>
+        <button class="chip" id="rotateBtn">⟳回転</button>
         <button class="chip" id="zoomOut">➖</button>
         <button class="chip" id="zoomIn">➕🔍</button>
         <button class="chip" id="helpBtn2">❓</button>
+      </div>
+      <div class="chipRow" id="protectRow" style="display:none">
+        <button class="chip" id="addRectBtn">□ 四角を追加</button>
+        <button class="chip" id="eraseOutsideBtn" style="background:#10b981;border-color:#10b981;color:#fff">✂ 枠の外を消す</button>
+        <button class="chip" id="clearShapesBtn">枠をクリア</button>
       </div>
       <div class="aiRow">
         <button id="aiBtn">✨ AIで消す（実験）</button>
@@ -290,19 +299,32 @@
   <div class="sheet">
     <h2 style="color:#0d9488">📚 プリント管理に保管</h2>
     <p>このプリント（消した後の状態）を、アプリの中に保管します。あとで「プリント管理」からまとめて印刷できます。</p>
+    <h3>学年</h3>
+    <select class="fInput" id="kpGrade" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
+      <option value="">なし</option><option>小1</option><option>小2</option><option>小3</option>
+      <option>小4</option><option>小5</option><option>小6</option>
+    </select>
     <h3>科目</h3>
     <select class="fInput" id="kpSubject" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
       <option>算数</option><option>国語</option><option>理科</option><option>社会</option><option>その他</option>
     </select>
-    <h3>No</h3>
-    <select class="fInput" id="kpNo" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
-      <option value="">なし</option>
-    </select>
     <h3>授業の種類</h3>
     <select class="fInput" id="kpType" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
-      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
-      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+      <option>マスター</option><option>最レ</option><option>季節講習</option>
+      <option>公開学力</option><option>模試</option><option>その他</option>
     </select>
+    <div id="kpNoWrap">
+      <h3>No</h3>
+      <select class="fInput" id="kpNo" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
+        <option value="">なし</option>
+      </select>
+    </div>
+    <div id="kpMonthWrap" style="display:none">
+      <h3>何月のもの？</h3>
+      <select class="fInput" id="kpMonth" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
+        <option value="">なし</option>
+      </select>
+    </div>
     <div class="sheetBtns" style="margin-top:14px">
       <button class="btn" id="kpCancel" style="background:#e2e8f0;color:#475569">やめる</button>
       <button class="btn" id="kpSave" style="background:#0d9488;color:#fff;flex:2">保管する</button>
@@ -380,8 +402,10 @@ document.querySelectorAll('.chip.mode').forEach(btn => {
     document.querySelectorAll('.chip.mode').forEach(b => b.classList.remove('on'));
     btn.classList.add('on');
     mode = btn.dataset.mode;
+    $('protectRow').style.display = mode === 'protect' ? '' : 'none';
     if (mode === 'erase') toast('指でこすると消えます（2本指で拡大・移動）');
     if (mode === 'restore') toast('指でこすると元にもどります（2本指で拡大・移動）');
+    if (mode === 'protect') toast('タップで点を打つと多角形に。□で四角も置けます');
   };
 });
 
@@ -409,8 +433,8 @@ function applyZoom() {
     wrap.classList.add('zoomed');
   }
 }
-$('zoomIn').onclick = () => { zoom = Math.min(4, zoom * 1.4); applyZoom(); };
-$('zoomOut').onclick = () => { zoom = Math.max(1, zoom / 1.4); applyZoom(); };
+$('zoomIn').onclick = () => { zoom = Math.min(8, zoom * 1.25); applyZoom(); };
+$('zoomOut').onclick = () => { zoom = Math.max(1, zoom / 1.25); applyZoom(); };
 
 // 押している間だけ元画像を表示
 const cmpBtn = $('compareBtn');
@@ -767,6 +791,11 @@ outCanvas.addEventListener('pointerdown', e => {
   if (mode === 'pan' || !normGray) return;
   if (touches.size >= 2) return;   // ピンチ中は描かない
   e.preventDefault();
+  if (mode === 'protect') {
+    outCanvas.setPointerCapture(e.pointerId);
+    protectDown(canvasPoint(e));
+    return;
+  }
   outCanvas.setPointerCapture(e.pointerId);
   drawing = true;
   strokeBackup = manual.slice();
@@ -774,6 +803,10 @@ outCanvas.addEventListener('pointerdown', e => {
   stamp(lastPt.x, lastPt.y);
 });
 outCanvas.addEventListener('pointermove', e => {
+  if (mode === 'protect') {
+    if (shapeDrag) { e.preventDefault(); protectMove(canvasPoint(e)); }
+    return;
+  }
   if (!drawing) return;
   e.preventDefault();
   const p = canvasPoint(e);
@@ -781,12 +814,168 @@ outCanvas.addEventListener('pointermove', e => {
   lastPt = p;
 });
 function endStroke() {
+  if (mode === 'protect') { shapeDrag = null; return; }
   if (!drawing) return;
   drawing = false;
   lastPt = null;
   strokeBackup = null;
   outData = outCtx.getImageData(0, 0, W, H); // 比較・保存用に同期
 }
+
+// ---------- 保護マスク（🛡ワク） ----------
+const ovCanvas = $('ovCanvas');
+const ovCtx = ovCanvas.getContext('2d');
+let shapes = [];      // {kind:'rect',x0,y0,x1,y1}
+let curPoly = [];     // 作りかけの多角形 [{x,y}...]
+let shapeDrag = null; // {shape, corner:'tl'|'tr'|'bl'|'br'|'move', ox, oy}
+
+function drawOverlay() {
+  ovCtx.clearRect(0, 0, ovCanvas.width, ovCanvas.height);
+  const lw = Math.max(3, W * 0.004);
+  ovCtx.lineWidth = lw;
+  ovCtx.strokeStyle = '#10b981';
+  ovCtx.fillStyle = 'rgba(16,185,129,0.16)';
+  for (const s of shapes) {
+    const x = Math.min(s.x0, s.x1), y = Math.min(s.y0, s.y1);
+    const w = Math.abs(s.x1 - s.x0), h = Math.abs(s.y1 - s.y0);
+    ovCtx.fillRect(x, y, w, h);
+    ovCtx.strokeRect(x, y, w, h);
+    const hs = Math.max(10, W * 0.016);
+    ovCtx.fillStyle = '#10b981';
+    for (const [cx, cy] of [[s.x0, s.y0], [s.x1, s.y0], [s.x0, s.y1], [s.x1, s.y1]]) {
+      ovCtx.fillRect(cx - hs / 2, cy - hs / 2, hs, hs);
+    }
+    ovCtx.fillStyle = 'rgba(16,185,129,0.16)';
+  }
+  if (curPoly.length) {
+    ovCtx.beginPath();
+    ovCtx.moveTo(curPoly[0].x, curPoly[0].y);
+    for (const p of curPoly.slice(1)) ovCtx.lineTo(p.x, p.y);
+    if (curPoly.length >= 3) {
+      ovCtx.closePath();
+      ovCtx.fill();
+    }
+    ovCtx.stroke();
+    ovCtx.fillStyle = '#059669';
+    for (const p of curPoly) {
+      ovCtx.beginPath();
+      ovCtx.arc(p.x, p.y, Math.max(6, W * 0.008), 0, Math.PI * 2);
+      ovCtx.fill();
+    }
+    ovCtx.fillStyle = 'rgba(16,185,129,0.16)';
+  }
+}
+
+function protectDown(p) {
+  const grab = Math.max(18, W * 0.03);
+  for (const s of shapes) {
+    const corners = { tl: [s.x0, s.y0], tr: [s.x1, s.y0], bl: [s.x0, s.y1], br: [s.x1, s.y1] };
+    for (const k in corners) {
+      if (Math.hypot(p.x - corners[k][0], p.y - corners[k][1]) < grab) {
+        shapeDrag = { shape: s, corner: k };
+        return;
+      }
+    }
+    if (p.x > Math.min(s.x0, s.x1) && p.x < Math.max(s.x0, s.x1) &&
+        p.y > Math.min(s.y0, s.y1) && p.y < Math.max(s.y0, s.y1)) {
+      shapeDrag = { shape: s, corner: 'move', ox: p.x, oy: p.y };
+      return;
+    }
+  }
+  curPoly.push({ x: p.x, y: p.y });   // 何もつかまなければ多角形の点を追加
+  drawOverlay();
+}
+
+function protectMove(p) {
+  const s = shapeDrag.shape, k = shapeDrag.corner;
+  if (k === 'move') {
+    const dx = p.x - shapeDrag.ox, dy = p.y - shapeDrag.oy;
+    s.x0 += dx; s.x1 += dx; s.y0 += dy; s.y1 += dy;
+    shapeDrag.ox = p.x; shapeDrag.oy = p.y;
+  } else {
+    if (k === 'tl') { s.x0 = p.x; s.y0 = p.y; }
+    if (k === 'tr') { s.x1 = p.x; s.y0 = p.y; }
+    if (k === 'bl') { s.x0 = p.x; s.y1 = p.y; }
+    if (k === 'br') { s.x1 = p.x; s.y1 = p.y; }
+  }
+  drawOverlay();
+}
+
+$('addRectBtn').onclick = () => {
+  if (!normGray) return;
+  shapes.push({ kind: 'rect', x0: W * 0.2, y0: H * 0.2, x1: W * 0.8, y1: H * 0.8 });
+  drawOverlay();
+  toast('角をドラッグで伸縮、中をドラッグで移動できます');
+};
+
+$('clearShapesBtn').onclick = () => {
+  shapes = []; curPoly = [];
+  drawOverlay();
+};
+
+$('eraseOutsideBtn').onclick = () => {
+  if (!normGray) return;
+  if (!shapes.length && curPoly.length < 3) { toast('先に枠（四角か多角形）を作ってください'); return; }
+  // 保護領域を白で描いたマスクを作る
+  const mc = document.createElement('canvas');
+  mc.width = W; mc.height = H;
+  const mx = mc.getContext('2d');
+  mx.fillStyle = '#000'; mx.fillRect(0, 0, W, H);
+  mx.fillStyle = '#fff';
+  for (const s of shapes) {
+    mx.fillRect(Math.min(s.x0, s.x1), Math.min(s.y0, s.y1), Math.abs(s.x1 - s.x0), Math.abs(s.y1 - s.y0));
+  }
+  if (curPoly.length >= 3) {
+    mx.beginPath();
+    mx.moveTo(curPoly[0].x, curPoly[0].y);
+    for (const p of curPoly.slice(1)) mx.lineTo(p.x, p.y);
+    mx.closePath();
+    mx.fill();
+  }
+  const md = mx.getImageData(0, 0, W, H).data;
+  for (let i = 0; i < W * H; i++) {
+    if (md[i * 4] < 128) manual[i] = 1;   // 枠の外＝強制消去
+  }
+  render();
+  outData = outCtx.getImageData(0, 0, W, H);
+  toast('枠の外を消しました（↺で手直しごと取り消せます）');
+};
+
+// ---------- 回転（90°ずつ） ----------
+$('rotateBtn').onclick = async () => {
+  if (!normGray) return;
+  loading(true, '回転しています…');
+  await new Promise(r => setTimeout(r, 30));
+  try {
+    const oldW = W, oldH = H;
+    const rc = document.createElement('canvas');
+    rc.width = oldH; rc.height = oldW;
+    const rx = rc.getContext('2d');
+    rx.translate(oldH, 0);
+    rx.rotate(Math.PI / 2);
+    rx.drawImage(origCanvas, 0, 0);
+    origCanvas = rc;
+    // 手直しレイヤーも同じ向きに回す
+    const nm = new Uint8Array(oldW * oldH);
+    for (let y = 0; y < oldH; y++) {
+      for (let x = 0; x < oldW; x++) {
+        nm[x * oldH + (oldH - 1 - y)] = manual[y * oldW + x];
+      }
+    }
+    manual = nm;
+    W = oldH; H = oldW;
+    outCanvas.width = W; outCanvas.height = H;
+    ovCanvas.width = W; ovCanvas.height = H;
+    shapes = []; curPoly = []; drawOverlay();
+    outData = null;
+    precompute();
+    buildRestore();
+    render();
+    outData = outCtx.getImageData(0, 0, W, H);
+  } finally {
+    loading(false);
+  }
+};
 // 描きかけを取り消す（2本目の指が置かれたとき）
 function cancelStroke() {
   if (!drawing) return;
@@ -808,6 +997,7 @@ wrap.addEventListener('pointerdown', e => {
   touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
   if (touches.size === 2) {
     cancelStroke();
+    shapeDrag = null;
     panDrag = null;
     const [a, b] = [...touches.values()];
     const rect = outCanvas.getBoundingClientRect();
@@ -829,7 +1019,7 @@ wrap.addEventListener('pointermove', e => {
   if (pinch && touches.size >= 2) {
     e.preventDefault();
     const [a, b] = [...touches.values()];
-    zoom = Math.min(4, Math.max(1, pinch.z * (Math.hypot(a.x - b.x, a.y - b.y) || 1) / pinch.dist));
+    zoom = Math.min(8, Math.max(1, pinch.z * (Math.hypot(a.x - b.x, a.y - b.y) || 1) / pinch.dist));
     applyZoom();
     // つまんだ場所が指の真ん中に付いてくるようにスクロール補正
     const rect = outCanvas.getBoundingClientRect();
@@ -871,6 +1061,8 @@ async function openImage(file) {
     origCanvas.getContext('2d').drawImage(img, 0, 0, W, H);
 
     outCanvas.width = W; outCanvas.height = H;
+    ovCanvas.width = W; ovCanvas.height = H;
+    shapes = []; curPoly = []; shapeDrag = null; drawOverlay();
     manual = new Uint8Array(W * H);
     zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
 
@@ -1181,6 +1373,7 @@ async function saveImage() {
 }
 
 // ---------- プリント管理へ保管（IndexedDB） ----------
+const NO_TYPES = ['マスター', '最レ', '季節講習'];   // No.を付ける種類（それ以外は月）
 (() => {
   const sel = $('kpNo');
   for (let i = 1; i <= 50; i++) {
@@ -1188,7 +1381,19 @@ async function saveImage() {
     o.value = 'No.' + i; o.textContent = 'No.' + i;
     sel.appendChild(o);
   }
+  const ms = $('kpMonth');
+  for (let m = 1; m <= 12; m++) {
+    const o = document.createElement('option');
+    o.value = m + '月'; o.textContent = m + '月';
+    ms.appendChild(o);
+  }
 })();
+function updateKpCond() {
+  const isNo = NO_TYPES.includes($('kpType').value);
+  $('kpNoWrap').style.display = isNo ? '' : 'none';
+  $('kpMonthWrap').style.display = isNo ? 'none' : '';
+}
+$('kpType').onchange = updateKpCond;
 
 function idbOpen() {
   return new Promise((res, rej) => {
@@ -1201,6 +1406,7 @@ function idbOpen() {
 
 $('keepBtn').onclick = () => {
   if (!outData) { toast('先にプリントを撮ってください'); return; }
+  updateKpCond();
   $('keepModal').classList.add('open');
 };
 $('kpCancel').onclick = () => $('keepModal').classList.remove('open');
@@ -1219,11 +1425,14 @@ $('kpSave').onclick = async () => {
     tc.getContext('2d').drawImage(outCanvas, 0, 0, tc.width, tc.height);
     const thumb = await new Promise(r => tc.toBlob(r, 'image/jpeg', 0.8));
 
+    const isNo = NO_TYPES.includes($('kpType').value);
     const rec = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      grade: $('kpGrade').value,
       subject: $('kpSubject').value,
-      no: $('kpNo').value,
       type: $('kpType').value,
+      no: isNo ? $('kpNo').value : '',
+      month: isNo ? '' : $('kpMonth').value,
       date: new Date().toISOString().slice(0, 10),
       blob, thumb
     };
