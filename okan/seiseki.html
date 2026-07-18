@@ -162,7 +162,8 @@
   <button class="tab on" data-tab="kokai">公開</button>
   <button class="tab" data-tab="fukushu">復習テスト</button>
   <button class="tab" data-tab="saire">最レ算数</button>
-  <button class="tab" data-tab="nadago">灘中合格</button>
+  <button class="tab" data-tab="saikoku">最レ国語</button>
+  <button class="tab" data-tab="nadago">灘合</button>
   <button class="tab" data-tab="ab">⚖️クラス替え</button>
   <span class="grow"></span>
   <button id="aiFmtBtn">🤖 AI入力</button>
@@ -275,10 +276,28 @@
   </div>
 </div>
 
-<!-- 灘中合格特訓入力 -->
+<!-- 最レ国語入力 -->
+<div class="overlay" id="saikokuSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="saikokuTitle">最レ国語を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">日付</p><input class="fInput" type="date" id="kkDate"></div>
+      <div><p class="fLabel">テストNo.</p><input class="fInput" type="number" id="kkNo"></div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">復習テスト（100点満点）</p><input class="fInput" type="number" id="kkScore"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="saikokuDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="saikokuSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 灘合入力 -->
 <div class="overlay" id="nadaSheet">
   <div class="sheet">
-    <div class="sheetHead"><h2 id="nadaTitle">灘中合格特訓を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="sheetHead"><h2 id="nadaTitle">灘合を記録</h2><button class="closeBtn" data-close>✕</button></div>
     <div class="fRow">
       <div><p class="fLabel">日付</p><input class="fInput" type="date" id="nDate"></div>
       <div><p class="fLabel">テストNo.</p><input class="fInput" type="number" id="nNo"></div>
@@ -287,6 +306,11 @@
       <div><p class="fLabel">国語</p><input class="fInput" type="number" id="nKoku"></div>
       <div><p class="fLabel">算数</p><input class="fInput" type="number" id="nSan"></div>
       <div><p class="fLabel">理科</p><input class="fInput" type="number" id="nRi"></div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">国語 順位</p><input class="fInput" type="number" id="nKokuRank"></div>
+      <div><p class="fLabel">算数 順位</p><input class="fInput" type="number" id="nSanRank"></div>
+      <div><p class="fLabel">理科 順位</p><input class="fInput" type="number" id="nRiRank"></div>
     </div>
     <div class="sheetBtns">
       <button class="btn btnDanger" id="nadaDelete" style="display:none">削除</button>
@@ -362,8 +386,11 @@
     "saire": [
       { "id": "s2026-06-07", "date": "2026-06-07", "no": 5, "keisan": 90, "fukushu": 110 }
     ],
+    "saikoku": [
+      { "id": "k2026-06-07", "date": "2026-06-07", "no": 8, "score": 85 }
+    ],
     "nadago": [
-      { "id": "n2026-06-28", "date": "2026-06-28", "no": 2, "koku": 75, "san": 100, "ri": 94 }
+      { "id": "n2026-06-28", "date": "2026-06-28", "no": 2, "koku": 75, "san": 100, "ri": 94, "kokuRank": 5, "sanRank": 1, "riRank": 3 }
     ],
     "atotal": [
       { "id": "a2026-05-master", "ym": "2026-05", "course": "マスター", "rank": 1 }
@@ -375,7 +402,8 @@
 - kokai＝公開学力テスト（月ごと1件）。ym は "YYYY-MM"。dev=偏差値、score=得点、rank=順位。rank4/rank3/rank2 は「順位/受験者数」の文字列。kijutsu＝国語記述。sha（社会）と avg4/rank4（4科）は成績表にあるときだけ入れる（無ければ省略）。
 - fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
 - saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
-- nadago＝灘中合格特訓。koku/san/ri は各教科の得点。
+- saikoku＝最高レベル特訓国語。復習テストのみ（100点満点）。score=得点、no=第何回（実力テストは null）。
+- nadago＝灘中合格特訓（灘合）。koku/san/ri は各教科の得点。kokuRank/sanRank/riRank は各教科のクラス内順位（成績表にあるときだけ）。
 - atotal＝A表のクラス内順位。course は マスター/最レ算数/最レ国語/灘合 のどれか。rank=その月度のクラス内順位。ym は "YYYY-MM"（月度）。総合点は復テ・公開の記録から自動計算されるので入力不要（A表個人票の実物値 fuku/kokai/total を入れた場合はそちらを優先表示。灘合の総合点は実物値がある場合のみグラフに出ます）。
 - 読み取れない値は null。数値は数値型で書き、単位（点・位）は付けない。
 - id は他とかぶらない英数字の文字列。上の例のように日付から作る。
@@ -406,7 +434,7 @@ function load() {
   let d = null;
   try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) { /* fallthrough */ }
   if (!d) d = {};
-  for (const k of ['kokai', 'fukushu', 'saire', 'nadago', 'atotal']) if (!Array.isArray(d[k])) d[k] = [];
+  for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal']) if (!Array.isArray(d[k])) d[k] = [];
   return d;
 }
 const save = () => localStorage.setItem(KEY, JSON.stringify(db));
@@ -507,15 +535,27 @@ function saiRow(ym) {
   const kokai = (k && k.san && k.san.score != null && k.san.score !== '') ? +k.san.score : null;
   return { ym, total: (fuku != null && kokai != null) ? fuku + kokai : null };
 }
+// 最レ国語のA表：その月の復習テスト平均（100点満点・日曜開催で暦月区切り）＋公開テスト国語の得点
+function saikokuRow(ym) {
+  const sc = [];
+  for (const t of db.saikoku) {
+    if (t.date && t.date.slice(0, 7) === ym && t.score != null && t.score !== '') sc.push(+t.score);
+  }
+  const fuku = sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null;
+  const k = db.kokai.find(x => x.ym === ym);
+  const kokai = (k && k.koku && k.koku.score != null && k.koku.score !== '') ? +k.koku.score : null;
+  return { ym, total: (fuku != null && kokai != null) ? fuku + kokai : null };
+}
 // 講座ごとの月度データ。総合点＝A表個人票の実物値(atotal.total)優先→なければ自動計算、順位＝atotal.rank
 function courseMonthData(course) {
   const yms = new Set(db.atotal.filter(x => (x.course || 'マスター') === course).map(x => x.ym));
   if (course === 'マスター') abMonths().forEach(m => yms.add(m));
   if (course === '最レ算数') db.saire.forEach(t => { if (t.date) yms.add(saiYmOf(t.date)); });
+  if (course === '最レ国語') db.saikoku.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
   return [...yms].sort().map(ym => {
     const rec = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
     let total = rec && rec.total != null ? +rec.total : null;
-    if (total == null) total = course === 'マスター' ? aRow(ym).total : course === '最レ算数' ? saiRow(ym).total : null;
+    if (total == null) total = course === 'マスター' ? aRow(ym).total : course === '最レ算数' ? saiRow(ym).total : course === '最レ国語' ? saikokuRow(ym).total : null;
     return { ym, total: total != null ? Math.round(total * 10) / 10 : null, rank: rec && rec.rank != null ? rec.rank : null };
   });
 }
@@ -886,6 +926,27 @@ function render() {
     v.innerHTML = h;
     v.querySelectorAll('[data-saire]').forEach(el => el.onclick = () => openSaire(db.saire.find(x => x.id === el.dataset.saire)));
     bindRankChips(v, '最レ算数');
+  } else if (tab === 'saikoku') {
+    const list = [...db.saikoku].sort((a, b) => b.date.localeCompare(a.date));
+    let h = courseGraphs('最レ国語');
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓国語（復習テスト・100点満点）を記録できます。</p>';
+    let curYm = '';
+    for (const t of list) {
+      const ym = t.date.slice(0, 7);
+      if (ym !== curYm) {
+        curYm = ym;
+        const m = db.saikoku.filter(x => x.date.slice(0, 7) === ym);
+        const avg = (m.reduce((s, x) => s + (+x.score || 0), 0) / m.length).toFixed(1);
+        const rk = rankFor('最レ国語', ym);
+        h += `<p class="secLabel">${ymLabel(ym)}度（${m.length}回・平均 ${avg}点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
+      }
+      h += `<div class="testLine" data-saikoku="${t.id}"><span class="d">${mdLabel(t.date)}</span>
+        <span class="sj">復習テスト</span><span class="no">No.${show(t.no)}</span>
+        <span class="sc${(+t.score || 0) < 60 ? ' scoreBad' : ''}">${show(t.score)}点</span></div>`;
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-saikoku]').forEach(el => el.onclick = () => openSaikoku(db.saikoku.find(x => x.id === el.dataset.saikoku)));
+    bindRankChips(v, '最レ国語');
   } else if (tab === 'ab') {
     v.innerHTML = renderAB();
     const sync = () => {
@@ -901,8 +962,9 @@ function render() {
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで灘中合格特訓（国算理 各100点）を記録できます。</p>';
     for (const t of list) {
       const total = (+t.koku || 0) + (+t.san || 0) + (+t.ri || 0);
+      const rk = r => r != null && r !== '' ? `<span style="font-size:10px;color:#94a3b8">(${r}位)</span>` : '';
       h += `<div class="testLine" data-nada="${t.id}"><span class="d">${mdLabel(t.date)}</span>
-        <span class="sj">No.${show(t.no)}　国${show(t.koku)}・算${show(t.san)}・理${show(t.ri)}</span>
+        <span class="sj">No.${show(t.no)}　国${show(t.koku)}${rk(t.kokuRank)}・算${show(t.san)}${rk(t.sanRank)}・理${show(t.ri)}${rk(t.riRank)}</span>
         <span class="sc">${total}点</span></div>`;
     }
     v.innerHTML = h;
@@ -1047,23 +1109,57 @@ $('saireDelete').onclick = () => {
   save(); closeAll(); render();
 };
 
+// ---------- 最レ国語 ----------
+let editingSaikoku = null;
+function openSaikoku(t) {
+  editingSaikoku = t ? t.id : null;
+  $('saikokuTitle').textContent = t ? '最レ国語を編集' : '最レ国語を記録';
+  $('kkDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('kkNo').value = t && t.no != null ? t.no : '';
+  $('kkScore').value = t && t.score != null ? t.score : '';
+  $('saikokuDelete').style.display = t ? '' : 'none';
+  $('saikokuSheet').classList.add('open');
+}
+$('saikokuSave').onclick = () => {
+  const date = $('kkDate').value;
+  if (!date) { alert('日付を入れてください'); return; }
+  const item = { id: editingSaikoku || uid(), date, no: num($('kkNo').value), score: num($('kkScore').value) };
+  db.saikoku = db.saikoku.filter(x => x.id !== item.id);
+  db.saikoku.push(item);
+  editingSaikoku = null;
+  save(); closeAll(); render();
+};
+$('saikokuDelete').onclick = () => {
+  if (!editingSaikoku) return;
+  db.saikoku = db.saikoku.filter(x => x.id !== editingSaikoku);
+  editingSaikoku = null;
+  save(); closeAll(); render();
+};
+
 // ---------- 灘合 ----------
 let editingNada = null;
 function openNada(t) {
   editingNada = t ? t.id : null;
-  $('nadaTitle').textContent = t ? '灘中合格特訓を編集' : '灘中合格特訓を記録';
+  $('nadaTitle').textContent = t ? '灘合を編集' : '灘合を記録';
   $('nDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
   $('nNo').value = t && t.no != null ? t.no : '';
   $('nKoku').value = t && t.koku != null ? t.koku : '';
   $('nSan').value = t && t.san != null ? t.san : '';
   $('nRi').value = t && t.ri != null ? t.ri : '';
+  $('nKokuRank').value = t && t.kokuRank != null ? t.kokuRank : '';
+  $('nSanRank').value = t && t.sanRank != null ? t.sanRank : '';
+  $('nRiRank').value = t && t.riRank != null ? t.riRank : '';
   $('nadaDelete').style.display = t ? '' : 'none';
   $('nadaSheet').classList.add('open');
 }
 $('nadaSave').onclick = () => {
   const date = $('nDate').value;
   if (!date) { alert('日付を入れてください'); return; }
-  const item = { id: editingNada || uid(), date, no: num($('nNo').value), koku: num($('nKoku').value), san: num($('nSan').value), ri: num($('nRi').value) };
+  const item = {
+    id: editingNada || uid(), date, no: num($('nNo').value),
+    koku: num($('nKoku').value), san: num($('nSan').value), ri: num($('nRi').value),
+    kokuRank: num($('nKokuRank').value), sanRank: num($('nSanRank').value), riRank: num($('nRiRank').value)
+  };
   db.nadago = db.nadago.filter(x => x.id !== item.id);
   db.nadago.push(item);
   editingNada = null;
@@ -1110,7 +1206,7 @@ $('atotalDelete').onclick = () => {
 // チェックした講座のタブだけ表示。マスターを外すと⚖️も隠す
 document.querySelectorAll('#topBar .tab').forEach(b => {
   const t = b.dataset.tab;
-  if ((t === 'fukushu' || t === 'saire' || t === 'nadago') && !courseOn(t)) b.style.display = 'none';
+  if ((t === 'fukushu' || t === 'saire' || t === 'saikoku' || t === 'nadago') && !courseOn(t)) b.style.display = 'none';
   if (t === 'ab' && !courseOn('fukushu')) b.style.display = 'none';
 });
 document.querySelectorAll('#topBar .tab').forEach(b => {
@@ -1126,6 +1222,7 @@ $('fab').onclick = () => {
   if (tab === 'kokai') openKokaiForm(null);
   else if (tab === 'fukushu') openFuku(null);
   else if (tab === 'saire') openSaire(null);
+  else if (tab === 'saikoku') openSaikoku(null);
   else openNada(null);
 };
 $('aiFmtBtn').onclick = () => $('aiFmtSheet').classList.add('open');

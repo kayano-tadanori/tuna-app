@@ -246,7 +246,10 @@
           <input type="checkbox" data-course="saire" checked style="width:19px;height:19px;accent-color:#db2777"> 最高レベル特訓 算数
         </label>
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
-          <input type="checkbox" data-course="nadago" checked style="width:19px;height:19px;accent-color:#db2777"> 灘中合格特訓
+          <input type="checkbox" data-course="saikoku" checked style="width:19px;height:19px;accent-color:#db2777"> 最高レベル特訓 国語
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
+          <input type="checkbox" data-course="nadago" checked style="width:19px;height:19px;accent-color:#db2777"> 灘合（灘中合格特訓）
         </label>
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
           <input type="checkbox" data-course="shakai" style="width:19px;height:19px;accent-color:#db2777"> 社会（4科目で受講）
@@ -283,7 +286,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v37</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v38</p>
     </div>
   </div>
 </div>
@@ -481,7 +484,7 @@ async function importDataObj(obj) {
       if (k === 'fukushu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
       return (a.no ?? null) === (b.no ?? null);   // saire/nadago：同じ日・同じ回
     };
-    for (const k of ['kokai', 'fukushu', 'saire', 'nadago', 'atotal']) {
+    for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal']) {
       if (!Array.isArray(cur[k])) cur[k] = [];
       for (const it of (obj.seiseki[k] || [])) {
         const i = cur[k].findIndex(x => sameRec(k, x, it));
