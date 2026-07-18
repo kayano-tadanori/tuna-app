@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>中受伴走｜成績管理</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="中受伴走">
+<meta name="theme-color" content="#db2777">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: #f8fafc; color: #1e293b;
+    display: flex; flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+  }
+  header {
+    background: #db2777; color: #fff;
+    padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  header .backLink {
+    color: #fbcfe8; font-size: 12px; font-weight: 700; text-decoration: none;
+    padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.12); white-space: nowrap;
+  }
+  header .titleWrap { text-align: center; line-height: 1.25; }
+  header .titleWrap .t1 { font-size: 17px; font-weight: 800; }
+  header .titleWrap .t2 { font-size: 10px; font-weight: 700; color: #fbcfe8; letter-spacing: .1em; }
+  header .spacer { width: 74px; }
+
+  #topBar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 10px; background: #fff; border-bottom: 1px solid #e2e8f0; flex-shrink: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  #topBar > * { flex-shrink: 0; }
+  .tab {
+    border: none; background: #f1f5f9; color: #64748b; font-size: 13px; font-weight: 800;
+    padding: 8px 12px; border-radius: 10px; cursor: pointer; white-space: nowrap;
+  }
+  .tab.on { background: #db2777; color: #fff; }
+  .grow { flex: 1; }
+
+  main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 12px 130px; }
+
+  .graphCard {
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px;
+    padding: 12px 8px 6px; margin-bottom: 12px;
+  }
+  .graphCard h3 { font-size: 12px; font-weight: 800; color: #db2777; margin: 0 6px 4px; }
+  .legend { display: flex; gap: 10px; flex-wrap: wrap; padding: 4px 6px 6px; }
+  .legend span { font-size: 10px; font-weight: 800; display: flex; align-items: center; gap: 4px; color: #64748b; }
+  .legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; }
+
+  .secLabel { font-size: 12px; font-weight: 800; color: #94a3b8; margin: 14px 2px 8px; }
+  .rowCard {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px;
+    padding: 11px 12px; margin-bottom: 8px; cursor: pointer;
+  }
+  .rowCard .bar { width: 5px; height: 36px; border-radius: 3px; flex-shrink: 0; background: #db2777; }
+  .rowCard .dt { flex: 1; min-width: 0; }
+  .rowCard .dt .n { font-size: 14px; font-weight: 800; }
+  .rowCard .dt .s { font-size: 11px; color: #94a3b8; font-weight: 700; margin-top: 2px; }
+  .rowCard .big { font-size: 17px; font-weight: 800; color: #db2777; flex-shrink: 0; }
+  .rowCard .arrow { color: #cbd5e1; font-weight: 800; }
+  .scoreBad { color: #dc2626 !important; }
+  .emptyMsg { text-align: center; color: #94a3b8; font-size: 13px; padding: 30px 10px; line-height: 1.9; }
+
+  .testLine {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px;
+    padding: 9px 12px; margin-bottom: 6px; cursor: pointer; font-weight: 800;
+  }
+  .testLine .d { font-size: 11px; color: #94a3b8; width: 44px; flex-shrink: 0; }
+  .testLine .sj { font-size: 13px; flex: 1; }
+  .testLine .no { font-size: 11px; color: #94a3b8; }
+  .testLine .sc { font-size: 15px; color: #0d9488; min-width: 52px; text-align: right; }
+
+  #fab {
+    position: fixed; right: 18px; bottom: calc(24px + env(safe-area-inset-bottom));
+    width: 58px; height: 58px; border-radius: 50%;
+    border: none; background: #db2777; color: #fff; font-size: 28px; font-weight: 800;
+    box-shadow: 0 6px 18px rgba(219,39,119,.4); cursor: pointer; z-index: 5;
+  }
+  #fab:active { transform: scale(.94); }
+
+  .overlay {
+    position: fixed; inset: 0; background: rgba(30,41,59,.45);
+    display: none; align-items: flex-end; justify-content: center; z-index: 30;
+  }
+  .overlay.open { display: flex; }
+  .sheet {
+    background: #fff; width: 100%; max-width: 480px; max-height: 85vh;
+    border-radius: 20px 20px 0 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
+  }
+  .sheetHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .sheetHead h2 { font-size: 15px; font-weight: 800; }
+  .closeBtn {
+    border: none; background: #f1f5f9; color: #64748b; font-size: 14px; font-weight: 800;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  }
+  .fLabel { font-size: 12px; font-weight: 800; color: #64748b; margin: 12px 2px 5px; }
+  .fInput {
+    width: 100%; padding: 11px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+    font-size: 15px; font-family: inherit; background: #fff; color: inherit;
+  }
+  .fRow { display: flex; gap: 8px; }
+  .fRow > * { flex: 1; }
+  .subjHead { font-size: 12px; font-weight: 800; color: #db2777; margin: 14px 2px 2px; border-top: 1px solid #f1f5f9; padding-top: 12px; }
+  .sheetBtns { display: flex; gap: 10px; margin-top: 16px; }
+  .btn { flex: 1; padding: 13px; border: none; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; }
+  .btnPink { background: #db2777; color: #fff; }
+  .btnGray { background: #e2e8f0; color: #475569; }
+  .btnDanger { background: #fee2e2; color: #dc2626; }
+  .kv { display: flex; justify-content: space-between; padding: 8px 2px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+  .kv .k { color: #64748b; font-weight: 700; }
+  .kv .v { font-weight: 800; }
+
+  #aiFmtBtn {
+    border: 1.5px dashed #db2777; background: #fdf2f8; color: #db2777;
+    font-size: 12px; font-weight: 800; padding: 7px 10px; border-radius: 10px;
+    cursor: pointer; white-space: nowrap;
+  }
+  .aiStep { font-size: 13px; font-weight: 700; line-height: 1.7; margin: 6px 2px; }
+  .aiNote { font-size: 11px; color: #94a3b8; font-weight: 700; line-height: 1.7; margin: 10px 2px 0; }
+  .fmtPre {
+    background: #f1f5f9; border: 1.5px solid #e2e8f0; border-radius: 10px;
+    padding: 10px; margin-top: 10px; font-size: 10.5px; line-height: 1.55;
+    white-space: pre-wrap; word-break: break-all; max-height: 240px; overflow-y: auto;
+    font-family: ui-monospace, Menlo, Consolas, monospace; color: #334155;
+  }
+</style>
+<link rel="stylesheet" href="dark.css">
+<script>if((localStorage.getItem('okan_gender')||'')==='男'){document.documentElement.classList.add('otonDark');var _tm=document.querySelector('meta[name="theme-color"]');if(_tm)_tm.content='#101c38';}</script>
+</head>
+<body>
+<header>
+  <a class="backLink" href="./">← ホーム</a>
+  <div class="titleWrap"><div class="t1">成績管理</div><div class="t2">テストのきろく</div></div>
+  <div class="spacer"></div>
+</header>
+
+<div id="topBar">
+  <button class="tab on" data-tab="kokai">公開</button>
+  <button class="tab" data-tab="fukushu">復習テスト</button>
+  <button class="tab" data-tab="saire">最レ算数</button>
+  <button class="tab" data-tab="nadago">灘中合格</button>
+  <span class="grow"></span>
+  <button id="aiFmtBtn">🤖 AI入力</button>
+</div>
+
+<main>
+  <div id="view"></div>
+</main>
+
+<button id="fab">＋</button>
+
+<!-- 公開テスト入力 -->
+<div class="overlay" id="kokaiSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="kokaiTitle">公開学力テストを記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">実施月</p><input class="fInput" type="month" id="kYm"></div>
+      <div><p class="fLabel">教室・クラス（例：西宮V1）</p><input class="fInput" id="kClass" autocomplete="off"></div>
+    </div>
+    <p class="subjHead">国語</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="kKokuDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="kKokuScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="kKokuRank"></div>
+    </div>
+    <p class="subjHead">算数</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="kSanDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="kSanScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="kSanRank"></div>
+    </div>
+    <p class="subjHead">理科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="kRiDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="kRiScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="kRiRank"></div>
+    </div>
+    <p class="subjHead">3科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="k3Dev"></div>
+      <div><p class="fLabel">順位（例：27/2884）</p><input class="fInput" id="k3Rank" autocomplete="off"></div>
+    </div>
+    <p class="subjHead">2科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="k2Dev"></div>
+      <div><p class="fLabel">順位（例：131/2884）</p><input class="fInput" id="k2Rank" autocomplete="off"></div>
+    </div>
+    <p class="subjHead">国語記述（あれば）</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="kKijDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="kKijScore"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="kokaiDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="kokaiSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 復習テスト入力 -->
+<div class="overlay" id="fukuSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="fukuTitle">復習テストを記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">日付</p><input class="fInput" type="date" id="fDate"></div>
+      <div><p class="fLabel">科目</p>
+        <select class="fInput" id="fSubj"><option>国語</option><option>算数</option><option>理科</option><option>社会</option></select>
+      </div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">テストNo.</p><input class="fInput" type="number" id="fNo"></div>
+      <div><p class="fLabel">点数（100点満点）</p><input class="fInput" type="number" id="fScore"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="fukuDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="fukuSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 最レ算数入力 -->
+<div class="overlay" id="saireSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="saireTitle">最レ算数を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">日付</p><input class="fInput" type="date" id="sDate"></div>
+      <div><p class="fLabel">テストNo.</p><input class="fInput" type="number" id="sNo"></div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">計算（80点満点）</p><input class="fInput" type="number" id="sKeisan"></div>
+      <div><p class="fLabel">復習（120点満点）</p><input class="fInput" type="number" id="sFukushu"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="saireDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="saireSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 灘中合格特訓入力 -->
+<div class="overlay" id="nadaSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="nadaTitle">灘中合格特訓を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">日付</p><input class="fInput" type="date" id="nDate"></div>
+      <div><p class="fLabel">テストNo.</p><input class="fInput" type="number" id="nNo"></div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">国語</p><input class="fInput" type="number" id="nKoku"></div>
+      <div><p class="fLabel">算数</p><input class="fInput" type="number" id="nSan"></div>
+      <div><p class="fLabel">理科</p><input class="fInput" type="number" id="nRi"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="nadaDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="nadaSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 公開テスト詳細 -->
+<div class="overlay" id="detSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="detTitle"></h2><button class="closeBtn" data-close>✕</button></div>
+    <div id="detBody"></div>
+    <div class="sheetBtns">
+      <button class="btn btnGray" id="detEdit">編集する</button>
+    </div>
+  </div>
+</div>
+
+<!-- AIでJSONを作る人向けフォーマット -->
+<div class="overlay" id="aiFmtSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2>🤖 AIでまとめて入力する</h2><button class="closeBtn" data-close>✕</button></div>
+    <p class="aiStep">① 下の「指示文をコピー」を押す</p>
+    <p class="aiStep">② ChatGPTやClaudeに貼りつけ、成績表のスクショを一緒に送る</p>
+    <p class="aiStep">③ 返ってきたJSONを「.json」ファイルとして保存する（AIに「ファイルにして」と頼んでもOK）</p>
+    <p class="aiStep">④ ホーム → ⚙️設定 → 📥取り込む でそのファイルを選ぶ</p>
+    <pre class="fmtPre" id="aiFmtPre">あなたは成績データ入力の係です。渡した浜学園の成績表（スクリーンショット）から「あなたの成績」を読み取り、次の形式のJSONだけを出力してください。説明文は不要です。
+
+{
+  "app": "chuju-mama-banso",
+  "ver": 1,
+  "seiseki": {
+    "kokai": [
+      {
+        "id": "k2026-04",
+        "ym": "2026-04",
+        "class": "西宮V1",
+        "koku": { "dev": 58.3, "score": 78, "rank": 210 },
+        "san":  { "dev": 65.1, "score": 92, "rank": 45 },
+        "ri":   { "dev": 60.2, "score": 80, "rank": 120 },
+        "avg3": { "dev": 62.0 }, "rank3": "27/2884",
+        "avg2": { "dev": 61.5 }, "rank2": "131/2884",
+        "kijutsu": { "dev": 55.0, "score": 40 }
+      }
+    ],
+    "fukushu": [
+      { "id": "f2026-06-01-san12", "date": "2026-06-01", "subject": "算数", "no": 12, "score": 85 }
+    ],
+    "saire": [
+      { "id": "s2026-06-07", "date": "2026-06-07", "no": 5, "keisan": 90, "fukushu": 110 }
+    ],
+    "nadago": [
+      { "id": "n2026-06-28", "date": "2026-06-28", "no": 2, "koku": 75, "san": 100, "ri": 94 }
+    ]
+  }
+}
+
+ルール:
+- kokai＝公開学力テスト（月ごと1件）。ym は "YYYY-MM"。dev=偏差値、score=得点、rank=順位。rank3/rank2 は「順位/受験者数」の文字列。kijutsu＝国語記述。
+- fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
+- saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
+- nadago＝灘中合格特訓。koku/san/ri は各教科の得点。
+- 読み取れない値は null。数値は数値型で書き、単位（点・位）は付けない。
+- id は他とかぶらない英数字の文字列。上の例のように日付から作る。
+- 該当データのない配列は [] のままでよい。</pre>
+    <div class="sheetBtns">
+      <button class="btn btnPink" id="aiFmtCopy">📋 指示文をコピー</button>
+    </div>
+    <p class="aiNote">同じ月の公開テストは上書き、その他は id が同じものが上書きされます。何度取り込んでも重複しません。</p>
+  </div>
+</div>
+
+<script>
+'use strict';
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+
+const $ = id => document.getElementById(id);
+const KEY = 'okan_seiseki_v1';
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const DARK = document.documentElement.classList.contains('otonDark');
+
+let db = load();
+function load() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) { /* fallthrough */ }
+  if (!d) d = {};
+  for (const k of ['kokai', 'fukushu', 'saire', 'nadago']) if (!Array.isArray(d[k])) d[k] = [];
+  return d;
+}
+const save = () => localStorage.setItem(KEY, JSON.stringify(db));
+
+const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
+const show = v => (v === null || v === undefined || v === '') ? '—' : v;
+const ymLabel = ym => { const [y, m] = ym.split('-'); return `${y}年${+m}月`; };
+const mdLabel = ds => { const d = new Date(ds + 'T00:00:00'); return `${d.getMonth() + 1}/${d.getDate()}`; };
+
+// ---------- 公開テスト：偏差値グラフ ----------
+const NADA_LINE = 64;
+function renderGraph(list) {
+  if (list.length < 2) return '';
+  const W = 360, H = 190, L = 30, R = 8, T = 14, B = 24;
+  const iw = W - L - R, ih = H - T - B;
+  const series = [
+    { key: 'koku', label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.dev },
+    { key: 'san', label: '算数', color: '#3b82f6', get: k => k.san && k.san.dev },
+    { key: 'ri', label: '理科', color: '#10b981', get: k => k.ri && k.ri.dev },
+    { key: 'avg3', label: '3科平均', color: DARK ? '#f9e2af' : '#9333ea', get: k => k.avg3 && k.avg3.dev, bold: true },
+  ];
+  let vals = [];
+  for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
+  if (!vals.length) return '';
+  let yMin = Math.floor((Math.min(...vals, NADA_LINE) - 4) / 5) * 5;
+  let yMax = Math.ceil((Math.max(...vals, NADA_LINE) + 4) / 5) * 5;
+  const X = i => L + (list.length === 1 ? iw / 2 : i / (list.length - 1) * iw);
+  const Y = v => T + (yMax - v) / (yMax - yMin) * ih;
+  const grid = DARK ? '#26365d' : '#e2e8f0';
+  const txt = DARK ? '#93a7cd' : '#94a3b8';
+  let g = '';
+  for (let v = yMin; v <= yMax; v += 5) {
+    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
+    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}</text>`;
+  }
+  // 灘ライン
+  g += `<line x1="${L}" y1="${Y(NADA_LINE)}" x2="${W - R}" y2="${Y(NADA_LINE)}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  g += `<text x="${W - R}" y="${Y(NADA_LINE) - 4}" fill="#f59e0b" font-size="8" font-weight="800" text-anchor="end">灘 ${NADA_LINE}</text>`;
+  // x軸（間引き）
+  const step = Math.ceil(list.length / 6);
+  list.forEach((k, i) => {
+    if (i % step === 0 || i === list.length - 1) {
+      const [y, m] = k.ym.split('-');
+      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+m}月</text>`;
+    }
+  });
+  // クラス変更マーク
+  for (let i = 1; i < list.length; i++) {
+    if (list[i].class && list[i - 1].class && list[i].class !== list[i - 1].class) {
+      g += `<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H - B}" stroke="${txt}" stroke-width="1" stroke-dasharray="2 3"/>`;
+      g += `<text x="${X(i) + 3}" y="${T + 8}" fill="${txt}" font-size="7.5">${list[i].class}へ</text>`;
+    }
+  }
+  for (const s of series) {
+    const pts = [];
+    list.forEach((k, i) => { const v = s.get(k); if (v != null) pts.push([X(i), Y(v)]); });
+    if (pts.length < 2) continue;
+    g += `<polyline points="${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.bold ? 3 : 1.8}" opacity="${s.bold ? 1 : .85}"/>`;
+    pts.forEach(p => { g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${s.bold ? 3 : 2.2}" fill="${s.color}"/>`; });
+  }
+  const legend = series.map(s => `<span><i style="background:${s.color}"></i>${s.label}</span>`).join('');
+  return `<div class="graphCard"><h3>📈 公開学力テスト 偏差値の推移</h3>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
+    <div class="legend">${legend}<span><i style="background:#f59e0b"></i>灘中ライン</span></div></div>`;
+}
+
+// ---------- 表示 ----------
+let tab = 'kokai';
+function render() {
+  const v = $('view');
+  if (tab === 'kokai') {
+    const list = [...db.kokai].sort((a, b) => a.ym.localeCompare(b.ym));
+    let h = renderGraph(list);
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで公開学力テストの結果を記録できます。<br>（データの取り込みはホームの ⚙️設定 → 📥取り込む から）</p>';
+    else {
+      h += '<p class="secLabel">つきごとの記録（タップでくわしく）</p>';
+      for (const k of [...list].reverse()) {
+        const dev3 = k.avg3 && k.avg3.dev != null ? k.avg3.dev : null;
+        h += `<div class="rowCard" data-kokai="${k.id}">
+          <div class="bar"></div>
+          <div class="dt"><div class="n">${ymLabel(k.ym)}</div>
+          <div class="s">国${show(k.koku && k.koku.dev)}・算${show(k.san && k.san.dev)}・理${show(k.ri && k.ri.dev)}${k.rank3 ? '・3科 ' + k.rank3 + '位' : ''}${k.class ? '・' + k.class : ''}</div></div>
+          <div class="big">${dev3 != null ? dev3 : '—'}</div><span class="arrow">›</span></div>`;
+      }
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-kokai]').forEach(el => el.onclick = () => openDetail(el.dataset.kokai));
+  } else if (tab === 'fukushu') {
+    const list = [...db.fukushu].sort((a, b) => b.date.localeCompare(a.date));
+    let h = '';
+    if (!list.length) h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで復習テストの点数を記録できます。</p>';
+    let curYm = '';
+    for (const t of list) {
+      const ym = t.date.slice(0, 7);
+      if (ym !== curYm) {
+        curYm = ym;
+        const monthTests = db.fukushu.filter(x => x.date.slice(0, 7) === ym);
+        const avg = (monthTests.reduce((s, x) => s + (+x.score || 0), 0) / monthTests.length).toFixed(1);
+        h += `<p class="secLabel">${ymLabel(ym)}（${monthTests.length}枚・平均 ${avg}点）</p>`;
+      }
+      h += `<div class="testLine" data-fuku="${t.id}"><span class="d">${mdLabel(t.date)}</span>
+        <span class="sj">${t.subject}</span><span class="no">No.${show(t.no)}</span>
+        <span class="sc${(+t.score || 0) < 80 ? ' scoreBad' : ''}">${show(t.score)}点</span></div>`;
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-fuku]').forEach(el => el.onclick = () => openFuku(db.fukushu.find(x => x.id === el.dataset.fuku)));
+  } else if (tab === 'saire') {
+    const list = [...db.saire].sort((a, b) => b.date.localeCompare(a.date));
+    let h = '';
+    if (!list.length) h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓算数（計算80点＋復習120点）を記録できます。</p>';
+    let curYm = '';
+    for (const t of list) {
+      const ym = t.date.slice(0, 7);
+      if (ym !== curYm) {
+        curYm = ym;
+        const m = db.saire.filter(x => x.date.slice(0, 7) === ym);
+        const avg = (m.reduce((s, x) => s + (+x.keisan || 0) + (+x.fukushu || 0), 0) / m.length).toFixed(1);
+        h += `<p class="secLabel">${ymLabel(ym)}（${m.length}回・平均 ${avg}/200点）</p>`;
+      }
+      const total = (+t.keisan || 0) + (+t.fukushu || 0);
+      h += `<div class="testLine" data-saire="${t.id}"><span class="d">${mdLabel(t.date)}</span>
+        <span class="sj">No.${show(t.no)}　計算${show(t.keisan)}・復習${show(t.fukushu)}</span>
+        <span class="sc${total < 160 ? ' scoreBad' : ''}">${total}点</span></div>`;
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-saire]').forEach(el => el.onclick = () => openSaire(db.saire.find(x => x.id === el.dataset.saire)));
+  } else {
+    const list = [...db.nadago].sort((a, b) => b.date.localeCompare(a.date));
+    let h = '';
+    if (!list.length) h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで灘中合格特訓（国算理 各100点）を記録できます。</p>';
+    for (const t of list) {
+      const total = (+t.koku || 0) + (+t.san || 0) + (+t.ri || 0);
+      h += `<div class="testLine" data-nada="${t.id}"><span class="d">${mdLabel(t.date)}</span>
+        <span class="sj">No.${show(t.no)}　国${show(t.koku)}・算${show(t.san)}・理${show(t.ri)}</span>
+        <span class="sc">${total}点</span></div>`;
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-nada]').forEach(el => el.onclick = () => openNada(db.nadago.find(x => x.id === el.dataset.nada)));
+  }
+}
+
+// ---------- 公開：詳細・入力 ----------
+let editingKokai = null;
+function openDetail(id) {
+  const k = db.kokai.find(x => x.id === id);
+  if (!k) return;
+  $('detTitle').textContent = ymLabel(k.ym) + ' 公開学力テスト';
+  const kv = (kk, vv) => `<div class="kv"><span class="k">${kk}</span><span class="v">${vv}</span></div>`;
+  let h = '';
+  if (k.class) h += kv('教室・クラス', k.class);
+  const subj = (name, o, rankName) => {
+    if (!o) return '';
+    let s = '';
+    if (o.dev != null) s += kv(name + ' 偏差値', o.dev);
+    if (o.score != null) s += kv(name + ' 得点', o.score + '点');
+    if (o.rank != null) s += kv(name + ' 全体順位', o.rank + '位');
+    return s;
+  };
+  h += subj('国語', k.koku) + subj('算数', k.san) + subj('理科', k.ri);
+  if (k.avg3 && k.avg3.dev != null) h += kv('3科 偏差値', k.avg3.dev);
+  if (k.rank3) h += kv('3科 順位', k.rank3);
+  if (k.avg2 && k.avg2.dev != null) h += kv('2科 偏差値', k.avg2.dev);
+  if (k.rank2) h += kv('2科 順位', k.rank2);
+  if (k.kijutsu && (k.kijutsu.dev != null || k.kijutsu.score != null)) {
+    if (k.kijutsu.dev != null) h += kv('国語記述 偏差値', k.kijutsu.dev);
+    if (k.kijutsu.score != null) h += kv('国語記述 得点', k.kijutsu.score + '点');
+  }
+  $('detBody').innerHTML = h || '<p class="emptyMsg">くわしいデータがありません</p>';
+  $('detEdit').onclick = () => { closeAll(); openKokaiForm(k); };
+  $('detSheet').classList.add('open');
+}
+
+function openKokaiForm(k) {
+  editingKokai = k ? k.id : null;
+  $('kokaiTitle').textContent = k ? '公開学力テストを編集' : '公開学力テストを記録';
+  $('kYm').value = k ? k.ym : new Date().toISOString().slice(0, 7);
+  $('kClass').value = k ? (k.class || '') : '';
+  const set = (id, v) => $(id).value = v == null ? '' : v;
+  set('kKokuDev', k && k.koku && k.koku.dev); set('kKokuScore', k && k.koku && k.koku.score); set('kKokuRank', k && k.koku && k.koku.rank);
+  set('kSanDev', k && k.san && k.san.dev); set('kSanScore', k && k.san && k.san.score); set('kSanRank', k && k.san && k.san.rank);
+  set('kRiDev', k && k.ri && k.ri.dev); set('kRiScore', k && k.ri && k.ri.score); set('kRiRank', k && k.ri && k.ri.rank);
+  set('k3Dev', k && k.avg3 && k.avg3.dev); $('k3Rank').value = k ? (k.rank3 || '') : '';
+  set('k2Dev', k && k.avg2 && k.avg2.dev); $('k2Rank').value = k ? (k.rank2 || '') : '';
+  set('kKijDev', k && k.kijutsu && k.kijutsu.dev); set('kKijScore', k && k.kijutsu && k.kijutsu.score);
+  $('kokaiDelete').style.display = k ? '' : 'none';
+  $('kokaiSheet').classList.add('open');
+}
+$('kokaiSave').onclick = () => {
+  const ym = $('kYm').value;
+  if (!ym) { alert('実施月を入れてください'); return; }
+  const item = {
+    id: editingKokai || uid(), ym, class: $('kClass').value.trim(),
+    koku: { dev: num($('kKokuDev').value), score: num($('kKokuScore').value), rank: num($('kKokuRank').value) },
+    san: { dev: num($('kSanDev').value), score: num($('kSanScore').value), rank: num($('kSanRank').value) },
+    ri: { dev: num($('kRiDev').value), score: num($('kRiScore').value), rank: num($('kRiRank').value) },
+    avg3: { dev: num($('k3Dev').value) }, rank3: $('k3Rank').value.trim(),
+    avg2: { dev: num($('k2Dev').value) }, rank2: $('k2Rank').value.trim(),
+    kijutsu: { dev: num($('kKijDev').value), score: num($('kKijScore').value) },
+  };
+  db.kokai = db.kokai.filter(x => x.id !== item.id && x.ym !== ym);
+  db.kokai.push(item);
+  editingKokai = null;
+  save(); closeAll(); render();
+};
+$('kokaiDelete').onclick = () => {
+  if (!editingKokai) return;
+  if (!confirm('この月の記録を削除しますか？')) return;
+  db.kokai = db.kokai.filter(x => x.id !== editingKokai);
+  editingKokai = null;
+  save(); closeAll(); render();
+};
+
+// ---------- 復習テスト ----------
+let editingFuku = null;
+function openFuku(t) {
+  editingFuku = t ? t.id : null;
+  $('fukuTitle').textContent = t ? '復習テストを編集' : '復習テストを記録';
+  $('fDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('fSubj').value = t ? t.subject : '算数';
+  $('fNo').value = t && t.no != null ? t.no : '';
+  $('fScore').value = t && t.score != null ? t.score : '';
+  $('fukuDelete').style.display = t ? '' : 'none';
+  $('fukuSheet').classList.add('open');
+}
+$('fukuSave').onclick = () => {
+  const date = $('fDate').value, score = num($('fScore').value);
+  if (!date || score == null) { alert('日付と点数を入れてください'); return; }
+  const item = { id: editingFuku || uid(), date, subject: $('fSubj').value, no: num($('fNo').value), score };
+  db.fukushu = db.fukushu.filter(x => x.id !== item.id);
+  db.fukushu.push(item);
+  editingFuku = null;
+  save(); closeAll(); render();
+};
+$('fukuDelete').onclick = () => {
+  if (!editingFuku) return;
+  db.fukushu = db.fukushu.filter(x => x.id !== editingFuku);
+  editingFuku = null;
+  save(); closeAll(); render();
+};
+
+// ---------- 最レ ----------
+let editingSaire = null;
+function openSaire(t) {
+  editingSaire = t ? t.id : null;
+  $('saireTitle').textContent = t ? '最レ算数を編集' : '最レ算数を記録';
+  $('sDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('sNo').value = t && t.no != null ? t.no : '';
+  $('sKeisan').value = t && t.keisan != null ? t.keisan : '';
+  $('sFukushu').value = t && t.fukushu != null ? t.fukushu : '';
+  $('saireDelete').style.display = t ? '' : 'none';
+  $('saireSheet').classList.add('open');
+}
+$('saireSave').onclick = () => {
+  const date = $('sDate').value;
+  if (!date) { alert('日付を入れてください'); return; }
+  const item = { id: editingSaire || uid(), date, no: num($('sNo').value), keisan: num($('sKeisan').value), fukushu: num($('sFukushu').value) };
+  db.saire = db.saire.filter(x => x.id !== item.id);
+  db.saire.push(item);
+  editingSaire = null;
+  save(); closeAll(); render();
+};
+$('saireDelete').onclick = () => {
+  if (!editingSaire) return;
+  db.saire = db.saire.filter(x => x.id !== editingSaire);
+  editingSaire = null;
+  save(); closeAll(); render();
+};
+
+// ---------- 灘合 ----------
+let editingNada = null;
+function openNada(t) {
+  editingNada = t ? t.id : null;
+  $('nadaTitle').textContent = t ? '灘中合格特訓を編集' : '灘中合格特訓を記録';
+  $('nDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('nNo').value = t && t.no != null ? t.no : '';
+  $('nKoku').value = t && t.koku != null ? t.koku : '';
+  $('nSan').value = t && t.san != null ? t.san : '';
+  $('nRi').value = t && t.ri != null ? t.ri : '';
+  $('nadaDelete').style.display = t ? '' : 'none';
+  $('nadaSheet').classList.add('open');
+}
+$('nadaSave').onclick = () => {
+  const date = $('nDate').value;
+  if (!date) { alert('日付を入れてください'); return; }
+  const item = { id: editingNada || uid(), date, no: num($('nNo').value), koku: num($('nKoku').value), san: num($('nSan').value), ri: num($('nRi').value) };
+  db.nadago = db.nadago.filter(x => x.id !== item.id);
+  db.nadago.push(item);
+  editingNada = null;
+  save(); closeAll(); render();
+};
+$('nadaDelete').onclick = () => {
+  if (!editingNada) return;
+  db.nadago = db.nadago.filter(x => x.id !== editingNada);
+  editingNada = null;
+  save(); closeAll(); render();
+};
+
+// ---------- ナビ ----------
+document.querySelectorAll('#topBar .tab').forEach(b => {
+  b.onclick = () => {
+    tab = b.dataset.tab;
+    document.querySelectorAll('#topBar .tab').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  };
+});
+$('fab').onclick = () => {
+  if (tab === 'kokai') openKokaiForm(null);
+  else if (tab === 'fukushu') openFuku(null);
+  else if (tab === 'saire') openSaire(null);
+  else openNada(null);
+};
+$('aiFmtBtn').onclick = () => $('aiFmtSheet').classList.add('open');
+$('aiFmtCopy').onclick = async () => {
+  const text = $('aiFmtPre').textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    $('aiFmtCopy').textContent = '✅ コピーしました';
+  } catch (e) {
+    // クリップボードAPIが使えない環境向けの保険
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); ta.remove();
+    $('aiFmtCopy').textContent = '✅ コピーしました';
+  }
+  setTimeout(() => { $('aiFmtCopy').textContent = '📋 指示文をコピー'; }, 1800);
+};
+function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open')); }
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = closeAll);
+document.querySelectorAll('.overlay').forEach(o =>
+  o.addEventListener('click', e => { if (e.target === e.currentTarget) closeAll(); }));
+
+render();
+</script>
+</body>
+</html>

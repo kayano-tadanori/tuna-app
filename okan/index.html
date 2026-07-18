@@ -192,14 +192,14 @@
       </span>
       <span class="arrow">›</span>
     </a>
-    <div class="card soon">
+    <a class="card active" href="seiseki.html">
       <span class="icon">📊</span>
       <span class="txt">
         <span class="name">成績管理</span>
-        <span class="desc">テストの点数・偏差値の記録とグラフ</span>
+        <span class="desc">公開テストの偏差値グラフ・復習テスト・最レ・灘合の記録</span>
       </span>
-      <span class="badge">準備中</span>
-    </div>
+      <span class="arrow">›</span>
+    </a>
     <a class="card active" href="prints.html">
       <span class="icon">🗂</span>
       <span class="txt">
@@ -244,6 +244,9 @@
       <p style="font-size:11px;color:#94a3b8;margin:4px 0 8px;line-height:1.7">書き出したファイルをLINEなどで送り、相手のアプリで取り込むと、スケジュールやプリントが合体します（同じものは新しい方で上書き）</p>
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
         <input type="checkbox" id="expSched" checked style="width:19px;height:19px;accent-color:#db2777"> スケジュール・やること・子供の名前
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
+        <input type="checkbox" id="expSeiseki" checked style="width:19px;height:19px;accent-color:#db2777"> 成績（公開テスト・復習テストなど）
       </label>
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0 12px">
         <input type="checkbox" id="expPrints" style="width:19px;height:19px;accent-color:#db2777"> 保管したプリント（画像・ファイルが大きくなります）
@@ -371,11 +374,14 @@ function b64ToBlob(b64, type) {
   return new Blob([u], { type: type || 'image/png' });
 }
 
-async function buildExportObj(withSched, withPrints) {
+async function buildExportObj(withSched, withPrints, withSeiseki) {
   const obj = { app: 'chuju-mama-banso', ver: 1, date: new Date().toISOString().slice(0, 10) };
   if (withSched) {
     try { obj.sched = JSON.parse(localStorage.getItem('okan_sched_v1')) || null; } catch (e) { obj.sched = null; }
     try { obj.children = JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { obj.children = []; }
+  }
+  if (withSeiseki) {
+    try { obj.seiseki = JSON.parse(localStorage.getItem('okan_seiseki_v1')) || null; } catch (e) { obj.seiseki = null; }
   }
   if (withPrints) {
     obj.prints = [];
@@ -419,6 +425,23 @@ async function importDataObj(obj) {
     localStorage.setItem(CHILDREN_KEY, JSON.stringify(merged));
     result.children = merged.length;
   }
+  if (obj.seiseki) {
+    let cur;
+    try { cur = JSON.parse(localStorage.getItem('okan_seiseki_v1')) || null; } catch (e) { cur = null; }
+    if (!cur) cur = {};
+    for (const k of ['kokai', 'fukushu', 'saire', 'nadago']) {
+      if (!Array.isArray(cur[k])) cur[k] = [];
+      for (const it of (obj.seiseki[k] || [])) {
+        // 公開テストは「同じ月」を上書き、その他はidで上書き
+        const i = k === 'kokai'
+          ? cur[k].findIndex(x => x.ym === it.ym)
+          : cur[k].findIndex(x => x.id === it.id);
+        if (i >= 0) cur[k][i] = it; else cur[k].push(it);
+        result.seiseki = (result.seiseki || 0) + 1;
+      }
+    }
+    localStorage.setItem('okan_seiseki_v1', JSON.stringify(cur));
+  }
   if (obj.prints) {
     for (const p of obj.prints) {
       await idbPutPrint({
@@ -436,11 +459,12 @@ async function importDataObj(obj) {
 document.getElementById('expBtn').onclick = async () => {
   const withSched = document.getElementById('expSched').checked;
   const withPrints = document.getElementById('expPrints').checked;
-  if (!withSched && !withPrints) { alert('書き出す内容を選んでください'); return; }
+  const withSeiseki = document.getElementById('expSeiseki').checked;
+  if (!withSched && !withPrints && !withSeiseki) { alert('書き出す内容を選んでください'); return; }
   const btn = document.getElementById('expBtn');
   btn.textContent = '⏳ 書き出し中…';
   try {
-    const obj = await buildExportObj(withSched, withPrints);
+    const obj = await buildExportObj(withSched, withPrints, withSeiseki);
     const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
     const name = `中受伴走データ_${obj.date.replace(/-/g, '')}.json`;
     const file = new File([blob], name, { type: 'application/json' });
@@ -469,7 +493,7 @@ document.getElementById('impDataFile').onchange = async e => {
   try {
     const obj = JSON.parse(await f.text());
     const r = await importDataObj(obj);
-    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚`);
+    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件`);
   } catch (err) {
     console.error(err);
     alert('取り込みに失敗しました：' + err.message);
