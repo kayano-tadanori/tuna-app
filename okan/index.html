@@ -259,8 +259,10 @@
       <button class="setSave" id="impPasteBtn" style="background:#7c3aed;margin-top:8px">📋 貼り付けて取り込む（ファイル保存できない時）</button>
       <div id="pasteArea" style="display:none;margin-top:8px">
         <textarea id="pasteBox" placeholder="コピーしたデータをここに長押し→ペースト" style="width:100%;height:110px;padding:10px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:12px;font-family:inherit;box-sizing:border-box"></textarea>
-        <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:6px">この内容を取り込む</button>
+        <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
+        <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v25</p>
     </div>
   </div>
 </div>
@@ -518,19 +520,45 @@ document.getElementById('impPasteBtn').onclick = async () => {
   } catch (e) { /* 手動ペーストしてもらう */ }
   document.getElementById('pasteBox').focus();
 };
-document.getElementById('pasteGo').onclick = async () => {
-  const txt = document.getElementById('pasteBox').value.replace(/^\uFEFF/, '').trim();
-  if (!txt) { alert('先にコピーしたデータを貼り付けてください'); return; }
+function setPasteStatus(msg, kind) {
+  const p = document.getElementById('pasteStatus');
+  p.textContent = msg;
+  p.style.color = kind === 'ok' ? '#16a34a' : kind === 'ng' ? '#ef4444' : '#64748b';
+}
+async function doPasteImport(fromAuto) {
+  const box = document.getElementById('pasteBox');
+  const txt = box.value.replace(/^\uFEFF/, '').trim();
+  if (!txt) {
+    if (!fromAuto) setPasteStatus('まだ何も貼り付けられていません。枠を長押し→「ペースト」してください', 'ng');
+    return;
+  }
+  let obj;
   try {
-    const r = await importDataObj(JSON.parse(txt));
-    document.getElementById('pasteBox').value = '';
-    document.getElementById('pasteArea').style.display = 'none';
-    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件`);
+    obj = JSON.parse(txt);
+  } catch (e) {
+    // 自動判定中は貼り付け途中の可能性があるので静かに待つ
+    if (fromAuto) setPasteStatus('貼り付けを確認中…', '');
+    else setPasteStatus('❌ 内容が途中で切れているか、データ以外の文字が混ざっています。もう一度「データをコピー」からやり直してください', 'ng');
+    return;
+  }
+  try {
+    const r = await importDataObj(obj);
+    box.value = '';
+    setPasteStatus(`✅ 取り込みました！ 成績${r.seiseki || 0}件・スケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件。ホームに戻って成績管理を開いてください`, 'ok');
   } catch (err) {
     console.error(err);
-    alert('取り込みに失敗しました：' + err.message);
+    setPasteStatus('❌ 取り込みに失敗しました：' + err.message, 'ng');
   }
-};
+}
+document.getElementById('pasteGo').onclick = () => doPasteImport(false);
+document.getElementById('pasteBox').addEventListener('input', () => {
+  clearTimeout(window._pasteTimer);
+  window._pasteTimer = setTimeout(() => doPasteImport(true), 500);
+});
+window.addEventListener('error', e => {
+  const area = document.getElementById('pasteArea');
+  if (area && area.style.display !== 'none') setPasteStatus('❌ アプリ内エラー：' + (e.message || '不明'), 'ng');
+});
 
 // ---------- 最新版に更新 ----------
 document.getElementById('refreshBtn').onclick = async () => {
