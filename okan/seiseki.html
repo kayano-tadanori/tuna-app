@@ -72,6 +72,10 @@
   .rowCard .arrow { color: #cbd5e1; font-weight: 800; }
   .scoreBad { color: #dc2626 !important; }
   .emptyMsg { text-align: center; color: #94a3b8; font-size: 13px; padding: 30px 10px; line-height: 1.9; }
+  .abLine { font-size: 12.5px; font-weight: 700; color: #64748b; margin: 5px 0; line-height: 1.5; }
+  .abLine.good { color: #059669; }
+  .abLine.bad { color: #dc2626; }
+  .abLine.ok { color: #94a3b8; }
 
   .testLine {
     display: flex; align-items: center; gap: 8px;
@@ -153,6 +157,7 @@
   <button class="tab" data-tab="fukushu">復習テスト</button>
   <button class="tab" data-tab="saire">最レ算数</button>
   <button class="tab" data-tab="nadago">灘中合格</button>
+  <button class="tab" data-tab="ab">⚖️クラス替え</button>
   <span class="grow"></span>
   <button id="aiFmtBtn">🤖 AI入力</button>
 </div>
@@ -424,6 +429,129 @@ function renderGraph(list) {
     <div class="legend">${legend}<span><i style="background:#f59e0b"></i>${GOAL_SCHOOL.slice(0, 8)}ライン</span></div></div>`;
 }
 
+// ---------- A表/B表（クラス替えシミュレーション） ----------
+// 基準値：教育相談スライドより（非公表のおおまかな目安・幅±10程度・社会除く）
+const AB_TH = {
+  V: { down: { 4: 310, 5: 305, 6: 265 }, downTo: 'S', v1: 350 },   // V内：B表350↑でV1昇格（ユーザー提供）
+  S: { up: { 4: 330, 5: 325, 6: 295 }, upTo: 'V', down: { 2: 260, 3: 295, 4: 280, 5: 265, 6: 230 }, downTo: 'H' },
+  H: { up: { 2: 300, 3: 310, 4: 300, 5: 290, 6: 260 }, upTo: 'S' }
+};
+
+// その月のA表：復習テスト（前月16日〜当月15日）の教科別平均→全体平均 ＋ 公開の平均点
+function aRow(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  const p = new Date(y, m - 2, 16);
+  const from = `${p.getFullYear()}-${String(p.getMonth() + 1).padStart(2, '0')}-16`;
+  const to = ym + '-15';
+  const tests = db.fukushu.filter(t => t.date >= from && t.date <= to && t.score != null && t.score !== '');
+  const bySubj = {};
+  for (const t of tests) {
+    const s = t.subject || 'その他';
+    (bySubj[s] = bySubj[s] || []).push(+t.score);
+  }
+  const subjAvgs = Object.entries(bySubj).map(([s, arr]) => [s, arr.reduce((a, b) => a + b, 0) / arr.length]);
+  const fuku = subjAvgs.length ? subjAvgs.reduce((a, x) => a + x[1], 0) / subjAvgs.length : null;
+  const k = db.kokai.find(x => x.ym === ym);
+  let kAvg = null;
+  if (k) {
+    const sc = [k.koku, k.san, k.ri].map(o => o && o.score).filter(v => v != null && v !== '');
+    if (sc.length) kAvg = sc.reduce((a, b) => a + (+b), 0) / sc.length;
+  }
+  const total = (fuku != null && kAvg != null) ? fuku + kAvg : null;
+  return { ym, fuku, kAvg, total, subjAvgs, count: tests.length };
+}
+
+function abMonths() {
+  const set = new Set(db.kokai.map(k => k.ym));
+  for (const t of db.fukushu) {
+    if (!t.date) continue;
+    const d = t.date.slice(8, 10);
+    if (+d <= 15) set.add(t.date.slice(0, 7));
+    else {
+      const [y, m] = t.date.slice(0, 7).split('-').map(Number);
+      const n = new Date(y, m, 1);
+      set.add(`${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`);
+    }
+  }
+  return [...set].sort();
+}
+
+function prevYm(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  const d = new Date(y, m - 2, 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function renderAB() {
+  const grade = +(localStorage.getItem('okan_ab_grade') || 5);
+  const cls = localStorage.getItem('okan_ab_class') || 'V';
+  const months = abMonths();
+  const rows = months.map(aRow);
+  const byYm = {};
+  rows.forEach(r => byYm[r.ym] = r);
+
+  let h = `<div class="graphCard"><h3>⚖️ クラス替えシミュレーション</h3>
+    <div style="display:flex;gap:8px;margin:8px 0">
+      <select class="fInput" id="abGrade" style="flex:1">
+        ${[2, 3, 4, 5, 6].map(g => `<option value="${g}" ${g === grade ? 'selected' : ''}>小${g}</option>`).join('')}
+      </select>
+      <select class="fInput" id="abClass" style="flex:1">
+        ${['V', 'S', 'H'].map(c => `<option ${c === cls ? 'selected' : ''}>${c}クラス</option>`).join('')}
+      </select>
+    </div>
+    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復習テスト平均（前月16日〜当月15日・教科別平均のならし）＋公開の平均点（総合点÷科目数）。B表＝2ヶ月合算でクラス替え判定。基準値は非公表のおおまかな目安（±10点程度・社会除く）です。</p></div>`;
+
+  // B表（判定月＝奇数月：2+3月→3月末、4+5月→5月末…）
+  const th = AB_TH[cls] || {};
+  const bCards = [];
+  for (const ym of [...months].reverse()) {
+    const m = +ym.split('-')[1];
+    if (m % 2 === 0) continue;
+    const cur = byYm[ym], prev = byYm[prevYm(ym)];
+    if (!cur || !prev || cur.total == null || prev.total == null) continue;
+    const b = cur.total + prev.total;
+    let lines = '';
+    if (cls === 'V' && th.v1) {
+      lines += b >= th.v1
+        ? `<div class="abLine good">🎉 V1昇格ライン(${th.v1})を＋${(b - th.v1).toFixed(1)}点クリア！</div>`
+        : `<div class="abLine">V1昇格(${th.v1})まで あと${(th.v1 - b).toFixed(1)}点</div>`;
+    }
+    if (th.up && th.up[grade] != null) {
+      lines += b >= th.up[grade]
+        ? `<div class="abLine good">🎉 ${cls}→${th.upTo}アップ圏（基準${th.up[grade]}を＋${(b - th.up[grade]).toFixed(1)}点）</div>`
+        : `<div class="abLine">${th.upTo}アップ(${th.up[grade]})まで あと${(th.up[grade] - b).toFixed(1)}点</div>`;
+    }
+    if (th.down && th.down[grade] != null) {
+      lines += b <= th.down[grade]
+        ? `<div class="abLine bad">⚠ ${cls}→${th.downTo}ダウン圏（基準${th.down[grade]}）</div>`
+        : `<div class="abLine ok">${th.downTo}ダウンライン(${th.down[grade]})まで 余裕${(b - th.down[grade]).toFixed(1)}点</div>`;
+    }
+    const [jy, jm] = ym.split('-').map(Number);
+    const nx = new Date(jy, jm, 1);
+    bCards.push(`<div class="graphCard"><h3>B表 ${ymLabel(prevYm(ym))}＋${ymLabel(ym)}<span style="font-size:10px;color:#94a3b8;font-weight:700">　${jm}月末判定 → ${nx.getMonth() + 1}月から新クラス</span></h3>
+      <p style="font-size:22px;font-weight:800;color:#db2777;margin:4px 0">${b.toFixed(1)}<span style="font-size:12px;color:#94a3b8"> 点（${prev.total.toFixed(1)}＋${cur.total.toFixed(1)}）</span></p>
+      ${lines}</div>`);
+  }
+  if (bCards.length) {
+    h += `<p class="secLabel">B表（2ヶ月合算・クラス替え判定）</p>` + bCards.slice(0, 6).join('');
+  } else {
+    h += `<p class="emptyMsg">B表を計算するには、となり合う2ヶ月分の<br>復習テストと公開テストの記録が必要です</p>`;
+  }
+
+  // A表（月次）
+  const aCards = [];
+  for (const r of [...rows].reverse()) {
+    if (r.total == null && r.fuku == null && r.kAvg == null) continue;
+    const uchiwake = r.subjAvgs.map(([s, v]) => `${s}${v.toFixed(1)}`).join('・');
+    aCards.push(`<div class="rowCard"><div class="bar"></div><div class="dt">
+      <div class="n">${ymLabel(r.ym)}　${r.total != null ? '総合 ' + r.total.toFixed(1) + '点' : '（データ不足）'}</div>
+      <div class="s">復テ平均 ${r.fuku != null ? r.fuku.toFixed(1) + '点（' + uchiwake + '・' + r.count + '回）' : '記録なし'}／公開平均 ${r.kAvg != null ? r.kAvg.toFixed(1) + '点' : '記録なし'}</div>
+    </div></div>`);
+  }
+  if (aCards.length) h += `<p class="secLabel">A表（月ごとの総合点）</p>` + aCards.slice(0, 14).join('');
+  return h;
+}
+
 // ---------- 表示 ----------
 let tab = 'kokai';
 function render() {
@@ -484,6 +612,15 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-saire]').forEach(el => el.onclick = () => openSaire(db.saire.find(x => x.id === el.dataset.saire)));
+  } else if (tab === 'ab') {
+    v.innerHTML = renderAB();
+    const sync = () => {
+      localStorage.setItem('okan_ab_grade', $('abGrade').value);
+      localStorage.setItem('okan_ab_class', $('abClass').value.replace('クラス', ''));
+      render();
+    };
+    $('abGrade').onchange = sync;
+    $('abClass').onchange = sync;
   } else {
     const list = [...db.nadago].sort((a, b) => b.date.localeCompare(a.date));
     let h = '';
@@ -660,10 +797,12 @@ document.querySelectorAll('#topBar .tab').forEach(b => {
   b.onclick = () => {
     tab = b.dataset.tab;
     document.querySelectorAll('#topBar .tab').forEach(x => x.classList.toggle('on', x === b));
+    $('fab').style.display = b.dataset.tab === 'ab' ? 'none' : '';
     render();
   };
 });
 $('fab').onclick = () => {
+  if (tab === 'ab') return;   // クラス替えタブは自動計算のみ
   if (tab === 'kokai') openKokaiForm(null);
   else if (tab === 'fukushu') openFuku(null);
   else if (tab === 'saire') openSaire(null);
