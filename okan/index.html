@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>中受ママ伴走アプリ</title>
+<title>中受伴走アプリ</title>
 <meta name="description" content="おかん学園 — プリント消しゴム・プリント管理・塾スケジュール・成績管理">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="中受ママ伴走">
+<meta name="apple-mobile-web-app-title" content="中受伴走">
 <meta name="theme-color" content="#db2777">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -160,7 +160,7 @@
 <body>
 <header>
   <div class="spacer"></div>
-  <div class="titleWrap"><div class="t1">中受ママ伴走アプリ</div><div class="t2">おかんと一緒に</div></div>
+  <div class="titleWrap"><div class="t1">中受伴走アプリ</div><div class="t2">おかんと一緒に</div></div>
   <div class="hbtns">
     <button class="hbtn" id="settingsBtn" title="設定">⚙️</button>
     <button class="hbtn" id="refreshBtn" title="最新版に更新">🔄</button>
@@ -442,7 +442,7 @@ document.getElementById('expBtn').onclick = async () => {
   try {
     const obj = await buildExportObj(withSched, withPrints);
     const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
-    const name = `中受ママ伴走データ_${obj.date.replace(/-/g, '')}.json`;
+    const name = `中受伴走データ_${obj.date.replace(/-/g, '')}.json`;
     const file = new File([blob], name, { type: 'application/json' });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file] }).catch(() => {});

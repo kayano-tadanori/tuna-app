@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>中受ママ伴走｜塾スケジュール</title>
+<title>中受伴走｜塾スケジュール</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="中受ママ伴走">
+<meta name="apple-mobile-web-app-title" content="中受伴走">
 <meta name="theme-color" content="#db2777">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -234,22 +234,19 @@
 <div class="overlay" id="evSheet">
   <div class="sheet">
     <div class="sheetHead"><h2 id="evTitle">予定を追加</h2><button class="closeBtn" data-close="evSheet">✕</button></div>
-    <div class="fRow">
-      <div>
-        <p class="fLabel">誰が</p>
-        <select class="fInput" id="evWhoSel"></select>
-        <input class="fInput" id="evWho" placeholder="名前を入力" autocomplete="off" style="display:none;margin-top:6px">
-      </div>
-      <div>
-        <p class="fLabel">科目</p>
-        <select class="fInput" id="evSubj">
-          <option value="">なし</option><option>国語</option><option>算数</option><option>理科</option><option>社会</option>
-        </select>
-      </div>
+    <p class="fLabel">誰が</p>
+    <select class="fInput" id="evWhoSel"></select>
+    <input class="fInput" id="evWho" placeholder="名前を入力" autocomplete="off" style="display:none;margin-top:6px">
+    <p class="fLabel">科目（複数えらべます）</p>
+    <div class="subjChips" id="evSubjChips" style="display:flex;gap:7px;flex-wrap:wrap">
+      <button type="button" class="tab" data-subj="国語">国語</button>
+      <button type="button" class="tab" data-subj="算数">算数</button>
+      <button type="button" class="tab" data-subj="理科">理科</button>
+      <button type="button" class="tab" data-subj="社会">社会</button>
     </div>
     <p class="fLabel">種類</p>
     <select class="fInput" id="evLtype">
-      <option value="">なし</option><option>マスター</option><option>最レ</option><option>公開</option><option>灘合</option>
+      <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option>
       <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
     </select>
     <p class="fLabel">なまえ・メモ（例：遠足／パート13／弁当）</p>
@@ -303,21 +300,18 @@
         <select class="fInput" id="rgNo"><option value="">なし</option></select>
       </div>
     </div>
-    <div class="fRow">
-      <div>
-        <p class="fLabel">科目</p>
-        <select class="fInput" id="rgSubj">
-          <option value="">なし</option><option>国語</option><option>算数</option><option>理科</option><option>社会</option>
-        </select>
-      </div>
-      <div>
-        <p class="fLabel">種類</p>
-        <select class="fInput" id="rgLtype">
-          <option value="">なし</option><option>マスター</option><option>最レ</option><option>公開</option><option>灘合</option>
-          <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
-        </select>
-      </div>
+    <p class="fLabel">科目（複数えらべます）</p>
+    <div class="subjChips" id="rgSubjChips" style="display:flex;gap:7px;flex-wrap:wrap">
+      <button type="button" class="tab" data-subj="国語">国語</button>
+      <button type="button" class="tab" data-subj="算数">算数</button>
+      <button type="button" class="tab" data-subj="理科">理科</button>
+      <button type="button" class="tab" data-subj="社会">社会</button>
     </div>
+    <p class="fLabel">種類</p>
+    <select class="fInput" id="rgLtype">
+      <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option>
+      <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
+    </select>
     <p class="fLabel">メモ・補足（なくてもOK。例：教室が変わる）</p>
     <input class="fInput" id="rgName" placeholder="自由に入力" autocomplete="off">
     <p class="fLabel">曜日</p>
@@ -556,6 +550,16 @@ function setWhoSel(sel, freeInput, who) {
   if ([...sel.options].some(o => o.value === who)) { sel.value = who; freeInput.style.display = 'none'; }
   else { sel.value = '__free'; freeInput.value = who; freeInput.style.display = ''; }
 }
+// 科目チップ（複数選択）：文字列は「算数・国語」のように「・」区切りで保存（旧データの単独値も互換）
+function setSubjChips(wrapId, val) {
+  const set = new Set(String(val || '').split('・').filter(Boolean));
+  document.querySelectorAll('#' + wrapId + ' .tab').forEach(b => b.classList.toggle('on', set.has(b.dataset.subj)));
+}
+function getSubjChips(wrapId) {
+  return [...document.querySelectorAll('#' + wrapId + ' .tab.on')].map(b => b.dataset.subj).join('・');
+}
+document.querySelectorAll('.subjChips .tab').forEach(b => { b.onclick = () => b.classList.toggle('on'); });
+
 function todosDue(dateStr) {
   return db.todos.filter(t => !t.done && t.due === dateStr);
 }
@@ -593,7 +597,7 @@ function renderCal() {
       c.className = 'chipE';
       c.style.background = it.color;
       c.style.color = textOn(it.color);
-      c.textContent = (it.time ? it.time.replace(/^0/, '') + ' ' : '') + labelOf(it) + (it.bento ? '🍱' : '');
+      c.textContent = labelOf(it) + (it.bento ? '🍱' : '');
       cell.appendChild(c);
     });
     const over = items.length - MAX;
@@ -694,7 +698,7 @@ function openEvForm(item, ds) {
   $('evTitle').textContent = item ? '予定を編集' : '予定を追加';
   fillWhoSel($('evWhoSel'), $('evWho'));
   setWhoSel($('evWhoSel'), $('evWho'), item ? (item.who || '') : '');
-  $('evSubj').value = item ? (item.subject || '') : '';
+  setSubjChips('evSubjChips', item ? (item.subject || '') : '');
   $('evLtype').value = item ? (item.ltype || '') : '';
   $('evName').value = item ? item.title : '';
   $('evDate').value = item ? item.date : (ds || selDate);
@@ -709,7 +713,7 @@ function openEvForm(item, ds) {
 
 $('evSave').onclick = () => {
   const title = $('evName').value.trim();
-  const subject = $('evSubj').value, ltype = $('evLtype').value;
+  const subject = getSubjChips('evSubjChips'), ltype = $('evLtype').value;
   const date = $('evDate').value;
   if (!date) { alert('日付を入れてください'); return; }
   if (!title && !subject && !ltype) { alert('科目・種類・メモのどれかを入れてください'); return; }
@@ -794,7 +798,7 @@ function openRegForm(w) {
   $('regFormTitle').textContent = w ? '定期予定を編集' : '定期予定を登録';
   fillWhoSel($('rgWhoSel'), $('rgWho'));
   setWhoSel($('rgWhoSel'), $('rgWho'), w ? (w.who || '') : '');
-  $('rgSubj').value = w ? (w.subject || '') : '';
+  setSubjChips('rgSubjChips', w ? (w.subject || '') : '');
   $('rgLtype').value = w ? (w.ltype || '') : '';
   // 保存済みの受講Noが選択肢に無い場合（旧自由入力）は選択肢に足してから選ぶ
   const noSel = $('rgNo');
@@ -824,7 +828,7 @@ function openRegForm(w) {
 
 $('rgSave').onclick = () => {
   const title = $('rgName').value.trim();
-  const subject = $('rgSubj').value, ltype = $('rgLtype').value;
+  const subject = getSubjChips('rgSubjChips'), ltype = $('rgLtype').value;
   if (!title && !subject && !ltype) { alert('科目・種類・メモのどれかを入れてください'); return; }
   const type = $('rgRepeat').value;
   const repeat = { type };
