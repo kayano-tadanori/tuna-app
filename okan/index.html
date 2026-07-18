@@ -226,7 +226,7 @@
       <h2>⚙️ 設定</h2>
       <button class="closeBtn" id="setClose">✕</button>
     </div>
-    <div style="padding: 10px 18px 20px">
+    <div style="padding: 10px 18px 20px; overflow-y: auto; -webkit-overflow-scrolling: touch">
       <p class="setLabel">お名前（おかんがこの名前で声をかけます）</p>
       <input class="setInput" id="setName" placeholder="例：はなこ" autocomplete="off">
       <p class="setLabel">お子さんの名前（複数いるときはスペースで区切る）</p>
@@ -267,7 +267,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v28</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v29</p>
     </div>
   </div>
 </div>
@@ -534,7 +534,11 @@ document.getElementById('impPasteBtn').onclick = async () => {
     const t = await navigator.clipboard.readText();
     if (t && t.includes('chuju-mama-banso')) document.getElementById('pasteBox').value = t;
   } catch (e) { /* 手動ペーストしてもらう */ }
-  document.getElementById('pasteBox').focus();
+  // 画面外に隠れないよう貼り付け欄までスクロール
+  setTimeout(() => {
+    document.getElementById('pasteBox').scrollIntoView({ block: 'center', behavior: 'smooth' });
+    document.getElementById('pasteBox').focus();
+  }, 60);
 };
 function setPasteStatus(msg, kind) {
   const p = document.getElementById('pasteStatus');
