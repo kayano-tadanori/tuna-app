@@ -1,5 +1,5 @@
-// おかん学園 Service Worker
-const CACHE_NAME = 'okan-gakuen-v17';
+// 中受ママ伴走アプリ Service Worker
+const CACHE_NAME = 'okan-gakuen-v18';
 const ASSETS = [
   './',
   './index.html',

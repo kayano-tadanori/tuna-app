@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>おかん学園</title>
+<title>中受ママ伴走アプリ</title>
 <meta name="description" content="おかん学園 — プリント消しゴム・プリント管理・塾スケジュール・成績管理">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="おかん学園">
+<meta name="apple-mobile-web-app-title" content="中受ママ伴走">
 <meta name="theme-color" content="#db2777">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -150,7 +150,7 @@
 <body>
 <header>
   <div class="spacer"></div>
-  <div class="titleWrap"><div class="t1">おかん学園</div><div class="t2">おうちサポート</div></div>
+  <div class="titleWrap"><div class="t1">中受ママ伴走アプリ</div><div class="t2">おかんと一緒に</div></div>
   <div class="hbtns">
     <button class="hbtn" id="settingsBtn" title="設定">⚙️</button>
     <button class="hbtn" id="refreshBtn" title="最新版に更新">🔄</button>
@@ -223,6 +223,20 @@
       <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
       <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になります</p>
       <button class="setSave" id="setSave">保存する</button>
+
+      <p class="setLabel" style="margin-top:20px;border-top:1px solid #f1f5f9;padding-top:16px">👫 夫婦でデータを共有</p>
+      <p style="font-size:11px;color:#94a3b8;margin:4px 0 8px;line-height:1.7">書き出したファイルをLINEなどで送り、相手のアプリで取り込むと、スケジュールやプリントが合体します（同じものは新しい方で上書き）</p>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
+        <input type="checkbox" id="expSched" checked style="width:19px;height:19px;accent-color:#db2777"> スケジュール・やること・子供の名前
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0 12px">
+        <input type="checkbox" id="expPrints" style="width:19px;height:19px;accent-color:#db2777"> 保管したプリント（画像・ファイルが大きくなります）
+      </label>
+      <div style="display:flex;gap:8px">
+        <button class="setSave" id="expBtn" style="background:#0d9488">📤 書き出す</button>
+        <button class="setSave" id="impDataBtn" style="background:#475569">📥 取り込む</button>
+      </div>
+      <input type="file" id="impDataFile" accept=".json,application/json" hidden>
     </div>
   </div>
 </div>
@@ -281,6 +295,147 @@ document.getElementById('setSave').onclick = () => {
   localStorage.setItem(CHILDREN_KEY, JSON.stringify(kids));
   document.getElementById('setModal').classList.remove('open');
   renderHello();
+};
+
+// ---------- 夫婦間のデータ共有（書き出し／取り込み） ----------
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('okan_prints', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('prints', { keyPath: 'id' });
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+async function idbAllPrints() {
+  const d = await idbOpen();
+  return new Promise((res, rej) => {
+    const q = d.transaction('prints').objectStore('prints').getAll();
+    q.onsuccess = () => res(q.result || []);
+    q.onerror = () => rej(q.error);
+  });
+}
+async function idbPutPrint(rec) {
+  const d = await idbOpen();
+  return new Promise((res, rej) => {
+    const t = d.transaction('prints', 'readwrite');
+    t.objectStore('prints').put(rec);
+    t.oncomplete = res; t.onerror = () => rej(t.error);
+  });
+}
+const blobToB64 = b => new Promise((res, rej) => {
+  const f = new FileReader();
+  f.onload = () => res(String(f.result).split(',')[1]);
+  f.onerror = rej;
+  f.readAsDataURL(b);
+});
+function b64ToBlob(b64, type) {
+  const bin = atob(b64);
+  const u = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return new Blob([u], { type: type || 'image/png' });
+}
+
+async function buildExportObj(withSched, withPrints) {
+  const obj = { app: 'chuju-mama-banso', ver: 1, date: new Date().toISOString().slice(0, 10) };
+  if (withSched) {
+    try { obj.sched = JSON.parse(localStorage.getItem('okan_sched_v1')) || null; } catch (e) { obj.sched = null; }
+    try { obj.children = JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { obj.children = []; }
+  }
+  if (withPrints) {
+    obj.prints = [];
+    for (const r of await idbAllPrints()) {
+      obj.prints.push({
+        id: r.id, subject: r.subject, no: r.no, type: r.type, date: r.date,
+        blob: await blobToB64(r.blob), blobType: r.blob.type,
+        thumb: r.thumb ? await blobToB64(r.thumb) : null, thumbType: r.thumb ? r.thumb.type : null
+      });
+    }
+  }
+  return obj;
+}
+
+async function importDataObj(obj) {
+  if (!obj || obj.app !== 'chuju-mama-banso') throw new Error('このアプリのファイルではありません');
+  const result = { sched: 0, todos: 0, events: 0, prints: 0, children: 0 };
+  if (obj.sched) {
+    let cur;
+    try { cur = JSON.parse(localStorage.getItem('okan_sched_v1')) || null; } catch (e) { cur = null; }
+    if (!cur) cur = { events: [], weekly: [], todos: [] };
+    const mergeBy = (dst, src) => {
+      let n = 0;
+      for (const it of (src || [])) {
+        const i = dst.findIndex(x => x.id === it.id);
+        if (i >= 0) dst[i] = it; else dst.push(it);
+        n++;
+      }
+      return n;
+    };
+    result.sched = mergeBy(cur.weekly, obj.sched.weekly);
+    result.events = mergeBy(cur.events, obj.sched.events);
+    result.todos = mergeBy(cur.todos, obj.sched.todos);
+    localStorage.setItem('okan_sched_v1', JSON.stringify(cur));
+  }
+  if (obj.children && obj.children.length) {
+    let kids;
+    try { kids = JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { kids = []; }
+    const merged = [...new Set([...kids, ...obj.children])];
+    localStorage.setItem(CHILDREN_KEY, JSON.stringify(merged));
+    result.children = merged.length;
+  }
+  if (obj.prints) {
+    for (const p of obj.prints) {
+      await idbPutPrint({
+        id: p.id, subject: p.subject, no: p.no, type: p.type, date: p.date,
+        blob: b64ToBlob(p.blob, p.blobType),
+        thumb: p.thumb ? b64ToBlob(p.thumb, p.thumbType) : null
+      });
+      result.prints++;
+    }
+  }
+  return result;
+}
+
+document.getElementById('expBtn').onclick = async () => {
+  const withSched = document.getElementById('expSched').checked;
+  const withPrints = document.getElementById('expPrints').checked;
+  if (!withSched && !withPrints) { alert('書き出す内容を選んでください'); return; }
+  const btn = document.getElementById('expBtn');
+  btn.textContent = '⏳ 書き出し中…';
+  try {
+    const obj = await buildExportObj(withSched, withPrints);
+    const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
+    const name = `中受ママ伴走データ_${obj.date.replace(/-/g, '')}.json`;
+    const file = new File([blob], name, { type: 'application/json' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file] }).catch(() => {});
+    } else {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+  } catch (e) {
+    console.error(e);
+    alert('書き出しに失敗しました');
+  } finally {
+    btn.textContent = '📤 書き出す';
+  }
+};
+
+document.getElementById('impDataBtn').onclick = () => document.getElementById('impDataFile').click();
+document.getElementById('impDataFile').onchange = async e => {
+  const f = e.target.files[0];
+  e.target.value = '';
+  if (!f) return;
+  try {
+    const obj = JSON.parse(await f.text());
+    const r = await importDataObj(obj);
+    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚`);
+  } catch (err) {
+    console.error(err);
+    alert('取り込みに失敗しました：' + err.message);
+  }
 };
 
 // ---------- 最新版に更新 ----------
