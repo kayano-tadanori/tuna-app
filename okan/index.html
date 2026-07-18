@@ -255,7 +255,12 @@
         <button class="setSave" id="expBtn" style="background:#0d9488">📤 書き出す</button>
         <button class="setSave" id="impDataBtn" style="background:#475569">📥 取り込む</button>
       </div>
-      <input type="file" id="impDataFile" accept=".json,application/json" hidden>
+      <input type="file" id="impDataFile" accept=".json,.txt,text/plain,application/json" hidden>
+      <button class="setSave" id="impPasteBtn" style="background:#7c3aed;margin-top:8px">📋 貼り付けて取り込む（ファイル保存できない時）</button>
+      <div id="pasteArea" style="display:none;margin-top:8px">
+        <textarea id="pasteBox" placeholder="コピーしたデータをここに長押し→ペースト" style="width:100%;height:110px;padding:10px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:12px;font-family:inherit;box-sizing:border-box"></textarea>
+        <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:6px">この内容を取り込む</button>
+      </div>
     </div>
   </div>
 </div>
@@ -491,8 +496,35 @@ document.getElementById('impDataFile').onchange = async e => {
   e.target.value = '';
   if (!f) return;
   try {
-    const obj = JSON.parse(await f.text());
+    const obj = JSON.parse((await f.text()).replace(/^\uFEFF/, '').trim());
     const r = await importDataObj(obj);
+    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件`);
+  } catch (err) {
+    console.error(err);
+    alert('取り込みに失敗しました：' + err.message);
+  }
+};
+
+// ---------- 貼り付けて取り込む（iPhoneでファイル保存がうまくいかない時の道）----------
+document.getElementById('impPasteBtn').onclick = async () => {
+  const area = document.getElementById('pasteArea');
+  const opening = area.style.display === 'none';
+  area.style.display = opening ? '' : 'none';
+  if (!opening) return;
+  // クリップボードにこのアプリのデータがあれば自動で入れる（権限NGなら手動ペースト）
+  try {
+    const t = await navigator.clipboard.readText();
+    if (t && t.includes('chuju-mama-banso')) document.getElementById('pasteBox').value = t;
+  } catch (e) { /* 手動ペーストしてもらう */ }
+  document.getElementById('pasteBox').focus();
+};
+document.getElementById('pasteGo').onclick = async () => {
+  const txt = document.getElementById('pasteBox').value.replace(/^\uFEFF/, '').trim();
+  if (!txt) { alert('先にコピーしたデータを貼り付けてください'); return; }
+  try {
+    const r = await importDataObj(JSON.parse(txt));
+    document.getElementById('pasteBox').value = '';
+    document.getElementById('pasteArea').style.display = 'none';
     alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件`);
   } catch (err) {
     console.error(err);
