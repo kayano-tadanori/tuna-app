@@ -450,7 +450,8 @@ function aRow(ym) {
     (bySubj[s] = bySubj[s] || []).push(+t.score);
   }
   const subjAvgs = Object.entries(bySubj).map(([s, arr]) => [s, arr.reduce((a, b) => a + b, 0) / arr.length]);
-  const fuku = subjAvgs.length ? subjAvgs.reduce((a, x) => a + x[1], 0) / subjAvgs.length : null;
+  // 復テ平均＝期間内テストの単純平均（実物のA表個人票で確認済み。教科平均のならしではない）
+  const fuku = tests.length ? tests.reduce((a, t) => a + (+t.score), 0) / tests.length : null;
   const k = db.kokai.find(x => x.ym === ym);
   let kAvg = null;
   if (k) {
@@ -499,7 +500,7 @@ function renderAB() {
         ${['V', 'S', 'H'].map(c => `<option ${c === cls ? 'selected' : ''}>${c}クラス</option>`).join('')}
       </select>
     </div>
-    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復習テスト平均（前月16日〜当月15日・教科別平均のならし）＋公開の平均点（総合点÷科目数）。B表＝2ヶ月合算でクラス替え判定。基準値は非公表のおおまかな目安（±10点程度・社会除く）です。</p></div>`;
+    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復テ平均（前月16日〜当月15日の復習テストの単純平均）＋公開の平均点（総合点÷科目数）＝200点満点。B表＝2ヶ月合算（奇数月末判定→偶数月から新クラス）。基準値は非公表のおおまかな目安（±10点程度）です。</p></div>`;
 
   // B表（判定月＝奇数月：2+3月→3月末、4+5月→5月末…）
   const th = AB_TH[cls] || {};
