@@ -200,6 +200,19 @@
       <div><p class="fLabel">得点</p><input class="fInput" type="number" id="kRiScore"></div>
       <div><p class="fLabel">順位</p><input class="fInput" type="number" id="kRiRank"></div>
     </div>
+    <div id="shaFields">
+      <p class="subjHead">社会</p>
+      <div class="fRow">
+        <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="kShaDev"></div>
+        <div><p class="fLabel">得点</p><input class="fInput" type="number" id="kShaScore"></div>
+        <div><p class="fLabel">順位</p><input class="fInput" type="number" id="kShaRank"></div>
+      </div>
+      <p class="subjHead">4科</p>
+      <div class="fRow">
+        <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="k4Dev"></div>
+        <div><p class="fLabel">順位（例：40/1500）</p><input class="fInput" id="k4Rank" autocomplete="off"></div>
+      </div>
+    </div>
     <p class="subjHead">3科</p>
     <div class="fRow">
       <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="k3Dev"></div>
@@ -336,6 +349,8 @@
         "koku": { "dev": 58.3, "score": 78, "rank": 210 },
         "san":  { "dev": 65.1, "score": 92, "rank": 45 },
         "ri":   { "dev": 60.2, "score": 80, "rank": 120 },
+        "sha":  { "dev": 57.0, "score": 70, "rank": 300 },
+        "avg4": { "dev": 61.0 }, "rank4": "40/1500",
         "avg3": { "dev": 62.0 }, "rank3": "27/2884",
         "avg2": { "dev": 61.5 }, "rank2": "131/2884",
         "kijutsu": { "dev": 55.0, "score": 40 }
@@ -357,7 +372,7 @@
 }
 
 ルール:
-- kokai＝公開学力テスト（月ごと1件）。ym は "YYYY-MM"。dev=偏差値、score=得点、rank=順位。rank3/rank2 は「順位/受験者数」の文字列。kijutsu＝国語記述。
+- kokai＝公開学力テスト（月ごと1件）。ym は "YYYY-MM"。dev=偏差値、score=得点、rank=順位。rank4/rank3/rank2 は「順位/受験者数」の文字列。kijutsu＝国語記述。sha（社会）と avg4/rank4（4科）は成績表にあるときだけ入れる（無ければ省略）。
 - fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
 - saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
 - nadago＝灘中合格特訓。koku/san/ri は各教科の得点。
@@ -381,6 +396,10 @@ const $ = id => document.getElementById(id);
 const KEY = 'okan_seiseki_v1';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const DARK = document.documentElement.classList.contains('otonDark');
+// ⚙️設定「成績に表示する受講講座」（未設定は全部表示。社会（4科）だけは既定OFF）
+let courseCfg; try { courseCfg = JSON.parse(localStorage.getItem('okan_courses')) || {}; } catch (e) { courseCfg = {}; }
+const courseOn = k => courseCfg[k] !== false;
+const SHAKAI = courseCfg.shakai === true;
 
 let db = load();
 function load() {
@@ -409,13 +428,16 @@ function renderGraph(list) {
   if (list.length < 2) return '';
   const W = 360, H = 190, L = 30, R = 8, T = 14, B = 24;
   const iw = W - L - R, ih = H - T - B;
+  const hasSha = SHAKAI || list.some(k => (k.sha && k.sha.dev != null) || (k.avg4 && k.avg4.dev != null));
   const series = [
     { key: 'koku', label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.dev },
     { key: 'san', label: '算数', color: '#3b82f6', get: k => k.san && k.san.dev },
     { key: 'ri', label: '理科', color: '#10b981', get: k => k.ri && k.ri.dev },
-    { key: 'avg3', label: '3科平均', color: DARK ? '#f9e2af' : '#9333ea', get: k => k.avg3 && k.avg3.dev, bold: true },
-    { key: 'avg2', label: '2科平均', color: DARK ? '#7dd3fc' : '#0284c7', get: k => k.avg2 && k.avg2.dev, bold: true },
   ];
+  if (hasSha) series.push({ key: 'sha', label: '社会', color: '#f97316', get: k => k.sha && k.sha.dev });
+  if (hasSha) series.push({ key: 'avg4', label: '4科平均', color: DARK ? '#fda4af' : '#be123c', get: k => k.avg4 && k.avg4.dev, bold: true });
+  series.push({ key: 'avg3', label: '3科平均', color: DARK ? '#f9e2af' : '#9333ea', get: k => k.avg3 && k.avg3.dev, bold: true });
+  series.push({ key: 'avg2', label: '2科平均', color: DARK ? '#7dd3fc' : '#0284c7', get: k => k.avg2 && k.avg2.dev, bold: true });
   let vals = [];
   for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
   if (!vals.length) return '';
@@ -550,13 +572,17 @@ function renderKokaiRankGraph(list) {
   const iw = W - L - R, ih = H - T - B;
   const p3 = k => { const m = /^(\d+)/.exec(k.rank3 || ''); return m ? +m[1] : null; };
   const p2 = k => { const m = /^(\d+)/.exec(k.rank2 || ''); return m ? +m[1] : null; };
+  const p4 = k => { const m = /^(\d+)/.exec(k.rank4 || ''); return m ? +m[1] : null; };
+  const hasSha = SHAKAI || list.some(k => (k.sha && k.sha.rank != null) || k.rank4);
   const series = [
     { label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.rank },
     { label: '算数', color: '#3b82f6', get: k => k.san && k.san.rank },
     { label: '理科', color: '#10b981', get: k => k.ri && k.ri.rank },
-    { label: '3科', color: DARK ? '#f9e2af' : '#9333ea', get: p3, bold: true },
-    { label: '2科', color: DARK ? '#7dd3fc' : '#0284c7', get: p2, bold: true }
   ];
+  if (hasSha) series.push({ label: '社会', color: '#f97316', get: k => k.sha && k.sha.rank });
+  if (hasSha) series.push({ label: '4科', color: DARK ? '#fda4af' : '#be123c', get: p4, bold: true });
+  series.push({ label: '3科', color: DARK ? '#f9e2af' : '#9333ea', get: p3, bold: true });
+  series.push({ label: '2科', color: DARK ? '#7dd3fc' : '#0284c7', get: p2, bold: true });
   let vals = [];
   for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
   if (!vals.length) return '';
@@ -799,12 +825,15 @@ function render() {
     else {
       h += '<p class="secLabel">つきごとの記録（タップでくわしく）</p>';
       for (const k of [...list].reverse()) {
-        const dev3 = k.avg3 && k.avg3.dev != null ? k.avg3.dev : null;
+        const big = k.avg4 && k.avg4.dev != null ? k.avg4.dev
+          : k.avg3 && k.avg3.dev != null ? k.avg3.dev
+          : k.avg2 && k.avg2.dev != null ? k.avg2.dev : null;
+        const sha = k.sha && k.sha.dev != null ? '・社' + k.sha.dev : '';
         h += `<div class="rowCard" data-kokai="${k.id}">
           <div class="bar"></div>
           <div class="dt"><div class="n">${ymLabel(k.ym)}</div>
-          <div class="s">国${show(k.koku && k.koku.dev)}・算${show(k.san && k.san.dev)}・理${show(k.ri && k.ri.dev)}${k.rank3 ? '・3科 ' + k.rank3 + '位' : ''}${k.class ? '・' + k.class : ''}</div></div>
-          <div class="big">${dev3 != null ? dev3 : '—'}</div><span class="arrow">›</span></div>`;
+          <div class="s">国${show(k.koku && k.koku.dev)}・算${show(k.san && k.san.dev)}・理${show(k.ri && k.ri.dev)}${sha}${k.rank4 ? '・4科 ' + k.rank4 + '位' : k.rank3 ? '・3科 ' + k.rank3 + '位' : k.rank2 ? '・2科 ' + k.rank2 + '位' : ''}${k.class ? '・' + k.class : ''}</div></div>
+          <div class="big">${big != null ? big : '—'}</div><span class="arrow">›</span></div>`;
       }
     }
     v.innerHTML = h;
@@ -894,7 +923,9 @@ function openDetail(id) {
     if (o.rank != null) s += kv(name + ' 全体順位', o.rank + '位');
     return s;
   };
-  h += subj('国語', k.koku) + subj('算数', k.san) + subj('理科', k.ri);
+  h += subj('国語', k.koku) + subj('算数', k.san) + subj('理科', k.ri) + subj('社会', k.sha);
+  if (k.avg4 && k.avg4.dev != null) h += kv('4科 偏差値', k.avg4.dev);
+  if (k.rank4) h += kv('4科 順位', k.rank4);
   if (k.avg3 && k.avg3.dev != null) h += kv('3科 偏差値', k.avg3.dev);
   if (k.rank3) h += kv('3科 順位', k.rank3);
   if (k.avg2 && k.avg2.dev != null) h += kv('2科 偏差値', k.avg2.dev);
@@ -919,6 +950,10 @@ function openKokaiForm(k) {
   set('kRiDev', k && k.ri && k.ri.dev); set('kRiScore', k && k.ri && k.ri.score); set('kRiRank', k && k.ri && k.ri.rank);
   set('k3Dev', k && k.avg3 && k.avg3.dev); $('k3Rank').value = k ? (k.rank3 || '') : '';
   set('k2Dev', k && k.avg2 && k.avg2.dev); $('k2Rank').value = k ? (k.rank2 || '') : '';
+  set('kShaDev', k && k.sha && k.sha.dev); set('kShaScore', k && k.sha && k.sha.score); set('kShaRank', k && k.sha && k.sha.rank);
+  set('k4Dev', k && k.avg4 && k.avg4.dev); $('k4Rank').value = k ? (k.rank4 || '') : '';
+  const hasSha = !!(k && ((k.sha && (k.sha.dev != null || k.sha.score != null || k.sha.rank != null)) || (k.avg4 && k.avg4.dev != null) || k.rank4));
+  $('shaFields').style.display = (SHAKAI || hasSha) ? '' : 'none';
   set('kKijDev', k && k.kijutsu && k.kijutsu.dev); set('kKijScore', k && k.kijutsu && k.kijutsu.score);
   $('kokaiDelete').style.display = k ? '' : 'none';
   $('kokaiSheet').classList.add('open');
@@ -931,8 +966,10 @@ $('kokaiSave').onclick = () => {
     koku: { dev: num($('kKokuDev').value), score: num($('kKokuScore').value), rank: num($('kKokuRank').value) },
     san: { dev: num($('kSanDev').value), score: num($('kSanScore').value), rank: num($('kSanRank').value) },
     ri: { dev: num($('kRiDev').value), score: num($('kRiScore').value), rank: num($('kRiRank').value) },
+    sha: { dev: num($('kShaDev').value), score: num($('kShaScore').value), rank: num($('kShaRank').value) },
     avg3: { dev: num($('k3Dev').value) }, rank3: $('k3Rank').value.trim(),
     avg2: { dev: num($('k2Dev').value) }, rank2: $('k2Rank').value.trim(),
+    avg4: { dev: num($('k4Dev').value) }, rank4: $('k4Rank').value.trim(),
     kijutsu: { dev: num($('kKijDev').value), score: num($('kKijScore').value) },
   };
   db.kokai = db.kokai.filter(x => x.id !== item.id && x.ym !== ym);
@@ -1064,6 +1101,12 @@ $('atotalDelete').onclick = () => {
 };
 
 // ---------- ナビ ----------
+// チェックした講座のタブだけ表示。マスターを外すと⚖️も隠す
+document.querySelectorAll('#topBar .tab').forEach(b => {
+  const t = b.dataset.tab;
+  if ((t === 'fukushu' || t === 'saire' || t === 'nadago') && !courseOn(t)) b.style.display = 'none';
+  if (t === 'ab' && !courseOn('fukushu')) b.style.display = 'none';
+});
 document.querySelectorAll('#topBar .tab').forEach(b => {
   b.onclick = () => {
     tab = b.dataset.tab;
