@@ -167,8 +167,10 @@
       <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
       <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
     </select>
+    <button class="chip" id="importBtn" style="background:#db2777;border-color:#db2777;color:#fff">📥 取り込み</button>
   </div>
 </div>
+<input type="file" id="impFile" accept="image/*" multiple hidden>
 
 <main><div id="grid"></div></main>
 
@@ -208,6 +210,34 @@
   </div>
 </div>
 
+<div class="overlay" id="impSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2>📥 取り込むプリントの情報</h2><button class="closeBtn" id="impClose">✕</button></div>
+    <p id="impCount" style="font-size:12px;color:#64748b;margin-bottom:6px"></p>
+    <div style="display:flex;gap:8px">
+      <div style="flex:1">
+        <p class="fLabel">科目</p>
+        <select class="fInput" id="impSubject">
+          <option>算数</option><option>国語</option><option>理科</option><option>社会</option><option>その他</option>
+        </select>
+      </div>
+      <div style="flex:1">
+        <p class="fLabel">No</p>
+        <select class="fInput" id="impNo"><option value="">なし</option></select>
+      </div>
+    </div>
+    <p class="fLabel">授業の種類</p>
+    <select class="fInput" id="impType">
+      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
+      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+    </select>
+    <div class="sheetBtns">
+      <button class="btn btnGray" id="impCancel">やめる</button>
+      <button class="btn btnPink" id="impSave">取り込む</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 <div id="printArea"></div>
 
@@ -219,7 +249,7 @@ if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
 const $ = id => document.getElementById(id);
 const SUBJ_COLORS = { '算数': '#2563eb', '国語': '#dc2626', '理科': '#059669', '社会': '#d97706', 'その他': '#64748b' };
 
-for (const sel of [$('dtNo')]) {
+for (const sel of [$('dtNo'), $('impNo')]) {
   for (let i = 1; i <= 50; i++) {
     const o = document.createElement('option');
     o.value = 'No.' + i; o.textContent = 'No.' + i;
@@ -415,6 +445,59 @@ $('sortBtn').onclick = () => {
   sortNew = !sortNew;
   $('sortBtn').textContent = sortNew ? '新しい順' : 'No順';
   render();
+};
+
+// ---------- 他アプリで保存した画像の取り込み ----------
+let impFiles = [];
+$('importBtn').onclick = () => $('impFile').click();
+$('impFile').onchange = e => {
+  if (e.target.files.length) importFiles([...e.target.files]);
+  e.target.value = '';
+};
+function importFiles(files) {
+  impFiles = files;
+  $('impCount').textContent = `選んだ${files.length}枚に同じ情報を付けて取り込みます（あとで1枚ずつ直せます）`;
+  $('impSheet').classList.add('open');
+}
+$('impClose').onclick = $('impCancel').onclick = () => $('impSheet').classList.remove('open');
+$('impSheet').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+
+function loadImgFile(file) {
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); res(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('load error')); };
+    img.src = url;
+  });
+}
+
+$('impSave').onclick = async () => {
+  const subject = $('impSubject').value, no = $('impNo').value, type = $('impType').value;
+  let okCount = 0;
+  for (const f of impFiles) {
+    try {
+      const img = await loadImgFile(f);
+      const ts = 360 / Math.max(img.naturalWidth, img.naturalHeight);
+      const tc = document.createElement('canvas');
+      tc.width = Math.max(1, Math.round(img.naturalWidth * ts));
+      tc.height = Math.max(1, Math.round(img.naturalHeight * ts));
+      tc.getContext('2d').drawImage(img, 0, 0, tc.width, tc.height);
+      const thumb = await new Promise(r => tc.toBlob(r, 'image/jpeg', 0.8));
+      await idbPut({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        subject, no, type,
+        date: new Date().toISOString().slice(0, 10),
+        blob: f, thumb
+      });
+      okCount++;
+    } catch (e) { console.error(e); }
+  }
+  impFiles = [];
+  $('impSheet').classList.remove('open');
+  recs = await idbAll();
+  render();
+  toast(`${okCount}枚 取り込みました`);
 };
 
 (async () => { recs = await idbAll(); render(); })();

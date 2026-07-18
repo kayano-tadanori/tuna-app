@@ -219,6 +219,9 @@
     <div style="padding: 10px 18px 20px">
       <p class="setLabel">お名前（おかんがこの名前で声をかけます）</p>
       <input class="setInput" id="setName" placeholder="例：はなこ" autocomplete="off">
+      <p class="setLabel">お子さんの名前（複数いるときはスペースで区切る）</p>
+      <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
+      <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になります</p>
       <button class="setSave" id="setSave">保存する</button>
     </div>
   </div>
@@ -260,8 +263,12 @@ function renderHello() {
 }
 renderHello();
 
+const CHILDREN_KEY = 'okan_children';
 document.getElementById('settingsBtn').onclick = () => {
   document.getElementById('setName').value = localStorage.getItem(NAME_KEY) || '';
+  try {
+    document.getElementById('setChildren').value = (JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []).join(' ');
+  } catch (e) { document.getElementById('setChildren').value = ''; }
   document.getElementById('setModal').classList.add('open');
 };
 document.getElementById('setClose').onclick = () => document.getElementById('setModal').classList.remove('open');
@@ -270,6 +277,8 @@ document.getElementById('setModal').addEventListener('click', e => {
 });
 document.getElementById('setSave').onclick = () => {
   localStorage.setItem(NAME_KEY, document.getElementById('setName').value.trim());
+  const kids = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
+  localStorage.setItem(CHILDREN_KEY, JSON.stringify(kids));
   document.getElementById('setModal').classList.remove('open');
   renderHello();
 };

@@ -229,8 +229,26 @@
 <div class="overlay" id="evSheet">
   <div class="sheet">
     <div class="sheetHead"><h2 id="evTitle">予定を追加</h2><button class="closeBtn" data-close="evSheet">✕</button></div>
-    <p class="fLabel">なまえ（例：つな マスタ／パート13／弁当）</p>
-    <input class="fInput" id="evName" placeholder="よていの名前" autocomplete="off">
+    <div class="fRow">
+      <div>
+        <p class="fLabel">誰が</p>
+        <select class="fInput" id="evWhoSel"></select>
+        <input class="fInput" id="evWho" placeholder="名前を入力" autocomplete="off" style="display:none;margin-top:6px">
+      </div>
+      <div>
+        <p class="fLabel">科目</p>
+        <select class="fInput" id="evSubj">
+          <option value="">なし</option><option>国語</option><option>算数</option><option>理科</option><option>社会</option>
+        </select>
+      </div>
+    </div>
+    <p class="fLabel">種類</p>
+    <select class="fInput" id="evLtype">
+      <option value="">なし</option><option>マスター</option><option>最レ</option><option>公開</option><option>灘合</option>
+      <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
+    </select>
+    <p class="fLabel">なまえ・メモ（例：遠足／パート13／弁当）</p>
+    <input class="fInput" id="evName" placeholder="自由に入力（なくてもOK）" autocomplete="off">
     <p class="fLabel">日付</p>
     <input class="fInput" type="date" id="evDate">
     <div class="fRow">
@@ -272,16 +290,31 @@
     <div class="fRow">
       <div>
         <p class="fLabel">誰が</p>
-        <input class="fInput" id="rgWho" placeholder="例：たろう" list="whoList" autocomplete="off">
-        <datalist id="whoList"></datalist>
+        <select class="fInput" id="rgWhoSel"></select>
+        <input class="fInput" id="rgWho" placeholder="名前を入力" autocomplete="off" style="display:none;margin-top:6px">
       </div>
       <div>
-        <p class="fLabel">受講No（次回のNo・毎回自動で進みます）</p>
+        <p class="fLabel">受講No（次回のNo・自動で進みます）</p>
         <select class="fInput" id="rgNo"><option value="">なし</option></select>
       </div>
     </div>
-    <p class="fLabel">スケジュールの名前</p>
-    <input class="fInput" id="rgName" placeholder="例：マスターコース算数" autocomplete="off">
+    <div class="fRow">
+      <div>
+        <p class="fLabel">科目</p>
+        <select class="fInput" id="rgSubj">
+          <option value="">なし</option><option>国語</option><option>算数</option><option>理科</option><option>社会</option>
+        </select>
+      </div>
+      <div>
+        <p class="fLabel">種類</p>
+        <select class="fInput" id="rgLtype">
+          <option value="">なし</option><option>マスター</option><option>最レ</option><option>公開</option><option>灘合</option>
+          <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
+        </select>
+      </div>
+    </div>
+    <p class="fLabel">メモ・補足（なくてもOK。例：教室が変わる）</p>
+    <input class="fInput" id="rgName" placeholder="自由に入力" autocomplete="off">
     <p class="fLabel">曜日</p>
     <select class="fInput" id="rgDow">
       <option value="0">日曜</option><option value="1">月曜</option><option value="2">火曜</option>
@@ -360,20 +393,37 @@ function load() {
     d = JSON.parse(localStorage.getItem(KEY));
   } catch (e) { /* fallthrough */ }
   if (!d || !d.events || !d.weekly || !d.todos) d = { events: [], weekly: [], todos: [] };
-  // 旧形式からの移行（repeat/who/no/終了時間/弁当 が無い登録に既定値を足す）
+  // 旧形式からの移行（repeat/who/no/終了時間/弁当/科目/種類 が無い登録に既定値を足す）
   for (const w of d.weekly) {
     if (!w.repeat) w.repeat = { type: 'weekly' };
     if (w.who === undefined) w.who = '';
     if (w.no === undefined) w.no = '';
     if (w.timeEnd === undefined) w.timeEnd = '';
     if (w.bento === undefined) w.bento = false;
+    if (w.subject === undefined) w.subject = '';
+    if (w.ltype === undefined) w.ltype = '';
     if (!w.except) w.except = [];
   }
   for (const e of d.events) {
     if (e.timeEnd === undefined) e.timeEnd = '';
     if (e.bento === undefined) e.bento = false;
+    if (e.who === undefined) e.who = '';
+    if (e.subject === undefined) e.subject = '';
+    if (e.ltype === undefined) e.ltype = '';
   }
   return d;
+}
+
+// v15より前に登録した定期予定へ、受講Noの基準日を後付けする（これが無いとNoが進まない）
+function migrateNoAnchors() {
+  let changed = false;
+  for (const w of db.weekly) {
+    if (w.no && !w.noAnchor) {
+      w.noAnchor = nextOccurrence(w);
+      changed = true;
+    }
+  }
+  if (changed) save();
 }
 
 // 受講No 1〜50 のドラム選択肢
@@ -475,7 +525,32 @@ function itemsOf(dateStr) {
   list.sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'));
   return list;
 }
-const labelOf = it => (it.who ? it.who + ' ' : '') + it.title;
+// 表示名：誰＋科目＋種類を続けて（例：つな国語最レ）、メモがあれば後ろに
+const labelOf = it => {
+  const parts = (it.who || '') + (it.subject || '') + (it.ltype || '');
+  const t = it.title || '';
+  return parts + (t ? (parts ? ' ' : '') + t : '') || '(予定)';
+};
+
+// 「誰が」セレクトの選択肢（設定で登録した子供の名前＋使用中の名前＋自由入力）
+function fillWhoSel(sel, freeInput) {
+  let kids = [];
+  try { kids = JSON.parse(localStorage.getItem('okan_children')) || []; } catch (e) { /* ignore */ }
+  const used = [...new Set([...db.weekly, ...db.events].map(x => x.who).filter(Boolean))];
+  const names = [...new Set([...kids, ...used])];
+  sel.innerHTML = '<option value="">なし</option>' +
+    names.map(n => `<option>${n}</option>`).join('') +
+    '<option value="__free">その他（自由入力）…</option>';
+  sel.onchange = () => { freeInput.style.display = sel.value === '__free' ? '' : 'none'; };
+}
+function whoValue(sel, freeInput) {
+  return sel.value === '__free' ? freeInput.value.trim() : sel.value;
+}
+function setWhoSel(sel, freeInput, who) {
+  if (!who) { sel.value = ''; freeInput.style.display = 'none'; return; }
+  if ([...sel.options].some(o => o.value === who)) { sel.value = who; freeInput.style.display = 'none'; }
+  else { sel.value = '__free'; freeInput.value = who; freeInput.style.display = ''; }
+}
 function todosDue(dateStr) {
   return db.todos.filter(t => !t.done && t.due === dateStr);
 }
@@ -612,6 +687,10 @@ function buildPalette() {
 function openEvForm(item, ds) {
   editing = item ? { id: item.id } : null;
   $('evTitle').textContent = item ? '予定を編集' : '予定を追加';
+  fillWhoSel($('evWhoSel'), $('evWho'));
+  setWhoSel($('evWhoSel'), $('evWho'), item ? (item.who || '') : '');
+  $('evSubj').value = item ? (item.subject || '') : '';
+  $('evLtype').value = item ? (item.ltype || '') : '';
   $('evName').value = item ? item.title : '';
   $('evDate').value = item ? item.date : (ds || selDate);
   $('evTime').value = item ? (item.time || '') : '';
@@ -625,11 +704,15 @@ function openEvForm(item, ds) {
 
 $('evSave').onclick = () => {
   const title = $('evName').value.trim();
+  const subject = $('evSubj').value, ltype = $('evLtype').value;
   const date = $('evDate').value;
-  if (!title || !date) { alert('なまえと日付を入れてください'); return; }
+  if (!date) { alert('日付を入れてください'); return; }
+  if (!title && !subject && !ltype) { alert('科目・種類・メモのどれかを入れてください'); return; }
   if (editing) db.events = db.events.filter(e => e.id !== editing.id);
   db.events.push({
     id: uid(), date, title, color: evColor,
+    who: whoValue($('evWhoSel'), $('evWho')),
+    subject, ltype,
     time: $('evTime').value, timeEnd: $('evTimeEnd').value,
     bento: $('evBento').checked
   });
@@ -704,7 +787,10 @@ document.querySelectorAll('#rgNthChips .tab').forEach(b => {
 function openRegForm(w) {
   regEditing = w ? w.id : null;
   $('regFormTitle').textContent = w ? '定期予定を編集' : '定期予定を登録';
-  $('rgWho').value = w ? (w.who || '') : '';
+  fillWhoSel($('rgWhoSel'), $('rgWho'));
+  setWhoSel($('rgWhoSel'), $('rgWho'), w ? (w.who || '') : '');
+  $('rgSubj').value = w ? (w.subject || '') : '';
+  $('rgLtype').value = w ? (w.ltype || '') : '';
   // 保存済みの受講Noが選択肢に無い場合（旧自由入力）は選択肢に足してから選ぶ
   const noSel = $('rgNo');
   const noVal = w ? (w.no || '') : '';
@@ -726,9 +812,6 @@ function openRegForm(w) {
     b.classList.toggle('on', (r.nth || []).includes(+b.dataset.nth)));
   rgColor = w ? w.color : COLORS[Math.floor(Math.random() * COLORS.length)];
   $('rgDelete').style.display = w ? '' : 'none';
-  // 「誰が」の入力候補
-  const whos = [...new Set(db.weekly.map(x => x.who).filter(Boolean))];
-  $('whoList').innerHTML = whos.map(x => `<option value="${x}">`).join('');
   buildRgPalette();
   updateRgRepeatUI();
   $('regFormSheet').classList.add('open');
@@ -736,7 +819,8 @@ function openRegForm(w) {
 
 $('rgSave').onclick = () => {
   const title = $('rgName').value.trim();
-  if (!title) { alert('スケジュールの名前を入れてください'); return; }
+  const subject = $('rgSubj').value, ltype = $('rgLtype').value;
+  if (!title && !subject && !ltype) { alert('科目・種類・メモのどれかを入れてください'); return; }
   const type = $('rgRepeat').value;
   const repeat = { type };
   if (type === 'biweekly') {
@@ -750,7 +834,8 @@ $('rgSave').onclick = () => {
   const prev = regEditing ? db.weekly.find(w => w.id === regEditing) : null;
   const item = {
     id: regEditing || uid(),
-    who: $('rgWho').value.trim(),
+    who: whoValue($('rgWhoSel'), $('rgWho')),
+    subject, ltype,
     no: $('rgNo').value,
     title,
     dow: +$('rgDow').value,
@@ -881,6 +966,7 @@ document.querySelectorAll('.overlay').forEach(o =>
   o.addEventListener('click', e => { if (e.target === e.currentTarget) closeAll(); }));
 
 function renderAll() { renderCal(); renderTodos(); }
+migrateNoAnchors();   // 旧登録に受講Noの基準日を後付け（不足分だけ補う）
 renderAll();
 </script>
 </body>
