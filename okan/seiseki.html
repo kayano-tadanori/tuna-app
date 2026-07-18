@@ -362,7 +362,13 @@ const ymLabel = ym => { const [y, m] = ym.split('-'); return `${y}年${+m}月`; 
 const mdLabel = ds => { const d = new Date(ds + 'T00:00:00'); return `${d.getMonth() + 1}/${d.getDate()}`; };
 
 // ---------- 公開テスト：偏差値グラフ ----------
-const NADA_LINE = 64;
+// 目標ライン：⚙️設定（ホーム）の志望校・目標偏差値。未設定なら灘中64
+const GOAL_SCHOOL = (localStorage.getItem('okan_goal_school') || '').trim() || '灘中';
+const GOAL_DEV = (() => {
+  const n = parseFloat(localStorage.getItem('okan_goal_dev'));
+  return (isNaN(n) || n < 20 || n > 90) ? 64 : n;
+})();
+const NADA_LINE = GOAL_DEV;
 function renderGraph(list) {
   if (list.length < 2) return '';
   const W = 360, H = 190, L = 30, R = 8, T = 14, B = 24;
@@ -389,7 +395,7 @@ function renderGraph(list) {
   }
   // 灘ライン
   g += `<line x1="${L}" y1="${Y(NADA_LINE)}" x2="${W - R}" y2="${Y(NADA_LINE)}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4"/>`;
-  g += `<text x="${W - R}" y="${Y(NADA_LINE) - 4}" fill="#f59e0b" font-size="8" font-weight="800" text-anchor="end">灘 ${NADA_LINE}</text>`;
+  g += `<text x="${W - R}" y="${Y(NADA_LINE) - 4}" fill="#f59e0b" font-size="8" font-weight="800" text-anchor="end">${GOAL_SCHOOL.slice(0, 6)} ${NADA_LINE}</text>`;
   // x軸（間引き）
   const step = Math.ceil(list.length / 6);
   list.forEach((k, i) => {
@@ -415,7 +421,7 @@ function renderGraph(list) {
   const legend = series.map(s => `<span><i style="background:${s.color}"></i>${s.label}</span>`).join('');
   return `<div class="graphCard"><h3>📈 公開学力テスト 偏差値の推移</h3>
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
-    <div class="legend">${legend}<span><i style="background:#f59e0b"></i>灘中ライン</span></div></div>`;
+    <div class="legend">${legend}<span><i style="background:#f59e0b"></i>${GOAL_SCHOOL.slice(0, 8)}ライン</span></div></div>`;
 }
 
 // ---------- 表示 ----------

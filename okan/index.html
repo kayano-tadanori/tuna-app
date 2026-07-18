@@ -232,6 +232,11 @@
       <p class="setLabel">お子さんの名前（複数いるときはスペースで区切る）</p>
       <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
       <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になります</p>
+      <p class="setLabel">🎯 志望校と目標偏差値（成績グラフに「◯◯ライン」として出ます）</p>
+      <div style="display:flex;gap:8px">
+        <input class="setInput" id="setGoalSchool" placeholder="例：灘中" autocomplete="off" style="flex:2">
+        <input class="setInput" id="setGoalDev" type="number" inputmode="decimal" placeholder="例：64" min="30" max="80" step="0.5" style="flex:1">
+      </div>
       <p class="setLabel">つかう人</p>
       <div style="display:flex;gap:8px;margin:6px 0 4px">
         <button type="button" class="genderBtn" data-g="女" id="gFemale">👩 おかん（女性）</button>
@@ -262,7 +267,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v25</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v26</p>
     </div>
   </div>
 </div>
@@ -322,6 +327,8 @@ document.getElementById('settingsBtn').onclick = () => {
   try {
     document.getElementById('setChildren').value = (JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []).join(' ');
   } catch (e) { document.getElementById('setChildren').value = ''; }
+  document.getElementById('setGoalSchool').value = localStorage.getItem('okan_goal_school') || '';
+  document.getElementById('setGoalDev').value = localStorage.getItem('okan_goal_dev') || '';
   renderGenderBtns();
   document.getElementById('setModal').classList.add('open');
 };
@@ -333,6 +340,9 @@ document.getElementById('setSave').onclick = () => {
   localStorage.setItem(NAME_KEY, document.getElementById('setName').value.trim());
   const kids = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
   localStorage.setItem(CHILDREN_KEY, JSON.stringify(kids));
+  // 志望校と目標偏差値（成績グラフの目標ライン）
+  localStorage.setItem('okan_goal_school', document.getElementById('setGoalSchool').value.trim());
+  localStorage.setItem('okan_goal_dev', document.getElementById('setGoalDev').value.trim());
   // 性別（男性＝おとんモード：全ページがダークスタイルに）
   const gBtn = document.querySelector('.genderBtn.on');
   const newGender = gBtn ? gBtn.dataset.g : '女';
