@@ -157,6 +157,7 @@
   <button class="tab" data-tab="fukushu">復習テスト</button>
   <button class="tab" data-tab="saire">最レ算数</button>
   <button class="tab" data-tab="nadago">灘中合格</button>
+  <button class="tab" data-tab="atotal">📋A表</button>
   <button class="tab" data-tab="ab">⚖️クラス替え</button>
   <span class="grow"></span>
   <button id="aiFmtBtn">🤖 AI入力</button>
@@ -276,6 +277,31 @@
   </div>
 </div>
 
+<!-- A表（月間総計・順位）入力 -->
+<div class="overlay" id="atotalSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="atotalTitle">A表（月間総計）を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">月度</p><input class="fInput" type="month" id="aYm"></div>
+      <div><p class="fLabel">講座</p>
+        <select class="fInput" id="aCourse"><option>マスター</option><option>最レ算数</option><option>最レ国語</option></select>
+      </div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">復テ平均</p><input class="fInput" type="number" step="0.1" id="aFuku"></div>
+      <div><p class="fLabel" id="aKokaiLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="aKokai"></div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">総計（空欄なら自動計算）</p><input class="fInput" type="number" step="0.1" id="aTotal"></div>
+      <div><p class="fLabel">クラス内順位</p><input class="fInput" type="number" id="aRank"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="atotalDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="atotalSave">保存</button>
+    </div>
+  </div>
+</div>
+
 <!-- 公開テスト詳細 -->
 <div class="overlay" id="detSheet">
   <div class="sheet">
@@ -322,6 +348,9 @@
     ],
     "nadago": [
       { "id": "n2026-06-28", "date": "2026-06-28", "no": 2, "koku": 75, "san": 100, "ri": 94 }
+    ],
+    "atotal": [
+      { "id": "a2026-05-master", "ym": "2026-05", "course": "マスター", "fuku": 91.3, "kokai": 96.3, "total": 187.6, "rank": 1 }
     ]
   }
 }
@@ -331,6 +360,7 @@
 - fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
 - saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
 - nadago＝灘中合格特訓。koku/san/ri は各教科の得点。
+- atotal＝A表（月度ごとの月間総計）。course は マスター/最レ算数/最レ国語 のどれか。fuku=復テ平均、kokai=マスターは公開平均（総合点÷科目数）・最レは公開テストの該当科目の得点、total=fuku+kokai（200点満点）、rank=クラス内順位。ym は "YYYY-MM"（月度）。
 - 読み取れない値は null。数値は数値型で書き、単位（点・位）は付けない。
 - id は他とかぶらない英数字の文字列。上の例のように日付から作る。
 - 該当データのない配列は [] のままでよい。</pre>
@@ -356,7 +386,7 @@ function load() {
   let d = null;
   try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) { /* fallthrough */ }
   if (!d) d = {};
-  for (const k of ['kokai', 'fukushu', 'saire', 'nadago']) if (!Array.isArray(d[k])) d[k] = [];
+  for (const k of ['kokai', 'fukushu', 'saire', 'nadago', 'atotal']) if (!Array.isArray(d[k])) d[k] = [];
   return d;
 }
 const save = () => localStorage.setItem(KEY, JSON.stringify(db));
@@ -427,6 +457,63 @@ function renderGraph(list) {
   return `<div class="graphCard"><h3>📈 公開学力テスト 偏差値の推移</h3>
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
     <div class="legend">${legend}<span><i style="background:#f59e0b"></i>${GOAL_SCHOOL.slice(0, 8)}ライン</span></div></div>`;
+}
+
+// ---------- A表（月間総計・順位）：講座別の折れ線グラフ ----------
+const A_COURSES = [
+  { name: 'マスター', color: DARK ? '#f9e2af' : '#9333ea', bold: true },
+  { name: '最レ算数', color: '#3b82f6' },
+  { name: '最レ国語', color: '#f43f5e' }
+];
+const aKokaiName = c => c === '最レ算数' ? '公開算数' : c === '最レ国語' ? '公開国語' : '公開平均';
+function atotalGraph(list, get, opt) {
+  // list: ym昇順。get(t)=値。opt={title, invert(順位グラフ=1位が上), }
+  const pts = list.filter(t => get(t) != null);
+  const yms = [...new Set(pts.map(t => t.ym))].sort();
+  if (yms.length < 2) return '';
+  const W = 360, H = 170, L = 30, R = 8, T = 14, B = 24;
+  const iw = W - L - R, ih = H - T - B;
+  const vals = pts.map(get);
+  let yMin, yMax, step;
+  if (opt.invert) {
+    yMin = 1; yMax = Math.max(...vals, 4);
+    step = yMax - yMin > 8 ? 2 : 1;
+  } else {
+    yMin = Math.floor((Math.min(...vals) - 5) / 10) * 10;
+    yMax = Math.min(200, Math.ceil((Math.max(...vals) + 5) / 10) * 10);
+    step = yMax - yMin > 60 ? 20 : 10;
+  }
+  const X = i => L + i / (yms.length - 1) * iw;
+  const Y = v => opt.invert ? T + (v - yMin) / (yMax - yMin) * ih : T + (yMax - v) / (yMax - yMin) * ih;
+  const grid = DARK ? '#26365d' : '#e2e8f0';
+  const txt = DARK ? '#93a7cd' : '#94a3b8';
+  let g = '';
+  for (let v = yMin; v <= yMax; v += step) {
+    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
+    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}${opt.invert ? '位' : ''}</text>`;
+  }
+  const xstep = Math.ceil(yms.length / 6);
+  yms.forEach((ym, i) => {
+    if (i % xstep === 0 || i === yms.length - 1) {
+      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+ym.slice(5)}月</text>`;
+    }
+  });
+  const used = [];
+  for (const c of A_COURSES) {
+    const p = [];
+    yms.forEach((ym, i) => {
+      const t = pts.find(x => x.ym === ym && (x.course || 'マスター') === c.name);
+      if (t) p.push([X(i), Y(get(t))]);
+    });
+    if (!p.length) continue;
+    used.push(c);
+    if (p.length > 1) g += `<polyline points="${p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ')}" fill="none" stroke="${c.color}" stroke-width="${c.bold ? 2.6 : 1.8}"/>`;
+    p.forEach(q => { g += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.4" fill="${c.color}"/>`; });
+  }
+  const legend = used.map(c => `<span><i style="background:${c.color}"></i>${c.name}</span>`).join('');
+  return `<div class="graphCard"><h3>${opt.title}</h3>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
+    <div class="legend">${legend}</div></div>`;
 }
 
 // ---------- A表/B表（クラス替えシミュレーション） ----------
@@ -613,6 +700,25 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-saire]').forEach(el => el.onclick = () => openSaire(db.saire.find(x => x.id === el.dataset.saire)));
+  } else if (tab === 'atotal') {
+    const list = [...db.atotal].sort((a, b) => a.ym.localeCompare(b.ym) || (a.course || '').localeCompare(b.course || ''));
+    let h = '';
+    if (!list.length) {
+      h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンでA表（月度ごとの総計とクラス内順位）を<br>講座別（マスター／最レ）に記録できます。</p>';
+    } else {
+      h += atotalGraph(list, t => t.rank, { title: '📉 クラス内順位の推移（1位が上）', invert: true });
+      h += atotalGraph(list, t => t.total, { title: '📈 総計の推移（200点満点）' });
+      let curY = '';
+      for (const t of [...list].reverse()) {
+        const y = t.ym.slice(0, 4);
+        if (y !== curY) { curY = y; h += `<p class="secLabel">${y}年</p>`; }
+        h += `<div class="testLine" data-atotal="${t.id}"><span class="d">${+t.ym.slice(5)}月度</span>
+          <span class="sj">${t.course || 'マスター'}　復テ${show(t.fuku)}＋${aKokaiName(t.course)}${show(t.kokai)}${t.rank != null ? `　<b>${t.rank}位</b>` : ''}</span>
+          <span class="sc">${show(t.total)}点</span></div>`;
+      }
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-atotal]').forEach(el => el.onclick = () => openAtotal(db.atotal.find(x => x.id === el.dataset.atotal)));
   } else if (tab === 'ab') {
     v.innerHTML = renderAB();
     const sync = () => {
@@ -793,6 +899,41 @@ $('nadaDelete').onclick = () => {
   save(); closeAll(); render();
 };
 
+// ---------- A表（月間総計・順位） ----------
+let editingAtotal = null;
+function openAtotal(t) {
+  editingAtotal = t ? t.id : null;
+  $('atotalTitle').textContent = t ? 'A表を編集' : 'A表（月間総計）を記録';
+  $('aYm').value = t ? t.ym : new Date().toISOString().slice(0, 7);
+  $('aCourse').value = t && t.course ? t.course : 'マスター';
+  $('aFuku').value = t && t.fuku != null ? t.fuku : '';
+  $('aKokai').value = t && t.kokai != null ? t.kokai : '';
+  $('aTotal').value = t && t.total != null ? t.total : '';
+  $('aRank').value = t && t.rank != null ? t.rank : '';
+  $('aKokaiLabel').textContent = aKokaiName($('aCourse').value);
+  $('atotalDelete').style.display = t ? '' : 'none';
+  $('atotalSheet').classList.add('open');
+}
+$('aCourse').onchange = () => { $('aKokaiLabel').textContent = aKokaiName($('aCourse').value); };
+$('atotalSave').onclick = () => {
+  const ym = $('aYm').value;
+  if (!ym) { alert('月度を入れてください'); return; }
+  const fuku = num($('aFuku').value), kokai = num($('aKokai').value);
+  let total = num($('aTotal').value);
+  if (total == null && fuku != null && kokai != null) total = Math.round((fuku + kokai) * 10) / 10;
+  const item = { id: editingAtotal || uid(), ym, course: $('aCourse').value, fuku, kokai, total, rank: num($('aRank').value) };
+  db.atotal = db.atotal.filter(x => x.id !== item.id);
+  db.atotal.push(item);
+  editingAtotal = null;
+  save(); closeAll(); render();
+};
+$('atotalDelete').onclick = () => {
+  if (!editingAtotal) return;
+  db.atotal = db.atotal.filter(x => x.id !== editingAtotal);
+  editingAtotal = null;
+  save(); closeAll(); render();
+};
+
 // ---------- ナビ ----------
 document.querySelectorAll('#topBar .tab').forEach(b => {
   b.onclick = () => {
@@ -807,6 +948,7 @@ $('fab').onclick = () => {
   if (tab === 'kokai') openKokaiForm(null);
   else if (tab === 'fukushu') openFuku(null);
   else if (tab === 'saire') openSaire(null);
+  else if (tab === 'atotal') openAtotal(null);
   else openNada(null);
 };
 $('aiFmtBtn').onclick = () => $('aiFmtSheet').classList.add('open');
