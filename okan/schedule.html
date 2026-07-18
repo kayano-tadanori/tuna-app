@@ -171,6 +171,11 @@
   .fRow { display: flex; gap: 10px; }
   .fRow > * { flex: 1; }
   .palette { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chk {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 14px; font-weight: 700; margin: 14px 2px 4px; cursor: pointer;
+  }
+  .chk input { width: 21px; height: 21px; accent-color: #db2777; }
   .sw {
     width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 3px solid transparent;
   }
@@ -226,16 +231,19 @@
     <div class="sheetHead"><h2 id="evTitle">予定を追加</h2><button class="closeBtn" data-close="evSheet">✕</button></div>
     <p class="fLabel">なまえ（例：つな マスタ／パート13／弁当）</p>
     <input class="fInput" id="evName" placeholder="よていの名前" autocomplete="off">
+    <p class="fLabel">日付</p>
+    <input class="fInput" type="date" id="evDate">
     <div class="fRow">
       <div>
-        <p class="fLabel">日付</p>
-        <input class="fInput" type="date" id="evDate">
-      </div>
-      <div>
-        <p class="fLabel">時間（なくてもOK）</p>
+        <p class="fLabel">開始時間（なくてもOK）</p>
         <input class="fInput" type="time" id="evTime">
       </div>
+      <div>
+        <p class="fLabel">終了時間（なくてもOK）</p>
+        <input class="fInput" type="time" id="evTimeEnd">
+      </div>
     </div>
+    <label class="chk"><input type="checkbox" id="evBento"> 🍱 弁当が必要</label>
     <p class="fLabel">色</p>
     <div class="palette" id="evPalette"></div>
     <p class="fLabel" style="color:#94a3b8">※ 毎週・隔週・第◯曜日のくり返し予定は「📋登録」から</p>
@@ -264,30 +272,33 @@
     <div class="fRow">
       <div>
         <p class="fLabel">誰が</p>
-        <input class="fInput" id="rgWho" placeholder="例：つな" list="whoList" autocomplete="off">
+        <input class="fInput" id="rgWho" placeholder="例：たろう" list="whoList" autocomplete="off">
         <datalist id="whoList"></datalist>
       </div>
       <div>
         <p class="fLabel">受講No（なくてもOK）</p>
-        <input class="fInput" id="rgNo" placeholder="例：No.12" autocomplete="off">
+        <select class="fInput" id="rgNo"><option value="">なし</option></select>
       </div>
     </div>
     <p class="fLabel">スケジュールの名前</p>
     <input class="fInput" id="rgName" placeholder="例：マスターコース算数" autocomplete="off">
+    <p class="fLabel">曜日</p>
+    <select class="fInput" id="rgDow">
+      <option value="0">日曜</option><option value="1">月曜</option><option value="2">火曜</option>
+      <option value="3">水曜</option><option value="4">木曜</option><option value="5">金曜</option>
+      <option value="6">土曜</option>
+    </select>
     <div class="fRow">
       <div>
-        <p class="fLabel">曜日</p>
-        <select class="fInput" id="rgDow">
-          <option value="0">日曜</option><option value="1">月曜</option><option value="2">火曜</option>
-          <option value="3">水曜</option><option value="4">木曜</option><option value="5">金曜</option>
-          <option value="6">土曜</option>
-        </select>
-      </div>
-      <div>
-        <p class="fLabel">時間（なくてもOK）</p>
+        <p class="fLabel">開始時間（なくてもOK）</p>
         <input class="fInput" type="time" id="rgTime">
       </div>
+      <div>
+        <p class="fLabel">終了時間（なくてもOK）</p>
+        <input class="fInput" type="time" id="rgTimeEnd">
+      </div>
     </div>
+    <label class="chk"><input type="checkbox" id="rgBento"> 🍱 弁当が必要</label>
     <p class="fLabel">くり返し</p>
     <select class="fInput" id="rgRepeat">
       <option value="weekly">毎週</option>
@@ -349,15 +360,33 @@ function load() {
     d = JSON.parse(localStorage.getItem(KEY));
   } catch (e) { /* fallthrough */ }
   if (!d || !d.events || !d.weekly || !d.todos) d = { events: [], weekly: [], todos: [] };
-  // 旧形式からの移行（repeat/who/no が無い登録に既定値を足す）
+  // 旧形式からの移行（repeat/who/no/終了時間/弁当 が無い登録に既定値を足す）
   for (const w of d.weekly) {
     if (!w.repeat) w.repeat = { type: 'weekly' };
     if (w.who === undefined) w.who = '';
     if (w.no === undefined) w.no = '';
+    if (w.timeEnd === undefined) w.timeEnd = '';
+    if (w.bento === undefined) w.bento = false;
     if (!w.except) w.except = [];
+  }
+  for (const e of d.events) {
+    if (e.timeEnd === undefined) e.timeEnd = '';
+    if (e.bento === undefined) e.bento = false;
   }
   return d;
 }
+
+// 受講No 1〜50 のドラム選択肢
+(() => {
+  const sel = document.getElementById('rgNo');
+  for (let i = 1; i <= 50; i++) {
+    const o = document.createElement('option');
+    o.value = 'No.' + i; o.textContent = 'No.' + i;
+    sel.appendChild(o);
+  }
+})();
+
+const timeRange = it => it.time ? it.time + (it.timeEnd ? '-' + it.timeEnd : '') : '';
 function save() { localStorage.setItem(KEY, JSON.stringify(db)); }
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
@@ -448,7 +477,7 @@ function renderCal() {
       c.className = 'chipE';
       c.style.background = it.color;
       c.style.color = textOn(it.color);
-      c.textContent = (it.time ? it.time.replace(/^0/, '') + ' ' : '') + labelOf(it);
+      c.textContent = (it.time ? it.time.replace(/^0/, '') + ' ' : '') + labelOf(it) + (it.bento ? '🍱' : '');
       cell.appendChild(c);
     });
     const over = items.length - MAX;
@@ -489,9 +518,10 @@ function openDaySheet(ds) {
     dt.className = 'dt';
     dt.innerHTML = `<div class="n"></div><div class="s"></div>`;
     dt.querySelector('.n').textContent = labelOf(it);
-    dt.querySelector('.s').textContent = (it.time || '終日')
+    dt.querySelector('.s').textContent = (timeRange(it) || '終日')
       + (it.kind === 'weekly' ? '・' + repeatLabel(it) : '')
-      + (it.no ? '・' + it.no : '');
+      + (it.no ? '・' + it.no : '')
+      + (it.bento ? '・🍱弁当' : '');
     row.append(bar, dt);
     if (it.kind === 'weekly') {
       const skip = document.createElement('button');
@@ -548,6 +578,8 @@ function openEvForm(item, ds) {
   $('evName').value = item ? item.title : '';
   $('evDate').value = item ? item.date : (ds || selDate);
   $('evTime').value = item ? (item.time || '') : '';
+  $('evTimeEnd').value = item ? (item.timeEnd || '') : '';
+  $('evBento').checked = item ? !!item.bento : false;
   evColor = item ? item.color : COLORS[Math.floor(Math.random() * COLORS.length)];
   $('evDelete').style.display = item ? '' : 'none';
   buildPalette();
@@ -558,9 +590,12 @@ $('evSave').onclick = () => {
   const title = $('evName').value.trim();
   const date = $('evDate').value;
   if (!title || !date) { alert('なまえと日付を入れてください'); return; }
-  const time = $('evTime').value;
   if (editing) db.events = db.events.filter(e => e.id !== editing.id);
-  db.events.push({ id: uid(), date, time, title, color: evColor });
+  db.events.push({
+    id: uid(), date, title, color: evColor,
+    time: $('evTime').value, timeEnd: $('evTimeEnd').value,
+    bento: $('evBento').checked
+  });
   editing = null;
   save(); closeAll(); renderAll();
 };
@@ -604,7 +639,8 @@ function renderRegList() {
     dt.className = 'dt';
     dt.innerHTML = `<div class="n"></div><div class="s"></div>`;
     dt.querySelector('.n').textContent = labelOf(w);
-    dt.querySelector('.s').textContent = repeatLabel(w) + (w.time ? '・' + w.time : '') + (w.no ? '・' + w.no : '');
+    dt.querySelector('.s').textContent = repeatLabel(w) + (timeRange(w) ? '・' + timeRange(w) : '')
+      + (w.no ? '・' + w.no : '') + (w.bento ? '・🍱' : '');
     const ar = document.createElement('span');
     ar.className = 'arrow'; ar.textContent = '›';
     row.append(bar, dt, ar);
@@ -632,10 +668,20 @@ function openRegForm(w) {
   regEditing = w ? w.id : null;
   $('regFormTitle').textContent = w ? '定期予定を編集' : '定期予定を登録';
   $('rgWho').value = w ? (w.who || '') : '';
-  $('rgNo').value = w ? (w.no || '') : '';
+  // 保存済みの受講Noが選択肢に無い場合（旧自由入力）は選択肢に足してから選ぶ
+  const noSel = $('rgNo');
+  const noVal = w ? (w.no || '') : '';
+  if (noVal && ![...noSel.options].some(o => o.value === noVal)) {
+    const o = document.createElement('option');
+    o.value = noVal; o.textContent = noVal;
+    noSel.appendChild(o);
+  }
+  noSel.value = noVal;
   $('rgName').value = w ? w.title : '';
   $('rgDow').value = w ? String(w.dow) : '0';
   $('rgTime').value = w ? (w.time || '') : '';
+  $('rgTimeEnd').value = w ? (w.timeEnd || '') : '';
+  $('rgBento').checked = w ? !!w.bento : false;
   const r = w ? (w.repeat || { type: 'weekly' }) : { type: 'weekly' };
   $('rgRepeat').value = r.type;
   $('rgAnchor').value = r.anchor || todayStr();
@@ -667,10 +713,12 @@ $('rgSave').onclick = () => {
   const item = {
     id: regEditing || uid(),
     who: $('rgWho').value.trim(),
-    no: $('rgNo').value.trim(),
+    no: $('rgNo').value,
     title,
     dow: +$('rgDow').value,
     time: $('rgTime').value,
+    timeEnd: $('rgTimeEnd').value,
+    bento: $('rgBento').checked,
     repeat,
     color: rgColor,
     except: regEditing ? (db.weekly.find(w => w.id === regEditing) || {}).except || [] : []

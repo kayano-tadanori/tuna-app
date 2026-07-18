@@ -70,9 +70,10 @@
     flex: 1; overflow: auto; -webkit-overflow-scrolling: touch;
     background: #cbd5e1; display: flex; align-items: flex-start; justify-content: center;
     padding: 8px;
+    touch-action: none; overscroll-behavior: contain;
   }
   #canvasWrap.zoomed { justify-content: flex-start; }
-  #outCanvas { max-width: 100%; height: auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  #outCanvas { max-width: 100%; height: auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); touch-action: none; }
 
   #controls {
     flex-shrink: 0;
@@ -267,7 +268,8 @@
       <li><b>🧽けす</b>：消え残った字を指でこすって消す（黒ペンの字もこれで消せます）</li>
       <li><b>🖌もどす</b>：消えすぎた枠や印刷を指でこすって元に戻す</li>
       <li><b>⚫小/中/大</b>：指の太さを変える　<b>↺</b>：手直しを全部やり直す</li>
-      <li><b>➕🔍/➖</b>：拡大・縮小。拡大中は「✋うごかす」で画面を動かせます</li>
+      <li><b>🤏 2本指</b>：つまむと拡大・縮小、2本指のまま動かすと移動（どのモードでもOK）</li>
+      <li><b>➕🔍/➖</b>：ボタンでも拡大・縮小できます</li>
       <li><b>押すと元画像</b>：押している間だけ撮った写真が見えます。見比べに便利</li>
     </ul>
 
@@ -330,8 +332,8 @@ let renderQueued = false;
 let mode = 'pan';                    // pan | erase | restore
 const SIZES = [['⚫小', 0.006], ['⚫中', 0.012], ['⚫大', 0.024]];
 let sizeIdx = 1;
-const ZOOMS = [1, 1.5, 2, 3];
-let zoomIdx = 0;
+let zoom = 1;                        // 連続ズーム（1〜4倍）
+let fitW = 0;                        // 等倍時の表示幅
 
 // ---------- UI ----------
 $('camBtn').onclick = () => $('camIn').click();
@@ -351,9 +353,8 @@ document.querySelectorAll('.chip.mode').forEach(btn => {
     document.querySelectorAll('.chip.mode').forEach(b => b.classList.remove('on'));
     btn.classList.add('on');
     mode = btn.dataset.mode;
-    outCanvas.style.touchAction = mode === 'pan' ? 'auto' : 'none';
-    if (mode === 'erase') toast('指でこすると消えます');
-    if (mode === 'restore') toast('指でこすると元にもどります');
+    if (mode === 'erase') toast('指でこすると消えます（2本指で拡大・移動）');
+    if (mode === 'restore') toast('指でこすると元にもどります（2本指で拡大・移動）');
   };
 });
 
@@ -369,20 +370,20 @@ $('resetManual').onclick = () => {
 };
 
 function applyZoom() {
-  const z = ZOOMS[zoomIdx];
-  if (z === 1) {
+  if (!fitW) fitW = wrap.clientWidth - 16;
+  if (zoom <= 1.02) {
+    zoom = 1;
     outCanvas.style.maxWidth = '100%';
     outCanvas.style.width = '';
     wrap.classList.remove('zoomed');
   } else {
-    const fitW = wrap.clientWidth - 16;
     outCanvas.style.maxWidth = 'none';
-    outCanvas.style.width = Math.round(fitW * z) + 'px';
+    outCanvas.style.width = Math.round(fitW * zoom) + 'px';
     wrap.classList.add('zoomed');
   }
 }
-$('zoomIn').onclick = () => { if (zoomIdx < ZOOMS.length - 1) { zoomIdx++; applyZoom(); } };
-$('zoomOut').onclick = () => { if (zoomIdx > 0) { zoomIdx--; applyZoom(); } };
+$('zoomIn').onclick = () => { zoom = Math.min(4, zoom * 1.4); applyZoom(); };
+$('zoomOut').onclick = () => { zoom = Math.max(1, zoom / 1.4); applyZoom(); };
 
 // 押している間だけ元画像を表示
 const cmpBtn = $('compareBtn');
@@ -688,6 +689,7 @@ async function callOpenAI(key, model, blob, useFidelity) {
 
 // ---------- 手直しブラシ ----------
 let drawing = false, lastPt = null;
+let strokeBackup = null;   // 2本指ピンチでストロークを取り消すためのバックアップ
 
 function canvasPoint(e) {
   const r = outCanvas.getBoundingClientRect();
@@ -736,9 +738,11 @@ function stampLine(a, b) {
 
 outCanvas.addEventListener('pointerdown', e => {
   if (mode === 'pan' || !normGray) return;
+  if (touches.size >= 2) return;   // ピンチ中は描かない
   e.preventDefault();
   outCanvas.setPointerCapture(e.pointerId);
   drawing = true;
+  strokeBackup = manual.slice();
   lastPt = canvasPoint(e);
   stamp(lastPt.x, lastPt.y);
 });
@@ -753,11 +757,77 @@ function endStroke() {
   if (!drawing) return;
   drawing = false;
   lastPt = null;
+  strokeBackup = null;
   outData = outCtx.getImageData(0, 0, W, H); // 比較・保存用に同期
+}
+// 描きかけを取り消す（2本目の指が置かれたとき）
+function cancelStroke() {
+  if (!drawing) return;
+  drawing = false;
+  lastPt = null;
+  if (strokeBackup) { manual.set(strokeBackup); strokeBackup = null; }
+  if (outData) outCtx.putImageData(outData, 0, 0);
 }
 outCanvas.addEventListener('pointerup', endStroke);
 outCanvas.addEventListener('pointercancel', endStroke);
 outCanvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// ---------- 2本指ピンチ（拡大縮小・移動）＋✋1本指パン ----------
+const touches = new Map();
+let pinch = null, panDrag = null;
+
+wrap.addEventListener('pointerdown', e => {
+  if (e.pointerType !== 'touch' || !normGray) return;
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (touches.size === 2) {
+    cancelStroke();
+    panDrag = null;
+    const [a, b] = [...touches.values()];
+    const rect = outCanvas.getBoundingClientRect();
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    pinch = {
+      dist: Math.hypot(a.x - b.x, a.y - b.y) || 1,
+      z: zoom,
+      px: (mx - rect.left) / rect.width,
+      py: (my - rect.top) / rect.height
+    };
+  } else if (touches.size === 1 && mode === 'pan') {
+    panDrag = { x: e.clientX, y: e.clientY, sl: wrap.scrollLeft, st: wrap.scrollTop };
+  }
+});
+
+wrap.addEventListener('pointermove', e => {
+  if (!touches.has(e.pointerId)) return;
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pinch && touches.size >= 2) {
+    e.preventDefault();
+    const [a, b] = [...touches.values()];
+    zoom = Math.min(4, Math.max(1, pinch.z * (Math.hypot(a.x - b.x, a.y - b.y) || 1) / pinch.dist));
+    applyZoom();
+    // つまんだ場所が指の真ん中に付いてくるようにスクロール補正
+    const rect = outCanvas.getBoundingClientRect();
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    wrap.scrollLeft += (rect.left + pinch.px * rect.width) - mx;
+    wrap.scrollTop += (rect.top + pinch.py * rect.height) - my;
+  } else if (panDrag && touches.size === 1 && mode === 'pan') {
+    wrap.scrollLeft = panDrag.sl - (e.clientX - panDrag.x);
+    wrap.scrollTop = panDrag.st - (e.clientY - panDrag.y);
+  }
+});
+
+function endTouch(e) {
+  if (!touches.has(e.pointerId)) return;
+  touches.delete(e.pointerId);
+  if (touches.size < 2) pinch = null;
+  if (touches.size === 1 && mode === 'pan') {
+    const [a] = [...touches.values()];
+    panDrag = { x: a.x, y: a.y, sl: wrap.scrollLeft, st: wrap.scrollTop };
+  } else if (!touches.size) {
+    panDrag = null;
+  }
+}
+wrap.addEventListener('pointerup', endTouch);
+wrap.addEventListener('pointercancel', endTouch);
 
 // ---------- 画像読み込み ----------
 async function openImage(file) {
@@ -775,7 +845,7 @@ async function openImage(file) {
 
     outCanvas.width = W; outCanvas.height = H;
     manual = new Uint8Array(W * H);
-    zoomIdx = 0; applyZoom();
+    zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
 
     // 重い前処理はUI描画を待ってから
     await new Promise(r => setTimeout(r, 30));
