@@ -190,6 +190,7 @@
   <button class="navBtn" id="nextM">›</button>
   <button id="todayBtn">今日</button>
   <span class="grow"></span>
+  <button class="tab" id="regBtn">📋登録</button>
   <button class="tab on" id="tabCal">📅</button>
   <button class="tab" id="tabTodo">✅<span id="todoBadge"></span></button>
 </div>
@@ -235,16 +236,83 @@
         <input class="fInput" type="time" id="evTime">
       </div>
     </div>
-    <p class="fLabel">くり返し</p>
-    <select class="fInput" id="evRepeat">
-      <option value="none">くり返さない（この日だけ）</option>
-      <option value="weekly">毎週この曜日</option>
-    </select>
     <p class="fLabel">色</p>
     <div class="palette" id="evPalette"></div>
+    <p class="fLabel" style="color:#94a3b8">※ 毎週・隔週・第◯曜日のくり返し予定は「📋登録」から</p>
     <div class="sheetBtns">
       <button class="btn btnDanger" id="evDelete" style="display:none">削除</button>
       <button class="btn btnPink" id="evSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 定期予定の登録一覧 -->
+<div class="overlay" id="regSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2>📋 定期予定の登録</h2><button class="closeBtn" data-close="regSheet">✕</button></div>
+    <div id="regList"></div>
+    <div class="sheetBtns">
+      <button class="btn btnPink" id="regAdd">＋ 新しく登録</button>
+    </div>
+  </div>
+</div>
+
+<!-- 定期予定の登録フォーム -->
+<div class="overlay" id="regFormSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="regFormTitle">定期予定を登録</h2><button class="closeBtn" data-close="regFormSheet">✕</button></div>
+    <div class="fRow">
+      <div>
+        <p class="fLabel">誰が</p>
+        <input class="fInput" id="rgWho" placeholder="例：つな" list="whoList" autocomplete="off">
+        <datalist id="whoList"></datalist>
+      </div>
+      <div>
+        <p class="fLabel">受講No（なくてもOK）</p>
+        <input class="fInput" id="rgNo" placeholder="例：No.12" autocomplete="off">
+      </div>
+    </div>
+    <p class="fLabel">スケジュールの名前</p>
+    <input class="fInput" id="rgName" placeholder="例：マスターコース算数" autocomplete="off">
+    <div class="fRow">
+      <div>
+        <p class="fLabel">曜日</p>
+        <select class="fInput" id="rgDow">
+          <option value="0">日曜</option><option value="1">月曜</option><option value="2">火曜</option>
+          <option value="3">水曜</option><option value="4">木曜</option><option value="5">金曜</option>
+          <option value="6">土曜</option>
+        </select>
+      </div>
+      <div>
+        <p class="fLabel">時間（なくてもOK）</p>
+        <input class="fInput" type="time" id="rgTime">
+      </div>
+    </div>
+    <p class="fLabel">くり返し</p>
+    <select class="fInput" id="rgRepeat">
+      <option value="weekly">毎週</option>
+      <option value="biweekly">隔週</option>
+      <option value="nth">月の決まった週（第◯曜日）</option>
+    </select>
+    <div id="rgAnchorWrap" style="display:none">
+      <p class="fLabel">直近の実施日（隔週の基準になります）</p>
+      <input class="fInput" type="date" id="rgAnchor">
+    </div>
+    <div id="rgNthWrap" style="display:none">
+      <p class="fLabel">何週目？（複数OK。例：第2と第4）</p>
+      <div class="chipRow" id="rgNthChips" style="display:flex;gap:7px;flex-wrap:wrap">
+        <button type="button" class="tab" data-nth="1">第1</button>
+        <button type="button" class="tab" data-nth="2">第2</button>
+        <button type="button" class="tab" data-nth="3">第3</button>
+        <button type="button" class="tab" data-nth="4">第4</button>
+        <button type="button" class="tab" data-nth="5">第5</button>
+      </div>
+    </div>
+    <p class="fLabel">色</p>
+    <div class="palette" id="rgPalette"></div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="rgDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="rgSave">保存</button>
     </div>
   </div>
 </div>
@@ -276,11 +344,19 @@ const DOWS = ['日', '月', '火', '水', '木', '金', '土'];
 
 let db = load();
 function load() {
+  let d = null;
   try {
-    const d = JSON.parse(localStorage.getItem(KEY));
-    if (d && d.events && d.weekly && d.todos) return d;
+    d = JSON.parse(localStorage.getItem(KEY));
   } catch (e) { /* fallthrough */ }
-  return { events: [], weekly: [], todos: [] };
+  if (!d || !d.events || !d.weekly || !d.todos) d = { events: [], weekly: [], todos: [] };
+  // 旧形式からの移行（repeat/who/no が無い登録に既定値を足す）
+  for (const w of d.weekly) {
+    if (!w.repeat) w.repeat = { type: 'weekly' };
+    if (w.who === undefined) w.who = '';
+    if (w.no === undefined) w.no = '';
+    if (!w.except) w.except = [];
+  }
+  return d;
 }
 function save() { localStorage.setItem(KEY, JSON.stringify(db)); }
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -297,14 +373,36 @@ const todayStr = () => fmt(new Date());
 let ym = (() => { const n = new Date(); return { y: n.getFullYear(), m: n.getMonth() }; })();
 let selDate = todayStr();
 
+// ---------- くり返しの判定 ----------
+function occursOn(w, dateStr, d) {
+  if (w.dow !== d.getDay()) return false;
+  if ((w.except || []).includes(dateStr)) return false;
+  const r = w.repeat || { type: 'weekly' };
+  if (r.type === 'biweekly') {
+    const anchor = new Date((r.anchor || dateStr) + 'T00:00:00');
+    const weeks = Math.round((d - anchor) / (7 * 86400000));
+    return ((weeks % 2) + 2) % 2 === 0;
+  }
+  if (r.type === 'nth') {
+    const nth = Math.ceil(d.getDate() / 7);
+    return (r.nth || []).includes(nth);
+  }
+  return true; // weekly
+}
+
+function repeatLabel(w) {
+  const r = w.repeat || { type: 'weekly' };
+  if (r.type === 'biweekly') return '隔週' + DOWS[w.dow];
+  if (r.type === 'nth') return '第' + (r.nth || []).join('・') + DOWS[w.dow];
+  return '毎週' + DOWS[w.dow];
+}
+
 // ---------- その日の項目を集める ----------
 function itemsOf(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
   const list = [];
   for (const w of db.weekly) {
-    if (w.dow === d.getDay() && !(w.except || []).includes(dateStr)) {
-      list.push({ kind: 'weekly', ...w });
-    }
+    if (occursOn(w, dateStr, d)) list.push({ kind: 'weekly', ...w });
   }
   for (const e of db.events) {
     if (e.date === dateStr) list.push({ kind: 'event', ...e });
@@ -312,6 +410,7 @@ function itemsOf(dateStr) {
   list.sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'));
   return list;
 }
+const labelOf = it => (it.who ? it.who + ' ' : '') + it.title;
 function todosDue(dateStr) {
   return db.todos.filter(t => !t.done && t.due === dateStr);
 }
@@ -349,7 +448,7 @@ function renderCal() {
       c.className = 'chipE';
       c.style.background = it.color;
       c.style.color = textOn(it.color);
-      c.textContent = (it.time ? it.time.replace(/^0/, '') + ' ' : '') + it.title;
+      c.textContent = (it.time ? it.time.replace(/^0/, '') + ' ' : '') + labelOf(it);
       cell.appendChild(c);
     });
     const over = items.length - MAX;
@@ -389,8 +488,10 @@ function openDaySheet(ds) {
     const dt = document.createElement('div');
     dt.className = 'dt';
     dt.innerHTML = `<div class="n"></div><div class="s"></div>`;
-    dt.querySelector('.n').textContent = it.title;
-    dt.querySelector('.s').textContent = (it.time || '終日') + (it.kind === 'weekly' ? '・毎週' + DOWS[it.dow] : '');
+    dt.querySelector('.n').textContent = labelOf(it);
+    dt.querySelector('.s').textContent = (it.time || '終日')
+      + (it.kind === 'weekly' ? '・' + repeatLabel(it) : '')
+      + (it.no ? '・' + it.no : '');
     row.append(bar, dt);
     if (it.kind === 'weekly') {
       const skip = document.createElement('button');
@@ -406,7 +507,11 @@ function openDaySheet(ds) {
     const ar = document.createElement('span');
     ar.className = 'arrow'; ar.textContent = '›';
     row.appendChild(ar);
-    row.onclick = () => { closeAll(); openEvForm(it, ds); };
+    row.onclick = () => {
+      closeAll();
+      if (it.kind === 'weekly') openRegForm(db.weekly.find(x => x.id === it.id));
+      else openEvForm(it, ds);
+    };
     list.appendChild(row);
   }
   for (const t of due) {
@@ -438,12 +543,11 @@ function buildPalette() {
 }
 
 function openEvForm(item, ds) {
-  editing = item ? { kind: item.kind, id: item.id } : null;
+  editing = item ? { id: item.id } : null;
   $('evTitle').textContent = item ? '予定を編集' : '予定を追加';
   $('evName').value = item ? item.title : '';
-  $('evDate').value = ds || selDate;
+  $('evDate').value = item ? item.date : (ds || selDate);
   $('evTime').value = item ? (item.time || '') : '';
-  $('evRepeat').value = item ? (item.kind === 'weekly' ? 'weekly' : 'none') : 'none';
   evColor = item ? item.color : COLORS[Math.floor(Math.random() * COLORS.length)];
   $('evDelete').style.display = item ? '' : 'none';
   buildPalette();
@@ -455,28 +559,138 @@ $('evSave').onclick = () => {
   const date = $('evDate').value;
   if (!title || !date) { alert('なまえと日付を入れてください'); return; }
   const time = $('evTime').value;
-  const weekly = $('evRepeat').value === 'weekly';
-  // 既存を消してから入れ直し（種別が変わる編集にも対応）
-  if (editing) {
-    db.events = db.events.filter(e => e.id !== editing.id);
-    db.weekly = db.weekly.filter(w => w.id !== editing.id);
-  }
-  const dow = new Date(date + 'T00:00:00').getDay();
-  if (weekly) db.weekly.push({ id: uid(), dow, time, title, color: evColor, except: [] });
-  else db.events.push({ id: uid(), date, time, title, color: evColor });
+  if (editing) db.events = db.events.filter(e => e.id !== editing.id);
+  db.events.push({ id: uid(), date, time, title, color: evColor });
   editing = null;
   save(); closeAll(); renderAll();
 };
 
 $('evDelete').onclick = () => {
   if (!editing) return;
-  const isWeekly = db.weekly.some(w => w.id === editing.id);
-  if (isWeekly && !confirm('毎週のくり返しごと削除します。よろしいですか？\n（この日だけ休みたいときは「この日だけ休み」を使ってください）')) return;
   db.events = db.events.filter(e => e.id !== editing.id);
-  db.weekly = db.weekly.filter(w => w.id !== editing.id);
   editing = null;
   save(); closeAll(); renderAll();
 };
+
+// ---------- 定期予定の登録（マスタ） ----------
+let regEditing = null;
+let rgColor = COLORS[0];
+
+function buildRgPalette() {
+  const p = $('rgPalette');
+  p.innerHTML = '';
+  for (const c of COLORS) {
+    const s = document.createElement('div');
+    s.className = 'sw' + (c === rgColor ? ' on' : '');
+    s.style.background = c;
+    s.onclick = () => { rgColor = c; buildRgPalette(); };
+    p.appendChild(s);
+  }
+}
+
+function renderRegList() {
+  const list = $('regList');
+  list.innerHTML = '';
+  if (!db.weekly.length) {
+    list.innerHTML = '<p class="emptyMsg">まだ登録がありません。<br>塾の時間割・習いごと・パートなどを登録すると、カレンダーに自動で並びます</p>';
+    return;
+  }
+  for (const w of db.weekly) {
+    const row = document.createElement('div');
+    row.className = 'dayRow';
+    const bar = document.createElement('div');
+    bar.className = 'bar'; bar.style.background = w.color;
+    const dt = document.createElement('div');
+    dt.className = 'dt';
+    dt.innerHTML = `<div class="n"></div><div class="s"></div>`;
+    dt.querySelector('.n').textContent = labelOf(w);
+    dt.querySelector('.s').textContent = repeatLabel(w) + (w.time ? '・' + w.time : '') + (w.no ? '・' + w.no : '');
+    const ar = document.createElement('span');
+    ar.className = 'arrow'; ar.textContent = '›';
+    row.append(bar, dt, ar);
+    row.onclick = () => { closeAll(); openRegForm(w); };
+    list.appendChild(row);
+  }
+}
+
+function openRegSheet() {
+  renderRegList();
+  $('regSheet').classList.add('open');
+}
+
+function updateRgRepeatUI() {
+  const t = $('rgRepeat').value;
+  $('rgAnchorWrap').style.display = t === 'biweekly' ? '' : 'none';
+  $('rgNthWrap').style.display = t === 'nth' ? '' : 'none';
+}
+$('rgRepeat').onchange = updateRgRepeatUI;
+document.querySelectorAll('#rgNthChips .tab').forEach(b => {
+  b.onclick = () => b.classList.toggle('on');
+});
+
+function openRegForm(w) {
+  regEditing = w ? w.id : null;
+  $('regFormTitle').textContent = w ? '定期予定を編集' : '定期予定を登録';
+  $('rgWho').value = w ? (w.who || '') : '';
+  $('rgNo').value = w ? (w.no || '') : '';
+  $('rgName').value = w ? w.title : '';
+  $('rgDow').value = w ? String(w.dow) : '0';
+  $('rgTime').value = w ? (w.time || '') : '';
+  const r = w ? (w.repeat || { type: 'weekly' }) : { type: 'weekly' };
+  $('rgRepeat').value = r.type;
+  $('rgAnchor').value = r.anchor || todayStr();
+  document.querySelectorAll('#rgNthChips .tab').forEach(b =>
+    b.classList.toggle('on', (r.nth || []).includes(+b.dataset.nth)));
+  rgColor = w ? w.color : COLORS[Math.floor(Math.random() * COLORS.length)];
+  $('rgDelete').style.display = w ? '' : 'none';
+  // 「誰が」の入力候補
+  const whos = [...new Set(db.weekly.map(x => x.who).filter(Boolean))];
+  $('whoList').innerHTML = whos.map(x => `<option value="${x}">`).join('');
+  buildRgPalette();
+  updateRgRepeatUI();
+  $('regFormSheet').classList.add('open');
+}
+
+$('rgSave').onclick = () => {
+  const title = $('rgName').value.trim();
+  if (!title) { alert('スケジュールの名前を入れてください'); return; }
+  const type = $('rgRepeat').value;
+  const repeat = { type };
+  if (type === 'biweekly') {
+    if (!$('rgAnchor').value) { alert('隔週の基準になる直近の実施日を入れてください'); return; }
+    repeat.anchor = $('rgAnchor').value;
+  }
+  if (type === 'nth') {
+    repeat.nth = [...document.querySelectorAll('#rgNthChips .tab.on')].map(b => +b.dataset.nth);
+    if (!repeat.nth.length) { alert('第何週かを選んでください'); return; }
+  }
+  const item = {
+    id: regEditing || uid(),
+    who: $('rgWho').value.trim(),
+    no: $('rgNo').value.trim(),
+    title,
+    dow: +$('rgDow').value,
+    time: $('rgTime').value,
+    repeat,
+    color: rgColor,
+    except: regEditing ? (db.weekly.find(w => w.id === regEditing) || {}).except || [] : []
+  };
+  db.weekly = db.weekly.filter(w => w.id !== item.id);
+  db.weekly.push(item);
+  regEditing = null;
+  save(); closeAll(); renderAll(); openRegSheet();
+};
+
+$('rgDelete').onclick = () => {
+  if (!regEditing) return;
+  if (!confirm('この定期予定を登録ごと削除します。よろしいですか？')) return;
+  db.weekly = db.weekly.filter(w => w.id !== regEditing);
+  regEditing = null;
+  save(); closeAll(); renderAll(); openRegSheet();
+};
+
+$('regBtn').onclick = openRegSheet;
+$('regAdd').onclick = () => { closeAll(); openRegForm(null); };
 
 // ---------- やること ----------
 function renderTodos() {
