@@ -1,10 +1,11 @@
 // おかん学園 Service Worker
-const CACHE_NAME = 'okan-gakuen-v15';
+const CACHE_NAME = 'okan-gakuen-v16';
 const ASSETS = [
   './',
   './index.html',
   './eraser.html',
   './schedule.html',
+  './prints.html',
   './updates.json',
   './manifest.json',
   './icon-192.png',

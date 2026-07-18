@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>おかん学園｜プリント管理</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="おかん学園">
+<meta name="theme-color" content="#db2777">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: #f8fafc; color: #1e293b;
+    display: flex; flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+  }
+  header {
+    background: #db2777; color: #fff;
+    padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  header .backLink {
+    color: #fbcfe8; font-size: 12px; font-weight: 700; text-decoration: none;
+    padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.12); white-space: nowrap;
+  }
+  header .titleWrap { text-align: center; line-height: 1.25; }
+  header .titleWrap .t1 { font-size: 17px; font-weight: 800; }
+  header .titleWrap .t2 { font-size: 10px; font-weight: 700; color: #fbcfe8; letter-spacing: .1em; }
+  header .selBtn {
+    border: none; background: rgba(255,255,255,.14); color: #fff;
+    font-size: 12px; font-weight: 800; padding: 8px 12px; border-radius: 10px; cursor: pointer;
+  }
+  header .selBtn.on { background: #fff; color: #db2777; }
+
+  #filters {
+    padding: 10px 12px 6px; background: #fff; border-bottom: 1px solid #e2e8f0; flex-shrink: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .chipRow { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .chip {
+    padding: 7px 12px; border-radius: 999px; font-size: 12px; font-weight: 800;
+    border: 1.5px solid #cbd5e1; background: #fff; color: #475569; cursor: pointer;
+  }
+  .chip.on { background: #db2777; border-color: #db2777; color: #fff; }
+  .chip.sort { margin-left: auto; background: #f1f5f9; border-color: #f1f5f9; }
+  select.typeSel {
+    padding: 7px 10px; border-radius: 999px; font-size: 12px; font-weight: 800;
+    border: 1.5px solid #cbd5e1; background: #fff; color: #475569; font-family: inherit;
+  }
+
+  main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 12px 140px; }
+  #grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card {
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px; overflow: hidden;
+    cursor: pointer; position: relative;
+  }
+  .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f1f5f9; }
+  .card .meta { padding: 8px 10px; }
+  .badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 3px; }
+  .bdg {
+    font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; color: #fff;
+  }
+  .bdgType { font-size: 10.5px; font-weight: 700; color: #64748b; }
+  .bdgDate { font-size: 9.5px; color: #94a3b8; }
+  .card .ck {
+    position: absolute; top: 8px; left: 8px;
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2.5px solid #fff; background: rgba(30,41,59,.35);
+    box-shadow: 0 1px 4px rgba(0,0,0,.4);
+    color: #fff; font-size: 15px; line-height: 22px; text-align: center; display: none;
+  }
+  body.selmode .card .ck { display: block; }
+  .card.checked .ck { background: #db2777; border-color: #fff; }
+  .card.checked { outline: 3px solid #db2777; }
+  .emptyMsg { text-align: center; color: #94a3b8; font-size: 13px; padding: 50px 10px; line-height: 2; }
+
+  #selBar {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: #fff; border-top: 1px solid #e2e8f0;
+    padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+    display: none; gap: 8px; align-items: center; z-index: 10;
+  }
+  body.selmode #selBar { display: flex; }
+  #selCount { font-size: 13px; font-weight: 800; color: #475569; }
+  .grow { flex: 1; }
+  .bbtn {
+    border: none; border-radius: 12px; padding: 12px 16px;
+    font-size: 14px; font-weight: 800; cursor: pointer;
+  }
+  #printSel { background: #db2777; color: #fff; }
+  #delSel { background: #fee2e2; color: #dc2626; }
+
+  /* 詳細シート */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(30,41,59,.5);
+    display: none; align-items: flex-end; justify-content: center; z-index: 30;
+  }
+  .overlay.open { display: flex; }
+  .sheet {
+    background: #fff; width: 100%; max-width: 480px; max-height: 88vh;
+    border-radius: 20px 20px 0 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 14px 16px calc(18px + env(safe-area-inset-bottom));
+  }
+  .sheetHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .sheetHead h2 { font-size: 15px; font-weight: 800; }
+  .closeBtn {
+    border: none; background: #f1f5f9; color: #64748b; font-size: 14px; font-weight: 800;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  }
+  #dtImg { width: 100%; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 10px; }
+  .fLabel { font-size: 12px; font-weight: 800; color: #64748b; margin: 8px 2px 4px; }
+  .fInput {
+    width: 100%; padding: 11px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+    font-size: 14px; font-family: inherit; background: #fff;
+  }
+  .sheetBtns { display: flex; gap: 8px; margin-top: 12px; }
+  .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; }
+  .btnPink { background: #db2777; color: #fff; }
+  .btnGray { background: #e2e8f0; color: #475569; }
+  .btnDanger { background: #fee2e2; color: #dc2626; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: calc(100px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    background: #1e293b; color: #fff; font-size: 13px; font-weight: 700;
+    padding: 10px 18px; border-radius: 999px; opacity: 0; transition: opacity .3s;
+    pointer-events: none; z-index: 40; white-space: nowrap;
+  }
+  #toast.show { opacity: 1; }
+
+  /* 印刷レイアウト */
+  #printArea { display: none; }
+  @media print {
+    body > *:not(#printArea) { display: none !important; }
+    #printArea { display: block; }
+    #printArea img { width: 100%; page-break-after: always; }
+    main { overflow: visible; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="backLink" href="./">← おかん学園</a>
+  <div class="titleWrap"><div class="t1">プリント管理</div><div class="t2">ほかんこ</div></div>
+  <button class="selBtn" id="selModeBtn">選択</button>
+</header>
+
+<div id="filters">
+  <div class="chipRow" id="subjChips">
+    <button class="chip on" data-s="all">全部</button>
+    <button class="chip" data-s="算数">算数</button>
+    <button class="chip" data-s="国語">国語</button>
+    <button class="chip" data-s="理科">理科</button>
+    <button class="chip" data-s="社会">社会</button>
+    <button class="chip" data-s="その他">その他</button>
+    <button class="chip sort" id="sortBtn">新しい順</button>
+  </div>
+  <div class="chipRow">
+    <select class="typeSel" id="typeSel">
+      <option value="all">授業の種類：全部</option>
+      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
+      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+    </select>
+  </div>
+</div>
+
+<main><div id="grid"></div></main>
+
+<div id="selBar">
+  <span id="selCount">0枚選択</span>
+  <span class="grow"></span>
+  <button class="bbtn" id="printSel">🖨 印刷</button>
+  <button class="bbtn" id="delSel">🗑</button>
+</div>
+
+<div class="overlay" id="dtSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2>プリントの情報</h2><button class="closeBtn" id="dtClose">✕</button></div>
+    <img id="dtImg" alt="プリント">
+    <div style="display:flex;gap:8px">
+      <div style="flex:1">
+        <p class="fLabel">科目</p>
+        <select class="fInput" id="dtSubject">
+          <option>算数</option><option>国語</option><option>理科</option><option>社会</option><option>その他</option>
+        </select>
+      </div>
+      <div style="flex:1">
+        <p class="fLabel">No</p>
+        <select class="fInput" id="dtNo"><option value="">なし</option></select>
+      </div>
+    </div>
+    <p class="fLabel">授業の種類</p>
+    <select class="fInput" id="dtType">
+      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
+      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+    </select>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="dtDelete">削除</button>
+      <button class="btn btnGray" id="dtPrint">🖨 印刷</button>
+      <button class="btn btnPink" id="dtSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="printArea"></div>
+
+<script>
+'use strict';
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+
+const $ = id => document.getElementById(id);
+const SUBJ_COLORS = { '算数': '#2563eb', '国語': '#dc2626', '理科': '#059669', '社会': '#d97706', 'その他': '#64748b' };
+
+for (const sel of [$('dtNo')]) {
+  for (let i = 1; i <= 50; i++) {
+    const o = document.createElement('option');
+    o.value = 'No.' + i; o.textContent = 'No.' + i;
+    sel.appendChild(o);
+  }
+}
+
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('okan_prints', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('prints', { keyPath: 'id' });
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+async function idbAll() {
+  const d = await idbOpen();
+  return new Promise((res, rej) => {
+    const q = d.transaction('prints').objectStore('prints').getAll();
+    q.onsuccess = () => res(q.result || []);
+    q.onerror = () => rej(q.error);
+  });
+}
+async function idbPut(rec) {
+  const d = await idbOpen();
+  return new Promise((res, rej) => {
+    const t = d.transaction('prints', 'readwrite');
+    t.objectStore('prints').put(rec);
+    t.oncomplete = res; t.onerror = () => rej(t.error);
+  });
+}
+async function idbDel(id) {
+  const d = await idbOpen();
+  return new Promise((res, rej) => {
+    const t = d.transaction('prints', 'readwrite');
+    t.objectStore('prints').delete(id);
+    t.oncomplete = res; t.onerror = () => rej(t.error);
+  });
+}
+
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+let recs = [];
+let subj = 'all', type = 'all', sortNew = true;
+let selMode = false;
+const selected = new Set();
+const urls = new Map();   // id -> objectURL(thumb)
+
+function thumbUrl(r) {
+  if (!urls.has(r.id)) urls.set(r.id, URL.createObjectURL(r.thumb || r.blob));
+  return urls.get(r.id);
+}
+
+function noNum(no) { const m = String(no || '').match(/(\d+)/); return m ? +m[1] : 9999; }
+
+function visible() {
+  let v = recs.filter(r => (subj === 'all' || r.subject === subj) && (type === 'all' || r.type === type));
+  v.sort(sortNew ? (a, b) => b.id.localeCompare(a.id)
+                 : (a, b) => noNum(a.no) - noNum(b.no) || b.id.localeCompare(a.id));
+  return v;
+}
+
+function render() {
+  const grid = $('grid');
+  grid.innerHTML = '';
+  const v = visible();
+  if (!v.length) {
+    grid.innerHTML = '<p class="emptyMsg" style="grid-column:1/-1">保管したプリントはまだありません。<br>プリント消しゴムで仕上げたあと<br>「📚 プリント管理に保管」を押すとここに並びます</p>';
+    return;
+  }
+  for (const r of v) {
+    const card = document.createElement('div');
+    card.className = 'card' + (selected.has(r.id) ? ' checked' : '');
+    const img = document.createElement('img');
+    img.loading = 'lazy'; img.src = thumbUrl(r);
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    const badges = document.createElement('div');
+    badges.className = 'badges';
+    const sb = document.createElement('span');
+    sb.className = 'bdg'; sb.style.background = SUBJ_COLORS[r.subject] || '#64748b';
+    sb.textContent = r.subject + (r.no ? ' ' + r.no : '');
+    badges.appendChild(sb);
+    const tp = document.createElement('div');
+    tp.className = 'bdgType'; tp.textContent = r.type;
+    const dtt = document.createElement('div');
+    dtt.className = 'bdgDate'; dtt.textContent = r.date;
+    meta.append(badges, tp, dtt);
+    const ck = document.createElement('div');
+    ck.className = 'ck'; ck.textContent = selected.has(r.id) ? '✔' : '';
+    card.append(img, meta, ck);
+    card.onclick = () => {
+      if (selMode) {
+        if (selected.has(r.id)) selected.delete(r.id); else selected.add(r.id);
+        updateSelBar(); render();
+      } else {
+        openDetail(r);
+      }
+    };
+    grid.appendChild(card);
+  }
+}
+
+// ---------- 選択モード ----------
+function updateSelBar() { $('selCount').textContent = `${selected.size}枚選択`; }
+$('selModeBtn').onclick = () => {
+  selMode = !selMode;
+  selected.clear();
+  document.body.classList.toggle('selmode', selMode);
+  $('selModeBtn').classList.toggle('on', selMode);
+  $('selModeBtn').textContent = selMode ? 'やめる' : '選択';
+  updateSelBar(); render();
+};
+
+$('delSel').onclick = async () => {
+  if (!selected.size) { toast('プリントを選んでください'); return; }
+  if (!confirm(`選んだ${selected.size}枚を削除しますか？`)) return;
+  for (const id of selected) { await idbDel(id); urls.delete(id); }
+  recs = await idbAll();
+  selected.clear(); updateSelBar(); render();
+  toast('削除しました');
+};
+
+// ---------- 印刷 ----------
+async function printRecs(list) {
+  if (!list.length) { toast('プリントを選んでください'); return; }
+  const area = $('printArea');
+  area.innerHTML = '';
+  const tmpUrls = [];
+  await Promise.all(list.map(r => new Promise(res => {
+    const img = document.createElement('img');
+    const u = URL.createObjectURL(r.blob);
+    tmpUrls.push(u);
+    img.onload = res; img.onerror = res;
+    img.src = u;
+    area.appendChild(img);
+  })));
+  window.print();
+  setTimeout(() => { tmpUrls.forEach(u => URL.revokeObjectURL(u)); area.innerHTML = ''; }, 3000);
+}
+$('printSel').onclick = () => printRecs(recs.filter(r => selected.has(r.id)));
+
+// ---------- 詳細 ----------
+let dtRec = null;
+function openDetail(r) {
+  dtRec = r;
+  $('dtImg').src = URL.createObjectURL(r.blob);
+  $('dtSubject').value = r.subject;
+  const noSel = $('dtNo');
+  if (r.no && ![...noSel.options].some(o => o.value === r.no)) {
+    const o = document.createElement('option');
+    o.value = r.no; o.textContent = r.no; noSel.appendChild(o);
+  }
+  noSel.value = r.no || '';
+  $('dtType').value = r.type;
+  $('dtSheet').classList.add('open');
+}
+$('dtClose').onclick = () => $('dtSheet').classList.remove('open');
+$('dtSheet').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+$('dtSave').onclick = async () => {
+  if (!dtRec) return;
+  dtRec.subject = $('dtSubject').value;
+  dtRec.no = $('dtNo').value;
+  dtRec.type = $('dtType').value;
+  await idbPut(dtRec);
+  recs = await idbAll();
+  $('dtSheet').classList.remove('open');
+  render(); toast('保存しました');
+};
+$('dtDelete').onclick = async () => {
+  if (!dtRec || !confirm('このプリントを削除しますか？')) return;
+  await idbDel(dtRec.id); urls.delete(dtRec.id);
+  recs = await idbAll();
+  $('dtSheet').classList.remove('open');
+  render(); toast('削除しました');
+};
+$('dtPrint').onclick = () => { if (dtRec) printRecs([dtRec]); };
+
+// ---------- フィルタ ----------
+document.querySelectorAll('#subjChips .chip[data-s]').forEach(c => {
+  c.onclick = () => {
+    subj = c.dataset.s;
+    document.querySelectorAll('#subjChips .chip[data-s]').forEach(x => x.classList.toggle('on', x === c));
+    render();
+  };
+});
+$('typeSel').onchange = () => { type = $('typeSel').value; render(); };
+$('sortBtn').onclick = () => {
+  sortNew = !sortNew;
+  $('sortBtn').textContent = sortNew ? '新しい順' : 'No順';
+  render();
+};
+
+(async () => { recs = await idbAll(); render(); })();
+</script>
+</body>
+</html>

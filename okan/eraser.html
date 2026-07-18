@@ -133,12 +133,12 @@
 
   /* ---- AI消しゴム ---- */
   .aiRow { display: flex; gap: 8px; }
-  #aiBtn {
+  #aiBtn, #keepBtn {
     flex: 1; padding: 11px; border: none; border-radius: 12px;
     font-size: 14px; font-weight: 800; color: #fff;
     background: linear-gradient(135deg, #7c3aed, #db2777); cursor: pointer;
   }
-  #aiBtn:active { transform: scale(.97); }
+  #aiBtn:active, #keepBtn:active { transform: scale(.97); }
   #aiCfg {
     width: 44px; border: 1.5px solid #cbd5e1; border-radius: 12px;
     background: #fff; font-size: 16px; cursor: pointer;
@@ -232,6 +232,9 @@
         <button id="aiBtn">✨ AIで消す（実験）</button>
         <button id="aiCfg" title="AIの設定">⚙️</button>
       </div>
+      <div class="aiRow">
+        <button id="keepBtn" style="background:linear-gradient(135deg,#0d9488,#059669)">📚 プリント管理に保管</button>
+      </div>
       <div class="btnRow">
         <button class="btn" id="compareBtn">押すと元画像</button>
         <button class="btn" id="newBtn">別の写真</button>
@@ -279,6 +282,30 @@
 
     <div class="sheetBtns">
       <button class="btn" id="helpClose" style="background:#db2777;color:#fff">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<div class="modalOverlay" id="keepModal">
+  <div class="sheet">
+    <h2 style="color:#0d9488">📚 プリント管理に保管</h2>
+    <p>このプリント（消した後の状態）を、アプリの中に保管します。あとで「プリント管理」からまとめて印刷できます。</p>
+    <h3>科目</h3>
+    <select class="fInput" id="kpSubject" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
+      <option>算数</option><option>国語</option><option>理科</option><option>社会</option><option>その他</option>
+    </select>
+    <h3>No</h3>
+    <select class="fInput" id="kpNo" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
+      <option value="">なし</option>
+    </select>
+    <h3>授業の種類</h3>
+    <select class="fInput" id="kpType" style="width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;font-size:15px">
+      <option>マスターコース</option><option>最高レベル特訓</option><option>講習（春期・夏期・冬期）</option>
+      <option>公開学力テスト</option><option>模試</option><option>復習テスト</option><option>宿題</option><option>その他</option>
+    </select>
+    <div class="sheetBtns" style="margin-top:14px">
+      <button class="btn" id="kpCancel" style="background:#e2e8f0;color:#475569">やめる</button>
+      <button class="btn" id="kpSave" style="background:#0d9488;color:#fff;flex:2">保管する</button>
     </div>
   </div>
 </div>
@@ -1152,6 +1179,67 @@ async function saveImage() {
     toast('ダウンロードしました');
   }
 }
+
+// ---------- プリント管理へ保管（IndexedDB） ----------
+(() => {
+  const sel = $('kpNo');
+  for (let i = 1; i <= 50; i++) {
+    const o = document.createElement('option');
+    o.value = 'No.' + i; o.textContent = 'No.' + i;
+    sel.appendChild(o);
+  }
+})();
+
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('okan_prints', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('prints', { keyPath: 'id' });
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+
+$('keepBtn').onclick = () => {
+  if (!outData) { toast('先にプリントを撮ってください'); return; }
+  $('keepModal').classList.add('open');
+};
+$('kpCancel').onclick = () => $('keepModal').classList.remove('open');
+$('keepModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+
+$('kpSave').onclick = async () => {
+  try {
+    showOrig(false);
+    const blob = await new Promise(r => outCanvas.toBlob(r, 'image/png'));
+    // 一覧用サムネイル（長辺360px・JPEG）
+    const tc = document.createElement('canvas');
+    const ts = 360 / Math.max(W, H);
+    tc.width = Math.round(W * ts); tc.height = Math.round(H * ts);
+    tc.getContext('2d').drawImage(outCanvas, 0, 0, tc.width, tc.height);
+    const thumb = await new Promise(r => tc.toBlob(r, 'image/jpeg', 0.8));
+
+    const rec = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      subject: $('kpSubject').value,
+      no: $('kpNo').value,
+      type: $('kpType').value,
+      date: new Date().toISOString().slice(0, 10),
+      blob, thumb
+    };
+    const db = await idbOpen();
+    await new Promise((res, rej) => {
+      const t = db.transaction('prints', 'readwrite');
+      t.objectStore('prints').put(rec);
+      t.oncomplete = res; t.onerror = () => rej(t.error);
+    });
+    $('keepModal').classList.remove('open');
+    toast('保管しました（プリント管理で見られます）');
+  } catch (e) {
+    console.error(e);
+    toast('保管に失敗しました');
+  }
+};
 
 // ---------- Service Worker ----------
 if ('serviceWorker' in navigator) {
