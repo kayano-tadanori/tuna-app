@@ -267,7 +267,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v26</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v27</p>
     </div>
   </div>
 </div>
@@ -446,13 +446,19 @@ async function importDataObj(obj) {
     let cur;
     try { cur = JSON.parse(localStorage.getItem('okan_seiseki_v1')) || null; } catch (e) { cur = null; }
     if (!cur) cur = {};
+    // 同じテストの判定：公開=同じ月／その他=同じid、またはidが違っても
+    // 「同じ日付＋同じ内容（科目・回）」なら同一とみなす（手入力とJSON取り込みの二重登録防止）
+    const sameRec = (k, a, b) => {
+      if (k === 'kokai') return a.ym === b.ym;
+      if (a.id === b.id) return true;
+      if (a.date !== b.date) return false;
+      if (k === 'fukushu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
+      return (a.no ?? null) === (b.no ?? null);   // saire/nadago：同じ日・同じ回
+    };
     for (const k of ['kokai', 'fukushu', 'saire', 'nadago']) {
       if (!Array.isArray(cur[k])) cur[k] = [];
       for (const it of (obj.seiseki[k] || [])) {
-        // 公開テストは「同じ月」を上書き、その他はidで上書き
-        const i = k === 'kokai'
-          ? cur[k].findIndex(x => x.ym === it.ym)
-          : cur[k].findIndex(x => x.id === it.id);
+        const i = cur[k].findIndex(x => sameRec(k, x, it));
         if (i >= 0) cur[k][i] = it; else cur[k].push(it);
         result.seiseki = (result.seiseki || 0) + 1;
       }
