@@ -414,6 +414,7 @@ function renderGraph(list) {
     { key: 'san', label: '算数', color: '#3b82f6', get: k => k.san && k.san.dev },
     { key: 'ri', label: '理科', color: '#10b981', get: k => k.ri && k.ri.dev },
     { key: 'avg3', label: '3科平均', color: DARK ? '#f9e2af' : '#9333ea', get: k => k.avg3 && k.avg3.dev, bold: true },
+    { key: 'avg2', label: '2科平均', color: DARK ? '#7dd3fc' : '#0284c7', get: k => k.avg2 && k.avg2.dev, bold: true },
   ];
   let vals = [];
   for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
@@ -548,11 +549,13 @@ function renderKokaiRankGraph(list) {
   const W = 360, H = 190, L = 38, R = 8, T = 14, B = 24;
   const iw = W - L - R, ih = H - T - B;
   const p3 = k => { const m = /^(\d+)/.exec(k.rank3 || ''); return m ? +m[1] : null; };
+  const p2 = k => { const m = /^(\d+)/.exec(k.rank2 || ''); return m ? +m[1] : null; };
   const series = [
     { label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.rank },
     { label: '算数', color: '#3b82f6', get: k => k.san && k.san.rank },
     { label: '理科', color: '#10b981', get: k => k.ri && k.ri.rank },
-    { label: '3科', color: DARK ? '#f9e2af' : '#9333ea', get: p3, bold: true }
+    { label: '3科', color: DARK ? '#f9e2af' : '#9333ea', get: p3, bold: true },
+    { label: '2科', color: DARK ? '#7dd3fc' : '#0284c7', get: p2, bold: true }
   ];
   let vals = [];
   for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
@@ -592,6 +595,59 @@ function renderKokaiRankGraph(list) {
   return `<div class="graphCard"><h3>📉 公開学力テスト 順位の推移（1位が上）</h3>
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
     <div class="legend">${legend}</div></div>`;
+}
+
+// ---------- グラフのピンチ拡大縮小・移動（全グラフ共通） ----------
+function makeZoomable(svg) {
+  if (svg.dataset.zoomable) return;
+  svg.dataset.zoomable = '1';
+  svg.parentElement.style.overflow = 'hidden';
+  svg.style.transformOrigin = '0 0';
+  let scale = 1, tx = 0, ty = 0;
+  let pinch = null, pan = null;
+  const apply = () => {
+    const w = svg.clientWidth, h = svg.clientHeight;
+    scale = Math.min(4, Math.max(1, scale));
+    tx = Math.min(0, Math.max(w * (1 - scale), tx));
+    ty = Math.min(0, Math.max(h * (1 - scale), ty));
+    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  };
+  // 見た目の位置から変形前の基準位置を逆算（transform-originが0 0なので rect - translate）
+  const origin = () => { const r = svg.getBoundingClientRect(); return [r.left - tx, r.top - ty]; };
+  const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  svg.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const [ox, oy] = origin();
+      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - ox;
+      const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - oy;
+      pinch = { d0: dist(e.touches), s0: scale, mx, my, tx0: tx, ty0: ty, ox, oy };
+      pan = null;
+    } else if (e.touches.length === 1 && scale > 1) {
+      pan = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx0: tx, ty0: ty };
+    }
+  }, { passive: false });
+  svg.addEventListener('touchmove', e => {
+    if (pinch && e.touches.length === 2) {
+      e.preventDefault();
+      const s = Math.min(4, Math.max(1, pinch.s0 * dist(e.touches) / pinch.d0));
+      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - pinch.ox;
+      const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - pinch.oy;
+      scale = s;
+      tx = mx - (pinch.mx - pinch.tx0) / pinch.s0 * s;
+      ty = my - (pinch.my - pinch.ty0) / pinch.s0 * s;
+      apply();
+    } else if (pan && e.touches.length === 1 && scale > 1) {
+      e.preventDefault();
+      tx = pan.tx0 + (e.touches[0].clientX - pan.x);
+      ty = pan.ty0 + (e.touches[0].clientY - pan.y);
+      apply();
+    }
+  }, { passive: false });
+  svg.addEventListener('touchend', e => {
+    if (e.touches.length < 2) pinch = null;
+    if (e.touches.length === 0) pan = null;
+  });
 }
 
 // ---------- A表/B表（クラス替えシミュレーション） ----------
@@ -818,6 +874,7 @@ function render() {
     v.innerHTML = h;
     v.querySelectorAll('[data-nada]').forEach(el => el.onclick = () => openNada(db.nadago.find(x => x.id === el.dataset.nada)));
   }
+  v.querySelectorAll('.graphCard svg').forEach(makeZoomable);
 }
 
 // ---------- 公開：詳細・入力 ----------
