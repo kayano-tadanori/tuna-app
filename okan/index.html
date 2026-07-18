@@ -122,6 +122,14 @@
     font-size: 15px; font-family: inherit; margin: 6px 0 14px;
   }
   .setLabel { font-size: 12px; font-weight: 800; color: #64748b; margin-top: 8px; }
+  .genderBtn {
+    flex: 1; padding: 12px 6px; border: 1.5px solid #cbd5e1; border-radius: 12px;
+    background: #fff; color: #475569; font-size: 13px; font-weight: 800; cursor: pointer;
+    font-family: inherit;
+  }
+  .genderBtn.on { border-color: #db2777; background: #fdf2f8; color: #db2777; }
+  html.otonDark .genderBtn { background: #0f1930; border-color: #33477a; color: #93a7cd; }
+  html.otonDark .genderBtn.on { border-color: #4c7dff; background: #1a2a4f; color: #6f9bff; }
   .setSave {
     width: 100%; padding: 13px; border: none; border-radius: 12px;
     background: #db2777; color: #fff; font-size: 15px; font-weight: 800; cursor: pointer;
@@ -146,6 +154,8 @@
   .updItem .t { font-size: 13px; font-weight: 800; margin-bottom: 6px; line-height: 1.5; }
   .updItem .b { font-size: 12px; color: #475569; line-height: 1.75; }
 </style>
+<link rel="stylesheet" href="dark.css">
+<script>if((localStorage.getItem('okan_gender')||'')==='男'){document.documentElement.classList.add('otonDark');var _tm=document.querySelector('meta[name="theme-color"]');if(_tm)_tm.content='#101c38';}</script>
 </head>
 <body>
 <header>
@@ -174,22 +184,6 @@
 
   <p class="sectionLabel">メニュー</p>
   <div class="menu">
-    <a class="card active" href="eraser.html">
-      <span class="icon">🧹</span>
-      <span class="txt">
-        <span class="name">プリント消しゴム</span>
-        <span class="desc">プリントを撮影して、鉛筆や赤・青ペンの書き込みだけを消してまっさらに戻す</span>
-      </span>
-      <span class="arrow">›</span>
-    </a>
-    <a class="card active" href="prints.html">
-      <span class="icon">🗂</span>
-      <span class="txt">
-        <span class="name">プリント管理</span>
-        <span class="desc">保管したプリントを科目・No・授業の種類で整理、まとめて印刷</span>
-      </span>
-      <span class="arrow">›</span>
-    </a>
     <a class="card active" href="schedule.html">
       <span class="icon">📅</span>
       <span class="txt">
@@ -206,6 +200,22 @@
       </span>
       <span class="badge">準備中</span>
     </div>
+    <a class="card active" href="prints.html">
+      <span class="icon">🗂</span>
+      <span class="txt">
+        <span class="name">プリント管理</span>
+        <span class="desc">保管したプリントを科目・No・授業の種類で整理、まとめて印刷</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
+    <a class="card active" href="eraser.html">
+      <span class="icon">🧹</span>
+      <span class="txt">
+        <span class="name">プリント消しゴム</span>
+        <span class="desc">プリントを撮影して、鉛筆や赤・青ペンの書き込みだけを消してまっさらに戻す</span>
+      </span>
+      <span class="arrow">›</span>
+    </a>
   </div>
 
   <p class="privacy">🔒 おかん学園のデータはすべてこのスマホの中だけに保存されます。<br>外部のサーバーには送信されません。<br>（例外：プリント消しゴムの「✨AIで消す」を押したときだけ、その写真が選んだAIの会社〈GoogleまたはOpenAI〉に送信されます）</p>
@@ -222,6 +232,12 @@
       <p class="setLabel">お子さんの名前（複数いるときはスペースで区切る）</p>
       <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
       <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になります</p>
+      <p class="setLabel">つかう人</p>
+      <div style="display:flex;gap:8px;margin:6px 0 4px">
+        <button type="button" class="genderBtn" data-g="女" id="gFemale">👩 おかん（女性）</button>
+        <button type="button" class="genderBtn" data-g="男" id="gMale">👨 おとん（男性）</button>
+      </div>
+      <p style="font-size:11px;color:#94a3b8;margin:2px 0 12px">男性を選ぶと、全ページがダークなスタイルになります</p>
       <button class="setSave" id="setSave">保存する</button>
 
       <p class="setLabel" style="margin-top:20px;border-top:1px solid #f1f5f9;padding-top:16px">👫 夫婦でデータを共有</p>
@@ -278,11 +294,25 @@ function renderHello() {
 renderHello();
 
 const CHILDREN_KEY = 'okan_children';
+const GENDER_KEY = 'okan_gender';
+// 男性（おとん）モードなら、おかんの顔をおとんに
+if ((localStorage.getItem(GENDER_KEY) || '') === '男') {
+  const face = document.querySelector('.hello .face');
+  if (face) face.textContent = '👨';
+}
+function renderGenderBtns() {
+  const g = localStorage.getItem(GENDER_KEY) || '女';
+  document.querySelectorAll('.genderBtn').forEach(b => b.classList.toggle('on', b.dataset.g === g));
+}
+document.querySelectorAll('.genderBtn').forEach(b => {
+  b.onclick = () => document.querySelectorAll('.genderBtn').forEach(x => x.classList.toggle('on', x === b));
+});
 document.getElementById('settingsBtn').onclick = () => {
   document.getElementById('setName').value = localStorage.getItem(NAME_KEY) || '';
   try {
     document.getElementById('setChildren').value = (JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []).join(' ');
   } catch (e) { document.getElementById('setChildren').value = ''; }
+  renderGenderBtns();
   document.getElementById('setModal').classList.add('open');
 };
 document.getElementById('setClose').onclick = () => document.getElementById('setModal').classList.remove('open');
@@ -293,7 +323,13 @@ document.getElementById('setSave').onclick = () => {
   localStorage.setItem(NAME_KEY, document.getElementById('setName').value.trim());
   const kids = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
   localStorage.setItem(CHILDREN_KEY, JSON.stringify(kids));
+  // 性別（男性＝おとんモード：全ページがダークスタイルに）
+  const gBtn = document.querySelector('.genderBtn.on');
+  const newGender = gBtn ? gBtn.dataset.g : '女';
+  const oldGender = localStorage.getItem(GENDER_KEY) || '女';
+  localStorage.setItem(GENDER_KEY, newGender);
   document.getElementById('setModal').classList.remove('open');
+  if (newGender !== oldGender) { location.reload(); return; }
   renderHello();
 };
 

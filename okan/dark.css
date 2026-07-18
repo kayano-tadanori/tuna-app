@@ -1,0 +1,115 @@
+/* おとんモード（設定で「男性」を選ぶと全ページに適用されるダークテーマ）
+   各ページの<style>より後に読み込むこと（同じ詳細度なら後勝ちで上書きするため） */
+
+html.otonDark body {
+  background: linear-gradient(160deg, #0b1224 0%, #101a33 60%) !important;
+  color: #dbe4f5;
+}
+html.otonDark header {
+  background: linear-gradient(135deg, #24406e, #101c38) !important;
+}
+html.otonDark header .backLink { background: rgba(255,255,255,.08); color: #9db4e4; }
+html.otonDark header .titleWrap .t2 { color: #8ea6d8; }
+html.otonDark .hbtn { background: rgba(255,255,255,.1); }
+
+/* ── 白いカード・シート類 ── */
+html.otonDark .hello,
+html.otonDark .card,
+html.otonDark .updBanner,
+html.otonDark .updSheet,
+html.otonDark .sheet,
+html.otonDark .todoItem,
+html.otonDark #controls,
+html.otonDark #aiCfg,
+html.otonDark #filters,
+html.otonDark #topBar,
+html.otonDark #selBar,
+html.otonDark .tip {
+  background: #141f3c !important;
+  border-color: #2b3b63 !important;
+  color: #dbe4f5;
+  box-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
+html.otonDark .hello p { color: #b9c9ea; }
+html.otonDark .card .txt .desc { color: #93a7cd; }
+html.otonDark .card .icon { background: #24406e; filter: none; }
+html.otonDark .card.soon .icon { background: #1a2749; filter: grayscale(1); }
+html.otonDark .card.active { border-color: #33477a !important; }
+html.otonDark .card.active:active { border-color: #4c7dff !important; }
+html.otonDark .badge { background: #24406e; color: #9db4e4; }
+html.otonDark .privacy { color: #64779f; }
+
+/* ── アクセント（ピンク→ブルー）── */
+html.otonDark .sectionLabel,
+html.otonDark .updBanner .lbl,
+html.otonDark .updBanner .arrow,
+html.otonDark .card .arrow,
+html.otonDark .updSheet .sheetHead h2,
+html.otonDark .sheetHead h2,
+html.otonDark .secLabel { color: #6f9bff; }
+html.otonDark .updBanner .newBadge { background: #3d63e0; }
+html.otonDark .setSave { background: #3d63e0; }
+html.otonDark #fab { background: #3d63e0; }
+html.otonDark .todayC { background: #3d63e0 !important; }
+
+/* ── 文字・区切り ── */
+html.otonDark .updItem { border-color: #22335c; }
+html.otonDark .updItem .t { color: #e6eeff; }
+html.otonDark .updItem .b { color: #b9c9ea; }
+html.otonDark .updItem .d { color: #7285b3; }
+html.otonDark .sheetHead { border-color: #22335c !important; }
+html.otonDark .closeBtn { background: #24406e; color: #b9c9ea; }
+html.otonDark .emptyMsg { color: #7285b3; }
+html.otonDark .fLabel, html.otonDark .setLabel { color: #93a7cd; }
+html.otonDark .overlay, html.otonDark #updModal, html.otonDark #setModal { background: rgba(3,7,18,.6); }
+
+/* ── 入力・選択 ── */
+html.otonDark input:not([type=checkbox]):not([type=radio]):not([type=range]),
+html.otonDark select,
+html.otonDark textarea {
+  background: #0f1930;
+  border-color: #33477a !important;
+  color: #e6eeff;
+}
+html.otonDark input::placeholder, html.otonDark textarea::placeholder { color: #5d6f9a; }
+
+/* ── チップ・タブ・小ボタン ── */
+html.otonDark .chip { background: #1a2a4f; border-color: #33477a !important; color: #c6d6f7; }
+html.otonDark .chip.on { background: #3d63e0; border-color: #3d63e0 !important; color: #fff; }
+html.otonDark .tab { background: #1a2a4f; border-color: #33477a !important; color: #c6d6f7; }
+html.otonDark .tab.on { background: #3d63e0; border-color: #3d63e0 !important; color: #fff; }
+html.otonDark .navBtn, html.otonDark #todayBtn, html.otonDark .bbtn, html.otonDark .btn {
+  background: #24406e; border-color: #33477a; color: #dbe4f5;
+}
+html.otonDark .bigBtn { background: linear-gradient(135deg, #3d63e0, #2946b8) !important; color: #fff; }
+html.otonDark .bigBtn.sub { background: #1a2a4f !important; border-color: #33477a !important; color: #c6d6f7; }
+html.otonDark #toast { background: #24406e; color: #fff; }
+html.otonDark #ymLabel { color: #e6eeff; }
+
+/* ── 塾スケジュール：カレンダー ── */
+html.otonDark #dowRow div { color: #93a7cd; }
+html.otonDark .cell { background: #111b36 !important; border-color: #26365d !important; }
+html.otonDark .cell.other { background: #0c1428 !important; }
+html.otonDark .cell .dnum { color: #c6d6f7; }
+html.otonDark .cell.other .dnum { color: #5d6f9a; }
+html.otonDark .cell.sel { border-color: #4c7dff !important; box-shadow: 0 0 0 1.5px #4c7dff inset; }
+html.otonDark .todoItem .tt { color: #dbe4f5; }
+html.otonDark .todoItem.done .tt { color: #64779f; }
+html.otonDark .todoItem .cbox { border-color: #33477a; background: #0f1930; }
+html.otonDark .todoItem.done .cbox { background: #3d63e0; border-color: #3d63e0; }
+
+/* ── プリント管理 ── */
+html.otonDark .card .meta { color: #b9c9ea; }
+html.otonDark .bdg { background: #24406e; color: #aebfe6; }
+html.otonDark .card.checked { border-color: #4c7dff !important; }
+html.otonDark header .selBtn { background: rgba(255,255,255,.1); color: #dbe4f5; }
+html.otonDark header .selBtn.on { background: #3d63e0; }
+
+/* ── プリント消しゴム ── */
+html.otonDark #canvasWrap { background: #0c1428; }
+html.otonDark #home .tip { background: #141f3c; color: #93a7cd; border-color: #2b3b63; }
+html.otonDark .bigBtn { box-shadow: 0 6px 16px rgba(61,99,224,.35) !important; }
+html.otonDark .row label { color: #93a7cd; }
+html.otonDark .rangeEnd { color: #93a7cd; }
+html.otonDark #loading { background: rgba(3,7,18,.7); }
+html.otonDark #loading p { color: #dbe4f5; }
