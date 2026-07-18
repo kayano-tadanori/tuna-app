@@ -489,11 +489,16 @@ function rankFor(course, ym) {
   const r = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
   return r && r.rank != null ? r.rank : null;
 }
-// 最レ算数のA表：その月の復テ平均（計算・復習の全得点の単純平均）＋公開テスト算数の得点
+// 最レの月度割り：小3まで（2025-01以前）は日曜開催で暦月区切り、
+// 小4から（2025-02以降）は週次開催でマスターと同じ「前月16日〜当月15日」区切り（実物の個人票で確認）
+function saiYmOf(ds) {
+  return ds <= '2025-01-31' ? ds.slice(0, 7) : ymOfDate(ds);
+}
+// 最レ算数のA表：その月度の復テ平均（計算・復習の全得点の単純平均）＋公開テスト算数の得点
 function saiRow(ym) {
   const sc = [];
   for (const t of db.saire) {
-    if (!t.date || t.date.slice(0, 7) !== ym) continue;
+    if (!t.date || saiYmOf(t.date) !== ym) continue;
     if (t.keisan != null && t.keisan !== '') sc.push(+t.keisan);
     if (t.fukushu != null && t.fukushu !== '') sc.push(+t.fukushu);
   }
@@ -506,7 +511,7 @@ function saiRow(ym) {
 function courseMonthData(course) {
   const yms = new Set(db.atotal.filter(x => (x.course || 'マスター') === course).map(x => x.ym));
   if (course === 'マスター') abMonths().forEach(m => yms.add(m));
-  if (course === '最レ算数') db.saire.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
+  if (course === '最レ算数') db.saire.forEach(t => { if (t.date) yms.add(saiYmOf(t.date)); });
   return [...yms].sort().map(ym => {
     const rec = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
     let total = rec && rec.total != null ? +rec.total : null;
@@ -865,13 +870,13 @@ function render() {
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓算数（計算80点＋復習120点）を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
-      const ym = t.date.slice(0, 7);
+      const ym = saiYmOf(t.date);
       if (ym !== curYm) {
         curYm = ym;
-        const m = db.saire.filter(x => x.date.slice(0, 7) === ym);
+        const m = db.saire.filter(x => saiYmOf(x.date) === ym);
         const avg = (m.reduce((s, x) => s + (+x.keisan || 0) + (+x.fukushu || 0), 0) / m.length).toFixed(1);
         const rk = rankFor('最レ算数', ym);
-        h += `<p class="secLabel">${ymLabel(ym)}（${m.length}回・平均 ${avg}/200点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
+        h += `<p class="secLabel">${ymLabel(ym)}度（${m.length}回・平均 ${avg}/200点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
       }
       const total = (+t.keisan || 0) + (+t.fukushu || 0);
       h += `<div class="testLine" data-saire="${t.id}"><span class="d">${mdLabel(t.date)}</span>
