@@ -546,16 +546,36 @@ function saikokuRow(ym) {
   const kokai = (k && k.koku && k.koku.score != null && k.koku.score !== '') ? +k.koku.score : null;
   return { ym, total: (fuku != null && kokai != null) ? fuku + kokai : null };
 }
+// 灘合のA表：その月（暦月）の各教科得点の単純平均＋公開の平均点（総合÷科目数）
+function nadaRow(ym) {
+  const sc = [];
+  for (const t of db.nadago) {
+    if (!t.date || t.date.slice(0, 7) !== ym) continue;
+    for (const v of [t.koku, t.san, t.ri]) if (v != null && v !== '') sc.push(+v);
+  }
+  const fuku = sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null;
+  const k = db.kokai.find(x => x.ym === ym);
+  let kAvg = null;
+  if (k) {
+    const s = [k.koku, k.san, k.ri].map(o => o && o.score).filter(v => v != null && v !== '');
+    if (s.length) kAvg = s.reduce((a, b) => a + (+b), 0) / s.length;
+  }
+  return { ym, total: (fuku != null && kAvg != null) ? fuku + kAvg : null };
+}
 // 講座ごとの月度データ。総合点＝A表個人票の実物値(atotal.total)優先→なければ自動計算、順位＝atotal.rank
 function courseMonthData(course) {
   const yms = new Set(db.atotal.filter(x => (x.course || 'マスター') === course).map(x => x.ym));
   if (course === 'マスター') abMonths().forEach(m => yms.add(m));
   if (course === '最レ算数') db.saire.forEach(t => { if (t.date) yms.add(saiYmOf(t.date)); });
   if (course === '最レ国語') db.saikoku.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
+  if (course === '灘合') db.nadago.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
   return [...yms].sort().map(ym => {
     const rec = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
     let total = rec && rec.total != null ? +rec.total : null;
-    if (total == null) total = course === 'マスター' ? aRow(ym).total : course === '最レ算数' ? saiRow(ym).total : course === '最レ国語' ? saikokuRow(ym).total : null;
+    if (total == null) total = course === 'マスター' ? aRow(ym).total
+      : course === '最レ算数' ? saiRow(ym).total
+      : course === '最レ国語' ? saikokuRow(ym).total
+      : course === '灘合' ? nadaRow(ym).total : null;
     return { ym, total: total != null ? Math.round(total * 10) / 10 : null, rank: rec && rec.rank != null ? rec.rank : null };
   });
 }

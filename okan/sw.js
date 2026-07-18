@@ -1,5 +1,5 @@
 // 中受ママ伴走アプリ Service Worker
-const CACHE_NAME = 'okan-gakuen-v38';
+const CACHE_NAME = 'okan-gakuen-v39';
 const ASSETS = [
   './',
   './index.html',
