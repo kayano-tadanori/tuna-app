@@ -302,7 +302,7 @@
     <div class="fRow">
       <div><p class="fLabel">月度</p><input class="fInput" type="month" id="aYm"></div>
       <div><p class="fLabel">講座</p>
-        <select class="fInput" id="aCourse"><option>マスター</option><option>最レ算数</option><option>最レ国語</option></select>
+        <select class="fInput" id="aCourse"><option>マスター</option><option>最レ算数</option><option>最レ国語</option><option>灘合</option></select>
       </div>
     </div>
     <div class="fRow">
@@ -376,7 +376,7 @@
 - fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
 - saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
 - nadago＝灘中合格特訓。koku/san/ri は各教科の得点。
-- atotal＝A表のクラス内順位。course は マスター/最レ算数/最レ国語 のどれか。rank=その月度のクラス内順位。ym は "YYYY-MM"（月度）。総合点は復テ・公開の記録から自動計算されるので入力不要（A表個人票の実物値 fuku/kokai/total を入れた場合はそちらを優先表示）。
+- atotal＝A表のクラス内順位。course は マスター/最レ算数/最レ国語/灘合 のどれか。rank=その月度のクラス内順位。ym は "YYYY-MM"（月度）。総合点は復テ・公開の記録から自動計算されるので入力不要（A表個人票の実物値 fuku/kokai/total を入れた場合はそちらを優先表示。灘合の総合点は実物値がある場合のみグラフに出ます）。
 - 読み取れない値は null。数値は数値型で書き、単位（点・位）は付けない。
 - id は他とかぶらない英数字の文字列。上の例のように日付から作る。
 - 該当データのない配列は [] のままでよい。</pre>
@@ -484,7 +484,7 @@ function renderGraph(list) {
 }
 
 // ---------- A表：総合点（自動計算）とクラス内順位（手入力）のグラフ ----------
-const COURSE_COLOR = { 'マスター': DARK ? '#f9e2af' : '#9333ea', '最レ算数': '#3b82f6', '最レ国語': '#f43f5e' };
+const COURSE_COLOR = { 'マスター': DARK ? '#f9e2af' : '#9333ea', '最レ算数': '#3b82f6', '最レ国語': '#f43f5e', '灘合': '#0d9488' };
 function rankFor(course, ym) {
   const r = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
   return r && r.rank != null ? r.rank : null;
@@ -897,8 +897,8 @@ function render() {
     $('abClass').onchange = sync;
   } else {
     const list = [...db.nadago].sort((a, b) => b.date.localeCompare(a.date));
-    let h = '';
-    if (!list.length) h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで灘中合格特訓（国算理 各100点）を記録できます。</p>';
+    let h = courseGraphs('灘合');
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで灘中合格特訓（国算理 各100点）を記録できます。</p>';
     for (const t of list) {
       const total = (+t.koku || 0) + (+t.san || 0) + (+t.ri || 0);
       h += `<div class="testLine" data-nada="${t.id}"><span class="d">${mdLabel(t.date)}</span>
@@ -907,6 +907,7 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-nada]').forEach(el => el.onclick = () => openNada(db.nadago.find(x => x.id === el.dataset.nada)));
+    bindRankChips(v, '灘合');
   }
   v.querySelectorAll('.graphCard svg').forEach(makeZoomable);
 }
