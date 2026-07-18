@@ -603,11 +603,28 @@ const AB_TH = {
 };
 
 // その月のA表：復習テスト（前月16日〜当月15日）の教科別平均→全体平均 ＋ 公開の平均点
-function aRow(ym) {
+// A表の月度窓。夏期は講習日程で16日〆からずれる（実物の個人票で確認：7月度=6/16〜7/4、8月度=7/7〜8/8、9月度=8/18〜9/12）。
+// 隙間なくつながる区切りで実装：7月度=6/16〜7/5、8月度=7/6〜8/12、9月度=8/13〜9/15、その他=前月16日〜当月15日
+function aWindow(ym) {
   const [y, m] = ym.split('-').map(Number);
+  if (m === 7) return [`${y}-06-16`, `${y}-07-05`];
+  if (m === 8) return [`${y}-07-06`, `${y}-08-12`];
+  if (m === 9) return [`${y}-08-13`, `${y}-09-15`];
   const p = new Date(y, m - 2, 16);
-  const from = `${p.getFullYear()}-${String(p.getMonth() + 1).padStart(2, '0')}-16`;
-  const to = ym + '-15';
+  return [`${p.getFullYear()}-${String(p.getMonth() + 1).padStart(2, '0')}-16`, ym + '-15'];
+}
+// 日付→その復テが属する月度（aWindowの逆引き）
+function ymOfDate(ds) {
+  const y = +ds.slice(0, 4), md = ds.slice(5, 10);
+  if (md >= '06-16' && md <= '07-05') return `${y}-07`;
+  if (md >= '07-06' && md <= '08-12') return `${y}-08`;
+  if (md >= '08-13' && md <= '09-15') return `${y}-09`;
+  if (+ds.slice(8, 10) <= 15) return ds.slice(0, 7);
+  const n = new Date(y, +ds.slice(5, 7), 1);
+  return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`;
+}
+function aRow(ym) {
+  const [from, to] = aWindow(ym);
   const tests = db.fukushu.filter(t => t.date >= from && t.date <= to && t.score != null && t.score !== '');
   const bySubj = {};
   for (const t of tests) {
@@ -631,13 +648,7 @@ function abMonths() {
   const set = new Set(db.kokai.map(k => k.ym));
   for (const t of db.fukushu) {
     if (!t.date) continue;
-    const d = t.date.slice(8, 10);
-    if (+d <= 15) set.add(t.date.slice(0, 7));
-    else {
-      const [y, m] = t.date.slice(0, 7).split('-').map(Number);
-      const n = new Date(y, m, 1);
-      set.add(`${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`);
-    }
+    set.add(ymOfDate(t.date));
   }
   return [...set].sort();
 }
@@ -665,7 +676,7 @@ function renderAB() {
         ${['V', 'S', 'H'].map(c => `<option ${c === cls ? 'selected' : ''}>${c}クラス</option>`).join('')}
       </select>
     </div>
-    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復テ平均（前月16日〜当月15日の復習テストの単純平均）＋公開の平均点（総合点÷科目数）＝200点満点。B表＝2ヶ月合算（奇数月末判定→偶数月から新クラス）。基準値は非公表のおおまかな目安（±10点程度）です。</p></div>`;
+    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復テ平均（前月16日〜当月15日の復習テストの単純平均。夏期は実物どおり7月度=〜7/5・8月度=〜8/12・9月度=〜9/15で区切り）＋公開の平均点（総合点÷科目数）＝200点満点。B表＝2ヶ月合算（奇数月末判定→偶数月から新クラス）。基準値は非公表のおおまかな目安（±10点程度）です。</p></div>`;
 
   // B表（判定月＝奇数月：2+3月→3月末、4+5月→5月末…）
   const th = AB_TH[cls] || {};
