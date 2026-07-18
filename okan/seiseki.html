@@ -57,6 +57,12 @@
   .legend { display: flex; gap: 10px; flex-wrap: wrap; padding: 4px 6px 6px; }
   .legend span { font-size: 10px; font-weight: 800; display: flex; align-items: center; gap: 4px; color: #64748b; }
   .legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; }
+  .gToggle { display: flex; gap: 6px; margin: 2px 2px 8px; }
+  .gBtn { border: none; background: #f1f5f9; color: #64748b; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+  .gBtn.on { background: #db2777; color: #fff; }
+  .rankRow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 2px 12px; font-size: 11px; color: #94a3b8; font-weight: 700; }
+  .rankChip { border: none; background: #fce7f3; color: #db2777; font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 999px; cursor: pointer; }
+  .rankChip.add { background: #f1f5f9; color: #64748b; }
 
   .secLabel { font-size: 12px; font-weight: 800; color: #94a3b8; margin: 14px 2px 8px; }
   .rowCard {
@@ -157,7 +163,6 @@
   <button class="tab" data-tab="fukushu">復習テスト</button>
   <button class="tab" data-tab="saire">最レ算数</button>
   <button class="tab" data-tab="nadago">灘中合格</button>
-  <button class="tab" data-tab="atotal">📋A表</button>
   <button class="tab" data-tab="ab">⚖️クラス替え</button>
   <span class="grow"></span>
   <button id="aiFmtBtn">🤖 AI入力</button>
@@ -277,10 +282,10 @@
   </div>
 </div>
 
-<!-- A表（月間総計・順位）入力 -->
+<!-- クラス内順位入力（A表・講座別） -->
 <div class="overlay" id="atotalSheet">
   <div class="sheet">
-    <div class="sheetHead"><h2 id="atotalTitle">A表（月間総計）を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="sheetHead"><h2 id="atotalTitle">クラス内順位を記録</h2><button class="closeBtn" data-close>✕</button></div>
     <div class="fRow">
       <div><p class="fLabel">月度</p><input class="fInput" type="month" id="aYm"></div>
       <div><p class="fLabel">講座</p>
@@ -288,13 +293,9 @@
       </div>
     </div>
     <div class="fRow">
-      <div><p class="fLabel">復テ平均</p><input class="fInput" type="number" step="0.1" id="aFuku"></div>
-      <div><p class="fLabel" id="aKokaiLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="aKokai"></div>
+      <div><p class="fLabel">クラス内順位（A表個人票より）</p><input class="fInput" type="number" id="aRank"></div>
     </div>
-    <div class="fRow">
-      <div><p class="fLabel">総計（空欄なら自動計算）</p><input class="fInput" type="number" step="0.1" id="aTotal"></div>
-      <div><p class="fLabel">クラス内順位</p><input class="fInput" type="number" id="aRank"></div>
-    </div>
+    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7;margin:4px 2px">総合点（復テ平均＋公開）は記録済みのテストから自動計算されます。クラス内順位だけはA表個人票にしか載っていないので、ここで記録してください。</p>
     <div class="sheetBtns">
       <button class="btn btnDanger" id="atotalDelete" style="display:none">削除</button>
       <button class="btn btnPink" id="atotalSave">保存</button>
@@ -350,7 +351,7 @@
       { "id": "n2026-06-28", "date": "2026-06-28", "no": 2, "koku": 75, "san": 100, "ri": 94 }
     ],
     "atotal": [
-      { "id": "a2026-05-master", "ym": "2026-05", "course": "マスター", "fuku": 91.3, "kokai": 96.3, "total": 187.6, "rank": 1 }
+      { "id": "a2026-05-master", "ym": "2026-05", "course": "マスター", "rank": 1 }
     ]
   }
 }
@@ -360,7 +361,7 @@
 - fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
 - saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
 - nadago＝灘中合格特訓。koku/san/ri は各教科の得点。
-- atotal＝A表（月度ごとの月間総計）。course は マスター/最レ算数/最レ国語 のどれか。fuku=復テ平均、kokai=マスターは公開平均（総合点÷科目数）・最レは公開テストの該当科目の得点、total=fuku+kokai（200点満点）、rank=クラス内順位。ym は "YYYY-MM"（月度）。
+- atotal＝A表のクラス内順位。course は マスター/最レ算数/最レ国語 のどれか。rank=その月度のクラス内順位。ym は "YYYY-MM"（月度）。総合点は復テ・公開の記録から自動計算されるので入力不要（A表個人票の実物値 fuku/kokai/total を入れた場合はそちらを優先表示）。
 - 読み取れない値は null。数値は数値型で書き、単位（点・位）は付けない。
 - id は他とかぶらない英数字の文字列。上の例のように日付から作る。
 - 該当データのない配列は [] のままでよい。</pre>
@@ -459,19 +460,42 @@ function renderGraph(list) {
     <div class="legend">${legend}<span><i style="background:#f59e0b"></i>${GOAL_SCHOOL.slice(0, 8)}ライン</span></div></div>`;
 }
 
-// ---------- A表（月間総計・順位）：講座別の折れ線グラフ ----------
-const A_COURSES = [
-  { name: 'マスター', color: DARK ? '#f9e2af' : '#9333ea', bold: true },
-  { name: '最レ算数', color: '#3b82f6' },
-  { name: '最レ国語', color: '#f43f5e' }
-];
-const aKokaiName = c => c === '最レ算数' ? '公開算数' : c === '最レ国語' ? '公開国語' : '公開平均';
-function atotalGraph(list, get, opt) {
-  // list: ym昇順。get(t)=値。opt={title, invert(順位グラフ=1位が上), }
-  const pts = list.filter(t => get(t) != null);
-  const yms = [...new Set(pts.map(t => t.ym))].sort();
-  if (yms.length < 2) return '';
-  const W = 360, H = 170, L = 30, R = 8, T = 14, B = 24;
+// ---------- A表：総合点（自動計算）とクラス内順位（手入力）のグラフ ----------
+const COURSE_COLOR = { 'マスター': DARK ? '#f9e2af' : '#9333ea', '最レ算数': '#3b82f6', '最レ国語': '#f43f5e' };
+function rankFor(course, ym) {
+  const r = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
+  return r && r.rank != null ? r.rank : null;
+}
+// 最レ算数のA表：その月の復テ平均（計算・復習の全得点の単純平均）＋公開テスト算数の得点
+function saiRow(ym) {
+  const sc = [];
+  for (const t of db.saire) {
+    if (!t.date || t.date.slice(0, 7) !== ym) continue;
+    if (t.keisan != null && t.keisan !== '') sc.push(+t.keisan);
+    if (t.fukushu != null && t.fukushu !== '') sc.push(+t.fukushu);
+  }
+  const fuku = sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null;
+  const k = db.kokai.find(x => x.ym === ym);
+  const kokai = (k && k.san && k.san.score != null && k.san.score !== '') ? +k.san.score : null;
+  return { ym, total: (fuku != null && kokai != null) ? fuku + kokai : null };
+}
+// 講座ごとの月度データ。総合点＝A表個人票の実物値(atotal.total)優先→なければ自動計算、順位＝atotal.rank
+function courseMonthData(course) {
+  const yms = new Set(db.atotal.filter(x => (x.course || 'マスター') === course).map(x => x.ym));
+  if (course === 'マスター') abMonths().forEach(m => yms.add(m));
+  if (course === '最レ算数') db.saire.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
+  return [...yms].sort().map(ym => {
+    const rec = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
+    let total = rec && rec.total != null ? +rec.total : null;
+    if (total == null) total = course === 'マスター' ? aRow(ym).total : course === '最レ算数' ? saiRow(ym).total : null;
+    return { ym, total: total != null ? Math.round(total * 10) / 10 : null, rank: rec && rec.rank != null ? rec.rank : null };
+  });
+}
+// 1系列の折れ線（invert=順位グラフ：1位が上）
+function lineGraph(data, get, opt) {
+  const pts = data.filter(d => get(d) != null);
+  if (pts.length < 2) return '';
+  const W = 360, H = 170, L = 34, R = 8, T = 14, B = 24;
   const iw = W - L - R, ih = H - T - B;
   const vals = pts.map(get);
   let yMin, yMax, step;
@@ -483,7 +507,7 @@ function atotalGraph(list, get, opt) {
     yMax = Math.min(200, Math.ceil((Math.max(...vals) + 5) / 10) * 10);
     step = yMax - yMin > 60 ? 20 : 10;
   }
-  const X = i => L + i / (yms.length - 1) * iw;
+  const X = i => L + i / (pts.length - 1) * iw;
   const Y = v => opt.invert ? T + (v - yMin) / (yMax - yMin) * ih : T + (yMax - v) / (yMax - yMin) * ih;
   const grid = DARK ? '#26365d' : '#e2e8f0';
   const txt = DARK ? '#93a7cd' : '#94a3b8';
@@ -492,26 +516,80 @@ function atotalGraph(list, get, opt) {
     g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
     g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}${opt.invert ? '位' : ''}</text>`;
   }
-  const xstep = Math.ceil(yms.length / 6);
-  yms.forEach((ym, i) => {
-    if (i % xstep === 0 || i === yms.length - 1) {
-      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+ym.slice(5)}月</text>`;
+  const xstep = Math.ceil(pts.length / 6);
+  pts.forEach((d, i) => {
+    if (i % xstep === 0 || i === pts.length - 1) {
+      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+d.ym.slice(5)}月</text>`;
     }
   });
-  const used = [];
-  for (const c of A_COURSES) {
-    const p = [];
-    yms.forEach((ym, i) => {
-      const t = pts.find(x => x.ym === ym && (x.course || 'マスター') === c.name);
-      if (t) p.push([X(i), Y(get(t))]);
-    });
-    if (!p.length) continue;
-    used.push(c);
-    if (p.length > 1) g += `<polyline points="${p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ')}" fill="none" stroke="${c.color}" stroke-width="${c.bold ? 2.6 : 1.8}"/>`;
-    p.forEach(q => { g += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="2.4" fill="${c.color}"/>`; });
+  g += `<polyline points="${pts.map((d, i) => X(i).toFixed(1) + ',' + Y(get(d)).toFixed(1)).join(' ')}" fill="none" stroke="${opt.color}" stroke-width="2.4"/>`;
+  pts.forEach((d, i) => { g += `<circle cx="${X(i).toFixed(1)}" cy="${Y(get(d)).toFixed(1)}" r="2.6" fill="${opt.color}"/>`; });
+  return `<div class="graphCard"><h3>${opt.title}</h3><svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg></div>`;
+}
+// 講座タブ上部：順位グラフ＋総合点グラフ＋順位チップ（タップで記録・編集）
+function courseGraphs(course) {
+  const data = courseMonthData(course);
+  const color = COURSE_COLOR[course] || '#db2777';
+  let h = lineGraph(data, d => d.rank, { title: `📉 クラス内順位の推移（1位が上）`, invert: true, color });
+  h += lineGraph(data, d => d.total, { title: `📈 A表総合点の推移（復テ平均＋公開・200点満点）`, color });
+  const chips = data.filter(d => d.rank != null).map(d =>
+    `<button class="rankChip" data-rankym="${d.ym}">${+d.ym.slice(5)}月度 ${d.rank}位</button>`).join('');
+  h += `<div class="rankRow"><span>クラス内順位：</span>${chips}<button class="rankChip add" data-rankadd="1">＋記録</button></div>`;
+  return h;
+}
+function bindRankChips(v, course) {
+  v.querySelectorAll('[data-rankym]').forEach(el => el.onclick = () => openRank(course, el.dataset.rankym));
+  const a = v.querySelector('[data-rankadd]');
+  if (a) a.onclick = () => openRank(course, null);
+}
+// 公開テスト：順位の折れ線（偏差値グラフと切り替え）
+function renderKokaiRankGraph(list) {
+  if (list.length < 2) return '';
+  const W = 360, H = 190, L = 38, R = 8, T = 14, B = 24;
+  const iw = W - L - R, ih = H - T - B;
+  const p3 = k => { const m = /^(\d+)/.exec(k.rank3 || ''); return m ? +m[1] : null; };
+  const series = [
+    { label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.rank },
+    { label: '算数', color: '#3b82f6', get: k => k.san && k.san.rank },
+    { label: '理科', color: '#10b981', get: k => k.ri && k.ri.rank },
+    { label: '3科', color: DARK ? '#f9e2af' : '#9333ea', get: p3, bold: true }
+  ];
+  let vals = [];
+  for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
+  if (!vals.length) return '';
+  const yMin = 1, yMax = Math.max(...vals, 10);
+  const step = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000].find(n => (yMax - yMin) / n <= 7) || 1000;
+  const X = i => L + (list.length === 1 ? iw / 2 : i / (list.length - 1) * iw);
+  const Y = v => T + (v - yMin) / (yMax - yMin) * ih;
+  const grid = DARK ? '#26365d' : '#e2e8f0';
+  const txt = DARK ? '#93a7cd' : '#94a3b8';
+  let g = `<line x1="${L}" y1="${Y(1)}" x2="${W - R}" y2="${Y(1)}" stroke="${grid}" stroke-width="1"/>
+    <text x="${L - 4}" y="${Y(1) + 3}" fill="${txt}" font-size="8" text-anchor="end">1位</text>`;
+  for (let v = step; v <= yMax; v += step) {
+    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
+    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}位</text>`;
   }
-  const legend = used.map(c => `<span><i style="background:${c.color}"></i>${c.name}</span>`).join('');
-  return `<div class="graphCard"><h3>${opt.title}</h3>
+  const xstep = Math.ceil(list.length / 6);
+  list.forEach((k, i) => {
+    if (i % xstep === 0 || i === list.length - 1) {
+      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+k.ym.split('-')[1]}月</text>`;
+    }
+  });
+  for (let i = 1; i < list.length; i++) {
+    if (list[i].class && list[i - 1].class && list[i].class !== list[i - 1].class) {
+      g += `<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H - B}" stroke="${txt}" stroke-width="1" stroke-dasharray="2 3"/>`;
+      g += `<text x="${X(i) + 3}" y="${T + 8}" fill="${txt}" font-size="7.5">${list[i].class}へ</text>`;
+    }
+  }
+  for (const s of series) {
+    const pts = [];
+    list.forEach((k, i) => { const v = s.get(k); if (v != null) pts.push([X(i), Y(v)]); });
+    if (pts.length < 2) continue;
+    g += `<polyline points="${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.bold ? 3 : 1.8}" opacity="${s.bold ? 1 : .85}"/>`;
+    pts.forEach(p => { g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${s.bold ? 3 : 2.2}" fill="${s.color}"/>`; });
+  }
+  const legend = series.map(s => `<span><i style="background:${s.color}"></i>${s.label}</span>`).join('');
+  return `<div class="graphCard"><h3>📉 公開学力テスト 順位の推移（1位が上）</h3>
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
     <div class="legend">${legend}</div></div>`;
 }
@@ -646,7 +724,10 @@ function render() {
   const v = $('view');
   if (tab === 'kokai') {
     const list = [...db.kokai].sort((a, b) => a.ym.localeCompare(b.ym));
-    let h = renderGraph(list);
+    const gmode = localStorage.getItem('okan_kokai_graph') || 'dev';
+    let h = '';
+    if (list.length >= 2) h += `<div class="gToggle"><button class="gBtn${gmode === 'dev' ? ' on' : ''}" data-gmode="dev">📈 偏差値</button><button class="gBtn${gmode === 'rank' ? ' on' : ''}" data-gmode="rank">📉 順位</button></div>`;
+    h += gmode === 'rank' ? renderKokaiRankGraph(list) : renderGraph(list);
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで公開学力テストの結果を記録できます。<br>（データの取り込みはホームの ⚙️設定 → 📥取り込む から）</p>';
     else {
       h += '<p class="secLabel">つきごとの記録（タップでくわしく）</p>';
@@ -661,10 +742,11 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-kokai]').forEach(el => el.onclick = () => openDetail(el.dataset.kokai));
+    v.querySelectorAll('[data-gmode]').forEach(el => el.onclick = () => { localStorage.setItem('okan_kokai_graph', el.dataset.gmode); render(); });
   } else if (tab === 'fukushu') {
     const list = [...db.fukushu].sort((a, b) => b.date.localeCompare(a.date));
-    let h = '';
-    if (!list.length) h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで復習テストの点数を記録できます。</p>';
+    let h = courseGraphs('マスター');
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで復習テストの点数を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
       const ym = t.date.slice(0, 7);
@@ -680,10 +762,11 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-fuku]').forEach(el => el.onclick = () => openFuku(db.fukushu.find(x => x.id === el.dataset.fuku)));
+    bindRankChips(v, 'マスター');
   } else if (tab === 'saire') {
     const list = [...db.saire].sort((a, b) => b.date.localeCompare(a.date));
-    let h = '';
-    if (!list.length) h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓算数（計算80点＋復習120点）を記録できます。</p>';
+    let h = courseGraphs('最レ算数');
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓算数（計算80点＋復習120点）を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
       const ym = t.date.slice(0, 7);
@@ -691,7 +774,8 @@ function render() {
         curYm = ym;
         const m = db.saire.filter(x => x.date.slice(0, 7) === ym);
         const avg = (m.reduce((s, x) => s + (+x.keisan || 0) + (+x.fukushu || 0), 0) / m.length).toFixed(1);
-        h += `<p class="secLabel">${ymLabel(ym)}（${m.length}回・平均 ${avg}/200点）</p>`;
+        const rk = rankFor('最レ算数', ym);
+        h += `<p class="secLabel">${ymLabel(ym)}（${m.length}回・平均 ${avg}/200点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
       }
       const total = (+t.keisan || 0) + (+t.fukushu || 0);
       h += `<div class="testLine" data-saire="${t.id}"><span class="d">${mdLabel(t.date)}</span>
@@ -700,25 +784,7 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-saire]').forEach(el => el.onclick = () => openSaire(db.saire.find(x => x.id === el.dataset.saire)));
-  } else if (tab === 'atotal') {
-    const list = [...db.atotal].sort((a, b) => a.ym.localeCompare(b.ym) || (a.course || '').localeCompare(b.course || ''));
-    let h = '';
-    if (!list.length) {
-      h = '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンでA表（月度ごとの総計とクラス内順位）を<br>講座別（マスター／最レ）に記録できます。</p>';
-    } else {
-      h += atotalGraph(list, t => t.rank, { title: '📉 クラス内順位の推移（1位が上）', invert: true });
-      h += atotalGraph(list, t => t.total, { title: '📈 総計の推移（200点満点）' });
-      let curY = '';
-      for (const t of [...list].reverse()) {
-        const y = t.ym.slice(0, 4);
-        if (y !== curY) { curY = y; h += `<p class="secLabel">${y}年</p>`; }
-        h += `<div class="testLine" data-atotal="${t.id}"><span class="d">${+t.ym.slice(5)}月度</span>
-          <span class="sj">${t.course || 'マスター'}　復テ${show(t.fuku)}＋${aKokaiName(t.course)}${show(t.kokai)}${t.rank != null ? `　<b>${t.rank}位</b>` : ''}</span>
-          <span class="sc">${show(t.total)}点</span></div>`;
-      }
-    }
-    v.innerHTML = h;
-    v.querySelectorAll('[data-atotal]').forEach(el => el.onclick = () => openAtotal(db.atotal.find(x => x.id === el.dataset.atotal)));
+    bindRankChips(v, '最レ算数');
   } else if (tab === 'ab') {
     v.innerHTML = renderAB();
     const sync = () => {
@@ -899,38 +965,33 @@ $('nadaDelete').onclick = () => {
   save(); closeAll(); render();
 };
 
-// ---------- A表（月間総計・順位） ----------
-let editingAtotal = null;
-function openAtotal(t) {
-  editingAtotal = t ? t.id : null;
-  $('atotalTitle').textContent = t ? 'A表を編集' : 'A表（月間総計）を記録';
-  $('aYm').value = t ? t.ym : new Date().toISOString().slice(0, 7);
-  $('aCourse').value = t && t.course ? t.course : 'マスター';
-  $('aFuku').value = t && t.fuku != null ? t.fuku : '';
-  $('aKokai').value = t && t.kokai != null ? t.kokai : '';
-  $('aTotal').value = t && t.total != null ? t.total : '';
-  $('aRank').value = t && t.rank != null ? t.rank : '';
-  $('aKokaiLabel').textContent = aKokaiName($('aCourse').value);
-  $('atotalDelete').style.display = t ? '' : 'none';
+// ---------- クラス内順位（A表・講座別） ----------
+function openRank(course, ym) {
+  const rec = ym ? db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym) : null;
+  $('aYm').value = ym || new Date().toISOString().slice(0, 7);
+  $('aCourse').value = course || 'マスター';
+  $('aRank').value = rec && rec.rank != null ? rec.rank : '';
+  $('atotalDelete').style.display = rec && rec.rank != null ? '' : 'none';
   $('atotalSheet').classList.add('open');
 }
-$('aCourse').onchange = () => { $('aKokaiLabel').textContent = aKokaiName($('aCourse').value); };
 $('atotalSave').onclick = () => {
   const ym = $('aYm').value;
   if (!ym) { alert('月度を入れてください'); return; }
-  const fuku = num($('aFuku').value), kokai = num($('aKokai').value);
-  let total = num($('aTotal').value);
-  if (total == null && fuku != null && kokai != null) total = Math.round((fuku + kokai) * 10) / 10;
-  const item = { id: editingAtotal || uid(), ym, course: $('aCourse').value, fuku, kokai, total, rank: num($('aRank').value) };
-  db.atotal = db.atotal.filter(x => x.id !== item.id);
-  db.atotal.push(item);
-  editingAtotal = null;
+  const course = $('aCourse').value;
+  const i = db.atotal.findIndex(x => (x.course || 'マスター') === course && x.ym === ym);
+  if (i >= 0) db.atotal[i].rank = num($('aRank').value);
+  else db.atotal.push({ id: uid(), ym, course, rank: num($('aRank').value) });
   save(); closeAll(); render();
 };
 $('atotalDelete').onclick = () => {
-  if (!editingAtotal) return;
-  db.atotal = db.atotal.filter(x => x.id !== editingAtotal);
-  editingAtotal = null;
+  const ym = $('aYm').value, course = $('aCourse').value;
+  const i = db.atotal.findIndex(x => (x.course || 'マスター') === course && x.ym === ym);
+  if (i >= 0) {
+    const r = db.atotal[i];
+    // A表個人票の実物値（総計など）が入っている記録は順位だけ消す
+    if (r.fuku != null || r.kokai != null || r.total != null) r.rank = null;
+    else db.atotal.splice(i, 1);
+  }
   save(); closeAll(); render();
 };
 
@@ -948,7 +1009,6 @@ $('fab').onclick = () => {
   if (tab === 'kokai') openKokaiForm(null);
   else if (tab === 'fukushu') openFuku(null);
   else if (tab === 'saire') openSaire(null);
-  else if (tab === 'atotal') openAtotal(null);
   else openNada(null);
 };
 $('aiFmtBtn').onclick = () => $('aiFmtSheet').classList.add('open');
