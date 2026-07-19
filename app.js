@@ -1137,6 +1137,8 @@ function initSettingsScreen() {
   mt.textContent = c.musicOn ? 'ON' : 'OFF'; mt.classList.toggle('off', !c.musicOn);
   document.getElementById('snd-sfx-vol').value = Math.round(c.sfxVol * 100);
   document.getElementById('snd-music-vol').value = Math.round(c.musicVol * 100);
+  const dg = document.getElementById('snd-diag');
+  if (dg) dg.textContent = Snd.diag();
 }
 
 document.getElementById('snd-sfx-toggle').onclick = () => {

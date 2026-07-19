@@ -38,10 +38,25 @@ const Snd = (() => {
   // iOSのマナーモード（横の消音スイッチ）でもWeb Audioが鳴るよう、再生カテゴリを指定
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* 非対応環境は無視 */ }
 
+  // 旧iOS（audioSession非対応）向け：無音の<audio>をループ再生すると
+  // 再生セッションが「メディア再生」扱いになり、マナーモードでもWeb Audioが鳴る
+  let silentAudio = null;
+  function unlockHtmlAudio() {
+    if (silentAudio) return;
+    try {
+      // 0.05秒の無音WAV（44.1kHz・16bit・モノラル）
+      silentAudio = new Audio('data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YSADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==');
+      silentAudio.loop = true;
+      const p = silentAudio.play();
+      if (p && p.catch) p.catch(() => { silentAudio = null; });
+    } catch (e) { silentAudio = null; }
+  }
+
   // iOSはユーザー操作がないと音が出ないので、タップのたびに起こす
   const unlock = () => {
     if (!ensure()) return;
     if (ctx.state === 'suspended') ctx.resume();
+    if (!navigator.audioSession) unlockHtmlAudio();
     if (bgmName && cfg.musicOn) startScheduler();
   };
   document.addEventListener('pointerdown', unlock, { capture: true });
@@ -291,11 +306,18 @@ const Snd = (() => {
   }
   function get() { return { ...cfg }; }
 
+  // 設定画面に出す診断情報（不具合の切り分け用）
+  function diag() {
+    const eng = ctx ? ctx.state : '未起動（画面をタップすると起動）';
+    const mute = navigator.audioSession ? '対応(audioSession)' : (silentAudio ? '対応(無音再生)' : '未対策');
+    return `音声エンジン: ${eng}／マナーモード対策: ${mute}／BGM: ${bgmName || '停止中'}`;
+  }
+
   // ---------- 全ボタン共通のタップ音（キャプチャで委譲） ----------
   document.addEventListener('click', e => {
     const btn = e.target.closest('button');
     if (btn && !btn.disabled) tap();
   }, true);
 
-  return { tap, correct, wrong, combo, fanfare, answer, result, bgm, stopBgm, onScreen, set, get };
+  return { tap, correct, wrong, combo, fanfare, answer, result, bgm, stopBgm, onScreen, set, get, diag };
 })();
