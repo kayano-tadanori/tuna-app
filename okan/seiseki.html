@@ -1271,11 +1271,10 @@ if (document.querySelector('#topBar .tab[data-tab="ab"]').style.display === 'non
   sel.innerHTML = CHILDREN.map(c => `<option ${c === activeChild ? 'selected' : ''}>${c}</option>`).join('');
   sel.style.display = '';
   sel.onchange = () => {
-    activeChild = sel.value;
-    localStorage.setItem('okan_active_child', activeChild);
-    KEY = seikey(activeChild);
-    db = load();
-    render();
+    // お子さんを切り替えたら、講座タブ・目標ライン・クラス設定もその子のものに
+    // まるごと切り替わるようリロード（これらは読み込み時に確定するため）
+    localStorage.setItem('okan_active_child', sel.value);
+    location.reload();
   };
 })();
 document.querySelectorAll('#topBar .tab').forEach(b => {

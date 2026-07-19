@@ -829,7 +829,8 @@ outCanvas.addEventListener('pointerdown', e => {
 });
 outCanvas.addEventListener('pointermove', e => {
   if (mode === 'protect') {
-    if (shapeDrag) { e.preventDefault(); protectMove(canvasPoint(e)); }
+    if (shapeDrag) { e.preventDefault(); protectMove(canvasPoint(e)); return; }
+    if (tapCandidate) { const p = canvasPoint(e); if (Math.hypot(p.x - tapCandidate.x, p.y - tapCandidate.y) > Math.max(8, W * 0.02)) tapCandidate = null; }
     return;
   }
   if (!drawing) return;
@@ -841,7 +842,8 @@ outCanvas.addEventListener('pointermove', e => {
 function endStroke() {
   if (mode === 'protect') {
     if (shapeDrag) { shapeDrag = null; rebuildProtect(); render(); }
-    pendingVertex = false;
+    else if (tapCandidate) { curPoly.push({ x: tapCandidate.x, y: tapCandidate.y }); drawOverlay(); }
+    tapCandidate = null;
     return;
   }
   if (!drawing) return;
@@ -860,7 +862,7 @@ let shapeDrag = null;   // {poly, ox, oy}（枠を中からつかんで移動）
 let frameResize = null; // 2本指で枠を拡大縮小
 let activePoly = null;
 let protectMask = null; // Uint8Array W*H（1＝保護）
-let pendingVertex = false;
+let tapCandidate = null; // タップを離したら頂点を追加（ピンチ開始時は取り消す）
 
 function polyCentroid(pts) { let x = 0, y = 0; for (const p of pts) { x += p.x; y += p.y; } return { x: x / pts.length, y: y / pts.length }; }
 function pointInPoly(pt, pts) {
@@ -910,10 +912,8 @@ function drawOverlay() {
 
 function protectDown(p) {
   const hit = polyAt(p);
-  if (hit) { shapeDrag = { poly: hit, ox: p.x, oy: p.y }; activePoly = hit; return; }
-  curPoly.push({ x: p.x, y: p.y });   // 枠の外をタップ＝多角形の点を追加
-  pendingVertex = true;
-  drawOverlay();
+  if (hit) { shapeDrag = { poly: hit, ox: p.x, oy: p.y }; activePoly = hit; tapCandidate = null; return; }
+  tapCandidate = { x: p.x, y: p.y };   // 指を離したら（タップなら）頂点を追加。ピンチ開始時は取り消す
 }
 function protectMove(p) {
   if (!shapeDrag) return;
@@ -968,7 +968,7 @@ $('rotateBtn').onclick = async () => {
     W = oldH; H = oldW;
     outCanvas.width = W; outCanvas.height = H;
     ovCanvas.width = W; ovCanvas.height = H;
-    shapes = []; curPoly = []; activePoly = null; shapeDrag = null; frameResize = null; pendingVertex = false; protectMask = null;
+    shapes = []; curPoly = []; activePoly = null; shapeDrag = null; frameResize = null; tapCandidate = null; protectMask = null;
     drawOverlay();
     outData = null;
     precompute();
@@ -1005,10 +1005,10 @@ wrap.addEventListener('pointerdown', e => {
     const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
     // 多角形枠モードで枠をつまんでいたら、その枠を拡大縮小
     if (mode === 'protect') {
-      if (pendingVertex) { curPoly.pop(); pendingVertex = false; drawOverlay(); }
+      tapCandidate = null;   // ピンチ開始：保留中のタップ頂点は取り消す
       shapeDrag = null;
-      const target = polyAt(clientToCanvas(mx, my)) || activePoly;
-      if (target) { frameResize = { poly: target, d0, pts0: target.pts.map(q => ({ x: q.x, y: q.y })), c: polyCentroid(target.pts) }; return; }
+      const target = polyAt(clientToCanvas(mx, my));   // 指の中心が枠の上のときだけ枠を拡大縮小
+      if (target) { activePoly = target; frameResize = { poly: target, d0, pts0: target.pts.map(q => ({ x: q.x, y: q.y })), c: polyCentroid(target.pts) }; return; }
     }
     cancelStroke();
     shapeDrag = null; panDrag = null;
@@ -1086,7 +1086,7 @@ async function openImage(file) {
 
     outCanvas.width = W; outCanvas.height = H;
     ovCanvas.width = W; ovCanvas.height = H;
-    shapes = []; curPoly = []; shapeDrag = null; frameResize = null; activePoly = null; pendingVertex = false; protectMask = null;
+    shapes = []; curPoly = []; shapeDrag = null; frameResize = null; activePoly = null; tapCandidate = null; protectMask = null;
     drawOverlay();
     manual = new Uint8Array(W * H);
     zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
