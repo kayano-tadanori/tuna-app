@@ -61,6 +61,19 @@
   .gToggle { display: flex; gap: 6px; margin: 2px 2px 8px; }
   .gBtn { border: none; background: #f1f5f9; color: #64748b; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 999px; cursor: pointer; }
   .gBtn.on { background: #db2777; color: #fff; }
+  .chartCard { background: #fff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 12px 8px 8px; margin-bottom: 12px; }
+  .chartCard h3 { font-size: 12px; font-weight: 800; color: #db2777; margin: 0 6px 4px; }
+  .chSvgWrap { overflow: hidden; touch-action: none; }
+  .chCtrl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 4px 6px 2px; }
+  .chLegend { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chChk { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; color: #475569; background: #f1f5f9; border-radius: 999px; padding: 4px 9px; cursor: pointer; user-select: none; }
+  .chChk i { width: 12px; height: 3px; border-radius: 2px; display: inline-block; }
+  .chChk.off { opacity: .4; text-decoration: line-through; }
+  .chReset { border: none; background: #fce7f3; color: #db2777; font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 999px; cursor: pointer; }
+  .chHint { font-size: 10px; color: #94a3b8; margin: 4px 6px 0; }
+  html.otonDark .chartCard { background: #0f1930; border-color: #26365d; }
+  html.otonDark .chChk { background: #1a2a4f; color: #93a7cd; }
+  html.otonDark .chReset { background: #3b1d33; }
   .rankRow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 2px 12px; font-size: 11px; color: #94a3b8; font-weight: 700; }
   .rankChip { border: none; background: #fce7f3; color: #db2777; font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 999px; cursor: pointer; }
   .rankChip.add { background: #f1f5f9; color: #64748b; }
@@ -464,63 +477,28 @@ const GOAL_DEV = (() => {
   return (isNaN(n) || n < 20 || n > 90) ? 64 : n;
 })();
 const NADA_LINE = GOAL_DEV;
+function kokaiClassMarks(list) {
+  const vmarks = [];
+  for (let i = 1; i < list.length; i++) if (list[i].class && list[i - 1].class && list[i].class !== list[i - 1].class) vmarks.push({ i, label: list[i].class + 'へ' });
+  return vmarks;
+}
 function renderGraph(list) {
   if (list.length < 2) return '';
-  const W = 360, H = 190, L = 30, R = 8, T = 14, B = 24;
-  const iw = W - L - R, ih = H - T - B;
+  const xlabels = list.map(k => +k.ym.split('-')[1] + '月');
   const hasSha = SHAKAI || list.some(k => (k.sha && k.sha.dev != null) || (k.avg4 && k.avg4.dev != null));
+  const col = (f) => list.map(k => { const v = f(k); return v == null ? null : v; });
   const series = [
-    { key: 'koku', label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.dev },
-    { key: 'san', label: '算数', color: '#3b82f6', get: k => k.san && k.san.dev },
-    { key: 'ri', label: '理科', color: '#10b981', get: k => k.ri && k.ri.dev },
+    { key: 'koku', label: '国語', color: '#f43f5e', vals: col(k => k.koku && k.koku.dev != null ? k.koku.dev : null) },
+    { key: 'san', label: '算数', color: '#3b82f6', vals: col(k => k.san && k.san.dev != null ? k.san.dev : null) },
+    { key: 'ri', label: '理科', color: '#10b981', vals: col(k => k.ri && k.ri.dev != null ? k.ri.dev : null) },
   ];
-  if (hasSha) series.push({ key: 'sha', label: '社会', color: '#f97316', get: k => k.sha && k.sha.dev });
-  if (hasSha) series.push({ key: 'avg4', label: '4科平均', color: DARK ? '#fda4af' : '#be123c', get: k => k.avg4 && k.avg4.dev, bold: true });
-  series.push({ key: 'avg3', label: '3科平均', color: DARK ? '#f9e2af' : '#9333ea', get: k => k.avg3 && k.avg3.dev, bold: true });
-  series.push({ key: 'avg2', label: '2科平均', color: DARK ? '#7dd3fc' : '#0284c7', get: k => k.avg2 && k.avg2.dev, bold: true });
-  let vals = [];
-  for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
-  if (!vals.length) return '';
-  let yMin = Math.floor((Math.min(...vals, NADA_LINE) - 4) / 5) * 5;
-  let yMax = Math.ceil((Math.max(...vals, NADA_LINE) + 4) / 5) * 5;
-  const X = i => L + (list.length === 1 ? iw / 2 : i / (list.length - 1) * iw);
-  const Y = v => T + (yMax - v) / (yMax - yMin) * ih;
-  const grid = DARK ? '#26365d' : '#e2e8f0';
-  const txt = DARK ? '#93a7cd' : '#94a3b8';
-  let g = '';
-  for (let v = yMin; v <= yMax; v += 5) {
-    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
-    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}</text>`;
+  if (hasSha) {
+    series.push({ key: 'sha', label: '社会', color: '#f97316', vals: col(k => k.sha && k.sha.dev != null ? k.sha.dev : null) });
+    series.push({ key: 'avg4', label: '4科', color: DARK ? '#fda4af' : '#be123c', bold: true, vals: col(k => k.avg4 && k.avg4.dev != null ? k.avg4.dev : null) });
   }
-  // 灘ライン
-  g += `<line x1="${L}" y1="${Y(NADA_LINE)}" x2="${W - R}" y2="${Y(NADA_LINE)}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4"/>`;
-  g += `<text x="${W - R}" y="${Y(NADA_LINE) - 4}" fill="#f59e0b" font-size="8" font-weight="800" text-anchor="end">${GOAL_SCHOOL.slice(0, 6)} ${NADA_LINE}</text>`;
-  // x軸（間引き）
-  const step = Math.ceil(list.length / 6);
-  list.forEach((k, i) => {
-    if (i % step === 0 || i === list.length - 1) {
-      const [y, m] = k.ym.split('-');
-      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+m}月</text>`;
-    }
-  });
-  // クラス変更マーク
-  for (let i = 1; i < list.length; i++) {
-    if (list[i].class && list[i - 1].class && list[i].class !== list[i - 1].class) {
-      g += `<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H - B}" stroke="${txt}" stroke-width="1" stroke-dasharray="2 3"/>`;
-      g += `<text x="${X(i) + 3}" y="${T + 8}" fill="${txt}" font-size="7.5">${list[i].class}へ</text>`;
-    }
-  }
-  for (const s of series) {
-    const pts = [];
-    list.forEach((k, i) => { const v = s.get(k); if (v != null) pts.push([X(i), Y(v)]); });
-    if (pts.length < 2) continue;
-    g += `<polyline points="${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.bold ? 3 : 1.8}" opacity="${s.bold ? 1 : .85}"/>`;
-    pts.forEach(p => { g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${s.bold ? 3 : 2.2}" fill="${s.color}"/>`; });
-  }
-  const legend = series.map(s => `<span><i style="background:${s.color}"></i>${s.label}</span>`).join('');
-  return `<div class="graphCard"><h3>📈 公開学力テスト 偏差値の推移</h3>
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
-    <div class="legend">${legend}<span><i style="background:#f59e0b"></i>${GOAL_SCHOOL.slice(0, 8)}ライン</span></div></div>`;
+  series.push({ key: 'avg3', label: '3科', color: DARK ? '#f9e2af' : '#9333ea', bold: true, vals: col(k => k.avg3 && k.avg3.dev != null ? k.avg3.dev : null) });
+  series.push({ key: 'avg2', label: '2科', color: DARK ? '#7dd3fc' : '#0284c7', bold: true, vals: col(k => k.avg2 && k.avg2.dev != null ? k.avg2.dev : null) });
+  return regChart({ id: 'kokai_dev', title: '📈 公開学力テスト 偏差値の推移', xlabels, series, ystep: 5, hline: NADA_LINE, hlabel: `${GOAL_SCHOOL.slice(0, 6)} ${NADA_LINE}`, vmarks: kokaiClassMarks(list) });
 }
 
 // ---------- A表：総合点（自動計算）とクラス内順位（手入力）のグラフ ----------
@@ -593,48 +571,45 @@ function courseMonthData(course) {
 }
 // 1系列の折れ線（invert=順位グラフ：1位が上）
 function lineGraph(data, get, opt) {
-  const pts = data.filter(d => get(d) != null);
-  if (pts.length < 2) return '';
-  const W = 360, H = 170, L = 34, R = 8, T = 14, B = 24;
-  const iw = W - L - R, ih = H - T - B;
-  const vals = pts.map(get);
-  let yMin, yMax, step;
-  if (opt.invert) {
-    yMin = 1; yMax = Math.max(...vals, 4);
-    step = yMax - yMin > 8 ? 2 : 1;
-  } else {
-    yMin = Math.floor((Math.min(...vals) - 5) / 10) * 10;
-    yMax = Math.min(200, Math.ceil((Math.max(...vals) + 5) / 10) * 10);
-    step = yMax - yMin > 60 ? 20 : 10;
-  }
-  const X = i => L + i / (pts.length - 1) * iw;
-  const Y = v => opt.invert ? T + (v - yMin) / (yMax - yMin) * ih : T + (yMax - v) / (yMax - yMin) * ih;
-  const grid = DARK ? '#26365d' : '#e2e8f0';
-  const txt = DARK ? '#93a7cd' : '#94a3b8';
-  let g = '';
-  for (let v = yMin; v <= yMax; v += step) {
-    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
-    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}${opt.invert ? '位' : ''}</text>`;
-  }
-  const xstep = Math.ceil(pts.length / 6);
-  pts.forEach((d, i) => {
-    if (i % xstep === 0 || i === pts.length - 1) {
-      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+d.ym.slice(5)}月</text>`;
-    }
-  });
-  g += `<polyline points="${pts.map((d, i) => X(i).toFixed(1) + ',' + Y(get(d)).toFixed(1)).join(' ')}" fill="none" stroke="${opt.color}" stroke-width="2.4"/>`;
-  pts.forEach((d, i) => { g += `<circle cx="${X(i).toFixed(1)}" cy="${Y(get(d)).toFixed(1)}" r="2.6" fill="${opt.color}"/>`; });
-  return `<div class="graphCard"><h3>${opt.title}</h3><svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg></div>`;
+  const vals = data.map(d => { const v = get(d); return v == null ? null : v; });
+  if (vals.filter(v => v != null).length < 2) return '';
+  const xlabels = data.map(d => +d.ym.slice(5) + '月');
+  return regChart({ id: opt.id, title: opt.title, xlabels, series: [{ key: 'v', label: opt.label || '値', color: opt.color, bold: true, vals }], invert: !!opt.invert, ySuffix: opt.invert ? '位' : '', legend: false });
 }
 // 講座タブ上部：順位グラフ＋総合点グラフ＋順位チップ（タップで記録・編集）
 function courseGraphs(course) {
   const data = courseMonthData(course);
   const color = COURSE_COLOR[course] || '#db2777';
-  let h = lineGraph(data, d => d.rank, { title: `📉 クラス内順位の推移（1位が上）`, invert: true, color });
-  h += lineGraph(data, d => d.total, { title: `📈 A表総合点の推移（復テ平均＋公開・200点満点）`, color });
+  let h = lineGraph(data, d => d.rank, { id: `c_${course}_rank`, title: `📉 クラス内順位の推移（1位が上）`, invert: true, color });
+  h += lineGraph(data, d => d.total, { id: `c_${course}_total`, title: `📈 A表総合点の推移（復テ平均＋公開・200点満点）`, color });
   const chips = data.filter(d => d.rank != null).map(d =>
     `<button class="rankChip" data-rankym="${d.ym}">${+d.ym.slice(5)}月度 ${d.rank}位</button>`).join('');
   h += `<div class="rankRow"><span>クラス内順位：</span>${chips}<button class="rankChip add" data-rankadd="1">＋記録</button></div>`;
+  return h;
+}
+// 灘合：全体＋教科別（国算理）のクラス内順位グラフ＋総合点グラフ
+function nadagoCharts() {
+  const yms = new Set(db.atotal.filter(x => (x.course || 'マスター') === '灘合').map(x => x.ym));
+  db.nadago.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
+  const months = [...yms].sort();
+  let h = '';
+  if (months.length >= 2) {
+    const xlabels = months.map(ym => +ym.slice(5) + '月');
+    const rec = {}; db.nadago.forEach(t => { if (t.date) rec[t.date.slice(0, 7)] = t; });
+    const overall = months.map(ym => { const r = db.atotal.find(x => (x.course || 'マスター') === '灘合' && x.ym === ym); return r && r.rank != null ? r.rank : null; });
+    const sub = f => months.map(ym => { const t = rec[ym]; return t && t[f] != null && t[f] !== '' ? +t[f] : null; });
+    const series = [
+      { key: 'all', label: '全体', color: '#0d9488', bold: true, vals: overall },
+      { key: 'ko', label: '国語', color: '#f43f5e', vals: sub('kokuRank') },
+      { key: 'sa', label: '算数', color: '#3b82f6', vals: sub('sanRank') },
+      { key: 'ri', label: '理科', color: '#10b981', vals: sub('riRank') },
+    ].filter(s => s.vals.some(v => v != null));
+    if (series.length) h += regChart({ id: 'nada_rank', title: '📉 灘合 クラス内順位（1位が上）', xlabels, series, invert: true, ySuffix: '位' });
+  }
+  const data = courseMonthData('灘合');
+  h += lineGraph(data, d => d.total, { id: 'nada_total', title: '📈 灘合 総合点の推移', color: COURSE_COLOR['灘合'] });
+  const chips = data.filter(d => d.rank != null).map(d => `<button class="rankChip" data-rankym="${d.ym}">${+d.ym.slice(5)}月度 ${d.rank}位</button>`).join('');
+  h += `<div class="rankRow"><span>全体順位：</span>${chips}<button class="rankChip add" data-rankadd="1">＋記録</button></div>`;
   return h;
 }
 function bindRankChips(v, course) {
@@ -645,112 +620,135 @@ function bindRankChips(v, course) {
 // 公開テスト：順位の折れ線（偏差値グラフと切り替え）
 function renderKokaiRankGraph(list) {
   if (list.length < 2) return '';
-  const W = 360, H = 190, L = 38, R = 8, T = 14, B = 24;
-  const iw = W - L - R, ih = H - T - B;
-  const p3 = k => { const m = /^(\d+)/.exec(k.rank3 || ''); return m ? +m[1] : null; };
-  const p2 = k => { const m = /^(\d+)/.exec(k.rank2 || ''); return m ? +m[1] : null; };
-  const p4 = k => { const m = /^(\d+)/.exec(k.rank4 || ''); return m ? +m[1] : null; };
+  const xlabels = list.map(k => +k.ym.split('-')[1] + '月');
+  const p = s => list.map(k => { const m = /^(\d+)/.exec(k[s] || ''); return m ? +m[1] : null; });
   const hasSha = SHAKAI || list.some(k => (k.sha && k.sha.rank != null) || k.rank4);
   const series = [
-    { label: '国語', color: '#f43f5e', get: k => k.koku && k.koku.rank },
-    { label: '算数', color: '#3b82f6', get: k => k.san && k.san.rank },
-    { label: '理科', color: '#10b981', get: k => k.ri && k.ri.rank },
+    { key: 'koku', label: '国語', color: '#f43f5e', vals: list.map(k => k.koku && k.koku.rank != null ? k.koku.rank : null) },
+    { key: 'san', label: '算数', color: '#3b82f6', vals: list.map(k => k.san && k.san.rank != null ? k.san.rank : null) },
+    { key: 'ri', label: '理科', color: '#10b981', vals: list.map(k => k.ri && k.ri.rank != null ? k.ri.rank : null) },
   ];
-  if (hasSha) series.push({ label: '社会', color: '#f97316', get: k => k.sha && k.sha.rank });
-  if (hasSha) series.push({ label: '4科', color: DARK ? '#fda4af' : '#be123c', get: p4, bold: true });
-  series.push({ label: '3科', color: DARK ? '#f9e2af' : '#9333ea', get: p3, bold: true });
-  series.push({ label: '2科', color: DARK ? '#7dd3fc' : '#0284c7', get: p2, bold: true });
-  let vals = [];
-  for (const s of series) for (const k of list) { const v = s.get(k); if (v != null) vals.push(v); }
-  if (!vals.length) return '';
-  const yMin = 1, yMax = Math.max(...vals, 10);
-  const step = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000].find(n => (yMax - yMin) / n <= 7) || 1000;
-  const X = i => L + (list.length === 1 ? iw / 2 : i / (list.length - 1) * iw);
-  const Y = v => T + (v - yMin) / (yMax - yMin) * ih;
-  const grid = DARK ? '#26365d' : '#e2e8f0';
-  const txt = DARK ? '#93a7cd' : '#94a3b8';
-  let g = `<line x1="${L}" y1="${Y(1)}" x2="${W - R}" y2="${Y(1)}" stroke="${grid}" stroke-width="1"/>
-    <text x="${L - 4}" y="${Y(1) + 3}" fill="${txt}" font-size="8" text-anchor="end">1位</text>`;
-  for (let v = step; v <= yMax; v += step) {
-    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
-    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}位</text>`;
+  if (hasSha) {
+    series.push({ key: 'sha', label: '社会', color: '#f97316', vals: list.map(k => k.sha && k.sha.rank != null ? k.sha.rank : null) });
+    series.push({ key: 'rank4', label: '4科', color: DARK ? '#fda4af' : '#be123c', bold: true, vals: p('rank4') });
   }
-  const xstep = Math.ceil(list.length / 6);
-  list.forEach((k, i) => {
-    if (i % xstep === 0 || i === list.length - 1) {
-      g += `<text x="${X(i)}" y="${H - 8}" fill="${txt}" font-size="8" text-anchor="middle">${+k.ym.split('-')[1]}月</text>`;
-    }
-  });
-  for (let i = 1; i < list.length; i++) {
-    if (list[i].class && list[i - 1].class && list[i].class !== list[i - 1].class) {
-      g += `<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H - B}" stroke="${txt}" stroke-width="1" stroke-dasharray="2 3"/>`;
-      g += `<text x="${X(i) + 3}" y="${T + 8}" fill="${txt}" font-size="7.5">${list[i].class}へ</text>`;
-    }
-  }
-  for (const s of series) {
-    const pts = [];
-    list.forEach((k, i) => { const v = s.get(k); if (v != null) pts.push([X(i), Y(v)]); });
-    if (pts.length < 2) continue;
-    g += `<polyline points="${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.bold ? 3 : 1.8}" opacity="${s.bold ? 1 : .85}"/>`;
-    pts.forEach(p => { g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${s.bold ? 3 : 2.2}" fill="${s.color}"/>`; });
-  }
-  const legend = series.map(s => `<span><i style="background:${s.color}"></i>${s.label}</span>`).join('');
-  return `<div class="graphCard"><h3>📉 公開学力テスト 順位の推移（1位が上）</h3>
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${g}</svg>
-    <div class="legend">${legend}</div></div>`;
+  series.push({ key: 'rank3', label: '3科', color: DARK ? '#f9e2af' : '#9333ea', bold: true, vals: p('rank3') });
+  series.push({ key: 'rank2', label: '2科', color: DARK ? '#7dd3fc' : '#0284c7', bold: true, vals: p('rank2') });
+  return regChart({ id: 'kokai_rank', title: '📉 公開学力テスト 順位の推移（1位が上）', xlabels, series, invert: true, ySuffix: '位', vmarks: kokaiClassMarks(list) });
 }
 
-// ---------- グラフのピンチ拡大縮小・移動（全グラフ共通） ----------
-function makeZoomable(svg) {
-  if (svg.dataset.zoomable) return;
-  svg.dataset.zoomable = '1';
-  svg.parentElement.style.overflow = 'hidden';
-  svg.style.transformOrigin = '0 0';
-  let scale = 1, tx = 0, ty = 0;
-  let pinch = null, pan = null;
-  const apply = () => {
-    const w = svg.clientWidth, h = svg.clientHeight;
-    scale = Math.min(4, Math.max(1, scale));
-    tx = Math.min(0, Math.max(w * (1 - scale), tx));
-    ty = Math.min(0, Math.max(h * (1 - scale), ty));
-    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-  };
-  // 見た目の位置から変形前の基準位置を逆算（transform-originが0 0なので rect - translate）
-  const origin = () => { const r = svg.getBoundingClientRect(); return [r.left - tx, r.top - ty]; };
+// ---------- インタラクティブ折れ線チャート（意味的ズーム＋系列チェック） ----------
+// cfg = {id, title, xlabels:[], series:[{key,label,color,bold,vals:[]}], invert, ySuffix, ystep, hline, hlabel, vmarks:[{i,label}], legend}
+const CHART_STATE = {};
+let PENDING_CHARTS = [];
+function regChart(cfg) { PENDING_CHARTS.push(cfg); return `<div class="chartCard" id="chart_${cfg.id}"></div>`; }
+function flushCharts() { const list = PENDING_CHARTS; PENDING_CHARTS = []; list.forEach(mountChart); }
+function loadHidden(id) { try { return new Set(JSON.parse(localStorage.getItem('okan_chart_hide_' + id)) || []); } catch (e) { return new Set(); } }
+function saveHidden(id, set) { localStorage.setItem('okan_chart_hide_' + id, JSON.stringify([...set])); }
+function chartSvgInner(cfg, st) {
+  const W = 360, H = 190, L = 34, R = 10, T = 14, B = 22;
+  const iw = W - L - R, ih = H - T - B;
+  const n = cfg.xlabels.length, i0 = st.i0, i1 = st.i1, span = (i1 - i0) || 1;
+  const lo = Math.max(0, Math.floor(i0)), hi = Math.min(n - 1, Math.ceil(i1));
+  const vis = cfg.series.filter(s => !st.hidden.has(s.key));
+  const grid = DARK ? '#26365d' : '#e2e8f0', txt = DARK ? '#93a7cd' : '#94a3b8';
+  let vals = [];
+  for (const s of vis) for (let i = lo; i <= hi; i++) if (s.vals[i] != null) vals.push(s.vals[i]);
+  if (cfg.hline != null) vals.push(cfg.hline);
+  if (!vals.length) return '';
+  let yMin, yMax, step;
+  if (cfg.invert) {
+    yMin = 1; yMax = Math.max(...vals, 2);
+    step = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000].find(x => (yMax - yMin) / x <= 6) || 1000;
+  } else {
+    const u = cfg.ystep || 5;
+    yMin = Math.floor((Math.min(...vals) - u) / u) * u;
+    yMax = Math.ceil((Math.max(...vals) + u) / u) * u;
+    step = [u, u * 2, u * 4, u * 10].find(x => (yMax - yMin) / x <= 6) || u * 10;
+  }
+  const X = i => L + (i - i0) / span * iw;
+  const Y = v => cfg.invert ? T + (v - yMin) / (yMax - yMin) * ih : T + (yMax - v) / (yMax - yMin) * ih;
+  let g = '';
+  const first = cfg.invert ? 1 : Math.ceil(yMin / step) * step;
+  for (let v = first; v <= yMax; v += step) {
+    if (cfg.invert && v < 1) continue;
+    g += `<line x1="${L}" y1="${Y(v)}" x2="${W - R}" y2="${Y(v)}" stroke="${grid}" stroke-width="1"/>`;
+    g += `<text x="${L - 4}" y="${Y(v) + 3}" fill="${txt}" font-size="8" text-anchor="end">${v}${cfg.ySuffix || ''}</text>`;
+  }
+  if (cfg.hline != null) {
+    g += `<line x1="${L}" y1="${Y(cfg.hline)}" x2="${W - R}" y2="${Y(cfg.hline)}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    g += `<text x="${W - R}" y="${Y(cfg.hline) - 4}" fill="#f59e0b" font-size="8" font-weight="800" text-anchor="end">${cfg.hlabel || ''}</text>`;
+  }
+  const idxs = []; for (let i = lo; i <= hi; i++) idxs.push(i);
+  const xstep = Math.max(1, Math.ceil(idxs.length / 7));
+  idxs.forEach((i, k) => { if (k % xstep === 0 || k === idxs.length - 1) g += `<text x="${X(i)}" y="${H - 7}" fill="${txt}" font-size="8" text-anchor="middle">${cfg.xlabels[i]}</text>`; });
+  (cfg.vmarks || []).forEach(vm => { if (vm.i >= lo && vm.i <= hi) { g += `<line x1="${X(vm.i)}" y1="${T}" x2="${X(vm.i)}" y2="${H - B}" stroke="${txt}" stroke-width="1" stroke-dasharray="2 3"/>`; g += `<text x="${X(vm.i) + 3}" y="${T + 8}" fill="${txt}" font-size="7.5">${vm.label}</text>`; } });
+  const showVals = idxs.length <= 6;
+  vis.forEach((s, j) => {
+    const pts = [];
+    for (let i = lo; i <= hi; i++) if (s.vals[i] != null) pts.push([X(i), Y(s.vals[i]), s.vals[i]]);
+    if (pts.length >= 2) g += `<polyline points="${pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.bold ? 3 : 1.8}" opacity="${s.bold ? 1 : .9}"/>`;
+    pts.forEach(p => {
+      g += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${s.bold ? 3 : 2.3}" fill="${s.color}"/>`;
+      if (showVals) g += `<text x="${p[0].toFixed(1)}" y="${(p[1] - 6 - j * 8).toFixed(1)}" fill="${s.color}" font-size="8" font-weight="800" text-anchor="middle">${Math.round(p[2] * 10) / 10}</text>`;
+    });
+  });
+  return g;
+}
+function bindChartZoom(svg, cfg, st, redraw) {
+  const n = cfg.xlabels.length, L = 34, R = 10;
+  const idxAt = cx => { const r = svg.getBoundingClientRect(); const lpx = L / 360 * r.width, wpx = (360 - L - R) / 360 * r.width; const fr = Math.max(0, Math.min(1, (cx - r.left - lpx) / wpx)); return st.i0 + fr * (st.i1 - st.i0); };
   const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  let pinch = null, pan = null;
   svg.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) {
-      e.preventDefault();
-      const [ox, oy] = origin();
-      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - ox;
-      const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - oy;
-      pinch = { d0: dist(e.touches), s0: scale, mx, my, tx0: tx, ty0: ty, ox, oy };
-      pan = null;
-    } else if (e.touches.length === 1 && scale > 1) {
-      pan = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx0: tx, ty0: ty };
-    }
+    if (e.touches.length === 2) { e.preventDefault(); const mid = (e.touches[0].clientX + e.touches[1].clientX) / 2; const fi = idxAt(mid); pinch = { d0: dist(e.touches), s0: st.i1 - st.i0, fi, fr: (fi - st.i0) / ((st.i1 - st.i0) || 1) }; pan = null; }
+    else if (e.touches.length === 1) { pan = { x: e.touches[0].clientX, i0: st.i0, span: st.i1 - st.i0 }; }
   }, { passive: false });
   svg.addEventListener('touchmove', e => {
     if (pinch && e.touches.length === 2) {
       e.preventDefault();
-      const s = Math.min(4, Math.max(1, pinch.s0 * dist(e.touches) / pinch.d0));
-      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - pinch.ox;
-      const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - pinch.oy;
-      scale = s;
-      tx = mx - (pinch.mx - pinch.tx0) / pinch.s0 * s;
-      ty = my - (pinch.my - pinch.ty0) / pinch.s0 * s;
-      apply();
-    } else if (pan && e.touches.length === 1 && scale > 1) {
+      let span = pinch.s0 * pinch.d0 / dist(e.touches);
+      span = Math.max(1, Math.min(n - 1, span));
+      let i0 = pinch.fi - pinch.fr * span; i0 = Math.max(0, Math.min(n - 1 - span, i0));
+      st.i0 = i0; st.i1 = i0 + span; redraw();
+    } else if (pan && e.touches.length === 1) {
+      if (pan.span >= n - 1) return;
       e.preventDefault();
-      tx = pan.tx0 + (e.touches[0].clientX - pan.x);
-      ty = pan.ty0 + (e.touches[0].clientY - pan.y);
-      apply();
+      const r = svg.getBoundingClientRect(); const wpx = (360 - L - R) / 360 * r.width;
+      let i0 = pan.i0 - (e.touches[0].clientX - pan.x) / wpx * pan.span;
+      i0 = Math.max(0, Math.min(n - 1 - pan.span, i0));
+      st.i0 = i0; st.i1 = i0 + pan.span; redraw();
     }
   }, { passive: false });
-  svg.addEventListener('touchend', e => {
-    if (e.touches.length < 2) pinch = null;
-    if (e.touches.length === 0) pan = null;
-  });
+  svg.addEventListener('touchend', e => { if (e.touches.length < 2) pinch = null; if (e.touches.length === 0) pan = null; });
+  svg.addEventListener('dblclick', () => { st.i0 = 0; st.i1 = n - 1; redraw(); });
+}
+function mountChart(cfg) {
+  const host = document.getElementById('chart_' + cfg.id);
+  if (!host) return;
+  const n = cfg.xlabels.length;
+  let st = CHART_STATE[cfg.id]; if (!st) st = CHART_STATE[cfg.id] = { i0: 0, i1: n - 1, hidden: loadHidden(cfg.id) };
+  st.i0 = Math.max(0, Math.min(st.i0, n - 1)); st.i1 = Math.min(n - 1, st.i1); if (st.i1 - st.i0 < 1) { st.i0 = 0; st.i1 = n - 1; }
+  host.innerHTML = `<h3>${cfg.title}</h3><div class="chSvgWrap"><svg class="chartSvg" viewBox="0 0 360 190" style="width:100%;display:block;touch-action:none"></svg></div><div class="chCtrl"></div><p class="chHint">2本指で拡大／1本指で移動。拡大すると各テストの数値が出ます</p>`;
+  const svg = host.querySelector('svg');
+  function redraw() {
+    svg.innerHTML = chartSvgInner(cfg, st);
+    const ctrl = host.querySelector('.chCtrl');
+    const zoomed = !(st.i0 <= 0 && st.i1 >= n - 1);
+    let html = zoomed ? `<button class="chReset">↩ 全体表示</button>` : '';
+    if (cfg.legend !== false && cfg.series.length > 1) html += '<div class="chLegend">' + cfg.series.map(s => `<label class="chChk${st.hidden.has(s.key) ? ' off' : ''}" data-serieskey="${s.key}"><i style="background:${s.color}"></i>${s.label}</label>`).join('') + '</div>';
+    ctrl.innerHTML = html;
+    const rb = ctrl.querySelector('.chReset'); if (rb) rb.onclick = () => { st.i0 = 0; st.i1 = n - 1; redraw(); };
+    ctrl.querySelectorAll('[data-serieskey]').forEach(el => el.onclick = () => {
+      const k = el.dataset.serieskey;
+      const willHide = !st.hidden.has(k);
+      if (willHide && (cfg.series.length - st.hidden.size) <= 1) return;   // 最低1系列は残す
+      if (st.hidden.has(k)) st.hidden.delete(k); else st.hidden.add(k);
+      saveHidden(cfg.id, st.hidden); redraw();
+    });
+  }
+  bindChartZoom(svg, cfg, st, redraw);
+  redraw();
 }
 
 // ---------- A表/B表（クラス替えシミュレーション） ----------
@@ -1008,7 +1006,7 @@ function render() {
     $('abClass').onchange = sync;
   } else {
     const list = [...db.nadago].sort((a, b) => b.date.localeCompare(a.date));
-    let h = courseGraphs('灘合');
+    let h = nadagoCharts();
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで灘中合格特訓（国算理 各100点）を記録できます。</p>';
     for (const t of list) {
       const total = (+t.koku || 0) + (+t.san || 0) + (+t.ri || 0);
@@ -1021,7 +1019,7 @@ function render() {
     v.querySelectorAll('[data-nada]').forEach(el => el.onclick = () => openNada(db.nadago.find(x => x.id === el.dataset.nada)));
     bindRankChips(v, '灘合');
   }
-  v.querySelectorAll('.graphCard svg').forEach(makeZoomable);
+  flushCharts();
 }
 
 // ---------- 公開：詳細・入力 ----------
