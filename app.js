@@ -201,6 +201,7 @@ function showScreen(id) {
     flushPlayTime();
   }
   updateScratchDock();
+  if (window.Snd) Snd.onScreen(id);
 }
 
 // ============================================================
@@ -452,6 +453,7 @@ function renderQuiz() {
 
 function onQuizChoose(btn, chosen, q, grid) {
   const correct = normalize(chosen) === normalize(q.answer);
+  Snd.answer(correct);
   recordResult(q.id, correct);
   if (correct) {
     state.correct++;
@@ -518,6 +520,7 @@ function submitFill() {
   if (!val.trim()) return;
 
   const correct = checkAnswer(val, q);
+  Snd.answer(correct);
   recordResult(q.id, correct);
 
   if (correct) {
@@ -658,6 +661,7 @@ function renderKanji() {
     document.getElementById('kanji-controls').classList.add('hidden');
   };
   document.getElementById('kanji-ok').onclick = () => {
+    Snd.answer(true);
     recordResult(q.id, true);
     state.correct++;
     document.getElementById('kanji-correct').textContent = state.correct;
@@ -665,6 +669,7 @@ function renderKanji() {
     renderKanji();
   };
   document.getElementById('kanji-ng').onclick = () => {
+    Snd.answer(false);
     recordResult(q.id, false);
     state.wrong++;
     document.getElementById('kanji-wrong').textContent = state.wrong;
@@ -721,6 +726,7 @@ function endSession() {
   awardSessionCoins(rate, total);
   awardSessionTicket(total);
   showScreen('result');
+  Snd.result(rate);
   checkTitlePromotion();
   pushAchievementToRanking();
 
@@ -1062,7 +1068,7 @@ function initSubject() {
   else                        msg = '「遅うまでえらいなあ。<br>無理せんとな！」';
   document.getElementById('otton-msg').innerHTML = msg;
 
-  document.querySelectorAll('.subject-card').forEach(btn => {
+  document.querySelectorAll('#screen-subject .subject-card').forEach(btn => {
     if (btn.id === 'btn-record') return; // 記録カードは専用ハンドラ
     btn.onclick = () => {
       if (btn.classList.contains('coming-soon')) {
@@ -1102,7 +1108,7 @@ function initSubject() {
   });
 
   document.getElementById('btn-subject-refresh').onclick = () => forceAppUpdate();
-  document.getElementById('btn-subject-char').onclick = () => showScreen('character');
+  document.getElementById('btn-subject-settings').onclick = () => { initSettingsScreen(); showScreen('settings'); };
   document.getElementById('btn-subject-change').onclick = () => {
     localStorage.removeItem('nickname');
     state.nickname = '';
@@ -1118,6 +1124,44 @@ function initSubject() {
   updateGameTicketBadge();
   initDebugTool();
 }
+
+// ============================================================
+// 設定画面（サウンド設定・キャラクター紹介）
+// ============================================================
+
+function initSettingsScreen() {
+  const c = Snd.get();
+  const st = document.getElementById('snd-sfx-toggle');
+  const mt = document.getElementById('snd-music-toggle');
+  st.textContent = c.sfxOn ? 'ON' : 'OFF'; st.classList.toggle('off', !c.sfxOn);
+  mt.textContent = c.musicOn ? 'ON' : 'OFF'; mt.classList.toggle('off', !c.musicOn);
+  document.getElementById('snd-sfx-vol').value = Math.round(c.sfxVol * 100);
+  document.getElementById('snd-music-vol').value = Math.round(c.musicVol * 100);
+}
+
+document.getElementById('snd-sfx-toggle').onclick = () => {
+  Snd.set('sfxOn', !Snd.get().sfxOn);
+  initSettingsScreen();
+  if (Snd.get().sfxOn) Snd.correct();
+};
+document.getElementById('snd-music-toggle').onclick = () => {
+  Snd.set('musicOn', !Snd.get().musicOn);
+  initSettingsScreen();
+};
+document.getElementById('snd-sfx-vol').oninput = e => Snd.set('sfxVol', e.target.value / 100);
+document.getElementById('snd-sfx-vol').onchange = () => Snd.correct();
+document.getElementById('snd-music-vol').oninput = e => Snd.set('musicVol', e.target.value / 100);
+document.getElementById('snd-sfx-test').onclick = () => Snd.fanfare('good');
+let _sndTestTimer = null;
+document.getElementById('snd-music-test').onclick = () => {
+  if (!Snd.get().musicOn) { showToast('音楽がOFFになっています'); return; }
+  Snd.bgm('sansu');
+  clearTimeout(_sndTestTimer);
+  _sndTestTimer = setTimeout(() => { if (currentScreenId === 'settings') Snd.stopBgm(); }, 5000);
+};
+document.getElementById('btn-settings-back').onclick = () => showScreen('subject');
+document.getElementById('btn-settings-char').onclick = () => showScreen('character');
+document.getElementById('btn-char-back').onclick = () => showScreen('settings');
 
 // ============================================================
 // 管理ツール（デバッグ・保護者用）：ホームのロゴ長押しで開く
@@ -2155,6 +2199,7 @@ function renderSansuQuiz() {
 
 // 正誤フィードバックの共通表示
 function showSqFeedback(q, correct) {
+  Snd.answer(correct);
   // 教科間でIDが衝突するため subject_cat:id 形式で記録（ミックスは出身カテゴリq._cat）
   recordResult(`${sansuState.subject}_${q._cat || sansuState.cat}:${q.id}`, correct);
   if (correct) { sansuState.correct++; document.getElementById('sq-correct').textContent = sansuState.correct; }
@@ -2239,6 +2284,7 @@ function endSansuSession() {
   };
 
   showScreen('result');
+  Snd.result(score);
   checkTitlePromotion();
   pushAchievementToRanking();
 }
@@ -2883,6 +2929,7 @@ function submitDrillAnswer() {
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer);
+  Snd.answer(correct);
 
   if (correct) {
     sansuState.drillCorrect++;
@@ -2945,6 +2992,11 @@ function endDrill() {
   document.getElementById('drill-result-emoji').textContent = emoji;
   document.getElementById('drill-result-comment').textContent = comment;
   document.getElementById('drill-result').classList.remove('hidden');
+
+  // 成績に応じたファンファーレ（タイムアタックは正解数を成績に換算）
+  const sndRate = sansuState.drillTime === 0 ? rate
+    : score >= 30 ? 100 : score >= 20 ? 85 : score >= 10 ? 60 : 30;
+  Snd.result(sndRate);
 
   // 無制限モードで5問以上の満点ならアイテムボーナス
   if (sansuState.drillTime === 0 && rate === 100 && total >= 5) {

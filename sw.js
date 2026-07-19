@@ -1,6 +1,6 @@
 // Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v235';
+const CACHE_NAME = 'oton-gakuen-v236';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -8,6 +8,7 @@ const ASSETS = [
   './index.html',
   './style.css',
   './app.js',
+  './sound.js',
   './firebase.js',
   './manifest.json',
   './icon-192.png',

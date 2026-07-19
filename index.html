@@ -46,7 +46,7 @@
       <span id="subject-title-badge" class="title-badge"></span>
       <span id="subject-nickname"></span>
       <button id="btn-subject-refresh" class="icon-btn" title="最新版に更新">🔄</button>
-      <button id="btn-subject-char" class="icon-btn" title="キャラクター紹介">🎭</button>
+      <button id="btn-subject-settings" class="icon-btn" title="設定">⚙️</button>
       <button id="btn-subject-change" class="icon-btn" title="ユーザー切替">👤</button>
     </div>
   </header>
@@ -145,10 +145,52 @@
   </div>
 </div>
 
+<!-- =============== 設定画面 =============== -->
+<div id="screen-settings" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" id="btn-settings-back">‹ 戻る</button>
+    <h2 class="top-title">設定</h2>
+  </header>
+  <div class="settings-main">
+    <div class="snd-card">
+      <div class="snd-row snd-row-head">
+        <span class="snd-label">🔔 効果音</span>
+        <button id="snd-sfx-toggle" class="snd-toggle">ON</button>
+      </div>
+      <div class="snd-row">
+        <span class="snd-sub">音量</span>
+        <input type="range" id="snd-sfx-vol" class="snd-range" min="0" max="100" step="5">
+        <button id="snd-sfx-test" class="snd-test-btn">▶ ためす</button>
+      </div>
+      <p class="snd-note">ボタンのタップ音、正解・不正解の音、連続正解のごほうび音が鳴ります</p>
+    </div>
+    <div class="snd-card">
+      <div class="snd-row snd-row-head">
+        <span class="snd-label">🎵 音楽</span>
+        <button id="snd-music-toggle" class="snd-toggle">ON</button>
+      </div>
+      <div class="snd-row">
+        <span class="snd-sub">音量</span>
+        <input type="range" id="snd-music-vol" class="snd-range" min="0" max="100" step="5">
+        <button id="snd-music-test" class="snd-test-btn">▶ ためす</button>
+      </div>
+      <p class="snd-note">問題を解いている間、科目の雰囲気に合った音楽が流れます（算数ドリルは緊張感のある曲）</p>
+    </div>
+    <button id="btn-settings-char" class="subject-card">
+      <span class="subject-icon-wrap"><span class="subject-icon">🎭</span></span>
+      <span class="game-text">
+        <span class="subject-name">キャラクター紹介</span>
+        <span class="subject-detail">オットン・オカーン・チッチのしょうかい</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
+  </div>
+</div>
+
 <!-- =============== キャラクター紹介画面 =============== -->
 <div id="screen-character" class="screen">
   <header class="top-bar">
-    <button class="back-btn" data-back="subject">‹ 戻る</button>
+    <button class="back-btn" id="btn-char-back">‹ 戻る</button>
     <h2 class="top-title">キャラクター紹介</h2>
   </header>
   <div class="char-main">
@@ -1619,6 +1661,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="firebase.js"></script>
+<script src="sound.js"></script>
 <script src="app.js"></script>
 <script>
 // 工事中のおかん学園ボタン：1秒長押しで入れる隠し入口
