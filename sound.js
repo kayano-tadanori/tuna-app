@@ -35,10 +35,22 @@ const Snd = (() => {
     return true;
   }
 
-  // iOSはユーザー操作がないと音が出ないので、最初のタップで起こす
-  const unlock = () => { ensure(); if (bgmName) startScheduler(); };
+  // iOSのマナーモード（横の消音スイッチ）でもWeb Audioが鳴るよう、再生カテゴリを指定
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* 非対応環境は無視 */ }
+
+  // iOSはユーザー操作がないと音が出ないので、タップのたびに起こす
+  const unlock = () => {
+    if (!ensure()) return;
+    if (ctx.state === 'suspended') ctx.resume();
+    if (bgmName && cfg.musicOn) startScheduler();
+  };
   document.addEventListener('pointerdown', unlock, { capture: true });
   document.addEventListener('touchend', unlock, { capture: true });
+  document.addEventListener('click', unlock, { capture: true });
+  // PWAがバックグラウンドから復帰したときに再開
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && ctx && ctx.state === 'suspended') ctx.resume();
+  });
 
   // ---------- 基本波形ヘルパー ----------
   const NOTE = n => 440 * Math.pow(2, (n - 69) / 12); // MIDIノート→周波数
@@ -222,6 +234,7 @@ const Snd = (() => {
   function startScheduler() {
     if (schedTimer || !bgmName || !cfg.musicOn) return;
     if (!ensure()) return;
+    if (ctx.state === 'suspended') ctx.resume();
     nextStepTime = ctx.currentTime + 0.1;
     stepIdx = 0;
     schedTimer = setInterval(() => {
@@ -257,6 +270,11 @@ const Snd = (() => {
       const subj = (typeof sansuState !== 'undefined' && sansuState.subject) || 'sansu';
       bgm(BGM[subj] ? subj : 'sansu');
     } else if (id === 'quiz' || id === 'fill' || id === 'kanji') bgm('kokugo');
+    // 科目のホーム画面でも、その科目の雰囲気の曲を流す
+    else if (id === 'home') bgm('kokugo');
+    else if (id === 'sansu-home') bgm('sansu');
+    else if (id === 'rika-home') bgm('rika');
+    else if (id === 'shakai-home') bgm('shakai');
     else stopBgm();
     // 勉強画面に入り直したら連続正解カウントをリセット
     if (!wasPlay && bgmName) streak = 0;
