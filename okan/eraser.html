@@ -55,6 +55,13 @@
     color: #0f766e; background: #ccfbf1; border-radius: 12px; font-size: 12px; line-height: 1.7;
     text-align: left; padding: 10px 14px; margin: 4px 18px; max-width: 420px;
   }
+  #home .recoApp p { margin: 0 0 8px; }
+  #home .recoLinks { display: flex; gap: 8px; flex-wrap: wrap; }
+  #home .recoLinks a {
+    flex: 1; min-width: 130px; text-align: center; text-decoration: none;
+    background: #0f766e; color: #fff; font-weight: 800; font-size: 12px;
+    padding: 8px 10px; border-radius: 9px; white-space: nowrap;
+  }
   .bigBtn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     width: 100%; max-width: 340px;
@@ -207,7 +214,13 @@
     <button class="bigBtn" id="camBtn">📷 プリントを撮影</button>
     <button class="bigBtn sub" id="libBtn">🖼 写真から選ぶ</button>
     <p class="tip">影が入らないよう、明るい場所で<br>プリントの真上から撮ってください。<br>鉛筆・シャーペン・赤や青のペンの<br>書き込みを消してまっさらに戻します。</p>
-    <p class="recoApp">📱 <b>おすすめ：</b>「<b>宿題スキャナー</b>」アプリで撮ると、傾きや影を自動でまっすぐ補正できます。そのプリントを「🖼 写真から選ぶ」で読み込むと、より綺麗に消せます。</p>
+    <div class="recoApp">
+      <p>📱 <b>おすすめ：「宿題スキャナー」アプリ</b>で撮ると、傾きや影を自動でまっすぐ補正できます。補正した画像を「🖼 写真から選ぶ」で読み込めばより綺麗に消せますし、<b>そのままプリント管理に保管して兄弟で使い回す</b>のも便利です。</p>
+      <div class="recoLinks">
+        <a href="https://apps.apple.com/jp/app/id1615750260" target="_blank" rel="noopener"> iPhone（App Store）</a>
+        <a href="https://play.google.com/store/apps/details?id=com.homework.helper" target="_blank" rel="noopener">▶ Android（Google Play）</a>
+      </div>
+    </div>
     <button class="helpLink" id="helpBtn">❓ 使い方を見る</button>
   </div>
 

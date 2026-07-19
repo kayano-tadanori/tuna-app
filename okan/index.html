@@ -231,7 +231,8 @@
       <input class="setInput" id="setName" placeholder="例：はなこ" autocomplete="off">
       <p class="setLabel">👦 お子さんの管理（兄弟はスペースで区切って登録）</p>
       <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
-      <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になり、成績管理はお子さんごとに切り替えて記録できます。<br><b>いちばん左のお子さんが、今入っている成績データの持ち主です。</b>2人目以降は成績ページ上の名前で切り替えると、その子だけの成績になります。</p>
+      <p style="font-size:11px;color:#94a3b8;margin:-8px 0 8px">塾スケジュールの「誰が」の選択肢になり、成績管理はお子さんごとに切り替えて記録できます。<br><b>いちばん左のお子さんが、今入っている成績データの持ち主です。</b>2人目以降は成績ページ上の名前で切り替えると、その子だけの成績になります。</p>
+      <div id="childMetaWrap" style="margin:0 0 12px"></div>
       <p class="setLabel">🎯 志望校と目標偏差値（成績グラフに「◯◯ライン」として出ます）</p>
       <div style="display:flex;gap:8px">
         <input class="setInput" id="setGoalSchool" placeholder="例：灘中" autocomplete="off" style="flex:2">
@@ -275,6 +276,11 @@
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0 12px">
         <input type="checkbox" id="expPrints" style="width:19px;height:19px;accent-color:#db2777"> 保管したプリント（画像・ファイルが大きくなります）
       </label>
+      <div id="impChildWrap" style="display:none;margin:4px 0 8px">
+        <p class="setLabel" style="margin:0 0 4px">👦 成績データの取り込み先（どのお子さん？）</p>
+        <select class="setInput" id="impChild" style="margin:0"></select>
+        <p style="font-size:11px;color:#94a3b8;margin:4px 0 0">成績のJSONは、ここで選んだお子さんの成績として取り込まれます（スケジュール・プリントは共通）</p>
+      </div>
       <div style="display:flex;gap:8px">
         <button class="setSave" id="expBtn" style="background:#0d9488">📤 書き出す</button>
         <button class="setSave" id="impDataBtn" style="background:#475569">📥 取り込む</button>
@@ -286,7 +292,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v40</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v41</p>
     </div>
   </div>
 </div>
@@ -353,9 +359,75 @@ document.getElementById('settingsBtn').onclick = () => {
     // 社会（4科）だけは既定OFF、講座は既定ON
     c.checked = c.dataset.course === 'shakai' ? cs.shakai === true : cs[c.dataset.course] !== false;
   });
+  renderChildMeta();
+  syncImpChild();
   renderGenderBtns();
   document.getElementById('setModal').classList.add('open');
 };
+
+// お子さんごとの現在の学年・クラス（Vは小4から。小1〜3は通常/土曜マスターでS・Hのみ）
+function childMetaMap() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
+const CM_SEL = 'font-size:12px;font-weight:800;border:1.5px solid #cbd5e1;border-radius:8px;padding:5px 4px;background:#fff';
+function fillClassCurr(row, grade, m) {
+  const classes = grade >= 4 ? ['V', 'S', 'H'] : ['S', 'H'];
+  row.querySelector('.cmClass').innerHTML = classes.map(c => `<option ${m.cls === c ? 'selected' : ''}>${c}</option>`).join('');
+  const cur = row.querySelector('.cmCurr');
+  if (grade <= 3) { cur.style.display = ''; cur.innerHTML = ['通常マスター', '土曜マスター'].map(c => `<option ${m.curr === c ? 'selected' : ''}>${c}</option>`).join(''); }
+  else { cur.style.display = 'none'; cur.innerHTML = ''; }
+}
+function renderChildMeta() {
+  const names = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
+  const wrap = document.getElementById('childMetaWrap');
+  const meta = childMetaMap();
+  if (!names.length) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = '<p class="setLabel" style="margin:6px 0 4px">📊 お子さんごとの今の学年・クラス</p>' +
+    names.map((n, idx) => `<div class="childMetaRow" data-name="${n}" style="display:flex;align-items:center;gap:6px;margin:5px 0">
+      <span style="flex:1;font-size:13px;font-weight:800;color:#334155;overflow:hidden;text-overflow:ellipsis">${n}</span>
+      <select class="cmGrade" style="${CM_SEL}">${[1, 2, 3, 4, 5, 6].map(g => `<option value="${g}">小${g}</option>`).join('')}</select>
+      <select class="cmClass" style="${CM_SEL}"></select>
+      <select class="cmCurr" style="${CM_SEL}"></select>
+    </div>`).join('');
+  wrap.querySelectorAll('.childMetaRow').forEach((row, idx) => {
+    const n = row.dataset.name;
+    const m = Object.assign({}, meta[n]);
+    if (idx === 0 && meta[n] == null) { m.grade = +(localStorage.getItem('okan_ab_grade') || 0) || undefined; m.cls = localStorage.getItem('okan_ab_class') || undefined; }
+    const gsel = row.querySelector('.cmGrade');
+    if (m.grade) gsel.value = m.grade;
+    fillClassCurr(row, +gsel.value, m);
+    gsel.onchange = () => fillClassCurr(row, +gsel.value, {});
+  });
+}
+function saveChildMeta() {
+  const meta = {};
+  document.querySelectorAll('#childMetaWrap .childMetaRow').forEach(row => {
+    const n = row.dataset.name;
+    const g = +row.querySelector('.cmGrade').value;
+    let cls = row.querySelector('.cmClass').value;
+    if (g < 4 && cls === 'V') cls = 'S';
+    const curr = g <= 3 ? row.querySelector('.cmCurr').value : '';
+    meta[n] = { grade: g, cls, curr };
+  });
+  localStorage.setItem('okan_child_meta', JSON.stringify(meta));
+}
+document.getElementById('setChildren').addEventListener('input', renderChildMeta);
+
+// 成績JSONの取り込み先（お子さん）
+function syncImpChild() {
+  const cs = childrenList();
+  const wrap = document.getElementById('impChildWrap');
+  const sel = document.getElementById('impChild');
+  if (cs.length >= 2) {
+    sel.innerHTML = cs.map(c => `<option>${c}</option>`).join('');
+    const act = localStorage.getItem('okan_active_child');
+    if (act && cs.includes(act)) sel.value = act;
+    wrap.style.display = '';
+  } else { wrap.style.display = 'none'; }
+}
+function importChild() {
+  const w = document.getElementById('impChildWrap');
+  const s = document.getElementById('impChild');
+  return (w.style.display !== 'none' && s.value) ? s.value : undefined;
+}
 document.getElementById('setClose').onclick = () => document.getElementById('setModal').classList.remove('open');
 document.getElementById('setModal').addEventListener('click', e => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
@@ -364,6 +436,8 @@ document.getElementById('setSave').onclick = () => {
   localStorage.setItem(NAME_KEY, document.getElementById('setName').value.trim());
   const kids = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
   localStorage.setItem(CHILDREN_KEY, JSON.stringify(kids));
+  // お子さんごとの学年・クラス
+  saveChildMeta();
   // 志望校と目標偏差値（成績グラフの目標ライン）
   localStorage.setItem('okan_goal_school', document.getElementById('setGoalSchool').value.trim());
   localStorage.setItem('okan_goal_dev', document.getElementById('setGoalDev').value.trim());
@@ -442,7 +516,10 @@ async function buildExportObj(withSched, withPrints, withSeiseki) {
   return obj;
 }
 
-async function importDataObj(obj) {
+// お子さんごとの成績キー（seiseki.html と同じ規則：いちばん左の子＝okan_seiseki_v1）
+function childrenList() { try { return JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { return []; } }
+function seikeyFor(child) { const cs = childrenList(); return (child && cs.length && child !== cs[0]) ? `okan_seiseki_v1__${child}` : 'okan_seiseki_v1'; }
+async function importDataObj(obj, targetChild) {
   if (!obj || obj.app !== 'chuju-mama-banso') throw new Error('このアプリのファイルではありません');
   const result = { sched: 0, todos: 0, events: 0, prints: 0, children: 0 };
   if (obj.sched) {
@@ -471,8 +548,9 @@ async function importDataObj(obj) {
     result.children = merged.length;
   }
   if (obj.seiseki) {
+    const skey = seikeyFor(targetChild);
     let cur;
-    try { cur = JSON.parse(localStorage.getItem('okan_seiseki_v1')) || null; } catch (e) { cur = null; }
+    try { cur = JSON.parse(localStorage.getItem(skey)) || null; } catch (e) { cur = null; }
     if (!cur) cur = {};
     // 同じテストの判定：公開=同じ月／その他=同じid、またはidが違っても
     // 「同じ日付＋同じ内容（科目・回）」なら同一とみなす（手入力とJSON取り込みの二重登録防止）
@@ -492,7 +570,8 @@ async function importDataObj(obj) {
         result.seiseki = (result.seiseki || 0) + 1;
       }
     }
-    localStorage.setItem('okan_seiseki_v1', JSON.stringify(cur));
+    localStorage.setItem(skey, JSON.stringify(cur));
+    result.seisekiChild = targetChild || (childrenList()[0] || '');
   }
   if (obj.prints) {
     for (const p of obj.prints) {
@@ -544,8 +623,8 @@ document.getElementById('impDataFile').onchange = async e => {
   if (!f) return;
   try {
     const obj = JSON.parse((await f.text()).replace(/^\uFEFF/, '').trim());
-    const r = await importDataObj(obj);
-    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件`);
+    const r = await importDataObj(obj, importChild());
+    alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件${r.seisekiChild ? '（' + r.seisekiChild + '）' : ''}`);
   } catch (err) {
     console.error(err);
     alert('取り込みに失敗しました：' + err.message);
@@ -591,9 +670,9 @@ async function doPasteImport(fromAuto) {
     return;
   }
   try {
-    const r = await importDataObj(obj);
+    const r = await importDataObj(obj, importChild());
     box.value = '';
-    setPasteStatus(`✅ 取り込みました！ 成績${r.seiseki || 0}件・スケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件。ホームに戻って成績管理を開いてください`, 'ok');
+    setPasteStatus(`✅ 取り込みました！ 成績${r.seiseki || 0}件${r.seisekiChild ? '（' + r.seisekiChild + 'の成績）' : ''}・スケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件。ホームに戻って成績管理を開いてください`, 'ok');
   } catch (err) {
     console.error(err);
     setPasteStatus('❌ 取り込みに失敗しました：' + err.message, 'ng');

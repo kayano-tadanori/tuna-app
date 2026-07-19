@@ -813,9 +813,13 @@ function prevYm(ym) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 }
 
+// お子さんごとの学年・クラス（⚙️設定 okan_child_meta[名前]={grade,cls,curr}）。Vは小4から
+function childMeta() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
 function renderAB() {
-  const grade = +(localStorage.getItem('okan_ab_grade') || 5);
-  const cls = localStorage.getItem('okan_ab_class') || 'V';
+  const m = (activeChild && childMeta()[activeChild]) || {};
+  const grade = +(m.grade || localStorage.getItem('okan_ab_grade') || 5);
+  let cls = m.cls || localStorage.getItem('okan_ab_class') || (grade >= 4 ? 'V' : 'S');
+  if (grade < 4 && cls === 'V') cls = 'S';   // 小3以下はVなし
   const months = abMonths();
   const rows = months.map(aRow);
   const byYm = {};
@@ -827,9 +831,10 @@ function renderAB() {
         ${[2, 3, 4, 5, 6].map(g => `<option value="${g}" ${g === grade ? 'selected' : ''}>小${g}</option>`).join('')}
       </select>
       <select class="fInput" id="abClass" style="flex:1">
-        ${['V', 'S', 'H'].map(c => `<option ${c === cls ? 'selected' : ''}>${c}クラス</option>`).join('')}
+        ${(grade >= 4 ? ['V', 'S', 'H'] : ['S', 'H']).map(c => `<option ${c === cls ? 'selected' : ''}>${c}クラス</option>`).join('')}
       </select>
     </div>
+    ${CHILDREN.length >= 2 ? `<p style="font-size:11px;color:#db2777;font-weight:800;margin:2px 0 6px">👦 ${activeChild}の設定（お子さんを切り替えるとクラスも切り替わります）</p>` : ''}
     <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復テ平均（前月16日〜当月15日の復習テストの単純平均。夏期は実物どおり7月度=〜7/5・8月度=〜8/12・9月度=〜9/15で区切り）＋公開の平均点（総合点÷科目数）＝200点満点。B表＝2ヶ月合算（奇数月末判定→偶数月から新クラス）。Vクラス内はB表340点がV1⇄V2の境界です。基準値は非公表のおおまかな目安（±10点程度）です。</p></div>`;
 
   // B表（判定月＝奇数月：2+3月→3月末、4+5月→5月末…）
@@ -980,8 +985,15 @@ function render() {
   } else if (tab === 'ab') {
     v.innerHTML = renderAB();
     const sync = () => {
-      localStorage.setItem('okan_ab_grade', $('abGrade').value);
-      localStorage.setItem('okan_ab_class', $('abClass').value.replace('クラス', ''));
+      const g = +$('abGrade').value;
+      let c = $('abClass').value.replace('クラス', '');
+      if (g < 4 && c === 'V') c = 'S';
+      // お子さんごとに保存（兄弟がいなければ従来のキーにも保存）
+      const meta = childMeta();
+      const key = activeChild || '';
+      meta[key] = Object.assign({}, meta[key], { grade: g, cls: c });
+      localStorage.setItem('okan_child_meta', JSON.stringify(meta));
+      if (!activeChild) { localStorage.setItem('okan_ab_grade', g); localStorage.setItem('okan_ab_class', c); }
       render();
     };
     $('abGrade').onchange = sync;
