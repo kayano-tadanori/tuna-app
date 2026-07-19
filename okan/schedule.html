@@ -93,6 +93,13 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .chipMore { font-size: 9px; color: #94a3b8; font-weight: 800; text-align: center; }
+  .adjChip { background: #64748b; color: #fff; text-align: center; }
+  .adjBtn {
+    width: 100%; border: 1.5px solid #cbd5e1; background: #fff; color: #475569;
+    font-size: 13px; font-weight: 800; padding: 11px; border-radius: 12px; cursor: pointer; margin-bottom: 10px;
+  }
+  .adjBtn.on { background: #475569; border-color: #475569; color: #fff; }
+  .adjNote { font-size: 12px; color: #64748b; background: #f1f5f9; border-radius: 10px; padding: 9px 12px; margin: 0 0 10px; line-height: 1.7; }
 
   /* ---- ToDoビュー ---- */
   #todoView { display: none; padding: 12px 14px 120px; }
@@ -393,6 +400,7 @@ function load() {
     d = JSON.parse(localStorage.getItem(KEY));
   } catch (e) { /* fallthrough */ }
   if (!d || !d.events || !d.weekly || !d.todos) d = { events: [], weekly: [], todos: [] };
+  if (!Array.isArray(d.adjust)) d.adjust = [];   // 調整日（塾休み）の日付リスト
   // 旧形式からの移行（repeat/who/no/終了時間/弁当/科目/種類 が無い登録に既定値を足す）
   for (const w of d.weekly) {
     if (!w.repeat) w.repeat = { type: 'weekly' };
@@ -488,8 +496,18 @@ const todayStr = () => fmt(new Date());
 let ym = (() => { const n = new Date(); return { y: n.getFullYear(), m: n.getMonth() }; })();
 let selDate = todayStr();
 
+// 調整日（塾がお休み）：その日は定期予定を出さず、受講Noも進めない
+function isAdjust(ds) { return (db.adjust || []).includes(ds); }
+function toggleAdjust(ds) {
+  db.adjust = db.adjust || [];
+  const i = db.adjust.indexOf(ds);
+  if (i >= 0) db.adjust.splice(i, 1); else db.adjust.push(ds);
+  save();
+}
+
 // ---------- くり返しの判定 ----------
 function occursOn(w, dateStr, d) {
+  if (isAdjust(dateStr)) return false;   // 調整日は塾全体がお休み
   if (w.dow !== d.getDay()) return false;
   if ((w.except || []).includes(dateStr)) return false;
   const r = w.repeat || { type: 'weekly' };
@@ -590,6 +608,11 @@ function renderCal() {
     num.appendChild(span);
     cell.appendChild(num);
 
+    if (isAdjust(ds)) {
+      const a = document.createElement('div');
+      a.className = 'chipE adjChip'; a.textContent = '🚫調整日';
+      cell.appendChild(a);
+    }
     const items = itemsOf(ds);
     const due = todosDue(ds);
     const MAX = 5;
@@ -625,10 +648,24 @@ function openDaySheet(ds) {
   $('dayTitle').textContent = `${d.getMonth() + 1}月${d.getDate()}日(${DOWS[d.getDay()]})`;
   const list = $('dayList');
   list.innerHTML = '';
+  const adj = isAdjust(ds);
+  const ab = document.createElement('button');
+  ab.className = 'adjBtn' + (adj ? ' on' : '');
+  ab.textContent = adj ? '🚫 調整日（塾お休み）を解除する' : '🚫 この日を調整日（塾お休み）にする';
+  ab.onclick = () => { toggleAdjust(ds); renderAll(); openDaySheet(ds); };
+  list.appendChild(ab);
+  if (adj) {
+    const note = document.createElement('p');
+    note.className = 'adjNote';
+    note.textContent = '調整日なので、この日の定期予定（塾）はお休みです。受講No.も進みません。';
+    list.appendChild(note);
+  }
   const items = itemsOf(ds);
   const due = db.todos.filter(t => t.due === ds);
-  if (!items.length && !due.length) {
-    list.innerHTML = '<p class="emptyMsg">この日の予定はありません</p>';
+  if (!items.length && !due.length && !adj) {
+    const p = document.createElement('p');
+    p.className = 'emptyMsg'; p.textContent = 'この日の予定はありません';
+    list.appendChild(p);
   }
   for (const it of items) {
     const row = document.createElement('div');
