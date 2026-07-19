@@ -84,11 +84,11 @@
   #canvasWrap {
     flex: 1; overflow: auto; -webkit-overflow-scrolling: touch;
     background: #cbd5e1; display: flex; align-items: flex-start; justify-content: center;
-    padding: 8px;
+    padding: 4px;
     touch-action: none; overscroll-behavior: contain;
   }
   #canvasWrap.zoomed { justify-content: flex-start; }
-  #canvasBox { position: relative; display: inline-block; font-size: 0; }
+  #canvasBox { position: relative; display: inline-block; font-size: 0; will-change: transform; }
   #outCanvas { max-width: 100%; height: auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); touch-action: none; display: block; }
   #ovCanvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
 
@@ -96,17 +96,17 @@
     flex-shrink: 0;
     background: #fff;
     border-top: 1px solid #e2e8f0;
-    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-    display: flex; flex-direction: column; gap: 9px;
+    padding: 7px 12px calc(7px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; gap: 6px;
   }
-  .row { display: flex; align-items: center; gap: 10px; }
-  .row label { font-size: 13px; font-weight: 700; color: #475569; white-space: nowrap; }
-  input[type=range] { flex: 1; accent-color: #db2777; height: 30px; }
-  .rangeEnd { font-size: 12px; color: #94a3b8; }
+  .row { display: flex; align-items: center; gap: 8px; }
+  .row label { font-size: 12px; font-weight: 700; color: #475569; white-space: nowrap; }
+  input[type=range] { flex: 1; accent-color: #db2777; height: 26px; }
+  .rangeEnd { font-size: 11px; color: #94a3b8; }
 
-  .chipRow { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+  .chipRow { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .chip {
-    padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 700;
+    padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700;
     border: 1.5px solid #cbd5e1; background: #fff; color: #475569; cursor: pointer;
   }
   .chip.on { background: #fce7f3; border-color: #db2777; color: #db2777; }
@@ -239,28 +239,29 @@
         <span class="rangeEnd">強</span>
       </div>
       <div class="chipRow">
-        <button class="chip on" id="lineChip">枠を守る</button>
-        <button class="chip on" id="despeckleChip">ゴミ取り</button>
-        <button class="chip on" id="crispChip">白黒くっきり</button>
-        <button class="chip on" id="colorChip">色ペンも消す</button>
-      </div>
-      <div class="chipRow">
-        <button class="chip mode on" data-mode="pan">✋うごかす</button>
+        <button class="chip mode on" data-mode="pan">✋移動</button>
         <button class="chip mode" data-mode="erase">🧽けす</button>
         <button class="chip mode" data-mode="restore">🖌もどす</button>
-        <button class="chip mode" data-mode="protect">🛡ワク</button>
+        <button class="chip mode" data-mode="protect">🔷多角形枠</button>
         <button class="chip" id="brushSize">⚫中</button>
         <button class="chip" id="resetManual">↺</button>
         <span class="grow"></span>
-        <button class="chip" id="rotateBtn">⟳回転</button>
+        <button class="chip" id="rotateBtn">⟳</button>
         <button class="chip" id="zoomOut">➖</button>
-        <button class="chip" id="zoomIn">➕🔍</button>
+        <button class="chip" id="zoomIn">➕</button>
         <button class="chip" id="helpBtn2">❓</button>
       </div>
+      <div class="chipRow">
+        <button class="chip on" id="lineChip">枠保護</button>
+        <button class="chip on" id="despeckleChip">ゴミ取り</button>
+        <button class="chip on" id="crispChip">くっきり</button>
+        <button class="chip on" id="colorChip">色ペン</button>
+      </div>
       <div class="chipRow" id="protectRow" style="display:none">
-        <button class="chip" id="addRectBtn">□ 四角を追加</button>
-        <button class="chip" id="eraseOutsideBtn" style="background:#10b981;border-color:#10b981;color:#fff">✂ 枠の外を消す</button>
-        <button class="chip" id="clearShapesBtn">枠をクリア</button>
+        <span style="font-size:11px;color:#64748b;font-weight:700">タップで点→</span>
+        <button class="chip" id="finalizeBtn" style="background:#0d9488;border-color:#0d9488;color:#fff">✓ 枠を確定</button>
+        <button class="chip" id="undoPointBtn">↶ 戻す</button>
+        <button class="chip" id="clearShapesBtn">🗑 枠を消す</button>
       </div>
       <div class="aiRow">
         <button id="aiBtn">✨ AIで消す（実験）</button>
@@ -294,19 +295,20 @@
 
     <h3>🎚 ボタンの意味</h3>
     <ul>
-      <li><b>枠を守る</b>：解答欄の枠・表・罫線を消さずに残します。消し具合を強にしても枠は消えません</li>
+      <li><b>枠保護</b>：解答欄の枠・表・罫線を消さずに残します。消し具合を強にしても枠は消えません</li>
       <li><b>ゴミ取り</b>：細かい点々の消しカスを掃除します</li>
-      <li><b>白黒くっきり</b>：印刷を濃くはっきりさせます（うすいグレーの印刷はそのまま残ります）</li>
-      <li><b>色ペンも消す</b>：赤や青のペン・丸つけを消します。赤を残したいときはOFFに</li>
+      <li><b>くっきり</b>：印刷を濃くはっきりさせます（うすいグレーの印刷はそのまま残ります）</li>
+      <li><b>色ペン</b>：赤や青のペン・丸つけを消します。赤を残したいときはOFFに</li>
     </ul>
 
     <h3>👆 指で手直し</h3>
     <ul>
       <li><b>🧽けす</b>：消え残った字を指でこすって消す（黒ペンの字もこれで消せます）</li>
       <li><b>🖌もどす</b>：消えすぎた枠や印刷を指でこすって元に戻す</li>
+      <li><b>🔷多角形枠</b>：消したくない場所をタップで囲み「✓枠を確定」。<b>枠の中は消えません</b>（細かい所は🧽けすで手直し）。枠の中をドラッグで位置調整、2本指で大きさ調整、「↶戻す」で点や枠を取り消し</li>
       <li><b>⚫小/中/大</b>：指の太さを変える　<b>↺</b>：手直しを全部やり直す</li>
-      <li><b>🤏 2本指</b>：つまむと拡大・縮小、2本指のまま動かすと移動（どのモードでもOK）</li>
-      <li><b>➕🔍/➖</b>：ボタンでも拡大・縮小できます</li>
+      <li><b>🤏 2本指</b>：つまむと拡大・縮小、2本指のまま動かすと移動（なめらかにズームします）</li>
+      <li><b>➕/➖</b>：ボタンでも拡大・縮小できます</li>
       <li><b>押すと元画像</b>：押している間だけ撮った写真が見えます。見比べに便利</li>
     </ul>
 
@@ -430,7 +432,7 @@ document.querySelectorAll('.chip.mode').forEach(btn => {
     $('protectRow').style.display = mode === 'protect' ? '' : 'none';
     if (mode === 'erase') toast('指でこすると消えます（2本指で拡大・移動）');
     if (mode === 'restore') toast('指でこすると元にもどります（2本指で拡大・移動）');
-    if (mode === 'protect') toast('タップで点を打つと多角形に。□で四角も置けます');
+    if (mode === 'protect') toast('タップで点を打ち「✓枠を確定」。枠の中は消えません。中をドラッグで移動、2本指で拡大縮小');
   };
 });
 
@@ -767,12 +769,10 @@ async function callOpenAI(key, model, blob, useFidelity) {
 let drawing = false, lastPt = null;
 let strokeBackup = null;   // 2本指ピンチでストロークを取り消すためのバックアップ
 
-function canvasPoint(e) {
+function canvasPoint(e) { return clientToCanvas(e.clientX, e.clientY); }
+function clientToCanvas(cx, cy) {
   const r = outCanvas.getBoundingClientRect();
-  return {
-    x: (e.clientX - r.left) * (outCanvas.width / r.width),
-    y: (e.clientY - r.top) * (outCanvas.height / r.height)
-  };
+  return { x: (cx - r.left) * (outCanvas.width / r.width), y: (cy - r.top) * (outCanvas.height / r.height) };
 }
 
 function stamp(x, y) {
@@ -839,7 +839,11 @@ outCanvas.addEventListener('pointermove', e => {
   lastPt = p;
 });
 function endStroke() {
-  if (mode === 'protect') { shapeDrag = null; return; }
+  if (mode === 'protect') {
+    if (shapeDrag) { shapeDrag = null; rebuildProtect(); render(); }
+    pendingVertex = false;
+    return;
+  }
   if (!drawing) return;
   drawing = false;
   lastPt = null;
@@ -847,123 +851,96 @@ function endStroke() {
   outData = outCtx.getImageData(0, 0, W, H); // 比較・保存用に同期
 }
 
-// ---------- 保護マスク（🛡ワク） ----------
+// ---------- 多角形枠（🔷保護枠：中を消えないように守る） ----------
 const ovCanvas = $('ovCanvas');
 const ovCtx = ovCanvas.getContext('2d');
-let shapes = [];      // {kind:'rect',x0,y0,x1,y1}
-let curPoly = [];     // 作りかけの多角形 [{x,y}...]
-let shapeDrag = null; // {shape, corner:'tl'|'tr'|'bl'|'br'|'move', ox, oy}
+let shapes = [];        // 確定した保護枠 [{kind:'poly', pts:[{x,y}...]}]
+let curPoly = [];       // 作りかけの多角形 [{x,y}...]
+let shapeDrag = null;   // {poly, ox, oy}（枠を中からつかんで移動）
+let frameResize = null; // 2本指で枠を拡大縮小
+let activePoly = null;
+let protectMask = null; // Uint8Array W*H（1＝保護）
+let pendingVertex = false;
+
+function polyCentroid(pts) { let x = 0, y = 0; for (const p of pts) { x += p.x; y += p.y; } return { x: x / pts.length, y: y / pts.length }; }
+function pointInPoly(pt, pts) {
+  let inside = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const xi = pts[i].x, yi = pts[i].y, xj = pts[j].x, yj = pts[j].y;
+    if (((yi > pt.y) !== (yj > pt.y)) && (pt.x < (xj - xi) * (pt.y - yi) / (yj - yi) + xi)) inside = !inside;
+  }
+  return inside;
+}
+function polyAt(p) { for (let k = shapes.length - 1; k >= 0; k--) { if (shapes[k].pts.length >= 3 && pointInPoly(p, shapes[k].pts)) return shapes[k]; } return null; }
+
+function rebuildProtect() {
+  if (!W || !shapes.length) { protectMask = null; return; }
+  const mc = document.createElement('canvas'); mc.width = W; mc.height = H;
+  const mx = mc.getContext('2d');
+  mx.fillStyle = '#fff';
+  for (const s of shapes) {
+    if (s.pts.length < 3) continue;
+    mx.beginPath(); mx.moveTo(s.pts[0].x, s.pts[0].y);
+    for (const p of s.pts.slice(1)) mx.lineTo(p.x, p.y);
+    mx.closePath(); mx.fill();
+  }
+  const md = mx.getImageData(0, 0, W, H).data;
+  const m = new Uint8Array(W * H); let any = false;
+  for (let i = 0; i < W * H; i++) if (md[i * 4] > 20) { m[i] = 1; any = true; }
+  protectMask = any ? m : null;
+}
 
 function drawOverlay() {
   ovCtx.clearRect(0, 0, ovCanvas.width, ovCanvas.height);
-  const lw = Math.max(3, W * 0.004);
-  ovCtx.lineWidth = lw;
-  ovCtx.strokeStyle = '#10b981';
-  ovCtx.fillStyle = 'rgba(16,185,129,0.16)';
-  for (const s of shapes) {
-    const x = Math.min(s.x0, s.x1), y = Math.min(s.y0, s.y1);
-    const w = Math.abs(s.x1 - s.x0), h = Math.abs(s.y1 - s.y0);
-    ovCtx.fillRect(x, y, w, h);
-    ovCtx.strokeRect(x, y, w, h);
-    const hs = Math.max(10, W * 0.016);
-    ovCtx.fillStyle = '#10b981';
-    for (const [cx, cy] of [[s.x0, s.y0], [s.x1, s.y0], [s.x0, s.y1], [s.x1, s.y1]]) {
-      ovCtx.fillRect(cx - hs / 2, cy - hs / 2, hs, hs);
-    }
-    ovCtx.fillStyle = 'rgba(16,185,129,0.16)';
-  }
-  if (curPoly.length) {
-    ovCtx.beginPath();
-    ovCtx.moveTo(curPoly[0].x, curPoly[0].y);
-    for (const p of curPoly.slice(1)) ovCtx.lineTo(p.x, p.y);
-    if (curPoly.length >= 3) {
-      ovCtx.closePath();
-      ovCtx.fill();
-    }
+  ovCtx.lineWidth = Math.max(3, W * 0.004);
+  const dot = Math.max(6, W * 0.008);
+  const drawPoly = (pts, closed, col, fillCol) => {
+    if (!pts.length) return;
+    ovCtx.strokeStyle = col; ovCtx.fillStyle = fillCol;
+    ovCtx.beginPath(); ovCtx.moveTo(pts[0].x, pts[0].y);
+    for (const p of pts.slice(1)) ovCtx.lineTo(p.x, p.y);
+    if (closed && pts.length >= 3) { ovCtx.closePath(); ovCtx.fill(); }
     ovCtx.stroke();
-    ovCtx.fillStyle = '#059669';
-    for (const p of curPoly) {
-      ovCtx.beginPath();
-      ovCtx.arc(p.x, p.y, Math.max(6, W * 0.008), 0, Math.PI * 2);
-      ovCtx.fill();
-    }
-    ovCtx.fillStyle = 'rgba(16,185,129,0.16)';
-  }
+    ovCtx.fillStyle = col;
+    for (const p of pts) { ovCtx.beginPath(); ovCtx.arc(p.x, p.y, dot, 0, Math.PI * 2); ovCtx.fill(); }
+  };
+  for (const s of shapes) drawPoly(s.pts, true, '#0d9488', 'rgba(13,148,136,0.16)');
+  if (curPoly.length) drawPoly(curPoly, true, '#db2777', 'rgba(219,39,99,0.14)');
 }
 
 function protectDown(p) {
-  const grab = Math.max(18, W * 0.03);
-  for (const s of shapes) {
-    const corners = { tl: [s.x0, s.y0], tr: [s.x1, s.y0], bl: [s.x0, s.y1], br: [s.x1, s.y1] };
-    for (const k in corners) {
-      if (Math.hypot(p.x - corners[k][0], p.y - corners[k][1]) < grab) {
-        shapeDrag = { shape: s, corner: k };
-        return;
-      }
-    }
-    if (p.x > Math.min(s.x0, s.x1) && p.x < Math.max(s.x0, s.x1) &&
-        p.y > Math.min(s.y0, s.y1) && p.y < Math.max(s.y0, s.y1)) {
-      shapeDrag = { shape: s, corner: 'move', ox: p.x, oy: p.y };
-      return;
-    }
-  }
-  curPoly.push({ x: p.x, y: p.y });   // 何もつかまなければ多角形の点を追加
+  const hit = polyAt(p);
+  if (hit) { shapeDrag = { poly: hit, ox: p.x, oy: p.y }; activePoly = hit; return; }
+  curPoly.push({ x: p.x, y: p.y });   // 枠の外をタップ＝多角形の点を追加
+  pendingVertex = true;
   drawOverlay();
 }
-
 function protectMove(p) {
-  const s = shapeDrag.shape, k = shapeDrag.corner;
-  if (k === 'move') {
-    const dx = p.x - shapeDrag.ox, dy = p.y - shapeDrag.oy;
-    s.x0 += dx; s.x1 += dx; s.y0 += dy; s.y1 += dy;
-    shapeDrag.ox = p.x; shapeDrag.oy = p.y;
-  } else {
-    if (k === 'tl') { s.x0 = p.x; s.y0 = p.y; }
-    if (k === 'tr') { s.x1 = p.x; s.y0 = p.y; }
-    if (k === 'bl') { s.x0 = p.x; s.y1 = p.y; }
-    if (k === 'br') { s.x1 = p.x; s.y1 = p.y; }
-  }
+  if (!shapeDrag) return;
+  const dx = p.x - shapeDrag.ox, dy = p.y - shapeDrag.oy;
+  for (const q of shapeDrag.poly.pts) { q.x += dx; q.y += dy; }
+  shapeDrag.ox = p.x; shapeDrag.oy = p.y;
   drawOverlay();
 }
 
-$('addRectBtn').onclick = () => {
+$('finalizeBtn').onclick = () => {
   if (!normGray) return;
-  shapes.push({ kind: 'rect', x0: W * 0.2, y0: H * 0.2, x1: W * 0.8, y1: H * 0.8 });
-  drawOverlay();
-  toast('角をドラッグで伸縮、中をドラッグで移動できます');
+  if (curPoly.length < 3) { toast('点を3つ以上打ってから確定してください'); return; }
+  shapes.push({ kind: 'poly', pts: curPoly.slice() });
+  activePoly = shapes[shapes.length - 1];
+  curPoly = [];
+  rebuildProtect(); render(); drawOverlay();
+  toast('枠を確定しました。中をドラッグで移動／2本指で拡大縮小できます');
 };
-
+$('undoPointBtn').onclick = () => {
+  if (curPoly.length) curPoly.pop();
+  else if (shapes.length) { shapes.pop(); activePoly = shapes[shapes.length - 1] || null; rebuildProtect(); render(); }
+  drawOverlay();
+};
 $('clearShapesBtn').onclick = () => {
-  shapes = []; curPoly = [];
-  drawOverlay();
-};
-
-$('eraseOutsideBtn').onclick = () => {
-  if (!normGray) return;
-  if (!shapes.length && curPoly.length < 3) { toast('先に枠（四角か多角形）を作ってください'); return; }
-  // 保護領域を白で描いたマスクを作る
-  const mc = document.createElement('canvas');
-  mc.width = W; mc.height = H;
-  const mx = mc.getContext('2d');
-  mx.fillStyle = '#000'; mx.fillRect(0, 0, W, H);
-  mx.fillStyle = '#fff';
-  for (const s of shapes) {
-    mx.fillRect(Math.min(s.x0, s.x1), Math.min(s.y0, s.y1), Math.abs(s.x1 - s.x0), Math.abs(s.y1 - s.y0));
-  }
-  if (curPoly.length >= 3) {
-    mx.beginPath();
-    mx.moveTo(curPoly[0].x, curPoly[0].y);
-    for (const p of curPoly.slice(1)) mx.lineTo(p.x, p.y);
-    mx.closePath();
-    mx.fill();
-  }
-  const md = mx.getImageData(0, 0, W, H).data;
-  for (let i = 0; i < W * H; i++) {
-    if (md[i * 4] < 128) manual[i] = 1;   // 枠の外＝強制消去
-  }
-  render();
-  outData = outCtx.getImageData(0, 0, W, H);
-  toast('枠の外を消しました（↺で手直しごと取り消せます）');
+  shapes = []; curPoly = []; activePoly = null; shapeDrag = null;
+  rebuildProtect(); render(); drawOverlay();
+  toast('枠を消しました');
 };
 
 // ---------- 回転（90°ずつ） ----------
@@ -991,7 +968,8 @@ $('rotateBtn').onclick = async () => {
     W = oldH; H = oldW;
     outCanvas.width = W; outCanvas.height = H;
     ovCanvas.width = W; ovCanvas.height = H;
-    shapes = []; curPoly = []; drawOverlay();
+    shapes = []; curPoly = []; activePoly = null; shapeDrag = null; frameResize = null; pendingVertex = false; protectMask = null;
+    drawOverlay();
     outData = null;
     precompute();
     buildRestore();
@@ -1013,26 +991,31 @@ outCanvas.addEventListener('pointerup', endStroke);
 outCanvas.addEventListener('pointercancel', endStroke);
 outCanvas.addEventListener('contextmenu', e => e.preventDefault());
 
-// ---------- 2本指ピンチ（拡大縮小・移動）＋✋1本指パン ----------
+// ---------- 2本指ピンチ（シームレス拡大縮小・移動）＋✋1本指パン ----------
 const touches = new Map();
 let pinch = null, panDrag = null;
+const box = $('canvasBox');
 
 wrap.addEventListener('pointerdown', e => {
   if (e.pointerType !== 'touch' || !normGray) return;
   touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
   if (touches.size === 2) {
-    cancelStroke();
-    shapeDrag = null;
-    panDrag = null;
     const [a, b] = [...touches.values()];
-    const rect = outCanvas.getBoundingClientRect();
+    const d0 = Math.hypot(a.x - b.x, a.y - b.y) || 1;
     const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-    pinch = {
-      dist: Math.hypot(a.x - b.x, a.y - b.y) || 1,
-      z: zoom,
-      px: (mx - rect.left) / rect.width,
-      py: (my - rect.top) / rect.height
-    };
+    // 多角形枠モードで枠をつまんでいたら、その枠を拡大縮小
+    if (mode === 'protect') {
+      if (pendingVertex) { curPoly.pop(); pendingVertex = false; drawOverlay(); }
+      shapeDrag = null;
+      const target = polyAt(clientToCanvas(mx, my)) || activePoly;
+      if (target) { frameResize = { poly: target, d0, pts0: target.pts.map(q => ({ x: q.x, y: q.y })), c: polyCentroid(target.pts) }; return; }
+    }
+    cancelStroke();
+    shapeDrag = null; panDrag = null;
+    // 現在の見た目サイズを基準に、指の中心を原点にしてなめらかにスケール
+    const br = box.getBoundingClientRect();
+    pinch = { d0, z: zoom, fx: (mx - br.left) / br.width, fy: (my - br.top) / br.height, cx: mx, cy: my };
+    box.style.transformOrigin = (pinch.fx * 100) + '% ' + (pinch.fy * 100) + '%';
   } else if (touches.size === 1 && mode === 'pan') {
     panDrag = { x: e.clientX, y: e.clientY, sl: wrap.scrollLeft, st: wrap.scrollTop };
   }
@@ -1041,26 +1024,42 @@ wrap.addEventListener('pointerdown', e => {
 wrap.addEventListener('pointermove', e => {
   if (!touches.has(e.pointerId)) return;
   touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
-  if (pinch && touches.size >= 2) {
+  const [a, b] = [...touches.values()];
+  if (frameResize && touches.size >= 2) {
     e.preventDefault();
-    const [a, b] = [...touches.values()];
-    zoom = Math.min(8, Math.max(1, pinch.z * (Math.hypot(a.x - b.x, a.y - b.y) || 1) / pinch.dist));
-    applyZoom();
-    // つまんだ場所が指の真ん中に付いてくるようにスクロール補正
-    const rect = outCanvas.getBoundingClientRect();
-    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-    wrap.scrollLeft += (rect.left + pinch.px * rect.width) - mx;
-    wrap.scrollTop += (rect.top + pinch.py * rect.height) - my;
+    const mul = (Math.hypot(a.x - b.x, a.y - b.y) || 1) / frameResize.d0;
+    const c = frameResize.c;
+    frameResize.poly.pts = frameResize.pts0.map(q => ({ x: c.x + (q.x - c.x) * mul, y: c.y + (q.y - c.y) * mul }));
+    drawOverlay();
+  } else if (pinch && touches.size >= 2) {
+    e.preventDefault();
+    // ライブは transform だけ（リフローなしでヌルヌル）
+    pinch.live = Math.min(8, Math.max(1, (Math.hypot(a.x - b.x, a.y - b.y) || 1) / pinch.d0 * pinch.z));
+    box.style.transform = 'scale(' + (pinch.live / pinch.z) + ')';
   } else if (panDrag && touches.size === 1 && mode === 'pan') {
     wrap.scrollLeft = panDrag.sl - (e.clientX - panDrag.x);
     wrap.scrollTop = panDrag.st - (e.clientY - panDrag.y);
   }
 });
 
+function commitPinch() {
+  if (!pinch) return;
+  box.style.transform = ''; box.style.transformOrigin = '';
+  zoom = pinch.live || zoom; applyZoom();
+  // つまんだ点が画面の同じ場所に残るようスクロール補正
+  const nb = box.getBoundingClientRect();
+  wrap.scrollLeft += (nb.left + pinch.fx * nb.width) - pinch.cx;
+  wrap.scrollTop += (nb.top + pinch.fy * nb.height) - pinch.cy;
+  pinch = null;
+}
+
 function endTouch(e) {
   if (!touches.has(e.pointerId)) return;
   touches.delete(e.pointerId);
-  if (touches.size < 2) pinch = null;
+  if (touches.size < 2) {
+    if (frameResize) { frameResize = null; rebuildProtect(); render(); }
+    if (pinch) commitPinch();
+  }
   if (touches.size === 1 && mode === 'pan') {
     const [a] = [...touches.values()];
     panDrag = { x: a.x, y: a.y, sl: wrap.scrollLeft, st: wrap.scrollTop };
@@ -1087,7 +1086,8 @@ async function openImage(file) {
 
     outCanvas.width = W; outCanvas.height = H;
     ovCanvas.width = W; ovCanvas.height = H;
-    shapes = []; curPoly = []; shapeDrag = null; drawOverlay();
+    shapes = []; curPoly = []; shapeDrag = null; frameResize = null; activePoly = null; pendingVertex = false; protectMask = null;
+    drawOverlay();
     manual = new Uint8Array(W * H);
     zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
 
@@ -1327,9 +1327,16 @@ function render() {
     else if (manual[i] === 2) mask[i] = looseMask[i];
   }
 
+  // 多角形枠の内側は元画像のまま守る（消しゴム・自動消去より優先）
+  if (protectMask) for (let i = 0; i < n; i++) if (protectMask[i]) mask[i] = 1;
+
   if (!outData) outData = outCtx.createImageData(W, H);
   const d = outData.data, sd = srcData.data;
   for (let i = 0, p = 0; i < n; i++, p += 4) {
+    if (protectMask && protectMask[i]) {
+      d[p] = sd[p]; d[p + 1] = sd[p + 1]; d[p + 2] = sd[p + 2]; d[p + 3] = 255;
+      continue;
+    }
     if (!mask[i]) {
       d[p] = d[p + 1] = d[p + 2] = 255;
     } else if (colorMask[i]) {
