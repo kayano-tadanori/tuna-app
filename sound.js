@@ -329,3 +329,6 @@ const Snd = (() => {
 
   return { tap, correct, wrong, combo, fanfare, answer, result, bgm, stopBgm, onScreen, set, get, diag };
 })();
+
+// constはwindowプロパティにならないため明示的に公開（app.jsのwindow.Snd判定用）
+window.Snd = Snd;
