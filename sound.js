@@ -12,6 +12,9 @@ const Snd = (() => {
     const saved = JSON.parse(localStorage.getItem('oton_snd_v1'));
     if (saved && typeof saved === 'object') cfg = { ...DEFAULTS, ...saved };
   } catch (e) { /* 既定値のまま */ }
+  // ONなのに音量0（スライダーを0にしたまま保存）は事故とみなして既定値に戻す
+  if (cfg.musicOn && !(cfg.musicVol >= 0.05)) cfg.musicVol = DEFAULTS.musicVol;
+  if (cfg.sfxOn && !(cfg.sfxVol >= 0.05)) cfg.sfxVol = DEFAULTS.sfxVol;
 
   let ctx = null, sfxGain = null, musicGain = null;
   let streak = 0;
@@ -252,16 +255,20 @@ const Snd = (() => {
     if (ctx.state === 'suspended') ctx.resume();
     nextStepTime = ctx.currentTime + 0.1;
     stepIdx = 0;
+    // iOSがタイマーを間引いても途切れないよう、先読みを長め(0.8秒)にする。
+    // 遅延で過去に落ちた音符は「今すぐ」に繰り上げ、大きく過去のものだけ捨てる。
     schedTimer = setInterval(() => {
       const def = BGM[bgmName];
       if (!def) return;
       const stepDur = 60 / def.bpm / 2;
-      while (nextStepTime < ctx.currentTime + 0.3) {
-        scheduleStep(def, stepIdx % 16, nextStepTime);
+      while (nextStepTime < ctx.currentTime + 0.8) {
+        if (nextStepTime > ctx.currentTime - 0.05) {
+          scheduleStep(def, stepIdx % 16, Math.max(nextStepTime, ctx.currentTime + 0.02));
+        }
         nextStepTime += stepDur;
         stepIdx++;
       }
-    }, 100);
+    }, 250);
   }
 
   function stopScheduler() {
@@ -310,7 +317,8 @@ const Snd = (() => {
   function diag() {
     const eng = ctx ? ctx.state : '未起動（画面をタップすると起動）';
     const mute = navigator.audioSession ? '対応(audioSession)' : (silentAudio ? '対応(無音再生)' : '未対策');
-    return `音声エンジン: ${eng}／マナーモード対策: ${mute}／BGM: ${bgmName || '停止中'}`;
+    const vols = `音量: 効果音${Math.round(cfg.sfxVol * 100)}%・音楽${Math.round(cfg.musicVol * 100)}%`;
+    return `音声エンジン: ${eng}／マナーモード対策: ${mute}／${vols}／BGM: ${bgmName || '停止中'}${schedTimer ? '(再生中)' : ''}`;
   }
 
   // ---------- 全ボタン共通のタップ音（キャプチャで委譲） ----------

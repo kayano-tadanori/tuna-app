@@ -1141,6 +1141,13 @@ function initSettingsScreen() {
   if (dg) dg.textContent = Snd.diag();
 }
 
+// 設定画面を開いている間は診断表示を自動更新（音楽ためす中のBGM状態も見える）
+setInterval(() => {
+  if (currentScreenId !== 'settings') return;
+  const dg = document.getElementById('snd-diag');
+  if (dg && window.Snd) dg.textContent = Snd.diag();
+}, 800);
+
 document.getElementById('snd-sfx-toggle').onclick = () => {
   Snd.set('sfxOn', !Snd.get().sfxOn);
   initSettingsScreen();
