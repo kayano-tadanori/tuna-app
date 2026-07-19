@@ -953,3 +953,7 @@ button { cursor: pointer; font-family: inherit; }
 .snd-range { flex: 1; accent-color: var(--accent); min-height: 30px; }
 .snd-test-btn { border: 1px solid var(--glass-border); background: var(--card2); color: var(--text); border-radius: var(--radius-xs); padding: 8px 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; flex-shrink: 0; }
 .snd-note { font-size: 0.75rem; color: var(--sub); line-height: 1.6; }
+
+/* ── クイズ中の音トグル（ヘッダー右上） ── */
+.snd-mini { font-size: 1.05rem; min-width: 36px; min-height: 36px; flex-shrink: 0; }
+.snd-mini.snd-off { opacity: 0.35; filter: grayscale(1); }

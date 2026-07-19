@@ -1165,6 +1165,26 @@ document.getElementById('btn-settings-back').onclick = () => showScreen('subject
 document.getElementById('btn-settings-char').onclick = () => showScreen('character');
 document.getElementById('btn-char-back').onclick = () => showScreen('settings');
 
+// クイズ中のヘッダー右上の音トグル（効果音🔔/🔕・音楽🎵）
+function updateSndMini() {
+  const c = Snd.get();
+  document.querySelectorAll('.snd-mini-sfx').forEach(b => {
+    b.textContent = c.sfxOn ? '🔔' : '🔕';
+    b.classList.toggle('snd-off', !c.sfxOn);
+  });
+  document.querySelectorAll('.snd-mini-music').forEach(b => b.classList.toggle('snd-off', !c.musicOn));
+}
+document.querySelectorAll('.snd-mini-sfx').forEach(b => b.onclick = () => {
+  Snd.set('sfxOn', !Snd.get().sfxOn);
+  updateSndMini();
+  if (Snd.get().sfxOn) Snd.tap();
+});
+document.querySelectorAll('.snd-mini-music').forEach(b => b.onclick = () => {
+  Snd.set('musicOn', !Snd.get().musicOn);
+  updateSndMini();
+});
+updateSndMini();
+
 // ============================================================
 // 管理ツール（デバッグ・保護者用）：ホームのロゴ長押しで開く
 // ============================================================
