@@ -819,7 +819,8 @@ function prevYm(ym) {
 // お子さんごとの学年・クラス（⚙️設定 okan_child_meta[名前]={grade,cls,curr}）。Vは小4から
 function childMeta() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
 function renderAB() {
-  const m = activeProfile || (activeChild && childMeta()[activeChild]) || {};
+  // 学年・クラスは最新の保存値（childMeta）を優先。⚖️内で変更しても即反映されるように
+  const m = (activeChild && childMeta()[activeChild]) || activeProfile || {};
   const grade = +(m.grade || localStorage.getItem('okan_ab_grade') || 5);
   let cls = m.cls || localStorage.getItem('okan_ab_class') || (grade >= 4 ? 'V' : 'S');
   if (grade < 4 && cls === 'V') cls = 'S';   // 小3以下はVなし
