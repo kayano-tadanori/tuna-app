@@ -54,8 +54,19 @@
     padding: 14px 16px; margin-bottom: 18px;
     box-shadow: 0 4px 14px rgba(219,39,119,.08);
   }
-  .hello .face { font-size: 34px; }
+  .hello .face { font-size: 34px; display: flex; align-items: center; }
+  .hello .avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid #fbcfe8; display: block; }
   .hello p { font-size: 13px; font-weight: 700; line-height: 1.6; color: #475569; }
+  .profRow { display: flex; align-items: center; gap: 10px; margin: 6px 0 14px; }
+  .profPrev { width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 26px; overflow: hidden; border: 1.5px solid #e2e8f0; }
+  .profPrev img { width: 100%; height: 100%; object-fit: cover; }
+  #profModal { position: fixed; inset: 0; background: rgba(30,41,59,.55); display: none; align-items: center; justify-content: center; z-index: 40; }
+  #profModal.open { display: flex; }
+  .profSheet { background: #fff; border-radius: 18px; padding: 16px; width: min(92vw, 330px); }
+  .profSheet h2 { font-size: 15px; font-weight: 800; color: #db2777; margin-bottom: 12px; text-align: center; }
+  .cropWrap { position: relative; width: 260px; height: 260px; margin: 0 auto; border-radius: 12px; overflow: hidden; background: #0f172a; touch-action: none; }
+  #cropCanvas { position: absolute; left: 0; top: 0; width: 260px; height: 260px; }
+  .cropRing { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 9999px rgba(15,23,42,.5); border: 2px solid #fff; pointer-events: none; }
 
   .sectionLabel { font-size: 13px; font-weight: 800; color: #db2777; margin: 0 2px 10px; letter-spacing: .05em; }
 
@@ -176,7 +187,7 @@
 </header>
 <main>
   <div class="hello">
-    <span class="face">👩</span>
+    <span class="face" id="helloFace">👩</span>
     <p id="helloMsg">「おかえり！<br>今日は何をしよか？」</p>
   </div>
 
@@ -237,6 +248,13 @@
     <div style="padding: 10px 18px 20px; overflow-y: auto; -webkit-overflow-scrolling: touch">
       <p class="setLabel">お名前（おかんがこの名前で声をかけます）</p>
       <input class="setInput" id="setName" placeholder="例：はなこ" autocomplete="off">
+      <p class="setLabel">🖼 プロフィール写真（ホームの顔に表示）</p>
+      <div class="profRow">
+        <span class="profPrev" id="profPrev">👩</span>
+        <button class="setSave" id="profPickBtn" style="flex:1;background:#0ea5e9;margin:0">写真を選ぶ</button>
+        <button class="setSave" id="profClearBtn" style="width:auto;padding:12px 14px;background:#e2e8f0;color:#475569;margin:0">消す</button>
+      </div>
+      <input type="file" id="profFile" accept="image/*" hidden>
       <p class="setLabel">👦 お子さん（兄弟）の管理</p>
       <div id="childList" style="margin:4px 0 6px"></div>
       <button class="setSave" id="addChildBtn" style="background:#0ea5e9">＋ お子さんを追加</button>
@@ -276,7 +294,24 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v44</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v45</p>
+    </div>
+  </div>
+</div>
+
+<!-- プロフィール写真の位置合わせ（クロップ） -->
+<div id="profModal">
+  <div class="profSheet">
+    <h2>プロフィール写真の位置合わせ</h2>
+    <div class="cropWrap" id="cropWrap"><canvas id="cropCanvas"></canvas><div class="cropRing"></div></div>
+    <div style="display:flex;align-items:center;gap:8px;margin:12px 0 4px">
+      <span style="font-size:14px">🔍</span>
+      <input type="range" id="cropZoom" min="1" max="4" step="0.01" value="1" style="flex:1;accent-color:#db2777;height:28px">
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin:0 0 12px;text-align:center">ドラッグで位置、2本指またはスライダーで拡大縮小</p>
+    <div style="display:flex;gap:10px">
+      <button class="setSave" id="cropCancel" style="background:#e2e8f0;color:#475569">やめる</button>
+      <button class="setSave" id="cropOk">この範囲にする</button>
     </div>
   </div>
 </div>
@@ -358,11 +393,15 @@ renderHello();
 
 const CHILDREN_KEY = 'okan_children';
 const GENDER_KEY = 'okan_gender';
-// 男性（おとん）モードなら、おかんの顔をおとんに
-if ((localStorage.getItem(GENDER_KEY) || '') === '男') {
-  const face = document.querySelector('.hello .face');
-  if (face) face.textContent = '👨';
+// ホームの顔：プロフィール写真があれば表示、なければ性別の絵文字
+function renderFace() {
+  const el = document.getElementById('helloFace');
+  if (!el) return;
+  const img = localStorage.getItem('okan_profile_img');
+  if (img) el.innerHTML = `<img class="avatar" src="${img}" alt="">`;
+  else el.textContent = (localStorage.getItem(GENDER_KEY) || '') === '男' ? '👨' : '👩';
 }
+renderFace();
 function renderGenderBtns() {
   const g = localStorage.getItem(GENDER_KEY) || '女';
   document.querySelectorAll('.genderBtn').forEach(b => b.classList.toggle('on', b.dataset.g === g));
@@ -374,8 +413,97 @@ document.getElementById('settingsBtn').onclick = () => {
   document.getElementById('setName').value = localStorage.getItem(NAME_KEY) || '';
   renderChildList();
   syncImpChild();
+  renderProfPreview();
   renderGenderBtns();
   document.getElementById('setModal').classList.add('open');
+};
+
+// ---------- プロフィール写真（選択→位置合わせ→保存） ----------
+function renderProfPreview() {
+  const el = document.getElementById('profPrev');
+  const img = localStorage.getItem('okan_profile_img');
+  el.innerHTML = img ? `<img src="${img}" alt="">` : ((localStorage.getItem(GENDER_KEY) || '') === '男' ? '👨' : '👩');
+}
+document.getElementById('profPickBtn').onclick = () => document.getElementById('profFile').click();
+document.getElementById('profClearBtn').onclick = () => { localStorage.removeItem('okan_profile_img'); renderProfPreview(); renderFace(); };
+document.getElementById('profFile').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) openCropper(f); };
+
+const CROP = 260;
+let cropImg = null, cS0 = 1, cS = 1, cTx = 0, cTy = 0, cIW = 0, cIH = 0;
+function drawCrop() {
+  const c = document.getElementById('cropCanvas');
+  c.width = CROP; c.height = CROP;
+  const x = c.getContext('2d');
+  x.clearRect(0, 0, CROP, CROP);
+  x.drawImage(cropImg, cTx, cTy, cIW * cS, cIH * cS);
+}
+function clampCrop() {
+  const w = cIW * cS, h = cIH * cS;
+  cTx = Math.min(0, Math.max(CROP - w, cTx));
+  cTy = Math.min(0, Math.max(CROP - h, cTy));
+}
+function openCropper(file) {
+  const img = new Image();
+  img.onload = () => {
+    cropImg = img; cIW = img.naturalWidth; cIH = img.naturalHeight;
+    cS0 = Math.max(CROP / cIW, CROP / cIH); cS = cS0;
+    cTx = (CROP - cIW * cS) / 2; cTy = (CROP - cIH * cS) / 2;
+    document.getElementById('cropZoom').value = 1;
+    drawCrop();
+    document.getElementById('profModal').classList.add('open');
+    URL.revokeObjectURL(img.src);
+  };
+  img.src = URL.createObjectURL(file);
+}
+document.getElementById('cropZoom').oninput = function () {
+  const ns = cS0 * (+this.value);
+  const f = CROP / 2;
+  cTx = f - (f - cTx) * (ns / cS); cTy = f - (f - cTy) * (ns / cS);
+  cS = ns; clampCrop(); drawCrop();
+};
+// クロップ内のドラッグ／ピンチ
+const cropWrap = document.getElementById('cropWrap');
+const cTouch = new Map(); let cPan = null, cPinch = null;
+cropWrap.addEventListener('pointerdown', e => {
+  cropWrap.setPointerCapture(e.pointerId);
+  cTouch.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (cTouch.size === 2) {
+    const [a, b] = [...cTouch.values()];
+    cPinch = { d0: Math.hypot(a.x - b.x, a.y - b.y) || 1, s0: cS, tx0: cTx, ty0: cTy, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 };
+    cPan = null;
+  } else if (cTouch.size === 1) {
+    cPan = { x: e.clientX, y: e.clientY, tx: cTx, ty: cTy };
+  }
+});
+cropWrap.addEventListener('pointermove', e => {
+  if (!cTouch.has(e.pointerId)) return;
+  cTouch.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  const r = cropWrap.getBoundingClientRect();
+  if (cPinch && cTouch.size >= 2) {
+    const [a, b] = [...cTouch.values()];
+    const ns = Math.max(cS0, cPinch.s0 * (Math.hypot(a.x - b.x, a.y - b.y) || 1) / cPinch.d0);
+    const fx = cPinch.mx - r.left, fy = cPinch.my - r.top;
+    cTx = fx - (fx - cPinch.tx0) * (ns / cPinch.s0);
+    cTy = fy - (fy - cPinch.ty0) * (ns / cPinch.s0);
+    cS = ns; document.getElementById('cropZoom').value = Math.min(4, cS / cS0);
+    clampCrop(); drawCrop();
+  } else if (cPan && cTouch.size === 1) {
+    cTx = cPan.tx + (e.clientX - cPan.x); cTy = cPan.ty + (e.clientY - cPan.y);
+    clampCrop(); drawCrop();
+  }
+});
+function cropEnd(e) { cTouch.delete(e.pointerId); if (cTouch.size < 2) cPinch = null; if (!cTouch.size) cPan = null; }
+cropWrap.addEventListener('pointerup', cropEnd);
+cropWrap.addEventListener('pointercancel', cropEnd);
+document.getElementById('cropCancel').onclick = () => document.getElementById('profModal').classList.remove('open');
+document.getElementById('profModal').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('cropOk').onclick = () => {
+  const out = document.createElement('canvas'); out.width = 240; out.height = 240;
+  const r = 240 / CROP;
+  out.getContext('2d').drawImage(cropImg, cTx * r, cTy * r, cIW * cS * r, cIH * cS * r);
+  try { localStorage.setItem('okan_profile_img', out.toDataURL('image/jpeg', 0.85)); } catch (err) { alert('画像の保存に失敗しました（サイズが大きすぎるかも）'); return; }
+  document.getElementById('profModal').classList.remove('open');
+  renderProfPreview(); renderFace();
 };
 
 // ---------- お子さん（兄弟）プロフィール v2 ----------

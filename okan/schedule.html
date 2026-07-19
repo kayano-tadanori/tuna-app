@@ -247,7 +247,7 @@
     </div>
     <p class="fLabel">種類</p>
     <select class="fInput" id="evLtype">
-      <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option>
+      <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option><option>記述錬成</option>
       <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
     </select>
     <p class="fLabel">なまえ・メモ（例：遠足／パート13／弁当）</p>
@@ -310,7 +310,7 @@
     </div>
     <p class="fLabel">種類</p>
     <select class="fInput" id="rgLtype">
-      <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option>
+      <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option><option>記述錬成</option>
       <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
     </select>
     <p class="fLabel">メモ・補足（なくてもOK。例：教室が変わる）</p>
@@ -383,7 +383,7 @@ if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
 const $ = id => document.getElementById(id);
 const KEY = 'okan_sched_v1';
 const COLORS = ['#4fc3f7', '#2196f3', '#b39ddb', '#673ab7', '#e91e63', '#f48fb1',
-                '#ffb300', '#8bc34a', '#26a69a', '#ef5350'];
+                '#ffb300', '#8bc34a', '#26a69a', '#ef5350', '#111827'];
 const DOWS = ['日', '月', '火', '水', '木', '金', '土'];
 
 let db = load();
