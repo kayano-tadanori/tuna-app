@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>中受伴走アプリ</title>
-<meta name="description" content="おかん学園 — プリント消しゴム・プリント管理・塾スケジュール・成績管理">
+<meta name="description" content="中受伴走アプリ — プリント消しゴム・プリント管理・塾スケジュール・成績管理">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -160,7 +160,7 @@
 <body>
 <header>
   <div class="spacer"></div>
-  <div class="titleWrap"><div class="t1">中受伴走アプリ</div><div class="t2">おかんと一緒に</div></div>
+  <div class="titleWrap"><div class="t1">中受伴走アプリ</div></div>
   <div class="hbtns">
     <button class="hbtn" id="settingsBtn" title="設定">⚙️</button>
     <button class="hbtn" id="refreshBtn" title="最新版に更新">🔄</button>
@@ -218,7 +218,7 @@
     </a>
   </div>
 
-  <p class="privacy">🔒 おかん学園のデータはすべてこのスマホの中だけに保存されます。<br>外部のサーバーには送信されません。<br>（例外：プリント消しゴムの「✨AIで消す」を押したときだけ、その写真が選んだAIの会社〈GoogleまたはOpenAI〉に送信されます）</p>
+  <p class="privacy">🔒 中受伴走アプリのデータはすべてこのスマホの中だけに保存されます。<br>外部のサーバーには送信されません。<br>（例外：プリント消しゴムの「✨AIで消す」を押したときだけ、その写真が選んだAIの会社〈GoogleまたはOpenAI〉に送信されます）</p>
 </main>
 <div id="setModal">
   <div class="updSheet">
@@ -229,9 +229,9 @@
     <div style="padding: 10px 18px 20px; overflow-y: auto; -webkit-overflow-scrolling: touch">
       <p class="setLabel">お名前（おかんがこの名前で声をかけます）</p>
       <input class="setInput" id="setName" placeholder="例：はなこ" autocomplete="off">
-      <p class="setLabel">お子さんの名前（複数いるときはスペースで区切る）</p>
+      <p class="setLabel">👦 お子さんの管理（兄弟はスペースで区切って登録）</p>
       <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
-      <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になります</p>
+      <p style="font-size:11px;color:#94a3b8;margin:-8px 0 12px">塾スケジュールの「誰が」の選択肢になり、成績管理はお子さんごとに切り替えて記録できます。<br><b>いちばん左のお子さんが、今入っている成績データの持ち主です。</b>2人目以降は成績ページ上の名前で切り替えると、その子だけの成績になります。</p>
       <p class="setLabel">🎯 志望校と目標偏差値（成績グラフに「◯◯ライン」として出ます）</p>
       <div style="display:flex;gap:8px">
         <input class="setInput" id="setGoalSchool" placeholder="例：灘中" autocomplete="off" style="flex:2">
@@ -286,7 +286,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v39</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v40</p>
     </div>
   </div>
 </div>
@@ -294,7 +294,7 @@
 <div id="updModal">
   <div class="updSheet">
     <div class="sheetHead">
-      <h2>📢 おかん学園のアップデート</h2>
+      <h2>📢 中受伴走アプリのアップデート</h2>
       <button class="closeBtn" id="updClose">✕</button>
     </div>
     <div class="updList" id="updList"></div>
