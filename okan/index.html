@@ -112,11 +112,19 @@
   .updBanner .arrow { color: #db2777; font-size: 18px; font-weight: 800; }
   .hidden { display: none !important; }
 
-  #updModal, #setModal {
+  #updModal, #setModal, #childModal {
     position: fixed; inset: 0; background: rgba(30,41,59,.45);
     display: none; align-items: flex-end; justify-content: center; z-index: 30;
   }
-  #updModal.open, #setModal.open { display: flex; }
+  #childModal { z-index: 31; }
+  #updModal.open, #setModal.open, #childModal.open { display: flex; }
+  .childCard {
+    display: flex; align-items: center; gap: 10px; border: 1.5px solid #fbcfe8;
+    border-radius: 12px; padding: 10px 12px; margin: 6px 0; background: #fff; cursor: pointer;
+  }
+  .childCard .cName { flex: 1; font-size: 14px; font-weight: 800; color: #334155; }
+  .childCard .cMeta { font-size: 11px; font-weight: 700; color: #94a3b8; }
+  .childCard .cEdit { font-size: 12px; font-weight: 800; color: #db2777; }
   .setInput {
     width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px;
     font-size: 15px; font-family: inherit; margin: 6px 0 14px;
@@ -229,34 +237,10 @@
     <div style="padding: 10px 18px 20px; overflow-y: auto; -webkit-overflow-scrolling: touch">
       <p class="setLabel">お名前（おかんがこの名前で声をかけます）</p>
       <input class="setInput" id="setName" placeholder="例：はなこ" autocomplete="off">
-      <p class="setLabel">👦 お子さんの管理（兄弟はスペースで区切って登録）</p>
-      <input class="setInput" id="setChildren" placeholder="例：たろう じろう" autocomplete="off">
-      <p style="font-size:11px;color:#94a3b8;margin:-8px 0 8px">塾スケジュールの「誰が」の選択肢になり、成績管理はお子さんごとに切り替えて記録できます。<br><b>いちばん左のお子さんが、今入っている成績データの持ち主です。</b>2人目以降は成績ページ上の名前で切り替えると、その子だけの成績になります。</p>
-      <div id="childMetaWrap" style="margin:0 0 12px"></div>
-      <p class="setLabel">🎯 志望校と目標偏差値（成績グラフに「◯◯ライン」として出ます）</p>
-      <div style="display:flex;gap:8px">
-        <input class="setInput" id="setGoalSchool" placeholder="例：灘中" autocomplete="off" style="flex:2">
-        <input class="setInput" id="setGoalDev" type="number" inputmode="decimal" placeholder="例：64" min="30" max="80" step="0.5" style="flex:1">
-      </div>
-      <p class="setLabel">📚 成績に表示する受講講座</p>
-      <div id="courseChecks" style="margin:2px 0 4px">
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
-          <input type="checkbox" data-course="fukushu" checked style="width:19px;height:19px;accent-color:#db2777"> マスター（復習テスト）
-        </label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
-          <input type="checkbox" data-course="saire" checked style="width:19px;height:19px;accent-color:#db2777"> 最高レベル特訓 算数
-        </label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
-          <input type="checkbox" data-course="saikoku" checked style="width:19px;height:19px;accent-color:#db2777"> 最高レベル特訓 国語
-        </label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
-          <input type="checkbox" data-course="nadago" checked style="width:19px;height:19px;accent-color:#db2777"> 灘合（灘中合格特訓）
-        </label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0">
-          <input type="checkbox" data-course="shakai" style="width:19px;height:19px;accent-color:#db2777"> 社会（4科目で受講）
-        </label>
-      </div>
-      <p style="font-size:11px;color:#94a3b8;margin:2px 0 12px">チェックした講座のタブだけが成績管理に出ます（公開テストは常に表示。マスターを外すと⚖️クラス替えも隠れます）。社会にチェックすると公開テストに社会・4科の入力欄とグラフが出ます</p>
+      <p class="setLabel">👦 お子さん（兄弟）の管理</p>
+      <div id="childList" style="margin:4px 0 6px"></div>
+      <button class="setSave" id="addChildBtn" style="background:#0ea5e9">＋ お子さんを追加</button>
+      <p style="font-size:11px;color:#94a3b8;margin:6px 0 14px">お子さんをタップすると、学年・クラス・志望校・目標偏差値・表示する講座を個別に設定できます。<br><b>いちばん上のお子さんが、今入っている成績データの持ち主です。</b>成績ページ上部の名前で切り替えます。</p>
       <p class="setLabel">つかう人</p>
       <div style="display:flex;gap:8px;margin:6px 0 4px">
         <button type="button" class="genderBtn" data-g="女" id="gFemale">👩 おかん（女性）</button>
@@ -292,7 +276,46 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v41</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v42</p>
+    </div>
+  </div>
+</div>
+
+<!-- お子さん個別設定モーダル -->
+<div id="childModal">
+  <div class="updSheet">
+    <div class="sheetHead">
+      <h2 id="childModalTitle">お子さんの設定</h2>
+      <button class="closeBtn" id="childClose">✕</button>
+    </div>
+    <div style="padding:10px 18px 20px;overflow-y:auto;-webkit-overflow-scrolling:touch">
+      <p class="setLabel">お子さんの名前</p>
+      <input class="setInput" id="cmName" placeholder="例：たろう" autocomplete="off">
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><p class="setLabel">学年</p>
+          <select class="setInput" id="cmGrade2"><option value="1">小1</option><option value="2">小2</option><option value="3">小3</option><option value="4">小4</option><option value="5" selected>小5</option><option value="6">小6</option></select>
+        </div>
+        <div style="flex:1"><p class="setLabel">クラス</p><select class="setInput" id="cmClass2"></select></div>
+      </div>
+      <div id="cmCurrWrap2"><p class="setLabel">カリキュラム（小1〜3）</p>
+        <select class="setInput" id="cmCurr2"><option>通常マスター</option><option>土曜マスター</option></select>
+      </div>
+      <p class="setLabel">🎯 志望校と目標偏差値（成績グラフに「◯◯ライン」として出ます）</p>
+      <div style="display:flex;gap:8px">
+        <input class="setInput" id="cmGoalSchool" placeholder="例：灘中" autocomplete="off" style="flex:2">
+        <input class="setInput" id="cmGoalDev" type="number" inputmode="decimal" placeholder="例：64" min="30" max="80" step="0.5" style="flex:1">
+      </div>
+      <p class="setLabel">📚 成績に表示する受講講座</p>
+      <div id="cmCourses" style="margin:2px 0 4px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0"><input type="checkbox" data-course="fukushu" checked style="width:19px;height:19px;accent-color:#db2777"> マスター（復習テスト）</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0"><input type="checkbox" data-course="saire" checked style="width:19px;height:19px;accent-color:#db2777"> 最高レベル特訓 算数</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0"><input type="checkbox" data-course="saikoku" checked style="width:19px;height:19px;accent-color:#db2777"> 最高レベル特訓 国語</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0"><input type="checkbox" data-course="nadago" checked style="width:19px;height:19px;accent-color:#db2777"> 灘合（灘中合格特訓）</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0"><input type="checkbox" data-course="shakai" style="width:19px;height:19px;accent-color:#db2777"> 社会（4科目で受講）</label>
+      </div>
+      <p style="font-size:11px;color:#94a3b8;margin:2px 0 12px">チェックした講座のタブだけが成績管理に出ます（公開は常に表示。マスターを外すと⚖️クラス替えも隠れます）</p>
+      <button class="setSave" id="cmSaveBtn">保存する</button>
+      <button class="setSave" id="cmDeleteBtn" style="background:#ef4444;margin-top:8px;display:none">このお子さんを削除</button>
     </div>
   </div>
 </div>
@@ -349,67 +372,116 @@ document.querySelectorAll('.genderBtn').forEach(b => {
 });
 document.getElementById('settingsBtn').onclick = () => {
   document.getElementById('setName').value = localStorage.getItem(NAME_KEY) || '';
-  try {
-    document.getElementById('setChildren').value = (JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []).join(' ');
-  } catch (e) { document.getElementById('setChildren').value = ''; }
-  document.getElementById('setGoalSchool').value = localStorage.getItem('okan_goal_school') || '';
-  document.getElementById('setGoalDev').value = localStorage.getItem('okan_goal_dev') || '';
-  let cs; try { cs = JSON.parse(localStorage.getItem('okan_courses')) || {}; } catch (e) { cs = {}; }
-  document.querySelectorAll('#courseChecks [data-course]').forEach(c => {
-    // 社会（4科）だけは既定OFF、講座は既定ON
-    c.checked = c.dataset.course === 'shakai' ? cs.shakai === true : cs[c.dataset.course] !== false;
-  });
-  renderChildMeta();
+  renderChildList();
   syncImpChild();
   renderGenderBtns();
   document.getElementById('setModal').classList.add('open');
 };
 
-// お子さんごとの現在の学年・クラス（Vは小4から。小1〜3は通常/土曜マスターでS・Hのみ）
-function childMetaMap() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
-const CM_SEL = 'font-size:12px;font-weight:800;border:1.5px solid #cbd5e1;border-radius:8px;padding:5px 4px;background:#fff';
-function fillClassCurr(row, grade, m) {
-  const classes = grade >= 4 ? ['V', 'S', 'H'] : ['S', 'H'];
-  row.querySelector('.cmClass').innerHTML = classes.map(c => `<option ${m.cls === c ? 'selected' : ''}>${c}</option>`).join('');
-  const cur = row.querySelector('.cmCurr');
-  if (grade <= 3) { cur.style.display = ''; cur.innerHTML = ['通常マスター', '土曜マスター'].map(c => `<option ${m.curr === c ? 'selected' : ''}>${c}</option>`).join(''); }
-  else { cur.style.display = 'none'; cur.innerHTML = ''; }
+// ---------- お子さん（兄弟）プロフィール v2 ----------
+// 1件＝{name, grade, cls, curr, goalSchool, goalDev, courses:{fukushu,saire,saikoku,nadago,shakai}}
+// 先頭(index0)が成績データ okan_seiseki_v1 の持ち主。
+function readChildrenV2() {
+  let v; try { v = JSON.parse(localStorage.getItem('okan_children_v2')); } catch (e) { }
+  if (Array.isArray(v)) return v;
+  // 旧データから移行（名前配列＋メタ＋グローバルの志望校/講座）
+  let names = []; try { names = JSON.parse(localStorage.getItem('okan_children')) || []; } catch (e) { }
+  let meta = {}; try { meta = JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { }
+  let courses = null; try { courses = JSON.parse(localStorage.getItem('okan_courses')); } catch (e) { }
+  const gS = localStorage.getItem('okan_goal_school') || '', gD = localStorage.getItem('okan_goal_dev') || '';
+  return names.map((n, i) => ({
+    name: n, grade: (meta[n] && meta[n].grade) || '', cls: (meta[n] && meta[n].cls) || '', curr: (meta[n] && meta[n].curr) || '',
+    goalSchool: i === 0 ? gS : '', goalDev: i === 0 ? gD : '', courses: (i === 0 && courses) ? courses : {}
+  }));
 }
-function renderChildMeta() {
-  const names = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
-  const wrap = document.getElementById('childMetaWrap');
-  const meta = childMetaMap();
-  if (!names.length) { wrap.innerHTML = ''; return; }
-  wrap.innerHTML = '<p class="setLabel" style="margin:6px 0 4px">📊 お子さんごとの今の学年・クラス</p>' +
-    names.map((n, idx) => `<div class="childMetaRow" data-name="${n}" style="display:flex;align-items:center;gap:6px;margin:5px 0">
-      <span style="flex:1;font-size:13px;font-weight:800;color:#334155;overflow:hidden;text-overflow:ellipsis">${n}</span>
-      <select class="cmGrade" style="${CM_SEL}">${[1, 2, 3, 4, 5, 6].map(g => `<option value="${g}">小${g}</option>`).join('')}</select>
-      <select class="cmClass" style="${CM_SEL}"></select>
-      <select class="cmCurr" style="${CM_SEL}"></select>
-    </div>`).join('');
-  wrap.querySelectorAll('.childMetaRow').forEach((row, idx) => {
-    const n = row.dataset.name;
-    const m = Object.assign({}, meta[n]);
-    if (idx === 0 && meta[n] == null) { m.grade = +(localStorage.getItem('okan_ab_grade') || 0) || undefined; m.cls = localStorage.getItem('okan_ab_class') || undefined; }
-    const gsel = row.querySelector('.cmGrade');
-    if (m.grade) gsel.value = m.grade;
-    fillClassCurr(row, +gsel.value, m);
-    gsel.onchange = () => fillClassCurr(row, +gsel.value, {});
-  });
-}
-function saveChildMeta() {
+function writeChildrenV2(arr) {
+  localStorage.setItem('okan_children_v2', JSON.stringify(arr));
+  localStorage.setItem(CHILDREN_KEY, JSON.stringify(arr.map(c => c.name).filter(Boolean)));
   const meta = {};
-  document.querySelectorAll('#childMetaWrap .childMetaRow').forEach(row => {
-    const n = row.dataset.name;
-    const g = +row.querySelector('.cmGrade').value;
-    let cls = row.querySelector('.cmClass').value;
-    if (g < 4 && cls === 'V') cls = 'S';
-    const curr = g <= 3 ? row.querySelector('.cmCurr').value : '';
-    meta[n] = { grade: g, cls, curr };
-  });
+  arr.forEach(c => { if (c.name) meta[c.name] = { grade: +c.grade || undefined, cls: c.cls || '', curr: c.curr || '' }; });
   localStorage.setItem('okan_child_meta', JSON.stringify(meta));
 }
-document.getElementById('setChildren').addEventListener('input', renderChildMeta);
+function renderChildList() {
+  const arr = readChildrenV2();
+  const wrap = document.getElementById('childList');
+  if (!arr.length) { wrap.innerHTML = '<p style="font-size:12px;color:#94a3b8;margin:4px 0 10px">まだ登録がありません。「＋お子さんを追加」から登録してください。</p>'; return; }
+  wrap.innerHTML = arr.map((c, i) => {
+    const m = [c.grade ? '小' + c.grade : '', c.cls ? c.cls + 'クラス' : '', c.goalSchool ? '🎯' + c.goalSchool : ''].filter(Boolean).join('・');
+    return `<div class="childCard" data-idx="${i}"><span class="cName">${c.name || '(名前未設定)'}${i === 0 ? ' <span style="font-size:10px;color:#94a3b8;font-weight:700">成績データの持ち主</span>' : ''}<br><span class="cMeta">${m || '未設定'}</span></span><span class="cEdit">編集 ›</span></div>`;
+  }).join('');
+  wrap.querySelectorAll('.childCard').forEach(el => el.onclick = () => openChildModal(+el.dataset.idx));
+}
+
+// ---------- お子さん個別設定モーダル ----------
+let editingChildIdx = -1;
+function fillChildClassCurr(grade, cls, curr) {
+  const classes = grade >= 4 ? ['V', 'S', 'H'] : ['S', 'H'];
+  document.getElementById('cmClass2').innerHTML = classes.map(c => `<option ${cls === c ? 'selected' : ''}>${c}クラス</option>`).join('');
+  const w = document.getElementById('cmCurrWrap2');
+  if (grade <= 3) { w.style.display = ''; document.getElementById('cmCurr2').value = curr || '通常マスター'; }
+  else { w.style.display = 'none'; }
+}
+function openChildModal(idx) {
+  const arr = readChildrenV2();
+  editingChildIdx = idx;
+  const c = idx >= 0 ? arr[idx] : { name: '', grade: 5, cls: '', curr: '', goalSchool: '', goalDev: '', courses: {} };
+  document.getElementById('childModalTitle').textContent = idx >= 0 ? 'お子さんの設定' : 'お子さんを追加';
+  document.getElementById('cmName').value = c.name || '';
+  const g = +c.grade || 5;
+  document.getElementById('cmGrade2').value = g;
+  fillChildClassCurr(g, c.cls, c.curr);
+  document.getElementById('cmGoalSchool').value = c.goalSchool || '';
+  document.getElementById('cmGoalDev').value = c.goalDev || '';
+  const cs = c.courses || {};
+  document.querySelectorAll('#cmCourses [data-course]').forEach(ch => { ch.checked = ch.dataset.course === 'shakai' ? cs.shakai === true : cs[ch.dataset.course] !== false; });
+  document.getElementById('cmDeleteBtn').style.display = idx >= 0 ? '' : 'none';
+  document.getElementById('childModal').classList.add('open');
+}
+document.getElementById('cmGrade2').onchange = () => fillChildClassCurr(+document.getElementById('cmGrade2').value, document.getElementById('cmClass2').value.replace('クラス', ''), document.getElementById('cmCurr2').value);
+document.getElementById('addChildBtn').onclick = () => openChildModal(-1);
+document.getElementById('childClose').onclick = () => document.getElementById('childModal').classList.remove('open');
+document.getElementById('childModal').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('cmSaveBtn').onclick = () => {
+  const name = document.getElementById('cmName').value.trim();
+  if (!name) { alert('お子さんの名前を入れてください'); return; }
+  const arr = readChildrenV2();
+  if (arr.some((c, i) => c.name === name && i !== editingChildIdx)) { alert('同じ名前のお子さんがすでにいます'); return; }
+  const g = +document.getElementById('cmGrade2').value;
+  let cls = document.getElementById('cmClass2').value.replace('クラス', '');
+  if (g < 4 && cls === 'V') cls = 'S';
+  const courses = {};
+  document.querySelectorAll('#cmCourses [data-course]').forEach(ch => { courses[ch.dataset.course] = ch.checked; });
+  const prevName = editingChildIdx >= 0 ? arr[editingChildIdx].name : null;
+  const rec = { name, grade: g, cls, curr: g <= 3 ? document.getElementById('cmCurr2').value : '', goalSchool: document.getElementById('cmGoalSchool').value.trim(), goalDev: document.getElementById('cmGoalDev').value.trim(), courses };
+  if (editingChildIdx >= 0) arr[editingChildIdx] = rec; else arr.push(rec);
+  writeChildrenV2(arr);
+  if (prevName && prevName !== name) migrateChildKey(arr, prevName, name);
+  document.getElementById('childModal').classList.remove('open');
+  renderChildList(); syncImpChild();
+};
+document.getElementById('cmDeleteBtn').onclick = () => {
+  const arr = readChildrenV2();
+  if (editingChildIdx < 0 || !arr[editingChildIdx]) return;
+  const c = arr[editingChildIdx];
+  if (!confirm(`「${c.name}」を一覧から削除します。\n（成績データ自体は残ります。同じ名前で追加すれば元に戻せます）\nよろしいですか？`)) return;
+  arr.splice(editingChildIdx, 1);
+  writeChildrenV2(arr);
+  if (localStorage.getItem('okan_active_child') === c.name) localStorage.removeItem('okan_active_child');
+  document.getElementById('childModal').classList.remove('open');
+  renderChildList(); syncImpChild();
+};
+// 名前変更時に成績キーを引き継ぐ（先頭=okan_seiseki_v1 は位置キーなので中身は動かさない）
+function migrateChildKey(arr, oldName, newName) {
+  const first = arr[0] && arr[0].name;
+  const oldKey = (oldName === first) ? 'okan_seiseki_v1' : 'okan_seiseki_v1__' + oldName;
+  const newKey = (newName === first) ? 'okan_seiseki_v1' : 'okan_seiseki_v1__' + newName;
+  if (oldKey === newKey) return;
+  const data = localStorage.getItem(oldKey);
+  if (data != null && localStorage.getItem(newKey) == null) {
+    localStorage.setItem(newKey, data);
+    if (oldKey !== 'okan_seiseki_v1') localStorage.removeItem(oldKey);
+  }
+}
 
 // 成績JSONの取り込み先（お子さん）
 function syncImpChild() {
@@ -428,23 +500,25 @@ function importChild() {
   const s = document.getElementById('impChild');
   return (w.style.display !== 'none' && s.value) ? s.value : undefined;
 }
+// 兄弟がいるとき、成績を別の子に誤って上書きしないよう取り込み先を確認する
+function confirmSeisekiTarget(obj) {
+  if (!obj || !obj.seiseki) return true;          // 成績データなしなら関係なし
+  const cs = childrenList();
+  if (cs.length < 2) return true;                 // お子さんが1人なら迷わない
+  const target = importChild() || cs[0];
+  let msg = `成績データを「${target}」の成績として取り込みます。よろしいですか？`;
+  if (obj.seisekiChild && obj.seisekiChild !== target) {
+    msg = `⚠ このデータは「${obj.seisekiChild}」の成績として書き出されたものですが、取り込み先は「${target}」になっています。\n本当に「${target}」へ取り込みますか？（ふつうは「${obj.seisekiChild}」を選びます）`;
+  }
+  return confirm(msg + `\n\n（ちがう場合はキャンセルして、上の「取り込み先のお子さん」を選び直してください）`);
+}
 document.getElementById('setClose').onclick = () => document.getElementById('setModal').classList.remove('open');
 document.getElementById('setModal').addEventListener('click', e => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
 });
 document.getElementById('setSave').onclick = () => {
   localStorage.setItem(NAME_KEY, document.getElementById('setName').value.trim());
-  const kids = document.getElementById('setChildren').value.trim().split(/[\s、,]+/).filter(Boolean);
-  localStorage.setItem(CHILDREN_KEY, JSON.stringify(kids));
-  // お子さんごとの学年・クラス
-  saveChildMeta();
-  // 志望校と目標偏差値（成績グラフの目標ライン）
-  localStorage.setItem('okan_goal_school', document.getElementById('setGoalSchool').value.trim());
-  localStorage.setItem('okan_goal_dev', document.getElementById('setGoalDev').value.trim());
-  // 成績に表示する受講講座
-  const cs = {};
-  document.querySelectorAll('#courseChecks [data-course]').forEach(c => { cs[c.dataset.course] = c.checked; });
-  localStorage.setItem('okan_courses', JSON.stringify(cs));
+  // お子さん（名前・学年・クラス・志望校・講座）は個別モーダルで保存済み
   // 性別（男性＝おとんモード：全ページがダークスタイルに）
   const gBtn = document.querySelector('.genderBtn.on');
   const newGender = gBtn ? gBtn.dataset.g : '女';
@@ -500,7 +574,9 @@ async function buildExportObj(withSched, withPrints, withSeiseki) {
     try { obj.children = JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { obj.children = []; }
   }
   if (withSeiseki) {
-    try { obj.seiseki = JSON.parse(localStorage.getItem('okan_seiseki_v1')) || null; } catch (e) { obj.seiseki = null; }
+    const active = localStorage.getItem('okan_active_child') || (childrenList()[0] || '');
+    try { obj.seiseki = JSON.parse(localStorage.getItem(seikeyFor(active))) || null; } catch (e) { obj.seiseki = null; }
+    if (obj.seiseki && active) obj.seisekiChild = active;   // どの子の成績かを記録（取り込み時の誤り防止）
   }
   if (withPrints) {
     obj.prints = [];
@@ -623,6 +699,7 @@ document.getElementById('impDataFile').onchange = async e => {
   if (!f) return;
   try {
     const obj = JSON.parse((await f.text()).replace(/^\uFEFF/, '').trim());
+    if (!confirmSeisekiTarget(obj)) return;
     const r = await importDataObj(obj, importChild());
     alert(`取り込みました！\nスケジュール${r.sched}件・予定${r.events}件・やること${r.todos}件・プリント${r.prints}枚・成績${r.seiseki || 0}件${r.seisekiChild ? '（' + r.seisekiChild + '）' : ''}`);
   } catch (err) {
@@ -668,6 +745,15 @@ async function doPasteImport(fromAuto) {
     if (fromAuto) setPasteStatus('貼り付けを確認中…', '');
     else setPasteStatus('❌ 内容が途中で切れているか、データ以外の文字が混ざっています。もう一度「データをコピー」からやり直してください', 'ng');
     return;
+  }
+  // 兄弟がいて成績を含むとき：誤って別の子に上書きしないよう自動取り込みせず、必ず取り込み先を確認する
+  if (obj.seiseki && childrenList().length >= 2) {
+    const target = importChild() || childrenList()[0];
+    if (fromAuto) {
+      setPasteStatus(`「${target}」の成績として取り込む準備ができました。取り込み先が合っていれば下の「この内容を取り込む」を押してください（変える場合は上の「取り込み先のお子さん」で選び直し）`, '');
+      return;
+    }
+    if (!confirmSeisekiTarget(obj)) { setPasteStatus('取り込みを中止しました。上の「取り込み先のお子さん」を確認してください', 'ng'); return; }
   }
   try {
     const r = await importDataObj(obj, importChild());

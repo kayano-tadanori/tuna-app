@@ -431,8 +431,13 @@ const seikey = c => (c && CHILDREN.length && c !== CHILDREN[0]) ? `okan_seiseki_
 let KEY = seikey(activeChild);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const DARK = document.documentElement.classList.contains('otonDark');
-// ⚙️設定「成績に表示する受講講座」（未設定は全部表示。社会（4科）だけは既定OFF）
-let courseCfg; try { courseCfg = JSON.parse(localStorage.getItem('okan_courses')) || {}; } catch (e) { courseCfg = {}; }
+// お子さんプロフィール（⚙️設定の個別モーダルで登録。志望校・講座・学年クラスは子ごと）
+function childrenV2() { try { return JSON.parse(localStorage.getItem('okan_children_v2')) || []; } catch (e) { return []; } }
+const activeProfile = (() => { const arr = childrenV2(); return arr.find(c => c.name === activeChild) || arr[0] || null; })();
+// 成績に表示する受講講座（子ごと→無ければ旧グローバル。未設定は全部表示・社会だけ既定OFF）
+let courseCfg;
+if (activeProfile && activeProfile.courses && Object.keys(activeProfile.courses).length) courseCfg = activeProfile.courses;
+else { try { courseCfg = JSON.parse(localStorage.getItem('okan_courses')) || {}; } catch (e) { courseCfg = {}; } }
 const courseOn = k => courseCfg[k] !== false;
 const SHAKAI = courseCfg.shakai === true;
 
@@ -453,9 +458,9 @@ const mdLabel = ds => { const d = new Date(ds + 'T00:00:00'); return `${d.getMon
 
 // ---------- 公開テスト：偏差値グラフ ----------
 // 目標ライン：⚙️設定（ホーム）の志望校・目標偏差値。未設定なら灘中64
-const GOAL_SCHOOL = (localStorage.getItem('okan_goal_school') || '').trim() || '灘中';
+const GOAL_SCHOOL = ((activeProfile && activeProfile.goalSchool) || localStorage.getItem('okan_goal_school') || '').trim() || '灘中';
 const GOAL_DEV = (() => {
-  const n = parseFloat(localStorage.getItem('okan_goal_dev'));
+  const n = parseFloat((activeProfile && activeProfile.goalDev) || localStorage.getItem('okan_goal_dev'));
   return (isNaN(n) || n < 20 || n > 90) ? 64 : n;
 })();
 const NADA_LINE = GOAL_DEV;
@@ -816,7 +821,7 @@ function prevYm(ym) {
 // お子さんごとの学年・クラス（⚙️設定 okan_child_meta[名前]={grade,cls,curr}）。Vは小4から
 function childMeta() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
 function renderAB() {
-  const m = (activeChild && childMeta()[activeChild]) || {};
+  const m = activeProfile || (activeChild && childMeta()[activeChild]) || {};
   const grade = +(m.grade || localStorage.getItem('okan_ab_grade') || 5);
   let cls = m.cls || localStorage.getItem('okan_ab_class') || (grade >= 4 ? 'V' : 'S');
   if (grade < 4 && cls === 'V') cls = 'S';   // 小3以下はVなし
@@ -988,7 +993,10 @@ function render() {
       const g = +$('abGrade').value;
       let c = $('abClass').value.replace('クラス', '');
       if (g < 4 && c === 'V') c = 'S';
-      // お子さんごとに保存（兄弟がいなければ従来のキーにも保存）
+      // お子さんプロフィール(v2)＋メタに保存
+      const arr = childrenV2();
+      const i = arr.findIndex(x => x.name === activeChild);
+      if (i >= 0) { arr[i].grade = g; arr[i].cls = c; localStorage.setItem('okan_children_v2', JSON.stringify(arr)); }
       const meta = childMeta();
       const key = activeChild || '';
       meta[key] = Object.assign({}, meta[key], { grade: g, cls: c });
