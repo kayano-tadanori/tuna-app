@@ -368,6 +368,17 @@
         <button type="button" class="tab" data-nth="5">第5</button>
       </div>
     </div>
+    <p class="fLabel">受講期間（任意・空欄なら年度の2/1〜翌1/31で自動。最レ・灘合など資格で受講が変わる講義に）</p>
+    <div class="fRow">
+      <div>
+        <p class="fLabel" style="font-size:11px">開始日</p>
+        <input class="fInput" type="date" id="rgStart">
+      </div>
+      <div>
+        <p class="fLabel" style="font-size:11px">終了日（資格を失う日など）</p>
+        <input class="fInput" type="date" id="rgEnd">
+      </div>
+    </div>
     <p class="fLabel">色</p>
     <div class="palette" id="rgPalette"></div>
     <div class="sheetBtns">
@@ -477,8 +488,10 @@ function computeNo(w, dateStr) {
   let refDate = new Date(w.noAnchor + 'T00:00:00');
   let refNo = +m0[1];
   const key = seriesKey(w);
+  const lo = w.startDate || w.cyc || '';                // この講義の受講期間の開始（別期間の補講を拾わない）
   for (const e of (db.events || [])) {
     if (!e.no || seriesKey(e) !== key) continue;      // 同じ講義の手入力でNo付きのみ
+    if (lo && e.date < lo) continue;                   // 受講期間より前の手入力は無視
     const em = String(e.no).match(/(\d+)/); if (!em) continue;
     const ed = new Date(e.date + 'T00:00:00');
     if (ed > d) continue;                              // 対象日より未来の手入力は無視
@@ -550,7 +563,11 @@ function occursOn(w, dateStr, d) {
   if (isAdjust(dateStr)) return false;   // 調整日は塾全体がお休み
   if (w.dow !== d.getDay()) return false;
   if ((w.except || []).includes(dateStr)) return false;
-  if (w.cyc && (dateStr < w.cyc || dateStr > cycEndOf(w.cyc))) return false;   // カリキュラム年(2/1〜翌1/31)の外は出さない
+  // 受講期間：開始日/終了日の手入力があればそれに従い、無ければカリキュラム年(2/1〜翌1/31)で自動
+  const lo = w.startDate || w.cyc;
+  const hi = w.endDate || (w.cyc ? cycEndOf(w.cyc) : '');
+  if (lo && dateStr < lo) return false;
+  if (hi && dateStr > hi) return false;
   const r = w.repeat || { type: 'weekly' };
   if (r.type === 'biweekly') {
     const anchor = new Date((r.anchor || dateStr) + 'T00:00:00');
@@ -974,6 +991,8 @@ function openRegForm(w) {
   $('rgTime').value = w ? (w.time || '') : '';
   $('rgTimeEnd').value = w ? (w.timeEnd || '') : '';
   $('rgBento').checked = w ? !!w.bento : false;
+  $('rgStart').value = w ? (w.startDate || '') : '';
+  $('rgEnd').value = w ? (w.endDate || '') : '';
   const r = w ? (w.repeat || { type: 'weekly' }) : { type: 'weekly' };
   $('rgRepeat').value = r.type;
   $('rgAnchor').value = r.anchor || todayStr();
@@ -1013,6 +1032,8 @@ $('rgSave').onclick = () => {
     bento: $('rgBento').checked,
     repeat,
     color: rgColor,
+    startDate: $('rgStart').value,   // 受講期間（任意）。空欄なら年度で自動
+    endDate: $('rgEnd').value,
     except: prev ? (prev.except || []) : []
   };
   // 受講Noの基準日：Noを新しく入れた／変えたときは「今日以降の最初の実施日」＝そのNoの回
