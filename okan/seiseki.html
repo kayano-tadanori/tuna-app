@@ -818,12 +818,65 @@ function prevYm(ym) {
 
 // お子さんごとの学年・クラス（⚙️設定 okan_child_meta[名前]={grade,cls,curr}）。Vは小4から
 function childMeta() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
+
+// ---------- 土曜マスターコース（小1〜3の希望者）のクラス判定 ----------
+// 復習テストは審査対象外。公開学力テストの2科偏差値だけで判定。2月の新学年開始後、4ヶ月ごとに
+// 判定して次の4ヶ月のクラスが決まる：3〜6月平均→7〜10月、7〜10月→11〜2月、11〜2月→3〜6月。
+const SAT_TH = 52;   // 公開2科偏差値の4ヶ月平均が >52 でSクラス、以下でHクラス（ユーザー提供）
+function satWindow(ym) {
+  const [y, mo] = ym.split('-').map(Number);
+  if (mo >= 3 && mo <= 6) return { key: `${y}-03`, apply: `${y}-07`, label: `${y}年 3〜6月`, applyLabel: `${y}年7〜10月` };
+  if (mo >= 7 && mo <= 10) return { key: `${y}-07`, apply: `${y}-11`, label: `${y}年 7〜10月`, applyLabel: `${y}年11月〜${y + 1}年2月` };
+  if (mo >= 11) return { key: `${y}-11`, apply: `${y + 1}-03`, label: `${y}年11月〜${y + 1}年2月`, applyLabel: `${y + 1}年 3〜6月` };
+  return { key: `${y - 1}-11`, apply: `${y}-03`, label: `${y - 1}年11月〜${y}年2月`, applyLabel: `${y}年 3〜6月` };   // 1・2月は前年11月始まりの窓
+}
+function renderSatMaster(grade, cls) {
+  // 公開の2科平均偏差値だけを4ヶ月の窓に束ねる
+  const wins = {};
+  for (const k of db.kokai) {
+    if (!k.avg2 || k.avg2.dev == null || k.avg2.dev === '') continue;
+    const w = satWindow(k.ym);
+    (wins[w.key] = wins[w.key] || { w, devs: [] }).devs.push(+k.avg2.dev);
+  }
+  let h = `<div class="graphCard"><h3>⚖️ クラス替えシミュレーション</h3>
+    <div style="display:flex;gap:8px;margin:8px 0">
+      <select class="fInput" id="abGrade" style="flex:1">
+        ${[2, 3, 4, 5, 6].map(g => `<option value="${g}" ${g === grade ? 'selected' : ''}>小${g}</option>`).join('')}
+      </select>
+      <select class="fInput" id="abClass" style="flex:1">
+        ${['S', 'H'].map(c => `<option ${c === cls ? 'selected' : ''}>${c}クラス</option>`).join('')}
+      </select>
+    </div>
+    ${CHILDREN.length >= 2 ? `<p style="font-size:11px;color:#db2777;font-weight:800;margin:2px 0 6px">👦 ${activeChild}の設定（お子さんを切り替えるとクラスも切り替わります）</p>` : ''}
+    <p style="font-size:11px;color:#0891b2;font-weight:800;margin:2px 0 4px">🗓️ 土曜マスターコース（4ヶ月ごと判定）</p>
+    <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">土曜マスターは<b>復習テストは審査対象外</b>。公開学力テストの<b>2科偏差値</b>だけで判定します。2月の新学年開始後、<b>3〜6月の平均→7〜10月のクラス</b>、7〜10月→11〜2月、11〜2月→3〜6月、と4ヶ月ごとに決まります。<b>平均が52を上回ればSクラス</b>、以下ならHクラスです（基準はおおよその目安）。</p></div>`;
+
+  const keys = Object.keys(wins).sort((a, b) => wins[b].w.apply.localeCompare(wins[a].w.apply));
+  const cards = [];
+  for (const key of keys) {
+    const { w, devs } = wins[key];
+    const avg = devs.reduce((a, b) => a + b, 0) / devs.length;
+    const full = devs.length >= 4;
+    const isS = avg > SAT_TH;
+    const diff = Math.abs(avg - SAT_TH).toFixed(1);
+    cards.push(`<div class="graphCard"><h3>${w.label}の公開<span style="font-size:10px;color:#94a3b8;font-weight:700">　→ ${w.applyLabel}のクラス</span></h3>
+      <p style="font-size:22px;font-weight:800;color:#db2777;margin:4px 0">2科偏差値 ${avg.toFixed(1)}<span style="font-size:12px;color:#94a3b8"> ／ 基準52（${devs.length}回${full ? '' : '・暫定'}）</span></p>
+      ${isS
+        ? `<div class="abLine good">🎉 Sクラス相当（基準52を＋${diff}）</div>`
+        : `<div class="abLine bad">Hクラス相当（Sまで あと${diff}）</div>`}
+      ${!full ? `<div class="abLine" style="opacity:.7;font-size:11px">※まだ${devs.length}ヶ月分。3〜6月など4ヶ月そろうと確定します</div>` : ''}</div>`);
+  }
+  if (cards.length) h += `<p class="secLabel">土曜マスター クラス判定（4ヶ月ごと）</p>` + cards.slice(0, 6).join('');
+  else h += `<p class="emptyMsg">公開学力テストの2科偏差値が記録されると<br>4ヶ月ごとのクラス判定を表示します</p>`;
+  return h;
+}
 function renderAB() {
   // 学年・クラスは最新の保存値（childMeta）を優先。⚖️内で変更しても即反映されるように
   const m = (activeChild && childMeta()[activeChild]) || activeProfile || {};
   const grade = +(m.grade || localStorage.getItem('okan_ab_grade') || 5);
   let cls = m.cls || localStorage.getItem('okan_ab_class') || (grade >= 4 ? 'V' : 'S');
   if (grade < 4 && cls === 'V') cls = 'S';   // 小3以下はVなし
+  if (m.curr === '土曜マスター' && grade <= 3) return renderSatMaster(grade, cls);   // 土曜マスターは公開偏差値だけで4ヶ月ごと判定
   const months = abMonths();
   const rows = months.map(aRow);
   const byYm = {};
