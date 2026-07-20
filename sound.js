@@ -55,6 +55,26 @@ const Snd = (() => {
     } catch (e) { silentAudio = null; }
   }
 
+  // ロック画面/バックグラウンドに「再生中」ウィジェット（サイトURLと再生ボタン）が
+  // 残り続けないよう、見えなくなったら無音<audio>を完全に破棄してメディアセッションを解放する
+  function stopHtmlAudio() {
+    if (silentAudio) {
+      try {
+        silentAudio.pause();
+        silentAudio.loop = false;
+        silentAudio.removeAttribute('src');
+        silentAudio.load();
+      } catch (e) { /* 破棄は失敗しても構わない */ }
+      silentAudio = null;
+    }
+    try {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = null;
+        navigator.mediaSession.playbackState = 'none';
+      }
+    } catch (e) { /* 非対応は無視 */ }
+  }
+
   // iOSはユーザー操作がないと音が出ないので、タップのたびに起こす
   const unlock = () => {
     if (!ensure()) return;
@@ -65,10 +85,18 @@ const Snd = (() => {
   document.addEventListener('pointerdown', unlock, { capture: true });
   document.addEventListener('touchend', unlock, { capture: true });
   document.addEventListener('click', unlock, { capture: true });
-  // PWAがバックグラウンドから復帰したときに再開
+  // バックグラウンド/ロック時：無音<audio>を破棄してロック画面の再生ウィジェットを消し、
+  // 音の処理も止める。復帰後はタップ（unlock）で再開する
+  function onHidden() {
+    stopHtmlAudio();
+    stopScheduler();
+    try { if (ctx && ctx.state === 'running') ctx.suspend(); } catch (e) { /* 無視 */ }
+  }
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && ctx && ctx.state === 'suspended') ctx.resume();
+    if (document.hidden) onHidden();
+    else if (ctx && ctx.state === 'suspended') ctx.resume();
   });
+  window.addEventListener('pagehide', onHidden);
 
   // ---------- 基本波形ヘルパー ----------
   const NOTE = n => 440 * Math.pow(2, (n - 69) / 12); // MIDIノート→周波数
