@@ -264,6 +264,8 @@
       <option value="">なし</option><option>マスター</option><option>最レ</option><option>土マス</option><option>公開</option><option>灘合</option><option>記述錬成</option>
       <option>春期講習</option><option>夏期講習</option><option>冬期講習</option><option>イベント</option><option>その他</option>
     </select>
+    <p class="fLabel">受講No（調整日で飛んだ講義の補講など。翌週からのNoの基準になります）</p>
+    <select class="fInput" id="evNo"><option value="">なし</option></select>
     <p class="fLabel">なまえ・メモ（例：遠足／パート13／弁当）</p>
     <input class="fInput" id="evName" placeholder="自由に入力（なくてもOK）" autocomplete="off">
     <p class="fLabel">日付</p>
@@ -441,13 +443,16 @@ function migrateNoAnchors() {
   if (changed) save();
 }
 
-// 受講No 1〜50 のドラム選択肢
+// 受講No 1〜50 のドラム選択肢（週次rgNo・手入力evNo 両方に）
 (() => {
-  const sel = document.getElementById('rgNo');
-  for (let i = 1; i <= 50; i++) {
-    const o = document.createElement('option');
-    o.value = 'No.' + i; o.textContent = 'No.' + i;
-    sel.appendChild(o);
+  for (const id of ['rgNo', 'evNo']) {
+    const sel = document.getElementById(id);
+    if (!sel) continue;
+    for (let i = 1; i <= 50; i++) {
+      const o = document.createElement('option');
+      o.value = 'No.' + i; o.textContent = 'No.' + i;
+      sel.appendChild(o);
+    }
   }
 })();
 
@@ -840,6 +845,7 @@ function openEvForm(item, ds) {
   setWhoSel($('evWhoSel'), $('evWho'), item ? (item.who || '') : '');
   setSubjChips('evSubjChips', item ? (item.subject || '') : '');
   $('evLtype').value = item ? (item.ltype || '') : '';
+  $('evNo').value = item ? (item.no || '') : '';
   $('evName').value = item ? item.title : '';
   $('evDate').value = item ? item.date : (ds || selDate);
   $('evTime').value = item ? (item.time || '') : '';
@@ -861,7 +867,7 @@ $('evSave').onclick = () => {
   db.events.push({
     id: uid(), date, title, color: evColor,
     who: whoValue($('evWhoSel'), $('evWho')),
-    subject, ltype,
+    subject, ltype, no: $('evNo').value,
     time: $('evTime').value, timeEnd: $('evTimeEnd').value,
     bento: $('evBento').checked
   });
