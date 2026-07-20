@@ -777,21 +777,33 @@ function clientToCanvas(cx, cy) {
 
 function stamp(x, y) {
   const r = Math.max(6, Math.round(outCanvas.width * SIZES[sizeIdx][1]));
-  // 画面に直接描く（軽い）
+  // 画面に直接描く（軽い）。確定済みの保護枠(shapes)の内側は消しゴム・もどしでも触らない
+  outCtx.save();
+  if (shapes.length) {
+    // 円から保護枠の内側をくり抜いたクリップ（evenodd）で、枠の中には描かない
+    outCtx.beginPath();
+    outCtx.arc(x, y, r, 0, Math.PI * 2);
+    for (const s of shapes) {
+      if (!s.pts || s.pts.length < 3) continue;
+      outCtx.moveTo(s.pts[0].x, s.pts[0].y);
+      for (let k = 1; k < s.pts.length; k++) outCtx.lineTo(s.pts[k].x, s.pts[k].y);
+      outCtx.closePath();
+    }
+    outCtx.clip('evenodd');
+  }
   if (mode === 'erase') {
     outCtx.fillStyle = '#ffffff';
     outCtx.beginPath();
     outCtx.arc(x, y, r, 0, Math.PI * 2);
     outCtx.fill();
   } else {
-    outCtx.save();
     outCtx.beginPath();
     outCtx.arc(x, y, r, 0, Math.PI * 2);
     outCtx.clip();
     outCtx.drawImage(restoreCanvas, 0, 0);
-    outCtx.restore();
   }
-  // 手直しレイヤーに記録（スライダーを動かしても維持される）
+  outCtx.restore();
+  // 手直しレイヤーに記録（スライダーを動かしても維持される）。保護枠の内側は記録しない
   const v = mode === 'erase' ? 1 : 2;
   const x0 = Math.max(0, Math.round(x - r)), x1 = Math.min(W - 1, Math.round(x + r));
   const y0 = Math.max(0, Math.round(y - r)), y1 = Math.min(H - 1, Math.round(y + r));
@@ -800,7 +812,10 @@ function stamp(x, y) {
     const dy = yy - y;
     for (let xx = x0; xx <= x1; xx++) {
       const dx = xx - x;
-      if (dx * dx + dy * dy <= r2) manual[yy * W + xx] = v;
+      if (dx * dx + dy * dy > r2) continue;
+      const i = yy * W + xx;
+      if (protectMask && protectMask[i]) continue;   // 保護枠の内側は手直しレイヤーにも残さない
+      manual[i] = v;
     }
   }
 }
