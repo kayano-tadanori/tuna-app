@@ -439,6 +439,10 @@ function migrateNoAnchors() {
       w.noAnchor = nextOccurrence(w);
       changed = true;
     }
+    if (!w.cyc) {   // 既存の定期予定にカリキュラム年(2/1始まり)を後付け
+      w.cyc = cycStartOf(w.noAnchor || todayStr());
+      changed = true;
+    }
   }
   if (changed) save();
 }
@@ -532,11 +536,21 @@ function toggleAdjust(ds) {
   save();
 }
 
+// 塾のカリキュラム年：2月1日〜翌年1月31日でワンサイクル（新学年は2/1始まり）。
+// 毎週の登録予定はこの範囲内だけ有効にし、翌年度へ漏れない／新年度へ逆流しないようにする。
+function cycStartOf(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const sy = d.getMonth() >= 1 ? d.getFullYear() : d.getFullYear() - 1;  // 2月(月index1)以降=当年始まり、1月=前年始まり
+  return `${sy}-02-01`;
+}
+function cycEndOf(cycStart) { return `${(+cycStart.slice(0, 4)) + 1}-01-31`; }
+
 // ---------- くり返しの判定 ----------
 function occursOn(w, dateStr, d) {
   if (isAdjust(dateStr)) return false;   // 調整日は塾全体がお休み
   if (w.dow !== d.getDay()) return false;
   if ((w.except || []).includes(dateStr)) return false;
+  if (w.cyc && (dateStr < w.cyc || dateStr > cycEndOf(w.cyc))) return false;   // カリキュラム年(2/1〜翌1/31)の外は出さない
   const r = w.repeat || { type: 'weekly' };
   if (r.type === 'biweekly') {
     const anchor = new Date((r.anchor || dateStr) + 'T00:00:00');
@@ -1009,6 +1023,8 @@ $('rgSave').onclick = () => {
   } else {
     item.noAnchor = '';
   }
+  // カリキュラム年（2/1〜翌1/31）：最初の実施日が属する年度に固定。翌年度へ漏れない
+  item.cyc = cycStartOf(item.noAnchor || nextOccurrence(item) || todayStr());
   db.weekly = db.weekly.filter(w => w.id !== item.id);
   db.weekly.push(item);
   regEditing = null;
