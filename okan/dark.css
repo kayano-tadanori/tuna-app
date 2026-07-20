@@ -93,6 +93,11 @@ html.otonDark .cell.other { background: #0c1428 !important; }
 html.otonDark .cell.today { background: #1d2f5c !important; }
 html.otonDark .cell .dnum { color: #c6d6f7; }
 html.otonDark .cell.other .dnum { color: #5d6f9a; }
+html.otonDark .cell.sunBg { background: #2a1622 !important; }   /* 日曜・祝日 */
+html.otonDark .cell.satBg { background: #101f3e !important; }   /* 土曜 */
+html.otonDark .cell .dnum .holT { color: #fb7185; }
+html.otonDark .cell .dnum .sunT { color: #fb7185; }
+html.otonDark .cell .holName { color: #fb7185; }
 html.otonDark .cell.sel { border-color: #4c7dff !important; box-shadow: 0 0 0 1.5px #4c7dff inset; }
 html.otonDark .todoItem .tt { color: #dbe4f5; }
 html.otonDark .todoItem.done .tt { color: #64779f; }

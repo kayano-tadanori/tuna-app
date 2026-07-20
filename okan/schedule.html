@@ -86,6 +86,13 @@
     background: #db2777; color: #fff; border-radius: 50%;
   }
   .cell.today { background: #fce7f3; }
+  .cell.sunBg { background: #fff1f2; }   /* 日曜・祝日 */
+  .cell.satBg { background: #eff6ff; }   /* 土曜 */
+  .cell .dnum .holT { color: #e11d48; }  /* 祝日の数字（赤） */
+  .cell .holName {
+    font-size: 8.5px; line-height: 1.15; color: #e11d48; font-weight: 700;
+    margin: 0 1px 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
   .cell.sel { outline: 2px solid #475569; outline-offset: -2px; }
   .chipE {
     font-size: 9.5px; font-weight: 700; line-height: 1.35;
@@ -584,6 +591,71 @@ function todosDue(dateStr) {
 }
 
 // ---------- カレンダー描画 ----------
+// ---------- 日本の祝日（内閣府の法令準拠・オフライン算出。1980〜2099で有効） ----------
+const HOLIDAY_CACHE = {};
+function nthMonday(y, m, nth) {   // m=1〜12。第nth月曜の日を返す
+  let cnt = 0;
+  for (let day = 1; day <= 31; day++) {
+    const dt = new Date(y, m - 1, day);
+    if (dt.getMonth() !== m - 1) break;
+    if (dt.getDay() === 1 && ++cnt === nth) return day;
+  }
+  return null;
+}
+function shunbun(y) { return Math.floor(20.8431 + 0.242194 * (y - 1980) - Math.floor((y - 1980) / 4)); } // 春分の日
+function shubun(y) { return Math.floor(23.2488 + 0.242194 * (y - 1980) - Math.floor((y - 1980) / 4)); }  // 秋分の日
+function holidaysOf(y) {
+  if (HOLIDAY_CACHE[y]) return HOLIDAY_CACHE[y];
+  const h = {};                       // 'M-D' -> 祝日名
+  const set = (m, d, name) => { if (d) h[m + '-' + d] = name; };
+  set(1, 1, '元日');
+  set(1, nthMonday(y, 1, 2), '成人の日');
+  set(2, 11, '建国記念の日');
+  set(2, 23, '天皇誕生日');
+  set(3, shunbun(y), '春分の日');
+  set(4, 29, '昭和の日');
+  set(5, 3, '憲法記念日');
+  set(5, 4, 'みどりの日');
+  set(5, 5, 'こどもの日');
+  set(7, nthMonday(y, 7, 3), '海の日');
+  set(8, 11, '山の日');
+  set(9, nthMonday(y, 9, 3), '敬老の日');
+  set(9, shubun(y), '秋分の日');
+  set(10, nthMonday(y, 10, 2), 'スポーツの日');
+  set(11, 3, '文化の日');
+  set(11, 23, '勤労感謝の日');
+  const key = dt => (dt.getMonth() + 1) + '-' + dt.getDate();
+  const extra = {};
+  // 振替休日：祝日が日曜なら、次の「祝日でない日」を振替休日に
+  for (let m = 1; m <= 12; m++) {
+    const dim = new Date(y, m, 0).getDate();
+    for (let d = 1; d <= dim; d++) {
+      if (!h[m + '-' + d]) continue;
+      const dt = new Date(y, m - 1, d);
+      if (dt.getDay() !== 0) continue;
+      const nx = new Date(dt);
+      do { nx.setDate(nx.getDate() + 1); } while (h[key(nx)] || extra[key(nx)]);
+      extra[key(nx)] = '振替休日';
+    }
+  }
+  // 国民の休日：前後がどちらも祝日の平日（日曜・祝日以外）
+  for (let m = 1; m <= 12; m++) {
+    const dim = new Date(y, m, 0).getDate();
+    for (let d = 1; d <= dim; d++) {
+      if (h[m + '-' + d] || extra[m + '-' + d]) continue;
+      const dt = new Date(y, m - 1, d);
+      if (dt.getDay() === 0) continue;
+      const pv = new Date(dt); pv.setDate(d - 1);
+      const nx = new Date(dt); nx.setDate(d + 1);
+      if ((h[key(pv)] || extra[key(pv)]) && (h[key(nx)] || extra[key(nx)])) extra[m + '-' + d] = '国民の休日';
+    }
+  }
+  Object.assign(h, extra);
+  HOLIDAY_CACHE[y] = h;
+  return h;
+}
+function holidayName(dt) { return holidaysOf(dt.getFullYear())[(dt.getMonth() + 1) + '-' + dt.getDate()] || null; }
+
 function renderCal() {
   $('ymLabel').textContent = `${ym.y}年${ym.m + 1}月`;
   const grid = $('calGrid');
@@ -602,11 +674,25 @@ function renderCal() {
     num.className = 'dnum';
     const span = document.createElement('span');
     span.textContent = d.getDate();
+    const hol = holidayName(d);
+    const inMonth = d.getMonth() === ym.m;
     if (ds === tStr) span.className = 'todayC';
+    else if (hol) span.className = 'holT';           // 祝日は赤
     else if (d.getDay() === 0) span.className = 'sunT';
     else if (d.getDay() === 6) span.className = 'satT';
     num.appendChild(span);
     cell.appendChild(num);
+    // 当月のみ土日・祝日にセル背景色（todayのピンクは優先）
+    if (inMonth && ds !== tStr) {
+      if (hol || d.getDay() === 0) cell.classList.add('sunBg');
+      else if (d.getDay() === 6) cell.classList.add('satBg');
+    }
+    // 祝日名を表示（当月のみ）
+    if (hol && inMonth) {
+      const hn = document.createElement('div');
+      hn.className = 'holName'; hn.textContent = hol;
+      cell.appendChild(hn);
+    }
 
     if (isAdjust(ds)) {
       const a = document.createElement('div');
@@ -645,7 +731,8 @@ function renderCal() {
 // ---------- その日のシート ----------
 function openDaySheet(ds) {
   const d = new Date(ds + 'T00:00:00');
-  $('dayTitle').textContent = `${d.getMonth() + 1}月${d.getDate()}日(${DOWS[d.getDay()]})`;
+  const _hol = holidayName(d);
+  $('dayTitle').textContent = `${d.getMonth() + 1}月${d.getDate()}日(${DOWS[d.getDay()]})` + (_hol ? ` ・ ${_hol}` : '');
   const list = $('dayList');
   list.innerHTML = '';
   const adj = isAdjust(ds);
