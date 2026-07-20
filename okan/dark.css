@@ -133,6 +133,19 @@ html.otonDark #aiFmtBtn { background: #16244a; border-color: #4c7dff; color: #6f
 html.otonDark .fmtPre { background: #0f1930; border-color: #2b3b63; color: #b9c9ea; }
 html.otonDark .aiNote { color: #7285b3; }
 
+/* ── ボトムシート本文（使い方・説明など。紺地に暗い文字で読めなかったのを修正）── */
+html.otonDark .sheet h2 { color: #6f9bff; }
+html.otonDark .sheet h3 { color: #6f9bff; border-color: #22335c !important; }
+html.otonDark .sheet p { color: #c6d6f7; }
+html.otonDark .sheet ol, html.otonDark .sheet ul { color: #c6d6f7; }
+html.otonDark .sheet li b { color: #e6eeff; }
+html.otonDark .sheet a { color: #6f9bff; }
+html.otonDark .sheet .warn { background: #3a2f14; border-color: #6b551d !important; color: #fde68a; }
+html.otonDark .engCard { background: #0f1930 !important; border-color: #33477a !important; }
+html.otonDark .engCard.on { background: #16224a !important; border-color: #4c7dff !important; }
+html.otonDark .engCard .engName { color: #e6eeff; }
+html.otonDark .engCard .engDesc { color: #93a7cd; }
+
 /* ── プリント消しゴム ── */
 html.otonDark #canvasWrap { background: #0c1428; }
 html.otonDark #home .tip { background: #141f3c; color: #93a7cd; border-color: #2b3b63; }
