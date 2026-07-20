@@ -453,24 +453,39 @@ function migrateNoAnchors() {
 
 const timeRange = it => it.time ? it.time + (it.timeEnd ? '-' + it.timeEnd : '') : '';
 
-// 受講Noの自動進行：noAnchor（基準日）のNoを起点に、実施日ごとに+1（休みの週は進まない）
+// 同じ講義シリーズかの判定キー（誰＋科目＋種類）。曜日違いの補講を紐づけるのに使う
+function seriesKey(x) { return [x.who || '', x.subject || '', x.ltype || ''].join('|'); }
+
+// 受講Noの自動進行：noAnchor（基準日）のNoを起点に、実施日ごとに+1（休みの週は進まない）。
+// さらに、同じ講義(誰+科目+種類)の手入力予定でNo付きのものが基準日より後・対象日以前にあれば、
+// いちばん新しいそれを基準に置き換える＝調整日で飛んだ講義を別曜日(祝日など)に手入力したら、
+// そこからNoの加算がやり直される（重複No防止）。ユーザー要望2026-07-20。
 function computeNo(w, dateStr) {
   if (!w.no) return '';
-  const m = String(w.no).match(/(\d+)/);
-  if (!m || !w.noAnchor) return w.no;
-  let n = +m[1];
+  const m0 = String(w.no).match(/(\d+)/);
+  if (!m0 || !w.noAnchor) return w.no;
   const d = new Date(dateStr + 'T00:00:00');
-  const a = new Date(w.noAnchor + 'T00:00:00');
-  if (d > a) {
-    const cur = new Date(a);
+  let refDate = new Date(w.noAnchor + 'T00:00:00');
+  let refNo = +m0[1];
+  const key = seriesKey(w);
+  for (const e of (db.events || [])) {
+    if (!e.no || seriesKey(e) !== key) continue;      // 同じ講義の手入力でNo付きのみ
+    const em = String(e.no).match(/(\d+)/); if (!em) continue;
+    const ed = new Date(e.date + 'T00:00:00');
+    if (ed > d) continue;                              // 対象日より未来の手入力は無視
+    if (ed > refDate) { refDate = ed; refNo = +em[1]; } // より新しい手入力を基準に採用
+  }
+  let n = refNo;
+  if (d > refDate) {                                   // 基準日より後：週次の実施回数だけ進める
+    const cur = new Date(refDate);
     for (let i = 0; i < 400; i++) {
       cur.setDate(cur.getDate() + 1);
       if (cur > d) break;
       if (occursOn(w, fmt(cur), cur)) n++;
     }
-  } else if (d < a) {
+  } else if (d < refDate) {                            // 基準日より前：戻す（基準はnoAnchorのケースのみ）
     const cur = new Date(d);
-    for (let i = 0; i < 400 && cur < a; i++) {
+    for (let i = 0; i < 400 && cur < refDate; i++) {
       if (occursOn(w, fmt(cur), cur)) n--;
       cur.setDate(cur.getDate() + 1);
     }
