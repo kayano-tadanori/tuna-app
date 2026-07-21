@@ -464,6 +464,7 @@
           <select class="fInput" id="pvType">
             <option value="kojinA">マスター個人票（A）</option>
             <option value="saireA">最レ算数 個人票（A）</option>
+            <option value="saikokuA">最レ国語 個人票（A）</option>
             <option value="kokai">公開学力テスト</option>
           </select>
         </div>
@@ -1127,9 +1128,11 @@ function render() {
         const rk = rankFor('最レ国語', ym);
         h += `<p class="secLabel">${ymLabel(ym)}度（${m.length}回・平均 ${avg}点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
       }
+      const av = (t.avg != null && t.avg !== '')
+        ? `<span class="av ${(+t.score || 0) >= +t.avg ? 'up' : 'dn'}">平均<b>${t.avg}</b></span>` : '';
       h += `<div class="testLine" data-saikoku="${t.id}"><span class="d">${mdLabel(t.date)}</span>
         <span class="sj">復習テスト</span><span class="no">No.${show(t.no)}</span>
-        <span class="sc${(+t.score || 0) < 60 ? ' scoreBad' : ''}">${show(t.score)}点</span></div>`;
+        <span class="sc${(+t.score || 0) < 60 ? ' scoreBad' : ''}">${show(t.score)}点</span>${av}</div>`;
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-saikoku]').forEach(el => el.onclick = () => openSaikoku(db.saikoku.find(x => x.id === el.dataset.saikoku)));
@@ -1487,7 +1490,10 @@ function numsOf(line) {
 // 見出しの特徴語で成績表の種類を見分ける
 function detectSheetType(t) {
   // 最レの個人票にも「7月公開算数」の欄があるので、公開の判定より先に見る
-  if (/成績個人票/.test(t) && /最高レベル特訓/.test(t) && /算数/.test(t)) return 'saireA';
+  if (/成績個人票/.test(t) && /最高レベル特訓/.test(t)) {
+    const sub = t.match(/最高レベル特訓[\s　]*[・･]?[\s　]*(算数|国語)/);
+    if (sub) return sub[1] === '国語' ? 'saikokuA' : 'saireA';
+  }
   if (/成績個人票/.test(t) && /マスターコース/.test(t)) return 'kojinA';
   if (/公開学力テスト/.test(t) || (/実施月/.test(t) && /科平均/.test(t))) return 'kokai';
   return '';
@@ -1500,7 +1506,17 @@ const SAIRE_WORDS = ['計算', '復習'];
 const KOJIN_KIND = {
   kojinA: { words: SUBJ_WORDS, course: 'マスター', fukuLabel: '復テ平均', kokaiLabel: '公開平均', totalLabel: '総計（200点満点）', testLabel: '復習テスト' },
   saireA: { words: SAIRE_WORDS, course: '最レ算数', fukuLabel: '復テ平均', kokaiLabel: '公開算数の得点', totalLabel: '総計（200点満点）', testLabel: '計算・復習テスト' },
+  // 最レ国語は日曜開催なので月度の区切りが暦月（1日〜末日）
+  saikokuA: { words: ['復習'], course: '最レ国語', fukuLabel: '復テ平均', kokaiLabel: '公開国語の得点', totalLabel: '総計（200点満点）', testLabel: '復習テスト', cal: true },
 };
+// その個人票の月度が何日から何日までか。暦月の講座と16日〆の講座がある
+function kojinWindow(kind, ym) {
+  if (KOJIN_KIND[kind] && KOJIN_KIND[kind].cal) {
+    const [y, m] = ym.split('-').map(Number);
+    return [`${ym}-01`, `${ym}-${new Date(y, m, 0).getDate()}`];
+  }
+  return aWindow(ym);
+}
 
 // ------------------------------------------------------------
 // 公開学力テストの一覧を解析する
@@ -1830,7 +1846,7 @@ $('pvType').onchange = () => {
 
 function runParse(raw, type) {
   pasteRaw = raw;
-  if (type !== 'kojinA' && type !== 'saireA' && type !== 'kokai') {
+  if (!KOJIN_KIND[type] && type !== 'kokai') {
     setPasteStatus('この成績表はまだ対応していません（今はマスター個人票Aと公開学力テスト）。ほかの成績表は順に追加します。', 'ng');
     $('pastePrev').style.display = 'none';
     return;
@@ -1864,7 +1880,7 @@ function runParse(raw, type) {
 
 function renderPastePreview(d) {
   $('pvType').value = d.type;
-  const kojin = d.type === 'kojinA' || d.type === 'saireA';
+  const kojin = !!KOJIN_KIND[d.type];
   const KK = KOJIN_KIND[d.type] || KOJIN_KIND.kojinA;
   $('pvKojin').style.display = kojin ? '' : 'none';
   $('pvKokaiWrap').style.display = kojin ? 'none' : '';
@@ -1932,11 +1948,19 @@ function renderKokaiPreview(d) {
 // 復習テストは日付順に並ぶので、月度の期間の初日から始めて
 // 「日が前より小さくなったら翌月」と送っていけば月が確定する。
 function relabelMonths() {
-  if (!pvData || (pvData.type !== 'kojinA' && pvData.type !== 'saireA')) return;
+  if (!pvData || pvData.type === 'kokai') return;
   const year = parseInt($('pvYear').value, 10), mo = parseInt($('pvYm').value, 10);
   if (!year || !mo) return;
-  const from = aWindow(`${year}-${String(mo).padStart(2, '0')}`)[0];
-  let m = +from.slice(5, 7), prev = 0;
+  const from = kojinWindow(pvData.type, `${year}-${String(mo).padStart(2, '0')}`)[0];
+  // 最初のテストが期間の初日以降なら初月から、そうでなければ翌月から始める
+  const first = pvData.tests.map((t, i) => {
+    const el = $('pvMd' + i); if (!el) return null;
+    const q = (el.value || '').split('/');
+    return parseInt(q.length > 1 ? q[1] : q[0], 10) || null;
+  }).find(v => v);
+  let m = +from.slice(5, 7);
+  if (first != null && first < +from.slice(8, 10)) m = m % 12 + 1;
+  let prev = 0;
   pvData.tests.forEach((t, i) => {
     const el = $('pvMd' + i);
     if (!el) return;
@@ -1956,6 +1980,7 @@ $('pasteImport').onclick = () => {
   if (!pvData) return;
   if (pvData.type === 'kokai') return importKokai();
   if (pvData.type === 'saireA') return importSaireA();
+  if (pvData.type === 'saikokuA') return importSaikokuA();
   const year = parseInt($('pvYear').value, 10);
   const mo = parseInt($('pvYm').value, 10);
   if (!year || !mo) { setPasteStatus('年と月度を入れてください。', 'ng'); return; }
@@ -2002,6 +2027,52 @@ $('pasteImport').onclick = () => {
   setPasteStatus(`✅ 取り込みました！ 復習テスト${added}件・${ym}のまとめを保存しました。`, 'ok');
   render();
 };
+
+// 最レ国語の個人票の取り込み。1回のテスト＝1列（復習100点満点）。
+function importSaikokuA() {
+  const year = parseInt($('pvYear').value, 10);
+  const mo = parseInt($('pvYm').value, 10);
+  if (!year || !mo) { setPasteStatus('年と月度を入れてください。', 'ng'); return; }
+  const ym = `${year}-${String(mo).padStart(2, '0')}`;
+  const pad = v => String(v).padStart(2, '0');
+
+  let added = 0;
+  pvData.tests.forEach((t, i) => {
+    const md = ($('pvMd' + i).value || '').split('/');
+    const m = parseInt(md[0], 10), dd = parseInt(md[1], 10);
+    const score = num($('pvSc' + i).value);
+    if (!m || !dd || score == null) return;
+    const y = (m > mo) ? year - 1 : year;
+    const date = `${y}-${pad(m)}-${pad(dd)}`;
+    const no = num($('pvNo' + i).value);
+    const avg = num($('pvAv' + i).value);
+    const j = db.saikoku.findIndex(x => x.date === date && (x.no ?? null) === (no ?? null));
+    const rec = { id: j >= 0 ? db.saikoku[j].id : ('k' + date), date, no, score, avg };
+    if (j >= 0) db.saikoku[j] = rec; else db.saikoku.push(rec);
+    added++;
+  });
+  db.saikoku.sort((a, b) => a.date.localeCompare(b.date));
+
+  const fuku = num($('pvFuku').value), kokai = num($('pvKokai').value);
+  const total = num($('pvTotal').value), rank = num($('pvRank').value);
+  const course = ($('pvCourse').value || '最レ国語').trim();
+  if (fuku != null || kokai != null || total != null || rank != null) {
+    const k = db.atotal.findIndex(x => (x.course || 'マスター') === course && x.ym === ym);
+    const rec = k >= 0 ? db.atotal[k] : { id: uid(), ym, course };
+    if (fuku != null) rec.fuku = fuku;
+    if (kokai != null) rec.kokai = kokai;
+    if (total != null) rec.total = total;
+    if (rank != null) rec.rank = rank;
+    if (k < 0) db.atotal.push(rec);
+  }
+
+  save();
+  $('pastePrev').style.display = 'none';
+  $('pasteBox').value = '';
+  pvData = null;
+  setPasteStatus(`✅ 取り込みました！ 最レ国語${added}回分・${ym}のまとめを保存しました。`, 'ok');
+  render();
+}
 
 // 最レ算数の個人票の取り込み。1回のテストが「計算」「復習」の2列に分かれているので、
 // 同じ日付・同じテストNo. のものを1件にまとめてから保存する。
