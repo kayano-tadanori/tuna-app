@@ -202,6 +202,7 @@
   <button class="tab" data-tab="saire">最レ算数</button>
   <button class="tab" data-tab="saikoku">最レ国語</button>
   <button class="tab" data-tab="nadago">灘合</button>
+  <button class="tab" data-tab="mosi">模試</button>
 </div>
 
 <main>
@@ -386,6 +387,64 @@
   </div>
 </div>
 
+<!-- 模試（判定テスト・各種模試）入力 -->
+<div class="overlay" id="mosiSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="mosiTitle">模試を記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">実施日</p><input class="fInput" type="date" id="mDate"></div>
+      <div><p class="fLabel">テスト名</p><input class="fInput" id="mName" placeholder="志望校判定模試"></div>
+    </div>
+    <p class="pNote">偏差値が出る模試は偏差値と得点を、得点と順位だけの模試は得点と順位を入れてください。空欄のままでOKです。</p>
+    <p class="subjHead">国語</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="mKokuDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="mKokuScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="mKokuRank"></div>
+    </div>
+    <p class="subjHead">算数</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="mSanDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="mSanScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="mSanRank"></div>
+    </div>
+    <p class="subjHead">理科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="mRiDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="mRiScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="mRiRank"></div>
+    </div>
+    <p class="subjHead">社会</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="mShaDev"></div>
+      <div><p class="fLabel">得点</p><input class="fInput" type="number" id="mShaScore"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" type="number" id="mShaRank"></div>
+    </div>
+    <p class="subjHead">2科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="m2Dev"></div>
+      <div><p class="fLabel">合計点</p><input class="fInput" type="number" id="m2Score"></div>
+      <div><p class="fLabel">順位（例：167/2482）</p><input class="fInput" id="m2Rank" autocomplete="off"></div>
+    </div>
+    <p class="subjHead">3科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="m3Dev"></div>
+      <div><p class="fLabel">合計点</p><input class="fInput" type="number" id="m3Score"></div>
+      <div><p class="fLabel">順位（例：113/2482）</p><input class="fInput" id="m3Rank" autocomplete="off"></div>
+    </div>
+    <p class="subjHead">4科</p>
+    <div class="fRow">
+      <div><p class="fLabel">偏差値</p><input class="fInput" type="number" step="0.1" id="m4Dev"></div>
+      <div><p class="fLabel">合計点</p><input class="fInput" type="number" id="m4Score"></div>
+      <div><p class="fLabel">順位</p><input class="fInput" id="m4Rank" autocomplete="off"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="mosiDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="mosiSave">保存</button>
+    </div>
+  </div>
+</div>
+
 <!-- 成績表を貼り付けて取り込む（AIを使わず、貼られた文字だけを解析する） -->
 <div class="overlay" id="pasteSheet">
   <div class="sheet">
@@ -433,9 +492,14 @@
 
       <!-- 公開学力テストのとき（月がたくさん並ぶので確認用の一覧） -->
       <div id="pvKokaiWrap">
-        <p class="pvHead">読み取った月</p>
-        <div id="pvKList"></div>
-        <p class="pNote" id="pvKNote"></p>
+        <div id="pvKWrap">
+          <p class="pvHead">公開学力テスト</p>
+          <div id="pvKList"></div>
+        </div>
+        <div id="pvMWrap" style="display:none">
+          <p class="pvHead">判定テスト・各種模試</p>
+          <div id="pvMList"></div>
+        </div>
       </div>
 
       <div class="sheetBtns"><button class="btn btnPink" id="pasteImport">この内容で取り込む</button></div>
@@ -474,7 +538,7 @@ function load() {
   let d = null;
   try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) { /* fallthrough */ }
   if (!d) d = {};
-  for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal']) if (!Array.isArray(d[k])) d[k] = [];
+  for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi']) if (!Array.isArray(d[k])) d[k] = [];
   return d;
 }
 const save = () => localStorage.setItem(KEY, JSON.stringify(db));
@@ -1065,6 +1129,28 @@ function render() {
     v.innerHTML = h;
     v.querySelectorAll('[data-saikoku]').forEach(el => el.onclick = () => openSaikoku(db.saikoku.find(x => x.id === el.dataset.saikoku)));
     bindRankChips(v, '最レ国語');
+  } else if (tab === 'mosi') {
+    const list = [...db.mosi].sort((a, b) => b.date.localeCompare(a.date));
+    let h = '';
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>公開学力テストのページを貼り付けると、判定テストや各種模試もここに入ります。<br>＋ボタンで手入力もできます。</p>';
+    for (const t of list) {
+      // 偏差値が出る模試は「偏差値(得点)」、得点と順位だけの模試は「得点(順位)」で見せる
+      const one = (n, o) => {
+        if (!o || (o.dev == null && o.score == null)) return '';
+        return o.dev != null ? `${n} ${o.dev}${o.score != null ? `(${o.score})` : ''}`
+                             : `${n} ${o.score}点${o.rank != null ? `(${o.rank}位)` : ''}`;
+      };
+      const subj = [one('国', t.koku), one('算', t.san), one('理', t.ri), one('社', t.sha)].filter(Boolean).join('・');
+      const tot = [['4科', t.avg4, t.rank4], ['3科', t.avg3, t.rank3], ['2科', t.avg2, t.rank2]]
+        .filter(([, a]) => a && (a.dev != null || a.score != null))
+        .map(([n, a, r]) => `${n} ${a.dev != null ? a.dev : ''}${a.score != null ? `${a.dev != null ? '（' : ''}${a.score}点${a.dev != null ? '）' : ''}` : ''}${r ? ` ${r}` : ''}`)
+        .join('　');
+      h += `<div class="pvK" data-mosi="${t.id}" style="cursor:pointer">
+        <div class="m">${t.date.replace(/-/g, '/')}<span>${t.name || '模試'}</span></div>
+        <div class="s">${subj || '—'}${tot ? '<br>' + tot : ''}</div></div>`;
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-mosi]').forEach(el => el.onclick = () => openMosi(db.mosi.find(x => x.id === el.dataset.mosi)));
   } else if (tab === 'ab') {
     v.innerHTML = renderAB();
     const sync = () => {
@@ -1266,6 +1352,50 @@ $('saikokuDelete').onclick = () => {
 
 // ---------- 灘合 ----------
 let editingNada = null;
+let editingMosi = null;
+function openMosi(t) {
+  editingMosi = t ? t.id : null;
+  $('mosiTitle').textContent = t ? '模試を編集' : '模試を記録';
+  $('mDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('mName').value = t ? (t.name || '') : '';
+  const set = (id, v) => $(id).value = v == null ? '' : v;
+  for (const [k, pre] of [['koku', 'mKoku'], ['san', 'mSan'], ['ri', 'mRi'], ['sha', 'mSha']]) {
+    set(pre + 'Dev', t && t[k] && t[k].dev); set(pre + 'Score', t && t[k] && t[k].score); set(pre + 'Rank', t && t[k] && t[k].rank);
+  }
+  for (const [k, pre] of [['avg2', 'm2'], ['avg3', 'm3'], ['avg4', 'm4']]) {
+    set(pre + 'Dev', t && t[k] && t[k].dev); set(pre + 'Score', t && t[k] && t[k].score);
+  }
+  $('m2Rank').value = t ? (t.rank2 || '') : '';
+  $('m3Rank').value = t ? (t.rank3 || '') : '';
+  $('m4Rank').value = t ? (t.rank4 || '') : '';
+  $('mosiDelete').style.display = t ? '' : 'none';
+  $('mosiSheet').classList.add('open');
+}
+$('mosiSave').onclick = () => {
+  const date = $('mDate').value;
+  if (!date) { alert('実施日を入れてください'); return; }
+  const sub = pre => ({ dev: num($(pre + 'Dev').value), score: num($(pre + 'Score').value), rank: num($(pre + 'Rank').value) });
+  const avg = pre => ({ dev: num($(pre + 'Dev').value), score: num($(pre + 'Score').value) });
+  const item = {
+    id: editingMosi || uid(), date, name: $('mName').value.trim(),
+    koku: sub('mKoku'), san: sub('mSan'), ri: sub('mRi'), sha: sub('mSha'),
+    avg2: avg('m2'), rank2: $('m2Rank').value.trim(),
+    avg3: avg('m3'), rank3: $('m3Rank').value.trim(),
+    avg4: avg('m4'), rank4: $('m4Rank').value.trim(),
+  };
+  db.mosi = db.mosi.filter(x => x.id !== item.id);
+  db.mosi.push(item);
+  editingMosi = null;
+  save(); closeAll(); render();
+};
+$('mosiDelete').onclick = () => {
+  if (!editingMosi) return;
+  if (!confirm('この模試の記録を削除しますか？')) return;
+  db.mosi = db.mosi.filter(x => x.id !== editingMosi);
+  editingMosi = null;
+  save(); closeAll(); render();
+};
+
 function openNada(t) {
   editingNada = t ? t.id : null;
   $('nadaTitle').textContent = t ? '灘合を編集' : '灘合を記録';
@@ -1396,10 +1526,113 @@ function parseKokai(raw) {
     const rec = kokaiRow(b.ym, b.body.join('\n'));
     if (rec) { rows.push(rec); seen.add(b.ym); }
   }
-  return { type: 'kokai', rows, hasOther: /判定学力テスト|判定模試|実力テスト|各種模試/.test(normText(raw)) };
+  // 同じページに載っている B（判定テスト）と C（各種模試）もまとめて読み取る
+  const whole = normText(raw);
+  const grade = activeProfile && activeProfile.grade ? +activeProfile.grade : null;
+  const mosi = parseMosiB(whole, grade).concat(parseMosiC(whole));
+  return { type: 'kokai', rows, mosi };
 }
 
-function kokaiRow(ym, body) {
+// ------------------------------------------------------------
+// B：小6合否判定学力テスト・小5志望校判定模試・小4実力テスト
+//   公開とちがって科目に［全体順位］が付かず、全部が「偏差値＋得点」の2段。
+//   代わりに順位（n/N）が2科・3科・4科の区切りになるので、それで切り分ける。
+// ------------------------------------------------------------
+function parseMosiB(t, grade) {
+  const b0 = t.search(/判定学力テスト|判定模試|実力テスト/);
+  if (b0 < 0) return [];
+  let body = t.slice(b0);
+  const c0 = body.search(/各種模試/);
+  const head = body.slice(0, body.search(/\n/) + 1 || 60);
+  if (c0 > 0) body = body.slice(0, c0);
+  // 見出し「小6合否判定学力テスト・小5志望校判定模試・小4実力テスト」から学年に合う名前を選ぶ
+  let name = '判定テスト';
+  const cands = head.split(/[・､、]/).map(x => x.trim()).filter(x => /テスト|模試/.test(x));
+  const hit = grade ? cands.find(x => x.startsWith('小' + grade)) : null;
+  if (hit) name = hit.replace(/^小\d\s*/, '');
+  else if (cands.length === 1) name = cands[0].replace(/^小\d\s*/, '');
+
+  const rows = [];
+  for (const blk of dateBlocks(body)) {
+    const T = tokenize(blk.body);
+    let i = 0;
+    const at = d => (T[i + d] ? T[i + d].k : '');
+    // 順位(P)が来るまで「偏差値＋得点」の組を読む
+    const group = () => {
+      const g = [];
+      while (at(0) === 'D' && at(1) === 'S') { g.push({ dev: T[i].v, score: T[i + 1].v, rank: null }); i += 2; }
+      let r = '';
+      if (at(0) === 'P') { r = T[i].v; i++; if (at(0) === 'G') i++; }
+      return { g, r };
+    };
+    const g1 = group(), g2 = group(), g3 = group();
+    if (g1.g.length < 2) continue;                 // 国語・算数が読めなければ行ではない
+    const rec = blankMosi(blk.date, name);
+    rec.koku = g1.g[0]; rec.san = g1.g[1];
+    if (g1.g[2]) { rec.avg2 = { dev: g1.g[2].dev, score: g1.g[2].score }; rec.rank2 = g1.r; }
+    if (g2.g[0]) rec.ri = g2.g[0];
+    if (g2.g[1]) { rec.avg3 = { dev: g2.g[1].dev, score: g2.g[1].score }; rec.rank3 = g2.r; }
+    if (g3.g[0]) rec.sha = g3.g[0];
+    if (g3.g[1]) { rec.avg4 = { dev: g3.g[1].dev, score: g3.g[1].score }; rec.rank4 = g3.r; }
+    rows.push(rec);
+  }
+  return rows;
+}
+
+// ------------------------------------------------------------
+// C：各種模試（灘中日本一模擬入試・灘中チャレンジテストなど）
+//   偏差値は無く「◯点／◯位」だけ。合計は「◯点／順位/受験者数」。
+//   空欄が多く列の位置が読めないので、点と順位の組を出てきた順に
+//   国語→算数→理科→社会と当てはめる（多すぎる時は取り込まない）。
+// ------------------------------------------------------------
+function parseMosiC(t) {
+  const c0 = t.search(/各種模試/);
+  if (c0 < 0) return [];
+  const rows = [];
+  for (const blk of dateBlocks(t.slice(c0))) {
+    const pairs = [];   // {score, rank}
+    let total = null;
+    const re = /(\d+)\s*点[\s\S]{0,3}?(?:(\d+)\s*位|(\d+)\s*\/\s*(\d+))/g;
+    let m;
+    while ((m = re.exec(blk.body)) !== null) {
+      if (m[2] != null) pairs.push({ score: +m[1], rank: +m[2] });
+      else total = { score: +m[1], rank: `${+m[3]}/${+m[4]}` };
+    }
+    if (!pairs.length && !total) continue;
+    if (pairs.length > 4) continue;                // どの科目か決められないので見送る
+    // テスト名＝数字でない文字が残る行
+    const name = blk.body.split('\n')
+      .filter(l => /[^\d.,()\[\]\/\s\-–—点位]/.test(l))
+      .map(l => l.replace(/\d+\s*点|\d+\s*位|\d+\s*\/\s*\d+/g, '').replace(/^[\s\-–—]+/, '').replace(/[\s\-–—]+$/, ''))
+      .filter(Boolean).join('') || '模試';
+    const rec = blankMosi(blk.date, name);
+    ['koku', 'san', 'ri', 'sha'].forEach((k, i) => { if (pairs[i]) rec[k] = { dev: null, score: pairs[i].score, rank: pairs[i].rank }; });
+    if (total) {
+      const key = pairs.length >= 4 ? 'avg4' : pairs.length >= 3 ? 'avg3' : 'avg2';
+      rec[key] = { dev: null, score: total.score };
+      rec[key === 'avg4' ? 'rank4' : key === 'avg3' ? 'rank3' : 'rank2'] = total.rank;
+    }
+    rows.push(rec);
+  }
+  return rows;
+}
+
+// 「2025/11/23」で始まる行ごとに1件分として切り出す
+function dateBlocks(t) {
+  const D = /^(\d{4})\s*[\/年-]\s*(\d{1,2})\s*[\/月-]\s*(\d{1,2})/;
+  const out = [];
+  let cur = null;
+  for (const ln of t.split('\n')) {
+    const m = ln.match(D);
+    if (m) {
+      const pad = v => String(+v).padStart(2, '0');
+      cur = { date: `${m[1]}-${pad(m[2])}-${pad(m[3])}`, body: [ln.replace(D, '')] };
+      out.push(cur);
+    } else if (cur) cur.body.push(ln);
+  }
+  return out.map(b => ({ date: b.date, body: b.body.join('\n') }));
+}
+function tokenize(body) {
   const T = [];
   let m;
   KOKAI_TOK.lastIndex = 0;
@@ -1410,6 +1643,21 @@ function kokaiRow(ym, body) {
     else if (m[5] != null) T.push({ k: 'P', v: `${+m[5]}/${+m[6]}` });
     else if (m[7] != null) T.push({ k: 'D', v: +m[7] });
   }
+  return T;
+}
+function blankMosi(date, name) {
+  const z = () => ({ dev: null, score: null, rank: null });
+  return {
+    id: uid(), date, name,
+    koku: z(), san: z(), ri: z(), sha: z(),
+    avg2: { dev: null, score: null }, rank2: '',
+    avg3: { dev: null, score: null }, rank3: '',
+    avg4: { dev: null, score: null }, rank4: '',
+  };
+}
+
+function kokaiRow(ym, body) {
+  const T = tokenize(body);
   let i = 0;
   const at = d => (T[i + d] ? T[i + d].k : '');
   const isSubj = () => at(0) === 'D' && at(1) === 'S' && at(2) === 'R';
@@ -1573,14 +1821,17 @@ function runParse(raw, type) {
   }
   if (type === 'kokai') {
     const d = parseKokai(raw);
-    if (!d.rows.length) {
+    if (!d.rows.length && !d.mosi.length) {
       setPasteStatus('公開学力テストの表が読み取れませんでした。「実施月」の見出しから下を、表ごと選んでコピーし直してみてください。', 'ng');
       $('pastePrev').style.display = 'none';
       return;
     }
     pvData = d;
     renderPastePreview(d);
-    setPasteStatus(`読み取りました：公開学力テスト${d.rows.length}ヶ月分（${ymLabel(d.rows[0].ym)}〜${ymLabel(d.rows[d.rows.length - 1].ym)}）。`, 'ok');
+    const parts = [];
+    if (d.rows.length) parts.push(`公開学力テスト${d.rows.length}ヶ月分（${ymLabel(d.rows[0].ym)}〜${ymLabel(d.rows[d.rows.length - 1].ym)}）`);
+    if (d.mosi.length) parts.push(`模試${d.mosi.length}件`);
+    setPasteStatus('読み取りました：' + parts.join(' ／ ') + '。', 'ok');
     return;
   }
   const d = parseKojinhyoA(raw);
@@ -1640,9 +1891,20 @@ function renderKokaiPreview(d) {
     return `<div class="pvK"><div class="m">${ymLabel(k.ym)}<span>${k.class || 'クラス不明'}</span></div>
       <div class="s">${subj || '—'}<br>${av}${kij}</div></div>`;
   }).join('');
-  $('pvKNote').textContent = d.hasOther
-    ? '※ 合否判定テスト・各種模試は保存する場所がまだ無いので取り込みません。'
-    : '';
+  // 同じページに載っている判定テスト・各種模試
+  $('pvMList').innerHTML = d.mosi.map(t => {
+    const one = (n, o) => (!o || (o.dev == null && o.score == null)) ? ''
+      : (o.dev != null ? `${n} ${o.dev}${o.score != null ? `(${o.score})` : ''}`
+                       : `${n} ${o.score}点${o.rank != null ? `(${o.rank}位)` : ''}`);
+    const subj = [one('国', t.koku), one('算', t.san), one('理', t.ri), one('社', t.sha)].filter(Boolean).join('・');
+    const tot = [['4科', t.avg4, t.rank4], ['3科', t.avg3, t.rank3], ['2科', t.avg2, t.rank2]]
+      .filter(([, a]) => a && (a.dev != null || a.score != null))
+      .map(([n, a, r]) => `${n} ${a.dev != null ? a.dev : ''}${a.score != null ? `${a.dev != null ? '（' : ''}${a.score}点${a.dev != null ? '）' : ''}` : ''}${r ? ` ${r}` : ''}`).join('　');
+    return `<div class="pvK"><div class="m">${t.date.replace(/-/g, '/')}<span>${t.name}</span></div>
+      <div class="s">${subj || '—'}${tot ? '<br>' + tot : ''}</div></div>`;
+  }).join('');
+  $('pvMWrap').style.display = d.mosi.length ? '' : 'none';
+  $('pvKWrap').style.display = d.rows.length ? '' : 'none';
 }
 
 // 個人票は「月」をセル結合で1回しか書かないので、コピーすると月が落ちる。
@@ -1745,11 +2007,22 @@ function importKokai() {
     n++;
   }
   db.kokai.sort((a, b) => a.ym.localeCompare(b.ym));
+
+  // 判定テスト・各種模試は「実施日＋テスト名」で同じものとみなして上書き
+  let mn = 0;
+  for (const t of pvData.mosi) {
+    const i = db.mosi.findIndex(x => x.date === t.date && (x.name || '') === (t.name || ''));
+    if (i >= 0) { t.id = db.mosi[i].id; db.mosi[i] = t; } else db.mosi.push(t);
+    mn++;
+  }
+  db.mosi.sort((a, b) => a.date.localeCompare(b.date));
+
   save();
   $('pastePrev').style.display = 'none';
   $('pasteBox').value = '';
   pvData = null;
-  setPasteStatus(`✅ 取り込みました！ 公開学力テスト${n}ヶ月分を保存しました。`, 'ok');
+  const msg = [n ? `公開学力テスト${n}ヶ月分` : '', mn ? `模試${mn}件` : ''].filter(Boolean).join('・');
+  setPasteStatus(`✅ 取り込みました！ ${msg}を保存しました。`, 'ok');
   render();
 }
 
@@ -1794,6 +2067,7 @@ $('fab').onclick = () => {
   else if (tab === 'fukushu') openFuku(null);
   else if (tab === 'saire') openSaire(null);
   else if (tab === 'saikoku') openSaikoku(null);
+  else if (tab === 'mosi') openMosi(null);
   else openNada(null);
 };
 $('pasteBtn').onclick = openPasteSheet;
