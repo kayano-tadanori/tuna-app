@@ -95,6 +95,13 @@
     font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 999px;
     background: #e2e8f0; color: #64748b; flex-shrink: 0;
   }
+  /* 成績管理の「コピペするだけ」の目印。気づいてもらいたいので色付きで目立たせる */
+  .easyTag {
+    display: inline-block; font-size: 11px; font-weight: 800; line-height: 1;
+    padding: 5px 9px; border-radius: 999px; margin-bottom: 5px;
+    background: linear-gradient(135deg, #db2777, #f472b6); color: #fff;
+    box-shadow: 0 2px 6px rgba(219, 39, 119, .35);
+  }
   .privacy {
     margin-top: 22px; text-align: center;
     font-size: 11px; color: #94a3b8; line-height: 1.7;
@@ -215,7 +222,8 @@
       <span class="icon">📊</span>
       <span class="txt">
         <span class="name">成績管理</span>
-        <span class="desc">公開テストの偏差値グラフ・復習テスト・最レ・灘合の記録</span>
+        <span class="easyTag">📋 簡単入力（コピペするだけ）</span>
+        <span class="desc">浜学園マイページの成績表を貼るだけで取り込み。公開テストの偏差値グラフ・復習テスト・最レ・灘合の記録</span>
       </span>
       <span class="arrow">›</span>
     </a>
