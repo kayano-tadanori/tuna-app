@@ -460,8 +460,9 @@
   <div class="sheet">
     <div class="sheetHead"><h2>📋 成績表を貼り付けて取り込む</h2><button class="closeBtn" data-close>✕</button></div>
     <p class="pStep">① 浜学園マイページを開いて、成績表を表示する</p>
-    <p class="pStep">② 表をドラッグして選択し、コピーする</p>
-    <p class="pStep">③ 下の枠を長押し→ペーストして「解析する」</p>
+    <p class="pStep">② 表をドラッグして選択 → <b>Ctrl＋C</b>（スマホは長押し→コピー）</p>
+    <p class="pStep">③ 下の枠に貼り付けて「解析する」</p>
+    <p class="pNote">右クリックが効かないページでも <b>Ctrl＋C</b> なら大体コピーできます。うまく選べなければ <b>Ctrl＋A →  Ctrl＋C</b> でページごとコピーして、そのまま貼ってOK（必要な所だけ拾います）。</p>
     <textarea class="pBox" id="pasteBox" placeholder="ここに成績表を貼り付け"></textarea>
     <div class="sheetBtns"><button class="btn btnPink" id="pasteParse">解析する</button></div>
     <p class="pNote" id="pasteStatus">アプリが浜学園にログインすることはありません。貼り付けた文字だけを読み取ります。</p>
@@ -1418,38 +1419,58 @@ function parseKojinhyoA(raw) {
   const lines = t.split('\n').map(s => s.trim()).filter(s => s);
   const r = { type: 'kojinA', month: null, grade: null, course: 'マスター', tests: [], fuku: null, kokai: null, total: null, rank: null };
 
-  const mMonth = t.match(/(\d{1,2})\s*月度/);
-  if (mMonth) r.month = +mMonth[1];
-  const mGrade = t.match(/小\s*([1-6])/);
-  if (mGrade) r.grade = +mGrade[1];
+  // ページ全体をコピー（Ctrl+A→Ctrl+C）しても効くよう、「あなたの成績」の行を軸にして
+  // 見出しはその手前から、クラス平均はその後ろから探す。表以外の文字が付いてきても迷わない。
+  const meIdx = lines.findIndex(l => l.includes('あなたの成績'));
+  const headTo = meIdx >= 0 ? meIdx : lines.length;
+  const headFrom = meIdx >= 0 ? Math.max(0, meIdx - 20) : 0;
+  // 軸の手前でいちばん近い行を採る（見つからなければ後ろも探す）
+  const pick = test => {
+    for (let i = headTo - 1; i >= headFrom; i--) if (test(lines[i])) return lines[i];
+    return lines.slice(headTo).find(test) || '';
+  };
+  const near = meIdx >= 0 ? lines.slice(headFrom, meIdx + 1).join('\n') : t;
+  // 表の真上にある見出しが正しいので、いちばん最後（＝表に近い方）の書き方を採る。
+  // ページ全体をコピーすると別の表の「6月度」などが上に紛れ込むため。
+  const lastNum = (s, src) => {
+    const g = new RegExp(src, 'g'); let m, last = null;
+    while ((m = g.exec(s)) !== null) last = m;
+    return last ? +last[1] : null;
+  };
+  r.month = lastNum(near, '(\\d{1,2})\\s*月度');
+  if (r.month == null) r.month = lastNum(t, '(\\d{1,2})\\s*月度');
+  r.grade = lastNum(near, '小\\s*([1-6])');
+  if (r.grade == null) r.grade = lastNum(t, '小\\s*([1-6])');
 
-  const pick = re => lines.find(l => re.test(l)) || '';
-  const months = numsOf(pick(/^月[\s\d]/));
-  const days = numsOf(pick(/^日[\s\d]/));
-  const nos = numsOf(pick(/^テストNo/));
+  const months = numsOf(pick(l => /^月[\s\d]/.test(l)));
+  const days = numsOf(pick(l => /^日[\s\d]/.test(l)));
+  const nos = numsOf(pick(l => /^テストNo/.test(l)));
   // 科目行：先頭が「科目」で、教科名が並ぶ行
-  const subjLine = lines.find(l => /^科目/.test(l) && SUBJ_WORDS.some(w => l.includes(w))) || '';
+  const subjLine = pick(l => /^科目/.test(l) && SUBJ_WORDS.some(w => l.includes(w)));
   const subjects = (subjLine.match(new RegExp(SUBJ_WORDS.join('|'), 'g')) || []);
 
   // 列数＝日付・科目・No.のうち最も多く取れた数
-  const n = Math.max(days.length, subjects.length, nos.length);
-
-  // 「あなたの成績」の行（コピーで行が割れる場合に備え、次の行も足して数を拾う）
-  const meIdx = lines.findIndex(l => l.includes('あなたの成績'));
   let meNums = [];
+  const n = Math.max(days.length, subjects.length, nos.length);
   if (meIdx >= 0) {
     meNums = numsOf(lines[meIdx]);
-    for (let k = 1; k <= 3 && meNums.length < n + 11 && meIdx + k < lines.length; k++) {
+    // コピーで1行が折れているときだけ、続きの行を足して補う
+    for (let k = 1; k <= 3 && meNums.length < n + 4 && meIdx + k < lines.length; k++) {
       const nx = lines[meIdx + k];
-      if (/あなた|平均/.test(nx)) break;
+      if (/あなた|^平均/.test(nx) || !/\d/.test(nx)) break;
       meNums = meNums.concat(numsOf(nx));
     }
   }
-  // 最下段の「平均」行（クラス平均）。「7月復テ平均」等の見出し行と紛れないよう、
-  // 行頭が「平均」で数値が2つ以上あるものの中から最後のものを採用する。
+  // クラス平均の行。クラス内順位表には他の子の行も並ぶので、
+  // 自分の行より後ろにある最初の「平均」行（数値2つ以上）を採る。
   let avgNums = [];
-  for (const l of lines) {
-    if (/^平均[\s\d]/.test(l)) { const v = numsOf(l); if (v.length >= 2) avgNums = v; }
+  for (let i = (meIdx >= 0 ? meIdx + 1 : 0); i < lines.length; i++) {
+    if (/^平均[\s\d]/.test(lines[i])) { const v = numsOf(lines[i]); if (v.length >= 2) { avgNums = v; break; } }
+  }
+  if (!avgNums.length) {   // 自分の行より前にある形なら、そちらから探す
+    for (const l of lines) {
+      if (/^平均[\s\d]/.test(l)) { const v = numsOf(l); if (v.length >= 2) avgNums = v; }
+    }
   }
 
   // 「あなたの成績」の並びは 各テストの点 … 合計・科目別(平均/順位)…・復テ平均・公開平均・総計・順位。
