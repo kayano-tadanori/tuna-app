@@ -508,10 +508,9 @@
 
       <!-- 復習テストの速報のとき -->
       <div id="pvSokWrap" style="display:none">
-        <div id="pvSokYmWrap">
-          <p class="fLabel">新しい回を入れる月度</p>
-          <input class="fInput" id="pvSokYm" placeholder="2026-08">
-        </div>
+        <div id="pvSokYmF"><p class="fLabel">新しい回を入れる月度（マスター復習テスト）</p><input class="fInput" id="pvSokYmFv" placeholder="2026-08"></div>
+        <div id="pvSokYmS"><p class="fLabel">新しい回を入れる月度（最レ算数）</p><input class="fInput" id="pvSokYmSv" placeholder="2026-08"></div>
+        <div id="pvSokYmK"><p class="fLabel">新しい回を入れる月度（最レ国語）</p><input class="fInput" id="pvSokYmKv" placeholder="2026-07"></div>
         <div id="pvSokList"></div>
       </div>
 
@@ -604,11 +603,14 @@ function rankFor(course, ym) {
 function saiYmOf(ds) {
   return ds <= '2025-01-31' ? ds.slice(0, 7) : ymOfDate(ds);
 }
+// 最レ算数・最レ国語がどの月度のものか（速報は日付が無いので ym をそのまま使う）
+function saiYm(t) { return t.date ? saiYmOf(t.date) : (t.ym || ''); }
+function sakYm(t) { return t.date ? t.date.slice(0, 7) : (t.ym || ''); }
 // 最レ算数のA表：その月度の復テ平均（計算・復習の全得点の単純平均）＋公開テスト算数の得点
 function saiRow(ym) {
   const sc = [];
   for (const t of db.saire) {
-    if (!t.date || saiYmOf(t.date) !== ym) continue;
+    if (saiYm(t) !== ym) continue;
     if (t.keisan != null && t.keisan !== '') sc.push(+t.keisan);
     if (t.fukushu != null && t.fukushu !== '') sc.push(+t.fukushu);
   }
@@ -621,7 +623,7 @@ function saiRow(ym) {
 function saikokuRow(ym) {
   const sc = [];
   for (const t of db.saikoku) {
-    if (t.date && t.date.slice(0, 7) === ym && t.score != null && t.score !== '') sc.push(+t.score);
+    if (sakYm(t) === ym && t.score != null && t.score !== '') sc.push(+t.score);
   }
   const fuku = sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null;
   const k = db.kokai.find(x => x.ym === ym);
@@ -648,8 +650,8 @@ function nadaRow(ym) {
 function courseMonthData(course) {
   const yms = new Set(db.atotal.filter(x => (x.course || 'マスター') === course).map(x => x.ym));
   if (course === 'マスター') abMonths().forEach(m => yms.add(m));
-  if (course === '最レ算数') db.saire.forEach(t => { if (t.date) yms.add(saiYmOf(t.date)); });
-  if (course === '最レ国語') db.saikoku.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
+  if (course === '最レ算数') db.saire.forEach(t => { const y = saiYm(t); if (y) yms.add(y); });
+  if (course === '最レ国語') db.saikoku.forEach(t => { const y = sakYm(t); if (y) yms.add(y); });
   if (course === '灘合') db.nadago.forEach(t => { if (t.date) yms.add(t.date.slice(0, 7)); });
   return [...yms].sort().map(ym => {
     const rec = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
@@ -1109,49 +1111,55 @@ function render() {
     v.querySelectorAll('[data-fuku]').forEach(el => el.onclick = () => openFuku(db.fukushu.find(x => x.id === el.dataset.fuku)));
     bindRankChips(v, 'マスター');
   } else if (tab === 'saire') {
-    const list = [...db.saire].sort((a, b) => b.date.localeCompare(a.date));
+    const skey = t => t.date ? t.date : '9999-' + (t.ym || '');
+    const list = [...db.saire].sort((a, b) => skey(b).localeCompare(skey(a)));
     let h = courseGraphs('最レ算数');
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓算数（計算80点＋復習120点）を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
-      const ym = saiYmOf(t.date);
+      const ym = (t.date ? '' : 'sok:') + saiYm(t);
       if (ym !== curYm) {
         curYm = ym;
-        const m = db.saire.filter(x => saiYmOf(x.date) === ym);
+        const sok = !t.date;
+        const m = db.saire.filter(x => ((x.date ? '' : 'sok:') + saiYm(x)) === ym);
         const avg = (m.reduce((s, x) => s + (+x.keisan || 0) + (+x.fukushu || 0), 0) / m.length).toFixed(1);
-        const rk = rankFor('最レ算数', ym);
-        h += `<p class="secLabel">${ymLabel(ym)}度（${m.length}回・平均 ${avg}/200点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
+        const rk = rankFor('最レ算数', saiYm(t));
+        h += `<p class="secLabel">${ymLabel(saiYm(t))}度${sok ? 'の速報' : ''}（${m.length}回・平均 ${avg}/200点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
       }
       const total = (+t.keisan || 0) + (+t.fukushu || 0);
       // 取り込んだ回はクラス平均も並べる（合計で比べる）
       const tAvg = (t.keisanAvg != null && t.fukushuAvg != null) ? +t.keisanAvg + +t.fukushuAvg : null;
       const av = tAvg != null
         ? `<span class="av ${total >= tAvg ? 'up' : 'dn'}">平均<b>${Math.round(tAvg * 10) / 10}</b></span>` : '';
-      h += `<div class="testLine" data-saire="${t.id}"><span class="d">${mdLabel(t.date)}</span>
-        <span class="sj">No.${show(t.no)}　計算${show(t.keisan)}・復習${show(t.fukushu)}</span>
+      const srk = [t.keisanRank != null ? `計${t.keisanRank}位` : '', t.fukushuRank != null ? `復${t.fukushuRank}位` : ''].filter(Boolean).join('・');
+      h += `<div class="testLine" data-saire="${t.id}"><span class="d">${t.date ? mdLabel(t.date) : '速報'}</span>
+        <span class="sj">No.${show(t.no)}　計算${show(t.keisan)}・復習${show(t.fukushu)}<span style="font-size:10px;color:#94a3b8;font-weight:700">${srk ? '　' + srk : ''}</span></span>
         <span class="sc${total < 160 ? ' scoreBad' : ''}">${total}点</span>${av}</div>`;
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-saire]').forEach(el => el.onclick = () => openSaire(db.saire.find(x => x.id === el.dataset.saire)));
     bindRankChips(v, '最レ算数');
   } else if (tab === 'saikoku') {
-    const list = [...db.saikoku].sort((a, b) => b.date.localeCompare(a.date));
+    const skey2 = t => t.date ? t.date : '9999-' + (t.ym || '');
+    const list = [...db.saikoku].sort((a, b) => skey2(b).localeCompare(skey2(a)));
     let h = courseGraphs('最レ国語');
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓国語（復習テスト・100点満点）を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
-      const ym = t.date.slice(0, 7);
+      const ym = (t.date ? '' : 'sok:') + sakYm(t);
       if (ym !== curYm) {
         curYm = ym;
-        const m = db.saikoku.filter(x => x.date.slice(0, 7) === ym);
+        const sok = !t.date;
+        const m = db.saikoku.filter(x => ((x.date ? '' : 'sok:') + sakYm(x)) === ym);
         const avg = (m.reduce((s, x) => s + (+x.score || 0), 0) / m.length).toFixed(1);
-        const rk = rankFor('最レ国語', ym);
-        h += `<p class="secLabel">${ymLabel(ym)}度（${m.length}回・平均 ${avg}点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
+        const rk = rankFor('最レ国語', sakYm(t));
+        h += `<p class="secLabel">${ymLabel(sakYm(t))}度${sok ? 'の速報' : ''}（${m.length}回・平均 ${avg}点${rk != null ? '・クラス内' + rk + '位' : ''}）</p>`;
       }
       const av = (t.avg != null && t.avg !== '')
         ? `<span class="av ${(+t.score || 0) >= +t.avg ? 'up' : 'dn'}">平均<b>${t.avg}</b></span>` : '';
-      h += `<div class="testLine" data-saikoku="${t.id}"><span class="d">${mdLabel(t.date)}</span>
-        <span class="sj">復習テスト</span><span class="no">No.${show(t.no)}</span>
+      const krk = t.rank != null ? `　クラス${t.rank}位${t.rankN ? '/' + t.rankN + '人' : ''}` : '';
+      h += `<div class="testLine" data-saikoku="${t.id}"><span class="d">${t.date ? mdLabel(t.date) : '速報'}</span>
+        <span class="sj">復習テスト<span style="font-size:10px;color:#94a3b8;font-weight:700">${krk}</span></span><span class="no">No.${show(t.no)}</span>
         <span class="sc${(+t.score || 0) < 60 ? ' scoreBad' : ''}">${show(t.score)}点</span>${av}</div>`;
     }
     v.innerHTML = h;
@@ -1571,9 +1579,19 @@ function parseSokuho(raw) {
   const rows = [];
   for (const b of blocks) {
     const body = b.body.join('\n');
-    const mSub = body.match(/国語|算数|理科|社会/);
     const mNo = body.match(/no\.?\s*(\d+)/i) || b.head.match(/\t\s*(\d+)\s*\t/);
-    if (!mSub || !mNo) continue;
+    if (!mNo) continue;
+    // 特訓コースの一覧は科目の欄が「特訓算数計算」「特訓算数復習」「特訓国語復習」
+    let kind = 'master', part = '', subject = '';
+    if (/(?:特訓|最レ)\s*算数\s*計算/.test(body)) { kind = 'saire'; part = 'keisan'; }
+    else if (/(?:特訓|最レ)\s*算数\s*復習/.test(body)) { kind = 'saire'; part = 'fukushu'; }
+    else if (/(?:特訓|最レ)\s*国語\s*復習/.test(body)) { kind = 'saikoku'; }
+    else if (/特訓|最レ|灘中/.test(body)) continue;   // 知らない特訓講座は取り込まない
+    else {
+      const mSub = body.match(/国語|算数|理科|社会/);
+      if (!mSub) continue;
+      subject = mSub[0];
+    }
     const pts = [...body.matchAll(/(\d+(?:\.\d+)?)\s*(?:点|ポイント)/g)].map(m => +m[1]);
     const rks = [...body.matchAll(/(\d+)\s*位\s*\/\s*(\d+)\s*[人名]/g)].map(m => [+m[1], +m[2]]);
     if (!pts.length) continue;
@@ -1582,7 +1600,7 @@ function parseSokuho(raw) {
     rows.push({
       year: +b.head.match(HEAD)[1],
       month: mMon ? +mMon[1] : null,
-      subject: mSub[0], no: +mNo[1],
+      kind, part, subject, no: +mNo[1],
       score: pts[0] != null ? pts[0] : null,
       avg: pts[1] != null ? pts[1] : null,
       allAvg: pts[2] != null ? pts[2] : null,
@@ -1591,9 +1609,9 @@ function parseSokuho(raw) {
       cls: mCls ? mCls[1] : '',
     });
   }
-  // 同じ科目・同じNo.が2回出てきたら先に読めた方を残す
+  // 同じ講座・同じNo.（最レ算数は計算/復習ごと）が2回出たら先に読めた方を残す
   const seen = new Set();
-  const uniq = rows.filter(r => { const k = r.subject + '/' + r.no; return seen.has(k) ? false : (seen.add(k), true); });
+  const uniq = rows.filter(r => { const k = r.kind + r.part + r.subject + '/' + r.no; return seen.has(k) ? false : (seen.add(k), true); });
   return { type: 'sokuho', rows: uniq, plan: sokuhoPlan(uniq) };
 }
 
@@ -1602,17 +1620,28 @@ function parseSokuho(raw) {
 //   まだ無い＆その科目でいちばん新しい回 → 新しい月度の記録として追加
 //   まだ無いが古い回 → 日付が分からないので取り込まない
 function sokuhoPlan(rows) {
+  // 講座ごとに「今わかっている最後のNo.」を出す
   const maxNo = {};
-  for (const t of db.fukushu) {
-    if (!t.subject || t.no == null) continue;
-    if (maxNo[t.subject] == null || +t.no > maxNo[t.subject]) maxNo[t.subject] = +t.no;
-  }
+  const bump = (key, no) => { if (no != null && (maxNo[key] == null || +no > maxNo[key])) maxNo[key] = +no; };
+  for (const t of db.fukushu) if (t.subject) bump('master/' + t.subject, t.no);
+  for (const t of db.saire) bump('saire', t.no);
+  for (const t of db.saikoku) bump('saikoku', t.no);
+
+  const key = r => r.kind === 'master' ? 'master/' + r.subject : r.kind;
+  const findRec = r => {
+    const arr = r.kind === 'master' ? db.fukushu : r.kind === 'saire' ? db.saire : db.saikoku;
+    const ymOf = r.kind === 'master' ? fukuYm : r.kind === 'saire' ? saiYm : sakYm;
+    const cands = arr.filter(t => (t.no ?? null) === r.no && (r.kind !== 'master' || t.subject === r.subject));
+    cands.sort((a, b) => (ymOf(b) || '').localeCompare(ymOf(a) || ''));
+    return cands[0] || null;
+  };
+
   const plan = { update: [], add: [], skip: [] };
   for (const r of rows) {
-    const cands = db.fukushu.filter(t => t.subject === r.subject && (t.no ?? null) === r.no);
-    cands.sort((a, b) => (fukuYm(b) || '').localeCompare(fukuYm(a) || ''));
-    if (cands.length) { plan.update.push({ r, id: cands[0].id }); continue; }
-    if (maxNo[r.subject] != null && r.no > maxNo[r.subject]) plan.add.push(r);
+    const hit = findRec(r);
+    if (hit) { plan.update.push({ r, id: hit.id }); continue; }
+    const mx = maxNo[key(r)];
+    if (mx != null && r.no > mx) plan.add.push(r);
     else plan.skip.push(r);
   }
   return plan;
@@ -2041,6 +2070,12 @@ function renderPastePreview(d) {
   $('pastePrev').style.display = '';
 }
 
+// 速報の1行が何の講座か（画面に出す名前）
+function sokLabel(r) {
+  if (r.kind === 'saire') return '最レ算数 ' + (r.part === 'keisan' ? '計算' : '復習');
+  if (r.kind === 'saikoku') return '最レ国語';
+  return r.subject;
+}
 // 速報のプレビュー。どの回が新しく入り、どれが順位だけ足されるのかを見せる
 function renderSokuhoPreview(d) {
   $('pvKojin').style.display = 'none';
@@ -2048,13 +2083,16 @@ function renderSokuhoPreview(d) {
   $('pvYearWrap').style.display = 'none';
   $('pvSokWrap').style.display = '';
   $('pvTitle').textContent = '読み取った内容';
-  $('pvSokYm').value = ymOfDate(new Date().toISOString().slice(0, 10));
+  const today = new Date().toISOString().slice(0, 10);
+  $('pvSokYmFv').value = ymOfDate(today);
+  $('pvSokYmSv').value = ymOfDate(today);          // 最レ算数はマスターと同じ16日〆
+  $('pvSokYmKv').value = today.slice(0, 7);        // 最レ国語は暦月
 
   const line = r => {
     const av = r.avg != null ? `平均${r.avg}` : '';
     const rk = r.rank != null ? `クラス${r.rank}位${r.rankN ? '/' + r.rankN + '人' : ''}` : '';
     const al = r.allRank != null ? `全体${r.allRank}位${r.allN ? '/' + r.allN + '人' : ''}` : '';
-    return `<div class="pvK"><div class="m">${r.subject} No.${r.no}<span>${r.month ? r.month + '月' : ''}${r.cls ? '・' + r.cls : ''}</span></div>
+    return `<div class="pvK"><div class="m">${sokLabel(r)} No.${r.no}<span>${r.month ? r.month + '月' : ''}${r.cls ? '・' + r.cls : ''}</span></div>
       <div class="s">${r.score != null ? r.score + '点' : '—'}　${av}　${rk}${al ? '<br>' + al : ''}</div></div>`;
   };
   const sec = (title, arr, note) => arr.length
@@ -2064,7 +2102,10 @@ function renderSokuhoPreview(d) {
     sec('新しく記録する回', d.plan.add, '下の月度に入ります。日付は個人票を取り込んだときに埋まります。')
     + sec('記録済み（クラス順位などを追加）', d.plan.update.map(u => u.r), '点数とクラス平均は個人票の確定値をそのまま残します。')
     + sec('取り込まない回', d.plan.skip, '日付も月度も分からないため見送ります。個人票（A）を取り込むと入ります。');
-  $('pvSokYmWrap').style.display = d.plan.add.length ? '' : 'none';
+  const has = k => d.plan.add.some(r => r.kind === k);
+  $('pvSokYmF').style.display = has('master') ? '' : 'none';
+  $('pvSokYmS').style.display = has('saire') ? '' : 'none';
+  $('pvSokYmK').style.display = has('saikoku') ? '' : 'none';
   $('pastePrev').style.display = '';
 }
 
@@ -2192,40 +2233,62 @@ $('pasteImport').onclick = () => {
 // 速報の取り込み。新しい回は月度だけを持った記録として足し、
 // すでにある回にはクラス順位・全体順位を書き足す。
 function importSokuho() {
-  const ym = ($('pvSokYm').value || '').trim();
   const plan = pvData.plan;
-  if (plan.add.length && !/^\d{4}-\d{2}$/.test(ym)) { setPasteStatus('月度を「2026-08」の形で入れてください。', 'ng'); return; }
+  const YM = {
+    master: ($('pvSokYmFv').value || '').trim(),
+    saire: ($('pvSokYmSv').value || '').trim(),
+    saikoku: ($('pvSokYmKv').value || '').trim(),
+  };
+  for (const k of ['master', 'saire', 'saikoku']) {
+    if (plan.add.some(r => r.kind === k) && !/^\d{4}-\d{2}$/.test(YM[k])) {
+      setPasteStatus('月度を「2026-08」の形で入れてください。', 'ng'); return;
+    }
+  }
+  // 最レ算数は計算・復習で欄名が変わる（keisanRank / fukushuRank …）
+  const pre = r => r.kind === 'saire' ? r.part : '';
+  const K = (r, name) => pre(r) ? pre(r) + name[0].toUpperCase() + name.slice(1) : name;
   const extra = r => {
     const o = {};
-    if (r.rank != null) o.rank = r.rank;
-    if (r.rankN != null) o.rankN = r.rankN;
-    if (r.allAvg != null) o.allAvg = r.allAvg;
-    if (r.allRank != null) o.allRank = r.allRank;
-    if (r.allN != null) o.allN = r.allN;
+    if (r.rank != null) o[K(r, 'rank')] = r.rank;
+    if (r.rankN != null) o[K(r, 'rankN')] = r.rankN;
+    if (r.allAvg != null) o[K(r, 'allAvg')] = r.allAvg;
+    if (r.allRank != null) o[K(r, 'allRank')] = r.allRank;
+    if (r.allN != null) o[K(r, 'allN')] = r.allN;
     if (r.cls) o.cls = r.cls;
     return o;
   };
+  const arrOf = k => k === 'master' ? db.fukushu : k === 'saire' ? db.saire : db.saikoku;
+  // その講座で「点」と「クラス平均」がどの欄に入るか
+  const scoreKey = r => r.kind === 'saire' ? r.part : 'score';
+  const avgKey = r => r.kind === 'saire' ? r.part + 'Avg' : 'avg';
+
   for (const u of plan.update) {
-    const i = db.fukushu.findIndex(x => x.id === u.id);
+    const arr = arrOf(u.r.kind);
+    const i = arr.findIndex(x => x.id === u.id);
     if (i < 0) continue;
-    const cur = db.fukushu[i];
+    const cur = arr[i];
     // 点とクラス平均は個人票（確定値）が入っていればそのまま
     const fill = {};
-    if (cur.score == null && u.r.score != null) fill.score = u.r.score;
-    if ((cur.avg == null || cur.avg === '') && u.r.avg != null) fill.avg = u.r.avg;
-    db.fukushu[i] = Object.assign({}, cur, extra(u.r), fill);
+    const sk = scoreKey(u.r), ak = avgKey(u.r);
+    if ((cur[sk] == null || cur[sk] === '') && u.r.score != null) fill[sk] = u.r.score;
+    if ((cur[ak] == null || cur[ak] === '') && u.r.avg != null) fill[ak] = u.r.avg;
+    arr[i] = Object.assign({}, cur, extra(u.r), fill);
   }
   for (const r of plan.add) {
-    db.fukushu.push(Object.assign({
-      id: uid(), ym, subject: r.subject, no: r.no, score: r.score, avg: r.avg,
-    }, extra(r)));
+    const arr = arrOf(r.kind);
+    // 最レ算数は計算と復習が同じ回なので、先に作った記録に足す
+    let rec = r.kind === 'saire' ? arr.find(x => !x.date && x.ym === YM.saire && (x.no ?? null) === r.no) : null;
+    if (!rec) { rec = { id: uid(), ym: YM[r.kind], no: r.no }; if (r.kind === 'master') rec.subject = r.subject; arr.push(rec); }
+    rec[scoreKey(r)] = r.score;
+    if (r.avg != null) rec[avgKey(r)] = r.avg;
+    Object.assign(rec, extra(r));
   }
   save();
   $('pastePrev').style.display = 'none';
   $('pasteBox').value = '';
   const n1 = plan.add.length, n2 = plan.update.length, n3 = plan.skip.length;
   pvData = null;
-  setPasteStatus(`✅ 取り込みました！ 新しい回${n1}件を${ym}度に追加${n2 ? `・記録済み${n2}件に順位を追加` : ''}${n3 ? `（古い${n3}件は日付が分からないので見送りました）` : ''}。`, 'ok');
+  setPasteStatus(`✅ 取り込みました！ 新しい回${n1}件を追加${n2 ? `・記録済み${n2}件に順位を追加` : ''}${n3 ? `（古い${n3}件は日付が分からないので見送りました）` : ''}。`, 'ok');
   render();
 }
 
@@ -2307,8 +2370,13 @@ function importSaikokuA() {
     const date = `${y}-${pad(m)}-${pad(dd)}`;
     const no = num($('pvNo' + i).value);
     const avg = num($('pvAv' + i).value);
+    // 先に速報で入れておいた同じ回があれば、そこへ日付を入れて確定させる
+    const sk = db.saikoku.findIndex(x => !x.date && (x.no ?? null) === (no ?? null));
+    const base = sk >= 0 ? db.saikoku[sk] : null;
+    if (sk >= 0) db.saikoku.splice(sk, 1);
     const j = db.saikoku.findIndex(x => x.date === date && (x.no ?? null) === (no ?? null));
-    const rec = { id: j >= 0 ? db.saikoku[j].id : ('k' + date), date, no, score, avg };
+    const rec = Object.assign({}, base || {}, { id: j >= 0 ? db.saikoku[j].id : (base ? base.id : 'k' + date), date, no, score, avg });
+    delete rec.ym;
     if (j >= 0) db.saikoku[j] = rec; else db.saikoku.push(rec);
     added++;
   });
@@ -2363,9 +2431,14 @@ function importSaireA() {
 
   let added = 0;
   for (const r of byKey.values()) {
-    // 既存と同じ日・同じ回なら上書き（idは既存のものを引き継ぐ）
+    // 先に速報で入れておいた同じ回があれば、そこへ日付を入れて確定させる
+    const sk = db.saire.findIndex(x => !x.date && (x.no ?? null) === (r.no ?? null));
+    const base = sk >= 0 ? db.saire[sk] : null;
+    if (sk >= 0) db.saire.splice(sk, 1);
     const i = db.saire.findIndex(x => x.date === r.date && (x.no ?? null) === (r.no ?? null));
-    const rec = Object.assign({ id: i >= 0 ? db.saire[i].id : ('s' + r.date) }, i >= 0 ? db.saire[i] : {}, r);
+    const rec = Object.assign({ id: i >= 0 ? db.saire[i].id : (base ? base.id : 's' + r.date) },
+      base || {}, i >= 0 ? db.saire[i] : {}, r);
+    delete rec.ym;
     if (i >= 0) db.saire[i] = rec; else db.saire.push(rec);
     added++;
   }
