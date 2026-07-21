@@ -153,14 +153,13 @@
   .kv .k { color: #64748b; font-weight: 700; }
   .kv .v { font-weight: 800; }
 
-  #aiFmtBtn, #pasteBtn {
+  #pasteBtn {
     border: 1.5px dashed #db2777; background: #fdf2f8; color: #db2777;
     font-size: 12px; font-weight: 800; padding: 7px 10px; border-radius: 10px;
     cursor: pointer; white-space: nowrap;
   }
   /* 貼り付け取り込みが本命なので実線で目立たせる */
   #pasteBtn { border-style: solid; background: #db2777; color: #fff; }
-  .aiStep { font-size: 13px; font-weight: 700; line-height: 1.7; margin: 6px 2px; }
   .aiNote { font-size: 11px; color: #94a3b8; font-weight: 700; line-height: 1.7; margin: 10px 2px 0; }
 
   /* ── 成績表の貼り付け取り込み ── */
@@ -180,12 +179,10 @@
     font-size: 13px; font-family: inherit; text-align: center; background: #fff; color: inherit; box-sizing: border-box;
   }
   .pvIn.miss { border-color: #f59e0b; background: #fffbeb; }
-  .fmtPre {
-    background: #f1f5f9; border: 1.5px solid #e2e8f0; border-radius: 10px;
-    padding: 10px; margin-top: 10px; font-size: 10.5px; line-height: 1.55;
-    white-space: pre-wrap; word-break: break-all; max-height: 240px; overflow-y: auto;
-    font-family: ui-monospace, Menlo, Consolas, monospace; color: #334155;
-  }
+  .pvK { border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 8px 10px; margin-bottom: 6px; background: #fff; }
+  .pvK .m { font-size: 12.5px; font-weight: 800; }
+  .pvK .m span { color: #94a3b8; font-size: 11px; margin-left: 6px; }
+  .pvK .s { font-size: 11.5px; color: #64748b; font-weight: 700; line-height: 1.7; margin-top: 3px; }
 </style>
 <link rel="stylesheet" href="dark.css">
 <script>if((localStorage.getItem('okan_gender')||'')==='男'){document.documentElement.classList.add('otonDark');var _tm=document.querySelector('meta[name="theme-color"]');if(_tm)_tm.content='#101c38';}</script>
@@ -198,15 +195,13 @@
 </header>
 
 <div id="topBar">
+  <button id="pasteBtn">📋 貼り付け取り込み</button>
   <button class="tab on" data-tab="ab">⚖️クラス替え</button>
   <button class="tab" data-tab="kokai">公開</button>
   <button class="tab" data-tab="fukushu">復習テスト</button>
   <button class="tab" data-tab="saire">最レ算数</button>
   <button class="tab" data-tab="saikoku">最レ国語</button>
   <button class="tab" data-tab="nadago">灘合</button>
-  <span class="grow"></span>
-  <button id="pasteBtn">📋 貼り付け取り込み</button>
-  <button id="aiFmtBtn">🤖 AI入力</button>
 </div>
 
 <main>
@@ -391,70 +386,6 @@
   </div>
 </div>
 
-<!-- AIでJSONを作る人向けフォーマット -->
-<div class="overlay" id="aiFmtSheet">
-  <div class="sheet">
-    <div class="sheetHead"><h2>🤖 AIでまとめて入力する</h2><button class="closeBtn" data-close>✕</button></div>
-    <p class="aiStep">① 下の「指示文をコピー」を押す</p>
-    <p class="aiStep">② ChatGPTやClaudeに貼りつけ、成績表のスクショを一緒に送る</p>
-    <p class="aiStep">③ 返ってきたJSONを「.json」ファイルとして保存する（AIに「ファイルにして」と頼んでもOK）</p>
-    <p class="aiStep">④ ホーム → ⚙️設定 → 📥取り込む でそのファイルを選ぶ</p>
-    <pre class="fmtPre" id="aiFmtPre">あなたは成績データ入力の係です。渡した浜学園の成績表（スクリーンショット）から「あなたの成績」を読み取り、次の形式のJSONだけを出力してください。説明文は不要です。
-
-{
-  "app": "chuju-mama-banso",
-  "ver": 1,
-  "seiseki": {
-    "kokai": [
-      {
-        "id": "k2026-04",
-        "ym": "2026-04",
-        "class": "西宮V1",
-        "koku": { "dev": 58.3, "score": 78, "rank": 210 },
-        "san":  { "dev": 65.1, "score": 92, "rank": 45 },
-        "ri":   { "dev": 60.2, "score": 80, "rank": 120 },
-        "sha":  { "dev": 57.0, "score": 70, "rank": 300 },
-        "avg4": { "dev": 61.0 }, "rank4": "40/1500",
-        "avg3": { "dev": 62.0 }, "rank3": "27/2884",
-        "avg2": { "dev": 61.5 }, "rank2": "131/2884",
-        "kijutsu": { "dev": 55.0, "score": 40 }
-      }
-    ],
-    "fukushu": [
-      { "id": "f2026-06-01-san12", "date": "2026-06-01", "subject": "算数", "no": 12, "score": 85 }
-    ],
-    "saire": [
-      { "id": "s2026-06-07", "date": "2026-06-07", "no": 5, "keisan": 90, "fukushu": 110 }
-    ],
-    "saikoku": [
-      { "id": "k2026-06-07", "date": "2026-06-07", "no": 8, "score": 85 }
-    ],
-    "nadago": [
-      { "id": "n2026-06-28", "date": "2026-06-28", "no": 2, "koku": 75, "san": 100, "ri": 94, "kokuRank": 5, "sanRank": 1, "riRank": 3 }
-    ],
-    "atotal": [
-      { "id": "a2026-05-master", "ym": "2026-05", "course": "マスター", "rank": 1 }
-    ]
-  }
-}
-
-ルール:
-- kokai＝公開学力テスト（月ごと1件）。ym は "YYYY-MM"。dev=偏差値、score=得点、rank=順位。rank4/rank3/rank2 は「順位/受験者数」の文字列。kijutsu＝国語記述。sha（社会）と avg4/rank4（4科）は成績表にあるときだけ入れる（無ければ省略）。
-- fukushu＝復習テスト。subject は 算数/国語/理科 など。no=第何回、score=得点。
-- saire＝最高レベル特訓算数。keisan=計算テストの得点、fukushu=復習テストの得点。
-- saikoku＝最高レベル特訓国語。復習テストのみ（100点満点）。score=得点、no=第何回（実力テストは null）。
-- nadago＝灘中合格特訓（灘合）。koku/san/ri は各教科の得点。kokuRank/sanRank/riRank は各教科のクラス内順位（成績表にあるときだけ）。
-- atotal＝A表のクラス内順位。course は マスター/最レ算数/最レ国語/灘合 のどれか。rank=その月度のクラス内順位。ym は "YYYY-MM"（月度）。総合点は復テ・公開の記録から自動計算されるので入力不要（A表個人票の実物値 fuku/kokai/total を入れた場合はそちらを優先表示。灘合の総合点は実物値がある場合のみグラフに出ます）。
-- 読み取れない値は null。数値は数値型で書き、単位（点・位）は付けない。
-- id は他とかぶらない英数字の文字列。上の例のように日付から作る。
-- 該当データのない配列は [] のままでよい。</pre>
-    <div class="sheetBtns">
-      <button class="btn btnPink" id="aiFmtCopy">📋 指示文をコピー</button>
-    </div>
-    <p class="aiNote">同じ月の公開テストは上書き、その他は id が同じものが上書きされます。何度取り込んでも重複しません。</p>
-  </div>
-</div>
-
 <!-- 成績表を貼り付けて取り込む（AIを使わず、貼られた文字だけを解析する） -->
 <div class="overlay" id="pasteSheet">
   <div class="sheet">
@@ -468,31 +399,43 @@
     <p class="pNote" id="pasteStatus">アプリが浜学園にログインすることはありません。貼り付けた文字だけを読み取ります。</p>
 
     <div id="pastePrev" style="display:none">
-      <p class="pvHead">読み取った内容（直せます）</p>
+      <p class="pvHead" id="pvTitle">読み取った内容（直せます）</p>
       <div class="fRow">
         <div><p class="fLabel">種類</p>
           <select class="fInput" id="pvType">
             <option value="kojinA">マスター個人票（A）</option>
+            <option value="kokai">公開学力テスト</option>
           </select>
         </div>
-        <div><p class="fLabel">年</p><input class="fInput" type="number" id="pvYear"></div>
-      </div>
-      <div class="fRow">
-        <div><p class="fLabel">月度</p><input class="fInput" id="pvYm" placeholder="7"></div>
-        <div><p class="fLabel">コース</p><input class="fInput" id="pvCourse" value="マスター"></div>
+        <div id="pvYearWrap"><p class="fLabel">年</p><input class="fInput" type="number" id="pvYear"></div>
       </div>
 
-      <p class="pvHead">復習テスト</p>
-      <div class="pvGrid" id="pvTests"></div>
+      <!-- マスター個人票（A）のとき -->
+      <div id="pvKojin">
+        <div class="fRow">
+          <div><p class="fLabel">月度</p><input class="fInput" id="pvYm" placeholder="7"></div>
+          <div><p class="fLabel">コース</p><input class="fInput" id="pvCourse" value="マスター"></div>
+        </div>
 
-      <p class="pvHead">この月度のまとめ</p>
-      <div class="fRow">
-        <div><p class="fLabel">復テ平均</p><input class="fInput" type="number" step="0.1" id="pvFuku"></div>
-        <div><p class="fLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="pvKokai"></div>
+        <p class="pvHead">復習テスト</p>
+        <div class="pvGrid" id="pvTests"></div>
+
+        <p class="pvHead">この月度のまとめ</p>
+        <div class="fRow">
+          <div><p class="fLabel">復テ平均</p><input class="fInput" type="number" step="0.1" id="pvFuku"></div>
+          <div><p class="fLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="pvKokai"></div>
+        </div>
+        <div class="fRow">
+          <div><p class="fLabel">総計（200点満点）</p><input class="fInput" type="number" step="0.1" id="pvTotal"></div>
+          <div><p class="fLabel">クラス内順位</p><input class="fInput" type="number" id="pvRank"></div>
+        </div>
       </div>
-      <div class="fRow">
-        <div><p class="fLabel">総計（200点満点）</p><input class="fInput" type="number" step="0.1" id="pvTotal"></div>
-        <div><p class="fLabel">クラス内順位</p><input class="fInput" type="number" id="pvRank"></div>
+
+      <!-- 公開学力テストのとき（月がたくさん並ぶので確認用の一覧） -->
+      <div id="pvKokaiWrap">
+        <p class="pvHead">読み取った月</p>
+        <div id="pvKList"></div>
+        <p class="pNote" id="pvKNote"></p>
       </div>
 
       <div class="sheetBtns"><button class="btn btnPink" id="pasteImport">この内容で取り込む</button></div>
@@ -1396,8 +1339,9 @@ $('atotalDelete').onclick = () => {
 // 全角→半角・空白の正規化。コピー形式（タブ/空白/1セル1行）の違いを吸収する
 function normText(s) {
   return String(s)
-    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)) // 全角数字
-    .replace(/[．]/g, '.').replace(/[　 ]/g, ' ')
+    // 全角の英数・記号（（）［］／．Ｖ１など）をまとめて半角へ
+    .replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[　 ]/g, ' ')
     .replace(/\r\n?/g, '\n')
     .replace(/[ \t]+/g, ' ');
 }
@@ -1408,10 +1352,100 @@ function numsOf(line) {
 // 見出しの特徴語で成績表の種類を見分ける
 function detectSheetType(t) {
   if (/成績個人票/.test(t) && /マスターコース/.test(t)) return 'kojinA';
+  if (/公開学力テスト/.test(t) || (/実施月/.test(t) && /科平均/.test(t))) return 'kokai';
   return '';
 }
 
 const SUBJ_WORDS = ['国語', '算数', '理科', '社会'];
+
+// ------------------------------------------------------------
+// 公開学力テストの一覧を解析する
+//   マイページの「A：公開学力テスト」の表が対象。
+//   B（合否判定・志望校判定模試・実力テスト）と C（各種模試）は
+//   今のところ保存先が無いので取り込まない。
+//
+//   1行の並びは表の見出しどおり：
+//     国語(偏差値/得点/[全体順位]) 算数(同) 2科平均(偏差値/合計点) 2科順位(順位/受験者数)
+//     理科(同) 3科平均 3科順位  社会(同) 4科平均 4科順位  国語記述(偏差値/得点)  教室・クラス
+//   科目は必ず [全体順位] が付き、平均には付かない。この違いで区切りを見分ける。
+// ------------------------------------------------------------
+// 数値を「どの書き方か」つきで拾う。順番が命なので種類だけ見て並べる
+//   G=(順位/受験者数)の男女別  S=(得点)  R=[全体順位]  P=順位/受験者数  D=偏差値
+const KOKAI_TOK = /\((\d+)\s*\/\s*(\d+)\)|\((\d+(?:\.\d+)?)\)|\[(\d+)\]|(\d+)\s*\/\s*(\d+)|(\d+(?:\.\d+)?)/g;
+
+function parseKokai(raw) {
+  let t = normText(raw);
+  // Aの表だけに絞る（下にある特訓講座の受講可能月やB・Cの表を巻き込まないため）
+  const a0 = t.search(/公開学力テスト/);
+  if (a0 > 0) t = t.slice(a0);
+  const a1 = t.search(/特訓講座|判定学力テスト|判定模試|実力テスト|各種模試/);
+  if (a1 > 0) t = t.slice(0, a1);
+
+  // 「2025年08月」で始まる行ごとに1ヶ月分として切り出す
+  const YM = /^(\d{4})\s*年\s*(\d{1,2})\s*月/;
+  const blocks = [];
+  let cur = null;
+  for (const ln of t.split('\n')) {
+    const m = ln.match(YM);
+    if (m) { cur = { ym: `${m[1]}-${String(+m[2]).padStart(2, '0')}`, body: [ln.replace(YM, '')] }; blocks.push(cur); }
+    else if (cur) cur.body.push(ln);
+  }
+  const rows = [], seen = new Set();
+  for (const b of blocks) {
+    if (seen.has(b.ym)) continue;
+    const rec = kokaiRow(b.ym, b.body.join('\n'));
+    if (rec) { rows.push(rec); seen.add(b.ym); }
+  }
+  return { type: 'kokai', rows, hasOther: /判定学力テスト|判定模試|実力テスト|各種模試/.test(normText(raw)) };
+}
+
+function kokaiRow(ym, body) {
+  const T = [];
+  let m;
+  KOKAI_TOK.lastIndex = 0;
+  while ((m = KOKAI_TOK.exec(body)) !== null) {
+    if (m[1] != null) T.push({ k: 'G' });
+    else if (m[3] != null) T.push({ k: 'S', v: +m[3] });
+    else if (m[4] != null) T.push({ k: 'R', v: +m[4] });
+    else if (m[5] != null) T.push({ k: 'P', v: `${+m[5]}/${+m[6]}` });
+    else if (m[7] != null) T.push({ k: 'D', v: +m[7] });
+  }
+  let i = 0;
+  const at = d => (T[i + d] ? T[i + d].k : '');
+  const isSubj = () => at(0) === 'D' && at(1) === 'S' && at(2) === 'R';
+  const isAvg = () => at(0) === 'D' && at(1) === 'S';
+  const subj = () => { const o = { dev: T[i].v, score: T[i + 1].v, rank: T[i + 2].v }; i += 3; return o; };
+  const avg = () => { const o = { dev: T[i].v, score: T[i + 1].v }; i += 2; return o; };
+  const rank = () => { if (at(0) !== 'P') return ''; const v = T[i].v; i++; if (at(0) === 'G') i++; return v; };
+
+  if (!isSubj()) return null;              // 国語が読めなければ公開の行ではない
+  const koku = subj();
+  const san = isSubj() ? subj() : null;
+  const a2 = isAvg() ? avg() : null;
+  const r2 = rank();
+  let ri = null, a3 = null, r3 = null, sha = null, a4 = null, r4 = null, kij = null;
+  if (isSubj()) { ri = subj(); if (isAvg()) a3 = avg(); r3 = rank(); }
+  if (isSubj()) { sha = subj(); if (isAvg()) a4 = avg(); r4 = rank(); }
+  if (isAvg()) kij = avg();                // 国語記述（偏差値＋得点）
+
+  // 教室・クラスは数字以外が残る行。「－ 明石」「(59) 明石」のように
+  // 空欄印や得点とくっついてくるので、数値の書き方を取り除いてから拾う
+  const cls = body.split('\n')
+    .filter(l => /[^\d.,()\[\]\/\s\-–—]/.test(l))
+    .map(l => l.replace(/\(\d+(?:\.\d+)?(?:\s*\/\s*\d+)?\)|\[\d+\]|\d+\s*\/\s*\d+|\d+\.\d+/g, '')
+                .replace(/^[\s\-–—]+/, '').replace(/[\s\-–—]+$/, ''))
+    .filter(Boolean).join('');
+
+  return {
+    ym, class: cls,
+    koku, san: san || { dev: null, score: null, rank: null }, ri: ri || { dev: null, score: null, rank: null },
+    sha: sha || { dev: null, score: null, rank: null },
+    avg3: { dev: a3 ? a3.dev : null }, rank3: r3 || '',
+    avg2: { dev: a2 ? a2.dev : null }, rank2: r2 || '',
+    avg4: { dev: a4 ? a4.dev : null }, rank4: r4 || '',
+    kijutsu: { dev: kij ? kij.dev : null, score: kij ? kij.score : null },
+  };
+}
 
 // マスター個人票（A）を解析する。取り込むのは「あなたの成績」の行と最下段の「平均」の行だけ。
 function parseKojinhyoA(raw) {
@@ -1484,7 +1518,9 @@ function parseKojinhyoA(raw) {
 
   for (let i = 0; i < n; i++) {
     r.tests.push({
-      month: months[i] != null ? months[i] : (months.length === 1 ? months[0] : null),
+      // 月は表がセル結合で1回しか書かないことが多い。数が合う時だけ採用し、
+      // 足りなければ後で日付の並びと月度の期間から組み立てる（relabelMonths）
+      month: months.length === n ? months[i] : null,
       day: days[i] != null ? days[i] : null,
       subject: subjects[i] || '',
       no: nos[i] != null ? nos[i] : null,
@@ -1503,7 +1539,7 @@ function guessYear(month) {
   return y;
 }
 
-let pvData = null;
+let pvData = null, pasteRaw = '';
 function openPasteSheet() {
   pvData = null;
   $('pasteBox').value = '';
@@ -1520,9 +1556,31 @@ function setPasteStatus(msg, kind) {
 $('pasteParse').onclick = () => {
   const raw = $('pasteBox').value.replace(/^﻿/, '').trim();
   if (!raw) { setPasteStatus('先に成績表を貼り付けてください。', 'ng'); return; }
-  const type = detectSheetType(raw);
-  if (type !== 'kojinA') {
-    setPasteStatus('この成績表はまだ対応していません（今はマスター個人票Aのみ）。ほかの成績表は順に追加します。', 'ng');
+  runParse(raw, detectSheetType(raw));
+};
+// 種類を選び直したら、貼ってある文字をその読み方でもう一度解析する
+$('pvType').onchange = () => {
+  const raw = $('pasteBox').value.trim();
+  if (raw) runParse(raw, $('pvType').value);
+};
+
+function runParse(raw, type) {
+  pasteRaw = raw;
+  if (type !== 'kojinA' && type !== 'kokai') {
+    setPasteStatus('この成績表はまだ対応していません（今はマスター個人票Aと公開学力テスト）。ほかの成績表は順に追加します。', 'ng');
+    $('pastePrev').style.display = 'none';
+    return;
+  }
+  if (type === 'kokai') {
+    const d = parseKokai(raw);
+    if (!d.rows.length) {
+      setPasteStatus('公開学力テストの表が読み取れませんでした。「実施月」の見出しから下を、表ごと選んでコピーし直してみてください。', 'ng');
+      $('pastePrev').style.display = 'none';
+      return;
+    }
+    pvData = d;
+    renderPastePreview(d);
+    setPasteStatus(`読み取りました：公開学力テスト${d.rows.length}ヶ月分（${ymLabel(d.rows[0].ym)}〜${ymLabel(d.rows[d.rows.length - 1].ym)}）。`, 'ok');
     return;
   }
   const d = parseKojinhyoA(raw);
@@ -1533,12 +1591,19 @@ $('pasteParse').onclick = () => {
     return;
   }
   pvData = d;
-  renderPastePreview(pvData);
+  renderPastePreview(d);
   setPasteStatus(`読み取りました：復習テスト${got}件${d.total != null ? ' ／ 総計' + d.total : ''}。おかしい所は下で直せます。`, 'ok');
-};
+}
 
 function renderPastePreview(d) {
-  $('pvType').value = 'kojinA';
+  $('pvType').value = d.type;
+  const kojin = d.type === 'kojinA';
+  $('pvKojin').style.display = kojin ? '' : 'none';
+  $('pvKokaiWrap').style.display = kojin ? 'none' : '';
+  $('pvYearWrap').style.display = kojin ? '' : 'none';   // 公開は月ごとに年が入っている
+  // 公開は月数が多いので一覧で確認だけ。直したい月は取り込んだ後に一覧からタップして編集できる
+  $('pvTitle').textContent = kojin ? '読み取った内容（直せます）' : '読み取った内容';
+  if (!kojin) { renderKokaiPreview(d); $('pastePrev').style.display = ''; return; }
   $('pvYear').value = guessYear(d.month);
   $('pvYm').value = d.month || '';
   $('pvCourse').value = d.course || 'マスター';
@@ -1557,11 +1622,56 @@ function renderPastePreview(d) {
       <input class="pvIn${miss(t.avg)}" id="pvAv${i}" type="number" step="0.1" value="${t.avg != null ? t.avg : ''}">`;
   });
   $('pvTests').innerHTML = h;
+  relabelMonths();
   $('pastePrev').style.display = '';
 }
 
+// 公開は月がたくさん並ぶ。1件ずつ直すのは大変なので確認用の一覧にして、
+// 直したい月は取り込んだ後に一覧からタップして編集してもらう。
+function renderKokaiPreview(d) {
+  const sc = o => (o && o.dev != null) ? `${o.dev}${o.score != null ? `(${o.score})` : ''}` : '—';
+  $('pvKList').innerHTML = d.rows.map(k => {
+    const subj = [['国', k.koku], ['算', k.san], ['理', k.ri], ['社', k.sha]]
+      .filter(([, o]) => o && o.dev != null).map(([n, o]) => `${n} ${sc(o)}`).join('・');
+    const av = [['4科', k.avg4, k.rank4], ['3科', k.avg3, k.rank3], ['2科', k.avg2, k.rank2]]
+      .filter(([, a]) => a && a.dev != null)
+      .map(([n, a, r]) => `${n} ${a.dev}${r ? `（${r}）` : ''}`).join('　');
+    const kij = k.kijutsu && k.kijutsu.dev != null ? `　記述 ${k.kijutsu.dev}(${k.kijutsu.score})` : '';
+    return `<div class="pvK"><div class="m">${ymLabel(k.ym)}<span>${k.class || 'クラス不明'}</span></div>
+      <div class="s">${subj || '—'}<br>${av}${kij}</div></div>`;
+  }).join('');
+  $('pvKNote').textContent = d.hasOther
+    ? '※ 合否判定テスト・各種模試は保存する場所がまだ無いので取り込みません。'
+    : '';
+}
+
+// 個人票は「月」をセル結合で1回しか書かないので、コピーすると月が落ちる。
+// 復習テストは日付順に並ぶので、月度の期間の初日から始めて
+// 「日が前より小さくなったら翌月」と送っていけば月が確定する。
+function relabelMonths() {
+  if (!pvData || pvData.type !== 'kojinA') return;
+  const year = parseInt($('pvYear').value, 10), mo = parseInt($('pvYm').value, 10);
+  if (!year || !mo) return;
+  const from = aWindow(`${year}-${String(mo).padStart(2, '0')}`)[0];
+  let m = +from.slice(5, 7), prev = 0;
+  pvData.tests.forEach((t, i) => {
+    const el = $('pvMd' + i);
+    if (!el) return;
+    const p = (el.value || '').split('/');
+    const day = parseInt(p.length > 1 ? p[1] : p[0], 10);
+    if (!day) return;
+    if (day < prev) m = m % 12 + 1;
+    prev = day;
+    el.value = `${m}/${day}`;
+    el.classList.remove('miss');
+  });
+}
+$('pvYear').onchange = relabelMonths;
+$('pvYm').oninput = relabelMonths;
+
 $('pasteImport').onclick = () => {
   if (!pvData) return;
+  if (pvData.type === 'kokai') return importKokai();
   const year = parseInt($('pvYear').value, 10);
   const mo = parseInt($('pvYm').value, 10);
   if (!year || !mo) { setPasteStatus('年と月度を入れてください。', 'ng'); return; }
@@ -1609,6 +1719,40 @@ $('pasteImport').onclick = () => {
   render();
 };
 
+// 公開学力テストの取り込み。同じ月は上書き（既存のidを引き継ぐ）。
+// 貼り付けに無い項目（社会など）は、手で入れてあった値を消さないように残す。
+function importKokai() {
+  const keep = (o, n) => {
+    if (!o) return n;
+    const r = {};
+    for (const k of Object.keys(Object.assign({}, o, n))) r[k] = (n && n[k] != null && n[k] !== '') ? n[k] : (o[k] != null ? o[k] : null);
+    return r;
+  };
+  let n = 0;
+  for (const k of pvData.rows) {
+    const old = db.kokai.find(x => x.ym === k.ym);
+    const rec = {
+      id: old ? old.id : uid(), ym: k.ym, class: k.class || (old ? old.class : ''),
+      koku: keep(old && old.koku, k.koku), san: keep(old && old.san, k.san),
+      ri: keep(old && old.ri, k.ri), sha: keep(old && old.sha, k.sha),
+      avg3: keep(old && old.avg3, k.avg3), rank3: k.rank3 || (old ? old.rank3 : ''),
+      avg2: keep(old && old.avg2, k.avg2), rank2: k.rank2 || (old ? old.rank2 : ''),
+      avg4: keep(old && old.avg4, k.avg4), rank4: k.rank4 || (old ? old.rank4 : ''),
+      kijutsu: keep(old && old.kijutsu, k.kijutsu),
+    };
+    db.kokai = db.kokai.filter(x => x.ym !== k.ym);
+    db.kokai.push(rec);
+    n++;
+  }
+  db.kokai.sort((a, b) => a.ym.localeCompare(b.ym));
+  save();
+  $('pastePrev').style.display = 'none';
+  $('pasteBox').value = '';
+  pvData = null;
+  setPasteStatus(`✅ 取り込みました！ 公開学力テスト${n}ヶ月分を保存しました。`, 'ok');
+  render();
+}
+
 // ---------- ナビ ----------
 // チェックした講座のタブだけ表示。マスターを外すと⚖️も隠す
 document.querySelectorAll('#topBar .tab').forEach(b => {
@@ -1653,21 +1797,6 @@ $('fab').onclick = () => {
   else openNada(null);
 };
 $('pasteBtn').onclick = openPasteSheet;
-$('aiFmtBtn').onclick = () => $('aiFmtSheet').classList.add('open');
-$('aiFmtCopy').onclick = async () => {
-  const text = $('aiFmtPre').textContent;
-  try {
-    await navigator.clipboard.writeText(text);
-    $('aiFmtCopy').textContent = '✅ コピーしました';
-  } catch (e) {
-    // クリップボードAPIが使えない環境向けの保険
-    const ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta);
-    ta.select(); document.execCommand('copy'); ta.remove();
-    $('aiFmtCopy').textContent = '✅ コピーしました';
-  }
-  setTimeout(() => { $('aiFmtCopy').textContent = '📋 指示文をコピー'; }, 1800);
-};
 function closeAll() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open')); }
 document.querySelectorAll('[data-close]').forEach(b => b.onclick = closeAll);
 document.querySelectorAll('.overlay').forEach(o =>
