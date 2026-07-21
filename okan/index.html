@@ -750,6 +750,7 @@ async function importDataObj(obj, targetChild) {
     result.sched = mergeBy(cur.weekly, obj.sched.weekly);
     result.events = mergeBy(cur.events, obj.sched.events);
     result.todos = mergeBy(cur.todos, obj.sched.todos);
+    if (obj.sched.menus) { if (!Array.isArray(cur.menus)) cur.menus = []; mergeBy(cur.menus, obj.sched.menus); }   // やることメニュー
     if (obj.sched.adjust) cur.adjust = [...new Set([...(cur.adjust || []), ...obj.sched.adjust])];   // 調整日は合体
     localStorage.setItem('okan_sched_v1', JSON.stringify(cur));
   }

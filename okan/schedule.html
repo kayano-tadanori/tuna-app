@@ -109,6 +109,15 @@
   .adjNote { font-size: 12px; color: #64748b; background: #f1f5f9; border-radius: 10px; padding: 9px 12px; margin: 0 0 10px; line-height: 1.7; }
 
   /* ---- ToDoビュー ---- */
+  /* やることメニュー（家庭学習の定番をチップで選ぶ） */
+  .menuChips { display: flex; gap: 7px; flex-wrap: wrap; margin: 4px 0 2px; }
+  .menuChip {
+    border: 1.5px solid #f9a8d4; background: #fff; color: #db2777;
+    font-size: 12.5px; font-weight: 800; padding: 8px 11px; border-radius: 999px;
+    cursor: pointer; white-space: nowrap;
+  }
+  .menuChip.on { background: #db2777; border-color: #db2777; color: #fff; }
+  .menuWho { font-size: 11px; font-weight: 800; color: #94a3b8; margin: 10px 2px 2px; }
   #todoView { display: none; padding: 12px 14px 120px; }
   .todoItem {
     display: flex; align-items: center; gap: 10px;
@@ -294,10 +303,23 @@
 <!-- 定期予定の登録一覧 -->
 <div class="overlay" id="regSheet">
   <div class="sheet">
-    <div class="sheetHead"><h2>📋 定期予定の登録</h2><button class="closeBtn" data-close="regSheet">✕</button></div>
-    <div id="regList"></div>
-    <div class="sheetBtns">
-      <button class="btn btnPink" id="regAdd">＋ 新しく登録</button>
+    <div class="sheetHead"><h2>📋 登録</h2><button class="closeBtn" data-close="regSheet">✕</button></div>
+    <div style="display:flex;gap:7px;margin-bottom:10px">
+      <button class="tab on" id="regTab1" style="flex:1">🗓 定期予定</button>
+      <button class="tab" id="regTab2" style="flex:1">✅ やることメニュー</button>
+    </div>
+    <div id="regPane1">
+      <div id="regList"></div>
+      <div class="sheetBtns">
+        <button class="btn btnPink" id="regAdd">＋ 新しく登録</button>
+      </div>
+    </div>
+    <div id="regPane2" style="display:none">
+      <p class="fLabel" style="color:#94a3b8">よくやる家庭学習を登録しておくと、やることを足すときにボタンで選べます（計算ドリル・漢字・最レの直しなど）。</p>
+      <div id="menuList"></div>
+      <div class="sheetBtns">
+        <button class="btn btnPink" id="menuAdd">＋ メニューを追加</button>
+      </div>
     </div>
   </div>
 </div>
@@ -388,11 +410,30 @@
   </div>
 </div>
 
+<!-- やることメニューの登録フォーム -->
+<div class="overlay" id="menuFormSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="menuFormTitle">メニューを追加</h2><button class="closeBtn" data-close="menuFormSheet">✕</button></div>
+    <p class="fLabel">内容（例：計算ドリル1ページ）</p>
+    <input class="fInput" id="mnTitle" placeholder="やることの内容" autocomplete="off">
+    <p class="fLabel">誰が（なくてもOK）</p>
+    <select class="fInput" id="mnWho"></select>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="menuDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="menuSave">保存</button>
+    </div>
+  </div>
+</div>
+
 <!-- やることフォーム -->
 <div class="overlay" id="tdSheet">
   <div class="sheet">
     <div class="sheetHead"><h2>やることを追加</h2><button class="closeBtn" data-close="tdSheet">✕</button></div>
-    <p class="fLabel">やること（例：計算ドリルNo.12 直し）</p>
+    <div id="tdMenuWrap">
+      <p class="fLabel">メニューから選ぶ（いくつでも）</p>
+      <div id="tdMenus"></div>
+    </div>
+    <p class="fLabel">自分で書く（例：計算ドリルNo.12 直し）</p>
     <input class="fInput" id="tdName" placeholder="やることの内容" autocomplete="off">
     <p class="fLabel">期限（なくてもOK）</p>
     <input class="fInput" type="date" id="tdDue">
@@ -420,6 +461,7 @@ function load() {
     d = JSON.parse(localStorage.getItem(KEY));
   } catch (e) { /* fallthrough */ }
   if (!d || !d.events || !d.weekly || !d.todos) d = { events: [], weekly: [], todos: [] };
+  if (!Array.isArray(d.menus)) d.menus = [];      // 家庭学習のやることメニュー
   if (!Array.isArray(d.adjust)) d.adjust = [];   // 調整日（塾休み）の日付リスト
   // 旧形式からの移行（repeat/who/no/終了時間/弁当/科目/種類 が無い登録に既定値を足す）
   for (const w of d.weekly) {
@@ -608,6 +650,13 @@ const labelOf = it => {
   return parts + (t ? (parts ? ' ' : '') + t : '') || '(予定)';
 };
 
+// 登録ずみの名前の一覧（お子さん設定＋いま使われている名前）
+function whoOptions() {
+  let kids = [];
+  try { kids = JSON.parse(localStorage.getItem('okan_children')) || []; } catch (e) { /* ignore */ }
+  const used = [...new Set([...db.weekly, ...db.events, ...db.menus].map(x => x.who).filter(Boolean))];
+  return [...new Set([...kids, ...used])];
+}
 // 「誰が」セレクトの選択肢（設定で登録した子供の名前＋使用中の名前＋自由入力）
 function fillWhoSel(sel, freeInput) {
   let kids = [];
@@ -955,8 +1004,14 @@ function renderRegList() {
   }
 }
 
-function openRegSheet() {
+function openRegSheet(pane) {
+  pane = pane || 1;
   renderRegList();
+  renderMenuList();
+  $('regPane1').style.display = pane === 1 ? '' : 'none';
+  $('regPane2').style.display = pane === 2 ? '' : 'none';
+  $('regTab1').classList.toggle('on', pane === 1);
+  $('regTab2').classList.toggle('on', pane === 2);
   $('regSheet').classList.add('open');
 }
 
@@ -1060,8 +1115,107 @@ $('rgDelete').onclick = () => {
   save(); closeAll(); renderAll(); openRegSheet();
 };
 
-$('regBtn').onclick = openRegSheet;
+$('regBtn').onclick = () => openRegSheet();
+$('regTab1').onclick = () => openRegSheet(1);
+$('regTab2').onclick = () => openRegSheet(2);
 $('regAdd').onclick = () => { closeAll(); openRegForm(null); };
+
+// ---------- やることメニュー（家庭学習の定番） ----------
+let menuEditing = null;
+function renderMenuList() {
+  const list = $('menuList');
+  list.innerHTML = '';
+  if (!db.menus.length) {
+    list.innerHTML = '<p class="emptyMsg">まだメニューがありません。<br>「計算ドリル1ページ」「漢字テストの直し」など、<br>くり返しやることを登録しておくと便利です</p>';
+    return;
+  }
+  for (const m of db.menus) {
+    const row = document.createElement('div');
+    row.className = 'dayRow';
+    row.innerHTML = `<div class="bar" style="background:#f59e0b"></div>
+      <div class="dt"><div class="n"></div><div class="s"></div></div><span class="arrow">›</span>`;
+    row.querySelector('.n').textContent = m.title;
+    row.querySelector('.s').textContent = m.who || '（誰でも）';
+    row.onclick = () => { closeAll(); openMenuForm(m); };
+    list.appendChild(row);
+  }
+}
+function openMenuForm(m) {
+  menuEditing = m ? m.id : null;
+  $('menuFormTitle').textContent = m ? 'メニューを編集' : 'メニューを追加';
+  $('mnTitle').value = m ? m.title : '';
+  const sel = $('mnWho');
+  sel.innerHTML = '<option value="">（誰でも）</option>';
+  for (const nm of whoOptions()) {
+    const o = document.createElement('option');
+    o.value = nm; o.textContent = nm;
+    sel.appendChild(o);
+  }
+  sel.value = m && m.who ? m.who : '';
+  $('menuDelete').style.display = m ? '' : 'none';
+  $('menuFormSheet').classList.add('open');
+}
+$('menuSave').onclick = () => {
+  const title = $('mnTitle').value.trim();
+  if (!title) { alert('内容を入れてください'); return; }
+  const item = { id: menuEditing || uid(), title, who: $('mnWho').value };
+  db.menus = db.menus.filter(x => x.id !== item.id);
+  db.menus.push(item);
+  menuEditing = null;
+  save(); closeAll(); openRegSheet(2);
+};
+$('menuDelete').onclick = () => {
+  if (!menuEditing) return;
+  if (!confirm('このメニューを削除しますか？（登録ずみのやることは残ります）')) return;
+  db.menus = db.menus.filter(x => x.id !== menuEditing);
+  menuEditing = null;
+  save(); closeAll(); openRegSheet(2);
+};
+$('menuAdd').onclick = () => { closeAll(); openMenuForm(null); };
+
+// やること追加のメニューチップ（選んだものは配列で覚える）
+let tdPicked = [];
+function renderTdMenus() {
+  const box = $('tdMenus');
+  box.innerHTML = '';
+  $('tdMenuWrap').style.display = db.menus.length ? '' : 'none';
+  if (!db.menus.length) return;
+  // 誰が ごとにまとめて並べる
+  const groups = new Map();
+  for (const m of db.menus) {
+    const k = m.who || '';
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(m);
+  }
+  for (const [who, arr] of groups) {
+    if (groups.size > 1 || who) {
+      const p = document.createElement('p');
+      p.className = 'menuWho'; p.textContent = who || 'みんな';
+      box.appendChild(p);
+    }
+    const wrap = document.createElement('div');
+    wrap.className = 'menuChips';
+    for (const m of arr) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'menuChip' + (tdPicked.includes(m.id) ? ' on' : '');
+      b.textContent = m.title;
+      b.onclick = () => {
+        tdPicked = tdPicked.includes(m.id) ? tdPicked.filter(x => x !== m.id) : [...tdPicked, m.id];
+        renderTdMenus();
+      };
+      wrap.appendChild(b);
+    }
+    box.appendChild(wrap);
+  }
+}
+function openTdSheet(due) {
+  tdPicked = [];
+  $('tdName').value = '';
+  $('tdDue').value = due || '';
+  renderTdMenus();
+  $('tdSheet').classList.add('open');
+}
 
 // ---------- やること ----------
 function renderTodos() {
@@ -1113,8 +1267,15 @@ function renderTodos() {
 
 $('tdSave').onclick = () => {
   const title = $('tdName').value.trim();
-  if (!title) { alert('内容を入れてください'); return; }
-  db.todos.push({ id: uid(), title, due: $('tdDue').value || '', done: false });
+  const due = $('tdDue').value || '';
+  if (!title && !tdPicked.length) { alert('メニューを選ぶか、内容を入れてください'); return; }
+  // 選んだメニューをそれぞれ1件のやることにする
+  for (const id of tdPicked) {
+    const m = db.menus.find(x => x.id === id);
+    if (m) db.todos.push({ id: uid(), title: m.title, due, done: false });
+  }
+  if (title) db.todos.push({ id: uid(), title, due, done: false });
+  tdPicked = [];
   save(); closeAll(); renderAll();
 };
 
@@ -1141,14 +1302,10 @@ $('todayBtn').onclick = () => {
 
 $('fab').onclick = () => {
   if (tab === 'cal') openEvForm(null, selDate);
-  else { $('tdName').value = ''; $('tdDue').value = ''; $('tdSheet').classList.add('open'); }
+  else openTdSheet('');
 };
 $('dayAddEvent').onclick = () => { const ds = selDate; closeAll(); openEvForm(null, ds); };
-$('dayAddTodo').onclick = () => {
-  const ds = selDate; closeAll();
-  $('tdName').value = ''; $('tdDue').value = ds;
-  $('tdSheet').classList.add('open');
-};
+$('dayAddTodo').onclick = () => { const ds = selDate; closeAll(); openTdSheet(ds); };
 
 function closeAll() {
   document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
