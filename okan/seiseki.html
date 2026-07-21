@@ -466,6 +466,7 @@
             <option value="saireA">最レ算数 個人票（A）</option>
             <option value="saikokuA">最レ国語 個人票（A）</option>
             <option value="nadaA">灘中合格特訓 個人票（A）</option>
+            <option value="sokuho">復習テストの速報（一覧結果）</option>
             <option value="kokai">公開学力テスト</option>
           </select>
         </div>
@@ -503,6 +504,15 @@
           <p class="pvHead">判定テスト・各種模試</p>
           <div id="pvMList"></div>
         </div>
+      </div>
+
+      <!-- 復習テストの速報のとき -->
+      <div id="pvSokWrap" style="display:none">
+        <div id="pvSokYmWrap">
+          <p class="fLabel">新しい回を入れる月度</p>
+          <input class="fInput" id="pvSokYm" placeholder="2026-08">
+        </div>
+        <div id="pvSokList"></div>
       </div>
 
       <div class="sheetBtns"><button class="btn btnPink" id="pasteImport">この内容で取り込む</button></div>
@@ -862,9 +872,12 @@ function ymOfDate(ds) {
   const n = new Date(y, +ds.slice(5, 7), 1);
   return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`;
 }
+// 復習テストがどの月度のものか。速報は日付が無いので ym をそのまま使う
+function fukuYm(t) {
+  return t.date ? ymOfDate(t.date) : (t.ym || '');
+}
 function aRow(ym) {
-  const [from, to] = aWindow(ym);
-  const tests = db.fukushu.filter(t => t.date >= from && t.date <= to && t.score != null && t.score !== '');
+  const tests = db.fukushu.filter(t => fukuYm(t) === ym && t.score != null && t.score !== '');
   const bySubj = {};
   for (const t of tests) {
     const s = t.subject || 'その他';
@@ -894,8 +907,8 @@ function aRow(ym) {
 function abMonths() {
   const set = new Set(db.kokai.map(k => k.ym));
   for (const t of db.fukushu) {
-    if (!t.date) continue;
-    set.add(ymOfDate(t.date));
+    const ym = fukuYm(t);
+    if (ym) set.add(ym);
   }
   return [...set].sort();
 }
@@ -1067,23 +1080,29 @@ function render() {
     v.querySelectorAll('[data-kokai]').forEach(el => el.onclick = () => openDetail(el.dataset.kokai));
     v.querySelectorAll('[data-gmode]').forEach(el => el.onclick = () => { localStorage.setItem('okan_kokai_graph', el.dataset.gmode); render(); });
   } else if (tab === 'fukushu') {
-    const list = [...db.fukushu].sort((a, b) => b.date.localeCompare(a.date));
+    // 速報（日付がまだ分からない分）はいちばん新しいので先頭にまとめる
+    const skey = t => t.date ? t.date : '9999-' + (t.ym || '');
+    const list = [...db.fukushu].sort((a, b) => skey(b).localeCompare(skey(a)));
     let h = courseGraphs('マスター');
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで復習テストの点数を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
-      const ym = t.date.slice(0, 7);
+      const ym = t.date ? t.date.slice(0, 7) : 'sok:' + (t.ym || '');
       if (ym !== curYm) {
         curYm = ym;
-        const monthTests = db.fukushu.filter(x => x.date.slice(0, 7) === ym);
+        const sok = !t.date;
+        const monthTests = db.fukushu.filter(x => (x.date ? x.date.slice(0, 7) : 'sok:' + (x.ym || '')) === ym);
         const avg = (monthTests.reduce((s, x) => s + (+x.score || 0), 0) / monthTests.length).toFixed(1);
-        h += `<p class="secLabel">${ymLabel(ym)}（${monthTests.length}枚・平均 ${avg}点）</p>`;
+        h += sok
+          ? `<p class="secLabel">${ymLabel(t.ym)}度の速報（${monthTests.length}枚・平均 ${avg}点）</p>`
+          : `<p class="secLabel">${ymLabel(ym)}（${monthTests.length}枚・平均 ${avg}点）</p>`;
       }
       // クラス平均は取り込んだテストにだけ付く。無い記録は今までどおり点数だけ
       const av = (t.avg != null && t.avg !== '')
         ? `<span class="av ${(+t.score || 0) >= +t.avg ? 'up' : 'dn'}">平均<b>${t.avg}</b></span>` : '';
-      h += `<div class="testLine" data-fuku="${t.id}"><span class="d">${mdLabel(t.date)}</span>
-        <span class="sj">${t.subject}</span><span class="no">No.${show(t.no)}</span>
+      const rkTxt = t.rank != null ? `　クラス${t.rank}位${t.rankN ? '/' + t.rankN + '人' : ''}` : '';
+      h += `<div class="testLine" data-fuku="${t.id}"><span class="d">${t.date ? mdLabel(t.date) : '速報'}</span>
+        <span class="sj">${t.subject}<span style="font-size:10px;color:#94a3b8;font-weight:700">${rkTxt}</span></span><span class="no">No.${show(t.no)}</span>
         <span class="sc${(+t.score || 0) < 80 ? ' scoreBad' : ''}">${show(t.score)}点</span>${av}</div>`;
     }
     v.innerHTML = h;
@@ -1286,7 +1305,7 @@ let editingFuku = null;
 function openFuku(t) {
   editingFuku = t ? t.id : null;
   $('fukuTitle').textContent = t ? '復習テストを編集' : '復習テストを記録';
-  $('fDate').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('fDate').value = t ? (t.date || '') : new Date().toISOString().slice(0, 10);
   $('fSubj').value = t ? t.subject : '算数';
   $('fNo').value = t && t.no != null ? t.no : '';
   $('fScore').value = t && t.score != null ? t.score : '';
@@ -1295,8 +1314,12 @@ function openFuku(t) {
 }
 $('fukuSave').onclick = () => {
   const date = $('fDate').value, score = num($('fScore').value);
-  if (!date || score == null) { alert('日付と点数を入れてください'); return; }
-  const item = { id: editingFuku || uid(), date, subject: $('fSubj').value, no: num($('fNo').value), score };
+  const old = editingFuku ? db.fukushu.find(x => x.id === editingFuku) : null;
+  // 速報の記録は日付が無いままでも保存できる（月度で持っているため）
+  if ((!date && !(old && old.ym)) || score == null) { alert('日付と点数を入れてください'); return; }
+  // クラス平均や順位など、貼り付けで入った情報を消さないよう引き継ぐ
+  const item = Object.assign({}, old, { id: editingFuku || uid(), subject: $('fSubj').value, no: num($('fNo').value), score });
+  if (date) { item.date = date; delete item.ym; } else delete item.date;
   db.fukushu = db.fukushu.filter(x => x.id !== item.id);
   db.fukushu.push(item);
   editingFuku = null;
@@ -1495,6 +1518,7 @@ function numsOf(line) {
 }
 // 見出しの特徴語で成績表の種類を見分ける
 function detectSheetType(t) {
+  if (/マスターコース一覧結果/.test(t) || (/クラス平均/.test(t) && /クラス順位/.test(t))) return 'sokuho';
   // 最レの個人票にも「7月公開算数」の欄があるので、公開の判定より先に見る
   if (/成績個人票/.test(t) && /灘中合格特訓/.test(t)) return 'nadaA';
   if (/成績個人票/.test(t) && /最高レベル特訓/.test(t)) {
@@ -1525,6 +1549,73 @@ function kojinWindow(kind, ym) {
     return [`${ym}-01`, `${ym}-${new Date(y, m, 0).getDate()}`];
   }
   return aWindow(ym);
+}
+
+// ------------------------------------------------------------
+// マスターコース一覧結果（復習テストの速報）
+//   1行＝1テスト。日付の列が無く、年度・実施月・テストNo.・試験名・学習内容・
+//   科目・クラス名・得点・クラス平均・クラス順位・全体の平均・全体順位 が並ぶ。
+//   コピーするとタブが一部落ちるので、位置ではなく書き方で拾う。
+//     得点＝最初の「◯点」か「◯ポイント」／クラス平均＝2つめの「◯点」
+//     全体の平均＝3つめ／順位＝「◯位/◯人」が出てきた順にクラス→全体
+// ------------------------------------------------------------
+function parseSokuho(raw) {
+  const t = normText(raw);
+  const HEAD = /^(\d{4})\s*年度/;
+  const blocks = [];
+  let cur = null;
+  for (const ln of t.split('\n')) {
+    if (HEAD.test(ln)) { cur = { head: ln, body: [ln] }; blocks.push(cur); }
+    else if (cur) cur.body.push(ln);
+  }
+  const rows = [];
+  for (const b of blocks) {
+    const body = b.body.join('\n');
+    const mSub = body.match(/国語|算数|理科|社会/);
+    const mNo = body.match(/no\.?\s*(\d+)/i) || b.head.match(/\t\s*(\d+)\s*\t/);
+    if (!mSub || !mNo) continue;
+    const pts = [...body.matchAll(/(\d+(?:\.\d+)?)\s*(?:点|ポイント)/g)].map(m => +m[1]);
+    const rks = [...body.matchAll(/(\d+)\s*位\s*\/\s*(\d+)\s*[人名]/g)].map(m => [+m[1], +m[2]]);
+    if (!pts.length) continue;
+    const mMon = b.head.match(/(\d{1,2})\s*月/);
+    const mCls = body.match(/(?:^|[\t\n])\s*([VSH]\d?)\s*(?=[\t\n])/);
+    rows.push({
+      year: +b.head.match(HEAD)[1],
+      month: mMon ? +mMon[1] : null,
+      subject: mSub[0], no: +mNo[1],
+      score: pts[0] != null ? pts[0] : null,
+      avg: pts[1] != null ? pts[1] : null,
+      allAvg: pts[2] != null ? pts[2] : null,
+      rank: rks[0] ? rks[0][0] : null, rankN: rks[0] ? rks[0][1] : null,
+      allRank: rks[1] ? rks[1][0] : null, allN: rks[1] ? rks[1][1] : null,
+      cls: mCls ? mCls[1] : '',
+    });
+  }
+  // 同じ科目・同じNo.が2回出てきたら先に読めた方を残す
+  const seen = new Set();
+  const uniq = rows.filter(r => { const k = r.subject + '/' + r.no; return seen.has(k) ? false : (seen.add(k), true); });
+  return { type: 'sokuho', rows: uniq, plan: sokuhoPlan(uniq) };
+}
+
+// 速報の各行をどう扱うか決める。
+//   すでに記録がある回 → クラス順位などを足すだけ（点や平均は個人票の方が確定値）
+//   まだ無い＆その科目でいちばん新しい回 → 新しい月度の記録として追加
+//   まだ無いが古い回 → 日付が分からないので取り込まない
+function sokuhoPlan(rows) {
+  const maxNo = {};
+  for (const t of db.fukushu) {
+    if (!t.subject || t.no == null) continue;
+    if (maxNo[t.subject] == null || +t.no > maxNo[t.subject]) maxNo[t.subject] = +t.no;
+  }
+  const plan = { update: [], add: [], skip: [] };
+  for (const r of rows) {
+    const cands = db.fukushu.filter(t => t.subject === r.subject && (t.no ?? null) === r.no);
+    cands.sort((a, b) => (fukuYm(b) || '').localeCompare(fukuYm(a) || ''));
+    if (cands.length) { plan.update.push({ r, id: cands[0].id }); continue; }
+    if (maxNo[r.subject] != null && r.no > maxNo[r.subject]) plan.add.push(r);
+    else plan.skip.push(r);
+  }
+  return plan;
 }
 
 // ------------------------------------------------------------
@@ -1828,11 +1919,14 @@ function parseKojinhyoA(raw, kind) {
 }
 
 // 個人票には年が印字されないので、今日を基準に推定（その月度が未来なら前年）
-function guessYear(month) {
-  const now = new Date();
-  let y = now.getFullYear();
-  if (month && month > now.getMonth() + 1) y -= 1;
-  return y;
+function guessYear(month, kind) {
+  const today = new Date().toISOString().slice(0, 10);
+  // 「今がどの月度か」で比べる。8月度は7/6から始まるので、
+  // 7月中に8月度の個人票が出ることがある（暦月で比べると前年にしてしまう）
+  const cur = (KOJIN_KIND[kind] && KOJIN_KIND[kind].cal) ? today.slice(0, 7) : ymOfDate(today);
+  const y = +cur.slice(0, 4), m = +cur.slice(5, 7);
+  if (!month) return y;
+  return month > m ? y - 1 : y;
 }
 
 let pvData = null, pasteRaw = '';
@@ -1862,6 +1956,21 @@ $('pvType').onchange = () => {
 
 function runParse(raw, type) {
   pasteRaw = raw;
+  if (type === 'sokuho') {
+    const d = parseSokuho(raw);
+    if (!d.rows.length) {
+      setPasteStatus('復習テストの一覧が読み取れませんでした。「年度」の見出しから下を、表ごと選んでコピーし直してみてください。', 'ng');
+      $('pastePrev').style.display = 'none';
+      return;
+    }
+    pvData = d;
+    renderPastePreview(d);
+    const parts = [`${d.rows.length}件`];
+    if (d.plan.add.length) parts.push(`新しい回${d.plan.add.length}件`);
+    if (d.plan.update.length) parts.push(`記録済み${d.plan.update.length}件に順位を追加`);
+    setPasteStatus('読み取りました：' + parts.join(' ／ ') + '。', 'ok');
+    return;
+  }
   if (!KOJIN_KIND[type] && type !== 'kokai') {
     setPasteStatus('この成績表はまだ対応していません（今はマスター個人票Aと公開学力テスト）。ほかの成績表は順に追加します。', 'ng');
     $('pastePrev').style.display = 'none';
@@ -1896,15 +2005,17 @@ function runParse(raw, type) {
 
 function renderPastePreview(d) {
   $('pvType').value = d.type;
+  if (d.type === 'sokuho') return renderSokuhoPreview(d);
   const kojin = !!KOJIN_KIND[d.type];
   const KK = KOJIN_KIND[d.type] || KOJIN_KIND.kojinA;
   $('pvKojin').style.display = kojin ? '' : 'none';
   $('pvKokaiWrap').style.display = kojin ? 'none' : '';
+  $('pvSokWrap').style.display = 'none';
   $('pvYearWrap').style.display = kojin ? '' : 'none';   // 公開は月ごとに年が入っている
   // 公開は月数が多いので一覧で確認だけ。直したい月は取り込んだ後に一覧からタップして編集できる
   $('pvTitle').textContent = kojin ? '読み取った内容（直せます）' : '読み取った内容';
   if (!kojin) { renderKokaiPreview(d); $('pastePrev').style.display = ''; return; }
-  $('pvYear').value = guessYear(d.month);
+  $('pvYear').value = guessYear(d.month, d.type);
   $('pvYm').value = d.month || '';
   $('pvCourse').value = d.course || 'マスター';
   $('pvTestsHead').textContent = KK.testLabel;
@@ -1927,6 +2038,33 @@ function renderPastePreview(d) {
   });
   $('pvTests').innerHTML = h;
   relabelMonths();
+  $('pastePrev').style.display = '';
+}
+
+// 速報のプレビュー。どの回が新しく入り、どれが順位だけ足されるのかを見せる
+function renderSokuhoPreview(d) {
+  $('pvKojin').style.display = 'none';
+  $('pvKokaiWrap').style.display = 'none';
+  $('pvYearWrap').style.display = 'none';
+  $('pvSokWrap').style.display = '';
+  $('pvTitle').textContent = '読み取った内容';
+  $('pvSokYm').value = ymOfDate(new Date().toISOString().slice(0, 10));
+
+  const line = r => {
+    const av = r.avg != null ? `平均${r.avg}` : '';
+    const rk = r.rank != null ? `クラス${r.rank}位${r.rankN ? '/' + r.rankN + '人' : ''}` : '';
+    const al = r.allRank != null ? `全体${r.allRank}位${r.allN ? '/' + r.allN + '人' : ''}` : '';
+    return `<div class="pvK"><div class="m">${r.subject} No.${r.no}<span>${r.month ? r.month + '月' : ''}${r.cls ? '・' + r.cls : ''}</span></div>
+      <div class="s">${r.score != null ? r.score + '点' : '—'}　${av}　${rk}${al ? '<br>' + al : ''}</div></div>`;
+  };
+  const sec = (title, arr, note) => arr.length
+    ? `<p class="pvHead">${title}（${arr.length}件）</p>${note ? `<p class="pNote">${note}</p>` : ''}${arr.map(line).join('')}` : '';
+
+  $('pvSokList').innerHTML =
+    sec('新しく記録する回', d.plan.add, '下の月度に入ります。日付は個人票を取り込んだときに埋まります。')
+    + sec('記録済み（クラス順位などを追加）', d.plan.update.map(u => u.r), '点数とクラス平均は個人票の確定値をそのまま残します。')
+    + sec('取り込まない回', d.plan.skip, '日付も月度も分からないため見送ります。個人票（A）を取り込むと入ります。');
+  $('pvSokYmWrap').style.display = d.plan.add.length ? '' : 'none';
   $('pastePrev').style.display = '';
 }
 
@@ -1998,6 +2136,7 @@ $('pasteImport').onclick = () => {
   if (pvData.type === 'saireA') return importSaireA();
   if (pvData.type === 'saikokuA') return importSaikokuA();
   if (pvData.type === 'nadaA') return importNadaA();
+  if (pvData.type === 'sokuho') return importSokuho();
   const year = parseInt($('pvYear').value, 10);
   const mo = parseInt($('pvYm').value, 10);
   if (!year || !mo) { setPasteStatus('年と月度を入れてください。', 'ng'); return; }
@@ -2017,7 +2156,12 @@ $('pasteImport').onclick = () => {
     const subject = $('pvSj' + i).value;
     const no = num($('pvNo' + i).value);
     const avg = num($('pvAv' + i).value);
-    const rec = { id: uid(), date, subject, no, score, avg };
+    // 先に速報で入れておいた同じ回があれば、そこへ日付を入れて確定させる
+    const sk = db.fukushu.findIndex(x => !x.date && x.subject === subject && (x.no ?? null) === (no ?? null));
+    const base = sk >= 0 ? db.fukushu[sk] : null;
+    const rec = Object.assign({}, base, { id: base ? base.id : uid(), date, subject, no, score, avg });
+    delete rec.ym;
+    if (sk >= 0) db.fukushu.splice(sk, 1);
     // 同じ日付・科目・回は上書き（何度貼っても増えない）
     const j = db.fukushu.findIndex(x => x.date === date && x.subject === subject && (x.no ?? null) === (no ?? null));
     if (j >= 0) { rec.id = db.fukushu[j].id; db.fukushu[j] = rec; } else db.fukushu.push(rec);
@@ -2044,6 +2188,46 @@ $('pasteImport').onclick = () => {
   setPasteStatus(`✅ 取り込みました！ 復習テスト${added}件・${ym}のまとめを保存しました。`, 'ok');
   render();
 };
+
+// 速報の取り込み。新しい回は月度だけを持った記録として足し、
+// すでにある回にはクラス順位・全体順位を書き足す。
+function importSokuho() {
+  const ym = ($('pvSokYm').value || '').trim();
+  const plan = pvData.plan;
+  if (plan.add.length && !/^\d{4}-\d{2}$/.test(ym)) { setPasteStatus('月度を「2026-08」の形で入れてください。', 'ng'); return; }
+  const extra = r => {
+    const o = {};
+    if (r.rank != null) o.rank = r.rank;
+    if (r.rankN != null) o.rankN = r.rankN;
+    if (r.allAvg != null) o.allAvg = r.allAvg;
+    if (r.allRank != null) o.allRank = r.allRank;
+    if (r.allN != null) o.allN = r.allN;
+    if (r.cls) o.cls = r.cls;
+    return o;
+  };
+  for (const u of plan.update) {
+    const i = db.fukushu.findIndex(x => x.id === u.id);
+    if (i < 0) continue;
+    const cur = db.fukushu[i];
+    // 点とクラス平均は個人票（確定値）が入っていればそのまま
+    const fill = {};
+    if (cur.score == null && u.r.score != null) fill.score = u.r.score;
+    if ((cur.avg == null || cur.avg === '') && u.r.avg != null) fill.avg = u.r.avg;
+    db.fukushu[i] = Object.assign({}, cur, extra(u.r), fill);
+  }
+  for (const r of plan.add) {
+    db.fukushu.push(Object.assign({
+      id: uid(), ym, subject: r.subject, no: r.no, score: r.score, avg: r.avg,
+    }, extra(r)));
+  }
+  save();
+  $('pastePrev').style.display = 'none';
+  $('pasteBox').value = '';
+  const n1 = plan.add.length, n2 = plan.update.length, n3 = plan.skip.length;
+  pvData = null;
+  setPasteStatus(`✅ 取り込みました！ 新しい回${n1}件を${ym}度に追加${n2 ? `・記録済み${n2}件に順位を追加` : ''}${n3 ? `（古い${n3}件は日付が分からないので見送りました）` : ''}。`, 'ok');
+  render();
+}
 
 // 灘合の個人票の取り込み。国算理の3列を1回分にまとめる。
 function importNadaA() {
