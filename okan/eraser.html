@@ -505,16 +505,17 @@ const ENGINES = {
   gemini: {
     label: 'Gemini',
     name: 'Gemini（Google）',
-    badge: '無料枠あり・おすすめ', badgeClass: '',
-    desc: 'Googleの画像AI「Nano Banana」。無料枠があり、家庭で使う枚数ならまず無料で足ります。速くて手軽。まずはこれから。',
+    badge: '少額課金・おすすめ', badgeClass: 'pay',
+    desc: 'Googleの画像AI「Nano Banana」(gemini-2.5-flash-image)。手書きだけをきれいに消してくれます。画像を作るAIなので、AI Studioで支払い方法の登録（Billing）が必要です（1枚あたり数円程度）。速くて手軽、まずはこれから。',
     keyStore: 'okan_gemini_key',
-    placeholder: 'APIキー（AIza…）を貼り付け',
-    guide: '<h3>Geminiキーの作り方（最初の1回だけ・無料）</h3><ol>' +
+    placeholder: 'APIキーを貼り付け',
+    guide: '<h3>Geminiキーの作り方（最初の1回だけ）</h3><ol>' +
       '<li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> を開く</li>' +
       '<li>Googleアカウントでログイン</li>' +
       '<li>「APIキーを作成」を押す</li>' +
-      '<li>できたキー（AIza…で始まる文字列）をコピーして、下の欄に貼り付けて「保存して使う」</li></ol>',
-    models: ['gemini-3.1-flash-image', 'gemini-2.5-flash-image'], // 先頭が失敗したら次へ
+      '<li><b>支払い方法を登録（Billing を有効化）</b>します。画像を作るAIは無料枠がほぼ無く、これが無いと「429（quota超過）」エラーになります。使うぶんだけの従量課金（1枚 数円程度）です</li>' +
+      '<li>できたキーをコピーして、下の欄に貼り付けて「保存して使う」</li></ol>',
+    models: ['gemini-2.5-flash-image', 'gemini-3.1-flash-image'], // 2.5が手書き除去に有効（3.1は編集せず素通し・2026-07-21検証）
     call: (key, model, blob, b64) => callGemini(key, model, b64)
   },
   openai: {
@@ -536,11 +537,15 @@ const ENGINES = {
 };
 let aiEngine = localStorage.getItem(AI_ENGINE) || 'gemini';
 if (!ENGINES[aiEngine]) aiEngine = 'gemini';
+// 「手書きだけ消す・描き足すな・印刷は1pxも変えるな・白紙化禁止」を強調
+// （弱い指示だと2.5は全消し=白紙化、"描き足すな"が無いと勝手にイラストを追加する・2026-07-21検証）
 const AI_PROMPT =
-  'この写真は学習プリントです。手書きの書き込み（鉛筆・シャーペン・ボールペン・赤ペンの丸つけ・メモなど）を' +
-  'すべて完全に消してください。印刷された問題文・数字・記号・枠線・罫線・図・イラストは' +
-  '一切変えず、そのままの位置・内容で残してください。紙面は白くきれいにして、' +
-  '書き込みをする前のまっさらな印刷プリントの画像として出力してください。';
+  '写真編集の指示です。この学習プリントの写真から、手書きの書き込み（鉛筆・シャープペン・ボールペン・' +
+  '赤ペンで書かれた答え・丸つけ・下線・メモ・記号）だけを消してください。' +
+  'それ以外は絶対に変えないでください：印刷された文字・数字・図・イラスト・罫線・枠線は1ピクセルも動かさず、' +
+  '消さず、描き直さず、位置も形もそのまま完全に保持してください。' +
+  '新しい絵・文字・イラスト・模様を絶対に描き足さないでください。白紙にもしないでください。' +
+  '手書きだけが消えて、他は元の写真と完全に同一の画像を出力してください。';
 
 $('aiBtn').onclick = () => {
   if (!origCanvas) return;
