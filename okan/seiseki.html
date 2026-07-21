@@ -106,6 +106,11 @@
   .testLine .sj { font-size: 13px; flex: 1; }
   .testLine .no { font-size: 11px; color: #94a3b8; }
   .testLine .sc { font-size: 15px; color: #0d9488; min-width: 52px; text-align: right; }
+  /* クラス平均（取り込んだテストだけ表示） */
+  .testLine .av { font-size: 10.5px; color: #94a3b8; min-width: 48px; text-align: right; line-height: 1.35; }
+  .testLine .av b { display: block; font-size: 12px; }
+  .testLine .av.up b { color: #059669; }
+  .testLine .av.dn b { color: #f97316; }
 
   #fab {
     position: fixed; right: 18px; bottom: calc(24px + env(safe-area-inset-bottom));
@@ -148,13 +153,33 @@
   .kv .k { color: #64748b; font-weight: 700; }
   .kv .v { font-weight: 800; }
 
-  #aiFmtBtn {
+  #aiFmtBtn, #pasteBtn {
     border: 1.5px dashed #db2777; background: #fdf2f8; color: #db2777;
     font-size: 12px; font-weight: 800; padding: 7px 10px; border-radius: 10px;
     cursor: pointer; white-space: nowrap;
   }
+  /* 貼り付け取り込みが本命なので実線で目立たせる */
+  #pasteBtn { border-style: solid; background: #db2777; color: #fff; }
   .aiStep { font-size: 13px; font-weight: 700; line-height: 1.7; margin: 6px 2px; }
   .aiNote { font-size: 11px; color: #94a3b8; font-weight: 700; line-height: 1.7; margin: 10px 2px 0; }
+
+  /* ── 成績表の貼り付け取り込み ── */
+  .pStep { font-size: 12.5px; font-weight: 700; line-height: 1.7; margin: 5px 2px; }
+  .pBox {
+    width: 100%; height: 110px; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+    font-size: 12px; font-family: inherit; box-sizing: border-box; background: #fff; color: inherit;
+  }
+  .pNote { font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.7; margin: 8px 2px; }
+  .pNote.ok { color: #16a34a; }
+  .pNote.ng { color: #ef4444; }
+  .pvHead { font-size: 12px; font-weight: 800; color: #db2777; margin: 14px 2px 6px; border-top: 1px solid #f1f5f9; padding-top: 12px; }
+  .pvGrid { display: grid; grid-template-columns: 56px 1fr 52px 1fr 1fr; gap: 4px; align-items: center; }
+  .pvGrid .pvTh { font-size: 10px; font-weight: 800; color: #94a3b8; text-align: center; }
+  .pvIn {
+    width: 100%; padding: 6px 4px; border: 1.5px solid #cbd5e1; border-radius: 8px;
+    font-size: 13px; font-family: inherit; text-align: center; background: #fff; color: inherit; box-sizing: border-box;
+  }
+  .pvIn.miss { border-color: #f59e0b; background: #fffbeb; }
   .fmtPre {
     background: #f1f5f9; border: 1.5px solid #e2e8f0; border-radius: 10px;
     padding: 10px; margin-top: 10px; font-size: 10.5px; line-height: 1.55;
@@ -180,6 +205,7 @@
   <button class="tab" data-tab="saikoku">最レ国語</button>
   <button class="tab" data-tab="nadago">灘合</button>
   <span class="grow"></span>
+  <button id="pasteBtn">📋 貼り付け取り込み</button>
   <button id="aiFmtBtn">🤖 AI入力</button>
 </div>
 
@@ -426,6 +452,51 @@
       <button class="btn btnPink" id="aiFmtCopy">📋 指示文をコピー</button>
     </div>
     <p class="aiNote">同じ月の公開テストは上書き、その他は id が同じものが上書きされます。何度取り込んでも重複しません。</p>
+  </div>
+</div>
+
+<!-- 成績表を貼り付けて取り込む（AIを使わず、貼られた文字だけを解析する） -->
+<div class="overlay" id="pasteSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2>📋 成績表を貼り付けて取り込む</h2><button class="closeBtn" data-close>✕</button></div>
+    <p class="pStep">① 浜学園マイページを開いて、成績表を表示する</p>
+    <p class="pStep">② 表をドラッグして選択し、コピーする</p>
+    <p class="pStep">③ 下の枠を長押し→ペーストして「解析する」</p>
+    <textarea class="pBox" id="pasteBox" placeholder="ここに成績表を貼り付け"></textarea>
+    <div class="sheetBtns"><button class="btn btnPink" id="pasteParse">解析する</button></div>
+    <p class="pNote" id="pasteStatus">アプリが浜学園にログインすることはありません。貼り付けた文字だけを読み取ります。</p>
+
+    <div id="pastePrev" style="display:none">
+      <p class="pvHead">読み取った内容（直せます）</p>
+      <div class="fRow">
+        <div><p class="fLabel">種類</p>
+          <select class="fInput" id="pvType">
+            <option value="kojinA">マスター個人票（A）</option>
+          </select>
+        </div>
+        <div><p class="fLabel">年</p><input class="fInput" type="number" id="pvYear"></div>
+      </div>
+      <div class="fRow">
+        <div><p class="fLabel">月度</p><input class="fInput" id="pvYm" placeholder="7"></div>
+        <div><p class="fLabel">コース</p><input class="fInput" id="pvCourse" value="マスター"></div>
+      </div>
+
+      <p class="pvHead">復習テスト</p>
+      <div class="pvGrid" id="pvTests"></div>
+
+      <p class="pvHead">この月度のまとめ</p>
+      <div class="fRow">
+        <div><p class="fLabel">復テ平均</p><input class="fInput" type="number" step="0.1" id="pvFuku"></div>
+        <div><p class="fLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="pvKokai"></div>
+      </div>
+      <div class="fRow">
+        <div><p class="fLabel">総計（200点満点）</p><input class="fInput" type="number" step="0.1" id="pvTotal"></div>
+        <div><p class="fLabel">クラス内順位</p><input class="fInput" type="number" id="pvRank"></div>
+      </div>
+
+      <div class="sheetBtns"><button class="btn btnPink" id="pasteImport">この内容で取り込む</button></div>
+      <p class="aiNote">同じテスト・同じ月度は上書きされます。何度取り込んでも重複しません。</p>
+    </div>
   </div>
 </div>
 
@@ -790,14 +861,22 @@ function aRow(ym) {
   }
   const subjAvgs = Object.entries(bySubj).map(([s, arr]) => [s, arr.reduce((a, b) => a + b, 0) / arr.length]);
   // 復テ平均＝期間内テストの単純平均（実物のA表個人票で確認済み。教科平均のならしではない）
-  const fuku = tests.length ? tests.reduce((a, t) => a + (+t.score), 0) / tests.length : null;
+  let fuku = tests.length ? tests.reduce((a, t) => a + (+t.score), 0) / tests.length : null;
   const k = db.kokai.find(x => x.ym === ym);
   let kAvg = null;
   if (k) {
     const sc = [k.koku, k.san, k.ri].map(o => o && o.score).filter(v => v != null && v !== '');
     if (sc.length) kAvg = sc.reduce((a, b) => a + (+b), 0) / sc.length;
   }
-  const total = (fuku != null && kAvg != null) ? fuku + kAvg : null;
+  let total = (fuku != null && kAvg != null) ? fuku + kAvg : null;
+  // 個人票から取り込んだ実物値があれば、そちらを正とする（塾の計算と必ず一致させるため）
+  const rec = db.atotal.find(x => (x.course || 'マスター') === 'マスター' && x.ym === ym);
+  if (rec) {
+    if (rec.fuku != null && rec.fuku !== '') fuku = +rec.fuku;
+    if (rec.kokai != null && rec.kokai !== '') kAvg = +rec.kokai;
+    if (rec.total != null && rec.total !== '') total = +rec.total;
+    else if (fuku != null && kAvg != null) total = fuku + kAvg;
+  }
   return { ym, fuku, kAvg, total, subjAvgs, count: tests.length };
 }
 
@@ -989,9 +1068,12 @@ function render() {
         const avg = (monthTests.reduce((s, x) => s + (+x.score || 0), 0) / monthTests.length).toFixed(1);
         h += `<p class="secLabel">${ymLabel(ym)}（${monthTests.length}枚・平均 ${avg}点）</p>`;
       }
+      // クラス平均は取り込んだテストにだけ付く。無い記録は今までどおり点数だけ
+      const av = (t.avg != null && t.avg !== '')
+        ? `<span class="av ${(+t.score || 0) >= +t.avg ? 'up' : 'dn'}">平均<b>${t.avg}</b></span>` : '';
       h += `<div class="testLine" data-fuku="${t.id}"><span class="d">${mdLabel(t.date)}</span>
         <span class="sj">${t.subject}</span><span class="no">No.${show(t.no)}</span>
-        <span class="sc${(+t.score || 0) < 80 ? ' scoreBad' : ''}">${show(t.score)}点</span></div>`;
+        <span class="sc${(+t.score || 0) < 80 ? ' scoreBad' : ''}">${show(t.score)}点</span>${av}</div>`;
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-fuku]').forEach(el => el.onclick = () => openFuku(db.fukushu.find(x => x.id === el.dataset.fuku)));
@@ -1304,6 +1386,208 @@ $('atotalDelete').onclick = () => {
   save(); closeAll(); render();
 };
 
+// ============================================================
+// 成績表の貼り付け取り込み（AIなし・貼られた文字だけを解析）
+//   浜学園マイページで表をコピー → ここに貼る → 解析 → 直せるプレビュー → 取り込み
+//   アプリが浜学園へ接続することは一切ない。
+// ============================================================
+
+// 全角→半角・空白の正規化。コピー形式（タブ/空白/1セル1行）の違いを吸収する
+function normText(s) {
+  return String(s)
+    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)) // 全角数字
+    .replace(/[．]/g, '.').replace(/[　 ]/g, ' ')
+    .replace(/\r\n?/g, '\n')
+    .replace(/[ \t]+/g, ' ');
+}
+// 行から数値だけを取り出す（「12/2884」のような順位表記は分子だけ）
+function numsOf(line) {
+  return (line.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+}
+// 見出しの特徴語で成績表の種類を見分ける
+function detectSheetType(t) {
+  if (/成績個人票/.test(t) && /マスターコース/.test(t)) return 'kojinA';
+  return '';
+}
+
+const SUBJ_WORDS = ['国語', '算数', '理科', '社会'];
+
+// マスター個人票（A）を解析する。取り込むのは「あなたの成績」の行と最下段の「平均」の行だけ。
+function parseKojinhyoA(raw) {
+  const t = normText(raw);
+  const lines = t.split('\n').map(s => s.trim()).filter(s => s);
+  const r = { type: 'kojinA', month: null, grade: null, course: 'マスター', tests: [], fuku: null, kokai: null, total: null, rank: null };
+
+  const mMonth = t.match(/(\d{1,2})\s*月度/);
+  if (mMonth) r.month = +mMonth[1];
+  const mGrade = t.match(/小\s*([1-6])/);
+  if (mGrade) r.grade = +mGrade[1];
+
+  const pick = re => lines.find(l => re.test(l)) || '';
+  const months = numsOf(pick(/^月[\s\d]/));
+  const days = numsOf(pick(/^日[\s\d]/));
+  const nos = numsOf(pick(/^テストNo/));
+  // 科目行：先頭が「科目」で、教科名が並ぶ行
+  const subjLine = lines.find(l => /^科目/.test(l) && SUBJ_WORDS.some(w => l.includes(w))) || '';
+  const subjects = (subjLine.match(new RegExp(SUBJ_WORDS.join('|'), 'g')) || []);
+
+  // 列数＝日付・科目・No.のうち最も多く取れた数
+  const n = Math.max(days.length, subjects.length, nos.length);
+
+  // 「あなたの成績」の行（コピーで行が割れる場合に備え、次の行も足して数を拾う）
+  const meIdx = lines.findIndex(l => l.includes('あなたの成績'));
+  let meNums = [];
+  if (meIdx >= 0) {
+    meNums = numsOf(lines[meIdx]);
+    for (let k = 1; k <= 3 && meNums.length < n + 11 && meIdx + k < lines.length; k++) {
+      const nx = lines[meIdx + k];
+      if (/あなた|平均/.test(nx)) break;
+      meNums = meNums.concat(numsOf(nx));
+    }
+  }
+  // 最下段の「平均」行（クラス平均）。「7月復テ平均」等の見出し行と紛れないよう、
+  // 行頭が「平均」で数値が2つ以上あるものの中から最後のものを採用する。
+  let avgNums = [];
+  for (const l of lines) {
+    if (/^平均[\s\d]/.test(l)) { const v = numsOf(l); if (v.length >= 2) avgNums = v; }
+  }
+
+  // 「あなたの成績」の並びは 各テストの点 … 合計・科目別(平均/順位)…・復テ平均・公開平均・総計・順位。
+  // 末尾4つ（復テ平均/公開平均/総計/順位）は必ずあるので、後ろから確定させる。
+  // テストの点と重ならない場合だけサマリとみなす（重なると別物を拾ってしまう）
+  if (meNums.length >= n + 4) {
+    const tail = meNums.slice(-4);
+    r.fuku = tail[0]; r.kokai = tail[1]; r.total = tail[2]; r.rank = tail[3];
+  }
+  const scores = meNums.slice(0, n);
+
+  for (let i = 0; i < n; i++) {
+    r.tests.push({
+      month: months[i] != null ? months[i] : (months.length === 1 ? months[0] : null),
+      day: days[i] != null ? days[i] : null,
+      subject: subjects[i] || '',
+      no: nos[i] != null ? nos[i] : null,
+      score: scores[i] != null ? scores[i] : null,
+      avg: avgNums[i] != null ? avgNums[i] : null,
+    });
+  }
+  return r;
+}
+
+// 個人票には年が印字されないので、今日を基準に推定（その月度が未来なら前年）
+function guessYear(month) {
+  const now = new Date();
+  let y = now.getFullYear();
+  if (month && month > now.getMonth() + 1) y -= 1;
+  return y;
+}
+
+let pvData = null;
+function openPasteSheet() {
+  pvData = null;
+  $('pasteBox').value = '';
+  $('pastePrev').style.display = 'none';
+  setPasteStatus('アプリが浜学園にログインすることはありません。貼り付けた文字だけを読み取ります。', '');
+  $('pasteSheet').classList.add('open');
+}
+function setPasteStatus(msg, kind) {
+  const p = $('pasteStatus');
+  p.textContent = msg;
+  p.className = 'pNote' + (kind ? ' ' + kind : '');
+}
+
+$('pasteParse').onclick = () => {
+  const raw = $('pasteBox').value.replace(/^﻿/, '').trim();
+  if (!raw) { setPasteStatus('先に成績表を貼り付けてください。', 'ng'); return; }
+  const type = detectSheetType(raw);
+  if (type !== 'kojinA') {
+    setPasteStatus('この成績表はまだ対応していません（今はマスター個人票Aのみ）。ほかの成績表は順に追加します。', 'ng');
+    return;
+  }
+  const d = parseKojinhyoA(raw);
+  const got = d.tests.filter(t => t.score != null).length;
+  if (!got && d.total == null) {
+    setPasteStatus('表の中身が読み取れませんでした。表の左上から右下まで、見出しの行（月・日・科目・テストNo.）ごと選んでコピーし直してみてください。', 'ng');
+    $('pastePrev').style.display = 'none';
+    return;
+  }
+  pvData = d;
+  renderPastePreview(pvData);
+  setPasteStatus(`読み取りました：復習テスト${got}件${d.total != null ? ' ／ 総計' + d.total : ''}。おかしい所は下で直せます。`, 'ok');
+};
+
+function renderPastePreview(d) {
+  $('pvType').value = 'kojinA';
+  $('pvYear').value = guessYear(d.month);
+  $('pvYm').value = d.month || '';
+  $('pvCourse').value = d.course || 'マスター';
+  $('pvFuku').value = d.fuku != null ? d.fuku : '';
+  $('pvKokai').value = d.kokai != null ? d.kokai : '';
+  $('pvTotal').value = d.total != null ? d.total : '';
+  $('pvRank').value = d.rank != null ? d.rank : '';
+
+  const miss = v => (v == null || v === '') ? ' miss' : '';
+  let h = '<span class="pvTh">月/日</span><span class="pvTh">科目</span><span class="pvTh">No.</span><span class="pvTh">自分</span><span class="pvTh">クラス平均</span>';
+  d.tests.forEach((t, i) => {
+    h += `<input class="pvIn${miss(t.day)}" id="pvMd${i}" value="${t.month || ''}/${t.day || ''}" placeholder="6/16">
+      <select class="pvIn" id="pvSj${i}">${SUBJ_WORDS.map(w => `<option${w === t.subject ? ' selected' : ''}>${w}</option>`).join('')}</select>
+      <input class="pvIn${miss(t.no)}" id="pvNo${i}" type="number" value="${t.no != null ? t.no : ''}">
+      <input class="pvIn${miss(t.score)}" id="pvSc${i}" type="number" value="${t.score != null ? t.score : ''}">
+      <input class="pvIn${miss(t.avg)}" id="pvAv${i}" type="number" step="0.1" value="${t.avg != null ? t.avg : ''}">`;
+  });
+  $('pvTests').innerHTML = h;
+  $('pastePrev').style.display = '';
+}
+
+$('pasteImport').onclick = () => {
+  if (!pvData) return;
+  const year = parseInt($('pvYear').value, 10);
+  const mo = parseInt($('pvYm').value, 10);
+  if (!year || !mo) { setPasteStatus('年と月度を入れてください。', 'ng'); return; }
+  const course = ($('pvCourse').value || 'マスター').trim();
+  const ym = `${year}-${String(mo).padStart(2, '0')}`;
+  const pad = v => String(v).padStart(2, '0');
+
+  let added = 0;
+  pvData.tests.forEach((t, i) => {
+    const md = ($('pvMd' + i).value || '').split('/');
+    const m = parseInt(md[0], 10), dd = parseInt(md[1], 10);
+    const score = num($('pvSc' + i).value);
+    if (!m || !dd || score == null) return;      // 日付か点が無い行は取り込まない
+    // 個人票の月度は前月16日〜当月15日をまたぐので、月が月度より大きければ前年扱い
+    const y = (m > mo) ? year - 1 : year;
+    const date = `${y}-${pad(m)}-${pad(dd)}`;
+    const subject = $('pvSj' + i).value;
+    const no = num($('pvNo' + i).value);
+    const avg = num($('pvAv' + i).value);
+    const rec = { id: uid(), date, subject, no, score, avg };
+    // 同じ日付・科目・回は上書き（何度貼っても増えない）
+    const j = db.fukushu.findIndex(x => x.date === date && x.subject === subject && (x.no ?? null) === (no ?? null));
+    if (j >= 0) { rec.id = db.fukushu[j].id; db.fukushu[j] = rec; } else db.fukushu.push(rec);
+    added++;
+  });
+
+  // A表の実物値（復テ平均・公開平均・総計・順位）。ある値だけ書き込む
+  const fuku = num($('pvFuku').value), kokai = num($('pvKokai').value);
+  const total = num($('pvTotal').value), rank = num($('pvRank').value);
+  if (fuku != null || kokai != null || total != null || rank != null) {
+    const k = db.atotal.findIndex(x => (x.course || 'マスター') === course && x.ym === ym);
+    const rec = k >= 0 ? db.atotal[k] : { id: uid(), ym, course };
+    if (fuku != null) rec.fuku = fuku;
+    if (kokai != null) rec.kokai = kokai;
+    if (total != null) rec.total = total;
+    if (rank != null) rec.rank = rank;
+    if (k < 0) db.atotal.push(rec);
+  }
+
+  save();
+  $('pastePrev').style.display = 'none';
+  $('pasteBox').value = '';
+  pvData = null;
+  setPasteStatus(`✅ 取り込みました！ 復習テスト${added}件・${ym}のまとめを保存しました。`, 'ok');
+  render();
+};
+
 // ---------- ナビ ----------
 // チェックした講座のタブだけ表示。マスターを外すと⚖️も隠す
 document.querySelectorAll('#topBar .tab').forEach(b => {
@@ -1347,6 +1631,7 @@ $('fab').onclick = () => {
   else if (tab === 'saikoku') openSaikoku(null);
   else openNada(null);
 };
+$('pasteBtn').onclick = openPasteSheet;
 $('aiFmtBtn').onclick = () => $('aiFmtSheet').classList.add('open');
 $('aiFmtCopy').onclick = async () => {
   const text = $('aiFmtPre').textContent;
