@@ -774,9 +774,10 @@ async function importDataObj(obj, targetChild) {
       if (a.date !== b.date) return false;
       if (k === 'fukushu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
       if (k === 'mosi') return (a.name || '') === (b.name || '');   // 模試：同じ日・同じテスト名
+      if (k === 'koushuu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
       return (a.no ?? null) === (b.no ?? null);   // saire/nadago：同じ日・同じ回
     };
-    for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi']) {
+    for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi', 'koushuu']) {
       if (!Array.isArray(cur[k])) cur[k] = [];
       for (const it of (obj.seiseki[k] || [])) {
         const i = cur[k].findIndex(x => sameRec(k, x, it));

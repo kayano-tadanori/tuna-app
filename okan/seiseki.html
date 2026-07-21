@@ -202,6 +202,7 @@
   <button class="tab" data-tab="saire">最レ算数</button>
   <button class="tab" data-tab="saikoku">最レ国語</button>
   <button class="tab" data-tab="nadago">灘合</button>
+  <button class="tab" data-tab="koushuu">講習</button>
   <button class="tab" data-tab="mosi">模試</button>
 </div>
 
@@ -387,6 +388,33 @@
   </div>
 </div>
 
+<!-- 講習会のテスト入力 -->
+<div class="overlay" id="kouSheet">
+  <div class="sheet">
+    <div class="sheetHead"><h2 id="kouTitle">講習のテストを記録</h2><button class="closeBtn" data-close>✕</button></div>
+    <div class="fRow">
+      <div><p class="fLabel">日付</p><input class="fInput" type="date" id="kDate2"></div>
+      <div><p class="fLabel">講習</p>
+        <select class="fInput" id="kTerm"><option>春期講習</option><option>夏期講習</option><option>冬期講習</option></select>
+      </div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">科目</p>
+        <select class="fInput" id="kSubj2"><option>国語</option><option>算数</option><option>理科</option><option>社会</option></select>
+      </div>
+      <div><p class="fLabel">テストNo.（実力テストは空）</p><input class="fInput" type="number" id="kNo2"></div>
+    </div>
+    <div class="fRow">
+      <div><p class="fLabel">点数</p><input class="fInput" type="number" id="kScore2"></div>
+      <div><p class="fLabel">クラス平均</p><input class="fInput" type="number" step="0.1" id="kAvg2"></div>
+    </div>
+    <div class="sheetBtns">
+      <button class="btn btnDanger" id="kouDelete" style="display:none">削除</button>
+      <button class="btn btnPink" id="kouSave">保存</button>
+    </div>
+  </div>
+</div>
+
 <!-- 模試（判定テスト・各種模試）入力 -->
 <div class="overlay" id="mosiSheet">
   <div class="sheet">
@@ -466,6 +494,7 @@
             <option value="saireA">最レ算数 個人票（A）</option>
             <option value="saikokuA">最レ国語 個人票（A）</option>
             <option value="nadaA">灘中合格特訓 個人票（A）</option>
+            <option value="koushuu">講習会 個人票</option>
             <option value="sokuho">復習テストの速報（一覧結果）</option>
             <option value="kokai">公開学力テスト</option>
           </select>
@@ -475,21 +504,26 @@
 
       <!-- マスター個人票（A）のとき -->
       <div id="pvKojin">
-        <div class="fRow">
+        <div class="fRow" id="pvYmRow">
           <div><p class="fLabel">月度</p><input class="fInput" id="pvYm" placeholder="7"></div>
           <div><p class="fLabel">コース</p><input class="fInput" id="pvCourse" value="マスター"></div>
         </div>
+        <div id="pvTermRow" style="display:none">
+          <p class="fLabel">講習</p><input class="fInput" id="pvTerm" placeholder="春期講習">
+          <p class="pNote">この表には年が入っていないので、上の「年度」を確かめてください（浜学園の年度は2月はじまり。春期＝その年の3〜4月、冬期＝12月〜翌1月）。</p>
+        </div>
 
         <p class="pvHead" id="pvTestsHead">復習テスト</p>
+        <p class="pNote" id="pvNoNote" style="display:none">No.が空の行は、講習のはじめにやる実力テストです（そのままでOK）。</p>
         <div class="pvGrid" id="pvTests"></div>
 
         <p class="pvHead">この月度のまとめ</p>
         <div class="fRow">
           <div><p class="fLabel" id="pvFukuLabel">復テ平均</p><input class="fInput" type="number" step="0.1" id="pvFuku"></div>
-          <div><p class="fLabel" id="pvKokaiLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="pvKokai"></div>
+          <div id="pvKokaiBox"><p class="fLabel" id="pvKokaiLabel">公開平均</p><input class="fInput" type="number" step="0.1" id="pvKokai"></div>
         </div>
         <div class="fRow">
-          <div><p class="fLabel" id="pvTotalLabel">総計（200点満点）</p><input class="fInput" type="number" step="0.1" id="pvTotal"></div>
+          <div id="pvTotalBox"><p class="fLabel" id="pvTotalLabel">総計（200点満点）</p><input class="fInput" type="number" step="0.1" id="pvTotal"></div>
           <div><p class="fLabel">クラス内順位</p><input class="fInput" type="number" id="pvRank"></div>
         </div>
       </div>
@@ -550,7 +584,7 @@ function load() {
   let d = null;
   try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) { /* fallthrough */ }
   if (!d) d = {};
-  for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi']) if (!Array.isArray(d[k])) d[k] = [];
+  for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi', 'koushuu']) if (!Array.isArray(d[k])) d[k] = [];
   return d;
 }
 const save = () => localStorage.setItem(KEY, JSON.stringify(db));
@@ -1165,6 +1199,31 @@ function render() {
     v.innerHTML = h;
     v.querySelectorAll('[data-saikoku]').forEach(el => el.onclick = () => openSaikoku(db.saikoku.find(x => x.id === el.dataset.saikoku)));
     bindRankChips(v, '最レ国語');
+  } else if (tab === 'koushuu') {
+    const list = [...db.koushuu].sort((a, b) => b.date.localeCompare(a.date));
+    let h = '';
+    if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>講習会の成績個人票を貼り付けると入ります。<br>＋ボタンで手入力もできます。</p>';
+    let cur = '';
+    for (const t of list) {
+      const key = (t.term || '講習') + '/' + t.date.slice(0, 4);
+      if (key !== cur) {
+        cur = key;
+        const m = db.koushuu.filter(x => ((x.term || '講習') + '/' + x.date.slice(0, 4)) === key);
+        const avg = (m.reduce((s, x) => s + (+x.score || 0), 0) / m.length).toFixed(1);
+        // まとめ（平均・順位）は講習のいちばん早い月に入れてある
+        const first = m.map(x => x.date).sort()[0];
+        const at = db.atotal.find(x => (x.course || '') === (t.term || '講習') && x.ym === first.slice(0, 7));
+        const rk = at && at.rank != null ? '・' + at.rank + '位' : '';
+        h += `<p class="secLabel">${t.date.slice(0, 4)}年 ${t.term || '講習'}（${m.length}枚・平均 ${at && at.fuku != null ? at.fuku : avg}点${rk}）</p>`;
+      }
+      const av = (t.avg != null && t.avg !== '')
+        ? `<span class="av ${(+t.score || 0) >= +t.avg ? 'up' : 'dn'}">平均<b>${t.avg}</b></span>` : '';
+      h += `<div class="testLine" data-kou="${t.id}"><span class="d">${mdLabel(t.date)}</span>
+        <span class="sj">${t.subject}</span><span class="no">${t.no != null ? 'No.' + t.no : '実力'}</span>
+        <span class="sc${(+t.score || 0) < 80 ? ' scoreBad' : ''}">${show(t.score)}点</span>${av}</div>`;
+    }
+    v.innerHTML = h;
+    v.querySelectorAll('[data-kou]').forEach(el => el.onclick = () => openKoushuu(db.koushuu.find(x => x.id === el.dataset.kou)));
   } else if (tab === 'mosi') {
     const list = [...db.mosi].sort((a, b) => b.date.localeCompare(a.date));
     let h = '';
@@ -1397,6 +1456,39 @@ $('saikokuDelete').onclick = () => {
 
 // ---------- 灘合 ----------
 let editingNada = null;
+let editingKou = null;
+function openKoushuu(t) {
+  editingKou = t ? t.id : null;
+  $('kouTitle').textContent = t ? '講習のテストを編集' : '講習のテストを記録';
+  $('kDate2').value = t ? t.date : new Date().toISOString().slice(0, 10);
+  $('kTerm').value = t && t.term ? t.term : '春期講習';
+  $('kSubj2').value = t ? t.subject : '算数';
+  $('kNo2').value = t && t.no != null ? t.no : '';
+  $('kScore2').value = t && t.score != null ? t.score : '';
+  $('kAvg2').value = t && t.avg != null ? t.avg : '';
+  $('kouDelete').style.display = t ? '' : 'none';
+  $('kouSheet').classList.add('open');
+}
+$('kouSave').onclick = () => {
+  const date = $('kDate2').value, score = num($('kScore2').value);
+  if (!date || score == null) { alert('日付と点数を入れてください'); return; }
+  const item = {
+    id: editingKou || uid(), date, term: $('kTerm').value, subject: $('kSubj2').value,
+    no: num($('kNo2').value), score, avg: num($('kAvg2').value),
+  };
+  db.koushuu = db.koushuu.filter(x => x.id !== item.id);
+  db.koushuu.push(item);
+  editingKou = null;
+  save(); closeAll(); render();
+};
+$('kouDelete').onclick = () => {
+  if (!editingKou) return;
+  if (!confirm('この記録を削除しますか？')) return;
+  db.koushuu = db.koushuu.filter(x => x.id !== editingKou);
+  editingKou = null;
+  save(); closeAll(); render();
+};
+
 let editingMosi = null;
 function openMosi(t) {
   editingMosi = t ? t.id : null;
@@ -1528,6 +1620,7 @@ function numsOf(line) {
 function detectSheetType(t) {
   if (/マスターコース一覧結果/.test(t) || (/クラス平均/.test(t) && /クラス順位/.test(t))) return 'sokuho';
   // 最レの個人票にも「7月公開算数」の欄があるので、公開の判定より先に見る
+  if (/講習会成績個人票/.test(t) || (/成績個人票/.test(t) && /[春夏冬][期季]\s*講習/.test(t))) return 'koushuu';
   if (/成績個人票/.test(t) && /灘中合格特訓/.test(t)) return 'nadaA';
   if (/成績個人票/.test(t) && /最高レベル特訓/.test(t)) {
     const sub = t.match(/最高レベル特訓[\s　]*[・･]?[\s　]*(算数|国語)/);
@@ -1549,6 +1642,9 @@ const KOJIN_KIND = {
   saikokuA: { words: ['復習'], course: '最レ国語', fukuLabel: '復テ平均', kokaiLabel: '公開国語の得点', totalLabel: '総計（200点満点）', testLabel: '復習テスト', cal: true },
   // 灘合は月1回・日曜開催（暦月区切り）。国算理が3列に並ぶ
   nadaA: { words: ['国語', '算数', '理科'], course: '灘合', fukuLabel: '復テ平均', kokaiLabel: '公開平均', totalLabel: '総計（200点満点）', testLabel: '灘合テスト', cal: true },
+  // 講習会（春期・夏期・冬期）。月度が無く、まとめは「平均」と「順位」の2つだけ。
+  // 年が印刷されていないので、確認画面で年度を入れてもらう。
+  koushuu: { words: SUBJ_WORDS, course: '', fukuLabel: '平均', totalLabel: '', testLabel: '講習のテスト', tail: 2, term: true },
 };
 // その個人票の月度が何日から何日までか。暦月の講座と16日〆の講座がある
 function kojinWindow(kind, ym) {
@@ -1887,7 +1983,11 @@ function parseKojinhyoA(raw, kind) {
 
   const months = numsOf(pick(l => /^月[\s\d]/.test(l)));
   const days = numsOf(pick(l => /^日[\s\d]/.test(l)));
-  const nos = numsOf(pick(l => /^テストNo/.test(l)));
+  // テストNo.の欄は「実」（実力テスト）のことがある。マスの並びのまま読み、数でなければ空にする
+  const noLine = pick(l => /^テストNo/.test(l));
+  const noCells = noLine.replace(/^テストNo\.?/, '').trim().split(/\s+/)
+    .map(v => /^\d+$/.test(v) ? +v : null);
+  const nos = numsOf(noLine);
   // 科目行：先頭が「科目」で、教科名が並ぶ行
   const subjLine = pick(l => /^科目/.test(l) && WORDS.some(w => l.includes(w)));
   const subjects = (subjLine.match(new RegExp(WORDS.join('|'), 'g')) || []);
@@ -1895,6 +1995,8 @@ function parseKojinhyoA(raw, kind) {
   // 列数＝日付・科目・No.のうち最も多く取れた数
   let meNums = [];
   const n = Math.max(days.length, subjects.length, nos.length);
+  // マスの並びで読めた分がそろっていれば、そちらを優先（「実」を空として残せる）
+  const noList = noCells.length >= n ? noCells.slice(0, n) : nos;
   if (meIdx >= 0) {
     meNums = numsOf(lines[meIdx]);
     // コピーで1行が折れているときだけ、続きの行を足して補う
@@ -1918,10 +2020,12 @@ function parseKojinhyoA(raw, kind) {
 
   // 「あなたの成績」の並びは 各テストの点 … 合計・科目別(平均/順位)…・復テ平均・公開平均・総計・順位。
   // 末尾4つ（復テ平均/公開平均/総計/順位）は必ずあるので、後ろから確定させる。
-  // テストの点と重ならない場合だけサマリとみなす（重なると別物を拾ってしまう）
-  if (meNums.length >= n + 4) {
-    const tail = meNums.slice(-4);
-    r.fuku = tail[0]; r.kokai = tail[1]; r.total = tail[2]; r.rank = tail[3];
+  // 講習会は「平均」と「順位」の2つだけ、ほかは 復テ平均・公開・総計・順位 の4つ
+  const TAIL = KOJIN_KIND[kind].tail || 4;
+  if (meNums.length >= n + TAIL) {
+    const tail = meNums.slice(-TAIL);
+    if (TAIL === 2) { r.fuku = tail[0]; r.rank = tail[1]; }
+    else { r.fuku = tail[0]; r.kokai = tail[1]; r.total = tail[2]; r.rank = tail[3]; }
   }
   const scores = meNums.slice(0, n);
   // 「あなたの成績」の並びは 各列の点 → 合計 →（科目別の平均・順位）×列数 → 末尾4つ。
@@ -1939,10 +2043,20 @@ function parseKojinhyoA(raw, kind) {
       month: months.length === n ? months[i] : null,
       day: days[i] != null ? days[i] : null,
       subject: subjects[i] || '',
-      no: nos[i] != null ? nos[i] : null,
+      no: noList[i] != null ? noList[i] : null,
       score: scores[i] != null ? scores[i] : null,
       avg: avgNums[i] != null ? avgNums[i] : null,
     });
+  }
+  r.monthsFromSheet = months.length === n;
+  // 講習の名前（春期＝3〜4月／夏期＝7〜8月／冬期＝12〜1月）
+  const mTerm = t.match(/([春夏冬])[期季]\s*講習/);
+  if (mTerm) r.term = mTerm[1] + '期講習';
+  else if (kind === 'koushuu') {
+    const m0 = (r.tests.find(x => x.month) || {}).month;
+    if (m0 === 3 || m0 === 4) r.term = '春期講習';
+    else if (m0 === 7 || m0 === 8) r.term = '夏期講習';
+    else if (m0 === 12 || m0 === 1) r.term = '冬期講習';
   }
   return r;
 }
@@ -2047,6 +2161,13 @@ function renderPastePreview(d) {
   $('pvYear').value = guessYear(d.month, d.type);
   $('pvYm').value = d.month || '';
   $('pvCourse').value = d.course || 'マスター';
+  const isK = d.type === 'koushuu';
+  $('pvYmRow').style.display = isK ? 'none' : '';
+  $('pvTermRow').style.display = isK ? '' : 'none';
+  $('pvKokaiBox').style.display = isK ? 'none' : '';
+  $('pvTotalBox').style.display = isK ? 'none' : '';
+  if (isK) $('pvTerm').value = d.term || '春期講習';
+  $('pvNoNote').style.display = isK ? '' : 'none';
   $('pvTestsHead').textContent = KK.testLabel;
   $('pvFukuLabel').textContent = KK.fukuLabel;
   $('pvKokaiLabel').textContent = KK.kokaiLabel;
@@ -2061,7 +2182,7 @@ function renderPastePreview(d) {
   d.tests.forEach((t, i) => {
     h += `<input class="pvIn${miss(t.day)}" id="pvMd${i}" value="${t.month || ''}/${t.day || ''}" placeholder="6/16">
       <select class="pvIn" id="pvSj${i}">${KK.words.map(w => `<option${w === t.subject ? ' selected' : ''}>${w}</option>`).join('')}</select>
-      <input class="pvIn${miss(t.no)}" id="pvNo${i}" type="number" value="${t.no != null ? t.no : ''}">
+      <input class="pvIn${d.type === 'koushuu' ? '' : miss(t.no)}" id="pvNo${i}" type="number" value="${t.no != null ? t.no : ''}"${d.type === 'koushuu' ? ' placeholder="実力"' : ''}>
       <input class="pvIn${miss(t.score)}" id="pvSc${i}" type="number" value="${t.score != null ? t.score : ''}">
       <input class="pvIn${miss(t.avg)}" id="pvAv${i}" type="number" step="0.1" value="${t.avg != null ? t.avg : ''}">`;
   });
@@ -2143,7 +2264,24 @@ function renderKokaiPreview(d) {
 // 復習テストは日付順に並ぶので、月度の期間の初日から始めて
 // 「日が前より小さくなったら翌月」と送っていけば月が確定する。
 function relabelMonths() {
-  if (!pvData || pvData.type === 'kokai') return;
+  if (!pvData || pvData.type === 'kokai' || pvData.type === 'sokuho') return;
+  if (pvData.monthsFromSheet) return;         // 表に月がそろっていればそのまま
+  if (pvData.type === 'koushuu') {            // 講習は月度が無いので最初の月から送る
+    let m0 = (pvData.tests.find(t => t.month) || {}).month;
+    if (!m0) return;
+    let prev0 = 0;
+    pvData.tests.forEach((t, i) => {
+      const el = $('pvMd' + i); if (!el) return;
+      const q = (el.value || '').split('/');
+      const day = parseInt(q.length > 1 ? q[1] : q[0], 10);
+      if (!day) return;
+      if (day < prev0) m0 = m0 % 12 + 1;
+      prev0 = day;
+      el.value = `${m0}/${day}`;
+      el.classList.remove('miss');
+    });
+    return;
+  }
   const year = parseInt($('pvYear').value, 10), mo = parseInt($('pvYm').value, 10);
   if (!year || !mo) return;
   const from = kojinWindow(pvData.type, `${year}-${String(mo).padStart(2, '0')}`)[0];
@@ -2178,6 +2316,7 @@ $('pasteImport').onclick = () => {
   if (pvData.type === 'saikokuA') return importSaikokuA();
   if (pvData.type === 'nadaA') return importNadaA();
   if (pvData.type === 'sokuho') return importSokuho();
+  if (pvData.type === 'koushuu') return importKoushuu();
   const year = parseInt($('pvYear').value, 10);
   const mo = parseInt($('pvYm').value, 10);
   if (!year || !mo) { setPasteStatus('年と月度を入れてください。', 'ng'); return; }
@@ -2229,6 +2368,52 @@ $('pasteImport').onclick = () => {
   setPasteStatus(`✅ 取り込みました！ 復習テスト${added}件・${ym}のまとめを保存しました。`, 'ok');
   render();
 };
+
+// 講習会の個人票の取り込み。月度が無いので、年度と月日から日付を組む。
+// 浜学園の年度は2月はじまりなので、1月のテストは翌年になる。
+function importKoushuu() {
+  const nendo = parseInt($('pvYear').value, 10);
+  const term = ($('pvTerm').value || '講習').trim();
+  if (!nendo) { setPasteStatus('年度を入れてください。', 'ng'); return; }
+  const pad = v => String(v).padStart(2, '0');
+
+  let added = 0;
+  pvData.tests.forEach((t, i) => {
+    const md = ($('pvMd' + i).value || '').split('/');
+    const m = parseInt(md[0], 10), dd = parseInt(md[1], 10);
+    const score = num($('pvSc' + i).value);
+    if (!m || !dd || score == null) return;
+    const y = m >= 2 ? nendo : nendo + 1;
+    const date = `${y}-${pad(m)}-${pad(dd)}`;
+    const subject = $('pvSj' + i).value;
+    const no = num($('pvNo' + i).value);
+    const avg = num($('pvAv' + i).value);
+    const j = db.koushuu.findIndex(x => x.date === date && x.subject === subject && (x.no ?? null) === (no ?? null));
+    const rec = { id: j >= 0 ? db.koushuu[j].id : uid(), date, subject, no, score, avg, term };
+    if (j >= 0) db.koushuu[j] = rec; else db.koushuu.push(rec);
+    added++;
+  });
+  db.koushuu.sort((a, b) => a.date.localeCompare(b.date));
+
+  // まとめ（平均と順位）は講習ごとにひとつ。いちばん早い日の月で持っておく
+  const fuku = num($('pvFuku').value), rank = num($('pvRank').value);
+  const first = db.koushuu.filter(x => x.term === term).map(x => x.date).sort()[0];
+  if (first && (fuku != null || rank != null)) {
+    const ym = first.slice(0, 7);
+    const k = db.atotal.findIndex(x => (x.course || 'マスター') === term && x.ym === ym);
+    const rec = k >= 0 ? db.atotal[k] : { id: uid(), ym, course: term };
+    if (fuku != null) rec.fuku = fuku;
+    if (rank != null) rec.rank = rank;
+    if (k < 0) db.atotal.push(rec);
+  }
+
+  save();
+  $('pastePrev').style.display = 'none';
+  $('pasteBox').value = '';
+  pvData = null;
+  setPasteStatus(`✅ 取り込みました！ ${term}のテスト${added}件を保存しました。`, 'ok');
+  render();
+}
 
 // 速報の取り込み。新しい回は月度だけを持った記録として足し、
 // すでにある回にはクラス順位・全体順位を書き足す。
@@ -2553,6 +2738,7 @@ $('fab').onclick = () => {
   else if (tab === 'saire') openSaire(null);
   else if (tab === 'saikoku') openSaikoku(null);
   else if (tab === 'mosi') openMosi(null);
+  else if (tab === 'koushuu') openKoushuu(null);
   else openNada(null);
 };
 $('pasteBtn').onclick = openPasteSheet;
