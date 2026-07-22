@@ -63,13 +63,37 @@
   /* A表そのもの × 100点を取った科目 */
   .cmpWrap { margin-top:11px; padding-top:10px; border-top:1.5px dashed #fde68a; }
   .cmpH { font-size:10.5px; font-weight:800; color:#b45309; margin-bottom:6px; padding-bottom:3px; border-bottom:1.5px solid #fde68a; }
-  .atScroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
-  .atT { border-collapse:collapse; width:100%; font-size:12px; }
-  .atT th { font-size:10px; font-weight:800; color:#94a3b8; padding:3px 6px; text-align:right; white-space:nowrap; }
-  .atT td { padding:3.5px 6px; text-align:right; color:#475569; font-weight:700; border-bottom:1px solid #f8fafc; white-space:nowrap; }
+  .atScroll { overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid #f1f5f9; border-radius:8px; }
+  .atT { border-collapse:separate; border-spacing:0; min-width:max-content; font-size:12px; }
+  .atT th { font-size:10px; font-weight:800; color:#94a3b8; padding:5px 7px; text-align:right;
+            white-space:nowrap; background:#fff; border-bottom:1.5px solid #fde68a; }
+  .atT td { padding:4px 7px; text-align:right; color:#475569; font-weight:700;
+            border-bottom:1px solid #f8fafc; white-space:nowrap; background:#fff; }
   .atT th.tot, .atT td.tot { color:#b45309; font-weight:800; }
+  /* 選んだライバルが100点だった回の列 */
+  .atT th.hit { color:#059669; background:#ecfdf5; }
+  .atT td.hit { background:#f0fdf4; color:#047857; }
   .atT tr.me td { background:#fffbeb; color:#b45309; font-weight:800; }
-  .atT td.mk { font-size:10px; color:#b45309; font-weight:800; text-align:left; width:34px; }
+  .atT tr.me td.hit { background:#dcfce7; }
+  .atT td.mk, .atT th.mk { font-size:10px; color:#b45309; font-weight:800; text-align:left; }
+  /* 順位とメモは横スクロールしても左に残す */
+  .atT th.fix1, .atT td.fix1 { position:sticky; left:0; z-index:2; width:38px; min-width:38px; }
+  .atT th.fix2, .atT td.fix2 { position:sticky; left:38px; z-index:2; width:104px; min-width:104px;
+                               box-shadow:1px 0 0 #e2e8f0; }
+  .atT th.memoH { text-align:left; padding-left:8px; }
+  .atT td.memoC { padding:2px 4px 2px 6px; }
+  .memoI { width:100%; border:none; background:transparent; font-family:inherit; font-size:11.5px;
+           font-weight:700; color:#334155; padding:3px 4px; border-radius:5px; }
+  .memoI:focus { outline:none; background:#fffbeb; box-shadow:0 0 0 1.5px #fcd34d; }
+  .memoI::placeholder { color:#e2e8f0; }
+  .atT tr.me td.memoC { background:#fffbeb; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .chip { border:1.5px solid #e2e8f0; background:#fff; color:#475569; border-radius:999px;
+          padding:6px 11px; font-size:12px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .chip.on { border-color:#059669; background:#ecfdf5; color:#047857; }
+  .hitList { font-size:11.5px; font-weight:700; color:#047857; line-height:1.7; margin-bottom:7px; }
+  .hitList .no { display:inline-block; background:#ecfdf5; border:1px solid #a7f3d0;
+                 border-radius:6px; padding:1px 6px; margin:0 4px 4px 0; }
   .cmpR { display:flex; align-items:baseline; gap:8px; font-size:12px; padding:4.5px 1px; border-bottom:1px solid #f8fafc; }
   .cmpR .v { width:62px; flex-shrink:0; color:#334155; font-weight:800; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .cmpR .r { flex:1; min-width:0; font-size:11.5px; font-weight:800; color:#b45309; }
@@ -340,7 +364,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v8';
+const APP_VER = 'v9';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -512,6 +536,27 @@ function render() {
   v.querySelectorAll('[data-kk]').forEach(e => e.onclick = () => openKokai(e.dataset.kk));
   v.querySelectorAll('[data-fk]').forEach(e => e.onclick = () => openFuku(e.dataset.fk));
   v.querySelectorAll('[data-at]').forEach(e => e.onclick = () => openAtable(e.dataset.at));
+  // A表のメモ：打っている最中に再描画すると入力が飛ぶので、保存だけして描き直さない
+  v.querySelectorAll('[data-memo]').forEach(e => {
+    e.onclick = ev => ev.stopPropagation();
+    e.oninput = () => {
+      const p = e.dataset.memo.split('|');
+      const rec = db.atable.find(x => x.id === p[0]);
+      if (!rec) return;
+      if (!rec.memos) rec.memos = {};
+      const t = e.value.trim();
+      if (t) rec.memos[p[1]] = t; else delete rec.memos[p[1]];
+      clearTimeout(window._memoTimer);
+      window._memoTimer = setTimeout(save, 400);
+    };
+    e.onblur = save;
+  });
+  v.querySelectorAll('[data-selrv]').forEach(e => e.onclick = ev => {
+    ev.stopPropagation();
+    const p = e.dataset.selrv.split('|');
+    if (p[1]) atSelRival[p[0]] = p[1]; else delete atSelRival[p[0]];
+    render();
+  });
   const ub = document.getElementById('updBanner');
   if (ub) ub.onclick = openUpdates;
 }
@@ -668,15 +713,18 @@ function parseATable(text) {
   const rows = [];
   let headers = null;
   for (const ln of lines) {
-    if (!/\d/.test(ln)) {
-      const h = ln.trim().split(/[\t,、　 ]+/).filter(Boolean);
-      if (h.length >= 2 && h.length <= 8) headers = h;
-      continue;
-    }
-    if (/合計|人数|満点|平均$/.test(ln) && !MINE_RE.test(ln)) continue;
-    const nums = (ln.match(/\d+(?:\.\d+)?/g) || []).map(Number);
+    const s = ln.trim();
+    if (!s) continue;
+    // 見出し行の判定：「No.11」のように数字を含む見出しがあるので、
+    // 「数字だけのトークン」が少ない行を見出しとみなす
+    const toks = s.split(/[\t,、　 ]+/).filter(Boolean);
+    const pure = toks.filter(x => /^\d+(?:\.\d+)?$/.test(x)).length;
+    if (toks.length >= 2 && toks.length <= 12 && pure / toks.length < 0.4) { headers = toks; continue; }
+    if (!/\d/.test(s)) continue;
+    if (/合計|人数|満点/.test(s) && !MINE_RE.test(s)) continue;
+    const nums = (s.match(/\d+(?:\.\d+)?/g) || []).map(Number);
     if (!nums.some(n => n >= 0 && n <= AT_MAX)) continue;
-    rows.push({ nums, mine: MINE_RE.test(ln) });
+    rows.push({ nums, mine: MINE_RE.test(s) });
   }
   // 1行に全員分が並んでいる貼り方（カンマ/スペース区切り）にも対応
   if (rows.length <= 2) {
@@ -771,31 +819,41 @@ function distHtml(rec, st) {
     <span class="distNum">${x.c || ''}</span></div>`).join('')}</div>`;
 }
 
-// その月の復テで、ライバルが100点を取った科目（科目ごとに 何回/その科目の回数）
-function monthHundred(ym) {
-  const rel = Object.keys(db.fuku).map(k => ({ k, a: db.fuku[k] }))
-    .filter(x => Array.isArray(x.a.who100))
-    .filter(x => {
-      const d = x.a.date || x.k.split('|')[0];
-      return (d.indexOf('ym:') === 0 ? d.slice(3, 10) : d.slice(0, 7)) === ym;
-    });
-  if (!rel.length) return null;
-  const perSubj = {};                       // 科目ごとの実施回数
-  for (const x of rel) perSubj[x.a.subject || '—'] = (perSubj[x.a.subject || '—'] || 0) + 1;
-  const list = db.rivals.map(r => {
-    const hits = {};
-    for (const x of rel) {
-      if (x.a.who100.indexOf(r.id) < 0) continue;
-      const s = x.a.subject || '—';
-      hits[s] = (hits[s] || 0) + 1;
-    }
-    const subs = Object.keys(hits).sort((a, b) => hits[b] - hits[a]);
-    return { name: r.name, hits, subs, total: subs.reduce((n, s) => n + hits[s], 0) };
-  }).sort((a, b) => b.total - a.total || a.name.localeCompare(b.name));
-  return { n: rel.length, perSubj, list };
+// その月の復テ一覧（科目・No つき）
+function monthTests(ym, scope) {
+  const out = [];
+  for (const k of Object.keys(db.fuku)) {
+    const a = db.fuku[k], p = k.split('|');
+    if (!Array.isArray(a.who100)) continue;
+    const d = a.date || p[0];
+    const m = (d.indexOf('ym:') === 0) ? d.slice(3, 10) : d.slice(0, 7);
+    if (m !== ym) continue;
+    const subject = a.subject || p[1] || '';
+    if (scope && subject !== scope) continue;
+    const no = (p[2] === '' || p[2] == null) ? null : Number(p[2]);
+    out.push({ key: k, date: d, subject, no, who100: a.who100 });
+  }
+  return out.sort((x, y) => (x.no || 0) - (y.no || 0) || x.date.localeCompare(y.date));
 }
-// A表そのもの（表の形のまま）と、その月にライバルが100点を取った科目を並べて置く。
-// どの行が誰かの推定はしない。見る人が突き合わせるための材料を並べるだけ。
+// A表の講座から、対象科目を絞る（最レ算数なら算数だけ。マスターは全科目）
+function subjScope(course) {
+  if (/算数/.test(course)) return '算数';
+  if (/国語/.test(course)) return '国語';
+  if (/理科/.test(course)) return '理科';
+  if (/社会/.test(course)) return '社会';
+  return null;
+}
+// 見出しから復テのNoを拾う（"No.3" "第3回" "③" "3" いずれも）
+const MARU = '⓪①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
+function headerNo(h) {
+  const s = String(h == null ? '' : h);
+  for (let i = 0; i < MARU.length; i++) if (s.indexOf(MARU[i]) >= 0) return i;
+  const m = s.match(/(\d+)/);
+  return m ? Number(m[1]) : null;
+}
+// A表そのもの（横スクロール）と、選んだライバルが100点を取った回。
+// A表の列（テストNo）と復テのNoが合った列にチェックを立てるだけ。誰の行かの推定はしない。
+let atSelRival = {};   // {A表id: ライバルid}
 function compareHtml(rec) {
   const rows = (rec.rows && rec.rows.length) ? rec.rows : (rec.scores || []).map(v => [v]);
   if (!rows.length) return '';
@@ -803,32 +861,67 @@ function compareHtml(rec) {
   const hs = (rec.headers && rec.headers.length === width) ? rec.headers
     : (width === 1 ? ['総合点'] : null);
   const tc = (typeof rec.totalCol === 'number' && rec.totalCol >= 0) ? rec.totalCol : width - 1;
-  const head = hs ? `<tr>${hs.map((h, i) =>
-    `<th class="${i === tc ? 'tot' : ''}">${esc(h)}</th>`).join('')}<th></th></tr>` : '';
+
+  const scope = subjScope(rec.course);
+  const tests = monthTests(rec.ym, scope);
+  const rid = atSelRival[rec.id] || '';
+  const hit = rid ? tests.filter(x => x.who100.indexOf(rid) >= 0) : [];
+  const hitNos = {};
+  for (const x of hit) if (x.no != null) hitNos[x.no] = true;
+
+  // 見出しのNoが、選んだライバルの100点の回と一致する列に印を付ける
+  const colHit = [];
+  for (let c = 0; c < width; c++) {
+    const n = (hs && c !== tc) ? headerNo(hs[c]) : null;
+    colHit[c] = n != null && !!hitNos[n];
+  }
+  const anyCol = colHit.some(Boolean);
+
+  // 順位のとなりにメモ欄を挟む（気づいたことを書き残せるように）
+  const memos = rec.memos || {};
+  const head = hs ? `<tr>${hs.map((h, i) => {
+    const th = `<th class="${i === 0 ? 'fix1 ' : ''}${i === tc ? 'tot ' : ''}${colHit[i] ? 'hit' : ''}">${colHit[i] ? '✓ ' : ''}${esc(h)}</th>`;
+    return i === 0 ? th + '<th class="fix2 memoH">メモ</th>' : th;
+  }).join('')}<th class="mk"></th></tr>` : '';
   const body = rows.map((r, i) => {
     const me = i === rec.mineRow;
     const cells = [];
     for (let c = 0; c < width; c++) {
-      cells.push(`<td class="${c === tc ? 'tot' : ''}">${r[c] == null ? '' : r[c]}</td>`);
+      cells.push(`<td class="${c === 0 ? 'fix1 ' : ''}${c === tc ? 'tot ' : ''}${colHit[c] ? 'hit' : ''}">${r[c] == null ? '' : r[c]}</td>`);
+      if (c === 0) cells.push(`<td class="fix2 memoC"><input class="memoI" type="text" placeholder="…"
+        data-memo="${rec.id}|${i}" value="${esc(memos[i] || '')}"></td>`);
     }
     return `<tr class="${me ? 'me' : ''}">${cells.join('')}<td class="mk">${me ? 'あなた' : ''}</td></tr>`;
   }).join('');
 
-  const mh = monthHundred(rec.ym);
-  const right = mh
-    ? mh.list.map(x => `<div class="cmpR">
-        <span class="v">${esc(x.name)}</span>
-        <span class="r">${x.subs.length
-          ? x.subs.map(s => `${esc(s)} ${x.hits[s]}/${mh.perSubj[s]}`).join('　')
-          : '<span style="color:#cbd5e1">—</span>'}</span></div>`).join('')
-      + `<div class="cmpNote">この月の復テ：${Object.keys(mh.perSubj).map(s => `${esc(s)}${mh.perSubj[s]}回`).join('・')}</div>`
-    : `<div class="cmpNote">この月の復テに、100点のチェックがまだありません。<br>「✍️復テ」タブで科目ごとにチェックを付けると、ここに並びます。</div>`;
+  const chips = db.rivals.length
+    ? `<div class="chips">${db.rivals.map(r =>
+        `<button class="chip${rid === r.id ? ' on' : ''}" data-selrv="${rec.id}|${rid === r.id ? '' : r.id}">${esc(r.name)}</button>`
+      ).join('')}</div>`
+    : `<div class="cmpNote">「🏆ライバル」タブで登録すると、ここで選べます。</div>`;
+
+  let info = '';
+  if (rid) {
+    const nm = rivalName(rid);
+    info = hit.length
+      ? `<div class="hitList">${esc(nm)}が100点：${hit.map(x =>
+          `<span class="no">${esc(x.subject)}${x.no != null ? ' No.' + x.no : ''}（${mdLabel(x.date)}）</span>`).join('')}</div>`
+        + (anyCol
+          ? `<div class="cmpNote">A表の <b style="color:#047857">✓ の列</b>がその回です。縦に見比べてください。</div>`
+          : `<div class="cmpNote">A表の見出しに回の番号が無いため、列には印を付けられませんでした。見出しが「No.3」「第3回」「③」のような形だと自動で合わせます。</div>`)
+      : `<div class="cmpNote">${esc(nm)}は、この月の${scope ? scope + 'の' : ''}復テで100点のチェックがありません。</div>`;
+  } else if (db.rivals.length) {
+    info = `<div class="cmpNote">ライバルを選ぶと、その子が100点を取った回の列にチェックが付きます。</div>`;
+  }
+  if (!tests.length) {
+    info = `<div class="cmpNote">この月の復テに100点のチェックがまだありません。「✍️復テ」タブで付けてください。</div>`;
+  }
 
   return `<div class="cmpWrap">
-      <p class="cmpH">A表（${ymLabel(rec.ym)}　${esc(rec.course)}）</p>
+      <p class="cmpH">ライバルを選ぶ（100点の回に✓が付きます）</p>
+      ${chips}${info}
+      <p class="cmpH" style="margin-top:10px">A表（${ymLabel(rec.ym)}　${esc(rec.course)}）　←→ 横にスクロールできます</p>
       <div class="atScroll"><table class="atT">${head}${body}</table></div>
-      <p class="cmpH" style="margin-top:12px">${ymLabel(rec.ym)}に100点を取った科目</p>
-      ${right}
     </div>`;
 }
 
@@ -1017,6 +1110,9 @@ $('atSave').onclick = () => {
     rec.rows = atParsed.rows; rec.headers = atParsed.headers;
     rec.totalCol = atParsed.totalCol; rec.mineRow = atParsed.mineRow;
   }
+  // 書いたメモは残す
+  const prevAt = db.atable.find(x => x.id === rec.id) || db.atable.find(x => x.ym === rec.ym && x.course === rec.course);
+  if (prevAt && prevAt.memos) rec.memos = prevAt.memos;
   if (!rec.ym) { alert('月度を入れてください'); return; }
   db.atable = db.atable.filter(x => x.id !== rec.id && !(x.ym === rec.ym && x.course === rec.course));
   db.atable.push(rec);
@@ -1326,7 +1422,16 @@ function mergeShare(txt) {
   for (const a of (d.atable || [])) {
     if (!a || !a.ym) continue;
     const i = db.atable.findIndex(x => x.ym === a.ym && x.course === a.course);
-    const rec = { id: i >= 0 ? db.atable[i].id : uid(), ym: a.ym, course: a.course, scores: a.scores || [], mine: a.mine };
+    const old = i >= 0 ? db.atable[i] : null;
+    const rec = {
+      id: old ? old.id : uid(), ym: a.ym, course: a.course,
+      scores: a.scores || [], mine: a.mine,
+      rows: a.rows, headers: a.headers, totalCol: a.totalCol, mineRow: a.mineRow
+    };
+    // メモは行ごとに合体（相手が書いていて自分が空なら相手のを入れる）
+    const memos = Object.assign({}, (old && old.memos) || {});
+    for (const k of Object.keys(a.memos || {})) if (a.memos[k]) memos[k] = a.memos[k];
+    if (Object.keys(memos).length) rec.memos = memos;
     if (i >= 0) db.atable[i] = rec; else db.atable.push(rec);
     n.atable++;
   }
