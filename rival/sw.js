@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rival-chaser-v5';
+const CACHE_NAME = 'rival-chaser-v6';
 const ASSETS = [
   './',
   './index.html',

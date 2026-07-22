@@ -186,11 +186,9 @@
   </div>
   <p class="fLabel">自分の点</p>
   <div id="fkMineBox"></div>
-  <div class="fRow">
-    <div><p class="fLabel">合格点（半数が挙手した点）</p><input class="fInput" type="number" id="fkPass" inputmode="numeric"></div>
-    <div><p class="fLabel">100点の人数</p><input class="fInput" type="number" id="fkCnt" inputmode="numeric"></div>
-  </div>
-  <p class="fLabel">100点だったライバル（挙手で分かった人）</p>
+  <p class="fLabel">合格点（半数が挙手した点）</p>
+  <input class="fInput" type="number" id="fkPass" inputmode="numeric">
+  <p class="fLabel">100点だったライバル（挙手で分かった人にチェック）</p>
   <div id="fkWho"></div>
   <div class="sheetBtns">
     <button class="btn btnDanger" id="fkDel" style="display:none">削除</button>
@@ -303,7 +301,7 @@
     <b>② 公開テスト</b><br>
     自分の点は伴走アプリから自動。<b>ライバルの点と100傑ボーダー（100位の点）だけ</b>入れると、点差の推移が自動でグラフになります。<br><br>
     <b>③ 復テ</b><br>
-    伴走アプリに入っている復習テストが一覧で並びます。各回に <b>合格点（半数が挙手した点）／100点の人数／100点だったライバル</b> を足してください。<br>
+    伴走アプリに入っている復習テストが一覧で並びます。各回に <b>合格点（半数が挙手した点）</b> を入れて、<b>100点だったライバルにチェック</b>を付けてください。<br>
     合格点は<b>クラスの真ん中</b>なので、「自分は毎回そこから何点上か」がすぐ分かります。<br><br>
     <b>データは端末内だけ</b>に保存されます（外部送信なし）。
   </p>
@@ -318,7 +316,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v5';
+const APP_VER = 'v6';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -445,10 +443,11 @@ function fukuEdge() {
   }
   return xs.length ? { avg: xs.reduce((a,b)=>a+b,0)/xs.length, n: xs.length } : null;
 }
+// 100点率＝チェックを付けた回のうち、その子が100点だった割合
 function hundredRate(rid) {
-  const rel = Object.values(db.fuku).filter(a => Array.isArray(a.who100) && (a.who100.length > 0 || a.cnt != null));
+  const rel = Object.values(db.fuku).filter(a => Array.isArray(a.who100));
   if (!rel.length) return null;
-  return rel.filter(a => (a.who100 || []).includes(rid)).length / rel.length;
+  return rel.filter(a => a.who100.includes(rid)).length / rel.length;
 }
 function myHundredRate() {
   const vals = Object.keys(db.fuku).map(k => mineFuku(k).v).filter(v => v != null);
@@ -626,7 +625,7 @@ function viewFuku() {
     const who = (a.who100 || []).map(rivalName).join('・');
     h += `<div class="card" data-fk="${esc(r.key)}"><div class="row">
       <div class="grow"><div class="rvName">${mdLabel(r.date)}　${esc(r.subject)}${(r.no != null && r.no !== '') ? ' No.'+esc(r.no) : ''}</div>
-        <div class="sub">自分 ${my ?? '—'}点 / 合格点 ${pass != null ? pass : '未入力'}${a.cnt != null ? '　100点 '+a.cnt+'人' : ''}</div></div>
+        <div class="sub">自分 ${my ?? '—'}点 / 合格点 ${pass != null ? pass : '未入力'}${(a.who100 || []).length ? '　100点 ' + a.who100.length + '人' : ''}</div></div>
       ${d != null ? `<div class="diff ${d>=0?'ahead':'behind'}">${d>=0?'+'+d:d}</div>` : `<span class="pill">記入</span>`}
     </div>${who ? `<div class="sub" style="margin-top:5px">100点：${esc(who)}</div>` : ''}</div>`;
   }
@@ -879,7 +878,6 @@ function openFuku(key) {
   $('fkSubj').value = row ? (row.subject || '算数') : '算数';
   $('fkSubj').disabled = !!row;
   $('fkPass').value = a.pass != null ? a.pass : '';
-  $('fkCnt').value = a.cnt != null ? a.cnt : '';
   $('fkWho').innerHTML = db.rivals.length
     ? db.rivals.map(r => `<label class="chk"><input type="checkbox" class="fkW" data-rid="${r.id}"
         ${(a.who100 || []).includes(r.id) ? 'checked' : ''}> ${esc(r.name)}</label>`).join('')
@@ -909,7 +907,7 @@ $('fkSave').onclick = () => {
   const who100 = [...document.querySelectorAll('.fkW')].filter(i => i.checked).map(i => i.dataset.rid);
   const rec = Object.assign({}, prev, {
     date: key.split('|')[0], subject,
-    pass: num($('fkPass').value), cnt: num($('fkCnt').value), who100
+    pass: num($('fkPass').value), who100
   });
   const mm = $('fkMyManual');
   if (mm) rec.myManual = num(mm.value);
@@ -1089,7 +1087,7 @@ function mergeShare(txt) {
   for (const key of Object.keys(d.fuku || {})) {
     const a = d.fuku[key] || {}, cur = db.fuku[key] || {};
     const rec = Object.assign({}, cur);
-    for (const f of ['date', 'subject', 'pass', 'cnt', 'myManual']) if (a[f] != null) rec[f] = a[f];
+    for (const f of ['date', 'subject', 'pass', 'myManual']) if (a[f] != null) rec[f] = a[f];
     const who = {};
     for (const x of (cur.who100 || [])) who[x] = 1;
     for (const x of (a.who100 || [])) who[mapId(x)] = 1;
