@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>100傑チェイサー</title>
+<meta name="description" content="追いかける相手との差を見える化して、自己研鑽のモチベにするアプリ">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="100傑">
+<meta name="theme-color" content="#b45309">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { min-height:100%; }
+  body {
+    font-family:-apple-system,"Hiragino Sans","Yu Gothic UI",sans-serif;
+    background:linear-gradient(160deg,#fffbeb 0%,#f8fafc 60%);
+    color:#1e293b; display:flex; flex-direction:column; min-height:100vh;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  header {
+    background:linear-gradient(135deg,#f59e0b,#b45309); color:#fff;
+    padding:calc(8px + env(safe-area-inset-top)) 12px 8px;
+    display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+  }
+  header .t1 { font-size:17px; font-weight:800; }
+  header .t2 { font-size:10px; font-weight:700; color:#fde68a; letter-spacing:.08em; }
+  .hbtn { border:none; background:rgba(255,255,255,.16); color:#fff; width:34px; height:34px; border-radius:10px; font-size:15px; cursor:pointer; }
+  main { flex:1; padding:14px 14px 92px; max-width:520px; width:100%; margin:0 auto; }
+
+  .tabs { display:flex; gap:6px; margin-bottom:12px; }
+  .tab { flex:1; padding:9px 4px; border:1.5px solid #fcd34d; background:#fff; color:#92400e;
+         border-radius:10px; font-size:12px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .tab.on { background:#b45309; border-color:#b45309; color:#fff; }
+
+  .card { background:#fff; border:1.5px solid #fde68a; border-radius:14px; padding:13px; margin-bottom:11px;
+          box-shadow:0 2px 10px rgba(180,83,9,.06); }
+  .card h3 { font-size:13px; font-weight:800; color:#b45309; margin-bottom:8px; }
+  .big { font-size:26px; font-weight:800; color:#b45309; line-height:1.2; }
+  .sub { font-size:11px; color:#94a3b8; font-weight:700; }
+  .row { display:flex; align-items:center; gap:9px; }
+  .grow { flex:1; min-width:0; }
+  .muted { color:#64748b; font-size:12px; line-height:1.65; }
+
+  .rvCard { display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid #e2e8f0;
+            border-radius:12px; padding:11px 12px; margin-bottom:9px; cursor:pointer; }
+  .rvCard.star { border-color:#f59e0b; background:#fffbeb; }
+  .rvName { font-size:14px; font-weight:800; color:#334155; }
+  .rvMeta { font-size:11px; color:#94a3b8; font-weight:700; }
+  .diff { font-size:19px; font-weight:800; text-align:right; }
+  .diff.behind { color:#dc2626; }
+  .diff.ahead { color:#059669; }
+  .diff.even { color:#94a3b8; }
+
+  .fInput { width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:9px; font-size:15px; font-family:inherit; background:#fff; }
+  .fInput:disabled { background:#f8fafc; color:#64748b; }
+  .fLabel { font-size:11px; font-weight:800; color:#64748b; margin:9px 0 4px; }
+  .fRow { display:flex; gap:8px; } .fRow > * { flex:1; }
+  .auto { padding:10px; border:1.5px dashed #fcd34d; border-radius:9px; background:#fffbeb;
+          font-size:15px; font-weight:800; color:#92400e; }
+  .auto small { display:block; font-size:10px; font-weight:700; color:#b45309; opacity:.8; margin-top:2px; }
+  .btn { border:none; border-radius:10px; padding:11px; font-size:14px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .btnMain { background:#b45309; color:#fff; }
+  .btnSub { background:#f1f5f9; color:#475569; }
+  .btnDanger { background:#fee2e2; color:#b91c1c; }
+
+  #fab { position:fixed; right:18px; bottom:calc(20px + env(safe-area-inset-bottom)); width:56px; height:56px;
+         border-radius:50%; border:none; background:#b45309; color:#fff; font-size:27px; cursor:pointer;
+         box-shadow:0 6px 18px rgba(180,83,9,.4); z-index:20; }
+  .overlay { position:fixed; inset:0; background:rgba(30,41,59,.45); display:none; align-items:flex-end; justify-content:center; z-index:30; }
+  .overlay.open { display:flex; }
+  .sheet { background:#fff; width:100%; max-width:520px; max-height:88vh; overflow:auto;
+           border-radius:18px 18px 0 0; padding:16px 16px calc(20px + env(safe-area-inset-bottom)); }
+  .sheetHead { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .sheetHead h2 { font-size:15px; font-weight:800; color:#b45309; }
+  .closeBtn { border:none; background:#f1f5f9; color:#475569; width:30px; height:30px; border-radius:50%; font-size:15px; cursor:pointer; }
+  .sheetBtns { display:flex; gap:9px; margin-top:15px; }
+  .sheetBtns .btn { flex:1; }
+  .empty { text-align:center; color:#94a3b8; font-size:12px; line-height:1.9; padding:26px 8px; }
+  .chk { display:flex; align-items:center; gap:8px; padding:8px 2px; font-size:14px; font-weight:700; color:#334155; }
+  .chk input { width:20px; height:20px; accent-color:#b45309; }
+  .pill { font-size:10px; font-weight:800; padding:3px 8px; border-radius:999px; background:#fef3c7; color:#92400e; }
+  .warn { background:#fef2f2; border:1.5px solid #fecaca; color:#b91c1c; border-radius:11px; padding:11px; font-size:12px; line-height:1.6; margin-bottom:11px; }
+  svg text { font-family:inherit; }
+</style>
+</head>
+<body>
+<header>
+  <button class="hbtn" id="cfgBtn">⚙️</button>
+  <div style="text-align:center;line-height:1.25">
+    <div class="t1">🏆 100傑チェイサー</div>
+    <div class="t2" id="hSub">追いかける背中を、数字で</div>
+  </div>
+  <button class="hbtn" id="helpBtn">❓</button>
+</header>
+
+<main>
+  <div class="tabs">
+    <button class="tab on" data-tab="home">🎯 目標</button>
+    <button class="tab" data-tab="rivals">🏆 ライバル</button>
+    <button class="tab" data-tab="kokai">📊 公開</button>
+    <button class="tab" data-tab="fuku">✍️ 復テ</button>
+  </div>
+  <div id="view"></div>
+</main>
+
+<button id="fab">＋</button>
+
+<!-- ライバル編集 -->
+<div class="overlay" id="rvSheet"><div class="sheet">
+  <div class="sheetHead"><h2 id="rvTitle">ライバルを追加</h2><button class="closeBtn" data-close="rvSheet">✕</button></div>
+  <p class="muted">100傑の掲示・HPの上位10名など、<b>塾が公式に公開している</b>相手を登録してください。</p>
+  <p class="fLabel">名前</p>
+  <input class="fInput" id="rvName" placeholder="例：山田" autocomplete="off">
+  <p class="fLabel">メモ（校舎・クラスなど）</p>
+  <input class="fInput" id="rvNote" placeholder="例：西宮 V1" autocomplete="off">
+  <label class="chk" style="margin-top:10px"><input type="checkbox" id="rvStar"> ⭐ 最重要ライバル（「目標」タブに表示）</label>
+  <div class="sheetBtns">
+    <button class="btn btnDanger" id="rvDel" style="display:none">削除</button>
+    <button class="btn btnMain" id="rvSave">保存</button>
+  </div>
+</div></div>
+
+<!-- 公開テスト -->
+<div class="overlay" id="kkSheet"><div class="sheet">
+  <div class="sheetHead"><h2 id="kkTitle">公開テスト</h2><button class="closeBtn" data-close="kkSheet">✕</button></div>
+  <p class="fLabel">実施月</p>
+  <select class="fInput" id="kkYm"></select>
+  <p class="fLabel">自分の点</p>
+  <div id="kkMineBox"></div>
+  <div class="fRow">
+    <div><p class="fLabel">100傑ボーダー（100位の点）</p><input class="fInput" type="number" id="kkB100" inputmode="numeric"></div>
+    <div><p class="fLabel">10位の点（HP掲載）</p><input class="fInput" type="number" id="kkB10" inputmode="numeric"></div>
+  </div>
+  <p class="fLabel">ライバルの点（掲示・HPの公開値）</p>
+  <div id="kkRivals"></div>
+  <div class="sheetBtns">
+    <button class="btn btnDanger" id="kkDel" style="display:none">削除</button>
+    <button class="btn btnMain" id="kkSave">保存</button>
+  </div>
+</div></div>
+
+<!-- 復習テスト -->
+<div class="overlay" id="fkSheet"><div class="sheet">
+  <div class="sheetHead"><h2 id="fkTitle">復習テスト</h2><button class="closeBtn" data-close="fkSheet">✕</button></div>
+  <div class="fRow">
+    <div><p class="fLabel">日付</p><input class="fInput" type="date" id="fkDate"></div>
+    <div><p class="fLabel">科目</p>
+      <select class="fInput" id="fkSubj"><option>算数</option><option>国語</option><option>理科</option><option>社会</option></select></div>
+  </div>
+  <p class="fLabel">自分の点</p>
+  <div id="fkMineBox"></div>
+  <div class="fRow">
+    <div><p class="fLabel">合格点（半数が挙手した点）</p><input class="fInput" type="number" id="fkPass" inputmode="numeric"></div>
+    <div><p class="fLabel">100点の人数</p><input class="fInput" type="number" id="fkCnt" inputmode="numeric"></div>
+  </div>
+  <p class="fLabel">100点だったライバル（挙手で分かった人）</p>
+  <div id="fkWho"></div>
+  <div class="sheetBtns">
+    <button class="btn btnDanger" id="fkDel" style="display:none">削除</button>
+    <button class="btn btnMain" id="fkSave">保存</button>
+  </div>
+</div></div>
+
+<!-- 設定 -->
+<div class="overlay" id="cfgSheet"><div class="sheet">
+  <div class="sheetHead"><h2>⚙️ 設定</h2><button class="closeBtn" data-close="cfgSheet">✕</button></div>
+  <p class="fLabel">お子さん（中受伴走アプリの成績を読みます）</p>
+  <select class="fInput" id="cfgChild"></select>
+  <p class="fLabel">100傑を見る土俵</p>
+  <select class="fInput" id="cfgMode">
+    <option value="2">2科（国語＋算数）</option>
+    <option value="3">3科（国語＋算数＋理科）</option>
+  </select>
+  <p class="muted" style="margin-top:11px">
+    自分の点・偏差値・復テの点は<b>中受伴走アプリの成績データ</b>から自動で読み込みます（同じ端末内・二重入力なし）。<br>
+    このアプリで足すのは <b>ライバルの公開点／100傑ボーダー／復テの合格点・100点情報</b> だけです。
+  </p>
+  <div class="sheetBtns"><button class="btn btnSub" data-close="cfgSheet">閉じる</button></div>
+</div></div>
+
+<!-- 使い方 -->
+<div class="overlay" id="helpSheet"><div class="sheet">
+  <div class="sheetHead"><h2>❓ 使い方</h2><button class="closeBtn" data-close="helpSheet">✕</button></div>
+  <p class="muted">
+    <b>目的</b>：追いかける相手との差を数字で見て、自己研鑽のモチベにするアプリです。<br><br>
+    <b>① ライバルを登録</b><br>
+    100傑の掲示やHPの上位10名（<b>塾が公式に公開している実名・点数</b>）から、意識したい相手を登録します。⭐を付けると「目標」タブに出ます。<br><br>
+    <b>② 公開テスト</b><br>
+    自分の点は伴走アプリから自動。<b>ライバルの点と100傑ボーダー（100位の点）だけ</b>入れると、点差の推移が自動でグラフになります。<br><br>
+    <b>③ 復テ</b><br>
+    伴走アプリに入っている復習テストが一覧で並びます。各回に <b>合格点（半数が挙手した点）／100点の人数／100点だったライバル</b> を足してください。<br>
+    合格点は<b>クラスの真ん中</b>なので、「自分は毎回そこから何点上か」がすぐ分かります。<br><br>
+    <b>データは端末内だけ</b>に保存されます（外部送信なし）。
+  </p>
+  <div class="sheetBtns"><button class="btn btnSub" data-close="helpSheet">閉じる</button></div>
+</div></div>
+
+<script>
+'use strict';
+// file:// で開いた時など、登録できない環境でも落とさない
+if ('serviceWorker' in navigator) {
+  try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {}
+}
+const $ = id => document.getElementById(id);
+const KEY = 'rival_v1';
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ===== 自前データ（ライバル・相手の公開点・復テの合格点） =====
+let db = load();
+function load() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(KEY)); } catch(e) {}
+  if (!d || typeof d !== 'object') d = {};
+  if (!Array.isArray(d.rivals)) d.rivals = [];
+  if (!Array.isArray(d.kokai)) d.kokai = [];
+  if (!d.fuku || typeof d.fuku !== 'object' || Array.isArray(d.fuku)) d.fuku = {};
+  if (!d.cfg || typeof d.cfg !== 'object') d.cfg = {};
+  if (d.cfg.mode !== '3') d.cfg.mode = '2';
+  return d;
+}
+const save = () => localStorage.setItem(KEY, JSON.stringify(db));
+
+// ===== 中受伴走アプリの成績（同一オリジンの localStorage をそのまま読む） =====
+function okanChildren() {
+  try {
+    const a = JSON.parse(localStorage.getItem('okan_children_v2'));
+    if (Array.isArray(a) && a.length) return a.map(c => (c && c.name) || c).filter(Boolean);
+  } catch(e) {}
+  try {
+    const b = JSON.parse(localStorage.getItem('okan_children'));
+    if (Array.isArray(b) && b.length) return b.filter(Boolean);
+  } catch(e) {}
+  return [];
+}
+function seikeyFor(child) {
+  const cs = okanChildren();
+  return (child && cs.length && child !== cs[0]) ? `okan_seiseki_v1__${child}` : 'okan_seiseki_v1';
+}
+function activeChild() {
+  const cs = okanChildren();
+  if (db.cfg.child && (!cs.length || cs.includes(db.cfg.child))) return db.cfg.child;
+  const a = localStorage.getItem('okan_active_child') || '';
+  if (a && (!cs.length || cs.includes(a))) return a;
+  return cs[0] || '';
+}
+function okanDB() {
+  try { return JSON.parse(localStorage.getItem(seikeyFor(activeChild()))) || {}; } catch(e) { return {}; }
+}
+function hasOkan() {
+  const d = okanDB();
+  return (Array.isArray(d.kokai) && d.kokai.length > 0) || (Array.isArray(d.fukushu) && d.fukushu.length > 0);
+}
+// 公開テスト：自分の合計点・偏差値（2科 or 3科）
+function myKokai(ym) {
+  const k = (okanDB().kokai || []).find(x => x.ym === ym);
+  if (!k) return null;
+  const subj = db.cfg.mode === '3' ? ['koku','san','ri'] : ['koku','san'];
+  let sum = 0, all = true;
+  for (const s of subj) { const v = k[s] && num(k[s].score); if (v == null) all = false; else sum += v; }
+  const avg = db.cfg.mode === '3' ? k.avg3 : k.avg2;
+  return { score: all ? sum : null, dev: num(avg && avg.dev), rank: (db.cfg.mode === '3' ? k.rank3 : k.rank2) || '' };
+}
+const okanYms = () => [...new Set((okanDB().kokai || []).map(k => k.ym).filter(Boolean))].sort();
+const okanFuku = () => (okanDB().fukushu || []).filter(t => t && (t.date || t.ym));
+const fkey = t => `${t.date || ('ym:' + (t.ym || ''))}|${t.subject || ''}|${t.no == null ? '' : t.no}`;
+
+// 自分の点（伴走アプリ優先、無ければこのアプリの手入力）
+function mineScore(ym) {
+  const a = myKokai(ym);
+  if (a && a.score != null) return { v: a.score, auto: true };
+  const k = db.kokai.find(x => x.ym === ym);
+  return { v: k ? num(k.mineManual) : null, auto: false };
+}
+function mineFuku(key) {
+  const t = okanFuku().find(x => fkey(x) === key);
+  if (t && num(t.score) != null) return { v: num(t.score), auto: true };
+  const a = db.fuku[key];
+  return { v: a ? num(a.myManual) : null, auto: false };
+}
+
+const ymLabel = ym => `${+ym.split('-')[1]}月度`;
+const mdLabel = ds => ds.startsWith('ym:')
+  ? `${+ds.slice(3).split('-')[1]}月` : `${+ds.split('-')[1]}/${+ds.split('-')[2]}`;
+const rivalName = id => (db.rivals.find(r => r.id === id) || {}).name || '?';
+
+// ===== タブ =====
+let tab = 'home';
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+  tab = b.dataset.tab;
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+  render();
+});
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => $(b.dataset.close).classList.remove('open'));
+document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
+$('helpBtn').onclick = () => $('helpSheet').classList.add('open');
+
+// ===== 集計 =====
+const kokaiSorted = () => [...db.kokai].sort((a,b) => a.ym.localeCompare(b.ym));
+function latestKokai() {
+  const l = kokaiSorted();
+  return l.length ? l[l.length-1] : null;
+}
+function diffOf(k, rid) {
+  if (!k) return null;
+  const mine = mineScore(k.ym).v;
+  const his = (k.scores && k.scores[rid] != null) ? num(k.scores[rid]) : null;
+  return (mine == null || his == null) ? null : mine - his;
+}
+function fukuEdge() {
+  const xs = [];
+  for (const [key, a] of Object.entries(db.fuku)) {
+    const my = mineFuku(key).v, pass = num(a.pass);
+    if (my != null && pass != null) xs.push(my - pass);
+  }
+  return xs.length ? { avg: xs.reduce((a,b)=>a+b,0)/xs.length, n: xs.length } : null;
+}
+function hundredRate(rid) {
+  const rel = Object.values(db.fuku).filter(a => Array.isArray(a.who100) && (a.who100.length > 0 || a.cnt != null));
+  if (!rel.length) return null;
+  return rel.filter(a => (a.who100 || []).includes(rid)).length / rel.length;
+}
+function myHundredRate() {
+  const vals = Object.keys(db.fuku).map(k => mineFuku(k).v).filter(v => v != null);
+  if (!vals.length) return null;
+  return vals.filter(v => v >= 100).length / vals.length;
+}
+
+// ===== 差の推移グラフ =====
+function diffChart(rid) {
+  const l = kokaiSorted().map(k => ({ ym:k.ym, d:diffOf(k,rid) })).filter(x => x.d != null);
+  if (l.length < 2) return '';
+  const W=300,H=112,P=22;
+  const vs = l.map(x=>x.d), mx = Math.max(...vs,0), mn = Math.min(...vs,0);
+  const pad = Math.max(5,(mx-mn)*0.18), hi = mx+pad, lo = mn-pad;
+  const X = i => P + (W-P-10) * (i/(l.length-1));
+  const Y = v => H-19 - (H-32) * ((v-lo)/((hi-lo)||1));
+  const pts = l.map((x,i)=>`${X(i)},${Y(x.d)}`).join(' ');
+  const zero = Y(0);
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;margin-top:6px">
+    <line x1="${P}" y1="${zero}" x2="${W-10}" y2="${zero}" stroke="#cbd5e1" stroke-dasharray="3 3"/>
+    <text x="1" y="${zero+3.5}" font-size="9" fill="#94a3b8">互角</text>
+    <polyline points="${pts}" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linejoin="round"/>
+    ${l.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(x.d)}" r="3.5" fill="${x.d>=0?'#059669':'#dc2626'}"/>
+      <text x="${X(i)}" y="${Y(x.d)-8}" font-size="9.5" font-weight="700" text-anchor="middle" fill="#475569">${x.d>0?'+':''}${x.d}</text>
+      <text x="${X(i)}" y="${H-5}" font-size="8.5" text-anchor="middle" fill="#94a3b8">${+x.ym.split('-')[1]}月</text>`).join('')}
+  </svg>`;
+}
+
+// ===== 描画 =====
+function render() {
+  const ch = activeChild();
+  $('hSub').textContent = ch ? `${ch}さん・${db.cfg.mode==='3'?'3科':'2科'}で比較` : '追いかける背中を、数字で';
+  $('fab').style.display = (tab === 'home') ? 'none' : '';
+  const v = $('view');
+  v.innerHTML = tab === 'home' ? viewHome() : tab === 'rivals' ? viewRivals() : tab === 'kokai' ? viewKokai() : viewFuku();
+  v.querySelectorAll('[data-rv]').forEach(e => e.onclick = () => openRival(db.rivals.find(r => r.id === e.dataset.rv)));
+  v.querySelectorAll('[data-kk]').forEach(e => e.onclick = () => openKokai(e.dataset.kk));
+  v.querySelectorAll('[data-fk]').forEach(e => e.onclick = () => openFuku(e.dataset.fk));
+}
+
+function viewHome() {
+  let h = '';
+  if (!hasOkan()) h += `<div class="warn">中受伴走アプリの成績が見つかりません。<br>
+    同じ端末・同じブラウザで<b>成績を登録</b>すると、自分の点・偏差値・復テの点がここに自動で入ります。</div>`;
+  const k = latestKokai();
+  if (!k) {
+    h += `<div class="card"><h3>🎯 まずは1回ぶん記録</h3><p class="muted">
+      「📊公開」タブの＋から、最新の公開テストに<b>100傑ボーダー（100位の点）とライバルの点</b>を入れてください。
+      自分の点は伴走アプリから自動で入ります。</p></div>`;
+  } else {
+    const mine = mineScore(k.ym).v, b100 = num(k.b100), b10 = num(k.b10);
+    const my = myKokai(k.ym);
+    h += `<div class="card"><h3>🏅 100傑まで（${ymLabel(k.ym)}）</h3>`;
+    if (mine != null && b100 != null) {
+      const d = mine - b100;
+      h += d >= 0 ? `<div class="big" style="color:#059669">100傑圏 +${d}点</div>` : `<div class="big">あと ${-d} 点</div>`;
+      h += `<div class="sub" style="margin-top:3px">自分 ${mine}点${my && my.dev != null ? '・偏差 '+my.dev : ''} ／ 100位 ${b100}点</div>`;
+    } else {
+      h += `<p class="muted">${mine == null
+        ? '自分の点が未登録です（伴走アプリの公開テストに科目点を入れてください）。'
+        : '100傑ボーダー（100位の点）を入れると差が出ます。'}</p>`;
+    }
+    if (mine != null && b10 != null) {
+      const d10 = mine - b10;
+      h += `<div class="sub" style="margin-top:7px">10位ライン(${b10}点)まで ${d10>=0?'到達 +'+d10:'あと '+(-d10)}点</div>`;
+    }
+    h += `</div>`;
+  }
+  const stars = db.rivals.filter(r => r.star);
+  const list = stars.length ? stars : db.rivals.slice(0,3);
+  if (list.length) {
+    h += `<p class="fLabel" style="margin-left:2px">⭐ 追いかける相手</p>`;
+    for (const r of list) {
+      const d = diffOf(k, r.id);
+      const cls = d == null ? 'even' : d > 0 ? 'ahead' : d < 0 ? 'behind' : 'even';
+      const rate = hundredRate(r.id);
+      h += `<div class="card"><div class="row">
+        <div class="grow"><div class="rvName">${esc(r.name)}</div>
+          <div class="rvMeta">${esc(r.note||'')}${rate != null ? '　復テ100点率 '+Math.round(rate*100)+'%' : ''}</div></div>
+        <div class="diff ${cls}">${d == null ? '—' : (d>0?'+'+d:d)}<div class="sub" style="font-size:9.5px">点差</div></div>
+      </div>${diffChart(r.id)}</div>`;
+    }
+  }
+  const e = fukuEdge(), myR = myHundredRate();
+  if (e) {
+    h += `<div class="card"><h3>✍️ 復テでの立ち位置</h3>
+      <div class="big">${e.avg>=0?'+':''}${e.avg.toFixed(1)}<span class="sub" style="font-size:12px"> 点／合格点比（${e.n}回）</span></div>
+      <p class="muted">合格点＝半数が挙手した点＝<b>クラスの真ん中</b>。平均でこれだけ上にいます。
+      ${myR != null ? '<br>自分の100点率 <b>'+Math.round(myR*100)+'%</b>' : ''}</p></div>`;
+  }
+  if (!db.rivals.length) h += `<div class="card"><h3>🏆 ライバルを登録</h3><p class="muted">
+    「🏆ライバル」タブの＋から、100傑の掲示やHPの上位10名にいる<b>追いかけたい相手</b>を登録してください。</p></div>`;
+  return h;
+}
+
+function viewRivals() {
+  if (!db.rivals.length) return `<p class="empty">まだ登録がありません。<br>＋ボタンで、100傑の掲示やHPの上位10名から<br>追いかけたい相手を登録できます。</p>`;
+  const k = latestKokai();
+  return db.rivals.map(r => {
+    const d = diffOf(k, r.id);
+    const cls = d == null ? 'even' : d > 0 ? 'ahead' : d < 0 ? 'behind' : 'even';
+    const rate = hundredRate(r.id);
+    return `<div class="rvCard${r.star?' star':''}" data-rv="${r.id}">
+      <div class="grow"><div class="rvName">${r.star?'⭐ ':''}${esc(r.name)}</div>
+        <div class="rvMeta">${esc(r.note||'')}${rate != null ? '　100点率 '+Math.round(rate*100)+'%' : ''}</div></div>
+      <div class="diff ${cls}">${d == null ? '—' : (d>0?'+'+d:d)}</div></div>`;
+  }).join('');
+}
+
+function viewKokai() {
+  const l = kokaiSorted().reverse();
+  if (!l.length) return `<p class="empty">まだ記録がありません。<br>＋ボタンで、100傑ボーダーとライバルの点を<br>記録できます（自分の点は自動）。</p>`;
+  return l.map(k => {
+    const mine = mineScore(k.ym).v, b100 = num(k.b100);
+    const near = (mine != null && b100 != null) ? mine - b100 : null;
+    const rs = db.rivals.map(r => (k.scores && k.scores[r.id] != null) ? `${esc(r.name)} ${k.scores[r.id]}` : null).filter(Boolean).join('　');
+    return `<div class="card" data-kk="${k.ym}"><div class="row">
+      <div class="grow"><h3 style="margin:0">${ymLabel(k.ym)}</h3>
+        <div class="sub">自分 ${mine ?? '—'}点${b100 != null ? '　/　100位 '+b100+'点' : ''}</div></div>
+      ${near != null ? `<div class="diff ${near>=0?'ahead':'behind'}">${near>=0?'+'+near:near}</div>` : ''}
+    </div><div class="sub" style="margin-top:6px">${rs || 'ライバルの点は未入力'}</div></div>`;
+  }).join('');
+}
+
+// 復テ一覧＝伴走アプリの記録 ∪ このアプリだけの手動記録
+function fukuRows() {
+  const rows = new Map();
+  for (const t of okanFuku()) {
+    const k = fkey(t);
+    rows.set(k, { key:k, date:t.date || ('ym:'+t.ym), subject:t.subject || '', no:t.no, okan:true });
+  }
+  for (const [key, a] of Object.entries(db.fuku)) {
+    if (!rows.has(key)) {
+      const p = key.split('|');
+      rows.set(key, { key, date:a.date || p[0], subject:a.subject || p[1] || '', no:(p[2] === '' ? null : p[2]), okan:false });
+    }
+  }
+  return [...rows.values()].sort((a,b) => b.date.localeCompare(a.date));
+}
+function viewFuku() {
+  const rows = fukuRows();
+  if (!rows.length) return `<p class="empty">復習テストの記録がありません。<br>伴走アプリに復テを登録すると自動で並びます。<br>＋ボタンで手動追加もできます。</p>`;
+  let h = '';
+  const e = fukuEdge();
+  if (e) h += `<div class="card"><h3>合格点との差（平均・${e.n}回）</h3>
+    <div class="big">${e.avg>=0?'+':''}${e.avg.toFixed(1)}点</div>
+    <p class="muted">合格点はクラスの中央値。プラスなら毎回<b>上半分</b>にいます。</p></div>`;
+  for (const r of rows) {
+    const a = db.fuku[r.key] || {};
+    const my = mineFuku(r.key).v, pass = num(a.pass);
+    const d = (my != null && pass != null) ? my - pass : null;
+    const who = (a.who100 || []).map(rivalName).join('・');
+    h += `<div class="card" data-fk="${esc(r.key)}"><div class="row">
+      <div class="grow"><div class="rvName">${mdLabel(r.date)}　${esc(r.subject)}${(r.no != null && r.no !== '') ? ' No.'+esc(r.no) : ''}</div>
+        <div class="sub">自分 ${my ?? '—'}点 / 合格点 ${pass != null ? pass : '未入力'}${a.cnt != null ? '　100点 '+a.cnt+'人' : ''}</div></div>
+      ${d != null ? `<div class="diff ${d>=0?'ahead':'behind'}">${d>=0?'+'+d:d}</div>` : `<span class="pill">記入</span>`}
+    </div>${who ? `<div class="sub" style="margin-top:5px">100点：${esc(who)}</div>` : ''}</div>`;
+  }
+  return h;
+}
+
+// ===== 入力：ライバル =====
+let editRv = null;
+function openRival(r) {
+  editRv = r ? r.id : null;
+  $('rvTitle').textContent = r ? 'ライバルを編集' : 'ライバルを追加';
+  $('rvName').value = r ? r.name : '';
+  $('rvNote').value = r ? (r.note || '') : '';
+  $('rvStar').checked = r ? !!r.star : false;
+  $('rvDel').style.display = r ? '' : 'none';
+  $('rvSheet').classList.add('open');
+}
+$('rvSave').onclick = () => {
+  const name = $('rvName').value.trim();
+  if (!name) { alert('名前を入れてください'); return; }
+  const rec = { id: editRv || uid(), name, note: $('rvNote').value.trim(), star: $('rvStar').checked };
+  const i = db.rivals.findIndex(r => r.id === rec.id);
+  if (i >= 0) db.rivals[i] = rec; else db.rivals.push(rec);
+  editRv = null; save(); $('rvSheet').classList.remove('open'); render();
+};
+$('rvDel').onclick = () => {
+  if (!editRv || !confirm('このライバルを削除します。よろしいですか？')) return;
+  const id = editRv;
+  db.rivals = db.rivals.filter(r => r.id !== id);
+  db.kokai.forEach(k => { if (k.scores) delete k.scores[id]; });
+  Object.values(db.fuku).forEach(a => { if (a.who100) a.who100 = a.who100.filter(x => x !== id); });
+  editRv = null; save(); $('rvSheet').classList.remove('open'); render();
+};
+
+// ===== 入力：公開テスト =====
+let editKk = null;
+function openKokai(ym) {
+  const k = ym ? db.kokai.find(x => x.ym === ym) : null;
+  editKk = k ? k.ym : null;
+  $('kkTitle').textContent = k ? '公開テストを編集' : '公開テストを記録';
+  const now = new Date();
+  const thisYm = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const yms = [...new Set([...okanYms(), ...db.kokai.map(x => x.ym), thisYm])].sort().reverse();
+  const sel = k ? k.ym : yms[0];
+  $('kkYm').innerHTML = yms.map(y =>
+    `<option value="${y}"${sel === y ? ' selected' : ''}>${y.split('-')[0]}年${+y.split('-')[1]}月度</option>`).join('');
+  $('kkB100').value = k && k.b100 != null ? k.b100 : '';
+  $('kkB10').value = k && k.b10 != null ? k.b10 : '';
+  $('kkRivals').innerHTML = db.rivals.length
+    ? db.rivals.map(r => `<div class="fRow" style="margin-bottom:6px;align-items:center">
+        <div style="flex:1.1;font-size:13px;font-weight:700;color:#334155">${esc(r.name)}</div>
+        <input class="fInput kkS" data-rid="${r.id}" type="number" inputmode="numeric" placeholder="点"
+          value="${k && k.scores && k.scores[r.id] != null ? k.scores[r.id] : ''}"></div>`).join('')
+    : `<p class="muted">先に「🏆ライバル」タブで登録してください。</p>`;
+  $('kkDel').style.display = k ? '' : 'none';
+  paintKkMine();
+  $('kkSheet').classList.add('open');
+}
+$('kkYm').onchange = () => paintKkMine();
+function paintKkMine() {
+  const ym = $('kkYm').value;
+  const my = myKokai(ym);
+  const k = db.kokai.find(x => x.ym === ym);
+  if (my && my.score != null) {
+    $('kkMineBox').innerHTML = `<div class="auto">${my.score}点${my.dev != null ? `（偏差 ${my.dev}）` : ''}
+      <small>📎 中受伴走アプリの${db.cfg.mode === '3' ? '3科' : '2科'}合計から自動</small></div>`;
+  } else {
+    $('kkMineBox').innerHTML = `<input class="fInput" type="number" id="kkMineManual" inputmode="numeric"
+      placeholder="伴走アプリに科目点が無いため手入力" value="${k && k.mineManual != null ? k.mineManual : ''}">`;
+  }
+}
+$('kkSave').onclick = () => {
+  const ym = $('kkYm').value;
+  if (!ym) { alert('実施月を選んでください'); return; }
+  const scores = {};
+  document.querySelectorAll('.kkS').forEach(i => { const v = num(i.value); if (v != null) scores[i.dataset.rid] = v; });
+  const rec = { ym, b100: num($('kkB100').value), b10: num($('kkB10').value), scores };
+  const mm = $('kkMineManual');
+  if (mm) rec.mineManual = num(mm.value);
+  db.kokai = db.kokai.filter(x => x.ym !== ym && x.ym !== editKk);
+  db.kokai.push(rec);
+  editKk = null; save(); $('kkSheet').classList.remove('open'); render();
+};
+$('kkDel').onclick = () => {
+  if (!editKk || !confirm('この月の記録を削除します。よろしいですか？')) return;
+  db.kokai = db.kokai.filter(x => x.ym !== editKk);
+  editKk = null; save(); $('kkSheet').classList.remove('open'); render();
+};
+
+// ===== 入力：復習テスト =====
+let editFk = null;
+function openFuku(key) {
+  editFk = key || null;
+  const row = key ? fukuRows().find(r => r.key === key) : null;
+  const a = key ? (db.fuku[key] || {}) : {};
+  $('fkTitle').textContent = row ? '復習テストに記入' : '復習テストを追加';
+  const t = new Date();
+  const today = `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+  const isYm = row && row.date.startsWith('ym:');
+  $('fkDate').value = row ? (isYm ? '' : row.date) : today;
+  $('fkDate').disabled = !!row;
+  $('fkSubj').value = row ? (row.subject || '算数') : '算数';
+  $('fkSubj').disabled = !!row;
+  $('fkPass').value = a.pass != null ? a.pass : '';
+  $('fkCnt').value = a.cnt != null ? a.cnt : '';
+  $('fkWho').innerHTML = db.rivals.length
+    ? db.rivals.map(r => `<label class="chk"><input type="checkbox" class="fkW" data-rid="${r.id}"
+        ${(a.who100 || []).includes(r.id) ? 'checked' : ''}> ${esc(r.name)}</label>`).join('')
+    : `<p class="muted">先に「🏆ライバル」タブで登録してください。</p>`;
+  $('fkDel').style.display = (key && db.fuku[key]) ? '' : 'none';
+  paintFkMine(key);
+  $('fkSheet').classList.add('open');
+}
+function paintFkMine(key) {
+  const m = key ? mineFuku(key) : { v:null, auto:false };
+  if (m.auto && m.v != null) {
+    $('fkMineBox').innerHTML = `<div class="auto">${m.v}点<small>📎 中受伴走アプリの復習テストから自動</small></div>`;
+  } else {
+    $('fkMineBox').innerHTML = `<input class="fInput" type="number" id="fkMyManual" inputmode="numeric"
+      placeholder="自分の点" value="${m.v != null ? m.v : ''}">`;
+  }
+}
+$('fkSave').onclick = () => {
+  let key = editFk;
+  const subject = $('fkSubj').value;
+  if (!key) {
+    const date = $('fkDate').value;
+    if (!date) { alert('日付を入れてください'); return; }
+    key = `${date}|${subject}|`;
+  }
+  const prev = db.fuku[key] || {};
+  const who100 = [...document.querySelectorAll('.fkW')].filter(i => i.checked).map(i => i.dataset.rid);
+  const rec = Object.assign({}, prev, {
+    date: key.split('|')[0], subject,
+    pass: num($('fkPass').value), cnt: num($('fkCnt').value), who100
+  });
+  const mm = $('fkMyManual');
+  if (mm) rec.myManual = num(mm.value);
+  db.fuku[key] = rec;
+  editFk = null; save(); $('fkSheet').classList.remove('open'); render();
+};
+$('fkDel').onclick = () => {
+  if (!editFk || !confirm('この回の記入内容（合格点・100点情報）を削除します。よろしいですか？')) return;
+  delete db.fuku[editFk];
+  editFk = null; save(); $('fkSheet').classList.remove('open'); render();
+};
+
+// ===== 設定 =====
+$('cfgBtn').onclick = () => {
+  const cs = okanChildren();
+  $('cfgChild').innerHTML = (cs.length ? cs : ['（伴走アプリに登録なし）'])
+    .map(c => `<option value="${esc(c)}"${activeChild() === c ? ' selected' : ''}>${esc(c)}</option>`).join('');
+  $('cfgChild').disabled = !cs.length;
+  $('cfgMode').value = db.cfg.mode;
+  $('cfgSheet').classList.add('open');
+};
+$('cfgChild').onchange = e => { db.cfg.child = e.target.value; save(); render(); };
+$('cfgMode').onchange = e => { db.cfg.mode = e.target.value; save(); render(); };
+
+$('fab').onclick = () => {
+  if (tab === 'rivals') openRival(null);
+  else if (tab === 'kokai') openKokai(null);
+  else if (tab === 'fuku') openFuku(null);
+};
+
+render();
+</script>
+</body>
+</html>
