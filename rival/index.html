@@ -30,10 +30,43 @@
   .hbtn { border:none; background:rgba(255,255,255,.16); color:#fff; width:34px; height:34px; border-radius:10px; font-size:15px; cursor:pointer; }
   main { flex:1; padding:14px 14px 92px; max-width:520px; width:100%; margin:0 auto; }
 
-  .tabs { display:flex; gap:6px; margin-bottom:12px; }
-  .tab { flex:1; padding:9px 4px; border:1.5px solid #fcd34d; background:#fff; color:#92400e;
-         border-radius:10px; font-size:12px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .tabs { display:flex; gap:5px; margin-bottom:12px; }
+  .tab { flex:1; padding:9px 2px; border:1.5px solid #fcd34d; background:#fff; color:#92400e;
+         border-radius:10px; font-size:11px; font-weight:800; cursor:pointer; font-family:inherit;
+         white-space:nowrap; overflow:hidden; }
   .tab.on { background:#b45309; border-color:#b45309; color:#fff; }
+
+  /* アップデート情報バナー */
+  .updBanner { display:flex; align-items:center; gap:9px; width:100%; text-align:left; cursor:pointer;
+    background:#fff; border:1.5px solid #fde68a; border-radius:13px; padding:10px 12px; margin-bottom:11px; font-family:inherit; }
+  .updBanner .ico { font-size:19px; }
+  .updBanner .txt { flex:1; min-width:0; }
+  .updBanner .lbl { display:block; font-size:10px; font-weight:800; color:#b45309; }
+  .updBanner .latest { display:block; font-size:12px; font-weight:700; color:#475569;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .updBanner .newBadge { background:#dc2626; color:#fff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:999px; }
+  .updBanner .newBadge.hidden { display:none; }
+  .updBanner .arrow { color:#cbd5e1; font-size:17px; }
+  .updItem { border-bottom:1px solid #f1f5f9; padding:11px 2px; }
+  .updItem .d { font-size:10px; font-weight:800; color:#b45309; }
+  .updItem .t { font-size:13px; font-weight:800; color:#334155; margin:2px 0 4px; }
+  .updItem .b { font-size:12px; color:#64748b; line-height:1.7; white-space:pre-wrap; }
+
+  /* A表：得点分布 */
+  .distWrap { margin-top:9px; }
+  .distRow { display:flex; align-items:center; gap:7px; margin-bottom:3px; font-size:11px; }
+  .distLbl { width:64px; flex-shrink:0; color:#94a3b8; font-weight:700; text-align:right; }
+  .distBar { flex:1; height:13px; background:#f1f5f9; border-radius:4px; overflow:hidden; }
+  .distBar i { display:block; height:100%; background:#fcd34d; }
+  .distBar i.me { background:#b45309; }
+  .distNum { width:26px; flex-shrink:0; color:#64748b; font-weight:700; }
+  .pBox { width:100%; min-height:110px; padding:10px; border:1.5px solid #cbd5e1; border-radius:9px;
+    font-size:13px; font-family:inherit; line-height:1.6; resize:vertical; }
+  .pStep { font-size:11.5px; font-weight:800; color:#b45309; margin:11px 0 4px; }
+  .stat { display:flex; gap:7px; margin-top:9px; }
+  .stat > div { flex:1; background:#fffbeb; border:1.5px solid #fde68a; border-radius:10px; padding:8px 6px; text-align:center; }
+  .stat b { display:block; font-size:17px; font-weight:800; color:#b45309; }
+  .stat span { font-size:9.5px; font-weight:700; color:#94a3b8; }
 
   .card { background:#fff; border:1.5px solid #fde68a; border-radius:14px; padding:13px; margin-bottom:11px;
           box-shadow:0 2px 10px rgba(180,83,9,.06); }
@@ -100,6 +133,7 @@
   <div class="tabs">
     <button class="tab on" data-tab="home">🎯 目標</button>
     <button class="tab" data-tab="rivals">🏆 ライバル</button>
+    <button class="tab" data-tab="atable">📋 A表</button>
     <button class="tab" data-tab="kokai">📊 公開</button>
     <button class="tab" data-tab="fuku">✍️ 復テ</button>
   </div>
@@ -164,6 +198,47 @@
   </div>
 </div></div>
 
+<!-- A表：貼り付けて取り込む -->
+<div class="overlay" id="atSheet"><div class="sheet">
+  <div class="sheetHead"><h2 id="atTitle">A表を貼り付けて取り込む</h2><button class="closeBtn" data-close="atSheet">✕</button></div>
+  <div class="fRow">
+    <div><p class="fLabel">月度</p><input class="fInput" type="month" id="atYm"></div>
+    <div><p class="fLabel">講座</p>
+      <select class="fInput" id="atCourse">
+        <option>マスター</option>
+        <option>最高レベル特訓 算数</option>
+        <option>最高レベル特訓 国語</option>
+        <option>灘中合格特訓</option>
+        <option>土曜マスター</option>
+      </select></div>
+  </div>
+  <p class="pStep">① A表（成績個人票）の得点欄をコピー　② 下の枠に貼り付け</p>
+  <textarea class="pBox" id="atPaste" placeholder="A表の点数の並びを貼り付け（1行に1人ぶんでも、数字だけの羅列でもOK）"></textarea>
+  <p class="muted" id="atStatus" style="margin-top:6px">貼り付けると自動で読み取ります。浜学園にログインすることはありません。</p>
+
+  <div id="atPrev" style="display:none">
+    <p class="pStep">③ 読み取り結果を確認（違っていれば直せます）</p>
+    <p class="fLabel">全員の総合点（カンマ区切り）</p>
+    <textarea class="pBox" id="atScores" style="min-height:70px;font-size:12.5px"></textarea>
+    <div class="fRow">
+      <div><p class="fLabel">あなたの総合点</p><input class="fInput" type="number" step="0.1" id="atMine" inputmode="decimal"></div>
+      <div><p class="fLabel">人数</p><input class="fInput" id="atCount" disabled></div>
+    </div>
+    <div class="stat" id="atStat"></div>
+  </div>
+  <div class="sheetBtns">
+    <button class="btn btnDanger" id="atDel" style="display:none">削除</button>
+    <button class="btn btnMain" id="atSave">この内容で取り込む</button>
+  </div>
+</div></div>
+
+<!-- アップデート情報 -->
+<div class="overlay" id="updModal"><div class="sheet">
+  <div class="sheetHead"><h2>📢 100傑チェイサーのアップデート</h2><button class="closeBtn" data-close="updModal">✕</button></div>
+  <div id="updList"></div>
+  <div class="sheetBtns"><button class="btn btnSub" data-close="updModal">閉じる</button></div>
+</div></div>
+
 <!-- 設定 -->
 <div class="overlay" id="cfgSheet"><div class="sheet">
   <div class="sheetHead"><h2>⚙️ 設定</h2><button class="closeBtn" data-close="cfgSheet">✕</button></div>
@@ -191,10 +266,15 @@
   </div>
   <p id="impStatus" class="muted" style="margin-top:8px"></p>
 
+  <p class="fLabel" style="margin-top:14px">🔄 アプリの更新</p>
+  <p class="muted">画面がおかしい時や、新機能が出てこない時に押してください。キャッシュを消して読み込み直します（記録は消えません）。</p>
+  <button class="btn btnMain" id="refreshBtn" style="width:100%;margin-top:8px">🔄 最新に更新</button>
+
   <p class="muted" style="margin-top:12px">
-    このアプリで足すのは <b>ライバルの公開点／100傑ボーダー／復テの合格点・100点情報</b> だけです。
+    このアプリで足すのは <b>ライバルの公開点／100傑ボーダー／A表／復テの合格点・100点情報</b> だけです。
     データは端末内のみ（外部送信なし）。
   </p>
+  <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:12px">バージョン <span id="verTxt"></span></p>
   <div class="sheetBtns"><button class="btn btnSub" data-close="cfgSheet">閉じる</button></div>
 </div></div>
 
@@ -223,6 +303,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
+const APP_VER = 'v3';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -235,6 +316,7 @@ function load() {
   if (!d || typeof d !== 'object') d = {};
   if (!Array.isArray(d.rivals)) d.rivals = [];
   if (!Array.isArray(d.kokai)) d.kokai = [];
+  if (!Array.isArray(d.atable)) d.atable = [];
   if (!d.fuku || typeof d.fuku !== 'object' || Array.isArray(d.fuku)) d.fuku = {};
   if (!d.imported || typeof d.imported !== 'object' || Array.isArray(d.imported)) d.imported = {};
   if (!d.cfg || typeof d.cfg !== 'object') d.cfg = {};
@@ -386,14 +468,23 @@ function render() {
   $('hSub').textContent = ch ? `${ch}さん・${db.cfg.mode==='3'?'3科':'2科'}で比較` : '追いかける背中を、数字で';
   $('fab').style.display = (tab === 'home') ? 'none' : '';
   const v = $('view');
-  v.innerHTML = tab === 'home' ? viewHome() : tab === 'rivals' ? viewRivals() : tab === 'kokai' ? viewKokai() : viewFuku();
+  v.innerHTML = tab === 'home' ? viewHome() : tab === 'rivals' ? viewRivals()
+    : tab === 'atable' ? viewAtable() : tab === 'kokai' ? viewKokai() : viewFuku();
   v.querySelectorAll('[data-rv]').forEach(e => e.onclick = () => openRival(db.rivals.find(r => r.id === e.dataset.rv)));
   v.querySelectorAll('[data-kk]').forEach(e => e.onclick = () => openKokai(e.dataset.kk));
   v.querySelectorAll('[data-fk]').forEach(e => e.onclick = () => openFuku(e.dataset.fk));
+  v.querySelectorAll('[data-at]').forEach(e => e.onclick = () => openAtable(e.dataset.at));
+  const ub = document.getElementById('updBanner');
+  if (ub) ub.onclick = openUpdates;
 }
 
 function viewHome() {
-  let h = '';
+  let h = `<button class="updBanner" id="updBanner">
+    <span class="ico">📢</span>
+    <span class="txt"><span class="lbl">アップデート情報</span>
+      <span class="latest">${esc(updLatestTxt)}</span></span>
+    <span class="newBadge${updHasNew ? '' : ' hidden'}">NEW</span>
+    <span class="arrow">›</span></button>`;
   if (!hasOkan()) h += `<div class="warn">中受伴走アプリの成績が読めていません。<br>
     <b>⚙️（左上）</b>を開くと原因が表示されます。<br>
     ホーム画面に別々のアプリとして追加していると、iPhoneはアプリごとにデータを分けるため直接は読めません。
@@ -421,6 +512,18 @@ function viewHome() {
       h += `<div class="sub" style="margin-top:7px">10位ライン(${b10}点)まで ${d10>=0?'到達 +'+d10:'あと '+(-d10)}点</div>`;
     }
     h += `</div>`;
+  }
+  // 最新のA表（月末に出る）
+  const at = [...db.atable].sort((a,b) => (a.ym + a.course).localeCompare(b.ym + b.course)).pop();
+  if (at) {
+    const st = atStats(at);
+    if (st) h += `<div class="card" data-at="${at.id}"><h3>📋 ${ymLabel(at.ym)} ${esc(at.course)}A表</h3>
+      <div class="row"><div class="grow">
+        <div class="big">${st.rank ?? '—'}<span class="sub" style="font-size:13px"> 位／${st.n}人</span></div>
+        <div class="sub" style="margin-top:2px">自分 ${st.mine ?? '—'}点　1位 ${st.top}点</div>
+      </div>${st.toTop != null ? `<div class="diff ${st.toTop <= 0 ? 'ahead' : 'behind'}">
+        ${st.toTop <= 0 ? 'トップ' : '-' + st.toTop}<div class="sub" style="font-size:9.5px">1位まで</div></div>` : ''}</div>
+      ${st.toNext != null && st.toNext > 0 ? `<p class="muted" style="margin-top:7px">1つ上の子まで <b>あと${st.toNext}点</b></p>` : ''}</div>`;
   }
   const stars = db.rivals.filter(r => r.star);
   const list = stars.length ? stars : db.rivals.slice(0,3);
@@ -514,6 +617,154 @@ function viewFuku() {
   }
   return h;
 }
+
+// ===== A表：貼り付け解析 =====
+// A表は「クラス全員分の行が匿名で並び、自分の行だけ印が付く」。行ごとに総合点を1つ拾う。
+// 1行に複数の数字（順位・復テ平均・公開・総合点…）があっても、総合点は 0〜210 の中で最大になる。
+const AT_MAX = 210;
+function parseATable(text) {
+  const lines = String(text || '').split(/\r?\n/);
+  const scores = [];
+  let mine = null;
+  const pick = ln => {
+    const ns = (ln.match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n >= 0 && n <= AT_MAX);
+    return ns.length ? Math.max(...ns) : null;
+  };
+  for (const ln of lines) {
+    if (!/\d/.test(ln)) continue;
+    if (/合計|平均|人数|満点|順位$|得点$/.test(ln) && !/あなた|本人/.test(ln)) continue;
+    const v = pick(ln);
+    if (v == null) continue;
+    scores.push(v);
+    if (/あなた|本人|自分|★|◀|◆/.test(ln)) mine = v;
+  }
+  // 1行に全員分が並んでいる貼り方（カンマ/スペース区切り）にも対応
+  if (scores.length <= 2) {
+    const flat = (String(text).match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n >= 0 && n <= AT_MAX);
+    if (flat.length > scores.length) { scores.length = 0; scores.push(...flat); }
+  }
+  return { scores, mine };
+}
+// 分布・ボーダーの集計
+function atStats(rec) {
+  const s = (rec.scores || []).filter(v => typeof v === 'number').slice().sort((a,b) => b - a);
+  if (!s.length) return null;
+  const mine = num(rec.mine);
+  const nth = k => s[Math.min(k - 1, s.length - 1)];   // k位の点（人数が少なければ最下位）
+  const rank = mine == null ? null : s.filter(v => v > mine).length + 1;
+  const above = mine == null ? null : s.filter(v => v > mine).pop();  // 1つ上の点
+  return {
+    n: s.length, top: s[0], min: s[s.length-1], mine, rank,
+    b3: nth(3), b5: nth(5), b10: nth(10), med: nth(Math.ceil(s.length / 2)),
+    toTop: mine == null ? null : +(s[0] - mine).toFixed(1),
+    toNext: (mine == null || above == null) ? null : +(above - mine).toFixed(1)
+  };
+}
+function viewAtable() {
+  const l = [...db.atable].sort((a,b) => (b.ym + b.course).localeCompare(a.ym + a.course));
+  if (!l.length) return `<p class="empty">まだA表がありません。<br>＋ボタンで、月末に出るマスターや<br>最高レベル特訓のA表を貼り付けられます。<br><br>全員の得点分布から、上位のボーダーと<br>自分の位置が分かります。</p>`;
+  let h = '';
+  for (const rec of l) {
+    const st = atStats(rec);
+    if (!st) continue;
+    h += `<div class="card" data-at="${rec.id}">
+      <div class="row"><div class="grow">
+        <h3 style="margin:0">${ymLabel(rec.ym)}　${esc(rec.course)}</h3>
+        <div class="sub">${st.n}人中 ${st.rank ? st.rank + '位' : '—'}　自分 ${st.mine ?? '—'}点</div>
+      </div>${st.toTop != null ? `<div class="diff ${st.toTop <= 0 ? 'ahead' : 'behind'}">
+        ${st.toTop <= 0 ? 'トップ' : '-' + st.toTop}<div class="sub" style="font-size:9.5px">1位まで</div></div>` : ''}</div>
+      <div class="stat">
+        <div><b>${st.top}</b><span>1位</span></div>
+        <div><b>${st.b3}</b><span>3位</span></div>
+        <div><b>${st.b5}</b><span>5位</span></div>
+        <div><b>${st.b10}</b><span>10位</span></div>
+      </div>
+      ${distHtml(rec, st)}
+      ${st.toNext != null ? `<p class="muted" style="margin-top:8px">1つ上の子まで <b>あと${st.toNext}点</b></p>` : ''}
+    </div>`;
+  }
+  return h;
+}
+// 得点分布（10点刻みのヒストグラム、自分のいる帯を濃く）
+function distHtml(rec, st) {
+  const s = (rec.scores || []).filter(v => typeof v === 'number');
+  if (s.length < 3) return '';
+  const lo = Math.floor(Math.min(...s) / 10) * 10, hi = Math.ceil(Math.max(...s) / 10) * 10;
+  const bins = [];
+  for (let b = hi - 10; b >= lo; b -= 10) {
+    const c = s.filter(v => v >= b && v < b + 10 + (b + 10 >= hi ? 0.001 : 0)).length;
+    bins.push({ b, c, me: st.mine != null && st.mine >= b && st.mine < b + 10 + (b + 10 >= hi ? 0.001 : 0) });
+  }
+  const mx = Math.max(...bins.map(x => x.c), 1);
+  return `<div class="distWrap">${bins.map(x => `<div class="distRow">
+    <span class="distLbl">${x.b}〜${x.b + 9}</span>
+    <span class="distBar"><i class="${x.me ? 'me' : ''}" style="width:${Math.round(x.c / mx * 100)}%"></i></span>
+    <span class="distNum">${x.c || ''}</span></div>`).join('')}</div>`;
+}
+
+let editAt = null;
+function openAtable(id) {
+  const rec = id ? db.atable.find(x => x.id === id) : null;
+  editAt = rec ? rec.id : null;
+  $('atTitle').textContent = rec ? 'A表を編集' : 'A表を貼り付けて取り込む';
+  const now = new Date();
+  $('atYm').value = rec ? rec.ym : `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  $('atCourse').value = rec ? rec.course : 'マスター';
+  $('atPaste').value = '';
+  $('atStatus').textContent = '貼り付けると自動で読み取ります。浜学園にログインすることはありません。';
+  if (rec) {
+    $('atScores').value = (rec.scores || []).join(', ');
+    $('atMine').value = rec.mine != null ? rec.mine : '';
+    $('atPrev').style.display = '';
+    refreshAtPrev();
+  } else {
+    $('atScores').value = ''; $('atMine').value = ''; $('atPrev').style.display = 'none';
+  }
+  $('atDel').style.display = rec ? '' : 'none';
+  $('atSheet').classList.add('open');
+}
+function readAtForm() {
+  const scores = ($('atScores').value.match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n >= 0 && n <= AT_MAX);
+  return { scores, mine: num($('atMine').value) };
+}
+function refreshAtPrev() {
+  const f = readAtForm();
+  $('atCount').value = f.scores.length ? `${f.scores.length}人` : '—';
+  const st = atStats(f);
+  $('atStat').innerHTML = st ? `
+    <div><b>${st.top}</b><span>1位</span></div>
+    <div><b>${st.b5}</b><span>5位</span></div>
+    <div><b>${st.rank ?? '—'}</b><span>あなたの順位</span></div>
+    <div><b>${st.toTop != null ? (st.toTop <= 0 ? '0' : st.toTop) : '—'}</b><span>1位まで</span></div>` : '';
+}
+$('atPaste').addEventListener('input', () => {
+  clearTimeout(window._atTimer);
+  window._atTimer = setTimeout(() => {
+    const r = parseATable($('atPaste').value);
+    if (!r.scores.length) { $('atStatus').textContent = '⚠️ 点数が見つかりませんでした。数字が含まれているか確認してください。'; return; }
+    $('atScores').value = r.scores.join(', ');
+    if (r.mine != null) $('atMine').value = r.mine;
+    $('atPrev').style.display = '';
+    refreshAtPrev();
+    $('atStatus').textContent = `✅ ${r.scores.length}人ぶん読み取りました${r.mine != null ? '（あなたの行も見つかりました）' : '（あなたの点は下で入れてください）'}`;
+  }, 400);
+});
+$('atScores').addEventListener('input', refreshAtPrev);
+$('atMine').addEventListener('input', refreshAtPrev);
+$('atSave').onclick = () => {
+  const f = readAtForm();
+  if (!f.scores.length) { alert('点数が読み取れていません。A表を貼り付けてください。'); return; }
+  const rec = { id: editAt || uid(), ym: $('atYm').value, course: $('atCourse').value, scores: f.scores, mine: f.mine };
+  if (!rec.ym) { alert('月度を入れてください'); return; }
+  db.atable = db.atable.filter(x => x.id !== rec.id && !(x.ym === rec.ym && x.course === rec.course));
+  db.atable.push(rec);
+  editAt = null; save(); $('atSheet').classList.remove('open'); render();
+};
+$('atDel').onclick = () => {
+  if (!editAt || !confirm('このA表の記録を削除します。よろしいですか？')) return;
+  db.atable = db.atable.filter(x => x.id !== editAt);
+  editAt = null; save(); $('atSheet').classList.remove('open'); render();
+};
 
 // ===== 入力：ライバル =====
 let editRv = null;
@@ -732,7 +983,56 @@ $('impTextGo').onclick = () => applyImport($('impText').value);
 $('fab').onclick = () => {
   if (tab === 'rivals') openRival(null);
   else if (tab === 'kokai') openKokai(null);
+  else if (tab === 'atable') openAtable(null);
   else if (tab === 'fuku') openFuku(null);
+};
+
+// ===== アップデート情報 =====
+const SEEN_KEY = 'rival_updates_seen';
+let updates = [], updLatestTxt = '読み込み中…', updHasNew = false;
+function openUpdates() {
+  const el = $('updList');
+  el.innerHTML = updates.length ? '' : '<p class="muted">まだありません。</p>';
+  for (const u of updates) {
+    const item = document.createElement('div');
+    item.className = 'updItem';
+    const d = document.createElement('p'); d.className = 'd'; d.textContent = `${u.date}　${u.ver || ''}`;
+    const t = document.createElement('p'); t.className = 't'; t.textContent = u.title || '';
+    const b = document.createElement('p'); b.className = 'b'; b.textContent = u.body || '';
+    item.append(d, t, b);
+    el.appendChild(item);
+  }
+  $('updModal').classList.add('open');
+  if (updates[0]) localStorage.setItem(SEEN_KEY, updates[0].date + updates[0].ver);
+  updHasNew = false;
+  const badge = document.querySelector('#updBanner .newBadge');
+  if (badge) badge.classList.add('hidden');
+}
+fetch('updates.json', { cache: 'no-cache' })
+  .then(r => r.json())
+  .then(list => {
+    updates = Array.isArray(list) ? list : [];
+    const latest = updates[0];
+    updLatestTxt = latest ? latest.title : 'まだありません';
+    updHasNew = !!latest && localStorage.getItem(SEEN_KEY) !== latest.date + latest.ver;
+    if (tab === 'home') render();
+  })
+  .catch(() => { updLatestTxt = '読み込めませんでした'; if (tab === 'home') render(); });
+
+// ===== 最新版に更新 =====
+$('verTxt').textContent = APP_VER;
+$('refreshBtn').onclick = async () => {
+  const btn = $('refreshBtn');
+  btn.textContent = '⏳ 更新中…';
+  try {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k.indexOf('rival-chaser-') === 0).map(k => caches.delete(k)));
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.update()));
+    }
+  } catch (e) { /* オフライン等は無視してリロード */ }
+  location.reload();
 };
 
 render();
