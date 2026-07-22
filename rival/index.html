@@ -123,7 +123,7 @@
 <header>
   <button class="hbtn" id="cfgBtn">⚙️</button>
   <div style="text-align:center;line-height:1.25">
-    <div class="t1">🏆 100傑チェイサー</div>
+    <div class="t1" id="appTitle">🏆 100傑チェイサー</div>
     <div class="t2" id="hSub">追いかける背中を、数字で</div>
   </div>
   <button class="hbtn" id="helpBtn">❓</button>
@@ -303,7 +303,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v3';
+const APP_VER = 'v4';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -986,6 +986,30 @@ $('fab').onclick = () => {
   else if (tab === 'atable') openAtable(null);
   else if (tab === 'fuku') openFuku(null);
 };
+
+// ===== 隠しリンク：タイトルを10秒長押しで 中受伴走アプリへ =====
+(function () {
+  const el = $('appTitle');
+  if (!el) return;
+  el.style.webkitTouchCallout = 'none';
+  el.style.webkitUserSelect = 'none';
+  el.style.userSelect = 'none';
+  const HOLD = 10000, HINT = 6000;
+  let hold = null, hint = null;
+  const reset = () => {
+    clearTimeout(hold); clearTimeout(hint); hold = hint = null;
+    el.style.transition = 'opacity .25s'; el.style.opacity = '';
+  };
+  const start = () => {
+    if (hold) return;
+    hint = setTimeout(() => { el.style.transition = 'opacity 4s linear'; el.style.opacity = '.3'; }, HINT);
+    hold = setTimeout(() => { reset(); location.href = '../okan/'; }, HOLD);
+  };
+  el.addEventListener('pointerdown', start);
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => el.addEventListener(ev, reset));
+  window.addEventListener('scroll', reset, { passive: true });
+  el.addEventListener('contextmenu', e => e.preventDefault());
+})();
 
 // ===== アップデート情報 =====
 const SEEN_KEY = 'rival_updates_seen';

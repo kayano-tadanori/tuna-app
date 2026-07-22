@@ -187,7 +187,7 @@
 <body>
 <header>
   <div class="spacer"></div>
-  <div class="titleWrap"><div class="t1">中受伴走アプリ</div></div>
+  <div class="titleWrap"><div class="t1" id="appTitle">中受伴走アプリ</div></div>
   <div class="hbtns">
     <button class="hbtn" id="settingsBtn" title="設定">⚙️</button>
     <button class="hbtn" id="refreshBtn" title="最新版に更新">🔄</button>
@@ -302,7 +302,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v57</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v71</p>
     </div>
   </div>
 </div>
@@ -913,6 +913,31 @@ window.addEventListener('error', e => {
   const area = document.getElementById('pasteArea');
   if (area && area.style.display !== 'none') setPasteStatus('❌ アプリ内エラー：' + (e.message || '不明'), 'ng');
 });
+
+// ---------- 隠しリンク：タイトルを10秒長押しで 100傑チェイサーへ ----------
+// 表には出さない移動口。うっかり押しても動かないよう10秒、6秒過ぎたら薄くなって手応えを出す。
+(function () {
+  const el = document.getElementById('appTitle');
+  if (!el) return;
+  el.style.webkitTouchCallout = 'none';
+  el.style.webkitUserSelect = 'none';
+  el.style.userSelect = 'none';
+  const HOLD = 10000, HINT = 6000;
+  let hold = null, hint = null;
+  const reset = () => {
+    clearTimeout(hold); clearTimeout(hint); hold = hint = null;
+    el.style.transition = 'opacity .25s'; el.style.opacity = '';
+  };
+  const start = () => {
+    if (hold) return;
+    hint = setTimeout(() => { el.style.transition = 'opacity 4s linear'; el.style.opacity = '.3'; }, HINT);
+    hold = setTimeout(() => { reset(); location.href = '../rival/'; }, HOLD);
+  };
+  el.addEventListener('pointerdown', start);
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => el.addEventListener(ev, reset));
+  window.addEventListener('scroll', reset, { passive: true });
+  el.addEventListener('contextmenu', e => e.preventDefault());
+})();
 
 // ---------- 最新版に更新 ----------
 document.getElementById('refreshBtn').onclick = async () => {
