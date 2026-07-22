@@ -60,15 +60,19 @@
   .distBar i { display:block; height:100%; background:#fcd34d; }
   .distBar i.me { background:#b45309; }
   .distNum { width:26px; flex-shrink:0; color:#64748b; font-weight:700; }
-  /* A表 × 100点チェック の並べ見せ */
-  .cmp { display:flex; gap:9px; margin-top:10px; }
-  .cmpCol { flex:1; min-width:0; }
-  .cmpH { font-size:10.5px; font-weight:800; color:#b45309; margin-bottom:5px; padding-bottom:3px; border-bottom:1.5px solid #fde68a; }
-  .cmpR { display:flex; align-items:center; gap:6px; font-size:12px; padding:3.5px 1px; border-bottom:1px solid #f8fafc; }
-  .cmpR.me { background:#fffbeb; font-weight:800; color:#b45309; border-radius:4px; }
-  .cmpR .k { width:26px; flex-shrink:0; color:#94a3b8; font-weight:700; font-size:10.5px; text-align:right; }
-  .cmpR .v { flex:1; min-width:0; color:#334155; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .cmpR .r { flex-shrink:0; font-size:11px; font-weight:800; color:#b45309; }
+  /* A表そのもの × 100点を取った科目 */
+  .cmpWrap { margin-top:11px; padding-top:10px; border-top:1.5px dashed #fde68a; }
+  .cmpH { font-size:10.5px; font-weight:800; color:#b45309; margin-bottom:6px; padding-bottom:3px; border-bottom:1.5px solid #fde68a; }
+  .atScroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .atT { border-collapse:collapse; width:100%; font-size:12px; }
+  .atT th { font-size:10px; font-weight:800; color:#94a3b8; padding:3px 6px; text-align:right; white-space:nowrap; }
+  .atT td { padding:3.5px 6px; text-align:right; color:#475569; font-weight:700; border-bottom:1px solid #f8fafc; white-space:nowrap; }
+  .atT th.tot, .atT td.tot { color:#b45309; font-weight:800; }
+  .atT tr.me td { background:#fffbeb; color:#b45309; font-weight:800; }
+  .atT td.mk { font-size:10px; color:#b45309; font-weight:800; text-align:left; width:34px; }
+  .cmpR { display:flex; align-items:baseline; gap:8px; font-size:12px; padding:4.5px 1px; border-bottom:1px solid #f8fafc; }
+  .cmpR .v { width:62px; flex-shrink:0; color:#334155; font-weight:800; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cmpR .r { flex:1; min-width:0; font-size:11.5px; font-weight:800; color:#b45309; }
   .cmpNote { font-size:10.5px; color:#94a3b8; line-height:1.6; margin-top:7px; }
   .pBox { width:100%; min-height:110px; padding:10px; border:1.5px solid #cbd5e1; border-radius:9px;
     font-size:13px; font-family:inherit; line-height:1.6; resize:vertical; }
@@ -336,7 +340,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v7';
+const APP_VER = 'v8';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -656,28 +660,56 @@ function viewFuku() {
 // A表は「クラス全員分の行が匿名で並び、自分の行だけ印が付く」。行ごとに総合点を1つ拾う。
 // 1行に複数の数字（順位・復テ平均・公開・総合点…）があっても、総合点は 0〜210 の中で最大になる。
 const AT_MAX = 210;
+const MINE_RE = /あなた|本人|自分|★|◀|◆|●/;
+// A表は表なので、行ごとに数字を全部保持する（表そのものを出せるように）。
+// 総合点は「0〜210の中で最大の数字」＝復テ平均や公開より必ず大きいので、それで拾える。
 function parseATable(text) {
   const lines = String(text || '').split(/\r?\n/);
-  const scores = [];
-  let mine = null;
-  const pick = ln => {
-    const ns = (ln.match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n >= 0 && n <= AT_MAX);
-    return ns.length ? Math.max(...ns) : null;
-  };
+  const rows = [];
+  let headers = null;
   for (const ln of lines) {
-    if (!/\d/.test(ln)) continue;
-    if (/合計|平均|人数|満点|順位$|得点$/.test(ln) && !/あなた|本人/.test(ln)) continue;
-    const v = pick(ln);
-    if (v == null) continue;
-    scores.push(v);
-    if (/あなた|本人|自分|★|◀|◆/.test(ln)) mine = v;
+    if (!/\d/.test(ln)) {
+      const h = ln.trim().split(/[\t,、　 ]+/).filter(Boolean);
+      if (h.length >= 2 && h.length <= 8) headers = h;
+      continue;
+    }
+    if (/合計|人数|満点|平均$/.test(ln) && !MINE_RE.test(ln)) continue;
+    const nums = (ln.match(/\d+(?:\.\d+)?/g) || []).map(Number);
+    if (!nums.some(n => n >= 0 && n <= AT_MAX)) continue;
+    rows.push({ nums, mine: MINE_RE.test(ln) });
   }
   // 1行に全員分が並んでいる貼り方（カンマ/スペース区切り）にも対応
-  if (scores.length <= 2) {
+  if (rows.length <= 2) {
     const flat = (String(text).match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n >= 0 && n <= AT_MAX);
-    if (flat.length > scores.length) { scores.length = 0; scores.push(...flat); }
+    if (flat.length > rows.length) return finishAT(flat.map(v => ({ nums: [v], mine: false })), null);
   }
-  return { scores, mine };
+  return finishAT(rows, headers);
+}
+// 行の並びから、総合点の列・自分の行を決めて記録の形に整える
+function finishAT(rows, headers) {
+  const width = rows.length ? Math.max(...rows.map(r => r.nums.length)) : 0;
+  let totalCol = -1;
+  if (width > 1) {
+    // 各列の「0〜210に収まる度合い」と大きさを見て、総合点らしい列を選ぶ
+    let best = -1;
+    for (let c = 0; c < width; c++) {
+      const vals = rows.map(r => r.nums[c]).filter(v => typeof v === 'number');
+      if (vals.length < rows.length * 0.6) continue;
+      const inR = vals.filter(v => v >= 0 && v <= AT_MAX).length / vals.length;
+      if (inR < 0.9) continue;
+      const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+      if (avg > best) { best = avg; totalCol = c; }
+    }
+  }
+  const totalOf = r => {
+    if (totalCol >= 0 && typeof r.nums[totalCol] === 'number') return r.nums[totalCol];
+    const ns = r.nums.filter(n => n >= 0 && n <= AT_MAX);
+    return ns.length ? Math.max(...ns) : null;
+  };
+  const scores = rows.map(totalOf).filter(v => v != null);
+  const mineRow = rows.findIndex(r => r.mine);
+  const mine = mineRow >= 0 ? totalOf(rows[mineRow]) : null;
+  return { rows: rows.map(r => r.nums), headers, totalCol, mineRow, scores, mine };
 }
 // 分布・ボーダーの集計
 function atStats(rec) {
@@ -717,7 +749,7 @@ function viewAtable() {
         ${distHtml(rec, st)}
         ${st.toNext != null ? `<p class="muted" style="margin-top:8px">1つ上の子まで <b>あと${st.toNext}点</b></p>` : ''}
       </div>
-      ${compareHtml(rec, st)}
+      ${compareHtml(rec)}
     </div>`;
   }
   return h;
@@ -739,7 +771,7 @@ function distHtml(rec, st) {
     <span class="distNum">${x.c || ''}</span></div>`).join('')}</div>`;
 }
 
-// その月の復テで、ライバル別に何回100点だったか（入力したチェックの集計）
+// その月の復テで、ライバルが100点を取った科目（科目ごとに 何回/その科目の回数）
 function monthHundred(ym) {
   const rel = Object.keys(db.fuku).map(k => ({ k, a: db.fuku[k] }))
     .filter(x => Array.isArray(x.a.who100))
@@ -748,30 +780,55 @@ function monthHundred(ym) {
       return (d.indexOf('ym:') === 0 ? d.slice(3, 10) : d.slice(0, 7)) === ym;
     });
   if (!rel.length) return null;
-  const list = db.rivals.map(r => ({
-    name: r.name,
-    hit: rel.filter(x => x.a.who100.indexOf(r.id) >= 0).length
-  })).sort((a, b) => b.hit - a.hit || a.name.localeCompare(b.name));
-  return { n: rel.length, list };
+  const perSubj = {};                       // 科目ごとの実施回数
+  for (const x of rel) perSubj[x.a.subject || '—'] = (perSubj[x.a.subject || '—'] || 0) + 1;
+  const list = db.rivals.map(r => {
+    const hits = {};
+    for (const x of rel) {
+      if (x.a.who100.indexOf(r.id) < 0) continue;
+      const s = x.a.subject || '—';
+      hits[s] = (hits[s] || 0) + 1;
+    }
+    const subs = Object.keys(hits).sort((a, b) => hits[b] - hits[a]);
+    return { name: r.name, hits, subs, total: subs.reduce((n, s) => n + hits[s], 0) };
+  }).sort((a, b) => b.total - a.total || a.name.localeCompare(b.name));
+  return { n: rel.length, perSubj, list };
 }
-// A表（匿名の点の並び）と、同じ月の100点チェックを並べて置くだけ。突き合わせは見る人の判断。
-function compareHtml(rec, st) {
-  const mh = monthHundred(rec.ym);
-  const s = (rec.scores || []).slice().sort((a, b) => b - a);
-  if (!s.length) return '';
-  const LIM = 14;
-  const rows = s.slice(0, LIM).map((v, i) => {
-    const me = st.mine != null && v === st.mine && (s.indexOf(v) === i || st.rank === i + 1);
-    return `<div class="cmpR${me ? ' me' : ''}"><span class="k">${i + 1}</span><span class="v">${v}</span>${me ? '<span class="r">自分</span>' : ''}</div>`;
+// A表そのもの（表の形のまま）と、その月にライバルが100点を取った科目を並べて置く。
+// どの行が誰かの推定はしない。見る人が突き合わせるための材料を並べるだけ。
+function compareHtml(rec) {
+  const rows = (rec.rows && rec.rows.length) ? rec.rows : (rec.scores || []).map(v => [v]);
+  if (!rows.length) return '';
+  const width = Math.max(...rows.map(r => r.length));
+  const hs = (rec.headers && rec.headers.length === width) ? rec.headers
+    : (width === 1 ? ['総合点'] : null);
+  const tc = (typeof rec.totalCol === 'number' && rec.totalCol >= 0) ? rec.totalCol : width - 1;
+  const head = hs ? `<tr>${hs.map((h, i) =>
+    `<th class="${i === tc ? 'tot' : ''}">${esc(h)}</th>`).join('')}<th></th></tr>` : '';
+  const body = rows.map((r, i) => {
+    const me = i === rec.mineRow;
+    const cells = [];
+    for (let c = 0; c < width; c++) {
+      cells.push(`<td class="${c === tc ? 'tot' : ''}">${r[c] == null ? '' : r[c]}</td>`);
+    }
+    return `<tr class="${me ? 'me' : ''}">${cells.join('')}<td class="mk">${me ? 'あなた' : ''}</td></tr>`;
   }).join('');
-  const more = s.length > LIM ? `<div class="cmpNote">ほか${s.length - LIM}人</div>` : '';
+
+  const mh = monthHundred(rec.ym);
   const right = mh
-    ? mh.list.map(x => `<div class="cmpR"><span class="v">${esc(x.name)}</span><span class="r">${x.hit}/${mh.n}</span></div>`).join('')
-      + `<div class="cmpNote">この月の復テ ${mh.n}回ぶん</div>`
-    : `<div class="cmpNote">この月の復テに、100点のチェックがまだありません。<br>「✍️復テ」タブで付けると、ここに並びます。</div>`;
-  return `<div class="cmp">
-      <div class="cmpCol"><p class="cmpH">A表（匿名・総合点）</p>${rows}${more}</div>
-      <div class="cmpCol"><p class="cmpH">${ymLabel(rec.ym)}の復テ100点</p>${right}</div>
+    ? mh.list.map(x => `<div class="cmpR">
+        <span class="v">${esc(x.name)}</span>
+        <span class="r">${x.subs.length
+          ? x.subs.map(s => `${esc(s)} ${x.hits[s]}/${mh.perSubj[s]}`).join('　')
+          : '<span style="color:#cbd5e1">—</span>'}</span></div>`).join('')
+      + `<div class="cmpNote">この月の復テ：${Object.keys(mh.perSubj).map(s => `${esc(s)}${mh.perSubj[s]}回`).join('・')}</div>`
+    : `<div class="cmpNote">この月の復テに、100点のチェックがまだありません。<br>「✍️復テ」タブで科目ごとにチェックを付けると、ここに並びます。</div>`;
+
+  return `<div class="cmpWrap">
+      <p class="cmpH">A表（${ymLabel(rec.ym)}　${esc(rec.course)}）</p>
+      <div class="atScroll"><table class="atT">${head}${body}</table></div>
+      <p class="cmpH" style="margin-top:12px">${ymLabel(rec.ym)}に100点を取った科目</p>
+      ${right}
     </div>`;
 }
 
@@ -789,11 +846,15 @@ function openAtable(id) {
   pendingPhoto = null;
   $('atStatus').textContent = '写真を撮るか、貼り付けてください。浜学園にログインすることはありません。';
   if (rec) {
+    atParsed = (rec.rows && rec.rows.length)
+      ? { rows: rec.rows, headers: rec.headers, totalCol: rec.totalCol, mineRow: rec.mineRow, scores: rec.scores || [], mine: rec.mine }
+      : null;
     $('atScores').value = (rec.scores || []).join(', ');
     $('atMine').value = rec.mine != null ? rec.mine : '';
     $('atPrev').style.display = '';
     refreshAtPrev();
   } else {
+    atParsed = null;
     $('atScores').value = ''; $('atMine').value = ''; $('atPrev').style.display = 'none';
   }
   $('atDel').style.display = rec ? '' : 'none';
@@ -813,28 +874,38 @@ function refreshAtPrev() {
     <div><b>${st.rank ?? '—'}</b><span>あなたの順位</span></div>
     <div><b>${st.toTop != null ? (st.toTop <= 0 ? '0' : st.toTop) : '—'}</b><span>1位まで</span></div>` : '';
 }
+let atParsed = null;   // 直近に読み取った「表そのもの」
+function acceptParsed(r, how) {
+  atParsed = r;
+  $('atScores').value = r.scores.join(', ');
+  if (r.mine != null) $('atMine').value = r.mine;
+  $('atPrev').style.display = '';
+  refreshAtPrev();
+  const w = r.rows && r.rows.length ? Math.max(...r.rows.map(x => x.length)) : 1;
+  $('atStatus').textContent = `✅ ${how}${r.scores.length}人ぶん読み取りました`
+    + (w > 1 ? `（${w}列の表として保存します）` : '')
+    + (r.mine != null ? '（あなたの行も見つかりました）' : '（あなたの点は下で入れてください）');
+}
 $('atPaste').addEventListener('input', () => {
   clearTimeout(window._atTimer);
   window._atTimer = setTimeout(() => {
     const r = parseATable($('atPaste').value);
     if (!r.scores.length) { $('atStatus').textContent = '⚠️ 点数が見つかりませんでした。数字が含まれているか確認してください。'; return; }
-    $('atScores').value = r.scores.join(', ');
-    if (r.mine != null) $('atMine').value = r.mine;
-    $('atPrev').style.display = '';
-    refreshAtPrev();
-    $('atStatus').textContent = `✅ ${r.scores.length}人ぶん読み取りました${r.mine != null ? '（あなたの行も見つかりました）' : '（あなたの点は下で入れてください）'}`;
+    acceptParsed(r, '');
   }, 400);
 });
 // --- 写真から読み取る（Gemini。キーは消しゴムAIと共通の okan_gemini_key）---
 const GKEY = 'okan_gemini_key';
 // 2.5/2.0系は新規キーで使えなくなっているため最新世代を使う（2026-07-22検証：どれも18/18で完全一致）
 const AT_MODELS = ['gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.5-flash-lite'];
-const AT_PROMPT = `この画像は塾（浜学園）の成績個人票（A表）です。表に並んでいる「総合点」の数値を、上から順にすべて読み取ってください。
+const AT_PROMPT = `この画像は塾（浜学園）の成績個人票（A表）です。表を、行と列の形のまま読み取ってください。
 出力は次の形のJSONだけにしてください。説明文やコードブロックは不要です。
-{"scores":[数値,数値,...],"mine":自分の行の数値またはnull}
-・scores には総合点の列の数値だけを入れてください。順位・平均・偏差値など他の列は入れないでください。
-・「あなた」「あなたの成績」「本人」など自分を示す行があれば、その総合点を mine に入れてください。無ければ null。
-・読み取れた行はすべて入れてください（同じ点数が複数あってもそのまま並べてください）。`;
+{"headers":["列の見出し",...],"rows":[[数値,数値,...],...],"totalCol":総合点の列番号,"mineRow":自分の行番号}
+・headers は表の見出し（順位・復習テスト平均・公開テスト・総合点 など）。読めなければ空配列。
+・rows は1人ぶんを1つの配列にして、左の列から順に数値を入れてください。上の行から順に、全員ぶん入れてください。
+・totalCol は「総合点」の列が左から何番目か（0から数える）。分からなければ -1。
+・mineRow は「あなた」「あなたの成績」「本人」など自分を示す印がある行が上から何番目か（0から数える）。無ければ -1。
+・数値以外（氏名や記号）は入れないでください。同じ点数が複数あってもそのまま並べてください。`;
 
 function shrinkImage(file, maxLong) {
   return new Promise((resolve, reject) => {
@@ -876,9 +947,24 @@ async function geminiReadTable(b64, key) {
       const m = txt.match(/\{[\s\S]*\}/);
       if (!m) throw new Error('読み取り結果を解釈できませんでした');
       const out = JSON.parse(m[0]);
-      const scores = (out.scores || []).map(Number).filter(v => !isNaN(v) && v >= 0 && v <= AT_MAX);
-      if (!scores.length) throw new Error('点数が見つかりませんでした。写真がぼやけていないか確認してください');
-      return { scores, mine: (out.mine == null || isNaN(Number(out.mine))) ? null : Number(out.mine) };
+      let rows = (out.rows || []).map(r => (Array.isArray(r) ? r : [r]).map(Number).filter(v => !isNaN(v)))
+        .filter(r => r.length && r.some(v => v >= 0 && v <= AT_MAX));
+      if (!rows.length && Array.isArray(out.scores)) {   // 古い形で返ってきた場合の保険
+        rows = out.scores.map(Number).filter(v => !isNaN(v)).map(v => [v]);
+      }
+      if (!rows.length) throw new Error('点数が見つかりませんでした。写真がぼやけていないか確認してください');
+      const width = Math.max(...rows.map(r => r.length));
+      const tc = Number(out.totalCol);
+      const mr = Number(out.mineRow);
+      const r0 = finishAT(rows.map((nums, i) => ({ nums, mine: i === mr })),
+        Array.isArray(out.headers) && out.headers.length === width ? out.headers : null);
+      if (!isNaN(tc) && tc >= 0 && tc < width) {         // AIが総合点の列を示してきたらそれを優先
+        r0.totalCol = tc;
+        r0.scores = rows.map(r => r[tc]).filter(v => typeof v === 'number');
+        r0.mine = (mr >= 0 && rows[mr]) ? rows[mr][tc] : null;
+      }
+      if (!r0.scores.length) throw new Error('総合点の列を特定できませんでした');
+      return r0;
     } catch (e) {
       if (/APIキー|上限|解釈|見つかりません/.test(e.message)) throw e;
       lastErr = e.message;
@@ -897,11 +983,8 @@ async function runPhoto(file) {
   try {
     const b64 = await shrinkImage(file, 1600);
     const r = await geminiReadTable(b64, key);
-    $('atScores').value = r.scores.join(', ');
-    if (r.mine != null) $('atMine').value = r.mine;
-    $('atPrev').style.display = '';
-    refreshAtPrev();
-    $('atStatus').textContent = `✅ 写真から${r.scores.length}人ぶん読み取りました${r.mine != null ? '（あなたの行も見つかりました）' : '（あなたの点は下で入れてください）'}。念のため数字を確認してから取り込んでください。`;
+    acceptParsed(r, '写真から');
+    $('atStatus').textContent += '　念のため数字を確認してから取り込んでください。';
   } catch (e) {
     $('atStatus').textContent = '⚠️ ' + e.message + '（貼り付けや手入力でも取り込めます）';
     if (/APIキーが無効/.test(e.message)) $('atKeyBox').style.display = '';
@@ -929,6 +1012,11 @@ $('atSave').onclick = () => {
   const f = readAtForm();
   if (!f.scores.length) { alert('点数が読み取れていません。A表を貼り付けてください。'); return; }
   const rec = { id: editAt || uid(), ym: $('atYm').value, course: $('atCourse').value, scores: f.scores, mine: f.mine };
+  // 表そのものを持っている場合は一緒に残す（総合点だけ手で直した時は表を捨てる）
+  if (atParsed && atParsed.scores.join() === f.scores.join()) {
+    rec.rows = atParsed.rows; rec.headers = atParsed.headers;
+    rec.totalCol = atParsed.totalCol; rec.mineRow = atParsed.mineRow;
+  }
   if (!rec.ym) { alert('月度を入れてください'); return; }
   db.atable = db.atable.filter(x => x.id !== rec.id && !(x.ym === rec.ym && x.course === rec.course));
   db.atable.push(rec);
