@@ -266,7 +266,22 @@
   </div>
   <p id="impStatus" class="muted" style="margin-top:8px"></p>
 
-  <p class="fLabel" style="margin-top:14px">🔄 アプリの更新</p>
+  <p class="fLabel" style="margin-top:16px">👫 夫婦でデータを共有</p>
+  <p class="muted">このアプリで入力したデータ（<b>ライバル・公開の相手の点・A表・復テの合格点</b>）を書き出して、相手のアプリで取り込むと合体します。同じものは新しい方で上書きされます。<br>
+    ※ お子さんの成績そのものは伴走アプリ側で共有してください。</p>
+  <input type="file" id="shFile" accept="application/json,.json" style="display:none">
+  <div class="fRow" style="margin-top:8px">
+    <button class="btn btnMain" id="shExpBtn" style="background:#0d9488">📤 書き出す</button>
+    <button class="btn btnMain" id="shImpBtn" style="background:#475569">📥 取り込む</button>
+  </div>
+  <button class="btn btnMain" id="shPasteBtn" style="width:100%;margin-top:8px;background:#7c3aed">📋 貼り付けて取り込む（ファイルが使えない時）</button>
+  <div id="shPasteBox" style="display:none;margin-top:9px">
+    <textarea class="fInput" id="shText" rows="4" placeholder="書き出したJSONをここに長押し→ペースト"></textarea>
+    <button class="btn btnMain" id="shTextGo" style="width:100%;margin-top:7px">この内容を取り込む</button>
+  </div>
+  <p id="shStatus" class="muted" style="margin-top:8px"></p>
+
+  <p class="fLabel" style="margin-top:16px">🔄 アプリの更新</p>
   <p class="muted">画面がおかしい時や、新機能が出てこない時に押してください。キャッシュを消して読み込み直します（記録は消えません）。</p>
   <button class="btn btnMain" id="refreshBtn" style="width:100%;margin-top:8px">🔄 最新に更新</button>
 
@@ -303,7 +318,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v4';
+const APP_VER = 'v5';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -916,6 +931,8 @@ $('cfgBtn').onclick = () => {
   $('cfgMode').value = db.cfg.mode;
   $('impStatus').textContent = '';
   $('pasteBox').style.display = 'none';
+  $('shStatus').textContent = '';
+  $('shPasteBox').style.display = 'none';
   paintDiag();
   $('cfgSheet').classList.add('open');
 };
@@ -986,6 +1003,125 @@ $('fab').onclick = () => {
   else if (tab === 'atable') openAtable(null);
   else if (tab === 'fuku') openFuku(null);
 };
+
+// ===== 夫婦でデータ共有：書き出し／取り込み =====
+// 書き出すのはこのアプリで入力したものだけ（お子さんの成績は伴走アプリ側で共有する）
+function buildShareObj() {
+  return {
+    app: 'rival-chaser', ver: 1, date: new Date().toISOString().slice(0, 10),
+    data: { rivals: db.rivals, kokai: db.kokai, atable: db.atable, fuku: db.fuku }
+  };
+}
+$('shExpBtn').onclick = async () => {
+  const btn = $('shExpBtn');
+  const obj = buildShareObj();
+  if (!obj.data.rivals.length && !obj.data.kokai.length && !obj.data.atable.length && !Object.keys(obj.data.fuku).length) {
+    $('shStatus').textContent = '⚠️ まだ書き出すデータがありません'; return;
+  }
+  btn.textContent = '⏳ 書き出し中…';
+  try {
+    const json = JSON.stringify(obj);
+    const name = `100傑チェイサー_${obj.date.replace(/-/g, '')}.json`;
+    const file = new File([new Blob([json], { type: 'application/json' })], name, { type: 'application/json' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file] }).catch(() => {});
+    } else {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+      a.download = name; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+    $('shStatus').textContent = '✅ 書き出しました。LINEなどで送って、相手のアプリで「📥 取り込む」を押してください。';
+  } catch (e) {
+    $('shStatus').textContent = '⚠️ 書き出せませんでした。「📋 貼り付けて取り込む」用にコピーする方法もあります。';
+  } finally { btn.textContent = '📤 書き出す'; }
+};
+
+// 取り込み＝合体。ライバルのidは端末ごとに違うので「名前」で突き合わせてidを対応付ける
+function mergeShare(txt) {
+  let obj;
+  try { obj = JSON.parse(txt); } catch (e) { return { err: 'JSONとして読めませんでした' }; }
+  const d = obj && (obj.data || ((obj.rivals || obj.kokai || obj.atable || obj.fuku) ? obj : null));
+  if (!d) return { err: '100傑チェイサーのデータが入っていません' };
+  const n = { rivals: 0, kokai: 0, atable: 0, fuku: 0 };
+
+  // ① ライバル：同じ名前なら同一人物とみなす
+  const idMap = {};
+  for (const r of (d.rivals || [])) {
+    if (!r || !r.name) continue;
+    let local = db.rivals.find(x => x.name === r.name);
+    if (local) {
+      if (r.note) local.note = r.note;
+      if (r.star) local.star = true;
+    } else {
+      local = { id: uid(), name: r.name, note: r.note || '', star: !!r.star };
+      db.rivals.push(local); n.rivals++;
+    }
+    if (r.id) idMap[r.id] = local.id;
+  }
+  const mapId = id => idMap[id] || id;
+
+  // ② 公開：月度で突き合わせ、相手の点は合体
+  for (const k of (d.kokai || [])) {
+    if (!k || !k.ym) continue;
+    let cur = db.kokai.find(x => x.ym === k.ym);
+    if (!cur) { cur = { ym: k.ym, scores: {} }; db.kokai.push(cur); }
+    if (k.b100 != null) cur.b100 = k.b100;
+    if (k.b10 != null) cur.b10 = k.b10;
+    if (k.mineManual != null) cur.mineManual = k.mineManual;
+    cur.scores = cur.scores || {};
+    for (const rid of Object.keys(k.scores || {})) {
+      if (k.scores[rid] != null) cur.scores[mapId(rid)] = k.scores[rid];
+    }
+    n.kokai++;
+  }
+
+  // ③ A表：月度＋講座で突き合わせ（点の並びは丸ごと新しい方）
+  for (const a of (d.atable || [])) {
+    if (!a || !a.ym) continue;
+    const i = db.atable.findIndex(x => x.ym === a.ym && x.course === a.course);
+    const rec = { id: i >= 0 ? db.atable[i].id : uid(), ym: a.ym, course: a.course, scores: a.scores || [], mine: a.mine };
+    if (i >= 0) db.atable[i] = rec; else db.atable.push(rec);
+    n.atable++;
+  }
+
+  // ④ 復テ：回ごとに項目単位で合体（片方が合格点・片方が100点人数でも消えない）
+  for (const key of Object.keys(d.fuku || {})) {
+    const a = d.fuku[key] || {}, cur = db.fuku[key] || {};
+    const rec = Object.assign({}, cur);
+    for (const f of ['date', 'subject', 'pass', 'cnt', 'myManual']) if (a[f] != null) rec[f] = a[f];
+    const who = {};
+    for (const x of (cur.who100 || [])) who[x] = 1;
+    for (const x of (a.who100 || [])) who[mapId(x)] = 1;
+    rec.who100 = Object.keys(who);
+    db.fuku[key] = rec; n.fuku++;
+  }
+  save();
+  return { n };
+}
+function applyShare(txt) {
+  const r = mergeShare(txt);
+  if (r.err) { $('shStatus').textContent = '⚠️ ' + r.err; return; }
+  $('shStatus').textContent = `✅ 合体しました（ライバル+${r.n.rivals}人・公開${r.n.kokai}件・A表${r.n.atable}件・復テ${r.n.fuku}件）`;
+  $('shPasteBox').style.display = 'none';
+  render();
+}
+$('shImpBtn').onclick = () => $('shFile').click();
+$('shFile').onchange = e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => applyShare(String(rd.result));
+  rd.onerror = () => { $('shStatus').textContent = '⚠️ ファイルを読めませんでした'; };
+  rd.readAsText(f);
+  e.target.value = '';
+};
+$('shPasteBtn').onclick = () => {
+  const b = $('shPasteBox');
+  b.style.display = b.style.display === 'none' ? '' : 'none';
+  if (b.style.display === '') $('shText').focus();
+};
+$('shTextGo').onclick = () => applyShare($('shText').value);
 
 // ===== 隠しリンク：タイトルを10秒長押しで 中受伴走アプリへ =====
 (function () {
