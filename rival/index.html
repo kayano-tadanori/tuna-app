@@ -222,6 +222,8 @@
     <div><p class="fLabel">科目</p>
       <select class="fInput" id="fkSubj"><option>算数</option><option>国語</option><option>理科</option><option>社会</option></select></div>
   </div>
+  <p class="fLabel">講義No.（A表の列と結びつけるのに使います）</p>
+  <select class="fInput" id="fkNo"></select>
   <p class="fLabel">自分の点</p>
   <div id="fkMineBox"></div>
   <p class="fLabel">合格点（半数が挙手した点）</p>
@@ -364,7 +366,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v9';
+const APP_VER = 'v10';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -440,6 +442,12 @@ function myKokai(ym) {
 const okanYms = () => [...new Set((okanDB().kokai || []).map(k => k.ym).filter(Boolean))].sort();
 const okanFuku = () => (okanDB().fukushu || []).filter(t => t && (t.date || t.ym));
 const fkey = t => `${t.date || ('ym:' + (t.ym || ''))}|${t.subject || ''}|${t.no == null ? '' : t.no}`;
+// 講義No.：このアプリで入れた値を優先し、無ければ伴走アプリ側（キーの3つ目）を使う
+function noOf(key, a) {
+  if (a && a.no != null && a.no !== '') return Number(a.no);
+  const p = String(key).split('|')[2];
+  return (p === '' || p == null) ? null : Number(p);
+}
 
 // 自分の点（伴走アプリ優先、無ければこのアプリの手入力）
 function mineScore(ym) {
@@ -674,9 +682,11 @@ function fukuRows() {
   for (const [key, a] of Object.entries(db.fuku)) {
     if (!rows.has(key)) {
       const p = key.split('|');
-      rows.set(key, { key, date:a.date || p[0], subject:a.subject || p[1] || '', no:(p[2] === '' ? null : p[2]), okan:false });
+      rows.set(key, { key, date:a.date || p[0], subject:a.subject || p[1] || '', no:null, okan:false });
     }
   }
+  // 講義No.はこのアプリで入れた値を優先（伴走アプリ側に無くても付けられる）
+  for (const r of rows.values()) r.no = noOf(r.key, db.fuku[r.key]);
   return [...rows.values()].sort((a,b) => b.date.localeCompare(a.date));
 }
 function viewFuku() {
@@ -830,8 +840,7 @@ function monthTests(ym, scope) {
     if (m !== ym) continue;
     const subject = a.subject || p[1] || '';
     if (scope && subject !== scope) continue;
-    const no = (p[2] === '' || p[2] == null) ? null : Number(p[2]);
-    out.push({ key: k, date: d, subject, no, who100: a.who100 });
+    out.push({ key: k, date: d, subject, no: noOf(k, a), who100: a.who100 });
   }
   return out.sort((x, y) => (x.no || 0) - (y.no || 0) || x.date.localeCompare(y.date));
 }
@@ -1221,6 +1230,11 @@ function openFuku(key) {
   $('fkDate').disabled = !!row;
   $('fkSubj').value = row ? (row.subject || '算数') : '算数';
   $('fkSubj').disabled = !!row;
+  // 講義No.のドラム（未設定＋1〜50）。伴走アプリに入っていればそれを初期値に
+  const curNo = row ? row.no : null;
+  let opts = `<option value="">未設定</option>`;
+  for (let i = 1; i <= 50; i++) opts += `<option value="${i}"${curNo == i ? ' selected' : ''}>No.${i}</option>`;
+  $('fkNo').innerHTML = opts;
   $('fkPass').value = a.pass != null ? a.pass : '';
   $('fkWho').innerHTML = db.rivals.length
     ? db.rivals.map(r => `<label class="chk"><input type="checkbox" class="fkW" data-rid="${r.id}"
@@ -1242,15 +1256,16 @@ function paintFkMine(key) {
 $('fkSave').onclick = () => {
   let key = editFk;
   const subject = $('fkSubj').value;
+  const no = num($('fkNo').value);
   if (!key) {
     const date = $('fkDate').value;
     if (!date) { alert('日付を入れてください'); return; }
-    key = `${date}|${subject}|`;
+    key = `${date}|${subject}|${no == null ? '' : no}`;
   }
   const prev = db.fuku[key] || {};
   const who100 = [...document.querySelectorAll('.fkW')].filter(i => i.checked).map(i => i.dataset.rid);
   const rec = Object.assign({}, prev, {
-    date: key.split('|')[0], subject,
+    date: key.split('|')[0], subject, no,
     pass: num($('fkPass').value), who100
   });
   const mm = $('fkMyManual');
@@ -1440,7 +1455,7 @@ function mergeShare(txt) {
   for (const key of Object.keys(d.fuku || {})) {
     const a = d.fuku[key] || {}, cur = db.fuku[key] || {};
     const rec = Object.assign({}, cur);
-    for (const f of ['date', 'subject', 'pass', 'myManual']) if (a[f] != null) rec[f] = a[f];
+    for (const f of ['date', 'subject', 'no', 'pass', 'myManual']) if (a[f] != null) rec[f] = a[f];
     const who = {};
     for (const x of (cur.who100 || [])) who[x] = 1;
     for (const x of (a.who100 || [])) who[mapId(x)] = 1;
