@@ -226,8 +226,6 @@
   <select class="fInput" id="fkNo"></select>
   <p class="fLabel">自分の点</p>
   <div id="fkMineBox"></div>
-  <p class="fLabel">合格点（半数が挙手した点）</p>
-  <input class="fInput" type="number" id="fkPass" inputmode="numeric">
   <p class="fLabel">100点だったライバル（挙手で分かった人にチェック）</p>
   <div id="fkWho"></div>
   <div class="sheetBtns">
@@ -315,7 +313,7 @@
   <p id="impStatus" class="muted" style="margin-top:8px"></p>
 
   <p class="fLabel" style="margin-top:16px">👫 夫婦でデータを共有</p>
-  <p class="muted">このアプリで入力したデータ（<b>ライバル・公開の相手の点・A表・復テの合格点</b>）を書き出して、相手のアプリで取り込むと合体します。同じものは新しい方で上書きされます。<br>
+  <p class="muted">このアプリで入力したデータ（<b>ライバル・公開の相手の点・A表・復テの100点情報</b>）を書き出して、相手のアプリで取り込むと合体します。同じものは新しい方で上書きされます。<br>
     ※ お子さんの成績そのものは伴走アプリ側で共有してください。</p>
   <input type="file" id="shFile" accept="application/json,.json" style="display:none">
   <div class="fRow" style="margin-top:8px">
@@ -334,7 +332,7 @@
   <button class="btn btnMain" id="refreshBtn" style="width:100%;margin-top:8px">🔄 最新に更新</button>
 
   <p class="muted" style="margin-top:12px">
-    このアプリで足すのは <b>ライバルの公開点／100傑ボーダー／A表／復テの合格点・100点情報</b> だけです。
+    このアプリで足すのは <b>ライバルの公開点／100傑ボーダー／A表／復テの100点情報</b> だけです。
     データは端末内のみ（外部送信なし）。
   </p>
   <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:12px">バージョン <span id="verTxt"></span></p>
@@ -351,8 +349,7 @@
     <b>② 公開テスト</b><br>
     自分の点は伴走アプリから自動。<b>ライバルの点と100傑ボーダー（100位の点）だけ</b>入れると、点差の推移が自動でグラフになります。<br><br>
     <b>③ 復テ</b><br>
-    伴走アプリに入っている復習テストが一覧で並びます。各回に <b>合格点（半数が挙手した点）</b> を入れて、<b>100点だったライバルにチェック</b>を付けてください。<br>
-    合格点は<b>クラスの真ん中</b>なので、「自分は毎回そこから何点上か」がすぐ分かります。<br><br>
+    伴走アプリに入っている復習テストが一覧で並びます。各回に <b>100点だったライバルにチェック</b>を付けてください。講義No.を選んでおくと、A表の同じ回の列と結びつきます。<br><br>
     <b>データは端末内だけ</b>に保存されます（外部送信なし）。
   </p>
   <div class="sheetBtns"><button class="btn btnSub" data-close="helpSheet">閉じる</button></div>
@@ -366,12 +363,12 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v10';
+const APP_VER = 'v11';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-// ===== 自前データ（ライバル・相手の公開点・復テの合格点） =====
+// ===== 自前データ（ライバル・相手の公開点・A表・復テの100点） =====
 let db = load();
 function load() {
   let d = null;
@@ -490,14 +487,6 @@ function diffOf(k, rid) {
   const mine = mineScore(k.ym).v;
   const his = (k.scores && k.scores[rid] != null) ? num(k.scores[rid]) : null;
   return (mine == null || his == null) ? null : mine - his;
-}
-function fukuEdge() {
-  const xs = [];
-  for (const [key, a] of Object.entries(db.fuku)) {
-    const my = mineFuku(key).v, pass = num(a.pass);
-    if (my != null && pass != null) xs.push(my - pass);
-  }
-  return xs.length ? { avg: xs.reduce((a,b)=>a+b,0)/xs.length, n: xs.length } : null;
 }
 // 100点率＝チェックを付けた回のうち、その子が100点だった割合
 function hundredRate(rid) {
@@ -631,12 +620,11 @@ function viewHome() {
       </div>${diffChart(r.id)}</div>`;
     }
   }
-  const e = fukuEdge(), myR = myHundredRate();
-  if (e) {
-    h += `<div class="card"><h3>✍️ 復テでの立ち位置</h3>
-      <div class="big">${e.avg>=0?'+':''}${e.avg.toFixed(1)}<span class="sub" style="font-size:12px"> 点／合格点比（${e.n}回）</span></div>
-      <p class="muted">合格点＝半数が挙手した点＝<b>クラスの真ん中</b>。平均でこれだけ上にいます。
-      ${myR != null ? '<br>自分の100点率 <b>'+Math.round(myR*100)+'%</b>' : ''}</p></div>`;
+  const myR = myHundredRate();
+  if (myR != null) {
+    h += `<div class="card"><h3>✍️ 復テの100点率</h3>
+      <div class="big">${Math.round(myR * 100)}<span class="sub" style="font-size:13px"> %</span></div>
+      <p class="muted">記録した回のうち、自分が100点だった割合。ライバルの100点率と同じ物差しです。</p></div>`;
   }
   if (!db.rivals.length) h += `<div class="card"><h3>🏆 ライバルを登録</h3><p class="muted">
     「🏆ライバル」タブの＋から、100傑の掲示やHPの上位10名にいる<b>追いかけたい相手</b>を登録してください。</p></div>`;
@@ -693,19 +681,15 @@ function viewFuku() {
   const rows = fukuRows();
   if (!rows.length) return `<p class="empty">復習テストの記録がありません。<br>伴走アプリに復テを登録すると自動で並びます。<br>＋ボタンで手動追加もできます。</p>`;
   let h = '';
-  const e = fukuEdge();
-  if (e) h += `<div class="card"><h3>合格点との差（平均・${e.n}回）</h3>
-    <div class="big">${e.avg>=0?'+':''}${e.avg.toFixed(1)}点</div>
-    <p class="muted">合格点はクラスの中央値。プラスなら毎回<b>上半分</b>にいます。</p></div>`;
   for (const r of rows) {
     const a = db.fuku[r.key] || {};
-    const my = mineFuku(r.key).v, pass = num(a.pass);
-    const d = (my != null && pass != null) ? my - pass : null;
+    const my = mineFuku(r.key).v;
     const who = (a.who100 || []).map(rivalName).join('・');
+    const done = Array.isArray(a.who100);
     h += `<div class="card" data-fk="${esc(r.key)}"><div class="row">
       <div class="grow"><div class="rvName">${mdLabel(r.date)}　${esc(r.subject)}${(r.no != null && r.no !== '') ? ' No.'+esc(r.no) : ''}</div>
-        <div class="sub">自分 ${my ?? '—'}点 / 合格点 ${pass != null ? pass : '未入力'}${(a.who100 || []).length ? '　100点 ' + a.who100.length + '人' : ''}</div></div>
-      ${d != null ? `<div class="diff ${d>=0?'ahead':'behind'}">${d>=0?'+'+d:d}</div>` : `<span class="pill">記入</span>`}
+        <div class="sub">自分 ${my ?? '—'}点${(a.who100 || []).length ? '　100点 ' + a.who100.length + '人' : ''}</div></div>
+      ${my != null && my >= 100 ? `<div class="diff ahead">100</div>` : (done ? '' : `<span class="pill">記入</span>`)}
     </div>${who ? `<div class="sub" style="margin-top:5px">100点：${esc(who)}</div>` : ''}</div>`;
   }
   return h;
@@ -1235,7 +1219,6 @@ function openFuku(key) {
   let opts = `<option value="">未設定</option>`;
   for (let i = 1; i <= 50; i++) opts += `<option value="${i}"${curNo == i ? ' selected' : ''}>No.${i}</option>`;
   $('fkNo').innerHTML = opts;
-  $('fkPass').value = a.pass != null ? a.pass : '';
   $('fkWho').innerHTML = db.rivals.length
     ? db.rivals.map(r => `<label class="chk"><input type="checkbox" class="fkW" data-rid="${r.id}"
         ${(a.who100 || []).includes(r.id) ? 'checked' : ''}> ${esc(r.name)}</label>`).join('')
@@ -1265,8 +1248,7 @@ $('fkSave').onclick = () => {
   const prev = db.fuku[key] || {};
   const who100 = [...document.querySelectorAll('.fkW')].filter(i => i.checked).map(i => i.dataset.rid);
   const rec = Object.assign({}, prev, {
-    date: key.split('|')[0], subject, no,
-    pass: num($('fkPass').value), who100
+    date: key.split('|')[0], subject, no, who100
   });
   const mm = $('fkMyManual');
   if (mm) rec.myManual = num(mm.value);
@@ -1274,7 +1256,7 @@ $('fkSave').onclick = () => {
   editFk = null; save(); $('fkSheet').classList.remove('open'); render();
 };
 $('fkDel').onclick = () => {
-  if (!editFk || !confirm('この回の記入内容（合格点・100点情報）を削除します。よろしいですか？')) return;
+  if (!editFk || !confirm('この回の記入内容（100点のチェック）を削除します。よろしいですか？')) return;
   delete db.fuku[editFk];
   editFk = null; save(); $('fkSheet').classList.remove('open'); render();
 };
@@ -1451,11 +1433,11 @@ function mergeShare(txt) {
     n.atable++;
   }
 
-  // ④ 復テ：回ごとに項目単位で合体（片方が合格点・片方が100点人数でも消えない）
+  // ④ 復テ：回ごとに項目単位で合体（片方だけが入れた項目も消えない）
   for (const key of Object.keys(d.fuku || {})) {
     const a = d.fuku[key] || {}, cur = db.fuku[key] || {};
     const rec = Object.assign({}, cur);
-    for (const f of ['date', 'subject', 'no', 'pass', 'myManual']) if (a[f] != null) rec[f] = a[f];
+    for (const f of ['date', 'subject', 'no', 'myManual']) if (a[f] != null) rec[f] = a[f];
     const who = {};
     for (const x of (cur.who100 || [])) who[x] = 1;
     for (const x of (a.who100 || [])) who[mapId(x)] = 1;
