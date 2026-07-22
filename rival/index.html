@@ -60,6 +60,16 @@
   .distBar i { display:block; height:100%; background:#fcd34d; }
   .distBar i.me { background:#b45309; }
   .distNum { width:26px; flex-shrink:0; color:#64748b; font-weight:700; }
+  /* A表 × 100点チェック の並べ見せ */
+  .cmp { display:flex; gap:9px; margin-top:10px; }
+  .cmpCol { flex:1; min-width:0; }
+  .cmpH { font-size:10.5px; font-weight:800; color:#b45309; margin-bottom:5px; padding-bottom:3px; border-bottom:1.5px solid #fde68a; }
+  .cmpR { display:flex; align-items:center; gap:6px; font-size:12px; padding:3.5px 1px; border-bottom:1px solid #f8fafc; }
+  .cmpR.me { background:#fffbeb; font-weight:800; color:#b45309; border-radius:4px; }
+  .cmpR .k { width:26px; flex-shrink:0; color:#94a3b8; font-weight:700; font-size:10.5px; text-align:right; }
+  .cmpR .v { flex:1; min-width:0; color:#334155; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cmpR .r { flex-shrink:0; font-size:11px; font-weight:800; color:#b45309; }
+  .cmpNote { font-size:10.5px; color:#94a3b8; line-height:1.6; margin-top:7px; }
   .pBox { width:100%; min-height:110px; padding:10px; border:1.5px solid #cbd5e1; border-radius:9px;
     font-size:13px; font-family:inherit; line-height:1.6; resize:vertical; }
   .pStep { font-size:11.5px; font-weight:800; color:#b45309; margin:11px 0 4px; }
@@ -210,7 +220,17 @@
         <option>土曜マスター</option>
       </select></div>
   </div>
-  <p class="pStep">① A表（成績個人票）の得点欄をコピー　② 下の枠に貼り付け</p>
+  <p class="pStep">① 写真から読み取る（書き写し不要）</p>
+  <input type="file" id="atPhoto" accept="image/*" style="display:none">
+  <button class="btn btnMain" id="atPhotoBtn" style="width:100%">📷 A表を撮る／写真を選ぶ</button>
+  <p class="muted" style="margin-top:6px;font-size:11px">写真はGoogleのAIに送って数字だけを読み取ります（消しゴムAIと同じキーを使います）。<b>貼り付け・手入力なら送信されません。</b></p>
+  <div id="atKeyBox" style="display:none;margin-top:8px">
+    <p class="fLabel">Gemini APIキー（AI Studioで発行。消しゴムAIと共通）</p>
+    <input class="fInput" id="atKey" type="password" placeholder="AIza… を貼り付け" autocomplete="off">
+    <button class="btn btnSub" id="atKeySave" style="width:100%;margin-top:6px">キーを保存して読み取る</button>
+  </div>
+
+  <p class="pStep">② または、コピーして貼り付け</p>
   <textarea class="pBox" id="atPaste" placeholder="A表の点数の並びを貼り付け（1行に1人ぶんでも、数字だけの羅列でもOK）"></textarea>
   <p class="muted" id="atStatus" style="margin-top:6px">貼り付けると自動で読み取ります。浜学園にログインすることはありません。</p>
 
@@ -316,7 +336,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v6';
+const APP_VER = 'v7';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -681,20 +701,23 @@ function viewAtable() {
   for (const rec of l) {
     const st = atStats(rec);
     if (!st) continue;
-    h += `<div class="card" data-at="${rec.id}">
-      <div class="row"><div class="grow">
-        <h3 style="margin:0">${ymLabel(rec.ym)}　${esc(rec.course)}</h3>
-        <div class="sub">${st.n}人中 ${st.rank ? st.rank + '位' : '—'}　自分 ${st.mine ?? '—'}点</div>
-      </div>${st.toTop != null ? `<div class="diff ${st.toTop <= 0 ? 'ahead' : 'behind'}">
-        ${st.toTop <= 0 ? 'トップ' : '-' + st.toTop}<div class="sub" style="font-size:9.5px">1位まで</div></div>` : ''}</div>
-      <div class="stat">
-        <div><b>${st.top}</b><span>1位</span></div>
-        <div><b>${st.b3}</b><span>3位</span></div>
-        <div><b>${st.b5}</b><span>5位</span></div>
-        <div><b>${st.b10}</b><span>10位</span></div>
+    h += `<div class="card">
+      <div data-at="${rec.id}">
+        <div class="row"><div class="grow">
+          <h3 style="margin:0">${ymLabel(rec.ym)}　${esc(rec.course)}</h3>
+          <div class="sub">${st.n}人中 ${st.rank ? st.rank + '位' : '—'}　自分 ${st.mine ?? '—'}点</div>
+        </div>${st.toTop != null ? `<div class="diff ${st.toTop <= 0 ? 'ahead' : 'behind'}">
+          ${st.toTop <= 0 ? 'トップ' : '-' + st.toTop}<div class="sub" style="font-size:9.5px">1位まで</div></div>` : ''}</div>
+        <div class="stat">
+          <div><b>${st.top}</b><span>1位</span></div>
+          <div><b>${st.b3}</b><span>3位</span></div>
+          <div><b>${st.b5}</b><span>5位</span></div>
+          <div><b>${st.b10}</b><span>10位</span></div>
+        </div>
+        ${distHtml(rec, st)}
+        ${st.toNext != null ? `<p class="muted" style="margin-top:8px">1つ上の子まで <b>あと${st.toNext}点</b></p>` : ''}
       </div>
-      ${distHtml(rec, st)}
-      ${st.toNext != null ? `<p class="muted" style="margin-top:8px">1つ上の子まで <b>あと${st.toNext}点</b></p>` : ''}
+      ${compareHtml(rec, st)}
     </div>`;
   }
   return h;
@@ -716,6 +739,42 @@ function distHtml(rec, st) {
     <span class="distNum">${x.c || ''}</span></div>`).join('')}</div>`;
 }
 
+// その月の復テで、ライバル別に何回100点だったか（入力したチェックの集計）
+function monthHundred(ym) {
+  const rel = Object.keys(db.fuku).map(k => ({ k, a: db.fuku[k] }))
+    .filter(x => Array.isArray(x.a.who100))
+    .filter(x => {
+      const d = x.a.date || x.k.split('|')[0];
+      return (d.indexOf('ym:') === 0 ? d.slice(3, 10) : d.slice(0, 7)) === ym;
+    });
+  if (!rel.length) return null;
+  const list = db.rivals.map(r => ({
+    name: r.name,
+    hit: rel.filter(x => x.a.who100.indexOf(r.id) >= 0).length
+  })).sort((a, b) => b.hit - a.hit || a.name.localeCompare(b.name));
+  return { n: rel.length, list };
+}
+// A表（匿名の点の並び）と、同じ月の100点チェックを並べて置くだけ。突き合わせは見る人の判断。
+function compareHtml(rec, st) {
+  const mh = monthHundred(rec.ym);
+  const s = (rec.scores || []).slice().sort((a, b) => b - a);
+  if (!s.length) return '';
+  const LIM = 14;
+  const rows = s.slice(0, LIM).map((v, i) => {
+    const me = st.mine != null && v === st.mine && (s.indexOf(v) === i || st.rank === i + 1);
+    return `<div class="cmpR${me ? ' me' : ''}"><span class="k">${i + 1}</span><span class="v">${v}</span>${me ? '<span class="r">自分</span>' : ''}</div>`;
+  }).join('');
+  const more = s.length > LIM ? `<div class="cmpNote">ほか${s.length - LIM}人</div>` : '';
+  const right = mh
+    ? mh.list.map(x => `<div class="cmpR"><span class="v">${esc(x.name)}</span><span class="r">${x.hit}/${mh.n}</span></div>`).join('')
+      + `<div class="cmpNote">この月の復テ ${mh.n}回ぶん</div>`
+    : `<div class="cmpNote">この月の復テに、100点のチェックがまだありません。<br>「✍️復テ」タブで付けると、ここに並びます。</div>`;
+  return `<div class="cmp">
+      <div class="cmpCol"><p class="cmpH">A表（匿名・総合点）</p>${rows}${more}</div>
+      <div class="cmpCol"><p class="cmpH">${ymLabel(rec.ym)}の復テ100点</p>${right}</div>
+    </div>`;
+}
+
 let editAt = null;
 function openAtable(id) {
   const rec = id ? db.atable.find(x => x.id === id) : null;
@@ -725,7 +784,10 @@ function openAtable(id) {
   $('atYm').value = rec ? rec.ym : `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
   $('atCourse').value = rec ? rec.course : 'マスター';
   $('atPaste').value = '';
-  $('atStatus').textContent = '貼り付けると自動で読み取ります。浜学園にログインすることはありません。';
+  $('atKeyBox').style.display = 'none';
+  $('atKey').value = '';
+  pendingPhoto = null;
+  $('atStatus').textContent = '写真を撮るか、貼り付けてください。浜学園にログインすることはありません。';
   if (rec) {
     $('atScores').value = (rec.scores || []).join(', ');
     $('atMine').value = rec.mine != null ? rec.mine : '';
@@ -763,6 +825,104 @@ $('atPaste').addEventListener('input', () => {
     $('atStatus').textContent = `✅ ${r.scores.length}人ぶん読み取りました${r.mine != null ? '（あなたの行も見つかりました）' : '（あなたの点は下で入れてください）'}`;
   }, 400);
 });
+// --- 写真から読み取る（Gemini。キーは消しゴムAIと共通の okan_gemini_key）---
+const GKEY = 'okan_gemini_key';
+// 2.5/2.0系は新規キーで使えなくなっているため最新世代を使う（2026-07-22検証：どれも18/18で完全一致）
+const AT_MODELS = ['gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.5-flash-lite'];
+const AT_PROMPT = `この画像は塾（浜学園）の成績個人票（A表）です。表に並んでいる「総合点」の数値を、上から順にすべて読み取ってください。
+出力は次の形のJSONだけにしてください。説明文やコードブロックは不要です。
+{"scores":[数値,数値,...],"mine":自分の行の数値またはnull}
+・scores には総合点の列の数値だけを入れてください。順位・平均・偏差値など他の列は入れないでください。
+・「あなた」「あなたの成績」「本人」など自分を示す行があれば、その総合点を mine に入れてください。無ければ null。
+・読み取れた行はすべて入れてください（同じ点数が複数あってもそのまま並べてください）。`;
+
+function shrinkImage(file, maxLong) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const s = Math.min(1, maxLong / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      resolve(c.toDataURL('image/jpeg', 0.9).split(',')[1]);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('画像を読めませんでした')); };
+    img.src = url;
+  });
+}
+async function geminiReadTable(b64, key) {
+  const body = JSON.stringify({
+    contents: [{ parts: [{ text: AT_PROMPT }, { inline_data: { mime_type: 'image/jpeg', data: b64 } }] }],
+    generationConfig: { temperature: 0, responseMimeType: 'application/json' }
+  });
+  let lastErr = '';
+  for (const model of AT_MODELS) {
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key }, body
+      });
+      if (!r.ok) {
+        lastErr = r.status === 400 || r.status === 404 ? `model ${model} 不可`
+          : r.status === 401 || r.status === 403 ? 'APIキーが無効です'
+          : r.status === 429 ? '利用量の上限に達しました（少し待って再試行）' : `通信エラー ${r.status}`;
+        if (r.status === 401 || r.status === 403 || r.status === 429) throw new Error(lastErr);
+        continue;   // モデル名が使えないだけなら次を試す
+      }
+      const js = await r.json();
+      const parts = ((js.candidates || [])[0] || {}).content || {};
+      const txt = ((parts.parts || []).map(p => p.text).filter(Boolean).join('')) || '';
+      const m = txt.match(/\{[\s\S]*\}/);
+      if (!m) throw new Error('読み取り結果を解釈できませんでした');
+      const out = JSON.parse(m[0]);
+      const scores = (out.scores || []).map(Number).filter(v => !isNaN(v) && v >= 0 && v <= AT_MAX);
+      if (!scores.length) throw new Error('点数が見つかりませんでした。写真がぼやけていないか確認してください');
+      return { scores, mine: (out.mine == null || isNaN(Number(out.mine))) ? null : Number(out.mine) };
+    } catch (e) {
+      if (/APIキー|上限|解釈|見つかりません/.test(e.message)) throw e;
+      lastErr = e.message;
+    }
+  }
+  throw new Error(lastErr || '読み取りに失敗しました');
+}
+let pendingPhoto = null;
+async function runPhoto(file) {
+  const key = (localStorage.getItem(GKEY) || '').trim();
+  if (!key) { pendingPhoto = file; $('atKeyBox').style.display = ''; $('atKey').focus();
+    $('atStatus').textContent = '⚠️ 先にGemini APIキーを入れてください（消しゴムAIと共通）'; return; }
+  const btn = $('atPhotoBtn');
+  btn.disabled = true; btn.textContent = '⏳ 読み取り中…';
+  $('atStatus').textContent = '写真をAIに送って数字を読み取っています…';
+  try {
+    const b64 = await shrinkImage(file, 1600);
+    const r = await geminiReadTable(b64, key);
+    $('atScores').value = r.scores.join(', ');
+    if (r.mine != null) $('atMine').value = r.mine;
+    $('atPrev').style.display = '';
+    refreshAtPrev();
+    $('atStatus').textContent = `✅ 写真から${r.scores.length}人ぶん読み取りました${r.mine != null ? '（あなたの行も見つかりました）' : '（あなたの点は下で入れてください）'}。念のため数字を確認してから取り込んでください。`;
+  } catch (e) {
+    $('atStatus').textContent = '⚠️ ' + e.message + '（貼り付けや手入力でも取り込めます）';
+    if (/APIキーが無効/.test(e.message)) $('atKeyBox').style.display = '';
+  } finally { btn.disabled = false; btn.textContent = '📷 A表を撮る／写真を選ぶ'; }
+}
+$('atPhotoBtn').onclick = () => $('atPhoto').click();
+$('atPhoto').onchange = e => {
+  const f = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (f) runPhoto(f);
+};
+$('atKeySave').onclick = () => {
+  const k = $('atKey').value.trim();
+  if (!k) { $('atStatus').textContent = '⚠️ キーを入れてください'; return; }
+  localStorage.setItem(GKEY, k);
+  $('atKeyBox').style.display = 'none';
+  $('atKey').value = '';
+  if (pendingPhoto) { const f = pendingPhoto; pendingPhoto = null; runPhoto(f); }
+  else $('atStatus').textContent = '✅ キーを保存しました。もう一度「📷 A表を撮る」を押してください。';
+};
+
 $('atScores').addEventListener('input', refreshAtPrev);
 $('atMine').addEventListener('input', refreshAtPrev);
 $('atSave').onclick = () => {
