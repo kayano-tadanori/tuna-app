@@ -174,9 +174,26 @@
     <option value="2">2科（国語＋算数）</option>
     <option value="3">3科（国語＋算数＋理科）</option>
   </select>
-  <p class="muted" style="margin-top:11px">
-    自分の点・偏差値・復テの点は<b>中受伴走アプリの成績データ</b>から自動で読み込みます（同じ端末内・二重入力なし）。<br>
+  <p class="fLabel" style="margin-top:14px">📡 中受伴走アプリの成績が読めているか</p>
+  <div id="diag"></div>
+
+  <p class="fLabel" style="margin-top:14px">📥 読めない時：伴走アプリから取り込む</p>
+  <p class="muted">伴走アプリの ⚙️設定 →「📤 書き出す」で作ったファイルを読み込みます。<br>
+    <b>iPhoneでホーム画面に別々に追加していると、iOSがアプリごとにデータを分けるため直接は読めません。</b>その場合はこちらを使ってください。</p>
+  <input type="file" id="impFile" accept="application/json,.json" style="display:none">
+  <div class="fRow" style="margin-top:8px">
+    <button class="btn btnMain" id="impFileBtn">📥 ファイルから</button>
+    <button class="btn btnSub" id="impPasteBtn">📋 貼り付けて</button>
+  </div>
+  <div id="pasteBox" style="display:none;margin-top:9px">
+    <textarea class="fInput" id="impText" rows="4" placeholder="書き出したJSONをここに長押し→ペースト"></textarea>
+    <button class="btn btnMain" id="impTextGo" style="width:100%;margin-top:7px">この内容を取り込む</button>
+  </div>
+  <p id="impStatus" class="muted" style="margin-top:8px"></p>
+
+  <p class="muted" style="margin-top:12px">
     このアプリで足すのは <b>ライバルの公開点／100傑ボーダー／復テの合格点・100点情報</b> だけです。
+    データは端末内のみ（外部送信なし）。
   </p>
   <div class="sheetBtns"><button class="btn btnSub" data-close="cfgSheet">閉じる</button></div>
 </div></div>
@@ -219,6 +236,7 @@ function load() {
   if (!Array.isArray(d.rivals)) d.rivals = [];
   if (!Array.isArray(d.kokai)) d.kokai = [];
   if (!d.fuku || typeof d.fuku !== 'object' || Array.isArray(d.fuku)) d.fuku = {};
+  if (!d.imported || typeof d.imported !== 'object' || Array.isArray(d.imported)) d.imported = {};
   if (!d.cfg || typeof d.cfg !== 'object') d.cfg = {};
   if (d.cfg.mode !== '3') d.cfg.mode = '2';
   return d;
@@ -226,16 +244,17 @@ function load() {
 const save = () => localStorage.setItem(KEY, JSON.stringify(db));
 
 // ===== 中受伴走アプリの成績（同一オリジンの localStorage をそのまま読む） =====
+// 子リストの正は 'okan_children'（名前の配列）。_v2 はプロフィール置き場なので順番の根拠にしない
 function okanChildren() {
   try {
-    const a = JSON.parse(localStorage.getItem('okan_children_v2'));
-    if (Array.isArray(a) && a.length) return a.map(c => (c && c.name) || c).filter(Boolean);
+    const a = JSON.parse(localStorage.getItem('okan_children'));
+    if (Array.isArray(a) && a.length) return a.filter(Boolean);
   } catch(e) {}
   try {
-    const b = JSON.parse(localStorage.getItem('okan_children'));
-    if (Array.isArray(b) && b.length) return b.filter(Boolean);
+    const b = JSON.parse(localStorage.getItem('okan_children_v2'));
+    if (Array.isArray(b) && b.length) return b.map(c => (c && c.name) || c).filter(Boolean);
   } catch(e) {}
-  return [];
+  return Object.keys(db.imported || {}).filter(k => k !== '_');
 }
 function seikeyFor(child) {
   const cs = okanChildren();
@@ -248,13 +267,23 @@ function activeChild() {
   if (a && (!cs.length || cs.includes(a))) return a;
   return cs[0] || '';
 }
+const notEmpty = d => !!d && ((Array.isArray(d.kokai) && d.kokai.length > 0) || (Array.isArray(d.fukushu) && d.fukushu.length > 0));
+// 同じ端末の localStorage を直接読む。読めない時（iOSでPWAごとにストレージが分かれている等）は
+// 「取り込み」で保存したスナップショットを使う
+function okanDirect() {
+  try { return JSON.parse(localStorage.getItem(seikeyFor(activeChild()))) || null; } catch(e) { return null; }
+}
+function okanImported() {
+  const im = db.imported || {};
+  return im[activeChild() || '_'] || im['_'] || null;
+}
 function okanDB() {
-  try { return JSON.parse(localStorage.getItem(seikeyFor(activeChild()))) || {}; } catch(e) { return {}; }
+  const d = okanDirect();
+  if (notEmpty(d)) return d;
+  const im = okanImported();
+  return (im && notEmpty(im.data)) ? im.data : (d || {});
 }
-function hasOkan() {
-  const d = okanDB();
-  return (Array.isArray(d.kokai) && d.kokai.length > 0) || (Array.isArray(d.fukushu) && d.fukushu.length > 0);
-}
+const hasOkan = () => notEmpty(okanDB());
 // 公開テスト：自分の合計点・偏差値（2科 or 3科）
 function myKokai(ym) {
   const k = (okanDB().kokai || []).find(x => x.ym === ym);
@@ -365,8 +394,10 @@ function render() {
 
 function viewHome() {
   let h = '';
-  if (!hasOkan()) h += `<div class="warn">中受伴走アプリの成績が見つかりません。<br>
-    同じ端末・同じブラウザで<b>成績を登録</b>すると、自分の点・偏差値・復テの点がここに自動で入ります。</div>`;
+  if (!hasOkan()) h += `<div class="warn">中受伴走アプリの成績が読めていません。<br>
+    <b>⚙️（左上）</b>を開くと原因が表示されます。<br>
+    ホーム画面に別々のアプリとして追加していると、iPhoneはアプリごとにデータを分けるため直接は読めません。
+    その場合は ⚙️ の<b>「📥 伴走アプリから取り込む」</b>をお使いください。</div>`;
   const k = latestKokai();
   if (!k) {
     h += `<div class="card"><h3>🎯 まずは1回ぶん記録</h3><p class="muted">
@@ -628,14 +659,75 @@ $('fkDel').onclick = () => {
 // ===== 設定 =====
 $('cfgBtn').onclick = () => {
   const cs = okanChildren();
-  $('cfgChild').innerHTML = (cs.length ? cs : ['（伴走アプリに登録なし）'])
+  $('cfgChild').innerHTML = (cs.length ? cs : ['（お子さんの登録なし）'])
     .map(c => `<option value="${esc(c)}"${activeChild() === c ? ' selected' : ''}>${esc(c)}</option>`).join('');
   $('cfgChild').disabled = !cs.length;
   $('cfgMode').value = db.cfg.mode;
+  $('impStatus').textContent = '';
+  $('pasteBox').style.display = 'none';
+  paintDiag();
   $('cfgSheet').classList.add('open');
 };
-$('cfgChild').onchange = e => { db.cfg.child = e.target.value; save(); render(); };
+$('cfgChild').onchange = e => { db.cfg.child = e.target.value; save(); paintDiag(); render(); };
 $('cfgMode').onchange = e => { db.cfg.mode = e.target.value; save(); render(); };
+
+// 読み取り状況の診断（原因がひと目で分かるように）
+function paintDiag() {
+  const key = seikeyFor(activeChild());
+  const d = okanDirect(), im = okanImported();
+  const cnt = x => `公開${(x && x.kokai || []).length}件・復テ${(x && x.fukushu || []).length}件`;
+  const okanKeys = Object.keys(localStorage).filter(k => k.indexOf('okan_') === 0);
+  let h = '';
+  if (notEmpty(d)) {
+    h += `<div class="auto" style="border-style:solid;border-color:#86efac;background:#f0fdf4;color:#166534">
+      ✅ 直接読めています<small style="color:#16a34a">${esc(key)} … ${cnt(d)}</small></div>`;
+  } else if (im && notEmpty(im.data)) {
+    h += `<div class="auto">📥 取り込んだデータを使用中<small>${esc(im.at || '')} 取り込み … ${cnt(im.data)}</small></div>`;
+  } else {
+    h += `<div class="warn" style="margin-bottom:0">❌ 成績が読めていません<br>
+      探したキー：<b>${esc(key)}</b><br>
+      この端末で見えている伴走アプリのデータ：${okanKeys.length ? okanKeys.length + '件' : '<b>0件（別アプリとして分離されています）</b>'}</div>`;
+  }
+  if (okanKeys.length) {
+    h += `<p class="muted" style="margin-top:6px;font-size:11px">見えているキー：${okanKeys.slice(0, 12).map(esc).join('、')}${okanKeys.length > 12 ? ' ほか' : ''}</p>`;
+  }
+  $('diag').innerHTML = h;
+}
+
+// 伴走アプリの書き出しJSONを取り込む
+function applyImport(txt) {
+  let obj;
+  try { obj = JSON.parse(txt); } catch(e) { $('impStatus').textContent = '⚠️ JSONとして読めませんでした'; return; }
+  const s = obj && (obj.seiseki || (obj.kokai || obj.fukushu ? obj : null));
+  if (!s || !notEmpty(s)) { $('impStatus').textContent = '⚠️ 成績データが入っていません（書き出す時に「成績」にチェックを入れてください）'; return; }
+  const child = (obj && obj.seisekiChild) || activeChild() || '_';
+  db.imported[child] = { at: new Date().toLocaleString('ja-JP'), data: { kokai: s.kokai || [], fukushu: s.fukushu || [] } };
+  if (child !== '_') db.cfg.child = child;
+  save();
+  $('impStatus').textContent = `✅ 取り込みました（${child !== '_' ? child + '：' : ''}公開${(s.kokai||[]).length}件・復テ${(s.fukushu||[]).length}件）`;
+  $('pasteBox').style.display = 'none';
+  const cs = okanChildren();
+  $('cfgChild').innerHTML = (cs.length ? cs : ['（お子さんの登録なし）'])
+    .map(c => `<option value="${esc(c)}"${activeChild() === c ? ' selected' : ''}>${esc(c)}</option>`).join('');
+  $('cfgChild').disabled = !cs.length;
+  paintDiag(); render();
+}
+$('impFileBtn').onclick = () => $('impFile').click();
+$('impFile').onchange = e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = () => applyImport(String(r.result));
+  r.onerror = () => { $('impStatus').textContent = '⚠️ ファイルを読めませんでした'; };
+  r.readAsText(f);
+  e.target.value = '';
+};
+$('impPasteBtn').onclick = () => {
+  const b = $('pasteBox');
+  b.style.display = b.style.display === 'none' ? '' : 'none';
+  if (b.style.display === '') $('impText').focus();
+};
+$('impTextGo').onclick = () => applyImport($('impText').value);
 
 $('fab').onclick = () => {
   if (tab === 'rivals') openRival(null);
