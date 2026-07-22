@@ -217,10 +217,11 @@
 <!-- 復習テスト -->
 <div class="overlay" id="fkSheet"><div class="sheet">
   <div class="sheetHead"><h2 id="fkTitle">復習テスト</h2><button class="closeBtn" data-close="fkSheet">✕</button></div>
+  <p class="fLabel">講座</p>
+  <select class="fInput" id="fkCourse"></select>
   <div class="fRow">
     <div><p class="fLabel">日付</p><input class="fInput" type="date" id="fkDate"></div>
-    <div><p class="fLabel">科目</p>
-      <select class="fInput" id="fkSubj"><option>算数</option><option>国語</option><option>理科</option><option>社会</option></select></div>
+    <div><p class="fLabel">科目</p><select class="fInput" id="fkSubj"></select></div>
   </div>
   <p class="fLabel">講義No.（A表の列と結びつけるのに使います）</p>
   <select class="fInput" id="fkNo"></select>
@@ -240,13 +241,7 @@
   <div class="fRow">
     <div><p class="fLabel">月度</p><input class="fInput" type="month" id="atYm"></div>
     <div><p class="fLabel">講座</p>
-      <select class="fInput" id="atCourse">
-        <option>マスター</option>
-        <option>最高レベル特訓 算数</option>
-        <option>最高レベル特訓 国語</option>
-        <option>灘中合格特訓</option>
-        <option>土曜マスター</option>
-      </select></div>
+      <select class="fInput" id="atCourse"></select></div>
   </div>
   <p class="pStep">① 写真から読み取る（書き写し不要）</p>
   <input type="file" id="atPhoto" accept="image/*" style="display:none">
@@ -363,7 +358,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v11';
+const APP_VER = 'v12';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -379,6 +374,13 @@ function load() {
   if (!Array.isArray(d.atable)) d.atable = [];
   if (!d.fuku || typeof d.fuku !== 'object' || Array.isArray(d.fuku)) d.fuku = {};
   if (!d.imported || typeof d.imported !== 'object' || Array.isArray(d.imported)) d.imported = {};
+  // v12より前は講座の区別が無く、キーが3分割だった → マスターとして引き継ぐ
+  const mig = {};
+  for (const k of Object.keys(d.fuku)) mig[k.split('|').length === 3 ? 'マスター|' + k : k] = d.fuku[k];
+  d.fuku = mig;
+  // A表の講座名を伴走アプリの表記に合わせる
+  const CN = { '最高レベル特訓 算数': '最レ算数', '最高レベル特訓 国語': '最レ国語', '灘中合格特訓': '灘合' };
+  for (const a of d.atable) if (CN[a.course]) a.course = CN[a.course];
   if (!d.cfg || typeof d.cfg !== 'object') d.cfg = {};
   if (d.cfg.mode !== '3') d.cfg.mode = '2';
   return d;
@@ -437,12 +439,50 @@ function myKokai(ym) {
   return { score: all ? sum : null, dev: num(avg && avg.dev), rank: (db.cfg.mode === '3' ? k.rank3 : k.rank2) || '' };
 }
 const okanYms = () => [...new Set((okanDB().kokai || []).map(k => k.ym).filter(Boolean))].sort();
-const okanFuku = () => (okanDB().fukushu || []).filter(t => t && (t.date || t.ym));
-const fkey = t => `${t.date || ('ym:' + (t.ym || ''))}|${t.subject || ''}|${t.no == null ? '' : t.no}`;
+
+// 復テは講座ごとに別物。伴走アプリは4本の配列で持っているので、
+// 「1回 ＝ (講座・日付・科目・No)」の形に揃えて取り込む。
+const COURSES = ['マスター', '最レ算数', '最レ国語', '灘合', '土曜マスター', '春期講習', '夏期講習', '冬期講習'];
+const YOTSU = ['算数', '国語', '理科', '社会'];
+const SUBJ_OF = {
+  'マスター': YOTSU, '最レ算数': ['計算', '復習'], '最レ国語': ['国語'],
+  '灘合': ['国語', '算数', '理科'], '土曜マスター': YOTSU,
+  '春期講習': YOTSU, '夏期講習': YOTSU, '冬期講習': YOTSU
+};
+function okanFuku() {
+  const d = okanDB(), out = [];
+  const ok = v => v != null && v !== '';
+  for (const t of (d.fukushu || [])) {              // マスター（1レコード＝1科目）
+    if (!t || !(t.date || t.ym)) continue;
+    out.push({ course: 'マスター', date: t.date, ym: t.ym, subject: t.subject || '', no: t.no, score: t.score });
+  }
+  for (const t of (d.saire || [])) {                // 最レ算数（計算・復習の2本）
+    if (!t || !(t.date || t.ym)) continue;
+    if (ok(t.keisan)) out.push({ course: '最レ算数', date: t.date, ym: t.ym, subject: '計算', no: t.no, score: t.keisan });
+    if (ok(t.fukushu)) out.push({ course: '最レ算数', date: t.date, ym: t.ym, subject: '復習', no: t.no, score: t.fukushu });
+    if (!ok(t.keisan) && !ok(t.fukushu)) out.push({ course: '最レ算数', date: t.date, ym: t.ym, subject: '復習', no: t.no, score: null });
+  }
+  for (const t of (d.saikoku || [])) {              // 最レ国語
+    if (!t || !(t.date || t.ym)) continue;
+    out.push({ course: '最レ国語', date: t.date, ym: t.ym, subject: '国語', no: t.no, score: t.score });
+  }
+  for (const t of (d.nadago || [])) {               // 灘合（1レコードに国算理）
+    if (!t || !t.date) continue;
+    for (const [k, s] of [['koku', '国語'], ['san', '算数'], ['ri', '理科']]) {
+      if (ok(t[k])) out.push({ course: '灘合', date: t.date, subject: s, no: t.no, score: t[k] });
+    }
+  }
+  for (const t of (d.koushuu || [])) {              // 季節講習（期ごとに別の講座として扱う）
+    if (!t || !t.date) continue;
+    out.push({ course: t.term || '講習', date: t.date, subject: t.subject || '', no: t.no, score: t.score });
+  }
+  return out;
+}
+const fkey = t => `${t.course || 'マスター'}|${t.date || ('ym:' + (t.ym || ''))}|${t.subject || ''}|${t.no == null ? '' : t.no}`;
 // 講義No.：このアプリで入れた値を優先し、無ければ伴走アプリ側（キーの3つ目）を使う
 function noOf(key, a) {
   if (a && a.no != null && a.no !== '') return Number(a.no);
-  const p = String(key).split('|')[2];
+  const p = String(key).split('|')[3];
   return (p === '' || p == null) ? null : Number(p);
 }
 
@@ -665,12 +705,13 @@ function fukuRows() {
   const rows = new Map();
   for (const t of okanFuku()) {
     const k = fkey(t);
-    rows.set(k, { key:k, date:t.date || ('ym:'+t.ym), subject:t.subject || '', no:t.no, okan:true });
+    rows.set(k, { key:k, course:t.course, date:t.date || ('ym:'+t.ym), subject:t.subject || '', no:t.no, okan:true });
   }
   for (const [key, a] of Object.entries(db.fuku)) {
     if (!rows.has(key)) {
       const p = key.split('|');
-      rows.set(key, { key, date:a.date || p[0], subject:a.subject || p[1] || '', no:null, okan:false });
+      rows.set(key, { key, course:a.course || p[0] || 'マスター', date:a.date || p[1],
+                      subject:a.subject || p[2] || '', no:null, okan:false });
     }
   }
   // 講義No.はこのアプリで入れた値を優先（伴走アプリ側に無くても付けられる）
@@ -687,7 +728,7 @@ function viewFuku() {
     const who = (a.who100 || []).map(rivalName).join('・');
     const done = Array.isArray(a.who100);
     h += `<div class="card" data-fk="${esc(r.key)}"><div class="row">
-      <div class="grow"><div class="rvName">${mdLabel(r.date)}　${esc(r.subject)}${(r.no != null && r.no !== '') ? ' No.'+esc(r.no) : ''}</div>
+      <div class="grow"><div class="rvName">${mdLabel(r.date)}　${esc(r.course)}${r.subject ? ' '+esc(r.subject) : ''}${(r.no != null && r.no !== '') ? ' No.'+esc(r.no) : ''}</div>
         <div class="sub">自分 ${my ?? '—'}点${(a.who100 || []).length ? '　100点 ' + a.who100.length + '人' : ''}</div></div>
       ${my != null && my >= 100 ? `<div class="diff ahead">100</div>` : (done ? '' : `<span class="pill">記入</span>`)}
     </div>${who ? `<div class="sub" style="margin-top:5px">100点：${esc(who)}</div>` : ''}</div>`;
@@ -814,27 +855,19 @@ function distHtml(rec, st) {
 }
 
 // その月の復テ一覧（科目・No つき）
-function monthTests(ym, scope) {
+// その月・その講座の復テだけを集める（講座が違えば別物なので混ぜない）
+function monthTests(ym, course) {
   const out = [];
   for (const k of Object.keys(db.fuku)) {
     const a = db.fuku[k], p = k.split('|');
     if (!Array.isArray(a.who100)) continue;
-    const d = a.date || p[0];
+    if (course && (a.course || p[0]) !== course) continue;
+    const d = a.date || p[1];
     const m = (d.indexOf('ym:') === 0) ? d.slice(3, 10) : d.slice(0, 7);
     if (m !== ym) continue;
-    const subject = a.subject || p[1] || '';
-    if (scope && subject !== scope) continue;
-    out.push({ key: k, date: d, subject, no: noOf(k, a), who100: a.who100 });
+    out.push({ key: k, date: d, subject: a.subject || p[2] || '', no: noOf(k, a), who100: a.who100 });
   }
   return out.sort((x, y) => (x.no || 0) - (y.no || 0) || x.date.localeCompare(y.date));
-}
-// A表の講座から、対象科目を絞る（最レ算数なら算数だけ。マスターは全科目）
-function subjScope(course) {
-  if (/算数/.test(course)) return '算数';
-  if (/国語/.test(course)) return '国語';
-  if (/理科/.test(course)) return '理科';
-  if (/社会/.test(course)) return '社会';
-  return null;
 }
 // 見出しから復テのNoを拾う（"No.3" "第3回" "③" "3" いずれも）
 const MARU = '⓪①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
@@ -855,8 +888,7 @@ function compareHtml(rec) {
     : (width === 1 ? ['総合点'] : null);
   const tc = (typeof rec.totalCol === 'number' && rec.totalCol >= 0) ? rec.totalCol : width - 1;
 
-  const scope = subjScope(rec.course);
-  const tests = monthTests(rec.ym, scope);
+  const tests = monthTests(rec.ym, rec.course);
   const rid = atSelRival[rec.id] || '';
   const hit = rid ? tests.filter(x => x.who100.indexOf(rid) >= 0) : [];
   const hitNos = {};
@@ -902,12 +934,12 @@ function compareHtml(rec) {
         + (anyCol
           ? `<div class="cmpNote">A表の <b style="color:#047857">✓ の列</b>がその回です。縦に見比べてください。</div>`
           : `<div class="cmpNote">A表の見出しに回の番号が無いため、列には印を付けられませんでした。見出しが「No.3」「第3回」「③」のような形だと自動で合わせます。</div>`)
-      : `<div class="cmpNote">${esc(nm)}は、この月の${scope ? scope + 'の' : ''}復テで100点のチェックがありません。</div>`;
+      : `<div class="cmpNote">${esc(nm)}は、この月の${esc(rec.course)}の復テで100点のチェックがありません。</div>`;
   } else if (db.rivals.length) {
     info = `<div class="cmpNote">ライバルを選ぶと、その子が100点を取った回の列にチェックが付きます。</div>`;
   }
   if (!tests.length) {
-    info = `<div class="cmpNote">この月の復テに100点のチェックがまだありません。「✍️復テ」タブで付けてください。</div>`;
+    info = `<div class="cmpNote">この月の${esc(rec.course)}の復テに、100点のチェックがまだありません。「✍️復テ」タブで付けてください。</div>`;
   }
 
   return `<div class="cmpWrap">
@@ -925,7 +957,9 @@ function openAtable(id) {
   $('atTitle').textContent = rec ? 'A表を編集' : 'A表を貼り付けて取り込む';
   const now = new Date();
   $('atYm').value = rec ? rec.ym : `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-  $('atCourse').value = rec ? rec.course : 'マスター';
+  const atc = rec ? rec.course : (db.cfg.lastCourse || 'マスター');
+  $('atCourse').innerHTML = COURSES.map(c =>
+    `<option value="${esc(c)}"${atc === c ? ' selected' : ''}>${esc(c)}</option>`).join('');
   $('atPaste').value = '';
   $('atKeyBox').style.display = 'none';
   $('atKey').value = '';
@@ -1212,7 +1246,12 @@ function openFuku(key) {
   const isYm = row && row.date.startsWith('ym:');
   $('fkDate').value = row ? (isYm ? '' : row.date) : today;
   $('fkDate').disabled = !!row;
-  $('fkSubj').value = row ? (row.subject || '算数') : '算数';
+  // 講座のドラム。伴走アプリ由来の回は講座も科目も動かせない（別物になってしまうため）
+  const curCourse = row ? (row.course || 'マスター') : (db.cfg.lastCourse || 'マスター');
+  $('fkCourse').innerHTML = COURSES.map(c =>
+    `<option value="${esc(c)}"${curCourse === c ? ' selected' : ''}>${esc(c)}</option>`).join('');
+  $('fkCourse').disabled = !!row;
+  fillSubj(curCourse, row ? row.subject : null);
   $('fkSubj').disabled = !!row;
   // 講義No.のドラム（未設定＋1〜50）。伴走アプリに入っていればそれを初期値に
   const curNo = row ? row.no : null;
@@ -1227,6 +1266,14 @@ function openFuku(key) {
   paintFkMine(key);
   $('fkSheet').classList.add('open');
 }
+// 講座によって科目が変わる（最レ算数なら計算・復習、最レ国語なら国語だけ）
+function fillSubj(course, want) {
+  const list = SUBJ_OF[course] || YOTSU;
+  const sel = (want && list.indexOf(want) >= 0) ? want : list[0];
+  $('fkSubj').innerHTML = list.map(s =>
+    `<option value="${esc(s)}"${sel === s ? ' selected' : ''}>${esc(s)}</option>`).join('');
+}
+$('fkCourse').onchange = e => fillSubj(e.target.value, null);
 function paintFkMine(key) {
   const m = key ? mineFuku(key) : { v:null, auto:false };
   if (m.auto && m.v != null) {
@@ -1238,17 +1285,19 @@ function paintFkMine(key) {
 }
 $('fkSave').onclick = () => {
   let key = editFk;
-  const subject = $('fkSubj').value;
+  const course = $('fkCourse').value, subject = $('fkSubj').value;
   const no = num($('fkNo').value);
   if (!key) {
     const date = $('fkDate').value;
     if (!date) { alert('日付を入れてください'); return; }
-    key = `${date}|${subject}|${no == null ? '' : no}`;
+    key = `${course}|${date}|${subject}|${no == null ? '' : no}`;
+    db.cfg.lastCourse = course;                     // 次に足す時の初期値
   }
+  const p = key.split('|');
   const prev = db.fuku[key] || {};
   const who100 = [...document.querySelectorAll('.fkW')].filter(i => i.checked).map(i => i.dataset.rid);
   const rec = Object.assign({}, prev, {
-    date: key.split('|')[0], subject, no, who100
+    course: p[0], date: p[1], subject, no, who100
   });
   const mm = $('fkMyManual');
   if (mm) rec.myManual = num(mm.value);
@@ -1437,7 +1486,7 @@ function mergeShare(txt) {
   for (const key of Object.keys(d.fuku || {})) {
     const a = d.fuku[key] || {}, cur = db.fuku[key] || {};
     const rec = Object.assign({}, cur);
-    for (const f of ['date', 'subject', 'no', 'myManual']) if (a[f] != null) rec[f] = a[f];
+    for (const f of ['course', 'date', 'subject', 'no', 'myManual']) if (a[f] != null) rec[f] = a[f];
     const who = {};
     for (const x of (cur.who100 || [])) who[x] = 1;
     for (const x of (a.who100 || [])) who[mapId(x)] = 1;
@@ -1471,22 +1520,24 @@ $('shPasteBtn').onclick = () => {
 };
 $('shTextGo').onclick = () => applyShare($('shText').value);
 
-// ===== 隠しリンク：タイトルを10秒長押しで 中受伴走アプリへ =====
+// ===== タイトルを1秒長押しで 中受伴走アプリへ =====
+// こちらは個人用アプリなので隠す必要がなく、短くしている（伴走アプリ側は配布先に
+// 見せないため10秒のまま）
 (function () {
   const el = $('appTitle');
   if (!el) return;
   el.style.webkitTouchCallout = 'none';
   el.style.webkitUserSelect = 'none';
   el.style.userSelect = 'none';
-  const HOLD = 10000, HINT = 6000;
-  let hold = null, hint = null;
+  const HOLD = 1000;
+  let hold = null;
   const reset = () => {
-    clearTimeout(hold); clearTimeout(hint); hold = hint = null;
-    el.style.transition = 'opacity .25s'; el.style.opacity = '';
+    clearTimeout(hold); hold = null;
+    el.style.transition = 'opacity .2s'; el.style.opacity = '';
   };
   const start = () => {
     if (hold) return;
-    hint = setTimeout(() => { el.style.transition = 'opacity 4s linear'; el.style.opacity = '.3'; }, HINT);
+    el.style.transition = `opacity ${HOLD}ms linear`; el.style.opacity = '.45';   // 押している間の手応え
     hold = setTimeout(() => { reset(); location.href = '../okan/'; }, HOLD);
   };
   el.addEventListener('pointerdown', start);
