@@ -1,5 +1,5 @@
 // 中受ママ伴走アプリ Service Worker
-const CACHE_NAME = 'okan-gakuen-v75';
+const CACHE_NAME = 'okan-gakuen-v76';
 // 自家製AIのモデルとランタイム（合計18MB）は専用キャッシュに置く。
 // アプリ更新（CACHE_NAME変更）では消さず、モデル差し替え時だけ MODEL_CACHE を上げて入れ替える。
 const MODEL_CACHE = 'okan-eraser-model-v11';

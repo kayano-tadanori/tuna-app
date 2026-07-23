@@ -850,6 +850,42 @@ function showScan(on, msg) {
   }
 }
 
+// 縁沿いの余計な塊（リング金具・影・紙の縁）を残す画素から落とす。
+// 印刷の文字は内側の小さな塊、金具・縁は外周に接する大きな塊なので分けられる。
+function dropEdgeJunk(keep, W, H) {
+  const band = Math.max(6, Math.round(Math.min(W, H) * 0.06));   // 外周帯の幅
+  const inBand = (x, y) => x < band || y < band || x >= W - band || y >= H - band;
+  const lab = new Int32Array(W * H).fill(0);
+  const stack = new Int32Array(W * H);
+  let cur = 0;
+  for (let s = 0; s < W * H; s++) {
+    if (!keep[s] || lab[s]) continue;
+    cur++;
+    let sp = 0; stack[sp++] = s; lab[s] = cur;
+    let area = 0, edge = 0, minx = W, miny = H, maxx = 0, maxy = 0;
+    const comp = [];
+    while (sp) {
+      const p = stack[--sp]; comp.push(p);
+      const x = p % W, y = (p / W) | 0;
+      area++; if (inBand(x, y)) edge++;
+      if (x < minx) minx = x; if (x > maxx) maxx = x;
+      if (y < miny) miny = y; if (y > maxy) maxy = y;
+      // 4近傍
+      if (x > 0 && keep[p - 1] && !lab[p - 1]) { lab[p - 1] = cur; stack[sp++] = p - 1; }
+      if (x < W - 1 && keep[p + 1] && !lab[p + 1]) { lab[p + 1] = cur; stack[sp++] = p + 1; }
+      if (y > 0 && keep[p - W] && !lab[p - W]) { lab[p - W] = cur; stack[sp++] = p - W; }
+      if (y < H - 1 && keep[p + W] && !lab[p + W]) { lab[p + W] = cur; stack[sp++] = p + W; }
+    }
+    if (area < 300) continue;                       // 小さい塊＝文字なので触らない
+    const bw = maxx - minx + 1, bh = maxy - miny + 1;
+    const touch = edge / area;                      // 塊のうち外周帯にある割合
+    const spanning = bw > W * 0.5 || bh > H * 0.5;   // 画面幅の半分以上に伸びる帯
+    if ((touch > 0.25 && area > 800) || (spanning && touch > 0.1)) {
+      for (const p of comp) keep[p] = 0;            // 縁のゴミとして消す
+    }
+  }
+}
+
 async function runOndevice() {
   showScan(true, 'AIを準備しています…');
   const sess = await loadOrt();
@@ -898,6 +934,7 @@ async function runOndevice() {
     keep[i] = (ink[i] && bigProb[i] > KEEP_THR) ? 1 : 0;
     rawNorm[i] = norm[i];
   }
+  dropEdgeJunk(keep, pw, ph);   // 縁のリング金具・影・紙の縁の帯を落とす（印刷には掛からない）
   aiTone = { w: pw, h: ph, keep, norm: rawNorm };
   const rc = toneCanvas();
   return rc.toDataURL('image/png').split(',')[1];   // 既存フローに合わせて base64 PNG を返す
