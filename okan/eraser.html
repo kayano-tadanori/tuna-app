@@ -1048,18 +1048,18 @@ async function runOndevice() {
   return rc.toDataURL('image/png').split(',')[1];   // 既存フローに合わせて base64 PNG を返す
 }
 
-// 「字のこさ」スライダー。案B（レベル補正）＝暗い所を黒へ、明るい所を白へ飛ばす。
-// 一番こく側で中間色を無くしてソリッド（黒か白か）に振り切る。
+// 「字のこさ」スライダー。残す画素はすべて印刷インクなので、必ず濃く見せる。
+// 白(255)へは絶対に飛ばさない（飛ばすと薄い印刷ごと消えて真っ白になる）。
 let aiTone = null;
 function toneCurve(v, s) {
-  // s 0..100 →（黒に落とす下限cut, 白に飛ばす上限wp）。s大ほど幅を狭めコントラスト強
-  const cut = 40 + s * 0.95;                 // s=55→92
-  const wp = Math.max(cut + (100 - s) * 0.9 + 8, cut + 6);  // s=55→約133  s=100→cut+14
-  let n = (v - cut) / (wp - cut);
+  // s 0..100 こさ（大きいほど濃く・くっきり）。vは補正前グレー（小さいほど濃い）
+  const bp = 20 + s * 1.05;                  // 黒点：これ以下は真っ黒。s=80→104
+  const wp = 210;                            // 参照白点（紙に近い薄インク）
+  let n = (v - bp) / (wp - bp);
   n = n < 0 ? 0 : n > 1 ? 1 : n;
-  // s=100付近は二値化（ソリッド）：中間を無くす
-  if (s >= 96) n = n < 0.5 ? 0 : 1;
-  return n * 255;
+  const cap = 200 - s * 1.6;                 // 最も薄い残し画素でもこの濃さ以下。s=80→72
+  if (s >= 96) return n < 0.5 ? 0 : cap;     // ソリッド：中間なし（でも白にはしない）
+  return n * cap;
 }
 function toneCanvas() {
   const { w, h, keep, norm } = aiTone;
