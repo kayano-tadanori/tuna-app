@@ -1075,10 +1075,31 @@ function toneCurve(v, s) {
 function toneCanvas() {
   const { w, h, keep, norm } = aiTone;
   const s = +(($('contrast') || {}).value || 80);
+  // まず素のグレーを作る（残す画素＝こさ変換、他＝白）
+  const g = new Uint8ClampedArray(w * h);
+  for (let i = 0; i < w * h; i++) g[i] = keep[i] ? toneCurve(norm[i], s) : 255;
+  // 掠れ対策：3×3 最小値フィルタ（黒を1px広げる）。既存の黒い値を広げるだけなので
+  // グレーのにじみが出ず、細い印刷が太く・濃くなり、線の小さな途切れも埋まる。
+  const th = new Uint8ClampedArray(w * h);
+  for (let y = 0; y < h; y++) {
+    const r = y * w;
+    for (let x = 0; x < w; x++) {
+      let m = g[r + x];
+      if (x > 0 && g[r + x - 1] < m) m = g[r + x - 1];
+      if (x < w - 1 && g[r + x + 1] < m) m = g[r + x + 1];
+      th[r + x] = m;
+    }
+  }
   const res = new Uint8ClampedArray(w * h * 4);
-  for (let i = 0; i < w * h; i++) {
-    const v = keep[i] ? toneCurve(norm[i], s) : 255;
-    res[i * 4] = res[i * 4 + 1] = res[i * 4 + 2] = v; res[i * 4 + 3] = 255;
+  for (let y = 0; y < h; y++) {
+    const r = y * w;
+    for (let x = 0; x < w; x++) {
+      let m = th[r + x];
+      if (y > 0 && th[r + x - w] < m) m = th[r + x - w];
+      if (y < h - 1 && th[r + x + w] < m) m = th[r + x + w];
+      const o = (r + x) * 4;
+      res[o] = res[o + 1] = res[o + 2] = m; res[o + 3] = 255;
+    }
   }
   const rc = document.createElement('canvas'); rc.width = w; rc.height = h;
   rc.getContext('2d').putImageData(new ImageData(res, w, h), 0, 0);
