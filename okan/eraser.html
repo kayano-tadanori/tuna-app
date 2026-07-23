@@ -139,6 +139,35 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   #loading p { font-size: 14px; font-weight: 700; color: #db2777; }
 
+  /* 自家製AIのスキャン演出（全画面・網掛け＋走査線） */
+  #scan { position: fixed; inset: 0; z-index: 60; display: none; background: #0b1020; overflow: hidden; }
+  #scan.on { display: block; }
+  #scanImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: .82; }
+  #scan .mesh {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,.16) 1px, transparent 1px);
+    background-size: 26px 26px; mix-blend-mode: screen;
+  }
+  #scan .beam {
+    position: absolute; left: 0; right: 0; height: 26%;
+    background: linear-gradient(180deg, transparent, rgba(56,189,248,.35) 45%, rgba(125,211,252,.65) 50%, rgba(56,189,248,.35) 55%, transparent);
+    filter: blur(1px); animation: beam 1.9s ease-in-out infinite;
+  }
+  #scan .frame { position: absolute; inset: 18px; border: 1.5px solid rgba(56,189,248,.5); border-radius: 12px; box-shadow: inset 0 0 40px rgba(56,189,248,.15); }
+  #scan .corner { position: absolute; width: 26px; height: 26px; border: 2.5px solid #7dd3fc; }
+  #scan .c1 { top: 12px; left: 12px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
+  #scan .c2 { top: 12px; right: 12px; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
+  #scan .c3 { bottom: 12px; left: 12px; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
+  #scan .c4 { bottom: 12px; right: 12px; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
+  #scan .scanMsg {
+    position: absolute; left: 0; right: 0; bottom: calc(40px + env(safe-area-inset-bottom)); text-align: center;
+    color: #bae6fd; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-shadow: 0 0 12px rgba(56,189,248,.6);
+  }
+  #scan .scanMsg small { display: block; font-size: 11px; font-weight: 700; color: #7dd3fc; opacity: .8; letter-spacing: .06em; margin-top: 5px; }
+  @keyframes beam { 0% { top: -26%; } 100% { top: 100%; } }
+
   #toast {
     position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom));
     transform: translateX(-50%);
@@ -281,6 +310,15 @@
 </main>
 
 <div id="loading"><div class="spinner"></div><p id="loadingMsg">処理中…</p></div>
+<div id="scan">
+  <img id="scanImg" alt="">
+  <div class="mesh"></div>
+  <div class="beam"></div>
+  <div class="frame"></div>
+  <div class="corner c1"></div><div class="corner c2"></div>
+  <div class="corner c3"></div><div class="corner c4"></div>
+  <p class="scanMsg" id="scanMsg">手書きをさがしています…<small>自家製AI・この端末の中で処理中</small></p>
+</div>
 <div id="toast"></div>
 
 <div class="modalOverlay" id="helpModal">
@@ -408,6 +446,16 @@ let origCanvas = null;   // 元画像（比較表示用）
 let restoreCanvas = null;// もどすブラシの絵の具（ゆるく残した状態の描画）
 let outData = null;      // 出力用ImageData
 let renderQueued = false;
+let preReady = false;    // 手動消しゴム用の重い前処理が済んでいるか（初回操作時に走らせる）
+
+// 「けす・もどす・枠」を初めて使う時だけ前処理を走らせる
+function ensurePrecompute() {
+  if (preReady || !origCanvas) return preReady;
+  precompute();
+  buildRestore();
+  preReady = true;
+  return true;
+}
 
 // 手直しモード
 let mode = 'pan';                    // pan | erase | restore
@@ -425,7 +473,7 @@ $('libIn').onchange = e => { if (e.target.files[0]) openImage(e.target.files[0])
 $('strength').addEventListener('input', queueRender);
 $('lineChip').onclick = function () { this.classList.toggle('on'); queueRender(); };
 $('despeckleChip').onclick = function () { this.classList.toggle('on'); queueRender(); };
-$('crispChip').onclick = function () { this.classList.toggle('on'); buildRestore(); queueRender(); };
+$('crispChip').onclick = function () { this.classList.toggle('on'); if (ensurePrecompute()) buildRestore(); queueRender(); };
 $('colorChip').onclick = function () { this.classList.toggle('on'); queueRender(); };
 
 // モード切替（うごかす／けす／もどす）
@@ -434,6 +482,10 @@ document.querySelectorAll('.chip.mode').forEach(btn => {
     document.querySelectorAll('.chip.mode').forEach(b => b.classList.remove('on'));
     btn.classList.add('on');
     mode = btn.dataset.mode;
+    // 手動ツールを選んだ時に初めて前処理（＋しきい値プレビュー）を走らせる
+    if (mode === 'erase' || mode === 'restore' || mode === 'protect') {
+      if (!preReady) { ensurePrecompute(); render(); }
+    }
     $('protectRow').style.display = mode === 'protect' ? '' : 'none';
     if (mode === 'erase') toast('指でこすると消えます（2本指で拡大・移動）');
     if (mode === 'restore') toast('指でこすると元にもどります（2本指で拡大・移動）');
@@ -540,22 +592,6 @@ const ENGINES = {
     models: ['gemini-2.5-flash-image', 'gemini-3.1-flash-image'], // 2.5が手書き除去に有効（3.1は編集せず素通し・2026-07-21検証）
     call: (key, model, blob, b64) => callGemini(key, model, b64)
   },
-  openai: {
-    label: 'ChatGPT',
-    name: 'ChatGPT（OpenAI）',
-    badge: '従量課金', badgeClass: 'pay',
-    desc: 'OpenAIの画像AI「GPT Image 1.5」。「元画像に忠実」モードで印刷の再現度に期待。1枚 約1〜20円。ChatGPT Plusの契約では使えず、開発者向けAPIキーが別に必要。',
-    keyStore: 'okan_openai_key',
-    placeholder: 'APIキー（sk-…）を貼り付け',
-    guide: '<h3>OpenAIキーの作り方</h3><ol>' +
-      '<li><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a> を開く</li>' +
-      '<li>ChatGPTと同じアカウントでログイン</li>' +
-      '<li>「Create new secret key」でキーを作成</li>' +
-      '<li>できたキー（sk-…で始まる文字列）をコピーして、下の欄に貼り付けて「保存して使う」</li></ol>' +
-      '<p>エラーが出る場合は、クレジットの購入（Billing）や組織の確認（Verify Organization）が必要なことがあります。</p>',
-    models: ['gpt-image-1.5', 'gpt-image-1'],
-    call: (key, model, blob, b64) => callOpenAIWithRetry(key, model, blob)
-  }
 };
 let aiEngine = localStorage.getItem(AI_ENGINE) || 'ondevice';
 if (!ENGINES[aiEngine]) aiEngine = 'ondevice';
@@ -669,7 +705,7 @@ async function aiErase(key) {
     } catch (e) {
       console.error(e);
       toast(e.userMsg || '自家製AIの処理に失敗しました');
-    } finally { loading(false); }
+    } finally { showScan(false); loading(false); }
     return;
   }
   loading(true, 'AIが消しています…（10〜60秒）');
@@ -723,8 +759,8 @@ async function aiErase(key) {
 // ---------- 自家製 消しゴムAI（端末内・onnxruntime-web） ----------
 // モデルは「印刷インクの確率」を粗く出すだけ。細部は元写真から取る（ハイブリッド）。
 const ONDEVICE_MODEL = 'eraser_model_v11.onnx';   // 差し替え時はファイル名のバージョンを上げる
-const MODEL_LONG = 1024;    // モデルに見せる長辺（大きすぎると携帯で重い）
-const PROC_LONG = 1536;     // 二値化・合成をする解像度
+const MODEL_LONG = 960;     // モデルに見せる長辺（大きすぎると携帯で重い・落ちる）
+const PROC_LONG = 1400;     // 二値化・合成をする解像度（メモリ峰を抑える）
 const INK_THR = 190;        // 照明補正後これより暗い画素をインクとみなす
 const KEEP_THR = 0.35;      // 印刷確率がこれ以上かつインク → 残す
 let ortSession = null;
@@ -766,8 +802,8 @@ function maxFilter(gray, w, h, r) {
   }
   return out;
 }
-// 分離可能なボックスぼかし（背景推定・積分なしの単純版）
-function boxBlur(src, w, h, r) {
+// 分離可能なボックスぼかし（自家製AI用・既存 boxBlur と名前を分ける）
+function odBoxBlur(src, w, h, r) {
   const tmp = new Float32Array(w * h), out = new Float32Array(w * h);
   for (let y = 0; y < h; y++) {
     const row = y * w; let sum = 0;
@@ -797,7 +833,7 @@ function photoInk(gray, w, h) {
   const k = Math.max(9, ((Math.min(w, h) / 90) | 0) | 1);
   const r = (k / 2) | 0;
   const dil = maxFilter(gray, w, h, r);
-  const bg = boxBlur(dil, w, h, k);
+  const bg = odBoxBlur(dil, w, h, k);
   const ink = new Uint8Array(w * h), norm = new Float32Array(w * h);
   for (let i = 0; i < w * h; i++) {
     const n = Math.min(255, gray[i] / Math.max(bg[i], 30) * 245);
@@ -815,9 +851,23 @@ function canvasToGray(cv) {
   return out;
 }
 
+// スキャン演出の表示・非表示
+function showScan(on, msg) {
+  const el = $('scan');
+  if (on) {
+    try { $('scanImg').src = origCanvas.toDataURL('image/jpeg', 0.7); } catch (e) {}
+    if (msg) $('scanMsg').firstChild.nodeValue = msg;
+    el.classList.add('on');
+  } else {
+    el.classList.remove('on');
+    $('scanImg').removeAttribute('src');   // メモリを抱えないよう解放
+  }
+}
+
 async function runOndevice() {
-  loading(true, 'AIが読み込み中…（初回は少し待ちます）');
+  showScan(true, 'AIを準備しています…');
   const sess = await loadOrt();
+  showScan(true, '手書きをさがしています…');
 
   // 処理解像度に origCanvas を縮小
   const sc = Math.min(1, PROC_LONG / Math.max(W, H));
@@ -837,7 +887,8 @@ async function runOndevice() {
   for (let i = 0, j = 0; j < plane; i += 4, j++) {
     input[j] = md[i] / 255; input[plane + j] = md[i + 1] / 255; input[2 * plane + j] = md[i + 2] / 255;
   }
-  loading(true, 'AIが手書きを消しています…');
+  showScan(true, '手書きを消しています…');
+  await new Promise(r => setTimeout(r, 30));   // 演出を描画させてから重い推論へ
   const out = await sess.run({ image: new ort.Tensor('float32', input, [1, 3, mh, mw]) });
   const prob = (out.ink || out[Object.keys(out)[0]]).data;   // mh×mw の印刷確率
 
@@ -913,62 +964,6 @@ async function callGemini(key, model, b64) {
 }
 
 // input_fidelity(元画像に忠実モード)が使えないモデルなら外して再試行
-async function callOpenAIWithRetry(key, model, blob) {
-  try {
-    return await callOpenAI(key, model, blob, true);
-  } catch (e) {
-    if (e.retryNoFidelity) return await callOpenAI(key, model, blob, false);
-    throw e;
-  }
-}
-
-async function callOpenAI(key, model, blob, useFidelity) {
-  const fd = new FormData();
-  fd.append('model', model);
-  fd.append('image', blob, 'print.jpg');
-  fd.append('prompt', AI_PROMPT);
-  fd.append('size', 'auto');
-  fd.append('quality', 'medium');
-  if (useFidelity) fd.append('input_fidelity', 'high');
-
-  const ctrl = new AbortController();
-  const tm = setTimeout(() => ctrl.abort(), 120000);
-  let res;
-  try {
-    res = await fetch('https://api.openai.com/v1/images/edits', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + key },
-      signal: ctrl.signal,
-      body: fd
-    });
-  } catch (e) {
-    const err = new Error('network');
-    err.userMsg = e.name === 'AbortError' ? 'AIの応答が時間切れになりました' : '通信に失敗しました。電波を確認してください';
-    throw err;
-  } finally {
-    clearTimeout(tm);
-  }
-  if (!res.ok) {
-    let msg = '';
-    try { msg = (await res.json()).error?.message || ''; } catch (e) { /* ignore */ }
-    const err = new Error('http ' + res.status + ' ' + msg);
-    const lower = msg.toLowerCase();
-    if (res.status === 404 || lower.includes('model')) err.notFound = true;
-    else if (res.status === 400 && lower.includes('input_fidelity')) err.retryNoFidelity = true;
-    else if (res.status === 401) { err.userMsg = 'APIキーが正しくないようです'; err.badKey = true; }
-    else if (res.status === 403) { err.userMsg = '組織の確認（Verify Organization）が必要かもしれません。platform.openai.comで確認してください'; }
-    else if (res.status === 429) { err.userMsg = 'クレジット不足か利用上限です。platform.openai.comのBillingを確認してください'; }
-    else err.userMsg = 'AI処理に失敗しました（エラー' + res.status + '）';
-    throw err;
-  }
-  const json = await res.json();
-  const item = json.data && json.data[0];
-  if (item && item.b64_json) return item.b64_json;
-  const err = new Error('no image');
-  err.userMsg = 'AIが画像を返しませんでした。もう一度試してください';
-  throw err;
-}
-
 // ---------- 手直しブラシ ----------
 let drawing = false, lastPt = null;
 let strokeBackup = null;   // 2本指ピンチでストロークを取り消すためのバックアップ
@@ -1318,14 +1313,14 @@ async function openImage(file) {
     manual = new Uint8Array(W * H);
     zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
 
-    // 重い前処理はUI描画を待ってから
-    await new Promise(r => setTimeout(r, 30));
-    precompute();
-    buildRestore();
+    // 手動消しゴム用の重い前処理（グレー化・照明補正・枠検出など）は、
+    // 実際に「けす／もどす／枠」を使う時まで走らせない。読み込みを軽くしメモリ落ちを防ぐ。
+    preReady = false;
+    outCtx.drawImage(origCanvas, 0, 0);   // 最初は元写真をそのまま表示
+    outData = outCtx.getImageData(0, 0, W, H);
 
     $('home').style.display = 'none';
     $('editor').style.display = 'flex';
-    render();
   } catch (err) {
     toast('読み込みに失敗しました');
     console.error(err);
@@ -1525,6 +1520,8 @@ function queueRender() {
 }
 
 function render() {
+  if (!origCanvas) return;
+  if (!normGray) ensurePrecompute();   // 前処理がまだなら走らせる
   if (!normGray) return;
   // スライダー右（強）ほどしきい値を下げて多く消す
   const s = +$('strength').value;              // 0..100
