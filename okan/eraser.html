@@ -262,6 +262,12 @@
   <div id="editor">
     <div id="canvasWrap"><div id="canvasBox"><canvas id="outCanvas"></canvas><canvas id="ovCanvas"></canvas></div></div>
     <div id="controls">
+      <div class="row" id="contrastRow" style="display:none">
+        <label>字のこさ</label>
+        <span class="rangeEnd">うすく</span>
+        <input type="range" id="contrast" min="0" max="100" value="100">
+        <span class="rangeEnd">くっきり</span>
+      </div>
       <div class="chipRow">
         <button class="chip mode on" data-mode="pan">✋移動</button>
         <button class="chip mode" data-mode="erase">🧽けす</button>
@@ -472,6 +478,14 @@ $('resetManual').onclick = () => {
   toast('手直しをリセットしました');
 };
 
+// 字のこさスライダー：ドラッグ中も軽く追従（重い時は間引く）
+let toneQueued = false;
+$('contrast').addEventListener('input', () => {
+  if (toneQueued) return;
+  toneQueued = true;
+  requestAnimationFrame(() => { toneQueued = false; applyTone(); });
+});
+
 function applyZoom() {
   if (!fitW) fitW = wrap.clientWidth - 16;
   if (zoom <= 1.02) {
@@ -506,6 +520,7 @@ $('newBtn').onclick = () => {
   $('home').style.display = 'flex';
   srcData = null; normGray = null; colorMask = null; looseMask = null;
   lineMask = null; manual = null; origCanvas = null; restoreCanvas = null; outData = null; editBase = null;
+  aiTone = null; $('contrastRow').style.display = 'none';
 };
 
 $('saveBtn').onclick = saveImage;
@@ -670,7 +685,8 @@ async function aiErase(key) {
       outCtx.drawImage(img, 0, 0, W, H);
       outData = outCtx.getImageData(0, 0, W, H);
       editBase = outCtx.getImageData(0, 0, W, H);   // 以後の手直しリセットはこのAI結果に戻す
-      toast('自家製AIで消しました。印刷が消えてないか確認を');
+      $('contrastRow').style.display = aiTone ? 'flex' : 'none';   // 字のこさスライダーを出す
+      toast('自家製AIで消しました。「字のこさ」で濃さを調整できます');
     } catch (e) {
       console.error(e);
       toast(e.userMsg || '自家製AIの処理に失敗しました');
@@ -875,15 +891,51 @@ async function runOndevice() {
   // 元写真から細部を取る：印刷確率が高い黒画素だけ残す
   const gray = canvasToGray(proc);
   const { ink, norm } = photoInk(gray, pw, ph);
-  const res = new Uint8ClampedArray(pw * ph * 4);
+  // 「字のこさ」を後から効かせられるよう、残す画素と補正前グレーを保持しておく
+  const keep = new Uint8Array(pw * ph);
+  const rawNorm = new Uint8ClampedArray(pw * ph);
   for (let i = 0; i < pw * ph; i++) {
-    const keep = ink[i] && bigProb[i] > KEEP_THR;
-    const v = keep ? Math.min(255, norm[i] * 0.72) : 255;
+    keep[i] = (ink[i] && bigProb[i] > KEEP_THR) ? 1 : 0;
+    rawNorm[i] = norm[i];
+  }
+  aiTone = { w: pw, h: ph, keep, norm: rawNorm };
+  const rc = toneCanvas();
+  return rc.toDataURL('image/png').split(',')[1];   // 既存フローに合わせて base64 PNG を返す
+}
+
+// 「字のこさ」スライダー。案B（レベル補正）＝暗い所を黒へ、明るい所を白へ飛ばす。
+// 一番こく側で中間色を無くしてソリッド（黒か白か）に振り切る。
+let aiTone = null;
+function toneCurve(v, s) {
+  // s 0..100 →（黒に落とす下限cut, 白に飛ばす上限wp）。s大ほど幅を狭めコントラスト強
+  const cut = 40 + s * 0.95;                 // s=55→92
+  const wp = Math.max(cut + (100 - s) * 0.9 + 8, cut + 6);  // s=55→約133  s=100→cut+14
+  let n = (v - cut) / (wp - cut);
+  n = n < 0 ? 0 : n > 1 ? 1 : n;
+  // s=100付近は二値化（ソリッド）：中間を無くす
+  if (s >= 96) n = n < 0.5 ? 0 : 1;
+  return n * 255;
+}
+function toneCanvas() {
+  const { w, h, keep, norm } = aiTone;
+  const s = +(($('contrast') || {}).value || 100);
+  const res = new Uint8ClampedArray(w * h * 4);
+  for (let i = 0; i < w * h; i++) {
+    const v = keep[i] ? toneCurve(norm[i], s) : 255;
     res[i * 4] = res[i * 4 + 1] = res[i * 4 + 2] = v; res[i * 4 + 3] = 255;
   }
-  const rc = document.createElement('canvas'); rc.width = pw; rc.height = ph;
-  rc.getContext('2d').putImageData(new ImageData(res, pw, ph), 0, 0);
-  return rc.toDataURL('image/png').split(',')[1];   // 既存フローに合わせて base64 PNG を返す
+  const rc = document.createElement('canvas'); rc.width = w; rc.height = h;
+  rc.getContext('2d').putImageData(new ImageData(res, w, h), 0, 0);
+  return rc;
+}
+// スライダーを動かしたら、モデル再実行なしで濃さだけ塗り直す
+function applyTone() {
+  if (!aiTone || !origCanvas) return;
+  const rc = toneCanvas();
+  outCtx.fillStyle = '#ffffff'; outCtx.fillRect(0, 0, W, H);
+  outCtx.drawImage(rc, 0, 0, W, H);
+  outData = outCtx.getImageData(0, 0, W, H);
+  editBase = outCtx.getImageData(0, 0, W, H);
 }
 
 async function callGemini(key, model, b64) {
@@ -1147,6 +1199,7 @@ $('rotateBtn').onclick = async () => {
     drawOverlay();
     outData = outCtx.getImageData(0, 0, W, H);
     editBase = outCtx.getImageData(0, 0, W, H);
+    aiTone = null; $('contrastRow').style.display = 'none';
   } finally {
     loading(false);
   }
@@ -1267,6 +1320,8 @@ async function openImage(file) {
     outCtx.drawImage(origCanvas, 0, 0);   // 最初は元写真をそのまま表示
     outData = outCtx.getImageData(0, 0, W, H);
     editBase = outCtx.getImageData(0, 0, W, H);   // 手直しリセットの戻り先
+    aiTone = null;
+    $('contrastRow').style.display = 'none';
 
     $('home').style.display = 'none';
     $('editor').style.display = 'flex';
