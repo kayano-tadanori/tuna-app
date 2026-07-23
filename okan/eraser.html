@@ -270,7 +270,7 @@
       <div class="row" id="contrastRow" style="display:none">
         <label>字のこさ</label>
         <span class="rangeEnd">うすく</span>
-        <input type="range" id="contrast" min="0" max="100" value="100">
+        <input type="range" id="contrast" min="0" max="100" value="80">
         <span class="rangeEnd">くっきり</span>
       </div>
       <div class="chipRow">
@@ -783,8 +783,11 @@ async function aiErase(key) {
 const ONDEVICE_MODEL = 'eraser_model_v11.onnx';   // 差し替え時はファイル名のバージョンを上げる
 const MODEL_LONG = 960;     // モデルに見せる長辺（大きすぎると携帯で重い・落ちる）
 const PROC_LONG = 1400;     // 二値化・合成をする解像度（メモリ峰を抑える）
-const INK_THR = 190;        // 照明補正後これより暗い画素をインクとみなす
-const KEEP_THR = 0.35;      // 印刷確率がこれ以上かつインク → 残す
+const INK_THR = 205;        // 照明補正後これより暗い画素をインクとみなす（細い印刷も拾う）
+// モデルは「手書き」を強く（確率≈0）と言う一方、細い印刷は自信なく低めに出す。
+// 0.35だと自信なさげな印刷まで消えて字が掠れる。0.08にして「モデルが手書きと
+// 断定した所だけ消す」＝印刷は写真から残す（掠れ解消・2026-07-23切り分けで判明）
+const KEEP_THR = 0.08;
 let ortSession = null;
 
 async function loadOrt() {
@@ -1060,7 +1063,7 @@ function toneCurve(v, s) {
 }
 function toneCanvas() {
   const { w, h, keep, norm } = aiTone;
-  const s = +(($('contrast') || {}).value || 100);
+  const s = +(($('contrast') || {}).value || 80);
   const res = new Uint8ClampedArray(w * h * 4);
   for (let i = 0; i < w * h; i++) {
     const v = keep[i] ? toneCurve(norm[i], s) : 255;
