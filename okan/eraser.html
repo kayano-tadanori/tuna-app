@@ -151,9 +151,11 @@
     background-size: 26px 26px; mix-blend-mode: screen;
   }
   #scan .beam {
-    position: absolute; left: 0; right: 0; height: 26%;
-    background: linear-gradient(180deg, transparent, rgba(56,189,248,.35) 45%, rgba(125,211,252,.65) 50%, rgba(56,189,248,.35) 55%, transparent);
-    filter: blur(1px); animation: beam 1.9s ease-in-out infinite;
+    position: absolute; left: 0; right: 0; top: 0; height: 22%;
+    background: linear-gradient(180deg, transparent, rgba(56,189,248,.55) 42%, rgba(186,230,253,.95) 50%, rgba(56,189,248,.55) 58%, transparent);
+    box-shadow: 0 0 26px 6px rgba(56,189,248,.5);
+    /* transform はコンポジタ側で動くので、推論でメインスレッドが詰まっても止まらない */
+    will-change: transform; animation: beam 1.5s linear infinite;
   }
   #scan .frame { position: absolute; inset: 18px; border: 1.5px solid rgba(56,189,248,.5); border-radius: 12px; box-shadow: inset 0 0 40px rgba(56,189,248,.15); }
   #scan .corner { position: absolute; width: 26px; height: 26px; border: 2.5px solid #7dd3fc; }
@@ -166,7 +168,10 @@
     color: #bae6fd; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-shadow: 0 0 12px rgba(56,189,248,.6);
   }
   #scan .scanMsg small { display: block; font-size: 11px; font-weight: 700; color: #7dd3fc; opacity: .8; letter-spacing: .06em; margin-top: 5px; }
-  @keyframes beam { 0% { top: -26%; } 100% { top: 100%; } }
+  /* 自分の高さ(22%container)基準で、画面上端の外から下端の外まで translate */
+  @keyframes beam { 0% { transform: translateY(-120%); } 100% { transform: translateY(475%); } }
+  #scan .mesh { will-change: transform; animation: meshmove 3s linear infinite; }
+  @keyframes meshmove { 0% { transform: translateY(0); } 100% { transform: translateY(26px); } }
 
   #toast {
     position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom));
@@ -276,6 +281,8 @@
         <button class="chip" id="brushSize">⚫中</button>
         <button class="chip" id="resetManual">↺</button>
         <span class="grow"></span>
+        <button class="chip" id="tiltL" title="左に少し回す">⟲.5°</button>
+        <button class="chip" id="tiltR" title="右に少し回す">.5°⟳</button>
         <button class="chip" id="rotateBtn">⟳</button>
         <button class="chip" id="zoomOut">➖</button>
         <button class="chip" id="zoomIn">➕</button>
@@ -501,6 +508,35 @@ function applyZoom() {
 }
 $('zoomIn').onclick = () => { zoom = Math.min(8, zoom * 1.25); applyZoom(); };
 $('zoomOut').onclick = () => { zoom = Math.max(1, zoom / 1.25); applyZoom(); };
+
+// 微回転：見えている結果と元写真を同じだけ回す（水平を手で合わせる用）
+function tilt(deg) {
+  if (!origCanvas) return;
+  const rad = deg * Math.PI / 180, ca = Math.abs(Math.cos(rad)), sa = Math.abs(Math.sin(rad));
+  const rot = (src) => {
+    const nW = Math.round(src.width * ca + src.height * sa);
+    const nH = Math.round(src.width * sa + src.height * ca);
+    const rc = document.createElement('canvas'); rc.width = nW; rc.height = nH;
+    const rx = rc.getContext('2d');
+    rx.fillStyle = '#ffffff'; rx.fillRect(0, 0, nW, nH);
+    rx.translate(nW / 2, nH / 2); rx.rotate(rad); rx.translate(-src.width / 2, -src.height / 2);
+    rx.drawImage(src, 0, 0);
+    return rc;
+  };
+  const rout = rot(outCanvas);
+  origCanvas = rot(origCanvas);
+  W = origCanvas.width; H = origCanvas.height;
+  outCanvas.width = W; outCanvas.height = H;
+  ovCanvas.width = W; ovCanvas.height = H;
+  outCtx.drawImage(rout, 0, 0);
+  outData = outCtx.getImageData(0, 0, W, H);
+  editBase = outCtx.getImageData(0, 0, W, H);
+  aiTone = null; $('contrastRow').style.display = 'none';   // トーンは寸法が変わるので無効化
+  shapes = []; curPoly = []; activePoly = null; protectMask = null; drawOverlay();
+  applyZoom();
+}
+$('tiltL').onclick = () => tilt(-0.5);
+$('tiltR').onclick = () => tilt(0.5);
 
 // 押している間だけ元画像を表示
 const cmpBtn = $('compareBtn');
@@ -850,6 +886,62 @@ function showScan(on, msg) {
   }
 }
 
+// 傾き補正：字や枠の並びから紙の傾きを測り、水平になるよう回した写真を返す。
+// 紙が画面いっぱいでも効く（四隅は不要）。角度探索は粗→細の2段階で軽く。
+function deskewCanvas(srcCanvas) {
+  // 縮小したグレーでインクを拾う
+  const SW = 700;
+  const sc = Math.min(1, SW / Math.max(srcCanvas.width, srcCanvas.height));
+  const w = Math.max(16, Math.round(srcCanvas.width * sc));
+  const h = Math.max(16, Math.round(srcCanvas.height * sc));
+  const tc = document.createElement('canvas'); tc.width = w; tc.height = h;
+  const tx = tc.getContext('2d'); tx.drawImage(srcCanvas, 0, 0, w, h);
+  const d = tx.getImageData(0, 0, w, h).data;
+  const gray = new Float32Array(w * h);
+  for (let i = 0, j = 0; j < w * h; i += 4, j++) gray[j] = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+  // 枠・罫線・文字の「辺の向き」から傾きを測る（勾配ヒストグラム）。
+  // 水平線の勾配は縦向き、垂直線の勾配は横向き。90°でたためば、どちらも
+  // 紙の傾きぶんだけズレる。長い辺ほど票が多いので、傾き角にピークが立つ。
+  const BINS = 720;                       // -45〜45度を0.125度刻み
+  const hist = new Float32Array(BINS);
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const i = y * w + x;
+      // Sobel
+      const gx = (gray[i - w + 1] + 2 * gray[i + 1] + gray[i + w + 1]) - (gray[i - w - 1] + 2 * gray[i - 1] + gray[i + w - 1]);
+      const gy = (gray[i + w - 1] + 2 * gray[i + w] + gray[i + w + 1]) - (gray[i - w - 1] + 2 * gray[i - w] + gray[i - w + 1]);
+      const mag = Math.abs(gx) + Math.abs(gy);
+      if (mag < 60) continue;             // 弱い勾配は無視
+      let a = Math.atan2(gy, gx) * 180 / Math.PI;   // 勾配の向き
+      a = ((a % 90) + 90) % 90;           // 0〜90に畳む
+      if (a > 45) a -= 90;                // -45〜45へ
+      const b = Math.min(BINS - 1, Math.max(0, ((a + 45) / 90 * BINS) | 0));
+      hist[b] += mag;
+    }
+  }
+  // ヒストグラムを少しならして、±6度以内の最大票の角度を選ぶ
+  let bestB = -1, bestV = -1;
+  const lo = ((-6 + 45) / 90 * BINS) | 0, hi = ((6 + 45) / 90 * BINS) | 0;
+  for (let b = lo; b <= hi; b++) {
+    const v = (hist[b - 1] || 0) + hist[b] + (hist[b + 1] || 0);
+    if (v > bestV) { bestV = v; bestB = b; }
+  }
+  const fineA = bestB / BINS * 90 - 45;
+
+  if (Math.abs(fineA) < 0.4) return { canvas: srcCanvas, angle: 0 };   // ほぼ水平なら触らない
+
+  // 原寸を回す（余白は白）。回転で少し大きくなった分も収める
+  const rad = fineA * Math.PI / 180, ca = Math.abs(Math.cos(rad)), sa = Math.abs(Math.sin(rad));
+  const SWi = srcCanvas.width, SHi = srcCanvas.height;
+  const nW = Math.round(SWi * ca + SHi * sa), nH = Math.round(SWi * sa + SHi * ca);
+  const rc = document.createElement('canvas'); rc.width = nW; rc.height = nH;
+  const rx = rc.getContext('2d');
+  rx.fillStyle = '#ffffff'; rx.fillRect(0, 0, nW, nH);
+  rx.translate(nW / 2, nH / 2); rx.rotate(rad); rx.translate(-SWi / 2, -SHi / 2);
+  rx.drawImage(srcCanvas, 0, 0);
+  return { canvas: rc, angle: fineA };
+}
+
 // 縁沿いの余計な塊（リング金具・影・紙の縁）を残す画素から落とす。
 // 印刷の文字は内側の小さな塊、金具・縁は外周に接する大きな塊なので分けられる。
 function dropEdgeJunk(keep, W, H) {
@@ -889,6 +981,19 @@ function dropEdgeJunk(keep, W, H) {
 async function runOndevice() {
   showScan(true, 'AIを準備しています…');
   const sess = await loadOrt();
+
+  // 傾き補正：字や枠の並びから紙の傾きを直してからAIにかける
+  showScan(true, 'かたむきを直しています…');
+  await new Promise(r => setTimeout(r, 20));
+  const dk = deskewCanvas(origCanvas);
+  if (dk.angle !== 0) {
+    origCanvas = dk.canvas;
+    W = origCanvas.width; H = origCanvas.height;
+    outCanvas.width = W; outCanvas.height = H;
+    ovCanvas.width = W; ovCanvas.height = H;
+    // 枠は座標が変わるのでクリア
+    shapes = []; curPoly = []; activePoly = null; protectMask = null; drawOverlay();
+  }
   showScan(true, '手書きをさがしています…');
 
   // 処理解像度に origCanvas を縮小
