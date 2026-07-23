@@ -281,6 +281,7 @@
         <button class="chip" id="brushSize">⚫中</button>
         <button class="chip" id="resetManual">↺</button>
         <span class="grow"></span>
+        <button class="chip" id="cropBtn" title="紙のフチ（床・机）を切り落とす">✂️切る</button>
         <button class="chip" id="tiltL" title="左に少し回す">⟲.5°</button>
         <button class="chip" id="tiltR" title="右に少し回す">.5°⟳</button>
         <button class="chip" id="rotateBtn">⟳</button>
@@ -293,6 +294,13 @@
         <button class="chip" id="finalizeBtn" style="background:#0d9488;border-color:#0d9488;color:#fff">✓ 枠を確定</button>
         <button class="chip" id="undoPointBtn">↶ 戻す</button>
         <button class="chip" id="clearShapesBtn">🗑 枠を消す</button>
+      </div>
+      <div class="chipRow" id="cropRow" style="display:none">
+        <span style="font-size:11px;color:#64748b;font-weight:700">白丸を紙の角へ→</span>
+        <button class="chip" id="cropAuto" title="四隅を自動で当てなおす">🔄自動</button>
+        <span class="grow"></span>
+        <button class="chip" id="cropCancel">やめる</button>
+        <button class="chip" id="cropApply" style="background:#0d9488;border-color:#0d9488;color:#fff">✂️切り抜く</button>
       </div>
       <div class="aiRow">
         <button id="aiBtn">✨ AIで消す（実験）</button>
@@ -335,6 +343,7 @@
 
     <h3>🎚 ボタンの意味</h3>
     <ul>
+      <li><b>✂️切る</b>：紙のまわりに写った<b>床や机を切り落とし</b>、プリントだけにします。床が写っていると自動で切り抜き画面になるので、<b>白丸を紙の四隅に合わせて「✂️切り抜く」</b>。紙だけにするとAIの消し残りもぐっと減ります。床が写っていなければ「やめる」でそのまま進めます</li>
       <li><b>枠保護</b>：解答欄の枠・表・罫線を消さずに残します。消し具合を強にしても枠は消えません</li>
       <li><b>ゴミ取り</b>：細かい点々の消しカスを掃除します</li>
       <li><b>くっきり</b>：印刷を濃くはっきりさせます（うすいグレーの印刷はそのまま残ります）</li>
@@ -557,6 +566,7 @@ $('newBtn').onclick = () => {
   srcData = null; normGray = null; colorMask = null; looseMask = null;
   lineMask = null; manual = null; origCanvas = null; restoreCanvas = null; outData = null; editBase = null;
   aiTone = null; $('contrastRow').style.display = 'none';
+  cropMode = false; cropPts = null; cropDrag = null; $('cropRow').style.display = 'none';
 };
 
 $('saveBtn').onclick = saveImage;
@@ -626,6 +636,7 @@ const AI_PROMPT =
 
 $('aiBtn').onclick = () => {
   if (!origCanvas) return;
+  if (cropMode) { toast('先に「✂️切り抜く」か「やめる」を押してください'); return; }
   const en = ENGINES[aiEngine];
   if (en.noKey) { aiErase(null); return; }   // 自家製AIはキー不要
   const key = localStorage.getItem(en.keyStore);
@@ -1182,6 +1193,14 @@ function stampLine(a, b) {
 }
 
 outCanvas.addEventListener('pointerdown', e => {
+  if (cropMode) {
+    if (!origCanvas || !cropPts) return;
+    e.preventDefault(); outCanvas.setPointerCapture(e.pointerId);
+    const p = canvasPoint(e); let best = 0, bd = Infinity;
+    for (let i = 0; i < 4; i++) { const dd = Math.hypot(cropPts[i].x - p.x, cropPts[i].y - p.y); if (dd < bd) { bd = dd; best = i; } }
+    cropDrag = bd < Math.max(60, W * 0.15) ? best : null;   // 近い白丸をつかむ
+    return;
+  }
   if (mode === 'pan' || !origCanvas) return;
   if (touches.size >= 2) return;   // ピンチ中は描かない
   e.preventDefault();
@@ -1197,6 +1216,13 @@ outCanvas.addEventListener('pointerdown', e => {
   stamp(lastPt.x, lastPt.y);
 });
 outCanvas.addEventListener('pointermove', e => {
+  if (cropMode) {
+    if (cropDrag == null) return;
+    e.preventDefault(); const p = canvasPoint(e);
+    cropPts[cropDrag] = { x: Math.max(0, Math.min(W, p.x)), y: Math.max(0, Math.min(H, p.y)) };
+    drawCropOverlay();
+    return;
+  }
   if (mode === 'protect') {
     if (shapeDrag) { e.preventDefault(); protectMove(canvasPoint(e)); return; }
     if (tapCandidate) { const p = canvasPoint(e); if (Math.hypot(p.x - tapCandidate.x, p.y - tapCandidate.y) > Math.max(8, W * 0.02)) tapCandidate = null; }
@@ -1209,6 +1235,7 @@ outCanvas.addEventListener('pointermove', e => {
   lastPt = p;
 });
 function endStroke() {
+  if (cropMode) { cropDrag = null; return; }
   if (mode === 'protect') {
     if (shapeDrag) { shapeDrag = null; rebuildProtect(); }
     else if (tapCandidate) { curPoly.push({ x: tapCandidate.x, y: tapCandidate.y }); rebuildProtect(); drawOverlay(); }
@@ -1349,6 +1376,184 @@ $('rotateBtn').onclick = async () => {
     loading(false);
   }
 };
+// ---------- ✂️ 紙を切る（スキャナー式クロップ：床・机を切り落とす） ----------
+// AIにかける前に紙だけにする。四隅を自動推定→ドラッグで微調整→射影変換で長方形に起こす。
+let cropMode = false;   // クロップ編集中か
+let cropPts = null;     // 四隅 [{x,y}] 順=左上,右上,右下,左下（origCanvas座標）
+let cropDrag = null;    // ドラッグ中の頂点index（0..3）
+
+// 紙の四隅を推定：明るい画素の広がりの角（x±yの最大最小）で取る。傾いた紙でも角が出る。
+// 明るい紙が見つからなければ、画面を少し内側に入れた四角を初期値にする（後で手で動かす前提）。
+function detectQuad() {
+  const S = 320, sc = Math.min(1, S / Math.max(W, H));
+  const w = Math.max(16, Math.round(W * sc)), h = Math.max(16, Math.round(H * sc));
+  const tc = document.createElement('canvas'); tc.width = w; tc.height = h;
+  tc.getContext('2d').drawImage(origCanvas, 0, 0, w, h);
+  const d = tc.getContext('2d').getImageData(0, 0, w, h).data;
+  const g = new Uint8Array(w * h), hist = new Uint32Array(256);
+  for (let i = 0, j = 0; j < w * h; i += 4, j++) {
+    const v = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) | 0;
+    g[j] = v; hist[v]++;
+  }
+  // 大津の二値化しきい値（紙＝明るい側）
+  let sum = 0; for (let t = 0; t < 256; t++) sum += t * hist[t];
+  let sumB = 0, wB = 0, best = -1, thr = 140; const tot = w * h;
+  for (let t = 0; t < 256; t++) {
+    wB += hist[t]; if (!wB) continue; const wF = tot - wB; if (!wF) break;
+    sumB += t * hist[t];
+    const mB = sumB / wB, mF = (sum - sumB) / wF, bt = wB * wF * (mB - mF) * (mB - mF);
+    if (bt > best) { best = bt; thr = t; }
+  }
+  let tl = null, tr = null, br = null, bl = null, cnt = 0;
+  let sMin = Infinity, sMax = -Infinity, dMin = Infinity, dMax = -Infinity;
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const j = y * w + x;
+      // 孤立した明点に釣られないよう、上下左右も明るい画素だけ角候補にする
+      if (g[j] <= thr || g[j - 1] <= thr || g[j + 1] <= thr || g[j - w] <= thr || g[j + w] <= thr) continue;
+      cnt++;
+      const s = x + y, df = x - y;
+      if (s < sMin) { sMin = s; tl = { x, y }; }
+      if (s > sMax) { sMax = s; br = { x, y }; }
+      if (df > dMax) { dMax = df; tr = { x, y }; }
+      if (df < dMin) { dMin = df; bl = { x, y }; }
+    }
+  }
+  const frac = cnt / (w * h), inv = 1 / sc;
+  if (!tl || frac < 0.12) {
+    const mx = W * 0.04, my = H * 0.04;
+    return { pts: [{ x: mx, y: my }, { x: W - mx, y: my }, { x: W - mx, y: H - my }, { x: mx, y: H - my }], frac: 1 };
+  }
+  return { pts: [tl, tr, br, bl].map(p => ({ x: p.x * inv, y: p.y * inv })), frac };
+}
+
+// 4点対応 dst(u,v)→src(x,y) の射影変換 H(3x3) をガウス消去で解く
+function solveHomography(src, dst) {
+  const n = 8, M = [];
+  for (let i = 0; i < 4; i++) {
+    const u = dst[i].x, v = dst[i].y, x = src[i].x, y = src[i].y;
+    M.push([u, v, 1, 0, 0, 0, -u * x, -v * x, x]);
+    M.push([0, 0, 0, u, v, 1, -u * y, -v * y, y]);
+  }
+  for (let c = 0; c < n; c++) {
+    let piv = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[piv][c])) piv = r;
+    const tmp = M[c]; M[c] = M[piv]; M[piv] = tmp;
+    const pv = M[c][c] || 1e-9;
+    for (let k = c; k <= n; k++) M[c][k] /= pv;
+    for (let r = 0; r < n; r++) { if (r === c) continue; const f = M[r][c]; if (!f) continue; for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k]; }
+  }
+  return [M[0][8], M[1][8], M[2][8], M[3][8], M[4][8], M[5][8], M[6][8], M[7][8], 1];
+}
+
+// 四隅(quad)を長方形に起こした新しいキャンバスを返す（bilinear、紙の外は白）
+function warpCrop(quad) {
+  const q = quad, dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  const ow = Math.max(16, Math.round(Math.max(dist(q[2], q[3]), dist(q[1], q[0]))));
+  const oh = Math.max(16, Math.round(Math.max(dist(q[1], q[2]), dist(q[0], q[3]))));
+  const dst = [{ x: 0, y: 0 }, { x: ow - 1, y: 0 }, { x: ow - 1, y: oh - 1 }, { x: 0, y: oh - 1 }];
+  const H0 = solveHomography(q, dst);   // dst→src
+  const s = origCanvas.getContext('2d').getImageData(0, 0, W, H).data;
+  const out = new Uint8ClampedArray(ow * oh * 4);
+  for (let y = 0; y < oh; y++) {
+    for (let x = 0; x < ow; x++) {
+      const den = H0[6] * x + H0[7] * y + 1;
+      const sx = (H0[0] * x + H0[1] * y + H0[2]) / den, sy = (H0[3] * x + H0[4] * y + H0[5]) / den;
+      const o = (y * ow + x) * 4;
+      if (sx < 0 || sy < 0 || sx > W - 1 || sy > H - 1) { out[o] = out[o + 1] = out[o + 2] = out[o + 3] = 255; continue; }
+      const x0 = sx | 0, y0 = sy | 0, x1 = Math.min(W - 1, x0 + 1), y1 = Math.min(H - 1, y0 + 1);
+      const fx = sx - x0, fy = sy - y0;
+      const i00 = (y0 * W + x0) * 4, i10 = (y0 * W + x1) * 4, i01 = (y1 * W + x0) * 4, i11 = (y1 * W + x1) * 4;
+      for (let c = 0; c < 3; c++) {
+        const top = s[i00 + c] * (1 - fx) + s[i10 + c] * fx, bot = s[i01 + c] * (1 - fx) + s[i11 + c] * fx;
+        out[o + c] = top * (1 - fy) + bot * fy;
+      }
+      out[o + 3] = 255;
+    }
+  }
+  const cc = document.createElement('canvas'); cc.width = ow; cc.height = oh;
+  cc.getContext('2d').putImageData(new ImageData(out, ow, oh), 0, 0);
+  return cc;
+}
+
+function drawCropOverlay() {
+  ovCtx.clearRect(0, 0, ovCanvas.width, ovCanvas.height);
+  if (!cropPts) return;
+  // 切り落とす外側を暗く
+  ovCtx.save();
+  ovCtx.beginPath();
+  ovCtx.rect(0, 0, ovCanvas.width, ovCanvas.height);
+  ovCtx.moveTo(cropPts[0].x, cropPts[0].y);
+  for (let i = 1; i < 4; i++) ovCtx.lineTo(cropPts[i].x, cropPts[i].y);
+  ovCtx.closePath();
+  ovCtx.fillStyle = 'rgba(2,6,23,0.5)';
+  ovCtx.fill('evenodd');
+  ovCtx.restore();
+  // 枠と角の白丸
+  ovCtx.lineWidth = Math.max(3, W * 0.005);
+  ovCtx.strokeStyle = '#22d3ee';
+  ovCtx.beginPath(); ovCtx.moveTo(cropPts[0].x, cropPts[0].y);
+  for (let i = 1; i < 4; i++) ovCtx.lineTo(cropPts[i].x, cropPts[i].y);
+  ovCtx.closePath(); ovCtx.stroke();
+  const dot = Math.max(11, W * 0.022);
+  for (const p of cropPts) {
+    ovCtx.beginPath(); ovCtx.arc(p.x, p.y, dot, 0, Math.PI * 2);
+    ovCtx.fillStyle = '#ffffff'; ovCtx.fill();
+    ovCtx.lineWidth = Math.max(2, W * 0.004); ovCtx.strokeStyle = '#0891b2'; ovCtx.stroke();
+  }
+}
+
+function enterCrop() {
+  if (!origCanvas || cropMode) return;
+  const det = detectQuad();
+  cropPts = det.pts.map(p => ({ x: p.x, y: p.y }));
+  cropMode = true; cropDrag = null;
+  outCtx.drawImage(origCanvas, 0, 0);   // 元写真を下地に
+  drawCropOverlay();
+  $('cropRow').style.display = '';
+  $('protectRow').style.display = 'none';
+  $('contrastRow').style.display = 'none';
+  toast('白丸を紙の四隅に合わせて「✂️切り抜く」。床が無ければ「やめる」');
+}
+
+function exitCrop() {
+  cropMode = false; cropPts = null; cropDrag = null;
+  $('cropRow').style.display = 'none';
+  ovCtx.clearRect(0, 0, ovCanvas.width, ovCanvas.height);
+  if (outData) outCtx.putImageData(outData, 0, 0); else if (origCanvas) outCtx.drawImage(origCanvas, 0, 0);
+  drawOverlay();
+}
+
+function applyCrop() {
+  if (!cropMode || !cropPts) return;
+  loading(true, '紙を切り抜いています…');
+  setTimeout(() => {
+    try {
+      const cc = warpCrop(cropPts);
+      origCanvas = cc;
+      W = cc.width; H = cc.height;
+      outCanvas.width = W; outCanvas.height = H;
+      ovCanvas.width = W; ovCanvas.height = H;
+      outCtx.drawImage(origCanvas, 0, 0);
+      outData = outCtx.getImageData(0, 0, W, H);
+      editBase = outCtx.getImageData(0, 0, W, H);
+      aiTone = null; $('contrastRow').style.display = 'none';
+      shapes = []; curPoly = []; activePoly = null; shapeDrag = null; protectMask = null;
+      cropMode = false; cropPts = null; cropDrag = null;
+      $('cropRow').style.display = 'none';
+      drawOverlay();
+      zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
+      toast('切り抜きました。このまま「AIで消す」でOK');
+    } catch (e) {
+      console.error(e); toast('切り抜きに失敗しました');
+    } finally { loading(false); }
+  }, 30);
+}
+
+$('cropBtn').onclick = () => { if (!origCanvas) return; if (cropMode) exitCrop(); else enterCrop(); };
+$('cropAuto').onclick = () => { if (!cropMode) return; const det = detectQuad(); cropPts = det.pts.map(p => ({ x: p.x, y: p.y })); drawCropOverlay(); };
+$('cropCancel').onclick = exitCrop;
+$('cropApply').onclick = applyCrop;
+
 // 描きかけを取り消す（2本目の指が置かれたとき）
 function cancelStroke() {
   if (!drawing) return;
@@ -1367,6 +1572,7 @@ let pinch = null, panDrag = null;
 const box = $('canvasBox');
 
 wrap.addEventListener('pointerdown', e => {
+  if (cropMode) return;   // クロップ中は白丸ドラッグ優先（ピンチ・パン無効）
   if (e.pointerType !== 'touch' || !origCanvas) return;
   touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
   if (touches.size === 2) {
@@ -1392,6 +1598,7 @@ wrap.addEventListener('pointerdown', e => {
 });
 
 wrap.addEventListener('pointermove', e => {
+  if (cropMode) return;
   if (!touches.has(e.pointerId)) return;
   touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
   const [a, b] = [...touches.values()];
@@ -1424,6 +1631,7 @@ function commitPinch() {
 }
 
 function endTouch(e) {
+  if (cropMode) return;
   if (!touches.has(e.pointerId)) return;
   touches.delete(e.pointerId);
   if (touches.size < 2) {
@@ -1470,6 +1678,16 @@ async function openImage(file) {
 
     $('home').style.display = 'none';
     $('editor').style.display = 'flex';
+
+    // 床・机が写っていそうなら（紙が画面いっぱいでなければ）自動でクロップ画面へ。
+    // 紙が端まで＝すでに切り抜き済み（宿題スキャナー等）は触らない。
+    cropMode = false; cropPts = null; cropDrag = null; $('cropRow').style.display = 'none';
+    try {
+      const det = detectQuad(), q = det.pts;
+      const area = Math.abs((q[0].x * (q[1].y - q[3].y) + q[1].x * (q[2].y - q[0].y) +
+        q[2].x * (q[3].y - q[1].y) + q[3].x * (q[0].y - q[2].y)) / 2);
+      if (det.frac > 0.12 && area > 0.15 * W * H && area < 0.88 * W * H) enterCrop();
+    } catch (e) { console.error(e); }
   } catch (err) {
     toast('読み込みに失敗しました');
     console.error(err);
