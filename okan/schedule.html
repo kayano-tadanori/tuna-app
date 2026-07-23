@@ -38,7 +38,7 @@
   #topBar {
     display: flex; align-items: center; gap: 6px;
     padding: 8px 10px; background: #fff; border-bottom: 1px solid #e2e8f0; flex-shrink: 0;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap;   /* 狭い画面ではボタンを2段に折り返す（タブが画面外に消えないように） */
   }
   #topBar > * { flex-shrink: 0; }
   .navBtn {
@@ -88,6 +88,17 @@
   .cell.today { background: #fce7f3; }
   .cell.sunBg { background: #fff1f2; }   /* 日曜・祝日 */
   .cell.satBg { background: #eff6ff; }   /* 土曜 */
+  /* 複数日えらび中：えらんだ日（曜日の色より優先して分かるように） */
+  .cell.picked { background: #99f6e4 !important; box-shadow: inset 0 0 0 2px #0d9488; }
+  #pickBar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
+    display: none; align-items: center; gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: #0f766e; color: #fff; box-shadow: 0 -4px 14px rgba(0,0,0,.2);
+  }
+  #pickBar.on { display: flex; }
+  #pickBar #pickCount { font-size: 13px; font-weight: 800; }
+  #pickBar .btn { padding: 9px 12px; font-size: 13px; }
   .cell .dnum .holT { color: #e11d48; }  /* 祝日の数字（赤） */
   .cell .holName {
     font-size: 8.5px; line-height: 1.15; color: #e11d48; font-weight: 700;
@@ -224,6 +235,7 @@
   <button class="navBtn" id="nextM">›</button>
   <button id="todayBtn">今日</button>
   <span class="grow"></span>
+  <button class="tab" id="multiBtn" title="講習などをカレンダーで複数日えらんで登録">複数日</button>
   <button class="tab" id="regBtn">📋登録</button>
   <button class="tab on" id="tabCal">📅</button>
   <button class="tab" id="tabTodo">✅<span id="todoBadge"></span></button>
@@ -241,6 +253,15 @@
 </main>
 
 <button id="fab">＋</button>
+
+<!-- カレンダーで複数日をえらんでいる間のバー -->
+<div id="pickBar">
+  <span id="pickCount">日をタップしてえらぶ</span>
+  <span class="grow"></span>
+  <button class="btn btnGray" id="pickClear">解除</button>
+  <button class="btn btnGray" id="pickCancel">やめる</button>
+  <button class="btn btnPink" id="pickReg">この日で登録</button>
+</div>
 
 <!-- その日の一覧シート -->
 <div class="overlay" id="daySheet">
@@ -361,7 +382,7 @@
         <option value="6">土曜</option>
       </select>
     </div>
-    <p class="fLabel">複数日指定（春期・夏期・冬期講習など、日をえらんでまとめて登録）</p>
+    <p class="fLabel">複数日指定（春期・夏期・冬期講習など、日をえらんでまとめて登録）<br><span style="color:#0f766e">カレンダー画面の「🗓複数日」から、日をタップしてえらぶこともできます</span></p>
     <div class="fRow">
       <input class="fInput" type="date" id="rgDatePick" style="flex:2">
       <button type="button" class="btn btnGray" id="rgDateAdd" style="flex:1">＋追加</button>
@@ -775,6 +796,22 @@ function holidaysOf(y) {
 }
 function holidayName(dt) { return holidaysOf(dt.getFullYear())[(dt.getMonth() + 1) + '-' + dt.getDate()] || null; }
 
+// ---------- カレンダーで複数日をえらんでまとめて登録（講習用） ----------
+let pickMode = false;
+const pickDates = new Set();
+function updatePickBar() {
+  $('pickBar').classList.toggle('on', pickMode);
+  $('multiBtn').classList.toggle('on', pickMode);
+  $('fab').style.display = pickMode ? 'none' : '';
+  $('pickCount').textContent = pickDates.size ? `${pickDates.size}日えらび中` : '日をタップしてえらぶ';
+}
+function setPickMode(on) {
+  pickMode = on;
+  if (!on) pickDates.clear();
+  updatePickBar();
+  renderCal();
+}
+
 function renderCal() {
   $('ymLabel').textContent = `${ym.y}年${ym.m + 1}月`;
   const grid = $('calGrid');
@@ -842,7 +879,16 @@ function renderCal() {
       c.textContent = `✅やること${due.length}`;
       cell.appendChild(c);
     }
-    cell.onclick = () => { selDate = ds; renderCal(); openDaySheet(ds); };
+    if (pickMode && pickDates.has(ds)) cell.classList.add('picked');
+    cell.onclick = () => {
+      if (pickMode) {   // 複数日えらび中はタップで選択のON/OFF（再描画せず軽く）
+        if (pickDates.has(ds)) { pickDates.delete(ds); cell.classList.remove('picked'); }
+        else { pickDates.add(ds); cell.classList.add('picked'); }
+        updatePickBar();
+        return;
+      }
+      selDate = ds; renderCal(); openDaySheet(ds);
+    };
     grid.appendChild(cell);
   }
 }
@@ -1169,7 +1215,7 @@ $('rgDelete').onclick = () => {
   save(); closeAll(); renderAll(); openRegSheet();
 };
 
-$('regBtn').onclick = () => openRegSheet();
+$('regBtn').onclick = () => { setPickMode(false); openRegSheet(); };
 $('regTab1').onclick = () => openRegSheet(1);
 $('regTab2').onclick = () => openRegSheet(2);
 $('regAdd').onclick = () => { closeAll(); openRegForm(null); };
@@ -1343,7 +1389,23 @@ function switchTab(t) {
   $('todoView').style.display = t === 'todo' ? 'block' : 'none';
 }
 $('tabCal').onclick = () => switchTab('cal');
-$('tabTodo').onclick = () => switchTab('todo');
+$('tabTodo').onclick = () => { setPickMode(false); switchTab('todo'); };
+
+// 複数日えらび：カレンダーで日をタップ → まとめて定期予定に登録
+$('multiBtn').onclick = () => {
+  if (tab !== 'cal') switchTab('cal');
+  setPickMode(!pickMode);
+};
+$('pickClear').onclick = () => { pickDates.clear(); updatePickBar(); renderCal(); };
+$('pickCancel').onclick = () => setPickMode(false);
+$('pickReg').onclick = () => {
+  if (!pickDates.size) { alert('日をタップしてえらんでください'); return; }
+  const ds = [...pickDates].sort();
+  setPickMode(false);
+  openRegForm(null);       // 登録フォームを開いてから、えらんだ日を流し込む
+  rgDates = ds;
+  renderRgDates();
+};
 
 $('prevM').onclick = () => { ym.m--; if (ym.m < 0) { ym.m = 11; ym.y--; } renderCal(); };
 $('nextM').onclick = () => { ym.m++; if (ym.m > 11) { ym.m = 0; ym.y++; } renderCal(); };
