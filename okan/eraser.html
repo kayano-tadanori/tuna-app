@@ -66,6 +66,11 @@
     font-size: 12px; font-weight: 800; color: #7c3aed; background: #f3e8ff;
     border-radius: 999px; padding: 7px 14px; margin: 6px auto 0; display: inline-block;
   }
+  #home .loveNote {
+    font-size: 14px; font-weight: 900; color: #be123c; background: #ffe4e6;
+    border: 1.5px solid #fda4af; border-radius: 14px; padding: 10px 18px;
+    margin: 10px auto 0; display: inline-block; box-shadow: 0 2px 8px rgba(190,18,60,.12);
+  }
   .bigBtn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     width: 100%; max-width: 340px;
@@ -261,6 +266,7 @@
       </div>
     </div>
     <p class="devNote">🧪 自家製 消しゴムAI を試験搭載しました（端末内・無料・開発中）</p>
+    <p class="loveNote">💕 まだお母さんの愛が少し必要（消しゴム）</p>
     <button class="helpLink" id="helpBtn">❓ 使い方を見る</button>
   </div>
 
@@ -276,7 +282,7 @@
       <div class="chipRow">
         <button class="chip mode on" data-mode="pan">✋移動</button>
         <button class="chip mode" data-mode="erase">🧽けす</button>
-        <button class="chip mode" data-mode="restore">🖌もどす</button>
+        <button class="chip" id="undoStroke" title="消しすぎたら一つ戻す">↶戻す</button>
         <button class="chip mode" data-mode="protect">🔷多角形枠</button>
         <button class="chip" id="brushSize">⚫中</button>
         <button class="chip" id="resetManual">↺</button>
@@ -353,7 +359,7 @@
     <h3>👆 指で手直し</h3>
     <ul>
       <li><b>🧽けす</b>：消え残った字を指でこすって消す（黒ペンの字もこれで消せます）</li>
-      <li><b>🖌もどす</b>：消えすぎた枠や印刷を指でこすって元に戻す</li>
+      <li><b>↶戻す</b>：けすで消しすぎたとき、<b>直前のひと塗りを取り消します</b>（何回か戻せます）。元写真に戻すのではなく、消しゴムの操作だけを戻します</li>
       <li><b>🔷多角形枠</b>：消したくない場所をタップで囲み「✓枠を確定」。<b>枠の中は消えません</b>（細かい所は🧽けすで手直し）。枠の中をドラッグで位置調整、2本指で大きさ調整、「↶戻す」で点や枠を取り消し</li>
       <li><b>⚫小/中/大</b>：指の太さを変える　<b>↺</b>：手直しを全部やり直す</li>
       <li><b>🤏 2本指</b>：つまむと拡大・縮小、2本指のまま動かすと移動（なめらかにズームします）</li>
@@ -362,8 +368,8 @@
     </ul>
 
     <h3>✨ AIで消す（実験）</h3>
-    <p>AIが写真を描き直して手書きを消します。自動処理で消せない黒ペンの書き込みにも効果的。AIは⚙️で切り替えられます（いまはGeminiとChatGPTに対応、今後追加予定）。各AIの特徴・料金・キーの作り方は設定画面に書いてあります。いま選んでいるAIはボタンに表示されます。</p>
-    <p class="warn">⚠️ AIを使うときだけ写真が選んだAIの会社（GoogleまたはOpenAI）に送信されます。また、AIは画像を描き直すため印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください。</p>
+    <p>AIが写真を描き直して手書きを消します。自動処理で消せない黒ペンの書き込みにも効果的。AIは⚙️で切り替えられます（いまは自家製AIとGeminiに対応、今後追加予定）。各AIの特徴・料金・キーの作り方は設定画面に書いてあります。いま選んでいるAIはボタンに表示されます。</p>
+    <p class="warn">⚠️ Geminiを使うときだけ写真がGoogleに送信されます（自家製AIはどこにも送信しません）。また、AIは画像を描き直すため印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください。</p>
 
     <div class="sheetBtns">
       <button class="btn" id="helpClose" style="background:#db2777;color:#fff">閉じる</button>
@@ -415,7 +421,7 @@
     <div id="engineCards"></div>
     <div id="engineGuide"></div>
     <p class="warn" id="aiSendWarn">⚠️ 使う前に知っておいてください<br>
-    ・このボタンを使うときだけ、写真が選んだAIの会社（GoogleまたはOpenAI）のサーバーに送信されます<br>
+    ・このボタンを使うときだけ、写真が選んだAIの会社（Google）のサーバーに送信されます<br>
     ・AIは画像を描き直すため、印刷の文字や数字が変わることがあります。保存前に「押すと元画像」で必ず見比べてください<br>
     ・APIキーはこのスマホの中だけに保存されます</p>
     <p class="warn" id="aiLocalNote" style="display:none;background:#ede9fe;border-color:#c4b5fd;color:#5b21b6">
@@ -471,7 +477,7 @@ $('camIn').onchange = e => { if (e.target.files[0]) openImage(e.target.files[0])
 $('libIn').onchange = e => { if (e.target.files[0]) openImage(e.target.files[0]); e.target.value = ''; };
 
 
-// モード切替（うごかす／けす／もどす）
+// モード切替（うごかす／けす／枠）
 document.querySelectorAll('.chip.mode').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.chip.mode').forEach(b => b.classList.remove('on'));
@@ -479,7 +485,6 @@ document.querySelectorAll('.chip.mode').forEach(btn => {
     mode = btn.dataset.mode;
     $('protectRow').style.display = mode === 'protect' ? '' : 'none';
     if (mode === 'erase') toast('指でこすると消えます（2本指で拡大・移動）');
-    if (mode === 'restore') toast('指でこすると元にもどります（2本指で拡大・移動）');
     if (mode === 'protect') toast('タップで点を打ち「✓枠を確定」。枠の中は消えません。中をドラッグで移動、2本指で拡大縮小');
   };
 });
@@ -491,8 +496,10 @@ $('brushSize').onclick = function () {
 
 $('resetManual').onclick = () => {
   if (editBase) { outCtx.putImageData(editBase, 0, 0); outData = outCtx.getImageData(0, 0, W, H); }
+  clearUndo();
   toast('手直しをリセットしました');
 };
+$('undoStroke').onclick = undoStroke;
 
 // 字のこさスライダー：ドラッグ中も軽く追従（重い時は間引く）
 let toneQueued = false;
@@ -542,6 +549,7 @@ function tilt(deg) {
   editBase = outCtx.getImageData(0, 0, W, H);
   aiTone = null; $('contrastRow').style.display = 'none';   // トーンは寸法が変わるので無効化
   shapes = []; curPoly = []; activePoly = null; protectMask = null; drawOverlay();
+  clearUndo();
   applyZoom();
 }
 $('tiltL').onclick = () => tilt(-0.5);
@@ -567,6 +575,7 @@ $('newBtn').onclick = () => {
   lineMask = null; manual = null; origCanvas = null; restoreCanvas = null; outData = null; editBase = null;
   aiTone = null; $('contrastRow').style.display = 'none';
   cropMode = false; cropPts = null; cropDrag = null; $('cropRow').style.display = 'none';
+  clearUndo();
 };
 
 $('saveBtn').onclick = saveImage;
@@ -732,6 +741,7 @@ async function aiErase(key) {
       outCtx.drawImage(img, 0, 0, W, H);
       outData = outCtx.getImageData(0, 0, W, H);
       editBase = outCtx.getImageData(0, 0, W, H);   // 以後の手直しリセットはこのAI結果に戻す
+      clearUndo();
       $('contrastRow').style.display = aiTone ? 'flex' : 'none';   // 字のこさスライダーを出す
       toast('自家製AIで消しました。「字のこさ」で濃さを調整できます');
     } catch (e) {
@@ -1063,43 +1073,23 @@ async function runOndevice() {
 // 白(255)へは絶対に飛ばさない（飛ばすと薄い印刷ごと消えて真っ白になる）。
 let aiTone = null;
 function toneCurve(v, s) {
-  // s 0..100 こさ（大きいほど濃く・くっきり）。vは補正前グレー（小さいほど濃い）
-  const bp = 20 + s * 1.05;                  // 黒点：これ以下は真っ黒。s=80→104
+  // s 0..100 こさ（大きいほど濃く・くっきり）。vは補正前グレー（小さいほど濃い）。
+  // 「太らせず濃くする」方針：字を黒寄せしてくっきり見せる。太らせると小さい字が潰れるため。
+  const bp = 35 + s * 1.05;                  // 黒点：これ以下は真っ黒。s=80→119
   const wp = 210;                            // 参照白点（紙に近い薄インク）
   let n = (v - bp) / (wp - bp);
   n = n < 0 ? 0 : n > 1 ? 1 : n;
-  const cap = 200 - s * 1.6;                 // 最も薄い残し画素でもこの濃さ以下。s=80→72
+  const cap = 150 - s * 1.25;                // 最も薄い残し画素でもこの濃さ以下。s=80→50（濃いめ）
   if (s >= 96) return n < 0.5 ? 0 : cap;     // ソリッド：中間なし（でも白にはしない）
   return n * cap;
 }
 function toneCanvas() {
   const { w, h, keep, norm } = aiTone;
   const s = +(($('contrast') || {}).value || 80);
-  // まず素のグレーを作る（残す画素＝こさ変換、他＝白）
-  const g = new Uint8ClampedArray(w * h);
-  for (let i = 0; i < w * h; i++) g[i] = keep[i] ? toneCurve(norm[i], s) : 255;
-  // 掠れ対策：3×3 最小値フィルタ（黒を1px広げる）。既存の黒い値を広げるだけなので
-  // グレーのにじみが出ず、細い印刷が太く・濃くなり、線の小さな途切れも埋まる。
-  const th = new Uint8ClampedArray(w * h);
-  for (let y = 0; y < h; y++) {
-    const r = y * w;
-    for (let x = 0; x < w; x++) {
-      let m = g[r + x];
-      if (x > 0 && g[r + x - 1] < m) m = g[r + x - 1];
-      if (x < w - 1 && g[r + x + 1] < m) m = g[r + x + 1];
-      th[r + x] = m;
-    }
-  }
   const res = new Uint8ClampedArray(w * h * 4);
-  for (let y = 0; y < h; y++) {
-    const r = y * w;
-    for (let x = 0; x < w; x++) {
-      let m = th[r + x];
-      if (y > 0 && th[r + x - w] < m) m = th[r + x - w];
-      if (y < h - 1 && th[r + x + w] < m) m = th[r + x + w];
-      const o = (r + x) * 4;
-      res[o] = res[o + 1] = res[o + 2] = m; res[o + 3] = 255;
-    }
+  for (let i = 0; i < w * h; i++) {
+    const v = keep[i] ? toneCurve(norm[i], s) : 255;   // 残す画素＝濃さ変換、他＝白
+    res[i * 4] = res[i * 4 + 1] = res[i * 4 + 2] = v; res[i * 4 + 3] = 255;
   }
   const rc = document.createElement('canvas'); rc.width = w; rc.height = h;
   rc.getContext('2d').putImageData(new ImageData(res, w, h), 0, 0);
@@ -1113,6 +1103,7 @@ function applyTone() {
   outCtx.drawImage(rc, 0, 0, W, H);
   outData = outCtx.getImageData(0, 0, W, H);
   editBase = outCtx.getImageData(0, 0, W, H);
+  clearUndo();
 }
 
 async function callGemini(key, model, b64) {
@@ -1166,6 +1157,18 @@ async function callGemini(key, model, b64) {
 // ---------- 手直しブラシ ----------
 let drawing = false, lastPt = null;
 let strokeBackup = null;   // 2本指ピンチでストロークを取り消すためのバックアップ
+
+// けす（手直し）のやり直し用スタック。1操作ごとに直前のキャンバスを積む。
+let undoStack = [];
+const UNDO_MAX = 6;        // 端末メモリのため段数を限定
+function pushUndo(img) { undoStack.push(img); if (undoStack.length > UNDO_MAX) undoStack.shift(); }
+function clearUndo() { undoStack = []; }
+function undoStroke() {
+  if (!undoStack.length) { toast('戻せる操作がありません'); return; }
+  outCtx.putImageData(undoStack.pop(), 0, 0);
+  outData = outCtx.getImageData(0, 0, W, H);
+  toast('一つ戻しました');
+}
 
 function canvasPoint(e) { return clientToCanvas(e.clientX, e.clientY); }
 function clientToCanvas(cx, cy) {
@@ -1266,6 +1269,7 @@ function endStroke() {
   if (!drawing) return;
   drawing = false;
   lastPt = null;
+  if (strokeBackup) pushUndo(strokeBackup);   // このひと塗りの直前を「戻す」用に保存
   strokeBackup = null;
   outData = outCtx.getImageData(0, 0, W, H); // 比較・保存用に同期
 }
@@ -1393,6 +1397,7 @@ $('rotateBtn').onclick = async () => {
     outData = outCtx.getImageData(0, 0, W, H);
     editBase = outCtx.getImageData(0, 0, W, H);
     aiTone = null; $('contrastRow').style.display = 'none';
+    clearUndo();
   } finally {
     loading(false);
   }
@@ -1561,6 +1566,7 @@ function applyCrop() {
       shapes = []; curPoly = []; activePoly = null; shapeDrag = null; protectMask = null;
       cropMode = false; cropPts = null; cropDrag = null;
       $('cropRow').style.display = 'none';
+      clearUndo();
       drawOverlay();
       zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
       toast('切り抜きました。このまま「AIで消す」でOK');
@@ -1694,7 +1700,7 @@ async function openImage(file) {
     outCtx.drawImage(origCanvas, 0, 0);   // 最初は元写真をそのまま表示
     outData = outCtx.getImageData(0, 0, W, H);
     editBase = outCtx.getImageData(0, 0, W, H);   // 手直しリセットの戻り先
-    aiTone = null;
+    aiTone = null; clearUndo();
     $('contrastRow').style.display = 'none';
 
     $('home').style.display = 'none';

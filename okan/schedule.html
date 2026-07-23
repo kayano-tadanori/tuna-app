@@ -292,7 +292,7 @@
     <label class="chk"><input type="checkbox" id="evBento"> 🍱 弁当が必要</label>
     <p class="fLabel">色</p>
     <div class="palette" id="evPalette"></div>
-    <p class="fLabel" style="color:#94a3b8">※ 毎週・隔週・第◯曜日のくり返し予定は「📋登録」から</p>
+    <p class="fLabel" style="color:#94a3b8">※ 毎週・隔週・第◯曜日のくり返し予定や、講習の複数日指定は「📋登録」から</p>
     <div class="sheetBtns">
       <button class="btn btnDanger" id="evDelete" style="display:none">削除</button>
       <button class="btn btnPink" id="evSave">保存</button>
@@ -353,12 +353,21 @@
     </select>
     <p class="fLabel">メモ・補足（なくてもOK。例：教室が変わる）</p>
     <input class="fInput" id="rgName" placeholder="自由に入力" autocomplete="off">
-    <p class="fLabel">曜日</p>
-    <select class="fInput" id="rgDow">
-      <option value="0">日曜</option><option value="1">月曜</option><option value="2">火曜</option>
-      <option value="3">水曜</option><option value="4">木曜</option><option value="5">金曜</option>
-      <option value="6">土曜</option>
-    </select>
+    <div id="rgDowWrap">
+      <p class="fLabel">曜日</p>
+      <select class="fInput" id="rgDow">
+        <option value="0">日曜</option><option value="1">月曜</option><option value="2">火曜</option>
+        <option value="3">水曜</option><option value="4">木曜</option><option value="5">金曜</option>
+        <option value="6">土曜</option>
+      </select>
+    </div>
+    <p class="fLabel">複数日指定（春期・夏期・冬期講習など、日をえらんでまとめて登録）</p>
+    <div class="fRow">
+      <input class="fInput" type="date" id="rgDatePick" style="flex:2">
+      <button type="button" class="btn btnGray" id="rgDateAdd" style="flex:1">＋追加</button>
+    </div>
+    <div class="menuChips" id="rgDateChips" style="margin-top:7px"></div>
+    <p class="fLabel" style="color:#94a3b8;font-weight:700">※ 日を1つでも入れると、曜日・くり返しは使わず「えらんだ日」だけに予定が入ります（受講Noは日ごとに進みます）。追加すると日付は自動で次の日に進むので、連日の講習もポンポン入れられます。日のチップをタップで取り消し</p>
     <div class="fRow">
       <div>
         <p class="fLabel">開始時間（なくてもOK）</p>
@@ -370,6 +379,7 @@
       </div>
     </div>
     <label class="chk"><input type="checkbox" id="rgBento"> 🍱 弁当が必要</label>
+    <div id="rgRepeatWrap">
     <p class="fLabel">くり返し</p>
     <select class="fInput" id="rgRepeat">
       <option value="weekly">毎週</option>
@@ -400,6 +410,7 @@
         <p class="fLabel" style="font-size:11px">終了日（資格を失う日など）</p>
         <input class="fInput" type="date" id="rgEnd">
       </div>
+    </div>
     </div>
     <p class="fLabel">色</p>
     <div class="palette" id="rgPalette"></div>
@@ -473,6 +484,7 @@ function load() {
     if (w.subject === undefined) w.subject = '';
     if (w.ltype === undefined) w.ltype = '';
     if (!w.except) w.except = [];
+    if (!Array.isArray(w.dates)) w.dates = [];   // 複数日指定（講習用）
   }
   for (const e of d.events) {
     if (e.timeEnd === undefined) e.timeEnd = '';
@@ -603,8 +615,10 @@ function cycEndOf(cycStart) { return `${(+cycStart.slice(0, 4)) + 1}-01-31`; }
 // ---------- くり返しの判定 ----------
 function occursOn(w, dateStr, d) {
   if (isAdjust(dateStr)) return false;   // 調整日は塾全体がお休み
-  if (w.dow !== d.getDay()) return false;
   if ((w.except || []).includes(dateStr)) return false;
+  // 複数日指定（講習）：えらんだ日だけ。曜日・くり返し・受講期間は見ない
+  if (w.dates && w.dates.length) return w.dates.includes(dateStr);
+  if (w.dow !== d.getDay()) return false;
   // 受講期間：開始日/終了日の手入力があればそれに従い、無ければカリキュラム年(2/1〜翌1/31)で自動
   const lo = w.startDate || w.cyc;
   const hi = w.endDate || (w.cyc ? cycEndOf(w.cyc) : '');
@@ -624,6 +638,11 @@ function occursOn(w, dateStr, d) {
 }
 
 function repeatLabel(w) {
+  if (w.dates && w.dates.length) {   // 複数日指定：期間と日数で表す
+    const md = s => { const d = new Date(s + 'T00:00:00'); return `${d.getMonth() + 1}/${d.getDate()}`; };
+    const f = w.dates[0], l = w.dates[w.dates.length - 1];
+    return w.dates.length === 1 ? md(f) + 'のみ' : `${md(f)}〜${md(l)}・${w.dates.length}日`;
+  }
   const r = w.repeat || { type: 'weekly' };
   if (r.type === 'biweekly') return '隔週' + DOWS[w.dow];
   if (r.type === 'nth') return '第' + (r.nth || []).join('・') + DOWS[w.dow];
@@ -1025,6 +1044,35 @@ document.querySelectorAll('#rgNthChips .tab').forEach(b => {
   b.onclick = () => b.classList.toggle('on');
 });
 
+// 複数日指定（春期・夏期・冬期講習など）。日を1つでも入れると曜日・くり返しは使わない
+let rgDates = [];
+function renderRgDates() {
+  const box = $('rgDateChips');
+  box.innerHTML = '';
+  for (const ds of rgDates) {
+    const d = new Date(ds + 'T00:00:00');
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'menuChip on';
+    b.textContent = `${d.getMonth() + 1}/${d.getDate()}(${DOWS[d.getDay()]}) ✕`;
+    b.onclick = () => { rgDates = rgDates.filter(x => x !== ds); renderRgDates(); };
+    box.appendChild(b);
+  }
+  const on = rgDates.length > 0;
+  $('rgDowWrap').style.display = on ? 'none' : '';
+  $('rgRepeatWrap').style.display = on ? 'none' : '';
+}
+$('rgDateAdd').onclick = () => {
+  const v = $('rgDatePick').value;
+  if (!v) { alert('日付をえらんでください'); return; }
+  if (!rgDates.includes(v)) { rgDates.push(v); rgDates.sort(); }
+  // 講習は連日が多いので、日付を次の日へ進めておく（続けてポンポン追加できる）
+  const nx = new Date(v + 'T00:00:00');
+  nx.setDate(nx.getDate() + 1);
+  $('rgDatePick').value = fmt(nx);
+  renderRgDates();
+};
+
 function openRegForm(w) {
   regEditing = w ? w.id : null;
   $('regFormTitle').textContent = w ? '定期予定を編集' : '定期予定を登録';
@@ -1055,8 +1103,11 @@ function openRegForm(w) {
     b.classList.toggle('on', (r.nth || []).includes(+b.dataset.nth)));
   rgColor = w ? w.color : COLORS[Math.floor(Math.random() * COLORS.length)];
   $('rgDelete').style.display = w ? '' : 'none';
+  rgDates = w ? (w.dates || []).slice() : [];
+  $('rgDatePick').value = selDate || todayStr();
   buildRgPalette();
   updateRgRepeatUI();
+  renderRgDates();
   $('regFormSheet').classList.add('open');
 }
 
@@ -1064,13 +1115,14 @@ $('rgSave').onclick = () => {
   const title = $('rgName').value.trim();
   const subject = getSubjChips('rgSubjChips'), ltype = $('rgLtype').value;
   if (!title && !subject && !ltype) { alert('科目・種類・メモのどれかを入れてください'); return; }
-  const type = $('rgRepeat').value;
+  const dates = rgDates.slice().sort();   // 複数日指定。あれば曜日・くり返しは使わない
+  const type = dates.length ? 'weekly' : $('rgRepeat').value;
   const repeat = { type };
-  if (type === 'biweekly') {
+  if (!dates.length && type === 'biweekly') {
     if (!$('rgAnchor').value) { alert('隔週の基準になる直近の実施日を入れてください'); return; }
     repeat.anchor = $('rgAnchor').value;
   }
-  if (type === 'nth') {
+  if (!dates.length && type === 'nth') {
     repeat.nth = [...document.querySelectorAll('#rgNthChips .tab.on')].map(b => +b.dataset.nth);
     if (!repeat.nth.length) { alert('第何週かを選んでください'); return; }
   }
@@ -1086,6 +1138,7 @@ $('rgSave').onclick = () => {
     timeEnd: $('rgTimeEnd').value,
     bento: $('rgBento').checked,
     repeat,
+    dates,                           // 複数日指定（講習用）。空なら通常のくり返し
     color: rgColor,
     startDate: $('rgStart').value,   // 受講期間（任意）。空欄なら年度で自動
     endDate: $('rgEnd').value,
@@ -1094,7 +1147,8 @@ $('rgSave').onclick = () => {
   // 受講Noの基準日：Noを新しく入れた／変えたときは「今日以降の最初の実施日」＝そのNoの回
   if (item.no) {
     const noChanged = !prev || prev.no !== item.no || !prev.noAnchor ||
-      prev.dow !== item.dow || JSON.stringify(prev.repeat) !== JSON.stringify(repeat);
+      prev.dow !== item.dow || JSON.stringify(prev.repeat) !== JSON.stringify(repeat) ||
+      JSON.stringify(prev.dates || []) !== JSON.stringify(dates);
     item.noAnchor = noChanged ? nextOccurrence(item) : prev.noAnchor;
   } else {
     item.noAnchor = '';
