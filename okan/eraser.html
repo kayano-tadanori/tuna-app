@@ -495,8 +495,9 @@ $('brushSize').onclick = function () {
 };
 
 $('resetManual').onclick = () => {
-  if (editBase) { outCtx.putImageData(editBase, 0, 0); outData = outCtx.getImageData(0, 0, W, H); }
-  clearUndo();
+  resetManualLayer();
+  if (editBase) renderComposite();
+  clearUndo(); resetManualLayer();
   toast('手直しをリセットしました');
 };
 $('undoStroke').onclick = undoStroke;
@@ -549,7 +550,7 @@ function tilt(deg) {
   editBase = outCtx.getImageData(0, 0, W, H);
   aiTone = null; $('contrastRow').style.display = 'none';   // トーンは寸法が変わるので無効化
   shapes = []; curPoly = []; activePoly = null; protectMask = null; drawOverlay();
-  clearUndo();
+  clearUndo(); resetManualLayer();
   applyZoom();
 }
 $('tiltL').onclick = () => tilt(-0.5);
@@ -575,7 +576,7 @@ $('newBtn').onclick = () => {
   lineMask = null; manual = null; origCanvas = null; restoreCanvas = null; outData = null; editBase = null;
   aiTone = null; $('contrastRow').style.display = 'none';
   cropMode = false; cropPts = null; cropDrag = null; $('cropRow').style.display = 'none';
-  clearUndo();
+  clearUndo(); resetManualLayer();
 };
 
 $('saveBtn').onclick = saveImage;
@@ -741,7 +742,7 @@ async function aiErase(key) {
       outCtx.drawImage(img, 0, 0, W, H);
       outData = outCtx.getImageData(0, 0, W, H);
       editBase = outCtx.getImageData(0, 0, W, H);   // 以後の手直しリセットはこのAI結果に戻す
-      clearUndo();
+      clearUndo(); resetManualLayer();
       $('contrastRow').style.display = aiTone ? 'flex' : 'none';   // 字のこさスライダーを出す
       toast('自家製AIで消しました。「字のこさ」で濃さを調整できます');
     } catch (e) {
@@ -1101,9 +1102,8 @@ function applyTone() {
   const rc = toneCanvas();
   outCtx.fillStyle = '#ffffff'; outCtx.fillRect(0, 0, W, H);
   outCtx.drawImage(rc, 0, 0, W, H);
-  outData = outCtx.getImageData(0, 0, W, H);
-  editBase = outCtx.getImageData(0, 0, W, H);
-  clearUndo();
+  editBase = outCtx.getImageData(0, 0, W, H);   // 土台だけを更新（手直しは含めない）
+  renderComposite();                            // 手直しレイヤーを上に戻す＝消した所は消えたまま
 }
 
 async function callGemini(key, model, b64) {
@@ -1158,15 +1158,32 @@ async function callGemini(key, model, b64) {
 let drawing = false, lastPt = null;
 let strokeBackup = null;   // 2本指ピンチでストロークを取り消すためのバックアップ
 
-// けす（手直し）のやり直し用スタック。1操作ごとに直前のキャンバスを積む。
+// 手直しレイヤー：指で消した／戻した分だけを別キャンバスに記録しておく。
+// これが無いと「字のこさ」を動かしたとき土台を塗り直して手直しが消えてしまう。
+// 画面 ＝ editBase（AI結果＝土台）＋ manualCanvas（手直し）で常に composite する。
+let manualCanvas = null, manualCtx = null;
+function ensureManualLayer() {   // 用意するだけ（中身は消さない）
+  if (!manualCanvas) { manualCanvas = document.createElement('canvas'); manualCtx = manualCanvas.getContext('2d'); }
+  if (manualCanvas.width !== W || manualCanvas.height !== H) { manualCanvas.width = W; manualCanvas.height = H; }
+}
+function resetManualLayer() { ensureManualLayer(); manualCtx.clearRect(0, 0, W, H); }   // 手直しを白紙に
+function renderComposite() {
+  if (!editBase) return;
+  outCtx.putImageData(editBase, 0, 0);
+  if (manualCanvas) outCtx.drawImage(manualCanvas, 0, 0);
+  outData = outCtx.getImageData(0, 0, W, H);
+}
+
+// けす（手直し）のやり直し用スタック。1操作ごとに手直しレイヤーの直前を積む。
 let undoStack = [];
 const UNDO_MAX = 6;        // 端末メモリのため段数を限定
 function pushUndo(img) { undoStack.push(img); if (undoStack.length > UNDO_MAX) undoStack.shift(); }
 function clearUndo() { undoStack = []; }
 function undoStroke() {
   if (!undoStack.length) { toast('戻せる操作がありません'); return; }
-  outCtx.putImageData(undoStack.pop(), 0, 0);
-  outData = outCtx.getImageData(0, 0, W, H);
+  ensureManualLayer();
+  manualCtx.putImageData(undoStack.pop(), 0, 0);
+  renderComposite();
   toast('一つ戻しました');
 }
 
@@ -1178,35 +1195,39 @@ function clientToCanvas(cx, cy) {
 
 function stamp(x, y) {
   const r = Math.max(6, Math.round(outCanvas.width * SIZES[sizeIdx][1]));
-  // 画面に直接描く（軽い）
-  // けす＝白く塗る／もどす＝元写真から戻す（どちらも円の中だけ）
-  outCtx.save();
-  outCtx.beginPath();
-  outCtx.arc(x, y, r, 0, Math.PI * 2);
-  outCtx.clip();
-  if (mode === 'erase') {
-    outCtx.fillStyle = '#ffffff';
-    outCtx.fillRect(x - r, y - r, r * 2, r * 2);
-  } else {
-    outCtx.drawImage(origCanvas, 0, 0);   // 元写真から戻す
-  }
-  outCtx.restore();
-
-  // 保護枠：塗った直後に、枠の内側だけ元写真へ戻して守る
-  const polys = protectPolys();
-  if (polys.length) {
-    outCtx.save();
-    outCtx.beginPath(); outCtx.arc(x, y, r, 0, Math.PI * 2); outCtx.clip();
-    outCtx.beginPath();
-    for (const pts of polys) {
-      outCtx.moveTo(pts[0].x, pts[0].y);
-      for (const p of pts.slice(1)) outCtx.lineTo(p.x, p.y);
-      outCtx.closePath();
+  // 画面と手直しレイヤーの両方に同じ塗りをする。レイヤーに残しておくことで、
+  // 「字のこさ」で土台を塗り直しても手直しが消えない。
+  const paint = (ctx) => {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.clip();
+    if (mode === 'erase') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    } else {
+      ctx.drawImage(origCanvas, 0, 0);   // 元写真から戻す
     }
-    outCtx.clip();
-    outCtx.drawImage(origCanvas, 0, 0);
-    outCtx.restore();
-  }
+    ctx.restore();
+
+    // 保護枠：塗った直後に、枠の内側だけ元写真へ戻して守る
+    const polys = protectPolys();
+    if (polys.length) {
+      ctx.save();
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.clip();
+      ctx.beginPath();
+      for (const pts of polys) {
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (const p of pts.slice(1)) ctx.lineTo(p.x, p.y);
+        ctx.closePath();
+      }
+      ctx.clip();
+      ctx.drawImage(origCanvas, 0, 0);
+      ctx.restore();
+    }
+  };
+  paint(outCtx);
+  if (manualCtx) paint(manualCtx);
 }
 
 function stampLine(a, b) {
@@ -1235,7 +1256,8 @@ outCanvas.addEventListener('pointerdown', e => {
   }
   outCanvas.setPointerCapture(e.pointerId);
   drawing = true;
-  strokeBackup = outCtx.getImageData(0, 0, W, H);   // 2本指で取り消す用の直前状態
+  ensureManualLayer();
+  strokeBackup = manualCtx.getImageData(0, 0, W, H);   // 手直しレイヤーの直前状態（取り消し・戻す用）
   lastPt = canvasPoint(e);
   stamp(lastPt.x, lastPt.y);
 });
@@ -1397,7 +1419,7 @@ $('rotateBtn').onclick = async () => {
     outData = outCtx.getImageData(0, 0, W, H);
     editBase = outCtx.getImageData(0, 0, W, H);
     aiTone = null; $('contrastRow').style.display = 'none';
-    clearUndo();
+    clearUndo(); resetManualLayer();
   } finally {
     loading(false);
   }
@@ -1566,7 +1588,7 @@ function applyCrop() {
       shapes = []; curPoly = []; activePoly = null; shapeDrag = null; protectMask = null;
       cropMode = false; cropPts = null; cropDrag = null;
       $('cropRow').style.display = 'none';
-      clearUndo();
+      clearUndo(); resetManualLayer();
       drawOverlay();
       zoom = 1; fitW = wrap.clientWidth - 16; applyZoom();
       toast('切り抜きました。このまま「AIで消す」でOK');
@@ -1586,8 +1608,12 @@ function cancelStroke() {
   if (!drawing) return;
   drawing = false;
   lastPt = null;
-  if (strokeBackup) { outCtx.putImageData(strokeBackup, 0, 0); outData = outCtx.getImageData(0, 0, W, H); strokeBackup = null; }
-  if (outData) outCtx.putImageData(outData, 0, 0);
+  if (strokeBackup) {   // 手直しレイヤーをひと塗り前に戻して描き直す
+    ensureManualLayer();
+    manualCtx.putImageData(strokeBackup, 0, 0);
+    strokeBackup = null;
+    renderComposite();
+  }
 }
 outCanvas.addEventListener('pointerup', endStroke);
 outCanvas.addEventListener('pointercancel', endStroke);
@@ -1700,7 +1726,7 @@ async function openImage(file) {
     outCtx.drawImage(origCanvas, 0, 0);   // 最初は元写真をそのまま表示
     outData = outCtx.getImageData(0, 0, W, H);
     editBase = outCtx.getImageData(0, 0, W, H);   // 手直しリセットの戻り先
-    aiTone = null; clearUndo();
+    aiTone = null; clearUndo(); resetManualLayer();
     $('contrastRow').style.display = 'none';
 
     $('home').style.display = 'none';
