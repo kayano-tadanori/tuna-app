@@ -38,7 +38,7 @@
   #topBar {
     display: flex; align-items: center; gap: 6px;
     padding: 8px 10px; background: #fff; border-bottom: 1px solid #e2e8f0; flex-shrink: 0;
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap;   /* 狭い画面ではタブを2段以上に折り返す（画面外に消えないように） */
   }
   #topBar > * { flex-shrink: 0; }
   .tab {
@@ -1962,7 +1962,11 @@ function parseKojinhyoA(raw, kind) {
   // 見出しはその手前から、クラス平均はその後ろから探す。表以外の文字が付いてきても迷わない。
   const meIdx = lines.findIndex(l => l.includes('あなたの成績'));
   const headTo = meIdx >= 0 ? meIdx : lines.length;
-  const headFrom = meIdx >= 0 ? Math.max(0, meIdx - 20) : 0;
+  // 見出しは「あなたの成績」より上を全部さかのぼって探す。クラス内順位表では
+  // 他の子の行が20行以上並ぶことがあり（最レ25人・講習22人など）、範囲を狭めると
+  // 月・日・科目・テストNo. の行に届かず1件も読めなくなる。
+  // 下から上へ探して最初に見つかった行を採るので、いちばん近い＝その表の見出しになる。
+  const headFrom = 0;
   // 軸の手前でいちばん近い行を採る（見つからなければ後ろも探す）
   const pick = test => {
     for (let i = headTo - 1; i >= headFrom; i--) if (test(lines[i])) return lines[i];
