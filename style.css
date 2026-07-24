@@ -485,7 +485,27 @@ button { cursor: pointer; font-family: inherit; }
 .grade-sub { font-size: 0.65rem; font-weight: 700; color: var(--gold); letter-spacing: 0; }
 
 /* モード選択 */
-.sansu-mode-grid { display: flex; gap: 10px; margin-bottom: 4px; }
+.sansu-mode-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 4px; }
+.sansu-mode-grid .sansu-mode-btn { flex: 1 1 calc(50% - 5px); }
+
+/* じゅくナビ（塾の講義No.連動） */
+.hama-panel { background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius); padding: 14px 12px; display: flex; flex-direction: column; gap: 12px; }
+.hama-course-row { display: flex; gap: 8px; }
+.hama-course-btn { flex: 1 1 0; min-height: 40px; padding: 8px 6px; background: transparent; border: 1.5px solid var(--glass-border); color: var(--sub2); border-radius: var(--radius-xs); font-size: 0.85rem; font-weight: 800; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.hama-course-btn.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+.hama-no-row { display: flex; align-items: stretch; gap: 10px; }
+.hama-step-btn { width: 52px; min-height: 56px; background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-xs); font-size: 1.5rem; font-weight: 900; transition: background 0.15s, transform 0.1s; }
+.hama-step-btn:active { transform: scale(0.94); }
+.hama-no-box { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.hama-no-label { font-size: 1.5rem; font-weight: 900; color: var(--accent2); line-height: 1.1; }
+.hama-no-title { font-size: 0.8rem; font-weight: 700; color: var(--sub2); text-align: center; overflow-wrap: anywhere; }
+.hama-hint { font-size: 0.68rem; color: var(--sub2); text-align: center; margin: 0; line-height: 1.5; }
+.hama-actions { display: flex; flex-direction: column; gap: 8px; }
+.hama-act-btn { width: 100%; min-height: 52px; padding: 10px 14px; background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: background 0.15s, transform 0.1s; }
+.hama-act-btn:active { transform: scale(0.98); }
+.hama-act-btn[disabled] { opacity: 0.45; }
+.hama-act-name { font-size: 0.92rem; font-weight: 800; }
+.hama-act-sub { font-size: 0.75rem; font-weight: 700; color: var(--sub2); white-space: nowrap; }
 .sansu-mode-btn { flex: 1 1 0; min-width: 0; background: var(--card); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius); padding: 12px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.9rem; font-weight: 700; min-height: 80px; transition: background 0.15s, border-color 0.15s, transform 0.1s; }
 .sansu-mode-btn .mode-icon { font-size: 1.5rem; }
 .sansu-mode-btn .mode-name { font-size: 0.78rem; font-weight: 900; text-align: center; }

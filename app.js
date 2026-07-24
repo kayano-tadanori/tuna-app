@@ -1451,7 +1451,7 @@ const SANSU_FILES = {
 const SANSU_CAT_LABELS = {
   bakuhatsu:'バクハツ', keisan:'計算', bun:'文章題', zu:'平面図形', kisoku:'規則性',
   tokusan:'特殊算', baai:'場合の数', kazu:'数の性質',
-  wariai:'割合と比', hayasa:'速さ', rittai:'立体図形'
+  wariai:'割合と比', hayasa:'速さ', rittai:'立体図形', hama:'じゅくナビ'
 };
 const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'激ムズ', 5:'灘中レベル', gachi:'灘中レベル（ガチ）' };
 const DRILL_TYPE_LABELS = {
@@ -1621,7 +1621,8 @@ const sansuCache = {};
 const sansuState = {
   subject: 'sansu', // 'sansu' | 'rika'
   grade: null, diff: null, cat: null,
-  mode: null, // 'normal' | 'drill'
+  mode: null, // 'normal' | 'drill' | 'hama'
+  hamaCourse: null, // じゅくナビのコース（master / sairei）
   drillType: null, drillDiff: null, drillTime: null,
   questions: [], current: 0, correct: 0, wrong: 0,
   // ドリル
@@ -1640,6 +1641,178 @@ async function loadSansuQuestions(cat, grade, diff) {
     sansuCache[key] = await res.json();
   }
   return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
+}
+
+// ── じゅくナビ（塾の講義No.に合わせた出題） ──────────────
+// data/hama_map.json に「講義No.→問題ID帯」の対応表を持ち、問題データ本体は変更しない。
+// 現在No.は子ども（ニックネーム）ごとに保存し、週に1つ自動で進む。ズレたら±で直せる。
+let hamaMap = null;
+const HAMA_WINDOW = 12;      // 公開テストの範囲＝直近3ヶ月ぶん（週1回×12回）
+const HAMA_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+async function loadHamaMap() {
+  if (!hamaMap) {
+    const res = await fetch('data/hama_map.json');
+    hamaMap = await res.json();
+  }
+  return hamaMap;
+}
+function hamaCourses(grade) {
+  const g = hamaMap && hamaMap.grades && hamaMap.grades[String(grade)];
+  return g ? g.courses : null;
+}
+function hamaStoreKey() { return `hamaNav_${state.nickname || 'guest'}`; }
+function getHamaStore() {
+  try { return JSON.parse(localStorage.getItem(hamaStoreKey()) || '{}'); } catch (e) { return {}; }
+}
+function saveHamaStore(s) { localStorage.setItem(hamaStoreKey(), JSON.stringify(s)); }
+
+// 保存してある日付から経過週ぶんNo.を自動で進める（上限は対応表の最終回）
+function hamaCurrent(grade, course) {
+  const store = getHamaStore();
+  const rec = (store[grade] || {})[course];
+  const courses = hamaCourses(grade);
+  const lessons = courses && courses[course] ? courses[course].lessons : [];
+  if (!rec || !lessons.length) return null;
+  const maxNo = lessons[lessons.length - 1].no;
+  let no = rec.no;
+  const weeks = Math.floor((Date.now() - rec.ts) / HAMA_WEEK_MS);
+  if (weeks > 0) {
+    no = Math.min(maxNo, no + weeks);
+    setHamaCurrent(grade, course, no, rec.ts + weeks * HAMA_WEEK_MS);
+  }
+  return no;
+}
+function setHamaCurrent(grade, course, no, ts) {
+  const store = getHamaStore();
+  if (!store[grade]) store[grade] = {};
+  store[grade][course] = { no, ts: ts || Date.now() };
+  saveHamaStore(store);
+}
+
+// 指定した講義No.の範囲から問題を集める（sel の ID 帯に入るものだけ）
+function hamaIdNum(id) { return Number(String(id).replace(/\D/g, '')); }
+function hamaIdPrefix(id) { return String(id).replace(/[0-9]/g, ''); }
+async function hamaCollect(grade, course, fromNo, toNo) {
+  const courses = hamaCourses(grade);
+  if (!courses || !courses[course]) return [];
+  const lessons = courses[course].lessons.filter(l => l.no >= fromNo && l.no <= toNo);
+  const need = {};   // cat -> [[prefix, from, to], ...]
+  lessons.forEach(l => (l.sel || []).forEach(s => {
+    if (!need[s.cat]) need[s.cat] = [];
+    s.ids.forEach(([a, b]) => need[s.cat].push([hamaIdPrefix(a), hamaIdNum(a), hamaIdNum(b)]));
+  }));
+  const out = [];
+  for (const cat of Object.keys(need)) {
+    const key = `sansu-${cat}`;
+    if (!sansuCache[key]) {
+      if (!SANSU_FILES[cat]) continue;
+      const res = await fetch(SANSU_FILES[cat]);
+      sansuCache[key] = await res.json();
+    }
+    sansuCache[key].forEach(q => {
+      const p = hamaIdPrefix(q.id), n = hamaIdNum(q.id);
+      if (need[cat].some(([pre, a, b]) => pre === p && n >= a && n <= b)) out.push(q);
+    });
+  }
+  return out;
+}
+
+function hamaLessonTitle(grade, course, no) {
+  const courses = hamaCourses(grade);
+  const l = courses && courses[course] && courses[course].lessons.find(x => x.no === no);
+  return l ? l.title : '';
+}
+
+// じゅくナビ画面の描画（コース切替・No.表示・各ボタンの問題数）
+async function renderHamaPanel() {
+  const grade = sansuState.grade;
+  const courses = hamaCourses(grade);
+  const row = document.getElementById('hama-course-row');
+  const label = document.getElementById('hama-no-label');
+  const title = document.getElementById('hama-no-title');
+  const hint = document.getElementById('hama-hint');
+  const acts = document.querySelectorAll('.hama-act-btn');
+  if (!courses) {
+    row.innerHTML = '';
+    label.textContent = 'No.—';
+    title.textContent = 'この学年の対応表はまだありません';
+    hint.textContent = '小3のマスター／最レに対応しています。';
+    acts.forEach(b => { b.disabled = true; });
+    ['week', 'kokai', 'senshu'].forEach(k => { document.getElementById('hama-cnt-' + k).textContent = '—'; });
+    return;
+  }
+  const keys = Object.keys(courses);
+  if (!sansuState.hamaCourse || !courses[sansuState.hamaCourse]) sansuState.hamaCourse = keys[0];
+  row.innerHTML = keys.map(k =>
+    `<button class="hama-course-btn${k === sansuState.hamaCourse ? ' selected' : ''}" data-hama-course="${k}">${courses[k].label}</button>`
+  ).join('');
+  row.querySelectorAll('.hama-course-btn').forEach(b => {
+    b.onclick = () => { sansuState.hamaCourse = b.dataset.hamaCourse; renderHamaPanel(); };
+  });
+
+  const course = sansuState.hamaCourse;
+  const lessons = courses[course].lessons;
+  let no = hamaCurrent(grade, course);
+  if (no === null) {
+    // はじめて開いたときは、まん中あたりを初期値にして「合わせてね」と促す
+    no = lessons[Math.floor(lessons.length / 2)].no;
+    setHamaCurrent(grade, course, no);
+    hint.textContent = 'つぎの講義の番号に −／＋ で合わせてね。あとは毎週じどうで1つ進みます。';
+  } else {
+    hint.textContent = '毎週じどうで1つ進みます。ズレたら −／＋ で直せます。';
+  }
+  label.textContent = `No.${no}`;
+  title.textContent = hamaLessonTitle(grade, course, no) || '—';
+
+  const minNo = lessons[0].no, maxNo = lessons[lessons.length - 1].no;
+  document.getElementById('hama-minus').disabled = no <= minNo;
+  document.getElementById('hama-plus').disabled = no >= maxNo;
+
+  const ranges = {
+    week: [no, no],
+    kokai: [Math.max(minNo, no - HAMA_WINDOW), no],
+    senshu: [no + 1, Math.min(maxNo, no + HAMA_WINDOW)],
+  };
+  for (const k of Object.keys(ranges)) {
+    const [a, b] = ranges[k];
+    const qs = (a > b) ? [] : await hamaCollect(grade, course, a, b);
+    const el = document.getElementById('hama-cnt-' + k);
+    const btn = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
+    const span = (k === 'week') ? `No.${no}` : `No.${a}〜${b}`;
+    el.textContent = qs.length ? `${span}・${qs.length}問` : `${span}・まだ問題なし`;
+    if (btn) btn.disabled = !qs.length;
+  }
+}
+
+// じゅくナビから出題を開始する
+async function startHamaSession(kind) {
+  const grade = sansuState.grade, course = sansuState.hamaCourse;
+  const courses = hamaCourses(grade);
+  if (!courses || !courses[course]) return;
+  const lessons = courses[course].lessons;
+  const minNo = lessons[0].no, maxNo = lessons[lessons.length - 1].no;
+  const no = hamaCurrent(grade, course);
+  const range = kind === 'week' ? [no, no]
+    : kind === 'kokai' ? [Math.max(minNo, no - HAMA_WINDOW), no]
+      : [no + 1, Math.min(maxNo, no + HAMA_WINDOW)];
+  if (range[0] > range[1]) { showToast('この範囲にはまだ問題がありません'); return; }
+  showLoading();
+  try {
+    const all = await hamaCollect(grade, course, range[0], range[1]);
+    if (!all.length) { showToast('この範囲にはまだ問題がありません'); hideLoading(); return; }
+    const want = Number(document.getElementById('sansu-q-count').value) || 10;
+    const picked = shuffle(all).slice(0, want === 0 ? all.length : want);
+    sansuState.subject = 'sansu';
+    sansuState.cat = 'hama';
+    sansuState.questions = picked;
+    sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+    coinSessionEarned = 0;
+    hideLoading();
+    startSansuQuiz();
+  } catch (e) {
+    showToast('問題の読み込みに失敗しました'); hideLoading();
+  }
 }
 
 // ── 算数ホーム初期化（階層式ステップUI） ──────────────────
@@ -1704,27 +1877,48 @@ function initSansuHome() {
       btn.classList.add('selected');
       sansuState.mode = btn.dataset.sansuMode;
       if (sansuState.mode === 'normal') {
-        hideSansuSteps('sansu-step-dtype', 'sansu-step-time');
+        hideSansuSteps('sansu-step-dtype', 'sansu-step-time', 'sansu-step-hama');
         showSansuStep('sansu-step-cat');
         if (sansuState.cat) showSansuStep('sansu-step-diff');
+      } else if (sansuState.mode === 'hama') {
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        loadHamaMap().then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
+          .catch(() => showToast('じゅくナビの読み込みに失敗しました'));
       } else if (sansuState.mode === 'drill') {
-        hideSansuSteps('sansu-step-cat', 'sansu-step-diff');
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-hama');
         refreshDrillTypeAvailability();
         showSansuStep('sansu-step-dtype');
         if (sansuState.drillType) showSansuStep('sansu-step-drilldiff');
         if (sansuState.drillType && sansuState.drillDiff) showSansuStep('sansu-step-time');
       } else if (sansuState.mode === 'tora') {
-        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time', 'sansu-step-hama');
         initToraHome();
         showScreen('tora-home');
       } else {
-        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time', 'sansu-step-hama');
         showToast('もうすぐ追加されます！工事中🚧');
       }
       // ドリルは出題数不要
       document.getElementById('sansu-qcount-wrap').classList.toggle('hidden', sansuState.mode === 'drill');
       updateSansuStart();
     };
+  });
+
+  // じゅくナビ：No.の増減と、3つの出題ボタン
+  const hamaShift = (d) => {
+    const grade = sansuState.grade, course = sansuState.hamaCourse;
+    const courses = hamaCourses(grade);
+    if (!courses || !courses[course]) return;
+    const lessons = courses[course].lessons;
+    const cur = hamaCurrent(grade, course);
+    if (cur === null) return;
+    const next = Math.min(lessons[lessons.length - 1].no, Math.max(lessons[0].no, cur + d));
+    if (next !== cur) { setHamaCurrent(grade, course, next); renderHamaPanel(); }
+  };
+  document.getElementById('hama-minus').onclick = () => hamaShift(-1);
+  document.getElementById('hama-plus').onclick = () => hamaShift(1);
+  document.querySelectorAll('.hama-act-btn').forEach(btn => {
+    btn.onclick = () => startHamaSession(btn.dataset.hamaAct);
   });
 
   // STEP3: カテゴリ（算数ホーム内）

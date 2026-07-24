@@ -688,6 +688,42 @@
           <span class="mode-name">虎の巻</span>
           <span class="mode-desc">知識をまとめて読む</span>
         </button>
+        <button class="sansu-mode-btn" data-sansu-mode="hama">
+          <span class="mode-icon">🎒</span>
+          <span class="mode-name">じゅくナビ</span>
+          <span class="mode-desc">じゅくの進度に合わせる</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- じゅくナビ（塾の講義No.に合わせて出題） -->
+    <div id="sansu-step-hama" class="sansu-step hidden">
+      <section class="section-label"><span class="step-badge">じゅくナビ</span>いまの進みぐあい</section>
+      <div id="hama-panel" class="hama-panel">
+        <div class="hama-course-row" id="hama-course-row"></div>
+        <div class="hama-no-row">
+          <button class="hama-step-btn" id="hama-minus" aria-label="ひとつ前にもどす">−</button>
+          <div class="hama-no-box">
+            <div class="hama-no-label" id="hama-no-label">No.—</div>
+            <div class="hama-no-title" id="hama-no-title">まだ設定されていません</div>
+          </div>
+          <button class="hama-step-btn" id="hama-plus" aria-label="ひとつ先に進める">＋</button>
+        </div>
+        <p class="hama-hint" id="hama-hint">つぎの講義の番号に合わせてね。毎週じどうで1つ進みます。</p>
+        <div class="hama-actions">
+          <button class="hama-act-btn" data-hama-act="week">
+            <span class="hama-act-name">📝 今週の復習テスト</span>
+            <span class="hama-act-sub" id="hama-cnt-week">—</span>
+          </button>
+          <button class="hama-act-btn" data-hama-act="kokai">
+            <span class="hama-act-name">🎯 公開テストのはんい</span>
+            <span class="hama-act-sub" id="hama-cnt-kokai">—</span>
+          </button>
+          <button class="hama-act-btn" data-hama-act="senshu">
+            <span class="hama-act-name">🚀 先どり</span>
+            <span class="hama-act-sub" id="hama-cnt-senshu">—</span>
+          </button>
+        </div>
       </div>
     </div>
 
