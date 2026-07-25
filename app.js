@@ -1777,11 +1777,17 @@ async function renderHamaPanel() {
   document.getElementById('hama-minus').disabled = no <= minNo;
   document.getElementById('hama-plus').disabled = no >= maxNo;
 
+  // 公開学力テストの出題範囲に最高レベル特訓の内容は含まれない（本人確認 2026-07-26）。
+  // 最レを選んでいるときは「公開テストのはんい」ボタン自体を出さない。
+  const showKokai = (course !== 'sairei');
+  const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
+  if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
+
   const ranges = {
     week: [no, no],
-    kokai: [Math.max(minNo, no - HAMA_WINDOW), no],
     senshu: [no + 1, Math.min(maxNo, no + HAMA_WINDOW)],
   };
+  if (showKokai) ranges.kokai = [Math.max(minNo, no - HAMA_WINDOW), no];
   for (const k of Object.keys(ranges)) {
     const [a, b] = ranges[k];
     const noRange = (a > b);   // 先どりで、まだ先の回が無いとき
