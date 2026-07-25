@@ -1697,22 +1697,30 @@ async function hamaCollect(grade, course, fromNo, toNo) {
   const courses = hamaCourses(grade);
   if (!courses || !courses[course]) return [];
   const lessons = courses[course].lessons.filter(l => l.no >= fromNo && l.no <= toNo);
-  const need = {};   // cat -> [[prefix, from, to], ...]
+  // ブロックは cat と学年ごとにまとめる。s.grade で学年を上書きできる（実力回＝小4総復習など）。
+  // s.all:true ならそのカテゴリ・学年の全問（ID帯を問わない）。
+  const need = {};   // "cat@grade" -> {cat, g, ranges, all}
   lessons.forEach(l => (l.sel || []).forEach(s => {
-    if (!need[s.cat]) need[s.cat] = [];
-    s.ids.forEach(([a, b]) => need[s.cat].push([hamaIdPrefix(a), hamaIdNum(a), hamaIdNum(b)]));
+    const g = s.grade || grade;
+    const nk = `${s.cat}@${g}`;
+    if (!need[nk]) need[nk] = { cat: s.cat, g, ranges: [], all: false };
+    if (s.all) need[nk].all = true;
+    (s.ids || []).forEach(([a, b]) => need[nk].ranges.push([hamaIdPrefix(a), hamaIdNum(a), hamaIdNum(b)]));
   }));
   const out = [];
-  for (const cat of Object.keys(need)) {
-    const key = `sansu-${cat}`;
+  for (const nk of Object.keys(need)) {
+    const info = need[nk];
+    const key = `sansu-${info.cat}`;
     if (!sansuCache[key]) {
-      if (!SANSU_FILES[cat]) continue;
-      const res = await fetch(SANSU_FILES[cat]);
+      if (!SANSU_FILES[info.cat]) continue;
+      const res = await fetch(SANSU_FILES[info.cat]);
       sansuCache[key] = await res.json();
     }
     sansuCache[key].forEach(q => {
+      if (q.grade !== info.g) return;   // その学年の問題だけ（ID帯が学年をまたいでも混ざらない）
+      if (info.all) { out.push(q); return; }
       const p = hamaIdPrefix(q.id), n = hamaIdNum(q.id);
-      if (need[cat].some(([pre, a, b]) => pre === p && n >= a && n <= b)) out.push(q);
+      if (info.ranges.some(([pre, a, b]) => pre === p && n >= a && n <= b)) out.push(q);
     });
   }
   return out;
@@ -1776,11 +1784,16 @@ async function renderHamaPanel() {
   };
   for (const k of Object.keys(ranges)) {
     const [a, b] = ranges[k];
-    const qs = (a > b) ? [] : await hamaCollect(grade, course, a, b);
+    const noRange = (a > b);   // 先どりで、まだ先の回が無いとき
+    const qs = noRange ? [] : await hamaCollect(grade, course, a, b);
     const el = document.getElementById('hama-cnt-' + k);
     const btn = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
     const span = (k === 'week') ? `No.${no}` : `No.${a}〜${b}`;
-    el.textContent = qs.length ? `${span}・${qs.length}問` : `${span}・まだ問題なし`;
+    if (noRange) {
+      el.textContent = (k === 'senshu') ? 'まだ習っていません' : 'はんい外';
+    } else {
+      el.textContent = qs.length ? `${span}・${qs.length}問` : `${span}・まだ問題なし`;
+    }
     if (btn) btn.disabled = !qs.length;
   }
 }
