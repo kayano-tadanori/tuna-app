@@ -1730,14 +1730,15 @@ async function renderSansuUnitRow() {
   const wrap = document.getElementById('sansu-unit-wrap');
   const row = document.getElementById('sansu-unit-row');
   if (!wrap || !row) return;
-  const { cat, grade } = sansuState;
-  if (!cat || !grade) { wrap.classList.add('hidden'); return; }
+  // 単元グループはカテゴリを横断するので cat は要らない。学年だけあれば描ける
+  const grade = sansuState.grade;
+  if (!grade) { row.innerHTML = '<p class="muted">先に学年をえらんでください。</p>'; return; }
+  row.innerHTML = '<p class="muted">単元をよみこんでいます…</p>';
   let units = [];
-  try { units = await sansuUnitsFor(cat, grade); } catch (e) { units = []; }
-  if (units.length < 2) { wrap.classList.add('hidden'); sansuState.unit = null; return; }
-  wrap.classList.remove('hidden');
+  try { units = await sansuUnitsFor(null, grade); } catch (e) { units = []; }
+  if (sansuState.grade !== grade) return;   // 読み込み中に学年が変わっていたら破棄
+  if (!units.length) { row.innerHTML = `<p class="muted">小${grade}で使える単元はまだありません。</p>`; return; }
   row.innerHTML =
-    `<button class="sansu-cat-btn${sansuState.unit ? '' : ' selected'}" data-unit="">ぜんぶ</button>` +
     units.map(([u, n]) =>
       `<button class="sansu-cat-btn${sansuState.unit === u ? ' selected' : ''}" data-unit="${u}">${u}<br><span style="font-size:.72em;opacity:.7">${n}問</span></button>`
     ).join('');
