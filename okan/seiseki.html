@@ -1056,6 +1056,15 @@ function qualCard(grade) {
   h += `<div class="abLine ${q.ok ? 'good' : ''}">${q.ok ? '✅ 資格あり' : '⏳ あと少し'}　直近3回のベスト ${q.best != null ? q.best + '位前後' : '—'}</div>`;
   h += `<div class="abLine">${req.rank}位のめやす <b>${q.needScore}点</b>（公開平均 ${q.avg}点）</div>`;
   h += `<div class="abLine">最新 ${last.ym} は ${last.score}点＝<b>${e ? e.rank + '位' + e.op : '—'}</b>　${d > 0 ? 'あと ' + d + '点' : (-d) + '点うわまわり'}</div>`;
+  // ★連続性＝トップ30は「毎回超える」ことが条件（単発では意味がない）
+  const recent = res.slice(0, 6);
+  if (recent.length >= 2) {
+    const avgs = recent.map(r => r.score / subj);
+    const mean = avgs.reduce((x, y) => x + y, 0) / avgs.length;
+    const cnt = a => avgs.filter(v => v >= a).length;
+    h += `<div class="abLine">直近${recent.length}回の公開平均 <b>${mean.toFixed(1)}点</b>　／　90点超え <b>${cnt(90)}/${recent.length}回</b>　87点超え <b>${cnt(87)}/${recent.length}回</b></div>`;
+    h += `<div class="abLine${cnt(90) === recent.length ? ' good' : ''}">${cnt(90) === recent.length ? '毎回90超え＝トップ30圏' : 'トップ30は「毎回90超え」が条件です'}</div>`;
+  }
   h += HAMA.bands.map(b => {
     const sc = Math.round(b.avg * subj), c = last.score - sc;
     return `<div class="abLine${c >= 0 ? ' good' : ''}">平均${b.avg}（${sc}点）${b.label}　${c >= 0 ? '+' + c : 'あと ' + (-c)}点</div>`;

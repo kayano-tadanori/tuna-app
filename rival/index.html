@@ -363,7 +363,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v13';
+const APP_VER = 'v14';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -779,6 +779,18 @@ function viewQual() {
     h += `<div class="sub" style="margin-top:6px">最新（${ymLabel(last.ym)}）${last.score}点＝<b>${e.rank}位${e.op}</b>`;
     h += d > 0 ? `　→ ${req.rank}位まで あと ${d}点` : `　→ ${req.rank}位を ${-d}点 うわまわり`;
     h += `</div>`;
+  }
+  // ★連続性＝トップ30は「毎回超える」ことが条件（単発では意味がない）
+  const recent = res.slice(0, 6);
+  if (recent.length >= 2) {
+    const avgs = recent.map(r => r.score / subj);
+    const mean = avgs.reduce((x, y) => x + y, 0) / avgs.length;
+    const cnt = a => avgs.filter(v => v >= a).length;
+    h += `<div style="margin-top:8px;padding-top:7px;border-top:1px solid #f1e3c8">
+      <div class="sub">直近${recent.length}回の公開平均 <b>${mean.toFixed(1)}点</b></div>
+      <div class="sub">90点超え <b>${cnt(90)}/${recent.length}回</b>　87点超え <b>${cnt(87)}/${recent.length}回</b></div>
+      <div class="sub" style="color:${cnt(90) === recent.length ? '#059669' : '#94a3b8'}">
+        ${cnt(90) === recent.length ? '毎回90超え＝トップ30圏' : 'トップ30は「毎回90超え」が条件です'}</div></div>`;
   }
   // はしご
   const bandRows = HAMA.bands.map(b => {
@@ -1313,11 +1325,21 @@ function openKokai(ym) {
     `<option value="${y}"${sel === y ? ' selected' : ''}>${y.split('-')[0]}年${+y.split('-')[1]}月度</option>`).join('');
   $('kkB100').value = k && k.b100 != null ? k.b100 : '';
   $('kkB10').value = k && k.b10 != null ? k.b10 : '';
+  // 前回の回の点をプレースホルダに出す（掲示を見ながら「前より上か下か」がすぐ分かる）
+  const _ymNow = $('kkYm').value;
+  const _prev = kokaiSorted().filter(x => x.ym < _ymNow).pop();
   $('kkRivals').innerHTML = db.rivals.length
-    ? db.rivals.map(r => `<div class="fRow" style="margin-bottom:6px;align-items:center">
-        <div style="flex:1.1;font-size:13px;font-weight:700;color:#334155">${esc(r.name)}</div>
-        <input class="fInput kkS" data-rid="${r.id}" type="number" inputmode="numeric" placeholder="点"
-          value="${k && k.scores && k.scores[r.id] != null ? k.scores[r.id] : ''}"></div>`).join('')
+    ? db.rivals.map(r => {
+        const cur = k && k.scores && k.scores[r.id] != null ? k.scores[r.id] : '';
+        const pv  = _prev && _prev.scores && _prev.scores[r.id] != null ? _prev.scores[r.id] : null;
+        const dif = (cur !== '' && pv != null) ? (+cur - +pv) : null;
+        return `<div class="fRow" style="margin-bottom:6px;align-items:center">
+        <div style="flex:1.1;font-size:13px;font-weight:700;color:#334155">${r.star?'⭐ ':''}${esc(r.name)}
+          ${pv != null ? `<span style="font-weight:600;color:#94a3b8;font-size:11px">　前回 ${pv}</span>` : ''}</div>
+        <input class="fInput kkS" data-rid="${r.id}" type="number" inputmode="numeric"
+          placeholder="${pv != null ? '前回 ' + pv : '点'}" value="${cur}">
+        <div style="width:46px;text-align:right;font-size:12px;font-weight:800;color:${dif==null?'#cbd5e1':dif>0?'#dc2626':dif<0?'#059669':'#94a3b8'}">${dif==null?'':(dif>0?'▲'+dif:dif<0?'▼'+(-dif):'±0')}</div></div>`;
+      }).join('')
     : `<p class="muted">先に「🏆ライバル」タブで登録してください。</p>`;
   $('kkDel').style.display = k ? '' : 'none';
   paintKkMine();
