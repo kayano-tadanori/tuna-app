@@ -752,7 +752,12 @@
 
     <!-- STEP3 カテゴリ選択（通常問題・グループ分類） -->
     <div id="sansu-step-cat" class="sansu-step hidden">
-      <section class="section-label"><span class="step-badge">STEP 3</span>カテゴリを選ぼう</section>
+      <section class="section-label"><span class="step-badge">STEP 3</span>何をやるか選ぼう</section>
+      <div class="sansu-cat-grid" id="pick-mode-row" style="margin-bottom:12px">
+        <button class="sansu-cat-btn selected" data-pick="cat">📚 種類でえらぶ<br><span style="font-size:.72em;opacity:.7">計算・文章題・図形…</span></button>
+        <button class="sansu-cat-btn" data-pick="unit">🎯 じゅくの単元でえらぶ<br><span style="font-size:.72em;opacity:.7">つるかめ算・場合の数…</span></button>
+      </div>
+      <div id="pick-cat-wrap">
       <div class="sansu-cat-grid">
         <button class="sansu-cat-btn cat-mix-btn" data-scat="mix">🔀 ミックス<span class="mix-sub">全単元から出題</span></button>
       </div>
@@ -779,8 +784,9 @@
         <button class="sansu-cat-btn juken-only hidden" data-scat="tokusan" data-min-grade="3">特殊算</button>
         <button class="sansu-cat-btn juken-only hidden" data-scat="baai" data-min-grade="3">場合の数</button>
       </div>
-      <div id="sansu-unit-wrap" class="hidden" style="margin-top:14px">
-        <p class="hama-hint" style="margin:0 0 6px">じゅくの単元でしぼれます。えらぶと、その単元だけをどの単元グループからも集めて出します（えらばなければ上でえらんだ種類から出ます）。</p>
+      </div>
+      <div id="sansu-unit-wrap" class="hidden">
+        <p class="hama-hint" style="margin:0 0 6px">じゅくの単元でえらびます。種類（計算・文章題…）にまたがって、その単元だけを集めて出します。</p>
         <div id="sansu-unit-row" class="sansu-cat-grid"></div>
       </div>
     </div>

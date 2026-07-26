@@ -1629,7 +1629,7 @@ function setChainCountOptions(selectId, isChain) {
 const sansuCache = {};
 const sansuState = {
   subject: 'sansu', // 'sansu' | 'rika'
-  grade: null, diff: null, cat: null, unit: null,
+  grade: null, diff: null, cat: null, unit: null, pick: 'cat',
   mode: null, // 'normal' | 'drill' | 'hama'
   hamaCourse: null, // じゅくナビのコース（master / sairei）
   hamaMode: null,   // 最レの引き方（no＝回番号 / unit＝単元名）
@@ -1746,7 +1746,7 @@ async function renderSansuUnitRow() {
       row.querySelectorAll('.sansu-cat-btn').forEach(x => x.classList.remove('selected'));
       b.classList.add('selected');
       sansuState.unit = b.dataset.unit || null;
-      if (typeof renderDiffBadgesSansu === 'function') renderDiffBadgesSansu();
+      showSansuStep('sansu-step-diff');
       if (typeof updateSansuStart === 'function') updateSansuStart();
     };
   });
@@ -2103,7 +2103,8 @@ function initSansuHome() {
       btn.classList.add('selected');
       sansuState.grade = Number(btn.dataset.grade);
       sansuState.unit = null;
-      if (sansuState.cat) renderSansuUnitRow();
+      // 学年で使える単元グループは変わるのでチップを描き直す
+      if (sansuState.pick === 'unit') { renderSansuUnitRow(); document.getElementById('sansu-start-zone').classList.add('hidden'); }
       // カテゴリごとの履修開始学年（SAPIX/浜学園カリキュラム基準）に達したら表示
       document.querySelectorAll('.juken-only').forEach(el => {
         const minGrade = Number(el.dataset.minGrade) || 4;
@@ -2182,6 +2183,26 @@ function initSansuHome() {
   });
 
   // STEP3: カテゴリ（算数ホーム内）
+  // STEP3：入り口の切替（📚種類でえらぶ ／ 🎯単元でえらぶ）
+  // 以前はカテゴリを選ばせた上で単元も選ばせていたが、単元はカテゴリを横断するため
+  // 2つ選ばせて片方が無効になる状態だった（本人指摘 2026-07-26）→ 並列の入り口にした
+  document.querySelectorAll('#pick-mode-row .sansu-cat-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#pick-mode-row .sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sansuState.pick = btn.dataset.pick;
+      const byUnit = sansuState.pick === 'unit';
+      document.getElementById('pick-cat-wrap').classList.toggle('hidden', byUnit);
+      document.getElementById('sansu-unit-wrap').classList.toggle('hidden', !byUnit);
+      // 入り口を変えたら選択をリセット（片方だけが効く状態にする）
+      sansuState.cat = null; sansuState.unit = null;
+      document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('sansu-start-zone').classList.add('hidden');
+      if (byUnit) renderSansuUnitRow();
+      updateSansuStart();
+    };
+  });
+
   document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
@@ -2189,7 +2210,6 @@ function initSansuHome() {
       btn.classList.add('selected');
       sansuState.cat = btn.dataset.scat;
       sansuState.unit = null;
-      renderSansuUnitRow();
       showSansuStep('sansu-step-diff');
       updateSansuStart();
     };
@@ -2265,9 +2285,10 @@ function updateSansuStart() {
   let ready = false;
 
   if (sansuState.mode === 'normal') {
-    ready = sansuState.grade && sansuState.cat && sansuState.diff;
+    ready = sansuState.grade && (sansuState.cat || sansuState.unit) && sansuState.diff;
     if (ready) {
-      info.textContent = `小${sansuState.grade} / ${SANSU_CAT_LABELS[sansuState.cat]} / ${DIFF_LABELS[sansuState.diff]}`;
+      const what = sansuState.unit ? sansuState.unit : SANSU_CAT_LABELS[sansuState.cat];
+      info.textContent = `小${sansuState.grade} / ${what} / ${DIFF_LABELS[sansuState.diff]}`;
     }
   } else if (sansuState.mode === 'drill') {
     ready = sansuState.grade && sansuState.drillType && sansuState.drillDiff && sansuState.drillTime !== null;
