@@ -717,7 +717,14 @@
       <section class="section-label"><span class="step-badge">じゅくナビ</span>いまの進みぐあい</section>
       <div id="hama-panel" class="hama-panel">
         <div class="hama-course-row" id="hama-course-row"></div>
-        <div class="hama-no-row">
+        <div class="hama-course-row" id="hama-mode-row" style="display:none">
+          <button class="hama-course-btn" data-hama-mode="no">回番号でえらぶ</button>
+          <button class="hama-course-btn" data-hama-mode="unit">単元でえらぶ</button>
+        </div>
+        <div id="hama-unit-wrap" class="hidden" style="margin-top:2px">
+          <select id="hama-unit-sel" class="hama-unit-sel"></select>
+        </div>
+        <div class="hama-no-row" id="hama-no-row">
           <button class="hama-step-btn" id="hama-minus" aria-label="ひとつ前にもどす">−</button>
           <div class="hama-no-box">
             <div class="hama-no-label" id="hama-no-label">No.—</div>

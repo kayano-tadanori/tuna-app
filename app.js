@@ -1632,6 +1632,8 @@ const sansuState = {
   grade: null, diff: null, cat: null, unit: null,
   mode: null, // 'normal' | 'drill' | 'hama'
   hamaCourse: null, // じゅくナビのコース（master / sairei）
+  hamaMode: null,   // 最レの引き方（no＝回番号 / unit＝単元名）
+  hamaUnit: null,   // 単元でえらぶときの単元名
   drillType: null, drillDiff: null, drillTime: null,
   questions: [], current: 0, correct: 0, wrong: 0,
   // ドリル
@@ -1833,6 +1835,23 @@ async function hamaCollect(grade, course, fromNo, toNo) {
   return out;
 }
 
+// 単元名でその学年の問題を集める（最レ用。回番号がズレても引けるように）
+async function hamaCollectUnit(grade, course, unit) {
+  const courses = hamaCourses(grade);
+  if (!courses || !courses[course] || !unit) return [];
+  const nos = courses[course].lessons.filter(l => (l.units || []).includes(unit)).map(l => l.no);
+  const seen = new Set();
+  const out = [];
+  for (const no of nos) {
+    for (const q of await hamaCollect(grade, course, no, no)) {
+      if (q.unit !== unit) continue;      // その単元の問題だけ
+      if (seen.has(q.id)) continue;
+      seen.add(q.id); out.push(q);
+    }
+  }
+  return out;
+}
+
 function hamaLessonTitle(grade, course, no) {
   const courses = hamaCourses(grade);
   const l = courses && courses[course] && courses[course].lessons.find(x => x.no === no);
@@ -1868,6 +1887,48 @@ async function renderHamaPanel() {
 
   const course = sansuState.hamaCourse;
   const lessons = courses[course].lessons;
+
+  // 最レは2026年度に内容が刷新され、回番号の中身が入れ替わった。
+  // 回番号がズレても困らないよう、最レだけ「単元でえらぶ」も使えるようにする。
+  const modeRow = document.getElementById('hama-mode-row');
+  const unitWrap = document.getElementById('hama-unit-wrap');
+  const unitSel = document.getElementById('hama-unit-sel');
+  const canUnit = course === 'sairei' && lessons.some(l => (l.units || []).length);
+  modeRow.style.display = canUnit ? 'flex' : 'none';
+  if (!canUnit) sansuState.hamaMode = 'no';
+  if (!sansuState.hamaMode) sansuState.hamaMode = 'no';
+  modeRow.querySelectorAll('.hama-course-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.hamaMode === sansuState.hamaMode);
+    b.onclick = () => { sansuState.hamaMode = b.dataset.hamaMode; renderHamaPanel(); };
+  });
+
+  if (canUnit && sansuState.hamaMode === 'unit') {
+    // 単元でえらぶ：その学年の最レに出てくる単元を一覧にする
+    const units = [...new Set(lessons.flatMap(l => l.units || []))].sort();
+    if (!units.includes(sansuState.hamaUnit)) sansuState.hamaUnit = units[0];
+    unitSel.innerHTML = units.map(u =>
+      `<option value="${u}"${u === sansuState.hamaUnit ? ' selected' : ''}>${u}</option>`).join('');
+    unitSel.onchange = () => { sansuState.hamaUnit = unitSel.value; renderHamaPanel(); };
+    unitWrap.classList.remove('hidden');
+    document.getElementById('hama-no-row').style.display = 'none';
+    label.textContent = '単元でえらぶ';
+    title.textContent = sansuState.hamaUnit || '—';
+    hint.textContent = '最レは年度によって回の中身が入れかわるので、単元でえらぶこともできます。';
+    const qs = await hamaCollectUnit(grade, course, sansuState.hamaUnit);
+    const filtered = filterByBand(qs);
+    const wk = document.getElementById('hama-cnt-week');
+    wk.textContent = filtered.length ? `${sansuState.hamaUnit}・${filtered.length}問` : 'まだ問題なし';
+    document.querySelector('.hama-act-btn[data-hama-act="week"]').disabled = !filtered.length;
+    ['kokai', 'senshu'].forEach(k => {
+      document.getElementById('hama-cnt-' + k).textContent = '—';
+      const b = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
+      if (b) b.disabled = true;
+    });
+    return;
+  }
+  unitWrap.classList.add('hidden');
+  document.getElementById('hama-no-row').style.display = 'flex';
+
   let no = hamaCurrent(grade, course);
   if (no === null) {
     // はじめて開いたときは、まん中あたりを初期値にして「合わせてね」と促す
@@ -1968,6 +2029,25 @@ async function startHamaSession(kind) {
   const courses = hamaCourses(grade);
   if (!courses || !courses[course]) return;
   const lessons = courses[course].lessons;
+
+  // 単元でえらぶモード（最レ）はここで出題する
+  if (course === 'sairei' && sansuState.hamaMode === 'unit' && sansuState.hamaUnit) {
+    showLoading();
+    try {
+      const all = filterByBand(await hamaCollectUnit(grade, course, sansuState.hamaUnit));
+      if (!all.length) { showToast('この単元にはまだ問題がありません'); hideLoading(); return; }
+      const want = Number(document.getElementById('sansu-q-count').value) || 10;
+      sansuState.subject = 'sansu';
+      sansuState.cat = 'hama';
+      sansuState.questions = shuffle(all).slice(0, want === 0 ? all.length : want);
+      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+      coinSessionEarned = 0;
+      hideLoading();
+      startSansuQuiz();
+    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+    return;
+  }
+
   const minNo = lessons[0].no, maxNo = lessons[lessons.length - 1].no;
   const no = hamaCurrent(grade, course);
   const range = kind === 'week' ? [no, no]
@@ -5679,8 +5759,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1268, bun: 759, zu: 990, kisoku: 923, tokusan: 451, baai: 503, kazu: 620,
-            wariai: 306, hayasa: 168, rittai: 411 },                                         // 5,352（2026-07-26）
+  sansu:  { bakuhatsu: 160, keisan: 1268, bun: 779, zu: 999, kisoku: 949, tokusan: 501, baai: 503, kazu: 624,
+            wariai: 336, hayasa: 168, rittai: 419 },                                         // 5,352（2026-07-26）
   rika:   { shokubutsu: 947, doubutsu: 866, jintai: 250, sora: 734, tenki: 490, mono: 831, kitai: 273,
             daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,721（2026-07-17 重複57問削除+補充6問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
