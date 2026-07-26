@@ -285,6 +285,11 @@
   <div class="sheetHead"><h2>⚙️ 設定</h2><button class="closeBtn" data-close="cfgSheet">✕</button></div>
   <p class="fLabel">お子さん（中受伴走アプリの成績を読みます）</p>
   <select class="fInput" id="cfgChild"></select>
+  <p class="fLabel">学年（受講資格の判定に使います）</p>
+  <select class="fInput" id="cfgGrade">
+    <option value="2">小2</option><option value="3">小3</option><option value="4">小4</option>
+    <option value="5">小5</option><option value="6">小6</option>
+  </select>
   <p class="fLabel">100傑を見る土俵</p>
   <select class="fInput" id="cfgMode">
     <option value="2">2科（国語＋算数）</option>
@@ -358,7 +363,7 @@ if ('serviceWorker' in navigator) {
 }
 const $ = id => document.getElementById(id);
 const KEY = 'rival_v1';
-const APP_VER = 'v12';
+const APP_VER = 'v13';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const num = v => { const n = parseFloat(v); return isNaN(n) ? null : n; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -383,6 +388,7 @@ function load() {
   for (const a of d.atable) if (CN[a.course]) a.course = CN[a.course];
   if (!d.cfg || typeof d.cfg !== 'object') d.cfg = {};
   if (d.cfg.mode !== '3') d.cfg.mode = '2';
+  if (!/^[2-6]$/.test(String(d.cfg.grade||''))) d.cfg.grade = '5';
   return d;
 }
 const save = () => localStorage.setItem(KEY, JSON.stringify(db));
@@ -540,6 +546,71 @@ function myHundredRate() {
   return vals.filter(v => v >= 100).length / vals.length;
 }
 
+// ===== 浜学園の受講資格と順位ボーダー（実測＋公式）=====
+// 公式：https://www.hamagakuen.co.jp/entrance/course/kansai/
+//   条件はすべて「受講開始月より起算して、過去3回の公開学力テストで下記を1回以上」
+// 実測：十傑資料の合計点分布（10点刻みの実人数）を累積して線形補間。小4・小5＝13回、小3＝6回
+const HAMA = {
+  // 灘中合格特訓の受講資格（学年 → 判定科目数・順位）
+  nadago: {
+    1: { subj: 2, rank: 25 }, 2: { subj: 2, rank: 30 }, 3: { subj: 2, rank: 40 },
+    4: { subj: 2, rank: 50 }, 5: { subj: 3, rank: 60 },
+  },
+  // 最高レベル特訓（算数）の受講資格＝2科偏差値58以上 または 算数偏差値58以上（小6は60）
+  saire: { dev: g => (g >= 6 ? 60 : 58) },
+  // 実測の順位ボーダー（素点）。key = `${学年}-${科目数}`
+  // ※小4の灘合は2科判定だが、十傑資料は小4の2科分布を含まないため小4-2は無い
+  borders: {
+    '3-2': { 10: 183.5, 30: 176.3, 40: 173.6, 60: 171.0, 80: 167.9, 100: 165.4, max: 200, n: 6 },
+    '4-3': { 10: 281.6, 30: 273.8, 50: 269.6, 60: 268.2, 80: 265.6, 100: 263.2, max: 300, n: 7 },
+    '5-3': { 10: 281.2, 30: 273.6, 50: 269.6, 60: 267.3, 80: 264.0, 100: 261.7, max: 300, n: 6 },
+  },
+  // 体感のはしご（本人。実測と1点以内で一致）
+  bands: [
+    { avg: 93, label: '十傑圏' }, { avg: 90, label: 'トップ30圏（毎回超えるなら）' },
+    { avg: 87, label: '100傑圏' }, { avg: 75, label: 'Vクラス圏' },
+  ],
+};
+// 素点 → 推定順位（実測ボーダーを対数っぽく内挿。範囲外は端を返す）
+function hamaRank(grade, subj, score) {
+  const b = HAMA.borders[`${grade}-${subj}`];
+  if (!b || score == null) return null;
+  const ks = Object.keys(b).filter(k => /^\d+$/.test(k)).map(Number).sort((a, c) => a - c);
+  if (score >= b[ks[0]]) return { rank: ks[0], op: '以内' };
+  for (let i = 0; i < ks.length - 1; i++) {
+    const hi = ks[i], lo = ks[i + 1];
+    if (score >= b[lo]) {
+      const f = (b[hi] - score) / (b[hi] - b[lo]);
+      return { rank: Math.round(hi + f * (lo - hi)), op: '前後' };
+    }
+  }
+  return { rank: ks[ks.length - 1], op: 'より下' };
+}
+// 灘合の資格判定：直近3回のうち1回でも基準順位以内なら○
+// results = [{ grade, subj, score }] 新しい順。score は素点合計
+function hamaNadago(results) {
+  if (!results || !results.length) return null;
+  const last3 = results.slice(0, 3);
+  const g = last3[0].grade;
+  const req = HAMA.nadago[g];
+  if (!req) return null;
+  let best = null, ok = false;
+  for (const r of last3) {
+    if (r.subj !== req.subj || r.score == null) continue;
+    const e = hamaRank(r.grade, r.subj, r.score);
+    if (!e) continue;
+    if (best == null || e.rank < best) best = e.rank;
+    if (e.rank <= req.rank) ok = true;
+  }
+  const b = HAMA.borders[`${g}-${req.subj}`];
+  return {
+    grade: g, subj: req.subj, need: req.rank, ok, best,
+    needScore: b ? Math.round(b[req.rank] ?? 0) : null,
+    avg: b && b[req.rank] ? +(b[req.rank] / req.subj).toFixed(1) : null,
+    hasData: !!b,
+  };
+}
+
 // ===== 差の推移グラフ =====
 function diffChart(rid) {
   const l = kokaiSorted().map(k => ({ ym:k.ym, d:diffOf(k,rid) })).filter(x => x.d != null);
@@ -633,6 +704,9 @@ function viewHome() {
     }
     h += `</div>`;
   }
+  // 🎓 灘中合格特訓の受講資格（公式条件＋実測ボーダーで判定）
+  h += viewQual();
+
   // 最新のA表（月末に出る）
   const at = [...db.atable].sort((a,b) => (a.ym + a.course).localeCompare(b.ym + b.course)).pop();
   if (at) {
@@ -669,6 +743,52 @@ function viewHome() {
   if (!db.rivals.length) h += `<div class="card"><h3>🏆 ライバルを登録</h3><p class="muted">
     「🏆ライバル」タブの＋から、100傑の掲示やHPの上位10名にいる<b>追いかけたい相手</b>を登録してください。</p></div>`;
   return h;
+}
+
+// 直近の公開を新しい順に [{grade, subj, score}] で返す
+function hamaResults() {
+  const g = Number(db.cfg.grade), subj = db.cfg.mode === '3' ? 3 : 2;
+  return kokaiSorted().reverse().map(k => ({ grade: g, subj, score: mineScore(k.ym).v, ym: k.ym }))
+    .filter(r => r.score != null);
+}
+function viewQual() {
+  const res = hamaResults();
+  const g = Number(db.cfg.grade);
+  const req = HAMA.nadago[g];
+  if (!req) return '';
+  const subj = db.cfg.mode === '3' ? 3 : 2;
+  let h = `<div class="card"><h3>🎓 灘中合格特訓の資格（小${g}）</h3>`;
+  h += `<div class="sub">条件：<b>過去3回のうち1回以上</b>で ${req.subj}科 男女総合 <b>${req.rank}位以内</b></div>`;
+  if (subj !== req.subj) {
+    h += `<p class="muted" style="margin-top:6px">小${g}は<b>${req.subj}科</b>で判定されます。設定の「100傑を見る土俵」を${req.subj}科にすると判定できます。</p></div>`;
+    return h;
+  }
+  const q = hamaNadago(res);
+  if (!q) { h += `<p class="muted" style="margin-top:6px">公開の点が未登録です。</p></div>`; return h; }
+  if (!q.hasData) {
+    h += `<p class="muted" style="margin-top:6px">小${g}の${req.subj}科の順位ボーダーは手元の資料に無いため、点数からの判定はできません。</p></div>`;
+    return h;
+  }
+  const last = res[0];
+  const e = hamaRank(g, subj, last.score);
+  h += `<div class="big" style="margin-top:6px;color:${q.ok ? '#059669' : '#b45309'}">${q.ok ? '資格あり' : 'あと少し'}</div>`;
+  h += `<div class="sub" style="margin-top:3px">直近3回のベスト <b>${q.best != null ? q.best + '位前後' : '—'}</b>`;
+  h += `　／　${req.rank}位のめやす <b>${q.needScore}点</b>（公開平均 ${q.avg}点）</div>`;
+  if (e && last.score != null) {
+    const d = q.needScore - last.score;
+    h += `<div class="sub" style="margin-top:6px">最新（${ymLabel(last.ym)}）${last.score}点＝<b>${e.rank}位${e.op}</b>`;
+    h += d > 0 ? `　→ ${req.rank}位まで あと ${d}点` : `　→ ${req.rank}位を ${-d}点 うわまわり`;
+    h += `</div>`;
+  }
+  // はしご
+  const bandRows = HAMA.bands.map(b => {
+    const sc = Math.round(b.avg * subj);
+    const cur = last.score != null ? last.score - sc : null;
+    return `<div class="sub">平均${b.avg}（${sc}点）${b.label}${cur != null ? `　${cur >= 0 ? '<b style="color:#059669">+' + cur + '</b>' : 'あと ' + (-cur)}点` : ''}</div>`;
+  }).join('');
+  h += `<div style="margin-top:8px;padding-top:7px;border-top:1px solid #f1e3c8">${bandRows}</div>`;
+  h += `<p class="muted" style="margin-top:6px;font-size:11px">順位のめやすは十傑資料の得点分布${HAMA.borders[g+'-'+subj].n}回ぶんの平均から。回によって±6点ほど動きます。</p>`;
+  return h + `</div>`;
 }
 
 function viewRivals() {
@@ -1317,6 +1437,7 @@ $('cfgBtn').onclick = () => {
     .map(c => `<option value="${esc(c)}"${activeChild() === c ? ' selected' : ''}>${esc(c)}</option>`).join('');
   $('cfgChild').disabled = !cs.length;
   $('cfgMode').value = db.cfg.mode;
+  $('cfgGrade').value = db.cfg.grade;
   $('impStatus').textContent = '';
   $('pasteBox').style.display = 'none';
   $('shStatus').textContent = '';
@@ -1326,6 +1447,7 @@ $('cfgBtn').onclick = () => {
 };
 $('cfgChild').onchange = e => { db.cfg.child = e.target.value; save(); paintDiag(); render(); };
 $('cfgMode').onchange = e => { db.cfg.mode = e.target.value; save(); render(); };
+$('cfgGrade').onchange = e => { db.cfg.grade = e.target.value; save(); render(); };
 
 // 読み取り状況の診断（原因がひと目で分かるように）
 function paintDiag() {
