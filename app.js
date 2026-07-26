@@ -5679,8 +5679,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1176, bun: 715, zu: 927, kisoku: 880, tokusan: 442, baai: 469, kazu: 592,
-            wariai: 279, hayasa: 168, rittai: 407 },                                         // 5,352（2026-07-26）
+  sansu:  { bakuhatsu: 160, keisan: 1227, bun: 738, zu: 953, kisoku: 903, tokusan: 451, baai: 483, kazu: 608,
+            wariai: 290, hayasa: 168, rittai: 411 },                                         // 5,352（2026-07-26）
   rika:   { shokubutsu: 947, doubutsu: 866, jintai: 250, sora: 734, tenki: 490, mono: 831, kitai: 273,
             daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,721（2026-07-17 重複57問削除+補充6問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
