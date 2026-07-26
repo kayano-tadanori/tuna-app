@@ -1911,10 +1911,23 @@ async function renderHamaPanel() {
   }
 }
 
-// ── クラス帯（H/S/V）──────────────────────────
-// 浜学園はクラスによって復習テストの中身が違う（本人確認 2026-07-26）。
-// 難易度＝骨に乗っている「制約の数」で定義しているので、クラス帯を難易度に対応させる。
-const CLASS_BAND_DIFFS = { H: [1, 2], S: [2, 3], V: [3, 4] };
+// ── クラス帯（浜学園のクラス編成に対応）──────────────────
+// 浜学園のテキストは全クラス共通で、中が「やさしい／難しい／チャレンジ」とページで
+// 区切られている。宿題としてやる範囲がクラスごとに決まっている（本人説明 2026-07-26）：
+//   H＝やさしいのみ／SHH＝やさしい＋難しいのできる範囲／S＝難しいまで必須／V＝チャレンジまで
+// 小規模校は生徒数が少ないのでクラスを合同にする。上から V／VSV／VSS／S／SHS／SHH／H。
+// 合同クラスは「先頭2文字＝合同する2クラス、末尾1文字＝その中のどの帯か」。
+//   例）SHH＝SとHの合同クラスのH帯、VSV＝VとSの合同クラスのV帯
+// 合同の下帯（SHH・VSS）は、上の帯と同じ教室で同じテキストを持つので上の範囲に手を伸ばす。
+const CLASS_BAND_DIFFS = {
+  H:   [1],        // やさしい のみ
+  SHH: [1, 2],     // やさしい ＋ 難しいのできる範囲（背伸びする帯）
+  SHS: [2],        // S帯なので 難しい が主戦場
+  S:   [2],        // 難しい まで必須
+  VSS: [2, 3],     // Sだが V と同じ教室 → チャレンジに手を伸ばす
+  VSV: [3],        // V帯
+  V:   [3, 4],     // チャレンジ ＋ その上
+};
 function getClassBand() { try { return localStorage.getItem('otonClassBand') || ''; } catch (e) { return ''; } }
 function setClassBand(v) { try { v ? localStorage.setItem('otonClassBand', v) : localStorage.removeItem('otonClassBand'); } catch (e) {} }
 // クラス帯でしぼる。その帯に十分な数が無ければしぼらない（＝出題できなくならない安全弁）
@@ -1923,7 +1936,12 @@ function filterByBand(list, minWanted = 5) {
   const diffs = CLASS_BAND_DIFFS[band];
   if (!diffs) return list;
   const only = list.filter(q => diffs.includes(q.difficulty));
-  return only.length >= minWanted ? only : list;
+  if (only.length >= minWanted) return only;
+  // 足りないときは、となりのむずかしさまで1段だけ広げる。
+  // いきなり全部に戻すと、Hの子に灘レベルが出てしまうため段階的にする。
+  const lo = Math.min(...diffs) - 1, hi = Math.max(...diffs) + 1;
+  const widened = list.filter(q => q.difficulty >= lo && q.difficulty <= hi);
+  return widened.length >= minWanted ? widened : list;
 }
 function initClassBandUI() {
   const row = document.getElementById('class-band-row');
@@ -1935,7 +1953,11 @@ function initClassBandUI() {
       row.querySelectorAll('.sansu-cat-btn').forEach(x => x.classList.remove('selected'));
       b.classList.add('selected');
       setClassBand(b.dataset.band || '');
-      showToast(b.dataset.band ? `${b.dataset.band}クラスのむずかしさで出します` : 'ぜんぶのむずかしさから出します');
+      const band = b.dataset.band || '';
+      const LABEL = { 1: 'やさしい', 2: '難しい', 3: 'チャレンジ', 4: 'その上' };
+      const ds = CLASS_BAND_DIFFS[band];
+      showToast(ds ? `${band}クラス：${ds.map(d => LABEL[d]).join('と')}を出します`
+                   : 'ぜんぶのむずかしさから出します');
     };
   });
 }
