@@ -1562,6 +1562,14 @@ async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) 
     const locked = n === 0;
     chainBtn.classList.toggle('diff-locked', locked);
     chainBtn.disabled = locked;
+    // 連鎖（発見算・ガチ）は別ファイルなので通常の集計に乗らない。問題数だけ出す
+    let b = chainBtn.querySelector('.clear-badge');
+    if (locked) { if (b) b.remove(); }
+    else {
+      if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; chainBtn.appendChild(b); }
+      b.textContent = `${n}問`;
+      b.classList.add('diff-prog');
+    }
     if (locked && chainBtn.classList.contains('selected')) {
       chainBtn.classList.remove('selected');
       if (onLockSelected) onLockSelected();
@@ -6079,16 +6087,16 @@ async function renderGradeCrowns(subject) {
 // 難易度ボタン用: 全問クリアで✅、途中なら「12/20」の進み具合を表示
 function setDiffProgress(btn, cleared, total) {
   let b = btn.querySelector('.clear-badge');
-  if (total > 0 && cleared >= total) {
-    if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; btn.appendChild(b); }
+  // 問題が1問も無いときだけバッジを出さない。
+  // 正解0でも「0/問題数」を出す（何問あるかを先に知りたい・本人要望 2026-07-26）
+  if (!(total > 0)) { if (b) b.remove(); return; }
+  if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; btn.appendChild(b); }
+  if (cleared >= total) {
     b.textContent = '✅';
     b.classList.remove('diff-prog');
-  } else if (cleared > 0) {
-    if (!b) { b = document.createElement('span'); b.className = 'clear-badge'; btn.appendChild(b); }
+  } else {
     b.textContent = `${cleared}/${total}`;
     b.classList.add('diff-prog');
-  } else if (b) {
-    b.remove();
   }
 }
 
