@@ -1694,9 +1694,11 @@ const UNIT_GROUPS = {
   '消去算': ['消去算'],
   'つるかめ算': ['つるかめ算'],
   '過不足算・差集め算': ['過不足算・差集め算'],
-  '仕事算': ['仕事算'],
   '年令算・平均算': ['年齢算', '平均算'],
-  '相当算・やりとり': ['相当算・還元算', '倍数算・やりとり'],
+  // 仕事算・ニュートン算は原簿（浜学園の実物）に0問＝教材にまだ来ていない単元。
+  // 骨は「全体を1とみる」で相当算の親戚なので、しぼり込みではここに寄せる。
+  // ただし unit は分けて持つ：仕事算＝複数で1つの仕事／ニュートン算＝増える量と減る量が同時（本人指摘 2026-07-26）
+  '相当算・やりとり': ['相当算・還元算', '倍数算・やりとり', '仕事算', 'ニュートン算'],
   '割合・食塩水': ['割合', '食塩水・濃度'],
   '比': ['比'],
   '速さ（旅人算）': ['速さ（旅人算）'],
@@ -5830,8 +5832,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 779, zu: 1016, kisoku: 954, tokusan: 523, baai: 553, kazu: 643,
-            wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,845（2026-07-26）
+  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 779, zu: 1016, kisoku: 954, tokusan: 534, baai: 553, kazu: 643,
+            wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,856（2026-07-26）
   rika:   { shokubutsu: 947, doubutsu: 866, jintai: 250, sora: 734, tenki: 490, mono: 831, kitai: 273,
             daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,721（2026-07-17 重複57問削除+補充6問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
