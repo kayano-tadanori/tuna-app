@@ -1531,7 +1531,7 @@ function expandChain(chain, grade) {
 
 // 指定した教科・カテゴリ・学年で出題できる連鎖問題（step）の数を返す。
 // 難易度5ボタンの有効/無効判定に使う（0なら問題なし）
-async function countChainSteps(subject, cat, grade) {
+async function countChainSteps(subject, cat, grade, unit) {
   if (grade < chainMinGrade(subject)) return 0;
   let data;
   try {
@@ -1544,14 +1544,18 @@ async function countChainSteps(subject, cat, grade) {
       data = sansuCache[key];
     }
   } catch { return 0; }
+  // cat は文字列・配列どちらでもよい。unit を渡すと単元でしぼる（連鎖にも unit を付けた／2026-07-26）
+  const cats = Array.isArray(cat) ? cat : [cat];
+  const any = cats.includes('mix') || cats.includes(null);
   return data
-    .filter(c => (cat === 'mix' || c.category === cat) && chainInGrade(c, grade))
+    .filter(c => (any || cats.includes(c.category)) && chainInGrade(c, grade))
+    .filter(c => !unit || c.unit === unit)
     .reduce((n, c) => n + c.steps.length, 0);
 }
 
 // 難易度5（連鎖問題）ボタンの有効/無効を切り替える。
 // 問題が無ければロックし、その難易度が選択中なら選択を解除する
-async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) {
+async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected, unit) {
   // 難易度5＝発見算。算数はさらに 'gachi'（ガチ＝パズル連鎖、別ファイル）もロック管理する
   const targets = [{ diff: '5', subj: subject }];
   if (subject === 'sansu') targets.push({ diff: 'gachi', subj: 'gachi' });
@@ -1559,7 +1563,7 @@ async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) 
   for (const t of targets) {
     const chainBtn = [...btns].find(b => b.dataset.diff === t.diff);
     if (!chainBtn) continue;
-    const n = await countChainSteps(t.subj, cat, grade);
+    const n = await countChainSteps(t.subj, cat, grade, unit);
     const locked = n === 0;
     chainBtn.classList.toggle('diff-locked', locked);
     chainBtn.disabled = locked;
@@ -1580,7 +1584,7 @@ async function updateChainDiffButton(btns, subject, cat, grade, onLockSelected) 
 
 // チェーン（連鎖問題）を読み込み、カテゴリでしぼって、chain単位はシャッフルしつつ
 // 各chain内のstep順は維持したまま平らな問題配列に展開する
-async function loadChainQuestions(subject, cat, grade, maxQuestions = 'all') {
+async function loadChainQuestions(subject, cat, grade, maxQuestions = 'all', unit) {
   // 連鎖問題は灘中レベル。教科ごとの最低学年より下では出題しない
   if (grade < chainMinGrade(subject)) return [];
   const key = `chain-${subject}`;
@@ -1588,7 +1592,9 @@ async function loadChainQuestions(subject, cat, grade, maxQuestions = 'all') {
     const res = await fetch(CHAIN_FILES[subject]);
     sansuCache[key] = await res.json();
   }
-  const chains = shuffle(sansuCache[key].filter(c => (cat === 'mix' || c.category === cat) && chainInGrade(c, grade)));
+  // 単元モードでは cat が null。unit があれば単元でしぼる（連鎖にも unit を付けた／2026-07-26）
+  const chains = shuffle(sansuCache[key].filter(c =>
+    (unit ? c.unit === unit : (cat === 'mix' || c.category === cat)) && chainInGrade(c, grade)));
   // 選んだ出題数（問数）に合わせて連鎖を「丸ごと」詰める。1連鎖(①②③)は途中で切らない。
   return fillChains(chains, grade, maxQuestions);
 }
@@ -1646,14 +1652,9 @@ const sansuState = {
 async function loadSansuQuestions(cat, grade, diff) {
   const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
     : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
-  const key = `${sansuState.subject}-${cat}`;
-  if (!sansuCache[key]) {
-    const res = await fetch(fileMap[cat]);
-    sansuCache[key] = await res.json();
-  }
-  let list = sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
   // 単元グループでしぼる場合は、カテゴリをまたいで集める
   // （同じ単元が bun/tokusan/kisoku などに分散しているため。本人要望 2026-07-26）
+  // ★cat より先に見る。「単元でえらぶ」入り口では cat が null なので fileMap[cat] が引けない
   const gsel = sansuState.unit;
   if (gsel && UNIT_GROUPS[gsel] && sansuState.subject === 'sansu') {
     const pooled = [];
@@ -1667,7 +1668,13 @@ async function loadSansuQuestions(cat, grade, diff) {
     }
     if (pooled.length) return pooled;
   }
-  return list;
+  if (!cat || !fileMap[cat]) return [];
+  const key = `${sansuState.subject}-${cat}`;
+  if (!sansuCache[key]) {
+    const res = await fetch(fileMap[cat]);
+    sansuCache[key] = await res.json();
+  }
+  return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
 }
 
 
@@ -2122,7 +2129,7 @@ function initSansuHome() {
       const outOfMax = selectedCatBtn && selectedCatBtn.dataset.maxGrade && sansuState.grade > Number(selectedCatBtn.dataset.maxGrade);
       if (outOfMin || outOfMax) {
         sansuState.cat = null;
-        document.querySelectorAll('.sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.sansu-cat-btn[data-scat]').forEach(b => b.classList.remove('selected'));
         hideSansuSteps('sansu-step-diff');
       }
       refreshDrillTypeAvailability();
@@ -2197,17 +2204,19 @@ function initSansuHome() {
       document.getElementById('sansu-unit-wrap').classList.toggle('hidden', !byUnit);
       // 入り口を変えたら選択をリセット（片方だけが効く状態にする）
       sansuState.cat = null; sansuState.unit = null;
-      document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#screen-sansu-home .sansu-cat-btn[data-scat]').forEach(b => b.classList.remove('selected'));
       document.getElementById('sansu-start-zone').classList.add('hidden');
       if (byUnit) renderSansuUnitRow();
       updateSansuStart();
     };
   });
 
-  document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(btn => {
+  // ★ [data-scat] で限定する。限定しないと #pick-mode-row の入り口ボタン（同じクラス）まで
+  //   このハンドラで onclick を上書きしてしまい、「単元でえらぶ」が反応しなくなる（2026-07-26）
+  document.querySelectorAll('#screen-sansu-home .sansu-cat-btn[data-scat]').forEach(btn => {
     btn.classList.remove('selected');
     btn.onclick = () => {
-      document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#screen-sansu-home .sansu-cat-btn[data-scat]').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.cat = btn.dataset.scat;
       sansuState.unit = null;
@@ -2554,8 +2563,8 @@ async function startSansuSession() {
     try {
       const isChain = sansuState.diff === 5 || sansuState.diff === 'gachi';
       const all = isChain
-        ? await loadChainQuestions(sansuState.diff === 'gachi' ? 'gachi' : sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('sansu-q-count').value)
-        : sansuState.cat === 'mix'
+        ? await loadChainQuestions(sansuState.diff === 'gachi' ? 'gachi' : sansuState.subject, sansuState.cat, sansuState.grade, document.getElementById('sansu-q-count').value, sansuState.unit)
+        : (sansuState.cat === 'mix' && !sansuState.unit)
           ? await loadMixQuestions(sansuState.grade, sansuState.diff)
           : await loadSansuQuestions(sansuState.cat, sansuState.grade, sansuState.diff);
       if (all.length === 0) { showToast('この組み合わせの問題はまだ準備中です'); hideLoading(); return; }
@@ -5781,8 +5790,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1268, bun: 779, zu: 999, kisoku: 949, tokusan: 501, baai: 522, kazu: 624,
-            wariai: 336, hayasa: 168, rittai: 419 },                                         // 5,352（2026-07-26）
+  sansu:  { bakuhatsu: 160, keisan: 1268, bun: 779, zu: 999, kisoku: 949, tokusan: 501, baai: 540, kazu: 624,
+            wariai: 336, hayasa: 168, rittai: 419 },                                         // 5,370（2026-07-26）
   rika:   { shokubutsu: 947, doubutsu: 866, jintai: 250, sora: 734, tenki: 490, mono: 831, kitai: 273,
             daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,721（2026-07-17 重複57問削除+補充6問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
@@ -6325,12 +6334,12 @@ async function renderDiffBadgesSansu() {
   const btns = document.querySelectorAll(btnSel);
   btns.forEach(b => setClearBadge(b, false));
   const cat = sansuState.cat, grade = sansuState.grade;
-  if (!cat || !grade) return;
+  // 単元でえらぶ入り口では cat が null になる。grade と unit のどちらかがあれば数えられる
+  const unitSel = sansuState.unit || null;
+  if (!grade || (!cat && !unitSel)) return;
   try {
     const sets = buildClearedSets();
     const byDiff = {};
-    // 単元をしぼっているときは、その単元だけで数える（表示と実際の出題を一致させる）
-    const unitSel = sansuState.unit || null;
     const tally = (q, set) => {
       if (q.grade !== grade) return;
       if (unitSel && UNIT_TO_GROUP[q.unit] !== unitSel) return;
@@ -6351,17 +6360,19 @@ async function renderDiffBadgesSansu() {
       qs.forEach(q => tally(q, set));
     }
     // 非同期の間に選択が変わっていたら破棄
-    if (sansuState.cat !== cat || sansuState.grade !== grade || sansuState.subject !== subject) return;
+    if (sansuState.cat !== cat || sansuState.grade !== grade || sansuState.subject !== subject
+        || (sansuState.unit || null) !== unitSel) return;
     btns.forEach(b => {
       const info = byDiff[Number(b.dataset.diff)] || { total: 0, cleared: 0 };
       setDiffProgress(b, info.cleared, info.total);
     });
     // 難易度5（連鎖問題）は問題が無ければロック
     const zoneId = { sansu: 'sansu-start-zone', rika: 'rika-start-zone', shakai: 'shakai-start-zone' }[subject];
-    await updateChainDiffButton(btns, subject, cat, grade, () => {
+    // 単元モードでは cat が無いので、その単元が実際にあったカテゴリだけを連鎖の対象にする
+    await updateChainDiffButton(btns, subject, unitSel ? cats : cat, grade, () => {
       sansuState.diff = null;
       if (zoneId) document.getElementById(zoneId).classList.add('hidden');
-    });
+    }, unitSel);
   } catch (e) { /* バッジは飾りなので失敗しても無視 */ }
 }
 

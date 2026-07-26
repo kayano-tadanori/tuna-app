@@ -1,0 +1,161 @@
+rules_version = '2';
+
+// ============================================================
+// オトン学園 Firestore セキュリティルール案
+//   貼り付け先： Firebaseコンソール → Firestore Database → ルール → 公開
+//   https://console.firebase.google.com/project/tuna-app-4eeab/firestore/rules
+//
+// 【これで防げること】
+//   ・想定外のコレクション／フィールドへの書き込み（荒らし・スパム）
+//   ・巨大データの書き込み（無料枠の使い切り）
+//   ・ありえない値（スコア999999999・達成率200%など）の登録
+//   ・他人のデータの「削除」（消し逃げ）
+//
+// 【防げないこと（正直に）】
+//   このアプリはニックネームだけで認証が無いため、
+//   「他人のニックネームを名乗って、その人の記録を上書きする」ことは
+//   ルールでは防げません（サーバーが本人かどうか判定できないため）。
+//   ただし上書きされても“ありえない値”は弾かれ、削除もできません。
+//   完全に防ぐには各自にパスワード/PINを持たせる改修が必要です。
+//
+// 【注意：管理ツールへの影響】
+//   「データ完全削除」ボタンは動かなくなります（削除を全面禁止するため）。
+//   消したいときは Firebaseコンソールから手動で削除してください。
+//   ※どうしても管理ツールから消したい場合は、末尾の「管理者用の例外」を参照。
+//
+//   プレゼント付与（コイン・遊び券・アイテム）は今までどおり動きます。
+// ============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- 共通ヘルパー ----------
+    function nickOk(nick) {
+      return nick is string && nick.size() > 0 && nick.size() <= 20;
+    }
+    // 時刻はサーバー時刻のみ許可（過去日付の偽装を防ぐ）
+    function serverTime() {
+      return request.resource.data.lastUpdated == request.time;
+    }
+    function intIn(v, lo, hi) {
+      return v is int && v >= lo && v <= hi;
+    }
+    function strOk(v, maxLen) {
+      return v is string && v.size() <= maxLen;
+    }
+
+    // ---------- 学習の進捗 users/{ニックネーム}/progress/{単元} ----------
+    match /users/{nick}/progress/{category} {
+      allow read: if nickOk(nick);
+      allow create, update: if nickOk(nick)
+        && request.resource.data.keys().hasOnly(['correct', 'total', 'lastUpdated'])
+        && intIn(request.resource.data.correct, 0, 200000)
+        && intIn(request.resource.data.total, 0, 200000)
+        && request.resource.data.correct <= request.resource.data.total
+        && serverTime();
+      allow delete: if false;
+    }
+
+    // ---------- 端末バックアップ users/{ニックネーム}/backup/data ----------
+    // 中身はlocalStorageの文字列。progressが一番大きいので上限を厚めに。
+    match /users/{nick}/backup/data {
+      allow read: if nickOk(nick);
+      allow create, update: if nickOk(nick)
+        && request.resource.data.keys().hasOnly([
+             'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
+             'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
+             'mapquizBest', 'timelineBest', 'progress', 'lastUpdated'
+           ])
+        && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 400000))
+        && (!('gacha' in request.resource.data)     || strOk(request.resource.data.gacha, 60000))
+        && (!('items' in request.resource.data)     || strOk(request.resource.data.items, 4000))
+        && (!('loginBonus' in request.resource.data)|| strOk(request.resource.data.loginBonus, 2000))
+        && (!('coins' in request.resource.data)     || strOk(request.resource.data.coins, 20))
+        && (!('playTime' in request.resource.data)  || strOk(request.resource.data.playTime, 20))
+        && (!('titleRank' in request.resource.data) || strOk(request.resource.data.titleRank, 20))
+        && (!('tetrisBest' in request.resource.data)|| strOk(request.resource.data.tetrisBest, 20))
+        && (!('jumpBest' in request.resource.data)  || strOk(request.resource.data.jumpBest, 20))
+        && (!('mineBest_easy' in request.resource.data)   || strOk(request.resource.data.mineBest_easy, 20))
+        && (!('mineBest_normal' in request.resource.data) || strOk(request.resource.data.mineBest_normal, 20))
+        && (!('mineBest_hard' in request.resource.data)   || strOk(request.resource.data.mineBest_hard, 20))
+        && (!('mapquizBest' in request.resource.data)     || strOk(request.resource.data.mapquizBest, 20))
+        && (!('timelineBest' in request.resource.data)    || strOk(request.resource.data.timelineBest, 20))
+        && serverTime();
+      allow delete: if false;
+    }
+
+    // ---------- プレゼント付与 users/{ニックネーム}/backup/grants ----------
+    // 管理ツールが加算予約を書き、アプリが読んで反映後に削除する
+    // 形： { items: {bomb:2, wing:1, …}, coins: 100, tickets: 3, ts: 時刻 }
+    match /users/{nick}/backup/grants {
+      allow read: if nickOk(nick);
+      allow delete: if nickOk(nick);       // アプリが受け取り後に消す（必須）
+      allow create, update: if nickOk(nick)
+        && request.resource.data.keys().hasOnly(['items', 'coins', 'tickets', 'ts'])
+        && (!('coins' in request.resource.data)   || intIn(request.resource.data.coins, 0, 5000))
+        && (!('tickets' in request.resource.data) || intIn(request.resource.data.tickets, 0, 100))
+        && (!('items' in request.resource.data) || (
+              request.resource.data.items.keys()
+                .hasOnly(['bomb', 'slow', 'search', 'shield', 'wing', 'rocket'])
+              && (!('bomb' in request.resource.data.items)   || intIn(request.resource.data.items.bomb, 0, 99))
+              && (!('slow' in request.resource.data.items)   || intIn(request.resource.data.items.slow, 0, 99))
+              && (!('search' in request.resource.data.items) || intIn(request.resource.data.items.search, 0, 99))
+              && (!('shield' in request.resource.data.items) || intIn(request.resource.data.items.shield, 0, 99))
+              && (!('wing' in request.resource.data.items)   || intIn(request.resource.data.items.wing, 0, 99))
+              && (!('rocket' in request.resource.data.items) || intIn(request.resource.data.items.rocket, 0, 99))
+           ));
+    }
+
+    // ---------- 単元別ランキング leaderboard/{単元}/scores/{ニックネーム} ----------
+    match /leaderboard/{category}/scores/{nick} {
+      allow read: if true;                 // ランキング表示のため誰でも読める
+      allow create, update: if nickOk(nick)
+        && request.resource.data.keys().hasOnly(['rate', 'correct', 'total', 'lastUpdated'])
+        && intIn(request.resource.data.rate, 0, 100)
+        && intIn(request.resource.data.correct, 0, 200000)
+        && intIn(request.resource.data.total, 0, 200000)
+        && request.resource.data.correct <= request.resource.data.total
+        && serverTime();
+      allow delete: if false;
+    }
+
+    // ---------- 達成率ランキング achievement/{ニックネーム} ----------
+    match /achievement/{nick} {
+      allow read: if true;
+      allow create, update: if nickOk(nick)
+        && request.resource.data.keys().hasOnly(['pct', 'cleared', 'titleIdx', 'lastUpdated'])
+        && request.resource.data.pct is number
+        && request.resource.data.pct >= 0
+        && request.resource.data.pct <= 100
+        && intIn(request.resource.data.cleared, 0, 100000)
+        && intIn(request.resource.data.titleIdx, 0, 20)
+        && serverTime();
+      allow delete: if false;
+    }
+
+    // ---------- ゲームランキング game_scores/{ゲーム}/scores/{ニックネーム} ----------
+    match /game_scores/{game}/scores/{nick} {
+      allow read: if true;
+      allow create, update: if nickOk(nick)
+        && game in ['tetris', 'jump', 'mine_easy', 'mine_normal', 'mine_hard']
+        && request.resource.data.keys().hasOnly(['value', 'lastUpdated'])
+        && intIn(request.resource.data.value, 0, 10000000)
+        && serverTime();
+      allow delete: if false;
+    }
+
+    // ---------- 上記以外はすべて拒否 ----------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ============================================================
+// 【管理者用の例外（任意）】
+//   管理ツールの「データ完全削除」を使い続けたい場合は、
+//   上の各ブロックの  allow delete: if false;  を
+//     allow delete: if request.auth != null;
+//   に変え、管理ツールだけFirebase Authでログインする改修を入れます。
+//   （認証なしのまま delete を許すと、誰でも他人のデータを消せます）
+// ============================================================
