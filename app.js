@@ -6220,6 +6220,11 @@ function pushAchievementToRanking() {
   const a = getAchievement();
   const t = getTitleInfo(a.titlePct);
   saveAchievement(state.nickname, Math.round(a.titlePct * 10) / 10, a.titleCleared, t.idx);
+  // ★成績の中身（progress）も一緒に上げる。
+  //   達成率だけは解き終わるたびに送られるのに、progress は「アプリを閉じたとき」しか
+  //   送っていなかったため、管理ツールで「％は増えているのに解いた形跡が見えない」状態になっていた。
+  //   （2026-07-26・本人が「れっぴ」の記録で発見）
+  backupLocalData();
 }
 
 // ── テトリスお助けアイテム ────────────────────────────────
