@@ -1650,29 +1650,77 @@ async function loadSansuQuestions(cat, grade, diff) {
     sansuCache[key] = await res.json();
   }
   let list = sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
-  // 単元しぼり（浜学園の単元名。最レは回番号でなく単元名で引くため 2026-07-26）
-  if (sansuState.unit) {
-    const only = list.filter(q => q.unit === sansuState.unit);
-    if (only.length) list = only;   // その単元が0問なら、しぼらず全部から出す
+  // 単元グループでしぼる場合は、カテゴリをまたいで集める
+  // （同じ単元が bun/tokusan/kisoku などに分散しているため。本人要望 2026-07-26）
+  const gsel = sansuState.unit;
+  if (gsel && UNIT_GROUPS[gsel] && sansuState.subject === 'sansu') {
+    const pooled = [];
+    for (const k of Object.keys(SANSU_FILES)) {
+      if (k === 'mix') continue;
+      let qs;
+      try { qs = await ensureSansuFile('sansu', k); } catch (e) { continue; }
+      for (const q of qs) {
+        if (q.grade === grade && q.difficulty === diff && UNIT_TO_GROUP[q.unit] === gsel) pooled.push(q);
+      }
+    }
+    if (pooled.length) return pooled;
   }
   return list;
 }
 
-// その学年・そのカテゴリに実際に存在する単元を、問題数つきで返す
+
+// ── 単元グループ（しぼり込み用）──────────────────────
+// 浜学園の単元名31種はそのまま各問題の unit に残す。しぼり込みだけはこの23グループで行う。
+// 理由：同じ単元が複数カテゴリ（bun/tokusan/kisoku…）に分散していて、
+// カテゴリ内だけで数えると1難易度あたり10問に届かないセルが多発するため（本人要望 2026-07-26）
+const UNIT_GROUPS = {
+  '計算のくふう': ['計算のくふう'],
+  '和差算・分配算': ['和差算・分配算'],
+  '消去算': ['消去算'],
+  'つるかめ算': ['つるかめ算'],
+  '過不足算・差集め算': ['過不足算・差集め算'],
+  '年令算・平均算': ['年齢算', '平均算'],
+  '相当算・やりとり': ['相当算・還元算', '倍数算・やりとり'],
+  '割合・食塩水': ['割合', '食塩水・濃度'],
+  '比': ['比'],
+  '速さ（旅人算）': ['速さ（旅人算）'],
+  '速さ（通過・流水・時計）': ['速さ（通過・流水・時計）'],
+  '規則性・数列': ['規則性・数列', '群数列'],
+  '周期算': ['周期算'],
+  '植木算・方陣算': ['植木算', '方陣算'],
+  '場合の数': ['場合の数', '最大最小・最適化', '不可能性・存在証明'],
+  'なかま調べ・推理': ['なかま調べ（集合・ベン図）', '推理・論理'],
+  '倍数・約数': ['倍数・約数'],
+  '数の性質・N進法': ['数の性質', 'N進法', '記号定義（約束）'],
+  '概数（がい数）': ['概数（がい数）'],
+  '平面図形（面積）': ['平面図形（面積）'],
+  '平面図形（角度）': ['平面図形（角度）'],
+  '図形の相似と移動': ['平面図形（相似・比）', '図形の移動・対称'],
+  '立体図形': ['立体図形（体積・表面積）', '展開図・投影図'],
+};
+const UNIT_TO_GROUP = {};
+for (const [g, us] of Object.entries(UNIT_GROUPS)) for (const u of us) UNIT_TO_GROUP[u] = g;
+// 4段 × 10問に届かないグループはしぼり込みに出さない（選んでも問題が足りないため）
+const UNIT_GROUP_MIN = 40;
+
+// その学年で使える単元グループを、問題数つきで返す（カテゴリは横断する）
 async function sansuUnitsFor(cat, grade) {
-  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
-    : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
-  const key = `${sansuState.subject}-${cat}`;
-  if (!sansuCache[key]) {
-    const res = await fetch(fileMap[cat]);
-    sansuCache[key] = await res.json();
-  }
+  if (sansuState.subject !== 'sansu') return [];
   const c = {};
-  for (const q of sansuCache[key]) {
-    if (q.grade !== grade || !q.unit) continue;
-    c[q.unit] = (c[q.unit] || 0) + 1;
+  for (const k of Object.keys(SANSU_FILES)) {
+    if (k === 'mix') continue;
+    let qs;
+    try { qs = await ensureSansuFile('sansu', k); } catch (e) { continue; }
+    for (const q of qs) {
+      if (q.grade !== grade) continue;
+      const g = UNIT_TO_GROUP[q.unit];
+      if (!g) continue;
+      c[g] = (c[g] || 0) + 1;
+    }
   }
-  return Object.entries(c).sort((a, b) => b[1] - a[1]);
+  return Object.entries(c)
+    .filter(([, n]) => n >= UNIT_GROUP_MIN)     // 4段×10問に届かないグループは出さない
+    .sort((a, b) => b[1] - a[1]);
 }
 
 // 単元しぼりのチップを描く。単元が1つしかないカテゴリでは出さない
@@ -6161,15 +6209,18 @@ async function renderDiffBadgesSansu() {
     const unitSel = sansuState.unit || null;
     const tally = (q, set) => {
       if (q.grade !== grade) return;
-      if (unitSel && q.unit !== unitSel) return;
+      if (unitSel && UNIT_TO_GROUP[q.unit] !== unitSel) return;
       const d = q.difficulty;
       if (!byDiff[d]) byDiff[d] = { total: 0, cleared: 0 };
       byDiff[d].total++;
       if (set && set.has(q.id)) byDiff[d].cleared++;
     };
-    const cats = cat === 'mix'
-      ? Object.keys(subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES)
-      : [cat];
+    // 単元グループでしぼっているときは全カテゴリから数える
+    const cats = unitSel && UNIT_GROUPS[unitSel]
+      ? Object.keys(SANSU_FILES).filter(k => k !== 'mix')
+      : cat === 'mix'
+        ? Object.keys(subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES)
+        : [cat];
     for (const c of cats) {
       const qs = await ensureSansuFile(subject, c);
       const set = sets[`${subject}:${c}`];
