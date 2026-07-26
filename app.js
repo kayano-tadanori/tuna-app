@@ -1711,10 +1711,29 @@ const UNIT_TO_GROUP = {};
 for (const [g, us] of Object.entries(UNIT_GROUPS)) for (const u of us) UNIT_TO_GROUP[u] = g;
 // 4段 × 10問に届かないグループはしぼり込みに出さない（選んでも問題が足りないため）
 const UNIT_GROUP_MIN = 40;
+const UNIT_INDEX_FILE = 'data/sansu_unit_index.json';
+
+// 単元グループの問題数だけを先に持っておく索引（1.7KB）。
+// これが無いと、単元チップを出すために算数の全ファイル（数MB）を先に落とすことになり、
+// 初回だけ「単元をよみこんでいます…」が数秒つづく（本番で実測）。索引なら一瞬で出る。
+let unitIndexCache = null;
+async function loadUnitIndex() {
+  if (unitIndexCache) return unitIndexCache;
+  try {
+    unitIndexCache = await (await fetch(UNIT_INDEX_FILE)).json();
+  } catch (e) { unitIndexCache = {}; }
+  return unitIndexCache;
+}
 
 // その学年で使える単元グループを、問題数つきで返す（カテゴリは横断する）
 async function sansuUnitsFor(cat, grade) {
   if (sansuState.subject !== 'sansu') return [];
+  // まず索引を見る。無い・空のときだけ実ファイルを数える（作りかけの学年でも動くように）
+  const idx = await loadUnitIndex();
+  const fromIdx = idx[String(grade)];
+  if (fromIdx && Object.keys(fromIdx).length) {
+    return Object.entries(fromIdx).sort((a, b) => b[1] - a[1]);
+  }
   const c = {};
   for (const k of Object.keys(SANSU_FILES)) {
     if (k === 'mix') continue;
