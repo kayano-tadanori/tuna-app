@@ -1454,7 +1454,7 @@ const SANSU_CAT_LABELS = {
   tokusan:'特殊算', baai:'場合の数', kazu:'数の性質',
   wariai:'割合と比', hayasa:'速さ', rittai:'立体図形', hama:'じゅくナビ'
 };
-const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'激ムズ', 5:'灘中レベル', gachi:'灘中レベル（ガチ）' };
+const DIFF_LABELS = { 1:'やさしい', 2:'難しい', 3:'チャレンジ', 4:'激ムズ', 5:'灘中レベル', gachi:'灘中レベル（ガチ）', kaisetsu:'かんたん解説' };
 const DRILL_TYPE_LABELS = {
   add:'足し算', sub:'引き算', mul:'かけ算', div:'割り算',
   divrem:'余りあり', decimal:'小数', fraction:'分数', mix:'ミックス'
@@ -1809,6 +1809,56 @@ async function renderSansuUnitRow() {
 // 現在No.は子ども（ニックネーム）ごとに保存し、週に1つ自動で進む。ズレたら±で直せる。
 let hamaMap = null;
 const HAMA_WINDOW = 12;      // 公開テストの範囲＝直近3ヶ月ぶん（週1回×12回）
+
+// ── かんたん解説モード（じゅくナビ専用データ）─────────────────
+// 浜学園は復習主義で先取りを推奨していないため、最レでは「先どり」を出さず
+// 代わりに「かんたん解説」を置く（本人指示 2026-07-27）。
+// 中身は 例題（解き方を見せる／入力させない）→ 類題（かんたんな問題を解かせる）の順。
+// 次男は抽象概念がまだ弱いので「具体を手で持たせてから名前を付ける」順に並べてある。
+const HAMA_KAISETSU_FILE = 'data/hama_kaisetsu.json';
+let hamaKaisetsuCache = null;
+async function loadHamaKaisetsu() {
+  if (hamaKaisetsuCache) return hamaKaisetsuCache;
+  try { hamaKaisetsuCache = await (await fetch(HAMA_KAISETSU_FILE)).json(); }
+  catch (e) { hamaKaisetsuCache = { grades: {} }; }
+  return hamaKaisetsuCache;
+}
+// その学年・コース・回に用意されている「かんたん解説」の中身を返す（無ければ null）
+async function hamaKaisetsuFor(grade, course, no) {
+  const d = await loadHamaKaisetsu();
+  const g = d.grades && d.grades[String(grade)];
+  const c = g && g[course];
+  return (c && c[String(no)]) || null;
+}
+// 例題＋類題を1本の出題リストに開く。例題には rei:true を立てて入力させない
+function expandKaisetsu(pack, grade) {
+  const out = [];
+  (pack.items || []).forEach((it, i) => {
+    const head = `📘 ${i + 1}. ${it.bone}`;
+    out.push({
+      id: `kx_${grade}_${i}_rei`,
+      rei: true,
+      question: it.rei.question,
+      chainIntro: `${head}
+まずは やり方を見てみよう`,
+      svg: it.rei.svg || '',
+      answer: it.rei.answer,
+      kaisetsu: it.rei.kaisetsu || [],
+      grade, _cat: 'kaisetsu',
+    });
+    (it.ruidai || []).forEach((r, j) => out.push({
+      id: `kx_${grade}_${i}_r${j}`,
+      question: r.question,
+      chainIntro: j === 0 ? `${head}
+おなじやり方で やってみよう` : '',
+      svg: r.svg || '',
+      answer: r.answer,
+      meaning: r.meaning,
+      grade, _cat: 'kaisetsu',
+    }));
+  });
+  return out;
+}
 const HAMA_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 async function loadHamaMap() {
@@ -1973,8 +2023,9 @@ async function renderHamaPanel() {
     const wk = document.getElementById('hama-cnt-week');
     wk.textContent = filtered.length ? `${sansuState.hamaUnit}・${filtered.length}問` : 'まだ問題なし';
     document.querySelector('.hama-act-btn[data-hama-act="week"]').disabled = !filtered.length;
-    ['kokai', 'senshu'].forEach(k => {
-      document.getElementById('hama-cnt-' + k).textContent = '—';
+    ['kokai', 'senshu', 'kaisetsu'].forEach(k => {
+      const el = document.getElementById('hama-cnt-' + k);
+      if (el) el.textContent = '—';
       const b = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
       if (b) b.disabled = true;
     });
@@ -2005,10 +2056,24 @@ async function renderHamaPanel() {
   const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
   if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
 
-  const ranges = {
-    week: [no, no],
-    senshu: [no + 1, Math.min(maxNo, no + HAMA_WINDOW)],
-  };
+  // 最レでは「先どり」を出さず「かんたん解説」を出す（浜は復習主義／本人指示 2026-07-27）
+  const isSairei = (course === 'sairei');
+  const senshuBtn = document.querySelector('.hama-act-btn[data-hama-act="senshu"]');
+  const kxBtn = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
+  if (senshuBtn) senshuBtn.classList.toggle('hidden', isSairei);
+  if (kxBtn) {
+    kxBtn.classList.toggle('hidden', !isSairei);
+    if (isSairei) {
+      const pack = await hamaKaisetsuFor(grade, course, no);
+      const el = document.getElementById('hama-cnt-kaisetsu');
+      const n = pack ? expandKaisetsu(pack, grade).length : 0;
+      el.textContent = n ? `No.${no} ${pack.title}・${n}問` : `No.${no}・まだ用意していません`;
+      kxBtn.disabled = !n;
+    }
+  }
+
+  const ranges = { week: [no, no] };
+  if (!isSairei) ranges.senshu = [no + 1, Math.min(maxNo, no + HAMA_WINDOW)];
   if (showKokai) ranges.kokai = [Math.max(minNo, no - HAMA_WINDOW), no];
   for (const k of Object.keys(ranges)) {
     const [a, b] = ranges[k];
@@ -2104,6 +2169,26 @@ async function startHamaSession(kind) {
 
   const minNo = lessons[0].no, maxNo = lessons[lessons.length - 1].no;
   const no = hamaCurrent(grade, course);
+
+  // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
+  if (kind === 'kaisetsu') {
+    showLoading();
+    try {
+      const pack = await hamaKaisetsuFor(grade, course, no);
+      const qs = pack ? expandKaisetsu(pack, grade) : [];
+      if (!qs.length) { showToast('この回のかんたん解説はまだ用意していません'); hideLoading(); return; }
+      sansuState.subject = 'sansu';
+      sansuState.cat = 'kaisetsu';
+      sansuState.diff = 'kaisetsu';
+      sansuState.questions = qs;      // ★順番どおりに出す
+      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+      coinSessionEarned = 0;
+      hideLoading();
+      startSansuQuiz();
+    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+    return;
+  }
+
   const range = kind === 'week' ? [no, no]
     : kind === 'kokai' ? [Math.max(minNo, no - HAMA_WINDOW), no]
       : [no + 1, Math.min(maxNo, no + HAMA_WINDOW)];
@@ -2725,6 +2810,29 @@ function renderSansuQuiz() {
   const previewWrap = document.getElementById('sq-preview-wrap');
   const remainWrap = document.getElementById('sq-remain-wrap');
   const choicesWrap = document.getElementById('sq-choices');
+
+  // ★例題（かんたん解説モード）＝解き方を見せるだけ。入力させず、採点もしない
+  if (q.rei) {
+    numpad.classList.add('hidden');
+    previewWrap.classList.add('hidden');
+    remainWrap.classList.add('hidden');
+    choicesWrap.classList.add('hidden');
+    const fb = document.getElementById('sq-feedback');
+    document.getElementById('sq-feedback-text').textContent = '💡 やり方';
+    const ansEl = document.getElementById('sq-feedback-ans');
+    ansEl.innerHTML = (q.kaisetsu || []).map((k, i) =>
+      `<span class="rei-step"><b>${i + 1}</b>${k}</span>`).join('')
+      + `<span class="rei-ans">答え　${q.answer}</span>`;
+    fb.classList.remove('hidden');
+    const nextBtn = document.getElementById('sq-btn-next');
+    nextBtn.textContent = 'わかった！やってみる →';
+    nextBtn.onclick = () => {
+      nextBtn.textContent = '次へ →';
+      sansuState.current++;
+      renderSansuQuiz();
+    };
+    return;
+  }
 
   // 理科の数値で答える問題は、4択ではなくテンキー入力にする
   const forceNumpad = sansuState.subject === 'rika' && isNumpadAnswer(q.answer);

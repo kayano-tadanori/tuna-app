@@ -980,3 +980,10 @@ button { cursor: pointer; font-family: inherit; }
 /* ── クイズ中の音トグル（ヘッダー右上） ── */
 .snd-mini { font-size: 1.05rem; min-width: 36px; min-height: 36px; flex-shrink: 0; }
 .snd-mini.snd-off { opacity: 0.35; filter: grayscale(1); }
+
+/* ── かんたん解説モード（じゅくナビ・最レ）───────────────── */
+.hama-act-btn.hama-act-kx { border-color: rgba(34,211,238,0.55); background: linear-gradient(135deg, rgba(34,211,238,0.14), rgba(45,212,191,0.10)); }
+/* 例題の「やり方」＝1手ずつ改行して見せる。抽象が苦手な子に一気に読ませない */
+.rei-step { display: block; margin: 0 0 8px; padding-left: 26px; position: relative; line-height: 1.65; text-align: left; }
+.rei-step b { position: absolute; left: 0; top: 1px; width: 19px; height: 19px; border-radius: 50%; background: #22d3ee; color: #052027; font-size: 12px; line-height: 19px; text-align: center; font-weight: 800; }
+.rei-ans { display: block; margin-top: 10px; padding: 8px 12px; border-radius: 8px; background: rgba(34,211,238,0.16); border: 1px solid rgba(34,211,238,0.5); font-weight: 800; font-size: 1.05em; text-align: center; }
