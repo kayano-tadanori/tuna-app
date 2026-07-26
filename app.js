@@ -1130,6 +1130,7 @@ function initSubject() {
 // ============================================================
 
 function initSettingsScreen() {
+  initClassBandUI();
   const c = Snd.get();
   const st = document.getElementById('snd-sfx-toggle');
   const mt = document.getElementById('snd-music-toggle');
@@ -1695,6 +1696,7 @@ async function renderSansuUnitRow() {
       row.querySelectorAll('.sansu-cat-btn').forEach(x => x.classList.remove('selected'));
       b.classList.add('selected');
       sansuState.unit = b.dataset.unit || null;
+      if (typeof renderDiffBadgesSansu === 'function') renderDiffBadgesSansu();
       if (typeof updateSansuStart === 'function') updateSansuStart();
     };
   });
@@ -1848,7 +1850,7 @@ async function renderHamaPanel() {
   for (const k of Object.keys(ranges)) {
     const [a, b] = ranges[k];
     const noRange = (a > b);   // 先どりで、まだ先の回が無いとき
-    const qs = noRange ? [] : await hamaCollect(grade, course, a, b);
+    const qs = noRange ? [] : filterByBand(await hamaCollect(grade, course, a, b));
     const el = document.getElementById('hama-cnt-' + k);
     const btn = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
     const span = (k === 'week') ? `No.${no}` : `No.${a}〜${b}`;
@@ -1859,6 +1861,35 @@ async function renderHamaPanel() {
     }
     if (btn) btn.disabled = !qs.length;
   }
+}
+
+// ── クラス帯（H/S/V）──────────────────────────
+// 浜学園はクラスによって復習テストの中身が違う（本人確認 2026-07-26）。
+// 難易度＝骨に乗っている「制約の数」で定義しているので、クラス帯を難易度に対応させる。
+const CLASS_BAND_DIFFS = { H: [1, 2], S: [2, 3], V: [3, 4] };
+function getClassBand() { try { return localStorage.getItem('otonClassBand') || ''; } catch (e) { return ''; } }
+function setClassBand(v) { try { v ? localStorage.setItem('otonClassBand', v) : localStorage.removeItem('otonClassBand'); } catch (e) {} }
+// クラス帯でしぼる。その帯に十分な数が無ければしぼらない（＝出題できなくならない安全弁）
+function filterByBand(list, minWanted = 5) {
+  const band = getClassBand();
+  const diffs = CLASS_BAND_DIFFS[band];
+  if (!diffs) return list;
+  const only = list.filter(q => diffs.includes(q.difficulty));
+  return only.length >= minWanted ? only : list;
+}
+function initClassBandUI() {
+  const row = document.getElementById('class-band-row');
+  if (!row) return;
+  const cur = getClassBand();
+  row.querySelectorAll('.sansu-cat-btn').forEach(b => {
+    b.classList.toggle('selected', (b.dataset.band || '') === cur);
+    b.onclick = () => {
+      row.querySelectorAll('.sansu-cat-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      setClassBand(b.dataset.band || '');
+      showToast(b.dataset.band ? `${b.dataset.band}クラスのむずかしさで出します` : 'ぜんぶのむずかしさから出します');
+    };
+  });
 }
 
 // じゅくナビから出題を開始する
@@ -1875,8 +1906,9 @@ async function startHamaSession(kind) {
   if (range[0] > range[1]) { showToast('この範囲にはまだ問題がありません'); return; }
   showLoading();
   try {
-    const all = await hamaCollect(grade, course, range[0], range[1]);
-    if (!all.length) { showToast('この範囲にはまだ問題がありません'); hideLoading(); return; }
+    const raw = await hamaCollect(grade, course, range[0], range[1]);
+    if (!raw.length) { showToast('この範囲にはまだ問題がありません'); hideLoading(); return; }
+    const all = filterByBand(raw);   // クラス帯（H/S/V）に合うむずかしさだけ
     const want = Number(document.getElementById('sansu-q-count').value) || 10;
     const picked = shuffle(all).slice(0, want === 0 ? all.length : want);
     sansuState.subject = 'sansu';
@@ -6125,8 +6157,11 @@ async function renderDiffBadgesSansu() {
   try {
     const sets = buildClearedSets();
     const byDiff = {};
+    // 単元をしぼっているときは、その単元だけで数える（表示と実際の出題を一致させる）
+    const unitSel = sansuState.unit || null;
     const tally = (q, set) => {
       if (q.grade !== grade) return;
+      if (unitSel && q.unit !== unitSel) return;
       const d = q.difficulty;
       if (!byDiff[d]) byDiff[d] = { total: 0, cleared: 0 };
       byDiff[d].total++;
