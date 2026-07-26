@@ -1620,7 +1620,7 @@ function setChainCountOptions(selectId, isChain) {
 const sansuCache = {};
 const sansuState = {
   subject: 'sansu', // 'sansu' | 'rika'
-  grade: null, diff: null, cat: null,
+  grade: null, diff: null, cat: null, unit: null,
   mode: null, // 'normal' | 'drill' | 'hama'
   hamaCourse: null, // じゅくナビのコース（master / sairei）
   drillType: null, drillDiff: null, drillTime: null,
@@ -1640,7 +1640,56 @@ async function loadSansuQuestions(cat, grade, diff) {
     const res = await fetch(fileMap[cat]);
     sansuCache[key] = await res.json();
   }
-  return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
+  let list = sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
+  // 単元しぼり（浜学園の単元名。最レは回番号でなく単元名で引くため 2026-07-26）
+  if (sansuState.unit) {
+    const only = list.filter(q => q.unit === sansuState.unit);
+    if (only.length) list = only;   // その単元が0問なら、しぼらず全部から出す
+  }
+  return list;
+}
+
+// その学年・そのカテゴリに実際に存在する単元を、問題数つきで返す
+async function sansuUnitsFor(cat, grade) {
+  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
+    : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+  const key = `${sansuState.subject}-${cat}`;
+  if (!sansuCache[key]) {
+    const res = await fetch(fileMap[cat]);
+    sansuCache[key] = await res.json();
+  }
+  const c = {};
+  for (const q of sansuCache[key]) {
+    if (q.grade !== grade || !q.unit) continue;
+    c[q.unit] = (c[q.unit] || 0) + 1;
+  }
+  return Object.entries(c).sort((a, b) => b[1] - a[1]);
+}
+
+// 単元しぼりのチップを描く。単元が1つしかないカテゴリでは出さない
+async function renderSansuUnitRow() {
+  const wrap = document.getElementById('sansu-unit-wrap');
+  const row = document.getElementById('sansu-unit-row');
+  if (!wrap || !row) return;
+  const { cat, grade } = sansuState;
+  if (!cat || !grade) { wrap.classList.add('hidden'); return; }
+  let units = [];
+  try { units = await sansuUnitsFor(cat, grade); } catch (e) { units = []; }
+  if (units.length < 2) { wrap.classList.add('hidden'); sansuState.unit = null; return; }
+  wrap.classList.remove('hidden');
+  row.innerHTML =
+    `<button class="sansu-cat-btn${sansuState.unit ? '' : ' selected'}" data-unit="">ぜんぶ</button>` +
+    units.map(([u, n]) =>
+      `<button class="sansu-cat-btn${sansuState.unit === u ? ' selected' : ''}" data-unit="${u}">${u}<br><span style="font-size:.72em;opacity:.7">${n}問</span></button>`
+    ).join('');
+  row.querySelectorAll('.sansu-cat-btn').forEach(b => {
+    b.onclick = () => {
+      row.querySelectorAll('.sansu-cat-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      sansuState.unit = b.dataset.unit || null;
+      if (typeof updateSansuStart === 'function') updateSansuStart();
+    };
+  });
 }
 
 // ── じゅくナビ（塾の講義No.に合わせた出題） ──────────────
@@ -1848,7 +1897,7 @@ function hideSansuSteps(...ids) {
 function initSansuHome() {
   sansuState.subject = 'sansu';
   document.getElementById('sansu-nickname').textContent = state.nickname;
-  sansuState.grade = null; sansuState.diff = null; sansuState.cat = null;
+  sansuState.grade = null; sansuState.diff = null; sansuState.cat = null; sansuState.unit = null;
   sansuState.mode = null; sansuState.drillType = null; sansuState.drillDiff = null; sansuState.drillTime = null;
 
   // 戻るボタン
@@ -1863,6 +1912,8 @@ function initSansuHome() {
       document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.grade = Number(btn.dataset.grade);
+      sansuState.unit = null;
+      if (sansuState.cat) renderSansuUnitRow();
       // カテゴリごとの履修開始学年（SAPIX/浜学園カリキュラム基準）に達したら表示
       document.querySelectorAll('.juken-only').forEach(el => {
         const minGrade = Number(el.dataset.minGrade) || 4;
@@ -1947,6 +1998,8 @@ function initSansuHome() {
       document.querySelectorAll('#screen-sansu-home .sansu-cat-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       sansuState.cat = btn.dataset.scat;
+      sansuState.unit = null;
+      renderSansuUnitRow();
       showSansuStep('sansu-step-diff');
       updateSansuStart();
     };
