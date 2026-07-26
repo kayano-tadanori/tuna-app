@@ -955,6 +955,71 @@ function prevYm(ym) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 }
 
+// ===== 浜学園の受講資格と順位ボーダー（実測＋公式）=====
+// 公式：https://www.hamagakuen.co.jp/entrance/course/kansai/
+//   条件はすべて「受講開始月より起算して、過去3回の公開学力テストで下記を1回以上」
+// 実測：十傑資料の合計点分布（10点刻みの実人数）を累積して線形補間。小4・小5＝13回、小3＝6回
+const HAMA = {
+  // 灘中合格特訓の受講資格（学年 → 判定科目数・順位）
+  nadago: {
+    1: { subj: 2, rank: 25 }, 2: { subj: 2, rank: 30 }, 3: { subj: 2, rank: 40 },
+    4: { subj: 2, rank: 50 }, 5: { subj: 3, rank: 60 },
+  },
+  // 最高レベル特訓（算数）の受講資格＝2科偏差値58以上 または 算数偏差値58以上（小6は60）
+  saire: { dev: g => (g >= 6 ? 60 : 58) },
+  // 実測の順位ボーダー（素点）。key = `${学年}-${科目数}`
+  // ※小4の灘合は2科判定だが、十傑資料は小4の2科分布を含まないため小4-2は無い
+  borders: {
+    '3-2': { 10: 183.5, 30: 176.3, 40: 173.6, 60: 171.0, 80: 167.9, 100: 165.4, max: 200, n: 6 },
+    '4-3': { 10: 281.6, 30: 273.8, 50: 269.6, 60: 268.2, 80: 265.6, 100: 263.2, max: 300, n: 7 },
+    '5-3': { 10: 281.2, 30: 273.6, 50: 269.6, 60: 267.3, 80: 264.0, 100: 261.7, max: 300, n: 6 },
+  },
+  // 体感のはしご（本人。実測と1点以内で一致）
+  bands: [
+    { avg: 93, label: '十傑圏' }, { avg: 90, label: 'トップ30圏（毎回超えるなら）' },
+    { avg: 87, label: '100傑圏' }, { avg: 75, label: 'Vクラス圏' },
+  ],
+};
+// 素点 → 推定順位（実測ボーダーを対数っぽく内挿。範囲外は端を返す）
+function hamaRank(grade, subj, score) {
+  const b = HAMA.borders[`${grade}-${subj}`];
+  if (!b || score == null) return null;
+  const ks = Object.keys(b).filter(k => /^\d+$/.test(k)).map(Number).sort((a, c) => a - c);
+  if (score >= b[ks[0]]) return { rank: ks[0], op: '以内' };
+  for (let i = 0; i < ks.length - 1; i++) {
+    const hi = ks[i], lo = ks[i + 1];
+    if (score >= b[lo]) {
+      const f = (b[hi] - score) / (b[hi] - b[lo]);
+      return { rank: Math.round(hi + f * (lo - hi)), op: '前後' };
+    }
+  }
+  return { rank: ks[ks.length - 1], op: 'より下' };
+}
+// 灘合の資格判定：直近3回のうち1回でも基準順位以内なら○
+// results = [{ grade, subj, score }] 新しい順。score は素点合計
+function hamaNadago(results) {
+  if (!results || !results.length) return null;
+  const last3 = results.slice(0, 3);
+  const g = last3[0].grade;
+  const req = HAMA.nadago[g];
+  if (!req) return null;
+  let best = null, ok = false;
+  for (const r of last3) {
+    if (r.subj !== req.subj || r.score == null) continue;
+    const e = hamaRank(r.grade, r.subj, r.score);
+    if (!e) continue;
+    if (best == null || e.rank < best) best = e.rank;
+    if (e.rank <= req.rank) ok = true;
+  }
+  const b = HAMA.borders[`${g}-${req.subj}`];
+  return {
+    grade: g, subj: req.subj, need: req.rank, ok, best,
+    needScore: b ? Math.round(b[req.rank] ?? 0) : null,
+    avg: b && b[req.rank] ? +(b[req.rank] / req.subj).toFixed(1) : null,
+    hasData: !!b,
+  };
+}
+
 // お子さんごとの学年・クラス（⚙️設定 okan_child_meta[名前]={grade,cls,curr}）。Vは小4から
 function childMeta() { try { return JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { return {}; } }
 
@@ -969,6 +1034,36 @@ function satWindow(ym) {
   if (mo >= 11) return { key: `${y}-11`, apply: `${y + 1}-03`, label: `${y}年11月〜${y + 1}年2月`, applyLabel: `${y + 1}年 3〜6月` };
   return { key: `${y - 1}-11`, apply: `${y}-03`, label: `${y - 1}年11月〜${y}年2月`, applyLabel: `${y}年 3〜6月` };   // 1・2月は前年11月始まりの窓
 }
+// 🎓 灘中合格特訓の受講資格（公式条件＋十傑資料の実測ボーダー）
+function qualCard(grade) {
+  const req = HAMA.nadago[grade];
+  if (!req) return '';
+  const ks = (db.kokai || []).filter(k => k.ym).sort((a, b) => b.ym.localeCompare(a.ym));
+  const subj = req.subj;
+  const cols = subj === 3 ? ['koku', 'san', 'ri'] : ['koku', 'san'];
+  const res = [];
+  for (const k of ks) {
+    let sum = 0, all = true;
+    for (const c of cols) { const v = k[c] && k[c].score; if (v == null || v === '') all = false; else sum += +v; }
+    if (all) res.push({ grade, subj, score: sum, ym: k.ym });
+  }
+  let h = `<div class="graphCard"><h3>🎓 灘中合格特訓の資格（小${grade}）</h3>
+    <p style="font-size:11px;color:#94a3b8;line-height:1.7">条件は<b>過去3回の公開のうち1回以上</b>で ${subj}科 男女総合 <b>${req.rank}位以内</b>（浜学園 公式）。</p>`;
+  const q = hamaNadago(res);
+  if (!q) return h + `<p style="font-size:11.5px;color:#94a3b8">公開テストの${subj}科の点がそろっていません。</p></div>`;
+  if (!q.hasData) return h + `<p style="font-size:11.5px;color:#94a3b8">小${grade}の${subj}科の順位ボーダーは手元の資料に無いため、点数からの判定はできません。</p></div>`;
+  const last = res[0], e = hamaRank(grade, subj, last.score), d = q.needScore - last.score;
+  h += `<div class="abLine ${q.ok ? 'good' : ''}">${q.ok ? '✅ 資格あり' : '⏳ あと少し'}　直近3回のベスト ${q.best != null ? q.best + '位前後' : '—'}</div>`;
+  h += `<div class="abLine">${req.rank}位のめやす <b>${q.needScore}点</b>（公開平均 ${q.avg}点）</div>`;
+  h += `<div class="abLine">最新 ${last.ym} は ${last.score}点＝<b>${e ? e.rank + '位' + e.op : '—'}</b>　${d > 0 ? 'あと ' + d + '点' : (-d) + '点うわまわり'}</div>`;
+  h += HAMA.bands.map(b => {
+    const sc = Math.round(b.avg * subj), c = last.score - sc;
+    return `<div class="abLine${c >= 0 ? ' good' : ''}">平均${b.avg}（${sc}点）${b.label}　${c >= 0 ? '+' + c : 'あと ' + (-c)}点</div>`;
+  }).join('');
+  h += `<p style="font-size:10.5px;color:#94a3b8;line-height:1.7;margin-top:6px">順位のめやすは十傑資料の得点分布（小4小5=13回／小3=6回）の平均から。<b>回によって±6点ほど動きます</b>。最高レベル特訓は「2科偏差値58以上 または 算数偏差値58以上」（小6は60）。</p>`;
+  return h + `</div>`;
+}
+
 function renderSatMaster(grade, cls) {
   // 公開の2科平均偏差値だけを4ヶ月の窓に束ねる
   const wins = {};
@@ -1032,6 +1127,8 @@ function renderAB() {
     </div>
     ${CHILDREN.length >= 2 ? `<p style="font-size:11px;color:#db2777;font-weight:800;margin:2px 0 6px">👦 ${activeChild}の設定（お子さんを切り替えるとクラスも切り替わります）</p>` : ''}
     <p style="font-size:10.5px;color:#94a3b8;line-height:1.7">A表＝復テ平均（前月16日〜当月15日の復習テストの単純平均。夏期は実物どおり7月度=〜7/5・8月度=〜8/12・9月度=〜9/15で区切り）＋公開の平均点（総合点÷科目数）＝200点満点。B表＝2ヶ月合算（奇数月末判定→偶数月から新クラス）。Vクラス内はB表340点がV1⇄V2の境界です。基準値は非公表のおおまかな目安（±10点程度）です。</p></div>`;
+
+  h += qualCard(grade);
 
   // B表（判定月＝奇数月：2+3月→3月末、4+5月→5月末…）
   const th = AB_TH[cls] || {};
