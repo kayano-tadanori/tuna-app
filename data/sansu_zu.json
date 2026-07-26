@@ -5477,7 +5477,7 @@
   "answer": "31.4",
   "meaning": "円周＝直径×円周率＝10×3.14＝31.400000000000002cmです。",
   "grade": 5,
-  "difficulty": 3,
+  "difficulty": 1,
   "svg": "<svg viewBox='0 0 140 130' style='display:block;margin:6px auto;max-width:210px'><circle cx='70' cy='65' r='45' fill='#4f9eff' opacity='0.18' stroke='#eef2ff' stroke-width='1.5'/><line x1='70' y1='65' x2='115' y2='65' stroke='#ef476f'/><text x='90' y='60' font-size='10' fill='#ef476f'>半径5</text></svg>",
   "unit": "平面図形（面積）"
  },
@@ -5487,7 +5487,7 @@
   "answer": "62.8",
   "meaning": "円周＝直径×円周率＝20×3.14＝62.800000000000004cmです。",
   "grade": 5,
-  "difficulty": 3,
+  "difficulty": 1,
   "svg": "<svg viewBox='0 0 140 130' style='display:block;margin:6px auto;max-width:210px'><circle cx='70' cy='65' r='45' fill='#4f9eff' opacity='0.18' stroke='#eef2ff' stroke-width='1.5'/><line x1='70' y1='65' x2='115' y2='65' stroke='#ef476f'/><text x='90' y='60' font-size='10' fill='#ef476f'>半径10</text></svg>",
   "unit": "平面図形（面積）"
  },
@@ -5497,7 +5497,7 @@
   "answer": "50.24",
   "meaning": "円周＝直径×円周率＝16×3.14＝50.24cmです。",
   "grade": 5,
-  "difficulty": 3,
+  "difficulty": 1,
   "svg": "<svg viewBox='0 0 140 130' style='display:block;margin:6px auto;max-width:210px'><circle cx='70' cy='65' r='45' fill='#4f9eff' opacity='0.18' stroke='#eef2ff' stroke-width='1.5'/><line x1='70' y1='65' x2='115' y2='65' stroke='#ef476f'/><text x='90' y='60' font-size='10' fill='#ef476f'>半径8</text></svg>",
   "unit": "平面図形（面積）"
  },
@@ -5507,7 +5507,7 @@
   "answer": "31.4",
   "meaning": "円周＝直径×円周率＝10×3.14＝31.400000000000002cmです。",
   "grade": 5,
-  "difficulty": 4,
+  "difficulty": 1,
   "unit": "平面図形（面積）"
  },
  {
@@ -5516,7 +5516,7 @@
   "answer": "62.8",
   "meaning": "円周＝直径×円周率＝20×3.14＝62.800000000000004cmです。",
   "grade": 5,
-  "difficulty": 4,
+  "difficulty": 1,
   "unit": "平面図形（面積）"
  },
  {
@@ -5525,7 +5525,7 @@
   "answer": "18.84",
   "meaning": "円周＝直径×円周率＝6×3.14＝18.84cmです。",
   "grade": 5,
-  "difficulty": 4,
+  "difficulty": 1,
   "unit": "平面図形（面積）"
  },
  {
@@ -8298,7 +8298,7 @@
   "answer": "10000",
   "meaning": "1m＝100cm。100×100＝10000cm2です。",
   "grade": 4,
-  "difficulty": 4,
+  "difficulty": 1,
   "unit": "平面図形（面積）"
  },
  {
@@ -9602,7 +9602,7 @@
   "answer": "63",
   "meaning": "14×9÷2＝63cm²です。",
   "grade": 5,
-  "difficulty": 3,
+  "difficulty": 1,
   "unit": "平面図形（面積）",
   "id": "sz1871"
  },
@@ -9611,7 +9611,7 @@
   "answer": "64",
   "meaning": "(6+10)×8÷2＝64cm²です。",
   "grade": 5,
-  "difficulty": 3,
+  "difficulty": 1,
   "unit": "平面図形（面積）",
   "id": "sz1872"
  },
@@ -9803,5 +9803,77 @@
   "difficulty": 4,
   "unit": "平面図形（面積）",
   "id": "sz1893"
+ },
+ {
+  "question": "平行四辺形ABCDの面積は 96cm²です。辺BC上に点Pをとって三角形APDを作ると、面積は何cm²ですか。（Pがどこにあっても同じです）",
+  "answer": "48",
+  "meaning": "三角形APDの底辺ADは平行四辺形の1辺で、高さは平行四辺形の高さと同じ。三角形は底辺×高さ÷2 なので、平行四辺形のちょうど半分。96÷2＝48cm²です。Pの場所を動かしても答えは変わりません。",
+  "grade": 5,
+  "difficulty": 3,
+  "unit": "平面図形（面積）",
+  "id": "sz1894"
+ },
+ {
+  "question": "三角形ABCの面積は 84cm²です。辺BCを 3等分する点をD、Eとするとき、三角形ADEの面積は何cm²ですか。",
+  "answer": "28",
+  "meaning": "底辺DEはBCの3分の1で、高さは三角形ABCと同じ。だから面積も3分の1。84÷3＝28cm²です。",
+  "grade": 5,
+  "difficulty": 3,
+  "unit": "平面図形（面積）",
+  "id": "sz1895"
+ },
+ {
+  "question": "1辺 10cmの正方形の中に、対角線を1本引き、さらにその対角線の真ん中の点と、正方形の1つの頂点を結びました。できた小さい三角形の面積は何cm²ですか。",
+  "answer": "25",
+  "meaning": "対角線で正方形は半分の 100÷2＝50cm²の三角形2つに分かれます。その三角形を対角線の真ん中の点から頂点へ結ぶと、さらに半分。50÷2＝25cm²です。",
+  "grade": 5,
+  "difficulty": 3,
+  "unit": "平面図形（面積）",
+  "id": "sz1896"
+ },
+ {
+  "question": "面積が 72cm²の三角形の底辺を 2倍にして、高さを半分にすると、面積は何cm²になりますか。",
+  "answer": "72",
+  "meaning": "底辺が2倍で高さが半分なら、かけ算の結果は変わりません。2×(1/2)＝1 なので面積は 72cm²のままです。",
+  "grade": 5,
+  "difficulty": 3,
+  "unit": "平面図形（面積）",
+  "id": "sz1897"
+ },
+ {
+  "question": "たて 12cm、よこ 20cmの長方形の中に、たて 12cm・はば 4cmの道と、よこ 20cm・はば 3cmの道を十字に作りました。道の面積は何cm²ですか。（十字の重なりを二重に数えないこと）",
+  "answer": "96",
+  "meaning": "たての道は 12×4＝48cm²、よこの道は 20×3＝60cm²。十字の重なりは 4×3＝12cm²で、これを二重に数えているので1回引きます。48+60−12＝96cm²です。",
+  "grade": 5,
+  "difficulty": 3,
+  "unit": "平面図形（面積）",
+  "id": "sz1898"
+ },
+ {
+  "question": "1辺 12cmの正方形の中に、各辺を 1:3 に分ける点を4つとって四角形を作りました。この四角形の面積は何cm²ですか。",
+  "answer": "90",
+  "meaning": "正方形は 12×12＝144cm²。四すみにできる直角三角形は、2辺が 3cmと 9cmで 3×9÷2＝13.5cm²。4つで 54cm²。144−54＝90cm²です。",
+  "grade": 5,
+  "difficulty": 4,
+  "unit": "平面図形（面積）",
+  "id": "sz1899"
+ },
+ {
+  "question": "長方形ABCDの中に点Pをとります。三角形PABの面積が 18cm²、三角形PCDの面積が 22cm²のとき、長方形の面積は何cm²ですか。",
+  "answer": "80",
+  "meaning": "PABとPCDは、底辺がABとCD（長さが同じ）で、2つの高さを合わせると長方形のたてになります。だから2つの三角形の面積の和は、長方形のちょうど半分。18+22＝40cm²が半分なので、長方形は 80cm²です。（Pの場所が分からなくても答えが出ます）",
+  "grade": 5,
+  "difficulty": 4,
+  "unit": "平面図形（面積）",
+  "id": "sz1900"
+ },
+ {
+  "question": "1辺 8cmの正方形と、その1つの頂点を中心とする半径 8cmの四分円が重なっています。正方形から四分円をのぞいた部分の面積は何cm²ですか。円周率は3.14とします。",
+  "answer": "13.76",
+  "meaning": "正方形は 8×8＝64cm²。四分円は 8×8×3.14÷4＝50.24cm²。64−50.24＝13.76cm²です。",
+  "grade": 5,
+  "difficulty": 4,
+  "unit": "平面図形（面積）",
+  "id": "sz1901"
  }
 ]
