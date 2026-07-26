@@ -1662,8 +1662,11 @@ async function loadSansuQuestions(cat, grade, diff) {
       if (k === 'mix') continue;
       let qs;
       try { qs = await ensureSansuFile('sansu', k); } catch (e) { continue; }
+      const ov = overlapSource(grade, diff);
       for (const q of qs) {
-        if (q.grade === grade && q.difficulty === diff && UNIT_TO_GROUP[q.unit] === gsel) pooled.push(q);
+        if (UNIT_TO_GROUP[q.unit] !== gsel) continue;
+        if (q.grade === grade && q.difficulty === diff) pooled.push(q);
+        else if (ov && q.grade === ov.grade && q.difficulty === ov.diff) pooled.push(q);
       }
     }
     if (pooled.length) return pooled;
@@ -1674,7 +1677,10 @@ async function loadSansuQuestions(cat, grade, diff) {
     const res = await fetch(fileMap[cat]);
     sansuCache[key] = await res.json();
   }
-  return sansuCache[key].filter(q => q.grade === grade && q.difficulty === diff);
+  const ov = overlapSource(grade, diff);
+  return sansuCache[key].filter(q =>
+    (q.grade === grade && q.difficulty === diff) ||
+    (ov && q.grade === ov.grade && q.difficulty === ov.diff));
 }
 
 
@@ -1688,6 +1694,7 @@ const UNIT_GROUPS = {
   '消去算': ['消去算'],
   'つるかめ算': ['つるかめ算'],
   '過不足算・差集め算': ['過不足算・差集め算'],
+  '仕事算': ['仕事算'],
   '年令算・平均算': ['年齢算', '平均算'],
   '相当算・やりとり': ['相当算・還元算', '倍数算・やりとり'],
   '割合・食塩水': ['割合', '食塩水・濃度'],
@@ -1712,6 +1719,20 @@ for (const [g, us] of Object.entries(UNIT_GROUPS)) for (const u of us) UNIT_TO_G
 // 4段 × 10問に届かないグループはしぼり込みに出さない（選んでも問題が足りないため）
 const UNIT_GROUP_MIN = 40;
 const UNIT_INDEX_FILE = 'data/sansu_unit_index.json';
+
+// ★ 学年をまたぐ難易度の重なり（本人の目安 2026-07-26）
+//   「4年の難しいは5年のやさしいに相当します」
+//   ＝ 小N の d4 と 小(N+1) の d1 は同じ重さ。絶対レベル A ＝ 3×学年 ＋ 難易度 で一致する
+//     （小4d4 → 3×4+4＝16 ／ 小5d1 → 3×5+1＝16）
+//   原簿（浜学園の実物593問）でも、同じ骨が「小3最レ★★ → 小4マスター★★ → 小4最レ★」と
+//   コースをまたいで重なっており、1学年内で4段に刻まれてはいない。
+//   → d1 を選んだときは、1つ下の学年の d4 も同じプールに入れる。
+//     下の学年の問題は必ずその学年で解ける道具しか使っていないので、上に混ぜるのは安全。
+//     逆（下の学年に上の学年の問題を混ぜる）は未習の道具が入るのでやらない。
+function overlapSource(grade, diff) {
+  if (diff !== 1 || !(grade > 1)) return null;
+  return { grade: grade - 1, diff: 4 };
+}
 
 // 単元グループの問題数だけを先に持っておく索引（1.7KB）。
 // これが無いと、単元チップを出すために算数の全ファイル（数MB）を先に落とすことになり、
@@ -5809,8 +5830,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 779, zu: 1016, kisoku: 954, tokusan: 519, baai: 550, kazu: 643,
-            wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,838（2026-07-26）
+  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 779, zu: 1016, kisoku: 954, tokusan: 523, baai: 553, kazu: 643,
+            wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,845（2026-07-26）
   rika:   { shokubutsu: 947, doubutsu: 866, jintai: 250, sora: 734, tenki: 490, mono: 831, kitai: 273,
             daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,721（2026-07-17 重複57問削除+補充6問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
@@ -6359,13 +6380,17 @@ async function renderDiffBadgesSansu() {
   try {
     const sets = buildClearedSets();
     const byDiff = {};
-    const tally = (q, set) => {
-      if (q.grade !== grade) return;
-      if (unitSel && UNIT_TO_GROUP[q.unit] !== unitSel) return;
-      const d = q.difficulty;
+    // 出題プールと同じ数え方にする。d1 には1つ下の学年の d4 も入るので、そのぶんも足す
+    const bump = (d, q, set) => {
       if (!byDiff[d]) byDiff[d] = { total: 0, cleared: 0 };
       byDiff[d].total++;
       if (set && set.has(q.id)) byDiff[d].cleared++;
+    };
+    const tally = (q, set) => {
+      if (unitSel && UNIT_TO_GROUP[q.unit] !== unitSel) return;
+      if (q.grade === grade) bump(q.difficulty, q, set);
+      // 1つ下の学年の d4 は、この学年の d1 として出題される
+      else if (q.grade === grade - 1 && q.difficulty === 4 && grade > 1) bump(1, q, set);
     };
     // 単元グループでしぼっているときは全カテゴリから数える
     const cats = unitSel && UNIT_GROUPS[unitSel]
