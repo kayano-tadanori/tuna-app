@@ -1665,8 +1665,10 @@ async function loadSansuQuestions(cat, grade, diff) {
       const ov = overlapSource(grade, diff);
       for (const q of qs) {
         if (UNIT_TO_GROUP[q.unit] !== gsel) continue;
-        if (q.grade === grade && q.difficulty === diff) pooled.push(q);
-        else if (ov && q.grade === ov.grade && q.difficulty === ov.diff) pooled.push(q);
+        // ★出身カテゴリ(_cat)を必ず持たせる。無いと成績が sansu_null: で記録され、
+        //   達成率の集計から丸ごと捨てられる（2026-07-26 のバグ。本人報告で発覚）
+        if (q.grade === grade && q.difficulty === diff) pooled.push({ ...q, _cat: k });
+        else if (ov && q.grade === ov.grade && q.difficulty === ov.diff) pooled.push({ ...q, _cat: k });
       }
     }
     if (pooled.length) return pooled;
@@ -1877,9 +1879,11 @@ async function hamaCollect(grade, course, fromNo, toNo) {
     }
     sansuCache[key].forEach(q => {
       if (q.grade !== info.g) return;   // その学年の問題だけ（ID帯が学年をまたいでも混ざらない）
-      if (info.all) { out.push(q); return; }
+      // ★出身カテゴリ(_cat)を持たせる。じゅくナビもカテゴリをまたいで集めるので、
+      //   これが無いと成績が sansu_null: になり達成率に入らない
+      if (info.all) { out.push({ ...q, _cat: info.cat }); return; }
       const p = hamaIdPrefix(q.id), n = hamaIdNum(q.id);
-      if (info.ranges.some(([pre, a, b]) => pre === p && n >= a && n <= b)) out.push(q);
+      if (info.ranges.some(([pre, a, b]) => pre === p && n >= a && n <= b)) out.push({ ...q, _cat: info.cat });
     });
   }
   return out;
@@ -5832,8 +5836,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1033, kisoku: 982, tokusan: 559, baai: 559, kazu: 643,
-            wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,933（2026-07-26）
+  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1036, kisoku: 982, tokusan: 560, baai: 560, kazu: 643,
+            wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,938（2026-07-26）
   rika:   { shokubutsu: 947, doubutsu: 866, jintai: 250, sora: 734, tenki: 490, mono: 831, kitai: 273,
             daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,721（2026-07-17 重複57問削除+補充6問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
@@ -5901,8 +5905,17 @@ function buildClearedSets() {
       const head = key.slice(0, ci);
       const ui = head.indexOf('_');
       if (ui < 0) continue;
-      const bucket = `${head.slice(0, ui)}:${head.slice(ui + 1)}`;
-      if (sets[bucket]) sets[bucket].add(key.slice(ci + 1));
+      const subj = head.slice(0, ui);
+      const bucket = `${subj}:${head.slice(ui + 1)}`;
+      if (sets[bucket]) { sets[bucket].add(key.slice(ci + 1)); continue; }
+      // カテゴリが取れていない記録（sansu_null: など）をIDの頭文字から救う。
+      // 2026-07-26 以前に「単元でえらぶ」「じゅくナビ」で解いた分がこれに当たる
+      const id = key.slice(ci + 1);
+      const pm = id.match(/^[a-zA-Z]+/);
+      if (!pm) continue;
+      (ID_PREFIX_MAP[pm[0]] || [])
+        .filter(b => b.startsWith(subj + ':'))
+        .forEach(b => { if (sets[b]) sets[b].add(id); });
     } else {
       // 旧素ID：プレフィックスで振り分け（Setなので新キーと重複しても二重計上されない）
       const m = key.match(/^[a-zA-Z]+/);
