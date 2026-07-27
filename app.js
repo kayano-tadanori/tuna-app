@@ -1241,6 +1241,28 @@ function bindDebugHandlers() {
       if (typeof updateItemButtons === 'function') updateItemButtons();
     });
   }
+  // ☁️ バックアップの状態（管理ツールで progress が見えない件の切り分け用）
+  const bkBtn = document.getElementById('debug-backup-now');
+  if (bkBtn && !bkBtn.dataset.dbgBound) {
+    bkBtn.dataset.dbgBound = '1';
+    bkBtn.onclick = async () => {
+      const el = document.getElementById('debug-backup-state');
+      el.textContent = '送信中…';
+      backupLocalData();
+      await new Promise(r => setTimeout(r, 1500));
+      const i = window.lastBackupInfo;
+      if (!i) { el.textContent = 'Firebaseにつながっていません（オフラインか設定なし）'; return; }
+      const sz = Object.entries(i.sizes || {}).map(([k, v]) => `${k}:${v}`).join(' / ');
+      const NL = String.fromCharCode(10);
+      el.textContent = i.ok
+        ? '✅ 成功（' + i.at.slice(0, 19) + '）' + NL + '送った中身の大きさ → ' + sz
+        : '❌ 失敗 [' + i.code + '] ' + i.message + NL + '送ろうとした中身 → ' + sz +
+          (i.retriedWithoutProgress ? NL + '※progressを外したら成功しました＝progressが原因です' : '') +
+          (i.retryMessage ? NL + '※progressを外しても失敗：' + i.retryMessage : '');
+      el.style.whiteSpace = 'pre-wrap';
+    };
+  }
+
   const allmax = document.getElementById('debug-allmax');
   if (allmax) allmax.onclick = () => {
     Object.keys(ITEM_DEFS).forEach(k => addItem(k, 99));
@@ -1492,8 +1514,11 @@ const CHAIN_FILES = {
   gachi: 'data/sansu_gachi.json',  // 灘中レベル（ガチ）＝算数のパズル連鎖
   rikagachi: 'data/rika_gachi.json', // 灘中レベル（ガチ）＝理科のパズル連鎖
 };
-// 連鎖問題を出題する最低学年（教科ごと）。算数は小3から、理科などは小5から
-const CHAIN_MIN_GRADE = { sansu: 3, rika: 5, shakai: 5, kokugo: 5, gachi: 3, rikagachi: 5 };
+// 連鎖問題を出題する最低学年（教科ごと）。算数は小3から。
+// ★理科は小4から（2026-07-27）：浜学園の小4公開理科は、大問4がゴムひも・みつど・かがみの重なりなど
+//   毎回きっちり「表を読んで規則を見つけ、外へ延ばす」連鎖問題になっている（原簿 HG-1651〜1677）。
+//   ここを小5からにしていたため、小4の連鎖を入れてもボタンが開かなかった。
+const CHAIN_MIN_GRADE = { sansu: 3, rika: 4, shakai: 5, kokugo: 5, gachi: 3, rikagachi: 5 };
 function chainMinGrade(subject) { return CHAIN_MIN_GRADE[subject] ?? 5; }
 
 // 連鎖問題（灘中レベル）は、選んだ学年"ぴったり"の問題だけ出す。
@@ -1884,9 +1909,28 @@ async function loadHamaMap() {
   }
   return hamaMap;
 }
-function hamaCourses(grade) {
+// じゅくナビのパネル(sansu-step-hama)は1つしか作っていないので、
+// 開く画面へ移動して使い回す。IDを複製しないための方法（2026-07-27・理科対応）
+function moveHamaPanelTo(screenId, beforeId) {
+  const panel = document.getElementById('sansu-step-hama');
+  const target = document.getElementById(screenId);
+  if (!panel || !target) return;
+  const before = beforeId ? document.getElementById(beforeId) : null;
+  if (before && before.parentElement === target) target.insertBefore(panel, before);
+  else target.appendChild(panel);
+}
+
+// その学年・その教科のコースだけを返す。
+// ★教科でしぼらないと、算数のじゅくナビに理科のコースが並んでしまう（2026-07-27）
+function hamaCourses(grade, subject) {
   const g = hamaMap && hamaMap.grades && hamaMap.grades[String(grade)];
-  return g ? g.courses : null;
+  if (!g || !g.courses) return null;
+  const subj = subject || sansuState.subject || 'sansu';
+  const out = {};
+  for (const [k, v] of Object.entries(g.courses)) {
+    if ((v.subject || 'sansu') === subj) out[k] = v;
+  }
+  return Object.keys(out).length ? out : null;
 }
 function hamaStoreKey() { return `hamaNav_${state.nickname || 'guest'}`; }
 function getHamaStore() {
@@ -1924,6 +1968,20 @@ async function hamaCollect(grade, course, fromNo, toNo) {
   const courses = hamaCourses(grade);
   if (!courses || !courses[course]) return [];
   const lessons = courses[course].lessons.filter(l => l.no >= fromNo && l.no <= toNo);
+  // ★理科などのコースは ID帯を持たない。回に書いてある単元名で集める（2026-07-27）
+  const subj = courses[course].subject;
+  if (subj && subj !== 'sansu') {
+    const seen = new Set(); const out = [];
+    for (const l of lessons) {
+      for (const u of (l.units || [])) {
+        for (const q of await unitPool(subj, grade, u)) {
+          if (seen.has(q.id)) continue;
+          seen.add(q.id); out.push(q);
+        }
+      }
+    }
+    return out;
+  }
   // ブロックは cat と学年ごとにまとめる。s.grade で学年を上書きできる（実力回＝小4総復習など）。
   // s.all:true ならそのカテゴリ・学年の全問（ID帯を問わない）。
   const need = {};   // "cat@grade" -> {cat, g, ranges, all}
@@ -1959,6 +2017,9 @@ async function hamaCollect(grade, course, fromNo, toNo) {
 async function hamaCollectUnit(grade, course, unit) {
   const courses = hamaCourses(grade);
   if (!courses || !courses[course] || !unit) return [];
+  // ★理科などのコースは subject を持ち、ID帯ではなく単元名だけで引く（2026-07-27）
+  const subj = courses[course].subject;
+  if (subj && subj !== 'sansu') return await unitPool(subj, grade, unit);
   const nos = courses[course].lessons.filter(l => (l.units || []).includes(unit)).map(l => l.no);
   const seen = new Set();
   const out = [];
@@ -1976,15 +2037,23 @@ async function hamaCollectUnit(grade, course, unit) {
 }
 
 // その学年で、その単元（グループ名でも単元名でも可）の問題を全カテゴリから集める
-async function sansuUnitPool(grade, unit) {
+async function sansuUnitPool(grade, unit) { return unitPool('sansu', grade, unit); }
+
+// 単元名で問題を集める（教科をまたいで使える）。
+// ★理科のじゅくナビはこちらを使う（2026-07-27）。理科は回番号→ID帯の対応表を持たず、
+//   hama_map の lessons に units（単元名）だけを書いて、問題データの unit と突き合わせる方式にした。
+//   こうすると問題データ側を触らずにカリキュラム連動でき、回の順序が変わっても壊れない。
+async function unitPool(subject, grade, unit) {
+  const files = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
   const out = [];
-  for (const k of Object.keys(SANSU_FILES)) {
+  for (const k of Object.keys(files)) {
     if (k === 'mix') continue;
     let qs;
-    try { qs = await ensureSansuFile('sansu', k); } catch (e) { continue; }
+    try { qs = await ensureSansuFile(subject, k); } catch (e) { continue; }
     for (const q of qs) {
       if (q.grade !== grade) continue;
-      if (q.unit === unit || UNIT_TO_GROUP[q.unit] === unit) out.push({ ...q, _cat: k });
+      // 算数は単元グループ(UNIT_GROUPS)でも引けるようにする。理科は単元名そのもの
+      if (q.unit === unit || (subject === 'sansu' && UNIT_TO_GROUP[q.unit] === unit)) out.push({ ...q, _cat: k });
     }
   }
   return out;
@@ -1997,7 +2066,32 @@ function hamaLessonTitle(grade, course, no) {
 }
 
 // じゅくナビ画面の描画（コース切替・No.表示・各ボタンの問題数）
+// じゅくナビのNo.を1つ動かす
+function hamaShift(d) {
+  const grade = sansuState.grade, course = sansuState.hamaCourse;
+  const courses = hamaCourses(grade);
+  if (!courses || !courses[course]) return;
+  const lessons = courses[course].lessons;
+  const cur = hamaCurrent(grade, course);
+  if (cur === null) return;
+  const next = Math.min(lessons[lessons.length - 1].no, Math.max(lessons[0].no, cur + d));
+  if (next !== cur) { setHamaCurrent(grade, course, next); renderHamaPanel(); }
+}
+
+// じゅくナビの操作ボタンを配線する。
+// ★以前は算数ホームの初期化(initSansuHome)の中でしか配線しておらず、
+//   理科から入るとボタンに onclick が付かず、押しても何も起きなかった（2026-07-27）。
+//   パネルを描くたびに呼ぶようにして、どの教科から入っても効くようにした。
+function wireHamaButtons() {
+  const m = document.getElementById('hama-minus'); if (m) m.onclick = () => hamaShift(-1);
+  const p = document.getElementById('hama-plus');  if (p) p.onclick = () => hamaShift(1);
+  document.querySelectorAll('.hama-act-btn').forEach(btn => {
+    btn.onclick = () => startHamaSession(btn.dataset.hamaAct);
+  });
+}
+
 async function renderHamaPanel() {
+  wireHamaButtons();
   const grade = sansuState.grade;
   const courses = hamaCourses(grade);
   const row = document.getElementById('hama-course-row');
@@ -2196,6 +2290,9 @@ async function startHamaSession(kind) {
   const courses = hamaCourses(grade);
   if (!courses || !courses[course]) return;
   const lessons = courses[course].lessons;
+  // ★このコースの教科（理科のじゅくナビ対応・2026-07-27）。
+  //   以前は無条件に sansuState.subject='sansu' としていたため、理科で開いても算数に切りかわっていた
+  const hamaSubj = courses[course].subject || 'sansu';
 
   // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
   if (kind === 'kaisetsu') {
@@ -2223,7 +2320,7 @@ async function startHamaSession(kind) {
       const all = filterByBand(await hamaCollectUnit(grade, course, await hamaPoolUnit(grade, course, sansuState.hamaUnit)));
       if (!all.length) { showToast('この単元にはまだ問題がありません'); hideLoading(); return; }
       const want = Number(document.getElementById('sansu-q-count').value) || 10;
-      sansuState.subject = 'sansu';
+      sansuState.subject = hamaSubj;
       sansuState.cat = 'hama';
       sansuState.questions = shuffle(all).slice(0, want === 0 ? all.length : want);
       sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
@@ -2249,7 +2346,7 @@ async function startHamaSession(kind) {
     const all = filterByBand(raw);   // クラス帯（H/S/V）に合うむずかしさだけ
     const want = Number(document.getElementById('sansu-q-count').value) || 10;
     const picked = shuffle(all).slice(0, want === 0 ? all.length : want);
-    sansuState.subject = 'sansu';
+    sansuState.subject = hamaSubj;
     sansuState.cat = 'hama';
     sansuState.questions = picked;
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
@@ -2331,6 +2428,8 @@ function initSansuHome() {
         if (sansuState.cat) showSansuStep('sansu-step-diff');
       } else if (sansuState.mode === 'hama') {
         hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        // 理科で使ったあとはパネルが理科ホームに移っているので、算数ホームへ戻す
+        moveHamaPanelTo('screen-sansu-home', 'sansu-start-zone');
         loadHamaMap().then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
           .catch(() => showToast('じゅくナビの読み込みに失敗しました'));
       } else if (sansuState.mode === 'drill') {
@@ -2353,22 +2452,8 @@ function initSansuHome() {
     };
   });
 
-  // じゅくナビ：No.の増減と、3つの出題ボタン
-  const hamaShift = (d) => {
-    const grade = sansuState.grade, course = sansuState.hamaCourse;
-    const courses = hamaCourses(grade);
-    if (!courses || !courses[course]) return;
-    const lessons = courses[course].lessons;
-    const cur = hamaCurrent(grade, course);
-    if (cur === null) return;
-    const next = Math.min(lessons[lessons.length - 1].no, Math.max(lessons[0].no, cur + d));
-    if (next !== cur) { setHamaCurrent(grade, course, next); renderHamaPanel(); }
-  };
-  document.getElementById('hama-minus').onclick = () => hamaShift(-1);
-  document.getElementById('hama-plus').onclick = () => hamaShift(1);
-  document.querySelectorAll('.hama-act-btn').forEach(btn => {
-    btn.onclick = () => startHamaSession(btn.dataset.hamaAct);
-  });
+  // じゅくナビのボタン配線は wireHamaButtons() に出した（理科からも使うため・2026-07-27）
+  wireHamaButtons();
 
   // STEP3: カテゴリ（算数ホーム内）
   // STEP3：入り口の切替（📚種類でえらぶ ／ 🎯単元でえらぶ）
@@ -2541,6 +2626,14 @@ function initRikaHome() {
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         initLabHome();
         showScreen('lab-home');
+      } else if (btn.dataset.topmode === 'hama') {
+        // ★理科のじゅくナビ（2026-07-27）。算数と同じパネルを画面ごと移動して使い回す。
+        //   理科は回番号→ID帯の表を持たず、hama_map の units（単元名）で問題を引く
+        hideSansuSteps('rika-step-cat', 'rika-step-diff');
+        document.getElementById('rika-start-zone').classList.add('hidden');
+        moveHamaPanelTo('screen-rika-home', 'rika-start-zone');
+        loadHamaMap().then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
+          .catch(() => showToast('じゅくの対応表が読みこめませんでした'));
       } else {
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         showToast('もうすぐ追加されます！工事中🚧');
@@ -2854,6 +2947,10 @@ function renderSansuQuiz() {
 
   // フィードバック非表示
   document.getElementById('sq-feedback').classList.add('hidden');
+  // 「わかった！やってみる →」は例題(q.rei)専用のラベル。例題を1問見たあと
+  // 通常問題に戻ってもラベルが残り、正解したのに「わかった！やってみる」と出ていた（本人報告 2026-07-27）。
+  // 毎問ここで既定にもどす。例題のときは下で上書きされる。
+  document.getElementById('sq-btn-next').textContent = '次へ →';
 
   const numpad = document.getElementById('sq-numpad');
   const previewWrap = document.getElementById('sq-preview-wrap');

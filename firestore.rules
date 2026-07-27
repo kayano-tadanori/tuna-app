@@ -53,7 +53,7 @@ service cloud.firestore {
         && intIn(request.resource.data.total, 0, 200000)
         && request.resource.data.correct <= request.resource.data.total
         && serverTime();
-      allow delete: if false;
+      allow delete: if isAdmin();
     }
 
     // ---------- 端末バックアップ users/{ニックネーム}/backup/data ----------
@@ -66,7 +66,7 @@ service cloud.firestore {
              'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
              'mapquizBest', 'timelineBest', 'progress', 'lastUpdated'
            ])
-        && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 400000))
+        && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
         && (!('gacha' in request.resource.data)     || strOk(request.resource.data.gacha, 60000))
         && (!('items' in request.resource.data)     || strOk(request.resource.data.items, 4000))
         && (!('loginBonus' in request.resource.data)|| strOk(request.resource.data.loginBonus, 2000))
@@ -81,7 +81,7 @@ service cloud.firestore {
         && (!('mapquizBest' in request.resource.data)     || strOk(request.resource.data.mapquizBest, 20))
         && (!('timelineBest' in request.resource.data)    || strOk(request.resource.data.timelineBest, 20))
         && serverTime();
-      allow delete: if false;
+      allow delete: if isAdmin();
     }
 
     // ---------- プレゼント付与 users/{ニックネーム}/backup/grants ----------
@@ -116,7 +116,7 @@ service cloud.firestore {
         && intIn(request.resource.data.total, 0, 200000)
         && request.resource.data.correct <= request.resource.data.total
         && serverTime();
-      allow delete: if false;
+      allow delete: if isAdmin();
     }
 
     // ---------- 達成率ランキング achievement/{ニックネーム} ----------
@@ -130,7 +130,7 @@ service cloud.firestore {
         && intIn(request.resource.data.cleared, 0, 100000)
         && intIn(request.resource.data.titleIdx, 0, 20)
         && serverTime();
-      allow delete: if false;
+      allow delete: if isAdmin();
     }
 
     // ---------- ゲームランキング game_scores/{ゲーム}/scores/{ニックネーム} ----------
@@ -141,7 +141,15 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['value', 'lastUpdated'])
         && intIn(request.resource.data.value, 0, 10000000)
         && serverTime();
-      allow delete: if false;
+      allow delete: if isAdmin();
+    }
+
+    // ---------- 管理者（管理ツール）の判定 ----------
+    // 管理ツールだけ Firebase Auth で匿名ログイン→管理者UIDを持たせる想定。
+    // ADMIN_UIDS に実際のUIDを入れるまでは誰も管理者にならない＝今までどおり削除は不可。
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.uid in ['ここに管理ツールのUIDを入れる'];
     }
 
     // ---------- 上記以外はすべて拒否 ----------

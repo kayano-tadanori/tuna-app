@@ -181,15 +181,41 @@ async function getGameRanking(game, dir) {
 // 端末データのクラウドバックアップ（コイン・ガチャ・アイテム等）
 // ============================================================
 
+// 直近のバックアップ結果（デバッグ画面と管理ツールでの切り分け用）。
+// 失敗を握りつぶすと「管理ツールで progress だけ見えない」の原因が永久に分からないので、
+// 何が起きたかを必ず残す（2026-07-27・本人報告「最近参加した人は見えない」）
+window.lastBackupInfo = null;
+
 async function saveLocalBackup(nickname, payload) {
   if (!firebaseReady || !nickname) return;
+  const keys = Object.keys(payload);
+  const sizes = {};
+  keys.forEach(k => { sizes[k] = String(payload[k] || '').length; });
   try {
     await db.collection('users').doc(nickname).collection('backup').doc('data').set({
       ...payload,
       lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
     });
+    window.lastBackupInfo = { ok: true, at: new Date().toISOString(), keys, sizes };
   } catch (e) {
-    console.warn('バックアップ保存失敗:', e.message);
+    window.lastBackupInfo = { ok: false, at: new Date().toISOString(), keys, sizes,
+                              code: e.code || '', message: e.message || '' };
+    console.warn('バックアップ保存失敗:', e.code, e.message, sizes);
+    // ★progress が大きすぎて弾かれている可能性があるので、progress 抜きでもう一度だけ試す。
+    //   こうしておけば「コインだけ保存されて progress が消える」ことは起きるが、
+    //   少なくとも失敗した事実が lastBackupInfo に残り、原因を切り分けられる。
+    if (payload.progress !== undefined) {
+      const { progress, ...rest } = payload;
+      try {
+        await db.collection('users').doc(nickname).collection('backup').doc('data').set({
+          ...rest,
+          lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        window.lastBackupInfo.retriedWithoutProgress = true;
+      } catch (e2) {
+        window.lastBackupInfo.retryMessage = e2.message || '';
+      }
+    }
   }
 }
 
