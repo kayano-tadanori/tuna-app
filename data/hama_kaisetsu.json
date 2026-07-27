@@ -4,8 +4,167 @@
   "3": {
    "sairei": {
     "units": {
-     "場合の数": {
-      "title": "場合の数（カードをならべて整数を作る）",
+     "場合の数(1)": {
+      "title": "場合の数(1)",
+      "poolUnit": "場合の数",
+      "items": [
+       {
+        "bone": "ぜんぶ書き出す（樹形図）",
+        "rei": {
+         "question": "A、B、C の3人が1れつにならびます。ならび方は全部で何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 300 112\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"30\" y=\"46\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">A</text><path d=\"M44 41 L88 21\" stroke=\"#9aa3c0\" stroke-width=\"1.6\" fill=\"none\"/><text x=\"100\" y=\"26\" font-size=\"15\" font-family=\"sans-serif\" fill=\"#1a2340\">B → C</text><path d=\"M44 41 L88 47\" stroke=\"#9aa3c0\" stroke-width=\"1.6\" fill=\"none\"/><text x=\"100\" y=\"52\" font-size=\"15\" font-family=\"sans-serif\" fill=\"#1a2340\">C → B</text><text x=\"150\" y=\"106\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">先頭がAのときだけで2通り</text></svg>",
+         "kaisetsu": [
+          "**先頭をだれにするか**で分けて、ぜんぶ書き出します。これがいちばん確実です。",
+          "先頭が A のとき。のこりは B と C だから ABC、ACB の 2通り。",
+          "先頭が B のとき。BAC、BCA の 2通り。先頭が C のときも 2通り。",
+          "2＋2＋2＝6通り。（3×2×1＝6 と計算してもよい）"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "A、B、C、D の4人が1れつにならびます。ならび方は全部で何通りありますか。",
+          "answer": "24",
+          "meaning": "先頭は4通り。2番目はのこり3通り。3番目は2通り。4番目は1通り。4×3×2×1＝24通りです。",
+          "svg": "<svg viewBox=\"0 0 252 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><circle cx=\"216.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"216.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">D</text><text x=\"126.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4人をならべる</text></svg>"
+         },
+         {
+          "question": "赤、青、黄 の3つの玉から2つをえらんで1れつにならべます。ならべ方は全部で何通りありますか。",
+          "answer": "6",
+          "meaning": "1つ目は3通り、2つ目はのこり2通り。3×2＝6通りです。",
+          "svg": "<svg viewBox=\"0 0 192 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">赤</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">青</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">黄</text><text x=\"96.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3つから2つならべる</text></svg>"
+         },
+         {
+          "question": "1、2、3、4、5 の5人から3人をえらんで1れつにならべます。ならべ方は全部で何通りありますか。",
+          "answer": "60",
+          "meaning": "1つ目5通り、2つ目4通り、3つ目3通り。5×4×3＝60通りです。",
+          "svg": "<svg viewBox=\"0 0 312 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><circle cx=\"216.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"216.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><circle cx=\"276.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"276.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><text x=\"156.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5人から3人ならべる</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "ならべる（順番あり）と えらぶ（順番なし）のちがい",
+        "rei": {
+         "question": "A、B、C の3人から 2人をえらんで、**係を2つ**（委員長と副委員長）決めます。決め方は何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 192 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><text x=\"96.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">委員長と副委員長を決める</text></svg>",
+         "kaisetsu": [
+          "委員長と副委員長は **ちがう役** なので、**だれがどっちか** で別ものになります。",
+          "委員長は3通り。副委員長はのこりの2通り。",
+          "3×2＝6通り。",
+          "書き出すと (A,B)(B,A)(A,C)(C,A)(B,C)(C,B) の6通り。**AB と BA は別**です。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "A、B、C の3人から 2人をえらんで、そうじ当番にします。えらび方は何通りありますか。（当番に順番はありません）",
+          "answer": "3",
+          "meaning": "こんどは順番がないので AB と BA は同じ。ならべ方6通りを2でわって 6÷2＝3通り。書き出すと AB、AC、BC です。",
+          "svg": "<svg viewBox=\"0 0 192 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><text x=\"96.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">当番を2人えらぶ</text></svg>"
+         },
+         {
+          "question": "5人から 2人をえらんで そうじ当番にします。えらび方は何通りありますか。",
+          "answer": "10",
+          "meaning": "ならべ方は 5×4＝20通り。順番がないので2でわって 20÷2＝10通りです。",
+          "svg": "<svg viewBox=\"0 0 312 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><circle cx=\"216.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"216.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><circle cx=\"276.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"276.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><text x=\"156.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5人から2人えらぶ</text></svg>"
+         },
+         {
+          "question": "6人から 2人をえらんで そうじ当番にします。えらび方は何通りありますか。",
+          "answer": "15",
+          "meaning": "6×5＝30。2でわって 15通りです。",
+          "svg": "<svg viewBox=\"0 0 372 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><circle cx=\"216.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"216.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><circle cx=\"276.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"276.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><circle cx=\"336.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"336.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><text x=\"186.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6人から2人えらぶ</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "となり合う人を ひとかたまりにする",
+        "rei": {
+         "question": "A、B、C の3人が1れつにならびます。A と B がとなり合うならび方は何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 192 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><text x=\"96.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">AとBはとなり合う</text></svg>",
+         "kaisetsu": [
+          "**A と B をくっつけて1人と考えます。**［AB］と C の2つをならべる、と思うのがコツ。",
+          "［AB］と C のならべ方は 2×1＝2通り。（［AB］C と C［AB］）",
+          "でも かたまりの中で **A と B の順番が2通り**（AB と BA）あります。",
+          "2×2＝4通り。書き出すと ABC、BAC、CAB、CBA。"
+         ],
+         "answer": "4"
+        },
+        "ruidai": [
+         {
+          "question": "A、B、C、D の4人が1れつにならびます。A と B がとなり合うならび方は何通りありますか。",
+          "answer": "12",
+          "meaning": "［AB］とC、Dの3つをならべて 3×2×1＝6通り。中の順番が2通りなので 6×2＝12通りです。",
+          "svg": "<svg viewBox=\"0 0 252 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><circle cx=\"216.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"216.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">D</text><text x=\"126.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">AとBはとなり合う</text></svg>"
+         },
+         {
+          "question": "A、B、C、D の4人が1れつにならびます。A と B がとなり合わないならび方は何通りありますか。",
+          "answer": "12",
+          "meaning": "ぜんぶで 4×3×2×1＝24通り。となり合うのが12通りなので 24−12＝12通りです。「合わない」はぜんたいからひきます。",
+          "svg": "<svg viewBox=\"0 0 252 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"36.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"36.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><circle cx=\"96.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"96.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><circle cx=\"156.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"156.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><circle cx=\"216.0\" cy=\"28\" r=\"17\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"216.0\" y=\"34\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">D</text><text x=\"126.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">AとBはとなり合わない</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "道すじの数（大通りを通る）",
+        "rei": {
+         "question": "右の図のように、たて2ます・よこ2ますの道があります。左下から右上まで、遠回りしないで行く行き方は何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><text x=\"85.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">交差点に「そこまでの行き方」を書きこむ</text></svg>",
+         "kaisetsu": [
+          "**交差点に、そこまでの行き方の数を書きこんでいきます。**これがいちばんわかりやすい。",
+          "左下から真上・真右へは、それぞれ1通りしかないので 1 と書く。",
+          "ななめの交差点は、**左からの数 ＋ 下からの数**。1＋1＝2。",
+          "これをくり返して右上まで進むと 6。答えは 6通り。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "たて2ます・よこ3ますの道を、左下から右上まで遠回りしないで行きます。行き方は何通りありますか。",
+          "answer": "10",
+          "meaning": "右に3回、上に2回、合わせて5回進みます。5回のうち上に進む2回をどこにするかで 5×4÷2＝10通りです。",
+          "svg": ""
+         },
+         {
+          "question": "たて3ます・よこ3ますの道を、左下から右上まで遠回りしないで行きます。行き方は何通りありますか。",
+          "answer": "20",
+          "meaning": "右3回・上3回で6回。6回のうち上の3回をえらぶので 6×5×4÷(3×2×1)＝20通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "お金の はらい方",
+        "rei": {
+         "question": "10円玉が2まい、50円玉が1まい あります。この中から何まいか使ってはらえる金あくは何通りありますか。（0円は数えません）",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">50</text><text x=\"85.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10円2まいと50円1まい</text></svg>",
+         "kaisetsu": [
+          "**10円を何まい使うか** で分けて、ぜんぶ書き出します。",
+          "10円を0まい使う → 0円、50円。（0円は数えないので 50円だけ）",
+          "10円を1まい使う → 10円、60円。",
+          "10円を2まい使う → 20円、70円。",
+          "50、10、60、20、70 の 5通り。同じ金がくがないか確かめるのも大事です。"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "10円玉が2まい、100円玉が1まい あります。はらえる金あくは何通りありますか。（0円は数えません）",
+          "answer": "5",
+          "meaning": "10円0まい→100円。1まい→10円、110円。2まい→20円、120円。5通りです。",
+          "svg": "<svg viewBox=\"0 0 170 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">100</text></svg>"
+         },
+         {
+          "question": "10円玉が1まい、50円玉が1まい、100円玉が1まい あります。はらえる金あくは何通りありますか。（0円は数えません）",
+          "answer": "7",
+          "meaning": "使う・使わないが3まいそれぞれ2通りで 2×2×2＝8通り。ぜんぶ使わない0円をのぞいて 7通りです。",
+          "svg": "<svg viewBox=\"0 0 170 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">50</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">100</text></svg>"
+         }
+        ]
+       }
+      ]
+     },
+     "場合の数(2)": {
+      "title": "場合の数(2)",
       "items": [
        {
         "bone": "ならべて整数を作る（〜より小さい・大きい）",
@@ -213,10 +372,12 @@
          }
         ]
        }
-      ]
+      ],
+      "poolUnit": "場合の数"
      },
-     "規則性・数列": {
-      "title": "規則性・数列（ならびのきまりを見つける）",
+     "規則性(1)": {
+      "title": "規則性(1)",
+      "poolUnit": "規則性・数列",
       "items": [
        {
         "bone": "ふえていく数の列（等差）",
@@ -348,46 +509,6 @@
         ]
        },
        {
-        "bone": "1から続けて奇数をたすと 四角の数になる",
-        "rei": {
-         "question": "1＋3＋5＋7＋9 はいくつですか。",
-         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9</text><text x=\"137.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1から続けて奇数を5こ</text></svg>",
-         "kaisetsu": [
-          "じゅんに たしてみます。1、1＋3＝4、＋5＝9、＋7＝16、＋9＝25。",
-          "出てきた数を見てください。1、4、9、16、25。",
-          "これは **1×1、2×2、3×3、4×4、5×5** です。",
-          "つまり **1から続けて奇数を n こ たすと n×n**。5こだから 5×5＝25。"
-         ],
-         "answer": "25"
-        },
-        "ruidai": [
-         {
-          "question": "1＋3＋5＋…＋39 はいくつですか。",
-          "answer": "400",
-          "meaning": "39は何こ目の奇数か。(39＋1)÷2＝20こ目。だから 20×20＝400です。",
-          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">39</text></svg>"
-         },
-         {
-          "question": "1＋3＋5＋…＋199 はいくつですか。",
-          "answer": "10000",
-          "meaning": "199は (199＋1)÷2＝100こ目の奇数。100×100＝10000です。",
-          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">199</text></svg>"
-         },
-         {
-          "question": "1＋3＋5＋…＋□＝64 のとき、□にあてはまる数はいくつですか。",
-          "answer": "15",
-          "meaning": "64は 8×8 なので、奇数を8こたしたところ。8こ目の奇数は 8×2−1＝15です。",
-          "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><text x=\"137.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">答えが64になる</text></svg>"
-         },
-         {
-          "question": "41＋43＋45＋…＋199 はいくつですか。",
-          "answer": "9600",
-          "meaning": "1＋3＋…＋199＝100×100＝10000。1＋3＋…＋39＝20×20＝400。ひくと 10000−400＝9600です。",
-          "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">41</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">43</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">45</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">199</text><text x=\"137.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1から39までをひく</text></svg>"
-         }
-        ]
-       },
-       {
         "bone": "同じ数を何回もかけたときの 一の位",
         "rei": {
          "question": "3を10回かけた数の 一の位はいくつですか。",
@@ -454,6 +575,52 @@
           "svg": "<svg viewBox=\"0 0 378 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">0</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">0</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"189.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3こでくり返す</text></svg>"
          }
         ]
+       }
+      ]
+     },
+     "規則性(2)": {
+      "title": "規則性(2)",
+      "poolUnit": "規則性・数列",
+      "items": [
+       {
+        "bone": "1から続けて奇数をたすと 四角の数になる",
+        "rei": {
+         "question": "1＋3＋5＋7＋9 はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9</text><text x=\"137.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1から続けて奇数を5こ</text></svg>",
+         "kaisetsu": [
+          "じゅんに たしてみます。1、1＋3＝4、＋5＝9、＋7＝16、＋9＝25。",
+          "出てきた数を見てください。1、4、9、16、25。",
+          "これは **1×1、2×2、3×3、4×4、5×5** です。",
+          "つまり **1から続けて奇数を n こ たすと n×n**。5こだから 5×5＝25。"
+         ],
+         "answer": "25"
+        },
+        "ruidai": [
+         {
+          "question": "1＋3＋5＋…＋39 はいくつですか。",
+          "answer": "400",
+          "meaning": "39は何こ目の奇数か。(39＋1)÷2＝20こ目。だから 20×20＝400です。",
+          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">39</text></svg>"
+         },
+         {
+          "question": "1＋3＋5＋…＋199 はいくつですか。",
+          "answer": "10000",
+          "meaning": "199は (199＋1)÷2＝100こ目の奇数。100×100＝10000です。",
+          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">199</text></svg>"
+         },
+         {
+          "question": "1＋3＋5＋…＋□＝64 のとき、□にあてはまる数はいくつですか。",
+          "answer": "15",
+          "meaning": "64は 8×8 なので、奇数を8こたしたところ。8こ目の奇数は 8×2−1＝15です。",
+          "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><text x=\"137.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">答えが64になる</text></svg>"
+         },
+         {
+          "question": "41＋43＋45＋…＋199 はいくつですか。",
+          "answer": "9600",
+          "meaning": "1＋3＋…＋199＝100×100＝10000。1＋3＋…＋39＝20×20＝400。ひくと 10000−400＝9600です。",
+          "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">41</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">43</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">45</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">199</text><text x=\"137.0\" y=\"66\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1から39までをひく</text></svg>"
+         }
+        ]
        },
        {
         "bone": "前の2つをたす数の列",
@@ -485,8 +652,9 @@
        }
       ]
      },
-     "倍数・約数": {
-      "title": "倍数・約数（何こあるかを数える）",
+     "倍数と約数": {
+      "title": "倍数と約数",
+      "poolUnit": "倍数・約数",
       "items": [
        {
         "bone": "1から○までに △の倍数は何こ",
@@ -620,8 +788,9 @@
        }
       ]
      },
-     "なかま調べ・推理": {
-      "title": "なかま調べ（ぜんたいから ひいて考える）",
+     "なかま調べ": {
+      "title": "なかま調べ",
+      "poolUnit": "なかま調べ・推理",
       "items": [
        {
         "bone": "石だんを ○だんずつ のぼる",

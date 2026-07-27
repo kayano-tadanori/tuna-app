@@ -1832,6 +1832,13 @@ async function hamaKaisetsuFor(grade, course, unit) {
   const c = g && g[course];
   return (c && c.units && c.units[unit]) || null;
 }
+// 「場合の数(1)」のような回ごとの名前から、通常問題を引くときの単元名を返す。
+// 例：場合の数(1)／場合の数(2) → どちらも通常プールは「場合の数」から引く。
+async function hamaPoolUnit(grade, course, unit) {
+  const p = await hamaKaisetsuFor(grade, course, unit);
+  return (p && p.poolUnit) || unit;
+}
+
 // その学年・コースで かんたん解説が用意されている単元名の一覧
 async function hamaKaisetsuUnits(grade, course) {
   const d = await loadHamaKaisetsu();
@@ -2048,7 +2055,7 @@ async function renderHamaPanel() {
     label.textContent = '単元でえらぶ';
     title.textContent = sansuState.hamaUnit || '—';
     hint.textContent = '最レは年度によって回の中身が入れかわるので、単元でえらぶこともできます。';
-    const qs = await hamaCollectUnit(grade, course, sansuState.hamaUnit);
+    const qs = await hamaCollectUnit(grade, course, await hamaPoolUnit(grade, course, sansuState.hamaUnit));
     const filtered = filterByBand(qs);
     const wk = document.getElementById('hama-cnt-week');
     wk.textContent = filtered.length ? `${sansuState.hamaUnit}・${filtered.length}問` : 'まだ問題なし';
@@ -2213,7 +2220,7 @@ async function startHamaSession(kind) {
   if (course === 'sairei' && sansuState.hamaMode === 'unit' && sansuState.hamaUnit) {
     showLoading();
     try {
-      const all = filterByBand(await hamaCollectUnit(grade, course, sansuState.hamaUnit));
+      const all = filterByBand(await hamaCollectUnit(grade, course, await hamaPoolUnit(grade, course, sansuState.hamaUnit)));
       if (!all.length) { showToast('この単元にはまだ問題がありません'); hideLoading(); return; }
       const want = Number(document.getElementById('sansu-q-count').value) || 10;
       sansuState.subject = 'sansu';
