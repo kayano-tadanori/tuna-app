@@ -1182,6 +1182,680 @@
        }
       ]
      }
+    },
+    "lessons": {
+     "0": {
+      "title": "場合の数",
+      "items": [
+       {
+        "bone": "6のカードは さかさまにすると 9 になる",
+        "rei": {
+         "question": "1、6、8 の3まいのカードがあります。6のカードは さかさまにすると 9 として使えます。3まい全部をならべて3けたの整数を作るとき、いちばん大きい数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6は さかさまで 9 になる</text></svg>",
+         "kaisetsu": [
+          "まず **使える数字を書き出します**。1、6（または9）、8。",
+          "いちばん大きくしたいので、6は **9** として使います。使える数字は 1、9、8。",
+          "大きい順にならべます。9、8、1。",
+          "981。"
+         ],
+         "answer": "981"
+        },
+        "ruidai": [
+         {
+          "question": "1、6、8 の3まいのカード（6はさかさまで9になる）を全部ならべて3けたの整数を作るとき、いちばん小さい数はいくつですか。",
+          "answer": "168",
+          "meaning": "小さくしたいので6は6のまま。使える数字は 1、6、8。小さい順で 168です。",
+          "svg": "<svg viewBox=\"0 0 170 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text></svg>"
+         },
+         {
+          "question": "2、6、9 の3まいのカードがあります。6は9に、9は6にして使えます。3まい全部で3けたの整数を作るとき、いちばん大きい数はいくつですか。",
+          "answer": "992",
+          "meaning": "6も9も どちらにもできるので、両方 9 にします。使える数字は 2、9、9。大きい順で 992です。",
+          "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6も9も入れかえOK</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "方眼の中の長方形は「たての線2本」「よこの線2本」で決まる",
+        "rei": {
+         "question": "たて2ます・よこ2ますの方眼があります。この中にある長方形（正方形もふくむ）は全部で何こありますか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たての線は3本、よこの線も3本</text></svg>",
+         "kaisetsu": [
+          "長方形は **たての線を2本、よこの線を2本** えらべば1つ決まります。ここが発見です。",
+          "たて2ますなら、たての線は 3本。そこから2本えらぶのは 3×2÷2＝3通り。",
+          "よこも同じで 3通り。",
+          "3×3＝9こ。"
+         ],
+         "answer": "9"
+        },
+        "ruidai": [
+         {
+          "question": "たて2ます・よこ3ますの方眼の中にある長方形（正方形もふくむ）は全部で何こありますか。",
+          "answer": "18",
+          "meaning": "たての線は3本から2本で3通り。よこの線は4本から2本で 4×3÷2＝6通り。3×6＝18こです。",
+          "svg": ""
+         },
+         {
+          "question": "たて3ます・よこ3ますの方眼の中にある長方形（正方形もふくむ）は全部で何こありますか。",
+          "answer": "36",
+          "meaning": "たてもよこも 4本から2本で6通り。6×6＝36こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "1": {
+      "title": "約束記号・虫食い算",
+      "items": [
+       {
+        "bone": "新しい記号のきまりを 読みかえる",
+        "rei": {
+         "question": "「a◎b」は、a を b でわったときの **商だけ**（あまりは考えない）を表すことにします。17◎5 はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">17</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">◎</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">◎は「わり算の商だけ」</text></svg>",
+         "kaisetsu": [
+          "**まず、きまりを ふつうのことばに直します。**◎は「わって、商だけを答える」。",
+          "17÷5 を計算します。17÷5＝3 あまり 2。",
+          "◎は 商だけ なので、あまりの2はすてます。",
+          "答えは 3。"
+         ],
+         "answer": "3"
+        },
+        "ruidai": [
+         {
+          "question": "「a◎b」は a を b でわった商だけを表します。40◎6 はいくつですか。",
+          "answer": "6",
+          "meaning": "40÷6＝6あまり4。商だけなので 6です。",
+          "svg": ""
+         },
+         {
+          "question": "「a◎b」は a を b でわった商だけを表します。（30◎4）◎2 はいくつですか。",
+          "answer": "3",
+          "meaning": "先に30◎4＝30÷4＝7あまり2で7。つぎに7◎2＝7÷2＝3あまり1で3です。",
+          "svg": ""
+         },
+         {
+          "question": "「a◎b」は a を b でわった商だけを表します。□◎7＝4 になる整数□のうち、いちばん大きい数はいくつですか。",
+          "answer": "34",
+          "meaning": "□÷7の商が4になるのは、□が 28以上34以下のとき。いちばん大きいのは 34です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "わり算で 商とあまりが同じになる数",
+        "rei": {
+         "question": "ある数を 5 でわったら、商とあまりが同じになりました。このような数のうち、いちばん大きい数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 378 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">÷</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">=</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">商</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">あまり</text><text x=\"189\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">商とあまりが同じ</text></svg>",
+         "kaisetsu": [
+          "**あまりは わる数より小さい**、がいちばん大事なきまりです。5でわるならあまりは 0〜4。",
+          "商とあまりが同じ数を □ とすると、あまりは4までなので 商も4まで。",
+          "いちばん大きくするには 商もあまりも 4。",
+          "もとの数は 5×4＋4＝24。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "ある数を 7 でわったら、商とあまりが同じになりました。このような数のうち、いちばん大きい数はいくつですか。",
+          "answer": "48",
+          "meaning": "7でわるとあまりは6まで。商も6にして 7×6＋6＝48です。",
+          "svg": ""
+         },
+         {
+          "question": "ある数を 5 でわったら、商とあまりが同じになりました。このような数は全部で何こありますか。（0でわり切れる場合はのぞく）",
+          "answer": "4",
+          "meaning": "商＝あまり＝1、2、3、4 の4通り。（0は もとの数が0になるのでのぞく）4こです。",
+          "svg": ""
+         },
+         {
+          "question": "ある数を 6 でわったら、商とあまりが同じになりました。このような数のうち、いちばん小さい数はいくつですか。（0はのぞく）",
+          "answer": "7",
+          "meaning": "商＝あまり＝1のとき 6×1＋1＝7です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "かけ算の虫食い（一の位から決める）",
+        "rei": {
+         "question": "□1 × 3 ＝ 1□3 の □ に入る同じ数字はいくつですか。（2つの□には同じ数字が入ります）",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">×</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">=</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1□3</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">□は同じ数字</text></svg>",
+         "kaisetsu": [
+          "**一の位から決めます。**ここが虫食い算のコツ。",
+          "1×3＝3 なので、答えの一の位は 3。問題の 1□3 の一の位も 3 で、ちゃんと合っています。",
+          "つぎに **答えが 100いくつ** であることに注目します。□1×3 が 100台になるのは □1 が 34〜66 くらい。",
+          "□に 4、5、6 を入れてためします。41×3＝123（十の位2で□4とちがう）／**51×3＝153（十の位5で□5と同じ）**／61×3＝183（×）。",
+          "答えは 5。"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "□1 × 4 ＝ 16□ の □ に入る同じ数字はいくつですか。",
+          "answer": "4",
+          "meaning": "一の位は 1×4＝4 なので 右の□は4。すると答えは164。164÷4＝41 なので □1＝41、□は4。左右とも4で合います。",
+          "svg": ""
+         },
+         {
+          "question": "□1 × 6 ＝ 2□6 の □ に入る同じ数字はいくつですか。",
+          "answer": "4",
+          "meaning": "一の位は 1×6＝6 で合っています。□に4を入れると 41×6＝246。十の位が4で□と同じ。答えは4です。",
+          "svg": ""
+         },
+         {
+          "question": "34 × □ ＝ 204 のとき、□に入る数はいくつですか。",
+          "answer": "6",
+          "meaning": "204÷34＝6です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "2": {
+      "title": "計算のくふう・逆にたどる",
+      "items": [
+       {
+        "bone": "＋と−を入れて 目あての数を作る",
+        "rei": {
+         "question": "1 2 3 4 5 の間に ＋ か − を入れて（数の順番は変えません）、答えを 3 にします。1□2□3□4□5＝3 の □ のうち、＋はいくつ使いますか。",
+         "svg": "<svg viewBox=\"0 0 482 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"374\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"397.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"426\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"449.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><text x=\"241\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">□に ＋ か − を入れる</text></svg>",
+         "kaisetsu": [
+          "**ぜんぶ＋にしたときの答え**をまず出します。1＋2＋3＋4＋5＝15。",
+          "目あては3なので、15より **12 小さく** したい。",
+          "ある数を ＋ から − に変えると、その数の **2倍** だけ答えが小さくなります（＋5→−5 で10へる）。",
+          "12小さくするには 2倍して12になる数＝**6**を −にすればよい。6は無いので、**2と4**（2×2＋4×2＝12）を −にします。",
+          "1−2＋3−4＋5＝3。−が2つなので **＋は2つ**。"
+         ],
+         "answer": "2"
+        },
+        "ruidai": [
+         {
+          "question": "1 2 3 4 5 の間に ＋ か − を入れて 答えを 5 にします。1□2□3□4□5＝5 のとき、−はいくつ使いますか。",
+          "answer": "1",
+          "meaning": "ぜんぶ＋で15。5にするには10小さくしたい。10の半分は5なので 5を−にします。1＋2＋3＋4−5＝5。−は1つです。",
+          "svg": ""
+         },
+         {
+          "question": "1 2 3 4 5 6 の間に ＋ か − を入れて 答えを 9 にします。ぜんぶ＋にしたときの答えはいくつですか。",
+          "answer": "21",
+          "meaning": "1＋2＋3＋4＋5＋6＝21です。",
+          "svg": ""
+         },
+         {
+          "question": "1 2 3 4 5 6 の間に ＋ か − を入れて 答えを 9 にします。−にする数をぜんぶたすといくつですか。",
+          "answer": "6",
+          "meaning": "ぜんぶ＋で21。9にするには12小さくしたい。1つの数を−にすると その2倍だけ小さくなるので、12÷2＝6。−にする数の合計は6です。（たとえば 6だけ−、または 2と4を−）",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "うしろから 逆にたどる",
+        "rei": {
+         "question": "ある数に、次のことを 3回 くり返します。「偶数なら半分にする。奇数なら1をたす。」3回やったら 3 になりました。もとの数として考えられるもののうち、いちばん大きい数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 300 112\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"30\" y=\"46\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">3</text><path d=\"M44 41 L88 21\" stroke=\"#9aa3c0\" stroke-width=\"1.6\" fill=\"none\"/><text x=\"100\" y=\"26\" font-size=\"15\" font-family=\"sans-serif\" fill=\"#1a2340\">← 6（半分にした）</text><path d=\"M44 41 L88 47\" stroke=\"#9aa3c0\" stroke-width=\"1.6\" fill=\"none\"/><text x=\"100\" y=\"52\" font-size=\"15\" font-family=\"sans-serif\" fill=\"#1a2340\">← 2（1をたした…は2→3で奇数化しない）</text><text x=\"150\" y=\"106\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">うしろから逆にたどる</text></svg>",
+         "kaisetsu": [
+          "**うしろから たどります。**いまが3。その1つ前は何だったか。",
+          "「半分にして3」なら 前は 6。「1をたして3」なら 前は 2 だが、2は偶数なので半分にする規則になる。だから前は **6** だけ。",
+          "6の前は「半分にして6」→12、または「1をたして6」→5（5は奇数なので1をたす、○）。**12 と 5**。",
+          "12の前は 24 か 11。5の前は 10 か 4（4は偶数なので半分→2、×）。いちばん大きいのは **24**。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "ある数に「偶数なら半分・奇数なら1をたす」を 2回 くり返したら 3 になりました。もとの数として考えられるもののうち、いちばん大きい数はいくつですか。",
+          "answer": "12",
+          "meaning": "3の前は6（半分にして3）。6の前は12（半分にして6）か5（1をたして6）。大きいのは12です。",
+          "svg": ""
+         },
+         {
+          "question": "ある数に「偶数なら半分・奇数なら1をたす」を 1回 したら 8 になりました。もとの数として考えられるもののうち、いちばん大きい数はいくつですか。",
+          "answer": "16",
+          "meaning": "半分にして8なら16。1をたして8なら7（7は奇数なので○）。大きいのは16です。",
+          "svg": ""
+         },
+         {
+          "question": "20 に「偶数なら半分・奇数なら1をたす」を 3回 くり返すと いくつになりますか。",
+          "answer": "6",
+          "meaning": "20→10→5→6。答えは6です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "3": {
+      "title": "数列と周期",
+      "items": [
+       {
+        "bone": "2つの数の列が 出会うところ",
+        "rei": {
+         "question": "A は 3、7、11、15、… と 4ずつ ふえます。B は 100、97、94、… と 3ずつ へります。同じ番目でくらべたとき、はじめて A の方が大きくなるのは 何番目ですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">11</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">A は4ずつふえる</text></svg>",
+         "kaisetsu": [
+          "**差がどれだけ縮むか**を考えます。ここが発見です。",
+          "1番目の差は 100−3＝97。",
+          "1つ進むごとに A は4ふえ B は3へるので、差は **毎回7ずつ縮みます**。",
+          "97÷7＝13あまり6 なので、13回進むと差は6。まだAが小さい。もう1回進むと差がなくなって逆転。",
+          "1番目から14回進んだ **15番目**で はじめてAが大きくなります。"
+         ],
+         "answer": "15"
+        },
+        "ruidai": [
+         {
+          "question": "A は 5、9、13、… と4ずつふえ、B は 60、57、54、… と3ずつへります。1番目の差はいくつですか。",
+          "answer": "55",
+          "meaning": "60−5＝55です。",
+          "svg": ""
+         },
+         {
+          "question": "A は 5、9、13、… と4ずつふえ、B は 60、57、54、… と3ずつへります。1つ進むごとに差はいくつずつ縮みますか。",
+          "answer": "7",
+          "meaning": "Aが4ふえてBが3へるので 4＋3＝7ずつ縮みます。",
+          "svg": ""
+         },
+         {
+          "question": "A は 2、5、8、… と3ずつふえ、B は 50、48、46、… と2ずつへります。20番目のとき、Aはいくつですか。",
+          "answer": "59",
+          "meaning": "2＋3×19＝59です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "くり返しの中の かたよりを数える",
+        "rei": {
+         "question": "○ □ △ ◎ □ の5こを くり返しならべます。はじめから 50 こならべたとき、□ は何こありますか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">○</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">△</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">◎</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">この5こでくり返す</text></svg>",
+         "kaisetsu": [
+          "**1かたまりに □ がいくつあるか**を数えます。5この中に □ は **2こ**。",
+          "50こは 50÷5＝10かたまり ちょうど。",
+          "1かたまりに2こなので 2×10＝20こ。",
+          "答えは 20こ。"
+         ],
+         "answer": "20"
+        },
+        "ruidai": [
+         {
+          "question": "○ □ △ ◎ □ の5こをくり返します。はじめから 53 こならべたとき、□ は何こありますか。",
+          "answer": "21",
+          "meaning": "53÷5＝10あまり3。10かたまりで20こ。あまりの3こは ○□△ で□が1こ。20＋1＝21こです。",
+          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">○</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">△</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">◎</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text></svg>"
+         },
+         {
+          "question": "○ □ △ ◎ □ の5こをくり返します。20番目の記号は何番目のものですか（かたまりの中で何番目か、数で答えなさい）。",
+          "answer": "5",
+          "meaning": "20÷5＝4でちょうど。かたまりの5番目です。",
+          "svg": ""
+         },
+         {
+          "question": "赤・青・青・黄 の4こをくり返します。はじめから 30 こならべたとき、青は何こありますか。",
+          "answer": "15",
+          "meaning": "30÷4＝7あまり2。7かたまりで青は2×7＝14こ。あまりの2こは 赤・青 で青が1こ。14＋1＝15こです。",
+          "svg": "<svg viewBox=\"0 0 222 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">赤</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">青</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">青</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">黄</text></svg>"
+         }
+        ]
+       }
+      ]
+     },
+     "4": {
+      "title": "交換と植木算",
+      "items": [
+       {
+        "bone": "空きびんを 交かんしてもらう",
+        "rei": {
+         "question": "ジュースを買うと、空きびん 3本で 新しい1本と交かんしてもらえます。はじめに 9本 買ったとき、全部で何本 飲めますか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">空きびん3本で1本</text></svg>",
+         "kaisetsu": [
+          "**交かんは くり返せます。**もらった1本も飲めば空きびんになります。",
+          "はじめの9本を飲む。空きびんは9本。9÷3＝3本もらえる（ここまで 9＋3＝12本）。",
+          "その3本を飲むと 空きびんが3本。3÷3＝1本もらえる（12＋1＝13本）。",
+          "その1本を飲むと空きびんは1本。3本ないので おしまい。**13本**。"
+         ],
+         "answer": "13"
+        },
+        "ruidai": [
+         {
+          "question": "空きびん 3本で 1本と交かんできます。はじめに 12本 買ったとき、全部で何本 飲めますか。",
+          "answer": "17",
+          "meaning": "12本飲む → 空12本で 12÷3＝4本もらう（ここまで16本）。4本飲む → 空4本で 4÷3＝1本もらう（17本）。1本飲む → 空は のこり1＋1＝2本で交かんできない。全部で17本です。",
+          "svg": ""
+         },
+         {
+          "question": "空きびん 4本で 1本と交かんできます。はじめに 8本 買ったとき、全部で何本 飲めますか。",
+          "answer": "10",
+          "meaning": "8本→空8→2本（10）→空2 で終わり。10本です。",
+          "svg": ""
+         },
+         {
+          "question": "空きびん 3本で 1本と交かんできます。はじめに 6本 買ったとき、全部で何本 飲めますか。",
+          "answer": "8",
+          "meaning": "6本→空6→2本（8）→空2 で終わり。8本です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "両はしから 同じ間かくで うつ",
+        "rei": {
+         "question": "長さ 12m の道の 両はしをふくめて 3mおきに くいを立てます。くいは何本 いりますか。",
+         "svg": "<svg viewBox=\"0 0 378 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">―</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">―</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">―</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">|</text><text x=\"189\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3mおき・両はしにも立てる</text></svg>",
+         "kaisetsu": [
+          "**間の数を先に出します。**ここが植木算のコツ。",
+          "12÷3＝4。間は 4か所。",
+          "両はしにも立てるので、くいの数は **間の数より1本多い**。",
+          "4＋1＝5本。"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "長さ 20m の道の 両はしをふくめて 4mおきに くいを立てます。くいは何本いりますか。",
+          "answer": "6",
+          "meaning": "間は 20÷4＝5か所。両はしにも立てるので 5＋1＝6本です。",
+          "svg": ""
+         },
+         {
+          "question": "長さ 20m の道に 4mおきに くいを立てます。ただし 両はしには立てません。くいは何本いりますか。",
+          "answer": "4",
+          "meaning": "間は5か所。両はしに立てないので 5−1＝4本です。",
+          "svg": ""
+         },
+         {
+          "question": "まわりが 24m の池の まわりに 3mおきに くいを立てます。くいは何本いりますか。",
+          "answer": "8",
+          "meaning": "輪になっているので 間の数とくいの数は同じ。24÷3＝8本です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "5": {
+      "title": "がい数の範囲",
+      "items": [
+       {
+        "bone": "四捨五入する前の 数の範囲",
+        "rei": {
+         "question": "ある整数を 一の位で四捨五入すると 40 になりました。もとの整数として考えられる いちばん小さい数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">35</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">36</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">37</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">44</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">四捨五入して40になる数</text></svg>",
+         "kaisetsu": [
+          "**四捨五入は「5以上なら上げる」**。だから 一の位が5のときが 上がるさかい目です。",
+          "40になるのは、35、36、…、44 のあいだ。",
+          "35 は四捨五入して 40（5だから上げる）。34 は 30 になってしまう。",
+          "いちばん小さいのは 35。"
+         ],
+         "answer": "35"
+        },
+        "ruidai": [
+         {
+          "question": "ある整数を 一の位で四捨五入すると 40 になりました。もとの整数として考えられる いちばん大きい数はいくつですか。",
+          "answer": "44",
+          "meaning": "44は四捨五入して40。45だと50になってしまいます。44です。",
+          "svg": ""
+         },
+         {
+          "question": "ある整数を 十の位で四捨五入すると 500 になりました。もとの整数として考えられる いちばん小さい数はいくつですか。",
+          "answer": "450",
+          "meaning": "450以上549以下が500になります。いちばん小さいのは450です。",
+          "svg": ""
+         },
+         {
+          "question": "ある整数を 一の位で四捨五入すると 40 になりました。そのような整数は全部で何こありますか。",
+          "answer": "10",
+          "meaning": "35から44までなので 44−35＋1＝10こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "2つのがい数の 差の いちばん大きい値",
+        "rei": {
+         "question": "A は 一の位で四捨五入すると 40、B は 一の位で四捨五入すると 20 になる整数です。A−B が いちばん大きくなるとき、その差はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">35〜44</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">15〜24</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">それぞれの範囲</text></svg>",
+         "kaisetsu": [
+          "**差をいちばん大きくするには、A をできるだけ大きく、B をできるだけ小さく**します。",
+          "A の範囲は 35〜44。いちばん大きいのは 44。",
+          "B の範囲は 15〜24。いちばん小さいのは 15。",
+          "44−15＝29。"
+         ],
+         "answer": "29"
+        },
+        "ruidai": [
+         {
+          "question": "A は 一の位で四捨五入すると 40、B は 一の位で四捨五入すると 20 になる整数です。A−B が いちばん小さくなるとき、その差はいくつですか。",
+          "answer": "11",
+          "meaning": "Aをいちばん小さく35、Bをいちばん大きく24。35−24＝11です。",
+          "svg": ""
+         },
+         {
+          "question": "A は 十の位で四捨五入すると 300、B は 十の位で四捨五入すると 100 になる整数です。A−B が いちばん大きくなるとき、その差はいくつですか。",
+          "answer": "299",
+          "meaning": "Aの最大は349、Bの最小は50。349−50＝299です。",
+          "svg": ""
+         },
+         {
+          "question": "A は 一の位で四捨五入すると 40、B は 一の位で四捨五入すると 20 になる整数です。A＋B が いちばん大きくなるとき、その和はいくつですか。",
+          "answer": "68",
+          "meaning": "どちらも いちばん大きくして 44＋24＝68です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "6": {
+      "title": "位取り記数法（N進法）",
+      "items": [
+       {
+        "bone": "○こで 1つ上の 入れものにうつる",
+        "rei": {
+         "question": "あめを 5こずつ 小ぶくろに入れ、小ぶくろ 5つで 大ぶくろ1つにします。大ぶくろ2つ、小ぶくろ3つ、ばら4こ のとき、あめは全部で何こですか。",
+         "svg": "<svg viewBox=\"0 0 266 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"47.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">大ぶくろ</text><text x=\"47.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">小5つ分</text><text x=\"90.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"96\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"133.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">小ぶくろ</text><text x=\"133.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">あめ5こ</text><text x=\"176.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"182\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"219.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">ばら</text><text x=\"219.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">あめ1こ</text><text x=\"133\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5こで1つ上へ</text></svg>",
+         "kaisetsu": [
+          "**1つ上の入れものが あめ何こ分か**を先に出します。ここが全部の土台。",
+          "小ぶくろ＝5こ。大ぶくろ＝小5つ＝5×5＝**25こ**。",
+          "大ぶくろ2つ＝25×2＝50こ。小ぶくろ3つ＝5×3＝15こ。ばら4こ。",
+          "50＋15＋4＝69こ。"
+         ],
+         "answer": "69"
+        },
+        "ruidai": [
+         {
+          "question": "あめを 4こずつ 小ぶくろに、小ぶくろ 4つで 大ぶくろにします。大ぶくろ1つ、小ぶくろ2つ、ばら3こ のとき、あめは全部で何こですか。",
+          "answer": "27",
+          "meaning": "大ぶくろ＝4×4＝16こ。16×1＋4×2＋3＝16＋8＋3＝27こです。",
+          "svg": "<svg viewBox=\"0 0 266 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"47.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">大ぶくろ</text><text x=\"47.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">小4つ分</text><text x=\"90.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"96\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"133.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">小ぶくろ</text><text x=\"133.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">あめ4こ</text><text x=\"176.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"182\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"219.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">ばら</text><text x=\"219.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">あめ1こ</text><text x=\"133\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4こで1つ上へ</text></svg>"
+         },
+         {
+          "question": "あめを 3こずつ 小ぶくろに、小ぶくろ 3つで 大ぶくろにします。あめが 20こ あるとき、大ぶくろは いくつできますか。",
+          "answer": "2",
+          "meaning": "大ぶくろ＝3×3＝9こ分。20÷9＝2あまり2 なので 2つです。",
+          "svg": ""
+         },
+         {
+          "question": "6こで1つ上の位にくり上がる書き方があります。この書き方で「23」と書かれた数は、ふつうの数でいくつですか。",
+          "answer": "15",
+          "meaning": "上の位は6こ分。6×2＋3＝15です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "4 と 9 を使わない番号（じつは 8進法）",
+        "rei": {
+         "question": "ある駐車場では、番号に 4 と 9 を使いません。1、2、3、5、6、7、8、10、11、… と番号をつけます。10番目の車は 何番ですか。",
+         "svg": "<svg viewBox=\"0 0 482 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"374\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"397.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"426\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"449.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"241\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4と9はとばす</text></svg>",
+         "kaisetsu": [
+          "**とばす数があるだけで、じつは ふつうに順番に数えているのと同じ**です。",
+          "使える数字は 0、1、2、3、5、6、7、8 の **8こ**。だから 8進法と同じしくみ。",
+          "10番目を8進法で書くと、10÷8＝1あまり2 で「12」。",
+          "8進法の 0,1,2,3,4,5,6,7 を 0,1,2,3,5,6,7,8 に読みかえます。1→1、2→2 なので **12番**。"
+         ],
+         "answer": "12"
+        },
+        "ruidai": [
+         {
+          "question": "番号に 4 と 9 を使いません。8番目の車は 何番ですか。",
+          "answer": "10",
+          "meaning": "1,2,3,5,6,7,8 が7番目まで。次は4も9も使えないので 10。8番目は10番です。",
+          "svg": "<svg viewBox=\"0 0 430 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"374\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"397.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><text x=\"215\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8番目は10</text></svg>"
+         },
+         {
+          "question": "番号に 4 と 9 を使いません。1番から数えて 16番目の車は 何番ですか。",
+          "answer": "20",
+          "meaning": "順に書き出します。1、2、3、5、6、7、8、10、11、12、13、15、16、17、18、20。16番目は 20番です。",
+          "svg": ""
+         },
+         {
+          "question": "番号に 4 だけ を使いません（9は使います）。1番から数えて 10番目の車は 何番ですか。",
+          "answer": "11",
+          "meaning": "使える数字は9こ（0,1,2,3,5,6,7,8,9）。1,2,3,5,6,7,8,9,10 が9番目。次は11。10番目は11番です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "3つの数字ダイヤルの 計器",
+        "rei": {
+         "question": "3つのダイヤルがならんだ計器があります。それぞれ 0 から 3 までの数字が出て、右のダイヤルが 3 の次に 0 にもどるとき 左どなりが 1 ふえます。「1 2 3」と出ているとき、はじめから何回すすめたところですか。",
+         "svg": "<svg viewBox=\"0 0 266 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"47.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">左</text><text x=\"47.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">16回分</text><text x=\"90.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"96\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"133.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">まん中</text><text x=\"133.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">4回分</text><text x=\"176.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"182\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"219.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">右</text><text x=\"219.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">1回分</text><text x=\"133\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">0〜3の4しゅるい＝4進法</text></svg>",
+         "kaisetsu": [
+          "数字が 0〜3 の **4しゅるい**なので、4こで1つ上にくり上がる＝**4進法**です。",
+          "右のダイヤルは 1回分。まん中は 4回分。左は 4×4＝**16回分**。",
+          "1×16＋2×4＋3×1＝16＋8＋3。",
+          "27回。"
+         ],
+         "answer": "27"
+        },
+        "ruidai": [
+         {
+          "question": "0〜3の数字が出る3つのダイヤルの計器で「2 0 1」と出ているとき、はじめから何回すすめたところですか。",
+          "answer": "33",
+          "meaning": "2×16＋0×4＋1×1＝32＋0＋1＝33回です。",
+          "svg": ""
+         },
+         {
+          "question": "0〜4の数字が出る3つのダイヤルの計器（5こで1つ上にくり上がる）で「1 0 2」と出ているとき、はじめから何回すすめたところですか。",
+          "answer": "27",
+          "meaning": "左は5×5＝25回分。1×25＋0×5＋2＝27回です。",
+          "svg": ""
+         },
+         {
+          "question": "0〜3の数字が出る3つのダイヤルの計器を 20回 すすめると、どんな数字がならびますか。（3つの数字をつなげて答えなさい）",
+          "answer": "110",
+          "meaning": "20÷4＝5あまり0、5÷4＝1あまり1。上から 1、1、0 で「110」です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "方眼の黒ぬり＝ 位の重み",
+        "rei": {
+         "question": "方眼が 4つならんでいて、左から 8、4、2、1 の重さがついています。黒くぬったところの数をたして 数を表します。左から「黒・白・黒・白」のとき、いくつを表しますか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">左から 8・4・2・1</text></svg>",
+         "kaisetsu": [
+          "黒くぬったところの **重さだけをたす** しくみです。",
+          "左から 8、4、2、1。黒いのは 1つ目（8）と 3つ目（2）。",
+          "8＋2＝10。",
+          "（これは2進法の 1010 と同じことです）"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "左から 8、4、2、1 の重さがついた4つの方眼で、「白・黒・黒・黒」のとき いくつを表しますか。",
+          "answer": "7",
+          "meaning": "4＋2＋1＝7です。",
+          "svg": "<svg viewBox=\"0 0 222 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text></svg>"
+         },
+         {
+          "question": "左から 8、4、2、1 の重さがついた4つの方眼で、13 を表すには どこを黒くぬればよいですか。黒くぬる方眼は何こですか。",
+          "answer": "3",
+          "meaning": "13＝8＋4＋1。黒くぬるのは 8、4、1 の3こです。",
+          "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">13を作る</text></svg>"
+         },
+         {
+          "question": "左から 16、8、4、2、1 の重さがついた5つの方眼で、「黒・白・黒・白・黒」のとき いくつを表しますか。",
+          "answer": "21",
+          "meaning": "16＋4＋1＝21です。",
+          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">16</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "3・4・5こずつ と 入れものがかわる（混合）",
+        "rei": {
+         "question": "あめを 3こずつ 小ぶくろに、小ぶくろ 4つで 中ぶくろに、中ぶくろ 5つで 箱に入れます。箱1つ、中ぶくろ2つ、小ぶくろ1つ、ばら2こ のとき、あめは全部で何こですか。",
+         "svg": "<svg viewBox=\"0 0 352 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"47.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">箱</text><text x=\"47.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">中5つ</text><text x=\"90.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"96\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"133.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">中ぶくろ</text><text x=\"133.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">小4つ</text><text x=\"176.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"182\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"219.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">小ぶくろ</text><text x=\"219.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">あめ3こ</text><text x=\"262.0\" y=\"38\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#9aa3c0\">&#8592;</text><rect x=\"268\" y=\"10\" width=\"74\" height=\"44\" rx=\"8\" fill=\"#eef2ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"305.0\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">ばら</text><text x=\"305.0\" y=\"47\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">1こ</text><text x=\"176\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3こ→4つ→5つ と数がかわる</text></svg>",
+         "kaisetsu": [
+          "**入れものごとに 数がちがう**のがこの問題のポイント。下から順に あめ何こ分か 出します。",
+          "小ぶくろ＝3こ。中ぶくろ＝小4つ＝3×4＝**12こ**。箱＝中5つ＝12×5＝**60こ**。",
+          "箱1つ＝60こ。中ぶくろ2つ＝12×2＝24こ。小ぶくろ1つ＝3こ。ばら2こ。",
+          "60＋24＋3＋2＝89こ。"
+         ],
+         "answer": "89"
+        },
+        "ruidai": [
+         {
+          "question": "あめを 3こずつ 小ぶくろに、小ぶくろ 4つで 中ぶくろにします。中ぶくろ1つは あめ何こ分ですか。",
+          "answer": "12",
+          "meaning": "3×4＝12こ分です。",
+          "svg": ""
+         },
+         {
+          "question": "あめを 3こずつ 小ぶくろに、小ぶくろ 4つで 中ぶくろに、中ぶくろ 5つで 箱に入れます。箱1つは あめ何こ分ですか。",
+          "answer": "60",
+          "meaning": "小3こ→中は3×4＝12こ→箱は12×5＝60こ分です。",
+          "svg": ""
+         },
+         {
+          "question": "あめを 2こずつ 小ぶくろに、小ぶくろ 3つで 中ぶくろに、中ぶくろ 4つで 箱に入れます。箱1つ、中ぶくろ1つ、ばら1こ は あめ何こですか。",
+          "answer": "31",
+          "meaning": "小2こ→中は6こ→箱は24こ。24＋6＋1＝31こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "0 から はじまる番号",
+        "rei": {
+         "question": "人形に 0 番から順に 0、1、2、10、11、12、20、… と番号をつけます（3こで1つ上の位にくり上がる）。はじめから数えて 8 番目の人形の番号はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 482 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">0</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">11</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">12</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">20</text><rect x=\"374\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"397.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">21</text><rect x=\"426\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"449.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"241\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3こでくり上がる・0から始まる</text></svg>",
+         "kaisetsu": [
+          "**0 から始まる**ので、「8番目」は 0 を1番目と数えて **7 を表す番号** になります。",
+          "3進法で 7 を書きます。7÷3＝2あまり1、2÷3＝0あまり2。",
+          "上から 2、1 で「21」。",
+          "答えは 21。"
+         ],
+         "answer": "21"
+        },
+        "ruidai": [
+         {
+          "question": "0 番から 0、1、2、10、11、… と3こでくり上がる番号をつけます。はじめから数えて 5 番目の人形の番号はいくつですか。",
+          "answer": "11",
+          "meaning": "0を1番目と数えるので5番目は4を表す番号。4÷3＝1あまり1 で「11」です。",
+          "svg": ""
+         },
+         {
+          "question": "0 番から 0、1、2、3、10、11、… と4こでくり上がる番号をつけます。はじめから数えて 7 番目の人形の番号はいくつですか。",
+          "answer": "12",
+          "meaning": "7番目は6を表す番号。6÷4＝1あまり2 で「12」です。",
+          "svg": ""
+         },
+         {
+          "question": "3こでくり上がる書き方で「102」と書かれた数は、ふつうの数でいくつですか。",
+          "answer": "11",
+          "meaning": "1×9＋0×3＋2＝11です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     }
     }
    }
   }
