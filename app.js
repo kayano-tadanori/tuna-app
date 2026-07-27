@@ -1823,12 +1823,21 @@ async function loadHamaKaisetsu() {
   catch (e) { hamaKaisetsuCache = { grades: {} }; }
   return hamaKaisetsuCache;
 }
-// その学年・コース・回に用意されている「かんたん解説」の中身を返す（無ければ null）
-async function hamaKaisetsuFor(grade, course, no) {
+// ★かんたん解説は「単元名」で引く。回番号では引かない。
+// 最レの回番号は年度で中身が入れかわり、アプリに入っているのは去年までのカリキュラムなので
+// 回番号にひもづけてはいけない（本人指示 2026-07-27）。
+async function hamaKaisetsuFor(grade, course, unit) {
   const d = await loadHamaKaisetsu();
   const g = d.grades && d.grades[String(grade)];
   const c = g && g[course];
-  return (c && c[String(no)]) || null;
+  return (c && c.units && c.units[unit]) || null;
+}
+// その学年・コースで かんたん解説が用意されている単元名の一覧
+async function hamaKaisetsuUnits(grade, course) {
+  const d = await loadHamaKaisetsu();
+  const g = d.grades && d.grades[String(grade)];
+  const c = g && g[course];
+  return (c && c.units) ? Object.keys(c.units) : [];
 }
 // 例題＋類題を1本の出題リストに開く。例題には rei:true を立てて入力させない
 function expandKaisetsu(pack, grade) {
@@ -1953,6 +1962,24 @@ async function hamaCollectUnit(grade, course, unit) {
       seen.add(q.id); out.push(q);
     }
   }
+  if (out.length) return out;
+  // 回に units が付いていない学年（小3最レなど）は、通常プールから単元名で集める。
+  // 「単元名で復習させる」ため（本人指示 2026-07-27）。回番号にはたよらない。
+  return await sansuUnitPool(grade, unit);
+}
+
+// その学年で、その単元（グループ名でも単元名でも可）の問題を全カテゴリから集める
+async function sansuUnitPool(grade, unit) {
+  const out = [];
+  for (const k of Object.keys(SANSU_FILES)) {
+    if (k === 'mix') continue;
+    let qs;
+    try { qs = await ensureSansuFile('sansu', k); } catch (e) { continue; }
+    for (const q of qs) {
+      if (q.grade !== grade) continue;
+      if (q.unit === unit || UNIT_TO_GROUP[q.unit] === unit) out.push({ ...q, _cat: k });
+    }
+  }
   return out;
 }
 
@@ -1997,7 +2024,10 @@ async function renderHamaPanel() {
   const modeRow = document.getElementById('hama-mode-row');
   const unitWrap = document.getElementById('hama-unit-wrap');
   const unitSel = document.getElementById('hama-unit-sel');
-  const canUnit = course === 'sairei' && lessons.some(l => (l.units || []).length);
+  // かんたん解説がある単元だけでも「単元でえらぶ」を使えるようにする
+  // （小3最レは lessons に units が無いが、かんたん解説は単元名で持っている）
+  const kxUnits = (course === 'sairei') ? await hamaKaisetsuUnits(grade, course) : [];
+  const canUnit = course === 'sairei' && (lessons.some(l => (l.units || []).length) || kxUnits.length > 0);
   modeRow.style.display = canUnit ? 'flex' : 'none';
   if (!canUnit) sansuState.hamaMode = 'no';
   if (!sansuState.hamaMode) sansuState.hamaMode = 'no';
@@ -2007,8 +2037,8 @@ async function renderHamaPanel() {
   });
 
   if (canUnit && sansuState.hamaMode === 'unit') {
-    // 単元でえらぶ：その学年の最レに出てくる単元を一覧にする
-    const units = [...new Set(lessons.flatMap(l => l.units || []))].sort();
+    // 単元でえらぶ：その学年の最レに出てくる単元＋かんたん解説がある単元を一覧にする
+    const units = [...new Set([...lessons.flatMap(l => l.units || []), ...kxUnits])].sort();
     if (!units.includes(sansuState.hamaUnit)) sansuState.hamaUnit = units[0];
     unitSel.innerHTML = units.map(u =>
       `<option value="${u}"${u === sansuState.hamaUnit ? ' selected' : ''}>${u}</option>`).join('');
@@ -2022,17 +2052,33 @@ async function renderHamaPanel() {
     const filtered = filterByBand(qs);
     const wk = document.getElementById('hama-cnt-week');
     wk.textContent = filtered.length ? `${sansuState.hamaUnit}・${filtered.length}問` : 'まだ問題なし';
-    document.querySelector('.hama-act-btn[data-hama-act="week"]').disabled = !filtered.length;
-    ['kokai', 'senshu', 'kaisetsu'].forEach(k => {
+    const wkB = document.querySelector('.hama-act-btn[data-hama-act="week"]');
+    wkB.disabled = !filtered.length;
+    wkB.classList.toggle('hidden', !filtered.length);   // 0問なら出さない（こわれて見えるので）
+    document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent = '📝 この単元を復習';
+    // ★かんたん解説はこの単元モードで出す（回番号には依存しない）
+    const kxPack = await hamaKaisetsuFor(grade, course, sansuState.hamaUnit);
+    const kxN = kxPack ? expandKaisetsu(kxPack, grade).length : 0;
+    const kxB = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
+    if (kxB) {
+      kxB.classList.remove('hidden');
+      kxB.disabled = !kxN;
+      document.getElementById('hama-cnt-kaisetsu').textContent =
+        kxN ? `${kxPack.title}・${kxN}問` : 'この単元はまだ用意していません';
+    }
+    ['kokai', 'senshu'].forEach(k => {
       const el = document.getElementById('hama-cnt-' + k);
       if (el) el.textContent = '—';
       const b = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
-      if (b) b.disabled = true;
+      if (b) { b.disabled = true; b.classList.add('hidden'); }
     });
     return;
   }
   unitWrap.classList.add('hidden');
   document.getElementById('hama-no-row').style.display = 'flex';
+  // 単元モードで書きかえたラベルを戻す
+  document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent = '📝 今週の復習テスト';
+  document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.remove('hidden');
 
   let no = hamaCurrent(grade, course);
   if (no === null) {
@@ -2056,20 +2102,15 @@ async function renderHamaPanel() {
   const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
   if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
 
-  // 最レでは「先どり」を出さず「かんたん解説」を出す（浜は復習主義／本人指示 2026-07-27）
+  // 最レでは「先どり」を出さない（浜学園は復習主義／本人指示 2026-07-27）。
+  // かんたん解説は「単元でえらぶ」モードのほうに出す（回番号は旧カリキュラムなので使わない）
   const isSairei = (course === 'sairei');
   const senshuBtn = document.querySelector('.hama-act-btn[data-hama-act="senshu"]');
   const kxBtn = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
   if (senshuBtn) senshuBtn.classList.toggle('hidden', isSairei);
-  if (kxBtn) {
-    kxBtn.classList.toggle('hidden', !isSairei);
-    if (isSairei) {
-      const pack = await hamaKaisetsuFor(grade, course, no);
-      const el = document.getElementById('hama-cnt-kaisetsu');
-      const n = pack ? expandKaisetsu(pack, grade).length : 0;
-      el.textContent = n ? `No.${no} ${pack.title}・${n}問` : `No.${no}・まだ用意していません`;
-      kxBtn.disabled = !n;
-    }
+  if (kxBtn) kxBtn.classList.add('hidden');
+  if (isSairei && kxUnits.length) {
+    hint.textContent = '最レは年度で回の中身が入れかわります。「単元でえらぶ」にすると 💡かんたん解説 が使えます。';
   }
 
   const ranges = { week: [no, no] };
@@ -2149,6 +2190,25 @@ async function startHamaSession(kind) {
   if (!courses || !courses[course]) return;
   const lessons = courses[course].lessons;
 
+  // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
+  if (kind === 'kaisetsu') {
+    showLoading();
+    try {
+      const pack = await hamaKaisetsuFor(grade, course, sansuState.hamaUnit);
+      const qs = pack ? expandKaisetsu(pack, grade) : [];
+      if (!qs.length) { showToast('この単元のかんたん解説はまだ用意していません'); hideLoading(); return; }
+      sansuState.subject = 'sansu';
+      sansuState.cat = 'kaisetsu';
+      sansuState.diff = 'kaisetsu';
+      sansuState.questions = qs;      // ★順番どおりに出す
+      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+      coinSessionEarned = 0;
+      hideLoading();
+      startSansuQuiz();
+    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+    return;
+  }
+
   // 単元でえらぶモード（最レ）はここで出題する
   if (course === 'sairei' && sansuState.hamaMode === 'unit' && sansuState.hamaUnit) {
     showLoading();
@@ -2170,24 +2230,6 @@ async function startHamaSession(kind) {
   const minNo = lessons[0].no, maxNo = lessons[lessons.length - 1].no;
   const no = hamaCurrent(grade, course);
 
-  // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
-  if (kind === 'kaisetsu') {
-    showLoading();
-    try {
-      const pack = await hamaKaisetsuFor(grade, course, no);
-      const qs = pack ? expandKaisetsu(pack, grade) : [];
-      if (!qs.length) { showToast('この回のかんたん解説はまだ用意していません'); hideLoading(); return; }
-      sansuState.subject = 'sansu';
-      sansuState.cat = 'kaisetsu';
-      sansuState.diff = 'kaisetsu';
-      sansuState.questions = qs;      // ★順番どおりに出す
-      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
-      coinSessionEarned = 0;
-      hideLoading();
-      startSansuQuiz();
-    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
-    return;
-  }
 
   const range = kind === 'week' ? [no, no]
     : kind === 'kokai' ? [Math.max(minNo, no - HAMA_WINDOW), no]
