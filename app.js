@@ -6210,8 +6210,8 @@ const QUESTION_COUNTS = {
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
   sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 982, tokusan: 562, baai: 562, kazu: 662,
             wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,969（2026-07-26）
-  rika:   { shokubutsu: 987, doubutsu: 1006, jintai: 250, sora: 774, tenki: 490, mono: 874, kitai: 273,
-            daichi: 490, suiyoueki: 507, denki: 518, chikara: 587, hikari_oto: 304 },        // 7,060（2026-07-28 生物140・水43・電気36）
+  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 273,
+            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,093（2026-07-28 小4理科の全42回を30問以上に）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
