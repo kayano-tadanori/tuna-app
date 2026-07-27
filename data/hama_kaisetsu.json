@@ -1855,6 +1855,874 @@
         ]
        }
       ]
+     },
+     "7": {
+      "title": "小数点のつけ忘れ",
+      "items": [
+       {
+        "bone": "小数点をつけ忘れると 10倍になる（差は 9倍）",
+        "rei": {
+         "question": "ある小数の 小数点をつけ忘れて 書いてしまったところ、正しい数より 27 大きくなりました。もとの小数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3.5</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">35</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">小数点を忘れると 10倍になる</text></svg>",
+         "kaisetsu": [
+          "小数点を1つ **右にずらす**と、数は **10倍** になります。ここが土台。",
+          "もとの数を □ とすると、まちがえた数は □×10。",
+          "差は 10倍−1倍＝**9倍**。だから 9×□＝27。",
+          "□＝27÷9＝3。"
+         ],
+         "answer": "3"
+        },
+        "ruidai": [
+         {
+          "question": "ある小数の 小数点をつけ忘れて書いたら、正しい数より 63 大きくなりました。もとの小数はいくつですか。",
+          "answer": "7",
+          "meaning": "差は9倍なので 63÷9＝7です。",
+          "svg": ""
+         },
+         {
+          "question": "ある小数の 小数点をつけ忘れて書いたら、正しい数より 45 大きくなりました。まちがえて書いた数はいくつですか。",
+          "answer": "50",
+          "meaning": "もとの数は 45÷9＝5。まちがえた数はその10倍で 50です。",
+          "svg": ""
+         },
+         {
+          "question": "ある小数の 小数点をつけ忘れて書いたら、正しい数より 108 大きくなりました。もとの小数はいくつですか。",
+          "answer": "12",
+          "meaning": "108÷9＝12です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "小数点を 2つずらすと 100倍（差は 99倍）",
+        "rei": {
+         "question": "ある小数の 小数点を 2つ 右にずらして書いてしまったところ、正しい数より 198 大きくなりました。もとの小数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3.5</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">350</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2つずらすと 100倍</text></svg>",
+         "kaisetsu": [
+          "小数点を 2つ 右にずらすと **100倍** になります。",
+          "差は 100倍−1倍＝**99倍**。",
+          "99×□＝198。",
+          "□＝198÷99＝2。"
+         ],
+         "answer": "2"
+        },
+        "ruidai": [
+         {
+          "question": "ある小数の 小数点を 2つ 右にずらして書いたら、正しい数より 396 大きくなりました。もとの小数はいくつですか。",
+          "answer": "4",
+          "meaning": "差は99倍なので 396÷99＝4です。",
+          "svg": ""
+         },
+         {
+          "question": "ある小数の 小数点を 2つ 右にずらして書いたら、正しい数より 693 大きくなりました。もとの小数はいくつですか。",
+          "answer": "7",
+          "meaning": "693÷99＝7です。",
+          "svg": ""
+         },
+         {
+          "question": "ある小数を 10倍するところを まちがえて 100倍してしまい、正しい答えより 180 大きくなりました。もとの小数はいくつですか。",
+          "answer": "2",
+          "meaning": "100倍と10倍の差は 90倍。180÷90＝2です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "8": {
+      "title": "計算のとりちがえ",
+      "items": [
+       {
+        "bone": "÷ を × と まちがえた",
+        "rei": {
+         "question": "ある数を 4 でわるところを、まちがえて 4 をかけてしまい、答えが 48 になりました。正しい答えはいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">×4</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">=48</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">本当は ÷4 だった</text></svg>",
+         "kaisetsu": [
+          "**まず「ある数」を出します。**まちがえた式から逆算するのがコツ。",
+          "□×4＝48 なので □＝48÷4＝12。",
+          "正しくは □÷4 なので 12÷4。",
+          "答えは 3。"
+         ],
+         "answer": "3"
+        },
+        "ruidai": [
+         {
+          "question": "ある数を 6 でわるところを、まちがえて 6 をかけてしまい、答えが 72 になりました。正しい答えはいくつですか。",
+          "answer": "2",
+          "meaning": "□×6＝72 で □＝12。正しくは 12÷6＝2です。",
+          "svg": ""
+         },
+         {
+          "question": "ある数を 5 でわるところを、まちがえて 5 をかけてしまい、答えが 100 になりました。正しい答えはいくつですか。",
+          "answer": "4",
+          "meaning": "□×5＝100 で □＝20。正しくは 20÷5＝4です。",
+          "svg": ""
+         },
+         {
+          "question": "ある数を 3 でわるところを、まちがえて 3 をかけてしまい、答えが 54 になりました。まちがえた答えは 正しい答えの何倍ですか。",
+          "answer": "9",
+          "meaning": "□＝18、正しい答えは6、まちがえた答えは54。54÷6＝9倍。（いつも わる数の2倍かけた分＝3×3＝9倍になります）",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "たすところを ひいてしまった",
+        "rei": {
+         "question": "ある数に 7 をたすところを、まちがえて 7 をひいてしまい、答えが 15 になりました。正しい答えはいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">−7</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">=15</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">本当は ＋7 だった</text></svg>",
+         "kaisetsu": [
+          "まちがえた式から **ある数** を出します。",
+          "□−7＝15 なので □＝15＋7＝22。",
+          "正しくは □＋7 なので 22＋7。",
+          "答えは 29。（まちがえた答えとの差は 7の2倍＝14）"
+         ],
+         "answer": "29"
+        },
+        "ruidai": [
+         {
+          "question": "ある数に 9 をたすところを、まちがえて 9 をひいてしまい、答えが 12 になりました。正しい答えはいくつですか。",
+          "answer": "30",
+          "meaning": "□＝12＋9＝21。正しくは 21＋9＝30です。",
+          "svg": ""
+         },
+         {
+          "question": "ある数に 8 をたすところを、まちがえて 8 をひいてしまいました。正しい答えと まちがえた答えの差はいくつですか。",
+          "answer": "16",
+          "meaning": "＋8 と −8 の差は 8の2倍で 16です。（ある数が分からなくても出せます）",
+          "svg": ""
+         },
+         {
+          "question": "ある数から 6 をひくところを、まちがえて 6 をたしてしまい、答えが 20 になりました。正しい答えはいくつですか。",
+          "answer": "8",
+          "meaning": "□＝20−6＝14。正しくは 14−6＝8です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "9": {
+      "title": "日暦算・曜日",
+      "items": [
+       {
+        "bone": "その月の 水曜日の 日づけの和",
+        "rei": {
+         "question": "ある年の 7月は、水曜日の日づけを全部たすと 75 になりました。7月1日は何曜日ですか。（日＝1、月＝2、火＝3、水＝4、木＝5、金＝6、土＝7 の番号で答えなさい）",
+         "svg": "<svg viewBox=\"0 0 230 176\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text><rect x=\"40\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text><rect x=\"70\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text><rect x=\"100\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text><rect x=\"130\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text><rect x=\"160\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text><rect x=\"190\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text><rect x=\"10\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text><rect x=\"40\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text><rect x=\"70\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text><rect x=\"100\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text><rect x=\"130\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text><rect x=\"160\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text><rect x=\"190\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text><rect x=\"10\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text><rect x=\"40\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text><rect x=\"70\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text><rect x=\"100\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text><rect x=\"130\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text><rect x=\"160\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text><rect x=\"190\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text><rect x=\"10\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text><rect x=\"40\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text><rect x=\"70\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text><rect x=\"100\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text><rect x=\"130\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text><rect x=\"160\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text><rect x=\"190\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text><rect x=\"10\" y=\"126\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">29</text><rect x=\"40\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">30</text><rect x=\"70\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">31</text><text x=\"115\" y=\"170\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7日おきに水曜がくる</text></svg>",
+         "kaisetsu": [
+          "水曜日は **7日おき**。だから 1回目を □日 とすると、2回目は □＋7、3回目は □＋14…",
+          "7月は31日まで。水曜が何回あるか考えます。5回なら和は □×5＋(7＋14＋21＋28)＝□×5＋70。",
+          "□×5＋70＝75 → □×5＝5 → □＝1。**7月1日が水曜**。",
+          "（4回だと □×4＋42＝75 で整数にならないので合いません）",
+          "水は番号で 4。"
+         ],
+         "answer": "4"
+        },
+        "ruidai": [
+         {
+          "question": "ある月の 月曜日の日づけを全部たすと 80 になりました。その月の1回目の月曜日は 何日ですか。（月曜が5回あるとします）",
+          "answer": "2",
+          "meaning": "5回なら □×5＋70＝80 → □×5＝10 → □＝2。2日です。",
+          "svg": "<svg viewBox=\"0 0 230 162\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text><rect x=\"40\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text><rect x=\"70\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text><rect x=\"100\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text><rect x=\"130\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text><rect x=\"160\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text><rect x=\"190\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text><rect x=\"10\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text><rect x=\"40\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text><rect x=\"70\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text><rect x=\"100\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text><rect x=\"130\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text><rect x=\"160\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text><rect x=\"190\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text><rect x=\"10\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text><rect x=\"40\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text><rect x=\"70\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text><rect x=\"100\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text><rect x=\"130\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text><rect x=\"160\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text><rect x=\"190\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text><rect x=\"10\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text><rect x=\"40\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text><rect x=\"70\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text><rect x=\"100\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text><rect x=\"130\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text><rect x=\"160\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text><rect x=\"190\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text><rect x=\"10\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">29</text><rect x=\"40\" y=\"126\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">30</text><rect x=\"70\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">31</text></svg>"
+         },
+         {
+          "question": "ある月の 日曜日の日づけを全部たすと 58 になりました。その月の1回目の日曜日は 何日ですか。（日曜が4回あるとします）",
+          "answer": "4",
+          "meaning": "4回なら □×4＋(7＋14＋21)＝□×4＋42＝58 → □×4＝16 → □＝4。4日です。",
+          "svg": ""
+         },
+         {
+          "question": "7月1日が水曜日のとき、7月の水曜日は何回ありますか。",
+          "answer": "5",
+          "meaning": "1、8、15、22、29 の5回です。",
+          "svg": "<svg viewBox=\"0 0 230 162\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text><rect x=\"40\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text><rect x=\"70\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text><rect x=\"100\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text><rect x=\"130\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text><rect x=\"160\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text><rect x=\"190\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text><rect x=\"10\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text><rect x=\"40\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text><rect x=\"70\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text><rect x=\"100\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text><rect x=\"130\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text><rect x=\"160\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text><rect x=\"190\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text><rect x=\"10\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text><rect x=\"40\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text><rect x=\"70\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text><rect x=\"100\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text><rect x=\"130\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text><rect x=\"160\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text><rect x=\"190\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text><rect x=\"10\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text><rect x=\"40\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text><rect x=\"70\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text><rect x=\"100\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text><rect x=\"130\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text><rect x=\"160\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text><rect x=\"190\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text><rect x=\"10\" y=\"126\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">29</text><rect x=\"40\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">30</text><rect x=\"70\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">31</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "週に○回 かようとき、△回目はいつ",
+        "rei": {
+         "question": "月曜・水曜・金曜 の週3回、教室にかよいます。4月1日（月）が1回目のとき、10回目は 4月何日ですか。",
+         "svg": "<svg viewBox=\"0 0 230 176\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text><rect x=\"40\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text><rect x=\"70\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text><rect x=\"100\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text><rect x=\"130\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text><rect x=\"160\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text><rect x=\"190\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text><rect x=\"10\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text><rect x=\"40\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text><rect x=\"70\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text><rect x=\"100\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text><rect x=\"130\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text><rect x=\"160\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text><rect x=\"190\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text><rect x=\"10\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text><rect x=\"40\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text><rect x=\"70\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text><rect x=\"100\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text><rect x=\"130\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text><rect x=\"160\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text><rect x=\"190\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text><rect x=\"10\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text><rect x=\"40\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text><rect x=\"70\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text><rect x=\"100\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text><rect x=\"130\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text><rect x=\"160\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text><rect x=\"190\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text><rect x=\"10\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">29</text><rect x=\"40\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">30</text><text x=\"115\" y=\"170\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">月・水・金にかよう</text></svg>",
+         "kaisetsu": [
+          "**1週間に3回**なので、まず 10回目が 何週目かを出します。",
+          "10÷3＝3あまり1。3週まるごと（9回）がおわって、4週目の **1回目**。",
+          "1週目は 1日（月）・3日（水）・5日（金）。1週ごとに 7日ずつ すすみます。",
+          "4週目の月曜は 1＋7×3＝**22日**。"
+         ],
+         "answer": "22"
+        },
+        "ruidai": [
+         {
+          "question": "月・水・金 の週3回かよいます。4月1日（月）が1回目のとき、8回目は 4月何日ですか。",
+          "answer": "17",
+          "meaning": "8÷3＝2あまり2。2週（6回）のあと3週目の2回目＝水曜。3週目の月曜は 1＋14＝15日、水曜は17日です。",
+          "svg": ""
+         },
+         {
+          "question": "火・木 の週2回かよいます。4月1日（火）が1回目のとき、7回目は 4月何日ですか。",
+          "answer": "22",
+          "meaning": "7÷2＝3あまり1。3週（6回）のあと4週目の1回目＝火曜。4週目の火曜は 1＋7×3＝22日です。",
+          "svg": ""
+         },
+         {
+          "question": "月・水・金 の週3回かよいます。1回目から数えて 20回目は 何週目の何回目ですか。週の番号を答えなさい。",
+          "answer": "7",
+          "meaning": "20÷3＝6あまり2。6週おわって7週目の2回目。週は7週目です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "最初の週だけ 回数が足りないとき",
+        "rei": {
+         "question": "月・水・金 の週3回かよう教室に、4月3日（水）から かよいはじめました。10回目は 4月何日ですか。（4月1日は月曜）",
+         "svg": "<svg viewBox=\"0 0 230 176\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text><rect x=\"40\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text><rect x=\"70\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text><rect x=\"100\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text><rect x=\"130\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text><rect x=\"160\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text><rect x=\"190\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text><rect x=\"10\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text><rect x=\"40\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text><rect x=\"70\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text><rect x=\"100\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text><rect x=\"130\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text><rect x=\"160\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text><rect x=\"190\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text><rect x=\"10\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text><rect x=\"40\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text><rect x=\"70\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text><rect x=\"100\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text><rect x=\"130\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text><rect x=\"160\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text><rect x=\"190\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text><rect x=\"10\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text><rect x=\"40\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text><rect x=\"70\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text><rect x=\"100\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text><rect x=\"130\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text><rect x=\"160\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text><rect x=\"190\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text><rect x=\"10\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">29</text><rect x=\"40\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">30</text><text x=\"115\" y=\"170\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">最初の週は 水・金 の2回だけ</text></svg>",
+         "kaisetsu": [
+          "**最初の週だけ 回数が少ない**のがワナ。ここを別あつかいします。",
+          "1週目は 3日（水）・5日（金）の **2回だけ**。",
+          "のこりは 10−2＝8回。2週目からは 週3回なので 8÷3＝2あまり2。",
+          "2週まるごと（2・3週目で6回）のあと、4週目の2回目。4週目は 22日（月）・24日（水）・26日（金）。",
+          "2回目は **24日**。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "月・水・金 の週3回かよう教室に、4月3日（水）からかよいはじめました。5回目は 4月何日ですか。（4月1日は月曜）",
+          "answer": "12",
+          "meaning": "1週目は3日・5日の2回。のこり3回。2週目は8日（月）・10日（水）・12日（金）。3回目は12日です。",
+          "svg": ""
+         },
+         {
+          "question": "火・木 の週2回かよう教室に、4月3日（木）からかよいはじめました。1週目は何回かよいますか。（4月1日は火曜）",
+          "answer": "1",
+          "meaning": "1週目は3日（木）だけの1回です。",
+          "svg": ""
+         },
+         {
+          "question": "月・水・金 の週3回かよう教室に、4月5日（金）からかよいはじめました。7回目は 4月何日ですか。（4月1日は月曜）",
+          "answer": "19",
+          "meaning": "かよう日を順に書き出します。5日、8日、10日、12日、15日、17日、19日。7回目は 19日です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "何才から 生まれた年をしぼる",
+        "rei": {
+         "question": "きょう 2026年4月1日 に「わたしは 10才です」と言った人がいます。この人が生まれた年として考えられるのは 何年ですか。いちばん古い年を答えなさい。",
+         "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2015</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2016</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10才の人が生まれた年は2つ考えられる</text></svg>",
+         "kaisetsu": [
+          "**たん生日を むかえたかどうか**で 2つに分かれます。ここがワナ。",
+          "きょうが 2026年。もう10才のたん生日をむかえていれば 2026−10＝**2016年**生まれ。",
+          "まだむかえていなければ、1年前の **2015年**生まれ（2015年生まれで たん生日前なら まだ10才）。",
+          "古い方は 2015年。"
+         ],
+         "answer": "2015"
+        },
+        "ruidai": [
+         {
+          "question": "2026年4月1日に「8才です」と言った人が生まれた年として考えられるもののうち、新しい方の年はいくつですか。",
+          "answer": "2018",
+          "meaning": "たん生日をむかえていれば 2026−8＝2018年生まれです。",
+          "svg": ""
+         },
+         {
+          "question": "2026年4月1日に「12才です」と言った人が生まれた年として考えられるもののうち、古い方の年はいくつですか。",
+          "answer": "2013",
+          "meaning": "まだたん生日をむかえていなければ 2026−12−1＝2013年生まれです。",
+          "svg": ""
+         },
+         {
+          "question": "2026年に「10才」と言った人が生まれた年は 何通り考えられますか。",
+          "answer": "2",
+          "meaning": "たん生日をむかえたかどうかで 2通りです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "10": {
+      "title": "わる数の逆算・公約数",
+      "items": [
+       {
+        "bone": "「○でわると△あまる」から わる数をさがす",
+        "rei": {
+         "question": "43 をある数でわると 3 あまりました。ある数として考えられるものは 全部で何こありますか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">43</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">÷</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">=</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…3</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">あまりは わる数より小さい</text></svg>",
+         "kaisetsu": [
+          "**あまった分をひくと、わり切れる**。ここが入口です。",
+          "43−3＝40。だから □ は **40 をわり切る数**（40の約数）。",
+          "40の約数は 1、2、4、5、8、10、20、40。",
+          "でも **あまりは わる数より小さい**ので、□ は 3 より大きくないといけません。1、2 は消えます。",
+          "のこりは 4、5、8、10、20、40 の **6こ**。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "53 をある数でわると 5 あまりました。ある数として考えられるものは 全部で何こありますか。",
+          "answer": "6",
+          "meaning": "53−5＝48。48の約数のうち5より大きいのは 6、8、12、16、24、48 の6こです。",
+          "svg": ""
+         },
+         {
+          "question": "43 をある数でわると 3 あまりました。ある数のうち いちばん小さい数はいくつですか。",
+          "answer": "4",
+          "meaning": "40の約数で3より大きい いちばん小さい数は 4です。",
+          "svg": ""
+         },
+         {
+          "question": "29 をある数でわると 5 あまりました。ある数として考えられるものは 全部で何こありますか。",
+          "answer": "4",
+          "meaning": "29−5＝24。24の約数のうち5より大きいのは 6、8、12、24 の4こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "2つの数を わり切る数（公約数）を すべて出す",
+        "rei": {
+         "question": "24 と 36 の どちらもわり切ることができる数を すべて 答えます。全部で何こありますか。",
+         "svg": "<svg viewBox=\"0 0 300 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"6\" y=\"10\" width=\"288\" height=\"120\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.5\"/><text x=\"14\" y=\"126\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">ぜんたい 0</text><circle cx=\"115\" cy=\"66\" r=\"52\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"185\" cy=\"66\" r=\"52\" fill=\"rgba(255,107,107,0.16)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"72\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">24の約数</text><text x=\"212\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">36の約数</text><text x=\"84\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"150\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#8a5cff\"></text><text x=\"216\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text></svg>",
+         "kaisetsu": [
+          "**両方をわり切る数＝公約数**です。まず いちばん大きいのを見つけます。",
+          "24＝2×2×2×3、36＝2×2×3×3。共通なのは 2×2×3＝**12**（最大公約数）。",
+          "**公約数は 最大公約数の約数**、というのが大事なきまり。",
+          "12の約数は 1、2、3、4、6、12 の **6こ**。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "18 と 30 の どちらもわり切ることができる数は 全部で何こありますか。",
+          "answer": "4",
+          "meaning": "18と30の最大公約数は6。6の約数は 1、2、3、6 の4こです。",
+          "svg": ""
+         },
+         {
+          "question": "48 と 60 の どちらもわり切ることができる数は 全部で何こありますか。",
+          "answer": "6",
+          "meaning": "48と60の最大公約数は12。12の約数は 1、2、3、4、6、12 の6こです。",
+          "svg": ""
+         },
+         {
+          "question": "24 と 36 の どちらもわり切ることができる数のうち、2番目に大きい数はいくつですか。",
+          "answer": "6",
+          "meaning": "公約数は 1、2、3、4、6、12。2番目に大きいのは6です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "あまりをそろえてから 公約数",
+        "rei": {
+         "question": "27 をわると 3 あまり、43 をわると 3 あまる数を さがします。そのような数として考えられるものは 全部で何こありますか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">27</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">43</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">24</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">40</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">あまり3をひいてそろえる</text></svg>",
+         "kaisetsu": [
+          "**あまりが同じなら、あまりをひいてそろえます。**ここが発見。",
+          "27−3＝24、43−3＝40。□ は 24 と 40 の **両方をわり切る数**。",
+          "24と40の最大公約数は 8。8の約数は 1、2、4、8。",
+          "あまりが3なので □ は 3 より大きい。1、2 は消えて **4 と 8** の 2こ。"
+         ],
+         "answer": "2"
+        },
+        "ruidai": [
+         {
+          "question": "34 をわると 4 あまり、58 をわると 4 あまる数は 全部で何こありますか。",
+          "answer": "1",
+          "meaning": "34−4＝30、58−4＝54。30と54の最大公約数は6で、その約数は 1、2、3、6。あまりの4より大きいのは 6 だけなので 1こです。",
+          "svg": ""
+         },
+         {
+          "question": "27 をわると 3 あまり、43 をわると 3 あまる数のうち、いちばん大きい数はいくつですか。",
+          "answer": "8",
+          "meaning": "24と40の最大公約数は8。8は3より大きいので8です。",
+          "svg": ""
+         },
+         {
+          "question": "50 をわると 2 あまり、74 をわると 2 あまる数のうち、いちばん大きい数はいくつですか。",
+          "answer": "24",
+          "meaning": "48と72の最大公約数は24です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "11": {
+      "title": "公倍数・ベン図の包除",
+      "items": [
+       {
+        "bone": "公倍数のところに 印をつける（植木算の＋1）",
+        "rei": {
+         "question": "1本の道に、はしからはしまで 4mおきに 赤いくいを、6mおきに 青いくいを立てます。道の長さが 60m のとき、赤と青が 同じ場所に立つのは 何か所ありますか。（両はしもふくむ）",
+         "svg": "<svg viewBox=\"0 0 326 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">0</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">12</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">24</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">36</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">48</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">60</text><text x=\"163\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4と6の公倍数の場所</text></svg>",
+         "kaisetsu": [
+          "赤は 0m、4m、8m…（4の倍数）。青は 0m、6m、12m…（6の倍数）。",
+          "同じ場所になるのは **4と6の公倍数**。いちばん小さいのは 12。",
+          "0m、12m、24m、36m、48m、60m。",
+          "60÷12＝5 だが、**0m（はし）もふくむ**ので 5＋1＝**6か所**。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "1本の道に、はしからはしまで 3mおきに赤、5mおきに青のくいを立てます。道の長さが 60m のとき、赤と青が同じ場所に立つのは何か所ですか。（両はしもふくむ）",
+          "answer": "5",
+          "meaning": "3と5の最小公倍数は15。0、15、30、45、60 の5か所です。",
+          "svg": ""
+         },
+         {
+          "question": "1本の道に 4mおきに赤、6mおきに青のくいを立てます。道の長さが 48m のとき、赤と青が同じ場所に立つのは何か所ですか。（両はしもふくむ）",
+          "answer": "5",
+          "meaning": "12の倍数の場所。0、12、24、36、48 の5か所です。",
+          "svg": ""
+         },
+         {
+          "question": "4と6の 最小公倍数はいくつですか。",
+          "answer": "12",
+          "meaning": "4の倍数 4、8、12…／6の倍数 6、12…。はじめて同じになるのは12です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "2つ引いて 1つ もどす（包除）",
+        "rei": {
+         "question": "1 から 300 までの整数のうち、4 でも 6 でも わり切れない整数は 何こありますか。",
+         "svg": "<svg viewBox=\"0 0 300 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"6\" y=\"10\" width=\"288\" height=\"120\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.5\"/><text x=\"14\" y=\"126\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">ぜんたい 300</text><circle cx=\"115\" cy=\"66\" r=\"52\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"185\" cy=\"66\" r=\"52\" fill=\"rgba(255,107,107,0.16)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"72\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">4の倍数 75こ</text><text x=\"212\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">6の倍数 50こ</text><text x=\"84\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">50</text><text x=\"150\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#8a5cff\">25</text><text x=\"216\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">25</text></svg>",
+         "kaisetsu": [
+          "「わり切れない」は数えにくいので **ぜんたいから わり切れるものを引きます**。",
+          "4の倍数は 300÷4＝75こ。6の倍数は 300÷6＝50こ。",
+          "そのまま たすと 75＋50＝125 だが、**12の倍数（4でも6でも）を2回数えている**。300÷12＝25こ。",
+          "4か6でわり切れるのは 75＋50−25＝100こ。",
+          "300−100＝**200こ**。"
+         ],
+         "answer": "200"
+        },
+        "ruidai": [
+         {
+          "question": "1 から 300 までの整数のうち、4 でも 6 でも わり切れる整数は 何こありますか。",
+          "answer": "25",
+          "meaning": "4と6の最小公倍数12の倍数。300÷12＝25こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 300 までの整数のうち、4 または 6 で わり切れる整数は 何こありますか。",
+          "answer": "100",
+          "meaning": "75＋50−25＝100こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 200 までの整数のうち、3 でも 5 でも わり切れない整数は 何こありますか。",
+          "answer": "107",
+          "meaning": "3の倍数66こ、5の倍数40こ、15の倍数13こ。66＋40−13＝93こ。200−93＝107こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "12": {
+      "title": "場合の数（ならべ方）",
+      "items": [
+       {
+        "bone": "となり合わないように 置く場所を先に決める",
+        "rei": {
+         "question": "6つのマスが1れつにならんでいます。この中の 3つ に ○ を、どの ○ も となり合わないように 書きます。書き方は全部で何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 326 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"163\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6マスに ○ を3つ・となり合わない</text></svg>",
+         "kaisetsu": [
+          "**○ を置く場所だけを先に決めます。**ならべ方ではなく「どこに置くか」。",
+          "となり合わないので、○ と ○ の間には 必ず 1マス以上あきます。",
+          "書き出してみます。1・3・5／1・3・6／1・4・6／2・4・6 の 4通り。",
+          "答えは 4通り。"
+         ],
+         "answer": "4"
+        },
+        "ruidai": [
+         {
+          "question": "5つのマスが1れつにならんでいます。この中の 2つ に ○ を、となり合わないように書きます。書き方は全部で何通りありますか。",
+          "answer": "6",
+          "meaning": "1・3／1・4／1・5／2・4／2・5／3・5 の6通りです。",
+          "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5マスに○を2つ</text></svg>"
+         },
+         {
+          "question": "6つのマスの中の 2つ に ○ を、となり合わないように書きます。書き方は全部で何通りありますか。",
+          "answer": "10",
+          "meaning": "書き出すと10通りです。",
+          "svg": ""
+         },
+         {
+          "question": "7つのマスの中の 3つ に ○ を、となり合わないように書きます。書き方は全部で何通りありますか。",
+          "answer": "10",
+          "meaning": "書き出すと10通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "4けた ＋ 3けた を いちばん小さくする",
+        "rei": {
+         "question": "1、2、3、4、5、6、7 の7まいのカードを全部使って、4けたの数と3けたの数を作り、たし算します。答えがいちばん小さくなるとき、その答えはいくつですか。",
+         "svg": "<svg viewBox=\"0 0 378 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><text x=\"189\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">全部使って 4けた＋3けた</text></svg>",
+         "kaisetsu": [
+          "**位の重みで考えます。**千の位は1000倍、百の位は100倍…と効きめがちがう。",
+          "小さくしたいので、**重みの大きい位に 小さい数字**を入れます。",
+          "千の位（4けたの方だけ）には いちばん小さい 1。",
+          "百の位は2つある（両方の数）ので 次に小さい 2 と 3。十の位に 4 と 5、一の位に 6 と 7。",
+          "1234＋567＝1801。または 1245＋367 など いろいろあるが、位ごとの合計は同じで **1801**。"
+         ],
+         "answer": "1801"
+        },
+        "ruidai": [
+         {
+          "question": "1、2、3、4、5 の5まいのカードを全部使って、3けたの数と2けたの数を作りたし算します。答えがいちばん小さくなるとき、その答えはいくつですか。",
+          "answer": "168",
+          "meaning": "百の位に1、十の位に2と3、一の位に4と5。123＋45＝168です。",
+          "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text></svg>"
+         },
+         {
+          "question": "1、2、3、4、5 の5まいのカードを全部使って、3けたの数と2けたの数を作りたし算します。答えがいちばん大きくなるとき、その答えはいくつですか。",
+          "answer": "564",
+          "meaning": "百の位に5、十の位に4と3、一の位に2と1。543＋21＝564です。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、3、4、5、6、7 の7まいを全部使って 4けた＋3けた を作ります。答えがいちばん大きくなるとき、その答えはいくつですか。",
+          "answer": "7975",
+          "meaning": "千の位に7、百の位に6と5、十の位に4と3、一の位に2と1。7654＋321＝7975です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "13": {
+      "title": "分け方・組み合わせ",
+      "items": [
+       {
+        "bone": "1人分の 下がぎりを 先に配ってしまう",
+        "rei": {
+         "question": "あめ 10こ を 3人 に分けます。どの人も 少なくとも 2こ もらえるようにするとき、分け方は何通りありますか。（だれがどれだけ もらうかを区別します）",
+         "svg": "<svg viewBox=\"0 0 378 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><text x=\"189\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">先に2こずつ配る</text></svg>",
+         "kaisetsu": [
+          "**「少なくとも2こ」は、先に2こずつ配ってしまう**のがコツ。",
+          "3人に2こずつ配ると 2×3＝6こ 使います。のこりは 10−6＝**4こ**。",
+          "のこりの4こを 3人に自由に分ければよい（0こでもよい）。",
+          "4このあめと 2本のしきりを ならべると考えて、6か所から しきり2本の場所をえらぶ。6×5÷2＝**15通り**。"
+         ],
+         "answer": "15"
+        },
+        "ruidai": [
+         {
+          "question": "あめ 8こ を 3人に分けます。どの人も 少なくとも 1こ もらえるようにするとき、分け方は何通りありますか。（だれがどれだけかを区別します）",
+          "answer": "21",
+          "meaning": "先に1こずつ配ると のこり5こ。5このあめと2本のしきりで 7か所から2本えらぶ。7×6÷2＝21通りです。",
+          "svg": ""
+         },
+         {
+          "question": "あめ 10こ を 3人に分けます。どの人も 少なくとも 2こ のとき、まず先に配るのは ぜんぶで何こですか。",
+          "answer": "6",
+          "meaning": "3人に2こずつなので 2×3＝6こです。",
+          "svg": ""
+         },
+         {
+          "question": "あめ 6こ を 2人に分けます。どの人も 少なくとも 1こ もらえるようにするとき、分け方は何通りありますか。（だれがどれだけかを区別します）",
+          "answer": "5",
+          "meaning": "先に1こずつ配って のこり4こを2人に分ける。(4,0)(3,1)(2,2)(1,3)(0,4)の5通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "区別する / 区別しない の ちがい",
+        "rei": {
+         "question": "みかん 5こ を 2人 に分けます。どちらの人も 少なくとも 1こ もらえるようにするとき、**だれがどれだけ もらうかを区別する** と 何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">だれがどれだけ もらうか</text></svg>",
+         "kaisetsu": [
+          "**「区別する」＝A と B を入れかえたら別のもの**として数えます。",
+          "1こずつ配ってのこり3こ。A と B の分け方は (A,B)＝(4,1)(3,2)(2,3)(1,4)。",
+          "書き出すと 4通り。",
+          "（もし「区別しない」なら (4,1)と(1,4)は同じなので 2通りになります）"
+         ],
+         "answer": "4"
+        },
+        "ruidai": [
+         {
+          "question": "みかん 5こ を 2人に分けます。どちらも少なくとも1こ もらうとき、**分ける数の組だけ**を考える（区別しない）と何通りですか。",
+          "answer": "2",
+          "meaning": "(4,1)と(3,2)の2通りです。(1,4)は(4,1)と同じとみます。",
+          "svg": ""
+         },
+         {
+          "question": "あめ 6こ を 2人に分けます。どちらも少なくとも1こ もらうとき、区別すると何通りですか。",
+          "answer": "5",
+          "meaning": "(5,1)(4,2)(3,3)(2,4)(1,5)の5通りです。",
+          "svg": ""
+         },
+         {
+          "question": "あめ 6こ を 2人に分けます。どちらも少なくとも1こ もらうとき、区別しないと何通りですか。",
+          "answer": "3",
+          "meaning": "(5,1)(4,2)(3,3)の3通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "お金の はらい方（まい数のかぎり）",
+        "rei": {
+         "question": "10円玉が 2まい、50円玉が 1まい、100円玉が 1まい あります。この中から 何まいか使って はらえる金がくは 何通りありますか。（0円は数えません）",
+         "svg": "<svg viewBox=\"0 0 266 78\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"37.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"37.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">10</text><circle cx=\"101.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"101.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">10</text><circle cx=\"165.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"165.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">50</text><circle cx=\"229.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"229.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">100</text><text x=\"133\" y=\"72\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">この4まいから えらぶ</text></svg>",
+         "kaisetsu": [
+          "**10円を何まい使うか**で分けて、ぜんぶ書き出すのが確実です。",
+          "10円0まい → 0、50、100、150（0円はのぞく）→ 50、100、150",
+          "10円1まい → 10、60、110、160",
+          "10円2まい → 20、70、120、170",
+          "同じ金がくが出ていないか たしかめて、3＋4＋4＝**11通り**。"
+         ],
+         "answer": "11"
+        },
+        "ruidai": [
+         {
+          "question": "10円玉が 2まい、50円玉が 1まい あります。はらえる金がくは 何通りありますか。（0円は数えません）",
+          "answer": "5",
+          "meaning": "50／10、60／20、70 の5通りです。",
+          "svg": "<svg viewBox=\"0 0 202 64\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"37.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"37.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">10</text><circle cx=\"101.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"101.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">10</text><circle cx=\"165.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"165.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">50</text></svg>"
+         },
+         {
+          "question": "10円玉、50円玉、100円玉 が 1まいずつ あります。はらえる金がくは 何通りありますか。（0円は数えません）",
+          "answer": "7",
+          "meaning": "使う・使わないが3まいで 2×2×2＝8通り。0円をのぞいて7通りです。",
+          "svg": "<svg viewBox=\"0 0 202 64\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"37.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"37.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">10</text><circle cx=\"101.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"101.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">50</text><circle cx=\"165.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"165.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">100</text></svg>"
+         },
+         {
+          "question": "100円玉が 3まい あります。はらえる金がくは 何通りありますか。（0円は数えません）",
+          "answer": "3",
+          "meaning": "100円、200円、300円 の3通りです。",
+          "svg": "<svg viewBox=\"0 0 202 64\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"37.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"37.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">100</text><circle cx=\"101.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"101.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">100</text><circle cx=\"165.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"165.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">100</text></svg>"
+         }
+        ]
+       }
+      ]
+     },
+     "14": {
+      "title": "不定方程式・表の読み取り",
+      "items": [
+       {
+        "bone": "一の位に目をつけて しぼる",
+        "rei": {
+         "question": "1こ 30円 のあめ と 1こ 80円 のガム を あわせて 買ったら ちょうど 500円 でした。ぜんぶで 10こ買ったとき、ガムは何こ 買いましたか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">30円</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">80円</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">500円</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">あわせて500円ちょうど</text></svg>",
+         "kaisetsu": [
+          "**一の位** に目をつけます。30円も80円も 一の位は 0 なので、まず 10でわって考えます。",
+          "3×（あめの数）＋8×（ガムの数）＝50。",
+          "ガムの数をためします。ガム1こなら 3×あめ＝42 で あめ14こ（合計15こ・×）。ガム4こなら 3×あめ＝18 で あめ6こ（合計10こ・○）。",
+          "ぜんぶで10こ という条件に合うのは **ガム4こ・あめ6こ**。",
+          "答えは 4こ。（30×6＋80×4＝180＋320＝500 ○）"
+         ],
+         "answer": "4"
+        },
+        "ruidai": [
+         {
+          "question": "1こ 30円のあめ と 1こ 80円のガム をあわせて買って ちょうど 500円 でした。あめとガムの買い方は 全部で何通りありますか。（どちらも1こ以上）",
+          "answer": "2",
+          "meaning": "3×あめ＋8×ガム＝50 をためすと (あめ14, ガム1) と (あめ6, ガム4) の2通りです。",
+          "svg": ""
+         },
+         {
+          "question": "1こ 40円 と 1こ 90円 のものを どちらも1こ以上 買って ちょうど 400円 でした。90円のものは何こ買いましたか。",
+          "answer": "4",
+          "meaning": "4×A＋9×B＝40（10でわった）。B＝4のとき 4A＝4 で A＝1。どちらも1こ以上なので これだけ。90円のものは4こです。",
+          "svg": ""
+         },
+         {
+          "question": "1こ 30円 と 1こ 80円 のものを どちらも1こ以上 買って ちょうど 500円 でした。ぜんぶで いちばん多く買えるのは 何こですか。",
+          "answer": "15",
+          "meaning": "(30円14こ, 80円1こ) なら15こ。(30円6こ, 80円4こ) なら10こ。多いのは15こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "表を たてと よこ から 読む",
+        "rei": {
+         "question": "3人がテストを受けました。A と B の合計は 150点、B と C の合計は 160点、A と C の合計は 170点です。3人の合計は何点ですか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"83.8\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"57.9\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A+B</text><rect x=\"99.8\" y=\"24\" width=\"89.3\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"144.4\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B+C</text><rect x=\"189.1\" y=\"24\" width=\"94.9\" height=\"30\" fill=\"#22c55e\" fill-opacity=\"0.22\" stroke=\"#22c55e\" stroke-width=\"1.8\"/><text x=\"236.5\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A+C</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3つの式を全部たすと…</text></svg>",
+         "kaisetsu": [
+          "**3つの式を ぜんぶ たします。**ここが発見。",
+          "(A＋B)＋(B＋C)＋(A＋C)＝150＋160＋170＝480。",
+          "左がわを見ると A も B も C も **2回ずつ** 出ています。つまり 3人の合計の 2倍。",
+          "480÷2＝**240点**。"
+         ],
+         "answer": "240"
+        },
+        "ruidai": [
+         {
+          "question": "A と B の合計は 150点、B と C の合計は 160点、A と C の合計は 170点です。B は何点ですか。",
+          "answer": "70",
+          "meaning": "3人の合計は240点。B は「A と C の合計」を引いて 240−170＝70点です。",
+          "svg": ""
+         },
+         {
+          "question": "A と B の合計は 150点、B と C の合計は 160点、A と C の合計は 170点です。A は何点ですか。",
+          "answer": "80",
+          "meaning": "240−（BとCの合計160）＝80点です。",
+          "svg": ""
+         },
+         {
+          "question": "3つの数があります。2つずつの和が 20、24、28 のとき、3つの数の合計はいくつですか。",
+          "answer": "36",
+          "meaning": "全部たすと72で これは合計の2倍。72÷2＝36です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "切り捨てから もとの数の範囲を出す",
+        "rei": {
+         "question": "ある品物の ねだんを 10円未満切り捨てで 表示したら 240円 になりました。もとのねだんとして考えられる いちばん高いねだんはいくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">240</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">249</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">切り捨てて240になる範囲</text></svg>",
+         "kaisetsu": [
+          "**切り捨ては 下を捨てるだけ**。四捨五入とちがって 上がることはありません。",
+          "240円と表示されるのは、もとが 240円以上 250円未満 のとき。",
+          "いちばん安いのは 240円、いちばん高いのは **249円**。",
+          "答えは 249円。"
+         ],
+         "answer": "249"
+        },
+        "ruidai": [
+         {
+          "question": "10円未満切り捨てで 240円 と表示されました。もとのねだんとして考えられる いちばん安いねだんはいくつですか。",
+          "answer": "240",
+          "meaning": "切り捨てなので 240円そのものが いちばん安いです。",
+          "svg": ""
+         },
+         {
+          "question": "100円未満切り捨てで 3000円 と表示されました。もとのねだんとして考えられる いちばん高いねだんはいくつですか。",
+          "answer": "3099",
+          "meaning": "3000円以上3100円未満なので 3099円です。",
+          "svg": ""
+         },
+         {
+          "question": "10円未満切り捨てで 240円 と表示されるねだんは 全部で何通りありますか。",
+          "answer": "10",
+          "meaning": "240円から249円までの10通りです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "15": {
+      "title": "消去算・つるかめ算",
+      "items": [
+       {
+        "bone": "2つの式を たす・ひく",
+        "rei": {
+         "question": "A＋B＝80、A−B＝20 のとき、A はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"167.5\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"99.8\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><rect x=\"183.5\" y=\"24\" width=\"100.5\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"233.8\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">和が80・差が20</text></svg>",
+         "kaisetsu": [
+          "**2つの式を たすと B が消えます。**ここが消去算の入口。",
+          "(A＋B)＋(A−B)＝80＋20＝100。左がわは A が2つ。",
+          "A×2＝100 なので A＝50。",
+          "（ひくと A が消えて B×2＝60、B＝30 も出ます）"
+         ],
+         "answer": "50"
+        },
+        "ruidai": [
+         {
+          "question": "A＋B＝80、A−B＝20 のとき、B はいくつですか。",
+          "answer": "30",
+          "meaning": "2つの式をひくと B×2＝60。B＝30です。",
+          "svg": ""
+         },
+         {
+          "question": "A＋B＝100、A−B＝40 のとき、A はいくつですか。",
+          "answer": "70",
+          "meaning": "たすと A×2＝140。A＝70です。",
+          "svg": ""
+         },
+         {
+          "question": "A＋B＝54、A−B＝18 のとき、B はいくつですか。",
+          "answer": "18",
+          "meaning": "ひくと B×2＝36。B＝18です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "同じものを 順に消していく",
+        "rei": {
+         "question": "えん筆 2本 と ノート 3さつ で 390円、えん筆 2本 と ノート 5さつ で 550円 です。ノート 1さつ はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"107.2\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"69.6\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">えん筆2本</text><rect x=\"123.2\" y=\"24\" width=\"160.8\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"203.6\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">ノート3さつ</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">えん筆の数が同じ！</text></svg>",
+         "kaisetsu": [
+          "**2つの式で 同じ数のものをさがします。**えん筆はどちらも 2本。",
+          "ちがうのは ノートの数だけ。5−3＝**2さつぶん**。",
+          "ねだんの差は 550−390＝160円。これが ノート2さつぶん。",
+          "160÷2＝**80円**。"
+         ],
+         "answer": "80"
+        },
+        "ruidai": [
+         {
+          "question": "えん筆 2本 と ノート 3さつ で 390円、えん筆 2本 と ノート 5さつ で 550円 です。えん筆 1本 はいくつですか。",
+          "answer": "75",
+          "meaning": "ノート1さつ80円。えん筆2本は 390−80×3＝150円。1本は75円です。",
+          "svg": ""
+         },
+         {
+          "question": "りんご 3こ と みかん 2こ で 400円、りんご 3こ と みかん 5こ で 610円 です。みかん 1こ はいくつですか。",
+          "answer": "70",
+          "meaning": "りんごの数が同じ。みかん3こぶんが210円なので 1こ70円です。",
+          "svg": ""
+         },
+         {
+          "question": "パン 4こ と 牛にゅう 1本 で 470円、パン 4こ と 牛にゅう 3本 で 690円 です。牛にゅう 1本 はいくつですか。",
+          "answer": "110",
+          "meaning": "パンの数が同じ。牛にゅう2本ぶんが220円なので 1本110円です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "正かいで もらい、まちがえると ひかれる",
+        "rei": {
+         "question": "テストは 1問 正かいで 5点 もらえ、まちがえると 2点 ひかれます。10問 答えて 得点が 29点でした。正かいは何問ですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">正かい</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">+5</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">まちがい</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">−2</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10問で29点</text></svg>",
+         "kaisetsu": [
+          "**ぜんぶ正かいだったら** を先に出します。5×10＝50点。",
+          "じっさいは29点なので 50−29＝**21点 少ない**。",
+          "1問まちがえると、もらえる5点が消えて さらに2点ひかれるので **5＋2＝7点** へります。",
+          "21÷7＝3問 まちがえた。正かいは 10−3＝**7問**。"
+         ],
+         "answer": "7"
+        },
+        "ruidai": [
+         {
+          "question": "1問 正かいで 5点、まちがえると 2点ひかれます。10問 答えて 得点が 22点でした。正かいは何問ですか。",
+          "answer": "6",
+          "meaning": "ぜんぶ正かいなら50点。50−22＝28点少ない。1問まちがえると7点へるので 28÷7＝4問まちがえた。正かいは 10−4＝6問です。",
+          "svg": ""
+         },
+         {
+          "question": "1問 正かいで 4点、まちがえると 1点ひかれます。12問 答えて 得点が 33点でした。正かいは何問ですか。",
+          "answer": "9",
+          "meaning": "48−33＝15。1問まちがえると 4＋1＝5点へる。15÷5＝3問まちがえた。正かいは 12−3＝9問です。",
+          "svg": ""
+         },
+         {
+          "question": "1問 正かいで 5点、まちがえると 2点ひかれます。10問 全部正かいだと 何点ですか。",
+          "answer": "50",
+          "meaning": "5×10＝50点です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
      }
     }
    }
