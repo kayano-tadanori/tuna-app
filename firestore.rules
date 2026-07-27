@@ -68,18 +68,21 @@ service cloud.firestore {
            ])
         && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
         && (!('gacha' in request.resource.data)     || strOk(request.resource.data.gacha, 60000))
-        && (!('items' in request.resource.data)     || strOk(request.resource.data.items, 4000))
-        && (!('loginBonus' in request.resource.data)|| strOk(request.resource.data.loginBonus, 2000))
-        && (!('coins' in request.resource.data)     || strOk(request.resource.data.coins, 20))
-        && (!('playTime' in request.resource.data)  || strOk(request.resource.data.playTime, 20))
-        && (!('titleRank' in request.resource.data) || strOk(request.resource.data.titleRank, 20))
-        && (!('tetrisBest' in request.resource.data)|| strOk(request.resource.data.tetrisBest, 20))
-        && (!('jumpBest' in request.resource.data)  || strOk(request.resource.data.jumpBest, 20))
-        && (!('mineBest_easy' in request.resource.data)   || strOk(request.resource.data.mineBest_easy, 20))
-        && (!('mineBest_normal' in request.resource.data) || strOk(request.resource.data.mineBest_normal, 20))
-        && (!('mineBest_hard' in request.resource.data)   || strOk(request.resource.data.mineBest_hard, 20))
-        && (!('mapquizBest' in request.resource.data)     || strOk(request.resource.data.mapquizBest, 20))
-        && (!('timelineBest' in request.resource.data)    || strOk(request.resource.data.timelineBest, 20))
+        && (!('items' in request.resource.data)     || strOk(request.resource.data.items, 20000))
+        && (!('loginBonus' in request.resource.data)|| strOk(request.resource.data.loginBonus, 20000))
+        && (!('coins' in request.resource.data)     || strOk(request.resource.data.coins, 200))
+        // playTime は {"total":n,"byDate":{"2026-07-27":123,...}} で毎日1件ずつ増える。
+        // 20文字だと最初から超える（実測393文字で permission-denied。2026-07-27に確定）。
+        // 6年間毎日でも約2200日×20文字＝44,000字なので、余裕をみて 80,000。
+        && (!('playTime' in request.resource.data)  || strOk(request.resource.data.playTime, 80000))
+        && (!('titleRank' in request.resource.data) || strOk(request.resource.data.titleRank, 200))
+        && (!('tetrisBest' in request.resource.data)|| strOk(request.resource.data.tetrisBest, 200))
+        && (!('jumpBest' in request.resource.data)  || strOk(request.resource.data.jumpBest, 200))
+        && (!('mineBest_easy' in request.resource.data)   || strOk(request.resource.data.mineBest_easy, 200))
+        && (!('mineBest_normal' in request.resource.data) || strOk(request.resource.data.mineBest_normal, 200))
+        && (!('mineBest_hard' in request.resource.data)   || strOk(request.resource.data.mineBest_hard, 200))
+        && (!('mapquizBest' in request.resource.data)     || strOk(request.resource.data.mapquizBest, 200))
+        && (!('timelineBest' in request.resource.data)    || strOk(request.resource.data.timelineBest, 200))
         && serverTime();
       allow delete: if isAdmin();
     }

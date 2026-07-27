@@ -201,21 +201,10 @@ async function saveLocalBackup(nickname, payload) {
     window.lastBackupInfo = { ok: false, at: new Date().toISOString(), keys, sizes,
                               code: e.code || '', message: e.message || '' };
     console.warn('バックアップ保存失敗:', e.code, e.message, sizes);
-    // ★progress が大きすぎて弾かれている可能性があるので、progress 抜きでもう一度だけ試す。
-    //   こうしておけば「コインだけ保存されて progress が消える」ことは起きるが、
-    //   少なくとも失敗した事実が lastBackupInfo に残り、原因を切り分けられる。
-    if (payload.progress !== undefined) {
-      const { progress, ...rest } = payload;
-      try {
-        await db.collection('users').doc(nickname).collection('backup').doc('data').set({
-          ...rest,
-          lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-        window.lastBackupInfo.retriedWithoutProgress = true;
-      } catch (e2) {
-        window.lastBackupInfo.retryMessage = e2.message || '';
-      }
-    }
+    // ★progress を外して再試行してはいけない。
+    //   .set() は上書きなので、progress 抜きで書くと クラウドの progress が消える。
+    //   実際これが「管理ツールで達成率の中身だけ見えない」状態を作っていた（2026-07-27）。
+    //   失敗したら 何もせず、次の機会にまるごと書き直す。
   }
 }
 

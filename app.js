@@ -1257,8 +1257,7 @@ function bindDebugHandlers() {
       el.textContent = i.ok
         ? '✅ 成功（' + i.at.slice(0, 19) + '）' + NL + '送った中身の大きさ → ' + sz
         : '❌ 失敗 [' + i.code + '] ' + i.message + NL + '送ろうとした中身 → ' + sz +
-          (i.retriedWithoutProgress ? NL + '※progressを外したら成功しました＝progressが原因です' : '') +
-          (i.retryMessage ? NL + '※progressを外しても失敗：' + i.retryMessage : '');
+          NL + '※失敗すると、この回のぶんはクラウドに保存されません（前の内容は消えません）';
       el.style.whiteSpace = 'pre-wrap';
     };
   }
