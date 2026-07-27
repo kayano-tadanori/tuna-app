@@ -1870,6 +1870,16 @@ async function hamaKaisetsuUnits(grade, course) {
   const c = g && g[course];
   return (c && c.units) ? Object.keys(c.units) : [];
 }
+
+// ★回番号で引く（旧カリキュラム用）。
+// 最レは2026年度に刷新されたが、旧カリキュラムの回番号ぶんも原簿から作ってある。
+// 単元名で選ぶ＝新カリキュラム／回番号で選ぶ＝旧カリキュラム、と使い分ける（本人指示 2026-07-27）。
+async function hamaKaisetsuForNo(grade, course, no) {
+  const d = await loadHamaKaisetsu();
+  const g = d.grades && d.grades[String(grade)];
+  const c = g && g[course];
+  return (c && c.lessons && c.lessons[String(no)]) || null;
+}
 // 例題＋類題を1本の出題リストに開く。例題には rei:true を立てて入力させない
 function expandKaisetsu(pack, grade) {
   const out = [];
@@ -2208,9 +2218,16 @@ async function renderHamaPanel() {
   const senshuBtn = document.querySelector('.hama-act-btn[data-hama-act="senshu"]');
   const kxBtn = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
   if (senshuBtn) senshuBtn.classList.toggle('hidden', isSairei);
-  if (kxBtn) kxBtn.classList.add('hidden');
+  // 回番号モードのかんたん解説＝旧カリキュラム（原簿から作ったもの）
+  if (kxBtn) {
+    const pack = isSairei ? await hamaKaisetsuForNo(grade, course, no) : null;
+    const n2 = pack ? expandKaisetsu(pack, grade).length : 0;
+    kxBtn.classList.toggle('hidden', !n2);
+    kxBtn.disabled = !n2;
+    if (n2) document.getElementById('hama-cnt-kaisetsu').textContent = `No.${no} ${pack.title}・${n2}問`;
+  }
   if (isSairei && kxUnits.length) {
-    hint.textContent = '最レは年度で回の中身が入れかわります。「単元でえらぶ」にすると 💡かんたん解説 が使えます。';
+    hint.textContent = '回番号＝去年までのカリキュラム／単元でえらぶ＝今年のカリキュラム。どちらでも 💡かんたん解説 が使えます。';
   }
 
   const ranges = { week: [no, no] };
@@ -2297,9 +2314,12 @@ async function startHamaSession(kind) {
   if (kind === 'kaisetsu') {
     showLoading();
     try {
-      const pack = await hamaKaisetsuFor(grade, course, sansuState.hamaUnit);
+      const byUnit = (sansuState.hamaMode === 'unit' && sansuState.hamaUnit);
+      const pack = byUnit
+        ? await hamaKaisetsuFor(grade, course, sansuState.hamaUnit)
+        : await hamaKaisetsuForNo(grade, course, hamaCurrent(grade, course));
       const qs = pack ? expandKaisetsu(pack, grade) : [];
-      if (!qs.length) { showToast('この単元のかんたん解説はまだ用意していません'); hideLoading(); return; }
+      if (!qs.length) { showToast('ここのかんたん解説はまだ用意していません'); hideLoading(); return; }
       sansuState.subject = 'sansu';
       sansuState.cat = 'kaisetsu';
       sansuState.diff = 'kaisetsu';
@@ -6094,7 +6114,7 @@ const QUESTION_COUNTS = {
   sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 982, tokusan: 562, baai: 562, kazu: 662,
             wariai: 340, hayasa: 172, rittai: 419 },                                         // 6,969（2026-07-26）
   rika:   { shokubutsu: 987, doubutsu: 866, jintai: 250, sora: 774, tenki: 490, mono: 831, kitai: 273,
-            daichi: 490, suiyoueki: 507, denki: 482, chikara: 547, hikari_oto: 304 },        // 6,801（2026-07-27 けんび鏡40問＋太陽の動きとかげ40問）
+            daichi: 490, suiyoueki: 507, denki: 482, chikara: 587, hikari_oto: 304 },        // 6,841（2026-07-27 けんび鏡・太陽・上皿てんびん 各40問）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
