@@ -1839,6 +1839,57 @@ const HAMA_WINDOW = 12;      // 公開テストの範囲＝直近3ヶ月ぶん�
 // 代わりに「かんたん解説」を置く（本人指示 2026-07-27）。
 // 中身は 例題（解き方を見せる／入力させない）→ 類題（かんたんな問題を解かせる）の順。
 // 次男は抽象概念がまだ弱いので「具体を手で持たせてから名前を付ける」順に並べてある。
+// ── 大問モード（じゅくナビ専用データ）────────────────────────
+// 「今週の復習テスト（大問）」＝その回の復習テストの良問を、原簿(HG-xxxx)の実物どおりに置く。
+// 「公開テストのはんい（大問）」＝同じ時期の公開に実際に出た大問を、原簿どおりに置く。
+// ★数値替えの類題ではなく、なるべく原簿そのまま（本人指示 2026-07-28）。出典は src:"HG-xxxx"。
+// 形は連鎖(chain)と同じ {id,title,intro,svg,steps:[{question,answer,...}]} なので expandChain がそのまま使える。
+//   grades[学年][コース].fukushu[回番号] = [大問, …]
+//   grades[学年][コース].kokai[月]       = [大問, …]   ※月は "3"〜"12","1","2"
+const HAMA_DAIMON_FILE = 'data/hama_daimon.json';
+let hamaDaimonCache = null;
+async function loadHamaDaimon() {
+  if (hamaDaimonCache) return hamaDaimonCache;
+  try { hamaDaimonCache = await (await fetch(HAMA_DAIMON_FILE)).json(); }
+  catch (e) { hamaDaimonCache = { grades: {} }; }
+  return hamaDaimonCache;
+}
+function hamaDaimonNode(d, grade, course) {
+  const g = d.grades && d.grades[String(grade)];
+  return (g && g[course]) || null;
+}
+// 講義No.→だいたい何月か。浜学園は3月開講で、マスターは年42回＝ならすと月3.5回。
+// ★正確さより「だいたい合っていればよい」（本人指示 2026-07-28）。
+// hama_map の回に month が書いてあればそれを優先する（あとで正確にしたくなったとき用）。
+const HAMA_LESSONS_PER_MONTH = 3.5;
+function hamaMonthOf(grade, course, no) {
+  const courses = hamaCourses(grade);
+  const lesson = courses && courses[course] &&
+    courses[course].lessons.find(l => l.no === no);
+  if (lesson && lesson.month) return Number(lesson.month);
+  const off = Math.floor((Math.max(1, no) - 1) / HAMA_LESSONS_PER_MONTH);
+  return ((3 - 1 + off) % 12) + 1;
+}
+// その回の復習テストの大問
+async function hamaDaimonWeek(grade, course, no) {
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
+  return (node && node.fukushu && node.fukushu[String(no)]) || [];
+}
+// 公開の範囲は直近3ヶ月ぶん。月がひと月ずつずれて重なる（ラップする）ので、
+// 月に1本ずつ置いておけば、いつ開いても3本＝9問そろう＝たくさん作らなくてよい（本人指摘 2026-07-28）
+async function hamaDaimonKokai(grade, course, no) {
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
+  if (!node || !node.kokai) return [];
+  const m = hamaMonthOf(grade, course, no);
+  const out = [];
+  for (let k = 2; k >= 0; k--) {
+    const mm = ((m - 1 - k) % 12 + 12) % 12 + 1;
+    (node.kokai[String(mm)] || []).forEach(d => out.push(d));
+  }
+  return out;
+}
+function daimonSteps(sets) { return sets.reduce((n, d) => n + (d.steps || []).length, 0); }
+
 const HAMA_KAISETSU_FILE = 'data/hama_kaisetsu.json';
 let hamaKaisetsuCache = null;
 async function loadHamaKaisetsu() {
@@ -2114,7 +2165,9 @@ async function renderHamaPanel() {
     title.textContent = 'この学年の対応表はまだありません';
     hint.textContent = '小3のマスター／最レに対応しています。';
     acts.forEach(b => { b.disabled = true; });
-    ['week', 'kokai', 'senshu'].forEach(k => { document.getElementById('hama-cnt-' + k).textContent = '—'; });
+    ['week', 'weekq', 'kokai', 'kokaiq'].forEach(k => {
+      const el = document.getElementById('hama-cnt-' + k); if (el) el.textContent = '—';
+    });
     return;
   }
   const keys = Object.keys(courses);
@@ -2176,7 +2229,8 @@ async function renderHamaPanel() {
       document.getElementById('hama-cnt-kaisetsu').textContent =
         kxN ? `${kxPack.title}・${kxN}問` : 'この単元はまだ用意していません';
     }
-    ['kokai', 'senshu'].forEach(k => {
+    // 大問は回番号にひもづくので、単元でえらぶモードでは出さない
+    ['kokai', 'weekq', 'kokaiq'].forEach(k => {
       const el = document.getElementById('hama-cnt-' + k);
       if (el) el.textContent = '—';
       const b = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
@@ -2212,12 +2266,29 @@ async function renderHamaPanel() {
   const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
   if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
 
-  // 最レでは「先どり」を出さない（浜学園は復習主義／本人指示 2026-07-27）。
+  // 「先どり」は廃止した（浜学園は復習主義／本人指示 2026-07-28）。その場所が大問モード。
   // かんたん解説は「単元でえらぶ」モードのほうに出す（回番号は旧カリキュラムなので使わない）
   const isSairei = (course === 'sairei');
-  const senshuBtn = document.querySelector('.hama-act-btn[data-hama-act="senshu"]');
   const kxBtn = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
-  if (senshuBtn) senshuBtn.classList.toggle('hidden', isSairei);
+
+  // ★大問モード（原簿どおりの3問1組）。まだ問題が無いところは暗転して残す（本人指示 2026-07-28）
+  const weekSets = await hamaDaimonWeek(grade, course, no);
+  const kokaiSets = showKokai ? await hamaDaimonKokai(grade, course, no) : [];
+  const mNow = hamaMonthOf(grade, course, no);
+  const mFrom = ((mNow - 1 - 2) % 12 + 12) % 12 + 1;
+  const dq = [
+    { k: 'weekq', show: true, sets: weekSets, span: `No.${no}` },
+    { k: 'kokaiq', show: showKokai, sets: kokaiSets, span: `${mFrom}〜${mNow}月` },
+  ];
+  for (const d of dq) {
+    const btn = document.querySelector(`.hama-act-btn[data-hama-act="${d.k}"]`);
+    const el = document.getElementById('hama-cnt-' + d.k);
+    if (!btn || !el) continue;
+    btn.classList.toggle('hidden', !d.show);
+    const n = daimonSteps(d.sets);
+    btn.disabled = !n;
+    el.textContent = n ? `${d.span}・大問${d.sets.length}（${n}問）` : `${d.span}・じゅんび中`;
+  }
   // 回番号モードのかんたん解説＝旧カリキュラム（原簿から作ったもの）
   if (kxBtn) {
     const pack = isSairei ? await hamaKaisetsuForNo(grade, course, no) : null;
@@ -2231,7 +2302,6 @@ async function renderHamaPanel() {
   }
 
   const ranges = { week: [no, no] };
-  if (!isSairei) ranges.senshu = [no + 1, Math.min(maxNo, no + HAMA_WINDOW)];
   if (showKokai) ranges.kokai = [Math.max(minNo, no - HAMA_WINDOW), no];
   for (const k of Object.keys(ranges)) {
     const [a, b] = ranges[k];
@@ -2241,7 +2311,7 @@ async function renderHamaPanel() {
     const btn = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
     const span = (k === 'week') ? `No.${no}` : `No.${a}〜${b}`;
     if (noRange) {
-      el.textContent = (k === 'senshu') ? 'まだ習っていません' : 'はんい外';
+      el.textContent = 'はんい外';
     } else {
       el.textContent = qs.length ? `${span}・${qs.length}問` : `${span}・まだ問題なし`;
     }
@@ -2324,6 +2394,33 @@ async function startHamaSession(kind) {
       sansuState.cat = 'kaisetsu';
       sansuState.diff = 'kaisetsu';
       sansuState.questions = qs;      // ★順番どおりに出す
+      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+      coinSessionEarned = 0;
+      hideLoading();
+      startSansuQuiz();
+    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+    return;
+  }
+
+  // 大問モード：原簿どおりの3問1組をそのまま出す。
+  // シャッフルしない（①②③は順番に意味がある）。1本ぶんは途中で切らない＝fillChains にまかせる。
+  if (kind === 'weekq' || kind === 'kokaiq') {
+    showLoading();
+    try {
+      const dno = hamaCurrent(grade, course);
+      let sets = kind === 'weekq'
+        ? await hamaDaimonWeek(grade, course, dno)
+        : await hamaDaimonKokai(grade, course, dno);
+      if (!sets.length) { showToast('ここの大問はまだ用意していません'); hideLoading(); return; }
+      // ★良問から先に出す（本人指示 2026-07-28）。原簿の★が高い順。同じ★の中だけまぜる。
+      // 公開は1ヶ月に3本置くので、直近3ヶ月＝9本たまる。そこから良い順に出題数ぶんだけ出す。
+      sets = shuffle(sets.slice()).sort((a, b) => (b.star || 0) - (a.star || 0));
+      const want = Number(document.getElementById('sansu-q-count').value) || 10;
+      const qs = fillChains(sets, grade, want === 0 ? 'all' : want);
+      if (!qs.length) { showToast('ここの大問はまだ用意していません'); hideLoading(); return; }
+      sansuState.subject = hamaSubj;
+      sansuState.cat = 'hama';
+      sansuState.questions = qs;
       sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
       coinSessionEarned = 0;
       hideLoading();

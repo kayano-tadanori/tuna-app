@@ -983,6 +983,9 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ── かんたん解説モード（じゅくナビ・最レ）───────────────── */
 .hama-act-btn.hama-act-kx { border-color: rgba(34,211,238,0.55); background: linear-gradient(135deg, rgba(34,211,238,0.14), rgba(45,212,191,0.10)); }
+/* 大問モード＝原簿どおりの3問1組。通常の範囲学習と見た目を分ける（オレンジ） */
+.hama-act-btn.hama-act-dq { border-color: rgba(251,146,60,0.55); background: linear-gradient(135deg, rgba(251,146,60,0.14), rgba(245,158,11,0.10)); }
+.hama-act-btn.hama-act-dq[disabled] { opacity: 0.38; }
 /* 例題の「やり方」＝1手ずつ改行して見せる。抽象が苦手な子に一気に読ませない */
 .rei-step { display: block; margin: 0 0 8px; padding-left: 26px; position: relative; line-height: 1.65; text-align: left; }
 .rei-step b { position: absolute; left: 0; top: 1px; width: 19px; height: 19px; border-radius: 50%; background: #22d3ee; color: #052027; font-size: 12px; line-height: 19px; text-align: center; font-weight: 800; }
