@@ -852,7 +852,211 @@
         }
       },
       "sairei": {
-        "fukushu": {}
+        "fukushu": {
+          "12": [
+            {
+              "id": "hd_3s_f12_2",
+              "src": "HG-0376",
+              "title": "0・4・5・6 のカード",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 2,
+              "intro": "0、4、5、6 と書かれた4まいのカードがあります。\nこの中から3まいをえらんで ならべ、3けたの整数を作ります（同じカードは1回までしか使えません）。",
+              "svg": "<svg viewBox='0 0 210 76' xmlns='http://www.w3.org/2000/svg'><rect x='16.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='35.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>0</text><rect x='62.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='81.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>4</text><rect x='108.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='127.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>5</text><rect x='154.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='173.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>6</text></svg>",
+              "steps": [
+                {
+                  "question": "大きいほうから3番目の数はいくつですか。",
+                  "answer": "645",
+                  "meaning": "大きいじゅんに 654、650、645。百の位に0は使えないことに注意。"
+                },
+                {
+                  "question": "小さいほうから3番目の数はいくつですか。",
+                  "answer": "450",
+                  "meaning": "小さいじゅんに 405、406、450。"
+                },
+                {
+                  "question": "6のカードは、さかさまにして9としても使えます。このとき、小さいほうから10番目の数はいくつですか。",
+                  "answer": "495",
+                  "meaning": "6を9にできるので 作れる数がふえる（18通り→32通り）。ただし1まいのカードは 6か9の どちらか一方でしか使えない。"
+                },
+                {
+                  "question": "6のカードを9としても使えるとき、524にいちばん近い数はいくつですか。",
+                  "answer": "509",
+                  "meaning": "524より小さい側にも さがすこと。509（ちがい15）が 540（ちがい16）より近い。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f12_3",
+              "src": "HG-0377",
+              "title": "おもてと うらのカード",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 3,
+              "intro": "0、1、2、3、5 と書かれた5まいのカードがあります。すべて おもてを向いています。\nカードのうらには、おもての数より3大きい数が書かれています。\nこの中から3まいをえらび、おもてか うらの どちらかの面を使って ならべ、3けたの整数を作ります。",
+              "svg": "<svg viewBox='0 0 256 94' xmlns='http://www.w3.org/2000/svg'><rect x='16.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='35.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>0</text><rect x='62.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='81.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>1</text><rect x='108.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='127.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>2</text><rect x='154.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='173.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>3</text><rect x='200.0' y='20.0' width='38.0' height='46.0' rx='4' fill='#f8fafc' stroke='#4f9eff' stroke-width='1.4'/><text x='219.0' y='52.0' fill='#0f172a' font-size='22' text-anchor='middle' font-weight='bold'>5</text><text x='16.0' y='84.0' fill='#06d6a0' font-size='9' text-anchor='start'>うらは おもてより3大きい数（3, 4, 5, 6, 8）</text></svg>",
+              "steps": [
+                {
+                  "question": "できる数の中で いちばん大きい数はいくつですか。",
+                  "answer": "865",
+                  "meaning": "うらの 8、6、5 を使って 865。"
+                },
+                {
+                  "question": "できる数の中で いちばん小さい数はいくつですか。",
+                  "answer": "102",
+                  "meaning": "百の位に0は使えないので 1、0、2 で 102。"
+                },
+                {
+                  "question": "百の位に5、十の位に8を使うとき、できる3けたの整数は何通りありますか。",
+                  "answer": "5",
+                  "meaning": "8が作れるのは カード5のうら だけ。だから5は カード2のうら になる。一の位は のこりの 0・1・3 のカードから 0/3、1/4、3/6 の6とおりだが、583が2回できるので 5通り。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f12_6",
+              "src": "HG-0378",
+              "title": "式に数字を入れる",
+              "category": "kazu",
+              "unit": "最大最小・最適化",
+              "grade": 3,
+              "star": 2,
+              "intro": "0から9までの数字を、1つの式の中で 1度ずつ使います。\n（①で使った数字を ②で使ってもかまいません）",
+              "svg": "<svg viewBox='0 0 230 86' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='16.0' fill='#ffd166' font-size='13' text-anchor='start'>①　□□□□ ＋ □□□</text><text x='8.0' y='40.0' fill='#ffd166' font-size='13' text-anchor='start'>②　□□□□ × □</text><text x='8.0' y='62.0' fill='#06d6a0' font-size='9' text-anchor='start'>0〜9 の数字を 1つの式で1度ずつ使う</text><text x='8.0' y='76.0' fill='#06d6a0' font-size='9' text-anchor='start'>（①で使った数字を ②で使ってもよい）</text></svg>",
+              "steps": [
+                {
+                  "question": "① □□□□ ＋ □□□ の答えのうち、いちばん小さい数はいくつですか。",
+                  "answer": "1281",
+                  "meaning": "4けたの千の位に1、3けたの百の位に2を置く。あとは下の位に小さい数字から。1035+246＝1281。"
+                },
+                {
+                  "question": "② □□□□ × □ の答えのうち、いちばん大きい数はいくつですか。",
+                  "answer": "78885",
+                  "meaning": "1けた側を9にするのが先。8765×9＝78885。9765×8＝78120 より大きい。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f12_9",
+              "src": "HG-0379",
+              "title": "1が3回・となり合わない6けた",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 3,
+              "intro": "0、1、3、5 の4しゅるいの数字を使って 6けたの整数を作ります。\n1はちょうど3回使い、0・3・5は 使わなくても 何回使ってもかまいません。\nただし、同じ数字が となり合ってはいけません。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "このような6けたの整数は 何通りありますか。",
+                  "answer": "81",
+                  "meaning": "先に「1を置く場所」を決める。となり合わないので 1，3，5番目／1，3，6番目／1，4，6番目／2，4，6番目 の4通りだけ。あとは のこりに 0・3・5 を入れる。2，4，6番目のときだけ 先頭が0になれないことに注意して 27+18+18+18＝81通り。"
+                }
+              ]
+            }
+          ],
+          "13": [
+            {
+              "id": "hd_3s_f13_1",
+              "src": "HG-0381",
+              "title": "りんご10こを2つに分ける",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 2,
+              "intro": "りんご10こを 2つに分けます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "AさんとBさんの2人に、1人1こ以上になるように分ける方法は何通りですか。",
+                  "answer": "9",
+                  "meaning": "Aが1〜9この9通り。Aが決まればBも決まる。"
+                },
+                {
+                  "question": "CさんとDさんの2人に、もらえない人がいてもよいように分ける方法は何通りですか。",
+                  "answer": "11",
+                  "meaning": "Cが0〜10この11通り。0こもよくなったので2通りふえる。"
+                },
+                {
+                  "question": "2つのお皿に、1皿1こ以上になるように分ける方法は何通りですか。ただし お皿に区別はありません。",
+                  "answer": "5",
+                  "meaning": "お皿に名前がないので (1,9)と(9,1)は同じ。(1,9)(2,8)(3,7)(4,6)(5,5) の5通り。(5,5)は相手がいないので ただ半分にするのではない。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f13_4",
+              "src": "HG-0382",
+              "title": "こう貨のはらい方",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 2,
+              "intro": "100円玉を5まい、50円玉を5まい、10円玉を15まい 持っています。\nちょうどの金がくを はらう方法を考えます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "500円を ちょうどはらう方法は何通りですか。",
+                  "answer": "12",
+                  "meaning": "100円玉の まい数で場合分けする。持っているまい数をこえないように数える。"
+                },
+                {
+                  "question": "150円を ちょうどはらう方法は何通りですか。",
+                  "answer": "6",
+                  "meaning": "100円玉は0まいか1まい。10円玉は15まいまでしかない。"
+                },
+                {
+                  "question": "550円を ちょうどはらう方法は何通りですか。",
+                  "answer": "12",
+                  "meaning": "10円玉は15まい（150円ぶん）までなので、そこで場合が切れる。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f13_5",
+              "src": "HG-0383",
+              "title": "ドーナツとクッキーを分ける",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 3,
+              "intro": "4人で ドーナツ30ことクッキー2まいを、しゅるいに関係なく 同じ数ずつ分けます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "分け方は何通りありますか。",
+                  "answer": "10",
+                  "meaning": "しゅるいに関係なく同じ数ずつ＝32こを4人で8こずつ。だから数えるのは クッキー2まいの配り方だけ。1人が2まい…4通り、2人が1まいずつ…6通り。合わせて10通り。ドーナツは のこりで自動的に決まる。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f13_9",
+              "src": "HG-0384",
+              "title": "下がぎりを先に配る",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 3,
+              "intro": "①ボール15こを、大・中・小の3つの箱に入れます。大は8こまで、中は6こまで、小は4こまでしか入りません。どの箱にも3こ以上入れます。\n②おはじき5こを、2つ以上のかたまりに分けます（かたまりのじゅん番は区別しません）。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "①の入れ方は何通りありますか。",
+                  "answer": "7",
+                  "meaning": "先に どの箱にも3こずつ（合わせて9こ）入れてしまう。のこり6こを、大にあと5・中にあと3・小にあと1 までの範囲で配る問題に変わる。"
+                },
+                {
+                  "question": "②の分け方は何通りありますか。",
+                  "answer": "6",
+                  "meaning": "(4,1)(3,2)(3,1,1)(2,2,1)(2,1,1,1)(1,1,1,1,1) の6通り。(5) は「2つ以上」に合わないので数えない。"
+                }
+              ]
+            }
+          ]
+        }
       }
     },
     "4": {
