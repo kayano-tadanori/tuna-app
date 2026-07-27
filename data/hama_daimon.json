@@ -858,7 +858,405 @@
     "4": {
       "master": {
         "fukushu": {},
-        "kokai": {}
+        "kokai": {
+          "3": [
+            {
+              "id": "hd_4m_k03_624_3",
+              "src": "HG-0969",
+              "title": "カードを全部つかう ひっ算",
+              "category": "kazu",
+              "unit": "覆面算",
+              "grade": 4,
+              "star": 3,
+              "intro": "数字カードを1まいずつ使って、たし算の ひっ算を作ります。カードは全部つかいきります。\nただし 6のカードを9として、9のカードを6として使うことはできません。また、いちばん上の位に0のカードは使えません。",
+              "svg": "<svg viewBox='0 0 310 130' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>3つの たし算の ひっ算</text><text x='56.0' y='30.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［式1］</text><text x='94.0' y='46.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>1</text><text x='94.0' y='63.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>5 2</text><text x='94.0' y='80.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>+□ □ 3</text><line x1='18.0' y1='84.0' x2='94.0' y2='84.0' stroke='#ffd166' stroke-width='1.2'/><text x='94.0' y='97.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>ア イ ウ</text><text x='152.0' y='30.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［式2］</text><text x='190.0' y='46.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>2</text><text x='190.0' y='63.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>6 4</text><text x='190.0' y='80.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>+□ □ □</text><line x1='114.0' y1='84.0' x2='190.0' y2='84.0' stroke='#ffd166' stroke-width='1.2'/><text x='190.0' y='97.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>カ キ ク ケ</text><text x='248.0' y='30.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［式3］</text><text x='286.0' y='46.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>□</text><text x='286.0' y='63.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>3 □</text><text x='286.0' y='80.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>+□ □ □</text><line x1='210.0' y1='84.0' x2='286.0' y2='84.0' stroke='#ffd166' stroke-width='1.2'/><text x='286.0' y='97.0' fill='#ffd166' font-size='11' text-anchor='end' font-family='monospace'>サ シ ス セ</text><text x='8.0' y='122.0' fill='#06d6a0' font-size='9' text-anchor='start'>カードは1まいずつ・全部つかいきる</text></svg>",
+              "steps": [
+                {
+                  "question": "1〜9の9まいを全部使って［式1］を作りました。アイウにあてはまる3けたの数を答えなさい。",
+                  "answer": "846",
+                  "meaning": "一の位は 1+2+3＝6 で ウ＝6。十の位は 5+□。もし くり上がらないと 百の位の□が そのままアになり 同じカードを2回使うことになる。だから必ずくり上がる。5+9＝14 で イ＝4、のこり{7,8}から ア＝8。1+52+793＝846。"
+                },
+                {
+                  "question": "0〜9の10まいを全部使って［式2］を作りました。カキクケにあてはまる4けたの数を答えなさい。",
+                  "answer": "1053",
+                  "meaning": "4けたになるので 千の位は1。百の位は「9＋くり上がり」で10になるしかない。2+64+987＝1053。"
+                },
+                {
+                  "question": "0〜9の10まいを全部使って［式3］を作りました。サシスセにあてはまる4けたの数を答えなさい。",
+                  "answer": "1026",
+                  "meaning": "同じく千の位は1。中の□の入れ方は何通りかあるが、答えは1つに決まる。れい 4+35+987＝1026。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k03_624_4",
+              "src": "HG-0970",
+              "title": "白と黒のタイル",
+              "category": "zu",
+              "unit": "平面図形（面積）",
+              "grade": 4,
+              "star": 2,
+              "intro": "1辺1cmの白いタイルと黒いタイルを、重ねずに すきまなくならべて 大きな正三角形を作ります。\n［図2］は 白3まいと黒1まいで 1辺2cmの正三角形を作ったものです。",
+              "svg": "<svg viewBox='0 0 340 92' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='12.0' fill='#ffd166' font-size='9' text-anchor='start'>白と黒の1cmタイルで 大きな正三角形をつくる</text><polygon points='46.0,24.0 23.0,63.8 69.0,63.8' fill='#e2e8f0' stroke='#4f9eff' stroke-width='1.2'/><line x1='34.5' y1='43.9' x2='57.5' y2='43.9' stroke='#94a3b8' stroke-width='0.5'/><line x1='34.5' y1='43.9' x2='46.0' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><line x1='57.5' y1='43.9' x2='46.0' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><polygon points='34.5,43.9 57.5,43.9 46.0,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><text x='46.0' y='76.8' fill='#06d6a0' font-size='9' text-anchor='middle'>［図2］1辺2cm</text><polygon points='128.0,24.0 105.0,63.8 151.0,63.8' fill='#e2e8f0' stroke='#4f9eff' stroke-width='1.2'/><line x1='122.2' y1='34.0' x2='133.8' y2='34.0' stroke='#94a3b8' stroke-width='0.5'/><line x1='122.2' y1='34.0' x2='139.5' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><line x1='133.8' y1='34.0' x2='116.5' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><line x1='116.5' y1='43.9' x2='139.5' y2='43.9' stroke='#94a3b8' stroke-width='0.5'/><line x1='116.5' y1='43.9' x2='128.0' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><line x1='139.5' y1='43.9' x2='128.0' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><line x1='110.8' y1='53.9' x2='145.2' y2='53.9' stroke='#94a3b8' stroke-width='0.5'/><line x1='110.8' y1='53.9' x2='116.5' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><line x1='145.2' y1='53.9' x2='139.5' y2='63.8' stroke='#94a3b8' stroke-width='0.5'/><polygon points='116.5,43.9 139.5,43.9 128.0,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><text x='128.0' y='76.8' fill='#06d6a0' font-size='9' text-anchor='middle'>［図3］1辺4cm</text><polygon points='210.0,24.0 187.0,63.8 233.0,63.8' fill='#e2e8f0' stroke='#4f9eff' stroke-width='1.2'/><line x1='207.4' y1='28.4' x2='212.6' y2='28.4' stroke='#94a3b8' stroke-width='0.35'/><line x1='207.4' y1='28.4' x2='227.9' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='212.6' y1='28.4' x2='192.1' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='204.9' y1='32.9' x2='215.1' y2='32.9' stroke='#94a3b8' stroke-width='0.35'/><line x1='204.9' y1='32.9' x2='222.8' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='215.1' y1='32.9' x2='197.2' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='202.3' y1='37.3' x2='217.7' y2='37.3' stroke='#94a3b8' stroke-width='0.35'/><line x1='202.3' y1='37.3' x2='217.7' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='217.7' y1='37.3' x2='202.3' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='199.8' y1='41.7' x2='220.2' y2='41.7' stroke='#94a3b8' stroke-width='0.35'/><line x1='199.8' y1='41.7' x2='212.6' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='220.2' y1='41.7' x2='207.4' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='197.2' y1='46.1' x2='222.8' y2='46.1' stroke='#94a3b8' stroke-width='0.35'/><line x1='197.2' y1='46.1' x2='207.4' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='222.8' y1='46.1' x2='212.6' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='194.7' y1='50.6' x2='225.3' y2='50.6' stroke='#94a3b8' stroke-width='0.35'/><line x1='194.7' y1='50.6' x2='202.3' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='225.3' y1='50.6' x2='217.7' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='192.1' y1='55.0' x2='227.9' y2='55.0' stroke='#94a3b8' stroke-width='0.35'/><line x1='192.1' y1='55.0' x2='197.2' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='227.9' y1='55.0' x2='222.8' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='189.6' y1='59.4' x2='230.4' y2='59.4' stroke='#94a3b8' stroke-width='0.35'/><line x1='189.6' y1='59.4' x2='192.1' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='230.4' y1='59.4' x2='227.9' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><polygon points='202.3,37.3 217.7,37.3 210.0,50.6' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><polygon points='194.7,50.6 210.0,50.6 202.3,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><polygon points='210.0,50.6 225.3,50.6 217.7,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><text x='210.0' y='76.8' fill='#06d6a0' font-size='9' text-anchor='middle'>［図4］1辺9cm</text><polygon points='292.0,24.0 269.0,63.8 315.0,63.8' fill='#e2e8f0' stroke='#4f9eff' stroke-width='1.2'/><line x1='290.1' y1='27.3' x2='293.9' y2='27.3' stroke='#94a3b8' stroke-width='0.35'/><line x1='290.1' y1='27.3' x2='311.2' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='293.9' y1='27.3' x2='272.8' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='288.2' y1='30.6' x2='295.8' y2='30.6' stroke='#94a3b8' stroke-width='0.35'/><line x1='288.2' y1='30.6' x2='307.3' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='295.8' y1='30.6' x2='276.7' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='286.2' y1='34.0' x2='297.8' y2='34.0' stroke='#94a3b8' stroke-width='0.35'/><line x1='286.2' y1='34.0' x2='303.5' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='297.8' y1='34.0' x2='280.5' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='284.3' y1='37.3' x2='299.7' y2='37.3' stroke='#94a3b8' stroke-width='0.35'/><line x1='284.3' y1='37.3' x2='299.7' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='299.7' y1='37.3' x2='284.3' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='282.4' y1='40.6' x2='301.6' y2='40.6' stroke='#94a3b8' stroke-width='0.35'/><line x1='282.4' y1='40.6' x2='295.8' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='301.6' y1='40.6' x2='288.2' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='280.5' y1='43.9' x2='303.5' y2='43.9' stroke='#94a3b8' stroke-width='0.35'/><line x1='280.5' y1='43.9' x2='292.0' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='303.5' y1='43.9' x2='292.0' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='278.6' y1='47.2' x2='305.4' y2='47.2' stroke='#94a3b8' stroke-width='0.35'/><line x1='278.6' y1='47.2' x2='288.2' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='305.4' y1='47.2' x2='295.8' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='276.7' y1='50.6' x2='307.3' y2='50.6' stroke='#94a3b8' stroke-width='0.35'/><line x1='276.7' y1='50.6' x2='284.3' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='307.3' y1='50.6' x2='299.7' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='274.8' y1='53.9' x2='309.2' y2='53.9' stroke='#94a3b8' stroke-width='0.35'/><line x1='274.8' y1='53.9' x2='280.5' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='309.2' y1='53.9' x2='303.5' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='272.8' y1='57.2' x2='311.2' y2='57.2' stroke='#94a3b8' stroke-width='0.35'/><line x1='272.8' y1='57.2' x2='276.7' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='311.2' y1='57.2' x2='307.3' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='270.9' y1='60.5' x2='313.1' y2='60.5' stroke='#94a3b8' stroke-width='0.35'/><line x1='270.9' y1='60.5' x2='272.8' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><line x1='313.1' y1='60.5' x2='311.2' y2='63.8' stroke='#94a3b8' stroke-width='0.35'/><polygon points='280.5,43.9 303.5,43.9 292.0,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><polygon points='286.2,34.0 297.8,34.0 292.0,43.9' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><polygon points='274.8,53.9 286.2,53.9 280.5,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><polygon points='297.8,53.9 309.2,53.9 303.5,63.8' fill='#0f172a' stroke='#0f172a' stroke-width='0.6'/><text x='292.0' y='76.8' fill='#06d6a0' font-size='9' text-anchor='middle'>［図5］1辺12cm</text></svg>",
+              "steps": [
+                {
+                  "question": "［図3］（1辺4cm）では、黒のタイルを何まい使っていますか。",
+                  "answer": "4",
+                  "meaning": "黒いところは 1辺2cmの さかさま三角形。1辺が2倍なら まい数は2×2＝4まい。"
+                },
+                {
+                  "question": "［図4］（1辺9cm）では、黒のタイルを何まい使っていますか。",
+                  "answer": "27",
+                  "meaning": "1辺3cmの さかさま三角形が3つ。1つが3×3＝9まいなので 9×3＝27まい。"
+                },
+                {
+                  "question": "［図5］（1辺12cm）では、黒のタイルを何まい使っていますか。",
+                  "answer": "63",
+                  "meaning": "1辺6cmが1つ（6×6＝36）と 1辺3cmが3つ（9×3＝27）。36+27＝63まい。数えずに「1辺を見る」。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k03_624_5",
+              "src": "HG-0971",
+              "title": "☆という きまり",
+              "category": "kazu",
+              "unit": "記号定義（約束）",
+              "grade": 4,
+              "star": 2,
+              "intro": "A☆B は、A×B と A+B を計算した答えの ちがい を表します。\nたとえば 2☆5 は 2×5＝10 と 2+5＝7 の ちがいが3なので 2☆5＝3 です。\nまた 1☆9 は 1×9＝9 と 1+9＝10 の ちがいが1なので 1☆9＝1 です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "6☆24 が表す数は何ですか。",
+                  "answer": "114",
+                  "meaning": "6×24＝144、6+24＝30。ちがいは 144−30＝114。"
+                },
+                {
+                  "question": "□☆8＝132 のとき、□にあてはまる数は何ですか。",
+                  "answer": "20",
+                  "meaning": "□×8−(□+8)＝□×7−8。これが132だから □×7＝140、□＝20。"
+                },
+                {
+                  "question": "△☆△＝195 のとき、△にあてはまる数は何ですか。ただし2つの△には同じ1以上の整数が入ります。",
+                  "answer": "15",
+                  "meaning": "△×△−△×2＝195 なので △×(△−2)＝195。2ちがいのかけ算で195になるのは 15×13。だから △＝15。"
+                }
+              ]
+            }
+          ],
+          "6": [
+            {
+              "id": "hd_4m_k06_627_3",
+              "src": "HG-0972",
+              "title": "だんごとに ならべる数",
+              "category": "kisoku",
+              "unit": "群数列",
+              "grade": 4,
+              "star": 2,
+              "intro": "きまりにしたがって 数をならべます。\n1だん目　1\n2だん目　2, 2, 1, 1\n3だん目　3, 3, 3, 2, 2, 2, 1, 1, 1\n4だん目　4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1\n（以下同じ）",
+              "svg": "<svg viewBox='0 0 340 120' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>だんごとに ならべていく</text><text x='10.0' y='32.0' fill='#06d6a0' font-size='9' text-anchor='start'>1だん目</text><rect x='56.0' y='22.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='63.0' y='33.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><text x='10.0' y='52.0' fill='#06d6a0' font-size='9' text-anchor='start'>2だん目</text><rect x='56.0' y='42.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='63.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='73.0' y='42.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='80.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='90.0' y='42.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='97.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='107.0' y='42.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='114.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><text x='10.0' y='72.0' fill='#06d6a0' font-size='9' text-anchor='start'>3だん目</text><rect x='56.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='63.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='73.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='80.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='90.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='97.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='107.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='114.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='124.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='131.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='141.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='148.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='158.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='165.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='175.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='182.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='192.0' y='62.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='199.0' y='73.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><text x='10.0' y='92.0' fill='#06d6a0' font-size='9' text-anchor='start'>4だん目</text><rect x='56.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='63.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='73.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='80.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='90.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='97.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='107.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='114.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='124.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='131.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='141.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='148.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='158.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='165.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='175.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='182.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='192.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='199.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='209.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='216.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='226.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='233.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='243.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='250.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='260.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='267.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='277.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='284.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='294.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='301.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='311.0' y='82.0' width='14.0' height='15.0' rx='2' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.7'/><text x='318.0' y='93.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><text x='10.0' y='112.0' fill='#06d6a0' font-size='9' text-anchor='start'>（以下同じ）</text></svg>",
+              "steps": [
+                {
+                  "question": "1だん目から5だん目までに、2は何こならんでいますか。",
+                  "answer": "14",
+                  "meaning": "2は 2だん目から出てきて、nだん目には n こある。0+2+3+4+5＝14こ。"
+                },
+                {
+                  "question": "7だん目の 左から数えて9番目の数は何ですか。",
+                  "answer": "6",
+                  "meaning": "7だん目は 7が7こ、つぎに6が7こ…。9番目は 7このかたまりを1つこえた2つ目なので6。"
+                },
+                {
+                  "question": "1だん目から3だん目の左から2番目までの数を全てたすと 1+2+2+1+1+3+3＝13 になります。同じように、1だん目から7だん目の左から9番目までの数を全てたすと いくつになりますか。",
+                  "answer": "327",
+                  "meaning": "nだん目の合計は n×(1+2+…+n)＝1, 6, 18, 40, 75, 126。6だん目までで266。7だん目は 7×7＋6×2＝61。266+61＝327。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k06_627_4",
+              "src": "HG-0973",
+              "title": "2点シュートと3点シュート",
+              "category": "tokusan",
+              "unit": "つるかめ算",
+              "grade": 4,
+              "star": 3,
+              "intro": "バスケットボールには 2点になるシュートと 3点になるシュートがあります。\nAチームとBチームが 試合をしました。得点はこの2つしかありません。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "Aチームが2点シュートを21本、3点シュートを9本 成功したとすると、得点は全部で何点ですか。",
+                  "answer": "69",
+                  "meaning": "2×21＋3×9＝42+27＝69点。"
+                },
+                {
+                  "question": "Aチームが合計40本のシュートに成功し、得点は全部で93点でした。3点シュートは何本 成功しましたか。",
+                  "answer": "13",
+                  "meaning": "40本ぜんぶ2点なら80点。3点シュートは1本ごとに1点ふえるだけなので 93−80＝13本。"
+                },
+                {
+                  "question": "Aチームが40本、Bチームが35本のシュートに成功し、Bチームが勝ちました。Aチームの3点シュートの本数と Bチームの3点シュートの本数の差は、もっとも少なくて何本ですか。",
+                  "answer": "11",
+                  "meaning": "Aの得点は 80＋（Aの3点の本数）、Bは 70＋（Bの3点の本数）。B>A になるには Bの本数が Aより11本以上多いことが必要。得点そのものは 出さなくてよい。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k06_627_5",
+              "src": "HG-0974",
+              "title": "五角形の中の三角形",
+              "category": "zu",
+              "unit": "平面図形（角度）",
+              "grade": 4,
+              "star": 2,
+              "intro": "五角形に 対角線をひきます。［図1］［図2］［図3］の中にある三角形を、大小あわせて数えます。",
+              "svg": "<svg viewBox='0 0 300 120' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='12.0' fill='#ffd166' font-size='9' text-anchor='start'>五角形に 対角線をひく</text><polygon points='52.0,28.0 19.7,51.5 32.0,89.5 72.0,89.5 84.3,51.5' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><line x1='52.0' y1='28.0' x2='32.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='52.0' y1='28.0' x2='72.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='19.7' y1='51.5' x2='72.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><text x='47.0' y='24.0' fill='#06d6a0' font-size='8' text-anchor='middle'>A</text><text x='14.7' y='47.5' fill='#06d6a0' font-size='8' text-anchor='middle'>B</text><text x='27.0' y='99.5' fill='#06d6a0' font-size='8' text-anchor='middle'>C</text><text x='77.0' y='99.5' fill='#06d6a0' font-size='8' text-anchor='middle'>D</text><text x='89.3' y='47.5' fill='#06d6a0' font-size='8' text-anchor='middle'>E</text><text x='52.0' y='112.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図1］</text><polygon points='148.0,28.0 115.7,51.5 128.0,89.5 168.0,89.5 180.3,51.5' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><line x1='148.0' y1='28.0' x2='128.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='148.0' y1='28.0' x2='168.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='115.7' y1='51.5' x2='180.3' y2='51.5' stroke='#ffd166' stroke-width='1.1'/><text x='143.0' y='24.0' fill='#06d6a0' font-size='8' text-anchor='middle'>A</text><text x='110.7' y='47.5' fill='#06d6a0' font-size='8' text-anchor='middle'>B</text><text x='123.0' y='99.5' fill='#06d6a0' font-size='8' text-anchor='middle'>C</text><text x='173.0' y='99.5' fill='#06d6a0' font-size='8' text-anchor='middle'>D</text><text x='185.3' y='47.5' fill='#06d6a0' font-size='8' text-anchor='middle'>E</text><text x='148.0' y='112.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図2］</text><polygon points='244.0,28.0 211.7,51.5 224.0,89.5 264.0,89.5 276.3,51.5' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><line x1='244.0' y1='28.0' x2='224.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='244.0' y1='28.0' x2='264.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='211.7' y1='51.5' x2='264.0' y2='89.5' stroke='#ffd166' stroke-width='1.1'/><line x1='211.7' y1='51.5' x2='276.3' y2='51.5' stroke='#ffd166' stroke-width='1.1'/><line x1='224.0' y1='89.5' x2='276.3' y2='51.5' stroke='#ffd166' stroke-width='1.1'/><text x='239.0' y='24.0' fill='#06d6a0' font-size='8' text-anchor='middle'>A</text><text x='206.7' y='47.5' fill='#06d6a0' font-size='8' text-anchor='middle'>B</text><text x='219.0' y='99.5' fill='#06d6a0' font-size='8' text-anchor='middle'>C</text><text x='269.0' y='99.5' fill='#06d6a0' font-size='8' text-anchor='middle'>D</text><text x='281.3' y='47.5' fill='#06d6a0' font-size='8' text-anchor='middle'>E</text><text x='244.0' y='112.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図3］</text></svg>",
+              "steps": [
+                {
+                  "question": "［図1］の中に、三角形は大小あわせて全部で何こありますか。",
+                  "answer": "9",
+                  "meaning": "小さい三角形をつくってから、2こ・3こをくっつけた三角形も かぞえる。"
+                },
+                {
+                  "question": "［図2］の中に、三角形は大小あわせて全部で何こありますか。",
+                  "answer": "11",
+                  "meaning": "対角線の数は［図1］と同じ3本だが、内がわの交わる点が1こから2こにふえるので 三角形も ふえる。"
+                },
+                {
+                  "question": "［図3］の中に、三角形は大小あわせて全部で何こありますか。",
+                  "answer": "35",
+                  "meaning": "1こずつ数えると必ず落とす。線10本から3本えらぶ120通りから、三角形にならない組（交わらない・1点に集まる）をひいて35こ。"
+                }
+              ]
+            }
+          ],
+          "8": [
+            {
+              "id": "hd_4m_k08_629_4",
+              "src": "HG-0975",
+              "title": "同じ数のかけ算の形にする",
+              "category": "kazu",
+              "unit": "倍数・約数",
+              "grade": 4,
+              "star": 3,
+              "intro": "一郎「8×18 を 同じ数のかけ算の形（□×□）にするには どう考えたらいいかな？」\n泰子「8や18を 小さい数のかけ算に分けてみるといいよ。8は 2×2×2 と表せるよね」\n一郎「それなら 18は 2×9 かな？」\n泰子「9は もう少し小さい数のかけ算にできるね。9は (ア)×(ア) と表せるよ」\n一郎「なるほど。8×18は 2×2×2×2×(ア)×(ア) だから、2×2×(ア) を2つ作れて 8×18＝(イ)×(イ) だ！」\n泰子「その通り。では 28×63 は どうかな？」\n一郎「わかった！ (ウ)×(ウ) だ！」",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "(ア)にあてはまる数を答えなさい。",
+                  "answer": "3",
+                  "meaning": "9＝3×3。"
+                },
+                {
+                  "question": "(イ)にあてはまる数を答えなさい。",
+                  "answer": "12",
+                  "meaning": "8×18＝2×2×2×2×3×3。同じものを2つに分けると (2×2×3)×(2×2×3)＝12×12。"
+                },
+                {
+                  "question": "(ウ)にあてはまる数を答えなさい。",
+                  "answer": "42",
+                  "meaning": "28＝2×2×7、63＝7×3×3。ぜんぶで 2×2×3×3×7×7 だから (2×3×7)×(2×3×7)＝42×42。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k08_629_5",
+              "src": "HG-0976",
+              "title": "的当てゲーム",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 4,
+              "star": 3,
+              "intro": "的に向かってボールを投げ、当たった場所と その上下左右に書かれた数の合計を 1回の得点とします。\nたとえば ①に当たると 1+2+4 で7点、⑤に当たると 2+4+5+6+8 で25点です。\nボールを ①→⑤ と当てても ⑤→① と当てても 合計の得点は同じですが、この場合 当て方は2通りと数えます。",
+              "svg": "<svg viewBox='0 0 290 122' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>3×3の 的</text><rect x='30.0' y='24.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='46.0' y='43.0' fill='#ffd166' font-size='13' text-anchor='middle'>①</text><rect x='64.0' y='24.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='80.0' y='43.0' fill='#ffd166' font-size='13' text-anchor='middle'>②</text><rect x='98.0' y='24.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='114.0' y='43.0' fill='#ffd166' font-size='13' text-anchor='middle'>③</text><rect x='30.0' y='54.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='46.0' y='73.0' fill='#ffd166' font-size='13' text-anchor='middle'>④</text><rect x='64.0' y='54.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='80.0' y='73.0' fill='#ffd166' font-size='13' text-anchor='middle'>⑤</text><rect x='98.0' y='54.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='114.0' y='73.0' fill='#ffd166' font-size='13' text-anchor='middle'>⑥</text><rect x='30.0' y='84.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='46.0' y='103.0' fill='#ffd166' font-size='13' text-anchor='middle'>⑦</text><rect x='64.0' y='84.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='80.0' y='103.0' fill='#ffd166' font-size='13' text-anchor='middle'>⑧</text><rect x='98.0' y='84.0' width='32.0' height='28.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='1.1'/><text x='114.0' y='103.0' fill='#ffd166' font-size='13' text-anchor='middle'>⑨</text><text x='146.0' y='46.0' fill='#06d6a0' font-size='9' text-anchor='start'>当たった場所と</text><text x='146.0' y='60.0' fill='#06d6a0' font-size='9' text-anchor='start'>その上下左右の数の合計</text><text x='146.0' y='76.0' fill='#ffd166' font-size='9' text-anchor='start'>①なら 1+2+4＝7点</text><text x='146.0' y='90.0' fill='#ffd166' font-size='9' text-anchor='start'>⑤なら 2+4+5+6+8＝25点</text></svg>",
+              "steps": [
+                {
+                  "question": "ボールを1回だけ投げたとき、考えられる最大の得点は何点ですか。",
+                  "answer": "29",
+                  "meaning": "まん中の⑧＝4+7+8+9＝…ではなく 5+7+8+9＝29点がいちばん大きい。"
+                },
+                {
+                  "question": "ボールを2回だけ投げたとき、2回の合計の得点が30点でした。考えられるボールの当て方は何通りですか。",
+                  "answer": "8",
+                  "meaning": "先に9この的の得点を書き出す（7, 11, 11, 17, 25, 23, 19, 29, 23）。30になるのは 7+23 と 11+19。23の的は2こ、11の的も2こあるので 4組。じゅん番も数えて8通り。"
+                },
+                {
+                  "question": "ボールを4回だけ投げたとき、1回目から4回目まで 全てちがう得点で、4回の合計が60点でした。考えられるボールの当て方は何通りですか。",
+                  "answer": "144",
+                  "meaning": "ちがう得点4つで60になるのは {7,11,17,25} と {7,11,19,23}。的のえらび方は 前が2通り・後が4通り。じゅん番は 4×3×2×1＝24通り。(2+4)×24＝144通り。"
+                }
+              ]
+            }
+          ],
+          "10": [
+            {
+              "id": "hd_4m_k10_631_3",
+              "src": "HG-0977",
+              "title": "2こ・3こ・4こで区切る",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 4,
+              "star": 2,
+              "intro": "1から小さいじゅんにならんでいる整数を、あるきまりで区切って 左から 第1グループ、第2グループ、…… とよびます。\n【1，2】【3，4，5】【6，7，8，9】【10，11】【12，13，14】【15，16，17，18】【19，20】……\nたとえば 第4グループの整数は 10と11 の2こで、和は21です。",
+              "svg": "<svg viewBox='0 0 400 86' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>2こ・3こ・4こ の くりかえしで区切る</text><rect x='12.0' y='26.0' width='50.0' height='22.0' rx='3' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.9'/><text x='26.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><text x='48.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><text x='37.0' y='60.0' fill='#06d6a0' font-size='8' text-anchor='middle'>第1</text><rect x='67.0' y='26.0' width='72.0' height='22.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='81.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><text x='103.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><text x='125.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><text x='103.0' y='60.0' fill='#06d6a0' font-size='8' text-anchor='middle'>第2</text><rect x='144.0' y='26.0' width='94.0' height='22.0' rx='3' fill='#3f2d5c' stroke='#4f9eff' stroke-width='0.9'/><text x='158.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><text x='180.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><text x='202.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><text x='224.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>9</text><text x='191.0' y='60.0' fill='#06d6a0' font-size='8' text-anchor='middle'>第3</text><rect x='243.0' y='26.0' width='50.0' height='22.0' rx='3' fill='#1e3a5f' stroke='#4f9eff' stroke-width='0.9'/><text x='257.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>10</text><text x='279.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>11</text><text x='268.0' y='60.0' fill='#06d6a0' font-size='8' text-anchor='middle'>第4</text><rect x='298.0' y='26.0' width='72.0' height='22.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='312.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>12</text><text x='334.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>13</text><text x='356.0' y='41.0' fill='#ffd166' font-size='9' text-anchor='middle'>14</text><text x='334.0' y='60.0' fill='#06d6a0' font-size='8' text-anchor='middle'>第5</text><text x='377.0' y='41.0' fill='#ffd166' font-size='10' text-anchor='start'>……</text><text x='12.0' y='78.0' fill='#06d6a0' font-size='9' text-anchor='start'>3グループで 整数が9こ すすむ</text></svg>",
+              "steps": [
+                {
+                  "question": "36は第何グループの整数ですか。",
+                  "answer": "12",
+                  "meaning": "3グループで整数が9こすすむ。36÷9＝4 ちょうどなので 第12グループ【33，34，35，36】の最後。"
+                },
+                {
+                  "question": "第43グループの整数の和はいくつですか。",
+                  "answer": "255",
+                  "meaning": "43＝3×14＋1 なので 14まわりのあと の2こ組。第42グループまでで126こだから【127，128】で和255。"
+                },
+                {
+                  "question": "整数の和が282になるグループは 第●グループと第■グループです。●と■の和はいくつですか。",
+                  "answer": "56",
+                  "meaning": "2こ組の和は 続いた2つの数の和だから 必ず奇数。282は偶数なので 2こ組は消える。3こ組なら【93，94，95】＝第32、4こ組なら【69，70，71，72】＝第24。32+24＝56。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k10_631_4",
+              "src": "HG-0978",
+              "title": "さいころで動く2つの点",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 4,
+              "star": 3,
+              "intro": "数直線の上に2つの点A、Bがあります。はじめ Aは0、Bは6の位置にあります。\nさいころを1こふって、出た目によって2つの点は 同時に つぎのように動きます。\n・点Aは 2，4，6 の目が出ると右に1つ、1，3，5 の目が出ると右に2つ動く。\n・点Bは 1の目が出ると動かず、2，3 の目で左に1つ、4，5，6 の目で右に2つ動く。",
+              "svg": "<svg viewBox='0 0 380 74' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>数直線の上の 点Aと点B</text><line x1='14.0' y1='46.0' x2='364.0' y2='46.0' stroke='#94a3b8' stroke-width='1.4'/><line x1='20.0' y1='42.0' x2='20.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='20.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>0</text><line x1='44.0' y1='42.0' x2='44.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='44.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>1</text><line x1='68.0' y1='42.0' x2='68.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='68.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>2</text><line x1='92.0' y1='42.0' x2='92.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='92.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>3</text><line x1='116.0' y1='42.0' x2='116.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='116.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>4</text><line x1='140.0' y1='42.0' x2='140.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='140.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>5</text><line x1='164.0' y1='42.0' x2='164.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='164.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>6</text><line x1='188.0' y1='42.0' x2='188.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='188.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>7</text><line x1='212.0' y1='42.0' x2='212.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='212.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>8</text><line x1='236.0' y1='42.0' x2='236.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='236.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>9</text><line x1='260.0' y1='42.0' x2='260.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='260.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>10</text><line x1='284.0' y1='42.0' x2='284.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='284.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>11</text><line x1='308.0' y1='42.0' x2='308.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='308.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>12</text><line x1='332.0' y1='42.0' x2='332.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='332.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>13</text><line x1='356.0' y1='42.0' x2='356.0' y2='50.0' stroke='#94a3b8' stroke-width='1'/><text x='356.0' y='64.0' fill='#cbd5e1' font-size='8' text-anchor='middle'>14</text><circle cx='20.0' cy='46.0' r='5' fill='#ef476f' stroke='#ef476f' stroke-width='1'/><text x='20.0' y='34.0' fill='#ef476f' font-size='11' text-anchor='middle' font-weight='bold'>A</text><circle cx='164.0' cy='46.0' r='5' fill='#06d6a0' stroke='#06d6a0' stroke-width='1'/><text x='164.0' y='34.0' fill='#06d6a0' font-size='11' text-anchor='middle' font-weight='bold'>B</text></svg>",
+              "steps": [
+                {
+                  "question": "さいころを2回ふって、点Aが2の位置になるような目の出方は何通りですか。",
+                  "answer": "9",
+                  "meaning": "Aは1回に＋1か＋2。2回で＋2は（＋1，＋1）だけ。＋1になる目は3つずつなので 3×3＝9通り。"
+                },
+                {
+                  "question": "さいころを3回ふって、点Aが4、点Bが12の位置になるような目の出方は何通りですか。",
+                  "answer": "12",
+                  "meaning": "Bが3回で＋6は 毎回＋2＝目4,5,6のみ。その中でAが＋2になるのは目5だけ。（＋1,＋1,＋2）の位置が3通り×のこり2回が4か6で2×2＝12通り。"
+                },
+                {
+                  "question": "さいころを3回ふって、点Aと点Bが同じ位置になるような目の出方は何通りですか。",
+                  "answer": "11",
+                  "meaning": "AとBを別々に追ってはいけない。「B−A」の変わり方だけ見ると 目1:−2／目2:−2／目3:−3／目4:＋1／目5:0／目6:＋1。はじめの差6を3回で0にするのは (−2,−2,−2)＝8通りと (−3,−3,0)＝3通りで 11通り。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k10_631_5",
+              "src": "HG-0979",
+              "title": "竹ひごにおきかえる",
+              "category": "rittai",
+              "unit": "立体図形（体積・表面積）",
+              "grade": 4,
+              "star": 2,
+              "intro": "辺の長さが全て1cmの箱を組み合わせて、へこみやふくらみのない立体を作ります。\nできた立体の 箱の辺を 1本1cmの竹ひごに おきかえます。\nたとえば［図1］（箱2こ）の立体は 20本の竹ひごに おきかえられます。",
+              "svg": "<svg viewBox='0 0 420 190' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='12.0' fill='#ffd166' font-size='9' text-anchor='start'>1cmの箱をくみあわせた立体</text><line x1='44.0' y1='62.0' x2='44.0' y2='54.0' stroke='#64748b' stroke-width='0.6'/><line x1='37.1' y1='66.0' x2='37.1' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='50.9' y1='66.0' x2='50.9' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='44.0' y1='70.0' x2='44.0' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='57.9' y1='70.0' x2='57.9' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='50.9' y1='74.0' x2='50.9' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='44.0' y1='62.0' x2='37.1' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='44.0' y1='54.0' x2='37.1' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='50.9' y1='66.0' x2='44.0' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='50.9' y1='58.0' x2='44.0' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='57.9' y1='70.0' x2='50.9' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='57.9' y1='62.0' x2='50.9' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='44.0' y1='62.0' x2='57.9' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='44.0' y1='54.0' x2='57.9' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='37.1' y1='66.0' x2='50.9' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='37.1' y1='58.0' x2='50.9' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='44.0' y1='62.0' x2='57.9' y2='70.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='44.0' y1='62.0' x2='37.1' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='44.0' y1='62.0' x2='44.0' y2='54.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='50.9' y1='66.0' x2='37.1' y2='58.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='50.9' y1='66.0' x2='57.9' y2='62.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='50.9' y1='66.0' x2='50.9' y2='74.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='57.9' y1='70.0' x2='50.9' y2='74.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='57.9' y1='70.0' x2='57.9' y2='62.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='37.1' y1='66.0' x2='50.9' y2='74.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='37.1' y1='66.0' x2='37.1' y2='58.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='44.0' y1='54.0' x2='57.9' y2='62.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='44.0' y1='54.0' x2='37.1' y2='58.0' stroke='#4f9eff' stroke-width='1.3'/><text x='44.0' y='93.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図1］2こ＝20本</text><line x1='132.0' y1='62.0' x2='132.0' y2='54.0' stroke='#64748b' stroke-width='0.6'/><line x1='125.1' y1='66.0' x2='125.1' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='138.9' y1='66.0' x2='138.9' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='132.0' y1='70.0' x2='132.0' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='145.9' y1='70.0' x2='145.9' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='138.9' y1='74.0' x2='138.9' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='152.8' y1='74.0' x2='152.8' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='145.9' y1='78.0' x2='145.9' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='132.0' y1='62.0' x2='125.1' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='132.0' y1='54.0' x2='125.1' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='138.9' y1='66.0' x2='132.0' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='138.9' y1='58.0' x2='132.0' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='145.9' y1='70.0' x2='138.9' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='145.9' y1='62.0' x2='138.9' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='152.8' y1='74.0' x2='145.9' y2='78.0' stroke='#64748b' stroke-width='0.6'/><line x1='152.8' y1='66.0' x2='145.9' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='132.0' y1='62.0' x2='152.8' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='132.0' y1='54.0' x2='152.8' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='125.1' y1='66.0' x2='145.9' y2='78.0' stroke='#64748b' stroke-width='0.6'/><line x1='125.1' y1='58.0' x2='145.9' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='132.0' y1='62.0' x2='152.8' y2='74.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='132.0' y1='62.0' x2='125.1' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='132.0' y1='62.0' x2='132.0' y2='54.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='145.9' y1='70.0' x2='125.1' y2='58.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='145.9' y1='70.0' x2='152.8' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='145.9' y1='70.0' x2='145.9' y2='78.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='152.8' y1='74.0' x2='145.9' y2='78.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='152.8' y1='74.0' x2='152.8' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='125.1' y1='66.0' x2='145.9' y2='78.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='125.1' y1='66.0' x2='125.1' y2='58.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='132.0' y1='54.0' x2='152.8' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='132.0' y1='54.0' x2='125.1' y2='58.0' stroke='#4f9eff' stroke-width='1.3'/><text x='132.0' y='97.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図3］3こ</text><line x1='226.0' y1='62.0' x2='226.0' y2='54.0' stroke='#64748b' stroke-width='0.6'/><line x1='219.1' y1='66.0' x2='219.1' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='212.1' y1='70.0' x2='212.1' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='232.9' y1='66.0' x2='232.9' y2='58.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='70.0' x2='226.0' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='219.1' y1='74.0' x2='219.1' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='239.9' y1='70.0' x2='239.9' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='232.9' y1='74.0' x2='232.9' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='78.0' x2='226.0' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='246.8' y1='74.0' x2='246.8' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='239.9' y1='78.0' x2='239.9' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='232.9' y1='82.0' x2='232.9' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='62.0' x2='212.1' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='54.0' x2='212.1' y2='62.0' stroke='#64748b' stroke-width='0.6'/><line x1='232.9' y1='66.0' x2='219.1' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='232.9' y1='58.0' x2='219.1' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='239.9' y1='70.0' x2='226.0' y2='78.0' stroke='#64748b' stroke-width='0.6'/><line x1='239.9' y1='62.0' x2='226.0' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='246.8' y1='74.0' x2='232.9' y2='82.0' stroke='#64748b' stroke-width='0.6'/><line x1='246.8' y1='66.0' x2='232.9' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='62.0' x2='246.8' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='54.0' x2='246.8' y2='66.0' stroke='#64748b' stroke-width='0.6'/><line x1='219.1' y1='66.0' x2='239.9' y2='78.0' stroke='#64748b' stroke-width='0.6'/><line x1='219.1' y1='58.0' x2='239.9' y2='70.0' stroke='#64748b' stroke-width='0.6'/><line x1='212.1' y1='70.0' x2='232.9' y2='82.0' stroke='#64748b' stroke-width='0.6'/><line x1='212.1' y1='62.0' x2='232.9' y2='74.0' stroke='#64748b' stroke-width='0.6'/><line x1='226.0' y1='62.0' x2='246.8' y2='74.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='226.0' y1='62.0' x2='212.1' y2='70.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='226.0' y1='62.0' x2='226.0' y2='54.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='232.9' y1='74.0' x2='212.1' y2='62.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='232.9' y1='74.0' x2='246.8' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='232.9' y1='74.0' x2='232.9' y2='82.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='246.8' y1='74.0' x2='232.9' y2='82.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='246.8' y1='74.0' x2='246.8' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='212.1' y1='70.0' x2='232.9' y2='82.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='212.1' y1='70.0' x2='212.1' y2='62.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='226.0' y1='54.0' x2='246.8' y2='66.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='226.0' y1='54.0' x2='212.1' y2='62.0' stroke='#4f9eff' stroke-width='1.3'/><text x='226.0' y='101.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図4］6こ</text><line x1='344.0' y1='126.0' x2='344.0' y2='73.5' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='131.2' x2='334.9' y2='78.8' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='136.5' x2='325.8' y2='84.0' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='141.8' x2='316.7' y2='89.2' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='131.2' x2='353.1' y2='78.8' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='136.5' x2='344.0' y2='84.0' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='141.8' x2='334.9' y2='89.2' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='147.0' x2='325.8' y2='94.5' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='136.5' x2='362.2' y2='84.0' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='141.8' x2='353.1' y2='89.2' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='147.0' x2='344.0' y2='94.5' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='152.2' x2='334.9' y2='99.8' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='141.8' x2='371.3' y2='89.2' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='147.0' x2='362.2' y2='94.5' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='152.2' x2='353.1' y2='99.8' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='157.5' x2='344.0' y2='105.0' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='147.0' x2='380.4' y2='94.5' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='152.2' x2='371.3' y2='99.8' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='157.5' x2='362.2' y2='105.0' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='162.8' x2='353.1' y2='110.2' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='126.0' x2='316.7' y2='141.8' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='115.5' x2='316.7' y2='131.2' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='105.0' x2='316.7' y2='120.8' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='94.5' x2='316.7' y2='110.2' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='84.0' x2='316.7' y2='99.8' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='73.5' x2='316.7' y2='89.2' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='131.2' x2='325.8' y2='147.0' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='120.8' x2='325.8' y2='136.5' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='110.2' x2='325.8' y2='126.0' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='99.8' x2='325.8' y2='115.5' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='89.2' x2='325.8' y2='105.0' stroke='#64748b' stroke-width='0.6'/><line x1='353.1' y1='78.8' x2='325.8' y2='94.5' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='136.5' x2='334.9' y2='152.2' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='126.0' x2='334.9' y2='141.8' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='115.5' x2='334.9' y2='131.2' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='105.0' x2='334.9' y2='120.8' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='94.5' x2='334.9' y2='110.2' stroke='#64748b' stroke-width='0.6'/><line x1='362.2' y1='84.0' x2='334.9' y2='99.8' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='141.8' x2='344.0' y2='157.5' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='131.2' x2='344.0' y2='147.0' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='120.8' x2='344.0' y2='136.5' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='110.2' x2='344.0' y2='126.0' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='99.8' x2='344.0' y2='115.5' stroke='#64748b' stroke-width='0.6'/><line x1='371.3' y1='89.2' x2='344.0' y2='105.0' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='147.0' x2='353.1' y2='162.8' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='136.5' x2='353.1' y2='152.2' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='126.0' x2='353.1' y2='141.8' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='115.5' x2='353.1' y2='131.2' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='105.0' x2='353.1' y2='120.8' stroke='#64748b' stroke-width='0.6'/><line x1='380.4' y1='94.5' x2='353.1' y2='110.2' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='126.0' x2='380.4' y2='147.0' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='115.5' x2='380.4' y2='136.5' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='105.0' x2='380.4' y2='126.0' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='94.5' x2='380.4' y2='115.5' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='84.0' x2='380.4' y2='105.0' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='73.5' x2='380.4' y2='94.5' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='131.2' x2='371.3' y2='152.2' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='120.8' x2='371.3' y2='141.8' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='110.2' x2='371.3' y2='131.2' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='99.8' x2='371.3' y2='120.8' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='89.2' x2='371.3' y2='110.2' stroke='#64748b' stroke-width='0.6'/><line x1='334.9' y1='78.8' x2='371.3' y2='99.8' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='136.5' x2='362.2' y2='157.5' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='126.0' x2='362.2' y2='147.0' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='115.5' x2='362.2' y2='136.5' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='105.0' x2='362.2' y2='126.0' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='94.5' x2='362.2' y2='115.5' stroke='#64748b' stroke-width='0.6'/><line x1='325.8' y1='84.0' x2='362.2' y2='105.0' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='141.8' x2='353.1' y2='162.8' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='131.2' x2='353.1' y2='152.2' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='120.8' x2='353.1' y2='141.8' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='110.2' x2='353.1' y2='131.2' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='99.8' x2='353.1' y2='120.8' stroke='#64748b' stroke-width='0.6'/><line x1='316.7' y1='89.2' x2='353.1' y2='110.2' stroke='#64748b' stroke-width='0.6'/><line x1='344.0' y1='126.0' x2='380.4' y2='147.0' stroke='#4f9eff' stroke-width='1.3'/><line x1='344.0' y1='126.0' x2='316.7' y2='141.8' stroke='#4f9eff' stroke-width='1.3'/><line x1='344.0' y1='126.0' x2='344.0' y2='73.5' stroke='#4f9eff' stroke-width='1.3'/><line x1='353.1' y1='110.2' x2='316.7' y2='89.2' stroke='#4f9eff' stroke-width='1.3'/><line x1='353.1' y1='110.2' x2='380.4' y2='94.5' stroke='#4f9eff' stroke-width='1.3'/><line x1='353.1' y1='110.2' x2='353.1' y2='162.8' stroke='#4f9eff' stroke-width='1.3'/><line x1='380.4' y1='147.0' x2='353.1' y2='162.8' stroke='#4f9eff' stroke-width='1.3'/><line x1='380.4' y1='147.0' x2='380.4' y2='94.5' stroke='#4f9eff' stroke-width='1.3'/><line x1='316.7' y1='141.8' x2='353.1' y2='162.8' stroke='#4f9eff' stroke-width='1.3'/><line x1='316.7' y1='141.8' x2='316.7' y2='89.2' stroke='#4f9eff' stroke-width='1.3'/><line x1='344.0' y1='73.5' x2='380.4' y2='94.5' stroke='#4f9eff' stroke-width='1.3'/><line x1='344.0' y1='73.5' x2='316.7' y2='89.2' stroke='#4f9eff' stroke-width='1.3'/><text x='344.0' y='181.8' fill='#06d6a0' font-size='9' text-anchor='middle'>［図5］60こ</text></svg>",
+              "steps": [
+                {
+                  "question": "［図3］（箱3こを横1れつ）の立体は 何本の竹ひごに おきかえられますか。",
+                  "answer": "28",
+                  "meaning": "1本ずつ数えない。よこ向き・おく向き・たて向きの3方向に分けて数える。3×2×2＋1×4×2＋1×4×2＝28本。"
+                },
+                {
+                  "question": "［図4］（箱6こ）の立体は 何本の竹ひごに おきかえられますか。",
+                  "answer": "46",
+                  "meaning": "3×2×1の直方体。3×3×2＋2×4×2＋1×4×3＝18+16+12＝46本。"
+                },
+                {
+                  "question": "［図5］（箱60こ）の立体は 何本の竹ひごに おきかえられますか。",
+                  "answer": "286",
+                  "meaning": "4×3×5の直方体。4×4×6＋3×5×6＋5×5×4＝96+90+100＝286本。"
+                }
+              ]
+            }
+          ],
+          "11": [
+            {
+              "id": "hd_4m_k11_632_3",
+              "src": "HG-0980",
+              "title": "ねだんが変わっても 合計は同じ",
+              "category": "tokusan",
+              "unit": "つるかめ算",
+              "grade": 4,
+              "star": 3,
+              "intro": "たろうさんは 1こ120円の商品Aを2こと、1こ300円の商品Bを8こ 買いに行きました。\nちょうどの金がくを用意していましたが、大安売りは前の日で終わっていて、\n今日は 商品Aが1こあたり60円高く、商品Bが1こあたり2倍のねだんになっていました。\nそこで たろうさんは 買うこ数を変えて、合計のこ数も 合計の金がくも 変わらないようにしました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "たろうさんが用意していた金がくは何円ですか。",
+                  "answer": "2640",
+                  "meaning": "きのうのねだんで計算する。120×2＋300×8＝2640円。"
+                },
+                {
+                  "question": "たろうさんが今日買った商品Aのこ数は何こですか。",
+                  "answer": "8",
+                  "meaning": "今日は A＝180円、B＝600円。合計10こで2640円。ぜんぶAなら1800円で、1こBにかえるごとに420円ふえる。(2640−1800)÷420＝2こがB。Aは8こ。"
+                },
+                {
+                  "question": "はなこさんは 今日、五千円さつを1まい持って行き、商品Aと商品Bを買ったところ、おつりが こう貨1まいだけになりました。また 商品Aより商品Bを多く買いました。買った商品Aのこ数は何こですか。",
+                  "answer": "5",
+                  "meaning": "はらう金がくは 180×A＋600×B＝60×(3A＋10B) で 60の倍数。5000÷60＝83あまり20なので、おつりも60でわって20あまる数＝500円玉だけ。はらったのは4500円で 3A＋10B＝75、B>A から A＝5・B＝6。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k11_632_4",
+              "src": "HG-0981",
+              "title": "山と谷に ならべる",
+              "category": "baai",
+              "unit": "推理・論理",
+              "grade": 4,
+              "star": 3,
+              "intro": "ある数を左からならべます。13254 のようにならべると、3の両どなりは3より小さく、2の両どなりは2より大きくなっています。5の両どなりも 5より小さくなっています。\nこのように、両はしをのぞいて どの数も 両どなりが「その数より大きい」か「その数より小さい」かの どちらかにそろうように ならべます。\nさらに(2)(3)では、ちょうど真ん中の数から 左の数の合計と 右の数の合計が 同じになるようにします。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "1，2，3，4，5をならべたところ、いちばん左はしに4、ちょうど真ん中に5、5のすぐ右に2がありました。できた5けたの数を答えなさい。",
+                  "answer": "41523",
+                  "meaning": "4□5 2□ の□に 1と3。4番目の2は谷なので 両どなりが2より大きい。5番目は3、2番目は1。41523。"
+                },
+                {
+                  "question": "1，2，3，4，5をならべたところ、いちばん左はしに4、ちょうど真ん中に3がありました。できた5けたの数を答えなさい。",
+                  "answer": "42315",
+                  "meaning": "1〜5の和15から真ん中の3をのぞくと12。左右6ずつ。左は4＋2。真ん中3の左どなりが2（＜3）だから 右どなりも3より小さくて1、いちばん右が5。42315。"
+                },
+                {
+                  "question": "1〜9をならべたところ、真ん中の数より大きい数が両はしにあり、真ん中より左に「2でわると商が整数になる数」が3こと5があり、1は真ん中のすぐ右、2は左から2番目でした。できた9けたの数を答えなさい。",
+                  "answer": "825471639",
+                  "meaning": "真ん中をm、右にまわった偶数をeとすると 左の和＝5＋(20−e)。これが(45−m)÷2 と等しく m＝2e−5。e＝6・m＝7 だけが成り立つ。左は{8,2,5,4}、右は{1,6,3,9}で 山と谷を交ごにならべて 825471639。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_k11_632_5",
+              "src": "HG-0982",
+              "title": "さいころの 見える目",
+              "category": "rittai",
+              "unit": "立体図形（体積・表面積）",
+              "grade": 4,
+              "star": 3,
+              "intro": "むかい合う面の目の数の和が7になっている さいころがあります。\nこれを紙の上において、外がわに見える面の目の数の合計を考えます。\nたとえば さいころ1こで 6の面が紙にくっついているときは 1+2+3+4+5＝15 です。",
+              "svg": "<svg viewBox='0 0 280 120' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='12.0' fill='#ffd166' font-size='9' text-anchor='start'>むかい合う面の目の和は 7</text><polygon points='30,84 96,84 82,96 16,96' fill='#334155' stroke='#64748b' stroke-width='1'/><polygon points='56.0,69.0 65.5,74.5 56.0,80.0 46.5,74.5' fill='#e2e8f0' stroke='#0f172a' stroke-width='1'/><polygon points='46.5,74.5 56.0,80.0 56.0,91.0 46.5,85.5' fill='#cbd5e1' stroke='#0f172a' stroke-width='1'/><polygon points='65.5,74.5 56.0,80.0 56.0,91.0 65.5,85.5' fill='#94a3b8' stroke='#0f172a' stroke-width='1'/><text x='56.0' y='78.5' fill='#0f172a' font-size='11' text-anchor='middle' font-weight='bold'>2</text><text x='51.2' y='86.8' fill='#0f172a' font-size='11' text-anchor='middle' font-weight='bold'>3</text><text x='60.8' y='86.8' fill='#0f172a' font-size='11' text-anchor='middle' font-weight='bold'>6</text><text x='56.0' y='112.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図2］</text><polygon points='128,84 236,84 222,96 114,96' fill='#334155' stroke='#64748b' stroke-width='1'/><polygon points='150.0,69.0 159.5,74.5 150.0,80.0 140.5,74.5' fill='#e2e8f0' stroke='#0f172a' stroke-width='1'/><polygon points='140.5,74.5 150.0,80.0 150.0,91.0 140.5,85.5' fill='#cbd5e1' stroke='#0f172a' stroke-width='1'/><polygon points='159.5,74.5 150.0,80.0 150.0,91.0 159.5,85.5' fill='#94a3b8' stroke='#0f172a' stroke-width='1'/><polygon points='159.5,74.5 169.1,80.0 159.5,85.5 150.0,80.0' fill='#e2e8f0' stroke='#0f172a' stroke-width='1'/><polygon points='150.0,80.0 159.5,85.5 159.5,96.5 150.0,91.0' fill='#cbd5e1' stroke='#0f172a' stroke-width='1'/><polygon points='169.1,80.0 159.5,85.5 159.5,96.5 169.1,91.0' fill='#94a3b8' stroke='#0f172a' stroke-width='1'/><polygon points='169.1,80.0 178.6,85.5 169.1,91.0 159.5,85.5' fill='#e2e8f0' stroke='#0f172a' stroke-width='1'/><polygon points='159.5,85.5 169.1,91.0 169.1,102.0 159.5,96.5' fill='#cbd5e1' stroke='#0f172a' stroke-width='1'/><polygon points='178.6,85.5 169.1,91.0 169.1,102.0 178.6,96.5' fill='#94a3b8' stroke='#0f172a' stroke-width='1'/><text x='180.0' y='112.0' fill='#06d6a0' font-size='9' text-anchor='middle'>［図3］3こ 横1れつ</text></svg>",
+              "steps": [
+                {
+                  "question": "［図2］のように さいころを紙の上においたとき、外がわに見える面の目の数の合計はいくつですか。",
+                  "answer": "16",
+                  "meaning": "さいころ1この目の合計は21。見えないのは 紙についた面だけ。上の面が2なら 下は5。21−5＝16。"
+                },
+                {
+                  "question": "［図3］のように さいころ3こを ぴったりくっつけて紙の上においたとき、見える面の目の数の合計は もっとも小さくていくつですか。",
+                  "answer": "28",
+                  "meaning": "3こで21×3＝63。かくれるのは 底3面と くっつく4面の計7面で、これを大きくする。両はしは となりあう2面で 6+5＝11ずつ、まん中は 左右がむかい合っていて和7でうごかず 底に6で13。63−35＝28。"
+                }
+              ]
+            }
+          ]
+        }
       },
       "sairei": {
         "fukushu": {}
