@@ -2862,8 +2862,10 @@ function renderSansuQuiz() {
     const fb = document.getElementById('sq-feedback');
     document.getElementById('sq-feedback-text').textContent = '💡 やり方';
     const ansEl = document.getElementById('sq-feedback-ans');
+    // **ここ** と書いた所を太字にする（大事な言葉だけ目立たせる）
+    const em = t => String(t).replace(/\*\*(.+?)\*\*/g, '<em class="rei-em">$1</em>');
     ansEl.innerHTML = (q.kaisetsu || []).map((k, i) =>
-      `<span class="rei-step"><b>${i + 1}</b>${k}</span>`).join('')
+      `<span class="rei-step"><b>${i + 1}</b>${em(k)}</span>`).join('')
       + `<span class="rei-ans">答え　${q.answer}</span>`;
     fb.classList.remove('hidden');
     const nextBtn = document.getElementById('sq-btn-next');
