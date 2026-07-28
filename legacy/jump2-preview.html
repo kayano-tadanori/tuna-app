@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>チッチジャンプ2 風景プレビュー</title>
+<style>
+  body { margin:0; padding:20px; background:#0b1020; color:#e8ecf8; font-family:system-ui,sans-serif; }
+  h1 { font-size:1.1rem; margin:0 0 4px; }
+  p.note { font-size:0.8rem; color:#9aa4c0; margin:0 0 18px; }
+  .row { display:flex; flex-wrap:wrap; gap:14px; }
+  figure { margin:0; }
+  figcaption { font-size:0.78rem; color:#b9c2dc; margin-top:6px; text-align:center; font-weight:700; }
+  canvas, img.shot { border:1px solid #2a3355; border-radius:8px; display:block; width:260px; height:420px; background:#000; }
+  #stage { position:absolute; left:-9999px; top:0; }
+  button { margin:14px 8px 0 0; padding:9px 16px; border-radius:8px; border:1px solid #3a4570;
+           background:#1b2547; color:#e8ecf8; font-weight:800; cursor:pointer; }
+</style>
+</head>
+<body>
+<h1>チッチジャンプ2 ― 月から火星までの風景</h1>
+<p class="note">app.js の実物の描画コードでそのまま描いています。右クリックで画像保存、または「まとめて保存」で1枚ずつ落とせます。</p>
+<pre id="err" style="color:#ff8da4;font-size:12px;white-space:pre-wrap"></pre>
+<div class="row" id="shots"></div>
+<button id="dl">まとめて保存</button>
+<button id="re">描き直す</button>
+
+<!-- 本番と同じIDのキャンバス（app.js の drawJump が探しにくる） -->
+<canvas id="stage" width="260" height="420"></canvas>
+<canvas id="jump-canvas" width="260" height="420" style="position:absolute;left:-9999px"></canvas>
+<canvas id="jump-chars" width="320" height="76" style="position:absolute;left:-9999px"></canvas>
+
+<script>
+// ★app.js より前に登録する（後だと app.js 自身の読み込みエラーを取り逃す）
+const errEl = document.getElementById('err');
+function showErr(where, e) { errEl.textContent += `[${where}] ${e && e.message ? e.message : e}\n${e && e.stack ? e.stack.split('\n').slice(0,5).join('\n') : ''}\n`; }
+window.addEventListener('error', ev => showErr(ev.filename ? ev.filename.split('/').pop() + ':' + ev.lineno : 'window', ev.error || ev.message));
+
+// app.js は本番のHTMLがある前提で、読み込んだ直後にボタンへ onclick を付けにいく。
+// ここには本番のHTMLが無いので、無い要素にはダミーを返して素通りさせる
+// （jump-canvas / jump-chars は本物を置いてあるので、そちらは本物が返る）。
+(function patchDom() {
+  const dummies = {};
+  const realGet = document.getElementById.bind(document);
+  document.getElementById = id => realGet(id) || (dummies[id] = dummies[id] || document.createElement('canvas'));
+  const realQ = document.querySelector.bind(document);
+  document.querySelector = sel => realQ(sel) || document.createElement('canvas');
+})();
+</script>
+<script src="../sound.js"></script>
+<script src="../app.js"></script>
+<script>
+// 音は鳴らさない
+try { tSound.bgm = false; tSound.sfx = false; } catch (e) { showErr('tSound', e); }
+
+const SCENES = [
+  { m: 2900, label: '2900m 月の直前' },
+  { m: 3100, label: '3100m 月を見送る' },
+  { m: 3600, label: '3600m 小惑星帯' },
+  { m: 4200, label: '4200m 火星が見える' },
+  { m: 4850, label: '4850m 砂嵐' },
+  { m: 5000, label: '5000m 火星に到着', ending: 'mars' },
+  { m: 3000, label: '3000m 月に到着', ending: 'moon' },
+];
+
+function seedState(m, ending) {
+  jumpState.meters = m;
+  jumpState.maxHeight = m * 10;
+  jumpState.starsCollected = 12;
+  jumpState.starScore = 5400;
+  jumpState.bonusScore = m >= 3000 ? 50000 : 0;
+  jumpState.moonCleared = m >= 3000;
+  jumpState.marsCleared = ending === 'mars';
+  jumpState.score = jHeightScore(m) + jumpState.starScore + jumpState.bonusScore;
+  jumpState.over = false;
+  jumpState.ending = !!ending;
+  jumpState.wingUntil = 0; jumpState.barrierUntil = 0; jumpState.rocketUntil = 0;
+  jumpState.stunUntil = 0; jumpState.milestoneUntil = 0; jumpState.popUntil = 0;
+  jumpState.stars = Array.from({ length: 44 }, (_, i) => ({
+    x: (i * 97) % 260, y: (i * 53) % 420, r: (i % 3) * 0.4 + 0.5,
+  }));
+  // 足場をひととおり
+  jumpState.platforms = [];
+  jumpState.coins = [];
+  jumpState.spawnY = 400;
+  while (jumpState.spawnY > -20) { jGenPlatformAt(jumpState.spawnY); jumpState.spawnY -= 78; }
+  jumpState.player.x = 118; jumpState.player.y = 250; jumpState.player.vy = -4; jumpState.player.vx = 0;
+  // その高さで出るじゃま役を置いてみせる
+  jumpState.hawk = null;
+  jumpState.shooters = (m >= 2500 && !ending) ? [{ x: 60, y: 90, vx: 1.6, vy: 3.0 }, { x: 200, y: 190, vx: -1.9, vy: 2.7 }] : [];
+  jumpState.asteroids = (m >= 3400 && m < 4000) ? [
+    { x: 70, y: 120, dir: 1, vy: 0.3, rot: 0.6, seed: 0.31 },
+    { x: 190, y: 260, dir: -1, vy: 0.2, rot: 2.1, seed: 0.77 },
+  ] : [];
+  jumpState.alien = (m >= 4000 && !ending) ? {
+    x: 175, y: 130, dir: -1, seed: 0.42,
+    talk: J_ALIEN_TALK[2], talkUntil: Date.now() + 99999,
+  } : null;
+}
+
+function render() {
+  const wrap = document.getElementById('shots');
+  wrap.innerHTML = '';
+  SCENES.forEach(sc => {
+    try {
+      seedState(sc.m, sc.ending);
+      if (sc.ending) jDrawEnding(); else drawJump();
+    } catch (e) { showErr(sc.label, e); }
+    const url = document.getElementById('jump-canvas').toDataURL('image/png');
+    const fig = document.createElement('figure');
+    const img = document.createElement('img');
+    img.className = 'shot'; img.src = url; img.dataset.name = `jump2_${sc.m}m.png`;
+    const cap = document.createElement('figcaption');
+    cap.textContent = sc.label;
+    fig.appendChild(img); fig.appendChild(cap);
+    wrap.appendChild(fig);
+  });
+}
+
+document.getElementById('re').onclick = render;
+document.getElementById('dl').onclick = () => {
+  document.querySelectorAll('img.shot').forEach((img, i) => {
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = img.src; a.download = img.dataset.name; a.click();
+    }, i * 260);
+  });
+};
+render();
+</script>
+</body>
+</html>

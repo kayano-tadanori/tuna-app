@@ -913,7 +913,23 @@ button { cursor: pointer; font-family: inherit; }
 #zukan-modal-voice { color: var(--accent2); font-style: italic; }
 
 /* ── チッチジャンプ ── */
-.subject-card-jump { --sc-accent: linear-gradient(90deg,#38c8f0,#ffd166); --sc-glow: rgba(56,200,240,0.2); border-color: rgba(56,200,240,0.35); }
+/* チッチジャンプ2：宇宙のバナーを背景に敷く。左側は暗く落として文字を読ませる（2026-07-28） */
+.subject-card-jump {
+  --sc-accent: linear-gradient(90deg,#38c8f0,#ffd166); --sc-glow: rgba(56,200,240,0.28);
+  border-color: rgba(120,150,255,0.5);
+  background:
+    linear-gradient(90deg, rgba(5,7,22,0.94) 0%, rgba(5,7,22,0.74) 20%, rgba(5,7,22,0.30) 40%, rgba(5,7,22,0.05) 62%),
+    url('images/jump2-banner.png') center 42% / cover no-repeat;
+  min-height: 92px;
+  box-shadow: 0 8px 26px rgba(20,40,120,0.35);
+}
+.subject-card-jump .subject-name {
+  background: linear-gradient(90deg,#ffe9a8,#ffb35c);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(255,180,80,0.25); font-weight: 900; letter-spacing: 0.02em;
+}
+.subject-card-jump .subject-detail { color: rgba(226,235,255,0.92); text-shadow: 0 1px 6px rgba(0,0,0,0.9); }
+.subject-card-jump .game-icon { filter: drop-shadow(0 0 12px rgba(120,180,255,0.75)); }
 .jump-area { padding: 8px 16px calc(24px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; align-items: center; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; }
 .jump-area .tetris-info-row { width: 100%; }
 .jump-main { position: relative; }

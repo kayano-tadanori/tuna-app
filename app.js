@@ -8265,10 +8265,11 @@ function drawJump() {
     const tt = (M - J_GOAL) / (J_MOON_LEAVE_M - J_GOAL); // 0..1
     jDrawMoonBall(ctx, J_W * 0.5, J_H * 0.45 + tt * J_H * 0.75, 78 - tt * 54, now);
   }
-  // 近づいてくる火星：4000mから点で見えはじめ、5000mで画面いっぱいに
+  // 近づいてくる火星：4000mでは遠くの赤い点。ゴールが近づくほど大きく、
+  // かつ画面の下へおりてくる（＝これから降り立つ地面が迫ってくる見え方にする）
   if (M >= J_MARS_SEE_M) {
     const tt = Math.min((M - J_MARS_SEE_M) / (J_MARS - J_MARS_SEE_M), 1);
-    jDrawMars(ctx, J_W * 0.5, -40 + tt * (J_H * 0.42), 8 + tt * tt * 120, now);
+    jDrawMars(ctx, J_W * 0.5, J_H * 0.30 + tt * J_H * 0.62, 10 + tt * tt * 78, now);
   }
   // 砂嵐：赤い砂が斜めに流れる
   if (M >= J_STORM_M && !jumpState.marsCleared) {
@@ -8951,19 +8952,29 @@ function jDrawMarsEnding() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
   const now = Date.now();
-  // 火星の空（砂が晴れて、赤茶けた空になる）
+  // 火星の空（砂が晴れたあと。上はまだ宇宙の暗さが残っていて、地平線に近いほど赤くなる）
   const g = ctx.createLinearGradient(0, 0, 0, cv.height);
-  g.addColorStop(0, '#3d1c10'); g.addColorStop(0.55, '#8a4526'); g.addColorStop(1, '#c07548');
+  g.addColorStop(0, '#140604'); g.addColorStop(0.45, '#5c2812'); g.addColorStop(1, '#b05f34');
   ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height);
+  // 暗い上空にはまだ星が見える
+  if (jumpState.stars) {
+    jumpState.stars.forEach((s, i) => {
+      if (s.y > J_H * 0.42) return;
+      ctx.globalAlpha = (1 - s.y / (J_H * 0.42)) * (0.35 + 0.45 * Math.abs(Math.sin(now / 420 + i)));
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
 
   // 空に小さく見える地球と月（ここまで来た距離が分かるように）
-  jDrawEarth(ctx, 206, 54, 11, now);
-  jDrawMoonBall(ctx, 232, 74, 5, now);
+  jDrawEarth(ctx, 202, 116, 13, now);
+  jDrawMoonBall(ctx, 231, 139, 6, now);
   ctx.save();
-  ctx.globalAlpha = 0.75;
-  ctx.font = '9px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#ffe7d5';
-  ctx.fillText('地球', 206, 72);
+  ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(255,231,213,0.9)';
+  ctx.fillText('地球', 202, 137);
+  ctx.fillText('月', 231, 154);
   ctx.restore();
 
   // 火星の地面
