@@ -2335,8 +2335,14 @@ async function renderHamaPanel() {
     kxBtn.disabled = !n2;
     if (n2) document.getElementById('hama-cnt-kaisetsu').textContent = `No.${no} ${pack.title}・${n2}問`;
   }
-  if (isSairei && isOldCurr && newUnits.length) {
-    hint.textContent = '⚠ この回番号は **去年までのカリキュラム** です。今年の内容は「単元でえらぶ（今年）」から。';
+  // ★旧カリキュラムのコースは、回番号モードで必ず注意書きを出す（本人指示 2026-07-28）
+  if (isOldCurr) {
+    hint.textContent = canUnit
+      ? '⚠ この回番号は 去年までのカリキュラム です。今年の内容は「単元でえらぶ（今年）」から。'
+      : '⚠ この回番号は 去年までのカリキュラム です。今年の教材はまだ手もとにないので、単元でえらぶは出していません。';
+    hint.classList.add('hama-warn');
+  } else {
+    hint.classList.remove('hama-warn');
   }
 
   const ranges = { week: [no, no] };
