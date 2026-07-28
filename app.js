@@ -3119,6 +3119,16 @@ function startSansuQuiz() {
   showScreen('sansu-quiz');
 }
 
+// **ここ** と書いた所を強調する。原簿から作った 問題文・設定文・解説は この書き方で
+// 大事な所を囲んである（じゅくナビのデータに 1,600か所以上）。
+// ★算数の文には 60×□<450 のような不等号が生で入っているので、
+//   先に < > & を打ち消してから、強調のタグだけ HTML に戻す。逆順だと不等号がタグとして消える。
+function sqEm(t, cls) {
+  return String(t == null ? '' : t)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<em class="' + (cls || 'rei-em') + '">$1</em>');
+}
+
 function renderSansuQuiz() {
   const total = sansuState.questions.length;
   if (sansuState.current >= total) { endSansuSession(); return; }
@@ -3126,10 +3136,10 @@ function renderSansuQuiz() {
 
   const q = sansuState.questions[sansuState.current];
   document.getElementById('sansu-quiz-counter').textContent = `${sansuState.current + 1}/${total}`;
-  document.getElementById('sq-question').textContent = q.question;
+  document.getElementById('sq-question').innerHTML = sqEm(q.question, 'sq-em');
   document.getElementById('sq-meaning').textContent = '';
   const introEl = document.getElementById('sq-chain-intro');
-  if (q.chainIntro) { introEl.textContent = q.chainIntro; introEl.classList.remove('hidden'); }
+  if (q.chainIntro) { introEl.innerHTML = sqEm(q.chainIntro, 'sq-em'); introEl.classList.remove('hidden'); }
   else { introEl.textContent = ''; introEl.classList.add('hidden'); }
   const figEl = document.getElementById('sq-figure');
   if (q.svg) { figEl.innerHTML = q.svg; figEl.classList.remove('hidden'); }
@@ -3165,8 +3175,7 @@ function renderSansuQuiz() {
     const fb = document.getElementById('sq-feedback');
     document.getElementById('sq-feedback-text').textContent = '💡 やり方';
     const ansEl = document.getElementById('sq-feedback-ans');
-    // **ここ** と書いた所を太字にする（大事な言葉だけ目立たせる）
-    const em = t => String(t).replace(/\*\*(.+?)\*\*/g, '<em class="rei-em">$1</em>');
+    const em = sqEm;   // **ここ** の強調は sqEm にまとめた（不等号も安全に出せる）
     ansEl.innerHTML = (q.kaisetsu || []).map((k, i) =>
       `<span class="rei-step"><b>${i + 1}</b>${em(k)}</span>`).join('')
       + `<span class="rei-ans">答え　${q.answer}</span>`;
@@ -3224,7 +3233,8 @@ function showSqFeedback(q, correct) {
 
   const fb = document.getElementById('sq-feedback');
   document.getElementById('sq-feedback-text').textContent = correct ? '✅ 正解！' : '❌ 不正解';
-  document.getElementById('sq-feedback-ans').textContent = correct ? (q.meaning || '') : `正解：${q.answer}　${q.meaning || ''}`;
+  document.getElementById('sq-feedback-ans').innerHTML = correct ? sqEm(q.meaning)
+    : '正解：' + sqEm(q.answer) + '　' + sqEm(q.meaning);
   document.getElementById('sq-meaning').textContent = '';
   fb.classList.remove('hidden');
 

@@ -996,6 +996,8 @@ button { cursor: pointer; font-family: inherit; }
 .rei-step b { position: absolute; left: 0; top: 1px; width: 19px; height: 19px; border-radius: 50%; background: #22d3ee; color: #052027; font-size: 12px; line-height: 19px; text-align: center; font-weight: 800; }
 .rei-ans { display: block; margin-top: 10px; padding: 8px 12px; border-radius: 8px; background: rgba(34,211,238,0.16); border: 1px solid rgba(34,211,238,0.5); font-weight: 800; font-size: 1.05em; text-align: center; }
 .rei-em { font-style: normal; font-weight: 800; color: #0891b2; background: rgba(34,211,238,0.14); border-radius: 4px; padding: 0 3px; }
+/* 問題文・設定文の中の強調。解説の .rei-em より控えめに（太字と色だけ・背景なし） */
+.sq-em { font-style: normal; font-weight: 900; color: var(--gold); }
 @media (prefers-color-scheme: dark) { .rei-em { color: #67e8f9; } }
 
 /* 旧カリキュラムの回番号を使っているときの注意書き（2026-07-28） */
