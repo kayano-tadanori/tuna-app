@@ -19,7 +19,8 @@ bad, nch, tot = [], 0, 0
 for path in sorted(glob.glob(os.path.join(BASE, "data", "*.json"))):
     name = os.path.basename(path)
     # テンキー／4択の画面を使う教科だけ。国語（漢字の書き取りなど）は手書き入力なので対象外
-    if not (name.startswith(("sansu_", "rika_", "shakai_")) or name == "hama_kaisetsu.json"):
+    if not (name.startswith(("sansu_", "rika_", "shakai_"))
+            or name in ("hama_kaisetsu.json", "hama_daimon.json")):
         continue
     if name in ("sansu_unit_index.json",) or name.endswith(".ubak"):
         continue
@@ -49,6 +50,24 @@ for path in sorted(glob.glob(os.path.join(BASE, "data", "*.json"))):
                     continue
                 bad.append((name, "%s_s%d" % (ch.get("id", "?"), i + 1), ch.get("grade"),
                             st["question"][:46], st["answer"]))
+    # 大問（じゅくナビの🧩）
+    if isinstance(d, dict) and "grades" in d and name == "hama_daimon.json":
+        for g, gv in d["grades"].items():
+            for course, cv in gv.items():
+                packs = []
+                for v in cv.get("fukushu", {}).values():
+                    packs += v
+                for v in cv.get("kokai", {}).values():
+                    packs += v
+                for x in packs:
+                    for st in x.get("steps", []):
+                        tot += 1
+                        if numpad(st["answer"]):
+                            continue
+                        if st.get("choices") and st["answer"] in st["choices"]:
+                            nch += 1
+                            continue
+                        bad.append((name, x.get("id", "?"), g, st["question"][:46], st["answer"]))
     # かんたん解説
     if isinstance(d, dict) and "grades" in d and name == "hama_kaisetsu.json":
         for g, gv in d["grades"].items():
