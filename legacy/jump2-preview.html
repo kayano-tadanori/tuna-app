@@ -56,6 +56,7 @@ window.addEventListener('error', ev => showErr(ev.filename ? ev.filename.split('
 try { tSound.bgm = false; tSound.sfx = false; } catch (e) { showErr('tSound', e); }
 
 const SCENES = [
+  { m: 60, label: '60m 街と富士山' },
   { m: 2900, label: '2900m 月の直前' },
   { m: 3100, label: '3100m 月を見送る' },
   { m: 3600, label: '3600m 小惑星帯' },

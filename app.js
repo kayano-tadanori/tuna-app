@@ -7493,10 +7493,13 @@ const J_STATION_M = 2000;      // 2000mあたりで宇宙ステーションが�
 const J_UFO_M = 2500;          // 2500mあたりでUFOが背景を通過
 const J_SHOOT_M = 2500;        // 2500m超で多めの流れ星が邪魔をしてくる
 // 高度で変わる空（スコア＝m のしきい値・上下グラデ色）。宇宙は1500m、月は2000m
+// 空の色は高さで移り変わる。スタートは昼の青空、登るほど夕やけ→薄暮→夜→宇宙（2026-07-28）
 const J_SKY_TIERS = [
-  { min: 0,    top: '#1a2f6e', bot: '#0a1128' }, // 昼
-  { min: 250,  top: '#7a3f2e', bot: '#2c1636' }, // 夕やけ
-  { min: 650,  top: '#0e1230', bot: '#05060f' }, // 夜
+  { min: 0,    top: '#4aa8e8', bot: '#bfe4ff' }, // 昼（下ほど明るい青空）
+  { min: 200,  top: '#3f86d8', bot: '#ffd9a8' }, // 日が傾きはじめる
+  { min: 380,  top: '#8a4a86', bot: '#ff9e58' }, // 夕やけ
+  { min: 560,  top: '#3a2358', bot: '#8a3f5a' }, // 薄暮
+  { min: 780,  top: '#0e1230', bot: '#05060f' }, // 夜
   { min: 1500, top: '#0a0512', bot: '#000000' }, // 宇宙
   { min: 3000, top: '#050510', bot: '#000000' }, // 深宇宙（月より先）
   { min: 4000, top: '#1a0806', bot: '#000000' }, // 火星の赤い光がうっすら差す
@@ -7526,8 +7529,8 @@ const J_ASTEROID_SIZE = 30;
 // ── チッチの絵（Geminiで描いたもの）を実行時に透過させて使う ────────────
 // Geminiは透過PNGを安定して出せないので、マゼンタ(255,0,255)の下敷きで描かせて
 // 読み込み時に一度だけ抜く。絵が無い・読めないときは今までのドット絵にもどす。
-function jMakeSprite(src) {
-  const holder = { canvas: null, ready: false };
+function jMakeSprite(src, pixelArt) {
+  const holder = { canvas: null, ready: false, pixelArt: !!pixelArt };
   const img = new Image();
   img.onload = () => {
     const c = document.createElement('canvas');
@@ -7562,6 +7565,8 @@ const J_IMG = {
   mars: jMakeSprite('images/jump2-marsball.png'),
   city: jMakeSprite('images/jump2-city.png'),
   rabbit: jMakeSprite('images/jump2-rabbit.png'),
+  moonScene: jMakeSprite('images/jump2-moonscene.png'),
+  marsScene: jMakeSprite('images/jump2-marsscene.png'),
   otton: jMakeSprite('images/jump2-otton.png'),
   okan: jMakeSprite('images/jump2-okan.png'),
   octo: jMakeSprite('images/jump2-octo.png'),
@@ -7598,6 +7603,8 @@ function jDrawImg(ctx, holder, cx, cy, w, h, flip) {
   const sc = Math.min(w / iw, h / ih);
   const dw = iw * sc, dh = ih * sc;
   ctx.save();
+  // ドット絵はにじませない（四角いピクセルのまま出す）
+  if (holder.pixelArt) ctx.imageSmoothingEnabled = false;
   ctx.translate(cx, cy);
   if (flip) ctx.scale(-1, 1);
   ctx.drawImage(holder.canvas, -dw / 2, -dh / 2, dw, dh);
@@ -7660,7 +7667,7 @@ const jumpState = {
   rafId: null, controlsReady: false,
 };
 
-const jumpChars = makeCharStrip('jump-chars', true);
+const jumpChars = makeCharStrip('jump-chars');
 
 function jRandGap() { return J_GAP_MIN + Math.random() * (J_GAP_MAX - J_GAP_MIN); }
 
@@ -8188,6 +8195,16 @@ function jDrawBalloon(ctx, x, y, now) {
 
 // 街のビル群（スタート地点の背景。登るほど下へスクロールして消える）
 function jDrawCity(ctx, W, H, off, alpha, now) {
+  // 描いた夜景（奥に富士山）があればそれを使う。登るほど下へ去っていく
+  const _ct = J_IMG.city;
+  if (_ct && _ct.ready) {
+    const ch = W * (_ct.canvas.height / _ct.canvas.width);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(_ct.canvas, 0, H + off - ch, W, ch);
+    ctx.restore();
+    return;
+  }
   ctx.save();
   ctx.globalAlpha = alpha;
   const baseY = H + off;
@@ -9191,10 +9208,14 @@ function jDrawEnding() {
     });
     ctx.globalAlpha = 1;
   }
-  // 地球（お空に大きく見える）
-  jDrawEarth(ctx, 84, 132, 44, now);
-  // 月面
-  jDrawMoonGround(ctx, cv.width, cv.height);
+  // 描いた月面の風景があれば、空・地球・地面をまとめてその1枚にする
+  const _ms = J_IMG.moonScene;
+  if (_ms && _ms.ready) {
+    ctx.drawImage(_ms.canvas, 0, 0, cv.width, cv.height);
+  } else {
+    jDrawEarth(ctx, 84, 132, 44, now);       // 地球（お空に大きく見える）
+    jDrawMoonGround(ctx, cv.width, cv.height); // 月面
+  }
   // 月のうさぎ（お餅つき）
   jDrawMoonRabbit(ctx, 48, J_H - 132, now);
   // チッチ（月面でぴょこぴょこ喜ぶ）＋旗
@@ -9223,6 +9244,11 @@ function jDrawMarsEnding() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
   const now = Date.now();
+  // 描いた火星の風景があれば、空も地面もその1枚にまかせる
+  const _mrs = J_IMG.marsScene;
+  if (_mrs && _mrs.ready) {
+    ctx.drawImage(_mrs.canvas, 0, 0, cv.width, cv.height);
+  } else {
   // 火星の空（砂が晴れたあと。上はまだ宇宙の暗さが残っていて、地平線に近いほど赤くなる）
   const g = ctx.createLinearGradient(0, 0, 0, cv.height);
   g.addColorStop(0, '#140604'); g.addColorStop(0.45, '#5c2812'); g.addColorStop(1, '#b05f34');
@@ -9250,6 +9276,8 @@ function jDrawMarsEnding() {
 
   // 火星の地面
   jDrawMarsGround(ctx, cv.width, cv.height);
+  }
+  // ここから下は、描いた風景を使う場合も使わない場合も共通で上に乗せる
   // キュリオシティ（左手前でカメラをこちらに向けている）
   jDrawCuriosity(ctx, 62, J_H - 96, now);
   // 出迎えの8本脚の宇宙人（あいかわらず何を言っているか分からない）
