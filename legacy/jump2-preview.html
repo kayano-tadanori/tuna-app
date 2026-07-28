@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- app.js の中の 'images/○○.png' がアプリ本体と同じように解決されるように基準を1つ上へ -->
+<base href="../">
 <title>チッチジャンプ2 風景プレビュー</title>
 <style>
   body { margin:0; padding:20px; background:#0b1020; color:#e8ecf8; font-family:system-ui,sans-serif; }
@@ -47,8 +49,8 @@ window.addEventListener('error', ev => showErr(ev.filename ? ev.filename.split('
   document.querySelector = sel => realQ(sel) || document.createElement('canvas');
 })();
 </script>
-<script src="../sound.js"></script>
-<script src="../app.js"></script>
+<script src="sound.js"></script>
+<script src="app.js"></script>
 <script>
 // 音は鳴らさない
 try { tSound.bgm = false; tSound.sfx = false; } catch (e) { showErr('tSound', e); }
@@ -117,6 +119,14 @@ function render() {
   });
 }
 
+// 絵の読み込みを待ってから描く（1回こっきりの描画なので、待たないと絵が間に合わない）
+async function preloadThenRender() {
+  const srcs = ['images/space-nebula.png'].concat(['chicchi-up','chicchi-down','hawkup','hawkdown','alien','balloon','ufo','station','moonball','marsball','city','rabbit','octo','rover','cloud_normal','cloud_spring','cloud_break','cloud_ice','rock_normal','rock_spring','rock_break','rock_ice','mars_normal','mars_spring','mars_break','mars_ice'].map(n => 'images/jump2-' + n + '.png'));
+  await Promise.all(srcs.map(s => new Promise(res => { const i = new Image(); i.onload = i.onerror = res; i.src = s; })));
+  await new Promise(r => setTimeout(r, 500));   // app.js側の透過処理が終わるのを待つ
+  render();
+}
+
 document.getElementById('re').onclick = render;
 document.getElementById('dl').onclick = () => {
   document.querySelectorAll('img.shot').forEach((img, i) => {
@@ -126,7 +136,7 @@ document.getElementById('dl').onclick = () => {
     }, i * 260);
   });
 };
-render();
+preloadThenRender();
 </script>
 </body>
 </html>

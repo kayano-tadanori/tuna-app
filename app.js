@@ -7517,6 +7517,88 @@ const J_MARS_SEE_M = 4000;     // 火星が見えはじめる
 const J_STORM_M = 4700;        // 砂嵐（横風）のはじまり
 const J_ASTEROID_SIZE = 30;
 
+// ── チッチの絵（Geminiで描いたもの）を実行時に透過させて使う ────────────
+// Geminiは透過PNGを安定して出せないので、マゼンタ(255,0,255)の下敷きで描かせて
+// 読み込み時に一度だけ抜く。絵が無い・読めないときは今までのドット絵にもどす。
+function jMakeSprite(src) {
+  const holder = { canvas: null, ready: false };
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const cx = c.getContext('2d');
+    cx.drawImage(img, 0, 0);
+    const d = cx.getImageData(0, 0, c.width, c.height);
+    const p = d.data;
+    for (let i = 0; i < p.length; i += 4) {
+      // 赤と青が強くて緑が弱い＝マゼンタの下敷き。ふちの中間色もうすめて残さない
+      if (p[i] > 140 && p[i + 2] > 140 && p[i + 1] < 120) p[i + 3] = 0;
+      else if (p[i] > 120 && p[i + 2] > 120 && p[i + 1] < 150) p[i + 3] = Math.min(p[i + 3], 90);
+    }
+    cx.putImageData(d, 0, 0);
+    holder.canvas = c; holder.ready = true;
+  };
+  img.onerror = () => { holder.ready = false; };
+  img.src = src;
+  return holder;
+}
+// 出てくるもの全部の絵。まだ描けていない／読めないものは、これまでのcanvas描画にもどる
+const J_IMG = {
+  chicchiUp: jMakeSprite('images/jump2-chicchi-up.png'),
+  chicchiDown: jMakeSprite('images/jump2-chicchi-down.png'),
+  hawkUp: jMakeSprite('images/jump2-hawkup.png'),
+  hawkDown: jMakeSprite('images/jump2-hawkdown.png'),
+  alien: jMakeSprite('images/jump2-alien.png'),
+  balloon: jMakeSprite('images/jump2-balloon.png'),
+  ufo: jMakeSprite('images/jump2-ufo.png'),
+  station: jMakeSprite('images/jump2-station.png'),
+  moon: jMakeSprite('images/jump2-moonball.png'),
+  mars: jMakeSprite('images/jump2-marsball.png'),
+  city: jMakeSprite('images/jump2-city.png'),
+  rabbit: jMakeSprite('images/jump2-rabbit.png'),
+  octo: jMakeSprite('images/jump2-octo.png'),
+  rover: jMakeSprite('images/jump2-rover.png'),
+  // 足場（雲＝空、岩＝宇宙）。種類ごとに1枚ずつ
+  cloud_normal: jMakeSprite('images/jump2-cloud_normal.png'),
+  cloud_spring: jMakeSprite('images/jump2-cloud_spring.png'),
+  cloud_break: jMakeSprite('images/jump2-cloud_break.png'),
+  cloud_ice: jMakeSprite('images/jump2-cloud_ice.png'),
+  rock_normal: jMakeSprite('images/jump2-rock_normal.png'),
+  rock_spring: jMakeSprite('images/jump2-rock_spring.png'),
+  rock_break: jMakeSprite('images/jump2-rock_break.png'),
+  rock_ice: jMakeSprite('images/jump2-rock_ice.png'),
+  mars_normal: jMakeSprite('images/jump2-mars_normal.png'),
+  mars_spring: jMakeSprite('images/jump2-mars_spring.png'),
+  mars_break: jMakeSprite('images/jump2-mars_break.png'),
+  mars_ice: jMakeSprite('images/jump2-mars_ice.png'),
+};
+const J_CHICCHI_SPRITES = { flapUp: J_IMG.chicchiUp, flapDown: J_IMG.chicchiDown };
+// 見た目だけ大きく描く（当たり判定は今までどおり24×34のまま）
+const J_SPRITE_DRAW_W = 44, J_SPRITE_DRAW_H = 44;
+
+// 絵を中心合わせで描く。用意できていなければ false を返すので、呼び出し側が今までの絵を描く
+function jDrawImg(ctx, holder, cx, cy, w, h, flip) {
+  if (!holder || !holder.ready) return false;
+  // 与えた枠に収まるよう、絵の縦横比を保ったまま縮める（惑星や探査車が楕円に潰れないように）
+  const iw = holder.canvas.width, ih = holder.canvas.height;
+  const sc = Math.min(w / iw, h / ih);
+  const dw = iw * sc, dh = ih * sc;
+  ctx.save();
+  ctx.translate(cx, cy);
+  if (flip) ctx.scale(-1, 1);
+  ctx.drawImage(holder.canvas, -dw / 2, -dh / 2, dw, dh);
+  ctx.restore();
+  return true;
+}
+
+// 宇宙の星雲の絵。読み込めるまでは描かない（オフラインでも落ちないように）
+const J_NEBULA_FROM = 1200;
+let _jNeb = null;
+function jNebulaImg() {
+  if (!_jNeb) { _jNeb = new Image(); _jNeb.src = 'images/space-nebula.png'; }
+  return (_jNeb.complete && _jNeb.naturalWidth) ? _jNeb : null;
+}
+
 // 高さ(m)から高さ点を出す。区間ごとに単価が違うので積み上げで計算する
 function jHeightScore(m) {
   let s = 0, prev = 0;
@@ -7559,7 +7641,7 @@ const jumpState = {
   // meters＝高さ(m)。score＝合計点。演出の判定は必ず meters を見ること（scoreは桁が違う）
   meters: 0, starScore: 0, bonusScore: 0, starCombo: 0, lastStarAt: -99999,
   moonCleared: false, marsCleared: false,
-  asteroids: [], asteroidCooldown: 0, popText: '', popUntil: 0,
+  asteroids: [], asteroidCooldown: 0, popText: '', popUntil: 0, bursts: [],
   over: false, dragging: false,
   rafId: null, controlsReady: false,
 };
@@ -7830,6 +7912,7 @@ function jUpdatePhysics() {
       p.vy = J_KNOCKBACK_VY;
       jumpState.stunUntil = Date.now() + J_STUN_MS;
       jSfx('hawkHit');
+      jBurst(h.x, h.y, '#ff8da4');
       jumpChars.cheer('ふっとばされた！', 1200);
       jumpState.hawkCooldown = 150 + Math.random() * 150;
     } else if (h.x < -J_HAWK_SIZE || h.x > J_W + J_HAWK_SIZE) {
@@ -7864,13 +7947,14 @@ function jUpdatePhysics() {
     sh.x += sh.vx; sh.y += sh.vy;
     const hit = p.x + J_PLAYER_W > sh.x - 6 && p.x < sh.x + 6 && p.y + J_PLAYER_H > sh.y - 6 && p.y < sh.y + 6;
     if (hit && (wingOn || barrierOn)) {
-      jumpState.shooters.splice(i, 1); jSfx('onigiri');
+      jumpState.shooters.splice(i, 1); jSfx('onigiri'); jBurst(sh.x, sh.y, '#ffb3d9');
     } else if (hit) {
       jumpState.shooters.splice(i, 1);
       p.vx = (p.x + J_PLAYER_W / 2 < sh.x ? -1 : 1) * J_KNOCKBACK_VX;
       p.vy = J_KNOCKBACK_VY;
       jumpState.stunUntil = now + J_STUN_MS;
       jSfx('hawkHit');
+      jBurst(sh.x, sh.y, '#9fd8ff');
       jumpChars.cheer('流れ星にぶつかった！', 1000);
     } else if (sh.y > J_H + 20 || sh.x < -20 || sh.x > J_W + 20) {
       jumpState.shooters.splice(i, 1);
@@ -7898,7 +7982,7 @@ function jUpdatePhysics() {
     const ar = J_ASTEROID_SIZE / 2;
     const hitA = p.x + J_PLAYER_W > a.x - ar && p.x < a.x + ar && p.y + J_PLAYER_H > a.y - ar && p.y < a.y + ar;
     if (hitA && (wingOn || barrierOn)) {
-      jumpState.asteroids.splice(i, 1); jSfx('onigiri');
+      jumpState.asteroids.splice(i, 1); jSfx('onigiri'); jBurst(a.x, a.y, '#ffb3d9');
       jumpChars.cheer('バリアで岩をはね返した！', 1000);
     } else if (hitA) {
       jumpState.asteroids.splice(i, 1);
@@ -7906,6 +7990,7 @@ function jUpdatePhysics() {
       p.vy = J_KNOCKBACK_VY;
       jumpState.stunUntil = now + J_STUN_MS;
       jSfx('hawkHit');
+      jBurst(a.x, a.y, '#e0c08a');
       jumpChars.cheer('岩にぶつかった！', 1000);
     } else if (a.x < -40 || a.x > J_W + 40 || a.y > J_H + 40) {
       jumpState.asteroids.splice(i, 1);
@@ -7951,6 +8036,7 @@ function jUpdatePhysics() {
       p.vy = J_KNOCKBACK_VY;
       jumpState.stunUntil = now + J_STUN_MS;
       jSfx('hawkHit');
+      jBurst(al.x, al.y, '#8dffc0');
       jumpChars.cheer('宇宙人にぶつかった！', 1000);
       jumpState.alienCooldown = 180 + Math.random() * 180;
     } else if (al.x < -40 || al.x > J_W + 40) {
@@ -8001,6 +8087,7 @@ function updateJumpInfo() {
 
 // 宇宙ステーション（2000mあたりの背景を通過する）
 function jDrawSpaceStation(ctx, cx, cy, now) {
+  if (jDrawImg(ctx, J_IMG.station, cx, cy, 86, 86)) return;
   ctx.save();
   ctx.translate(cx, cy);
   ctx.rotate(Math.sin(now / 1600) * 0.06);
@@ -8032,6 +8119,7 @@ function jDrawSpaceStation(ctx, cx, cy, now) {
 
 // UFO（2500mあたりの背景を通過する空飛ぶ円盤）
 function jDrawUFO(ctx, cx, cy, now) {
+  if (jDrawImg(ctx, J_IMG.ufo, cx, cy, 76, 76)) return;
   ctx.save();
   ctx.translate(cx, cy);
   ctx.rotate(Math.sin(now / 1300) * 0.05);
@@ -8114,6 +8202,13 @@ const J_CLOUD_COLORS = {
   ice:    ['rgba(200,236,255,0.97)', 'rgba(120,195,240,0.55)'],
 };
 function jDrawCloud(ctx, x, y, w, h, type) {
+  // 描いた絵があればそれを使う（moving＝動く雲はふつうの雲の絵で描く）
+  const _c = J_IMG['cloud_' + (type === 'moving' ? 'normal' : type)];
+  if (_c && _c.ready) {
+    const dw = w + 26, dh = dw * (_c.canvas.height / _c.canvas.width) * 1.15;
+    ctx.drawImage(_c.canvas, x + w / 2 - dw / 2, y + h / 2 - dh / 2, dw, dh);
+    return;
+  }
   const r = h * 0.85;
   const [main, base] = J_CLOUD_COLORS[type] || J_CLOUD_COLORS.normal;
   ctx.fillStyle = main;
@@ -8144,7 +8239,13 @@ function jDrawCloud(ctx, x, y, w, h, type) {
 }
 
 // 宇宙の足場は隕石（岩）。seedで大きさ・形・クレーターがバラける
-function jDrawMeteor(ctx, x, y, w, h, type, seed) {
+function jDrawMeteor(ctx, x, y, w, h, type, seed, zone) {
+  const _r = J_IMG[(zone || 'rock') + '_' + (type === 'moving' ? 'normal' : type)];
+  if (_r && _r.ready) {
+    const dw = w + 26, dh = dw * (_r.canvas.height / _r.canvas.width) * 1.15;
+    ctx.drawImage(_r.canvas, x + w / 2 - dw / 2, y + h / 2 - dh / 2, dw, dh);
+    return;
+  }
   const cx = x + w / 2, cy = y + h / 2 + 2;
   const rxBase = w / 2 + 3;
   const ry = h / 2 + 4 + seed * 4;   // 縦の大きさをseedでばらつかせる
@@ -8226,6 +8327,19 @@ function drawJump() {
     jDrawCity(ctx, J_W, J_H, M * 0.6, Math.max(0, 1 - M / 450), now);
   }
 
+  // 宇宙の星雲（1200mあたりからだんだん濃くなる。登るほどゆっくり下へ流れる＝奥行きが出る）
+  const neb = jNebulaImg();
+  if (neb && M >= J_NEBULA_FROM) {
+    const a = Math.min((M - J_NEBULA_FROM) / 700, 1) * 0.9;
+    const oh = J_H * 1.7;
+    const off = (jumpState.maxHeight * 0.10) % oh;
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.drawImage(neb, 0, off - oh, J_W, oh);
+    ctx.drawImage(neb, 0, off, J_W, oh);
+    ctx.restore();
+  }
+
   // 夜〜宇宙でまたたく星（夜＝650mに近づくと現れる）
   const nightFactor = Math.min(Math.max((M - 450) / 200, 0), 1);
   if (nightFactor > 0 && jumpState.stars) {
@@ -8285,11 +8399,13 @@ function drawJump() {
     ctx.restore();
   }
 
-  const inSpace = M >= J_SPACE_M;
+  // 足場の見た目は高さで3段階：空＝雲、宇宙＝灰色の岩、火星圏（4000m〜）＝赤い岩
+  const zone = M >= J_MARS_SEE_M ? 'mars' : (M >= J_SPACE_M ? 'rock' : 'cloud');
+  const inSpace = zone !== 'cloud';
   jumpState.platforms.forEach(plat => {
     const type = plat.used ? 'break' : (plat.vx && plat.type === 'normal' ? 'moving' : plat.type);
     if (plat.used) { ctx.save(); ctx.globalAlpha = Math.max(0, 1 - (now - plat.breakAt) / J_BREAK_FADE_MS); }
-    if (inSpace) jDrawMeteor(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type, plat.seed != null ? plat.seed : 0.5);
+    if (inSpace) jDrawMeteor(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type, plat.seed != null ? plat.seed : 0.5, zone);
     else jDrawCloud(ctx, plat.x, plat.y, plat.w, J_PLATFORM_H, type);
     if (plat.used) ctx.restore();
   });
@@ -8331,16 +8447,25 @@ function drawJump() {
     const s = M;
     if (s >= J_BALLOON_M && s < J_SPACE_M) {
       // 1000〜1500mは気球
-      jDrawBalloon(ctx, h.x, h.y, now);
+      if (!jDrawImg(ctx, J_IMG.balloon, h.x, h.y, 38, 46)) jDrawBalloon(ctx, h.x, h.y, now);
+    } else if (s >= J_SPACE_M) {
+      // 宇宙（1500m以上）は宇宙人
+      if (!jDrawImg(ctx, J_IMG.alien, h.x, h.y, 36, 36)) {
+        ctx.save();
+        ctx.font = '26px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('👽', h.x, h.y);
+        ctx.restore();
+      }
     } else {
-      // 〜1000mはタカ、宇宙（1500m以上）は宇宙人
-      const emoji = s >= J_SPACE_M ? '👽' : '🦅';
-      ctx.save();
-      ctx.font = '26px sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText(emoji, 0, 0); }
-      else { ctx.fillText(emoji, h.x, h.y); }
-      ctx.restore();
+      // 〜1000mはタカ。翼を上げ下げして羽ばたかせる（進む向きに合わせて左右を反転）
+      const hk = Math.floor(now / 150) % 2 ? J_IMG.hawkUp : J_IMG.hawkDown;
+      if (!jDrawImg(ctx, hk, h.x, h.y, 40, 40, h.dir === 1)) {
+        ctx.save();
+        ctx.font = '26px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        if (h.dir === 1) { ctx.translate(h.x, h.y); ctx.scale(-1, 1); ctx.fillText('🦅', 0, 0); }
+        else { ctx.fillText('🦅', h.x, h.y); }
+        ctx.restore();
+      }
     }
   }
 
@@ -8370,14 +8495,31 @@ function drawJump() {
       ctx.restore();
     }
   }
+  // アイテム中のオーラ（キャラの下に敷いて、キャラが光に包まれて見えるように）
+  if (rocketOn) jDrawAura(ctx, px + J_PLAYER_W / 2, py + J_PLAYER_H / 2, now, 'rocket');
+  else if (wingOn) jDrawAura(ctx, px + J_PLAYER_W / 2, py + J_PLAYER_H / 2, now, 'wing');
+  else if (barrierOn) jDrawAura(ctx, px + J_PLAYER_W / 2, py + J_PLAYER_H / 2, now, 'barrier');
+
   const sp = T_SPRITES.chicchi;
   const glow = wingOn || barrierOn || rocketOn;
   // 羽ばたき：いつも速くバタバタ。つばさ発動中はさらに速く。ロケット中は加速ポーズ
   const flapMs = wingOn ? 45 : 65;
   const frame = rocketOn ? sp.rocket : (Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown);
   if (glow) { ctx.save(); ctx.shadowColor = rocketOn ? '#ff8c3a' : wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = rocketOn ? 6 : 12; }
-  tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
+  // 絵が用意できていれば描いたチッチ、まだならドット絵（オフライン初回など）
+  const upS = J_CHICCHI_SPRITES.flapUp, downS = J_CHICCHI_SPRITES.flapDown;
+  if (upS.ready && downS.ready) {
+    const cvs = (Math.floor(now / flapMs) % 2 ? upS : downS).canvas;
+    ctx.drawImage(cvs,
+      px + J_PLAYER_W / 2 - J_SPRITE_DRAW_W / 2,
+      py + J_PLAYER_H / 2 - J_SPRITE_DRAW_H / 2,
+      J_SPRITE_DRAW_W, J_SPRITE_DRAW_H);
+  } else {
+    tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
+  }
   if (glow) ctx.restore();
+
+  jDrawBursts(ctx, now);
 
   // 到達演出のバナー
   if (now < jumpState.milestoneUntil) {
@@ -8547,6 +8689,7 @@ function jSaveJumpRecord() {
 
 // 見送ってくれる月（背景を遠ざかっていく球）
 function jDrawMoonBall(ctx, cx, cy, r, now) {
+  if (jDrawImg(ctx, J_IMG.moon, cx, cy, r * 2.1, r * 2.1)) return;
   ctx.save();
   const glow = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.3);
   glow.addColorStop(0, 'rgba(226,230,245,0.28)');
@@ -8569,6 +8712,7 @@ function jDrawMoonBall(ctx, cx, cy, r, now) {
 
 // 火星（近づいてくる赤い惑星）— 極の氷・大シルチスふうの黒い模様つき
 function jDrawMars(ctx, cx, cy, r, now) {
+  if (jDrawImg(ctx, J_IMG.mars, cx, cy, r * 2.1, r * 2.1)) return;
   ctx.save();
   const glow = ctx.createRadialGradient(cx, cy, r * 0.92, cx, cy, r * 1.4);
   glow.addColorStop(0, 'rgba(255,140,90,0.35)');
@@ -8619,8 +8763,101 @@ function jDrawAsteroid(ctx, cx, cy, r, rot, seed) {
   ctx.restore();
 }
 
+// ── お助けアイテムのオーラ（2026-07-28）────────────────────
+// ロケット中は金色のオーラを立ちのぼらせる（本人の希望：サイヤ人みたいに）。
+// つばさは黄色、おにぎりバリアは桃色で、同じ形のオーラを色ちがいで出す。
+const J_AURA = {
+  rocket:  { inner: 'rgba(255,244,190,0.70)', mid: 'rgba(255,176,40,0.36)', out: 'rgba(255,110,0,0)',   f1: 'rgba(255,226,130,0.60)', f2: 'rgba(255,150,40,0.50)', spark: 'rgba(255,255,220,0.95)', r: 38 },
+  wing:    { inner: 'rgba(255,240,170,0.52)', mid: 'rgba(255,209,102,0.26)', out: 'rgba(255,209,102,0)', f1: 'rgba(255,236,160,0.42)', f2: 'rgba(255,205,90,0.34)',  spark: 'rgba(255,255,230,0.85)', r: 30 },
+  barrier: { inner: 'rgba(255,200,230,0.50)', mid: 'rgba(255,140,190,0.26)', out: 'rgba(255,140,190,0)', f1: 'rgba(255,190,225,0.40)', f2: 'rgba(255,130,185,0.32)', spark: 'rgba(255,240,250,0.85)', r: 30 },
+};
+function jDrawAura(ctx, cx, cy, now, kind) {
+  const c = J_AURA[kind]; if (!c) return;
+  ctx.save();
+  // ぼんやりした光の玉
+  const g = ctx.createRadialGradient(cx, cy, 5, cx, cy, c.r);
+  g.addColorStop(0, c.inner); g.addColorStop(0.55, c.mid); g.addColorStop(1, c.out);
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(cx, cy, c.r, 0, Math.PI * 2); ctx.fill();
+  // 上へ立ちのぼる炎の舌（ゆらゆら揺れる）
+  ctx.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 7; i++) {
+    const ph = now / 85 + i * 1.7;
+    const fw = 5 + Math.sin(ph) * 2;
+    const fh = (kind === 'rocket' ? 32 : 22) + Math.sin(ph * 1.3) * 10;
+    const ox = (i - 3) * 5.4;
+    ctx.fillStyle = i % 2 ? c.f1 : c.f2;
+    ctx.beginPath();
+    ctx.moveTo(cx + ox - fw / 2, cy + 11);
+    ctx.quadraticCurveTo(cx + ox, cy - fh, cx + ox + fw / 2, cy + 11);
+    ctx.closePath(); ctx.fill();
+  }
+  // まわりを回る光の粒
+  ctx.fillStyle = c.spark;
+  for (let i = 0; i < 6; i++) {
+    const a = now / 210 + i * (Math.PI / 3);
+    const rr = (c.r * 0.62) + Math.sin(now / 300 + i) * 5;
+    ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr * 0.72, 2.2, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.restore();
+}
+
+// ── ぶつかったときのエフェクト（2026-07-28）──────────────────
+// ぶつかった場所に星形の破裂と衝撃の輪を出す。当たったのが目で分かるようにする。
+function jBurst(x, y, color) {
+  jumpState.bursts.push({ x, y, at: Date.now(), color: color || '#ffd166' });
+  if (jumpState.bursts.length > 6) jumpState.bursts.shift();
+}
+const J_BURST_MS = 420;
+function jDrawBursts(ctx, now) {
+  if (!jumpState.bursts || !jumpState.bursts.length) return;
+  for (let i = jumpState.bursts.length - 1; i >= 0; i--) {
+    const b = jumpState.bursts[i];
+    const t = (now - b.at) / J_BURST_MS;
+    if (t >= 1) { jumpState.bursts.splice(i, 1); continue; }
+    ctx.save();
+    ctx.globalAlpha = 1 - t;
+    // 広がる輪
+    ctx.strokeStyle = b.color; ctx.lineWidth = 3 * (1 - t);
+    ctx.beginPath(); ctx.arc(b.x, b.y, 8 + t * 26, 0, Math.PI * 2); ctx.stroke();
+    // 飛び散る光
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2 * (1 - t); ctx.lineCap = 'round';
+    for (let k = 0; k < 8; k++) {
+      const a = (k / 8) * Math.PI * 2 + t;
+      const r1 = 6 + t * 20, r2 = r1 + 8 * (1 - t);
+      ctx.beginPath();
+      ctx.moveTo(b.x + Math.cos(a) * r1, b.y + Math.sin(a) * r1);
+      ctx.lineTo(b.x + Math.cos(a) * r2, b.y + Math.sin(a) * r2);
+      ctx.stroke();
+    }
+    ctx.lineCap = 'butt';
+    ctx.restore();
+  }
+}
+
+// 読めない記号のふきだし（8本脚の宇宙人が使う）
+function jDrawTalkBubble(ctx, cx, y, talk) {
+  ctx.save();
+  ctx.font = 'bold 11px sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const w = ctx.measureText(talk).width + 14;
+  const bx = Math.min(Math.max(cx - w / 2, 2), J_W - w - 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.94)';
+  jRoundRect(ctx, bx, y, w, 18, 6); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(cx - 4, y + 18); ctx.lineTo(cx + 4, y + 18); ctx.lineTo(cx, y + 24); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#1c3a2a';
+  ctx.fillText(talk, bx + w / 2, y + 9);
+  ctx.restore();
+}
+
 // 火星の8本脚の宇宙人。目は3つ、脚はうねうね。しゃべる内容は読めない記号
 function jDrawOctoAlien(ctx, cx, cy, now, seed, talk) {
+  const _o = J_IMG.octo;
+  if (_o && _o.ready) {
+    jDrawImg(ctx, _o, cx, cy + Math.sin(now / 420 + seed * 6) * 2, 46, 46);
+    if (talk) jDrawTalkBubble(ctx, cx, cy - 34, talk);
+    return;
+  }
   ctx.save();
   const y = cy + Math.sin(now / 420 + seed * 6) * 2;
 
@@ -8683,6 +8920,7 @@ function jDrawMarsGround(ctx, W, H) {
 
 // キュリオシティ（NASAの火星探査車）— 6輪・マスト・カメラ・ロボットアーム
 function jDrawCuriosity(ctx, x, gy, now) {
+  if (jDrawImg(ctx, J_IMG.rover, x, gy - 20, 66, 50)) return;
   ctx.save();
   ctx.translate(x, gy);
   const body = '#c8cbd4', dark = '#6d7280';
@@ -8813,6 +9051,14 @@ function jRoundRect(ctx, x, y, w, h, r) {
 
 // 月のうさぎ（2羽でお餅つき：つき手＋返し手）＋湯気・伸びる餅・セリフ
 function jDrawMoonRabbit(ctx, x, gy, now) {
+  // 描いたウサギがあればそれを使う（セリフだけは今までどおり出す）
+  const _rb = J_IMG.rabbit;
+  if (_rb && _rb.ready) {
+    jDrawImg(ctx, _rb, x + 26, gy - 22, 92, 76);
+    const lines = ['ぺったん♪', 'よいしょ！', 'いらっしゃい', 'おいしいよ', 'もちどうぞ'];
+    jDrawTalkBubble(ctx, x + 22, gy - 74, lines[Math.floor(now / 2600) % lines.length]);
+    return;
+  }
   const t = Math.sin(now / 240);
   const up = t > 0 ? t : 0;        // 杵をふり上げる量 0..1
   const kineY = gy - 26 - up * 14; // 杵の高さ（先に計算：伸びる餅に使う）
