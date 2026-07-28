@@ -654,6 +654,283 @@
                 }
               ]
             }
+          ],
+          "19": [
+            {
+              "id": "hd_3m_f19_3",
+              "src": "HG-0061",
+              "title": "対角線を ひいた長方形",
+              "category": "zu",
+              "unit": "平面図形（面積）",
+              "grade": 3,
+              "star": 2,
+              "intro": "長方形を たて2つ・よこ2つ の4つのマスに区切り、\nどのマスにも 同じ向きの対角線を1本ずつ ひきました。",
+              "svg": "<svg viewBox='0 0 200 122' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>長方形を 2×2の4つのマスに 区切り、</text><text x='8.0' y='28.0' fill='#ffd166' font-size='10' text-anchor='start'>どのマスにも 同じ向きの 対角線をひいた</text><rect x='30.0' y='40.0' width='60.0' height='34.0' rx='0' fill='none' stroke='#4f9eff' stroke-width='1.3'/><line x1='30.0' y1='40.0' x2='90.0' y2='74.0' stroke='#ffd166' stroke-width='1'/><rect x='90.0' y='40.0' width='60.0' height='34.0' rx='0' fill='none' stroke='#4f9eff' stroke-width='1.3'/><line x1='90.0' y1='40.0' x2='150.0' y2='74.0' stroke='#ffd166' stroke-width='1'/><rect x='30.0' y='74.0' width='60.0' height='34.0' rx='0' fill='none' stroke='#4f9eff' stroke-width='1.3'/><line x1='30.0' y1='74.0' x2='90.0' y2='108.0' stroke='#ffd166' stroke-width='1'/><rect x='90.0' y='74.0' width='60.0' height='34.0' rx='0' fill='none' stroke='#4f9eff' stroke-width='1.3'/><line x1='90.0' y1='74.0' x2='150.0' y2='108.0' stroke='#ffd166' stroke-width='1'/></svg>",
+              "steps": [
+                {
+                  "question": "この中に 長方形は 全部で何こありますか。（対角線は使いません）",
+                  "answer": "9",
+                  "meaning": "たての線3本から2本、よこの線3本から2本 えらべばよい。3通り×3通り＝9こ。"
+                }
+              ]
+            }
+          ],
+          "20": [
+            {
+              "id": "hd_3m_f20_3",
+              "src": "HG-0062",
+              "title": "大きい円の中の 2つの円",
+              "category": "zu",
+              "unit": "平面図形（面積）",
+              "grade": 3,
+              "star": 3,
+              "intro": "まわりの長さが42cmの円の中に、大きさのちがう2つの円 ア・イ が よこにならんで ぴったり入っています。\nイの直径は5cmです。円周率は3とします。",
+              "svg": "<svg viewBox='0 0 270 126' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>大きい円に 2つの円が ぴったり入っている</text><circle cx='90.0' cy='74.0' r='42' fill='none' stroke='#4f9eff' stroke-width='1.6'/><circle cx='75.0' cy='74.0' r='27.0' fill='none' stroke='#ef476f' stroke-width='1.4'/><circle cx='117.0' cy='74.0' r='15.0' fill='none' stroke='#06d6a0' stroke-width='1.4'/><text x='75.0' y='78.0' fill='#ef476f' font-size='11' text-anchor='middle'>ア</text><text x='117.0' y='78.0' fill='#06d6a0' font-size='11' text-anchor='middle'>イ</text><text x='150.0' y='50.0' fill='#ffd166' font-size='9' text-anchor='start'>大きい円のまわり</text><text x='150.0' y='64.0' fill='#ffd166' font-size='9' text-anchor='start'>＝42cm</text><text x='150.0' y='82.0' fill='#06d6a0' font-size='9' text-anchor='start'>イの直径＝5cm</text><text x='150.0' y='100.0' fill='#06d6a0' font-size='9' text-anchor='start'>円周率は3</text></svg>",
+              "steps": [
+                {
+                  "question": "イの円のまわりの長さは何cmですか。",
+                  "answer": "15",
+                  "meaning": "5×3＝15cm。"
+                },
+                {
+                  "question": "大きい円の直径は何cmですか。",
+                  "answer": "14",
+                  "meaning": "まわり÷円周率で 42÷3＝14cm。"
+                },
+                {
+                  "question": "アの円の直径は何cmですか。",
+                  "answer": "9",
+                  "meaning": "アとイが よこにならんで ぴったり入っているので、アの直径＋イの直径＝大きい円の直径。14−5＝9cm。"
+                },
+                {
+                  "question": "アの円のまわりの長さは何cmですか。",
+                  "answer": "27",
+                  "meaning": "9×3＝27cm。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f20_4",
+              "src": "HG-0063",
+              "title": "箱に入った ボール",
+              "category": "rittai",
+              "unit": "立体図形（体積・表面積）",
+              "grade": 3,
+              "star": 3,
+              "intro": "たて2mの箱に 同じ大きさのボールが すき間なく入っています。\n上から見ると よこに4こ、たてに5こ ならんでいます。円周率は3とします。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "ボール1この直径は何cmですか。",
+                  "answer": "40",
+                  "meaning": "たて2m＝200cmに5こならぶので 200÷5＝40cm。たての数で直径が決まる。"
+                },
+                {
+                  "question": "箱のよこの長さは何cmですか。",
+                  "answer": "160",
+                  "meaning": "40×4＝160cm（1.6m）。"
+                },
+                {
+                  "question": "ボールを半分に切ったときの 切り口のまわりの長さは何cmですか。",
+                  "answer": "120",
+                  "meaning": "切り口は 直径40cmの円。40×3＝120cm。"
+                }
+              ]
+            }
+          ],
+          "21": [
+            {
+              "id": "hd_3m_f21_4",
+              "src": "HG-0064",
+              "title": "箱にかけた リボン",
+              "category": "rittai",
+              "unit": "立体図形（体積・表面積）",
+              "grade": 3,
+              "star": 2,
+              "intro": "たて25cm・よこ45cm・高さ20cm の箱に、リボンを 十字にかけます。\n結び目に25cm 使います。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "リボンは 全部で何cm いりますか。",
+                  "answer": "245",
+                  "meaning": "十字にかけると 高さは2つの輪が どちらも通るので 4回分。たてとよこは2回分ずつ。20×4+45×2+25×2＝220。結び目25をたして245cm（2m45cm）。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f21_6",
+              "src": "HG-0065",
+              "title": "赤くぬった 直方体",
+              "category": "rittai",
+              "unit": "立体図形（体積・表面積）",
+              "grade": 3,
+              "star": 3,
+              "intro": "同じ大きさの小さい立方体を つみ上げて、たて3こ・よこ5こ・高さ3こ の直方体を作りました。\nその外がわの面を ぜんぶ 赤くぬってから、バラバラにします。",
+              "svg": "<svg viewBox='0 0 230 118' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='9' text-anchor='start'>小さい立方体で たて3・横5・高さ3 の直方体を作り、</text><text x='8.0' y='28.0' fill='#ffd166' font-size='9' text-anchor='start'>外がわの面を ぜんぶ赤くぬった</text><polygon points='82.5,132.0 93.8,138.5 82.5,145.0 71.3,138.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,138.5 82.5,145.0 82.5,158.0 71.3,151.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,138.5 82.5,145.0 82.5,158.0 93.8,151.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,119.0 93.8,125.5 82.5,132.0 71.3,125.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,125.5 82.5,132.0 82.5,145.0 71.3,138.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,125.5 82.5,132.0 82.5,145.0 93.8,138.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 93.8,112.5 82.5,119.0 71.3,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 82.5,119.0 82.5,132.0 71.3,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,112.5 82.5,119.0 82.5,132.0 93.8,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,125.5 82.5,132.0 71.3,138.5 60.0,132.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,132.0 71.3,138.5 71.3,151.5 60.0,145.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,132.0 71.3,138.5 71.3,151.5 82.5,145.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 82.5,119.0 71.3,125.5 60.0,119.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,119.0 71.3,125.5 71.3,138.5 60.0,132.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,119.0 71.3,125.5 71.3,138.5 82.5,132.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 82.5,106.0 71.3,112.5 60.0,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 71.3,112.5 71.3,125.5 60.0,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 71.3,112.5 71.3,125.5 82.5,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,119.0 71.3,125.5 60.0,132.0 48.7,125.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,125.5 60.0,132.0 60.0,145.0 48.7,138.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,125.5 60.0,132.0 60.0,145.0 71.3,138.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 71.3,112.5 60.0,119.0 48.7,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,112.5 60.0,119.0 60.0,132.0 48.7,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 60.0,119.0 60.0,132.0 71.3,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 71.3,99.5 60.0,106.0 48.7,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,99.5 60.0,106.0 60.0,119.0 48.7,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 60.0,106.0 60.0,119.0 71.3,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,112.5 60.0,119.0 48.7,125.5 37.5,119.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,119.0 48.7,125.5 48.7,138.5 37.5,132.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,119.0 48.7,125.5 48.7,138.5 60.0,132.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,99.5 60.0,106.0 48.7,112.5 37.5,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,106.0 48.7,112.5 48.7,125.5 37.5,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 48.7,112.5 48.7,125.5 60.0,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,86.5 60.0,93.0 48.7,99.5 37.5,93.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,93.0 48.7,99.5 48.7,112.5 37.5,106.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 48.7,99.5 48.7,112.5 60.0,106.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,106.0 48.7,112.5 37.5,119.0 26.2,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='26.2,112.5 37.5,119.0 37.5,132.0 26.2,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,112.5 37.5,119.0 37.5,132.0 48.7,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,93.0 48.7,99.5 37.5,106.0 26.2,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='26.2,99.5 37.5,106.0 37.5,119.0 26.2,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,99.5 37.5,106.0 37.5,119.0 48.7,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,80.0 48.7,86.5 37.5,93.0 26.2,86.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='26.2,86.5 37.5,93.0 37.5,106.0 26.2,99.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,86.5 37.5,93.0 37.5,106.0 48.7,99.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,125.5 105.0,132.0 93.8,138.5 82.5,132.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,132.0 93.8,138.5 93.8,151.5 82.5,145.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,132.0 93.8,138.5 93.8,151.5 105.0,145.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,112.5 105.0,119.0 93.8,125.5 82.5,119.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,119.0 93.8,125.5 93.8,138.5 82.5,132.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,119.0 93.8,125.5 93.8,138.5 105.0,132.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,99.5 105.0,106.0 93.8,112.5 82.5,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 93.8,112.5 93.8,125.5 82.5,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,106.0 93.8,112.5 93.8,125.5 105.0,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,119.0 93.8,125.5 82.5,132.0 71.3,125.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,125.5 82.5,132.0 82.5,145.0 71.3,138.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,125.5 82.5,132.0 82.5,145.0 93.8,138.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 93.8,112.5 82.5,119.0 71.3,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 82.5,119.0 82.5,132.0 71.3,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,112.5 82.5,119.0 82.5,132.0 93.8,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,93.0 93.8,99.5 82.5,106.0 71.3,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 82.5,106.0 82.5,119.0 71.3,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,99.5 82.5,106.0 82.5,119.0 93.8,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 82.5,119.0 71.3,125.5 60.0,119.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,119.0 71.3,125.5 71.3,138.5 60.0,132.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,119.0 71.3,125.5 71.3,138.5 82.5,132.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 82.5,106.0 71.3,112.5 60.0,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 71.3,112.5 71.3,125.5 60.0,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 71.3,112.5 71.3,125.5 82.5,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,86.5 82.5,93.0 71.3,99.5 60.0,93.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 71.3,99.5 71.3,112.5 60.0,106.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,93.0 71.3,99.5 71.3,112.5 82.5,106.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 71.3,112.5 60.0,119.0 48.7,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,112.5 60.0,119.0 60.0,132.0 48.7,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 60.0,119.0 60.0,132.0 71.3,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 71.3,99.5 60.0,106.0 48.7,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,99.5 60.0,106.0 60.0,119.0 48.7,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 60.0,106.0 60.0,119.0 71.3,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,80.0 71.3,86.5 60.0,93.0 48.7,86.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,86.5 60.0,93.0 60.0,106.0 48.7,99.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,86.5 60.0,93.0 60.0,106.0 71.3,99.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,99.5 60.0,106.0 48.7,112.5 37.5,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,106.0 48.7,112.5 48.7,125.5 37.5,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 48.7,112.5 48.7,125.5 60.0,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,86.5 60.0,93.0 48.7,99.5 37.5,93.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,93.0 48.7,99.5 48.7,112.5 37.5,106.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 48.7,99.5 48.7,112.5 60.0,106.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,73.5 60.0,80.0 48.7,86.5 37.5,80.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='37.5,80.0 48.7,86.5 48.7,99.5 37.5,93.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,80.0 48.7,86.5 48.7,99.5 60.0,93.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,119.0 116.3,125.5 105.0,132.0 93.8,125.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,125.5 105.0,132.0 105.0,145.0 93.8,138.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='116.3,125.5 105.0,132.0 105.0,145.0 116.3,138.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,106.0 116.3,112.5 105.0,119.0 93.8,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,112.5 105.0,119.0 105.0,132.0 93.8,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='116.3,112.5 105.0,119.0 105.0,132.0 116.3,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,93.0 116.3,99.5 105.0,106.0 93.8,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,99.5 105.0,106.0 105.0,119.0 93.8,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='116.3,99.5 105.0,106.0 105.0,119.0 116.3,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,112.5 105.0,119.0 93.8,125.5 82.5,119.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,119.0 93.8,125.5 93.8,138.5 82.5,132.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,119.0 93.8,125.5 93.8,138.5 105.0,132.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,99.5 105.0,106.0 93.8,112.5 82.5,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 93.8,112.5 93.8,125.5 82.5,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,106.0 93.8,112.5 93.8,125.5 105.0,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,86.5 105.0,93.0 93.8,99.5 82.5,93.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,93.0 93.8,99.5 93.8,112.5 82.5,106.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='105.0,93.0 93.8,99.5 93.8,112.5 105.0,106.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 93.8,112.5 82.5,119.0 71.3,112.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,112.5 82.5,119.0 82.5,132.0 71.3,125.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,112.5 82.5,119.0 82.5,132.0 93.8,125.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,93.0 93.8,99.5 82.5,106.0 71.3,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 82.5,106.0 82.5,119.0 71.3,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,99.5 82.5,106.0 82.5,119.0 93.8,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,80.0 93.8,86.5 82.5,93.0 71.3,86.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,86.5 82.5,93.0 82.5,106.0 71.3,99.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='93.8,86.5 82.5,93.0 82.5,106.0 93.8,99.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 82.5,106.0 71.3,112.5 60.0,106.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,106.0 71.3,112.5 71.3,125.5 60.0,119.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,106.0 71.3,112.5 71.3,125.5 82.5,119.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,86.5 82.5,93.0 71.3,99.5 60.0,93.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 71.3,99.5 71.3,112.5 60.0,106.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,93.0 71.3,99.5 71.3,112.5 82.5,106.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,73.5 82.5,80.0 71.3,86.5 60.0,80.0' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,80.0 71.3,86.5 71.3,99.5 60.0,93.0' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='82.5,80.0 71.3,86.5 71.3,99.5 82.5,93.0' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,93.0 71.3,99.5 60.0,106.0 48.7,99.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,99.5 60.0,106.0 60.0,119.0 48.7,112.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,99.5 60.0,106.0 60.0,119.0 71.3,112.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,80.0 71.3,86.5 60.0,93.0 48.7,86.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,86.5 60.0,93.0 60.0,106.0 48.7,99.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,86.5 60.0,93.0 60.0,106.0 71.3,99.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/><polygon points='60.0,67.0 71.3,73.5 60.0,80.0 48.7,73.5' fill='#fca5a5' stroke='#0f172a' stroke-width='0.7'/><polygon points='48.7,73.5 60.0,80.0 60.0,93.0 48.7,86.5' fill='#f87171' stroke='#0f172a' stroke-width='0.7'/><polygon points='71.3,73.5 60.0,80.0 60.0,93.0 71.3,86.5' fill='#dc2626' stroke='#0f172a' stroke-width='0.7'/></svg>",
+              "steps": [
+                {
+                  "question": "小さい立方体は 全部で何こありますか。",
+                  "answer": "45",
+                  "meaning": "3×5×3＝45こ。"
+                },
+                {
+                  "question": "3つの面が赤い立方体は 何こですか。",
+                  "answer": "8",
+                  "meaning": "かどにあるものだけ。直方体の かどは いつも8こ。"
+                },
+                {
+                  "question": "2つの面が赤い立方体は 何こですか。",
+                  "answer": "20",
+                  "meaning": "辺のところで かどをのぞいた部分。(3−2)+(5−2)+(3−2)＝5、それが4本ずつで 5×4＝20こ。"
+                },
+                {
+                  "question": "1つの面だけ赤い立方体は 何こですか。",
+                  "answer": "14",
+                  "meaning": "それぞれの面の 内がわ。(1×3+3×1+1×1)×2＝14こ。"
+                },
+                {
+                  "question": "どの面も赤くない立方体は 何こですか。",
+                  "answer": "3",
+                  "meaning": "内がわにかくれている 1×3×1＝3こ。8+20+14+3＝45 で ①と合うか たしかめられる。"
+                }
+              ]
+            }
+          ],
+          "22": [
+            {
+              "id": "hd_3m_f22_3",
+              "src": "HG-0071",
+              "title": "四すみを切って 箱を作る",
+              "category": "rittai",
+              "unit": "立体図形（体積・表面積）",
+              "grade": 3,
+              "star": 2,
+              "intro": "たて0.4m・よこ0.9m の紙の 四すみから、1辺9cmの正方形を 切りとり、\nのこりを 折り上げて ふたのない箱を作ります。",
+              "svg": "<svg viewBox='0 0 260 128' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='9' text-anchor='start'>四すみから 1辺9cmの正方形を切りとって 折り上げる</text><rect x='24.0' y='26.0' width='180.0' height='80.0' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><rect x='24.0' y='26.0' width='18.0' height='18.0' rx='0' fill='#7f1d1d' stroke='#ef476f' stroke-width='1.2'/><rect x='186.0' y='26.0' width='18.0' height='18.0' rx='0' fill='#7f1d1d' stroke='#ef476f' stroke-width='1.2'/><rect x='24.0' y='88.0' width='18.0' height='18.0' rx='0' fill='#7f1d1d' stroke='#ef476f' stroke-width='1.2'/><rect x='186.0' y='88.0' width='18.0' height='18.0' rx='0' fill='#7f1d1d' stroke='#ef476f' stroke-width='1.2'/><text x='114.0' y='122.0' fill='#ffd166' font-size='10' text-anchor='middle'>横 0.9m</text><text x='18.0' y='66.0' fill='#ffd166' font-size='9' text-anchor='end'>たて</text><text x='18.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='end'>0.4m</text><text x='212.0' y='38.0' fill='#ef476f' font-size='9' text-anchor='start'>9cm</text></svg>",
+              "steps": [
+                {
+                  "question": "箱の底の よこの長さは何cmですか。",
+                  "answer": "72",
+                  "meaning": "0.9m＝90cm。両がわから9cmずつ切るので 90−9×2＝72cm。"
+                },
+                {
+                  "question": "箱の底の たての長さは何cmですか。",
+                  "answer": "22",
+                  "meaning": "0.4m＝40cm。40−9×2＝22cm。"
+                },
+                {
+                  "question": "箱の高さは何cmですか。",
+                  "answer": "9",
+                  "meaning": "折り上げた かべの高さ＝切りとった正方形の1辺で9cm。"
+                }
+              ]
+            }
+          ],
+          "23": [
+            {
+              "id": "hd_3m_f23_4",
+              "src": "HG-0072",
+              "title": "1日に 2分48秒 すすむ時計",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 3,
+              "star": 3,
+              "intro": "1日に 2分48秒 すすむ時計があります。日曜日の正午に 正しい時こくに 合わせました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "この時計は 1日に何秒 すすみますか。",
+                  "answer": "168",
+                  "meaning": "2分48秒＝120+48＝168秒。"
+                },
+                {
+                  "question": "この時計は 1時間に何秒 すすみますか。",
+                  "answer": "7",
+                  "meaning": "168÷24＝7秒。1時間あたりに もどすのが かんじん。"
+                },
+                {
+                  "question": "同じ日の午後9時には、何秒 すすんでいますか。",
+                  "answer": "63",
+                  "meaning": "正午から9時間なので 7×9＝63秒（1分3秒）。"
+                },
+                {
+                  "question": "14分すすむのは、合わせてから何時間後ですか。",
+                  "answer": "120",
+                  "meaning": "14分＝840秒。840÷7＝120時間後（5日後の金曜正午）。"
+                },
+                {
+                  "question": "10分51秒すすむのは、合わせてから何時間後ですか。",
+                  "answer": "93",
+                  "meaning": "651÷7＝93時間後。93時間＝3日と21時間なので 木曜の午前9時。"
+                }
+              ]
+            }
+          ],
+          "24": [
+            {
+              "id": "hd_3m_f24_4",
+              "src": "HG-0073",
+              "title": "植える間かくを かえる",
+              "category": "kisoku",
+              "unit": "植木算",
+              "grade": 3,
+              "star": 2,
+              "intro": "まっすぐな道の はしから はしまで、6mおきに木を植えるつもりで 105本 用意しました。\nところが 実さいには 8mおきに 植えました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "木は 何本 あまりましたか。",
+                  "answer": "26",
+                  "meaning": "105本を6mおきに はしからはしまで植えると 間は104こ。道の長さは 104×6＝624m。8mおきなら 間は78こで 木は79本。105−79＝26本。用意した本数から 道の長さを もどすのが かぎ。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f24_7",
+              "src": "HG-0074",
+              "title": "かべにそって ならべた長いす",
+              "category": "kisoku",
+              "unit": "植木算",
+              "grade": 3,
+              "star": 3,
+              "intro": "よこ40mの かべにそって、長いすを13きゃく 一列にならべます。\nかべの両はしと 長いすの間は 2.4mずつ、長いすと長いすの間は 1.2mずつ あけます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "長いす1きゃくの長さは何cmですか。",
+                  "answer": "160",
+                  "meaning": "いすが13きゃくなら いす同士の間は12こで 1.2×12＝14.4m。両はしは 2.4×2＝4.8m。40−19.2＝20.8mが いす13きゃくぶん。20.8÷13＝1.6m＝160cm。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f24_9",
+              "src": "HG-0075",
+              "title": "人文字「HAMA」",
+              "category": "kisoku",
+              "unit": "植木算",
+              "grade": 3,
+              "star": 3,
+              "intro": "1mおきに人がならんで、人文字で「HAMA」を作ります。\nH＝たて10m・たて10m・よこ6m／A＝ななめ12m・ななめ12m・よこ4m／\nM＝たて10m・たて10m・V字の8m と 8m でできています。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "Hの文字には 何人 ならびますか。",
+                  "answer": "27",
+                  "meaning": "1本ずつ「長さ+1人」で数えると 11+11+7＝29人。でも よこ棒の両はしは たて棒と同じ人なので 2人ぶん重なっている。29−2＝27人。"
+                },
+                {
+                  "question": "Aの文字には 何人 ならびますか。",
+                  "answer": "28",
+                  "meaning": "13+13+5＝31人。てっぺんで1人、よこ棒の両はしで2人 重なるので 31−3＝28人。"
+                },
+                {
+                  "question": "「HAMA」全部では 何人 ならびますか。",
+                  "answer": "120",
+                  "meaning": "Mは 11+11+9+9−3＝37人。H27＋A28＋M37＋A28＝120人。同じ人を2回数えないことが かんじん。"
+                }
+              ]
+            }
           ]
         },
         "kokai": {
