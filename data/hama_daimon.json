@@ -218,6 +218,34 @@
          "meaning": "左の列は 8+㋑+㋔＝15。まん中の行から ㋑＝15−5−9＝1 なので ㋔＝6。"
         }
        ]
+      },
+      {
+       "id": "hd3m_05_1",
+       "category": "kazu",
+       "grade": 3,
+       "unit": "推理・論理",
+       "title": "予想が ぜんぶ はずれた",
+       "intro": "4人で かけっこを しました。4人とも 順位を 予想しましたが、**だれの 予想も どの順位も 当たって いません** でした。",
+       "star": 2,
+       "src": "原簿・小3マスター No.5",
+       "steps": [
+        {
+         "question": "4人の 順位の ならび方は 全部で 何通り ありますか。",
+         "answer": "24",
+         "meaning": "①4×3×2×1＝24通り。"
+        },
+        {
+         "question": "「全部 はずれ」は、その人が 予想した 順位に **ならない** ということです。候補が 1人だけ に なる 順位から 決めていきます。この 解き方を 何と いいますか。消去法なら 1、場合分けなら 2 と 答えなさい。",
+         "answer": "1",
+         "meaning": "①ありえないものを消していく＝**消去法**。②候補が1人しか残らない順位が突破口。"
+        },
+        {
+         "question": "うめ子さんが 1位、あさ子さんが 2位、いちろうさんが 3位、えいじさんが 4位 でした。3位は だれ ですか。1うめ子・2あさ子・3いちろう・4えいじ の 番号で 答えなさい。",
+         "answer": "3",
+         "meaning": "①いちろうさん。**2位に候補が1人しか残らない**ところから玉突きで全部決まる。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1位</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2位</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3位</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4位</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">予想は全部はずれ</text></svg>"
       }
      ],
      "7": [
@@ -1685,6 +1713,99 @@
          "meaning": "ふつうは週3回だが、はじまりが木曜なので 1週目は 木・土の2回しかない。のこり23回を 週3回で数えると 11月1日の木曜。"
         }
        ]
+      }
+     ],
+     "0": [
+      {
+       "id": "hd3m_00_1",
+       "category": "wariai",
+       "grade": 3,
+       "unit": "割合",
+       "title": "倍の 連鎖",
+       "intro": "中コップは 小コップの ちょうど 2はい分、大コップは 中コップの ちょうど 2はい分 入ります。",
+       "star": 1,
+       "src": "原簿・小3マスター No.0",
+       "steps": [
+        {
+         "question": "中コップ 1ぱいは 小コップ 何はい分 ですか。",
+         "answer": "2",
+         "meaning": "①問題文のとおり2はい分。"
+        },
+        {
+         "question": "大コップ 1ぱいは 中コップ 何はい分 ですか。",
+         "answer": "2",
+         "meaning": "①2はい分。"
+        },
+        {
+         "question": "大コップ 1ぱいは 小コップ 何はい分 ですか。",
+         "answer": "4",
+         "meaning": "①大＝中2はい、中＝小2はい。②大＝小2×2＝**4はい分**。**倍をかけ合わせる**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">小</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">中＝小×2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">大＝中×2</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">入れ子になっている</text></svg>"
+      },
+      {
+       "id": "hd3m_00_2",
+       "category": "tokusan",
+       "grade": 3,
+       "unit": "和差算・分配算",
+       "title": "差の 半分を わたす",
+       "intro": "あきこさんは あめを 30こ、はなさんは 20こ 持っています。",
+       "star": 1,
+       "src": "原簿・小3マスター No.0",
+       "steps": [
+        {
+         "question": "2人の 差は 何こ ですか。",
+         "answer": "10",
+         "meaning": "①30−20＝10こ。"
+        },
+        {
+         "question": "あきこさんが 1こ わたすと、差は 何こ に なりますか。",
+         "answer": "8",
+         "meaning": "①あきこは29こ、はなは21こ。②差は8こ。**1こわたすと 差は2こちぢむ**。"
+        },
+        {
+         "question": "あきこさんが 何こ わたすと 2人が 同じに なりますか。",
+         "answer": "5",
+         "meaning": "①差10こを 0にするので 10÷2＝5こ。②**差の半分**をわたす。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"160.8\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"96.4\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">あきこ30</text><rect x=\"176.8\" y=\"24\" width=\"107.2\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"230.4\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">はな20</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">差の半分を動かす</text></svg>"
+      }
+     ],
+     "6": [
+      {
+       "id": "hd3m_06_1",
+       "category": "wariai",
+       "grade": 3,
+       "unit": "平均算",
+       "title": "点数の 分布から 逆に たどる",
+       "intro": "36人が 3問の テストを 受けました。配点は **A が 10点、B が 40点、C が 50点** です。36人の 得点の 合計は 2030点 でした。",
+       "star": 3,
+       "src": "原簿・小3マスター No.6",
+       "steps": [
+        {
+         "question": "**50点** の 人は、C だけ できた 人 と、A と B の 両方が できた 人 の 2通り あります。A＋B は 何点 ですか。",
+         "answer": "50",
+         "meaning": "①10＋40＝50点。②**A＋B と C が ぶつかる**ように 配点が えらばれている。"
+        },
+        {
+         "question": "36人の 平均点は 何点 ですか。小数で 答えなさい。",
+         "answer": "56.4",
+         "meaning": "①2030÷36＝56.38…。小数第2位を四捨五入して 56.4点。"
+        },
+        {
+         "question": "分布表の 空らん ㋐ と ㋑ を たすと いくつ ですか。",
+         "answer": "9",
+         "meaning": "①人数の合計36人 と 得点の合計2030点 の **2つの式** で 空らん2つが決まる。②㋐＝2、㋑＝7 で 和は9。"
+        },
+        {
+         "question": "C が できた 人が 21人 の とき、B が できた 人は 何人 ですか。",
+         "answer": "19",
+         "meaning": "①50点の中から「Cだけ」と「A＋B」を分ける。②C正解21人という情報で分解できる。③19人。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">40</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">50</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">A＋B＝C＝50 が衝突</text></svg>"
       }
      ]
     },
@@ -4109,6 +4230,1126 @@
          "meaning": "3+0+0+2+1＝6まい。（10円玉は10まいで 合わせて25まい）"
         }
        ]
+      }
+     ],
+     "0": [
+      {
+       "id": "hd3s_00_1",
+       "category": "baai",
+       "grade": 3,
+       "unit": "場合の数",
+       "title": "方眼の 中の 四角形を 数える",
+       "intro": "1辺 1cm の 正方形を すきまなく ならべて、**横 5マス・たて 3マス** の 長方形を 作りました。",
+       "star": 2,
+       "src": "原簿・小3最レ No.0",
+       "steps": [
+        {
+         "question": "1辺 1cm の 正方形は 何こ ありますか。",
+         "answer": "15",
+         "meaning": "①5×3＝15こ。"
+        },
+        {
+         "question": "1辺 2cm の 正方形は 何こ ありますか。",
+         "answer": "8",
+         "meaning": "①よこは4か所、たては2か所。②4×2＝8こ。"
+        },
+        {
+         "question": "この 方眼には たての線が 何本 ありますか。",
+         "answer": "6",
+         "meaning": "①横5マスなので たての線は 5＋1＝6本。"
+        },
+        {
+         "question": "四角形は 全部で 何こ ありますか。",
+         "answer": "90",
+         "meaning": "①**四角形＝たての線2本と よこの線2本の組み合わせ**。ここが発見。②たて6本から2本＝15通り、よこ4本から2本＝6通り。③15×6＝90こ。**正方形と長方形を別々に数えると必ず落とす**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 174 118\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"12\" y=\"8\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"42\" y=\"8\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"72\" y=\"8\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"102\" y=\"8\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"132\" y=\"8\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"12\" y=\"38\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"42\" y=\"38\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"72\" y=\"38\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"102\" y=\"38\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"132\" y=\"38\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"12\" y=\"68\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"42\" y=\"68\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"72\" y=\"68\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"102\" y=\"68\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"132\" y=\"68\" width=\"30\" height=\"30\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1\"/><text x=\"87\" y=\"112\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">横5マス×たて3マス</text></svg>"
+      },
+      {
+       "id": "hd3s_00_2",
+       "category": "baai",
+       "grade": 3,
+       "unit": "場合の数",
+       "title": "6を 9 として 使う",
+       "intro": "0、1、3、6、8 の 5まいの カードで 3けたの 数を 作ります。**6 は さかさまにして 9 として 使ってもよい** ですが、カードは 1まいずつ しか ありません。",
+       "star": 3,
+       "src": "原簿・小3最レ No.0",
+       "steps": [
+        {
+         "question": "いちばん 大きい 数は いくつですか。",
+         "answer": "983",
+         "meaning": "①9（＝6をさかさま）、8、3 を大きい順に。②983。"
+        },
+        {
+         "question": "いちばん 小さい 数は いくつですか。",
+         "answer": "103",
+         "meaning": "①百の位に0は置けない。②1、0、3 で 103。"
+        },
+        {
+         "question": "6 と 9 を **同じ数の中に 両方** 使えますか。使えるなら 1、使えないなら 2 と 答えなさい。",
+         "answer": "2",
+         "meaning": "①6のカードは **1まいしかない**。②6として使うか9として使うかの どちらか。両方は使えない。"
+        },
+        {
+         "question": "10番目に 大きい 数は いくつですか。",
+         "answer": "908",
+         "meaning": "①大きい順に 983、981、980、938、931、930、918、913、910、**908**。②996や963を数えると まちがい（6と9の同居）。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">0</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6は9としても使える</text></svg>"
+      }
+     ],
+     "16": [
+      {
+       "id": "hd3s_16_1",
+       "category": "kisoku",
+       "grade": 3,
+       "unit": "周期算",
+       "title": "円のまわりを 18とび",
+       "intro": "大きな 円の まわりに 1 から 60 までの 数が 右回りに 書いてあります。1 から はじめて **18番目ごと** に ○印を つけ、60 の次は 1 に もどって 何周でも くり返します。",
+       "star": 3,
+       "src": "原簿・小3最レ No.16",
+       "steps": [
+        {
+         "question": "1 の つぎに ○が つくのは いくつ ですか。",
+         "answer": "19",
+         "meaning": "①1＋18＝19。"
+        },
+        {
+         "question": "2周目の はじめに ○が つく 数は いくつ ですか。",
+         "answer": "13",
+         "meaning": "①1→19→37→55→**13**（55＋18＝73、73−60＝13）。②13。"
+        },
+        {
+         "question": "○が つく 数は 全部で 何こ ですか。",
+         "answer": "10",
+         "meaning": "①18と60の **最大公約数は6**。②結局6とびの数にしか印がつかない。③60÷6＝10こ。"
+        },
+        {
+         "question": "何周しても ○が つかない 数は 何こ ですか。",
+         "answer": "50",
+         "meaning": "①60−10＝50こ。"
+        },
+        {
+         "question": "○の ついた 数を ぜんぶ たすと いくつ ですか。",
+         "answer": "280",
+         "meaning": "①1、7、13、…、55 の10個。②(1＋55)×10÷2＝280。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100\" cy=\"96\" r=\"76\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"100.0\" cy=\"20.0\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"107.9\" cy=\"20.4\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"115.8\" cy=\"21.7\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"123.5\" cy=\"23.7\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"130.9\" cy=\"26.6\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"138.0\" cy=\"30.2\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"144.7\" cy=\"34.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"150.9\" cy=\"39.5\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"156.5\" cy=\"45.1\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"161.5\" cy=\"51.3\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"165.8\" cy=\"58.0\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"169.4\" cy=\"65.1\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"172.3\" cy=\"72.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"174.3\" cy=\"80.2\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"175.6\" cy=\"88.1\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"176.0\" cy=\"96.0\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"175.6\" cy=\"103.9\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"174.3\" cy=\"111.8\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"172.3\" cy=\"119.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"169.4\" cy=\"126.9\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"165.8\" cy=\"134.0\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"161.5\" cy=\"140.7\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"156.5\" cy=\"146.9\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"150.9\" cy=\"152.5\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"144.7\" cy=\"157.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"138.0\" cy=\"161.8\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"130.9\" cy=\"165.4\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"123.5\" cy=\"168.3\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"115.8\" cy=\"170.3\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"107.9\" cy=\"171.6\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"100.0\" cy=\"172.0\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"92.1\" cy=\"171.6\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"84.2\" cy=\"170.3\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"76.5\" cy=\"168.3\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"69.1\" cy=\"165.4\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"62.0\" cy=\"161.8\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"55.3\" cy=\"157.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"49.1\" cy=\"152.5\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"43.5\" cy=\"146.9\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"38.5\" cy=\"140.7\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"34.2\" cy=\"134.0\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"30.6\" cy=\"126.9\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"27.7\" cy=\"119.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"25.7\" cy=\"111.8\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"24.4\" cy=\"103.9\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"24.0\" cy=\"96.0\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"24.4\" cy=\"88.1\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"25.7\" cy=\"80.2\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"27.7\" cy=\"72.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"30.6\" cy=\"65.1\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"34.2\" cy=\"58.0\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"38.5\" cy=\"51.3\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"43.5\" cy=\"45.1\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"49.1\" cy=\"39.5\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"55.3\" cy=\"34.5\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"62.0\" cy=\"30.2\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"69.1\" cy=\"26.6\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"76.5\" cy=\"23.7\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"84.2\" cy=\"21.7\" r=\"2\" fill=\"#9aa3c0\"/><circle cx=\"92.1\" cy=\"20.4\" r=\"2\" fill=\"#9aa3c0\"/><text x=\"100\" y=\"192\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1〜60が右回りにならぶ</text><text x=\"100\" y=\"194\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1〜60が右回り</text></svg>"
+      },
+      {
+       "id": "hd3s_16_2",
+       "category": "kisoku",
+       "grade": 3,
+       "unit": "植木算",
+       "title": "くさりの 長さ",
+       "intro": "同じ 輪を つないで くさりを 作ります。**輪1この 長さは 4cm、線の 太さは 8mm** です。",
+       "star": 3,
+       "src": "原簿・小3最レ No.16",
+       "steps": [
+        {
+         "question": "輪を 1こ ふやすと、長さは 何cm のびますか。小数で 答えなさい。",
+         "answer": "2.4",
+         "meaning": "①つなぎ目で 両側の太さ 8mm ずつが 食われる。②4−0.8−0.8＝2.4cm。**4cmのびるのではない**。"
+        },
+        {
+         "question": "輪を 15こ つないだ 長さは 何cm ですか。小数で 答えなさい。",
+         "answer": "37.6",
+         "meaning": "①4＋2.4×14＝4＋33.6＝37.6cm（＝37cm6mm）。"
+        },
+        {
+         "question": "輪を 28こ つないだ 長さは 何cm ですか。小数で 答えなさい。",
+         "answer": "68.8",
+         "meaning": "①4＋2.4×27＝4＋64.8＝68.8cm（＝68cm8mm）。"
+        },
+        {
+         "question": "ちょうど 100cm に なるのは 輪が 何こ の ときですか。",
+         "answer": "41",
+         "meaning": "①4＋2.4×(n−1)＝100 → 2.4×(n−1)＝96 → n−1＝40。②41こ。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><ellipse cx=\"28\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"62\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"96\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"130\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"164\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"198\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"232\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><ellipse cx=\"266\" cy=\"44\" rx=\"22\" ry=\"14\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"5\"/><text x=\"150\" y=\"76\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">輪1この長さ4cm・線の太さ8mm</text><text x=\"150\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">輪1こ4cm・太さ8mm</text></svg>"
+      },
+      {
+       "id": "hd3s_16_3",
+       "category": "kisoku",
+       "grade": 3,
+       "unit": "植木算",
+       "title": "3色の テープを のりしろ 1cm で",
+       "intro": "白 3cm、赤 5cm、黒 7cm の テープを、**のりしろ 1cm ずつ** とって 白・赤・黒・白・赤・黒… の順に つなぎます。",
+       "star": 3,
+       "src": "原簿・小3最レ No.16",
+       "steps": [
+        {
+         "question": "白・赤・黒・白・赤・黒・白 の 7まい を つないだ 長さは 何cm ですか。",
+         "answer": "27",
+         "meaning": "①長さの合計は 3×3＋5×2＋7×2＝9＋10＋14＝33cm。②のりしろは **まい数−1＝6**か所。③33−6＝27cm。"
+        },
+        {
+         "question": "白5まい・赤5まい・黒4まい を つないだ 長さは 何cm ですか。",
+         "answer": "55",
+         "meaning": "①3×5＋5×5＋7×4＝15＋25＋28＝68cm。②のりしろは 14−1＝13か所。③68−13＝55cm。"
+        },
+        {
+         "question": "全体が 87cm に なりました。白は 何まい ですか。",
+         "answer": "8",
+         "meaning": "①白a・赤b・黒c として 3a＋5b＋7c−(a＋b＋c−1)＝87 → a＋2b＋3c＝43。②**白からはじまる順**なので (k,k,k)(k+1,k,k)(k+1,k+1,k) のどれか。③6k＋1＝43 → k＝7。白8・赤7・黒7。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"14\" y=\"24\" width=\"24\" height=\"26\" fill=\"#fff\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><rect x=\"30\" y=\"24\" width=\"40\" height=\"26\" fill=\"#ff6b6b\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><rect x=\"62\" y=\"24\" width=\"56\" height=\"26\" fill=\"#1a2340\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><rect x=\"110\" y=\"24\" width=\"24\" height=\"26\" fill=\"#fff\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><rect x=\"126\" y=\"24\" width=\"40\" height=\"26\" fill=\"#ff6b6b\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><rect x=\"158\" y=\"24\" width=\"56\" height=\"26\" fill=\"#1a2340\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><rect x=\"206\" y=\"24\" width=\"24\" height=\"26\" fill=\"#fff\" fill-opacity=\"0.5\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"150\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">白3cm・赤5cm・黒7cm／のりしろ1cm</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">白3・赤5・黒7／のりしろ1cm</text></svg>"
+      }
+     ],
+     "17": [
+      {
+       "id": "hd3s_17_1",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（角度）",
+       "title": "等脚台形の リング",
+       "intro": "等脚台形の タイルを すきまなく つないで **リング状に 1周** ならべます。台形の 長い底の 両はしの 角を X度 とします。",
+       "star": 3,
+       "src": "原簿・小3最レ No.17",
+       "steps": [
+        {
+         "question": "タイル 1まいの 「開き角」は 180−X×2 度 です。X＝80度 の とき 開き角は 何度 ですか。",
+         "answer": "20",
+         "meaning": "①180−160＝20度。"
+        },
+        {
+         "question": "リングを 1周 すると、開き角の 合計は 何度 ですか。",
+         "answer": "360",
+         "meaning": "①1周ぶんなので **360度**。ここが発見。"
+        },
+        {
+         "question": "X＝80度 の とき、タイルは 何まい 必要 ですか。",
+         "answer": "18",
+         "meaning": "①360÷20＝18まい。"
+        },
+        {
+         "question": "タイルを 30まい に するには X を 何度 に すれば よいですか。",
+         "answer": "84",
+         "meaning": "①開き角は 360÷30＝12度。②180−X×2＝12 → X×2＝168 → X＝84度。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"162.0\" y=\"91.0\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(90.0 170.0 96.0)\"/><rect x=\"157.8\" y=\"114.9\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(110.0 165.8 119.9)\"/><rect x=\"145.6\" y=\"136.0\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(130.0 153.6 141.0)\"/><rect x=\"127.0\" y=\"151.6\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(150.0 135.0 156.6)\"/><rect x=\"104.2\" y=\"159.9\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(170.0 112.2 164.9)\"/><rect x=\"79.8\" y=\"159.9\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(190.0 87.8 164.9)\"/><rect x=\"57.0\" y=\"151.6\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(210.0 65.0 156.6)\"/><rect x=\"38.4\" y=\"136.0\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(230.0 46.4 141.0)\"/><rect x=\"26.2\" y=\"114.9\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(250.0 34.2 119.9)\"/><rect x=\"22.0\" y=\"91.0\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(270.0 30.0 96.0)\"/><rect x=\"26.2\" y=\"67.1\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(290.0 34.2 72.1)\"/><rect x=\"38.4\" y=\"46.0\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(310.0 46.4 51.0)\"/><rect x=\"57.0\" y=\"30.4\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(330.0 65.0 35.4)\"/><rect x=\"79.8\" y=\"22.1\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(350.0 87.8 27.1)\"/><rect x=\"104.2\" y=\"22.1\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(370.0 112.2 27.1)\"/><rect x=\"127.0\" y=\"30.4\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(390.0 135.0 35.4)\"/><rect x=\"145.6\" y=\"46.0\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(410.0 153.6 51.0)\"/><rect x=\"157.8\" y=\"67.1\" width=\"16\" height=\"11\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#4f7cff\" stroke-width=\"1\" transform=\"rotate(430.0 165.8 72.1)\"/><text x=\"100\" y=\"192\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">等脚台形をリング状にならべる</text><text x=\"100\" y=\"194\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">等脚台形のリング</text></svg>"
+      },
+      {
+       "id": "hd3s_17_2",
+       "category": "zu",
+       "grade": 3,
+       "unit": "図形の移動・対称",
+       "title": "正方形を 二重に 折り返す",
+       "intro": "正方形ABCD の 各辺の 中点を E、F、G、H とします。**角B を EG に 重なるように、角D を HF に 重なるように** 折ります（折り目は どちらも 頂点C を通る）。",
+       "star": 3,
+       "src": "原簿・小3最レ No.17",
+       "steps": [
+        {
+         "question": "折り返しても CB′ の 長さは 正方形の 1辺と 同じ ですか。同じなら 1、ちがうなら 2。",
+         "answer": "1",
+         "meaning": "①折り返しは 長さを変えない。②CB′＝CB＝正方形の1辺。"
+        },
+        {
+         "question": "B′ は BC から 1辺の **半分** の 高さに あります。斜辺が 高さの 2倍 の 直角三角形は 何度の 角を もちますか。",
+         "answer": "30",
+         "meaning": "①正三角形を半分に切った形。②角B′CB＝30度。"
+        },
+        {
+         "question": "角B′CD′ は 何度 ですか。",
+         "answer": "30",
+         "meaning": "①角B′CB＝角D′CD＝30度。②90−30−30＝30度。"
+        },
+        {
+         "question": "角X（B′ に できる角）は 何度 ですか。",
+         "answer": "45",
+         "meaning": "①三角形CB′D′ は二等辺で 頂角30度なので 底角は 75度。②錯角30度を引いて 45度。**対称性だけでも解ける**（B′D′ は対角線BDと平行）＝二通りの解法がある良問。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B→B′</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">D→D′</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">二重に折り返す</text></svg>"
+      },
+      {
+       "id": "hd3s_17_3",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（角度）",
+       "title": "正三角形を あぶり出す",
+       "intro": "四角形ABCD の 辺BC 上に **AB＝DE** となる 点E を とります。角ABE＝75度、角DEC＝45度、角BAE＝30度、角ADC＝90度 です。",
+       "star": 3,
+       "src": "原簿・小3最レ No.17",
+       "steps": [
+        {
+         "question": "三角形ABE で 角AEB は 何度 ですか。",
+         "answer": "75",
+         "meaning": "①180−75−30＝75度。"
+        },
+        {
+         "question": "角ABE と 角AEB が どちらも 75度 なので、AE と AB の 長さは 同じ ですか。同じなら 1、ちがうなら 2。",
+         "answer": "1",
+         "meaning": "①2つの角が等しい＝二等辺三角形。②AE＝AB。"
+        },
+        {
+         "question": "AB＝DE と あわせると AE と DE は 同じ 長さ に なります。角AED は 何度 ですか。",
+         "answer": "60",
+         "meaning": "①B・E・C は一直線なので 180−75−45＝60度。"
+        },
+        {
+         "question": "角X（AE と AD の あいだ）は 何度 ですか。",
+         "answer": "60",
+         "meaning": "①AE＝DE で はさむ角が60度 → **三角形AED は 正三角形**。②X＝60度。**角ADC＝90度 は 答えに使わない ダミー条件**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">75</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">45</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">30</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">90</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">90度はダミー</text></svg>"
+      }
+     ],
+     "18": [
+      {
+       "id": "hd3s_18_1",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（面積）",
+       "title": "3つの おうぎ形",
+       "intro": "3辺が 15cm・12cm・9cm の 直角三角形（9と12がはさむ角が直角）の **3つの 頂点それぞれを 中心に、半径 4cm の おうぎ形** を 内がわに かきました。円周率は 3.14 とします。",
+       "star": 3,
+       "src": "原簿・小3最レ No.18",
+       "steps": [
+        {
+         "question": "三角形の 3つの 角を たすと 何度 ですか。",
+         "answer": "180",
+         "meaning": "①三角形の内角の和。②180度。**だから3つのおうぎ形は 合わせて半円1こ分**。ここが発見。"
+        },
+        {
+         "question": "3つの おうぎ形の 弧を 合わせると、半径 4cm の 円の 何分の1 ですか。分母を 答えなさい。",
+         "answer": "2",
+         "meaning": "①中心角の合計が180度＝半円。②分母は2。"
+        },
+        {
+         "question": "その 弧の 長さの 合計は 何cm ですか。小数で 答えなさい。",
+         "answer": "12.56",
+         "meaning": "①4×2×3.14÷2＝12.56cm。"
+        },
+        {
+         "question": "斜線部分（三角形から おうぎ形3つを のぞいた 残り）の まわりの 長さは 何cm ですか。小数で 答えなさい。",
+         "answer": "24.56",
+         "meaning": "①直線部分は 三角形のまわり36cm から 半径4cm×2本×3頂点＝24cm を引いて 12cm。②12＋12.56＝24.56cm。**弧を3つ別々に計算しようとすると 角度が分からず詰まる**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 240 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,130 210,130 30,22\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M30 130 A 26 26 0 0 0 56 130\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><path d=\"M210 130 A 26 26 0 0 1 186 122\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><path d=\"M30 22 A 26 26 0 0 0 30 48\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><text x=\"120\" y=\"146\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3つの頂点を中心に半径4cmのおうぎ形</text><text x=\"120\" y=\"164\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3頂点を中心に半径4cm</text></svg>"
+      },
+      {
+       "id": "hd3s_18_2",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（面積）",
+       "title": "角から 正方形を 切り取る",
+       "intro": "まわりの 長さが 64cm の 長方形から、左上の 角に 1辺 7cm、右下の 角に 1辺 9cm の 正方形を 切り取りました。下辺の 左の 部分は 11cm です。",
+       "star": 3,
+       "src": "原簿・小3最レ No.18",
+       "steps": [
+        {
+         "question": "角から 正方形を 切り取ると、まわりの 長さは 変わりますか。変わらないなら 1、変わるなら 2。",
+         "answer": "1",
+         "meaning": "①へる2辺と ふえる2辺の 長さが同じ。②**まわりは64cmのまま**。"
+        },
+        {
+         "question": "もとの 長方形の たて＋よこ は 何cm ですか。",
+         "answer": "32",
+         "meaning": "①64÷2＝32cm。"
+        },
+        {
+         "question": "よこの 長さは 何cm ですか。",
+         "answer": "20",
+         "meaning": "①下辺は 11cm と 切り取った9cm。②11＋9＝20cm。"
+        },
+        {
+         "question": "辺アイ の 長さは 何cm ですか。",
+         "answer": "5",
+         "meaning": "①たては 32−20＝12cm。②アイ＝12−7＝5cm。**面積で解こうとすると詰まる**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 250 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"60,26 220,26 220,96 170,96 170,130 30,130 30,60 60,60\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"125\" y=\"146\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2つの角から正方形を切り取る</text><text x=\"125\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2つの角を切り取る</text></svg>"
+      },
+      {
+       "id": "hd3s_18_3",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（面積）",
+       "title": "階段状の 折れ線で 2つに 分ける",
+       "intro": "1辺 15cm の 正方形を、**階段状の 折れ線**（どの部分も 同じ長さ）で ア と イ の 2つに 分けます。折れ線は 左辺の 上から 3cm の 点から 出発し、右4→下4→右4→下4→右4→下4 と 進んで 下辺に つきます。",
+       "star": 3,
+       "src": "原簿・小3最レ No.18",
+       "steps": [
+        {
+         "question": "折れ線は ア の まわりにも イ の まわりにも 入っています。まわりの 長さを くらべるとき 折れ線は 計算に 必要 ですか。必要なら 1、いらないなら 2。",
+         "answer": "2",
+         "meaning": "①両方に **同じだけ** 入っているので **消える**。②折れ線の長さは求めなくてよい。"
+        },
+        {
+         "question": "ア の まわりのうち、正方形の 辺に あたる 部分は 何cm ですか。",
+         "answer": "24",
+         "meaning": "①左辺の下12cm ＋ 下辺の左12cm。②24cm。"
+        },
+        {
+         "question": "イ の まわりのうち、正方形の 辺に あたる 部分は 何cm ですか。",
+         "answer": "36",
+         "meaning": "①左辺の上3cm ＋ 上辺15cm ＋ 右辺15cm ＋ 下辺の右3cm。②36cm。"
+        },
+        {
+         "question": "イ の 方が 何cm 長いですか。",
+         "answer": "12",
+         "meaning": "①36−24＝12cm。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 220 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"20\" width=\"150\" height=\"150\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2\"/><polyline points=\"26,50 66,50 66,90 106,90 106,130 146,130 146,170\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"2.6\"/><text x=\"60\" y=\"150\" font-size=\"12\" font-family=\"sans-serif\" fill=\"#4f7cff\">ア</text><text x=\"140\" y=\"46\" font-size=\"12\" font-family=\"sans-serif\" fill=\"#ff6b6b\">イ</text><text x=\"110\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">階段状の折れ線</text></svg>"
+      }
+     ],
+     "19": [
+      {
+       "id": "hd3s_19_1",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（面積）",
+       "title": "面積の 等しい 2枚を 重ねる",
+       "intro": "面積の 同じ 長方形 ア（たて 6cm）と イ（たて 9cm）を、上辺と 左辺を そろえて 重ねます。**ア の 右はしが イ より 2cm はみ出し** ました。",
+       "star": 3,
+       "src": "原簿・小3最レ No.19",
+       "steps": [
+        {
+         "question": "2枚の 面積が 等しいので、重なりを 両方から 引くと 「アだけ」と「イだけ」の 面積は 等しく なりますか。なるなら 1、ならないなら 2。",
+         "answer": "1",
+         "meaning": "①同じ数から 同じ数を引くので のこりも等しい。②1。"
+        },
+        {
+         "question": "「アだけ」の 部分は たて 6cm・よこ 2cm です。面積は 何cm² ですか。",
+         "answer": "12",
+         "meaning": "①6×2＝12cm²。"
+        },
+        {
+         "question": "イ の よこの 長さは 何cm ですか。",
+         "answer": "4",
+         "meaning": "①「イだけ」は たて 9−6＝3cm・よこ（イのよこ）。②3×イ＝12 なので イ＝4cm。"
+        },
+        {
+         "question": "ア の よこの 長さは 何cm ですか。",
+         "answer": "6",
+         "meaning": "①4＋2＝6cm。②検算：6×6＝36、9×4＝36 ✓。**重なりの大きさは求めなくてよい**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 250 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"26\" width=\"120\" height=\"60\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><rect x=\"26\" y=\"26\" width=\"80\" height=\"90\" fill=\"rgba(255,107,107,0.20)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"180\" y=\"56\" font-size=\"12\" font-family=\"sans-serif\" fill=\"#4f7cff\">ア たて6cm</text><text x=\"180\" y=\"110\" font-size=\"12\" font-family=\"sans-serif\" fill=\"#ff6b6b\">イ たて9cm</text><text x=\"125\" y=\"154\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">面積の同じ2枚</text></svg>"
+      },
+      {
+       "id": "hd3s_19_2",
+       "category": "zu",
+       "grade": 3,
+       "unit": "平面図形（面積）",
+       "title": "①＝② の とき ア を 求める",
+       "intro": "長方形ACDE（よこ 15cm・たて 10cm）が あります。左辺AC 上に AB＝4cm の 点B、上辺AE 上に 点F を とり、BD と CF の 交点を G とします。**①＝四角形AFGB、②＝三角形GCD**、**ア＝FE の 長さ** です。",
+       "star": 3,
+       "src": "原簿・小3最レ No.19",
+       "steps": [
+        {
+         "question": "①と② に **共通の 三角形BGC** を 足すと、① は 三角形AFC に、② は 三角形BCD に なります。「①＝②」は 「三角形AFC＝三角形BCD」 と 同じ ですか。同じなら 1、ちがうなら 2。",
+         "answer": "1",
+         "meaning": "①同じものを両方に足しても等しさは変わらない。②1。**交点Gの位置は求めなくてよい**。"
+        },
+        {
+         "question": "三角形BCD の 面積は 何cm² ですか。",
+         "answer": "45",
+         "meaning": "①底辺BC＝10−4＝6cm、高さ15cm。②15×6÷2＝45cm²。"
+        },
+        {
+         "question": "AF の 長さは 何cm ですか。",
+         "answer": "9",
+         "meaning": "①三角形AFC＝AF×10÷2＝45 → AF＝9cm。"
+        },
+        {
+         "question": "ア（FE）の 長さは 何cm ですか。",
+         "answer": "6",
+         "meaning": "①15−9＝6cm。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">15</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">交点Gは求めない</text></svg>"
+      },
+      {
+       "id": "hd3s_19_3",
+       "category": "zu",
+       "grade": 3,
+       "unit": "図形の移動・対称",
+       "title": "折り返して D が A に 重なる",
+       "intro": "面積 500cm²、たて AB＝10cm の 長方形ABDE が あります。下辺上に BC＝24cm の 点C を とり、**FC を 折り目に 右側を 左へ 折り返す と E は G に、D は A に ちょうど 重なり** ました。",
+       "star": 3,
+       "src": "原簿・小3最レ No.19",
+       "steps": [
+        {
+         "question": "長方形の よこの 長さは 何cm ですか。",
+         "answer": "50",
+         "meaning": "①500÷10＝50cm。"
+        },
+        {
+         "question": "CD の 長さは 何cm ですか。",
+         "answer": "26",
+         "meaning": "①50−24＝26cm。"
+        },
+        {
+         "question": "折り返して D が A に 重なるので CA の 長さは 何cm ですか。",
+         "answer": "26",
+         "meaning": "①折り返しても長さは変わらない。②CA＝CD＝26cm。"
+        },
+        {
+         "question": "錯角と 折り返しから 三角形AFC は 二等辺 に なり AF＝AC です。斜線部（三角形AFC）の 面積は 何cm² ですか。",
+         "answer": "130",
+         "meaning": "①AF＝26cm、高さは たての10cm。②26×10÷2＝130cm²。**10-24-26 は 3:4:5 の2倍**なので 26 を図から与えれば小3でも成立する。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">24</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">26</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">折り返すと長さが保存される</text></svg>"
+      }
+     ],
+     "21": [
+      {
+       "id": "hd3s_21_1",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "色の ぬられない 面",
+       "intro": "立方体の つみ木を つみ上げ、**外がわ 全体に ペンキを ぬって** から ばらばらに します。**色の ぬられない 面** は、くっついていた 面 と 地面に ついていた 面 です。見本：2個を 横1列 に すると 色のぬられない面は 4面。",
+       "star": 3,
+       "src": "原簿・小3最レ No.21",
+       "steps": [
+        {
+         "question": "2個を 横1列 に したとき、くっついている 面の 組は 何組 ですか。",
+         "answer": "1",
+         "meaning": "①1組（となりどうし）。②その組で 2面 が色なし。"
+        },
+        {
+         "question": "2個を 横1列 に したとき、地面に ついている 立方体は 何個 ですか。",
+         "answer": "2",
+         "meaning": "①2個とも床の上。②2面が色なし。合わせて 2＋2＝4面 で 見本と合う。"
+        },
+        {
+         "question": "1×3×1（横1列に3個）の とき、色の ぬられない 面は 何面 ですか。",
+         "answer": "7",
+         "meaning": "①接触の組は2組で 2×2＝4面。②床についているのは3個で3面。③4＋3＝7面。"
+        },
+        {
+         "question": "3×2×2（12個）の とき、色の ぬられない 面は 何面 ですか。",
+         "answer": "46",
+         "meaning": "①接触の組は20組で 20×2＝40面。②床についているのは6個で6面。③40＋6＝46面。**1個ずつ調べるのでなく「接触の組」に置きかえる**のがコツ。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"30\" y=\"60\" width=\"34\" height=\"34\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#1a2340\" stroke-width=\"1.4\"/><rect x=\"64\" y=\"60\" width=\"34\" height=\"34\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#1a2340\" stroke-width=\"1.4\"/><rect x=\"98\" y=\"60\" width=\"34\" height=\"34\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#1a2340\" stroke-width=\"1.4\"/><rect x=\"30\" y=\"26\" width=\"34\" height=\"34\" fill=\"rgba(79,124,255,0.25)\" stroke=\"#1a2340\" stroke-width=\"1.4\"/><path d=\"M20 94 L230 94\" stroke=\"#1a2340\" stroke-width=\"2\"/><text x=\"125\" y=\"118\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">床の上につみ上げて 外がわに色をぬる</text><text x=\"125\" y=\"144\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">床の上につみ上げる</text></svg>"
+      },
+      {
+       "id": "hd3s_21_2",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "展開図・投影図",
+       "title": "あと 1まいで 展開図を 完成させる",
+       "intro": "正方形 5まい の 展開図の 一部が あります。あと 1まい 足して 立方体の 展開図に します。**答えは 1か所とは かぎりません。**",
+       "star": 3,
+       "src": "原簿・小3最レ No.21",
+       "steps": [
+        {
+         "question": "立方体の 展開図に 使う 正方形は 何まい ですか。",
+         "answer": "6",
+         "meaning": "①6まい。"
+        },
+        {
+         "question": "正方形が 横に 4つ ならんだ 帯は、組み立てると 何に なりますか。側面の 輪なら 1、上下のフタなら 2 と 答えなさい。",
+         "answer": "1",
+         "meaning": "①横4連は ぐるっと回って **側面の輪**になる。②残り1面は 上下のフタとして入る位置しかない。"
+        },
+        {
+         "question": "上段に 4まい 横ならび＋下段に 1まい の とき、足せる 場所は 何か所 ありますか。",
+         "answer": "4",
+         "meaning": "①すでにフタが1つある側には置けない。②反対側なら どの列でもよいので 4か所。"
+        },
+        {
+         "question": "立方体の 展開図は 全部で 何種類 ありますか。",
+         "answer": "11",
+         "meaning": "①11種類。**1つ見つけて満足しない**のがこの問題。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">横4連は側面の輪</text></svg>"
+      },
+      {
+       "id": "hd3s_21_3",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "n×n に しきつめた さいころの 目の 合計",
+       "intro": "向かい合う 面の 目の 和が 7 の さいころを、**同じ向きに そろえて たて・よこ n列ずつ 1段だけ** ならべます。**底面や 側面も ふくめた 表面** の 目の 合計を 考えます。",
+       "star": 3,
+       "src": "原簿・小3最レ No.21",
+       "steps": [
+        {
+         "question": "上下 1組の 目の 和は いくつ ですか。",
+         "answer": "7",
+         "meaning": "①向かい合う面の和は7。"
+        },
+        {
+         "question": "4列ずつ の とき、さいころは 何個 ですか。",
+         "answer": "16",
+         "meaning": "①4×4＝16個。"
+        },
+        {
+         "question": "4列ずつ の とき、**上下** の 目の 合計は いくつ ですか。",
+         "answer": "112",
+         "meaning": "①さいころ1個の上下で7。②16個ぶんで 7×16＝112。"
+        },
+        {
+         "question": "4列ずつ の とき、表面の 目の 合計は いくつ ですか。",
+         "answer": "168",
+         "meaning": "①上下は112。②前後は はしの列が4組で 7×4＝28。左右も 7×4＝28。③112＋28＋28＝**168**。**どの向きに置いても 対になる面の和は7 なので、向きを考えなくてよい**のがこの問題の核。（まとめると 7×n×(n＋2)＝7×4×6＝168）"
+        },
+        {
+         "question": "表面の 目の 合計が はじめて 700 を こえるのは 何列ずつ の ときですか。",
+         "answer": "10",
+         "meaning": "①7n(n＋2)＞700 → n(n＋2)＞100。②9列は 7×9×11＝693 で届かず、10列は 840。③10列。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 144 148\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"12\" y=\"8\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"27\" cy=\"23\" r=\"3\" fill=\"#1a2340\"/><rect x=\"42\" y=\"8\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"57\" cy=\"23\" r=\"3\" fill=\"#1a2340\"/><rect x=\"72\" y=\"8\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"87\" cy=\"23\" r=\"3\" fill=\"#1a2340\"/><rect x=\"102\" y=\"8\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"117\" cy=\"23\" r=\"3\" fill=\"#1a2340\"/><rect x=\"12\" y=\"38\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"27\" cy=\"53\" r=\"3\" fill=\"#1a2340\"/><rect x=\"42\" y=\"38\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"57\" cy=\"53\" r=\"3\" fill=\"#1a2340\"/><rect x=\"72\" y=\"38\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"87\" cy=\"53\" r=\"3\" fill=\"#1a2340\"/><rect x=\"102\" y=\"38\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"117\" cy=\"53\" r=\"3\" fill=\"#1a2340\"/><rect x=\"12\" y=\"68\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"27\" cy=\"83\" r=\"3\" fill=\"#1a2340\"/><rect x=\"42\" y=\"68\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"57\" cy=\"83\" r=\"3\" fill=\"#1a2340\"/><rect x=\"72\" y=\"68\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"87\" cy=\"83\" r=\"3\" fill=\"#1a2340\"/><rect x=\"102\" y=\"68\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"117\" cy=\"83\" r=\"3\" fill=\"#1a2340\"/><rect x=\"12\" y=\"98\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"27\" cy=\"113\" r=\"3\" fill=\"#1a2340\"/><rect x=\"42\" y=\"98\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"57\" cy=\"113\" r=\"3\" fill=\"#1a2340\"/><rect x=\"72\" y=\"98\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"87\" cy=\"113\" r=\"3\" fill=\"#1a2340\"/><rect x=\"102\" y=\"98\" width=\"30\" height=\"30\" rx=\"4\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><circle cx=\"117\" cy=\"113\" r=\"3\" fill=\"#1a2340\"/><text x=\"72\" y=\"142\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4列ずつならべる</text></svg>"
+      }
+     ],
+     "22": [
+      {
+       "id": "hd3s_22_1",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "展開図・投影図",
+       "title": "三角柱の 展開図",
+       "intro": "帯（たて 8cm）が 3つの 区画に 分かれ、左から 8cm、（寸法なし）、17cm です。左はしの 下と 右はしの 上に、8cm と 15cm を はさむ 直角三角形が ついています。",
+       "star": 3,
+       "src": "原簿・小3最レ No.22",
+       "steps": [
+        {
+         "question": "寸法の 書かれていない まん中の 区画は 何cm ですか。",
+         "answer": "15",
+         "meaning": "①底面の三角形の3辺は 8・15・17。②書かれていないのは15cm。**三角形から読む**。"
+        },
+        {
+         "question": "この 立体の 底面の 三角形の 面積は 何cm² ですか。",
+         "answer": "60",
+         "meaning": "①8×15÷2＝60cm²。"
+        },
+        {
+         "question": "側面（帯）の 面積は 何cm² ですか。",
+         "answer": "320",
+         "meaning": "①よこは 底面のまわり 8＋15＋17＝40cm。②たては 8cm。③40×8＝320cm²。"
+        },
+        {
+         "question": "表面積は 何cm² ですか。",
+         "answer": "440",
+         "meaning": "①底面2つで 60×2＝120cm²。②120＋320＝440cm²。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">15</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">17</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">帯のよこ＝底面のまわり</text></svg>"
+      },
+      {
+       "id": "hd3s_22_2",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "表面積から □ を もどす",
+       "intro": "立体の 表面積から 長さを 逆に 求めます。円周率は 3.14 とします。",
+       "star": 3,
+       "src": "原簿・小3最レ No.22",
+       "steps": [
+        {
+         "question": "たて 4cm・よこ 5cm・高さ 3cm の 直方体の 表面積は 何cm² ですか。",
+         "answer": "94",
+         "meaning": "①(4×5＋5×3＋4×3)×2＝(20＋15＋12)×2＝94cm²。"
+        },
+        {
+         "question": "底面が 1辺 10cm の 正方形、側面の 三角形の 高さ（斜高）が 12cm の 正四角すいの 表面積は 何cm² ですか。",
+         "answer": "340",
+         "meaning": "①底面 10×10＝100cm²。②側面は 10×12÷2＝60cm² が4つで240cm²。③100＋240＝340cm²。**12cmを高さと読みまちがえない**。"
+        },
+        {
+         "question": "高さ 9cm・奥行き 5cm・横 □cm の 直方体の 表面積が 258cm² の とき、□は いくつですか。",
+         "answer": "6",
+         "meaning": "①(9×5＋9×□＋5×□)×2＝258 → 45＋14□＝129 → 14□＝84 → □＝6。"
+        },
+        {
+         "question": "半径 5cm・長さ □cm の 円柱（横だおし）の 表面積が 408.2cm² の とき、□は いくつですか。",
+         "answer": "8",
+         "meaning": "①底面2つ＝5×5×3.14×2＝157cm²。②側面＝10×3.14×□＝31.4□。③157＋31.4□＝408.2 → 31.4□＝251.2 → □＝8。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">順→逆の2衣装</text></svg>"
+      },
+      {
+       "id": "hd3s_22_3",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "くりぬくと 表面積は ふえる",
+       "intro": "**ア** ＝ まん中の 立方体の 6面 すべてに 1個ずつ くっつけた 十字形（7個）。**イ** ＝ 1辺 3cm の 立方体から、上面 中央の マスから 下面まで 1×1×3 の 柱を 1本 くりぬいた 立体。",
+       "star": 3,
+       "src": "原簿・小3最レ No.22",
+       "steps": [
+        {
+         "question": "ア は 立方体 7個 なので 面は 全部で 何面 ありますか。（1辺1cmとします）",
+         "answer": "42",
+         "meaning": "①7×6＝42面。"
+        },
+        {
+         "question": "ア で くっついている 面は 何面 ですか。",
+         "answer": "12",
+         "meaning": "①接触は6組。②6×2＝12面。"
+        },
+        {
+         "question": "ア の 表面積は 何cm² ですか。",
+         "answer": "30",
+         "meaning": "①42−12＝30面。②1面1cm²なので 30cm²。"
+        },
+        {
+         "question": "イ で くりぬくと 表面積は ふえますか、へりますか。ふえるなら 1、へるなら 2 と 答えなさい。",
+         "answer": "1",
+         "meaning": "①上下のフタ 1cm²×2＝2cm² がへる。②内かべ 1×3 の面が4まいで 12cm² がふえる。③差し引き10cm²ふえる。"
+        },
+        {
+         "question": "イ の 表面積は 何cm² ですか。",
+         "answer": "64",
+         "meaning": "①もとの立方体は 3×3×6＝54cm²。②54−2＋12＝64cm²。**穴をあけると減ると思うと まちがい**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">24</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ア＝十字7個／イ＝くりぬき</text></svg>"
+      }
+     ]
+    },
+    "kokai": {},
+    "units": {
+     "倍数と約数": [
+      {
+       "id": "hd3s_06_1",
+       "category": "kazu",
+       "grade": 3,
+       "unit": "倍数・約数",
+       "title": "「200から」に 200 は 入るか",
+       "intro": "倍数の 個数を 数えます。**はしの 数が 入るか どうか** に 気をつけます。",
+       "star": 3,
+       "src": "原簿・小3最レ No.6",
+       "steps": [
+        {
+         "question": "1 から 100 までに、9 で わりきれる 整数は 何こ ありますか。",
+         "answer": "11",
+         "meaning": "①100÷9＝11あまり1。②11こ。"
+        },
+        {
+         "question": "1 から 400 までに、8 で わりきれる 整数は 何こ ありますか。",
+         "answer": "50",
+         "meaning": "①400÷8＝50こ。"
+        },
+        {
+         "question": "1 から 199 までに、8 で わりきれる 整数は 何こ ありますか。",
+         "answer": "24",
+         "meaning": "①199÷8＝24あまり7。②24こ。"
+        },
+        {
+         "question": "**200 から 400 まで** に、8 で わりきれる 整数は 何こ ありますか。",
+         "answer": "26",
+         "meaning": "①「200から」は **200を ふくむ**。②だから 引くのは 199まで。50−24＝26こ。③200÷8＝25 で引くと 200自身を 消してしまい 25こ になる（誤答）。**200も400も 8の倍数**という いちばん きびしい 数えらび。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">200</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">400</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">はしが両方とも8の倍数</text></svg>"
+      },
+      {
+       "id": "hd3s_06_3",
+       "category": "kazu",
+       "grade": 3,
+       "unit": "倍数・約数",
+       "title": "同じ向きに ならべて 正方形を 作る",
+       "intro": "たて 12cm、横 15cm の 長方形の 紙を、**同じ向きに**、すきまなく 重ねずに ならべて 正方形を 作ります。",
+       "star": 3,
+       "src": "原簿・小3最レ No.6",
+       "steps": [
+        {
+         "question": "「同じ向きに」と 書いてあるので、紙を 回して よいですか。よいなら 1、いけないなら 2。",
+         "answer": "2",
+         "meaning": "①**回転は 禁止**。②だから たては 12の倍数、横は 15の倍数 のまま。"
+        },
+        {
+         "question": "いちばん 小さい 正方形の 1辺は 何cm ですか。",
+         "answer": "60",
+         "meaning": "①12と15の 最小公倍数。②60cm。"
+        },
+        {
+         "question": "その とき 紙は 何まい ならべますか。",
+         "answer": "20",
+         "meaning": "①たてに 60÷12＝5まい、横に 60÷15＝4まい。②5×4＝20まい。"
+        },
+        {
+         "question": "2番目に 小さい 正方形の 1辺は 何cm ですか。",
+         "answer": "120",
+         "meaning": "①最小公倍数の2倍。②120cm。"
+        },
+        {
+         "question": "その とき 紙は 何まい ですか。",
+         "answer": "80",
+         "meaning": "①120÷12＝10、120÷15＝8。②10×8＝80まい。**1辺が2倍なら まい数は4倍**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">12</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">15</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">同じ向き＝回転禁止</text></svg>"
+      }
+     ],
+     "なかま調べ": [
+      {
+       "id": "hd3s_06_2",
+       "category": "kazu",
+       "grade": 3,
+       "unit": "なかま調べ（集合・ベン図）",
+       "title": "5でも 8でも わりきれない",
+       "intro": "**1 から 300 までの 300この 整数** について 考えます。",
+       "star": 3,
+       "src": "原簿・小3最レ No.6",
+       "steps": [
+        {
+         "question": "5 で わりきれる 整数は 何こ ありますか。",
+         "answer": "60",
+         "meaning": "①300÷5＝60こ。"
+        },
+        {
+         "question": "8 で わりきれる 整数は 何こ ありますか。",
+         "answer": "37",
+         "meaning": "①300÷8＝37あまり4。②37こ。"
+        },
+        {
+         "question": "5 でも 8 でも わりきれる 整数は 何こ ありますか。",
+         "answer": "7",
+         "meaning": "①5と8の最小公倍数は40。②300÷40＝7あまり20。③7こ。"
+        },
+        {
+         "question": "**5 でも 8 でも わりきれない** 整数は 何こ ありますか。",
+         "answer": "210",
+         "meaning": "①「わりきれない」は 直接数えられない。**全体から「少なくとも一方でわりきれる」を引く**。②60＋37−7＝90こ。③300−90＝210こ。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">40</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たして引く</text></svg>"
+      },
+      {
+       "id": "hd3s_06_4",
+       "category": "kazu",
+       "grade": 3,
+       "unit": "なかま調べ（集合・ベン図）",
+       "title": "石だんを 2人で のぼる",
+       "intro": "神社の 石だんは 全部で **300だん** です。A さんは **3だんずつ**、B さんは **4だんずつ** のぼります。",
+       "star": 3,
+       "src": "原簿・小3最レ No.6",
+       "steps": [
+        {
+         "question": "A さんが ふんだ 石だんは 何だん ですか。",
+         "answer": "100",
+         "meaning": "①3の倍数。300÷3＝100だん。"
+        },
+        {
+         "question": "B さんが ふんだ 石だんは 何だん ですか。",
+         "answer": "75",
+         "meaning": "①4の倍数。300÷4＝75だん。"
+        },
+        {
+         "question": "2人とも ふんだ 石だんは 何だん ですか。",
+         "answer": "25",
+         "meaning": "①12の倍数。300÷12＝25だん。"
+        },
+        {
+         "question": "**A さんだけ** が ふんだ 石だんは 何だん ですか。",
+         "answer": "75",
+         "meaning": "①Aがふんだ100だんから 2人ともの25だんを引く。②100−25＝75だん。**「〜だけ」＝差集合**。"
+        },
+        {
+         "question": "**2人とも ふまなかった** 石だんは 何だん ですか。",
+         "answer": "150",
+         "meaning": "①少なくとも一方がふんだのは 100＋75−25＝150だん。②300−150＝150だん。**大問2と骨は同じで、衣装だけ石段に着がえたもの**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 280 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"12\" y=\"88\" width=\"20\" height=\"6\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"33\" y=\"82\" width=\"20\" height=\"12\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"54\" y=\"76\" width=\"20\" height=\"18\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"75\" y=\"70\" width=\"20\" height=\"24\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"96\" y=\"64\" width=\"20\" height=\"30\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"117\" y=\"58\" width=\"20\" height=\"36\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"138\" y=\"52\" width=\"20\" height=\"42\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"159\" y=\"46\" width=\"20\" height=\"48\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"180\" y=\"40\" width=\"20\" height=\"54\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"201\" y=\"34\" width=\"20\" height=\"60\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"222\" y=\"28\" width=\"20\" height=\"66\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><rect x=\"243\" y=\"22\" width=\"20\" height=\"72\" fill=\"rgba(79,124,255,0.20)\" stroke=\"#4f7cff\" stroke-width=\"1\"/><text x=\"140\" y=\"112\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">神社の石だんは全部で300だん</text><text x=\"140\" y=\"114\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">300だんを3だんずつ・4だんずつ</text></svg>"
+      },
+      {
+       "id": "hd3s_06_5",
+       "category": "kazu",
+       "grade": 3,
+       "unit": "なかま調べ（集合・ベン図）",
+       "title": "5でも 7でも 9でも わりきれない",
+       "intro": "**1 から 300 まで** の 整数について、こんどは **3つ** の 数で 考えます。",
+       "star": 3,
+       "src": "原簿・小3最レ No.6",
+       "steps": [
+        {
+         "question": "5 の倍数、7 の倍数、9 の倍数 は それぞれ 何こ ありますか。3つを たすと いくつ ですか。",
+         "answer": "135",
+         "meaning": "①300÷5＝60、300÷7＝42、300÷9＝33。②60＋42＝102、＋33＝135こ。"
+        },
+        {
+         "question": "35 の倍数、45 の倍数、63 の倍数 の 個数を たすと いくつ ですか。",
+         "answer": "18",
+         "meaning": "①300÷35＝8、300÷45＝6、300÷63＝4。②8＋6＝14、＋4＝18こ。"
+        },
+        {
+         "question": "315（＝5×7×9）の 倍数は 300 までに 何こ ありますか。",
+         "answer": "0",
+         "meaning": "①315＞300 なので **0こ**。②ここが 0 になるよう 300 が えらばれている。"
+        },
+        {
+         "question": "5 でも 7 でも 9 でも わりきれない 整数は 何こ ありますか。",
+         "answer": "183",
+         "meaning": "①135−18＋0＝117こ が 少なくとも1つでわりきれる。②300−117＝183こ。**大問2で2つをやった直後に 3つへ自力で広げさせる**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3つ足して3つ引いて1つ足す</text></svg>"
+      }
+     ],
+     "立体図形(1)": [
+      {
+       "id": "hd3s_07_3",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "数えるのは 立方体 ではなく 面",
+       "intro": "1辺 1cm の 立方体を つみ重ねて、たて 3cm・横 4cm・高さ 5cm の 直方体を 作りました。**表面 全体に 色を ぬって** から、ふたたび **全部 バラバラ** に します。",
+       "star": 3,
+       "src": "原簿・小3最レ No.7",
+       "steps": [
+        {
+         "question": "立方体は 全部で 何個 ですか。",
+         "answer": "60",
+         "meaning": "①3×4×5＝60個。"
+        },
+        {
+         "question": "面は 全部で 何こ ありますか。",
+         "answer": "360",
+         "meaning": "①立方体1個に6面。②60×6＝360こ。**数えるのは 立方体ではなく「面」**。ここが発見。"
+        },
+        {
+         "question": "色が ついた 面は 何こ ですか。",
+         "answer": "94",
+         "meaning": "①直方体の表面の 1cm² の正方形の数。②2×(3×4＋4×5＋3×5)＝2×47＝94こ。"
+        },
+        {
+         "question": "色を ぬっていない 面は 何こ ですか。",
+         "answer": "266",
+         "meaning": "①360−94＝266こ。"
+        },
+        {
+         "question": "色を ぬっていない 面と ぬった 面の **ちがい** は 何こ ですか。",
+         "answer": "172",
+         "meaning": "①266−94＝172こ。②別解：360−94×2＝172。**大問2で「立方体を数える」をやった直後に「面を数える」に切りかえる**＝学んだ手を壊す配置。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"110\" y=\"152\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たて3cm・横4cm・高さ5cm</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3×4×5の直方体</text></svg>"
+      },
+      {
+       "id": "hd3s_07_5",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "数が さいころを 渡るたび 反転する",
+       "intro": "向かい合う 面の 和が 7 の さいころを **L字型** に 4こ つみます（下段に 横一列 3こ ＋ 下段左はしの 上に 1こ）。**くっついている 面の 数は たがいに 同じ** です。",
+       "star": 3,
+       "src": "原簿・小3最レ No.7",
+       "steps": [
+        {
+         "question": "さいころの ある面が □ の とき、その 裏の 面は いくつ ですか。7 から 何を 引きますか。",
+         "answer": "7",
+         "meaning": "①和が7なので 裏は 7−□。②7から□を引く。"
+        },
+        {
+         "question": "くっついている 面が 同じ 数 なので、となりの さいころに 移ると その面の 裏に なります。数は □ → 7−□ → □ と 何回で もとに もどりますか。",
+         "answer": "2",
+         "meaning": "①2回わたると もとにもどる。②**さいころを渡るたび スイッチする**。"
+        },
+        {
+         "question": "上の さいころの 下面が 3 の とき、下段左はしの さいころの 上面 は いくつ ですか。",
+         "answer": "3",
+         "meaning": "①くっついている面は同じ数なので 3。"
+        },
+        {
+         "question": "その とき 下段左はしの さいころの **下面** は いくつ ですか。",
+         "answer": "4",
+         "meaning": "①7−3＝4。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 200 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"40,50 110,50 145,26 75,26\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#1a2340\" stroke-width=\"1.6\"/><polygon points=\"40,50 110,50 110,118 40,118\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#1a2340\" stroke-width=\"1.6\"/><polygon points=\"110,50 145,26 145,94 110,118\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#1a2340\" stroke-width=\"1.6\"/><circle cx=\"75\" cy=\"84\" r=\"5\" fill=\"#1a2340\"/><text x=\"100\" y=\"140\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">向かい合う面の和は7</text><text x=\"100\" y=\"144\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">L字に4こつむ</text></svg>"
+      },
+      {
+       "id": "hd3s_07_6",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "図1を 飾りに 見せかけて 一意性の 鍵に する",
+       "intro": "向かい合う 面の 和が 7 の さいころが あります。図の **12 と 15** は、**角に 集まっている 3つの 面の 目の 合計** です。",
+       "star": 3,
+       "src": "原簿・小3最レ No.7",
+       "steps": [
+        {
+         "question": "12 と 15 の 頂点は **上面と 右面を 共有** し、ちがうのは 手前と 奥 だけ です。手前 ＋ 奥 は いくつ ですか。",
+         "answer": "7",
+         "meaning": "①手前と奥は 向かい合う面。②和は7。"
+        },
+        {
+         "question": "12 ＋ 15 は いくつ ですか。",
+         "answer": "27",
+         "meaning": "①27。"
+        },
+        {
+         "question": "27 ＝ (上＋右)×2 ＋ 7 です。上 ＋ 右 は いくつ ですか。",
+         "answer": "10",
+         "meaning": "①27−7＝20。②20÷2＝10。"
+        },
+        {
+         "question": "15 − 12 は 手前 − 奥 です。手前 は いくつ ですか。",
+         "answer": "5",
+         "meaning": "①差は3、和は7。②(7＋3)÷2＝5。（奥は2）"
+        },
+        {
+         "question": "上 ＋ 右 ＝ 10 に なる 組は {4,6} です。図1 の 向きから 上面は いくつ と 決まりますか。",
+         "answer": "4",
+         "meaning": "①和10の組は {4,6} だけ。②どちらが上かは **図1の向き** でしか決まらない。③4。**図1は 無駄な飾りに 見せかけて 実は 一意性の 鍵**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 200 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"40,50 110,50 145,26 75,26\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#1a2340\" stroke-width=\"1.6\"/><polygon points=\"40,50 110,50 110,118 40,118\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#1a2340\" stroke-width=\"1.6\"/><polygon points=\"110,50 145,26 145,94 110,118\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#1a2340\" stroke-width=\"1.6\"/><circle cx=\"75\" cy=\"84\" r=\"5\" fill=\"#1a2340\"/><text x=\"100\" y=\"140\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">向かい合う面の和は7</text><text x=\"100\" y=\"144\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">角に集まる3面の和</text></svg>"
+      },
+      {
+       "id": "hd3s_07_7",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "立体図形（体積・表面積）",
+       "title": "ふたをして 倒すと 底面積だけ 変わる",
+       "intro": "**16L の 水が 入る ふたつきの 水そう**（底面 20cm×20cm・高さ 40cm）を 2つ 用意します。**ア** は 20cm まで、**イ** は 10cm まで 水を 入れました。",
+       "star": 3,
+       "src": "原簿・小3最レ No.7",
+       "steps": [
+        {
+         "question": "水そう イ には 何L の 水が 入っていますか。",
+         "answer": "4",
+         "meaning": "①20×20×10＝4000cm³。②1L＝1000cm³ なので 4L。"
+        },
+        {
+         "question": "水そう ア には 何L の 水が 入っていますか。",
+         "answer": "8",
+         "meaning": "①20×20×20＝8000cm³＝8L。"
+        },
+        {
+         "question": "ア から イ に 何L うつすと、2つが 同じ 量に なりますか。",
+         "answer": "2",
+         "meaning": "①合わせて12L、1つ6L。②8−6＝2L。"
+        },
+        {
+         "question": "**ふたをして 横だおし** に すると 底面は 何cm² に なりますか。",
+         "answer": "800",
+         "meaning": "①20×40＝800cm²。②立てたときの400cm²の **ちょうど2倍**。**水の量は変わらない**。"
+        },
+        {
+         "question": "（うつす前の 量で）倒したとき、ア と イ の 水面の 高さの ちがいは 何cm ですか。",
+         "answer": "5",
+         "meaning": "①ア＝8000÷800＝10cm、イ＝4000÷800＝5cm。②10−5＝5cm。**「ふたをして」の一言が無いと 問題が こわれる**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 260 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"20\" width=\"70\" height=\"110\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2\"/><rect x=\"26\" y=\"75\" width=\"70\" height=\"55\" fill=\"rgba(79,124,255,0.35)\"/><rect x=\"150\" y=\"60\" width=\"100\" height=\"55\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2\"/><rect x=\"150\" y=\"88\" width=\"100\" height=\"27\" fill=\"rgba(79,124,255,0.35)\"/><text x=\"61\" y=\"144\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">立てたとき</text><text x=\"200\" y=\"144\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ふたをして倒したとき</text><text x=\"130\" y=\"154\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ふたをして倒す</text></svg>"
+      }
+     ],
+     "立体図形(2)": [
+      {
+       "id": "hd3s_08_1",
+       "category": "rittai",
+       "grade": 3,
+       "unit": "展開図・投影図",
+       "title": "内に おる／外に おる で 効き方が 真逆",
+       "intro": "ふたの ない 直方体の 紙の 箱が あります。底は **たて 11cm・横 35cm** です。**小さい方の 側面を 内がわに、大きい方の 側面を 外がわに** おって つぶすと、太線の 部分が **正方形** に なりました。",
+       "star": 3,
+       "src": "原簿・小3最レ No.8",
+       "steps": [
+        {
+         "question": "**内がわ** に おった 側面は、外がわの 形（外形）を 変えますか。変えるなら 1、変えないなら 2。",
+         "answer": "2",
+         "meaning": "①内がわに たたむので 外形は そのまま。②変えない。"
+        },
+        {
+         "question": "**外がわ** に おった 側面は、外形を 両側に それぞれ 何ぶん のばしますか。箱の高さぶんなら 1、底の長さぶんなら 2 と 答えなさい。",
+         "answer": "1",
+         "meaning": "①外にたおすと 高さのぶんだけ 外へのびる。②両側なので 高さ×2 のびる。"
+        },
+        {
+         "question": "太線の 正方形の 1辺は 何cm ですか。",
+         "answer": "35",
+         "meaning": "①横35cm の方は 内がわにおった側が変えないので そのまま35cm。②正方形なので 1辺35cm。"
+        },
+        {
+         "question": "もとの 箱の 高さは 何cm ですか。",
+         "answer": "12",
+         "meaning": "①たて11cm が 外がわにおって 35cm になった。②35＝11＋高さ×2 → 高さ×2＝24 → 12cm。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 250 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"30\" y=\"40\" width=\"190\" height=\"60\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M30 40 L30 20 M220 40 L220 20\" stroke=\"#9aa3c0\" stroke-width=\"1.4\" stroke-dasharray=\"3 3\"/><text x=\"125\" y=\"34\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">底 たて11cm・横35cm</text><text x=\"125\" y=\"124\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">小さい側面は内がわに・大きい側面は外がわにおる</text><text x=\"125\" y=\"154\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ふたのない箱をつぶす</text></svg>"
+      }
+     ],
+     "規則性(1)": [
+      {
+       "id": "hd3s_09_6",
+       "category": "kisoku",
+       "grade": 3,
+       "unit": "群数列",
+       "title": "群数列を 4つの 角度から",
+       "intro": "1, 2,3, 3,4,5, 4,5,6,7, 5,6,7,8,9, 6,7, …… と ならんでいます。**第k群は k個** あり、**k から はじまって 1ずつ ふえます**（第k群の 最後は 2k−1）。",
+       "star": 3,
+       "src": "原簿・小3最レ No.9",
+       "steps": [
+        {
+         "question": "第1群から 第9群 までに 数は 全部で 何個 ありますか。",
+         "answer": "45",
+         "meaning": "①1＋2＋…＋9＝45個。"
+        },
+        {
+         "question": "50番目 の 数は いくつ ですか。",
+         "answer": "14",
+         "meaning": "①45個までが第9群。②50番目は 第10群の 5個目。③第10群は 10,11,12,… なので 10＋4＝14。"
+        },
+        {
+         "question": "10 が はじめて 出てくるのは 何番目 ですか。",
+         "answer": "20",
+         "meaning": "①10が入るのは k≦10≦2k−1 → k≧5.5 かつ k≦10。②はじめは第6群（6,7,8,9,10,11）の5個目。③第5群までが15個。15＋5＝20番目。"
+        },
+        {
+         "question": "12 は 全部で 何回 出てきますか。",
+         "answer": "6",
+         "meaning": "①k≦12≦2k−1 → k≧6.5 かつ k≦12。②k＝7,8,9,10,11,12 の6回。**数えずに範囲で出せる**。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2,3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3,4,5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4,5,6,7</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">第k群はk個</text></svg>"
+      }
+     ],
+     "規則性(2)": [
+      {
+       "id": "hd3s_10_7",
+       "category": "kisoku",
+       "grade": 3,
+       "unit": "群数列",
+       "title": "1枚の 中で 道具を 作って 使わせる",
+       "intro": "1, 1,2,1, 1,2,3,2,1, 1,2,3,4,3,2,1, …… と ならんでいます。**第k群は 1 から k まで 上がって 1 まで 下りる 山型** で、**2k−1 個** あります。",
+       "star": 3,
+       "src": "原簿・小3最レ No.10",
+       "steps": [
+        {
+         "question": "1 から 続けて 奇数を n個 たすと いくつ に なりますか。n×n なら 1、n＋n なら 2 と 答えなさい。",
+         "answer": "1",
+         "meaning": "①1＋3＋5＋…＝n×n（四角の数）。②1。"
+        },
+        {
+         "question": "第1群から 第10群 までに 数は 全部で 何個 ありますか。",
+         "answer": "100",
+         "meaning": "①各群が 1,3,5,… 個の奇数。②10群までで 10×10＝100個。**奇数の和＝平方数**がそのまま効く。"
+        },
+        {
+         "question": "120番目 の 数は いくつ ですか。",
+         "answer": "2",
+         "meaning": "①10群までで100個、11群までで 11×11＝121個。②120番目は 第11群の 20個目。③第11群は 21個で 山型。20個目は 最後から2番目なので **2**。"
+        },
+        {
+         "question": "**25 が はじめて 出てくる** のは 何番目 ですか。",
+         "answer": "601",
+         "meaning": "①25 は 第25群の **頂点** ではじめて出る。②24群までで 24×24＝576個。③576＋25＝601番目。**同じ回の別の大問で作った「奇数の和＝平方数」を ここで使わせる**構成。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1,2,1</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1,2,3,2,1</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">山型・第k群は2k−1個</text></svg>"
       }
      ]
     }

@@ -1875,6 +1875,14 @@ async function hamaDaimonWeek(grade, course, no) {
   const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
   return (node && node.fukushu && node.fukushu[String(no)]) || [];
 }
+// ★単元でえらぶモードの大問。
+//   回番号＝去年までのカリキュラム／単元＝今年のカリキュラム、という分け方に合わせる。
+//   刷新版（2026年度〜）の大問は回番号にひもづけられないので units 側に置く（2026-07-28）
+async function hamaDaimonUnit(grade, course, unit) {
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
+  if (!node || !node.units || !unit) return [];
+  return node.units[unit] || node.units[await hamaPoolUnit(grade, course, unit)] || [];
+}
 // 公開の範囲は直近3ヶ月ぶん。月がひと月ずつずれて重なる（ラップする）ので、
 // 月に1本ずつ置いておけば、いつ開いても3本＝9問そろう＝たくさん作らなくてよい（本人指摘 2026-07-28）
 async function hamaDaimonKokai(grade, course, no) {
@@ -2229,8 +2237,19 @@ async function renderHamaPanel() {
       document.getElementById('hama-cnt-kaisetsu').textContent =
         kxN ? `${kxPack.title}・${kxN}問` : 'この単元はまだ用意していません';
     }
-    // 大問は回番号にひもづくので、単元でえらぶモードでは出さない
-    ['kokai', 'weekq', 'kokaiq'].forEach(k => {
+    // ★大問は「今年のカリキュラム」ぶんを 単元にひもづけて出す（2026-07-28）。
+    //   回番号＝去年までのカリキュラムなので、刷新版の大問は units 側に置いてある。
+    const uSets = await hamaDaimonUnit(grade, course, sansuState.hamaUnit);
+    const uN = daimonSteps(uSets);
+    const wqB = document.querySelector('.hama-act-btn[data-hama-act="weekq"]');
+    const wqEl = document.getElementById('hama-cnt-weekq');
+    if (wqB && wqEl) {
+      wqB.classList.toggle('hidden', !uN);
+      wqB.disabled = !uN;
+      wqEl.textContent = uN ? `${sansuState.hamaUnit}・大問${uSets.length}（${uN}問）` : '—';
+    }
+    // 公開の範囲は月にひもづくので、単元でえらぶモードでは出さない
+    ['kokai', 'kokaiq'].forEach(k => {
       const el = document.getElementById('hama-cnt-' + k);
       if (el) el.textContent = '—';
       const b = document.querySelector(`.hama-act-btn[data-hama-act="${k}"]`);
@@ -2272,12 +2291,15 @@ async function renderHamaPanel() {
   const kxBtn = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
 
   // ★大問モード（原簿どおりの3問1組）。まだ問題が無いところは暗転して残す（本人指示 2026-07-28）
-  const weekSets = await hamaDaimonWeek(grade, course, no);
+  const byUnitMode = (sansuState.hamaMode === 'unit' && sansuState.hamaUnit);
+  const weekSets = byUnitMode
+    ? await hamaDaimonUnit(grade, course, sansuState.hamaUnit)
+    : await hamaDaimonWeek(grade, course, no);
   const kokaiSets = showKokai ? await hamaDaimonKokai(grade, course, no) : [];
   const mNow = hamaMonthOf(grade, course, no);
   const mFrom = ((mNow - 1 - 2) % 12 + 12) % 12 + 1;
   const dq = [
-    { k: 'weekq', show: true, sets: weekSets, span: `No.${no}` },
+    { k: 'weekq', show: true, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
     { k: 'kokaiq', show: showKokai, sets: kokaiSets, span: `${mFrom}〜${mNow}月` },
   ];
   for (const d of dq) {
@@ -2408,8 +2430,10 @@ async function startHamaSession(kind) {
     showLoading();
     try {
       const dno = hamaCurrent(grade, course);
+      const byUnit = (sansuState.hamaMode === 'unit' && sansuState.hamaUnit);
       let sets = kind === 'weekq'
-        ? await hamaDaimonWeek(grade, course, dno)
+        ? (byUnit ? await hamaDaimonUnit(grade, course, sansuState.hamaUnit)
+                  : await hamaDaimonWeek(grade, course, dno))
         : await hamaDaimonKokai(grade, course, dno);
       if (!sets.length) { showToast('ここの大問はまだ用意していません'); hideLoading(); return; }
       // ★良問から先に出す（本人指示 2026-07-28）。原簿の★が高い順。同じ★の中だけまぜる。
