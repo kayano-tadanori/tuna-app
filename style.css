@@ -840,6 +840,13 @@ button { cursor: pointer; font-family: inherit; }
 .tetris-overlay.ending .tetris-overlay-text,
 .tetris-overlay.ending .tetris-overlay-score,
 .tetris-overlay.ending .mine-overlay-img { display: none; }
+/* チッチジャンプ2（2026-07-28）：情報が4つ並ぶので少しだけ詰める */
+.jump-area .tetris-info { padding: 4px 2px; }
+.jump-area .tetris-info span { font-size: 0.56rem; }
+.jump-area .tetris-info b { font-size: 0.86rem; }
+.jump-area .tetris-overlay-score { font-size: 0.82rem; line-height: 1.5; text-align: center; padding: 0 10px; }
+/* 「もっと先へ」＝月に着いた人だけに出る、火星ゆきのボタン */
+.jump-continue-btn { background: linear-gradient(135deg, #ff7a3d, #c4352b); border: 1.5px solid rgba(255,180,120,0.55); box-shadow: 0 6px 22px rgba(220,90,40,0.45); }
 .tetris-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .tetris-btn { background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-sm); font-size: 1.4rem; font-weight: 900; min-height: 54px; transition: background 0.1s, transform 0.08s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .tetris-btn:active { background: var(--card); transform: scale(0.92); }

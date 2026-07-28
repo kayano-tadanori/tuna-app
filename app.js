@@ -7452,7 +7452,7 @@ function mineUseItem(kind) {
 }
 
 // ============================================================
-// チッチジャンプ（息抜きミニゲーム3）
+// チッチジャンプ2（息抜きミニゲーム3）月→火星
 // ============================================================
 
 const J_W = 260, J_H = 420;
@@ -7492,6 +7492,45 @@ const J_SKY_TIERS = [
   { min: 250,  top: '#7a3f2e', bot: '#2c1636' }, // 夕やけ
   { min: 650,  top: '#0e1230', bot: '#05060f' }, // 夜
   { min: 1500, top: '#0a0512', bot: '#000000' }, // 宇宙
+  { min: 3000, top: '#050510', bot: '#000000' }, // 深宇宙（月より先）
+  { min: 4000, top: '#1a0806', bot: '#000000' }, // 火星の赤い光がうっすら差す
+  { min: 4700, top: '#3a1408', bot: '#120303' }, // 火星の砂嵐
+];
+
+// ── スコア設計（2026-07-28）─────────────────────────────
+// もとは「高さ÷10」がそのままスコアで、3000mの月に着くと全員3000点で並んでいた。
+// 上に行くほど1mの値打ちが上がるようにして、星とクリアボーナスを足す3本立てにする。
+//   [ここまでの高さ(m), その区間の1mあたりの点]
+const J_MARS = 5000;           // 第2ゴール：火星
+const J_SCORE_TIERS = [[500, 10], [1500, 20], [2500, 30], [3000, 50], [J_MARS, 100], [Infinity, 150]];
+const J_STAR_BASE = 300;       // ⭐1個の基礎点
+const J_STAR_COMBO_MS = 3000;  // この間に次を取るとコンボがつながる
+const J_STAR_COMBO_MAX = 5;    // 倍率の上限（＝1個1,500点まで）
+const J_MOON_BONUS = 50000;    // 月に着いたら
+const J_MARS_BONUS = 150000;   // 火星に着いたら
+
+// 月から火星までのステージ区切り
+const J_MOON_LEAVE_M = 3300;   // ここまで月が足元に見えている
+const J_BELT_M = 3400;         // 小惑星帯のはじまり
+const J_BELT_END_M = 4000;     // 小惑星帯のおわり
+const J_MARS_SEE_M = 4000;     // 火星が見えはじめる
+const J_STORM_M = 4700;        // 砂嵐（横風）のはじまり
+const J_ASTEROID_SIZE = 30;
+
+// 高さ(m)から高さ点を出す。区間ごとに単価が違うので積み上げで計算する
+function jHeightScore(m) {
+  let s = 0, prev = 0;
+  for (const [to, rate] of J_SCORE_TIERS) {
+    if (m <= prev) break;
+    s += (Math.min(m, to) - prev) * rate;
+    prev = to;
+  }
+  return Math.round(s);
+}
+// 火星の8本脚の宇宙人がしゃべる「意味不明な記号」。読めないのが正解
+const J_ALIEN_TALK = [
+  'ｸﾞﾎﾞ▲ﾘ？', '★☆◆ﾋﾟ！', 'ﾑﾆｮ〜ん◎', 'ｼﾞｮﾎﾞ■ﾀﾞ！', '▽※▽※？',
+  'ﾜﾚﾜﾚﾊ…〠', 'ﾎﾟﾎﾟ◇ﾑ？', '⁂ﾋﾞｮ⁂', 'ﾀﾞ✦ﾎﾞ✦ﾝ', '⌇ｸﾈｸﾈ⌇',
 ];
 const J_MILESTONE_CHEERS = [
   'オットン：ようやったチッチ！', 'オカーン：その調子や〜！', 'チッチ：ピピーッ！！',
@@ -7517,6 +7556,10 @@ const jumpState = {
   player: { x: J_W / 2 - J_PLAYER_W / 2, y: 0, vy: 0, vx: 0 },
   platforms: [], coins: [], hawk: null, hawkCooldown: 0, stunUntil: 0,
   spawnY: 0, score: 0, maxHeight: 0, starsCollected: 0,
+  // meters＝高さ(m)。score＝合計点。演出の判定は必ず meters を見ること（scoreは桁が違う）
+  meters: 0, starScore: 0, bonusScore: 0, starCombo: 0, lastStarAt: -99999,
+  moonCleared: false, marsCleared: false,
+  asteroids: [], asteroidCooldown: 0, popText: '', popUntil: 0,
   over: false, dragging: false,
   rafId: null, controlsReady: false,
 };
@@ -7532,15 +7575,21 @@ function jPlatformWidth(score) {
 }
 
 function jGenPlatformAt(y) {
-  const score = jumpState.score;
+  const score = jumpState.meters;   // 足場の見た目・むずかしさは「高さ(m)」で決める
   const w = jPlatformWidth(score);
   const x = Math.random() * (J_W - w);
-  // 足場タイプの抽選：登るほど特殊足場が出やすくなる
+  // 足場タイプの抽選：登るほど特殊足場が出やすくなる。
+  // ★もとは「r<0.28でこわれ雲 → その後にr<0.14でバネ雲」と条件が重なっていて、
+  //   28mを超えるとバネ雲が数学的に一度も出なくなっていた（2026-07-28に修正）。
+  //   取り分を足し上げる形にして、バネ雲は最後までちょこちょこ出るようにする。
   let type = 'normal';
   const r = Math.random();
-  if (score > 45 && r < 0.14) type = 'ice';
-  else if (score > 28 && r < 0.28) type = 'break';
-  else if (r < (score > 10 ? 0.14 : 0.08)) type = 'spring';
+  const pIce = score > 45 ? 0.13 : 0;
+  const pBreak = score > 28 ? 0.13 : 0;
+  const pSpring = score > 10 ? 0.18 : 0.10;
+  if (r < pIce) type = 'ice';
+  else if (r < pIce + pBreak) type = 'break';
+  else if (r < pIce + pBreak + pSpring) type = 'spring';
   // 動く足場はふつうの雲だけ（特殊足場は止めておく：難しすぎ防止）
   const moving = type === 'normal' && score > 20 && Math.random() < 0.3;
   jumpState.platforms.push({ x, y, w, type, used: false, breakAt: 0, seed: Math.random(), vx: moving ? (Math.random() < 0.5 ? 1 : -1) * 0.8 : 0 });
@@ -7551,14 +7600,16 @@ function jGenPlatformAt(y) {
 }
 
 function initJump() {
-  document.getElementById('jump-best').textContent = localStorage.getItem('jumpBest') || '0';
+  document.getElementById('jump-best').textContent = Number(localStorage.getItem('jumpBest') || 0).toLocaleString();
   document.getElementById('jump-back').onclick = () => { stopJumpLoop(); jStopBgm(); jumpChars.stop(); showScreen('subject'); };
   document.getElementById('jump-restart').onclick = startJump;
-  document.getElementById('jump-rank').onclick = () => showGameRanking('jump', 'チッチジャンプ', 'max');
+  document.getElementById('jump-continue').onclick = jContinueToMars;
+  document.getElementById('jump-rank').onclick = () => showGameRanking('jump', 'チッチジャンプ2', 'max');
   document.getElementById('jump-bgm').onclick = () => {
     tSound.bgm = !tSound.bgm;
     localStorage.setItem('tetrisBgm', tSound.bgm ? '1' : '0');
-    if (tSound.bgm && !jumpState.over) jStartBgm(); else jStopBgm();
+    // 月より先まで来ているなら深宇宙のBGMに戻す
+    if (tSound.bgm && !jumpState.over) jStartBgm(jumpState.moonCleared ? 'space' : undefined); else jStopBgm();
     jUpdateSoundBtns();
   };
   document.getElementById('jump-sfx').onclick = () => {
@@ -7613,6 +7664,20 @@ function startJump() {
   jumpState.score = 0;
   jumpState.maxHeight = 0;
   jumpState.starsCollected = 0;
+  jumpState.meters = 0;
+  jumpState.starScore = 0;
+  jumpState.bonusScore = 0;
+  jumpState.starCombo = 0;
+  jumpState.lastStarAt = -99999;
+  jumpState.moonCleared = false;
+  jumpState.marsCleared = false;
+  jumpState.asteroids = [];
+  jumpState.asteroidCooldown = 120;
+  jumpState.alien = null;
+  jumpState.alienCooldown = 120;
+  jumpState.alienWarned = false;
+  jumpState.popText = '';
+  jumpState.popUntil = 0;
   jumpState.over = false;
   jumpState.wingUntil = 0;
   jumpState.barrierUntil = 0;
@@ -7622,6 +7687,8 @@ function startJump() {
   jumpState.shooters = [];
   jumpState.shootCooldown = 0;
   jumpState.shootWarned = false;
+  jumpState.beltWarned = false;
+  jumpState.stormWarned = false;
   jumpState.hawkCooldown = 150;
   jumpState.stunUntil = 0;
   jumpState.nextMilestone = J_MILESTONE_STEP;
@@ -7632,6 +7699,7 @@ function startJump() {
   document.querySelectorAll('#screen-jump .t-item-btn').forEach(b => b.classList.remove('item-active'));
   const ov = document.getElementById('jump-overlay');
   ov.classList.add('hidden'); ov.classList.remove('ending');
+  document.getElementById('jump-continue').classList.add('hidden');
 
   const startPlatY = J_H - 40;
   jumpState.platforms.push({ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, type: 'normal', used: false, breakAt: 0, seed: Math.random(), vx: 0 });
@@ -7662,7 +7730,9 @@ function jLoop() {
   jUpdatePhysics();
   updateJumpInfo();
   drawJump();
-  if (jumpState.score >= J_GOAL) { jReachMoon(); jumpState.rafId = requestAnimationFrame(jLoop); return; }
+  // ゴールは2つ。月(3000m)で一度きって、「もっと先へ」を選んだ人だけ火星(5000m)へ進む
+  if (!jumpState.moonCleared && jumpState.meters >= J_GOAL) { jReachMoon(); jumpState.rafId = requestAnimationFrame(jLoop); return; }
+  if (jumpState.moonCleared && !jumpState.marsCleared && jumpState.meters >= J_MARS) { jReachMars(); jumpState.rafId = requestAnimationFrame(jLoop); return; }
   if (jumpState.player.y > J_H + 20) { jGameOver(); return; }
   jumpState.rafId = requestAnimationFrame(jLoop);
 }
@@ -7723,8 +7793,20 @@ function jUpdatePhysics() {
         jSfx('onigiri');
         jumpChars.cheer('オカーンのおにぎり！バリアや！', 1400);
       } else {
-        jumpState.maxHeight += 30; // スコアボーナスのみ。ガチャ用コインとは切り離す（周回稼ぎ対策）
+        // ⭐は高さを水増しせず、独立した得点にする（高さを足すとゴール判定がずれるため）。
+        // 3秒以内に次を取るとコンボがつながって倍率が上がる＝危ない位置の星を狙う判断が生まれる。
+        // ガチャ用コインとは切り離したまま（周回稼ぎ対策）。
+        jumpState.starCombo = (now - jumpState.lastStarAt <= J_STAR_COMBO_MS)
+          ? Math.min(jumpState.starCombo + 1, J_STAR_COMBO_MAX) : 1;
+        jumpState.lastStarAt = now;
+        const gained = J_STAR_BASE * jumpState.starCombo;
+        jumpState.starScore += gained;
         jumpState.starsCollected++;
+        jumpState.popText = jumpState.starCombo > 1
+          ? `⭐×${jumpState.starCombo}  +${gained.toLocaleString()}`
+          : `⭐ +${gained.toLocaleString()}`;
+        jumpState.popUntil = now + 900;
+        if (jumpState.starCombo === J_STAR_COMBO_MAX) jumpChars.cheer('コンボ最高や！⭐×5！', 1200);
         jSfx('coin');
       }
     }
@@ -7754,19 +7836,19 @@ function jUpdatePhysics() {
       jumpState.hawk = null;
       jumpState.hawkCooldown = 200 + Math.random() * 200;
     }
-  } else if (jumpState.score >= J_HAWK_MIN_SCORE && jumpState.score < J_SHOOT_M) {
+  } else if (jumpState.meters >= J_HAWK_MIN_SCORE && jumpState.meters < J_SHOOT_M) {
     jumpState.hawkCooldown--;
     if (jumpState.hawkCooldown <= 0) {
       const dir = Math.random() < 0.5 ? 1 : -1;
       jumpState.hawk = { x: dir === 1 ? -J_HAWK_SIZE : J_W + J_HAWK_SIZE, y: 40 + Math.random() * (J_H * 0.5), dir };
       jSfx('hawkWarn');
-      const s = jumpState.score;
+      const s = jumpState.meters;
       jumpChars.cheer(s >= J_SPACE_M ? '👽 宇宙人や！じゃまするで！' : s >= J_BALLOON_M ? '🎈 気球や！ぶつからんように！' : '🦅 タカや！気をつけて！', 1500);
     }
   }
 
   // 流れ星（2500m超・多めに降ってきて邪魔をする）
-  if (jumpState.score >= J_SHOOT_M) {
+  if (jumpState.meters >= J_SHOOT_M) {
     if (!jumpState.shootWarned) { jumpState.shootWarned = true; jSfx('hawkWarn'); jumpChars.cheer('☄️ 流れ星の雨や！気をつけて！', 1800); }
     jumpState.shootCooldown--;
     if (jumpState.shooters.length < 6 && jumpState.shootCooldown <= 0) {
@@ -7795,6 +7877,88 @@ function jUpdatePhysics() {
     }
   }
 
+  // ☄️ 小惑星帯（3400〜4000m）：大きな岩がゆっくり横切る。流れ星より遅いぶん、
+  // 見てからよけられる＝「待つ」判断が要る障害物にする
+  if (jumpState.meters >= J_BELT_M && jumpState.meters < J_BELT_END_M) {
+    if (!jumpState.beltWarned) { jumpState.beltWarned = true; jSfx('hawkWarn'); jumpChars.cheer('☄️ 小惑星帯や！岩をよけろ！', 1800); }
+    jumpState.asteroidCooldown--;
+    if (jumpState.asteroids.length < 3 && jumpState.asteroidCooldown <= 0) {
+      const dir = Math.random() < 0.5 ? 1 : -1;
+      jumpState.asteroids.push({
+        x: dir === 1 ? -J_ASTEROID_SIZE : J_W + J_ASTEROID_SIZE,
+        y: 30 + Math.random() * (J_H * 0.55),
+        dir, vy: 0.2 + Math.random() * 0.4, rot: Math.random() * Math.PI, seed: Math.random(),
+      });
+      jumpState.asteroidCooldown = 90 + Math.random() * 90;
+    }
+  }
+  for (let i = jumpState.asteroids.length - 1; i >= 0; i--) {
+    const a = jumpState.asteroids[i];
+    a.x += a.dir * 1.15; a.y += a.vy; a.rot += 0.02;
+    const ar = J_ASTEROID_SIZE / 2;
+    const hitA = p.x + J_PLAYER_W > a.x - ar && p.x < a.x + ar && p.y + J_PLAYER_H > a.y - ar && p.y < a.y + ar;
+    if (hitA && (wingOn || barrierOn)) {
+      jumpState.asteroids.splice(i, 1); jSfx('onigiri');
+      jumpChars.cheer('バリアで岩をはね返した！', 1000);
+    } else if (hitA) {
+      jumpState.asteroids.splice(i, 1);
+      p.vx = -a.dir * J_KNOCKBACK_VX;
+      p.vy = J_KNOCKBACK_VY;
+      jumpState.stunUntil = now + J_STUN_MS;
+      jSfx('hawkHit');
+      jumpChars.cheer('岩にぶつかった！', 1000);
+    } else if (a.x < -40 || a.x > J_W + 40 || a.y > J_H + 40) {
+      jumpState.asteroids.splice(i, 1);
+    }
+  }
+
+  // 🌪 火星の砂嵐（4700m〜）：ゆっくり向きの変わる横風に押される。着地の直前が一番むずかしい
+  if (jumpState.meters >= J_STORM_M && !jumpState.marsCleared) {
+    if (!jumpState.stormWarned) { jumpState.stormWarned = true; jSfx('hawkWarn'); jumpChars.cheer('🌪 火星の砂嵐や！ふんばれ！', 1800); }
+    p.x += Math.sin(now / 2200) * 0.55;
+  }
+
+  // 👾 火星の8本脚の宇宙人（4000m〜）：ふわふわ寄ってきて、意味不明な記号をしゃべる。
+  // 当たると吹っ飛ぶのは他のじゃま役と同じ
+  if (jumpState.meters >= J_MARS_SEE_M) {
+    if (!jumpState.alienWarned) { jumpState.alienWarned = true; jSfx('hawkWarn'); jumpChars.cheer('👾 8本脚の宇宙人や！なに言うてるか分からん！', 2000); }
+    if (!jumpState.alien) {
+      jumpState.alienCooldown--;
+      if (jumpState.alienCooldown <= 0) {
+        const dir = Math.random() < 0.5 ? 1 : -1;
+        jumpState.alien = {
+          x: dir === 1 ? -34 : J_W + 34, y: 40 + Math.random() * (J_H * 0.45), dir,
+          talk: J_ALIEN_TALK[Math.floor(Math.random() * J_ALIEN_TALK.length)],
+          talkUntil: now + 2600, seed: Math.random(),
+        };
+        jSfx('hawkWarn');
+      }
+    }
+  }
+  if (jumpState.alien) {
+    const al = jumpState.alien;
+    al.x += al.dir * 0.85;
+    al.y += Math.sin(now / 600 + al.seed * 6) * 0.7; // ふわふわ上下
+    const arr = 17;
+    const hitAl = p.x + J_PLAYER_W > al.x - arr && p.x < al.x + arr && p.y + J_PLAYER_H > al.y - arr && p.y < al.y + arr;
+    if (hitAl && (wingOn || barrierOn)) {
+      jumpState.alien = null; jSfx('onigiri');
+      jumpChars.cheer('宇宙人をはね返した！', 1000);
+      jumpState.alienCooldown = 200 + Math.random() * 200;
+    } else if (hitAl) {
+      jumpState.alien = null;
+      p.vx = -al.dir * J_KNOCKBACK_VX;
+      p.vy = J_KNOCKBACK_VY;
+      jumpState.stunUntil = now + J_STUN_MS;
+      jSfx('hawkHit');
+      jumpChars.cheer('宇宙人にぶつかった！', 1000);
+      jumpState.alienCooldown = 180 + Math.random() * 180;
+    } else if (al.x < -40 || al.x > J_W + 40) {
+      jumpState.alien = null;
+      jumpState.alienCooldown = 150 + Math.random() * 200;
+    }
+  }
+
   if (p.y < J_SCROLL_Y && p.vy < 0) {
     const dy = J_SCROLL_Y - p.y;
     p.y = J_SCROLL_Y;
@@ -7814,9 +7978,13 @@ function jUpdatePhysics() {
 }
 
 function updateJumpInfo() {
-  jumpState.score = Math.floor(jumpState.maxHeight / 10);
-  // 到達演出：○mごとに家族が応援（ゴール手前まで）
-  if (jumpState.score >= jumpState.nextMilestone && jumpState.nextMilestone < J_GOAL) {
+  jumpState.meters = Math.floor(jumpState.maxHeight / 10);
+  // 合計点＝高さ点＋⭐点＋クリアボーナス。クリアボーナスは加算済みなので、
+  // 月のあとで落ちてもボーナスは消えない（だから安心して先へ挑戦できる）
+  jumpState.score = jHeightScore(jumpState.meters) + jumpState.starScore + jumpState.bonusScore;
+  // 到達演出：○mごとに家族が応援（ゴール手前まで。月より先はまた出す）
+  const beforeGoal = jumpState.nextMilestone < J_GOAL || jumpState.moonCleared;
+  if (jumpState.meters >= jumpState.nextMilestone && beforeGoal) {
     const m = jumpState.nextMilestone;
     jumpState.milestoneText = `⛰ ${m}m とうたつ！`;
     jumpState.milestoneUntil = Date.now() + 1600;
@@ -7824,8 +7992,11 @@ function updateJumpInfo() {
     jumpChars.cheer(J_MILESTONE_CHEERS[(m / J_MILESTONE_STEP - 1) % J_MILESTONE_CHEERS.length], 1600);
     jumpState.nextMilestone += J_MILESTONE_STEP;
   }
-  document.getElementById('jump-score').textContent = jumpState.score;
-  document.getElementById('jump-coins').textContent = jumpState.starsCollected;
+  document.getElementById('jump-score').textContent = jumpState.score.toLocaleString();
+  document.getElementById('jump-meters').textContent = `${jumpState.meters}m`;
+  document.getElementById('jump-coins').textContent = jumpState.starScore
+    ? `${jumpState.starsCollected}（+${jumpState.starScore.toLocaleString()}）`
+    : jumpState.starsCollected;
 }
 
 // 宇宙ステーション（2000mあたりの背景を通過する）
@@ -8042,20 +8213,21 @@ function drawJump() {
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
   const now = Date.now();
+  const M = jumpState.meters;   // 背景・演出はぜんぶ「高さ(m)」で決める
   // 高度で変わる空
-  const [skyTop, skyBot] = jSkyColors(jumpState.score);
+  const [skyTop, skyBot] = jSkyColors(M);
   const g = ctx.createLinearGradient(0, 0, 0, cv.height);
   g.addColorStop(0, skyTop); g.addColorStop(1, skyBot);
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, cv.width, cv.height);
 
   // スタート地点の街並み（低いところだけ。登るほど下へスクロールしてフェード）
-  if (jumpState.score < 450) {
-    jDrawCity(ctx, J_W, J_H, jumpState.score * 0.6, Math.max(0, 1 - jumpState.score / 450), now);
+  if (M < 450) {
+    jDrawCity(ctx, J_W, J_H, M * 0.6, Math.max(0, 1 - M / 450), now);
   }
 
   // 夜〜宇宙でまたたく星（夜＝650mに近づくと現れる）
-  const nightFactor = Math.min(Math.max((jumpState.score - 450) / 200, 0), 1);
+  const nightFactor = Math.min(Math.max((M - 450) / 200, 0), 1);
   if (nightFactor > 0 && jumpState.stars) {
     jumpState.stars.forEach((s, i) => {
       ctx.globalAlpha = nightFactor * (0.5 + 0.5 * Math.sin(now / 350 + i));
@@ -8067,8 +8239,8 @@ function drawJump() {
 
   // 宇宙ステーション：2000mあたりを背景でゆっくり通過（上→下へスクロール）
   const stBand = 200; // ±200mの範囲で見える
-  if (jumpState.score > J_STATION_M - stBand && jumpState.score < J_STATION_M + stBand) {
-    const tt = (jumpState.score - (J_STATION_M - stBand)) / (stBand * 2); // 0..1
+  if (M > J_STATION_M - stBand && M < J_STATION_M + stBand) {
+    const tt = (M - (J_STATION_M - stBand)) / (stBand * 2); // 0..1
     const stX = J_W * 0.66 + Math.sin(now / 2200) * 10;
     const stY = -30 + tt * (J_H + 60);
     ctx.globalAlpha = Math.min(1, Math.min(tt, 1 - tt) * 5 + 0.2); // 端でうっすらフェード
@@ -8078,8 +8250,8 @@ function drawJump() {
 
   // UFO：2500mあたりを背景でゆっくり通過
   const ufoBand = 200;
-  if (jumpState.score > J_UFO_M - ufoBand && jumpState.score < J_UFO_M + ufoBand) {
-    const tt = (jumpState.score - (J_UFO_M - ufoBand)) / (ufoBand * 2);
+  if (M > J_UFO_M - ufoBand && M < J_UFO_M + ufoBand) {
+    const tt = (M - (J_UFO_M - ufoBand)) / (ufoBand * 2);
     const ux = J_W * 0.34 + Math.sin(now / 1700) * 16; // 左寄りをふらふら
     const uy = -30 + tt * (J_H + 60);
     ctx.globalAlpha = Math.min(1, Math.min(tt, 1 - tt) * 5 + 0.2);
@@ -8087,7 +8259,32 @@ function drawJump() {
     ctx.globalAlpha = 1;
   }
 
-  const inSpace = jumpState.score >= J_SPACE_M;
+  // ── 月より先（3000m〜）の背景 ──────────────────────────
+  // 見送ってくれる月：3000→3300mのあいだ、足元へ遠ざかって小さくなる
+  if (M >= J_GOAL && M < J_MOON_LEAVE_M) {
+    const tt = (M - J_GOAL) / (J_MOON_LEAVE_M - J_GOAL); // 0..1
+    jDrawMoonBall(ctx, J_W * 0.5, J_H * 0.45 + tt * J_H * 0.75, 78 - tt * 54, now);
+  }
+  // 近づいてくる火星：4000mから点で見えはじめ、5000mで画面いっぱいに
+  if (M >= J_MARS_SEE_M) {
+    const tt = Math.min((M - J_MARS_SEE_M) / (J_MARS - J_MARS_SEE_M), 1);
+    jDrawMars(ctx, J_W * 0.5, -40 + tt * (J_H * 0.42), 8 + tt * tt * 120, now);
+  }
+  // 砂嵐：赤い砂が斜めに流れる
+  if (M >= J_STORM_M && !jumpState.marsCleared) {
+    const gust = 0.55 + 0.45 * Math.sin(now / 2200);
+    ctx.save();
+    ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = '#e08a5a'; ctx.lineWidth = 1.2; ctx.lineCap = 'round';
+    for (let i = 0; i < 26; i++) {
+      const sx = (i * 71 + now * (0.24 + (i % 4) * 0.05)) % (J_W + 60) - 30;
+      const sy = (i * 53 + now * 0.09) % (J_H + 20);
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx - 13 * gust, sy + 4); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  const inSpace = M >= J_SPACE_M;
   jumpState.platforms.forEach(plat => {
     const type = plat.used ? 'break' : (plat.vx && plat.type === 'normal' ? 'moving' : plat.type);
     if (plat.used) { ctx.save(); ctx.globalAlpha = Math.max(0, 1 - (now - plat.breakAt) / J_BREAK_FADE_MS); }
@@ -8117,9 +8314,20 @@ function drawJump() {
     ctx.lineCap = 'butt';
   }
 
+  // 小惑星（回転しながら横切る岩）
+  if (jumpState.asteroids && jumpState.asteroids.length) {
+    jumpState.asteroids.forEach(a => jDrawAsteroid(ctx, a.x, a.y, J_ASTEROID_SIZE / 2, a.rot, a.seed));
+  }
+
+  // 8本脚の宇宙人（火星圏）
+  if (jumpState.alien) {
+    const al = jumpState.alien;
+    jDrawOctoAlien(ctx, al.x, al.y, now, al.seed, now < al.talkUntil ? al.talk : '');
+  }
+
   if (jumpState.hawk) {
     const h = jumpState.hawk;
-    const s = jumpState.score;
+    const s = M;
     if (s >= J_BALLOON_M && s < J_SPACE_M) {
       // 1000〜1500mは気球
       jDrawBalloon(ctx, h.x, h.y, now);
@@ -8181,6 +8389,21 @@ function drawJump() {
     ctx.fillText(jumpState.milestoneText, J_W / 2, J_H * 0.33 + 17);
     ctx.restore();
   }
+
+  // ⭐コンボのポップ（ふわっと上がって消える）
+  if (now < jumpState.popUntil) {
+    const t = 1 - (jumpState.popUntil - now) / 900;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, 1 - t * t);
+    ctx.font = 'bold 18px sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillStyle = '#ffe08a';
+    const py2 = J_H * 0.2 - t * 24;
+    ctx.strokeText(jumpState.popText, J_W / 2, py2);
+    ctx.fillText(jumpState.popText, J_W / 2, py2);
+    ctx.restore();
+  }
 }
 
 function jumpUseItem(kind) {
@@ -8213,25 +8436,28 @@ function jGameOver() {
   jumpState.over = true;
   stopJumpLoop();
   jStopBgm();
-  const prevBest = Number(localStorage.getItem('jumpBest') || 0);
+  const prevBest = jSaveJumpRecord();
   const isNewBest = jumpState.score > prevBest;
   jSfx(isNewBest ? 'best' : 'over');
   if (isNewBest) {
     jumpChars.state.mood = 'cheer';
     jumpChars.state.moodUntil = Date.now() + 5000;
     jumpChars.state.bubble = 'ベスト更新や！すごいで！';
-    localStorage.setItem('jumpBest', jumpState.score);
   } else {
     jumpChars.state.bubble = 'ドンマイ！もう一回や！';
     setTimeout(() => { if (jumpState.over) jumpChars.state.bubble = ''; }, 4000);
   }
-  if (jumpState.score > 0 && typeof saveGameScore === 'function') saveGameScore('jump', state.nickname, jumpState.score, 'max');
-  document.getElementById('jump-best').textContent = Math.max(jumpState.score, prevBest);
+  document.getElementById('jump-continue').classList.add('hidden');
   document.getElementById('jump-overlay-emoji').classList.toggle('hidden', !isNewBest);
   document.getElementById('jump-overlay-emoji').textContent = '🏆';
   document.getElementById('jump-overlay-img').classList.toggle('hidden', isNewBest);
   document.getElementById('jump-overlay-text').textContent = isNewBest ? 'ベスト更新！' : 'おっこちた！';
-  document.getElementById('jump-overlay-score').textContent = `スコア ${jumpState.score}`;
+  // 何点がどこから来たかを見せる（高さ・⭐・クリアボーナスの内訳）
+  const parts = [`⛰ ${jumpState.meters}m`];
+  if (jumpState.starsCollected) parts.push(`⭐${jumpState.starsCollected}個 +${jumpState.starScore.toLocaleString()}`);
+  if (jumpState.bonusScore) parts.push(`🏁 +${jumpState.bonusScore.toLocaleString()}`);
+  document.getElementById('jump-overlay-score').textContent =
+    `スコア ${jumpState.score.toLocaleString()}（${parts.join(' / ')}）`;
   const ov = document.getElementById('jump-overlay');
   ov.classList.remove('ending'); ov.classList.remove('hidden');
 }
@@ -8242,18 +8468,260 @@ function jGameOver() {
 function jReachMoon() {
   if (jumpState.ending) return;
   jumpState.ending = true;
+  jumpState.moonCleared = true;
+  jumpState.bonusScore += J_MOON_BONUS;   // 先で落ちても消えない（だから安心して挑戦できる）
+  updateJumpInfo();
   jStopBgm();
   jSfx('moon');
-  const prevBest = Number(localStorage.getItem('jumpBest') || 0);
-  if (jumpState.score > prevBest) localStorage.setItem('jumpBest', jumpState.score);
-  document.getElementById('jump-best').textContent = Math.max(jumpState.score, prevBest);
-  if (jumpState.score > 0 && typeof saveGameScore === 'function') saveGameScore('jump', state.nickname, jumpState.score, 'max');
+  jSaveJumpRecord();
   jumpChars.state.mood = 'cheer';
   jumpChars.state.moodUntil = Date.now() + 8000;
   jumpChars.state.bubble = 'チッチ：月についたピヨ〜！🌙';
-  // オーバーレイは「もう一回」ボタンだけ出す（月面シーンはキャンバスに描く）
+  // オーバーレイに「ここでやめる」と「もっと先へ」を出す（月面シーンはキャンバスに描く）
   const ov = document.getElementById('jump-overlay');
   ov.classList.add('ending'); ov.classList.remove('hidden');
+  document.getElementById('jump-continue').classList.remove('hidden');
+}
+
+// 🚀 月から火星へ出発しなおす。高さ(maxHeight)はそのまま引き継ぎ、
+// 足場だけ作り直す（月に着いた瞬間は空中なので、そのまま再開すると即落下してしまう）
+function jContinueToMars() {
+  document.getElementById('jump-continue').classList.add('hidden');
+  const ov = document.getElementById('jump-overlay');
+  ov.classList.add('hidden'); ov.classList.remove('ending');
+  jumpState.ending = false;
+
+  const p = jumpState.player;
+  const startPlatY = J_H - 60;
+  jumpState.platforms = [{ x: J_W / 2 - J_PLATFORM_W / 2, y: startPlatY, w: J_PLATFORM_W, type: 'normal', used: false, breakAt: 0, seed: Math.random(), vx: 0 }];
+  jumpState.coins = [];
+  p.x = J_W / 2 - J_PLAYER_W / 2;
+  p.y = startPlatY - J_PLAYER_H;
+  p.vy = J_JUMP_V;
+  p.vx = 0;
+  jumpState.spawnY = startPlatY - jRandGap();
+  while (jumpState.spawnY > -20) {
+    jGenPlatformAt(jumpState.spawnY);
+    jumpState.spawnY -= jRandGap();
+  }
+  jumpState.hawk = null;
+  jumpState.shooters = [];
+  jumpState.asteroids = [];
+  jumpState.alien = null;
+  jumpState.stunUntil = 0;
+  jumpState.nextMilestone = Math.ceil((jumpState.meters + 1) / J_MILESTONE_STEP) * J_MILESTONE_STEP;
+
+  jumpChars.cheer('🚀 つぎは火星や！いくで〜！', 2000);
+  jStartBgm('space');
+}
+
+// 🔴 火星に到着（第2ゴール）
+function jReachMars() {
+  if (jumpState.ending) return;
+  jumpState.ending = true;
+  jumpState.marsCleared = true;
+  jumpState.bonusScore += J_MARS_BONUS;
+  updateJumpInfo();
+  jStopBgm();
+  jSfx('moon');
+  jSaveJumpRecord();
+  jumpChars.state.mood = 'cheer';
+  jumpChars.state.moodUntil = Date.now() + 8000;
+  jumpChars.state.bubble = 'チッチ：火星についたピヨ〜！🔴';
+  const ov = document.getElementById('jump-overlay');
+  ov.classList.add('ending'); ov.classList.remove('hidden');
+  document.getElementById('jump-continue').classList.add('hidden');
+}
+
+// 記録の保存（月・火星・ゲームオーバーで共通）。前のベストを返す
+function jSaveJumpRecord() {
+  const prevBest = Number(localStorage.getItem('jumpBest') || 0);
+  if (jumpState.score > prevBest) localStorage.setItem('jumpBest', jumpState.score);
+  document.getElementById('jump-best').textContent = Math.max(jumpState.score, prevBest).toLocaleString();
+  if (jumpState.score > 0 && typeof saveGameScore === 'function') saveGameScore('jump', state.nickname, jumpState.score, 'max');
+  return prevBest;
+}
+
+// ── 月より先（3000m〜5000m 火星）で使う絵 ────────────────────
+
+// 見送ってくれる月（背景を遠ざかっていく球）
+function jDrawMoonBall(ctx, cx, cy, r, now) {
+  ctx.save();
+  const glow = ctx.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.3);
+  glow.addColorStop(0, 'rgba(226,230,245,0.28)');
+  glow.addColorStop(1, 'rgba(226,230,245,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(cx, cy, r * 1.3, 0, Math.PI * 2); ctx.fill();
+
+  const g = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.15, cx, cy, r * 1.1);
+  g.addColorStop(0, '#f2f3fa'); g.addColorStop(0.65, '#c9ccd9'); g.addColorStop(1, '#8f93a6');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+
+  ctx.fillStyle = 'rgba(120,124,142,0.45)';
+  [[-0.35, -0.2, 0.17], [0.2, -0.35, 0.11], [0.3, 0.25, 0.14], [-0.15, 0.4, 0.09], [0.05, 0.02, 0.07], [-0.5, 0.15, 0.08]]
+    .forEach(([dx, dy, rr]) => {
+      ctx.beginPath(); ctx.ellipse(cx + dx * r, cy + dy * r, rr * r, rr * r * 0.82, 0, 0, Math.PI * 2); ctx.fill();
+    });
+  ctx.restore();
+}
+
+// 火星（近づいてくる赤い惑星）— 極の氷・大シルチスふうの黒い模様つき
+function jDrawMars(ctx, cx, cy, r, now) {
+  ctx.save();
+  const glow = ctx.createRadialGradient(cx, cy, r * 0.92, cx, cy, r * 1.4);
+  glow.addColorStop(0, 'rgba(255,140,90,0.35)');
+  glow.addColorStop(1, 'rgba(255,140,90,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(cx, cy, r * 1.4, 0, Math.PI * 2); ctx.fill();
+
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+  const g = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.4, r * 0.2, cx, cy, r * 1.15);
+  g.addColorStop(0, '#e8804a'); g.addColorStop(0.6, '#c4552b'); g.addColorStop(1, '#6e2a15');
+  ctx.fillStyle = g; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+
+  ctx.fillStyle = 'rgba(108,44,24,0.5)';
+  [[-0.2, -0.1, 0.42, 0.24, 0.4], [0.3, 0.2, 0.3, 0.17, -0.3], [-0.35, 0.38, 0.26, 0.12, 0.2]]
+    .forEach(([dx, dy, rw, rh, rot]) => {
+      ctx.beginPath(); ctx.ellipse(cx + dx * r, cy + dy * r, rw * r, rh * r, rot, 0, Math.PI * 2); ctx.fill();
+    });
+  ctx.fillStyle = 'rgba(255,255,255,0.82)';
+  ctx.beginPath(); ctx.ellipse(cx, cy - r * 0.92, r * 0.42, r * 0.18, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(cx, cy + r * 0.95, r * 0.30, r * 0.13, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  ctx.restore();
+}
+
+// 小惑星（ゴツゴツした岩。seedで形が変わる）
+function jDrawAsteroid(ctx, cx, cy, r, rot, seed) {
+  ctx.save();
+  ctx.translate(cx, cy); ctx.rotate(rot);
+  const n = 9;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    const wob = 0.72 + 0.34 * Math.abs(Math.sin(i * 12.9898 + seed * 78.233));
+    const rr = r * wob;
+    if (i === 0) ctx.moveTo(Math.cos(a) * rr, Math.sin(a) * rr);
+    else ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+  }
+  ctx.closePath();
+  const g = ctx.createLinearGradient(-r, -r, r, r);
+  g.addColorStop(0, '#9a8f86'); g.addColorStop(1, '#544c47');
+  ctx.fillStyle = g; ctx.fill();
+  ctx.strokeStyle = 'rgba(30,25,22,0.5)'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = 'rgba(60,52,48,0.55)';
+  [[-0.3, -0.2, 0.20], [0.25, 0.1, 0.16], [0.02, 0.36, 0.12]].forEach(([dx, dy, rr]) => {
+    ctx.beginPath(); ctx.ellipse(dx * r, dy * r, rr * r, rr * r * 0.8, 0, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.restore();
+}
+
+// 火星の8本脚の宇宙人。目は3つ、脚はうねうね。しゃべる内容は読めない記号
+function jDrawOctoAlien(ctx, cx, cy, now, seed, talk) {
+  ctx.save();
+  const y = cy + Math.sin(now / 420 + seed * 6) * 2;
+
+  ctx.strokeStyle = '#6fd79b'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  for (let i = 0; i < 8; i++) {
+    const a = Math.PI * (0.12 + 0.76 * (i / 7));
+    const bx = cx + Math.cos(a) * 11;
+    const sway = Math.sin(now / 300 + i * 0.8 + seed * 3) * 5;
+    ctx.beginPath();
+    ctx.moveTo(bx, y + 6);
+    ctx.quadraticCurveTo(bx + sway, y + 15, bx + Math.cos(a) * 6 + sway * 1.6, y + 23);
+    ctx.stroke();
+  }
+  ctx.lineCap = 'butt';
+
+  const g = ctx.createRadialGradient(cx - 4, y - 6, 2, cx, y, 17);
+  g.addColorStop(0, '#d3ffe6'); g.addColorStop(1, '#3fae74');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.ellipse(cx, y, 15, 13, 0, 0, Math.PI * 2); ctx.fill();
+
+  // 目は3つ（左右と、おでこにもう1つ）
+  [[-6, -2, 3.4], [5, -3, 3.0], [0, -8, 2.4]].forEach(([dx, dy, rr]) => {
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(cx + dx, y + dy, rr, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#17301f';
+    ctx.beginPath(); ctx.arc(cx + dx + Math.sin(now / 700 + seed) * 0.9, y + dy, rr * 0.55, 0, Math.PI * 2); ctx.fill();
+  });
+
+  if (talk) {
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const w = ctx.measureText(talk).width + 14;
+    const bx = Math.min(Math.max(cx - w / 2, 2), J_W - w - 2);
+    const by = y - 38;
+    ctx.fillStyle = 'rgba(255,255,255,0.94)';
+    jRoundRect(ctx, bx, by, w, 18, 6); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx - 4, by + 18); ctx.lineTo(cx + 4, by + 18); ctx.lineTo(cx, by + 24); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#1c3a2a';
+    ctx.fillText(talk, bx + w / 2, by + 9);
+  }
+  ctx.restore();
+}
+
+// 火星の地面（赤い砂と岩）
+function jDrawMarsGround(ctx, W, H) {
+  const top = H - 150;
+  const g = ctx.createLinearGradient(0, top, 0, H);
+  g.addColorStop(0, '#c1633a'); g.addColorStop(1, '#7d3418');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.moveTo(0, top + 22);
+  ctx.quadraticCurveTo(W * 0.35, top - 10, W * 0.62, top + 14);
+  ctx.quadraticCurveTo(W * 0.85, top + 30, W, top + 10);
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+  // ころがっている岩
+  ctx.fillStyle = 'rgba(90,40,22,0.55)';
+  [[36, top + 44, 9], [88, top + 62, 6], [162, top + 40, 11], [214, top + 58, 7], [124, top + 78, 8]]
+    .forEach(([x, y, rr]) => { ctx.beginPath(); ctx.ellipse(x, y, rr, rr * 0.62, 0, 0, Math.PI * 2); ctx.fill(); });
+}
+
+// キュリオシティ（NASAの火星探査車）— 6輪・マスト・カメラ・ロボットアーム
+function jDrawCuriosity(ctx, x, gy, now) {
+  ctx.save();
+  ctx.translate(x, gy);
+  const body = '#c8cbd4', dark = '#6d7280';
+  // 車輪6つ（手前3・奥3）
+  ctx.fillStyle = '#3a3d47';
+  [[-20, 0], [0, 2], [20, 0]].forEach(([wx, off]) => {
+    ctx.beginPath(); ctx.arc(wx, -6 + off, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#8b8f9c'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(wx, -6 + off, 3, 0, Math.PI * 2); ctx.stroke();
+  });
+  // サスペンション
+  ctx.strokeStyle = dark; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(-20, -8); ctx.lineTo(-6, -16); ctx.lineTo(20, -8); ctx.stroke();
+  // 本体
+  ctx.fillStyle = body;
+  jRoundRect(ctx, -19, -28, 38, 13, 3); ctx.fill();
+  ctx.fillStyle = dark;
+  jRoundRect(ctx, -15, -26, 12, 8, 2); ctx.fill();   // 機器パネル
+  // RTG（右うしろの発電機）
+  ctx.fillStyle = '#8f949f';
+  jRoundRect(ctx, 15, -33, 9, 7, 2); ctx.fill();
+  // マスト＋カメラの頭（左右にゆっくり首をふる）
+  const look = Math.sin(now / 1500) * 0.25;
+  ctx.strokeStyle = body; ctx.lineWidth = 2.4;
+  ctx.beginPath(); ctx.moveTo(-10, -28); ctx.lineTo(-10, -46); ctx.stroke();
+  ctx.save();
+  ctx.translate(-10, -47); ctx.rotate(look);
+  ctx.fillStyle = body;
+  jRoundRect(ctx, -7, -5, 14, 8, 2); ctx.fill();
+  ctx.fillStyle = '#2b6cc4';
+  ctx.beginPath(); ctx.arc(-3, -1, 1.8, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(3, -1, 1.8, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  // ロボットアーム
+  ctx.strokeStyle = '#a7abb6'; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-19, -22); ctx.lineTo(-30, -17); ctx.lineTo(-34, -8);
+  ctx.stroke();
+  ctx.lineCap = 'butt';
+  ctx.restore();
 }
 
 // 地球（青い惑星）— 球の陰影・大陸・極の氷・雲つきでそれらしく
@@ -8434,6 +8902,7 @@ function jDrawMoonRabbit(ctx, x, gy, now) {
 }
 
 function jDrawEnding() {
+  if (jumpState.marsCleared) { jDrawMarsEnding(); return; }
   const cv = document.getElementById('jump-canvas');
   const ctx = cv.getContext('2d');
   const now = Date.now();
@@ -8472,7 +8941,57 @@ function jDrawEnding() {
   ctx.fillStyle = '#ffd166'; ctx.font = 'bold 21px sans-serif';
   ctx.fillText('🌙 月にとうちゃく！', J_W / 2, 46);
   ctx.fillStyle = '#ffffff'; ctx.font = 'bold 15px sans-serif';
-  ctx.fillText(`${J_GOAL}m 達成！おめでとう！`, J_W / 2, 74);
+  ctx.fillText(`${J_GOAL}m 達成！ +${J_MOON_BONUS.toLocaleString()}点`, J_W / 2, 74);
+}
+
+// ============================================================
+// エンディング2：5000mで火星に到着（キュリオシティと8本脚の宇宙人がお出迎え）
+// ============================================================
+function jDrawMarsEnding() {
+  const cv = document.getElementById('jump-canvas');
+  const ctx = cv.getContext('2d');
+  const now = Date.now();
+  // 火星の空（砂が晴れて、赤茶けた空になる）
+  const g = ctx.createLinearGradient(0, 0, 0, cv.height);
+  g.addColorStop(0, '#3d1c10'); g.addColorStop(0.55, '#8a4526'); g.addColorStop(1, '#c07548');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height);
+
+  // 空に小さく見える地球と月（ここまで来た距離が分かるように）
+  jDrawEarth(ctx, 206, 54, 11, now);
+  jDrawMoonBall(ctx, 232, 74, 5, now);
+  ctx.save();
+  ctx.globalAlpha = 0.75;
+  ctx.font = '9px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#ffe7d5';
+  ctx.fillText('地球', 206, 72);
+  ctx.restore();
+
+  // 火星の地面
+  jDrawMarsGround(ctx, cv.width, cv.height);
+  // キュリオシティ（左手前でカメラをこちらに向けている）
+  jDrawCuriosity(ctx, 62, J_H - 96, now);
+  // 出迎えの8本脚の宇宙人（あいかわらず何を言っているか分からない）
+  const talk = J_ALIEN_TALK[Math.floor(now / 2600) % J_ALIEN_TALK.length];
+  jDrawOctoAlien(ctx, 196, J_H - 118, now, 0.42, talk);
+
+  // チッチ（火星の大地でぴょこぴょこ）＋旗
+  const sp = T_SPRITES.chicchi;
+  const bob = Math.abs(Math.sin(now / 220)) * 5;
+  const cx = J_W / 2 - (10 * J_PLAYER_S) / 2 - 8;
+  const cy = J_H - 150 - bob;
+  jDrawFlag(ctx, cx + 30, cy - 2);
+  const frame = Math.floor(now / 160) % 2 ? sp.cheer : sp.flapUp;
+  ctx.save(); ctx.shadowColor = '#ffd166'; ctx.shadowBlur = 10;
+  tDrawSprite(ctx, frame, sp.pal, cx, cy, J_PLAYER_S);
+  ctx.restore();
+
+  // お祝いテキスト
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.fillRect(0, 22, J_W, 68);
+  ctx.fillStyle = '#ffd166'; ctx.font = 'bold 21px sans-serif';
+  ctx.fillText('🔴 火星にとうちゃく！', J_W / 2, 46);
+  ctx.fillStyle = '#ffffff'; ctx.font = 'bold 15px sans-serif';
+  ctx.fillText(`${J_MARS}m 達成！ +${J_MARS_BONUS.toLocaleString()}点`, J_W / 2, 74);
 }
 
 // ── サウンド（tSound設定・tTone/tNoteエンジンを共用） ──
@@ -8506,19 +9025,30 @@ const J_MELODY = [
 ];
 const J_BASS = ['C3', 'G2', 'A2', 'F2'];
 
-function jStartBgm() {
+// 月より先（深宇宙〜火星）のBGM。短調でゆっくり、音をのばして無重力っぽく漂わせる
+const J_MELODY_SPACE = [
+  'A4', 0, 0, 0, 'C5', 0, 0, 0, 'E5', 0, 0, 0, 'D5', 0, 0, 0,
+  'F4', 0, 0, 0, 'A4', 0, 0, 0, 'B4', 0, 0, 0, 'E4', 0, 0, 0,
+];
+const J_BASS_SPACE = ['A2', 'F2', 'D2', 'E2'];
+
+function jStartBgm(mode) {
   jStopBgm();
   if (!tSound.bgm) return;
   tAudioCtx();
+  const space = mode === 'space';
+  jumpState.bgmMode = space ? 'space' : 'normal';
+  const mel = space ? J_MELODY_SPACE : J_MELODY;
+  const bass = space ? J_BASS_SPACE : J_BASS;
   jumpState.bgmStep = 0;
   jumpState.bgmTimer = setInterval(() => {
-    const n = J_MELODY[jumpState.bgmStep % J_MELODY.length];
-    if (n) tTone(tNote(n), 0.16, 'triangle', 0.05);
+    const n = mel[jumpState.bgmStep % mel.length];
+    if (n) tTone(tNote(n), space ? 0.34 : 0.16, space ? 'sine' : 'triangle', space ? 0.055 : 0.05);
     if (jumpState.bgmStep % 8 === 0) {
-      tTone(tNote(J_BASS[Math.floor(jumpState.bgmStep / 8) % J_BASS.length]), 0.4, 'sine', 0.08);
+      tTone(tNote(bass[Math.floor(jumpState.bgmStep / 8) % bass.length]), space ? 0.6 : 0.4, 'sine', 0.08);
     }
     jumpState.bgmStep++;
-  }, 200);
+  }, space ? 260 : 200);
 }
 function jStopBgm() { clearInterval(jumpState.bgmTimer); jumpState.bgmTimer = null; }
 

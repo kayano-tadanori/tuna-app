@@ -128,8 +128,8 @@
     <button class="subject-card subject-card-game subject-card-jump" data-subject="jump">
       <span class="game-icon">🐣</span>
       <span class="game-text">
-        <span class="subject-name">チッチジャンプ</span>
-        <span class="subject-detail">足場をとんでどこまで高くいけるか！</span>
+        <span class="subject-name">チッチジャンプ2</span>
+        <span class="subject-detail">月をこえて火星まで！どこまで高くいけるか</span>
       </span>
       <span class="game-arrow">›</span>
     </button>
@@ -1546,11 +1546,11 @@
   </div>
 </div>
 
-<!-- =============== チッチジャンプ =============== -->
+<!-- =============== チッチジャンプ2 =============== -->
 <div id="screen-jump" class="screen">
   <header class="top-bar">
     <button id="jump-back" class="back-btn">‹ 戻る</button>
-    <h2 class="top-title">チッチジャンプ</h2>
+    <h2 class="top-title">チッチジャンプ2</h2>
     <div class="tetris-head-btns">
       <button id="jump-rank" class="icon-btn" title="ランキング">🏆</button>
       <button id="jump-bgm" class="icon-btn snd-btn" title="音楽">🎵</button>
@@ -1560,6 +1560,7 @@
   <div class="jump-area">
     <div class="tetris-info-row">
       <div class="tetris-info"><span>スコア</span><b id="jump-score">0</b></div>
+      <div class="tetris-info"><span>高さ</span><b id="jump-meters">0m</b></div>
       <div class="tetris-info"><span>⭐ボーナス</span><b id="jump-coins">0</b></div>
       <div class="tetris-info"><span>ベスト</span><b id="jump-best">0</b></div>
     </div>
@@ -1576,6 +1577,7 @@
           <p id="jump-overlay-emoji" class="tetris-overlay-emoji">🐣</p>
           <p id="jump-overlay-text" class="tetris-overlay-text">おっこちた！</p>
           <p id="jump-overlay-score" class="tetris-overlay-score"></p>
+          <button id="jump-continue" class="btn-primary jump-continue-btn hidden">🚀 もっと先へ（火星をめざす）</button>
           <button id="jump-restart" class="btn-primary">もう一回！</button>
         </div>
       </div>
