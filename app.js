@@ -1878,6 +1878,11 @@ async function hamaDaimonWeek(grade, course, no) {
 // ★単元でえらぶモードの大問。
 //   回番号＝去年までのカリキュラム／単元＝今年のカリキュラム、という分け方に合わせる。
 //   刷新版（2026年度〜）の大問は回番号にひもづけられないので units 側に置く（2026-07-28）
+// 単元でえらぶ に出す単元名の一覧（大問がある単元）
+async function hamaDaimonUnits(grade, course) {
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
+  return (node && node.units) ? Object.keys(node.units) : [];
+}
 async function hamaDaimonUnit(grade, course, unit) {
   const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
   if (!node || !node.units || !unit) return [];
@@ -2197,9 +2202,20 @@ async function renderHamaPanel() {
   const unitSel = document.getElementById('hama-unit-sel');
   // かんたん解説がある単元だけでも「単元でえらぶ」を使えるようにする
   // （小3最レは lessons に units が無いが、かんたん解説は単元名で持っている）
+  // ★新カリキュラム／旧カリキュラム の切り分け（本人指示 2026-07-28）
+  //   回番号が「去年までのカリキュラム」を指しているコースだけ、単元でえらぶを出す。
+  //   小5最レのように回番号がそのまま今年のカリキュラムなら、単元でえらぶは要らない。
+  const curriculum = courses[course].curriculum || '新';
+  const isOldCurr = (curriculum === '旧');
   const kxUnits = (course === 'sairei') ? await hamaKaisetsuUnits(grade, course) : [];
-  const canUnit = course === 'sairei' && (lessons.some(l => (l.units || []).length) || kxUnits.length > 0);
+  const dqUnits = (course === 'sairei') ? await hamaDaimonUnits(grade, course) : [];
+  const newUnits = [...new Set([...kxUnits, ...dqUnits])].sort();
+  // 単元でえらぶ＝今年のカリキュラム用。今年ぶんの単元データがあるときだけ出す。
+  //   回についている単元名は去年までのものなので使わない。
+  const canUnit = course === 'sairei' && isOldCurr && newUnits.length > 0;
   modeRow.style.display = canUnit ? 'flex' : 'none';
+  modeRow.querySelectorAll('[data-hama-mode="no"]').forEach(b => { b.textContent = '回番号でえらぶ（去年まで）'; });
+  modeRow.querySelectorAll('[data-hama-mode="unit"]').forEach(b => { b.textContent = '単元でえらぶ（今年）'; });
   if (!canUnit) sansuState.hamaMode = 'no';
   if (!sansuState.hamaMode) sansuState.hamaMode = 'no';
   modeRow.querySelectorAll('.hama-course-btn').forEach(b => {
@@ -2209,7 +2225,7 @@ async function renderHamaPanel() {
 
   if (canUnit && sansuState.hamaMode === 'unit') {
     // 単元でえらぶ：その学年の最レに出てくる単元＋かんたん解説がある単元を一覧にする
-    const units = [...new Set([...lessons.flatMap(l => l.units || []), ...kxUnits])].sort();
+    const units = newUnits;
     if (!units.includes(sansuState.hamaUnit)) sansuState.hamaUnit = units[0];
     unitSel.innerHTML = units.map(u =>
       `<option value="${u}"${u === sansuState.hamaUnit ? ' selected' : ''}>${u}</option>`).join('');
@@ -2218,7 +2234,7 @@ async function renderHamaPanel() {
     document.getElementById('hama-no-row').style.display = 'none';
     label.textContent = '単元でえらぶ';
     title.textContent = sansuState.hamaUnit || '—';
-    hint.textContent = '最レは年度によって回の中身が入れかわるので、単元でえらぶこともできます。';
+    hint.textContent = '今年のカリキュラムの単元です。回番号は去年までのものなので、単元でえらんでください。';
     const qs = await hamaCollectUnit(grade, course, await hamaPoolUnit(grade, course, sansuState.hamaUnit));
     const filtered = filterByBand(qs);
     const wk = document.getElementById('hama-cnt-week');
@@ -2319,8 +2335,8 @@ async function renderHamaPanel() {
     kxBtn.disabled = !n2;
     if (n2) document.getElementById('hama-cnt-kaisetsu').textContent = `No.${no} ${pack.title}・${n2}問`;
   }
-  if (isSairei && kxUnits.length) {
-    hint.textContent = '回番号＝去年までのカリキュラム／単元でえらぶ＝今年のカリキュラム。どちらでも 💡かんたん解説 が使えます。';
+  if (isSairei && isOldCurr && newUnits.length) {
+    hint.textContent = '⚠ この回番号は **去年までのカリキュラム** です。今年の内容は「単元でえらぶ（今年）」から。';
   }
 
   const ranges = { week: [no, no] };
