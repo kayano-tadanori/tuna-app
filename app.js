@@ -2072,8 +2072,9 @@ async function hamaCollect(grade, course, fromNo, toNo) {
   if (subj && subj !== 'sansu') {
     const seen = new Set(); const out = [];
     for (const l of lessons) {
+      // l.grade で学年を上書きできる（実力回＝小4の総復習）。算数の sel.grade と同じ考え方
       for (const u of (l.units || [])) {
-        for (const q of await unitPool(subj, grade, u)) {
+        for (const q of await unitPoolFilled(subj, l.grade || grade, u)) {
           if (seen.has(q.id)) continue;
           seen.add(q.id); out.push(q);
         }
@@ -2118,7 +2119,7 @@ async function hamaCollectUnit(grade, course, unit) {
   if (!courses || !courses[course] || !unit) return [];
   // ★理科などのコースは subject を持ち、ID帯ではなく単元名だけで引く（2026-07-27）
   const subj = courses[course].subject;
-  if (subj && subj !== 'sansu') return await unitPool(subj, grade, unit);
+  if (subj && subj !== 'sansu') return await unitPoolFilled(subj, grade, unit);
   const nos = courses[course].lessons.filter(l => (l.units || []).includes(unit)).map(l => l.no);
   const seen = new Set();
   const out = [];
@@ -2154,6 +2155,20 @@ async function unitPool(subject, grade, unit) {
       // 算数は単元グループ(UNIT_GROUPS)でも引けるようにする。理科は単元名そのもの
       if (q.unit === unit || (subject === 'sansu' && UNIT_TO_GROUP[q.unit] === unit)) out.push({ ...q, _cat: k });
     }
+  }
+  return out;
+}
+
+// その学年のその単元が薄いときだけ、1つ下の学年からも足す（2026-07-29・小5理科用）。
+// 浜学園はスパイラルなので、小5の回で扱う単元は小4でも習っている＝下の学年の問題は復習になる。
+// 上の学年は混ぜない（まだ習っていない道具が入るため）。算数の overlapSource と同じ考え方。
+const HAMA_UNIT_MIN = 20;
+async function unitPoolFilled(subject, grade, unit) {
+  const out = await unitPool(subject, grade, unit);
+  if (out.length >= HAMA_UNIT_MIN || grade <= 1) return out;
+  const seen = new Set(out.map(q => q.id));
+  for (const q of await unitPool(subject, grade - 1, unit)) {
+    if (!seen.has(q.id)) { seen.add(q.id); out.push(q); }
   }
   return out;
 }
