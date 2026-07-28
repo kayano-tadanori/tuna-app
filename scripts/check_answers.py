@@ -5,6 +5,9 @@
    使い方：  python scripts/check_answers.py
 """
 import json, io, os, re, sys, glob
+import sys, io as _io
+# Windowsのcp932コンソールでも絵文字・矢印が出せるようにする
+sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

@@ -4,6 +4,9 @@
    使い方：  python scripts/check_genbo.py
 """
 import json, io, os, re, sys, collections
+import sys, io as _io
+# Windowsのcp932コンソールでも絵文字・矢印が出せるようにする
+sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GENBO = r"C:\Users\User\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md"

@@ -6503,6 +6503,44 @@
          "meaning": "上向きは 1辺1cmが10こ・2cmが6こ・3cmが3こ・4cmが1こで20こ。下向きは 1辺1cmが6こ・2cmが1こで7こ。合わせて27こ。下向きを わすれないこと。"
         }
        ]
+      },
+      {
+       "id": "hd4m_16_1",
+       "category": "zu",
+       "grade": 4,
+       "unit": "場合の数",
+       "title": "点対称な図の四角形を数える",
+       "intro": "●は正方形アイウエの各辺のまん中の点です。図に引かれている線にそってできる四角形を数えます。この図は**左右対称ではありません**（左上と右下だけがXになっています）。",
+       "star": 4,
+       "src": "HG-0829 原簿・小4マスター No.16",
+       "steps": [
+        {
+         "question": "正方形は何こありますか。",
+         "answer": "5",
+         "meaning": "大きい正方形1こ＋4つに分けた小さい正方形4こ＝**5こ**。4つの●を結んだかたむいた正方形は、右上と左下の辺が引かれていないので作れない。",
+         "svg": "<svg viewBox=\"0 0 260 260\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"25\" x2=\"25\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"25\" y1=\"25\" x2=\"25\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"125\" y1=\"225\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"25\" x2=\"125\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"225\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"125\" x2=\"225\" y2=\"225\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"125\" cy=\"225\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"25\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"225\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"125\" cy=\"25\" r=\"5\" fill=\"#ffd451\"/><text x=\"14\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ア</text><text x=\"230\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">イ</text><text x=\"230\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ウ</text><text x=\"14\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">エ</text></svg>"
+        },
+        {
+         "question": "長方形は何こありますか。（正方形はのぞきます）",
+         "answer": "4",
+         "meaning": "たて2つ分・横2つ分の半分どうし＝上半分・下半分・左半分・右半分の**4こ**。",
+         "svg": "<svg viewBox=\"0 0 260 260\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"25\" x2=\"25\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"25\" y1=\"25\" x2=\"25\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"125\" y1=\"225\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"25\" x2=\"125\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"225\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"125\" x2=\"225\" y2=\"225\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"125\" cy=\"225\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"25\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"225\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"125\" cy=\"25\" r=\"5\" fill=\"#ffd451\"/><text x=\"14\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ア</text><text x=\"230\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">イ</text><text x=\"230\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ウ</text><text x=\"14\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">エ</text></svg>"
+        },
+        {
+         "question": "平行四辺形は何こありますか。（長方形・正方形はのぞきます）",
+         "answer": "4",
+         "meaning": "ななめの線を2本使ってできるもの。**4こ**。ここを先に数えておくと、次の台形と混ざらない。",
+         "svg": "<svg viewBox=\"0 0 260 260\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"25\" x2=\"25\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"25\" y1=\"25\" x2=\"25\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"125\" y1=\"225\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"25\" x2=\"125\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"225\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"125\" x2=\"225\" y2=\"225\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"125\" cy=\"225\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"25\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"225\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"125\" cy=\"25\" r=\"5\" fill=\"#ffd451\"/><text x=\"14\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ア</text><text x=\"230\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">イ</text><text x=\"230\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ウ</text><text x=\"14\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">エ</text></svg>"
+        },
+        {
+         "question": "台形は何こありますか。（平行四辺形はのぞきます）",
+         "answer": "18",
+         "meaning": "向かい合う辺が**1組だけ**平行なもので**18こ**。**図を左右対称だと思いこむと、右上と左下で数がずれる**。左上（X字）と右上（線1本）はできる四角形の数がちがうので、片方を数えて2倍してはいけない。",
+         "svg": "<svg viewBox=\"0 0 260 260\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"25\" x2=\"25\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"25\" y1=\"25\" x2=\"25\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"125\" y1=\"225\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"25\" x2=\"125\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"225\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"125\" x2=\"225\" y2=\"225\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"125\" cy=\"225\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"25\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"225\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"125\" cy=\"25\" r=\"5\" fill=\"#ffd451\"/><text x=\"14\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ア</text><text x=\"230\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">イ</text><text x=\"230\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ウ</text><text x=\"14\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">エ</text></svg>"
+        }
+       ],
+       "hg": "HG-0829",
+       "svg": "<svg viewBox=\"0 0 260 260\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"225\" y1=\"25\" x2=\"25\" y2=\"25\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"25\" y1=\"25\" x2=\"25\" y2=\"225\" stroke=\"#e8ecff\" stroke-width=\"3\"/><line x1=\"125\" y1=\"225\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"125\" x2=\"125\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"25\" x2=\"125\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"225\" x2=\"225\" y2=\"125\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"125\" y1=\"125\" x2=\"225\" y2=\"225\" stroke=\"#4f7cff\" stroke-width=\"2\"/><line x1=\"25\" y1=\"225\" x2=\"225\" y2=\"25\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"125\" cy=\"225\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"25\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"225\" cy=\"125\" r=\"5\" fill=\"#ffd451\"/><circle cx=\"125\" cy=\"25\" r=\"5\" fill=\"#ffd451\"/><text x=\"14\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ア</text><text x=\"230\" y=\"18\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">イ</text><text x=\"230\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">ウ</text><text x=\"14\" y=\"248\" fill=\"#e8ecff\" font-size=\"15\" font-weight=\"700\">エ</text></svg>"
       }
      ],
      "17": [
@@ -7584,6 +7622,99 @@
          "meaning": "23×3000＝69000円（もとは44000円と64000円）。"
         }
        ]
+      }
+     ],
+     "0": [
+      {
+       "id": "hd4m_00_1",
+       "category": "baai",
+       "grade": 4,
+       "unit": "なかま調べ（集合・ベン図）",
+       "title": "2のつく日と3のつく日",
+       "intro": "1月1日から、日づけに2がつく日には10円、3がつく日には20円ちょ金します。23日のように両方に当てはまる日は、10円と20円で30円ちょ金します。",
+       "star": 3,
+       "src": "HG-0801 原簿・小4マスター No.0",
+       "steps": [
+        {
+         "question": "1月1日から1月31日までで、日づけに2がつく日は何日ありますか。",
+         "answer": "12",
+         "meaning": "2, 12, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 の12日。**「一の位が2の日」と読むと 2・12・22 の3日しかなくなる**。20〜29が丸ごと入るのを落とさない。"
+        },
+        {
+         "question": "日づけに3がつく日は何日ありますか。",
+         "answer": "5",
+         "meaning": "3, 13, 23, 30, 31 の5日。30日と31日も「3がつく日」。"
+        },
+        {
+         "question": "1月31日までに、ちょ金は全部で何円になりますか。",
+         "answer": "220",
+         "meaning": "ここが発見。**23日は両方に当てはまるが、10円と20円の両方をもらえる**ので、重なりを引く必要がない。12×10＋5×20＝120＋100＝**220円**。ふつうの集合の問題なら重なりを1回引くが、この問題は引いてはいけない。"
+        }
+       ],
+       "hg": "HG-0801"
+      },
+      {
+       "id": "hd4m_00_2",
+       "category": "baai",
+       "grade": 4,
+       "unit": "場合の数",
+       "title": "どのお金も少なくとも1まい",
+       "intro": "100円玉が3まい、50円玉が5まい、10円玉が15まいあります。どのお金も少なくとも1まいは使って、ちょうど350円をはらいます。",
+       "star": 4,
+       "src": "HG-0802 原簿・小4マスター No.0",
+       "steps": [
+        {
+         "question": "どのお金も1まいは使うので、先に100円・50円・10円を1まいずつ取り分けます。のこりはあと何円はらえばよいですか。",
+         "answer": "190",
+         "meaning": "100＋50＋10＝160円が先に決まる。350−160＝**190円**。「少なくとも1まい」は、**先に1まいずつ取り分けてしまえば消える**。"
+        },
+        {
+         "question": "100円玉を1まいだけ使うとき、はらい方は何通りありますか。",
+         "answer": "3",
+         "meaning": "のこり250円を50円玉と10円玉で。（50円2・10円15）（50円3・10円10）（50円4・10円5）の**3通り**。**50円1まいだと10円玉が20まい要るが、15まいしかないのでダメ**。ここで在庫が効いてくる。"
+        },
+        {
+         "question": "はらい方は全部で何通りありますか。",
+         "answer": "5",
+         "meaning": "100円2まいのとき＝（50円1・10円10）（50円2・10円5）の2通り。100円3まいのときは、のこり50円を50円と10円を1まいずつ以上で作れないので0通り。3＋2＝**5通り**。"
+        }
+       ],
+       "hg": "HG-0802"
+      }
+     ],
+     "37": [
+      {
+       "id": "hd4m_37_1",
+       "category": "wariai",
+       "grade": 4,
+       "unit": "割合",
+       "title": "□より大きくなるのはどれ",
+       "intro": "□には同じ数が入ります（0ではありません）。答えが□より大きくなるかどうかは、**□を何倍しているか**だけで決まります。計算しなくても見ぬけます。",
+       "star": 3,
+       "src": "HG-0883 原簿・小4マスター No.37",
+       "steps": [
+        {
+         "question": "㋒「□÷0.05」は、□の何倍ですか。",
+         "answer": "20",
+         "meaning": "1÷0.05＝**20倍**。**1より小さい数でわると大きくなる**。"
+        },
+        {
+         "question": "㋔「□÷(2/5)」は、□の何倍ですか。",
+         "answer": "2.5",
+         "meaning": "÷(2/5) は ×(5/2) と同じ。**2.5倍**。分数でわるときはひっくり返してかける。"
+        },
+        {
+         "question": "㋛「□×0.6×(3/4)」は、□の何倍ですか。",
+         "answer": "0.45",
+         "meaning": "0.6×3/4＝**0.45倍**。**かけ算とわり算がつながっているときは、倍率をかけ合わせて1とくらべる**。"
+        },
+        {
+         "question": "㋐「□÷2.3」㋒「□÷0.05」㋔「□÷(2/5)」㋛「□×0.6×(3/4)」のうち、答えが□より大きくなるものは何こありますか。",
+         "answer": "2",
+         "meaning": "倍率が1をこえるものを数える。㋐は1÷2.3で1より小さい、㋒は20倍、㋔は2.5倍、㋛は0.45倍。大きくなるのは**㋒と㋔の2こ**。**□に数を入れて計算しなくても、倍率だけ見れば決まる**。"
+        }
+       ],
+       "hg": "HG-0883"
       }
      ]
     },
