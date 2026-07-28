@@ -4336,6 +4336,31 @@
               ]
             }
           ],
+          "6": [
+            {
+              "id": "hd_4m_f06_6",
+              "src": "HG-0811",
+              "title": "2つの ひっ算を 重ねる",
+              "category": "kazu",
+              "unit": "覆面算",
+              "grade": 4,
+              "star": 3,
+              "intro": "同じ3けたの整数を、44でわった ひっ算と 38でわった ひっ算があります。\nどちらも 小数第一位まで わりました。44のほうは 商が5.5で あまりが「ア0」、\n38のほうは 商が6.3で あまりが「イ6」です（ア・イは0ではありません）。",
+              "svg": "<svg viewBox='0 0 300 136' xmlns='http://www.w3.org/2000/svg'><text x='10.0' y='15.0' fill='#ffd166' font-size='9' text-anchor='start'>同じ3けたの整数を 44と38で わった 2つのひっ算</text><text x='50.0' y='34.0' fill='#ffd166' font-size='12' text-anchor='start' font-family='monospace'>5.5</text><text x='20.0' y='52.0' fill='#ffd166' font-size='11' text-anchor='start' font-family='monospace'>44 ) □ □ □ . 0</text><text x='54.0' y='70.0' fill='#ffd166' font-size='11' text-anchor='start' font-family='monospace'>2 2 0</text><text x='54.0' y='88.0' fill='#ffd166' font-size='11' text-anchor='start' font-family='monospace'>2 2 0</text><text x='54.0' y='106.0' fill='#ef476f' font-size='11' text-anchor='start' font-family='monospace'>ア 0</text><text x='180.0' y='34.0' fill='#ffd166' font-size='12' text-anchor='start' font-family='monospace'>6.3</text><text x='150.0' y='52.0' fill='#ffd166' font-size='11' text-anchor='start' font-family='monospace'>38 ) □ □ □ . 0</text><text x='184.0' y='70.0' fill='#ffd166' font-size='11' text-anchor='start' font-family='monospace'>2 2 8</text><text x='184.0' y='88.0' fill='#ffd166' font-size='11' text-anchor='start' font-family='monospace'>1 1 4</text><text x='184.0' y='106.0' fill='#ef476f' font-size='11' text-anchor='start' font-family='monospace'>イ 6</text><text x='10.0' y='126.0' fill='#06d6a0' font-size='9' text-anchor='start'>ア・イ は 0では ありません</text></svg>",
+              "steps": [
+                {
+                  "question": "この3けたの整数はいくつですか。",
+                  "answer": "243",
+                  "meaning": "44のほうだけでは 243・244・245・246 の4つ、38のほうだけでは 241・242・243 の3つにしぼれる。両方に共通するのは243だけ。片方では決まらず、重ねてはじめて1つになる。"
+                },
+                {
+                  "question": "この数を21でわった商の 小数第21位の数字はいくつですか。",
+                  "answer": "1",
+                  "meaning": "243÷21＝11.571428571428… で 571428 の6つがくりかえす。21÷6＝3あまり3 なので くりかえしの3番目＝1。"
+                }
+              ]
+            }
+          ],
           "7": [
             {
               "id": "hd_4m_f07_10",
@@ -4448,6 +4473,309 @@
                   "question": "のこりの長さは 何cmですか。（□と△/5 の □ を答えなさい）",
                   "answer": "62",
                   "meaning": "テープ5まいで 83cm。のりしろは4か所（5か所ではない）なので 2/5×4＝8/5 をひいて 81と2/5cm。両はしから 9と2/5 を2回ひいて 62と3/5cm。"
+                }
+              ]
+            }
+          ],
+          "10": [
+            {
+              "id": "hd_4m_f10_9",
+              "src": "HG-0817",
+              "title": "あまりを ひいて 公約数",
+              "category": "kazu",
+              "unit": "倍数・約数",
+              "grade": 4,
+              "star": 3,
+              "intro": "ある整数で 751をわると 7あまり、1057をわると 3あまります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "そのような整数のうち いちばん大きい数はいくつですか。",
+                  "answer": "62",
+                  "meaning": "751−7＝744、1057−3＝1054 は どちらも わり切れる。744と1054の最大公約数は62。"
+                },
+                {
+                  "question": "そのような整数のうち いちばん小さい数はいくつですか。",
+                  "answer": "31",
+                  "meaning": "62の約数は 1・2・31・62。あまりが7なので わる数は7より大きくないといけない。だから31と62だけがのこる。1や2ではない。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_f10_10",
+              "src": "HG-0818",
+              "title": "バスに 333人",
+              "category": "kazu",
+              "unit": "倍数・約数",
+              "grade": 4,
+              "star": 2,
+              "intro": "333人が バスに乗ります。バスは1台に50人まで乗れます。\nどのバスにも 同じ人数ずつ乗り、バスの台数は できるだけ少なくします。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "1台に何人ずつ 乗りますか。",
+                  "answer": "37",
+                  "meaning": "同じ人数ずつなので 1台の人数は333の約数（1・3・9・37・111・333）。台数を少なくする＝1台の人数を多くする。50人までなので37人（9台）。"
+                }
+              ]
+            }
+          ],
+          "11": [
+            {
+              "id": "hd_4m_f11_7",
+              "src": "HG-0819",
+              "title": "たしたり ひいたりして わり切れる数",
+              "category": "kazu",
+              "unit": "倍数・約数",
+              "grade": 4,
+              "star": 3,
+              "intro": "「○をたすと □ でわり切れる」「○をひくと □ でわり切れる」数を さがします。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "1をたすと5でわり切れ、1をひくと6でわり切れる いちばん小さい整数はいくつですか。",
+                  "answer": "19",
+                  "meaning": "5でわると4あまり、6でわると1あまる数。19（20は5でわり切れ、18は6でわり切れる）。"
+                },
+                {
+                  "question": "6でも8でも9でわっても 2あまる3けたの整数は 何こありますか。",
+                  "answer": "12",
+                  "meaning": "6と8と9の最小公倍数は72。72×□+2 の形で3けたになるのは 146から938までの12こ。"
+                },
+                {
+                  "question": "3をたすと6でわり切れ、4をたすと7でわり切れる 3けたでいちばん小さい整数はいくつですか。",
+                  "answer": "129",
+                  "meaning": "6でわると3あまり、7でわっても3あまる。だから42でわると3あまる数。3けたでは129が最小。ずれ方を そろえるのが かなめ。"
+                },
+                {
+                  "question": "5をたすと7でわり切れ、9をひくと6でわり切れる 3けたでいちばん大きい整数はいくつですか。",
+                  "answer": "975",
+                  "meaning": "42でわると9あまる数。9・51・93・… と続き、3けたで最大は975。最小の135を答えないこと。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_f11_8",
+              "src": "HG-0820",
+              "title": "360段の 石段",
+              "category": "kazu",
+              "unit": "倍数・約数",
+              "grade": 4,
+              "star": 2,
+              "intro": "360段の石段があります。けんじ君は 3の倍数の段を、まなぶ君は 5の倍数の段を ふみます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "けんじ君だけが ふんだ段は 何段ですか。",
+                  "answer": "96",
+                  "meaning": "3の倍数は120段。そのうち5でもわり切れる（15の倍数）24段は まなぶ君もふむ。120−24＝96段。"
+                },
+                {
+                  "question": "まなぶ君だけが ふんだ段は 何段ですか。",
+                  "answer": "48",
+                  "meaning": "5の倍数は72段。72−24＝48段。"
+                },
+                {
+                  "question": "2人とも ふまなかった段は 何段ですか。",
+                  "answer": "192",
+                  "meaning": "どちらかがふんだのは 120+72−24＝168段。360−168＝192段。24を2回ひかないこと。"
+                }
+              ]
+            }
+          ],
+          "12": [
+            {
+              "id": "hd_4m_f12_5",
+              "src": "HG-0821",
+              "title": "トラック35台で 運ぶ",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 4,
+              "star": 3,
+              "intro": "12t積みのトラックが35台あります。1こ84kgの荷物を運びます。\nトラック1台の積み荷は 12tを こえてはいけません。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "荷物は 全部で何こ 運べますか。",
+                  "answer": "4970",
+                  "meaning": "1台ずつ考える。12000÷84＝142.8… なので 1台142こ（143こだと12012kgで12tをこえる）。142×35＝4970こ。ぜんぶまとめて 12000×35÷84＝5000 としてはいけない。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_f12_6",
+              "src": "HG-0822",
+              "title": "テープ51本を つなぐ",
+              "category": "kisoku",
+              "unit": "植木算",
+              "grade": 4,
+              "star": 3,
+              "intro": "1本18.6cmのテープを、つなぎめを 11mm ずつ 重ねて つなぎます。",
+              "svg": "<svg viewBox='0 0 240 96' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>テープを つなぎめで 重ねてつなぐ</text><rect x='20.0' y='32.0' width='62.0' height='22.0' rx='3' fill='#3b82f6' stroke='#4f9eff' stroke-width='1.2'/><rect x='72.0' y='32.0' width='62.0' height='22.0' rx='3' fill='#3b82f6' stroke='#4f9eff' stroke-width='1.2'/><rect x='72.0' y='32.0' width='10.0' height='22.0' rx='2' fill='#f59e0b' stroke='#ffd166' stroke-width='1'/><rect x='124.0' y='32.0' width='62.0' height='22.0' rx='3' fill='#3b82f6' stroke='#4f9eff' stroke-width='1.2'/><rect x='124.0' y='32.0' width='10.0' height='22.0' rx='2' fill='#f59e0b' stroke='#ffd166' stroke-width='1'/><text x='51.0' y='70.0' fill='#ffd166' font-size='9' text-anchor='middle'>18.6cm</text><text x='77.0' y='86.0' fill='#ef476f' font-size='9' text-anchor='middle'>つなぎめ 11mm</text></svg>",
+              "steps": [
+                {
+                  "question": "3本つなぐと 全体は何cmですか。",
+                  "answer": "53.6",
+                  "meaning": "18.6×3＝55.8cm。つなぎめは2か所なので 1.1×2＝2.2cmをひいて53.6cm。"
+                },
+                {
+                  "question": "51本つなぐと 全体は何cmですか。",
+                  "answer": "893.6",
+                  "meaning": "18.6×51−1.1×50＝948.6−55＝893.6cm（8.936m）。つなぎめは50か所。"
+                },
+                {
+                  "question": "全体が 7m18cm6mm になるのは 何本つないだときですか。",
+                  "answer": "41",
+                  "meaning": "1本ふえるごとに 18.6−1.1＝17.5cm ずつ のびる。718.6＝17.5×□+1.1 から 41本。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_f12_7",
+              "src": "HG-0823",
+              "title": "単位を まちがえた",
+              "category": "keisan",
+              "unit": "計算のくふう",
+              "grade": 4,
+              "star": 3,
+              "intro": "mで答えなければ ならない長さを、単位だけ まちがえて cm と答えてしまいました。\nそのため 正しい答えとの ちがいが 13m46cm4mm になりました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "正しい答えは 何mですか。",
+                  "answer": "13.6",
+                  "meaning": "mをcmと答えると 100分の1になる。だから ちがいは もとの100分の99。13.464÷(99/100)＝13.6m。100でわってはいけない。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_f12_8",
+              "src": "HG-0824",
+              "title": "歩はばの 思いちがい",
+              "category": "tokusan",
+              "unit": "消去算",
+              "grade": 4,
+              "star": 3,
+              "intro": "田中君と中山君は どちらも 自分の歩はばを 48cm だと 思っています。\nでも 本当は 田中君の歩はばは 中山君より 9cm みじかいのです。\n同じコートの長さを はかると、田中君は38.4m、中山君は31.2m になりました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "田中君は 何歩で はかりましたか。",
+                  "answer": "80",
+                  "meaning": "田中君は48cmだと思って計算しているので 3840÷48＝80歩。歩数だけは 正しい。"
+                },
+                {
+                  "question": "田中君の 本当の歩はばは 何cmですか。",
+                  "answer": "39",
+                  "meaning": "中山君は 3120÷48＝65歩。同じコートなので 80×(田中の歩はば)＝65×(田中+9)。これを解いて39cm。"
+                },
+                {
+                  "question": "本当の コートの長さは 何mですか。",
+                  "answer": "31.2",
+                  "meaning": "80×39＝3120cm＝31.2m。"
+                }
+              ]
+            }
+          ],
+          "13": [
+            {
+              "id": "hd_4m_f13_7",
+              "src": "HG-0825",
+              "title": "200m競走",
+              "category": "hayasa",
+              "unit": "速さ（旅人算）",
+              "grade": 4,
+              "star": 3,
+              "intro": "兄と弟が 200m競走をしました。兄は25秒、弟は40秒で 走りました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "兄の速さは 秒速何mですか。",
+                  "answer": "8",
+                  "meaning": "200÷25＝秒速8m（弟は200÷40＝秒速5m）。"
+                },
+                {
+                  "question": "兄がゴールしたとき、弟は ゴールの何m手前に いますか。",
+                  "answer": "75",
+                  "meaning": "兄の25秒で 弟は5×25＝125m。200−125＝75m手前。"
+                },
+                {
+                  "question": "2人が同時にゴールするには、兄は 弟より何m後ろから 出ればよいですか。",
+                  "answer": "120",
+                  "meaning": "弟が200m走る40秒のあいだに 兄は8×40＝320m走れる。だから200mのゴールに対して 320−200＝120m後ろから出ればよい。時間の基準を 兄から弟に 入れかえるのが山。"
+                }
+              ]
+            }
+          ],
+          "14": [
+            {
+              "id": "hd_4m_f14_5",
+              "src": "HG-0826",
+              "title": "長い針と 短い針の角",
+              "category": "zu",
+              "unit": "速さ（通過・流水・時計）",
+              "grade": 4,
+              "star": 3,
+              "intro": "長い針は1分で6°、短い針は1分で0.5°動きます。\n2つの針が つくる 小さいほうの角を もとめます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "10時30分のとき 何度ですか。",
+                  "answer": "135",
+                  "meaning": "長い針180°、短い針 300+15＝315°。ちがいは135°。"
+                },
+                {
+                  "question": "1時48分のとき 何度ですか。",
+                  "answer": "126",
+                  "meaning": "長い針288°、短い針 30+24＝54°。ちがい234°だが 小さいほうは 360−234＝126°。"
+                },
+                {
+                  "question": "8時44分のとき 何度ですか。",
+                  "answer": "2",
+                  "meaning": "長い針264°、短い針 240+22＝262°。たったの2°で ほとんど重なっている。"
+                },
+                {
+                  "question": "4時59分のとき 何度ですか。",
+                  "answer": "155.5",
+                  "meaning": "長い針354°、短い針 120+29.5＝149.5°。ちがい204.5° → 小さいほうは155.5°。"
+                }
+              ]
+            }
+          ],
+          "15": [
+            {
+              "id": "hd_4m_f15_6",
+              "src": "HG-0827",
+              "title": "正方形の中の 直角二等辺三角形",
+              "category": "zu",
+              "unit": "平面図形（面積）",
+              "grade": 4,
+              "star": 3,
+              "intro": "正方形に 対角線2本と まん中を通る線2本を ひきました（ぜんぶ 中心で交わります）。",
+              "svg": "<svg viewBox='0 0 260 130' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>正方形に 対角線2本と まん中の線2本をひいた</text><rect x='50.0' y='26.0' width='90.0' height='90.0' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.6'/><line x1='50.0' y1='26.0' x2='140.0' y2='116.0' stroke='#ffd166' stroke-width='1.2'/><line x1='140.0' y1='26.0' x2='50.0' y2='116.0' stroke='#ffd166' stroke-width='1.2'/><line x1='95.0' y1='26.0' x2='95.0' y2='116.0' stroke='#ffd166' stroke-width='1.2'/><line x1='50.0' y1='71.0' x2='140.0' y2='71.0' stroke='#ffd166' stroke-width='1.2'/><text x='160.0' y='60.0' fill='#06d6a0' font-size='9' text-anchor='start'>直角二等辺三角形を</text><text x='160.0' y='74.0' fill='#06d6a0' font-size='9' text-anchor='start'>大きさべつに 数える</text></svg>",
+              "steps": [
+                {
+                  "question": "直角二等辺三角形は 全部で何こ ありますか。",
+                  "answer": "16",
+                  "meaning": "いちばん小さいものが8こ。でも 2こ組み合わせたものが4こ、4こ組み合わせたものが4こ ある。8+4+4＝16こ。小さいのだけ数えて8で止まらないこと。"
+                }
+              ]
+            },
+            {
+              "id": "hd_4m_f15_8",
+              "src": "HG-0828",
+              "title": "角の 二等分線",
+              "category": "zu",
+              "unit": "平面図形（角度）",
+              "grade": 4,
+              "star": 3,
+              "intro": "頂角が40°の三角形があります。2つの底角を それぞれ 二等分する線をひきます。",
+              "svg": "<svg viewBox='0 0 270 126' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>頂角40°の三角形。両方の底角を 二等分する</text><polygon points='110,30 40,110 180,110' fill='#1e293b' stroke='#4f9eff' stroke-width='1.6'/><line x1='40.0' y1='110.0' x2='110.0' y2='82.0' stroke='#ffd166' stroke-width='1.2'/><line x1='180.0' y1='110.0' x2='110.0' y2='82.0' stroke='#ffd166' stroke-width='1.2'/><text x='110.0' y='44.0' fill='#ef476f' font-size='10' text-anchor='middle'>40°</text><text x='58.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='start'>○○</text><text x='146.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='start'>××</text><text x='110.0' y='76.0' fill='#ef476f' font-size='11' text-anchor='middle'>①</text><text x='196.0' y='70.0' fill='#ef476f' font-size='9' text-anchor='start'>①は何度？</text></svg>",
+              "steps": [
+                {
+                  "question": "2本の二等分線が 交わってできる角①は 何度ですか。",
+                  "answer": "110",
+                  "meaning": "2つの底角の和は 180−40＝140°。二等分するので ○と×の和は70°。三角形の残りの角は 180−70＝110°。○や×が それぞれ何度かは 出さなくてよい。"
                 }
               ]
             }
@@ -5206,7 +5534,8 @@
         }
       },
       "sairei": {
-        "fukushu": {}
+        "fukushu": {},
+        "kokai": {}
       }
     },
     "5": {
