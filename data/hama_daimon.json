@@ -931,6 +931,761 @@
                 }
               ]
             }
+          ],
+          "25": [
+            {
+              "id": "hd_3m_f25_5",
+              "src": "HG-0081",
+              "title": "ぼうで 正三角形をつなげる",
+              "category": "kisoku",
+              "unit": "植木算",
+              "grade": 3,
+              "star": 3,
+              "intro": "同じ長さのぼうで 正三角形を 上下こうごに、辺を1つずつ 共有しながら つなげていきます。",
+              "svg": "<svg viewBox='0 0 240 118' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>同じ長さの ぼうで 正三角形を つなげていく</text><polygon points='24.0,90.0 64.0,90.0 44.0,55.4' fill='#1e3a5f' stroke='#4f9eff' stroke-width='1.6'/><polygon points='44.0,55.4 84.0,55.4 64.0,90.0' fill='#1e3a5f' stroke='#4f9eff' stroke-width='1.6'/><polygon points='64.0,90.0 104.0,90.0 84.0,55.4' fill='#1e3a5f' stroke='#4f9eff' stroke-width='1.6'/><polygon points='84.0,55.4 124.0,55.4 104.0,90.0' fill='#1e3a5f' stroke='#4f9eff' stroke-width='1.6'/><polygon points='104.0,90.0 144.0,90.0 124.0,55.4' fill='#1e3a5f' stroke='#4f9eff' stroke-width='1.6'/><text x='84.0' y='108.0' fill='#06d6a0' font-size='9' text-anchor='middle'>1こ目は3本、あとは1本ふえるごとに2本</text></svg>",
+              "steps": [
+                {
+                  "question": "正三角形を7こ作るには、ぼうは何本 いりますか。",
+                  "answer": "15",
+                  "meaning": "1こ目は3本。あとは1こふえるごとに2本ずつ。2×7+1＝15本。"
+                },
+                {
+                  "question": "正三角形を30こ作るには、ぼうは何本 いりますか。",
+                  "answer": "61",
+                  "meaning": "2×30+1＝61本。"
+                },
+                {
+                  "question": "ぼうを123本使うと、正三角形は何こ できますか。",
+                  "answer": "61",
+                  "meaning": "(123−1)÷2＝61こ。"
+                },
+                {
+                  "question": "ぼうが150本あるとき、正三角形は 多くて何こ できますか。",
+                  "answer": "74",
+                  "meaning": "2×74+1＝149本で74こ。あと1本のこるが 75こ目は作れない。"
+                }
+              ]
+            }
+          ],
+          "26": [
+            {
+              "id": "hd_3m_f26_1",
+              "src": "HG-0082",
+              "title": "ちがいが 2ずつ ふえる",
+              "category": "kisoku",
+              "unit": "規則性・数列",
+              "grade": 3,
+              "star": 2,
+              "intro": "7, 10, 15, ㋐, 31, ㋑, 55, …… と 数がならんでいます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "㋐にあてはまる数はいくつですか。",
+                  "answer": "22",
+                  "meaning": "となりとの ちがいを見ると 3, 5, 7, 9, 11, 13 と 2ずつふえている。15+7＝22。同じ数ずつふえる（等差）と 思いこまないこと。"
+                },
+                {
+                  "question": "㋑にあてはまる数はいくつですか。",
+                  "answer": "42",
+                  "meaning": "31+11＝42（そのあと 42+13＝55 で 合う）。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f26_4",
+              "src": "HG-0083",
+              "title": "同じ数が 2回ずつ",
+              "category": "kisoku",
+              "unit": "群数列",
+              "grade": 3,
+              "star": 2,
+              "intro": "1, 1, 2, 2, 3, 3, 4, 4, …… と 同じ数が2回ずつ ならんでいます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "30番目の数はいくつですか。",
+                  "answer": "15",
+                  "meaning": "数kは (2k−1)番目と2k番目にある。30÷2＝15。"
+                },
+                {
+                  "question": "57番目の数はいくつですか。",
+                  "answer": "29",
+                  "meaning": "57は奇数なので (57+1)÷2＝29。"
+                },
+                {
+                  "question": "はじめて14が出てくるのは 何番目ですか。",
+                  "answer": "27",
+                  "meaning": "14は27番目と28番目。2×14−1＝27番目。"
+                },
+                {
+                  "question": "40番目までの数を すべてたすと いくつですか。",
+                  "answer": "420",
+                  "meaning": "40番目までに 1から20が2回ずつ。(1+2+…+20)×2＝210×2＝420。"
+                }
+              ]
+            }
+          ],
+          "27": [
+            {
+              "id": "hd_3m_f27_5",
+              "src": "HG-0084",
+              "title": "一の位が1の日",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 3,
+              "star": 3,
+              "intro": "1月1日から 1年間、毎日 算数の問題をときます。\n一の位が1の日は10問、それ以外の日は5問 ときます。この年は うるう年です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "1年間で 全部で何問 ときますか。",
+                  "answer": "2045",
+                  "meaning": "一の位が1の日は 1日・11日・21日・31日。1・11・21日は毎月あるので 3×12＝36日。31日があるのは 大の月7か月だけなので7日。合わせて43日。うるう年は366日なので 10×43+5×323＝2045問。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f27_6",
+              "src": "HG-0085",
+              "title": "4人の たんじょう日",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 3,
+              "star": 3,
+              "intro": "春子「わたしは 9才になって 今日で10日目よ」\n夏子「わたしは 今日から60日後に 9才になるわ」\n秋子「今日は 5月5日の3日後ね。わたしのたんじょう日は 冬子さんの42日前よ」\n冬子「わたしのたんじょう日は 夏子さんの130日後よ」",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "今日は 何月何日ですか。",
+                  "answer": "5月8日",
+                  "choices": [
+                    "5月8日",
+                    "5月5日",
+                    "5月2日",
+                    "5月9日"
+                  ],
+                  "meaning": "秋子さんの話から 5月5日の3日後で 5月8日。ここが すべての出発点。"
+                },
+                {
+                  "question": "春子さんの たんじょう日は 何月何日ですか。",
+                  "answer": "4月29日",
+                  "choices": [
+                    "4月29日",
+                    "4月28日",
+                    "5月18日",
+                    "4月30日"
+                  ],
+                  "meaning": "「今日で10日目」は 9日たったということ。5月8日の9日前で 4月29日。「10日目＝10日前」ではない。"
+                },
+                {
+                  "question": "冬子さんの たんじょう日は 何月何日ですか。",
+                  "answer": "11月14日",
+                  "choices": [
+                    "11月14日",
+                    "11月13日",
+                    "10月3日",
+                    "12月14日"
+                  ],
+                  "meaning": "夏子さんは 5月8日の60日後で7月7日。冬子さんは その130日後で11月14日。"
+                }
+              ]
+            }
+          ],
+          "28": [
+            {
+              "id": "hd_3m_f28_3",
+              "src": "HG-0092",
+              "title": "き数の和と ぐう数の和",
+              "category": "kazu",
+              "unit": "数の性質",
+              "grade": 3,
+              "star": 2,
+              "intro": "1から99までの整数について 考えます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "ぐう数は 何こありますか。",
+                  "answer": "49",
+                  "meaning": "2から98まで 2とびで49こ。"
+                },
+                {
+                  "question": "き数の和は ぐう数の和より いくつ大きいですか。",
+                  "answer": "50",
+                  "meaning": "(2−1)+(4−3)+… とペアにすると 1が49組ぶん。き数は50こ・ぐう数は49こなので 99が1つあまる。99−49＝50。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f28_4",
+              "src": "HG-0091",
+              "title": "5こずつ ならべた表",
+              "category": "kazu",
+              "unit": "数の性質",
+              "grade": 3,
+              "star": 3,
+              "intro": "1から じゅんに 5こずつ ならべて 表を作ります。\n1行目は 1・2・3・4・5、2行目は 6・7・8・9・10 …… です。",
+              "svg": "<svg viewBox='0 0 210 146' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>1から じゅんに 5こずつ ならべた表</text><rect x='20.0' y='22.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='36.0' y='36.0' fill='#ffd166' font-size='10' text-anchor='middle'>1</text><rect x='54.0' y='22.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='70.0' y='36.0' fill='#ffd166' font-size='10' text-anchor='middle'>2</text><rect x='88.0' y='22.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='104.0' y='36.0' fill='#ffd166' font-size='10' text-anchor='middle'>3</text><rect x='122.0' y='22.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='138.0' y='36.0' fill='#ffd166' font-size='10' text-anchor='middle'>4</text><rect x='156.0' y='22.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='172.0' y='36.0' fill='#ffd166' font-size='10' text-anchor='middle'>5</text><rect x='20.0' y='44.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='36.0' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>6</text><rect x='54.0' y='44.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='70.0' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>7</text><rect x='88.0' y='44.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='104.0' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>8</text><rect x='122.0' y='44.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='138.0' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>9</text><rect x='156.0' y='44.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='172.0' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>10</text><rect x='20.0' y='66.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='36.0' y='80.0' fill='#ffd166' font-size='10' text-anchor='middle'>11</text><rect x='54.0' y='66.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='70.0' y='80.0' fill='#ffd166' font-size='10' text-anchor='middle'>12</text><rect x='88.0' y='66.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='104.0' y='80.0' fill='#ffd166' font-size='10' text-anchor='middle'>13</text><rect x='122.0' y='66.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='138.0' y='80.0' fill='#ffd166' font-size='10' text-anchor='middle'>14</text><rect x='156.0' y='66.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='172.0' y='80.0' fill='#ffd166' font-size='10' text-anchor='middle'>15</text><rect x='20.0' y='88.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='36.0' y='102.0' fill='#ffd166' font-size='10' text-anchor='middle'>16</text><rect x='54.0' y='88.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='70.0' y='102.0' fill='#ffd166' font-size='10' text-anchor='middle'>17</text><rect x='88.0' y='88.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='104.0' y='102.0' fill='#ffd166' font-size='10' text-anchor='middle'>18</text><rect x='122.0' y='88.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='138.0' y='102.0' fill='#ffd166' font-size='10' text-anchor='middle'>19</text><rect x='156.0' y='88.0' width='32.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='172.0' y='102.0' fill='#ffd166' font-size='10' text-anchor='middle'>20</text><text x='20.0' y='126.0' fill='#06d6a0' font-size='9' text-anchor='start'>……（ずっとつづく）</text><text x='36.0' y='138.0' fill='#06d6a0' font-size='8' text-anchor='middle'>1列</text><text x='70.0' y='138.0' fill='#06d6a0' font-size='8' text-anchor='middle'>2列</text><text x='104.0' y='138.0' fill='#06d6a0' font-size='8' text-anchor='middle'>3列</text><text x='138.0' y='138.0' fill='#06d6a0' font-size='8' text-anchor='middle'>4列</text><text x='172.0' y='138.0' fill='#06d6a0' font-size='8' text-anchor='middle'>5列</text></svg>",
+              "steps": [
+                {
+                  "question": "22は 何行目にありますか。",
+                  "answer": "5",
+                  "meaning": "(22−1)÷5＝4あまり1 なので 5行目の2列目。"
+                },
+                {
+                  "question": "136は 何行目にありますか。",
+                  "answer": "28",
+                  "meaning": "135は5でわり切れるので 27行目の最後。136は28行目の1列目。"
+                },
+                {
+                  "question": "11行4列にある数はいくつですか。",
+                  "answer": "54",
+                  "meaning": "(11−1)×5+4＝54。"
+                },
+                {
+                  "question": "3列の数と 4列の数を 1つずつ選んで たすと、その数は 何列にありますか。",
+                  "answer": "2",
+                  "meaning": "3列の数は 5でわると3あまる数、4列の数は4あまる数。たすと あまりは7＝5+2 で 2あまる。どの数をえらんでも かならず2列になる。"
+                }
+              ]
+            }
+          ],
+          "29": [
+            {
+              "id": "hd_3m_f29_5",
+              "src": "HG-0093",
+              "title": "1年の 曜日の数",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 3,
+              "star": 2,
+              "intro": "ある年の1月1日は 月曜日でした。この年は うるう年では ありません（365日）。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "この年に 木曜日は 何回ありますか。",
+                  "answer": "52",
+                  "meaning": "365＝7×52+1。だから ほとんどの曜日は52回。"
+                },
+                {
+                  "question": "この年に 月曜日は 何回ありますか。",
+                  "answer": "53",
+                  "meaning": "あまりの1日ぶんだけ 1回多くなる。その1日は 1月1日の曜日＝月曜。だから月曜だけ53回。"
+                },
+                {
+                  "question": "この年の まん中の日（183日目）は 何曜日ですか。",
+                  "answer": "月曜日",
+                  "choices": [
+                    "月曜日",
+                    "火曜日",
+                    "日曜日",
+                    "水曜日"
+                  ],
+                  "meaning": "183＝7×26+1 なので 1月1日と同じ曜日。"
+                },
+                {
+                  "question": "次の年の1月1日は 何曜日ですか。",
+                  "answer": "火曜日",
+                  "choices": [
+                    "火曜日",
+                    "月曜日",
+                    "日曜日",
+                    "水曜日"
+                  ],
+                  "meaning": "365日は 52週と1日なので 曜日が1つずれる。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f29_7",
+              "src": "HG-0094",
+              "title": "週4回の ピアノ",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 3,
+              "star": 3,
+              "intro": "ピアノ教室は 毎週 月・水・金・日 の週4回です。1日も休みませんでした。\n50回目のレッスンは 7月12日の日曜日でした。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "36回目のレッスンは 何月何日ですか。",
+                  "answer": "6月17日（水）",
+                  "choices": [
+                    "6月17日（水）",
+                    "6月15日（月）",
+                    "6月19日（金）",
+                    "6月14日（日）"
+                  ],
+                  "meaning": "4回で1週だが 間かくは 2日・2日・2日・1日 と ふぞろい。50回目から14回もどると 6月17日の水曜。"
+                },
+                {
+                  "question": "1回目のレッスンは 何月何日ですか。",
+                  "answer": "4月17日（金）",
+                  "choices": [
+                    "4月17日（金）",
+                    "4月19日（日）",
+                    "4月15日（水）",
+                    "4月20日（月）"
+                  ],
+                  "meaning": "50回目から49回もどる。1回目は 4月17日の金曜。36回目も1回目も 17日になるのが おもしろいところ。"
+                }
+              ]
+            }
+          ],
+          "31": [
+            {
+              "id": "hd_3m_f31_3",
+              "src": "HG-0101",
+              "title": "ろうそくの のこり",
+              "category": "wariai",
+              "unit": "割合",
+              "grade": 3,
+              "star": 2,
+              "intro": "ろうそくに 火をつけて 8分たつと、長さが もとの 5/7 になりました。\nろうそくは 同じ速さで 燃えていきます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "あと何分で 燃えつきますか。",
+                  "answer": "20",
+                  "meaning": "8分に あたるのは 燃えた 2/7 のほう。2/7で8分だから 1/7で4分。のこりの5/7は 4×5＝20分。5/7に8をかけたりしないこと。"
+                }
+              ]
+            }
+          ],
+          "32": [
+            {
+              "id": "hd_3m_f32_1",
+              "src": "HG-0102",
+              "title": "2・2・4・6 のカード",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 3,
+              "intro": "2、2、4、6 の4まいのカードから 3まいを使って 3けたの整数を作ります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "2と2が となり合う数は 何とおり ありますか。",
+                  "answer": "4",
+                  "meaning": "224・422・226・622 の4とおり。2をひとかたまりに見る。"
+                },
+                {
+                  "question": "できる3けたの整数は 全部で何とおり ありますか。",
+                  "answer": "12",
+                  "meaning": "〈2,2,4〉と〈2,2,6〉は 同じ2が2まいあるので 3とおりずつ。〈2,4,6〉は6とおり。3+3+6＝12とおり。18としないこと。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f32_4",
+              "src": "HG-0103",
+              "title": "百＞十＞一 の3けた",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 3,
+              "intro": "0、1、2、3、4 の数字を 1回ずつ使って 3けたの整数を作ります。\nただし 百の位は十の位より大きく、十の位は一の位より大きい数にします。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "そのような3けたの整数は 何こ ありますか。",
+                  "answer": "10",
+                  "meaning": "大小のじゅんが決まっているので、3つ えらんだ時点で ならべ方は1とおりに決まる。だから「ならべる」のではなく「えらぶだけ」。5つから3つえらんで10こ。0をえらんでも 0は いちばん小さいので かならず一の位に来る。"
+                }
+              ]
+            }
+          ],
+          "33": [
+            {
+              "id": "hd_3m_f33_3",
+              "src": "HG-0104",
+              "title": "勝ちぬき戦の 試合数",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 2,
+              "intro": "50チームが 勝ちぬき戦（トーナメント）をします。引き分けは ありません。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "試合は 全部で何試合 ありますか。",
+                  "answer": "49",
+                  "meaning": "1試合ごとに 1チームが 負けて消える。優勝チーム以外の49チームが 1回ずつ負けるので 49試合。表を書かなくても出せる。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f33_6",
+              "src": "HG-0105",
+              "title": "くだものの えらび方",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 2,
+              "intro": "りんごが2こ、なしが4こ、かきが1こ あります。同じしゅるいのものは 区別しません。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "この中から 2こ えらぶ えらび方は 何とおりですか。",
+                  "answer": "5",
+                  "meaning": "「りんご何こ・なし何こ・かき何こ」の内わけで決まる。(2,0,0)(1,1,0)(1,0,1)(0,2,0)(0,1,1) の5とおり。"
+                },
+                {
+                  "question": "この中から 4こ えらぶ えらび方は 何とおりですか。",
+                  "answer": "6",
+                  "meaning": "(2,2,0)(2,1,1)(1,3,0)(1,2,1)(0,4,0)(0,3,1) の6とおり。「4こえらぶ＝3こ のこす」で たしかめられる。"
+                }
+              ]
+            }
+          ],
+          "34": [
+            {
+              "id": "hd_3m_f34_5",
+              "src": "HG-0111",
+              "title": "1g・3g・9g の おもり",
+              "category": "baai",
+              "unit": "N進法",
+              "grade": 3,
+              "star": 3,
+              "intro": "1gのおもり・3gのおもり・9gのおもりが それぞれ2こずつ あります。\nこれらを使って いろいろな重さを はかります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "作れる重さは 全部で何とおり ありますか。",
+                  "answer": "26",
+                  "meaning": "それぞれ 0こ・1こ・2こ の3とおりずつなので 3×3×3＝27。ぜんぶ0のときをのぞいて26とおり。じつは1gから26gまで ぬけもダブりもなく作れる（3ずつくり上がる位取りになっている）。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f34_6",
+              "src": "HG-0112",
+              "title": "点をむすんで 正方形",
+              "category": "zu",
+              "unit": "図形の移動・対称",
+              "grade": 3,
+              "star": 3,
+              "intro": "たて5・よこ5 に ならんだ 25この点があります。\nこの中の4つの点を むすんで 正方形を作ります。大きさが同じものは 1しゅるいと数えます。",
+              "svg": "<svg viewBox='0 0 260 134' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>5×5 の 点</text><circle cx='30.0' cy='26.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='54.0' cy='26.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='78.0' cy='26.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='102.0' cy='26.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='126.0' cy='26.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='30.0' cy='50.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='54.0' cy='50.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='78.0' cy='50.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='102.0' cy='50.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='126.0' cy='50.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='30.0' cy='74.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='54.0' cy='74.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='78.0' cy='74.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='102.0' cy='74.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='126.0' cy='74.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='30.0' cy='98.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='54.0' cy='98.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='78.0' cy='98.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='102.0' cy='98.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='126.0' cy='98.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='30.0' cy='122.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='54.0' cy='122.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='78.0' cy='122.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='102.0' cy='122.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><circle cx='126.0' cy='122.0' r='3.2' fill='#ffd166' stroke='#ffd166' stroke-width='0.5'/><line x1='30.0' y1='26.0' x2='54.0' y2='50.0' stroke='#ef476f' stroke-width='1.2'/><line x1='54.0' y1='50.0' x2='30.0' y2='74.0' stroke='#ef476f' stroke-width='1.2'/><line x1='30.0' y1='74.0' x2='30.0' y2='50.0' stroke='#ef476f' stroke-width='1.2'/><text x='150.0' y='60.0' fill='#06d6a0' font-size='9' text-anchor='start'>4つの点をむすんで</text><text x='150.0' y='74.0' fill='#06d6a0' font-size='9' text-anchor='start'>正方形を作る</text><text x='150.0' y='92.0' fill='#ef476f' font-size='9' text-anchor='start'>ななめの正方形も</text><text x='150.0' y='106.0' fill='#ef476f' font-size='9' text-anchor='start'>わすれずに</text></svg>",
+              "steps": [
+                {
+                  "question": "正方形は 何しゅるい できますか。",
+                  "answer": "8",
+                  "meaning": "たて・よこにまっすぐな正方形が 1辺1・2・3・4 の4しゅるい。それに ななめの正方形が4しゅるい。合わせて8しゅるい。ななめを わすれないこと。"
+                }
+              ]
+            }
+          ],
+          "35": [
+            {
+              "id": "hd_3m_f35_5",
+              "src": "HG-0113",
+              "title": "ご石の 正方形",
+              "category": "kisoku",
+              "unit": "方陣算",
+              "grade": 3,
+              "star": 3,
+              "intro": "ご石を すきまなく ならべて 中のつまった正方形を作ります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "正方形を作ると 25こ あまりました。たてよこを 2列ずつ 大きくしたら 1こ あまりました。ご石は全部で何こですか。",
+                  "answer": "50",
+                  "meaning": "2列大きくすると ふえるご石は 4×(もとの1辺)+4。25−1＝24こふえたので もとの1辺は5。5×5+25＝50こ。"
+                },
+                {
+                  "question": "別の日、正方形を作ると 17こ あまりました。もう1周 大きくしようとしたら 11こ たりません。ご石は全部で何こですか。",
+                  "answer": "53",
+                  "meaning": "17+11＝28こ必要。4×(1辺)+4＝28 から 1辺は6。6×6+17＝53こ。"
+                }
+              ]
+            }
+          ],
+          "36": [
+            {
+              "id": "hd_3m_f36_6",
+              "src": "HG-0114",
+              "title": "4クラスの 人数",
+              "category": "tokusan",
+              "unit": "和差算・分配算",
+              "grade": 3,
+              "star": 2,
+              "intro": "4つのクラスの人数は 合わせて143人です。\n1組は2組より2人少なく、2組は3組より5人多く、3組は4組より3人少ないです。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "3組は何人ですか。",
+                  "answer": "33",
+                  "meaning": "3組を もとにすると 2組は+5、1組は+3、4組も+3。4つ分＋11＝143 なので 3組は33人。どれを もとにするかで 式のきれいさが変わる。"
+                },
+                {
+                  "question": "2組は何人ですか。",
+                  "answer": "38",
+                  "meaning": "33+5＝38人。"
+                },
+                {
+                  "question": "1組は何人ですか。",
+                  "answer": "36",
+                  "meaning": "38−2＝36人。（4組も36人で 合計143人）"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f36_8",
+              "src": "HG-0115",
+              "title": "赤玉と青玉の やりとり",
+              "category": "tokusan",
+              "unit": "やりとり算",
+              "grade": 3,
+              "star": 3,
+              "intro": "赤い玉が445こ、青い玉が319こ あります。\n1分ごとに 赤い玉を7こずつ 青のほうへ 移します。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "赤と青が 同じ数になるのは 何分後ですか。",
+                  "answer": "9",
+                  "meaning": "はじめの差は126こ。7こ移すと 赤は7へり 青は7ふえるので 差は14ずつちぢむ。126÷14＝9分。126÷7＝18分 としないこと。"
+                }
+              ]
+            }
+          ],
+          "37": [
+            {
+              "id": "hd_3m_f37_7",
+              "src": "HG-0121",
+              "title": "母と 2人の子の 年れい",
+              "category": "tokusan",
+              "unit": "年齢算",
+              "grade": 3,
+              "star": 3,
+              "intro": "お母さんは63才、ゆう子さんは37才、れい子さんは35才です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "ゆう子さんと れい子さんの 年れいの和が、お母さんの年れいと 同じだったのは 何年前ですか。",
+                  "answer": "9",
+                  "meaning": "2人の和は 1年で2ずつへるが、お母さんは1ずつしかへらない。だから 差は1年で1ずつちぢむ。今の差は 72−63＝9 なので 9年前。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f37_8",
+              "src": "HG-0122",
+              "title": "6年前の 家族の年れい",
+              "category": "tokusan",
+              "unit": "年齢算",
+              "grade": 3,
+              "star": 3,
+              "intro": "父・母・兄・妹 の4人の 年れいの和は100才です。兄の年れいは 妹の3倍です。\n6年前の 4人の年れいの和は 77才でした。父は母より4才 年上です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "妹は何才ですか。",
+                  "answer": "5",
+                  "meaning": "4人なら 6年で和は24ふえるはず。でも 100−77＝23 しかふえていない。1才ぶん足りないのは 6年前に妹が まだ生まれていなかったから。妹は5才（6年前は−1才＝まだいない）。"
+                },
+                {
+                  "question": "父は何才ですか。",
+                  "answer": "42",
+                  "meaning": "兄は5×3＝15才。父+母＝100−15−5＝80才。父は母より4才上なので (80+4)÷2＝42才。"
+                }
+              ]
+            }
+          ],
+          "39": [
+            {
+              "id": "hd_3m_f39_3",
+              "src": "HG-0123",
+              "title": "3しゅるいの こう貨",
+              "category": "tokusan",
+              "unit": "消去算",
+              "grade": 3,
+              "star": 3,
+              "intro": "5円玉と10円玉を合わせると13まい、5円玉と50円玉を合わせると18まい、\n10円玉と50円玉を合わせると17まい あります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "こう貨は 全部で何まい ありますか。",
+                  "answer": "24",
+                  "meaning": "3つの式を ぜんぶたすと どのこう貨も2回ずつ数えられる。(13+18+17)÷2＝24まい。"
+                },
+                {
+                  "question": "50円玉は 何まい ありますか。",
+                  "answer": "11",
+                  "meaning": "全体24から 5円と10円の13まいをひく。"
+                },
+                {
+                  "question": "お金は 全部で何円 ありますか。",
+                  "answer": "645",
+                  "meaning": "5円7まい・10円6まい・50円11まい。35+60+550＝645円。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f39_4",
+              "src": "HG-0124",
+              "title": "4人のうち 3人ずつの 体重",
+              "category": "tokusan",
+              "unit": "消去算",
+              "grade": 3,
+              "star": 3,
+              "intro": "はる子・なつ子・あき子・ふゆ子 の4人がいます。\n3人ずつ えらんで 体重をはかると、68kg・72kg・76kg・69kg でした。\n（69kgは はる子をのぞく3人、76kgは なつ子をのぞく3人、72kgは あき子をのぞく3人、68kgは ふゆ子をのぞく3人です）",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "4人の体重の合計は何kgですか。",
+                  "answer": "95",
+                  "meaning": "4つを ぜんぶたすと どの人も3回ずつ数えられる。(68+72+76+69)÷3＝95kg。3しゅるいのときは÷2、4人のときは÷3。"
+                },
+                {
+                  "question": "はる子さんの体重は何kgですか。",
+                  "answer": "26",
+                  "meaning": "はる子をのぞく3人が69kgなので 95−69＝26kg。"
+                },
+                {
+                  "question": "ふゆ子さんの体重は何kgですか。",
+                  "answer": "27",
+                  "meaning": "ふゆ子をのぞく3人が68kgなので 95−68＝27kg。（なつ子は95−76＝19kg、あき子は95−72＝23kg）"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f39_6",
+              "src": "HG-0125",
+              "title": "えんぴつと ノートの ねだん",
+              "category": "tokusan",
+              "unit": "消去算",
+              "grade": 3,
+              "star": 3,
+              "intro": "えんぴつ3本と ノート2さつ のお金で、えんぴつが ちょうど10本 買えます。\nまた、えんぴつ4本と ノート6さつ で 1000円です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "ノート2さつは えんぴつ何本ぶんですか。",
+                  "answer": "7",
+                  "meaning": "えんぴつ3本＋ノート2さつ＝えんぴつ10本 なので、ノート2さつ＝えんぴつ7本ぶん。"
+                },
+                {
+                  "question": "えんぴつ1本は何円ですか。",
+                  "answer": "40",
+                  "meaning": "ノート6さつ＝えんぴつ21本ぶん。だから えんぴつ4+21＝25本で1000円。1000÷25＝40円。"
+                },
+                {
+                  "question": "ノート1さつは何円ですか。",
+                  "answer": "140",
+                  "meaning": "ノート2さつ＝えんぴつ7本＝280円。1さつ140円。"
+                }
+              ]
+            }
+          ],
+          "40": [
+            {
+              "id": "hd_3m_f40_6",
+              "src": "HG-0131",
+              "title": "みかんを 配る",
+              "category": "tokusan",
+              "unit": "過不足算・差集め算",
+              "grade": 3,
+              "star": 3,
+              "intro": "子どもたちに みかんを配ります。\n全員に4こずつ配ると 28こ あまります。\n3人だけ6こずつ、のこりの子に5こずつ配ると 2こ あまります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "子どもは 何人いますか。",
+                  "answer": "23",
+                  "meaning": "みかんの数は 4×人数+28 とも、6×3+5×(人数−3)+2＝5×人数+5 とも書ける。4×人数+28＝5×人数+5 で 人数は23人。"
+                },
+                {
+                  "question": "みかんは 何こ ありますか。",
+                  "answer": "120",
+                  "meaning": "4×23+28＝120こ。"
+                }
+              ]
+            }
+          ],
+          "41": [
+            {
+              "id": "hd_3m_f41_4",
+              "src": "HG-0132",
+              "title": "5列の 数表",
+              "category": "kazu",
+              "unit": "数の性質",
+              "grade": 3,
+              "star": 2,
+              "intro": "1から じゅんに 5こずつ ならべた 数表があります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "143は 何列にありますか。",
+                  "answer": "3",
+                  "meaning": "(143−1)÷5＝28あまり2 なので 3列目。"
+                },
+                {
+                  "question": "92は 何行目にありますか。",
+                  "answer": "19",
+                  "meaning": "(92−1)÷5＝18あまり1 なので 19行目の2列。"
+                },
+                {
+                  "question": "25行4列にある数はいくつですか。",
+                  "answer": "124",
+                  "meaning": "(25−1)×5+4＝124。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f41_5",
+              "src": "HG-0133",
+              "title": "3つの めもり盤（6でくり上がる）",
+              "category": "kazu",
+              "unit": "N進法",
+              "grade": 3,
+              "star": 3,
+              "intro": "Cのめもりが 1回転すると Bが1めもり、Bが1回転すると Aが1めもり 進む機械があります。\nどの めもりも 0から5までの6つで、はじめは (A, B, C)＝(0, 0, 0) です。",
+              "svg": "<svg viewBox='0 0 250 132' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='9' text-anchor='start'>Cが1回転すると Bが1目もり、Bが1回転すると Aが1目もり進む</text><circle cx='50.0' cy='62.0' r='26' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><text x='50.0' y='48.0' fill='#ffd166' font-size='8' text-anchor='middle'>0</text><text x='64.7' y='56.5' fill='#ffd166' font-size='8' text-anchor='middle'>1</text><text x='64.7' y='73.5' fill='#ffd166' font-size='8' text-anchor='middle'>2</text><text x='50.0' y='82.0' fill='#ffd166' font-size='8' text-anchor='middle'>3</text><text x='35.3' y='73.5' fill='#ffd166' font-size='8' text-anchor='middle'>4</text><text x='35.3' y='56.5' fill='#ffd166' font-size='8' text-anchor='middle'>5</text><text x='50.0' y='104.0' fill='#06d6a0' font-size='11' text-anchor='middle'>A</text><circle cx='126.0' cy='62.0' r='26' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><text x='126.0' y='48.0' fill='#ffd166' font-size='8' text-anchor='middle'>0</text><text x='140.7' y='56.5' fill='#ffd166' font-size='8' text-anchor='middle'>1</text><text x='140.7' y='73.5' fill='#ffd166' font-size='8' text-anchor='middle'>2</text><text x='126.0' y='82.0' fill='#ffd166' font-size='8' text-anchor='middle'>3</text><text x='111.3' y='73.5' fill='#ffd166' font-size='8' text-anchor='middle'>4</text><text x='111.3' y='56.5' fill='#ffd166' font-size='8' text-anchor='middle'>5</text><text x='126.0' y='104.0' fill='#06d6a0' font-size='11' text-anchor='middle'>B</text><circle cx='202.0' cy='62.0' r='26' fill='#1e293b' stroke='#4f9eff' stroke-width='1.4'/><text x='202.0' y='48.0' fill='#ffd166' font-size='8' text-anchor='middle'>0</text><text x='216.7' y='56.5' fill='#ffd166' font-size='8' text-anchor='middle'>1</text><text x='216.7' y='73.5' fill='#ffd166' font-size='8' text-anchor='middle'>2</text><text x='202.0' y='82.0' fill='#ffd166' font-size='8' text-anchor='middle'>3</text><text x='187.3' y='73.5' fill='#ffd166' font-size='8' text-anchor='middle'>4</text><text x='187.3' y='56.5' fill='#ffd166' font-size='8' text-anchor='middle'>5</text><text x='202.0' y='104.0' fill='#06d6a0' font-size='11' text-anchor='middle'>C</text><text x='8.0' y='122.0' fill='#06d6a0' font-size='9' text-anchor='start'>どの目もりも 0〜5 の6つ。はじめは (0, 0, 0)</text></svg>",
+              "steps": [
+                {
+                  "question": "Cを 60めもり 進めると (A, B, C) はどれになりますか。",
+                  "answer": "(1, 4, 0)",
+                  "choices": [
+                    "(1, 4, 0)",
+                    "(0, 6, 0)",
+                    "(4, 1, 0)",
+                    "(1, 0, 4)"
+                  ],
+                  "meaning": "Cが6めもりで Bが1つ進むので、Bは6めもりぶん・Aは36めもりぶん。60＝36×1+6×4+0。"
+                },
+                {
+                  "question": "(A, B, C)＝(5, 1, 3) のとき、Cは 何めもり 進みましたか。",
+                  "answer": "189",
+                  "meaning": "5×36+1×6+3＝189めもり。位取りが 36・6・1 になっている（6でくり上がる しくみ）。"
+                }
+              ]
+            }
+          ],
+          "42": [
+            {
+              "id": "hd_3m_f42_7",
+              "src": "HG-0134",
+              "title": "火・木・土 の 25回目",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 3,
+              "star": 3,
+              "intro": "毎週 火曜・木曜・土曜 に 教室があります。\n9月6日の木曜日から はじめて、25回で やめました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "25回目は 何月何日ですか。",
+                  "answer": "11月1日（木）",
+                  "choices": [
+                    "11月1日（木）",
+                    "11月3日（土）",
+                    "10月30日（火）",
+                    "11月6日（火）"
+                  ],
+                  "meaning": "ふつうは週3回だが、はじまりが木曜なので 1週目は 木・土の2回しかない。のこり23回を 週3回で数えると 11月1日の木曜。"
+                }
+              ]
+            }
           ]
         },
         "kokai": {
