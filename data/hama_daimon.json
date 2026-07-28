@@ -1193,6 +1193,82 @@
               ]
             }
           ],
+          "5": [
+            {
+              "id": "hd_3s_f05_9",
+              "src": "HG-0326",
+              "title": "2つの町の 人口の差",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 3,
+              "star": 2,
+              "intro": "山町の人口を 百の位で四捨五入すると 24000人、川町の人口を 百の位で四捨五入すると 8000人です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "2つの町の人口の差が いちばん少ないとき、その差は何人ですか。",
+                  "answer": "15001",
+                  "meaning": "山町は23500人〜24499人、川町は7500人〜8499人。差が少ないのは 山町が最小・川町が最大のとき。23500−8499＝15001人。24500ではなく24499（人は整数）。"
+                },
+                {
+                  "question": "2つの町の人口の差が いちばん多いとき、その差は何人ですか。",
+                  "answer": "16999",
+                  "meaning": "山町が最大・川町が最小のとき。24499−7500＝16999人。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f05_10",
+              "src": "HG-0327",
+              "title": "はんい どうしの ひき算",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 3,
+              "star": 3,
+              "intro": "㋐ を四捨五入して百の位までのがい数にすると 200 になります。\nまた ㋐＋㋑ を四捨五入して百の位までのがい数にすると 1200 になります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "㋐として考えられる いちばん小さい整数はいくつですか。",
+                  "answer": "150",
+                  "meaning": "150〜249 が 四捨五入して200になるはんい。"
+                },
+                {
+                  "question": "㋑として考えられる いちばん小さい整数はいくつですか。",
+                  "answer": "901",
+                  "meaning": "和は1150〜1249。㋑が小さいのは 和が最小・㋐が最大のとき。1150−249＝901。"
+                },
+                {
+                  "question": "㋑として考えられる いちばん大きい整数はいくつですか。",
+                  "answer": "1099",
+                  "meaning": "和が最大・㋐が最小のとき。1249−150＝1099。㋑＝1200−200＝1000 と 代表の数で計算してはいけない。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f05_11",
+              "src": "HG-0328",
+              "title": "2つの じょうけんの重なり",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 3,
+              "star": 3,
+              "intro": "ある整数を 四捨五入して千の位までのがい数にすると 8000 になります。\nまた その整数の2倍を 四捨五入して千の位までのがい数にすると 15000 になります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "この整数として考えられる いちばん小さい数はいくつですか。",
+                  "answer": "7500",
+                  "meaning": "1つ目のじょうけんから 7500〜8499。下がわは こちらで決まる。"
+                },
+                {
+                  "question": "この整数として考えられる いちばん大きい数はいくつですか。",
+                  "answer": "7749",
+                  "meaning": "2倍が14500〜15499 なので もとの数は 7250〜7749。上がわは こちらで決まる。2つのはんいの重なりは 7500〜7749。"
+                }
+              ]
+            }
+          ],
           "6": [
             {
               "id": "hd_3s_f06_1",
@@ -1762,6 +1838,164 @@
                   "question": "もともと 全部で何円かかる予定でしたか。",
                   "answer": "430",
                   "meaning": "入れかえで 黒1本ぶんは＋50円、赤1本ぶんは−30円、青1本ぶんは−20円になる。だから 50×黒−30×赤−20×青＝170 の1本の式になる。10でわると 5×黒−3×赤−2×青＝17。黒5・赤2・青1 で 予定は 430円（実さいは600円で 500円玉では足りない）。"
+                }
+              ]
+            }
+          ],
+          "20": [
+            {
+              "id": "hd_3s_f20_1",
+              "src": "HG-0341",
+              "title": "商とあまりの2つのじょうけん",
+              "category": "kazu",
+              "unit": "数の性質",
+              "grade": 3,
+              "star": 2,
+              "intro": "AをBでわると 商が3で あまりが4になります。\nまた A−B を5でわると 商が3で あまりが1になります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "Aはいくつですか。",
+                  "answer": "22",
+                  "meaning": "A＝3×B+4。A−B＝5×3+1＝16。A−B＝(3B+4)−B＝2B+4 なので 2B+4＝16 で B＝6、A＝22。あまり4より わる数Bは大きいことも たしかめる。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f20_2",
+              "src": "HG-0342",
+              "title": "4人の しょうげん",
+              "category": "baai",
+              "unit": "推理・論理",
+              "grade": 3,
+              "star": 2,
+              "intro": "ねず・うし・とら・うさ の4人が かけっこをしました。4人が つぎのように言いました。\nねず「4着にはならずに すんだよ」\nうし「ぼくは とらくんに負けたよ」\nとら「ぼくは うさくんに勝てたよ」\nうさ「ぼくは ねずくんには勝ったよ」",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "1着から4着の じゅんに ならべると どれですか。",
+                  "answer": "とら → うさ → ねず → うし",
+                  "choices": [
+                    "とら → うさ → ねず → うし",
+                    "とら → うし → うさ → ねず",
+                    "うさ → とら → ねず → うし",
+                    "とら → うさ → うし → ねず"
+                  ],
+                  "meaning": "とら＜うし、とら＜うさ＜ねず をつなぐと とらが1着に決まる。ねずは4着でないので うしが4着。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f20_3",
+              "src": "HG-0343",
+              "title": "予想が ぜんぶ はずれた",
+              "category": "baai",
+              "unit": "推理・論理",
+              "grade": 3,
+              "star": 3,
+              "intro": "へび・りゅう・さる・うま・ひつじ の5人が 500m競走をしました。\n3人が じゅんいを予想しましたが、どの予想も 5つとも ぜんぶ はずれました。\n実さいの2位は うま でした。",
+              "svg": "<svg viewBox='0 0 330 134' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>3人の予想（ぜんぶ はずれました）</text><rect x='10.0' y='22.0' width='50.0' height='20.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='35.0' y='36.0' fill='#f8fafc' font-size='10' text-anchor='middle'></text><rect x='62.0' y='22.0' width='50.0' height='20.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='87.0' y='36.0' fill='#f8fafc' font-size='10' text-anchor='middle'>1位</text><rect x='114.0' y='22.0' width='50.0' height='20.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='139.0' y='36.0' fill='#f8fafc' font-size='10' text-anchor='middle'>2位</text><rect x='166.0' y='22.0' width='50.0' height='20.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='191.0' y='36.0' fill='#f8fafc' font-size='10' text-anchor='middle'>3位</text><rect x='218.0' y='22.0' width='50.0' height='20.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='243.0' y='36.0' fill='#f8fafc' font-size='10' text-anchor='middle'>4位</text><rect x='270.0' y='22.0' width='50.0' height='20.0' rx='3' fill='#312e81' stroke='#4f9eff' stroke-width='0.9'/><text x='295.0' y='36.0' fill='#f8fafc' font-size='10' text-anchor='middle'>5位</text><rect x='10.0' y='42.0' width='50.0' height='20.0' rx='3' fill='#0f2942' stroke='#4f9eff' stroke-width='0.9'/><text x='35.0' y='56.0' fill='#ffd166' font-size='9' text-anchor='middle'>へびの予想</text><rect x='62.0' y='42.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='87.0' y='56.0' fill='#ffd166' font-size='9' text-anchor='middle'>へび</text><rect x='114.0' y='42.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='139.0' y='56.0' fill='#ffd166' font-size='9' text-anchor='middle'>りゅう</text><rect x='166.0' y='42.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='191.0' y='56.0' fill='#ffd166' font-size='9' text-anchor='middle'>さる</text><rect x='218.0' y='42.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='243.0' y='56.0' fill='#ffd166' font-size='9' text-anchor='middle'>うま</text><rect x='270.0' y='42.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='295.0' y='56.0' fill='#ffd166' font-size='9' text-anchor='middle'>ひつじ</text><rect x='10.0' y='64.0' width='50.0' height='20.0' rx='3' fill='#0f2942' stroke='#4f9eff' stroke-width='0.9'/><text x='35.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='middle'>うまの予想</text><rect x='62.0' y='64.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='87.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='middle'>うま</text><rect x='114.0' y='64.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='139.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='middle'>りゅう</text><rect x='166.0' y='64.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='191.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='middle'>ひつじ</text><rect x='218.0' y='64.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='243.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='middle'>さる</text><rect x='270.0' y='64.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='295.0' y='78.0' fill='#ffd166' font-size='9' text-anchor='middle'>へび</text><rect x='10.0' y='86.0' width='50.0' height='20.0' rx='3' fill='#0f2942' stroke='#4f9eff' stroke-width='0.9'/><text x='35.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='middle'>さるの予想</text><rect x='62.0' y='86.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='87.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='middle'>さる</text><rect x='114.0' y='86.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='139.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='middle'>りゅう</text><rect x='166.0' y='86.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='191.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='middle'>うま</text><rect x='218.0' y='86.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='243.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='middle'>ひつじ</text><rect x='270.0' y='86.0' width='50.0' height='20.0' rx='3' fill='#1e293b' stroke='#4f9eff' stroke-width='0.9'/><text x='295.0' y='100.0' fill='#ffd166' font-size='9' text-anchor='middle'>へび</text><text x='10.0' y='124.0' fill='#06d6a0' font-size='9' text-anchor='start'>2位は うま でした</text></svg>",
+              "steps": [
+                {
+                  "question": "1位は だれですか。",
+                  "answer": "ひつじ",
+                  "choices": [
+                    "ひつじ",
+                    "へび",
+                    "りゅう",
+                    "さる"
+                  ],
+                  "meaning": "予想表をたてに見ると「なれないじゅんい」が分かる。さるは1・3・4位が消え、2位はうまなので5位に決まる。すると1位は ひつじ。"
+                },
+                {
+                  "question": "5位は だれですか。",
+                  "answer": "さる",
+                  "choices": [
+                    "さる",
+                    "へび",
+                    "りゅう",
+                    "ひつじ"
+                  ],
+                  "meaning": "さるは 3人の予想で 1位・3位・4位に置かれているので そこには入れない。2位はうまなので 5位。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f20_4",
+              "src": "HG-0344",
+              "title": "通話りょう金の 階だんグラフ",
+              "category": "kisoku",
+              "unit": "規則性・数列",
+              "grade": 3,
+              "star": 2,
+              "intro": "電話の りょう金は、0分をこえて1分30秒までが10円、そのあと 1分30秒ごとに 10円ずつ 高くなります。\n（● は ふくむ、○ は ふくまない を表します）",
+              "svg": "<svg viewBox='0 0 260 148' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>通話りょう金の グラフ</text><line x1='26.0' y1='104.0' x2='226.0' y2='104.0' stroke='#94a3b8' stroke-width='1.2'/><line x1='26.0' y1='104.0' x2='26.0' y2='24.0' stroke='#94a3b8' stroke-width='1.2'/><line x1='26.0' y1='86.0' x2='71.0' y2='86.0' stroke='#ffd166' stroke-width='2'/><circle cx='26.0' cy='86.0' r='3' fill='#0f172a' stroke='#ffd166' stroke-width='1.4'/><circle cx='71.0' cy='86.0' r='3' fill='#ffd166' stroke='#ffd166' stroke-width='1.4'/><text x='20.0' y='90.0' fill='#ffd166' font-size='9' text-anchor='end'>10</text><line x1='71.0' y1='68.0' x2='116.0' y2='68.0' stroke='#ffd166' stroke-width='2'/><circle cx='71.0' cy='68.0' r='3' fill='#0f172a' stroke='#ffd166' stroke-width='1.4'/><circle cx='116.0' cy='68.0' r='3' fill='#ffd166' stroke='#ffd166' stroke-width='1.4'/><text x='20.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='end'>20</text><line x1='116.0' y1='50.0' x2='161.0' y2='50.0' stroke='#ffd166' stroke-width='2'/><circle cx='116.0' cy='50.0' r='3' fill='#0f172a' stroke='#ffd166' stroke-width='1.4'/><circle cx='161.0' cy='50.0' r='3' fill='#ffd166' stroke='#ffd166' stroke-width='1.4'/><text x='20.0' y='54.0' fill='#ffd166' font-size='9' text-anchor='end'>30</text><line x1='161.0' y1='32.0' x2='206.0' y2='32.0' stroke='#ffd166' stroke-width='2'/><circle cx='161.0' cy='32.0' r='3' fill='#0f172a' stroke='#ffd166' stroke-width='1.4'/><circle cx='206.0' cy='32.0' r='3' fill='#ffd166' stroke='#ffd166' stroke-width='1.4'/><text x='20.0' y='36.0' fill='#ffd166' font-size='9' text-anchor='end'>40</text><text x='26.0' y='118.0' fill='#06d6a0' font-size='8' text-anchor='middle'>0分</text><text x='71.0' y='118.0' fill='#06d6a0' font-size='8' text-anchor='middle'>1分30秒</text><text x='116.0' y='118.0' fill='#06d6a0' font-size='8' text-anchor='middle'>3分</text><text x='161.0' y='118.0' fill='#06d6a0' font-size='8' text-anchor='middle'>4分30秒</text><text x='206.0' y='118.0' fill='#06d6a0' font-size='8' text-anchor='middle'>6分</text><text x='236.0' y='104.0' fill='#06d6a0' font-size='9' text-anchor='start'>分</text><text x='8.0' y='138.0' fill='#06d6a0' font-size='9' text-anchor='start'>● ふくむ　○ ふくまない</text></svg>",
+              "steps": [
+                {
+                  "question": "10分間 話すと りょう金は何円ですか。",
+                  "answer": "70",
+                  "meaning": "1段は90秒。600÷90＝6あまり60 なので 7段目。10×7＝70円。1分で1段ではない。"
+                },
+                {
+                  "question": "150円では 最高で何秒まで話せますか。",
+                  "answer": "1350",
+                  "meaning": "150円は15段目。15×90＝1350秒（22分30秒）ちょうどまで。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f20_5",
+              "src": "HG-0345",
+              "title": "じゃんけんの点数",
+              "category": "tokusan",
+              "unit": "つるかめ算",
+              "grade": 3,
+              "star": 3,
+              "intro": "2人とも 40点から はじめます。\nじゃんけんで 勝つと3点もらえ、負けると1点ひかれます。あいこのときは 2人とも1点ずつ もらえます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "4回じゃんけんをして、2回勝ち・1回あいこだった人の点数は何点ですか。",
+                  "answer": "46",
+                  "meaning": "4回のうち 2勝・1あいこ なら のこり1回は負け。40+3+3+1−1＝46点。"
+                },
+                {
+                  "question": "2人の点数が 108点と32点になりました。じゃんけんを何回しましたか。",
+                  "answer": "30",
+                  "meaning": "勝ち負けなら +3−1＝+2、あいこでも +1+1＝+2。どんな結果でも 2人の合計は毎回2点ずつふえる。(140−80)÷2＝30回。だれが何回勝ったかは分からなくてよい。"
+                },
+                {
+                  "question": "15回じゃんけんをして 8回勝ち、点数が63点になりました。あいこは何回でしたか。",
+                  "answer": "3",
+                  "meaning": "あいこを□回とすると 負けは 15−8−□回。40+24−(7−□)+□＝63 なので □＝3回。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3s_f20_6",
+              "src": "HG-0346",
+              "title": "てんびんで 重い玉をさがす",
+              "category": "baai",
+              "unit": "推理・論理",
+              "grade": 3,
+              "star": 3,
+              "intro": "同じ形・同じ大きさの玉の中に、1こだけ 重い玉がまざっています。\nてんびんを使って、その1こを かならず見つけます。てんびんを使う回数を できるだけ少なくします。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "玉が7このとき、てんびんは 何回 使えば かならず見つけられますか。",
+                  "answer": "2",
+                  "meaning": "てんびんの結果は「左が重い・右が重い・つりあう」の3通り。だから1回で3つのグループに分けられる。1回で3こまで、2回で9こまで。7こは2回。"
+                },
+                {
+                  "question": "玉が54このとき、てんびんは 何回 使えば かならず見つけられますか。",
+                  "answer": "4",
+                  "meaning": "3, 9, 27, 81 なので 54こは4回。"
+                },
+                {
+                  "question": "てんびんを5回まで使えるとき、玉は最大で何こまで だいじょうぶですか。",
+                  "answer": "243",
+                  "meaning": "3×3×3×3×3＝243こ。「つりあう」も 立派な手がかりであることに気づけるかどうか。"
                 }
               ]
             }
