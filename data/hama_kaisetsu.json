@@ -6625,6 +6625,819 @@
         ]
        }
       ]
+     },
+     "30": {
+      "title": "数列（ふえ方）",
+      "items": [
+       {
+        "bone": "とちゅうから ふえ方が 一定になる",
+        "rei": {
+         "question": "1、2、4、7、11、16、22、… とならんでいます。9番目の数はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 430 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">11</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">16</text><rect x=\"322\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">22</text><rect x=\"374\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"397.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><text x=\"215\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">差は 1、2、3、4… とふえる</text></svg>",
+         "kaisetsu": [
+          "**となりとの差**を書きます。1、2、3、4、5、6…",
+          "差が **1ずつ ふえて** います。",
+          "7番目22 のあと、差は7、8。8番目は 22＋7＝29。",
+          "9番目は 29＋8＝**37**。"
+         ],
+         "answer": "37"
+        },
+        "ruidai": [
+         {
+          "question": "1、2、4、7、11、16、22、… の 8番目の数はいくつですか。",
+          "answer": "29",
+          "meaning": "22＋7＝29です。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、4、7、11、16、22、… の 10番目の数はいくつですか。",
+          "answer": "46",
+          "meaning": "9番目37に9をたして46です。",
+          "svg": ""
+         },
+         {
+          "question": "3、4、6、9、13、18、… の 7番目の数はいくつですか。",
+          "answer": "24",
+          "meaning": "差は1、2、3、4、5、6。18＋6＝24です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "ピラミッドは 奇数ずつ ふえる（＝四角の数）",
+        "rei": {
+         "question": "ご石を ピラミッドの形に、1だん目に1こ、2だん目に3こ、3だん目に5こ… と ならべます。6だん目まで ならべると ご石は 全部で何こですか。",
+         "svg": "<svg viewBox=\"0 0 326 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">7</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">11</text><text x=\"163\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">だんごとに 奇数ずつ</text></svg>",
+         "kaisetsu": [
+          "**1から続けて 奇数を n こ たすと n×n**。",
+          "6だんなので 奇数を6こ たします。",
+          "6×6。",
+          "**36こ**。"
+         ],
+         "answer": "36"
+        },
+        "ruidai": [
+         {
+          "question": "ピラミッドの形に 1、3、5… とならべます。10だん目までのご石は全部で何こですか。",
+          "answer": "100",
+          "meaning": "10×10＝100こです。",
+          "svg": ""
+         },
+         {
+          "question": "ピラミッドの形に 1、3、5… とならべます。6だん目には ご石が何こありますか。",
+          "answer": "11",
+          "meaning": "6こ目の奇数は 6×2−1＝11こです。",
+          "svg": ""
+         },
+         {
+          "question": "ピラミッドの形に 1、3、5… とならべたら 全部で 81こ になりました。何だんですか。",
+          "answer": "9",
+          "meaning": "81＝9×9 なので9だんです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "31": {
+      "title": "通過算",
+      "items": [
+       {
+        "bone": "鉄橋を わたるときに 進む長さ",
+        "rei": {
+         "question": "長さ 120m の列車が、長さ 480m の鉄橋を わたります。わたりはじめてから わたり終わるまでに 列車が進む長さは何mですか。",
+         "svg": "<svg viewBox=\"0 0 300 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"14\" y=\"34\" width=\"86\" height=\"26\" rx=\"5\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"57\" y=\"51\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">列車</text><path d=\"M120 64 L286 64\" stroke=\"#8a5cff\" stroke-width=\"4\"/><text x=\"203\" y=\"80\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#8a5cff\">鉄橋</text><path d=\"M104 47 L118 47\" stroke=\"#ff6b6b\" stroke-width=\"2\" marker-end=\"url(#a2)\"/><defs><marker id=\"a2\" markerWidth=\"7\" markerHeight=\"7\" refX=\"5\" refY=\"3\" orient=\"auto\"><path d=\"M0 0 L6 3 L0 6 z\" fill=\"#ff6b6b\"/></marker></defs><text x=\"150\" y=\"94\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">鉄橋をわたる</text></svg>",
+         "kaisetsu": [
+          "**わたり終わるのは、列車の いちばん後ろが 鉄橋を出たとき**。ここが発見。",
+          "だから進む長さは **鉄橋の長さ ＋ 列車の長さ**。",
+          "480＋120。",
+          "**600m**。"
+         ],
+         "answer": "600"
+        },
+        "ruidai": [
+         {
+          "question": "長さ 120m の列車が 長さ 480m の鉄橋を 秒速 20m でわたります。何秒かかりますか。",
+          "answer": "30",
+          "meaning": "600÷20＝30秒です。",
+          "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"14\" y=\"34\" width=\"86\" height=\"26\" rx=\"5\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"57\" y=\"51\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">列車</text><path d=\"M120 64 L286 64\" stroke=\"#8a5cff\" stroke-width=\"4\"/><text x=\"203\" y=\"80\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#8a5cff\">鉄橋</text><path d=\"M104 47 L118 47\" stroke=\"#ff6b6b\" stroke-width=\"2\" marker-end=\"url(#a2)\"/><defs><marker id=\"a2\" markerWidth=\"7\" markerHeight=\"7\" refX=\"5\" refY=\"3\" orient=\"auto\"><path d=\"M0 0 L6 3 L0 6 z\" fill=\"#ff6b6b\"/></marker></defs></svg>"
+         },
+         {
+          "question": "長さ 120m の列車が トンネルに 完全にかくれているあいだ に進む長さは、トンネルが 480m のとき何mですか。",
+          "answer": "360",
+          "meaning": "完全にかくれているのは トンネルの長さ−列車の長さ の 360mです。",
+          "svg": ""
+         },
+         {
+          "question": "長さ 150m の列車が 長さ 450m の鉄橋をわたるとき、進む長さは何mですか。",
+          "answer": "600",
+          "meaning": "450＋150＝600mです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "車内の 人から 見る（長さ0の点になる）",
+        "rei": {
+         "question": "長さ 120m の列車に乗っている人が、長さ 480m の鉄橋を わたりはじめてから わたり終わるまでに 進む長さは何mですか。",
+         "svg": "<svg viewBox=\"0 0 300 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"14\" y=\"34\" width=\"86\" height=\"26\" rx=\"5\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"57\" y=\"51\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">列車</text><path d=\"M120 64 L286 64\" stroke=\"#8a5cff\" stroke-width=\"4\"/><text x=\"203\" y=\"80\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#8a5cff\">鉄橋</text><path d=\"M104 47 L118 47\" stroke=\"#ff6b6b\" stroke-width=\"2\" marker-end=\"url(#a2)\"/><defs><marker id=\"a2\" markerWidth=\"7\" markerHeight=\"7\" refX=\"5\" refY=\"3\" orient=\"auto\"><path d=\"M0 0 L6 3 L0 6 z\" fill=\"#ff6b6b\"/></marker></defs><text x=\"150\" y=\"94\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">人は長さ0の点</text></svg>",
+         "kaisetsu": [
+          "**人には 長さがありません**。ここが発見。列車の長さは関係なくなる。",
+          "人が鉄橋に入って、人が鉄橋を出るまで。",
+          "つまり **鉄橋の長さだけ**。",
+          "**480m**。"
+         ],
+         "answer": "480"
+        },
+        "ruidai": [
+         {
+          "question": "長さ 120m の列車に乗っている人が 長さ 480m の鉄橋を 秒速 20m でわたるとき、何秒かかりますか。",
+          "answer": "24",
+          "meaning": "480÷20＝24秒です。",
+          "svg": ""
+         },
+         {
+          "question": "長さ 200m の列車に乗っている人が 長さ 600m のトンネルを通りぬけるとき、進む長さは何mですか。",
+          "answer": "600",
+          "meaning": "人は長さ0なので トンネルの600mだけです。",
+          "svg": ""
+         },
+         {
+          "question": "長さ 120m の列車ぜんたい が 長さ 480m の鉄橋をわたるときと、車内の人 がわたるときで、進む長さの差は何mですか。",
+          "answer": "120",
+          "meaning": "600−480＝120m。ちょうど列車の長さです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "32": {
+      "title": "流水算",
+      "items": [
+       {
+        "bone": "下りと 上りから 静かな水での 速さを出す",
+        "rei": {
+         "question": "川を 下るときの 船の速さは 分速 90m、上るときは 分速 50m です。流れのない ところでの 船の速さは 分速何mですか。",
+         "svg": "<svg viewBox=\"0 0 300 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M14 56 L286 56\" stroke=\"#4f7cff\" stroke-width=\"4\"/><text x=\"150\" y=\"74\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">川の流れ →</text><polygon points=\"40,30 84,30 76,46 48,46\" fill=\"rgba(255,107,107,0.35)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"62\" y=\"24\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">船</text><text x=\"150\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">下り90・上り50</text></svg>",
+         "kaisetsu": [
+          "**下り＝船＋流れ、上り＝船−流れ**。",
+          "2つを **たす**と 流れが消えて 船の2倍。90＋50＝140。",
+          "140÷2＝70。",
+          "**分速70m**。"
+         ],
+         "answer": "70"
+        },
+        "ruidai": [
+         {
+          "question": "川を下ると分速 90m、上ると分速 50m。川の流れの速さは分速何mですか。",
+          "answer": "20",
+          "meaning": "差は流れの2倍。40÷2＝分速20mです。",
+          "svg": "<svg viewBox=\"0 0 300 80\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M14 56 L286 56\" stroke=\"#4f7cff\" stroke-width=\"4\"/><text x=\"150\" y=\"74\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">川の流れ →</text><polygon points=\"40,30 84,30 76,46 48,46\" fill=\"rgba(255,107,107,0.35)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"62\" y=\"24\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">船</text></svg>"
+         },
+         {
+          "question": "流れのないところで 分速 70m の船が、分速 20m の川を 下るときの速さは分速何mですか。",
+          "answer": "90",
+          "meaning": "70＋20＝分速90mです。",
+          "svg": ""
+         },
+         {
+          "question": "流れのないところで 分速 70m の船が、分速 20m の川を 上るときの速さは分速何mですか。",
+          "answer": "50",
+          "meaning": "70−20＝分速50mです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "向かい合って進むと 流れは 関係なくなる",
+        "rei": {
+         "question": "川の上流と下流から 2そうの船が 向かい合って進みます。流れのないところでの速さは どちらも 分速 60m、川の流れは 分速 20m です。2そうが 1200m はなれているとき、出会うのは何分後ですか。",
+         "svg": "<svg viewBox=\"0 0 300 96\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M14 56 L286 56\" stroke=\"#4f7cff\" stroke-width=\"4\"/><text x=\"150\" y=\"74\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">川の流れ →</text><polygon points=\"40,30 84,30 76,46 48,46\" fill=\"rgba(255,107,107,0.35)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"62\" y=\"24\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">船</text><text x=\"150\" y=\"90\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">向かい合って進む</text></svg>",
+         "kaisetsu": [
+          "**下る船は ＋20、上る船は −20。たすと 流れが消えます。**ここが発見。",
+          "(60＋20)＋(60−20)＝80＋40＝120m。流れのない場合の 60＋60 と同じ。",
+          "1分で 120m ちぢむ。",
+          "1200÷120＝**10分後**。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "流れのないところで どちらも分速 60m の船が 向かい合って進みます。川の流れが分速 30m のとき、1分で何mちぢまりますか。",
+          "answer": "120",
+          "meaning": "流れは消えるので 60＋60＝120mです。",
+          "svg": ""
+         },
+         {
+          "question": "流れのないところで 分速 80m と 分速 40m の船が 向かい合って進みます。1440m はなれているとき、出会うのは何分後ですか。",
+          "answer": "12",
+          "meaning": "80＋40＝120m。1440÷120＝12分後です。",
+          "svg": ""
+         },
+         {
+          "question": "流れのないところで どちらも分速 60m の船が 向かい合い、1800m はなれています。出会うのは何分後ですか。",
+          "answer": "15",
+          "meaning": "1800÷120＝15分後です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "33": {
+      "title": "時計算",
+      "items": [
+       {
+        "bone": "長い針と 短い針が 進む 角度",
+        "rei": {
+         "question": "時計の 長い針は 1分間に 何度 進みますか。",
+         "svg": "<svg viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"90\" cy=\"86\" r=\"66\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><text x=\"90.0\" y=\"37.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"116.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"135.9\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"143.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"135.9\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"116.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"90.0\" y=\"143.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"63.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7</text><text x=\"44.1\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8</text><text x=\"37.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><text x=\"44.1\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10</text><text x=\"63.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">11</text><path d=\"M90 86 L90.0 38.0\" stroke=\"#4f7cff\" stroke-width=\"2.6\"/><path d=\"M90 86 L124.0 86.0\" stroke=\"#ff6b6b\" stroke-width=\"3.4\"/><circle cx=\"90\" cy=\"86\" r=\"4\" fill=\"#1a2340\"/><text x=\"90\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">長針と短針</text></svg>",
+         "kaisetsu": [
+          "**長い針は 60分で 1周（360°）**します。",
+          "1分では 360÷60。",
+          "**6°**。",
+          "（短い針は 1時間で30°。だから1分では0.5°。長針は短針より 1分で 5.5° 多く進む）"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "時計の 短い針は 1時間に 何度 進みますか。",
+          "answer": "30",
+          "meaning": "12時間で1周なので 360÷12＝30度です。",
+          "svg": "<svg viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"90\" cy=\"86\" r=\"66\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><text x=\"90.0\" y=\"37.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"116.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"135.9\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"143.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"135.9\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"116.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"90.0\" y=\"143.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"63.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7</text><text x=\"44.1\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8</text><text x=\"37.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><text x=\"44.1\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10</text><text x=\"63.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">11</text><path d=\"M90 86 L90.0 38.0\" stroke=\"#4f7cff\" stroke-width=\"2.6\"/><path d=\"M90 86 L124.0 86.0\" stroke=\"#ff6b6b\" stroke-width=\"3.4\"/><circle cx=\"90\" cy=\"86\" r=\"4\" fill=\"#1a2340\"/></svg>"
+         },
+         {
+          "question": "時計の 短い針は 10分間に 何度 進みますか。",
+          "answer": "5",
+          "meaning": "1時間で30度なので 10分では 30÷6＝5度です。",
+          "svg": ""
+         },
+         {
+          "question": "時計の 長い針は 20分間に 何度 進みますか。",
+          "answer": "120",
+          "meaning": "6×20＝120度です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "ちょうどの 時こくの 角度",
+        "rei": {
+         "question": "3時ちょうど のとき、長い針と 短い針が つくる 角のうち 小さいほうは 何度ですか。",
+         "svg": "<svg viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"90\" cy=\"86\" r=\"66\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><text x=\"90.0\" y=\"37.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"116.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"135.9\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"143.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"135.9\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"116.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"90.0\" y=\"143.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"63.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7</text><text x=\"44.1\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8</text><text x=\"37.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><text x=\"44.1\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10</text><text x=\"63.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">11</text><path d=\"M90 86 L90.0 38.0\" stroke=\"#4f7cff\" stroke-width=\"2.6\"/><path d=\"M90 86 L124.0 86.0\" stroke=\"#ff6b6b\" stroke-width=\"3.4\"/><circle cx=\"90\" cy=\"86\" r=\"4\" fill=\"#1a2340\"/><text x=\"90\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3時ちょうど</text></svg>",
+         "kaisetsu": [
+          "**文字ばんの 1めもり（1時間分）は 30°**。",
+          "3時ちょうどは 長針が12、短針が3。",
+          "あいだは 3めもり。",
+          "30×3＝**90°**。"
+         ],
+         "answer": "90"
+        },
+        "ruidai": [
+         {
+          "question": "4時ちょうどのとき、長い針と短い針がつくる角のうち小さいほうは何度ですか。",
+          "answer": "120",
+          "meaning": "4めもりで 30×4＝120度です。",
+          "svg": "<svg viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"90\" cy=\"86\" r=\"66\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><text x=\"90.0\" y=\"37.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"116.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"135.9\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"143.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"135.9\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"116.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"90.0\" y=\"143.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"63.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7</text><text x=\"44.1\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8</text><text x=\"37.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><text x=\"44.1\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10</text><text x=\"63.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">11</text><path d=\"M90 86 L90.0 38.0\" stroke=\"#4f7cff\" stroke-width=\"2.6\"/><path d=\"M90 86 L119.4 103.0\" stroke=\"#ff6b6b\" stroke-width=\"3.4\"/><circle cx=\"90\" cy=\"86\" r=\"4\" fill=\"#1a2340\"/></svg>"
+         },
+         {
+          "question": "6時ちょうどのとき、長い針と短い針がつくる角は何度ですか。",
+          "answer": "180",
+          "meaning": "6めもりで180度です。",
+          "svg": "<svg viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"90\" cy=\"86\" r=\"66\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><text x=\"90.0\" y=\"37.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"116.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"135.9\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"143.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"135.9\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"116.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"90.0\" y=\"143.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"63.5\" y=\"135.9\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7</text><text x=\"44.1\" y=\"116.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8</text><text x=\"37.0\" y=\"90.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><text x=\"44.1\" y=\"63.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10</text><text x=\"63.5\" y=\"44.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">11</text><path d=\"M90 86 L90.0 38.0\" stroke=\"#4f7cff\" stroke-width=\"2.6\"/><path d=\"M90 86 L90.0 120.0\" stroke=\"#ff6b6b\" stroke-width=\"3.4\"/><circle cx=\"90\" cy=\"86\" r=\"4\" fill=\"#1a2340\"/></svg>"
+         },
+         {
+          "question": "1日（12時間）のうち、長い針と短い針が 重なるのは 何回ですか。",
+          "answer": "11",
+          "meaning": "12時間で長針は短針より11周多く回るので11回です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "34": {
+      "title": "立方体の 色ぬり",
+      "items": [
+       {
+        "bone": "外がわに 色をぬって 切り分ける",
+        "rei": {
+         "question": "1辺 3cm の立方体の 外がわ全体に 色をぬり、1辺 1cm の小さい立方体に 切り分けます。色が **3面** にぬられている 小立方体は 何こですか。",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×3×3</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1辺3cmを27こに切る</text></svg>",
+         "kaisetsu": [
+          "**3面に色があるのは 角（頂点）にあった立方体**。ここが発見。",
+          "立方体の頂点は 8つ。",
+          "だから 8こ。",
+          "**8こ**。（大きさがかわっても いつも8こ）"
+         ],
+         "answer": "8"
+        },
+        "ruidai": [
+         {
+          "question": "1辺 3cm の立方体に色をぬり 1cm ずつに切り分けます。色が 2面 にぬられている小立方体は何こですか。",
+          "answer": "12",
+          "meaning": "辺のまん中にあったもの。辺は12本で1本に1こずつ。12こです。",
+          "svg": "<svg viewBox=\"0 0 230 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×3×3</text></svg>"
+         },
+         {
+          "question": "1辺 3cm の立方体に色をぬり 1cm ずつに切り分けます。色が 1面 だけの小立方体は何こですか。",
+          "answer": "6",
+          "meaning": "面のまん中にあったもの。面は6つで1つに1こずつ。6こです。",
+          "svg": ""
+         },
+         {
+          "question": "1辺 3cm の立方体に色をぬり 1cm ずつに切り分けます。どの面にも色がない小立方体は何こですか。",
+          "answer": "1",
+          "meaning": "27−8−12−6＝1こです。（まん中の1こ）",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "たてよこ高さが ちがう 直方体",
+        "rei": {
+         "question": "たて 3cm、よこ 4cm、高さ 5cm の直方体の 外がわに色をぬり、1辺 1cm に切り分けます。どの面にも 色がない 小立方体は 何こですか。",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×4×5</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3×4×5の直方体</text></svg>",
+         "kaisetsu": [
+          "**色がないのは、外がわの1まいを はがした 内がわ**。",
+          "たて・よこ・高さ から それぞれ 2ずつ ひきます。",
+          "(3−2)×(4−2)×(5−2)＝1×2×3。",
+          "**6こ**。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "たて 3cm、よこ 4cm、高さ 5cm の直方体を 1cm ずつに切り分けると 小立方体は全部で何こですか。",
+          "answer": "60",
+          "meaning": "3×4×5＝60こです。",
+          "svg": "<svg viewBox=\"0 0 230 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×4×5</text></svg>"
+         },
+         {
+          "question": "たて 4cm、よこ 5cm、高さ 6cm の直方体で どの面にも色がない小立方体は何こですか。",
+          "answer": "24",
+          "meaning": "(4−2)×(5−2)×(6−2)＝2×3×4＝24こです。",
+          "svg": ""
+         },
+         {
+          "question": "たて 3cm、よこ 4cm、高さ 5cm の直方体で 3面に色がある小立方体は何こですか。",
+          "answer": "8",
+          "meaning": "頂点の8こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "35": {
+      "title": "展開図",
+      "items": [
+       {
+        "bone": "向かい合う面を 見つける",
+        "rei": {
+         "question": "立方体の展開図で、十字の形にならんだ6つの面があります。立方体を組み立てたとき、向かい合う面は 何組 できますか。",
+         "svg": "<svg viewBox=\"0 0 326 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">上</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">前</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">右</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">後</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">左</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">下</text><text x=\"163\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6つの面</text></svg>",
+         "kaisetsu": [
+          "立方体の面は **6つ**。",
+          "向かい合う面は **2つで1組**。",
+          "6÷2。",
+          "**3組**。（上下・前後・左右）"
+         ],
+         "answer": "3"
+        },
+        "ruidai": [
+         {
+          "question": "立方体の 面は いくつありますか。",
+          "answer": "6",
+          "meaning": "6つです。",
+          "svg": ""
+         },
+         {
+          "question": "立方体の 辺は 何本ありますか。",
+          "answer": "12",
+          "meaning": "12本です。",
+          "svg": ""
+         },
+         {
+          "question": "立方体の 頂点は いくつありますか。",
+          "answer": "8",
+          "meaning": "8つです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "さいころの 向かい合う面",
+        "rei": {
+         "question": "向かい合う面の 目の和が 7 の さいころがあります。1 の 向かい側は いくつですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">↔</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">和が7</text></svg>",
+         "kaisetsu": [
+          "**向かい合う面の目を たすと 7**。",
+          "1 の向かい側を □ とすると 1＋□＝7。",
+          "□＝6。",
+          "**6**。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "向かい合う面の和が7のさいころで、2 の向かい側はいくつですか。",
+          "answer": "5",
+          "meaning": "7−2＝5です。",
+          "svg": ""
+         },
+         {
+          "question": "向かい合う面の和が7のさいころで、3 の向かい側はいくつですか。",
+          "answer": "4",
+          "meaning": "7−3＝4です。",
+          "svg": ""
+         },
+         {
+          "question": "向かい合う面の和が7のさいころで、見えている3つの面が 1、2、3 のとき、かくれている3つの面の目の合計はいくつですか。",
+          "answer": "15",
+          "meaning": "全部の和は21。見えているのが6なので 21−6＝15です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "36": {
+      "title": "立体を くりぬく",
+      "items": [
+       {
+        "bone": "たてに くりぬいた 立体の 体積",
+        "rei": {
+         "question": "1辺 3cm の立方体を 27この小立方体に分けて考えます。上の面のまん中から 下まで、1辺 1cm の あなを まっすぐ あけました。のこった立体の 体積は 何cm³ですか。",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×3×3</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">まん中をたてにくりぬく</text></svg>",
+         "kaisetsu": [
+          "**もとの体積から くりぬいた分をひきます。**",
+          "もとは 3×3×3＝27cm³。",
+          "あなは 1×1×3＝3cm³。",
+          "27−3＝**24cm³**。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "1辺 3cm の立方体を たてに 1×1 のあなでくりぬいた立体を 1cm の小立方体で数えると 何こですか。",
+          "answer": "24",
+          "meaning": "27−3＝24こです。",
+          "svg": "<svg viewBox=\"0 0 230 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×3×3</text></svg>"
+         },
+         {
+          "question": "1辺 3cm の立方体に、たて・よこ・高さの 3方向から まん中に 1×1 のあなをあけました。のこった小立方体は何こですか。",
+          "answer": "20",
+          "meaning": "3方向のあなで消えるのは 3＋3＋3＝9こだが、まん中の1こは3回数えているので 9−2＝7こ。27−7＝20こです。",
+          "svg": ""
+         },
+         {
+          "question": "1辺 3cm の立方体の 体積は何cm³ですか。",
+          "answer": "27",
+          "meaning": "3×3×3＝27cm³です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "上から 見た形と 横から見た形",
+        "rei": {
+         "question": "円柱を 2つ かさねた立体があります。下の円柱は 底面積 20cm²・高さ 5cm、上の円柱は 底面積 8cm²・高さ 3cm です。全体の体積は何cm³ですか。",
+         "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">下 20×5</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">上 8×3</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2つに分けて足す</text></svg>",
+         "kaisetsu": [
+          "**分けて計算して たします。**",
+          "下は 20×5＝100cm³。",
+          "上は 8×3＝24cm³。",
+          "100＋24＝**124cm³**。"
+         ],
+         "answer": "124"
+        },
+        "ruidai": [
+         {
+          "question": "底面積 20cm²・高さ 5cm の円柱の体積は何cm³ですか。",
+          "answer": "100",
+          "meaning": "20×5＝100cm³です。",
+          "svg": ""
+         },
+         {
+          "question": "底面積 8cm²・高さ 3cm の円柱の体積は何cm³ですか。",
+          "answer": "24",
+          "meaning": "8×3＝24cm³です。",
+          "svg": ""
+         },
+         {
+          "question": "底面積 20cm²・高さ 5cm と 底面積 12cm²・高さ 4cm の円柱をかさねた立体の体積は何cm³ですか。",
+          "answer": "148",
+          "meaning": "100＋48＝148cm³です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "37": {
+      "title": "水そうを かたむける",
+      "items": [
+       {
+        "bone": "満水を かたむけて こぼす",
+        "rei": {
+         "question": "たて 10cm、よこ 10cm、高さ 10cm の 直方体の水そうに 水を いっぱいに 入れました。これを かたむけて、水面が 底の辺と 上の辺を 通るところまで こぼしました。のこった水は 何cm³ですか。",
+         "svg": "<svg viewBox=\"0 0 230 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"40\" y=\"26\" width=\"150\" height=\"100\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><polygon points=\"40,126 190,126 190,56\" fill=\"rgba(79,124,255,0.35)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/><text x=\"115\" y=\"20\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">45度かたむける</text><text x=\"115\" y=\"154\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">45度かたむける</text></svg>",
+         "kaisetsu": [
+          "**のこった水の形は、水そうを ちょうど半分に切った形**になります。ここが発見。",
+          "水そう全体は 10×10×10＝1000cm³。",
+          "水面が 対角線を通るので、のこりは ちょうど 半分。",
+          "1000÷2＝**500cm³**。"
+         ],
+         "answer": "500"
+        },
+        "ruidai": [
+         {
+          "question": "たて 10cm、よこ 10cm、高さ 10cm の水そうを 満水にすると 水は何cm³ですか。",
+          "answer": "1000",
+          "meaning": "10×10×10＝1000cm³です。",
+          "svg": "<svg viewBox=\"0 0 230 146\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"40\" y=\"26\" width=\"150\" height=\"100\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><rect x=\"40\" y=\"26\" width=\"150\" height=\"100\" fill=\"rgba(79,124,255,0.35)\"/><text x=\"115\" y=\"20\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">満水</text></svg>"
+         },
+         {
+          "question": "たて 10cm、よこ 10cm、高さ 10cm の満水の水そうを かたむけて 半分こぼしました。こぼれた水は何cm³ですか。",
+          "answer": "500",
+          "meaning": "1000−500＝500cm³です。",
+          "svg": ""
+         },
+         {
+          "question": "たて 20cm、よこ 10cm、高さ 10cm の満水の水そうを かたむけて ちょうど半分にしたとき、のこった水は何cm³ですか。",
+          "answer": "1000",
+          "meaning": "2000÷2＝1000cm³です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "38": {
+      "title": "差集め算",
+      "items": [
+       {
+        "bone": "ふくろに 分けると あまる・たりない",
+        "rei": {
+         "question": "みかんを ふくろに 5こ ずつ 入れると 12こ あまり、7こ ずつ 入れると 8こ たりません。ふくろは 何ふくろ ありますか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"167.5\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"99.8\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5こずつ</text><rect x=\"183.5\" y=\"24\" width=\"100.5\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"233.8\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">あまり12</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">入れ方を変える</text></svg>",
+         "kaisetsu": [
+          "**1ふくろあたり 2こ ふえると、全体で どれだけ 変わるか**を見ます。",
+          "5こ→7こ で 1ふくろあたり 2こ 多くいる。",
+          "12こあまり から 8こたりない に変わったので、差は 12＋8＝**20こ**。",
+          "20÷2＝**10ふくろ**。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "みかんを 5こずつ入れると 12こあまり、7こずつ入れると 8こたりません。みかんは全部で何こですか。",
+          "answer": "62",
+          "meaning": "10ふくろなので 5×10＋12＝62こです。",
+          "svg": ""
+         },
+         {
+          "question": "あめを 4こずつ配ると 9こあまり、6こずつ配ると 7こたりません。人数は何人ですか。",
+          "answer": "8",
+          "meaning": "差は16こ。1人あたり2こふえるので 16÷2＝8人です。",
+          "svg": ""
+         },
+         {
+          "question": "あめを 3こずつ配ると 10こあまり、5こずつ配ると 4こたりません。あめは全部で何こですか。",
+          "answer": "31",
+          "meaning": "差は14こ。1人あたり2こなので7人。3×7＋10＝31こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "39": {
+      "title": "年令算",
+      "items": [
+       {
+        "bone": "年の差は ずっと かわらない",
+        "rei": {
+         "question": "いま お父さんは 40才、子どもは 10才 です。お父さんの年令が 子どもの ちょうど 2倍 になるのは 何年後ですか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"67.0\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"49.5\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">子ども10</text><rect x=\"83.0\" y=\"24\" width=\"201.0\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"183.5\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">差30</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">差はいつも30才</text></svg>",
+         "kaisetsu": [
+          "**2人の年の差は 何年たっても かわりません。**ここが土台。差は 40−10＝30才。",
+          "2倍になるとき、子ども①・父②とすると **差は①**。",
+          "その① が 30才にあたる。だから 子どもは30才。",
+          "30−10＝**20年後**。（そのとき父は60才で ちょうど2倍）"
+         ],
+         "answer": "20"
+        },
+        "ruidai": [
+         {
+          "question": "いま お父さんは 40才、子どもは 10才。2人の年の差は何才ですか。",
+          "answer": "30",
+          "meaning": "40−10＝30才です。何年たってもかわりません。",
+          "svg": ""
+         },
+         {
+          "question": "いま お父さんは 40才、子どもは 10才。お父さんが 子どもの 3倍 になるのは何年後ですか。",
+          "answer": "5",
+          "meaning": "差30才が②にあたるので ①＝15才が子ども。15−10＝5年後です。",
+          "svg": ""
+         },
+         {
+          "question": "いま お父さんは 45才、子どもは 15才。お父さんが 子どもの 2倍 になるのは何年後ですか。",
+          "answer": "15",
+          "meaning": "差は30才。子どもが30才になるとき。30−15＝15年後です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "何年 **前** に 何倍だったか",
+        "rei": {
+         "question": "いま お母さんは 42才、子どもは 12才 です。お母さんの年令が 子どもの ちょうど 4倍 だったのは 何年前ですか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"76.6\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"54.3\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">子ども12</text><rect x=\"92.6\" y=\"24\" width=\"191.4\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"188.3\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">差30</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">差は30才のまま</text></svg>",
+         "kaisetsu": [
+          "差は 42−12＝**30才**。何年前でも かわりません。",
+          "4倍のとき、子ども①・母④ なので **差は③**。",
+          "③＝30才 なので ①＝10才。そのとき子どもは10才。",
+          "いま12才だから 12−10＝**2年前**。（そのとき母は40才で ちょうど4倍）"
+         ],
+         "answer": "2"
+        },
+        "ruidai": [
+         {
+          "question": "いま お母さんは 42才、子どもは 12才。2人の年の差は何才ですか。",
+          "answer": "30",
+          "meaning": "42−12＝30才です。何年たってもかわりません。",
+          "svg": ""
+         },
+         {
+          "question": "いま お母さんは 42才、子どもは 12才。お母さんが 子どもの 6倍 だったのは何年前ですか。",
+          "answer": "6",
+          "meaning": "差30才が⑤にあたるので ①＝6才。12−6＝6年前です。（母36才＝6×6）",
+          "svg": ""
+         },
+         {
+          "question": "いま お母さんは 42才、子どもは 12才。お母さんが 子どもの 7倍 だったのは何年前ですか。",
+          "answer": "7",
+          "meaning": "差30才が⑥にあたるので ①＝5才。12−5＝7年前です。（母35才＝7×5）",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "40": {
+      "title": "円が 転がる",
+      "items": [
+       {
+        "bone": "まっすぐな 部分を たす",
+        "rei": {
+         "question": "1辺 6cm の 正三角形の 外がわを、円が すべらずに 1周 転がります。円の 中心が 動いてできる線の うち、**まっすぐな部分** の 長さの合計は何cmですか。",
+         "svg": "<svg viewBox=\"0 0 200 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"96.0,36.0 141.0,114.0 51.0,114.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"96.0\" cy=\"22.0\" r=\"14\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"100\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正三角形のまわりを転がる</text></svg>",
+         "kaisetsu": [
+          "**辺の上を転がるあいだ、中心は 辺と 同じ長さだけ まっすぐ動きます。**",
+          "辺は3本で、どれも6cm。",
+          "6×3。",
+          "**18cm**。（正三角形のまわりの長さと同じ）"
+         ],
+         "answer": "18"
+        },
+        "ruidai": [
+         {
+          "question": "1辺 6cm の 正方形の外がわを 円が1周転がるとき、中心が動く線の まっすぐな部分の合計は何cmですか。",
+          "answer": "24",
+          "meaning": "6×4＝24cmです。",
+          "svg": "<svg viewBox=\"0 0 200 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"96.0,36.0 148.0,88.0 96.0,140.0 44.0,88.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"96.0\" cy=\"22.0\" r=\"14\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"100\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正方形のまわり</text></svg>"
+         },
+         {
+          "question": "1辺 5cm の 正六角形の外がわを 円が1周転がるとき、中心が動く線の まっすぐな部分の合計は何cmですか。",
+          "answer": "30",
+          "meaning": "5×6＝30cmです。",
+          "svg": "<svg viewBox=\"0 0 200 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"96.0,36.0 141.0,62.0 141.0,114.0 96.0,140.0 51.0,114.0 51.0,62.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"96.0\" cy=\"22.0\" r=\"14\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"100\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正六角形のまわり</text></svg>"
+         },
+         {
+          "question": "1辺 6cm の正三角形の まわりの長さは何cmですか。",
+          "answer": "18",
+          "meaning": "6×3＝18cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "角のところで 回る 角度の 合計",
+        "rei": {
+         "question": "多角形の 外がわを 円が すべらずに 1周 転がるとき、**角のところで 円が 回る 角度の 合計** は 何度ですか。",
+         "svg": "<svg viewBox=\"0 0 200 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"96.0,36.0 141.0,114.0 51.0,114.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"96.0\" cy=\"22.0\" r=\"14\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"100\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">角のところで回る</text></svg>",
+         "kaisetsu": [
+          "**角で回る角度の合計は、その多角形の 外角の和 と同じ**になります。ここが発見。",
+          "外角の和は どんな多角形でも **360°**。",
+          "三角形でも 正方形でも 十角形でも かわりません。",
+          "**360°**。"
+         ],
+         "answer": "360"
+        },
+        "ruidai": [
+         {
+          "question": "正三角形の 外がわを 円が1周転がるとき、1つの角で円が回る角度は何度ですか。",
+          "answer": "120",
+          "meaning": "合計360度を3か所で分けるので 120度です。",
+          "svg": ""
+         },
+         {
+          "question": "正方形の 外がわを 円が1周転がるとき、1つの角で円が回る角度は何度ですか。",
+          "answer": "90",
+          "meaning": "360÷4＝90度です。",
+          "svg": ""
+         },
+         {
+          "question": "正六角形の 外がわを 円が1周転がるとき、1つの角で円が回る角度は何度ですか。",
+          "answer": "60",
+          "meaning": "360÷6＝60度です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "41": {
+      "title": "動く点と 面積",
+      "items": [
+       {
+        "bone": "高さが かわらない 台形",
+        "rei": {
+         "question": "平行な 2本の直線があり、間かくは 8cm です。上の線の上を 点P、下の線の上を 点Q が 動きます。上底が 5cm、下底が 7cm になったとき、四角形の面積は何cm²ですか。",
+         "svg": "<svg viewBox=\"0 0 250 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"72,34 178,34 210,120 40,120\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"125\" y=\"28\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">上底 5cm</text><text x=\"125\" y=\"136\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">下底 7cm</text><text x=\"228\" y=\"80\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">高さ8cm</text><text x=\"125\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">高さは いつも8cm</text></svg>",
+         "kaisetsu": [
+          "**平行な2直線のあいだなので、高さは いつも 8cm のまま**。ここが発見。",
+          "台形の面積は (上底＋下底)×高さ÷2。",
+          "(5＋7)×8＝96。",
+          "96÷2＝**48cm²**。"
+         ],
+         "answer": "48"
+        },
+        "ruidai": [
+         {
+          "question": "間かく 8cm の平行な2直線で、上底 3cm・下底 9cm の台形の面積は何cm²ですか。",
+          "answer": "48",
+          "meaning": "(3＋9)×8÷2＝48cm²です。",
+          "svg": "<svg viewBox=\"0 0 250 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"72,34 178,34 210,120 40,120\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"125\" y=\"28\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">上底 3cm</text><text x=\"125\" y=\"136\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">下底 9cm</text><text x=\"228\" y=\"80\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">高さ8cm</text></svg>"
+         },
+         {
+          "question": "間かく 8cm の平行な2直線で、上底と下底の和が 12cm の台形の面積は何cm²ですか。",
+          "answer": "48",
+          "meaning": "12×8÷2＝48cm²です。（和が同じなら面積も同じ）",
+          "svg": ""
+         },
+         {
+          "question": "台形の面積が 48cm²、高さが 8cm のとき、上底と下底の和は何cmですか。",
+          "answer": "12",
+          "meaning": "48×2÷8＝12cmです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "42": {
+      "title": "重なりの グラフ",
+      "items": [
+       {
+        "bone": "グラフの 形から 図形の 大きさを 読む",
+        "rei": {
+         "question": "長方形 A の上を、長方形 B が 右へ 秒速 1cm で 動きます。重なった部分の面積のグラフは、6秒で いちばん大きい 24cm² になり、そのあと しばらく 24cm² のままでした。長方形 B の よこ の長さは何cmですか。（重なりの たての長さは 4cm）",
+         "svg": "<svg viewBox=\"0 0 260 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M34 124 L240 124\" stroke=\"#6c7086\" stroke-width=\"1.6\"/><path d=\"M34 124 L34 24\" stroke=\"#6c7086\" stroke-width=\"1.6\"/><polyline points=\"34.0,124.0 109.0,32.0 159.0,32.0 234.0,124.0\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"2.4\"/><text x=\"246\" y=\"128\" font-size=\"10\" font-family=\"sans-serif\" fill=\"#6c7086\">秒</text><text x=\"14\" y=\"24\" font-size=\"10\" font-family=\"sans-serif\" fill=\"#6c7086\">cm²</text><circle cx=\"34.0\" cy=\"124.0\" r=\"3\" fill=\"#4f7cff\"/><circle cx=\"109.0\" cy=\"32.0\" r=\"3\" fill=\"#4f7cff\"/><circle cx=\"159.0\" cy=\"32.0\" r=\"3\" fill=\"#4f7cff\"/><circle cx=\"234.0\" cy=\"124.0\" r=\"3\" fill=\"#4f7cff\"/><text x=\"130\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6秒でいちばん大きくなる</text></svg>",
+         "kaisetsu": [
+          "**面積がふえ続けるのは、B が A に 完全に入るまで**。",
+          "6秒で いちばん大きくなったので、B のよこは **6cm**（秒速1cmで6秒）。",
+          "確かめると 6×4＝24cm² で グラフと合う。",
+          "**6cm**。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "重なりの たてが 4cm、よこが 6cm のとき、重なりの面積は何cm²ですか。",
+          "answer": "24",
+          "meaning": "4×6＝24cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "長方形 B が 秒速 1cm で動き、6秒で完全に重なりました。B のよこの長さは何cmですか。",
+          "answer": "6",
+          "meaning": "1×6＝6cmです。",
+          "svg": ""
+         },
+         {
+          "question": "重なりの面積のグラフが 24cm² のまま 4秒間 続きました。長方形 A のよこは B のよこより 何cm 長いですか。",
+          "answer": "4",
+          "meaning": "秒速1cmで4秒ぶんなので 4cm 長いです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
      }
     }
    }
