@@ -5630,7 +5630,7 @@ function tDrawSprite(ctx, rows, pal, ox, oy, s) {
 }
 
 // 応援キャラ帯（テトリス・スイーパー共用のファクトリ）
-function makeCharStrip(canvasId) {
+function makeCharStrip(canvasId, useImages) {
   const st = { timer: null, tick: 0, mood: 'idle', moodUntil: 0, bubble: '' };
 
   function draw() {
@@ -5649,7 +5649,13 @@ function makeCharStrip(canvasId) {
         : Math.round(Math.sin((st.tick + i * 2) / 2) * 2);
       const x = 32 + i * 104;
       const y = cv.height - frame.length * s - 2 + bounce;
-      tDrawSprite(ctx, frame, sp.pal, x, y, s);
+      // チッチジャンプ2だけ、描いた絵の3人で応援する（他のゲームは今までのドット絵のまま）
+      const holder = useImages ? [J_IMG.otton, J_IMG.okan, J_IMG.chicchiUp][i] : null;
+      if (holder && holder.ready) {
+        jDrawImg(ctx, holder, x + 22, cv.height - 34 + bounce, 66, 66);
+      } else {
+        tDrawSprite(ctx, frame, sp.pal, x, y, s);
+      }
     });
 
     if (st.bubble) {
@@ -7556,6 +7562,8 @@ const J_IMG = {
   mars: jMakeSprite('images/jump2-marsball.png'),
   city: jMakeSprite('images/jump2-city.png'),
   rabbit: jMakeSprite('images/jump2-rabbit.png'),
+  otton: jMakeSprite('images/jump2-otton.png'),
+  okan: jMakeSprite('images/jump2-okan.png'),
   octo: jMakeSprite('images/jump2-octo.png'),
   rover: jMakeSprite('images/jump2-rover.png'),
   // 足場（雲＝空、岩＝宇宙）。種類ごとに1枚ずつ
@@ -7646,7 +7654,7 @@ const jumpState = {
   rafId: null, controlsReady: false,
 };
 
-const jumpChars = makeCharStrip('jump-chars');
+const jumpChars = makeCharStrip('jump-chars', true);
 
 function jRandGap() { return J_GAP_MIN + Math.random() * (J_GAP_MAX - J_GAP_MIN); }
 
