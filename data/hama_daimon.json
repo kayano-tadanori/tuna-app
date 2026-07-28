@@ -38,7 +38,307 @@
   "grades": {
     "3": {
       "master": {
-        "fukushu": {},
+        "fukushu": {
+          "1": [
+            {
+              "id": "hd_3m_f01_6",
+              "src": "HG-0003",
+              "title": "6と9を ひっくりかえせるカード",
+              "category": "baai",
+              "unit": "場合の数",
+              "grade": 3,
+              "star": 2,
+              "intro": "0、1、6、7、9 と書かれた5まいのカードを ぜんぶ使って 5けたの整数を作ります。\n6のカードは ひっくりかえして9として、9のカードは6として 使うこともできます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "できる数の いちばん大きい数と いちばん小さい数の ちがいはいくつですか。",
+                  "answer": "89043",
+                  "meaning": "6を9にできるので 9を2まい作れて 最大は99710。9を6にできるので 最小は10667（0は先頭に置けない）。99710−10667＝89043。"
+                },
+                {
+                  "question": "70000に いちばん近い数はいくつですか。",
+                  "answer": "70166",
+                  "meaning": "70000より上は70166（ちがい166）、下は69710（ちがい290）。上と下の両方から はさんでさがす。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f01_8",
+              "src": "HG-0004",
+              "title": "1つ 見落とした たし算",
+              "category": "keisan",
+              "unit": "計算のくふう",
+              "grade": 3,
+              "star": 3,
+              "intro": "53761 ＋ 29408 を計算するときに、ある位の数字を 1つ 見落としてしまいました。\nそのため 答えが 正しい答えより 48400 小さくなりました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "まちがった答えはいくつですか。",
+                  "answer": "34769",
+                  "meaning": "数字を1つ見落とすと そのけたが ぬけて つまる。53761の百の位7がぬけると5361。5361+29408＝34769。"
+                },
+                {
+                  "question": "見落とした数字はいくつですか。",
+                  "answer": "7",
+                  "meaning": "正しい答えは83169。83169−34769＝48400 になるのは 53761→5361 のときだけ。"
+                }
+              ]
+            }
+          ],
+          "2": [
+            {
+              "id": "hd_3m_f02_5",
+              "src": "HG-0005",
+              "title": "かけ算の 虫食い算",
+              "category": "kazu",
+              "unit": "覆面算",
+              "grade": 3,
+              "star": 2,
+              "intro": "□に あてはまる数字を考えます。",
+              "svg": "<svg viewBox='0 0 240 92' xmlns='http://www.w3.org/2000/svg'><text x='10.0' y='16.0' fill='#ffd166' font-size='10' text-anchor='start'>□に あてはまる数字を考えます</text><text x='20.0' y='44.0' fill='#ffd166' font-size='13' text-anchor='start'>①　8□□ × 4 ＝ □500</text><text x='20.0' y='72.0' fill='#ffd166' font-size='13' text-anchor='start'>②　6□□ × 7 ＝ 4□09</text></svg>",
+              "steps": [
+                {
+                  "question": "① 8□□ × 4 ＝ □500 の 答え（4けた）はいくつですか。",
+                  "answer": "3500",
+                  "meaning": "一の位に注目。□×4の一の位が0になるのは □が0か5。けた数から 875×4＝3500。"
+                },
+                {
+                  "question": "② 6□□ × 7 ＝ 4□09 の 答え（4けた）はいくつですか。",
+                  "answer": "4809",
+                  "meaning": "□×7の一の位が9になるのは □＝7。687×7＝4809。かけ算の虫食いは 末尾から きめる。"
+                }
+              ]
+            }
+          ],
+          "3": [
+            {
+              "id": "hd_3m_f03_3",
+              "src": "HG-0006",
+              "title": "1本あたりの ちがい",
+              "category": "tokusan",
+              "unit": "過不足算・差集め算",
+              "grade": 3,
+              "star": 2,
+              "intro": "1本180円のペンを 45本 買うつもりで、ちょうどの お金を持っていきました。\nところが 1本あたり 17円 安くなっていました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "お金は何円 あまりましたか。",
+                  "answer": "765",
+                  "meaning": "1本で17円ずつ安いので、45本では 17×45＝765円あまる。全体を2回 計算しなくてよい。"
+                }
+              ]
+            }
+          ],
+          "4": [
+            {
+              "id": "hd_3m_f04_6",
+              "src": "HG-0011",
+              "title": "がい数の和と差の はんい",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 3,
+              "star": 3,
+              "intro": "一万の位を四捨五入すると、東市の人口は 30万人、西市の人口は 43万人になります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "東市の人口として考えられる いちばん少ない人数は何人ですか。",
+                  "answer": "295000",
+                  "meaning": "295000人〜304999人が 四捨五入して30万になるはんい。"
+                },
+                {
+                  "question": "2つの市の人口の合計として考えられる いちばん多い人数は何人ですか。",
+                  "answer": "739998",
+                  "meaning": "どちらも いちばん多いとき。304999+434999＝739998人。和は そのまま はしどうしを足す。"
+                },
+                {
+                  "question": "2つの市の人口の差として考えられる いちばん少ない人数は何人ですか。",
+                  "answer": "120001",
+                  "meaning": "差は 大小を 逆に組む。西市がいちばん少なく・東市がいちばん多いとき。425000−304999＝120001人。"
+                }
+              ]
+            }
+          ],
+          "5": [
+            {
+              "id": "hd_3m_f05_2",
+              "src": "HG-0012",
+              "title": "あきびん4本で ジュース1本",
+              "category": "tokusan",
+              "unit": "やりとり算",
+              "grade": 3,
+              "star": 3,
+              "intro": "あきびん4本で ジュース1本と 交かんしてもらえます。飲むと あきびんが1本 出ます。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "あきびん9本では ジュースを何本 飲めますか。",
+                  "answer": "2",
+                  "meaning": "9本→2本もらう（あきびんは1+2＝3本）。3本では交かんできないので 2本。"
+                },
+                {
+                  "question": "ちょうど6本 飲めたとき、はじめの あきびんは 少なくとも何本 ありましたか。",
+                  "answer": "19",
+                  "meaning": "1回の交かんで あきびんは 正味3本ずつへる。6本飲むには 19本〜21本のどれか。いちばん少ないのは19本。"
+                },
+                {
+                  "question": "ちょうど6本 飲めたとき、はじめの あきびんは 多くて何本 ありましたか。",
+                  "answer": "21",
+                  "meaning": "22本あると 7本飲めてしまう。だから多くて21本。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f05_3",
+              "src": "HG-0013",
+              "title": "3×3の 魔方じん",
+              "category": "kazu",
+              "unit": "数の性質",
+              "grade": 3,
+              "star": 2,
+              "intro": "3×3のマスに 1から9までの数を 1回ずつ入れます。\nたて・よこ・ななめ どの3つの数をたしても 同じ数になるようにします。",
+              "svg": "<svg viewBox='0 0 260 132' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='10' text-anchor='start'>1〜9を 1回ずつ入れる</text><rect x='30.0' y='22.0' width='32.0' height='32.0' rx='4' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='46.0' y='44.0' fill='#ffd166' font-size='13' text-anchor='middle'>8</text><rect x='64.0' y='22.0' width='32.0' height='32.0' rx='4' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='80.0' y='44.0' fill='#ffd166' font-size='13' text-anchor='middle'>3</text><rect x='98.0' y='22.0' width='32.0' height='32.0' rx='4' fill='#312e81' stroke='#4f9eff' stroke-width='1.2'/><text x='114.0' y='44.0' fill='#f8fafc' font-size='13' text-anchor='middle'>㋐</text><rect x='30.0' y='56.0' width='32.0' height='32.0' rx='4' fill='#312e81' stroke='#4f9eff' stroke-width='1.2'/><text x='46.0' y='78.0' fill='#f8fafc' font-size='13' text-anchor='middle'>㋑</text><rect x='64.0' y='56.0' width='32.0' height='32.0' rx='4' fill='#312e81' stroke='#4f9eff' stroke-width='1.2'/><text x='80.0' y='78.0' fill='#f8fafc' font-size='13' text-anchor='middle'>㋒</text><rect x='98.0' y='56.0' width='32.0' height='32.0' rx='4' fill='#312e81' stroke='#4f9eff' stroke-width='1.2'/><text x='114.0' y='78.0' fill='#f8fafc' font-size='13' text-anchor='middle'>㋓</text><rect x='30.0' y='90.0' width='32.0' height='32.0' rx='4' fill='#312e81' stroke='#4f9eff' stroke-width='1.2'/><text x='46.0' y='112.0' fill='#f8fafc' font-size='13' text-anchor='middle'>㋔</text><rect x='64.0' y='90.0' width='32.0' height='32.0' rx='4' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='80.0' y='112.0' fill='#ffd166' font-size='13' text-anchor='middle'>7</text><rect x='98.0' y='90.0' width='32.0' height='32.0' rx='4' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='114.0' y='112.0' fill='#ffd166' font-size='13' text-anchor='middle'>2</text><text x='146.0' y='60.0' fill='#06d6a0' font-size='9' text-anchor='start'>たて・よこ・ななめ</text><text x='146.0' y='76.0' fill='#06d6a0' font-size='9' text-anchor='start'>どの3つの和も同じ</text></svg>",
+              "steps": [
+                {
+                  "question": "まん中（㋒）に入る数はいくつですか。",
+                  "answer": "5",
+                  "meaning": "1〜9の和は45。3列あるので どの列の和も 45÷3＝15。ななめの 8+㋒+2＝15 から ㋒＝5。まん中は 4本の線が通る ただ1つのマス。"
+                },
+                {
+                  "question": "㋓に入る数はいくつですか。",
+                  "answer": "9",
+                  "meaning": "右の列は ㋐+㋓+2＝15。㋐＝15−8−3＝4 なので ㋓＝9。"
+                },
+                {
+                  "question": "㋔に入る数はいくつですか。",
+                  "answer": "6",
+                  "meaning": "左の列は 8+㋑+㋔＝15。まん中の行から ㋑＝15−5−9＝1 なので ㋔＝6。"
+                }
+              ]
+            }
+          ],
+          "7": [
+            {
+              "id": "hd_3m_f07_5",
+              "src": "HG-0021",
+              "title": "3・4・5の倍数の わ",
+              "category": "kazu",
+              "unit": "なかま調べ（集合・ベン図）",
+              "grade": 3,
+              "star": 2,
+              "intro": "1から60までの整数を、A＝3の倍数、B＝4の倍数、C＝5の倍数 の3つのなかまに分けます。",
+              "svg": "<svg viewBox='0 0 280 146' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='14.0' fill='#ffd166' font-size='9' text-anchor='start'>1から60までの数を 3つのなかまに分ける</text><circle cx='80.0' cy='64.0' r='34' fill='none' stroke='#ef476f' stroke-width='1.6'/><text x='50.0' y='40.0' fill='#ef476f' font-size='12' text-anchor='middle' font-weight='bold'>A</text><circle cx='120.0' cy='64.0' r='34' fill='none' stroke='#4f9eff' stroke-width='1.6'/><text x='150.0' y='40.0' fill='#4f9eff' font-size='12' text-anchor='middle' font-weight='bold'>B</text><circle cx='100.0' cy='96.0' r='34' fill='none' stroke='#06d6a0' stroke-width='1.6'/><text x='100.0' y='126.0' fill='#06d6a0' font-size='12' text-anchor='middle' font-weight='bold'>C</text><text x='100.0' y='78.0' fill='#ffd166' font-size='10' text-anchor='middle'>ウ</text><text x='78.0' y='86.0' fill='#ffd166' font-size='10' text-anchor='middle'>エ</text><text x='176.0' y='44.0' fill='#ef476f' font-size='9' text-anchor='start'>A＝3の倍数</text><text x='176.0' y='58.0' fill='#4f9eff' font-size='9' text-anchor='start'>B＝4の倍数</text><text x='176.0' y='72.0' fill='#06d6a0' font-size='9' text-anchor='start'>C＝5の倍数</text><text x='176.0' y='92.0' fill='#ffd166' font-size='9' text-anchor='start'>ク＝どの輪にも</text><text x='176.0' y='106.0' fill='#ffd166' font-size='9' text-anchor='start'>　　入らないところ</text></svg>",
+              "steps": [
+                {
+                  "question": "Aのなかまは 何こありますか。",
+                  "answer": "20",
+                  "meaning": "60÷3＝20こ。"
+                },
+                {
+                  "question": "A・B・C の3つ すべてに入る数（ウ）はいくつですか。",
+                  "answer": "60",
+                  "meaning": "3でも4でも5でもわり切れる数＝60の倍数。1〜60では60だけ。"
+                },
+                {
+                  "question": "AとCの両方に入るが、Bには入らない数（エ）は何こありますか。",
+                  "answer": "3",
+                  "meaning": "15の倍数は 15・30・45・60。このうち4でわり切れる60をのぞいて3こ。"
+                },
+                {
+                  "question": "A・B・C の どれにも入らない数（ク）は何こありますか。",
+                  "answer": "24",
+                  "meaning": "3か4か5でわり切れる数は 20+15+12から 重なりをひいて36こ。60−36＝24こ。外がわは「全体から わの合計をひく」。"
+                }
+              ]
+            }
+          ],
+          "8": [
+            {
+              "id": "hd_3m_f08_4",
+              "src": "HG-0022",
+              "title": "あまりのある わり算の 逆算",
+              "category": "kazu",
+              "unit": "数の性質",
+              "grade": 3,
+              "star": 2,
+              "intro": "□に あてはまる数を考えます。あてはまる数が いくつもあることもあります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "202 ÷ □ ＝ 6 あまり 4 のとき、□はいくつですか。",
+                  "answer": "33",
+                  "meaning": "202−4＝198 が □の6つ分。198÷6＝33。あまり4より わる数が大きいことも たしかめる。"
+                },
+                {
+                  "question": "□ ÷ 4 ＝ 191 あまり △（△に0は入りません）のとき、□として考えられる いちばん小さい数はいくつですか。",
+                  "answer": "765",
+                  "meaning": "4×191＝764。あまりは1・2・3のどれかなので □は765・766・767。いちばん小さいのは765。"
+                },
+                {
+                  "question": "同じとき、□として考えられる いちばん大きい数はいくつですか。",
+                  "answer": "767",
+                  "meaning": "あまりは わる数4より小さいので 3までしかない。764+3＝767。"
+                }
+              ]
+            }
+          ],
+          "9": [
+            {
+              "id": "hd_3m_f09_6",
+              "src": "HG-0023",
+              "title": "一の位の 0を つけわすれた",
+              "category": "keisan",
+              "unit": "計算のくふう",
+              "grade": 3,
+              "star": 2,
+              "intro": "ある数を 17でわりました。ところが 答えの 一の位の0を 1つ つけわすれたため、\n正しい答えとの ちがいが 81 になりました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "正しい答えはいくつですか。",
+                  "answer": "90",
+                  "meaning": "正しい答えを □0 とすると、つけわすれた答えは □。ちがいは □0−□＝□の9つ分。81÷9＝9 なので 正しい答えは90。"
+                },
+                {
+                  "question": "ある数はいくつですか。",
+                  "answer": "1530",
+                  "meaning": "90×17＝1530。"
+                }
+              ]
+            },
+            {
+              "id": "hd_3m_f09_7",
+              "src": "HG-0024",
+              "title": "5こずつ まとめる",
+              "category": "kazu",
+              "unit": "N進法",
+              "grade": 3,
+              "star": 2,
+              "intro": "あめを 5こずつ ふくろに入れ、ふくろ5つで 小ばこ1つ、小ばこ5つで 大ばこ1つ にします。\nまとめられるときは かならず まとめます。あめは 全部で1110こ あります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "大ばこは いくつできますか。",
+                  "answer": "8",
+                  "meaning": "大ばこ1つは 5×5×5＝125こ。1110÷125＝8あまり110。"
+                },
+                {
+                  "question": "小ばこは いくつできますか。",
+                  "answer": "4",
+                  "meaning": "小ばこ1つは25こ。110÷25＝4あまり10。"
+                },
+                {
+                  "question": "ふくろは いくつできますか。",
+                  "answer": "2",
+                  "meaning": "10÷5＝2ふくろ（ばらは0こ）。大きいまとまりから 順にとるのが「くり上がり」そのもの。"
+                }
+              ]
+            }
+          ]
+        },
         "kokai": {
           "2": [
             {

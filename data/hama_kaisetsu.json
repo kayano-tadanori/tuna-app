@@ -5224,6 +5224,1407 @@
         ]
        }
       ]
+     },
+     "15": {
+      "title": "旅人算",
+      "items": [
+       {
+        "bone": "池のまわりを 反対まわり（出会い）",
+        "rei": {
+         "question": "まわりが 600m の池のまわりを、A は 分速 70m、B は 分速 50m で 同じ場所から 反対まわりに 進みます。2人が はじめて 出会うのは 何分後ですか。",
+         "svg": "<svg viewBox=\"0 0 220 178\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><ellipse cx=\"110\" cy=\"82\" rx=\"82\" ry=\"62\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"110\" cy=\"20\" r=\"7\" fill=\"#ff6b6b\"/><text x=\"110\" y=\"13\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">A</text><circle cx=\"110\" cy=\"144\" r=\"7\" fill=\"#22c55e\"/><text x=\"110\" y=\"160\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#22c55e\">B</text><path d=\"M150 34 A 60 46 0 0 1 158 60\" stroke=\"#ff6b6b\" stroke-width=\"2\" fill=\"none\" marker-end=\"url(#ar)\"/><defs><marker id=\"ar\" markerWidth=\"7\" markerHeight=\"7\" refX=\"5\" refY=\"3\" orient=\"auto\"><path d=\"M0 0 L6 3 L0 6 z\" fill=\"#ff6b6b\"/></marker></defs><text x=\"110\" y=\"172\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">反対まわりに進む</text></svg>",
+         "kaisetsu": [
+          "**反対まわりだと、2人のあいだが 1分で「速さの和」だけ ちぢまります。**",
+          "1分で 70＋50＝120m ちぢむ。",
+          "池1周ぶん（600m）ちぢめば 出会う。",
+          "600÷120＝**5分後**。"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "まわりが 600m の池を A は分速 70m、B は分速 50m で 同じ方向に進みます。A が B に はじめて追いつくのは何分後ですか。",
+          "answer": "30",
+          "meaning": "同じ方向は 速さの差でちぢまります。70−50＝20m。600÷20＝30分後です。",
+          "svg": "<svg viewBox=\"0 0 220 164\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><ellipse cx=\"110\" cy=\"82\" rx=\"82\" ry=\"62\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"110\" cy=\"20\" r=\"7\" fill=\"#ff6b6b\"/><text x=\"110\" y=\"13\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">A</text><circle cx=\"110\" cy=\"144\" r=\"7\" fill=\"#22c55e\"/><text x=\"110\" y=\"160\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#22c55e\">B</text><path d=\"M150 34 A 60 46 0 0 1 158 60\" stroke=\"#ff6b6b\" stroke-width=\"2\" fill=\"none\" marker-end=\"url(#ar)\"/><defs><marker id=\"ar\" markerWidth=\"7\" markerHeight=\"7\" refX=\"5\" refY=\"3\" orient=\"auto\"><path d=\"M0 0 L6 3 L0 6 z\" fill=\"#ff6b6b\"/></marker></defs></svg>"
+         },
+         {
+          "question": "まわりが 900m の池を A は分速 80m、B は分速 70m で 反対まわりに進みます。はじめて出会うのは何分後ですか。",
+          "answer": "6",
+          "meaning": "80＋70＝150m。900÷150＝6分後です。",
+          "svg": ""
+         },
+         {
+          "question": "まわりが 600m の池を 反対まわりに進み 4分後に出会いました。A が分速 90m のとき、B は分速何mですか。",
+          "answer": "60",
+          "meaning": "1分で 600÷4＝150m ちぢむ。150−90＝分速60mです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "向かい合って進む（道の上の旅人算）",
+        "rei": {
+         "question": "1200m はなれた A地点と B地点から、たろうさんは 分速 80m、はなこさんは 分速 70m で 向かい合って 同時に出発します。2人が出会うのは 何分後ですか。",
+         "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M20 40 L280.0 40\" stroke=\"#9aa3c0\" stroke-width=\"3\"/><path d=\"M20.0 24 L20.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><path d=\"M280.0 24 L280.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"150\" y=\"78\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1200mはなれている</text></svg>",
+         "kaisetsu": [
+          "**向かい合うと、1分で「速さの和」だけ ちぢまります。**",
+          "80＋70＝150m。",
+          "1200m ちぢめば 出会う。",
+          "1200÷150＝**8分後**。"
+         ],
+         "answer": "8"
+        },
+        "ruidai": [
+         {
+          "question": "1200m はなれた2人が 向かい合って進み 分速 80m と 分速 40m のとき、出会うのは何分後ですか。",
+          "answer": "10",
+          "meaning": "120mずつちぢむので 1200÷120＝10分後です。",
+          "svg": ""
+         },
+         {
+          "question": "1200m はなれた2人が 向かい合って進み 6分後に出会いました。1人が分速 130m のとき、もう1人は分速何mですか。",
+          "answer": "70",
+          "meaning": "1分で200mちぢむ。200−130＝分速70mです。",
+          "svg": ""
+         },
+         {
+          "question": "900m 先を歩いている人を 追いかけます。自分は分速 90m、相手は分速 60m。追いつくのは何分後ですか。",
+          "answer": "30",
+          "meaning": "差は30m。900÷30＝30分後です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "使わない情報を 見ぬく",
+        "rei": {
+         "question": "A、B、C の3人がいます。A は 分速 60m、B は 分速 90m、C は 分速 75m です。A と B が 1500m はなれた 2地点から 向かい合って進むとき、出会うのは何分後ですか。",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A 60</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B 90</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C 75</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">Cは使わない</text></svg>",
+         "kaisetsu": [
+          "**問題に出てくる数を ぜんぶ 使うとはかぎりません。**",
+          "聞かれているのは A と B が出会う時間。**C は関係ありません**。",
+          "60＋90＝150m ずつ ちぢむ。",
+          "1500÷150＝**10分後**。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "A は分速 60m、B は分速 90m、C は分速 75m。A と C が 1350m はなれた2地点から向かい合うと、出会うのは何分後ですか。",
+          "answer": "10",
+          "meaning": "60＋75＝135m。1350÷135＝10分後です。",
+          "svg": ""
+         },
+         {
+          "question": "A は分速 60m、B は分速 90m。B が A を 900m 後ろから追いかけると、追いつくのは何分後ですか。",
+          "answer": "30",
+          "meaning": "差は30m。900÷30＝30分後です。",
+          "svg": ""
+         },
+         {
+          "question": "A は分速 60m で 20分歩きました。何m進みましたか。",
+          "answer": "1200",
+          "meaning": "60×20＝1200mです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "往復して すれちがう",
+        "rei": {
+         "question": "A地点と B地点は 1200m はなれています。たろうさんは A から 分速 60m、はなこさんは B から 分速 40m で 同時に出発し、それぞれ 相手の地点で 折り返します。2人が **2回目に** すれちがうのは 何分後ですか。",
+         "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M20 40 L280.0 40\" stroke=\"#9aa3c0\" stroke-width=\"3\"/><path d=\"M20.0 24 L20.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><path d=\"M280.0 24 L280.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"150\" y=\"78\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">折り返して また会う</text></svg>",
+         "kaisetsu": [
+          "**1回目に出会うまでに 2人あわせて 1200m** 進みます。",
+          "**2回目までには 2人あわせて 1200×3＝3600m** 進みます（往復ぶん）。ここが発見。",
+          "2人の速さの和は 60＋40＝100m。",
+          "3600÷100＝**36分後**。"
+         ],
+         "answer": "36"
+        },
+        "ruidai": [
+         {
+          "question": "1200m はなれた2人が 分速 60m と 分速 40m で同時に出発します。1回目にすれちがうのは何分後ですか。",
+          "answer": "12",
+          "meaning": "1200÷100＝12分後です。",
+          "svg": ""
+         },
+         {
+          "question": "1200m はなれた2人が 分速 60m と 分速 40m で往復します。3回目にすれちがうのは何分後ですか。",
+          "answer": "60",
+          "meaning": "3回目までに合わせて 1200×5＝6000m。6000÷100＝60分後です。",
+          "svg": ""
+         },
+         {
+          "question": "900m はなれた2人が 分速 50m と 分速 40m で往復します。2回目にすれちがうのは何分後ですか。",
+          "answer": "30",
+          "meaning": "900×3＝2700m。2700÷90＝30分後です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "16": {
+      "title": "植木算と公倍数",
+      "items": [
+       {
+        "bone": "木の 本数から 間かくを出す",
+        "rei": {
+         "question": "まっすぐな道の 両はしをふくめて 木が 21本 植えてあり、間かくは どこも同じです。道の長さが 200m のとき、間かくは何mですか。",
+         "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M20 40 L280.0 40\" stroke=\"#9aa3c0\" stroke-width=\"3\"/><path d=\"M20.0 24 L20.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M46.0 24 L46.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M72.0 24 L72.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M98.0 24 L98.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M124.0 24 L124.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M150.0 24 L150.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M176.0 24 L176.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M202.0 24 L202.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M228.0 24 L228.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M254.0 24 L254.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><path d=\"M280.0 24 L280.0 56\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"150\" y=\"78\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">両はしにも木がある</text></svg>",
+         "kaisetsu": [
+          "**間の数は 木の本数より1つ少ない**。",
+          "21−1＝20か所。",
+          "200÷20＝10。",
+          "**10m**。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "まっすぐな道の両はしをふくめて 木が 11本、道の長さが 200m のとき、間かくは何mですか。",
+          "answer": "20",
+          "meaning": "間は10か所。200÷10＝20mです。",
+          "svg": ""
+         },
+         {
+          "question": "まっすぐな道に 8mおきに 木を植えます。道の長さが 200m のとき、木は何本いりますか。（両はしにも植える）",
+          "answer": "26",
+          "meaning": "間は25か所。25＋1＝26本です。",
+          "svg": ""
+         },
+         {
+          "question": "まわりが 200m の池のまわりに 8mおきに 木を植えます。木は何本いりますか。",
+          "answer": "25",
+          "meaning": "輪なので 間の数と本数は同じ25本です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "2つの間かくが 重なるところ（公倍数）",
+        "rei": {
+         "question": "まっすぐな道に、はしから 6mおきに 赤い印、10mおきに 青い印 をつけます。はしから 120m までのあいだで、赤と青が 同じところに つくのは 何か所ですか。（はしの0mもふくめます）",
+         "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M20 40 L280.0 40\" stroke=\"#9aa3c0\" stroke-width=\"3\"/><path d=\"M20.0 24 L20.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><path d=\"M85.0 24 L85.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><path d=\"M150.0 24 L150.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><path d=\"M215.0 24 L215.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><path d=\"M280.0 24 L280.0 56\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/><text x=\"150\" y=\"78\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6と10の公倍数のところ</text></svg>",
+         "kaisetsu": [
+          "**両方の印がつくのは 6と10の 公倍数のところ**。",
+          "6と10の最小公倍数は 30。",
+          "0、30、60、90、120 の5か所。",
+          "**5か所**。（0mを入れるのを忘れない）"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "はしから 6mおきに赤、10mおきに青。120mまでで 両方つくのは 0mをふくめないと何か所ですか。",
+          "answer": "4",
+          "meaning": "30、60、90、120 の4か所です。",
+          "svg": ""
+         },
+         {
+          "question": "はしから 4mおきに赤、6mおきに青。120mまでで 両方つくのは何か所ですか。（0mもふくめる）",
+          "answer": "11",
+          "meaning": "最小公倍数は12。0から120まで12おきで11か所です。",
+          "svg": ""
+         },
+         {
+          "question": "6と10の最小公倍数はいくつですか。",
+          "answer": "30",
+          "meaning": "30です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "17": {
+      "title": "あまりと公倍数",
+      "items": [
+       {
+        "bone": "あまりが 同じなら 差が わり切れる",
+        "rei": {
+         "question": "ある整数で 47 と 59 を わると、あまりが 同じになりました。このような整数のうち、いちばん大きい数はいくつですか。（1より大きい数）",
+         "svg": "<svg viewBox=\"0 0 170 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">47</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">59</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">差12</text><text x=\"85\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">差がわり切れる</text></svg>",
+         "kaisetsu": [
+          "**あまりが同じなら、2つの数の差は その整数でわり切れます。**ここが発見。",
+          "59−47＝12。",
+          "12 の約数のうち 1より大きい数は 2、3、4、6、12。",
+          "いちばん大きいのは **12**。"
+         ],
+         "answer": "12"
+        },
+        "ruidai": [
+         {
+          "question": "ある整数で 47 と 59 をわるとあまりが同じになります。このような整数は全部で何こありますか。（1より大きい数）",
+          "answer": "5",
+          "meaning": "12の約数のうち1より大きいのは 2、3、4、6、12 の5こです。",
+          "svg": ""
+         },
+         {
+          "question": "ある整数で 38 と 62 をわるとあまりが同じになります。いちばん大きい数はいくつですか。（1より大きい数）",
+          "answer": "24",
+          "meaning": "差は24。いちばん大きいのは24です。",
+          "svg": ""
+         },
+         {
+          "question": "ある整数で 25、40、55 をわるとあまりが同じになります。いちばん大きい数はいくつですか。（1より大きい数）",
+          "answer": "15",
+          "meaning": "差は15と15。15の約数でいちばん大きいのは15です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "2つの ライトが 同時に つくとき",
+        "rei": {
+         "question": "赤いライトは 6秒おき、青いライトは 8秒おきに 光ります。同時に 光ったあと、つぎに 同時に 光るのは 何秒後ですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">→</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">24</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6と8の最小公倍数</text></svg>",
+         "kaisetsu": [
+          "**同時に光るのは 6と8の 公倍数の秒**。",
+          "6の倍数：6、12、18、**24**…",
+          "8の倍数：8、16、**24**…",
+          "はじめてそろうのは **24秒後**。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "赤は 6秒おき、青は 8秒おきに光ります。同時に光ってから 2分間 に 同時に光るのは何回ですか。（はじめの1回は数えない）",
+          "answer": "5",
+          "meaning": "24秒おき。120÷24＝5回です。",
+          "svg": ""
+         },
+         {
+          "question": "赤は 4秒おき、青は 10秒おきに光ります。つぎに同時に光るのは何秒後ですか。",
+          "answer": "20",
+          "meaning": "4と10の最小公倍数は20。20秒後です。",
+          "svg": ""
+         },
+         {
+          "question": "赤は 6秒おき、青は 8秒おき、黄は 12秒おきに光ります。つぎに3つ同時に光るのは何秒後ですか。",
+          "answer": "24",
+          "meaning": "6と8と12の最小公倍数は24。24秒後です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "3つのなかまを 重ねて数える（包除）",
+        "rei": {
+         "question": "1 から 100 までの整数のうち、3 でも 5 でも わり切れない数は 何こ ありますか。",
+         "svg": "<svg viewBox=\"0 0 300 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"6\" y=\"10\" width=\"288\" height=\"120\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.5\"/><text x=\"14\" y=\"126\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">ぜんたい 100</text><circle cx=\"115\" cy=\"66\" r=\"52\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"185\" cy=\"66\" r=\"52\" fill=\"rgba(255,107,107,0.16)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"72\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">3の倍数 33</text><text x=\"212\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">5の倍数 20</text><text x=\"84\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">27</text><text x=\"150\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#8a5cff\">6</text><text x=\"216\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">13</text></svg>",
+         "kaisetsu": [
+          "**まず わり切れる数を数えて、全体からひきます。**",
+          "3の倍数は 100÷3＝33こ。5の倍数は 100÷5＝20こ。",
+          "**両方（15の倍数）を 2回数えている**ので 100÷15＝6こ を引く。33＋20−6＝47こ。",
+          "100−47＝**53こ**。"
+         ],
+         "answer": "53"
+        },
+        "ruidai": [
+         {
+          "question": "1 から 100 までで、3 または 5 でわり切れる数は何こありますか。",
+          "answer": "47",
+          "meaning": "33＋20−6＝47こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 100 までで、3 でも 5 でも わり切れる数（15の倍数）は何こありますか。",
+          "answer": "6",
+          "meaning": "100÷15＝6こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 200 までで、4 でも 6 でも わり切れない数は何こありますか。",
+          "answer": "133",
+          "meaning": "50＋33−16＝67こがわり切れる。200−67＝133こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "18": {
+      "title": "倍数の見つけ方",
+      "items": [
+       {
+        "bone": "何回 わり切れるか",
+        "rei": {
+         "question": "1 から 20 までの整数を ぜんぶ かけた数は、2 で 何回 わり切れますか。",
+         "svg": "<svg viewBox=\"0 0 326 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">…</text><rect x=\"270\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"293.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">20</text><text x=\"163\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2の倍数を数える</text></svg>",
+         "kaisetsu": [
+          "**2の倍数、4の倍数、8の倍数… を 順に数えて たします。**",
+          "2の倍数：20÷2＝10こ。4の倍数：20÷4＝5こ。",
+          "8の倍数：20÷8＝2こ。16の倍数：20÷16＝1こ。",
+          "10＋5＋2＋1＝**18回**。"
+         ],
+         "answer": "18"
+        },
+        "ruidai": [
+         {
+          "question": "1 から 20 までをぜんぶかけた数は 5 で何回わり切れますか。",
+          "answer": "4",
+          "meaning": "5の倍数が4こ、25の倍数が0こ。4回です。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 10 までをぜんぶかけた数は 2 で何回わり切れますか。",
+          "answer": "8",
+          "meaning": "5＋2＋1＝8回です。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 30 までをぜんぶかけた数は 3 で何回わり切れますか。",
+          "answer": "14",
+          "meaning": "10＋3＋1＝14回です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "末尾の 0 は 2と5 のペアの数",
+        "rei": {
+         "question": "1 から 20 までの整数を ぜんぶ かけた数の 一の位から、0 は 何こ 続きますか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">10</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">15</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">20</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5の倍数を数える</text></svg>",
+         "kaisetsu": [
+          "**0が1こ増えるのは 10（＝2×5）が1組できるとき**。ここが発見。",
+          "2 は たくさんあるので、**少ないほうの 5 の数で決まります**。",
+          "5の倍数：20÷5＝4こ。25の倍数：0こ。",
+          "**4こ**。"
+         ],
+         "answer": "4"
+        },
+        "ruidai": [
+         {
+          "question": "1 から 30 までをぜんぶかけた数の 一の位から 0 は何こ続きますか。",
+          "answer": "7",
+          "meaning": "6＋1＝7こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 10 までをぜんぶかけた数の 一の位から 0 は何こ続きますか。",
+          "answer": "2",
+          "meaning": "2こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 50 までをぜんぶかけた数の 一の位から 0 は何こ続きますか。",
+          "answer": "12",
+          "meaning": "10＋2＝12こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "倍数の 見分け方を 使って 虫食いをうめる",
+        "rei": {
+         "question": "4けたの整数 3□24 が 9 の倍数になるとき、□ にあてはまる数字はいくつですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">□</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9の倍数</text></svg>",
+         "kaisetsu": [
+          "**9の倍数は 各位の数をたすと 9の倍数**になります。",
+          "3＋□＋2＋4＝9＋□。",
+          "9＋□ が9の倍数になるのは □＝0 か □＝9。",
+          "0 も 9 も あてはまるので、**大きいほうの 9** を答えます。（0でも正しい）"
+         ],
+         "answer": "9"
+        },
+        "ruidai": [
+         {
+          "question": "4けたの整数 3□24 が 3 の倍数になる □ は 全部で何こありますか。",
+          "answer": "4",
+          "meaning": "3＋□＋2＋4＝9＋□ が3の倍数。□＝0、3、6、9 の4こです。",
+          "svg": ""
+         },
+         {
+          "question": "4けたの整数 12□4 が 4 の倍数になる □ は 全部で何こありますか。",
+          "answer": "5",
+          "meaning": "4の倍数は下2けたで決まる。□4 が4の倍数なのは 04、24、44、64、84 の5こです。",
+          "svg": ""
+         },
+         {
+          "question": "3けたの整数 2□6 が 9 の倍数になるとき、□ はいくつですか。",
+          "answer": "1",
+          "meaning": "2＋□＋6＝8＋□。9の倍数になるのは □＝1です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "19": {
+      "title": "場合の数（数え上げ）",
+      "items": [
+       {
+        "bone": "三角形が できない場合を ひく（余事象）",
+        "rei": {
+         "question": "1cm、2cm、3cm、4cm、5cm の 5本の棒から 3本 選びます。三角形が **できる** 選び方は 何通りですか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3本えらぶ</text></svg>",
+         "kaisetsu": [
+          "**まず 全部の選び方**を出します。5本から3本で 10通り。",
+          "三角形ができるのは **いちばん長い辺 ＜ ほかの2辺の和** のとき。",
+          "できないものを数えます。(1,2,3)(1,2,4)(1,2,5)(1,3,4)(1,3,5)(1,4,5)(2,3,5) の7通り。",
+          "10−7＝**3通り**。（(2,3,4)(2,4,5)(3,4,5)）"
+         ],
+         "answer": "3"
+        },
+        "ruidai": [
+         {
+          "question": "1、2、3、4、5cm の5本から3本えらぶ選び方は全部で何通りですか。",
+          "answer": "10",
+          "meaning": "5本から3本で10通りです。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、3、4、5cm の5本から3本えらんで 三角形が できない 選び方は何通りですか。",
+          "answer": "7",
+          "meaning": "10通りのうち できるのは3通り。10−3＝7通りです。",
+          "svg": ""
+         },
+         {
+          "question": "2、3、4、5、6cm の5本から3本えらんで 三角形が できる 選び方は何通りですか。",
+          "answer": "7",
+          "meaning": "できないのは (2,3,5)(2,3,6)(2,4,6) の3通り。10−3＝7通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "あまりで なかま分けして 数える",
+        "rei": {
+         "question": "1 から 30 までの整数から 1つ 選びます。6 でわったあまりが 2 になる数は 何こ ありますか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">14</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">20</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">26</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6ずつふえる</text></svg>",
+         "kaisetsu": [
+          "**6でわって2あまる数**を書き出します。2、8、14、20、26…",
+          "6ずつ ふえていきます。",
+          "30 までなので 2、8、14、20、26 の5こ。（32 は 30 をこえる）",
+          "**5こ**。"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "1 から 30 までで、6 でわったあまりが 0 になる数は何こありますか。",
+          "answer": "5",
+          "meaning": "6、12、18、24、30 の5こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 30 までで、6 でわったあまりが 1 になる数は何こありますか。",
+          "answer": "5",
+          "meaning": "1、7、13、19、25 の5こです。",
+          "svg": ""
+         },
+         {
+          "question": "1 から 100 までで、6 でわったあまりが 2 になる数は何こありますか。",
+          "answer": "17",
+          "meaning": "2から98まで6おきで17こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "2つの数の 組み合わせを もれなく数える",
+        "rei": {
+         "question": "30円のあめ と 40円のガム を あわせて買って ちょうど 480円 にします。（どちらも 1こ以上 買います）買い方は 何通りありますか。",
+         "svg": "<svg viewBox=\"0 0 138 78\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"37.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"37.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">30</text><circle cx=\"101.0\" cy=\"34\" r=\"24\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"2\"/><text x=\"101.0\" y=\"39\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#7c2d12\">40</text><text x=\"69\" y=\"72\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">あわせて480円</text></svg>",
+         "kaisetsu": [
+          "**ガムの数で 場合分け**すると もれません。あめは 30円なので、のこりが 30でわり切れればよい。",
+          "ガム3こ＝120円。のこり360円。360÷30＝12こ。**できる**。",
+          "ガム6こ＝240円。のこり240円→8こ。ガム9こ＝360円。のこり120円→4こ。どちらも**できる**。",
+          "ガム12こだと 480円で あめが0こになり 条件に合わない。だから **3通り**。"
+         ],
+         "answer": "3"
+        },
+        "ruidai": [
+         {
+          "question": "30円のあめ と 40円のガム を あわせて ちょうど 480円 にします。（どちらも1こ以上）ガムを いちばん多く買うとき ガムは何こですか。",
+          "answer": "9",
+          "meaning": "ガム9こで360円、あめ4こで120円。合わせて480円です。",
+          "svg": ""
+         },
+         {
+          "question": "30円のあめ だけで 480円 にするには 何こ買いますか。",
+          "answer": "16",
+          "meaning": "480÷30＝16こです。",
+          "svg": ""
+         },
+         {
+          "question": "30円のあめ と 50円のガム を あわせて ちょうど 300円 にします。（どちらも1こ以上）買い方は何通りですか。",
+          "answer": "1",
+          "meaning": "ガム3こ＝150円、のこり150円があめ5こ。この1通りだけです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "20": {
+      "title": "並べ方と辞書順",
+      "items": [
+       {
+        "bone": "同じものが ある ならべ方",
+        "rei": {
+         "question": "赤玉 2こ と 白玉 3こ を 1れつに ならべます。ならべ方は 何通りですか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">赤</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">赤</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">白</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">白</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">白</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">同じ色は区別しない</text></svg>",
+         "kaisetsu": [
+          "**5つの場所のうち、赤を置く2か所を 選べば** 決まります。ここが発見。",
+          "5か所から2か所を選ぶ選び方。",
+          "5×4÷2＝10。（÷2 は 赤どうしを区別しないから）",
+          "**10通り**。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "赤玉 1こ と 白玉 4こ を 1れつにならべる並べ方は何通りですか。",
+          "answer": "5",
+          "meaning": "赤を置く場所が5か所。5通りです。",
+          "svg": ""
+         },
+         {
+          "question": "赤玉 3こ と 白玉 3こ を 1れつにならべる並べ方は何通りですか。",
+          "answer": "20",
+          "meaning": "6か所から3か所を選ぶので 6×5×4÷(3×2×1)＝20通りです。",
+          "svg": ""
+         },
+         {
+          "question": "赤玉 2こ と 白玉 2こ を 1れつにならべる並べ方は何通りですか。",
+          "answer": "6",
+          "meaning": "4か所から2か所で 4×3÷2＝6通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "辞書のじゅんに ならべたときの 順番",
+        "rei": {
+         "question": "1、2、3、4 の4まいのカードを ぜんぶ使って 4けたの整数を作り、小さい順に ならべます。3142 は 何番目ですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">小さい順にならべる</text></svg>",
+         "kaisetsu": [
+          "**かたまりで数えます。**",
+          "千の位が1のもの：3×2×1＝6こ。2のもの：6こ。ここまで12こ。",
+          "千の位が3で 百の位が1 のもの：31**、のこり2・4 で 3124、3142 の2こ。",
+          "3124 が13番目、3142 が **14番目**。"
+         ],
+         "answer": "14"
+        },
+        "ruidai": [
+         {
+          "question": "1、2、3、4 のカードで4けたの整数を作り小さい順にならべます。全部で何こできますか。",
+          "answer": "24",
+          "meaning": "4×3×2×1＝24こです。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、3、4 のカードで4けたの整数を作り小さい順にならべます。3124 は何番目ですか。",
+          "answer": "13",
+          "meaning": "千の位が1と2で12こ。つぎが3124で13番目です。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、3、4 のカードで4けたの整数を作り小さい順にならべます。13番目から24番目までは 千の位がいくつですか。",
+          "answer": "3",
+          "meaning": "1が1〜6番、2が7〜12番、3が13〜18番、4が19〜24番。13番目は3です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "カードで 整数を作り 倍数を数える",
+        "rei": {
+         "question": "1、2、3、4 の4まいのカードから 3まい 選んで 3けたの整数を作ります。3 の倍数は 何こ できますか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3まいえらぶ</text></svg>",
+         "kaisetsu": [
+          "**3の倍数は 各位の和が3の倍数**。まず 和が3の倍数になる3まいの組をさがします。",
+          "組は (1,2,3)＝6、(1,2,4)＝7、(1,3,4)＝8、(2,3,4)＝9。",
+          "3の倍数なのは **(1,2,3) と (2,3,4)** の2組。",
+          "それぞれ 3×2×1＝6通りならべられるので 6×2＝**12こ**。"
+         ],
+         "answer": "12"
+        },
+        "ruidai": [
+         {
+          "question": "1、2、3、4 から3まい選んで3けたの整数を作ります。全部で何こできますか。",
+          "answer": "24",
+          "meaning": "4×3×2＝24こです。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、3、4 から3まい選んで3けたの整数を作ります。偶数は何こできますか。",
+          "answer": "12",
+          "meaning": "一の位が2か4。それぞれ 3×2＝6通りで12こです。",
+          "svg": ""
+         },
+         {
+          "question": "1、2、3、4 から3まい選んで3けたの整数を作ります。4の倍数は何こできますか。",
+          "answer": "6",
+          "meaning": "下2けたが4の倍数なのは 12、24、32。それぞれ百の位が2通りで6こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "21": {
+      "title": "対称と塗り分け",
+      "items": [
+       {
+        "bone": "A が B より 右にくる（対称で半分）",
+        "rei": {
+         "question": "A、B、C、D の4人が 1れつに ならびます。A が B より **右** にいる ならび方は 何通りですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">A</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">B</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">C</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">D</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">AとBの前後だけ見る</text></svg>",
+         "kaisetsu": [
+          "**全部のならび方**は 4×3×2×1＝24通り。",
+          "A と B の 前後は、どのならび方でも **右か左の どちらか**。",
+          "**右になるのと 左になるのは ちょうど 同じ数**（左右をひっくり返せば1対1で対応する）。ここが発見。",
+          "24÷2＝**12通り**。"
+         ],
+         "answer": "12"
+        },
+        "ruidai": [
+         {
+          "question": "A、B、C、D、E の5人が1れつにならびます。A が B より右にいるならび方は何通りですか。",
+          "answer": "60",
+          "meaning": "5×4×3×2×1＝120。半分の60通りです。",
+          "svg": ""
+         },
+         {
+          "question": "A、B、C の3人が1れつにならびます。A が B より右にいるならび方は何通りですか。",
+          "answer": "3",
+          "meaning": "6÷2＝3通りです。",
+          "svg": ""
+         },
+         {
+          "question": "A、B、C、D の4人が1れつにならぶならび方は 全部で何通りですか。",
+          "answer": "24",
+          "meaning": "4×3×2×1＝24通りです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "となり合わないように ぬり分ける",
+        "rei": {
+         "question": "1れつにならんだ 4つの部屋を、赤・青・黄 の3色で ぬります。となり合う部屋は ちがう色にします。ぬり分け方は 何通りですか。",
+         "svg": "<svg viewBox=\"0 0 222 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">①</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">②</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">③</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">④</text><text x=\"111\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">となりは ちがう色</text></svg>",
+         "kaisetsu": [
+          "**左から順に、何色えらべるか**を数えます。",
+          "①はどれでもよいので **3通り**。",
+          "②は ①とちがう色なので **2通り**。③も ②とちがえばよいので 2通り。④も 2通り。",
+          "3×2×2×2＝**24通り**。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "1れつにならんだ 3つの部屋を 3色で となり合う部屋がちがう色になるようにぬります。何通りですか。",
+          "answer": "12",
+          "meaning": "3×2×2＝12通りです。",
+          "svg": ""
+         },
+         {
+          "question": "1れつにならんだ 4つの部屋を 4色で となり合う部屋がちがう色になるようにぬります。何通りですか。",
+          "answer": "108",
+          "meaning": "4×3×3×3＝108通りです。",
+          "svg": ""
+         },
+         {
+          "question": "1れつにならんだ 5つの部屋を 3色で となり合う部屋がちがう色になるようにぬります。何通りですか。",
+          "answer": "48",
+          "meaning": "3×2×2×2×2＝48通りです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "22": {
+      "title": "角度の見つけ方",
+      "items": [
+       {
+        "bone": "正多角形の 1つの角",
+        "rei": {
+         "question": "正八角形の 1つの内角は 何度ですか。",
+         "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 141.7,43.3 161.0,90.0 141.7,136.7 95.0,156.0 48.3,136.7 29.0,90.0 48.3,43.3\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正八角形</text></svg>",
+         "kaisetsu": [
+          "**外の角を先に出す**のが早いです。外の角をぜんぶたすと 360°。",
+          "1つの外角は 360÷8＝45°。",
+          "内角は 180−45。",
+          "**135°**。"
+         ],
+         "answer": "135"
+        },
+        "ruidai": [
+         {
+          "question": "正十角形の1つの内角は何度ですか。",
+          "answer": "144",
+          "meaning": "外角は36度。180−36＝144度です。",
+          "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 133.8,36.6 157.8,69.6 157.8,110.4 133.8,143.4 95.0,156.0 56.2,143.4 32.2,110.4 32.2,69.6 56.2,36.6\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正十角形</text></svg>"
+         },
+         {
+          "question": "正六角形の1つの内角は何度ですか。",
+          "answer": "120",
+          "meaning": "外角は60度。180−60＝120度です。",
+          "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 152.2,57.0 152.2,123.0 95.0,156.0 37.8,123.0 37.8,57.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正六角形</text></svg>"
+         },
+         {
+          "question": "1つの内角が 165° の正多角形は 正何角形ですか。",
+          "answer": "24",
+          "meaning": "外角は180−165＝15度。360÷15＝24。正24角形です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "正方形と 正三角形を くっつける",
+        "rei": {
+         "question": "正方形の 1辺の上に 正三角形を 外側に くっつけました。正方形の角と 正三角形の角が となり合うところの 角の大きさは 何度ですか。（正方形の1つの角と 正三角形の1つの角を たした角）",
+         "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">90°</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">60°</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正方形と正三角形</text></svg>",
+         "kaisetsu": [
+          "正方形の1つの角は **90°**。",
+          "正三角形の1つの角は **60°**。",
+          "となり合うので たします。",
+          "90＋60＝**150°**。"
+         ],
+         "answer": "150"
+        },
+        "ruidai": [
+         {
+          "question": "正方形の1つの角と 正三角形の1つの角 と 一直線（180°）の のこりの角は何度ですか。",
+          "answer": "30",
+          "meaning": "360−90−60−180＝30度です。",
+          "svg": ""
+         },
+         {
+          "question": "正五角形の1つの内角と 正三角形の1つの角 をたすと何度ですか。",
+          "answer": "168",
+          "meaning": "正五角形の内角は108度。108＋60＝168度です。",
+          "svg": ""
+         },
+         {
+          "question": "正六角形の1つの内角と 正方形の1つの角 をたすと何度ですか。",
+          "answer": "210",
+          "meaning": "120＋90＝210度です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "交わった線の 角の和",
+        "rei": {
+         "question": "三角形の 3つの内角の和は 180° です。四角形の 4つの内角の和は 何度ですか。",
+         "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 161.0,90.0 95.0,156.0 29.0,90.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">四角形</text></svg>",
+         "kaisetsu": [
+          "**対角線で 三角形に分けます。**ここが発見。",
+          "四角形に 対角線を1本ひくと、三角形が2つ できます。",
+          "180×2。",
+          "**360°**。（n角形なら 180×(n−2)）"
+         ],
+         "answer": "360"
+        },
+        "ruidai": [
+         {
+          "question": "五角形の 5つの内角の和は何度ですか。",
+          "answer": "540",
+          "meaning": "三角形3つに分かれるので 180×3＝540度です。",
+          "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 157.8,69.6 133.8,143.4 56.2,143.4 32.2,69.6\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">五角形</text></svg>"
+         },
+         {
+          "question": "六角形の 6つの内角の和は何度ですか。",
+          "answer": "720",
+          "meaning": "三角形4つで 180×4＝720度です。",
+          "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 152.2,57.0 152.2,123.0 95.0,156.0 37.8,123.0 37.8,57.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">六角形</text></svg>"
+         },
+         {
+          "question": "内角の和が 1080° なのは 何角形ですか。",
+          "answer": "8",
+          "meaning": "1080÷180＝6。三角形6つなので 8角形です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "23": {
+      "title": "面積とまわりの長さ",
+      "items": [
+       {
+        "bone": "見た目がちがっても まわりは同じ",
+        "rei": {
+         "question": "たて 6cm、よこ 10cm の長方形の 右上の角から、たて 2cm・よこ 3cm の長方形を 切り取りました。のこった形の まわりの長さは何cmですか。",
+         "svg": "<svg viewBox=\"0 0 250 175\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"22\" width=\"183.3\" height=\"110.0\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"117.7\" y=\"14\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10cm</text><text x=\"12\" y=\"77.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6cm</text><text x=\"117.7\" y=\"152.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">切り取っても まわりは同じ</text><text x=\"125\" y=\"169\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">角を切り取る</text></svg>",
+         "kaisetsu": [
+          "**切り取った角では、へる2辺と ふえる2辺の 長さが 同じ**です。",
+          "右へ3cm・下へ2cm がへって、同じ長さの2辺がふえる。",
+          "だから **まわりの長さは かわりません**。",
+          "(10＋6)×2＝**32cm**。"
+         ],
+         "answer": "32"
+        },
+        "ruidai": [
+         {
+          "question": "たて 6cm、よこ 10cm の長方形の 右上の角から たて2cm・よこ3cm を切り取った形の 面積は何cm²ですか。",
+          "answer": "54",
+          "meaning": "60−6＝54cm²です。（面積はへります）",
+          "svg": "<svg viewBox=\"0 0 250 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"22\" width=\"183.3\" height=\"110.0\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"117.7\" y=\"14\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10cm</text><text x=\"12\" y=\"77.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6cm</text><text x=\"117.7\" y=\"152.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">面積はへる</text></svg>"
+         },
+         {
+          "question": "たて 8cm、よこ 12cm の長方形の 角から 小さい長方形を切り取った形の まわりの長さは何cmですか。",
+          "answer": "40",
+          "meaning": "角を切り取ってもまわりはかわりません。(8＋12)×2＝40cmです。",
+          "svg": ""
+         },
+         {
+          "question": "たて 6cm、よこ 10cm の長方形の まわりの長さは何cmですか。",
+          "answer": "32",
+          "meaning": "(6＋10)×2＝32cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "円の まわりの長さ",
+        "rei": {
+         "question": "直径 50cm の円の まわりの長さは何cmですか。（円周率は 3.14 とします）",
+         "svg": "<svg viewBox=\"0 0 190 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"95\" cy=\"88\" r=\"66\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M95 88 L161 88\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"128\" y=\"82\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">25</text><text x=\"95\" y=\"168\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">まわり＝直径×3.14</text><text x=\"95\" y=\"179\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">直径50cmの円</text></svg>",
+         "kaisetsu": [
+          "**円のまわりの長さは 直径×3.14**。",
+          "どんな大きさの円でも、まわりの長さ÷直径は いつも同じ数（3.14）になります。",
+          "50×3.14。",
+          "**157cm**。"
+         ],
+         "answer": "157"
+        },
+        "ruidai": [
+         {
+          "question": "直径 100cm の円の まわりの長さは何cmですか。（円周率3.14）",
+          "answer": "314",
+          "meaning": "100×3.14＝314cmです。",
+          "svg": "<svg viewBox=\"0 0 190 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"95\" cy=\"88\" r=\"66\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M95 88 L161 88\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"128\" y=\"82\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">50</text><text x=\"95\" y=\"179\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">直径100cm</text></svg>"
+         },
+         {
+          "question": "半径 25cm の円の まわりの長さは何cmですか。（円周率3.14）",
+          "answer": "157",
+          "meaning": "直径は50cm。50×3.14＝157cmです。",
+          "svg": ""
+         },
+         {
+          "question": "まわりの長さが 314cm の円の 直径は何cmですか。（円周率3.14）",
+          "answer": "100",
+          "meaning": "314÷3.14＝100cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "六角形の 向かい合う辺",
+        "rei": {
+         "question": "すべての角が 120° の六角形があります。となり合う辺の長さが 順に 3cm、4cm、5cm、6cm、□cm、△cm のとき、□＋△ はいくつですか。（3＋6、4＋□、5＋△ が どれも同じ数になります）",
+         "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 152.2,57.0 152.2,123.0 95.0,156.0 37.8,123.0 37.8,57.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">すべての角が120°</text></svg>",
+         "kaisetsu": [
+          "**すべての角が120°の六角形では、向かい合う辺どうしの和が どれも同じ**になります。ここが発見。",
+          "3と6が向かい合うので 3＋6＝9。",
+          "4＋□＝9 なので □＝5。5＋△＝9 なので △＝4。",
+          "□＋△＝5＋4＝**9**。"
+         ],
+         "answer": "9"
+        },
+        "ruidai": [
+         {
+          "question": "すべての角が120°の六角形で、向かい合う辺が 3cm と 6cm のとき、その和はいくつですか。",
+          "answer": "9",
+          "meaning": "3＋6＝9です。",
+          "svg": ""
+         },
+         {
+          "question": "すべての角が120°の六角形で、向かい合う辺の和が どれも 9 です。片方が 4cm のとき もう片方は何cmですか。",
+          "answer": "5",
+          "meaning": "9−4＝5cmです。",
+          "svg": ""
+         },
+         {
+          "question": "正六角形の 1つの角は何度ですか。",
+          "answer": "120",
+          "meaning": "180−360÷6＝120度です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "24": {
+      "title": "面積の くふう",
+      "items": [
+       {
+        "bone": "ななめの 帯を のぞいた 面積",
+        "rei": {
+         "question": "たて 6cm、よこ 10cm の長方形に、はば 2cm の 帯が ななめに 通っています。帯を のぞいた 部分の面積は何cm²ですか。（帯は上の辺から下の辺まで まっすぐ通っています）",
+         "svg": "<svg viewBox=\"0 0 250 175\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"22\" width=\"183.3\" height=\"110.0\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><polygon points=\"77.3,22.0 114.0,22.0 158.0,132.0 121.3,132.0\" fill=\"rgba(255,107,107,0.30)\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"117.7\" y=\"14\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10cm</text><text x=\"12\" y=\"77.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6cm</text><text x=\"117.7\" y=\"152.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">帯をよせると長方形</text><text x=\"125\" y=\"169\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">はば2cmの帯</text></svg>",
+         "kaisetsu": [
+          "**帯を 左に よせても 面積はかわりません。**ここが発見。傾きは関係ない。",
+          "よせると、帯は たて6cm・よこ2cm の長方形になる。面積は 6×2＝12cm²。",
+          "全体は 6×10＝60cm²。",
+          "60−12＝**48cm²**。"
+         ],
+         "answer": "48"
+        },
+        "ruidai": [
+         {
+          "question": "たて 6cm、よこ 10cm の長方形に はば 2cm の帯が ななめに通っています。帯の部分の面積は何cm²ですか。",
+          "answer": "12",
+          "meaning": "よせると たて6cm・よこ2cm。12cm²です。",
+          "svg": "<svg viewBox=\"0 0 250 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"22\" width=\"183.3\" height=\"110.0\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><polygon points=\"77.3,22.0 114.0,22.0 158.0,132.0 121.3,132.0\" fill=\"rgba(255,107,107,0.30)\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"117.7\" y=\"14\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10cm</text><text x=\"12\" y=\"77.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6cm</text></svg>"
+         },
+         {
+          "question": "たて 8cm、よこ 12cm の長方形に はば 3cm の帯が ななめに通っています。帯をのぞいた面積は何cm²ですか。",
+          "answer": "72",
+          "meaning": "96−24＝72cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "たて 6cm、よこ 10cm の長方形の面積は何cm²ですか。",
+          "answer": "60",
+          "meaning": "6×10＝60cm²です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "ひし形の 面積は 対角線から",
+        "rei": {
+         "question": "対角線が 8cm と 6cm の ひし形の 面積は何cm²ですか。",
+         "svg": "<svg viewBox=\"0 0 118 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">6</text><text x=\"59\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2本の対角線</text></svg>",
+         "kaisetsu": [
+          "**ひし形の面積は 対角線×対角線÷2**。",
+          "なぜかというと、対角線を辺にもつ長方形の **ちょうど半分**だから。",
+          "8×6＝48。",
+          "48÷2＝**24cm²**。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "対角線が 10cm と 6cm の ひし形の面積は何cm²ですか。",
+          "answer": "30",
+          "meaning": "10×6÷2＝30cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "1辺 5cm の正方形を ひし形として見たとき、対角線の長さの積 ÷2 が面積になります。正方形の面積は何cm²ですか。",
+          "answer": "25",
+          "meaning": "正方形の面積は 5×5＝25cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "面積が 24cm² のひし形で、1本の対角線が 8cm のとき、もう1本は何cmですか。",
+          "answer": "6",
+          "meaning": "24×2÷8＝6cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "高さは 図の外にもある",
+        "rei": {
+         "question": "底辺が 8cm、高さが 5cm の 三角形の 面積は何cm²ですか。（高さは 底辺をのばした線までの きょり です）",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"24,124 206,124 74,26\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"115\" y=\"140\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">底辺8cm</text><text x=\"40\" y=\"72\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"150\" y=\"66\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"115\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">高さ5cm</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">高さは外にもある</text></svg>",
+         "kaisetsu": [
+          "**高さは「底辺をのばした線までの まっすぐなきょり」**。図の外に出ていてもかまいません。",
+          "三角形の面積は 底辺×高さ÷2。",
+          "8×5＝40。",
+          "40÷2＝**20cm²**。"
+         ],
+         "answer": "20"
+        },
+        "ruidai": [
+         {
+          "question": "底辺が 12cm、高さが 5cm の三角形の面積は何cm²ですか。",
+          "answer": "30",
+          "meaning": "12×5÷2＝30cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "面積が 20cm²、底辺が 8cm の三角形の 高さは何cmですか。",
+          "answer": "5",
+          "meaning": "20×2÷8＝5cmです。",
+          "svg": ""
+         },
+         {
+          "question": "底辺が 8cm、高さが 5cm の 平行四辺形 の面積は何cm²ですか。",
+          "answer": "40",
+          "meaning": "平行四辺形は ÷2 しません。8×5＝40cm²です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "25": {
+      "title": "面積から 長さを出す",
+      "items": [
+       {
+        "bone": "面積が わかっていて 長さを 出す",
+        "rei": {
+         "question": "三角形の面積が 30cm²、底辺が 12cm のとき、高さは何cmですか。",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"24,124 206,124 74,26\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"115\" y=\"140\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">12cm</text><text x=\"40\" y=\"72\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"150\" y=\"66\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"115\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">高さ?</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">面積30cm²</text></svg>",
+         "kaisetsu": [
+          "**底辺×高さ÷2＝面積** を さかさまに たどります。",
+          "÷2 を もどして 底辺×高さ＝30×2＝60。",
+          "60÷12。",
+          "**5cm**。"
+         ],
+         "answer": "5"
+        },
+        "ruidai": [
+         {
+          "question": "三角形の面積が 36cm²、高さが 9cm のとき、底辺は何cmですか。",
+          "answer": "8",
+          "meaning": "36×2÷9＝8cmです。",
+          "svg": ""
+         },
+         {
+          "question": "平行四辺形の面積が 60cm²、底辺が 12cm のとき、高さは何cmですか。",
+          "answer": "5",
+          "meaning": "平行四辺形は ÷2 しないので 60÷12＝5cmです。",
+          "svg": ""
+         },
+         {
+          "question": "台形の面積が 42cm²、上底と下底の和が 14cm のとき、高さは何cmですか。",
+          "answer": "6",
+          "meaning": "(上底＋下底)×高さ÷2＝面積。42×2÷14＝6cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "三角形を 3等分・2等分する",
+        "rei": {
+         "question": "三角形 ABC の面積が 36cm² です。辺 BC を 3等分した点のうち、B に近いほうの点を D とします。三角形 ABD の面積は何cm²ですか。",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"24,124 206,124 74,26\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"115\" y=\"140\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">BC を3等分</text><text x=\"40\" y=\"72\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"150\" y=\"66\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"115\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">面積36cm²</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">高さは同じ</text></svg>",
+         "kaisetsu": [
+          "**高さが同じ三角形の面積は 底辺の長さに比例します。**ここが発見。",
+          "ABD と ABC は 頂点Aが同じで、高さも同じ。",
+          "底辺 BD は BC の 3分の1。",
+          "36÷3＝**12cm²**。"
+         ],
+         "answer": "12"
+        },
+        "ruidai": [
+         {
+          "question": "三角形 ABC の面積が 36cm²。辺BCの まん中の点を M とすると、三角形 ABM の面積は何cm²ですか。",
+          "answer": "18",
+          "meaning": "底辺が半分なので 面積も半分の18cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "三角形 ABC の面積が 36cm²。辺BCを3等分した2点を D、E とすると、三角形 ADE の面積は何cm²ですか。",
+          "answer": "12",
+          "meaning": "DEはBCの3分の1。36÷3＝12cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "三角形 ABC の面積が 60cm²。辺BCを 4等分した1つ分を底辺にした三角形の面積は何cm²ですか。",
+          "answer": "15",
+          "meaning": "60÷4＝15cm²です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "26": {
+      "title": "円と正方形",
+      "items": [
+       {
+        "bone": "正方形に ぴったり入る円",
+        "rei": {
+         "question": "1辺 10cm の正方形に ぴったり入る 円の 直径は何cmですか。",
+         "svg": "<svg viewBox=\"0 0 190 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"95\" cy=\"88\" r=\"66\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M95 88 L161 88\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"128\" y=\"82\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">5</text><text x=\"95\" y=\"168\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">直径＝正方形の1辺</text><text x=\"95\" y=\"179\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正方形にぴったり入る円</text></svg>",
+         "kaisetsu": [
+          "**ぴったり入る円の 直径は 正方形の1辺と同じ**です。",
+          "正方形の1辺は 10cm。",
+          "だから直径も 10cm。",
+          "**10cm**。（半径は5cm）"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "1辺 10cm の正方形に ぴったり入る円の 半径は何cmですか。",
+          "answer": "5",
+          "meaning": "直径が10cmなので半径は5cmです。",
+          "svg": ""
+         },
+         {
+          "question": "直径 8cm の円が ぴったり入る 正方形の 1辺は何cmですか。",
+          "answer": "8",
+          "meaning": "1辺＝直径で8cmです。",
+          "svg": ""
+         },
+         {
+          "question": "1辺 10cm の正方形の 面積は何cm²ですか。",
+          "answer": "100",
+          "meaning": "10×10＝100cm²です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "円に ぴったり入る 正方形（対角線＝直径）",
+        "rei": {
+         "question": "直径 10cm の円に ぴったり入る 正方形があります。この正方形の 対角線の長さは何cmですか。",
+         "svg": "<svg viewBox=\"0 0 190 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"95\" cy=\"88\" r=\"66\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M95 88 L161 88\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"128\" y=\"82\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">5</text><text x=\"95\" y=\"168\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">対角線＝直径</text><text x=\"95\" y=\"179\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">円にぴったり入る正方形</text></svg>",
+         "kaisetsu": [
+          "**円にぴったり入る正方形は、対角線が 円の直径と同じ**になります。ここが発見。",
+          "正方形が かたむいていても かわりません。",
+          "直径は 10cm。",
+          "対角線も **10cm**。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "直径 10cm の円にぴったり入る正方形の 面積は何cm²ですか。（ひし形として 対角線×対角線÷2 で出します）",
+          "answer": "50",
+          "meaning": "対角線が2本とも10cm。10×10÷2＝50cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "直径 8cm の円にぴったり入る正方形の 対角線は何cmですか。",
+          "answer": "8",
+          "meaning": "対角線＝直径で8cmです。",
+          "svg": ""
+         },
+         {
+          "question": "直径 8cm の円にぴったり入る正方形の 面積は何cm²ですか。",
+          "answer": "32",
+          "meaning": "8×8÷2＝32cm²です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "27": {
+      "title": "重なりと角度",
+      "items": [
+       {
+        "bone": "重なりは 差では消えるが 和では消えない",
+        "rei": {
+         "question": "面積 40cm² の紙 A と、面積 30cm² の紙 B を 重ねました。重なった部分の面積が 12cm² のとき、A だけの部分 と B だけの部分 の 面積の差は何cm²ですか。",
+         "svg": "<svg viewBox=\"0 0 300 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"6\" y=\"10\" width=\"288\" height=\"120\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.5\"/><text x=\"14\" y=\"126\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">ぜんたい 0</text><circle cx=\"115\" cy=\"66\" r=\"52\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"185\" cy=\"66\" r=\"52\" fill=\"rgba(255,107,107,0.16)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"72\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">A 40</text><text x=\"212\" y=\"26\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">B 30</text><text x=\"84\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">28</text><text x=\"150\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#8a5cff\">12</text><text x=\"216\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">18</text></svg>",
+         "kaisetsu": [
+          "**「差」を聞かれたら、共通部分は 消えます。**ここが発見。",
+          "Aだけ＝40−12＝28cm²。Bだけ＝30−12＝18cm²。",
+          "差は 28−18＝10cm²。",
+          "じつは **40−30＝10** と 同じ。重なりを出さなくても 差は出せる。"
+         ],
+         "answer": "10"
+        },
+        "ruidai": [
+         {
+          "question": "面積 40cm² と 30cm² の紙を重ね、重なりが 12cm² のとき、全体の面積は何cm²ですか。",
+          "answer": "58",
+          "meaning": "40＋30−12＝58cm²です。（和では消えない）",
+          "svg": ""
+         },
+         {
+          "question": "面積 40cm² と 30cm² の紙を重ね、重なりが 12cm² のとき、A だけの部分は何cm²ですか。",
+          "answer": "28",
+          "meaning": "40−12＝28cm²です。",
+          "svg": ""
+         },
+         {
+          "question": "面積 50cm² と 35cm² の紙を重ねたとき、A だけの部分と B だけの部分の 面積の差は何cm²ですか。",
+          "answer": "15",
+          "meaning": "重なりは消えるので 50−35＝15cm²です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "二等辺三角形と 外角で 角をつくる",
+        "rei": {
+         "question": "二等辺三角形の 頂上の角が 30° のとき、底の1つの角は何度ですか。",
+         "svg": "<svg viewBox=\"0 0 230 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"24,124 206,124 74,26\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"115\" y=\"140\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"40\" y=\"72\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"150\" y=\"66\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\"></text><text x=\"115\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">頂上30°</text><text x=\"115\" y=\"159\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">二等辺三角形</text></svg>",
+         "kaisetsu": [
+          "三角形の3つの角の和は **180°**。",
+          "頂上が30°なので、のこりの2つで 180−30＝150°。",
+          "二等辺三角形の **底の2つの角は同じ大きさ**。",
+          "150÷2＝**75°**。"
+         ],
+         "answer": "75"
+        },
+        "ruidai": [
+         {
+          "question": "二等辺三角形の頂上の角が 40° のとき、底の1つの角は何度ですか。",
+          "answer": "70",
+          "meaning": "(180−40)÷2＝70度です。",
+          "svg": ""
+         },
+         {
+          "question": "二等辺三角形の 底の1つの角が 75° のとき、頂上の角は何度ですか。",
+          "answer": "30",
+          "meaning": "180−150＝30度です。",
+          "svg": ""
+         },
+         {
+          "question": "二等辺三角形の頂上の角が 30°、底の角が 75° です。底の角の外がわの角（一直線のこりの角）は何度ですか。",
+          "answer": "105",
+          "meaning": "180−75＝105度です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "28": {
+      "title": "平均算",
+      "items": [
+       {
+        "bone": "平均から 合計を もどす",
+        "rei": {
+         "question": "5人のテストの 平均点が 72点 でした。合計は何点ですか。",
+         "svg": "<svg viewBox=\"0 0 274 74\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">72</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">72</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">72</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">72</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">72</text><text x=\"137\" y=\"68\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">平均72点が5人</text></svg>",
+         "kaisetsu": [
+          "**平均×人数＝合計**。ここが基本。",
+          "72×5。",
+          "**360点**。",
+          "（平均は「ならしたら1人何点か」）"
+         ],
+         "answer": "360"
+        },
+        "ruidai": [
+         {
+          "question": "5人の平均が 72点。もう1人 84点 の人が入ると、6人の平均は何点になりますか。",
+          "answer": "74",
+          "meaning": "合計は360＋84＝444点。444÷6＝74点です。",
+          "svg": ""
+         },
+         {
+          "question": "6人の合計が 444点 のとき、平均は何点ですか。",
+          "answer": "74",
+          "meaning": "444÷6＝74点です。",
+          "svg": ""
+         },
+         {
+          "question": "4人の平均が 80点、もう1人が 60点 のとき、5人の平均は何点ですか。",
+          "answer": "76",
+          "meaning": "320＋60＝380点。380÷5＝76点です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "平均が つるかめになる",
+        "rei": {
+         "question": "男子 10人 の平均が 60点、女子 15人 の平均が 70点 でした。25人ぜんぶの 平均は何点ですか。",
+         "svg": "<svg viewBox=\"0 0 300 92\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16.0\" y=\"24\" width=\"107.2\" height=\"30\" fill=\"#4f7cff\" fill-opacity=\"0.22\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"69.6\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">男子10人60点</text><rect x=\"123.2\" y=\"24\" width=\"160.8\" height=\"30\" fill=\"#ff6b6b\" fill-opacity=\"0.22\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><text x=\"203.6\" y=\"44\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">女子15人70点</text><text x=\"150\" y=\"86\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">人数がちがう</text></svg>",
+         "kaisetsu": [
+          "**平均どうしを そのまま平均してはいけません**（65点ではない）。人数がちがうから。",
+          "合計を出します。男子 60×10＝600点、女子 70×15＝1050点。",
+          "ぜんぶで 600＋1050＝1650点。人数は 25人。",
+          "1650÷25＝**66点**。"
+         ],
+         "answer": "66"
+        },
+        "ruidai": [
+         {
+          "question": "男子 10人の平均が 60点、女子 15人の平均が 70点。全体の合計は何点ですか。",
+          "answer": "1650",
+          "meaning": "600＋1050＝1650点です。",
+          "svg": ""
+         },
+         {
+          "question": "男子 20人の平均が 65点、女子 10人の平均が 80点。30人の平均は何点ですか。",
+          "answer": "70",
+          "meaning": "1300＋800＝2100点。2100÷30＝70点です。",
+          "svg": ""
+         },
+         {
+          "question": "男子 10人 と 女子 15人 の 合計人数は何人ですか。",
+          "answer": "25",
+          "meaning": "10＋15＝25人です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
+     "29": {
+      "title": "方陣算",
+      "items": [
+       {
+        "bone": "正方形にならべた ご石（いちばん外がわ）",
+        "rei": {
+         "question": "ご石を たて・よこ 同じ数ずつ ならべて 正方形を作りました。1辺が 8こ のとき、いちばん外がわの ご石は 何こですか。",
+         "svg": "<svg viewBox=\"0 0 192 196\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"22\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"18\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"39\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"60\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"81\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"102\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"123\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"144\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"22\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"43\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"64\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"85\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"106\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"127\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"148\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"169\" cy=\"165\" r=\"8\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><text x=\"96\" y=\"190\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1辺8この正方形</text></svg>",
+         "kaisetsu": [
+          "**1辺×4 では 数えすぎ**になります。角を2回 数えるから。ここが落とし穴。",
+          "1辺8こ×4＝32こ。",
+          "角は4つあり、それぞれ 2回 数えているので 4こ ひく。",
+          "32−4＝**28こ**。（(8−1)×4＝28 とも書けます）"
+         ],
+         "answer": "28"
+        },
+        "ruidai": [
+         {
+          "question": "1辺が 10こ の正方形にならべたご石の いちばん外がわは何こですか。",
+          "answer": "36",
+          "meaning": "(10−1)×4＝36こです。",
+          "svg": "<svg viewBox=\"0 0 194 184\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"20\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/></svg>"
+         },
+         {
+          "question": "1辺が 8こ の正方形にならべたご石は 全部で何こですか。",
+          "answer": "64",
+          "meaning": "8×8＝64こです。",
+          "svg": ""
+         },
+         {
+          "question": "いちばん外がわが 28こ の正方形にならべたご石の 1辺は何こですか。",
+          "answer": "8",
+          "meaning": "28÷4＝7。7＋1＝8こです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "まん中が あいている 方陣（中空方陣）",
+        "rei": {
+         "question": "ご石を 正方形にならべ、まん中の 3×3 の部分だけ あけました。外がわの 1辺が 7こ のとき、ご石は 何こ 使いましたか。",
+         "svg": "<svg viewBox=\"0 0 178 182\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"23\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"67\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"89\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"19\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"23\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"67\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"89\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"41\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"23\" cy=\"63\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"63\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"63\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"63\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"23\" cy=\"85\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"85\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"85\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"85\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"23\" cy=\"107\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"107\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"107\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"107\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"23\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"67\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"89\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"129\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"23\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"45\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"67\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"89\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"133\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"155\" cy=\"151\" r=\"9\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><text x=\"89\" y=\"176\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">まん中の3×3があいている</text></svg>",
+         "kaisetsu": [
+          "**全体から あいている部分を ひきます。**",
+          "全体は 7×7＝49こ。",
+          "あいているのは 3×3＝9こ。",
+          "49−9＝**40こ**。"
+         ],
+         "answer": "40"
+        },
+        "ruidai": [
+         {
+          "question": "外がわの1辺が 9こ、まん中の 5×5 があいている方陣のご石は何こですか。",
+          "answer": "56",
+          "meaning": "81−25＝56こです。",
+          "svg": "<svg viewBox=\"0 0 186 176\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"21\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/></svg>"
+         },
+         {
+          "question": "外がわの1辺が 7こ の正方形にならべたご石は 全部で何こですか。",
+          "answer": "49",
+          "meaning": "7×7＝49こです。",
+          "svg": ""
+         },
+         {
+          "question": "外がわの1辺が 10こ、まん中の 6×6 があいている方陣のご石は何こですか。",
+          "answer": "64",
+          "meaning": "100−36＝64こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
      }
     }
    }
