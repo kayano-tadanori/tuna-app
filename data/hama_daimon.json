@@ -10446,6 +10446,176 @@
                   "meaning": "13でわる条件から 58.5以上71.5未満（59〜71）。47でわる条件から 70.5以上117.5未満（71〜117）。重なるのは71だけ。わる数を大きくはなすと 重なりが1点に落ちる。"
                 }
               ]
+            },
+            {
+              "id": "hd_5m_f05_6",
+              "src": "HG-1537",
+              "title": "切りすての 概数から もどす",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 5,
+              "star": 3,
+              "intro": "ある整数Aを8でわると 商がBで あまりが6になりました。\nその商Bを17でわり、切りすてで 小数第1位までの概数にすると 7.3になりました。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "整数Aはいくつですか。",
+                  "answer": "1006",
+                  "meaning": "切りすてなので 7.3以上7.4未満（四捨五入とちがい 下のはしが7.3そのもの）。17倍すると 124.1以上125.8未満で Bは125だけ。A＝8×125+6＝1006。"
+                }
+              ]
+            },
+            {
+              "id": "hd_5m_f05_4",
+              "src": "HG-1538",
+              "title": "概数の 和と差の はんい",
+              "category": "kazu",
+              "unit": "概数（がい数）",
+              "grade": 5,
+              "star": 3,
+              "intro": "A町の人口は 百の位を四捨五入すると10000人、B村の人口は 百の位を四捨五入すると2000人です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "2つの人口の和は 何人以上ですか。",
+                  "answer": "11000",
+                  "meaning": "A町は9500人以上、B村は1500人以上。和は 9500+1500＝11000人以上（13000人未満）。"
+                },
+                {
+                  "question": "2つの人口の差は 何人より大きいですか。",
+                  "answer": "7000",
+                  "meaning": "差は 和と はしの取り方が 逆になる。Aがいちばん小さく Bがいちばん大きいとき 9500−2500＝7000。これより大きい。"
+                },
+                {
+                  "question": "2つの人口の差は 何人より小さいですか。",
+                  "answer": "9000",
+                  "meaning": "Aがいちばん大きく Bがいちばん小さいとき 10500−1500＝9000。これより小さい。"
+                }
+              ]
+            }
+          ],
+          "6": [
+            {
+              "id": "hd_5m_f06_6",
+              "src": "HG-1540",
+              "title": "12gで 1回転する はかり",
+              "category": "kazu",
+              "unit": "周期算",
+              "grade": 5,
+              "star": 3,
+              "intro": "12gで1回転する はかりがあります。文字ばんは 0が真上で、右回りに 0・1・2・…・11 の目もりが あります。\n品物Aをはかると 何回転かして 6の目もりを さしました。\n品物Bをはかると 何回転かして 7の目もりを さしました。\n品物Cをはかると 品物Aのときより 3周多くまわって 9の目もりを さしました。",
+              "svg": "<svg viewBox='0 0 280 136' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='13.0' fill='#ffd166' font-size='10' text-anchor='start'>12gで1回転する はかり</text><circle cx='80.0' cy='76.0' r='46' fill='#1e293b' stroke='#4f9eff' stroke-width='1.6'/><text x='80.0' y='44.0' fill='#ffd166' font-size='9' text-anchor='middle'>0</text><text x='97.5' y='48.7' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><text x='110.3' y='61.5' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><text x='115.0' y='79.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><text x='110.3' y='96.5' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><text x='97.5' y='109.3' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><text x='80.0' y='114.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><text x='62.5' y='109.3' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><text x='49.7' y='96.5' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><text x='45.0' y='79.0' fill='#ffd166' font-size='9' text-anchor='middle'>9</text><text x='49.7' y='61.5' fill='#ffd166' font-size='9' text-anchor='middle'>10</text><text x='62.5' y='48.7' fill='#ffd166' font-size='9' text-anchor='middle'>11</text><line x1='80.0' y1='76.0' x2='80.0' y2='48.0' stroke='#ef476f' stroke-width='2.2'/><text x='150.0' y='50.0' fill='#06d6a0' font-size='9' text-anchor='start'>0が真上、右回りに</text><text x='150.0' y='64.0' fill='#06d6a0' font-size='9' text-anchor='start'>1・2・…・11</text><text x='150.0' y='84.0' fill='#ffd166' font-size='9' text-anchor='start'>目もりは 12でわった</text><text x='150.0' y='98.0' fill='#ffd166' font-size='9' text-anchor='start'>あまり そのもの</text></svg>",
+              "steps": [
+                {
+                  "question": "品物AとBを いっしょにはかると、どの目もりを さしますか。",
+                  "answer": "1",
+                  "meaning": "目もりは 12でわったあまり そのもの。6+7＝13で 12でわったあまりは1。"
+                },
+                {
+                  "question": "品物AとCを いっしょにはかったら 8回転して ある目もりを さしました。品物Cの重さは何gですか。",
+                  "answer": "69",
+                  "meaning": "A＝12×a+6、C＝12×a+45（3周＝36g多く 目もりが9）。A+C＝24×a+51 が 12×8＋(0〜11) の形になるのは a＝2のときだけ。C＝12×2+45＝69g。"
+                }
+              ]
+            },
+            {
+              "id": "hd_5m_f06_7",
+              "src": "HG-1541",
+              "title": "1〜8を おりかえしてならべる",
+              "category": "kisoku",
+              "unit": "周期算",
+              "grade": 5,
+              "star": 3,
+              "intro": "1から8までの整数を くりかえし使い、7列で 100行まで ならべます。\n1行目は左から右、2行目は右から左、と こうごに おりかえします。",
+              "svg": "<svg viewBox='0 0 230 140' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='13.0' fill='#ffd166' font-size='9' text-anchor='start'>1〜8をくりかえし、7列で 左右に おりかえしてならべる</text><rect x='24.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='50.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='76.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='102.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='128.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><rect x='154.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><rect x='180.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><text x='10.0' y='34.0' fill='#06d6a0' font-size='8' text-anchor='start'>1行</text><rect x='24.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><rect x='50.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><rect x='76.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='102.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='128.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='154.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='180.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><text x='10.0' y='53.0' fill='#06d6a0' font-size='8' text-anchor='start'>2行</text><rect x='24.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><rect x='50.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><rect x='76.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='102.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='128.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='154.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='180.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><text x='10.0' y='72.0' fill='#06d6a0' font-size='8' text-anchor='start'>3行</text><rect x='24.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='50.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='76.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='102.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='128.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><rect x='154.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><rect x='180.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#312e81' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><text x='10.0' y='91.0' fill='#06d6a0' font-size='8' text-anchor='start'>4行</text><rect x='24.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><rect x='50.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><rect x='76.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><rect x='102.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><rect x='128.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='154.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='180.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><text x='10.0' y='110.0' fill='#06d6a0' font-size='8' text-anchor='start'>5行</text><text x='24.0' y='130.0' fill='#06d6a0' font-size='9' text-anchor='start'>（100行までつづく）</text></svg>",
+              "steps": [
+                {
+                  "question": "7は 全部で何回 出てきますか。",
+                  "answer": "87",
+                  "meaning": "ぜんぶで 7×100＝700こ。700÷8＝87あまり4 なので 1〜4は88回、5〜8は87回。おりかえしても「何番目に書いたか」は変わらない。"
+                },
+                {
+                  "question": "45行5列の数は 何ですか。",
+                  "answer": "1",
+                  "meaning": "45行は奇数行なので 左から右。44×7+5＝313番目。313÷8＝39あまり1 で 1。"
+                },
+                {
+                  "question": "1行目から100行目までの すべての数の和は いくつですか。",
+                  "answer": "3142",
+                  "meaning": "8こひとまとまりの和は36。87まとまりで3132、のこり4こ（1+2+3+4＝10）をたして3142。"
+                }
+              ]
+            },
+            {
+              "id": "hd_5m_f06_8",
+              "src": "HG-1542",
+              "title": "数表に わくをかぶせる",
+              "category": "kisoku",
+              "unit": "規則性・数列",
+              "grade": 5,
+              "star": 3,
+              "intro": "1から順に、1行に7こずつ 整数をならべた数表があります。\n㋐は たて2こ・よこ3こ の長方形のわく、㋑は たて3こ・よこ3こ で まん中をぬいた8このわくです。",
+              "svg": "<svg viewBox='0 0 260 140' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='13.0' fill='#ffd166' font-size='10' text-anchor='start'>1から順に 7こずつ ならべた数表</text><rect x='24.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>1</text><rect x='50.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>2</text><rect x='76.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>3</text><rect x='102.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>4</text><rect x='128.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>5</text><rect x='154.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>6</text><rect x='180.0' y='22.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='34.0' fill='#ffd166' font-size='9' text-anchor='middle'>7</text><rect x='24.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>8</text><rect x='50.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>9</text><rect x='76.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>10</text><rect x='102.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>11</text><rect x='128.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>12</text><rect x='154.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>13</text><rect x='180.0' y='41.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='53.0' fill='#ffd166' font-size='9' text-anchor='middle'>14</text><rect x='24.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>15</text><rect x='50.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>16</text><rect x='76.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>17</text><rect x='102.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>18</text><rect x='128.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>19</text><rect x='154.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>20</text><rect x='180.0' y='60.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='72.0' fill='#ffd166' font-size='9' text-anchor='middle'>21</text><rect x='24.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>22</text><rect x='50.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>23</text><rect x='76.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>24</text><rect x='102.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>25</text><rect x='128.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>26</text><rect x='154.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>27</text><rect x='180.0' y='79.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='91.0' fill='#ffd166' font-size='9' text-anchor='middle'>28</text><rect x='24.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='36.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>29</text><rect x='50.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='62.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>30</text><rect x='76.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='88.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>31</text><rect x='102.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='114.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>32</text><rect x='128.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='140.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>33</text><rect x='154.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='166.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>34</text><rect x='180.0' y='98.0' width='24.0' height='17.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='192.0' y='110.0' fill='#ffd166' font-size='9' text-anchor='middle'>35</text><rect x='23.0' y='21.0' width='78.0' height='36.0' rx='3' fill='none' stroke='#ef476f' stroke-width='1.8'/><text x='108.0' y='42.0' fill='#ef476f' font-size='9' text-anchor='start'>㋐ たて2×よこ3</text><rect x='127.0' y='59.0' width='78.0' height='55.0' rx='3' fill='none' stroke='#06d6a0' stroke-width='1.8'/><text x='24.0' y='130.0' fill='#06d6a0' font-size='9' text-anchor='start'>㋑ たて3×よこ3で まん中をぬいた8こ</text></svg>",
+              "steps": [
+                {
+                  "question": "㋐のわくを動かしたら、中の6つの数の和が375になりました。わくの中で いちばん小さい数はいくつですか。",
+                  "answer": "58",
+                  "meaning": "左上を□とすると 6つは □、□+1、□+2、□+7、□+8、□+9。和は □×6+27。(375−27)÷6＝58。"
+                },
+                {
+                  "question": "㋑のわくを動かしたら、中の8つの数の和が640になりました。わくの中で いちばん小さい数はいくつですか。",
+                  "answer": "72",
+                  "meaning": "8つの和は まん中の数の8倍に ちょうど等しい。640÷8＝80がまん中。左上は 80−8＝72。"
+                }
+              ]
+            }
+          ],
+          "7": [
+            {
+              "id": "hd_5m_f07_7",
+              "src": "HG-1543",
+              "title": "分子と分母を たすと 210",
+              "category": "kazu",
+              "unit": "倍数・約数",
+              "grade": 5,
+              "star": 3,
+              "intro": "1/209、3/207、5/205、7/203、……、207/3、209/1 と 分数が105こ ならんでいます。\n分子は 1・3・5 と2ずつふえ、分母は 209・207 と2ずつへります。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "はじめて3より大きい分数が出てくるのは 左から何番目ですか。",
+                  "answer": "80",
+                  "meaning": "どの分数も 分子と分母をたすと210で 変わらない。3より大きい＝分子が分母の3倍より大きい＝分子が210の4分の3（157.5）より大きい。はじめての奇数は159で 80番目。"
+                },
+                {
+                  "question": "分母も分子も 3でわり切れるものは 何こありますか。",
+                  "answer": "35",
+                  "meaning": "210は3の倍数なので、分子が3でわり切れれば 分母も自動的にわり切れる。分子は 3・9・15・…・207 の35こ。"
+                }
+              ]
+            },
+            {
+              "id": "hd_5m_f07_5",
+              "src": "HG-1544",
+              "title": "前の2つを たした数",
+              "category": "kisoku",
+              "unit": "規則性・数列",
+              "grade": 5,
+              "star": 3,
+              "intro": "2, 4, 6, 10, 16, 26, 42, 68, …… と 数がならんでいます。\n3番目からは 前の2つの数を たした数です。",
+              "svg": "",
+              "steps": [
+                {
+                  "question": "左から15番目の数はいくつですか。",
+                  "answer": "1974",
+                  "meaning": "2, 4, 6, 10, 16, 26, 42, 68, 110, 178, 288, 466, 754, 1220, 1974。"
+                },
+                {
+                  "question": "左から125番目までに 8の倍数は 何こありますか。",
+                  "answer": "21",
+                  "meaning": "数そのものは 大きくなりすぎるが、8でわったあまりだけ追うと 2・4・6・2・0・2 の6こで くりかえす。あまり0は 5番目・11番目・17番目…と6ずつ。125番目までに21こ。"
+                }
+              ]
             }
           ]
         },
