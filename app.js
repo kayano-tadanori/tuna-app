@@ -5650,7 +5650,7 @@ function makeCharStrip(canvasId, useImages) {
       const x = 32 + i * 104;
       const y = cv.height - frame.length * s - 2 + bounce;
       // チッチジャンプ2だけ、描いた絵の3人で応援する（他のゲームは今までのドット絵のまま）
-      const holder = useImages ? [J_IMG.otton, J_IMG.okan, J_IMG.chicchiUp][i] : null;
+      const holder = useImages ? [J_IMG.otton, J_IMG.okan, J_CHICCHI_FRAMES[0]][i] : null;
       if (holder && holder.ready) {
         jDrawImg(ctx, holder, x + 22, cv.height - 34 + bounce, 66, 66);
       } else {
@@ -7580,6 +7580,12 @@ const J_IMG = {
   mars_break: jMakeSprite('images/jump2-mars_break.png'),
   mars_ice: jMakeSprite('images/jump2-mars_ice.png'),
 };
+// 羽ばたきの4コマ用（上→中→下）。正面向きのほうが可愛いのでこちらを使う（本人の好み）
+const J_CHICCHI_FRAMES = [
+  jMakeSprite('images/jump2-chicchi-f1.png'),   // 翼を高く上げたところ
+  jMakeSprite('images/jump2-chicchi-f2.png'),   // 中くらい
+  jMakeSprite('images/jump2-chicchi-f3.png'),   // 翼を下までふり下ろしたところ
+];
 const J_CHICCHI_SPRITES = { flapUp: J_IMG.chicchiUp, flapDown: J_IMG.chicchiDown };
 // 見た目だけ大きく描く（当たり判定は今までどおり24×34のまま）
 const J_SPRITE_DRAW_W = 44, J_SPRITE_DRAW_H = 44;
@@ -7676,7 +7682,7 @@ function jGenPlatformAt(y) {
   const r = Math.random();
   const pIce = score > 45 ? 0.13 : 0;
   const pBreak = score > 28 ? 0.13 : 0;
-  const pSpring = score > 10 ? 0.18 : 0.10;
+  const pSpring = score > 10 ? 0.10 : 0.07;   // 18%は出すぎだったので10%に（本人の体感 2026-07-28）
   if (r < pIce) type = 'ice';
   else if (r < pIce + pBreak) type = 'break';
   else if (r < pIce + pBreak + pSpring) type = 'spring';
@@ -8515,13 +8521,24 @@ function drawJump() {
   const frame = rocketOn ? sp.rocket : (Math.floor(now / flapMs) % 2 ? sp.flapUp : sp.flapDown);
   if (glow) { ctx.save(); ctx.shadowColor = rocketOn ? '#ff8c3a' : wingOn ? '#ffd166' : '#ff8cbe'; ctx.shadowBlur = rocketOn ? 6 : 12; }
   // 絵が用意できていれば描いたチッチ、まだならドット絵（オフライン初回など）
-  const upS = J_CHICCHI_SPRITES.flapUp, downS = J_CHICCHI_SPRITES.flapDown;
-  if (upS.ready && downS.ready) {
-    const cvs = (Math.floor(now / flapMs) % 2 ? upS : downS).canvas;
-    ctx.drawImage(cvs,
-      px + J_PLAYER_W / 2 - J_SPRITE_DRAW_W / 2,
-      py + J_PLAYER_H / 2 - J_SPRITE_DRAW_H / 2,
-      J_SPRITE_DRAW_W, J_SPRITE_DRAW_H);
+  // 羽ばたきは4コマ（上→中→下→中）でぐるぐる回す。2枚だけだとパタパタして見えない。
+  // 体の上下と、ほんの少しの傾きも足して、実際に羽ばたいているように見せる。
+  const fl = J_CHICCHI_FRAMES.filter(f => f.ready);
+  if (fl.length >= 2) {
+    const seq = J_CHICCHI_FRAMES.every(f => f.ready)
+      ? [0, 1, 2, 1]     // up → mid → low → mid
+      : fl.map((_, i) => i);
+    const stepMs = wingOn ? 65 : 95;
+    const k = Math.floor(now / stepMs) % seq.length;
+    const src = (J_CHICCHI_FRAMES.every(f => f.ready) ? J_CHICCHI_FRAMES[seq[k]] : fl[seq[k]]).canvas;
+    // 上のコマほど体が浮き、下のコマほど沈む
+    const lift = [-3, 0, 3, 0][k % 4];
+    const tilt = [0.05, 0, -0.05, 0][k % 4];
+    ctx.save();
+    ctx.translate(px + J_PLAYER_W / 2, py + J_PLAYER_H / 2 + lift);
+    ctx.rotate(tilt);
+    ctx.drawImage(src, -J_SPRITE_DRAW_W / 2, -J_SPRITE_DRAW_H / 2, J_SPRITE_DRAW_W, J_SPRITE_DRAW_H);
+    ctx.restore();
   } else {
     tDrawSprite(ctx, frame, sp.pal, px, py, J_PLAYER_S);
   }
