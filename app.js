@@ -1541,7 +1541,8 @@ function expandChain(chain, grade) {
   return chain.steps.map((step, i) => ({
     id: `${chain.id}_s${i + 1}`,
     question: `(${i + 1}) ${step.question}`,
-    chainIntro: i === 0 ? `📘 ${chain.title}\n${chain.intro}` : '',
+    // ★題名は問題文に混ぜない（読みにくいので本人指示 2026-07-28）。出すのは設定文だけ。
+    chainIntro: i === 0 ? chain.intro : '',
     // 図：設問ごとのsvg優先。無ければchainの共通図を全設問(①②③)で表示（②③でも図を見て考えられるように）
     svg: step.svg || chain.svg || '',
     answer: step.answer,
