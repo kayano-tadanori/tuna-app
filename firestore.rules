@@ -64,7 +64,7 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly([
              'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
              'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
-             'mapquizBest', 'timelineBest', 'progress', 'lastUpdated'
+             'mapquizBest', 'timelineBest', 'drillBest', 'progress', 'lastUpdated'
            ])
         && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
         && (!('gacha' in request.resource.data)     || strOk(request.resource.data.gacha, 60000))
@@ -83,6 +83,9 @@ service cloud.firestore {
         && (!('mineBest_hard' in request.resource.data)   || strOk(request.resource.data.mineBest_hard, 200))
         && (!('mapquizBest' in request.resource.data)     || strOk(request.resource.data.mapquizBest, 200))
         && (!('timelineBest' in request.resource.data)    || strOk(request.resource.data.timelineBest, 200))
+        // drillBest は {"drill_g5_mul_d3_t60":24, …} の1本。
+        // 全部埋めても 6学年×8種×4難×3タイム＝576件・約1.7万字なので余裕をみて 30,000。
+        && (!('drillBest' in request.resource.data)       || strOk(request.resource.data.drillBest, 30000))
         && serverTime();
       allow delete: if isAdmin();
     }
@@ -137,10 +140,17 @@ service cloud.firestore {
     }
 
     // ---------- ゲームランキング game_scores/{ゲーム}/scores/{ニックネーム} ----------
+    // 計算ドリルは「学年×種類×難易度×タイム」ごとに1本なので名前が可変。
+    // 列挙できないぶん、形をきっちり決めて正規表現で縛る（2026-07-28）。
+    //   例： drill_g5_mul_d3_t60
+    //   タイムは 60/90/120 のみ（無制限=t0 はランキング対象外なので許可しない）
+    function drillGameOk(game) {
+      return game.matches('^drill_g[1-6]_(add|sub|mul|div|divrem|decimal|fraction|mix)_d[1-4]_t(60|90|120)$');
+    }
     match /game_scores/{game}/scores/{nick} {
       allow read: if true;
       allow create, update: if nickOk(nick)
-        && game in ['tetris', 'jump', 'mine_easy', 'mine_normal', 'mine_hard']
+        && (game in ['tetris', 'jump', 'mine_easy', 'mine_normal', 'mine_hard'] || drillGameOk(game))
         && request.resource.data.keys().hasOnly(['value', 'lastUpdated'])
         && intIn(request.resource.data.value, 0, 10000000)
         && serverTime();

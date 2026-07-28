@@ -1358,6 +1358,7 @@ const BACKUP_KEYS = [
   'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
   'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
   'mapquizBest', 'timelineBest',
+  'drillBest',   // 計算ドリルの自己ベスト（組み合わせごとのJSON・2026-07-28）
   'progress',
 ];
 
@@ -1480,6 +1481,30 @@ const DRILL_TYPE_LABELS = {
   add:'足し算', sub:'引き算', mul:'かけ算', div:'割り算',
   divrem:'余りあり', decimal:'小数', fraction:'分数', mix:'ミックス'
 };
+
+// ── 計算ドリルのランキング（2026-07-28）────────────────────────
+// 学年×種類×難易度×タイムで1本ずつ独立したランキングを持つ。
+// 学年を混ぜないのは、同じ「足し算・激ムズ・60秒」でも学年で出る数の大きさが違うから。
+// 無制限モードは対象外（時間の縛りがなく、1問だけ正解してやめれば満点になるので比べられない）。
+function drillGameKey() {
+  const s = sansuState;
+  return `drill_g${s.grade}_${s.drillType}_d${s.drillDiff}_t${s.drillTime}`;
+}
+function drillRankTitle() {
+  const s = sansuState;
+  return `小${s.grade} ${DRILL_TYPE_LABELS[s.drillType]}・${DIFF_LABELS[s.drillDiff]}・${s.drillTime}秒`;
+}
+// 自己ベストは組み合わせごとに散らさず 'drillBest' 1つのJSONにまとめる。
+// （キーが可変だと BACKUP_KEYS とFirestoreルールの許可リストに載せられずクラウド保存から漏れるため）
+function getDrillBests() {
+  try { return JSON.parse(localStorage.getItem('drillBest') || '{}'); } catch (e) { return {}; }
+}
+function getDrillBest(key) { return Number(getDrillBests()[key] || 0); }
+function setDrillBest(key, v) {
+  const b = getDrillBests();
+  b[key] = v;
+  localStorage.setItem('drillBest', JSON.stringify(b));
+}
 
 // 理科ファイル・ラベル
 const RIKA_FILES = {
@@ -2737,6 +2762,17 @@ function updateSansuStart() {
   }
 
   setChainCountOptions('sansu-q-count', sansuState.mode === 'normal' && (sansuState.diff === 5 || sansuState.diff === 'gachi'));
+
+  // 🏆 やる前にランキングを見られるようにする（タイムアタックのときだけ）
+  const rankBtn = document.getElementById('sansu-btn-drillrank');
+  const canRank = sansuState.mode === 'drill' && ready && sansuState.drillTime > 0;
+  rankBtn.classList.toggle('hidden', !canRank);
+  if (canRank) {
+    const best = getDrillBest(drillGameKey());
+    rankBtn.textContent = best ? `🏆 ランキング（自己ベスト ${best}問）` : '🏆 ランキングを見る';
+    rankBtn.onclick = () => showGameRanking(drillGameKey(), drillRankTitle(), 'max', '問');
+  }
+
   zone.classList.toggle('hidden', !ready);
 }
 
@@ -3968,6 +4004,29 @@ function endDrill() {
     else if (score >= 10) { emoji = '👍'; comment = 'もう一息！'; }
     else { emoji = '💪'; comment = 'もう一度チャレンジ！'; }
     document.getElementById('drill-result-score').textContent = `${score}点！（${sansuState.drillTime}秒で${score}問正解）`;
+  }
+
+  // 🏆 ランキング（タイムアタックのみ）。自己ベストは端末に、順位はFirestoreに。
+  const bestEl = document.getElementById('drill-result-best');
+  const rankBtn = document.getElementById('drill-btn-rank');
+  if (sansuState.drillTime > 0) {
+    const key = drillGameKey();
+    const prevBest = getDrillBest(key);
+    const isNewBest = score > prevBest;
+    if (isNewBest) setDrillBest(key, score);
+    if (score > 0 && typeof saveGameScore === 'function') saveGameScore(key, state.nickname, score, 'max');
+    if (isNewBest && prevBest > 0) { emoji = '🏆'; comment = `自己ベスト更新！（前は ${prevBest}問）`; }
+    else if (isNewBest) { emoji = '🏆'; comment = 'はじめての記録や！'; }
+    bestEl.textContent = isNewBest
+      ? `🏆 自己ベスト更新！ ${score}問`
+      : `自己ベスト ${Math.max(prevBest, score)}問`;
+    bestEl.classList.toggle('is-new', isNewBest);
+    bestEl.classList.remove('hidden');
+    rankBtn.onclick = () => showGameRanking(key, drillRankTitle(), 'max', '問');
+    rankBtn.classList.remove('hidden');
+  } else {
+    bestEl.classList.add('hidden');
+    rankBtn.classList.add('hidden');
   }
 
   document.getElementById('drill-result-emoji').textContent = emoji;
@@ -8462,13 +8521,14 @@ function jUpdateSoundBtns() {
 // ミニゲーム共通スコアランキングモーダル
 // ============================================================
 
-function showGameRanking(game, title, dir) {
+// unit：max系で値に付ける単位（計算ドリルは「問」）。省略すると今までどおり数値だけ。
+function showGameRanking(game, title, dir, unit) {
   const modal = document.getElementById('game-rank-modal');
   document.getElementById('game-rank-title').textContent = `🏆 ${title}`;
   const list = document.getElementById('game-rank-list');
   list.innerHTML = '<p class="record-rank-empty">読み込み中…</p>';
   modal.classList.remove('hidden');
-  const fmt = dir === 'min' ? (v => `${v}秒`) : (v => Number(v).toLocaleString());
+  const fmt = dir === 'min' ? (v => `${v}秒`) : (v => `${Number(v).toLocaleString()}${unit || ''}`);
   const req = typeof getGameRanking === 'function' ? getGameRanking(game, dir) : Promise.resolve(null);
   req.then(rows => {
     list.innerHTML = '';

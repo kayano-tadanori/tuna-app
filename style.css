@@ -341,7 +341,6 @@ button { cursor: pointer; font-family: inherit; }
 .quiz-score-row span:last-child  b { color: var(--red); }
 
 .question-box { background: linear-gradient(155deg,rgba(15,40,90,0.70),rgba(10,20,50,0.65)); backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); border: 1.5px solid rgba(79,124,255,0.22); border-radius: var(--radius); padding: 24px 20px 20px; margin-bottom: 16px; box-shadow: 0 10px 32px rgba(0,0,0,0.28); position: relative; }
-.question-box::before { content: "Q"; position: absolute; top: 12px; right: 14px; font-size: 0.68rem; font-weight: 900; color: var(--accent); letter-spacing: 0.06em; background: rgba(79,124,255,0.15); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(79,124,255,0.28); }
 .quiz-question { font-size: 1.55rem; font-weight: 900; line-height: 1.65; margin-bottom: 12px; color: var(--text); }
 .quiz-question .tantei-passage { font-size: 0.92rem; font-weight: 500; line-height: 1.9; color: var(--sub2); background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; text-align: left; }
 .quiz-question .tantei-passage strong { color: var(--gold); font-weight: 800; }
@@ -630,6 +629,10 @@ button { cursor: pointer; font-family: inherit; }
 .drill-question { font-size: 1.55rem; font-weight: 900; text-align: center; color: var(--text); letter-spacing: 0.04em; line-height: 1.35; white-space: pre-line; }
 .drill-result { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 0; text-align: center; }
 .drill-result-score { font-size: 3rem; font-weight: 900; background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+/* 計算ドリルのランキング（2026-07-28） */
+.drill-result-best { font-size: 0.95rem; font-weight: 800; color: var(--sub2); }
+.drill-result-best.is-new { color: var(--gold); font-weight: 900; }
+.drill-rank-btn { width: 100%; max-width: 320px; margin-top: 10px; }
 
 /* ── 漢字の書き取り（手書き） ── */
 .kanji-area { padding: 10px 16px calc(30px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; align-items: center; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
