@@ -114,6 +114,8 @@ async function getLeaderboard(category) {
 // 達成率ランキング（がんばりの記録）
 // ============================================================
 
+// titleIdx は互換のため書き続けるが、表示には使わない（称号は pct から引き直す）。
+// TITLES の段数を変えると保存済みの番号が別の称号を指すため。
 async function saveAchievement(nickname, pct, cleared, titleIdx) {
   if (!firebaseReady || !nickname) return;
   try {

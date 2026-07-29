@@ -7131,7 +7131,9 @@ function renderRecordRanking(list) {
   }
   const medals = ['🥇', '🥈', '🥉'];
   list.forEach((e, i) => {
-    const t = TITLES[e.titleIdx] || TITLES[0];
+    // 称号は保存済みの titleIdx ではなく pct から引き直す。
+    // 番号は TITLES を増やすと別の称号を指してしまうため（称号10→16段階のときにズレた）
+    const t = getTitleInfo(e.pct || 0);
     const div = document.createElement('div');
     div.className = 'rank-item' + (e.nickname === state.nickname ? ' me' : '');
     const numClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
