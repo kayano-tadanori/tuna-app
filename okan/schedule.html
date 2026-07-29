@@ -931,6 +931,8 @@ function openDaySheet(ds) {
       skip.className = 'skipBtn'; skip.textContent = 'この日だけ休み';
       skip.onclick = ev => {
         ev.stopPropagation();
+        const md = `${d.getMonth() + 1}月${d.getDate()}日`;
+        if (!confirm(`${md} の「${labelOf(it)}」をお休みにします。\nこの日だけ表示されなくなり、受講No.も進みません。\nよろしいですか？`)) return;
         const w = db.weekly.find(x => x.id === it.id);
         w.except = w.except || []; w.except.push(ds);
         save(); renderAll(); openDaySheet(ds);
