@@ -113,7 +113,7 @@
   .chipMore { font-size: 9px; color: #94a3b8; font-weight: 800; text-align: center; }
   .adjChip { background: #64748b; color: #fff; text-align: center; }
   /* 調整日ボタン：たまにしか使わないので、シートのいちばん下に小さく置く */
-  .adjFoot { margin-top: 14px; padding-top: 10px; border-top: 1px dashed #e2e8f0; text-align: center; }
+  .adjFoot { margin-top: 16px; padding-top: 12px; border-top: 1px dashed #e2e8f0; text-align: center; }
   .adjBtn {
     border: 1px solid #e2e8f0; background: #fff; color: #94a3b8;
     font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; cursor: pointer;
@@ -274,6 +274,7 @@
       <button class="btn btnPink" id="dayAddEvent">＋ 予定</button>
       <button class="btn btnGray" id="dayAddTodo">＋ やること</button>
     </div>
+    <div id="dayAdjFoot"></div>
   </div>
 </div>
 
@@ -955,8 +956,9 @@ function openDaySheet(ds) {
     row.onclick = () => { switchTab('todo'); closeAll(); };
     list.appendChild(row);
   }
-  // 調整日の切り替えは、いちばん下に小さく
-  const foot = document.createElement('div');
+  // 調整日の切り替えは、＋予定／＋やることより下にいちばん小さく
+  const foot = $('dayAdjFoot');
+  foot.innerHTML = '';
   foot.className = 'adjFoot';
   const ab = document.createElement('button');
   ab.className = 'adjBtn' + (adj ? ' on' : '');
@@ -969,7 +971,6 @@ function openDaySheet(ds) {
     note.textContent = '調整日なので、この日の定期予定（塾）はお休みです。受講No.も進みません。';
     foot.appendChild(note);
   }
-  list.appendChild(foot);
   $('daySheet').classList.add('open');
 }
 
