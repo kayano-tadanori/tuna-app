@@ -112,12 +112,14 @@
   }
   .chipMore { font-size: 9px; color: #94a3b8; font-weight: 800; text-align: center; }
   .adjChip { background: #64748b; color: #fff; text-align: center; }
+  /* 調整日ボタン：たまにしか使わないので、シートのいちばん下に小さく置く */
+  .adjFoot { margin-top: 14px; padding-top: 10px; border-top: 1px dashed #e2e8f0; text-align: center; }
   .adjBtn {
-    width: 100%; border: 1.5px solid #cbd5e1; background: #fff; color: #475569;
-    font-size: 13px; font-weight: 800; padding: 11px; border-radius: 12px; cursor: pointer; margin-bottom: 10px;
+    border: 1px solid #e2e8f0; background: #fff; color: #94a3b8;
+    font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; cursor: pointer;
   }
-  .adjBtn.on { background: #475569; border-color: #475569; color: #fff; }
-  .adjNote { font-size: 12px; color: #64748b; background: #f1f5f9; border-radius: 10px; padding: 9px 12px; margin: 0 0 10px; line-height: 1.7; }
+  .adjBtn.on { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+  .adjNote { font-size: 11px; color: #94a3b8; margin: 7px 0 0; line-height: 1.6; }
 
   /* ---- ToDoビュー ---- */
   /* やることメニュー（家庭学習の定番をチップで選ぶ） */
@@ -901,17 +903,6 @@ function openDaySheet(ds) {
   const list = $('dayList');
   list.innerHTML = '';
   const adj = isAdjust(ds);
-  const ab = document.createElement('button');
-  ab.className = 'adjBtn' + (adj ? ' on' : '');
-  ab.textContent = adj ? '🚫 調整日（塾お休み）を解除する' : '🚫 この日を調整日（塾お休み）にする';
-  ab.onclick = () => { toggleAdjust(ds); renderAll(); openDaySheet(ds); };
-  list.appendChild(ab);
-  if (adj) {
-    const note = document.createElement('p');
-    note.className = 'adjNote';
-    note.textContent = '調整日なので、この日の定期予定（塾）はお休みです。受講No.も進みません。';
-    list.appendChild(note);
-  }
   const items = itemsOf(ds);
   const due = db.todos.filter(t => t.due === ds);
   if (!items.length && !due.length && !adj) {
@@ -964,6 +955,21 @@ function openDaySheet(ds) {
     row.onclick = () => { switchTab('todo'); closeAll(); };
     list.appendChild(row);
   }
+  // 調整日の切り替えは、いちばん下に小さく
+  const foot = document.createElement('div');
+  foot.className = 'adjFoot';
+  const ab = document.createElement('button');
+  ab.className = 'adjBtn' + (adj ? ' on' : '');
+  ab.textContent = adj ? '調整日を解除する' : '🚫 この日を調整日（塾お休み）にする';
+  ab.onclick = () => { toggleAdjust(ds); renderAll(); openDaySheet(ds); };
+  foot.appendChild(ab);
+  if (adj) {
+    const note = document.createElement('p');
+    note.className = 'adjNote';
+    note.textContent = '調整日なので、この日の定期予定（塾）はお休みです。受講No.も進みません。';
+    foot.appendChild(note);
+  }
+  list.appendChild(foot);
   $('daySheet').classList.add('open');
 }
 
