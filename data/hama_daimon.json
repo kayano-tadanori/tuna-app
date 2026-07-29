@@ -12558,6 +12558,71 @@
         }
        ]
       }
+     ],
+     "33": [
+      {
+       "id": "hd_4r_f33_2",
+       "src": "HG-1823",
+       "hg": "HG-1823",
+       "title": "氷を 熱し続けたときの 温度グラフ",
+       "category": "mono",
+       "unit": "水の状態変化",
+       "grade": 4,
+       "star": 2,
+       "intro": "[図]の グラフは、**1分あたりに 加える 熱の量を 一定に して**、ビーカーに 入れた **−20℃の 氷400g** を 熱していくときの 温度の 変化です。\n加えた 熱は すべて 氷や 水の 温度の 上しょうや、すがたの 変化だけに 使われる ものと します。\n**0分で−20℃ → 8分で0℃ → 72分まで 0℃のまま → 152分で 100℃ → そのあとは 100℃のまま** です。",
+       "svg": "<svg viewBox='0 0 330 200' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[図] −20℃の氷400g を 一定の 強さで 熱し続けたときの 温度</text><line x1='56.0' y1='44.0' x2='56.0' y2='154.0' stroke='#94a3b8' stroke-width='1.2'/><line x1='56.0' y1='154.0' x2='296.0' y2='154.0' stroke='#94a3b8' stroke-width='1.2'/><text x='56.0' y='168.0' fill='#94a3b8' font-size='9' text-anchor='middle'>0</text><line x1='56.0' y1='154.0' x2='56.0' y2='158.0' stroke='#94a3b8' stroke-width='1'/><text x='66.7' y='168.0' fill='#94a3b8' font-size='9' text-anchor='middle'>8</text><line x1='66.7' y1='154.0' x2='66.7' y2='158.0' stroke='#94a3b8' stroke-width='1'/><text x='152.0' y='168.0' fill='#94a3b8' font-size='9' text-anchor='middle'>72</text><line x1='152.0' y1='154.0' x2='152.0' y2='158.0' stroke='#94a3b8' stroke-width='1'/><text x='258.7' y='168.0' fill='#94a3b8' font-size='9' text-anchor='middle'>152</text><line x1='258.7' y1='154.0' x2='258.7' y2='158.0' stroke='#94a3b8' stroke-width='1'/><text x='51.0' y='157.0' fill='#94a3b8' font-size='9' text-anchor='end'>−20</text><line x1='53.0' y1='154.0' x2='56.0' y2='154.0' stroke='#94a3b8' stroke-width='1'/><text x='51.0' y='140.1' fill='#94a3b8' font-size='9' text-anchor='end'>0</text><line x1='53.0' y1='137.1' x2='56.0' y2='137.1' stroke='#94a3b8' stroke-width='1'/><text x='51.0' y='55.5' fill='#94a3b8' font-size='9' text-anchor='end'>100</text><line x1='53.0' y1='52.5' x2='56.0' y2='52.5' stroke='#94a3b8' stroke-width='1'/><line x1='56.0' y1='154.0' x2='66.7' y2='137.1' stroke='#ef476f' stroke-width='1.8'/><line x1='66.7' y1='137.1' x2='152.0' y2='137.1' stroke='#ef476f' stroke-width='1.8'/><line x1='152.0' y1='137.1' x2='258.7' y2='52.5' stroke='#ef476f' stroke-width='1.8'/><line x1='258.7' y1='52.5' x2='289.3' y2='52.5' stroke='#ef476f' stroke-width='1.8'/><text x='176.0' y='184.0' fill='#94a3b8' font-size='9' text-anchor='middle'>加熱しはじめてからの時間（分）</text><text x='10.0' y='38.0' fill='#94a3b8' font-size='9' text-anchor='start'>温度（℃）</text></svg>",
+       "steps": [
+        {
+         "question": "加熱しはじめて **5分後**、ビーカーの中は どうなっていますか。",
+         "answer": "すべて氷である",
+         "choices": [
+          "すべて氷である",
+          "水と氷がまざっている",
+          "すべて水である",
+          "水と水蒸気がまざっている"
+         ],
+         "meaning": "0〜8分は **−20℃から0℃へ 上がっている** だけなので、まだ **すべて氷**。"
+        },
+        {
+         "question": "加熱しはじめて **50分後**、ビーカーの中は どうなっていますか。",
+         "answer": "水と氷がまざっている",
+         "choices": [
+          "すべて氷である",
+          "水と氷がまざっている",
+          "すべて水である",
+          "水と水蒸気がまざっている"
+         ],
+         "meaning": "8〜72分は **0℃のまま 変わらない**。加えた熱が **氷を とかすのに 使われている** ので、この間は **水と氷が まざっている**。"
+        },
+        {
+         "question": "加熱しはじめて **100分後**、ビーカーの中は どうなっていますか。",
+         "answer": "すべて水である",
+         "choices": [
+          "すべて氷である",
+          "水と氷がまざっている",
+          "すべて水である",
+          "水と水蒸気がまざっている"
+         ],
+         "meaning": "72分で 氷は とけ終わり、そこから 水の 温度が 上がっていく。だから **すべて水**。"
+        },
+        {
+         "question": "次の うち、水が ふっとうしているのは どれですか。",
+         "answer": "160分後",
+         "choices": [
+          "160分後",
+          "6分後",
+          "54分後",
+          "84分後"
+         ],
+         "meaning": "152分で 100℃に なり、そこから また **水平**。ふっとうしているのは **152分より あと**。"
+        },
+        {
+         "question": "氷が とけ始めてから すべて とけ終わるまでに かかった 時間は 何分間ですか。",
+         "answer": "64",
+         "meaning": "とけている間＝**温度が 変わらない間**＝8分後から72分後。\n72−8＝**64分間**。グラフの 水平な ところの 長さを そのまま 読む。"
+        }
+       ]
+      }
      ]
     },
     "kokai": {
