@@ -202,6 +202,38 @@
   .btnGray { background: #e2e8f0; color: #475569; }
   .btnDanger { background: #fee2e2; color: #dc2626; }
 
+  /* ---- 確認ダイアログ ---- */
+  .askWrap {
+    position: fixed; inset: 0; background: rgba(15,23,42,.5);
+    display: none; align-items: center; justify-content: center; z-index: 60;
+    padding: 24px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  }
+  .askWrap.open { display: flex; animation: askFade .16s ease-out; }
+  .askCard {
+    background: #fff; width: 100%; max-width: 340px; border-radius: 20px;
+    padding: 22px 20px 18px; text-align: center;
+    box-shadow: 0 18px 50px rgba(15,23,42,.28);
+    animation: askPop .18s cubic-bezier(.2,.9,.3,1.2);
+  }
+  @keyframes askFade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes askPop { from { opacity: 0; transform: translateY(12px) scale(.96) } to { opacity: 1; transform: none } }
+  .askIcon {
+    width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%;
+    background: #fef3c7; display: flex; align-items: center; justify-content: center; font-size: 23px;
+  }
+  .askTitle { font-size: 15.5px; font-weight: 800; line-height: 1.5; margin-bottom: 7px; overflow-wrap: anywhere; white-space: pre-line; }
+  .askBody { font-size: 12.5px; color: #64748b; font-weight: 600; line-height: 1.75; margin-bottom: 18px; }
+  .askBtns { display: flex; gap: 9px; }
+  .askBtn {
+    flex: 1; padding: 12px; border: none; border-radius: 12px;
+    font-size: 14px; font-weight: 800; font-family: inherit; cursor: pointer;
+  }
+  .askBtn:active { transform: scale(.97); }
+  .askNo { background: #f1f5f9; color: #64748b; }
+  .askYes { background: #db2777; color: #fff; }
+  .askWrap.danger .askIcon { background: #fee2e2; }
+  .askWrap.danger .askYes { background: #dc2626; }
+
   /* ---- フォーム ---- */
   .fLabel { font-size: 12px; font-weight: 800; color: #64748b; margin: 12px 2px 5px; }
   .fInput {
@@ -478,6 +510,19 @@
   </div>
 </div>
 
+<!-- 確認ダイアログ -->
+<div class="askWrap" id="askModal">
+  <div class="askCard">
+    <div class="askIcon" id="askIcon">⚠️</div>
+    <h3 class="askTitle" id="askTitle"></h3>
+    <p class="askBody" id="askBody"></p>
+    <div class="askBtns">
+      <button class="askBtn askNo" id="askNo">やめる</button>
+      <button class="askBtn askYes" id="askYes">はい</button>
+    </div>
+  </div>
+</div>
+
 <script>
 'use strict';
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
@@ -488,6 +533,32 @@ const KEY = 'okan_sched_v1';
 const COLORS = ['#4fc3f7', '#2196f3', '#b39ddb', '#673ab7', '#e91e63', '#f48fb1',
                 '#ffb300', '#8bc34a', '#26a69a', '#ef5350', '#111827'];
 const DOWS = ['日', '月', '火', '水', '木', '金', '土'];
+
+// 確認ダイアログ（window.confirm の代わり）。Promise<boolean> を返す
+function ask({ title, body = '', ok = 'はい', icon = '⚠️', danger = false }) {
+  return new Promise(resolve => {
+    const wrap = $('askModal');
+    $('askIcon').textContent = icon;
+    $('askTitle').textContent = title;
+    const b = $('askBody');
+    b.textContent = body;
+    b.style.display = body ? '' : 'none';
+    $('askYes').textContent = ok;
+    wrap.classList.toggle('danger', danger);
+    wrap.classList.add('open');
+    const done = v => {
+      wrap.classList.remove('open');
+      $('askYes').onclick = $('askNo').onclick = wrap.onclick = null;
+      document.removeEventListener('keydown', onKey);
+      resolve(v);
+    };
+    const onKey = e => { if (e.key === 'Escape') done(false); };
+    $('askYes').onclick = () => done(true);
+    $('askNo').onclick = () => done(false);
+    wrap.onclick = e => { if (e.target === wrap) done(false); };   // 外側タップで取り消し
+    document.addEventListener('keydown', onKey);
+  });
+}
 
 let db = load();
 function load() {
@@ -929,10 +1000,16 @@ function openDaySheet(ds) {
     if (it.kind === 'weekly') {
       const skip = document.createElement('button');
       skip.className = 'skipBtn'; skip.textContent = 'この日だけ休み';
-      skip.onclick = ev => {
+      skip.onclick = async ev => {
         ev.stopPropagation();
         const md = `${d.getMonth() + 1}月${d.getDate()}日`;
-        if (!confirm(`${md} の「${labelOf(it)}」をお休みにします。\nこの日だけ表示されなくなり、受講No.も進みません。\nよろしいですか？`)) return;
+        const okd = await ask({
+          icon: '💤',
+          title: `${md} の「${labelOf(it)}」を\nこの日だけお休みにします`,
+          body: 'この日は表示されなくなり、受講No.も進みません。（次の授業からNo.が続きます）',
+          ok: 'お休みにする',
+        });
+        if (!okd) return;
         const w = db.weekly.find(x => x.id === it.id);
         w.except = w.except || []; w.except.push(ds);
         save(); renderAll(); openDaySheet(ds);
@@ -1216,9 +1293,9 @@ $('rgSave').onclick = () => {
   save(); closeAll(); renderAll(); openRegSheet();
 };
 
-$('rgDelete').onclick = () => {
+$('rgDelete').onclick = async () => {
   if (!regEditing) return;
-  if (!confirm('この定期予定を登録ごと削除します。よろしいですか？')) return;
+  if (!await ask({ icon: '🗑', title: 'この定期予定を削除します', body: '毎週の登録ごと消えます。1日だけ休みたいときは、カレンダーの「この日だけ休み」を使ってください。', ok: '削除する', danger: true })) return;
   db.weekly = db.weekly.filter(w => w.id !== regEditing);
   regEditing = null;
   save(); closeAll(); renderAll(); openRegSheet();
@@ -1273,9 +1350,9 @@ $('menuSave').onclick = () => {
   menuEditing = null;
   save(); closeAll(); openRegSheet(2);
 };
-$('menuDelete').onclick = () => {
+$('menuDelete').onclick = async () => {
   if (!menuEditing) return;
-  if (!confirm('このメニューを削除しますか？（登録ずみのやることは残ります）')) return;
+  if (!await ask({ icon: '🗑', title: 'このメニューを削除します', body: '登録ずみの「やること」はそのまま残ります。', ok: '削除する', danger: true })) return;
   db.menus = db.menus.filter(x => x.id !== menuEditing);
   menuEditing = null;
   save(); closeAll(); openRegSheet(2);
@@ -1358,7 +1435,10 @@ function renderTodos() {
     }
     const del = document.createElement('button');
     del.className = 'tDel'; del.textContent = '🗑';
-    del.onclick = () => { if (confirm('このやることを削除しますか？')) { db.todos = db.todos.filter(x => x.id !== t.id); save(); renderAll(); } };
+    del.onclick = async () => {
+      if (!await ask({ icon: '🗑', title: 'このやることを削除します', body: t.title, ok: '削除する', danger: true })) return;
+      db.todos = db.todos.filter(x => x.id !== t.id); save(); renderAll();
+    };
     item.appendChild(del);
     return item;
   };
