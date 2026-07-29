@@ -19412,6 +19412,304 @@
         }
        ]
       }
+     ],
+     "2": [
+      {
+       "id": "hd_5r_k02_599_3",
+       "src": "HG-1601",
+       "hg": "HG-1601",
+       "title": "月を 観測できる 時間",
+       "category": "sora",
+       "unit": "月",
+       "grade": 5,
+       "star": 2,
+       "intro": "月を 観測できるのは **午後6時から 次の日の 午前6時まで** とします。\nどの月も **地平線より 上に 出ている 時間は 12時間** とします。\n月が 南中する 時こくは、**新月＝午後0時／三日月＝午後3時／上げんの月＝午後6時／満月＝午前0時／下げんの月＝午前6時** を つかいます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "**上げんの月** を 観測できる 時間は 何時間ですか。",
+         "answer": "6",
+         "meaning": "南中が 午後6時なので、出ているのは その **前後6時間** ＝ 昼12時〜夜12時。\n観測できる 午後6時〜翌午前6時 と 重なるのは 午後6時〜夜12時 の **6時間**。"
+        },
+        {
+         "question": "**下げんの月** を 観測できる 時間は 何時間ですか。",
+         "answer": "6",
+         "meaning": "南中が 午前6時なので 出ているのは 真夜中0時〜昼12時。\n重なるのは **次の日の 0時〜午前6時** の **6時間**。「今日の夜には 出ていない」ので、**日を またいだ側** で 重なる。"
+        },
+        {
+         "question": "**三日月** を 観測できる 時間は 何時間ですか。",
+         "answer": "3",
+         "meaning": "南中が 午後3時なので 出ているのは 午前9時〜午後9時。重なるのは 午後6時〜午後9時 の **3時間**。"
+        },
+        {
+         "question": "**満月** を 観測できる 時間は 何時間ですか。",
+         "answer": "12",
+         "meaning": "南中が 午前0時なので 出ているのは 午後6時〜翌午前6時。観測できる 時間と **ぴったり 同じ** なので **12時間**。"
+        }
+       ]
+      }
+     ],
+     "3": [
+      {
+       "id": "hd_5r_k03_600_3",
+       "src": "HG-1610",
+       "hg": "HG-1610",
+       "title": "ふたを 開けずに 箱の中の 配線を 当てる",
+       "category": "denki",
+       "unit": "電気（直列・並列）",
+       "grade": 5,
+       "star": 3,
+       "intro": "まず [図1] かん電池1個＋豆電球a では **120mA**、[図2] かん電池2個を **直列**＋豆電球b では **240mA**、[図3] かん電池2個を **並列**＋豆電球c では **120mA** でした。\n[図4]の 箱には たん子P・Q・R・S が あり、中には **どう線1本** と **かん電池1個** が、どれか2つの たん子の間に つないで あります。\n「X—かん電池—豆電球d—電流計—Y」の テスト回路の X・Y を たん子に つないで しらべると [表]のように なりました（これ以外の つなぎ方では 豆電球dは 光りませんでした）。",
+       "svg": "<svg viewBox='0 0 480 190' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[図4] たん子P・Q・R・S を つけた箱。中には どう線1本と かん電池1個</text><rect x='40.0' y='34.0' width='130.0' height='96.0' fill='rgba(148,163,184,0.14)' stroke='#94a3b8' stroke-width='1.4'/><circle cx='40.0' cy='56.0' r='4' fill='#e2e8f0'/><text x='30.0' y='60.0' fill='#e2e8f0' font-size='11' text-anchor='end'>P</text><circle cx='170.0' cy='56.0' r='4' fill='#e2e8f0'/><text x='180.0' y='60.0' fill='#e2e8f0' font-size='11' text-anchor='start'>Q</text><circle cx='40.0' cy='108.0' r='4' fill='#e2e8f0'/><text x='30.0' y='112.0' fill='#e2e8f0' font-size='11' text-anchor='end'>R</text><circle cx='170.0' cy='108.0' r='4' fill='#e2e8f0'/><text x='180.0' y='112.0' fill='#e2e8f0' font-size='11' text-anchor='start'>S</text><text x='58.0' y='90.0' fill='#ef476f' font-size='20' text-anchor='start'>？</text><text x='200.0' y='40.0' fill='#ffd166' font-size='10' text-anchor='start'>[表] 豆電球d が ついたときの 電流計の 値</text><rect x='200.0' y='50.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='228.0' y='64.3' fill='#ffd166' font-size='10' text-anchor='middle'>X</text><rect x='256.0' y='50.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='284.0' y='64.3' fill='#ffd166' font-size='10' text-anchor='middle'>Y</text><rect x='312.0' y='50.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='340.0' y='64.3' fill='#ffd166' font-size='10' text-anchor='middle'>電流計</text><rect x='200.0' y='71.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='228.0' y='85.3' fill='#ffd166' font-size='10' text-anchor='middle'>P</text><rect x='256.0' y='71.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='284.0' y='85.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>S</text><rect x='312.0' y='71.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='340.0' y='85.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>120mA</text><rect x='200.0' y='92.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='228.0' y='106.3' fill='#ffd166' font-size='10' text-anchor='middle'>S</text><rect x='256.0' y='92.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='284.0' y='106.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>P</text><rect x='312.0' y='92.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='340.0' y='106.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>120mA</text><rect x='200.0' y='113.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='228.0' y='127.3' fill='#ffd166' font-size='10' text-anchor='middle'>P</text><rect x='256.0' y='113.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='284.0' y='127.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>Q</text><rect x='312.0' y='113.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='340.0' y='127.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>240mA</text><rect x='200.0' y='134.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='228.0' y='148.3' fill='#ffd166' font-size='10' text-anchor='middle'>S</text><rect x='256.0' y='134.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='284.0' y='148.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>Q</text><rect x='312.0' y='134.0' width='56.0' height='21.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='340.0' y='148.3' fill='#e2e8f0' font-size='10' text-anchor='middle'>240mA</text><text x='200.0' y='176.0' fill='#94a3b8' font-size='9' text-anchor='start'>これ以外の つなぎ方では 光らなかった</text></svg>",
+       "steps": [
+        {
+         "question": "豆電球a〜c を 明るいものから 順に ならべると どうなりますか。",
+         "answer": "b＞a＝c",
+         "choices": [
+          "b＞a＝c",
+          "a＞b＞c",
+          "c＞b＞a",
+          "a＞b＝c"
+         ],
+         "meaning": "明るさは 電流の 大きさで 決まる。b＝240mA、a と c は どちらも 120mA。"
+        },
+        {
+         "question": "[図1]〜[図3]に 同時に 電流を 流し始めたとき、いちばん 長く あかりが ついているのは どれですか。",
+         "answer": "c",
+         "choices": [
+          "c",
+          "a",
+          "b"
+         ],
+         "meaning": "**かん電池 1個あたりが 出している 電流** を 見る。a＝120mA、b＝240÷1（直列は 2個とも 同じ電流が 通る）、c＝120÷2＝**60mA**。1個あたりの 負担が いちばん 小さい **c** が 長持ち。"
+        },
+        {
+         "question": "どう線は どの たん子と どの たん子の 間に 取り付けて ありますか。",
+         "answer": "PとS",
+         "choices": [
+          "PとS",
+          "PとQ",
+          "PとR",
+          "QとS",
+          "RとS",
+          "QとR"
+         ],
+         "meaning": "**P→S でも S→P でも 同じ120mA**＝向きが 関係ない＝**どう線**（電池なら 向きで 変わる）。\nしかも 120mA は 素通りの 値。だから **PとS の間**。"
+        },
+        {
+         "question": "かん電池の ＋極側を つないだ たん子は どれですか。",
+         "answer": "Q",
+         "choices": [
+          "Q",
+          "P",
+          "R",
+          "S"
+         ],
+         "meaning": "どう線で **P と S は 同じ1点** に なっている。だから 電池の もう一方の足が P か S かは **区別できない**。\n答えが 1つに 決まる ためには、聞かれている ＋極は **Q側** で なければ ならない。\n（R は どう つないでも 光らないので 何も つながっていない＝ダミー）"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_k03_600_1",
+       "src": "HG-1609",
+       "hg": "HG-1609",
+       "title": "死亡率と、世代が つり合う 卵の数",
+       "category": "doubutsu",
+       "unit": "こん虫のくらし",
+       "grade": 5,
+       "star": 2,
+       "intro": "1800個 産みつけられた こん虫Pの 卵について、成虫に なるまでの 個体数を しらべました。\n[表]は それぞれの 期間の **はじめの** 個体数です。\n**死亡率(%) ＝ その期間に 死んだ個体数 ÷ その期間の はじめの個体数 × 100**",
+       "svg": "<svg viewBox='0 0 490 108' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表] 1800個の 卵から 成虫に なるまでの 個体数</text><rect x='14.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='43.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>卵</text><rect x='73.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='102.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>1れい幼虫</text><rect x='132.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='161.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>2れい幼虫</text><rect x='191.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='220.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>3れい幼虫</text><rect x='250.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='279.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>4れい幼虫</text><rect x='309.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='338.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>5れい幼虫</text><rect x='368.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='397.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>さなぎ</text><rect x='427.0' y='28.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='456.5' y='43.6' fill='#ffd166' font-size='9' text-anchor='middle'>成虫</text><rect x='14.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='43.5' y='66.6' fill='#ffd166' font-size='9' text-anchor='middle'>1800</text><rect x='73.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='102.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>1500</text><rect x='132.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='161.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>900</text><rect x='191.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='220.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>675</text><rect x='250.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='279.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>600</text><rect x='309.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='338.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>567</text><rect x='368.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='397.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>225</text><rect x='427.0' y='51.0' width='59.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='456.5' y='66.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>18</text><text x='14.0' y='96.0' fill='#06d6a0' font-size='10' text-anchor='start'>死亡率(%) ＝ その期間に 死んだ数 ÷ その期間の はじめの数 × 100</text></svg>",
+       "steps": [
+        {
+         "question": "こん虫Pの **2れい幼虫** の期間の 死亡率を 整数で 求めなさい。",
+         "answer": "25",
+         "meaning": "(900−675)÷900×100＝**25%**。"
+        },
+        {
+         "question": "死亡率が いちばん 高いのは どの期間ですか。",
+         "answer": "さなぎ",
+         "choices": [
+          "さなぎ",
+          "卵",
+          "1れい幼虫",
+          "5れい幼虫"
+         ],
+         "meaning": "減った数が 大きい期間＝死亡率が 高い期間 では ない。**もとにする量が 毎回 変わる**。\n5れい幼虫は 342匹 減って 60.3%、さなぎは 207匹 しか 減っていないのに 225匹しか いないので **92%** で いちばん高い。"
+        },
+        {
+         "question": "こん虫Pの メスは 一生に 一度だけ 卵を 産みます。成虫に なれる 数が 親の世代と 子の世代で 同じに なるには、メス1匹が 何個の 卵を 産めば よいですか。（成虫の オスと メスは 同数、変化の割合は いつも [表]と 同じとします）",
+         "answer": "200",
+         "meaning": "卵から 成虫に なれるのは 18÷1800＝**100分の1**。\n成虫18匹の うち メスは 9匹。9匹が □個ずつ 産むと 9×□個の 卵。\nその100分の1が 18匹に なれば よいので 9×□＝1800 → **□＝200個**。"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "id": "hd_5r_k04_601_4",
+       "src": "HG-1602",
+       "hg": "HG-1602",
+       "title": "3種類の 金ぞくを つないだ ぼう",
+       "category": "mono",
+       "unit": "もののあたたまり方",
+       "grade": 5,
+       "star": 3,
+       "intro": "銅のぼうP・アルミニウムのぼうQ・鉄のぼうR は、太さが 同じで **長さは どれも 60cm** です。\nP→Q→R の 順に 一直線に つないだ ものを **ぼうX** とし、Pの まん中を **A点**、Qの まん中を **B点**、Rの まん中を **C点** とします。\nぼうXの **左はし**（Pの左はし）を 熱すると、**左はし→A点＝1.0秒／A点→B点＝2.7秒／C点→右はし＝5.0秒** かかりました。",
+       "svg": "<svg viewBox='0 0 360 118' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[図1] ぼうX＝銅P・アルミQ・鉄R（どれも60cm）を つないだもの</text><rect x='40.0' y='60.0' width='93.0' height='24.0' fill='rgba(239,71,111,0.30)' stroke='#94a3b8' stroke-width='1.2'/><text x='86.5' y='76.0' fill='#e2e8f0' font-size='10' text-anchor='middle'>P（銅）</text><rect x='133.0' y='60.0' width='93.0' height='24.0' fill='rgba(6,214,160,0.28)' stroke='#94a3b8' stroke-width='1.2'/><text x='179.5' y='76.0' fill='#e2e8f0' font-size='10' text-anchor='middle'>Q（アルミニウム）</text><rect x='226.0' y='60.0' width='93.0' height='24.0' fill='rgba(79,158,255,0.30)' stroke='#94a3b8' stroke-width='1.2'/><text x='272.5' y='76.0' fill='#e2e8f0' font-size='10' text-anchor='middle'>R（鉄）</text><line x1='86.5' y1='60.0' x2='86.5' y2='84.0' stroke='#ffd166' stroke-width='1.2' stroke-dasharray='3 2'/><text x='86.5' y='54.0' fill='#ffd166' font-size='10' text-anchor='middle'>A点</text><line x1='179.5' y1='60.0' x2='179.5' y2='84.0' stroke='#ffd166' stroke-width='1.2' stroke-dasharray='3 2'/><text x='179.5' y='54.0' fill='#ffd166' font-size='10' text-anchor='middle'>B点</text><line x1='272.5' y1='60.0' x2='272.5' y2='84.0' stroke='#ffd166' stroke-width='1.2' stroke-dasharray='3 2'/><text x='272.5' y='54.0' fill='#ffd166' font-size='10' text-anchor='middle'>C点</text><text x='34.0' y='76.0' fill='#ef476f' font-size='14' text-anchor='end'>→</text><text x='34.0' y='54.0' fill='#ef476f' font-size='9' text-anchor='end'>熱する</text><text x='40.0' y='104.0' fill='#06d6a0' font-size='10' text-anchor='start'>左はし→A点＝1.0秒　　A点→B点＝2.7秒　　C点→右はし＝5.0秒</text></svg>",
+       "steps": [
+        {
+         "question": "銅・アルミニウム・鉄 のうち、熱が 伝わるのが **2番目に 早い** ものは どれですか。",
+         "answer": "アルミニウム",
+         "choices": [
+          "アルミニウム",
+          "銅",
+          "鉄"
+         ],
+         "meaning": "30cm すすむのに 銅は 1.0秒。A点→B点 の 2.7秒は「Pの右半分30cm」＋「Qの左半分30cm」なので、アルミは 30cmに 2.7−1.0＝**1.7秒**。鉄は 30cmに 5.0秒。\n早い順に 銅→アルミニウム→鉄 なので 2番目は **アルミニウム**。"
+        },
+        {
+         "question": "熱が ぼうQ の 左はしから 右はしまで 伝わるのに 何秒 かかりますか。",
+         "answer": "3.4",
+         "meaning": "アルミは 30cmで 1.7秒なので 60cm では 1.7×2＝**3.4秒**。"
+        },
+        {
+         "question": "熱が ぼうX の 左はしから 右はしまで 伝わるのに 何秒 かかりますか。",
+         "answer": "15.4",
+         "meaning": "P＝1.0×2＝2.0秒、Q＝3.4秒、R＝5.0×2＝10.0秒。合わせて **15.4秒**。"
+        },
+        {
+         "question": "ぼうXの **両はしから 同時に** 熱すると、両はしから 伝わった熱が 出会うのは どのぼうの 中ですか。",
+         "answer": "R",
+         "choices": [
+          "R",
+          "P",
+          "Q"
+         ],
+         "meaning": "左からの熱は 5.4秒で PとQ を 通りぬけて R に 入る。右からの熱は 鉄の中を ゆっくり（30cmに5秒）しか 進めない。\n出会うのは 左はしから 約133.8cm の ところ＝**ぼうRの中**。\n**区間ごとに 速さが 変わる 出会い算**。"
+        }
+       ]
+      }
+     ],
+     "1": [
+      {
+       "id": "hd_5r_k01_610_4",
+       "src": "HG-1646",
+       "hg": "HG-1646",
+       "title": "木炭を 燃やすと 出る 気体Aと 気体B",
+       "category": "mono",
+       "unit": "もののせいしつ",
+       "grade": 5,
+       "star": 3,
+       "intro": "木炭を **酸素が 十分な** 状態で 完全に 燃やすと **気体A だけ** が 出て、木炭は なくなります。\n[表]は そのときの 結果です。\nまた、木炭を **酸素が 不十分な** 状態で 燃やすと、気体Aとは べつの **気体B** が 出ます。たとえば **木炭12g を 酸素が 不十分な 状態で 燃やすと 気体B だけが 28g** 出ます。",
+       "svg": "<svg viewBox='0 0 300 112' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表] 酸素が 十分な 状態で 木炭を 完全に 燃やしたとき</text><rect x='20.0' y='28.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='49.0' y='43.6' fill='#ffd166' font-size='10' text-anchor='middle'>木炭(g)</text><rect x='78.0' y='28.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='107.0' y='43.6' fill='#ffd166' font-size='10' text-anchor='middle'>3</text><rect x='136.0' y='28.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='165.0' y='43.6' fill='#ffd166' font-size='10' text-anchor='middle'>6</text><rect x='194.0' y='28.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='223.0' y='43.6' fill='#ffd166' font-size='10' text-anchor='middle'>9</text><rect x='252.0' y='28.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='281.0' y='43.6' fill='#ffd166' font-size='10' text-anchor='middle'>15</text><rect x='20.0' y='51.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='49.0' y='66.6' fill='#ffd166' font-size='10' text-anchor='middle'>気体A(g)</text><rect x='78.0' y='51.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='107.0' y='66.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>11</text><rect x='136.0' y='51.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='165.0' y='66.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>22</text><rect x='194.0' y='51.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='223.0' y='66.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>33</text><rect x='252.0' y='51.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='281.0' y='66.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>55</text><text x='20.0' y='100.0' fill='#ef476f' font-size='10' text-anchor='start'>酸素が 不十分だと 気体B が 出る。木炭12g → 気体B 28g</text></svg>",
+       "steps": [
+        {
+         "question": "木炭 **12g** を 完全に 燃やすと、気体A は 何g 出ますか。",
+         "answer": "44",
+         "meaning": "表より 木炭3gで 気体A 11g。12gは その4倍なので 11×4＝**44g**。"
+        },
+        {
+         "question": "ある重さの 木炭を 完全に 燃やすと、気体A が **60.5g** 出ました。燃えた 木炭は 何g ですか。",
+         "answer": "16.5",
+         "meaning": "60.5÷11＝5.5、木炭は 3×5.5＝**16.5g**。"
+        },
+        {
+         "question": "木炭 **19g** の 一部を 燃やすと、気体A だけが **66g** 出ました。燃え残った 木炭は 何g ですか。",
+         "answer": "1",
+         "meaning": "燃えた木炭＝66÷11×3＝18g。19−18＝**1g** が 燃え残り。"
+        },
+        {
+         "question": "気体B を **10.5g** 出すには、少なくとも 木炭が 何g 必要ですか。",
+         "answer": "4.5",
+         "meaning": "木炭12gで 気体B 28g なので 木炭1gで 7/3g。10.5÷(7/3)＝**4.5g**。"
+        },
+        {
+         "question": "木炭 **9g** を 燃やすと 気体Aと 気体Bが 合わせて **29g** 出て、木炭は なくなりました。このとき 出た 気体A は 何g ですか。",
+         "answer": "22",
+         "meaning": "**つるかめ算**。もし 9g 全部が 気体B に なったら 9×7/3＝21g。実際は 29g で **8g 多い**。\n木炭1g を B から A に うつすと 11/3−7/3＝**4/3g ふえる** ので 8÷(4/3)＝6g。\nA に なった 木炭は 6g なので 気体A＝6×11/3＝**22g**。（検算：B は 3g→7g、22＋7＝29 ○）"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_k01_610_3",
+       "src": "HG-1645",
+       "hg": "HG-1645",
+       "title": "豆電球と かん電池の 数と 電流",
+       "category": "denki",
+       "unit": "電気（直列・並列）",
+       "grade": 5,
+       "star": 3,
+       "intro": "同じ種類の 豆電球と かん電池を つかいます。**直列つなぎの豆電球** と **直列つなぎのかん電池** を 1つの輪に した 回路で 個数を 変えると、点Pを 流れる 電流は [図2]の グラフに なりました。\n（豆電球1個・かん電池1個 のとき **480mA**）\n並列に 分かれた 枝を 流れる 電流は、合流すると **足し算** に なります。",
+       "svg": "<svg viewBox='0 0 560 156' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[図2] かん電池の 個数と 点Pを 流れる 電流</text><line x1='52.0' y1='42.0' x2='52.0' y2='138.0' stroke='#94a3b8' stroke-width='1.2'/><line x1='52.0' y1='138.0' x2='202.0' y2='138.0' stroke='#94a3b8' stroke-width='1.2'/><text x='52.0' y='151.0' fill='#94a3b8' font-size='9' text-anchor='middle'>0</text><text x='89.5' y='151.0' fill='#94a3b8' font-size='9' text-anchor='middle'>1</text><text x='127.0' y='151.0' fill='#94a3b8' font-size='9' text-anchor='middle'>2</text><text x='164.5' y='151.0' fill='#94a3b8' font-size='9' text-anchor='middle'>3</text><text x='202.0' y='151.0' fill='#94a3b8' font-size='9' text-anchor='middle'>4</text><text x='47.0' y='141.0' fill='#94a3b8' font-size='9' text-anchor='end'>0</text><line x1='49.0' y1='138.0' x2='52.0' y2='138.0' stroke='#94a3b8' stroke-width='1'/><text x='47.0' y='102.6' fill='#94a3b8' font-size='9' text-anchor='end'>480</text><line x1='49.0' y1='99.6' x2='52.0' y2='99.6' stroke='#94a3b8' stroke-width='1'/><text x='47.0' y='64.2' fill='#94a3b8' font-size='9' text-anchor='end'>960</text><line x1='49.0' y1='61.2' x2='52.0' y2='61.2' stroke='#94a3b8' stroke-width='1'/><line x1='52.0' y1='138.0' x2='127.0' y2='61.2' stroke='#ef476f' stroke-width='1.6'/><text x='130.0' y='64.2' fill='#ef476f' font-size='9' text-anchor='start'>豆1個</text><line x1='52.0' y1='138.0' x2='202.0' y2='61.2' stroke='#06d6a0' stroke-width='1.6'/><text x='205.0' y='64.2' fill='#06d6a0' font-size='9' text-anchor='start'>豆2個</text><line x1='52.0' y1='138.0' x2='202.0' y2='86.8' stroke='#4f9eff' stroke-width='1.6'/><text x='205.0' y='89.8' fill='#4f9eff' font-size='9' text-anchor='start'>豆3個</text><text x='127.0' y='166.0' fill='#94a3b8' font-size='9' text-anchor='middle'>かん電池の個数</text><text x='250.0' y='46.0' fill='#ffd166' font-size='10' text-anchor='start'>[図3]</text><text x='284.0' y='46.0' fill='#cbd5e1' font-size='10' text-anchor='start'>電池2個。〔豆2個直列〕の枝が2本 並列</text><text x='250.0' y='72.0' fill='#ffd166' font-size='10' text-anchor='start'>[図4]</text><text x='284.0' y='72.0' fill='#cbd5e1' font-size='10' text-anchor='start'>電池2個。豆1個 ＋〔豆2個直列の2並列〕</text><text x='250.0' y='98.0' fill='#ffd166' font-size='10' text-anchor='start'>[図5]</text><text x='284.0' y='98.0' fill='#cbd5e1' font-size='10' text-anchor='start'>電池2個。〔豆2個直列の2並列〕が 2つ 直列</text><text x='250.0' y='130.0' fill='#06d6a0' font-size='10' text-anchor='start'>※〔2個直列を2本 並列〕は 豆電球1個分と 同じ</text></svg>",
+       "steps": [
+        {
+         "question": "豆電球 **1個**、かん電池 **4個**（直列）のとき、点Pを 流れる 電流は 何mA ですか。",
+         "answer": "1920",
+         "meaning": "グラフから **豆電球1個・電池1個で480mA**。電流＝480×(電池の数)÷(豆電球の数)。\n480×4÷1＝**1920mA**。グラフの 目もりの 外なので、式で 出す。"
+        },
+        {
+         "question": "豆電球 **2個**（直列）、かん電池 **3個**（直列）のとき、点Pを 流れる 電流は 何mA ですか。",
+         "answer": "720",
+         "meaning": "480×3÷2＝**720mA**。"
+        },
+        {
+         "question": "[図3]（かん電池2個。〔豆電球2個直列〕の枝が 2本 並列）の 点Qを 流れる 電流は 何mA ですか。",
+         "answer": "960",
+         "meaning": "枝1本は 豆2個・電池2個 なので 480×2÷2＝480mA。\n枝が **2本** あるので 合流した 主線は 480×2＝**960mA**。"
+        },
+        {
+         "question": "[図4]（かん電池2個。豆電球1個 ＋〔豆電球2個直列の2並列〕）の 点Rを 流れる 電流は 何mA ですか。",
+         "answer": "480",
+         "meaning": "**〔2個直列を2本 並列〕は 豆電球1個分と 同じ はたらき**。\nだから 全体は「豆1個＋豆1個分」＝豆2個直列 と 同じ。480×2÷2＝**480mA**。"
+        },
+        {
+         "question": "[図5]（かん電池2個。〔豆電球2個直列の2並列〕が 2つ 直列）の 点Sを 流れる 電流は 何mA ですか。",
+         "answer": "480",
+         "meaning": "〔2個直列の2並列〕が 豆1個分なので、それが 2つで 豆2個直列。480×2÷2＝**480mA**。\n**豆電球の 数は [図4]が5個、[図5]が8個 と ちがうのに 答えは 同じ**。「個数を 数える」直かんを 正面から こわしてくる。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_k01_610_2",
+       "src": "HG-1644",
+       "hg": "HG-1644",
+       "title": "しつ度と ほう和水じょう気量",
+       "category": "tenki",
+       "unit": "天気・水のゆくえ",
+       "grade": 5,
+       "star": 2,
+       "intro": "空気1m³ の 中に ふくむことが できる 水じょう気の 最大の 重さを **ほう和水じょう気量** と いいます。\n[表]は 空気の 温度と ほう和水じょう気量の 関係です。\n**しつ度(%) ＝ 実際に ふくまれる 水じょう気の量 ÷ その温度の ほう和水じょう気量 × 100**",
+       "svg": "<svg viewBox='0 0 510 90' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表] 空気の温度と ほう和水じょう気量（空気1m³ に ふくめる 水じょう気の 最大の重さ）</text><rect x='14.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='36.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>温度(℃)</text><rect x='59.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='81.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>12</text><rect x='104.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='126.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>14</text><rect x='149.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='171.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>16</text><rect x='194.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='216.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>18</text><rect x='239.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='261.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>20</text><rect x='284.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='306.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>22</text><rect x='329.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='351.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>24</text><rect x='374.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='396.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>26</text><rect x='419.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='441.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>28</text><rect x='464.0' y='30.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='486.5' y='45.6' fill='#ffd166' font-size='9' text-anchor='middle'>30</text><rect x='14.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='36.5' y='68.6' fill='#ffd166' font-size='9' text-anchor='middle'>最大(g)</text><rect x='59.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='81.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>10.7</text><rect x='104.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='126.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>12.1</text><rect x='149.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='171.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>13.6</text><rect x='194.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='216.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>15.4</text><rect x='239.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='261.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>17.3</text><rect x='284.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='306.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>19.4</text><rect x='329.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='351.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>21.8</text><rect x='374.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='396.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>24.4</text><rect x='419.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='441.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>27.2</text><rect x='464.0' y='53.0' width='45.0' height='23.0' fill='rgba(59,130,246,0.08)' stroke='#64748b' stroke-width='1'/><text x='486.5' y='68.6' fill='#e2e8f0' font-size='9' text-anchor='middle'>30.4</text></svg>",
+       "steps": [
+        {
+         "question": "気温 **14℃** の 空気 **5m³** に ふくむことが できる 水じょう気の 最大の 重さは 何g ですか。",
+         "answer": "60.5",
+         "meaning": "14℃では 1m³ あたり 12.1g。12.1×5＝**60.5g**。"
+        },
+        {
+         "question": "金ぞくの コップに 水を 入れると、部屋の空気と 同じ **26℃** でした。氷で ゆっくり 冷やすと **20℃** で コップの 外側に 水てきが つき始めました。この部屋の 空気1m³ に ふくまれる 水じょう気は 何g ですか。",
+         "answer": "17.3",
+         "meaning": "**水てきが つき始めた 温度＝そこが ちょうど いっぱい** ということ。\n20℃の ほう和水じょう気量 **17.3g** が、いま ふくまれている 量そのもの。"
+        },
+        {
+         "question": "この部屋の 空気の しつ度は 何% ですか。小数第2位を 四捨五入して 小数第1位まで 答えなさい。",
+         "answer": "70.9",
+         "meaning": "17.3 ÷ （26℃の 24.4）× 100 ＝ 70.90…＝**70.9%**。"
+        },
+        {
+         "question": "次のうち、空気1m³ に ふくまれる 水じょう気の 量が いちばん 多いのは どれですか。ア 気温14℃・しつ度80%／イ 気温16℃・しつ度70%／ウ 気温22℃・しつ度50%／エ 気温28℃・しつ度30%",
+         "answer": "ウ",
+         "choices": [
+          "ウ",
+          "ア",
+          "イ",
+          "エ"
+         ],
+         "meaning": "ア 12.1×0.8＝9.68／イ 13.6×0.7＝9.52／ウ 19.4×0.5＝**9.7**／エ 27.2×0.3＝8.16。\n**上の3つは 0.2の中に かたまっている**。「気温が高い方が多い」「しつ度が高い方が多い」という 見当は どちらも 外れる。"
+        }
+       ]
+      }
      ]
     }
    }
