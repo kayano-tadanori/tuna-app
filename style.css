@@ -348,6 +348,14 @@ button { cursor: pointer; font-family: inherit; }
 .quiz-question .tantei-q::before { content: "🔍 "; }
 /* 大問モードの設定文（じゅくナビ）。題名は入れない。改行を活かして問題文とはっきり離す（2026-07-28） */
 #sq-chain-intro { font-size: 1.0rem; font-weight: 600; line-height: 1.95; color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-left: 3px solid var(--accent2); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 18px; text-align: left; white-space: pre-line; }
+/* ★大問の(2)(3)で、前の設問と その答えを上に残す（2026-07-29）。
+   紙のテストなら①は最後まで目の前にあるが、アプリでは画面が切りかわると消えていた。
+   主役はあくまで「今の設問」なので、字は小さく・色は落として、答えだけ手がかりとして光らせる。 */
+#sq-prev-steps { margin: 0 0 14px; text-align: left; }
+.prev-step { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 0.85rem; line-height: 1.65; color: var(--sub2); background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); padding: 8px 11px; margin-bottom: 6px; }
+.prev-step-n { font-weight: 800; color: var(--sub); flex: none; }
+.prev-step-q { flex: 1 1 150px; }
+.prev-step-a { flex: none; font-weight: 800; color: var(--accent2); background: rgba(56,200,240,0.10); border: 1px solid rgba(56,200,240,0.28); border-radius: 999px; padding: 2px 11px; white-space: nowrap; }
 .quiz-question .youyaku-summary { font-size: 1.0rem; font-weight: 700; line-height: 1.75; color: var(--text); background: rgba(255,209,102,0.07); border: 1px solid rgba(255,209,102,0.28); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 14px; text-align: left; }
 .quiz-question .youyaku-blank { color: var(--gold); font-weight: 900; }
 .quiz-meaning { font-size: 0.86rem; color: var(--sub2); line-height: 1.65; font-weight: 500; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; margin-top: 4px; }

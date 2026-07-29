@@ -1567,7 +1567,15 @@ function expandChain(chain, grade) {
     id: `${chain.id}_s${i + 1}`,
     question: `(${i + 1}) ${step.question}`,
     // ★題名は問題文に混ぜない（読みにくいので本人指示 2026-07-28）。出すのは設定文だけ。
-    chainIntro: i === 0 ? chain.intro : '',
+    // ★設定文は(2)(3)でも出す（本人了承 2026-07-29）。
+    //   紙の公開テストなら設定は最後まで目の前にあるのに、アプリでは(1)でしか出しておらず、
+    //   本番より不利な条件で解かせていた。次男の落ち方は「(1)○→(2)✗→(3)✗」でまさにここ。
+    chainIntro: chain.intro,
+    // ★前の設問と その答えを持たせる（本人了承 2026-07-29）。
+    //   誘導問題は①で見つけた見方を②③で使う。①が画面から消えると手がかりごと消えていた。
+    //   答えは「正解」を出す。1問ずつ答え合わせして次へ進む形なので、ここに着く時点で既に見ている。
+    //   （①を間違えた子も、正しい足場から②に進める）
+    prevSteps: chain.steps.slice(0, i).map((s, j) => ({ n: j + 1, question: s.question, answer: s.answer })),
     // 図：設問ごとのsvg優先。無ければchainの共通図を全設問(①②③)で表示（②③でも図を見て考えられるように）
     svg: step.svg || chain.svg || '',
     answer: step.answer,
@@ -3147,9 +3155,10 @@ function sqEm(t, cls) {
 function renderSansuQuiz() {
   const total = sansuState.questions.length;
   if (sansuState.current >= total) { endSansuSession(); return; }
-  resetQuizExtras('sq');
-
   const q = sansuState.questions[sansuState.current];
+  // ★大問の(2)(3)＝同じ設定の続きでは、計算用紙を消さない（本人指示 2026-07-29）。
+  //   紙のテストなら①で書いた筆算や数え上げは最後まで手元に残っている。
+  resetQuizExtras('sq', !!(q.prevSteps && q.prevSteps.length));
   document.getElementById('sansu-quiz-counter').textContent = `${sansuState.current + 1}/${total}`;
   document.getElementById('sq-question').innerHTML = sqEm(q.question, 'sq-em');
   document.getElementById('sq-meaning').textContent = '';
@@ -3159,6 +3168,17 @@ function renderSansuQuiz() {
   const figEl = document.getElementById('sq-figure');
   if (q.svg) { figEl.innerHTML = q.svg; figEl.classList.remove('hidden'); }
   else { figEl.innerHTML = ''; figEl.classList.add('hidden'); }
+  // ★大問の(2)(3)では、前の設問と その答えを上に残す（2026-07-29）。
+  //   紙のテストなら①の問題と自分の書き込みは目の前にある。アプリでは消えていた。
+  const prevEl = document.getElementById('sq-prev-steps');
+  if (q.prevSteps && q.prevSteps.length) {
+    prevEl.innerHTML = q.prevSteps.map(p =>
+      `<div class="prev-step"><span class="prev-step-n">(${p.n})</span>` +
+      `<span class="prev-step-q">${sqEm(p.question, 'sq-em')}</span>` +
+      `<span class="prev-step-a">答え ${sqEm(p.answer, 'sq-em')}</span></div>`
+    ).join('');
+    prevEl.classList.remove('hidden');
+  } else { prevEl.innerHTML = ''; prevEl.classList.add('hidden'); }
 
   // バッジ
   document.getElementById('sq-grade-badge').textContent = `小${sansuState.grade}`;
@@ -3430,7 +3450,10 @@ function setupQuizExtras(prefix) {
 }
 
 // 問題が切り替わるたびに呼ぶ（書き込み・計算用紙をリセットし、問題画面に戻す）
-function resetQuizExtras(prefix) {
+// keepScratch＝計算用紙の中身を残す。大問の(2)(3)のように「同じ設定の続き」で使う（2026-07-29）。
+// ★書き込み(write)のほうは毎問クリアする。あれは問題文の上に重ねるもので、
+//   設問が変わると文の高さが変わり、書いた線が図とずれてしまうため。
+function resetQuizExtras(prefix, keepScratch) {
   const pads = drawPads[prefix];
   if (!pads) return;
   pads.write.clear();
@@ -3441,7 +3464,7 @@ function resetQuizExtras(prefix) {
   document.getElementById(`${prefix}-btn-erase`).classList.add('hidden');
   document.getElementById(`${prefix}-input-area`).classList.remove('hidden');
   if (!scratchDocked) closeScratchFullscreen(); // ドッキング表示中は開いたままにする
-  if (scratchPad) scratchPad.clear();
+  if (scratchPad && !keepScratch) scratchPad.clear();
 }
 
 // ── 計算用紙（全画面・画面の4倍の広さ・2本指でパン＆ピンチズーム） ──────────
