@@ -7991,15 +7991,15 @@ function jUpdatePhysics() {
     }
   }
 
-  // 流れ星（2500m超・多めに降ってきて邪魔をする）
+  // 流れ星（2500m超・ときどき降ってきて邪魔をする）
   if (jumpState.meters >= J_SHOOT_M) {
     if (!jumpState.shootWarned) { jumpState.shootWarned = true; jSfx('hawkWarn'); jumpChars.cheer('☄️ 流れ星の雨や！気をつけて！', 1800); }
     jumpState.shootCooldown--;
-    if (jumpState.shooters.length < 6 && jumpState.shootCooldown <= 0) {
+    if (jumpState.shooters.length < 3 && jumpState.shootCooldown <= 0) {
       const dir = Math.random() < 0.5 ? 1 : -1;
       const sx = dir === 1 ? Math.random() * J_W * 0.45 : J_W - Math.random() * J_W * 0.45;
       jumpState.shooters.push({ x: sx, y: -12, vx: dir * (1.4 + Math.random() * 1.3), vy: 2.6 + Math.random() * 1.8 });
-      jumpState.shootCooldown = 12 + Math.random() * 16; // 多め＝短い間隔
+      jumpState.shootCooldown = 40 + Math.random() * 40; // 間隔をあけて、よけられる数にする
     }
   }
   // 流れ星の移動・当たり判定
