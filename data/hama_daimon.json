@@ -13395,6 +13395,351 @@
         }
        ]
       }
+     ],
+     "42": [
+      {
+       "id": "hd_4r_f42_6",
+       "src": "HG-1837",
+       "hg": "HG-1837",
+       "title": "メスシリンダーの 液面で とけた／とけ残った を 見分ける",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 3,
+       "intro": "[表]は、**30℃の 水100cm³** を 入れた メスシリンダーに、ある **固体P を 20gずつ** とかしていったときの、**全体の重さ** と **液面の体積** を まとめたものです。\nメスシリンダーの 重さは 考えず、水よう液の 温度は 変わらないものと します。答えは 整数で 答えます。",
+       "svg": "<svg viewBox='0 0 460 246' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表] 30℃の水100cm³ に 固体P を 20gずつ とかしていったとき</text><rect x='16.0' y='26.0' width='116.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='74.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>全体の重さ(g)</text><rect x='132.0' y='26.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='158.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>100</text><rect x='184.0' y='26.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='210.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>120</text><rect x='236.0' y='26.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='262.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>140</text><rect x='288.0' y='26.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='314.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>160</text><rect x='340.0' y='26.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='366.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>180</text><rect x='392.0' y='26.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='418.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>200</text><rect x='16.0' y='49.0' width='116.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='74.0' y='64.6' fill='#ffd166' font-size='10' text-anchor='middle'>液面の体積(cm³)</text><rect x='132.0' y='49.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='158.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>100</text><rect x='184.0' y='49.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='210.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>102</text><rect x='236.0' y='49.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='262.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>104</text><rect x='288.0' y='49.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='314.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>114</text><rect x='340.0' y='49.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='366.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>124</text><rect x='392.0' y='49.0' width='52.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='418.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>134</text><rect x='60.0' y='104.0' width='40.0' height='128.0' fill='rgba(148,163,184,0.10)' stroke='#94a3b8' stroke-width='1.2'/><rect x='60.0' y='130.0' width='40.0' height='102.0' fill='rgba(79,158,255,0.30)' stroke='none' stroke-width='0'/><line x1='60.0' y1='130.0' x2='100.0' y2='130.0' stroke='#ef476f' stroke-width='2.0'/><rect x='60.0' y='216.0' width='40.0' height='16.0' fill='rgba(239,71,111,0.30)' stroke='none' stroke-width='0'/><rect x='60.0' y='104.0' width='40.0' height='128.0' fill='none' stroke='#94a3b8' stroke-width='1.2'/><line x1='52.0' y1='232.0' x2='108.0' y2='232.0' stroke='#94a3b8' stroke-width='2.0'/><text x='112.0' y='134.0' fill='#ef476f' font-size='9' text-anchor='start'>← 液面</text><text x='112.0' y='228.0' fill='#94a3b8' font-size='9' text-anchor='start'>← とけ残った 固体P</text><text x='80.0' y='98.0' fill='#ffd166' font-size='9' text-anchor='middle'>[図] メスシリンダー</text></svg>",
+       "steps": [
+        {
+         "question": "[表]より、加えた 固体P 20g が **すべて とけた** とき、液面の 体積は 何cm³ ふえますか。",
+         "answer": "2",
+         "meaning": "液面の ふえ方を 順に 見ます。100→102→104→114→124→134 で **＋2、＋2、＋10、＋10、＋10**。\n**ふえ方は 2しゅるいしか ありません**。とけたときは つぶが 水の すき間に 入るので **＋2cm³**。"
+        },
+        {
+         "question": "[表]より、加えた 固体P 20g が **すべて とけ残った** とき、液面の 体積は 何cm³ ふえますか。",
+         "answer": "10",
+         "meaning": "とけ残りは **固体のまま 底に たまる** ので、その 固体の 体積ぶん そのまま ＝ **＋10cm³**。"
+        },
+        {
+         "question": "[表]より、30℃の 水100cm³ に 固体P は **最大 何g まで** とけますか。",
+         "answer": "40",
+         "meaning": "＋2 が 2回 つづいたあと ＋10 に 変わります。\n＝ **40g までは とけて、次の 20g は 1つぶも とけていない**。だから 最大 **40g**。\nもし 40gと60gの 間に さかい目が あるなら、3回目の ふえ方は 2と10の 間の はんぱな 数に なるはずです。"
+        },
+        {
+         "question": "固体P の **1cm³あたりの 重さ（密度）** は 何g ですか。",
+         "answer": "2",
+         "meaning": "とけ残りの ときは **20g で 10cm³** ふえました。20÷10＝**2g**。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f42_5b",
+       "src": "HG-1836",
+       "hg": "HG-1836",
+       "title": "4つの ビーカーと 固体X（まぜて ちょうど 満ぱいに する）",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 3,
+       "intro": "[図]のように、4つの ビーカーA〜D に 80℃の水を それぞれ **100g・200g・300g・400g** 入れました。\n次に A〜D に それぞれ **36g・48g・60g・72g** の **固体X** を 入れて よくかきまぜました。\n水温は 変化しないものと します。",
+       "svg": "<svg viewBox='0 0 460 228' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[図] 4つの ビーカーに 水を 入れ、固体X を 入れて よくかきまぜた</text><rect x='34.0' y='96.0' width='80.0' height='100.0' fill='rgba(148,163,184,0.10)' stroke='#94a3b8' stroke-width='1.2'/><rect x='35.0' y='177.5' width='78.0' height='17.5' fill='rgba(79,158,255,0.35)' stroke='none' stroke-width='0'/><text x='74.0' y='190.5' fill='#e2e8f0' font-size='9' text-anchor='middle'>水100g</text><text x='74.0' y='48.0' fill='#ffd166' font-size='10' text-anchor='middle'>固体X 36g</text><line x1='74.0' y1='56.0' x2='74.0' y2='84.0' stroke='#94a3b8' stroke-width='1.4'/><polygon points='74.0,92.0 70.0,82.0 78.0,82.0' fill='#94a3b8' stroke='#94a3b8' stroke-width='1.2'/><text x='74.0' y='216.0' fill='#fff' font-size='12' text-anchor='middle'>A</text><rect x='140.0' y='96.0' width='80.0' height='100.0' fill='rgba(148,163,184,0.10)' stroke='#94a3b8' stroke-width='1.2'/><rect x='141.0' y='159.0' width='78.0' height='36.0' fill='rgba(79,158,255,0.35)' stroke='none' stroke-width='0'/><text x='180.0' y='172.0' fill='#e2e8f0' font-size='9' text-anchor='middle'>水200g</text><text x='180.0' y='48.0' fill='#ffd166' font-size='10' text-anchor='middle'>固体X 48g</text><line x1='180.0' y1='56.0' x2='180.0' y2='84.0' stroke='#94a3b8' stroke-width='1.4'/><polygon points='180.0,92.0 176.0,82.0 184.0,82.0' fill='#94a3b8' stroke='#94a3b8' stroke-width='1.2'/><text x='180.0' y='216.0' fill='#fff' font-size='12' text-anchor='middle'>B</text><rect x='246.0' y='96.0' width='80.0' height='100.0' fill='rgba(148,163,184,0.10)' stroke='#94a3b8' stroke-width='1.2'/><rect x='247.0' y='140.5' width='78.0' height='54.5' fill='rgba(79,158,255,0.35)' stroke='none' stroke-width='0'/><text x='286.0' y='153.5' fill='#e2e8f0' font-size='9' text-anchor='middle'>水300g</text><text x='286.0' y='48.0' fill='#ffd166' font-size='10' text-anchor='middle'>固体X 60g</text><line x1='286.0' y1='56.0' x2='286.0' y2='84.0' stroke='#94a3b8' stroke-width='1.4'/><polygon points='286.0,92.0 282.0,82.0 290.0,82.0' fill='#94a3b8' stroke='#94a3b8' stroke-width='1.2'/><text x='286.0' y='216.0' fill='#fff' font-size='12' text-anchor='middle'>C</text><rect x='352.0' y='96.0' width='80.0' height='100.0' fill='rgba(148,163,184,0.10)' stroke='#94a3b8' stroke-width='1.2'/><rect x='353.0' y='122.0' width='78.0' height='73.0' fill='rgba(79,158,255,0.35)' stroke='none' stroke-width='0'/><text x='392.0' y='135.0' fill='#e2e8f0' font-size='9' text-anchor='middle'>水400g</text><text x='392.0' y='48.0' fill='#ffd166' font-size='10' text-anchor='middle'>固体X 72g</text><line x1='392.0' y1='56.0' x2='392.0' y2='84.0' stroke='#94a3b8' stroke-width='1.4'/><polygon points='392.0,92.0 388.0,82.0 396.0,82.0' fill='#94a3b8' stroke='#94a3b8' stroke-width='1.2'/><text x='392.0' y='216.0' fill='#fff' font-size='12' text-anchor='middle'>D</text></svg>",
+       "steps": [
+        {
+         "question": "ビーカー**D** の 水よう液に さらに 固体X を とかしたところ、**8gまで** とけました。このことから、ビーカー**A** で とけ残った 固体X の 重さは 何g ですか。",
+         "answer": "16",
+         "meaning": "Dは 水400g に 72g とけていて、あと 8g とけた ＝ 400gの水に **80g** が 上限。\nつまり **水100g あたり 20g** まで。\nAは 水100g なので 上限は **20g**。入れたのは 36g だから 36−20＝**16g** 残ります。"
+        },
+        {
+         "question": "同じように、ビーカー**B** で とけ残った 固体X の 重さは 何g ですか。",
+         "answer": "8",
+         "meaning": "Bは 水200g なので 上限は 20×2＝**40g**。48−40＝**8g** 残ります。"
+        },
+        {
+         "question": "同じように、ビーカー**C** で とけ残った 固体X の 重さは 何g ですか。とけ残りが ないときは「なし」と 答えなさい。",
+         "answer": "なし",
+         "choices": [
+          "なし",
+          "10g",
+          "20g",
+          "30g"
+         ],
+         "meaning": "Cは 水300g なので 上限は 20×3＝**60g**。入れたのも ちょうど 60g なので **ぴったり 全部とけて 残りは なし**。\n＝ **Cは ちょうど 満ぱい（飽和）** の 水よう液です。"
+        },
+        {
+         "question": "ビーカーDを [図]の 状態に もどしたあと、次の実験を しました。\n「とけ残りが ある **(ア)** の ビーカーの 中身と、とけ残りの ない **(イ)** の ビーカーの 中身を すべて まぜ合わせると、とけ残りが すべて とけて、とけ残りが ない **(ウ)** の ビーカーに 入っている 水よう液の こさと 同じに なった。」\n**(ア)** に あてはまる ビーカーは どれですか。",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "とけ残りが あるのは **AとB**、ないのは **CとD**。4通り ためします。\nA＋C＝水400g・X96g（上限80g）→ 16g 残る ✗\nA＋D＝水500g・X108g（上限100g）→ 8g 残る ✗\nB＋C＝水500g・X108g（上限100g）→ 8g 残る ✗\n**B＋D＝水600g・X120g（上限120g）→ ちょうど 0 ✓**\nだから (ア)は **B**。"
+        },
+        {
+         "question": "同じ「文」の **(イ)** に あてはまる ビーカーは どれですか。",
+         "answer": "D",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "上の 4通りで 残りが 0に なるのは **B と D** の 組だけ。だから (イ)は **D**。"
+        },
+        {
+         "question": "同じ「文」の **(ウ)** に あてはまる ビーカーは どれですか。",
+         "answer": "C",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "B＋D は 水600g に X120g で **ちょうど 満ぱい**。こさは 120÷(600＋120)＝**1/6**。\nCは 60÷(300＋60)＝**1/6** で ぴったり 同じ（Cも ちょうど 満ぱい だから）。\nDは 72÷472 で ちがう。だから (ウ)は **C**。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f42_2a",
+       "src": "HG-1834",
+       "hg": "HG-1834",
+       "title": "こさの 正誤（同じ体積で／同じ重さで）",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 3,
+       "intro": "こさのちがう **2つの 食塩水** を くらべます。\n**何を そろえて くらべているか**（同じ体積か、同じ重さか）を 毎回 読み分けます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "(1) こさのちがう 2つの 食塩水の **1cm³あたりの 重さ** を 比べると、こさが こいほうが **軽い**。\nこの文は 正しいですか。",
+         "answer": "正しくない",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "こい＝つまっている ので **1cm³あたりは 重い**。だから この文は まちがい。"
+        },
+        {
+         "question": "(2) こさが こい 食塩水のほうが **味が こい**。\nこの文は 正しいですか。",
+         "answer": "正しい",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "そのとおり。"
+        },
+        {
+         "question": "(3) こさのちがう 2つの 食塩水から **同じ体積(かさ)ずつ** 食塩水を 取り出し、水を すべて とりのぞいた あとに 残った **食塩の 体積** を 比べると、こさが こいほうが **大きい**。\nこの文は 正しいですか。",
+         "answer": "正しい",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "**体積を そろえた** ので、こいほうが 食塩が 多い。だから 残る 食塩の 体積も **大きい**。"
+        },
+        {
+         "question": "(4) 同じように **同じ体積ずつ** 取り出し、水を すべて とりのぞいた あとに とけていた **食塩の 重さ** を 比べると、こさが こいほうが **重い**。\nこの文は 正しいですか。",
+         "answer": "正しい",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "(3)と 同じ 骨。体積を そろえたので、こいほうが 食塩の 重さも **重い**。"
+        },
+        {
+         "question": "(5) こさのちがう 2つの 食塩水から **同じ重さずつ** 食塩水を 取り出して **体積** を 比べると、こさが こいほうが 体積は **大きい**。\nこの文は 正しいですか。",
+         "answer": "正しくない",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "こんどは **重さを そろえた**。こいほうは 1cm³あたりが 重い ＝ 同じ重さなら 体積は **小さい**。まちがい。"
+        },
+        {
+         "question": "(6) 同じように **同じ重さずつ** 取り出し、水を すべて とりのぞいた あとに とけていた **食塩の 重さ** を 比べると、こさが こいほうが **軽い**。\nこの文は 正しいですか。",
+         "answer": "正しくない",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "同じ重さの 食塩水なら、こいほうが とけている 食塩は **重い**。まちがい。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f42_2b",
+       "src": "HG-1834",
+       "hg": "HG-1834",
+       "title": "こさの 正誤（1てきずつ／飽和）",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 3,
+       "intro": "こさのちがう **2つの 食塩水** を くらべます。\n**何を そろえて くらべているか**（同じ体積か、同じ重さか）を 毎回 読み分けます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "(7) こさのちがう 2つの 食塩水から **スポイトで 1てきずつ** 取り出し、スライドガラスの上で かわかしたあと、残った **食塩の 体積** を 比べると、こさが こいほうが **小さい**。\nこの文は 正しいですか。",
+         "answer": "正しくない",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "**1てき ＝ 同じ体積**。だから (3)と 同じで、こいほうが **大きい**。まちがい。"
+        },
+        {
+         "question": "(8) 同じように **1てきずつ** 取り出して かわかしたあと、残った **食塩の 重さ** を 比べると、こさが こいほうが **重い**。\nこの文は 正しいですか。",
+         "answer": "正しい",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "**1てき ＝ 同じ体積** なので (4)と 同じ。正しい。"
+        },
+        {
+         "question": "(9) **同じ温度で 同じ重さの 水** を 使って、こさのちがう 2つの 食塩水を 作りました。この 食塩水に さらに 食塩を とかして **飽和食塩水** を つくるとき、**さらに とかすことの できる 食塩の 重さ** は、もとの 食塩水の こさが こいほうが **軽い**。\nこの文は 正しいですか。",
+         "answer": "正しい",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "水の 重さが 同じなら、**満ぱいまでに とける 量も 同じ**。\nすでに たくさん とけている（こい）ほうが、**あと 足せる 量は 少ない** ＝ 軽い。正しい。"
+        },
+        {
+         "question": "(10) **水温を 同じ** にして、**飽和食塩水** と、**とけ残りが 出ている 食塩水** の こさを 比べると、とけ残りが 出ている 食塩水のほうが **こさが こい**。\nこの文は 正しいですか。",
+         "answer": "正しくない",
+         "choices": [
+          "正しい",
+          "正しくない"
+         ],
+         "meaning": "**とけ残りが 出ている ＝ その水よう液は もう 満ぱい（飽和）**。\nだから こさは 飽和食塩水と **同じ**。まちがい。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f42_3",
+       "src": "HG-0797",
+       "hg": "HG-0797",
+       "title": "さとう水A と B（全体の重さが そろえてある）",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 2,
+       "intro": "[表]は さとう水A と さとう水B について 書いたものです。\n**全体の重さが どちらも 240g に そろえて ある** ところに 気づくと 速く 解けます。",
+       "svg": "<svg viewBox='0 0 372 148' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表] さとう水A と さとう水B</text><rect x='16.0' y='26.0' width='200.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>さとう水</text><rect x='216.0' y='26.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='252.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>A</text><rect x='288.0' y='26.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='324.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>B</text><rect x='16.0' y='49.0' width='200.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='64.6' fill='#ffd166' font-size='10' text-anchor='middle'>とかした さとうの 重さ(g)</text><rect x='216.0' y='49.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='252.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>140</text><rect x='288.0' y='49.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='324.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>40</text><rect x='16.0' y='72.0' width='200.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='87.6' fill='#ffd166' font-size='10' text-anchor='middle'>とかした さとうの 体積(cm³)</text><rect x='216.0' y='72.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='252.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>87.5</text><rect x='288.0' y='72.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='324.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>25</text><rect x='16.0' y='95.0' width='200.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='110.6' fill='#ffd166' font-size='10' text-anchor='middle'>さとう水 全体の 重さ(g)</text><rect x='216.0' y='95.0' width='72.0' height='23.0' fill='rgba(239,71,111,0.20)' stroke='#64748b' stroke-width='1'/><text x='252.0' y='110.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>240</text><rect x='288.0' y='95.0' width='72.0' height='23.0' fill='rgba(239,71,111,0.20)' stroke='#64748b' stroke-width='1'/><text x='324.0' y='110.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>240</text><rect x='16.0' y='118.0' width='200.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='133.6' fill='#ffd166' font-size='10' text-anchor='middle'>さとう水 全体の 体積(cm³)</text><rect x='216.0' y='118.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='252.0' y='133.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>162</text><rect x='288.0' y='118.0' width='72.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='324.0' y='133.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>210</text></svg>",
+       "steps": [
+        {
+         "question": "さとう水**A** に ふくまれている **水の重さ** は 何g ですか。",
+         "answer": "100",
+         "meaning": "全体240g から とかした さとう140g を ひきます。240−140＝**100g**。"
+        },
+        {
+         "question": "さとう水**B** に ふくまれている **水の重さ** は 何g ですか。",
+         "answer": "200",
+         "meaning": "240−40＝**200g**。Aより 水が 多い ＝ B のほうが うすい、と 見当が つきます。"
+        },
+        {
+         "question": "**1cm³あたりの 重さ** を 比べると、さとう水A と さとう水B では どちらのほうが 重いですか。",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "240÷162 と 240÷210。**わられる数が どちらも 240 で 同じ** なので、**体積が 小さい ほうが 重い** ＝ **A**。"
+        },
+        {
+         "question": "**1gあたりの 体積(かさ)** を 比べると、どちらのほうが 大きいですか。",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "162÷240 と 210÷240。こんどは **わる数が 同じ** なので **体積が 大きい B**。\n前の問題と **ちょうど 逆** の答えに なります（さかさまの わり算だから）。"
+        },
+        {
+         "question": "さとう水A と さとう水B では、どちらのほうが **こさが こい** ですか。",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "こさ ＝ さとう ÷ 全体。140/240 と 40/240 で **下が 同じ** なので **A**。\n表の「とかした さとうの 体積（87.5・25）」は **1度も 使いません**。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f42_4",
+       "src": "HG-1835",
+       "hg": "HG-1835",
+       "title": "水100gあたりに そろえて くらべる",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 2,
+       "intro": "**水100g あたりに そろえて（通分して）** 比べます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "[表1]のように、80℃の水と ほう酸を ビーカー①〜④に 入れると、どのビーカーにも ほう酸は とけ残っていませんでした。**2番目に こさが こい** ほう酸水が 入った ビーカーは どれですか。",
+         "answer": "③",
+         "choices": [
+          "①",
+          "②",
+          "③",
+          "④"
+         ],
+         "meaning": "水100g あたりに そろえます。\n① 27÷1.5＝**18**／② 42÷3＝**14**／③ 16÷1＝**16**／④ 25÷2.5＝**10**\nこい順に ①18 → ③16 → ②14 → ④10。**2番目は ③**。",
+         "svg": "<svg viewBox='0 0 420 104' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表1] 80℃の水と ほう酸（とけ残りは なかった）</text><rect x='16.0' y='26.0' width='168.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='100.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>ビーカー</text><rect x='184.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='213.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>①</text><rect x='242.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='271.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>②</text><rect x='300.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='329.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>③</text><rect x='358.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='387.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>④</text><rect x='16.0' y='49.0' width='168.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='100.0' y='64.6' fill='#ffd166' font-size='10' text-anchor='middle'>加えた 水の量(g)</text><rect x='184.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='213.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>150</text><rect x='242.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='271.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>300</text><rect x='300.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='329.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>100</text><rect x='358.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='387.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>250</text><rect x='16.0' y='72.0' width='168.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='100.0' y='87.6' fill='#ffd166' font-size='10' text-anchor='middle'>加えた ほう酸の量(g)</text><rect x='184.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='213.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>27</text><rect x='242.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='271.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>42</text><rect x='300.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='329.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>16</text><rect x='358.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='387.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>25</text></svg>"
+        },
+        {
+         "question": "[表2]のように、80℃の水と 食塩を ビーカー①〜④に 入れて よくかき混ぜました。**最も こさが うすい** 食塩水が 入った ビーカーは どれですか。なお、80℃の水100gに 食塩は 最大38gまで とけます。",
+         "answer": "④",
+         "choices": [
+          "①",
+          "②",
+          "③",
+          "④"
+         ],
+         "meaning": "① 76÷2＝**38**／② 128÷4＝**32**／③ 35÷1＝**35**／④ 90÷3＝**30**\n**最もうすいのは ④**。\n「最大38gまで」は、①が ちょうど38＝ぎりぎり 全部とける ことの たしかめに 使うだけで、**どれも とけ残りは 出ません**。",
+         "svg": "<svg viewBox='0 0 420 104' xmlns='http://www.w3.org/2000/svg'><text x='8.0' y='15.0' fill='#ffd166' font-size='10' text-anchor='start'>[表2] 80℃の水と 食塩（100gに 最大38gまで とける）</text><rect x='16.0' y='26.0' width='168.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='100.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>ビーカー</text><rect x='184.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='213.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>①</text><rect x='242.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='271.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>②</text><rect x='300.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='329.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>③</text><rect x='358.0' y='26.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='387.0' y='41.6' fill='#ffd166' font-size='10' text-anchor='middle'>④</text><rect x='16.0' y='49.0' width='168.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='100.0' y='64.6' fill='#ffd166' font-size='10' text-anchor='middle'>加えた 水の量(g)</text><rect x='184.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='213.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>200</text><rect x='242.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='271.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>400</text><rect x='300.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='329.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>100</text><rect x='358.0' y='49.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='387.0' y='64.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>300</text><rect x='16.0' y='72.0' width='168.0' height='23.0' fill='rgba(59,130,246,0.14)' stroke='#64748b' stroke-width='1'/><text x='100.0' y='87.6' fill='#ffd166' font-size='10' text-anchor='middle'>加えた 食塩の量(g)</text><rect x='184.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='213.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>76</text><rect x='242.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='271.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>128</text><rect x='300.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='329.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>35</text><rect x='358.0' y='72.0' width='58.0' height='23.0' fill='rgba(59,130,246,0.05)' stroke='#64748b' stroke-width='1'/><text x='387.0' y='87.6' fill='#e2e8f0' font-size='10' text-anchor='middle'>90</text></svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f42_5a",
+       "src": "HG-0800",
+       "hg": "HG-0800",
+       "title": "足せる量と 足せない量（重さと 体積）",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 4,
+       "star": 2,
+       "intro": "**水1cm³の 重さを 1g** と します。\n20℃の 水**100g** に 食塩**24g** を 加えて よくかきまぜると、食塩は すべて とけました。\nなお、**食塩24gの 体積は 12cm³** です。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "できた 食塩水の **重さ** に ついて 正しいものは どれですか。",
+         "answer": "124g",
+         "choices": [
+          "124gより 軽い",
+          "124g",
+          "124gより 重い"
+         ],
+         "meaning": "**重さは 足し算どおり**。100＋24＝**124g**。\n「食塩24gの 体積は12cm³」は この問題では **使いません**。"
+        },
+        {
+         "question": "できた 食塩水の **体積** に あてはまるものは どれですか。",
+         "answer": "112cm³より 小さい",
+         "choices": [
+          "112cm³より 小さい",
+          "112cm³",
+          "112cm³より 大きい"
+         ],
+         "meaning": "**体積は 足し算どおりに ならない**。とけた 食塩の つぶが 水の つぶの すき間に 入るので、100＋12＝112cm³ より **小さく** なります。\n＝ **重さは そのまま、体積は 減る**。だから こくなるほど 1cm³あたりは 重くなります。"
+        }
+       ]
+      }
      ]
     },
     "kokai": {
