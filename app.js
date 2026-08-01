@@ -6377,8 +6377,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 教科→カテゴリ→問題数（データは静的なのでハードコード。問題追加時はここを更新）
 const QUESTION_COUNTS = {
-  kokugo: { kotowaza: 489, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
-            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,696
+  kokugo: { kotowaza: 473, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
+            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,512
   sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
             wariai: 420, hayasa: 172, rittai: 419 },                                         // 6,900（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
