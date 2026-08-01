@@ -520,7 +520,23 @@ button { cursor: pointer; font-family: inherit; }
 .sansu-mode-btn .mode-icon { font-size: 1.5rem; }
 .sansu-mode-btn .mode-name { font-size: 0.78rem; font-weight: 900; text-align: center; }
 .sansu-mode-btn .mode-desc { font-size: 0.62rem; color: var(--sub2); text-align: center; }
-.sansu-mode-btn.selected { background: var(--grad-brand); border-color: var(--accent); box-shadow: var(--glow-brand); }
+/* ★えらんだモードは はっきり分かるようにする（本人指示 2026-08-01）
+   背景を明るいグラデにして、外側に2重のふちを出し、少し浮かせる */
+.sansu-mode-btn.selected { background: var(--grad-accent); border-color: var(--accent2); color: #fff;
+  box-shadow: 0 0 0 2.5px rgba(56,200,240,0.45), 0 0 30px rgba(79,124,255,0.55), 0 6px 16px rgba(0,0,0,0.35);
+  transform: translateY(-2px); }
+.sansu-mode-btn.selected .mode-name { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+.sansu-mode-btn.selected .mode-desc { color: rgba(255,255,255,0.86); }
+.sansu-mode-btn.selected .mode-icon { transform: scale(1.12); }
+/* ★じゅくナビ＝オトン学園の看板モード。えらぶ前から少し立たせておく */
+.sansu-mode-btn.kanban { border-color: rgba(255,209,102,0.5);
+  background: linear-gradient(135deg, rgba(255,209,102,0.13) 0%, rgba(79,124,255,0.13) 100%); }
+.sansu-mode-btn.kanban .mode-name { color: var(--gold); }
+/* えらんだときは ほかのモードと同じ青の塗り。ただし ふちだけ金にして看板であることを残す
+   （金の塗りは「難易度3＝チャレンジ」で使っているので、意味がぶつからないようにする）*/
+.sansu-mode-btn.kanban.selected { background: var(--grad-accent); border-color: var(--gold);
+  box-shadow: 0 0 0 2.5px rgba(255,186,0,0.55), 0 0 30px rgba(79,124,255,0.5), 0 6px 16px rgba(0,0,0,0.35); }
+.sansu-mode-btn.kanban.selected .mode-name { color: var(--gold); text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
 .sansu-mode-btn:active { transform: scale(0.94); }
 
 /* 設定エリア共通 */
