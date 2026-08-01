@@ -8729,6 +8729,255 @@
        }
       ]
      },
+     "12": {
+      "title": "時計算と 数字の 個数",
+      "items": [
+       {
+        "bone": "はりは 1分で どれだけ 動く",
+        "rei": {
+         "question": "長い はり（分針）は 1時間で 時計を ちょうど 1周 します。長い はりは 1分間に 何度 進みますか。",
+         "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><line x1=\"100.0\" y1=\"100.0\" x2=\"100.0\" y2=\"38.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">長いはりは 60分で 1周＝360度</text></svg>",
+         "kaisetsu": [
+          "**時計を 1周すると 360度。長い はりは それを 60分 かけて まわります。**",
+          "60等分すれば 1分ぶんが 出ます。360÷60。",
+          "**6度**。",
+          "短い はりは 1時間で 数字1つぶん（30度）しか 進まないので、1分では 30÷60＝**0.5度**。長い はりの 12分の1の 速さです。"
+         ],
+         "answer": "6"
+        },
+        "ruidai": [
+         {
+          "question": "短い はり（時針）は 1分間に 何度 進みますか。",
+          "answer": "0.5",
+          "meaning": "1時間で 数字1つぶん＝30度なので、30÷60＝0.5度です。",
+          "svg": ""
+         },
+         {
+          "question": "秒針は 30度 進むのに 何秒 かかりますか。",
+          "answer": "5",
+          "meaning": "秒針は 60秒で 1周＝360度。1秒で6度なので、30÷6＝5秒です。",
+          "svg": ""
+         },
+         {
+          "question": "短い はり（時針）が 1周する 間に、秒針は 何周 しますか。",
+          "answer": "720",
+          "meaning": "時針の1周は 12時間＝720分。秒針は 1分で 1周するので 720周です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "なす角＝2つの はりの 位置の 差",
+        "rei": {
+         "question": "8時50分の とき、長い はりと 短い はりの なす角の 小さい方は 何度ですか。",
+         "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><path d=\"M 70.1 102.6 A 30.0 30.0 0 0 1 74.0 85.0\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"55.1\" y=\"94.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">?</text><line x1=\"100.0\" y1=\"100.0\" x2=\"60.2\" y2=\"103.5\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"46.3\" y2=\"69.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8時50分（赤＝短いはり）</text></svg>",
+         "kaisetsu": [
+          "**まちがえやすいのが 短い はり。8時ちょうどなら 240度ですが、50分たっているので もう 少し 先へ 進んでいます。**",
+          "12のところから 右まわりに 何度か、で 両方の 場所を 出します。短い はり＝8×30＋50×0.5＝240＋25＝**265度**。長い はり＝50×6＝**300度**。",
+          "300−265。",
+          "**35度**。もし 差が 180度を こえたら、360からひいて 小さい方に します。"
+         ],
+         "answer": "35"
+        },
+        "ruidai": [
+         {
+          "question": "10時30分の とき、なす角の 小さい方は 何度ですか。",
+          "answer": "135",
+          "meaning": "短いはり＝10×30＋30×0.5＝315度、長いはり＝180度。315−180＝135度。この 問題だけ 短いはりの方が 先を 進んでいます。",
+          "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><path d=\"M 100.0 130.0 A 30.0 30.0 0 0 1 78.8 78.8\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"57.5\" y=\"121.6\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">?</text><line x1=\"100.0\" y1=\"100.0\" x2=\"71.7\" y2=\"71.7\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"100.0\" y2=\"162.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10時30分</text></svg>"
+         },
+         {
+          "question": "4時24分の とき、なす角の 小さい方は 何度ですか。",
+          "answer": "12",
+          "meaning": "短いはり＝120＋12＝132度、長いはり＝144度。144−132＝12度です。",
+          "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><line x1=\"100.0\" y1=\"100.0\" x2=\"129.7\" y2=\"126.8\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"136.4\" y2=\"150.2\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4時24分</text></svg>"
+         },
+         {
+          "question": "2時12分の とき、なす角の 小さい方は 何度ですか。",
+          "answer": "6",
+          "meaning": "短いはり＝60＋6＝66度、長いはり＝72度。72−66＝6度。短いはりの 0.5度/分を わすれると 12度に なってしまいます。",
+          "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><line x1=\"100.0\" y1=\"100.0\" x2=\"136.5\" y2=\"83.7\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"159.0\" y2=\"80.8\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2時12分</text></svg>"
+         }
+        ]
+       },
+       {
+        "bone": "差は 1分で 5.5度ずつ 動く",
+        "rei": {
+         "question": "5時と 6時の 間で、長い はりと 短い はりが 重なるのは 5時何分ですか。",
+         "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><path d=\"M 100.0 70.0 A 30.0 30.0 0 0 1 115.0 126.0\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"144.4\" y=\"92.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">150度</text><line x1=\"100.0\" y1=\"100.0\" x2=\"120.0\" y2=\"134.6\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"100.0\" y2=\"38.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5時ちょうど・150度 はなれている</text></svg>",
+         "kaisetsu": [
+          "**5時ちょうど、短い はりは 150度のところ、長い はりは 0度のところ。150度 はなれています。**",
+          "1分で 長い はりは 6度、短い はりは 0.5度 進むので、差は 1分で **6−0.5＝5.5度** ずつ ちぢまります。",
+          "150÷5.5＝1500÷55。",
+          "**27と3/11分**。時計算の 答えは ほとんど 分母が 11に なります（5.5＝11/2 だから）。"
+         ],
+         "answer": "27と3/11"
+        },
+        "ruidai": [
+         {
+          "question": "1時ちょうどの とき、長い はりと 短い はりは 何度 はなれていますか。",
+          "answer": "30",
+          "meaning": "数字1つぶんで 30度。1時なので 30度です。",
+          "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><path d=\"M 100.0 70.0 A 30.0 30.0 0 0 1 115.0 74.0\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"111.9\" y=\"59.6\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">?</text><line x1=\"100.0\" y1=\"100.0\" x2=\"120.0\" y2=\"65.4\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"100.0\" y2=\"38.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1時ちょうど</text></svg>"
+         },
+         {
+          "question": "1時と 2時の 間で 長い はりと 短い はりが 一直線に なるには、差を あと 何度 ひろげれば よいですか。",
+          "answer": "210",
+          "meaning": "いま 30度 ひらいています。長い はりが 追いこして、反対がわに 180度 ひらくので 30＋180＝210度です。",
+          "svg": ""
+         },
+         {
+          "question": "1時と 2時の 間で、長い はりと 短い はりが 一直線に なるのは 1時何分ですか。",
+          "answer": "38と2/11",
+          "meaning": "210÷5.5＝38と2/11分です。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "直角に なるのは 1時間に 2回 ある",
+        "rei": {
+         "question": "4時と 5時の 間で、長い はりと 短い はりの 間が 初めて 90度に なるのは 4時何分ですか。",
+         "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><path d=\"M 100.0 70.0 A 30.0 30.0 0 0 1 126.0 115.0\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"139.8\" y=\"81.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">120度</text><line x1=\"100.0\" y1=\"100.0\" x2=\"134.6\" y2=\"120.0\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"100.0\" y2=\"38.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4時ちょうど・120度 ひらいている</text></svg>",
+         "kaisetsu": [
+          "**4時ちょうどは 120度 ひらいています。90度は それより せまいので、ちぢめれば 着きます。**",
+          "ちぢめる角は 120−90＝**30度**。差は 1分で 5.5度ずつ ちぢまります。",
+          "30÷5.5。",
+          "**5と5/11分**。このあと 長い はりは 短い はりを 追いこして、こんどは 反対がわに ひらいていくので、**同じ1時間の 中で もう1回 90度に なります**。"
+         ],
+         "answer": "5と5/11"
+        },
+        "ruidai": [
+         {
+          "question": "10時ちょうどの とき、なす角の 小さい方は 何度ですか。",
+          "answer": "60",
+          "meaning": "短いはりは 300度、長いはりは 0度。360−300＝60度が 小さい方です。",
+          "svg": "<svg viewBox=\"0 0 200 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100.0\" cy=\"100.0\" r=\"74.0\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"34.0\" x2=\"100.0\" y2=\"26.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"133.0\" y1=\"42.8\" x2=\"137.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"157.2\" y1=\"67.0\" x2=\"164.1\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"166.0\" y1=\"100.0\" x2=\"174.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"157.2\" y1=\"133.0\" x2=\"164.1\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"133.0\" y1=\"157.2\" x2=\"137.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"100.0\" y1=\"166.0\" x2=\"100.0\" y2=\"174.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"67.0\" y1=\"157.2\" x2=\"63.0\" y2=\"164.1\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"42.8\" y1=\"133.0\" x2=\"35.9\" y2=\"137.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"34.0\" y1=\"100.0\" x2=\"26.0\" y2=\"100.0\" stroke=\"#1a2340\" stroke-width=\"2.4\"/><line x1=\"42.8\" y1=\"67.0\" x2=\"35.9\" y2=\"63.0\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><line x1=\"67.0\" y1=\"42.8\" x2=\"63.0\" y2=\"35.9\" stroke=\"#1a2340\" stroke-width=\"1.2\"/><text x=\"100.0\" y=\"50.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">12</text><text x=\"154.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"100.0\" y=\"158.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"46.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">9</text><path d=\"M 74.0 85.0 A 30.0 30.0 0 0 1 100.0 70.0\" fill=\"none\" stroke=\"#22c55e\" stroke-width=\"2.4\"/><text x=\"77.0\" y=\"64.2\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">?</text><line x1=\"100.0\" y1=\"100.0\" x2=\"65.4\" y2=\"80.0\" stroke=\"#ff6b6b\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"100.0\" y1=\"100.0\" x2=\"100.0\" y2=\"38.0\" stroke=\"#4f7cff\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100.0\" cy=\"100.0\" r=\"3.5\" fill=\"#1a2340\"/><text x=\"100.0\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10時ちょうど</text></svg>"
+         },
+         {
+          "question": "10時と 11時の 間で、1度目に 90度に なるのは 10時何分ですか。",
+          "answer": "5と5/11",
+          "meaning": "60度から ひろがっていくので、90−60＝30度ぶん。30÷5.5＝5と5/11分です。",
+          "svg": ""
+         },
+         {
+          "question": "10時と 11時の 間で、2度目に 90度に なるのは 10時何分ですか。",
+          "answer": "38と2/11",
+          "meaning": "1度目のあと 角は 180度まで ひろがり、そこから ちぢみます。長い はりは 短い はりより 300度 うしろ。差を 300−90＝210度 ちぢめればよいので 210÷5.5＝38と2/11分。1時の 一直線と 同じ 答えに なります。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "数字は けた数ごとに 束ねて 数える",
+        "rei": {
+         "question": "1から 10までの 整数を 順に 書いていくと「1,2,3,4,5,6,7,8,9,1,0」と 11個の 数字を 書きます。では 1から 85までの 整数を 順に 書いていくと、何個の 数字を 書きますか。",
+         "svg": "<svg viewBox=\"0 0 300 132\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"8\" y=\"8\" width=\"284\" height=\"30\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/><text x=\"20\" y=\"28\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">1〜9</text><text x=\"104\" y=\"28\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">9こ</text><text x=\"150\" y=\"28\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">数字1こずつ</text><text x=\"284\" y=\"28\" font-size=\"12\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">9こ</text><rect x=\"8\" y=\"44\" width=\"284\" height=\"30\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#22c55e\" stroke-width=\"1.6\"/><text x=\"20\" y=\"64\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">10〜99</text><text x=\"104\" y=\"64\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">90こ</text><text x=\"150\" y=\"64\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">数字2こずつ</text><text x=\"284\" y=\"64\" font-size=\"12\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">180こ</text><rect x=\"8\" y=\"80\" width=\"284\" height=\"30\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"20\" y=\"100\" font-size=\"12\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">100〜500</text><text x=\"104\" y=\"100\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">401こ</text><text x=\"150\" y=\"100\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">数字3こずつ</text><text x=\"284\" y=\"100\" font-size=\"12\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1203こ</text><text x=\"150\" y=\"127\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">けた数が かわるところで 束を 切る</text></svg>",
+         "kaisetsu": [
+          "**聞かれているのは「数」ではなく「数字」の 個数。10は『1』と『0』で 2個と 数えます。**",
+          "1けたの数は 1〜9の **9個**で、数字は 1個ずつ → 9個。2けたの数は 10〜85の **76個**で、数字は 2個ずつ → 76×2＝152個。",
+          "9＋152。",
+          "**161個**。けた数が かわるところで 束を 切る、が この 数え方の 型です。"
+         ],
+         "answer": "161"
+        },
+        "ruidai": [
+         {
+          "question": "1から 500までの 整数を 順に 書いていくと、何個の 数字を 書きますか。",
+          "answer": "1392",
+          "meaning": "1けた9個、2けたは 90個×2＝180個、3けたは 100〜500の 401個×3＝1203個。9＋180＋1203＝1392個です。",
+          "svg": ""
+         },
+         {
+          "question": "1から 順に 整数を 書いていくとき、250番目に 書く 数字を 求めなさい。",
+          "answer": "1",
+          "meaning": "99までで 9＋180＝189個。250−189＝61個ぶん 3けたの中を 進みます。61÷3＝20あまり1 なので、100から 20個 進んだ 120の 1けた目＝1です。",
+          "svg": ""
+         },
+         {
+          "question": "1から 順に 整数を 書いていくとき、999番目に 書く 数字を 求めなさい。",
+          "answer": "9",
+          "meaning": "999−189＝810。810÷3＝270で わりきれるので、100から 269個 進んだ 369の 最後のけた＝9です。わりきれたときは 1つ手前の 数の 一の位に なります。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "「何回 出るか」は 位ごとに 数える",
+        "rei": {
+         "question": "1から 500までの 整数を 全部 書きます。このとき「3」という 数字は 何回 出てきますか。",
+         "svg": "<svg viewBox=\"0 0 300 132\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"8\" y=\"8\" width=\"284\" height=\"30\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"18\" y=\"28\" font-size=\"11\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">一の位が3</text><text x=\"98\" y=\"28\" font-size=\"9\" font-family=\"sans-serif\" fill=\"#6c7086\">3, 13, … , 493</text><text x=\"284\" y=\"28\" font-size=\"12\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">50こ</text><rect x=\"8\" y=\"44\" width=\"284\" height=\"30\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"18\" y=\"64\" font-size=\"11\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">十の位が3</text><text x=\"98\" y=\"64\" font-size=\"9\" font-family=\"sans-serif\" fill=\"#6c7086\">30〜39 … 430〜439</text><text x=\"284\" y=\"64\" font-size=\"12\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">50こ</text><rect x=\"8\" y=\"80\" width=\"284\" height=\"30\" rx=\"6\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"18\" y=\"100\" font-size=\"11\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">百の位が3</text><text x=\"98\" y=\"100\" font-size=\"9\" font-family=\"sans-serif\" fill=\"#6c7086\">300 〜 399</text><text x=\"284\" y=\"100\" font-size=\"12\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">100こ</text><text x=\"150\" y=\"127\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">50 ＋ 50 ＋ 100 ＝ 200回</text></svg>",
+         "kaisetsu": [
+          "**333のような 数は 3回と 数えます。だから 数ではなく 位を 見ます。**",
+          "一の位が3：3,13,23,…,493 で **50個**。十の位が3：30〜39／130〜139／…／430〜439 の 5組×10＝**50個**。百の位が3：300〜399 の **100個**。",
+          "50＋50＋100。",
+          "**200回**。位ごとに 数えて たす、が 型です。"
+         ],
+         "answer": "200"
+        },
+        "ruidai": [
+         {
+          "question": "1から 500までで、一の位が 0の 数は 何個 ありますか。",
+          "answer": "50",
+          "meaning": "10,20,30,…,500 で 50個です。",
+          "svg": ""
+         },
+         {
+          "question": "1から 500までで、十の位が 0の 数は 何個 ありますか。",
+          "answer": "41",
+          "meaning": "100〜109・200〜209・300〜309・400〜409 で 40個、これに 500を たして 41個。500を わすれやすいところです。",
+          "svg": ""
+         },
+         {
+          "question": "1から 500までの 整数を 全部 書くとき、「0」という 数字は 何回 出てきますか。",
+          "answer": "91",
+          "meaning": "一の位が 50回、十の位が 41回で 91回。百の位に 0は 立ちません（0から 始まる 数は 書かないから）。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "「何個 あるか」は 使わない数を ひく",
+        "rei": {
+         "question": "1から 999までの 整数の うち、3の 使われている 数は 何個 ありますか。",
+         "svg": "<svg viewBox=\"0 0 300 112\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"14\" width=\"280\" height=\"46\" rx=\"8\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"1.8\"/><text x=\"150\" y=\"10\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1 〜 999 の ぜんぶ ＝ 999こ</text><rect x=\"16\" y=\"20\" width=\"190\" height=\"34\" rx=\"6\" fill=\"rgba(34,197,94,0.18)\" stroke=\"#22c55e\" stroke-width=\"1.6\"/><text x=\"111\" y=\"41\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">3を 使わない 728こ</text><rect x=\"210\" y=\"20\" width=\"74\" height=\"34\" rx=\"6\" fill=\"rgba(255,107,107,0.18)\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"247\" y=\"41\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">3を 使う</text><text x=\"150\" y=\"82\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">999 − 728 ＝ 271こ</text><text x=\"150\" y=\"102\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">「少なくとも1つ」は 反対がわを 数える</text></svg>",
+         "kaisetsu": [
+          "**さっきは「3が 何回」。こんどは「3を 使う 数が 何個」。333は 回数なら 3回ですが、個数なら 1個です。**",
+          "そのまま 数えると たいへんなので、**3を 使わない 数**を 数えます。000〜999 と 3けたに そろえて 見ると、どの位も 0,1,2,4,5,6,7,8,9 の 9通り → 9×9×9＝729個。ここから 000を のぞいて **728個**。",
+          "999−728。",
+          "**271個**。「少なくとも 1つ 使う」と 聞かれたら、まず **反対がわ（1つも 使わない）**を 数えます。"
+         ],
+         "answer": "271"
+        },
+        "ruidai": [
+         {
+          "question": "1から 999までで、0を 1つも 使わない 数は 何個 ありますか。",
+          "answer": "819",
+          "meaning": "1けたは 9個、2けたは 9×9＝81個、3けたは 9×9×9＝729個。9＋81＋729＝819個です。",
+          "svg": ""
+         },
+         {
+          "question": "1から 999までの 整数の うち、0の 使われている 数は 何個 ありますか。",
+          "answer": "180",
+          "meaning": "999−819＝180個です。",
+          "svg": ""
+         },
+         {
+          "question": "1から 500までの 整数の うち、2と0が 両方 使われている 数は 何個 ありますか。",
+          "answer": "26",
+          "meaning": "百の位で 分けます。2けたは 20の 1個。1□□は 102・120の 2個。2□□は 200〜209の 10個と 210,220,…,290の 9個で 19個。3□□は 302・320、4□□は 402・420で 2個ずつ。1＋2＋19＋2＋2＝26個です。",
+          "svg": ""
+         },
+         {
+          "question": "1から 500までの 整数の うち、1と8が 両方 使われている 数は 何個 ありますか。",
+          "answer": "27",
+          "meaning": "2けたは 18・81の 2個。1□□は 108,118,…,198の 9個と 180〜189の 10個で 19個。2□□は 218・281、3□□は 318・381、4□□は 418・481で 2個ずつ。2＋19＋2＋2＋2＝27個です。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
+     },
      "13": {
       "title": "N進法（1）",
       "items": [
