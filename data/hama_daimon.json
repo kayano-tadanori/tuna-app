@@ -17766,6 +17766,201 @@
        "hg": "HG-0719",
        "svg": "<svg viewBox=\"0 0 300 82\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"16\" y=\"10\" width=\"173.3\" height=\"18\" fill=\"#4f7cff\" fill-opacity=\"0.28\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"22\" y=\"24\" font-size=\"12\" font-family=\"sans-serif\" fill=\"#1a2340\">使った ②</text><rect x=\"16\" y=\"36\" width=\"86.7\" height=\"18\" fill=\"#ff6b6b\" fill-opacity=\"0.28\" stroke=\"#ff6b6b\" stroke-width=\"1.5\"/><text x=\"22\" y=\"50\" font-size=\"12\" font-family=\"sans-serif\" fill=\"#1a2340\">残り ①</text><text x=\"150\" y=\"76\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">使った分が基準</text></svg>"
       }
+     ],
+     "20": [
+      {
+       "id": "hd5m_20_1",
+       "src": "HG-2011 原簿・小5マスター No.20 大問5",
+       "hg": "HG-2011",
+       "title": "5割の利益を見こんで 3割引き",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "**仕入れ値の5割の利益**をみこんで定価をつけた品物を、**定価の3割引き**で売ったので、**実際の利益は375円**になりました。",
+       "svg": "<svg viewBox='0 0 315 110' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='72' y='26' font-size='9' fill='#eef2ff' text-anchor='end'>仕入れ値</text><rect x='78' y='12' width='150.0' height='19' rx='3' fill='#4f7cff' opacity='0.55' stroke='#eef2ff' stroke-width='1'/><text x='153.0' y='25.5' font-size='9' fill='#141a2e' text-anchor='middle'>1</text><text x='72' y='56' font-size='9' fill='#eef2ff' text-anchor='end'>定価</text><rect x='78' y='42' width='225.0' height='19' rx='3' fill='#ffd166' opacity='0.55' stroke='#eef2ff' stroke-width='1'/><text x='190.5' y='55.5' font-size='9' fill='#141a2e' text-anchor='middle'>1.5</text><text x='72' y='86' font-size='9' fill='#eef2ff' text-anchor='end'>売り値</text><rect x='78' y='72' width='157.5' height='19' rx='3' fill='#7ee787' opacity='0.55' stroke='#eef2ff' stroke-width='1'/><text x='156.8' y='85.5' font-size='9' fill='#141a2e' text-anchor='middle'>1.05</text></svg>",
+       "steps": [
+        {
+         "question": "仕入れ値を1とすると、定価はいくつにあたりますか。",
+         "answer": "1.5",
+         "meaning": "①5割の利益をみこむ＝1＋0.5。②定価は1.5にあたります。"
+        },
+        {
+         "question": "売り値は、仕入れ値のいくつにあたりますか。",
+         "answer": "1.05",
+         "meaning": "①定価1.5の3割引きなので 1.5×0.7。②1.05にあたります。**もとにする量は仕入れ値のまま**です。"
+        },
+        {
+         "question": "実際の利益は、仕入れ値の何分にあたりますか。",
+         "answer": "5分",
+         "choices": [
+          "5分",
+          "2割",
+          "1割5分",
+          "3割5分"
+         ],
+         "meaning": "①1.05－1＝0.05。②0.05は5分です。**5割もうけて3割引いたのに、利益は5分しかありません。**"
+        },
+        {
+         "question": "この品物の仕入れ値は何円ですか。",
+         "answer": "7500",
+         "meaning": "①375円が仕入れ値の0.05にあたります。②375÷0.05＝7500円です。"
+        },
+        {
+         "question": "この品物の定価は何円ですか。",
+         "answer": "11250",
+         "meaning": "①7500×1.5＝11250円です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_20_2",
+       "src": "HG-2012 原簿・小5マスター No.20 大問6(1)",
+       "hg": "HG-2012",
+       "title": "利益と損の差から 定価を出す",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある品物を**定価の8分引き**で売ると**335円の利益**があり、**定価の2割6分引き**で売ると**115円の損**になるそうです。",
+       "steps": [
+        {
+         "question": "8分引きで売ったときと、2割6分引きで売ったときの売り値の差は何円ですか。",
+         "answer": "450",
+         "meaning": "①一方は335円の利益、もう一方は115円の損。②335＋115＝450円ちがいます。**損を「マイナスの利益」と見る**のがコツです。"
+        },
+        {
+         "question": "その450円は、定価の何分にあたりますか。",
+         "answer": "1割8分",
+         "choices": [
+          "1割8分",
+          "3割4分",
+          "8分",
+          "2割6分"
+         ],
+         "meaning": "①0.92－0.74＝0.18。②1割8分です。**同じ定価から引く割合の差**になっています。"
+        },
+        {
+         "question": "この品物の定価は何円ですか。",
+         "answer": "2500",
+         "meaning": "①450÷0.18＝2500円です。"
+        },
+        {
+         "question": "この品物の原価は何円ですか。",
+         "answer": "1965",
+         "meaning": "①2500×0.92＝2300円が売り値。②2300－335＝1965円です。③たしかめ：2500×0.74＝1850、1850－1965＝－115で115円の損 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_20_3",
+       "src": "HG-2013 原簿・小5マスター No.20 大問6(2)",
+       "hg": "HG-2013",
+       "title": "同じねだんで売った＝式が1本できる",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "2つの品物**A、B**を仕入れました。**仕入れ値はAの方がBより225円安かった**のですが、**どちらも同じ値段で売りました**。**Aでは仕入れ値の1割6分の利益**があり、**Bでは仕入れ値の2割の損**をしました。",
+       "steps": [
+        {
+         "question": "Aの売り値は、Aの仕入れ値の何倍ですか。小数で答えなさい。",
+         "answer": "1.16",
+         "meaning": "①1割6分の利益なので 1＋0.16＝1.16倍です。"
+        },
+        {
+         "question": "Bの売り値は、Bの仕入れ値の何倍ですか。小数で答えなさい。",
+         "answer": "0.8",
+         "meaning": "①2割の損なので 1－0.2＝0.8倍です。"
+        },
+        {
+         "question": "Aの仕入れ値は何円ですか。",
+         "answer": "500",
+         "meaning": "①Aの仕入れ値を□とすると、Bは□＋225。②□×1.16＝(□＋225)×0.8。③1.16×□＝0.8×□＋180 なので 0.36×□＝180、□＝500円です。"
+        },
+        {
+         "question": "Bの仕入れ値は何円ですか。",
+         "answer": "725",
+         "meaning": "①500＋225＝725円。②たしかめ：500×1.16＝580、725×0.8＝580で同じ売り値 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_20_4",
+       "src": "HG-2014 原簿・小5マスター No.20 大問7",
+       "hg": "HG-2014",
+       "title": "値引きして売った分は 赤字だった",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある商品を**1個につき120円で1000個仕入れ**、**仕入れ値の2割5分の利益**をみこんで定価をつけました。**770個が売れたところで、残りの商品230個を値引きして売りつくす**と、**総利益が18500円**になりました。",
+       "steps": [
+        {
+         "question": "この商品1個の定価は何円ですか。",
+         "answer": "150",
+         "meaning": "①120×1.25＝150円です。"
+        },
+        {
+         "question": "仕入れにかかったお金は全部で何円ですか。",
+         "answer": "120000",
+         "meaning": "①120×1000＝120000円です。"
+        },
+        {
+         "question": "売り上げは全部で何円ですか。",
+         "answer": "138500",
+         "meaning": "①総利益＝総売上－総仕入れ。②120000＋18500＝138500円です。"
+        },
+        {
+         "question": "定価で売れた770個の売り上げは何円ですか。",
+         "answer": "115500",
+         "meaning": "①150×770＝115500円です。"
+        },
+        {
+         "question": "値引きして売った1個の売り値は何円ですか。",
+         "answer": "100",
+         "meaning": "①残り230個ぶんの売り上げは 138500－115500＝23000円。②23000÷230＝100円です。③**仕入れ値120円より安い＝1個20円の損**をして売っています。「値引きしてもまだもうかる」とはかぎりません。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_20_5",
+       "src": "HG-2015 原簿・小5マスター No.20 大問8",
+       "hg": "HG-2015",
+       "title": "売買損益 × つるかめ算",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "**(1)** ある商品を**1個350円で220個**仕入れ、**1個500円の定価**をつけて何個か売りましたが、売れなかった品物を**1個400円**で売ったので、売りつくしたときの**利益は28500円**でした。\n**(2)** **1個180円のりんごを140個**仕入れ、**1個250円で売る予定**でしたが、何個か250円で売ったあと**残りを1個120円**で売ったので、**利益は6290円**でした。",
+       "steps": [
+        {
+         "question": "(1) 売り上げは全部で何円ですか。",
+         "answer": "105500",
+         "meaning": "①仕入れは350×220＝77000円。②77000＋28500＝105500円です。"
+        },
+        {
+         "question": "(1) もし220個ぜんぶを500円で売っていたら、売り上げは何円ですか。",
+         "answer": "110000",
+         "meaning": "①500×220＝110000円です。**全部を高い方で売ったと仮定する**のがつるかめ算の入口です。"
+        },
+        {
+         "question": "(1) 1個400円で売ったのは何個ですか。",
+         "answer": "45",
+         "meaning": "①110000－105500＝4500円たりません。②1個を500円から400円にすると100円へります。③4500÷100＝45個です。"
+        },
+        {
+         "question": "(2) 売り上げは全部で何円ですか。",
+         "answer": "31490",
+         "meaning": "①仕入れは180×140＝25200円。②25200＋6290＝31490円です。"
+        },
+        {
+         "question": "(2) 250円で売ったりんごは何個ですか。",
+         "answer": "113",
+         "meaning": "①もし全部120円なら 120×140＝16800円。②31490－16800＝14690円多い。③1個を120円から250円にすると130円ふえるので 14690÷130＝113個です。"
+        }
+       ]
+      }
      ]
     },
     "kokai": {
@@ -21958,6 +22153,550 @@
         }
        ]
       }
+     ],
+     "19": [
+      {
+       "id": "hd_5r_f19_1",
+       "src": "HG-2023 原簿・小5理科 No.19 大問4",
+       "hg": "HG-2023",
+       "title": "どちらが余ったかを 毎回 見分ける",
+       "category": "kitai",
+       "unit": "気体の性質",
+       "grade": 5,
+       "star": 3,
+       "intro": "**同じ石灰石と同じこさのうすい塩酸**を使って、次の[実験1]〜[実験4]を行いました。ただし、実験中に水蒸気の発生はないものとします。\n**[実験1]** 石灰石**1g**にうすい塩酸**50cm³** → 二酸化炭素**100cm³**が発生。終わったあと**石灰石が少し残っていた**。\n**[実験2]** 石灰石**1g**にうすい塩酸**150cm³** → 二酸化炭素**200cm³**が発生。終わったあと**うすい塩酸が残っていた**。\n**[実験3]** 石灰石**2g**にうすい塩酸**100cm³** → 二酸化炭素**200cm³**が発生。終わったあと**石灰石が少し残っていた**。\n**[実験4]** [実験3]のあと、残った石灰石にある量のうすい塩酸を加えると二酸化炭素が発生し、終わったときには**石灰石はすべてなくなっていた**。",
+       "steps": [
+        {
+         "question": "実験1から、十分な石灰石にうすい塩酸50cm³を加えると、二酸化炭素は何cm³発生しますか。",
+         "answer": "100",
+         "meaning": "①実験1は石灰石が残った＝**塩酸が全部使われた**。②だから塩酸50cm³ぶんで100cm³です。"
+        },
+        {
+         "question": "実験2から、十分なうすい塩酸に石灰石1gを加えると、二酸化炭素は何cm³発生しますか。",
+         "answer": "200",
+         "meaning": "①実験2は塩酸が残った＝**石灰石が全部とけた**。②だから石灰石1gぶんで200cm³です。"
+        },
+        {
+         "question": "石灰石1gと過不足なく反応するうすい塩酸は何cm³ですか。",
+         "answer": "100",
+         "meaning": "①塩酸50cm³で100cm³、石灰石1gで200cm³。②同じ200cm³を出すのに要る塩酸は 50×2＝100cm³です。**実験1の「50cm³」をそのまま答えないこと。**"
+        },
+        {
+         "question": "実験1で残った石灰石は何gですか。",
+         "answer": "0.5",
+         "meaning": "①塩酸50cm³は石灰石0.5gぶん。②1－0.5＝0.5gが残ります。"
+        },
+        {
+         "question": "実験1のあと、十分な塩酸を加えると、新たに何cm³の二酸化炭素が発生しますか。",
+         "answer": "100",
+         "meaning": "①残った0.5g×200＝100cm³です。"
+        },
+        {
+         "question": "実験2のあと、十分な石灰石を加えると、新たに何cm³の二酸化炭素が発生しますか。",
+         "answer": "100",
+         "meaning": "①実験2は塩酸150cm³のうち100cm³しか使っていません。②余りの50cm³ぶん＝100cm³です。"
+        },
+        {
+         "question": "実験4で新たに発生した二酸化炭素は何cm³ですか。",
+         "answer": "200",
+         "meaning": "①実験3の塩酸100cm³は石灰石1gぶん。②2－1＝1gが残っていたので 1×200＝200cm³です。"
+        },
+        {
+         "question": "石灰石3gにうすい塩酸400cm³を加えると、二酸化炭素は何cm³発生しますか。",
+         "answer": "600",
+         "meaning": "①石灰石3gに必要な塩酸は300cm³。②400cm³あるので**石灰石の方が先になくなります**。③3×200＝600cm³です。**塩酸400から800と計算しないこと。**"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f19_2",
+       "src": "HG-2024 原簿・小5理科 No.19 大問6",
+       "hg": "HG-2024",
+       "title": "グラフの 折れる点が「ちょうど」",
+       "category": "kitai",
+       "unit": "気体の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "[図]のグラフは、**5gの石灰石**に、ある濃さの塩酸を少しずつ加えていったときの、**加えた塩酸の重さ**と**発生した二酸化炭素の最大の体積**との関係を表したものです。",
+       "svg": "<svg viewBox='0 0 300 176' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='4' y='11' fill='#eef2ff' font-size='9'>発生した二酸化炭素(cm³)</text><line x1='46' y1='132' x2='256' y2='132' stroke='#eef2ff' stroke-width='1.2'/><line x1='46' y1='132' x2='46' y2='28' stroke='#eef2ff' stroke-width='1.2'/><line x1='130.0' y1='132' x2='130.0' y2='136' stroke='#eef2ff'/><text x='130.0' y='147' fill='#eef2ff' font-size='9' text-anchor='middle'>100</text><line x1='214.0' y1='132' x2='214.0' y2='136' stroke='#eef2ff'/><text x='214.0' y='147' fill='#eef2ff' font-size='9' text-anchor='middle'>200</text><text x='40' y='48.3' fill='#eef2ff' font-size='9' text-anchor='end'>1000</text><line x1='46' y1='45.3' x2='214.0' y2='45.3' stroke='#64748b' stroke-dasharray='3 3'/><line x1='214.0' y1='132' x2='214.0' y2='45.3' stroke='#64748b' stroke-dasharray='3 3'/><text x='40' y='91.7' fill='#ff6b6b' font-size='9.5' text-anchor='end'>P</text><line x1='46' y1='88.7' x2='130.0' y2='88.7' stroke='#ff6b6b' stroke-dasharray='2 3'/><polyline points='46.0,132.0 214.0,45.3 256.0,45.3' fill='none' stroke='#7ee787' stroke-width='2'/><circle cx='96.4' cy='106.0' r='2.6' fill='#ffd166'/><text x='96.4' y='98.0' fill='#ffd166' font-size='10' text-anchor='middle'>A</text><circle cx='172.0' cy='67.0' r='2.6' fill='#ffd166'/><text x='172.0' y='59.0' fill='#ffd166' font-size='10' text-anchor='middle'>B</text><circle cx='214.0' cy='45.3' r='2.6' fill='#ffd166'/><text x='214.0' y='36.3' fill='#ffd166' font-size='10' text-anchor='middle'>C</text><circle cx='240.9' cy='45.3' r='2.6' fill='#ffd166'/><text x='240.9' y='36.3' fill='#ffd166' font-size='10' text-anchor='middle'>D</text><text x='151.0' y='172' fill='#eef2ff' font-size='9' text-anchor='middle'>加えた塩酸(g)</text></svg>",
+       "steps": [
+        {
+         "question": "塩酸があまっているのはA〜Dのどこですか。",
+         "answer": "D",
+         "choices": [
+          "D",
+          "A",
+          "B",
+          "C"
+         ],
+         "meaning": "①折れ点Cから右は、塩酸を足しても二酸化炭素がふえません。②**石灰石が先になくなった＝塩酸があまっている**のでDです。"
+        },
+        {
+         "question": "石灰石があまっているのはA〜Dのどこですか。すべて選びなさい。",
+         "answer": "A・B",
+         "choices": [
+          "A・B",
+          "A・B・C",
+          "C・D",
+          "A だけ"
+         ],
+         "meaning": "①折れ点Cより左は、塩酸を足すほど二酸化炭素がふえます。②**塩酸が先になくなっている＝石灰石があまる**のでA・Bです。③**Cはちょうど反応する点なので、どちらもあまりません。**"
+        },
+        {
+         "question": "2gの石灰石とちょうど反応する塩酸は何gですか。",
+         "answer": "80",
+         "meaning": "①石灰石5gと塩酸200gがちょうど。②5:200＝2:□ なので □＝80gです。"
+        },
+        {
+         "question": "そのとき発生する二酸化炭素は何cm³ですか。",
+         "answer": "400",
+         "meaning": "①5:1000＝2:□ なので □＝400cm³です。"
+        },
+        {
+         "question": "グラフのPにあてはまる数を答えなさい。",
+         "answer": "500",
+         "meaning": "①塩酸100gは200gの半分。②1000の半分で500です。"
+        },
+        {
+         "question": "二酸化炭素がPcm³発生したとき、あまっている石灰石は何gですか。",
+         "answer": "2.5",
+         "meaning": "①500cm³は石灰石2.5gぶん。②5－2.5＝2.5gがあまっています。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f19_3",
+       "src": "HG-2025 原簿・小5理科 No.19 大問7",
+       "hg": "HG-2025",
+       "title": "同じ数が続くところが 限界",
+       "category": "kitai",
+       "unit": "気体の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "**ある濃さの塩酸A 200cm³**に炭酸カルシウムを加えると二酸化炭素が発生します。加えた炭酸カルシウムの重さと、発生する二酸化炭素の体積は[表]の通りです。",
+       "svg": "<svg viewBox='0 0 436 66' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9.5'>[表] 塩酸A 200cm³に加えたとき</text><rect x='6' y='16' width='104' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='58.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>炭酸カルシウム(g)</text><rect x='110' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='130.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>0.5</text><rect x='150' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='170.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1.0</text><rect x='190' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='210.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>①</text><rect x='230' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='250.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2.0</text><rect x='270' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='290.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2.5</text><rect x='310' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='330.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3.0</text><rect x='350' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='370.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3.5</text><rect x='390' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='410.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4.0</text><rect x='6' y='38' width='104' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='58.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>二酸化炭素(cm³)</text><rect x='110' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='130.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>120</text><rect x='150' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='170.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>240</text><rect x='190' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='210.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>360</text><rect x='230' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='250.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>②</text><rect x='270' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='290.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>600</text><rect x='310' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='330.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>③</text><rect x='350' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='370.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>600</text><rect x='390' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='410.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>600</text></svg>",
+       "steps": [
+        {
+         "question": "表の①にあてはまる数を答えなさい。",
+         "answer": "1.5",
+         "meaning": "①0.5gずつふえているので1.5gです。②120→240→360と240ずつふえているのとも合います。"
+        },
+        {
+         "question": "表の②にあてはまる数を答えなさい。",
+         "answer": "480",
+         "meaning": "①1gあたり240cm³。②2.0×240＝480cm³です。"
+        },
+        {
+         "question": "表の③にあてはまる数を答えなさい。",
+         "answer": "600",
+         "meaning": "①2.5gで600cm³になったあと、3.5gも4.0gも600のまま＝**もう塩酸が足りていません**。②だから3.0gでも600cm³です。**3.0×240＝720としないこと。**"
+        },
+        {
+         "question": "塩酸A 400cm³と過不足なく反応する炭酸カルシウムは何gですか。",
+         "answer": "5",
+         "meaning": "①塩酸200cm³は炭酸カルシウム2.5gで限界。②400cm³ならその倍で5gです。"
+        },
+        {
+         "question": "炭酸カルシウム10gと過不足なく反応する塩酸Aは何cm³ですか。",
+         "answer": "800",
+         "meaning": "①2.5g:200cm³＝10g:□。②□＝800cm³です。"
+        },
+        {
+         "question": "塩酸A 650cm³に炭酸カルシウム8gを加えると、二酸化炭素は何cm³発生しますか。",
+         "answer": "1920",
+         "meaning": "①8gに必要な塩酸は 200÷2.5×8＝640cm³。②650cm³あるのでぎりぎり足ります。③**炭酸カルシウムが先になくなる**ので 8×240＝1920cm³です。"
+        }
+       ]
+      }
+     ],
+     "20": [
+      {
+       "id": "hd_5r_f20_1",
+       "src": "HG-2026 原簿・小5理科 No.20 大問4(2)",
+       "hg": "HG-2026",
+       "title": "ふたと すき間の 組み合わせ",
+       "category": "kitai",
+       "unit": "ものの燃焼",
+       "grade": 5,
+       "star": 2,
+       "intro": "いろいろな大きさの**ガラスの筒、ガラスのふた、金属板**を用いて[図]のA〜Eの装置をつくり、中に火のついたろうそくを入れました。ただし、**AとDではガラスの筒の下部に空気が通るすき間**をつくってあります。\n**A＝上にふた＋下にすき間／B＝上は開き＋筒の中央に金属板／C＝上は開き＋すき間なし／D＝上は開き＋下にすき間／E＝上にふた＋すき間なし**",
+       "svg": "<svg viewBox='0 0 340 150' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='32' y='11' fill='#ffd166' font-size='11' text-anchor='middle'>A</text><rect x='10' y='120' width='44' height='6' fill='#8892b0'/><line x1='14' y1='24' x2='14' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='50' y1='24' x2='50' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='12' y1='24' x2='52' y2='24' stroke='#ffd166' stroke-width='3'/><rect x='14' y='112' width='36' height='8' fill='#7ee787' opacity='0.35'/><rect x='26' y='92' width='12' height='28' fill='#eef2ff' opacity='0.85'/><path d='M32 92 Q28 84 32 76 Q36 84 32 92Z' fill='#ffd166'/><text x='98' y='11' fill='#ffd166' font-size='11' text-anchor='middle'>B</text><rect x='76' y='120' width='44' height='6' fill='#8892b0'/><line x1='80' y1='24' x2='80' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='116' y1='24' x2='116' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='98' y1='24' x2='98' y2='96' stroke='#8892b0' stroke-width='3'/><line x1='80' y1='120' x2='116' y2='120' stroke='#ff6b6b' stroke-width='2'/><rect x='92' y='92' width='12' height='28' fill='#eef2ff' opacity='0.85'/><path d='M98 92 Q94 84 98 76 Q102 84 98 92Z' fill='#ffd166'/><text x='164' y='11' fill='#ffd166' font-size='11' text-anchor='middle'>C</text><rect x='142' y='120' width='44' height='6' fill='#8892b0'/><line x1='146' y1='24' x2='146' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='182' y1='24' x2='182' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='146' y1='120' x2='182' y2='120' stroke='#ff6b6b' stroke-width='2'/><rect x='158' y='92' width='12' height='28' fill='#eef2ff' opacity='0.85'/><path d='M164 92 Q160 84 164 76 Q168 84 164 92Z' fill='#ffd166'/><text x='230' y='11' fill='#ffd166' font-size='11' text-anchor='middle'>D</text><rect x='208' y='120' width='44' height='6' fill='#8892b0'/><line x1='212' y1='24' x2='212' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='248' y1='24' x2='248' y2='120' stroke='#eef2ff' stroke-width='1.6'/><rect x='212' y='112' width='36' height='8' fill='#7ee787' opacity='0.35'/><rect x='224' y='92' width='12' height='28' fill='#eef2ff' opacity='0.85'/><path d='M230 92 Q226 84 230 76 Q234 84 230 92Z' fill='#ffd166'/><text x='296' y='11' fill='#ffd166' font-size='11' text-anchor='middle'>E</text><rect x='274' y='120' width='44' height='6' fill='#8892b0'/><line x1='278' y1='24' x2='278' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='314' y1='24' x2='314' y2='120' stroke='#eef2ff' stroke-width='1.6'/><line x1='276' y1='24' x2='316' y2='24' stroke='#ffd166' stroke-width='3'/><line x1='278' y1='120' x2='314' y2='120' stroke='#ff6b6b' stroke-width='2'/><rect x='290' y='92' width='12' height='28' fill='#eef2ff' opacity='0.85'/><path d='M296 92 Q292 84 296 76 Q300 84 296 92Z' fill='#ffd166'/><text x='170' y='144' fill='#7ee787' font-size='9' text-anchor='middle'>みどり＝下のすき間　きいろ＝ふた　はい色＝金属板</text></svg>",
+       "steps": [
+        {
+         "question": "すぐに火が消えるものを1つ選びなさい。",
+         "answer": "E",
+         "choices": [
+          "E",
+          "A",
+          "C",
+          "D"
+         ],
+         "meaning": "①Eは上にふたがあり、下にもすき間がありません。②**空気の出入り口がまったくない**ので、すぐに酸素を使いきって消えます。"
+        },
+        {
+         "question": "ろうそくが短くなると火が消えるものを1つ選びなさい。",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B",
+          "D",
+          "E"
+         ],
+         "meaning": "①Aは下から空気が入りますが、**上がふさがれています**。②燃えたあとの気体が上にたまり、ろうそくが短くなるとその中に炎が入って消えます。"
+        },
+        {
+         "question": "「つねに十分な量の酸素をふくむ（　）が入ってくること」。（　）に入る言葉は何ですか。",
+         "answer": "空気",
+         "choices": [
+          "空気",
+          "酸素",
+          "ちっ素",
+          "水じょう気"
+         ],
+         "meaning": "①答えは「酸素」ではなく**空気**です。②酸素だけを送っても、燃えたあとの気体が出ていかなければ入れかわりません。**入口と出口の両方が要る**という話です。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f20_2",
+       "src": "HG-2027 原簿・小5理科 No.20 大問5",
+       "hg": "HG-2027",
+       "title": "組み合わせは 3通りしかない",
+       "category": "kitai",
+       "unit": "ものの燃焼",
+       "grade": 5,
+       "star": 3,
+       "intro": "**酸素、ちっ素、二酸化炭素の3種類**の気体があります。この中から**異なる2種類**の気体を選び、ゴム栓のついた**3本の大きな細口びんA〜C**にそれぞれを**半分ずつ**入れてよく混ぜ合わせました。\n**[実験1]** A〜Cの気体を3個の三角フラスコに別々に取り出し、**石灰水**を入れてよくふったところ、**Aだけが変化せず、残りはすべて白くにごった**。\n**[実験2]** BとCの気体を集気びんに取り出し、火のついたろうそくを入れたところ、**Bでは空気中より激しく燃え**、**Cではすぐに消えた**。",
+       "steps": [
+        {
+         "question": "3種類から異なる2種類を選ぶ組み合わせは、全部で何通りありますか。",
+         "answer": "3",
+         "meaning": "①（酸素・ちっ素）（酸素・二酸化炭素）（ちっ素・二酸化炭素）の3通りです。②**びんは3本なので、この3通りを1回ずつ使うしかありません。**ここに気づけば、あとは振り分けるだけです。"
+        },
+        {
+         "question": "二酸化炭素が入っている細口びんはどれですか。",
+         "answer": "B・C",
+         "choices": [
+          "B・C",
+          "A・B",
+          "A・C",
+          "A・B・C"
+         ],
+         "meaning": "①石灰水が白くにごったのはBとC。②二酸化炭素はB・Cに入っています。③**Aは酸素とちっ素**に決まります。"
+        },
+        {
+         "question": "酸素が入っている細口びんはどれですか。",
+         "answer": "A・B",
+         "choices": [
+          "A・B",
+          "B・C",
+          "A・C",
+          "A だけ"
+         ],
+         "meaning": "①Bは空気中より激しく燃えた＝酸素が入っています。②Aも酸素とちっ素なので、酸素はA・Bです。③**半分ずつ混ぜても、空気（酸素21%）より濃い**ので激しく燃えます。"
+        },
+        {
+         "question": "ちっ素が入っている細口びんはどれですか。",
+         "answer": "A・C",
+         "choices": [
+          "A・C",
+          "A・B",
+          "B・C",
+          "C だけ"
+         ],
+         "meaning": "①Cはすぐ消えた＝酸素がない＝ちっ素と二酸化炭素。②Aもちっ素を持つのでA・Cです。③**A・B／B・C／A・Cと、3本がちょうど2回ずつ出てきます。答えの形そのものが検算**になっています。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f20_3",
+       "src": "HG-2028 原簿・小5理科 No.20 大問6",
+       "hg": "HG-2028",
+       "title": "残った気体が0の列を さがす",
+       "category": "kitai",
+       "unit": "ものの燃焼",
+       "grade": 5,
+       "star": 2,
+       "intro": "水素を燃やすと水ができます。**水素6L**にいろいろな体積の酸素をまぜて燃やし、残った気体の体積を調べると[表]のようになりました。気体の体積は同じ温度・気圧ではかるものとし、発生した水の体積は考えないものとします。",
+       "svg": "<svg viewBox='0 0 302 110' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9.5'>[表] 水素6Lに酸素をまぜて燃やした</text><rect x='6' y='16' width='90' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='51.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'></text><rect x='96' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>A</text><rect x='136' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='156.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>B</text><rect x='176' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='196.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>C</text><rect x='216' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='236.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>D</text><rect x='256' y='16' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='276.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>E</text><rect x='6' y='38' width='90' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='51.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>水素(L)</text><rect x='96' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='136' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='156.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='176' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='196.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='216' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='236.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='256' y='38' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='276.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='6' y='60' width='90' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='51.0' y='74.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>酸素(L)</text><rect x='96' y='60' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='74.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1</text><rect x='136' y='60' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='156.0' y='74.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text><rect x='176' y='60' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='196.0' y='74.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3</text><rect x='216' y='60' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='236.0' y='74.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4</text><rect x='256' y='60' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='276.0' y='74.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>5</text><rect x='6' y='82' width='90' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='51.0' y='96.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>残った気体(L)</text><rect x='96' y='82' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='116.0' y='96.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4</text><rect x='136' y='82' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='156.0' y='96.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text><rect x='176' y='82' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='196.0' y='96.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>0</text><rect x='216' y='82' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='236.0' y='96.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1</text><rect x='256' y='82' width='40' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='276.0' y='96.96000000000001' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text></svg>",
+       "steps": [
+        {
+         "question": "水素と酸素は、体積の比がいくつといくつで結びつきますか。「水素:酸素」の水素の方を答えなさい。",
+         "answer": "2",
+         "meaning": "①Cの列で残った気体が0＝**水素6Lと酸素3Lがちょうど**。②6:3＝2:1です。"
+        },
+        {
+         "question": "酸素5Lと過不足なく結びつく水素は何Lですか。",
+         "answer": "10",
+         "meaning": "①酸素1に水素2なので 5×2＝10Lです。"
+        },
+        {
+         "question": "水素8Lと過不足なく結びつく酸素は何Lですか。",
+         "answer": "4",
+         "meaning": "①水素2に酸素1なので 8÷2＝4Lです。"
+        },
+        {
+         "question": "酸素5Lと水素8Lをまぜた気体Xを燃やすと、あとに残る気体は何Lですか。",
+         "answer": "1",
+         "meaning": "①水素8Lに必要な酸素は4L。②酸素は5Lあるので 5－4＝1L残ります（残るのは酸素）。③**両方向を計算してから、どちらが余るかを決めます。**"
+        },
+        {
+         "question": "酸素8Lと水素20Lをまぜた気体Yを燃やすと、あとに残る気体は何Lですか。",
+         "answer": "4",
+         "meaning": "①酸素8Lに必要な水素は16L。②水素は20Lあるので 20－16＝4L残ります。"
+        },
+        {
+         "question": "気体Yで残った気体の名前を答えなさい。",
+         "answer": "水素",
+         "choices": [
+          "水素",
+          "酸素",
+          "ちっ素",
+          "二酸化炭素"
+         ],
+         "meaning": "①Xでは酸素が余り、Yでは水素が余ります。②**同じ手順でも、答えの向きが入れかわります。**"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f20_4",
+       "src": "HG-2029 原簿・小5理科 No.20 大問7",
+       "hg": "HG-2029",
+       "title": "ふえた重さ＝結びついた酸素",
+       "category": "kitai",
+       "unit": "ものの燃焼",
+       "grade": 5,
+       "star": 3,
+       "intro": "**マグネシウムリボン**や**銅粉**を空気中で燃焼させると、燃焼後に固体が残ります。[表]は重さを変えて十分に燃焼させたときの、燃焼前と燃焼後の重さです。",
+       "svg": "<svg viewBox='0 0 362 110' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9.5'>[表] 十分に燃焼させたときの重さ</text><rect x='6' y='16' width='140' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='76.0' y='30.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>燃焼させたマグネシウム(g)</text><rect x='146' y='16' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='167.0' y='30.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.3</text><rect x='188' y='16' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='209.0' y='30.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.6</text><rect x='230' y='16' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='251.0' y='30.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.9</text><rect x='272' y='16' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='293.0' y='30.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.2</text><rect x='314' y='16' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='335.0' y='30.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.5</text><rect x='6' y='38' width='140' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='76.0' y='52.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>燃焼後にできた固体(g)</text><rect x='146' y='38' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='167.0' y='52.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.5</text><rect x='188' y='38' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='209.0' y='52.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.0</text><rect x='230' y='38' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='251.0' y='52.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.5</text><rect x='272' y='38' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='293.0' y='52.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>2.0</text><rect x='314' y='38' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='335.0' y='52.96' fill='#eef2ff' font-size='8.5' text-anchor='middle'>2.5</text><rect x='6' y='60' width='140' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='76.0' y='74.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>燃焼させた銅(g)</text><rect x='146' y='60' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='167.0' y='74.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.4</text><rect x='188' y='60' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='209.0' y='74.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.6</text><rect x='230' y='60' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='251.0' y='74.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.8</text><rect x='272' y='60' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='293.0' y='74.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.0</text><rect x='314' y='60' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='335.0' y='74.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.2</text><rect x='6' y='82' width='140' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='76.0' y='96.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>燃焼後にできた固体(g)</text><rect x='146' y='82' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='167.0' y='96.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.5</text><rect x='188' y='82' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='209.0' y='96.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>0.75</text><rect x='230' y='82' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='251.0' y='96.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.0</text><rect x='272' y='82' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='293.0' y='96.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.25</text><rect x='314' y='82' width='42' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='335.0' y='96.96000000000001' fill='#eef2ff' font-size='8.5' text-anchor='middle'>1.5</text></svg>",
+       "steps": [
+        {
+         "question": "完全燃焼させたら2.25gの酸化マグネシウムが残りました。燃焼したマグネシウムは何gですか。",
+         "answer": "1.35",
+         "meaning": "①0.3g→0.5gなので比は3:5。②0.3×(2.25÷0.5)＝1.35gです。"
+        },
+        {
+         "question": "3.6gの銅を完全燃焼させると、酸化銅は何gできますか。",
+         "answer": "4.5",
+         "meaning": "①0.4g→0.5gなので比は4:5。②0.5×(3.6÷0.4)＝4.5gです。"
+        },
+        {
+         "question": "銅0.4gに結びつく酸素は何gですか。",
+         "answer": "0.1",
+         "meaning": "①0.5－0.4＝0.1g。②**ふえた重さが、結びついた酸素の重さ**です。"
+        },
+        {
+         "question": "2.0gの銅の燃焼を途中でやめたら2.1gになりました。燃焼した銅は何gですか。",
+         "answer": "0.4",
+         "meaning": "①ふえたのは0.1g＝結びついた酸素。②銅0.4gに酸素0.1gなので、燃えた銅は0.4gです。③**0.1gを「燃えた銅」としないこと。**"
+        },
+        {
+         "question": "そのとき、燃焼せずに残った銅は何gですか。",
+         "answer": "1.6",
+         "meaning": "①2.0－0.4＝1.6gです。"
+        },
+        {
+         "question": "同じ重さのマグネシウムと銅を別々に完全燃焼させると、酸化銅は酸化マグネシウムの何倍ですか。",
+         "answer": "0.75",
+         "meaning": "①表に**0.6g**が両方にあります。②銅0.6g→0.75g、マグネシウム0.6g→1.0g。③0.75÷1.0＝0.75倍です。**表から直接読めるように数が組んであります。**"
+        }
+       ]
+      }
+     ],
+     "21": [
+      {
+       "id": "hd_5r_f21_1",
+       "src": "HG-2030 原簿・小5理科 No.21 大問3",
+       "hg": "HG-2030",
+       "title": "曲線の上か 下か だけで決まる",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 5,
+       "star": 2,
+       "intro": "[図]は、いろいろな温度の水100gにとかすことのできる**物質W**の最大の重さをグラフにしたもの（よう解度曲線）に、**30℃と50℃の水100gに物質Wを15g、10g、5gずつそれぞれ加えた点**をア〜カとして表したものです。なお、ア〜カのいずれの点も、よくかき混ぜたあとの状態で考えます。\n**曲線は30℃で5g、50℃で15gを通っています。**",
+       "svg": "<svg viewBox='0 0 300 180' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='4' y='11' fill='#eef2ff' font-size='9'>水100gにとける重さ(g)</text><line x1='44' y1='138' x2='258' y2='138' stroke='#eef2ff' stroke-width='1.2'/><line x1='44' y1='138' x2='44' y2='26' stroke='#eef2ff' stroke-width='1.2'/><line x1='135.7' y1='138' x2='135.7' y2='142' stroke='#eef2ff'/><text x='135.7' y='153' fill='#eef2ff' font-size='9' text-anchor='middle'>30</text><line x1='196.9' y1='138' x2='196.9' y2='142' stroke='#eef2ff'/><text x='196.9' y='153' fill='#eef2ff' font-size='9' text-anchor='middle'>50</text><text x='39' y='113.0' fill='#eef2ff' font-size='9' text-anchor='end'>5</text><line x1='41' y1='110.0' x2='44' y2='110.0' stroke='#eef2ff'/><text x='39' y='85.0' fill='#eef2ff' font-size='9' text-anchor='end'>10</text><line x1='41' y1='82.0' x2='44' y2='82.0' stroke='#eef2ff'/><text x='39' y='57.0' fill='#eef2ff' font-size='9' text-anchor='end'>15</text><line x1='41' y1='54.0' x2='44' y2='54.0' stroke='#eef2ff'/><path d='M44.0,129.0 Q135.7,119.0 166.3,91.0 T221.3,29.4' fill='none' stroke='#7ee787' stroke-width='2'/><circle cx='135.7' cy='54.0' r='2.6' fill='#ffd166'/><text x='125.7' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>ア</text><circle cx='135.7' cy='82.0' r='2.6' fill='#ffd166'/><text x='125.7' y='86.0' fill='#ffd166' font-size='10' text-anchor='middle'>イ</text><circle cx='135.7' cy='110.0' r='2.6' fill='#ffd166'/><text x='125.7' y='114.0' fill='#ffd166' font-size='10' text-anchor='middle'>ウ</text><circle cx='196.9' cy='54.0' r='2.6' fill='#ffd166'/><text x='206.9' y='58.0' fill='#ffd166' font-size='10' text-anchor='middle'>エ</text><circle cx='196.9' cy='82.0' r='2.6' fill='#ffd166'/><text x='206.9' y='86.0' fill='#ffd166' font-size='10' text-anchor='middle'>オ</text><circle cx='196.9' cy='110.0' r='2.6' fill='#ffd166'/><text x='206.9' y='114.0' fill='#ffd166' font-size='10' text-anchor='middle'>カ</text><text x='151.0' y='176' fill='#eef2ff' font-size='9' text-anchor='middle'>水の温度(℃)</text></svg>",
+       "steps": [
+        {
+         "question": "水温30℃の水にWを10g加えた状態はどれですか。",
+         "answer": "イ",
+         "choices": [
+          "イ",
+          "ア",
+          "ウ",
+          "オ"
+         ],
+         "meaning": "①30℃の列で、たての位置が10gの点です。"
+        },
+        {
+         "question": "水温50℃の水にWを10g加えた状態はどれですか。",
+         "answer": "オ",
+         "choices": [
+          "オ",
+          "エ",
+          "カ",
+          "イ"
+         ],
+         "meaning": "①50℃の列で、たての位置が10gの点です。"
+        },
+        {
+         "question": "とけ残らず、ちょうど飽和している点はどれですか。すべて選びなさい。",
+         "answer": "ウ・エ",
+         "choices": [
+          "ウ・エ",
+          "ア・エ",
+          "ウ・オ",
+          "ア・オ"
+         ],
+         "meaning": "①**曲線そのものが「ちょうど飽和」の線**です。②曲線の上にのっている点はウ（30℃5g）とエ（50℃15g）です。"
+        },
+        {
+         "question": "アでは物質Wが何gとけ残っていますか。",
+         "answer": "10",
+         "meaning": "①30℃では5gまでしかとけません。②15－5＝10gが残ります。"
+        },
+        {
+         "question": "カでは、物質Wをさらに最大何gまでとかせますか。",
+         "answer": "10",
+         "meaning": "①50℃では15gまでとけます。②15－5＝10gまで足せます。③**アの答えと同じ10gですが、意味は正反対**（とけ残りと、まだとける量）です。"
+        },
+        {
+         "question": "イの状態から水温を上げて50℃にしました。さらに最大何gまでとかせますか。",
+         "answer": "5",
+         "meaning": "①50℃の限界は15g、すでに10gとけています。②15－10＝5gです。③**点は動かず、曲線が下から追いこしてきます。**"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f21_2",
+       "src": "HG-2031 原簿・小5理科 No.21 大問4",
+       "hg": "HG-2031",
+       "title": "水が100gでないときは 100gに直す",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 5,
+       "star": 2,
+       "intro": "[表]は、いろいろな温度の水100gにとかすことのできる**物質P**の最大の重さです。ただし、水の蒸発は考えないものとします。\n**B液＝40℃の水200gにPをとけるだけとかしたもの／C液＝80℃の水50gにP18gをとかしたもの**",
+       "svg": "<svg viewBox='0 0 322 66' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9.5'>[表] 水100gにとかすことのできる物質Pの最大の重さ</text><rect x='6' y='16' width='126' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='69.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>水の温度(℃)</text><rect x='132' y='16' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='155.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>20</text><rect x='178' y='16' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='201.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>40</text><rect x='224' y='16' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='247.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>60</text><rect x='270' y='16' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='293.0' y='30.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>80</text><rect x='6' y='38' width='126' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='69.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>とける最大の重さ(g)</text><rect x='132' y='38' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='155.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>18</text><rect x='178' y='38' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='201.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>36</text><rect x='224' y='38' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='247.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>60</text><rect x='270' y='38' width='46' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='1'/><text x='293.0' y='52.96' fill='#eef2ff' font-size='9.5' text-anchor='middle'>90</text></svg>",
+       "steps": [
+        {
+         "question": "B液を60℃にすると、あと最大何gのPをとかせますか。",
+         "answer": "48",
+         "meaning": "①水200gなので表の2倍。②60℃は120g、40℃は72gまで。③120－72＝48gです。"
+        },
+        {
+         "question": "B液を20℃にすると、何gのPがとけきれずに出てきますか。",
+         "answer": "36",
+         "meaning": "①B液は40℃の飽和液なので、とけているのは 36×2＝72g。②20℃・水200gには 18×2＝36gまでしかとけません。③72－36＝36gが出てきます。"
+        },
+        {
+         "question": "C液を80℃に保つとき、あと最大何gのPをとかせますか。",
+         "answer": "27",
+         "meaning": "①水50gなので表の半分。②80℃は45gまで。③45－18＝27gです。"
+        },
+        {
+         "question": "C液を冷やしていくと、何℃より低くなるととけきれなくなったPが出始めますか。",
+         "answer": "40",
+         "meaning": "①水50gに18g＝**100gあたり36g**。②表で36gは40℃です。"
+        },
+        {
+         "question": "20℃の水200gにP72gを加えてよくかき混ぜました。とけ残ったPは何gですか。",
+         "answer": "36",
+         "meaning": "①20℃・水200gには 18×2＝36gまで。②72－36＝36gが残ります。"
+        },
+        {
+         "question": "そのとけ残りをすべてとかすには、20℃の水を少なくともあと何g加えればよいですか。",
+         "answer": "200",
+         "meaning": "①72gをとかすには 100÷18×72＝400gの水が要ります。②400－200＝**200g**を足します。③「あと何g」なので400と答えないこと。"
+        },
+        {
+         "question": "そのかわりに、あたためていくとします。少なくとも何℃になればとけ残りがなくなりますか。",
+         "answer": "40",
+         "meaning": "①水200gに72g＝100gあたり36g。②表で36gは40℃です。③**冷やして出はじめる温度と、あたためて消える温度が同じ**になります。"
+        },
+        {
+         "question": "60℃の水にPをとけるだけとかした飽和水よう液240gには、Pが何gとけていますか。",
+         "answer": "90",
+         "meaning": "①60℃は水100gにP60g＝**水よう液160gの中にP60g**。②240×60÷160＝90gです。③**この問いだけ「水の重さ」ではなく「水よう液の重さ」**で与えられています。240×60÷100＝144としないこと。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f21_3",
+       "src": "HG-2032 原簿・小5理科 No.21 大問5",
+       "hg": "HG-2032",
+       "title": "曲線の形が まるでちがう2つ",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 5,
+       "star": 2,
+       "intro": "[図]は、いろいろな温度の水100gにとかすことのできる**物質A、B**の最大の重さをグラフにしたものです。\n**A：20℃＝30g／60℃＝110g／80℃＝170g　　B：60℃＝26g／80℃＝70g**",
+       "svg": "<svg viewBox='0 0 300 186' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='4' y='11' fill='#eef2ff' font-size='9'>水100gにとける重さ(g)</text><line x1='46' y1='140' x2='256' y2='140' stroke='#eef2ff' stroke-width='1.2'/><line x1='46' y1='140' x2='46' y2='24' stroke='#eef2ff' stroke-width='1.2'/><line x1='88.0' y1='140' x2='88.0' y2='144' stroke='#eef2ff'/><text x='88.0' y='155' fill='#eef2ff' font-size='8.5' text-anchor='middle'>20</text><line x1='130.0' y1='140' x2='130.0' y2='144' stroke='#eef2ff'/><text x='130.0' y='155' fill='#eef2ff' font-size='8.5' text-anchor='middle'>40</text><line x1='172.0' y1='140' x2='172.0' y2='144' stroke='#eef2ff'/><text x='172.0' y='155' fill='#eef2ff' font-size='8.5' text-anchor='middle'>60</text><line x1='214.0' y1='140' x2='214.0' y2='144' stroke='#eef2ff'/><text x='214.0' y='155' fill='#eef2ff' font-size='8.5' text-anchor='middle'>80</text><line x1='256.0' y1='140' x2='256.0' y2='144' stroke='#eef2ff'/><text x='256.0' y='155' fill='#eef2ff' font-size='8.5' text-anchor='middle'>100</text><text x='41' y='123.7' fill='#eef2ff' font-size='8.5' text-anchor='end'>30</text><line x1='43' y1='120.7' x2='46' y2='120.7' stroke='#64748b' stroke-dasharray='2 3'/><text x='41' y='97.9' fill='#eef2ff' font-size='8.5' text-anchor='end'>70</text><line x1='43' y1='94.9' x2='46' y2='94.9' stroke='#64748b' stroke-dasharray='2 3'/><text x='41' y='72.1' fill='#eef2ff' font-size='8.5' text-anchor='end'>110</text><line x1='43' y1='69.1' x2='46' y2='69.1' stroke='#64748b' stroke-dasharray='2 3'/><text x='41' y='33.4' fill='#eef2ff' font-size='8.5' text-anchor='end'>170</text><line x1='43' y1='30.4' x2='46' y2='30.4' stroke='#64748b' stroke-dasharray='2 3'/><polyline points='46.0,130.3 88.0,120.7 130.0,100.0 172.0,69.1 214.0,30.4' fill='none' stroke='#7ee787' stroke-width='2'/><polyline points='130.0,133.6 172.0,123.2 214.0,94.9 256.0,43.3' fill='none' stroke='#ff6b6b' stroke-width='2'/><text x='222.4' y='32.4' fill='#7ee787' font-size='10'>A</text><text x='252.0' y='37.3' fill='#ff6b6b' font-size='10'>B</text><text x='151.0' y='182' fill='#eef2ff' font-size='9' text-anchor='middle'>水の温度(℃)</text></svg>",
+       "steps": [
+        {
+         "question": "物質Aを80℃の水80gにとかせるだけとかすと、Aは何gとけますか。",
+         "answer": "136",
+         "meaning": "①水100gで170gなので、水80gなら 170×0.8＝136gです。"
+        },
+        {
+         "question": "それを20℃まで冷やすと、とけきれずに出てくる結晶は何gですか。",
+         "answer": "112",
+         "meaning": "①20℃・水80gには 30×0.8＝24gまで。②136－24＝112gが出てきます。"
+        },
+        {
+         "question": "60℃の水180gに物質Bを26gとかしました。これは飽和していますか。していれば1、まだとけるなら2と答えなさい。",
+         "answer": "2",
+         "meaning": "①60℃のBは水100gに26g。②水180gなら 26×1.8＝46.8gまでとけます。③26gは全部とけていて、まだ余裕があります。**グラフの26という数字をそのまま持ってきた撹乱**です。"
+        },
+        {
+         "question": "その液を80℃に上げると、さらに最大何gのBをとかせますか。",
+         "answer": "100",
+         "meaning": "①80℃・水180gには 70×1.8＝126gまで。②126－26＝100gです。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_f21_4",
+       "src": "HG-2033 原簿・小5理科 No.21 大問6",
+       "hg": "HG-2033",
+       "title": "出てきたほう酸の 行き先を全部たす",
+       "category": "suiyoueki",
+       "unit": "もののとけ方",
+       "grade": 5,
+       "star": 3,
+       "intro": "ほう酸は水100gに**40℃で最大9g、80℃で最大24g**までとけます。実験中に、水の蒸発、ろ紙にしみこんだ水、ほう酸の結晶についている水などはないものとします。\n**[実験]** **80℃の水200g**を入れたビーカーAに**ほう酸50g**を加えてとけるだけとかし、**①とけ残ったほう酸をろ過して取りのぞき**、ビーカーBに集めたろ液の中に**ほう酸の結晶1gを糸でつり下げ**、ふたをして静かに置きました。\n**3日後**、ろ液は**20℃**になっていて、つり下げた結晶を取り出すと**25g**になっていました。また**②ビーカーBのかべのあちこちに、ほう酸の結晶がついていました**。\nそこで**③ビーカーBに残ったろ液のうち42gだけをビーカーCに移し**、40℃に保ってほう酸を加えると、**最大1.6gまでとけました**。",
+       "steps": [
+        {
+         "question": "下線部①でろ過して取りのぞいたほう酸は何gですか。",
+         "answer": "2",
+         "meaning": "①80℃の水200gには 24×2＝48gまでとけます。②50－48＝2gが残ります。"
+        },
+        {
+         "question": "下線部③のろ液42gにふくまれている水は何gですか。",
+         "answer": "40",
+         "meaning": "①水□g・ほう酸○gとすると □＋○＝42。②40℃でさらに1.6gとけたので ○＋1.6＝9×□÷100。③42－□＋1.6＝0.09×□ → 43.6＝1.09×□ → □＝40gです。"
+        },
+        {
+         "question": "そのろ液42gにとけているほう酸は何gですか。",
+         "answer": "2",
+         "meaning": "①42－40＝2gです。②たしかめ：40℃で水40gには3.6gまでとけるので、3.6－2＝1.6g ✓"
+        },
+        {
+         "question": "20℃の水100gにとかすことのできるほう酸は最大何gですか。",
+         "answer": "5",
+         "meaning": "①そのろ液は**20℃の飽和液**です。②水40gにほう酸2gなので、100gあたり5gです。③**表に無い20℃の値を、実験から逆算して作る**のがこの問題の核です。"
+        },
+        {
+         "question": "20℃になったとき、ビーカーBのろ液から出てきたほう酸は全部で何gですか。",
+         "answer": "38",
+         "meaning": "①ろ液は水200gにほう酸48g。②20℃では 5×2＝10gしかとけません。③48－10＝38gが出ます。"
+        },
+        {
+         "question": "下線部②で、ビーカーBのかべについていたほう酸の結晶は何gですか。",
+         "answer": "14",
+         "meaning": "①つり下げた結晶は1g→25gなので**24gふえました**。②38－24＝14gがかべについています。③**25gをそのまま使わず、はじめの1gを引く**こと。"
+        }
+       ]
+      }
      ]
     },
     "kokai": {
@@ -22794,6 +23533,3100 @@
           "エ"
          ],
          "meaning": "ア 12.1×0.8＝9.68／イ 13.6×0.7＝9.52／ウ 19.4×0.5＝**9.7**／エ 27.2×0.3＝8.16。\n**上の3つは 0.2の中に かたまっている**。「気温が高い方が多い」「しつ度が高い方が多い」という 見当は どちらも 外れる。"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "master2nd": {
+    "label": "算数2nd（演習プリント）",
+    "note": "★2026-08-01 本人指示：じゅくナビの「今週の復習テスト」に置くのは1st（A表に記録される）だけ。2ndはここに分けて保管し、あとで作る「2ndだけの高難易度モード」で使う。2ndは1stより灘度Aが濃い（点数を競わないぶん難度を上げられる）。",
+    "fukushu": {
+     "20": [
+      {
+       "id": "hd5m2nd_20_6",
+       "src": "HG-2017 原簿・小5 2nd演習 No.20 大問7",
+       "hg": "HG-2017",
+       "title": "大きく上げて大きく引く方が 得だった",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "**A店、B店では、同じ仕入れ値の品物**を売っています。**A店は仕入れ値の2割増しの定価をつけ、その定価の1割5分引き**で売りました。**B店は仕入れ値の4割増しの定価をつけ、2割5分引き**で売りました。このとき、**A店とB店の利益の差は120円**でした。",
+       "steps": [
+        {
+         "question": "A店の売り値は、仕入れ値の何倍ですか。小数で答えなさい。",
+         "answer": "1.02",
+         "meaning": "①1.2×0.85＝1.02倍です。②利益は2分です。"
+        },
+        {
+         "question": "B店の売り値は、仕入れ値の何倍ですか。小数で答えなさい。",
+         "answer": "1.05",
+         "meaning": "①1.4×0.75＝1.05倍です。②利益は5分。**大きく上げて大きく引いた方が得**でした。"
+        },
+        {
+         "question": "2つの店の利益の差は、仕入れ値の何分にあたりますか。",
+         "answer": "3分",
+         "choices": [
+          "3分",
+          "2分",
+          "5分",
+          "1割5分"
+         ],
+         "meaning": "①0.05－0.02＝0.03。②3分です。"
+        },
+        {
+         "question": "この品物の仕入れ値は何円ですか。",
+         "answer": "4000",
+         "meaning": "①120÷0.03＝4000円です。②それぞれの利益（80円と200円）は最後まで聞かれません。**差だけで解けます。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_20_7",
+       "src": "HG-2018 原簿・小5 2nd演習 No.20 大問8",
+       "hg": "HG-2018",
+       "title": "比の1つ分が そのまま利益になる",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 2,
+       "intro": "**商品Aと商品Bの原価の比は5:4**です。**Aを売って2割の利益**があり、**Bを売って150円の損**をしたので、**差し引き700円の利益**となりました。",
+       "steps": [
+        {
+         "question": "Aの原価を⑤とすると、Aの利益はいくつにあたりますか。○の中の数を答えなさい。",
+         "answer": "1",
+         "meaning": "①⑤×0.2＝①。②**2割＝5分の1が、比の5と噛み合って1つ分になる**ように数が組まれています。"
+        },
+        {
+         "question": "比の1つ分は何円ですか。",
+         "answer": "850",
+         "meaning": "①①－150＝700なので、①＝850円です。"
+        },
+        {
+         "question": "商品Aの原価は何円ですか。",
+         "answer": "4250",
+         "meaning": "①850×5＝4250円です。②**Bの「4」は一度も使いません**（Bの損は金額で与えられているため）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_20_8",
+       "src": "HG-2019 原簿・小5 2nd演習 No.20 大問9",
+       "hg": "HG-2019",
+       "title": "「はずでした」の世界から 個数を逆算する",
+       "category": "wariai",
+       "unit": "売買損益",
+       "grade": 5,
+       "star": 3,
+       "intro": "おもちゃを**1個120円で何個か仕入れ**ました。それを**1個400円で売れば、15個こわれていても64000円の利益があるはず**でした。ところが、**実際には40個こわれていた**ので、**1個450円で売る**ことにしました。",
+       "steps": [
+        {
+         "question": "仕入れた個数を□個とすると、「はずでした」の売り上げは 400×(□－15) 円です。利益の式から、□は何個ですか。",
+         "answer": "250",
+         "meaning": "①400×(□－15)－120×□＝64000。②400×□－6000－120×□＝64000。③280×□＝70000 なので □＝250個です。**問われているのは利益なのに、先に個数を出さないと動けません。**"
+        },
+        {
+         "question": "実際に売れたのは何個ですか。",
+         "answer": "210",
+         "meaning": "①40個こわれたので 250－40＝210個です。②**こわれた分も仕入れ値はかかっています。**"
+        },
+        {
+         "question": "実際の売り上げは何円ですか。",
+         "answer": "94500",
+         "meaning": "①450×210＝94500円です。"
+        },
+        {
+         "question": "実際の利益は何円ですか。",
+         "answer": "64500",
+         "meaning": "①仕入れは120×250＝30000円。②94500－30000＝64500円です。③**こわれた数が15個から40個にふえたのに、利益は500円しか変わりません。**値上げがきいています。"
+        }
+       ]
+      }
+     ],
+     "21": [
+      {
+       "id": "hd5m2nd_21_1",
+       "src": "HG-2020 原簿・小5 2nd演習 No.21 大問5",
+       "hg": "HG-2020",
+       "title": "「すべて答えよ」なのに 答えは1つ",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "**ある年の8月1日が月曜日**のとき、この年で、**1日が水曜日になる月**は何月ですか。あてはまるものをすべて答えなさい。ただし、**この年は平年**とします。",
+       "steps": [
+        {
+         "question": "31日ある月の1日から、次の月の1日までは、曜日がいくつ進みますか。",
+         "answer": "3",
+         "meaning": "①31÷7＝4あまり3。②曜日は3つ進みます。"
+        },
+        {
+         "question": "2月（28日）の1日から3月1日までは、曜日がいくつ進みますか。",
+         "answer": "0",
+         "meaning": "①28÷7＝4あまり0。②**進みません。2月1日と3月1日は同じ曜日**です。ここが検算の足場になります。"
+        },
+        {
+         "question": "7月1日は何曜日ですか。",
+         "answer": "金",
+         "choices": [
+          "金",
+          "木",
+          "土",
+          "日"
+         ],
+         "meaning": "①7月は31日なので、8月1日は7月1日の3つ先。②月曜の3つ前は金曜日です。"
+        },
+        {
+         "question": "1日が水曜日になるのは何月ですか。",
+         "answer": "6",
+         "meaning": "①8月1日の月曜から1か月ずつもどして全部の月をしらべます。②1月土／2月火／3月火／4月金／5月日／**6月水**／7月金／8月月／9月木／10月土／11月火／12月木。③水曜は6月だけです。**全部しらべないと「1つだけ」だと言い切れません。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_21_2",
+       "src": "HG-2021 原簿・小5 2nd演習 No.21 大問7",
+       "hg": "HG-2021",
+       "title": "日数で数えず 回数を3でわる",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "**毎週 月、水、金の週3回放送**されるテレビ番組があります。**25回目の放送は、11月24日月曜日**でした。",
+       "steps": [
+        {
+         "question": "25回目の放送は、何週目の何回目ですか。「週目」の数を答えなさい。",
+         "answer": "9",
+         "meaning": "①25÷3＝8あまり1。②8週ぶんが終わって次の1回目なので、**9週目の1回目（月曜）**です。"
+        },
+        {
+         "question": "35回目の放送は12月何日ですか。",
+         "answer": "17",
+         "meaning": "①35回目は25回目の10回あと。②10÷3＝3あまり1なので**3週と1回**先です。③11月24日＋21日＝12月15日（月・34回目）、その次の水曜で**12月17日**です。"
+        },
+        {
+         "question": "1回目の放送は9月何日ですか。",
+         "answer": "29",
+         "meaning": "①25回目は1回目の24回あと。②24÷3＝8なので**ちょうど8週前**。③11月24日－56日＝**9月29日（月曜）**です。④月・水・金は間かくが2日,2日,3日とばらばらなので、**日数で数えると壊れます。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_21_3",
+       "src": "HG-2022 原簿・小5 2nd演習 No.21 大問8",
+       "hg": "HG-2022",
+       "title": "人の周期と 曜日の周期が二重にまわる",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 3,
+       "intro": "**ひろし君のクラスは38人**で、**ひろし君の出席番号は11番**です。**4月12日の月曜日から、日曜日を除いて毎日6人ずつ、出席番号1番の人から出席番号順**にヒヨコの当番をすることになりました。**日曜日以外は、祝日も当番があります。**",
+       "steps": [
+        {
+         "question": "1日目は1〜6番、2日目は7〜12番です。ひろし君（11番）が1回目に当番をするのは何日目ですか。",
+         "answer": "2",
+         "meaning": "①2日目は7〜12番なので、11番が入ります。"
+        },
+        {
+         "question": "7日目の当番は37番、38番のあと、何番にもどりますか。",
+         "answer": "1",
+         "meaning": "①6日目までで36人。②7日目は37,38ときて**1,2,3,4番にもどります**。③38人を6人ずつに分けるとわり切れないので、ここでまたぎます。"
+        },
+        {
+         "question": "ひろし君が3回目に当番をするのは何日目ですか。",
+         "answer": "15",
+         "meaning": "①9日目が11〜16番（2回目）、15日目が9〜14番（3回目）です。"
+        },
+        {
+         "question": "その日は4月何日ですか。",
+         "answer": "28",
+         "meaning": "①4月12日（月）から数えて15日目。②日曜（4月18日・25日）をとばすので**4月28日**です。"
+        },
+        {
+         "question": "その日は何曜日ですか。",
+         "answer": "水",
+         "choices": [
+          "水",
+          "火",
+          "木",
+          "金"
+         ],
+         "meaning": "①日曜をとばして数えると水曜日になります。"
+        },
+        {
+         "question": "4月12日と同じ人たち（1〜6番）が次に当番になるのは、何日目ですか。",
+         "answer": "20",
+         "meaning": "①38人と6人の最小公倍数は114人ぶん。②114÷6＝19日でちょうど3巡が終わります。③だから**その次の20日目**に、また1〜6番にもどります。"
+        },
+        {
+         "question": "それは5月何日ですか。",
+         "answer": "4",
+         "meaning": "①19日目は**5月4日**です。②19は7の倍数ではないので、曜日は毎回ずれます。③「祝日も当番がある」という一文は**まったく使いません**（使わない条件をわざと置いてあります）。"
+        }
+       ]
+      }
+     ],
+     "19": [
+      {
+       "id": "hd5m2nd_19_1",
+       "src": "HG-2016 原簿・小5 2nd演習 No.19（1枚まるごと食塩水）",
+       "hg": "HG-2016",
+       "title": "食塩水の 全部の型を 1枚で",
+       "category": "wariai",
+       "unit": "食塩水・濃度",
+       "grade": 5,
+       "star": 2,
+       "intro": "この回は**1枚まるごと食塩水**です。**加える → 逆算 → 混ぜる → 比で混ぜる**の順に、同じ「食塩＝食塩水×こさ」を**どこを隠すか**だけ変えて聞いてきます。**変わらないのは食塩の重さ**——そこを見つけるのが全部の入口です。",
+       "steps": [
+        {
+         "question": "8%の食塩水240gに水を80g加えると、こさは何%になりますか。",
+         "answer": "6",
+         "meaning": "①食塩は 240×0.08＝19.2g。②水を足しても**食塩は変わりません**。③全体は 240＋80＝320g なので 19.2÷320＝0.06 で6%です。"
+        },
+        {
+         "question": "4%の食塩水420gに食塩を60g加えると、こさは何%になりますか。",
+         "answer": "16",
+         "meaning": "①食塩は 420×0.04＝16.8g、足して 16.8＋60＝76.8g。②全体も 420＋60＝480g と**両方ふえる**のがさっきとのちがいです。③76.8÷480＝16%。"
+        },
+        {
+         "question": "14%の食塩水180gに水を何g混ぜると4%になりますか。",
+         "answer": "450",
+         "meaning": "①食塩 180×0.14＝25.2g は変わりません。②4%になったときの全体は 25.2÷0.04＝630g。③630－180＝450gの水を入れます。**先に「あとの全体」を出す**のが逆算の型です。"
+        },
+        {
+         "question": "5%の食塩水560gから水を何g蒸発させると7%になりますか。",
+         "answer": "160",
+         "meaning": "①食塩 560×0.05＝28g。**蒸発しても食塩は減りません。**②7%のときの全体は 28÷0.07＝400g。③560－400＝160gを蒸発させます。"
+        },
+        {
+         "question": "こさのわからない食塩水250gに、7%の食塩水150gを混ぜたら、4.5%の食塩水400gになりました。はじめの食塩水のこさは何%ですか。",
+         "answer": "3",
+         "meaning": "①できた食塩は 400×0.045＝18g。②7%の150gの食塩は 150×0.07＝10.5g。③18－10.5＝7.5g が250gにとけていたので 7.5÷250＝3%です。**食塩の引き算で戻します。**"
+        },
+        {
+         "question": "3%の食塩水120gに、17%の食塩水を何g混ぜると11%になりますか。",
+         "answer": "160",
+         "meaning": "①□g混ぜるとすると 3.6＋0.17×□＝0.11×(120＋□)。②3.6＋0.17×□＝13.2＋0.11×□ → 0.06×□＝9.6 → □＝160gです。"
+        },
+        {
+         "question": "3%の食塩水と19%の食塩水を3:5の割合で混ぜると、こさは何%になりますか。",
+         "answer": "13",
+         "meaning": "①重さを③と⑤とすると、食塩は 3×0.03＋5×0.19＝0.09＋0.95＝1.04。②全体は8なので 1.04÷8＝0.13 で13%です。**重さが分からなくても比だけで出ます。**"
+        },
+        {
+         "question": "2%の食塩水と17%の食塩水を混ぜて、8%の食塩水を300g作ります。2%の食塩水は何g要りますか。",
+         "answer": "180",
+         "meaning": "①こさの差は 8－2＝6 と 17－8＝9。②重さはその**逆比**で 9:6＝3:2。③300×3/5＝180gです。たしかめ：180×0.02＋120×0.17＝3.6＋20.4＝24、24÷300＝8% ✓"
+        }
+       ]
+      }
+     ],
+     "1": [
+      {
+       "id": "hd5m2nd_1_1",
+       "src": "HG-0501 原簿・小5 2nd演習 No.1 大問7",
+       "hg": "HG-0501",
+       "title": "入れかえた2けたの差は 9の倍数",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "2けたの整数**AB**（十の位がA・一の位がB）と、十の位と一の位を入れかえた2けたの整数**BA**があります。**ABはBAより45大きい**そうです。",
+       "steps": [
+        {
+         "question": "AB－BA は、A－B の何倍になりますか。",
+         "answer": "9",
+         "meaning": "①AB＝10×A＋B、BA＝10×B＋A。②引くと 9×A－9×B＝9×(A－B)。**いつでも9の倍数**になります。"
+        },
+        {
+         "question": "A－B はいくつですか。",
+         "answer": "5",
+         "meaning": "①9×(A－B)＝45。②A－B＝5です。"
+        },
+        {
+         "question": "あてはまる2けたの整数ABは何通りありますか。",
+         "answer": "4",
+         "meaning": "①差が5になる (A,B)は (6,1)(7,2)(8,3)(9,4)。②**BAも2けたなのでBは0にできません。**Bを0にすると50が入って5通りになってしまいます。③答えは4通り（61・72・83・94）です。"
+        },
+        {
+         "question": "そのうち いちばん大きい整数はいくつですか。",
+         "answer": "94",
+         "meaning": "①61・72・83・94 のうち いちばん大きいのは94です。"
+        }
+       ]
+      }
+     ],
+     "2": [
+      {
+       "id": "hd5m2nd_2_1",
+       "src": "HG-0502 原簿・小5 2nd演習 No.2 大問6",
+       "hg": "HG-0502",
+       "title": "小数点を ずらす＝倍を かける",
+       "category": "keisan",
+       "unit": "計算のくふう",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある小数の**小数点を左に2けたずらしたもの**は、その小数の**小数点を右に1けたずらしたもの**から**444.555をひいた答え**と等しくなりました。",
+       "steps": [
+        {
+         "question": "小数点を左に2けたずらすと、もとの数の何分の1になりますか。□分の1の□を答えなさい。",
+         "answer": "100",
+         "meaning": "①左に1けたで1/10、2けたで1/100です。"
+        },
+        {
+         "question": "小数点を右に1けたずらすと、もとの数の何倍になりますか。",
+         "answer": "10",
+         "meaning": "①右に1けたずらすと10倍です。"
+        },
+        {
+         "question": "もとの数を1とみると、10倍と 1/100 の差はいくつにあたりますか。小数で答えなさい。",
+         "answer": "9.99",
+         "meaning": "①10－0.01＝9.99。②**この9.99が444.555にあたります。**"
+        },
+        {
+         "question": "ある小数を求めなさい。",
+         "answer": "44.5",
+         "meaning": "①444.555÷9.99＝44.5です。②たしかめ：0.445 と 445－444.555＝0.445 で同じ ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_2_2",
+       "src": "HG-0503 原簿・小5 2nd演習 No.2 大問7",
+       "hg": "HG-0503",
+       "title": "打ちわすれ＝99倍のちがい",
+       "category": "keisan",
+       "unit": "計算のくふう",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある計算の答えを書くときに**小数点を打ちわすれた**ため、**打ちわすれた数と正しい答えとの差が76.23**になりました。",
+       "steps": [
+        {
+         "question": "正しい答えが小数第2位までの数だとすると、打ちわすれた数は正しい答えの何倍ですか。",
+         "answer": "100",
+         "meaning": "①小数第2位までなら、小数点を打たないと100倍の数を書いたことになります。"
+        },
+        {
+         "question": "そのとき、差は正しい答えの何倍にあたりますか。",
+         "answer": "99",
+         "meaning": "①100倍－1倍＝99倍です。"
+        },
+        {
+         "question": "正しい答えを求めなさい。",
+         "answer": "0.77",
+         "meaning": "①76.23÷99＝0.77。②小数第2位までの数になったので、はじめの見当が合っています。③たしかめ：77－0.77＝76.23 ✓"
+        }
+       ]
+      }
+     ],
+     "3": [
+      {
+       "id": "hd5m2nd_3_1",
+       "src": "HG-0504 原簿・小5 2nd演習 No.3 大問7",
+       "hg": "HG-0504",
+       "title": "かけていくと 途中が 全部 消える",
+       "category": "keisan",
+       "unit": "計算のくふう",
+       "grade": 5,
+       "star": 2,
+       "intro": "**1/5, 3/7, 5/9, 7/11, 9/13, …** と分数が並んでいます（分子は1から2ずつ、分母は5から2ずつ）。はじめから順にかけていくと、あるところで**積がはじめて 1/150 より小さく**なりました。",
+       "steps": [
+        {
+         "question": "1/5 × 3/7 × 5/9 を計算しなさい。分数で答えなさい。",
+         "answer": "1/21",
+         "meaning": "①5と5、3と3が**ななめに約分**で消えます。②残るのは 1×3÷(7×9)＝3/63＝1/21です。"
+        },
+        {
+         "question": "4個目までかけると 1/27 になります。5個目までかけるといくつですか。分数で答えなさい。",
+         "answer": "3/143",
+         "meaning": "①途中が全部消えて、残るのは**はじめの分子1×3**と**おわりの分母2つ**だけ。②n個かけると 3÷((2n+1)×(2n+3))。n＝5なら 3÷(11×13)＝3/143 です。"
+        },
+        {
+         "question": "積がはじめて 1/150 より小さくなるのは、何個目までかけたときですか。",
+         "answer": "10",
+         "meaning": "①3÷((2n+1)(2n+3))＜1/150 は (2n+1)(2n+3)＞450 と同じ。②n＝9 は 19×21＝399 でまだ足りず、n＝10 で 21×23＝483。③10個目です。"
+        },
+        {
+         "question": "最後にかけた分数を答えなさい。分数で答えなさい。",
+         "answer": "19/23",
+         "meaning": "①10個目の分数は 19/23 です。②そのときの積は 3/483＝1/161 で、たしかに 1/150 より小さい ✓"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "id": "hd5m2nd_4_1",
+       "src": "HG-0505 原簿・小5 2nd演習 No.4 大問4(3)",
+       "hg": "HG-0505",
+       "title": "分母を 小さい方から ためす",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "**1/4 と 1/3** の2つの分数があります。この2つの**間**にある分数を考えます（両はしはふくみません）。",
+       "steps": [
+        {
+         "question": "分母が5の分数で、1/4より大きく1/3より小さいものはありますか。あれば1、なければ2と答えなさい。",
+         "answer": "2",
+         "meaning": "①1/4＝0.25、1/3＝0.333…。②5分の1＝0.2、5分の2＝0.4。**間に入るものはありません。**"
+        },
+        {
+         "question": "分母が6の分数ではどうですか。あれば1、なければ2と答えなさい。",
+         "answer": "2",
+         "meaning": "①6分の1＝0.166…、6分の2＝0.333…＝1/3 で**ちょうど1/3**なのでふくみません。②ありません。"
+        },
+        {
+         "question": "1/4より大きく1/3より小さい分数のうち、分母がいちばん小さいものを答えなさい。分数で答えなさい。",
+         "answer": "2/7",
+         "meaning": "①分母を2,3,4,5,6と小さい順にためし、7ではじめて 2/7 が入ります。②2/7＝0.2857…で、たしかに0.25と0.333…の間 ✓ ③**分子どうし・分母どうしを足す**（1+1）/(4+3)＝2/7 でも出せます。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_4_2",
+       "src": "HG-0656 原簿・小5 2nd演習 No.4 大問5",
+       "hg": "HG-0656",
+       "title": "2と5の 多いほうが 位を決める",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "分母が積の形で書かれた分数 **1/(4×4)** と **7/(4×8)** を小数になおします。",
+       "steps": [
+        {
+         "question": "1/(4×4) の分母 16 は、2を何個かけた数ですか。",
+         "answer": "4",
+         "meaning": "①16＝2×2×2×2。②2が4個です。"
+        },
+        {
+         "question": "1/(4×4) は小数第何位の数になりますか。",
+         "answer": "4",
+         "meaning": "①2が4個なので小数第4位。②0.0625です。**わり算をしなくても分かります。**"
+        },
+        {
+         "question": "7/(4×8) は小数第何位の数になりますか。",
+         "answer": "5",
+         "meaning": "①32＝2が5個なので小数第5位。②0.21875です。③分子の7は約分に関係しないので、位は分母だけで決まります。"
+        },
+        {
+         "question": "1/(2×5×5) は小数第何位の数になりますか。",
+         "answer": "2",
+         "meaning": "①2が1個、5が2個。②**多いほうの5の個数**で決まって小数第2位。0.02です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_4_3",
+       "src": "HG-0506 原簿・小5 2nd演習 No.4 大問6",
+       "hg": "HG-0506",
+       "title": "両はしから 組にすると 和が一定",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 2,
+       "intro": "分母が30の分数のうち、**値が1より大きく5より小さい**もの（両はしはふくまない）で、**約分できないもの**を集めます。",
+       "steps": [
+        {
+         "question": "分子は30と何の関係にありますか。「約分できない」＝分子と30の最大公約数がいくつのときですか。",
+         "answer": "1",
+         "meaning": "①約分できない＝**分子と30の最大公約数が1**（たがいに素）ということです。"
+        },
+        {
+         "question": "分子が1から30までの30個のうち、30とたがいに素なものは何個ありますか。",
+         "answer": "8",
+         "meaning": "①30＝2×3×5。②2でも3でも5でもわれない数は 1,7,11,13,17,19,23,29 の8個です。"
+        },
+        {
+         "question": "全部で何個ありますか。",
+         "answer": "32",
+         "meaning": "①分子は 30より大きく150より小さい範囲。②30ずつの4周期ぶんで 8×4＝32個です。"
+        },
+        {
+         "question": "それらを すべてたすといくらですか。",
+         "answer": "96",
+         "meaning": "①**いちばん小さい分子31と いちばん大きい分子149を組にすると和は180**。②どの組も180で16組あるので、分子の合計は 180×16＝2880。③2880÷30＝96です。"
+        }
+       ]
+      }
+     ],
+     "5": [
+      {
+       "id": "hd5m2nd_5_1",
+       "src": "HG-0507 原簿・小5 2nd演習 No.5 大問8②",
+       "hg": "HG-0507",
+       "title": "2本の はんいの 重なりを見る",
+       "category": "kazu",
+       "unit": "概数（がい数）",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある整数を**12でわった商**の小数第1位を四捨五入すると**17**になり、**同じ整数を18でわった商**の小数第1位を四捨五入すると**12**になりました。",
+       "steps": [
+        {
+         "question": "四捨五入して17になる数は、16.5以上、何未満ですか。",
+         "answer": "17.5",
+         "meaning": "①16.5以上17.5未満の数が、四捨五入して17になります。"
+        },
+        {
+         "question": "12でわった商がその範囲に入るとき、もとの整数はいくつ以上ですか。",
+         "answer": "198",
+         "meaning": "①16.5×12＝198。②198以上210未満です。"
+        },
+        {
+         "question": "18でわった商から考えると、もとの整数はいくつ以上ですか。",
+         "answer": "207",
+         "meaning": "①11.5×18＝207。②207以上225未満です。"
+        },
+        {
+         "question": "もとの整数をすべて求めなさい。",
+         "answer": "207, 208, 209",
+         "choices": [
+          "207, 208, 209",
+          "198, 199, 200",
+          "207, 208",
+          "208, 209, 210"
+         ],
+         "meaning": "①198以上210未満 と 207以上225未満の**重なり**は 207以上210未満。②整数は207・208・209です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_5_2",
+       "src": "HG-0508 原簿・小5 2nd演習 No.5 大問9",
+       "hg": "HG-0508",
+       "title": "ひくと 「以上」と「未満」が 入れかわる",
+       "category": "kazu",
+       "unit": "概数（がい数）",
+       "grade": 5,
+       "star": 2,
+       "intro": "Aを小数第2位で四捨五入したら**52.3**、Bを小数第2位で四捨五入したら**29.9**になりました。",
+       "steps": [
+        {
+         "question": "Aはいくつ以上ですか。",
+         "answer": "52.25",
+         "meaning": "①小数第2位を四捨五入して52.3になるのは 52.25以上52.35未満です。"
+        },
+        {
+         "question": "Bはいくつ以上ですか。",
+         "answer": "29.85",
+         "meaning": "①同じように 29.85以上29.95未満です。"
+        },
+        {
+         "question": "A－B の差がいちばん小さくなるのは、Aをいちばん小さく、Bをどうしたときですか。いちばん大きくするなら1、いちばん小さくするなら2。",
+         "answer": "1",
+         "meaning": "①ひかれる数を小さく、ひく数を大きくすると差は小さくなります。②ただしBは29.95を**ふくまない**ので、差も22.30をふくみません。"
+        },
+        {
+         "question": "AとBの差の範囲を答えなさい。",
+         "answer": "22.3より大きく22.5未満",
+         "choices": [
+          "22.3より大きく22.5未満",
+          "22.3以上22.5以下",
+          "22.3以上22.5未満",
+          "22.3より大きく22.5以下"
+         ],
+         "meaning": "①小さい側：52.25－29.95＝22.30（**29.95をふくまないので22.3もふくまない**）。②大きい側：52.35－29.85＝22.50（52.35をふくまないので22.5もふくまない）。③**「以上」だったところが「より大きく」に変わる**のがこの問題の山です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_5_3",
+       "src": "HG-0509 原簿・小5 2nd演習 No.5 大問10",
+       "hg": "HG-0509",
+       "title": "四捨五入を 2回 さかのぼる",
+       "category": "kazu",
+       "unit": "概数（がい数）",
+       "grade": 5,
+       "star": 3,
+       "intro": "ある整数を18でわり、商を**小数第2位まで**計算します（第3位以下は切りすて）。その商の**小数第2位を四捨五入**します。得られた数をさらに**18倍**し、**小数第1位を四捨五入**したら**47**になりました。",
+       "steps": [
+        {
+         "question": "四捨五入した商は、小数第何位までの数になりますか。",
+         "answer": "1",
+         "meaning": "①小数第2位を四捨五入したので、**0.1きざみの数**＝小数第1位までです。"
+        },
+        {
+         "question": "その商を18倍した数が、四捨五入して47になります。商はいくつですか。",
+         "answer": "2.6",
+         "meaning": "①18倍が46.5以上47.5未満。②商は 2.583…以上 2.638…未満。③0.1きざみでこの間に入るのは**2.6だけ**です。"
+        },
+        {
+         "question": "商が2.6になるのは、もとの整数を18でわった商がいくつ以上のときですか。",
+         "answer": "2.55",
+         "meaning": "①四捨五入して2.6になるのは 2.55以上2.65未満です。"
+        },
+        {
+         "question": "もとの整数をすべて求めなさい。",
+         "answer": "46, 47",
+         "choices": [
+          "46, 47",
+          "45, 46",
+          "46, 47, 48",
+          "47 だけ"
+         ],
+         "meaning": "①2.55×18＝45.9、2.65×18＝47.7。②整数は46と47。③たしかめ：46÷18＝2.555…→2.55→2.6／47÷18＝2.611…→2.61→2.6。どちらも2.6×18＝46.8→47 ✓"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "id": "hd5m2nd_6_1",
+       "src": "HG-0510 原簿・小5 2nd演習 No.6 大問4",
+       "hg": "HG-0510",
+       "title": "わくの和は まん中だけで決まる",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "1から100までの整数を、[図]のように**横6列**（赤いわくは3×3の例）にならべます（1行目1〜6、2行目7〜12、…）。この表の上に正方形のわくをのせて、中の数を取り出します。たとえば3×3のわくで **8,9,10／14,15,16／20,21,22** を囲むと、9個の和は135です。",
+       "svg": "<svg viewBox='0 0 196 145' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='23.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>A</text><text x='53.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>B</text><text x='83.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>C</text><text x='113.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>D</text><text x='143.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>E</text><text x='173.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>F</text><rect x='8' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1</text><rect x='38' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text><rect x='68' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3</text><rect x='98' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4</text><rect x='128' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>5</text><rect x='158' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='8' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>7</text><rect x='38' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>8</text><rect x='68' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>9</text><rect x='98' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>10</text><rect x='128' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>11</text><rect x='158' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>12</text><rect x='8' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>13</text><rect x='38' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>14</text><rect x='68' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>15</text><rect x='98' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>16</text><rect x='128' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>17</text><rect x='158' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>18</text><rect x='8' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>19</text><rect x='38' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>20</text><rect x='68' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>21</text><rect x='98' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>22</text><rect x='128' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>23</text><rect x='158' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>24</text><rect x='8' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>25</text><rect x='38' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>26</text><rect x='68' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>27</text><rect x='98' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>28</text><rect x='128' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>29</text><rect x='158' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>30</text><rect x='8' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>31</text><rect x='38' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>32</text><rect x='68' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>33</text><rect x='98' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>34</text><rect x='128' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>35</text><rect x='158' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>36</text><rect x='38' y='42' width='90' height='57' fill='none' stroke='#ff6b6b' stroke-width='2'/></svg>",
+       "steps": [
+        {
+         "question": "その9個の和135は、まん中の数15の何倍ですか。",
+         "answer": "9",
+         "meaning": "①135÷15＝9。②**上下は±6、左右は±1で打ち消し合う**ので、和はいつでもまん中×9になります。"
+        },
+        {
+         "question": "3×3のわくの中の9個の和が315のとき、まん中の数はいくつですか。",
+         "answer": "35",
+         "meaning": "①315÷9＝35です。"
+        },
+        {
+         "question": "そのとき、わくの中でいちばん小さい数はいくつですか。",
+         "answer": "28",
+         "meaning": "①いちばん小さい数はまん中の**左上**＝まん中－6－1。②35－7＝28です。"
+        },
+        {
+         "question": "4×4のわくの中の16個の和が872のとき、わくの中でいちばん小さい数はいくつですか。",
+         "answer": "44",
+         "meaning": "①4×4には**まん中がありません**。②左上を□とすると16個の和は 16×□＋168。③16×□＝872－168＝704 → □＝44です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_6_2",
+       "src": "HG-0511 原簿・小5 2nd演習 No.6 大問5",
+       "hg": "HG-0511",
+       "title": "あまりだけで 組が決まる",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "整数を**7でわったあまり**で7つの組A〜Gに分けます。[図]のように1行7個ずつ1〜7／8〜14／15〜21／… とならべると、たての列がそのまま組になります（**A＝あまり1、B＝2、C＝3、D＝4、E＝5、F＝6、G＝0**）。",
+       "svg": "<svg viewBox='0 0 226 126' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='23.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>A</text><text x='53.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>B</text><text x='83.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>C</text><text x='113.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>D</text><text x='143.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>E</text><text x='173.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>F</text><text x='203.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>G</text><rect x='8' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1</text><rect x='38' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text><rect x='68' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3</text><rect x='98' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4</text><rect x='128' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>5</text><rect x='158' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='188' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='203.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>7</text><rect x='8' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>8</text><rect x='38' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>9</text><rect x='68' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>10</text><rect x='98' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>11</text><rect x='128' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>12</text><rect x='158' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>13</text><rect x='188' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='203.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>14</text><rect x='8' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>15</text><rect x='38' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>16</text><rect x='68' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>17</text><rect x='98' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>18</text><rect x='128' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>19</text><rect x='158' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>20</text><rect x='188' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='203.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>21</text><rect x='8' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>22</text><rect x='38' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>23</text><rect x='68' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>24</text><rect x='98' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>25</text><rect x='128' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>26</text><rect x='158' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>27</text><rect x='188' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='203.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>28</text><rect x='8' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>29</text><rect x='38' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>30</text><rect x='68' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>31</text><rect x='98' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>32</text><rect x='128' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>33</text><rect x='158' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>34</text><rect x='188' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='203.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>35</text></svg>",
+       "steps": [
+        {
+         "question": "C組の数とF組の数をたすと、どの組の数になりますか。",
+         "answer": "B",
+         "choices": [
+          "B",
+          "A",
+          "C",
+          "G"
+         ],
+         "meaning": "①3＋6＝9、9を7でわったあまりは2。②B組です。③**どの数を選んでも同じ**（10+13＝23、23÷7のあまりも2）。"
+        },
+        {
+         "question": "B組の数とF組の数をかけると、どの組の数になりますか。",
+         "answer": "E",
+         "choices": [
+          "E",
+          "D",
+          "F",
+          "A"
+         ],
+         "meaning": "①2×6＝12、あまりは5。②E組です。"
+        },
+        {
+         "question": "ある数とF組の数をかけたらD組になりました。ある数はどの組ですか。",
+         "answer": "C",
+         "choices": [
+          "C",
+          "B",
+          "D",
+          "E"
+         ],
+         "meaning": "①□×6のあまりが4になる□をA〜Gでためします。②3×6＝18、あまり4。③C組です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_6_3",
+       "src": "HG-0512 原簿・小5 2nd演習 No.6 大問7",
+       "hg": "HG-0512",
+       "title": "6個ずつに 区切ると 見える",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "整数が次のようにならんでいます。\n**第1段：1, 7, 13, 19, 25, 31, 37, …**\n**第2段：2, 3, 8, 9, 14, 15, 20, …**\n**第3段：4, 5, 6, 10, 11, 12, 16, …**",
+       "steps": [
+        {
+         "question": "1〜6の6個は、第1段に何個、第2段に何個、第3段に何個入っていますか。第3段の個数を答えなさい。",
+         "answer": "3",
+         "meaning": "①1が第1段、2と3が第2段、4・5・6が第3段。②**6個ずつのかたまりで 1個・2個・3個に配られています。**"
+        },
+        {
+         "question": "50は何かたまり目の何番目ですか。かたまりの番号を答えなさい。",
+         "answer": "9",
+         "meaning": "①50÷6＝8あまり2。②8かたまりが終わって次の2番目なので**9かたまり目**です。"
+        },
+        {
+         "question": "50は第何段目にありますか。",
+         "answer": "2",
+         "meaning": "①9かたまり目の2番目。②2番目は第2段です。"
+        },
+        {
+         "question": "50は第2段目の何番目ですか。",
+         "answer": "17",
+         "meaning": "①第2段には1かたまりにつき2個入ります。②(9－1)×2＋1＝17番目です。"
+        },
+        {
+         "question": "第3段目にある数のうち、100以下のものは何個ありますか。",
+         "answer": "49",
+         "meaning": "①第3段は 6でわって4・5・0あまる数（6k－2, 6k－1, 6k）。②k＝1〜16で48個、さらに k＝17 の 100 が入って49個です。"
+        }
+       ]
+      }
+     ],
+     "7": [
+      {
+       "id": "hd5m2nd_7_1",
+       "src": "HG-0561 原簿・小5 2nd演習 No.7 大問1(1)",
+       "hg": "HG-0561",
+       "title": "ならびかえると 同じ数が出てくる",
+       "category": "keisan",
+       "unit": "計算のくふう",
+       "grade": 5,
+       "star": 2,
+       "intro": "**14×13 ＋ 18×17 ＋ 13×19 ＋ 17×15** を計算します。\nとなりどうしでは共通の数が見えませんが、**はなれた項どうしに同じ数**がかくれています。",
+       "steps": [
+        {
+         "question": "13が共通なのは、1つ目と何つ目の項ですか。番号（1〜4）で答えなさい。",
+         "answer": "3",
+         "meaning": "①14×13 と 13×19 の2つに13があります。②1つ目と3つ目です。"
+        },
+        {
+         "question": "13でくくったカッコの中（14＋19）はいくつですか。",
+         "answer": "33",
+         "meaning": "①14＋19＝33です。"
+        },
+        {
+         "question": "17でくくったカッコの中（18＋15）はいくつですか。",
+         "answer": "33",
+         "meaning": "①18＋15＝33。②**どちらも同じ33**になるように作ってあります。"
+        },
+        {
+         "question": "全部を計算しなさい。",
+         "answer": "990",
+         "meaning": "①33×13＋33×17＝33×(13＋17)＝33×30。②990です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_7_2",
+       "src": "HG-0562 原簿・小5 2nd演習 No.7 大問5",
+       "hg": "HG-0562",
+       "title": "同じ数が 何度も出てくる数列",
+       "category": "kisoku",
+       "unit": "群数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "**1, 2, 3, 4, 2, 4, 6, 8, 3, 6, 9, 12, …** と数がならんでいます。**4個ずつの組**に区切ると、第n組は **n, 2n, 3n, 4n** になっています。",
+       "steps": [
+        {
+         "question": "第9組の4つの数のうち、いちばん大きい数はいくつですか。",
+         "answer": "36",
+         "meaning": "①第9組は 9, 18, 27, 36。②いちばん大きいのは 9×4＝36です。"
+        },
+        {
+         "question": "36は 第何組で はじめて出てきますか。",
+         "answer": "9",
+         "meaning": "①36＝n×k（kは1〜4）となるnは 9, 12, 18, 36。②いちばん小さいのは9です。"
+        },
+        {
+         "question": "36が3回目に出てくるのは、はじめから数えて何番目ですか。",
+         "answer": "70",
+         "meaning": "①出てくる順は 第9組の4番目（36番目）→第12組の3番目（47番目）→**第18組の2番目**。②第18組は (18－1)×4＋1＝69番目からなので、その2番目は70番目です。"
+        },
+        {
+         "question": "はじめから38番目の数はいくつですか。",
+         "answer": "20",
+         "meaning": "①38÷4＝9あまり2 → 第10組の2番目。②10×2＝20です。"
+        },
+        {
+         "question": "はじめから38番目までの和はいくつですか。",
+         "answer": "480",
+         "meaning": "①第n組の和は n＋2n＋3n＋4n＝10n。②第1〜9組で 10×(1+2+…+9)＝450。③さらに第10組の10と20を足して480です。"
+        }
+       ]
+      }
+     ],
+     "8": [
+      {
+       "id": "hd5m2nd_8_1",
+       "src": "HG-0563 原簿・小5 2nd演習 No.8 大問7",
+       "hg": "HG-0563",
+       "title": "同じあまり → 差はわり切れる",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 2,
+       "intro": "あめ**103個**、ガム**67枚**、みかん**43個**を何人かに等分して配ったところ、**どれも同じ数ずつあまりました**。",
+       "steps": [
+        {
+         "question": "あめとガムの個数の差はいくつですか。",
+         "answer": "36",
+         "meaning": "①103－67＝36です。"
+        },
+        {
+         "question": "あまりが同じとき、この差36は人数でわり切れますか。わり切れるなら1、切れないなら2。",
+         "answer": "1",
+         "meaning": "①あまりが同じなら、**あまりの分どうしが打ち消し合って差はきっちりわり切れます。**"
+        },
+        {
+         "question": "3つの差（36・24・60）の最大公約数はいくつですか。",
+         "answer": "12",
+         "meaning": "①36と24の最大公約数は12、12と60の最大公約数も12です。"
+        },
+        {
+         "question": "人数として考えられるものをすべて答えなさい。",
+         "answer": "2, 3, 4, 6, 12",
+         "choices": [
+          "2, 3, 4, 6, 12",
+          "1, 2, 3, 4, 6, 12",
+          "2, 3, 4, 6",
+          "12 だけ"
+         ],
+         "meaning": "①12の約数は 1, 2, 3, 4, 6, 12。②**1人だとあまりが出ない**ので除きます。③2人(あまり1)・3人(1)・4人(3)・6人(1)・12人(7) の5通りです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_2",
+       "src": "HG-0564 原簿・小5 2nd演習 No.8 大問5(2)",
+       "hg": "HG-0564",
+       "title": "2番目は 2倍・枚数は 4倍",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 2,
+       "intro": "**たて9cm・横15cm**の長方形を、同じ向きのまますきまなく敷きつめて正方形をつくります。",
+       "steps": [
+        {
+         "question": "もっとも小さい正方形の1辺は何cmですか。",
+         "answer": "45",
+         "meaning": "①1辺は9でも15でもわり切れる長さ＝**9と15の公倍数**。②いちばん小さいのは45cmです。"
+        },
+        {
+         "question": "そのとき何枚必要ですか。",
+         "answer": "15",
+         "meaning": "①たてに 45÷9＝5枚、横に 45÷15＝3枚。②5×3＝15枚です。"
+        },
+        {
+         "question": "2番目に小さい正方形の1辺は何cmですか。",
+         "answer": "90",
+         "meaning": "①次の公倍数は45の2倍の90cmです。"
+        },
+        {
+         "question": "2番目に小さい正方形をつくるには何枚必要ですか。",
+         "answer": "60",
+         "meaning": "①たて10枚・横6枚で60枚。②**1辺が2倍になると枚数は2×2＝4倍**になります。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_3",
+       "src": "HG-0565 原簿・小5 2nd演習 No.8 VS 2回目 大問2",
+       "hg": "HG-0565",
+       "title": "枚数が 2乗の形になっている",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "**たて8cm・横12cm**の長方形を、すきまなく同じ向きにならべて大きな正方形をつくります。",
+       "steps": [
+        {
+         "question": "もっとも小さい正方形の1辺は何cmですか。",
+         "answer": "24",
+         "meaning": "①8と12の最小公倍数は24cmです。"
+        },
+        {
+         "question": "2番目に小さい正方形をつくるには何枚必要ですか。",
+         "answer": "24",
+         "meaning": "①1辺48cm。②たて6枚・横4枚で24枚です。"
+        },
+        {
+         "question": "1辺が 24×k cm の正方形をつくるとき、必要な枚数は 6×(kの2乗) 枚になります。1000枚以内でつくれる kの最大はいくつですか。",
+         "answer": "12",
+         "meaning": "①6×k×k≦1000 → k×k≦166。②k＝12 で 6×144＝864枚、k＝13 だと 1014枚で足りません。"
+        },
+        {
+         "question": "1000枚を使ってできるだけ大きな正方形をつくると、1辺は何cmですか。",
+         "answer": "288",
+         "meaning": "①24×12＝288cmです。②864枚使い、136枚あまります。③**枚数がぴったり使い切れないところ**がこの問題のしかけです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_4",
+       "src": "HG-0566 原簿・小5 2nd演習 No.8 V 2回目 大問1(2)",
+       "hg": "HG-0566",
+       "title": "まん中から 1ずつ ずらした積",
+       "category": "keisan",
+       "unit": "計算のくふう",
+       "grade": 5,
+       "star": 2,
+       "intro": "**243×243 － 244×242** を計算します。",
+       "steps": [
+        {
+         "question": "244と242は、243からいくつずつずれていますか。",
+         "answer": "1",
+         "meaning": "①244＝243＋1、242＝243－1。②どちらも1ずつです。"
+        },
+        {
+         "question": "10×10 － 11×9 を計算しなさい。",
+         "answer": "1",
+         "meaning": "①100－99＝1。②**小さい数でためすと規則が見えます。**"
+        },
+        {
+         "question": "243×243 － 244×242 を計算しなさい。",
+         "answer": "1",
+         "meaning": "①244×242＝(243＋1)×(243－1)＝243×243－1。②差は1です。"
+        },
+        {
+         "question": "では 243×243 － 245×241 はいくつですか。",
+         "answer": "4",
+         "meaning": "①ずれが2になると (243＋2)(243－2)＝243×243－4。②差は4＝2×2です。③**ずれ幅を2回かけた数**が答えになります。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_5",
+       "src": "HG-0567 原簿・小5 2nd演習 No.8 V 2回目 大問7",
+       "hg": "HG-0567",
+       "title": "3つの面積を かけると 体積の2乗",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 3,
+       "intro": "体積1cm³の立方体をたくさん集めて**大きい立方体**をつくり、それを同じ向きにならべて**直方体**をつくりました。見えている3つの面の面積は、**あ（上）588cm²、い（右）196cm²、う（前）147cm²**です。**辺ADは「あ」と「う」の両方にふくまれる辺**です。",
+       "svg": "<svg viewBox='0 0 300 190' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='13' fill='#ffd166' font-size='9.5'>[図] 平たい直方体（見えている3面の面積）</text><rect x='40' y='96' width='150' height='36' fill='rgba(59,130,246,0.10)' stroke='#eef2ff' stroke-width='1.4'/><polygon points='40,96 190,96 230,64 80,64' fill='rgba(126,231,135,0.12)' stroke='#eef2ff' stroke-width='1.4'/><polygon points='190,96 230,64 230,100 190,132' fill='rgba(255,209,102,0.12)' stroke='#eef2ff' stroke-width='1.4'/><text x='155' y='76' fill='#7ee787' font-size='11' text-anchor='middle'>あ 588cm²</text><text x='294' y='98' fill='#ffd166' font-size='11' text-anchor='end'>い 196cm²</text><text x='115' y='119' fill='#8ab4ff' font-size='11' text-anchor='middle'>う 147cm²</text><circle cx='40' cy='96' r='2.4' fill='#ff6b6b'/><text x='29' y='92' fill='#ff6b6b' font-size='11'>A</text><circle cx='190' cy='96' r='2.4' fill='#ff6b6b'/><text x='194' y='90' fill='#ff6b6b' font-size='11'>D</text><circle cx='190' cy='132' r='2.4' fill='#ff6b6b'/><text x='195' y='145' fill='#ff6b6b' font-size='11'>B</text><circle cx='230' cy='64' r='2.4' fill='#ff6b6b'/><text x='234' y='60' fill='#ff6b6b' font-size='11'>C</text><text x='6' y='180' fill='#64748b' font-size='9'>辺ADは「あ（上）」と「う（前）」の両方にふくまれる辺</text></svg>",
+       "steps": [
+        {
+         "question": "たて・横・高さの3つの長さは、3つの面積の中にそれぞれ何回ずつ出てきますか。",
+         "answer": "2",
+         "meaning": "①上の面＝たて×横、右の面＝横×高さ、前の面＝たて×高さ。②**どの辺も2回ずつ**使われています。"
+        },
+        {
+         "question": "3つの面積をかけると、何の2乗になりますか。体積なら1、表面積なら2と答えなさい。",
+         "answer": "1",
+         "meaning": "①588×196×147＝(たて×横×高さ)×(たて×横×高さ)。②**体積の2乗**です。"
+        },
+        {
+         "question": "この直方体の体積は何cm³ですか。",
+         "answer": "4116",
+         "meaning": "①588×196×147＝16941456。②その平方根は4116。③体積は4116cm³です。"
+        },
+        {
+         "question": "辺ADの長さは何cmですか。",
+         "answer": "21",
+         "meaning": "①ADは「あ」と「う」の両方にある辺。②のこりの「い」で体積をわると出ます。③4116÷196＝21cmです。"
+        },
+        {
+         "question": "大きい立方体の1辺は何cmですか。",
+         "answer": "7",
+         "meaning": "①3つの辺は 21cm・28cm・7cm。②立方体をならべて作ったので、1辺は**3つの辺すべての公約数**。③1より大きい公約数は7cmです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_6",
+       "src": "HG-0568 原簿・小5 2nd演習 No.8 VS 2回目 大問4",
+       "hg": "HG-0568",
+       "title": "うら返る回数＝約数の個数",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "1から100までの番号のカード100枚が、はじめは全部**表向き**にならんでいます。「**1**でわり切れる番号のカードをうら返す」「**2**でわり切れる…」…「**50**でわり切れる…」と、**1から50まで**順に行います。",
+       "steps": [
+        {
+         "question": "6番のカードは何回うら返されますか。",
+         "answer": "4",
+         "meaning": "①6の約数は 1, 2, 3, 6 の4個。②どれも50以下なので4回です。"
+        },
+        {
+         "question": "84番のカードは何回うら返されますか。",
+         "answer": "11",
+         "meaning": "①84の約数は12個（1,2,3,4,6,7,12,14,21,28,42,84）。②**84だけは50より大きいので使いません。**③11回です。"
+        },
+        {
+         "question": "うら返る回数が奇数になるのは、どんな数のときですか。平方数なら1、素数なら2。",
+         "answer": "1",
+         "meaning": "①約数はふつう2つずつ組になるので偶数個。②**平方数だけ**が同じ数の組で1つ減って奇数個になります。"
+        },
+        {
+         "question": "最後に表向きのままのカードは何枚ありますか。",
+         "answer": "46",
+         "meaning": "①1〜50は約数が全部50以下なので、**平方数7個（1,4,9,16,25,36,49）だけがうら**。②51〜100は自分自身が50より大きいので回数が1つ減り、**平方数64・81・100だけが表**。③(50－7)＋3＝46枚です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_7",
+       "src": "HG-0569 原簿・小5 2nd演習 No.8 VS 2回目 大問3",
+       "hg": "HG-0569",
+       "title": "3つの差の 公約数をさがす",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 2,
+       "intro": "**141, 195, 285** をある整数でわったところ、**3つとも同じあまり**になりました。",
+       "steps": [
+        {
+         "question": "195－141 はいくつですか。",
+         "answer": "54",
+         "meaning": "①54です。②あまりが同じなら、この差はその整数でわり切れます。"
+        },
+        {
+         "question": "285－195 と 285－141 の最大公約数もふくめて、3つの差の最大公約数はいくつですか。",
+         "answer": "18",
+         "meaning": "①差は 54・90・144。②54と90の最大公約数は18、18と144の最大公約数も18です。"
+        },
+        {
+         "question": "考えられる整数をすべて答えなさい。",
+         "answer": "2, 3, 6, 9, 18",
+         "choices": [
+          "2, 3, 6, 9, 18",
+          "1, 2, 3, 6, 9, 18",
+          "2, 6, 9, 18",
+          "18 だけ"
+         ],
+         "meaning": "①18の約数は 1, 2, 3, 6, 9, 18。②1でわるとあまりが出ないので除きます。③**3のときだけあまりが0**（3つとも3の倍数）ですが、「同じあまり」には合っています。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_8_8",
+       "src": "HG-0570 原簿・小5 2nd演習 No.8 V 2回目 大問5(4)",
+       "hg": "HG-0570",
+       "title": "あまりは ひく・不足は たす",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "りんご**75個**、かき**105個**、なし**294個**を何人かの子どもに平等に分けようとしたところ、**りんごは11個あまり、かきは7個たりず、なしは6個あまりました**。",
+       "steps": [
+        {
+         "question": "りんごは何個あればちょうど分けられましたか。",
+         "answer": "64",
+         "meaning": "①11個あまったので 75－11＝64個ならちょうどです。"
+        },
+        {
+         "question": "かきは何個あればちょうど分けられましたか。",
+         "answer": "112",
+         "meaning": "①7個**たりない**ので、**足して** 105＋7＝112個ならちょうどです。"
+        },
+        {
+         "question": "64・112・288 の最大公約数はいくつですか。",
+         "answer": "16",
+         "meaning": "①64と112の最大公約数は16、16と288の最大公約数も16です。"
+        },
+        {
+         "question": "子どもは何人いましたか。",
+         "answer": "16",
+         "meaning": "①16の約数は 1, 2, 4, 8, 16。②**「11個あまる」ので人数は11より多い**はず。③あてはまるのは16人だけです。"
+        }
+       ]
+      }
+     ],
+     "9": [
+      {
+       "id": "hd5m2nd_9_1",
+       "src": "HG-0541 原簿・小5 2nd演習 No.9 大問5",
+       "hg": "HG-0541",
+       "title": "2つのあまりの 共通周期",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "**7をたすと9でわり切れ、9をたすと7でわり切れる**整数について考えます。",
+       "steps": [
+        {
+         "question": "「7をたすと9でわり切れる」数は、9でわるといくつあまりますか。",
+         "answer": "2",
+         "meaning": "①9でわったあまりが2なら、7を足して9になりわり切れます。"
+        },
+        {
+         "question": "「9をたすと7でわり切れる」数は、7でわるといくつあまりますか。",
+         "answer": "5",
+         "meaning": "①7でわったあまりが5なら、9を足すと14になりわり切れます。"
+        },
+        {
+         "question": "この2つを同時に満たす いちばん小さい数はいくつですか。",
+         "answer": "47",
+         "meaning": "①9でわって2あまる数 2, 11, 20, 29, 38, 47…。②そのうち7でわって5あまるのは47です。"
+        },
+        {
+         "question": "あてはまる数は、いくつおきにならびますか。",
+         "answer": "63",
+         "meaning": "①9と7の最小公倍数は63。②47, 110, 173, … と63おきです。"
+        },
+        {
+         "question": "1000にもっとも近い数はいくつですか。",
+         "answer": "992",
+         "meaning": "①47に63をたし続けると 929, 992, 1055。②1000との差は71・8・55なので992です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_9_2",
+       "src": "HG-0542 原簿・小5 2nd演習 No.9 大問7",
+       "hg": "HG-0542",
+       "title": "のりしろの＋1が そろっている",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "**たて16cm・横19cm**の長方形の紙を、すべて同じ向きにすきまなくならべて正方形をつくります。**のりしろはたて・横どこも1cmずつ**使います。",
+       "steps": [
+        {
+         "question": "たてに2枚つなぐと、全体のたては何cmになりますか。",
+         "answer": "31",
+         "meaning": "①16＋16－1（のりしろ1cm）＝31cmです。"
+        },
+        {
+         "question": "たてにm枚つないだときの全長は 15×m＋1 cm になります。横にn枚では 18×n＋1 cm です。正方形になるとき、15×m と 18×n はどうなりますか。等しいなら1、ちがうなら2。",
+         "answer": "1",
+         "meaning": "①どちらも**＋1が共通**なので、残りの 15×m と 18×n が等しくなります。"
+        },
+        {
+         "question": "15×m＝18×n となる いちばん小さい m はいくつですか。",
+         "answer": "6",
+         "meaning": "①15と18の最小公倍数は90。②15×6＝90、18×5＝90。③m＝6、n＝5です。"
+        },
+        {
+         "question": "いちばん小さな正方形の1辺は何cmですか。",
+         "answer": "91",
+         "meaning": "①15×6＋1＝91cmです。"
+        },
+        {
+         "question": "そのとき紙は全部で何枚使いますか。",
+         "answer": "30",
+         "meaning": "①たて6枚×横5枚＝30枚です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_9_3",
+       "src": "HG-0543 原簿・小5 2nd演習 No.9 大問9",
+       "hg": "HG-0543",
+       "title": "3つ重なる所を 引く",
+       "category": "kisoku",
+       "unit": "植木算",
+       "grade": 5,
+       "star": 2,
+       "intro": "長さ**300m**のまっすぐな道に、**両はしもふくめて**、はしから**4mおきに赤旗・5mおきに青旗・6mおきに緑旗**を立てます。",
+       "steps": [
+        {
+         "question": "3種類の旗がそろって立つのは、何mおきですか。",
+         "answer": "60",
+         "meaning": "①4と5と6の最小公倍数は60mです。"
+        },
+        {
+         "question": "3種類の旗が立つ所は、両はしをふくめて何か所ありますか。",
+         "answer": "6",
+         "meaning": "①0m, 60m, 120m, 180m, 240m, 300m。②6か所です。"
+        },
+        {
+         "question": "赤と青の2種類だけが立つ所は何か所ですか。",
+         "answer": "10",
+         "meaning": "①赤と青がそろうのは20mおきで 0〜300に16か所。②そのうち緑もそろう6か所を引いて10か所です。"
+        },
+        {
+         "question": "2種類だけが立つ所は 全部で何か所ですか。",
+         "answer": "35",
+         "meaning": "①赤青だけ10か所、赤緑だけ（12mおき26か所－6）＝20か所、青緑だけ（30mおき11か所－6）＝5か所。②合わせて35か所です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_9_4",
+       "src": "HG-0544 原簿・小5 2nd演習 No.9 大問10",
+       "hg": "HG-0544",
+       "title": "打ち止めが かくれたワナ",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 3,
+       "intro": "A町では**8分ごとに60発**、B町では**5分ごとに40発**の花火を打ち上げます。**両町で同時に打ち上げはじめ**、同時に打ち上げられた音は1つに聞こえます。あなたは**2つの町のちょうど中間**にいます。",
+       "steps": [
+        {
+         "question": "A町が最後（60発目）を打ち上げるのは、始めてから何分後ですか。",
+         "answer": "472",
+         "meaning": "①1発目が0分なので、60発目は 8×59＝472分後です。"
+        },
+        {
+         "question": "B町が最後（40発目）を打ち上げるのは何分後ですか。",
+         "answer": "195",
+         "meaning": "①5×39＝195分後です。**B町は195分で打ち止め**になります。"
+        },
+        {
+         "question": "両町が同時に打ち上げるのは、最初もふくめて何回ですか。",
+         "answer": "5",
+         "meaning": "①8と5の最小公倍数は40分。②0, 40, 80, 120, 160分の5回。③**200分はB町がもう終わっている**ので数えません。ここが最大のワナです。"
+        },
+        {
+         "question": "あなたが40回目に音を聞くのは、始めてから何分後ですか。",
+         "answer": "130",
+         "meaning": "①中間地点なので**音が届く時間は左右同じ**＝打ち上げた順に聞こえます。②130分までにA町17発・B町27発、同時が4回なので 17＋27－4＝40回目。③130分後です。"
+        },
+        {
+         "question": "そのときの花火はどちらの町のものですか。A町なら1、B町なら2。",
+         "answer": "2",
+         "meaning": "①130は5の倍数だけれど8の倍数ではありません。②B町です（2時間10分後）。"
+        }
+       ]
+      }
+     ],
+     "10": [
+      {
+       "id": "hd5m2nd_10_1",
+       "src": "HG-0545 原簿・小5 2nd演習 No.10 大問7",
+       "hg": "HG-0545",
+       "title": "末尾の0は 少ないほうで決まる",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 2,
+       "intro": "**1×2×3×…×49×50** の積について考えます。",
+       "steps": [
+        {
+         "question": "1から50までに、2の倍数は何個ありますか。",
+         "answer": "25",
+         "meaning": "①50÷2＝25個です。"
+        },
+        {
+         "question": "この積は2で何回わり切れますか。",
+         "answer": "47",
+         "meaning": "①2の倍数25個、4の倍数12個、8の倍数6個、16の倍数3個、32の倍数1個。②25＋12＋6＋3＋1＝47回です。**4は2を2個持つので、重ねて数えます。**"
+        },
+        {
+         "question": "この積は5で何回わり切れますか。",
+         "answer": "12",
+         "meaning": "①5の倍数10個、25の倍数2個。②10＋2＝12回です。"
+        },
+        {
+         "question": "積の終わりに0は何個つづきますか。",
+         "answer": "12",
+         "meaning": "①0が1個つく＝10＝2×5 が1組。②2は47個、5は12個なので**少ないほうの12個**で決まります。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_10_2",
+       "src": "HG-0546 原簿・小5 2nd演習 No.10 大問8",
+       "hg": "HG-0546",
+       "title": "6わり算は 3の個数で決まる",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "**1から□までの整数の積**が、**6でちょうど6回**わり切れました。",
+       "steps": [
+        {
+         "question": "6は2と3のかけ算です。1から15までの積に、3は何個ふくまれますか。",
+         "answer": "6",
+         "meaning": "①3の倍数は3,6,9,12,15の5個。②9は3を2個持つのでもう1個ふえて6個です。"
+        },
+        {
+         "question": "1から15までの積に、2は何個ふくまれますか。",
+         "answer": "11",
+         "meaning": "①7＋3＋1＝11個です。②**2のほうがずっと多い**ので、6でわれる回数は3の個数で決まります。"
+        },
+        {
+         "question": "□にあてはまる いちばん小さい整数はいくつですか。",
+         "answer": "15",
+         "meaning": "①3がちょうど6個になるのは15からです。②14までは5個しかありません。"
+        },
+        {
+         "question": "□にあてはまる整数は何通りありますか。",
+         "answer": "3",
+         "meaning": "①15, 16, 17 では3の個数は6個のまま。②18になると9の倍数なので3が2個ふえて8個。③3通りです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_10_3",
+       "src": "HG-0547 原簿・小5 2nd演習 No.10 大問10",
+       "hg": "HG-0547",
+       "title": "「Aの何倍」が そのまま bになる",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "**BはAの3倍より30大きく**、**AとBの最小公倍数はAの11倍**で、**最大公約数は15**です。",
+       "steps": [
+        {
+         "question": "最大公約数が15なので、A＝15×a、B＝15×b と書けます（aとbはたがいに素）。最小公倍数を15とaとbで表すと 15×a×b です。これがAの11倍と等しいとき、bはいくつですか。",
+         "answer": "11",
+         "meaning": "①15×a×b＝11×15×a。②両辺を15×aでわると b＝11です。"
+        },
+        {
+         "question": "Bはいくつですか。",
+         "answer": "165",
+         "meaning": "①B＝15×11＝165です。"
+        },
+        {
+         "question": "Aはいくつですか。",
+         "answer": "45",
+         "meaning": "①165＝3×A＋30 → 3×A＝135 → A＝45です。"
+        },
+        {
+         "question": "最小公倍数はいくつですか。",
+         "answer": "495",
+         "meaning": "①A＝45＝15×3、B＝165＝15×11。②a＝3とb＝11はたがいに素 ✓ ③最小公倍数は 15×3×11＝495です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_10_4",
+       "src": "HG-0548 原簿・小5 2nd演習 No.10 V/VS 2回目 大問1②",
+       "hg": "HG-0548",
+       "title": "和÷最大公約数が たがいに素な2数の和",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 2,
+       "intro": "2つの整数があります。**和は126**で、**最大公約数は14**です。",
+       "steps": [
+        {
+         "question": "126は14の何倍ですか。",
+         "answer": "9",
+         "meaning": "①126÷14＝9です。"
+        },
+        {
+         "question": "2数を 14×a と 14×b とすると、a＋b はいくつですか。",
+         "answer": "9",
+         "meaning": "①14×(a＋b)＝126 なので a＋b＝9です。"
+        },
+        {
+         "question": "a＋b＝9 で、aとbがたがいに素になる組は何組ありますか（a＜b）。",
+         "answer": "3",
+         "meaning": "①(1,8)(2,7)(3,6)(4,5)の4組のうち、**(3,6)は3で約分できる**ので使えません。②3組です。"
+        },
+        {
+         "question": "もっとも小さい数はいくつですか。",
+         "answer": "14",
+         "meaning": "①(1,8)→(14,112)、(2,7)→(28,98)、(4,5)→(56,70)。②いちばん小さいのは14です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_10_5",
+       "src": "HG-0549 原簿・小5 2nd演習 No.10 V/VS 2回目 大問2",
+       "hg": "HG-0549",
+       "title": "約束の記号で 最大公約数と最小公倍数",
+       "category": "baai",
+       "unit": "記号定義（約束）",
+       "grade": 5,
+       "star": 3,
+       "intro": "**〈a, b〉**はaとbの**最大公約数**、**[a, b]**はaとbの**最小公倍数**を表すことにします。たとえば **〈6, 10〉＝2、[6, 10]＝30** です。",
+       "steps": [
+        {
+         "question": "〈12, 27〉はいくつですか。",
+         "answer": "3",
+         "meaning": "①12と27の最大公約数は3です。"
+        },
+        {
+         "question": "[12, 27] はいくつですか。",
+         "answer": "108",
+         "meaning": "①12＝2×2×3、27＝3×3×3。②最小公倍数は 4×27＝108です。"
+        },
+        {
+         "question": "[12, 27] －〈12, 27〉を計算しなさい。",
+         "answer": "105",
+         "meaning": "①108－3＝105です。"
+        },
+        {
+         "question": "[a, b] －〈a, b〉＝3 となる組（b＞a）は何組ありますか。",
+         "answer": "2",
+         "meaning": "①最大公約数をgとして a＝g×x、b＝g×y とおくと、差は g×(x×y－1)。②3は素数なので g×(x×y－1)＝3 は (g,x×y)＝(1,4) か (3,2) だけ。③(1,4)と(3,6)の2組です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_10_6",
+       "src": "HG-0550 原簿・小5 2nd演習 No.10 V/VS 2回目 大問3",
+       "hg": "HG-0550",
+       "title": "在庫と 使うペースの きょうそう",
+       "category": "kazu",
+       "unit": "倍数・約数",
+       "grade": 5,
+       "star": 3,
+       "intro": "**N＝1×2×3×…×250** とします。Nを **3, 6, 8, 3, 6, 8, …** の順にくり返しわっていきます（1回目は3、2回目は6、3回目は8、4回目はまた3…）。",
+       "steps": [
+        {
+         "question": "Nは2で何回わり切れますか。",
+         "answer": "244",
+         "meaning": "①125＋62＋31＋15＋7＋3＋1＝244回です。"
+        },
+        {
+         "question": "Nは3で何回わり切れますか。",
+         "answer": "123",
+         "meaning": "①83＋27＋9＋3＋1＝123回です。"
+        },
+        {
+         "question": "3・6・8 の3回を1セットとすると、1セットで2を何個使いますか。",
+         "answer": "4",
+         "meaning": "①3では0個、6（＝2×3）で1個、8（＝2×2×2）で3個。②合わせて4個です。"
+        },
+        {
+         "question": "1セットで3を何個使いますか。",
+         "answer": "2",
+         "meaning": "①3で1個、6で1個、8で0個。②2個です。"
+        },
+        {
+         "question": "何セットまで進めますか。",
+         "answer": "61",
+         "meaning": "①2は244個あるので 244÷4＝61セット。②3は123個で 123÷2＝61セットあまり1。③**先に2が尽きる**ので61セットです。"
+        },
+        {
+         "question": "最後にわり切れるのは何回目ですか。",
+         "answer": "184",
+         "meaning": "①61セット＝183回が終わった時点で、2は0個・3が1個残っています。②184回目は「3でわる」なので**成功**。③185回目の「6でわる」は2が無いのでできません。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_10_7",
+       "src": "HG-0551 原簿・小5 2nd演習 No.10 V/VS 2回目 大問4",
+       "hg": "HG-0551",
+       "title": "言い方が ちがうと 答えが倍ちがう",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "1から50までの整数について考えます。",
+       "steps": [
+        {
+         "question": "6は「ことなる2つの素数の積」で表せますか。表せるなら1、表せないなら2。",
+         "answer": "1",
+         "meaning": "①6＝2×3。②2も3も素数なので表せます。"
+        },
+        {
+         "question": "12は「ことなる2つの素数の積」で表せますか。表せるなら1、表せないなら2。",
+         "answer": "2",
+         "meaning": "①12＝2×2×3。②素数3つの積なので「2つの積」では表せません。③ただし**2と3の2種類でわり切れる**のはたしかです。"
+        },
+        {
+         "question": "「ことなる2つの素数の積で表せる数」は何個ありますか。",
+         "answer": "13",
+         "meaning": "①6,10,14,15,21,22,26,33,34,35,38,39,46 の13個です。"
+        },
+        {
+         "question": "「ことなる2つの素数でわり切れる数」は何個ありますか。",
+         "answer": "26",
+         "meaning": "①こちらは**同じ素数が何個あってもよい**ので12や18も入ります。②26個です。③**言い方のちがいだけで答えが倍ちがいます。**"
+        }
+       ]
+      }
+     ],
+     "11": [
+      {
+       "id": "hd5m2nd_11_1",
+       "src": "HG-0531 原簿・小5 2nd演習 No.11 大問8",
+       "hg": "HG-0531",
+       "title": "6つの和を 全部たすと 3回ずつ",
+       "category": "tokusan",
+       "unit": "和差算・分配算",
+       "grade": 5,
+       "star": 3,
+       "intro": "ちがう4つの整数 **A・B・C・D** があり、小さい方からA・B・C・Dの順にならんでいます。この4つから2つずつ取り出して和をつくると、**22・25・28・29・32・35** の6通りになりました。",
+       "steps": [
+        {
+         "question": "6つの和を全部たすと、A・B・C・Dはそれぞれ何回ずつ出てきますか。",
+         "answer": "3",
+         "meaning": "①4つから2つ選ぶ組は6通り。②どの数も**3回ずつ**使われます。"
+        },
+        {
+         "question": "A＋B＋C＋D はいくつですか。",
+         "answer": "57",
+         "meaning": "①6つの和の合計は 22＋25＋28＋29＋32＋35＝171。②171÷3＝57です。"
+        },
+        {
+         "question": "いちばん小さい和22といちばん大きい和35は、それぞれどの2つの和ですか。22がA＋Bなら1、A＋Cなら2。",
+         "answer": "1",
+         "meaning": "①いちばん小さい2つを足したものが最小＝A＋B＝22。②いちばん大きい2つを足したものが最大＝C＋D＝35。③たしかめ：22＋35＝57 で、さっきの合計と合います ✓"
+        },
+        {
+         "question": "2番目に小さい和25は A＋C です。CはBよりいくつ大きいですか。",
+         "answer": "3",
+         "meaning": "①A＋C－(A＋B)＝25－22＝3。②C＝B＋3です。"
+        },
+        {
+         "question": "まん中の和29は B＋C です。Bはいくつですか。",
+         "answer": "13",
+         "meaning": "①B＋C＝29 で C＝B＋3 なので、B＋B＋3＝29。②B＝13です。"
+        },
+        {
+         "question": "Dはいくつですか。",
+         "answer": "19",
+         "meaning": "①C＝13＋3＝16、A＝22－13＝9。②C＋D＝35 なので D＝35－16＝19です。③(A,B,C,D)＝(9,13,16,19)。6つの和は 22,25,28,29,32,35 でぴったり合います ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_11_2",
+       "src": "HG-0532 原簿・小5 2nd演習 No.11 大問7(3)",
+       "hg": "HG-0532",
+       "title": "入れかえの差＝単価の差×本数の差",
+       "category": "tokusan",
+       "unit": "過不足算・差集め算",
+       "grade": 5,
+       "star": 2,
+       "intro": "1本**80円のえんぴつ**と1本**120円のボールペン**をそれぞれ何本か買うつもりで、**2760円**を持って店に行きました。ところが**買う本数を反対にしてしまった**ので、**120円あまりました**。",
+       "steps": [
+        {
+         "question": "えんぴつとボールペンの1本の値段の差は何円ですか。",
+         "answer": "40",
+         "meaning": "①120－80＝40円です。"
+        },
+        {
+         "question": "本数を入れかえたら安くなったということは、はじめの予定ではどちらを多く買うつもりでしたか。えんぴつなら1、ボールペンなら2。",
+         "answer": "2",
+         "meaning": "①入れかえて安くなった＝もとは**高いボールペンを多く**買う予定でした。"
+        },
+        {
+         "question": "予定と実際の代金の差120円は、1本40円の差の何本ぶんですか。",
+         "answer": "3",
+         "meaning": "①120÷40＝3本ぶんです。②これが**ボールペンとえんぴつの本数の差**になります。"
+        },
+        {
+         "question": "えんぴつを何本買うつもりでしたか。",
+         "answer": "12",
+         "meaning": "①本数の差が3本なので、えんぴつ□本・ボールペン(□＋3)本。②80×□＋120×(□＋3)＝2760 → 200×□＝2400 → □＝12本です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_11_3",
+       "src": "HG-0533 原簿・小5 2nd演習 No.11 大問5(2)",
+       "hg": "HG-0533",
+       "title": "こわすと 二重にへる",
+       "category": "tokusan",
+       "unit": "つるかめ算",
+       "grade": 5,
+       "star": 2,
+       "intro": "コップを運ぶ仕事があります。**1個運ぶと運賃20円**もらえますが、**こわすと運賃がもらえないうえ、60円の弁償**をします。**300個運んで4080円**もらいました。",
+       "steps": [
+        {
+         "question": "300個ぜんぶ無事に運んだら、もらえるのは何円ですか。",
+         "answer": "6000",
+         "meaning": "①20×300＝6000円です。"
+        },
+        {
+         "question": "実際との差は何円ですか。",
+         "answer": "1920",
+         "meaning": "①6000－4080＝1920円です。"
+        },
+        {
+         "question": "1個こわすと、もらえる金額は何円へりますか。",
+         "answer": "80",
+         "meaning": "①もらえるはずの20円がもらえず、さらに60円はらいます。②20＋60＝**80円**へります。**ここを60円としないこと。**"
+        },
+        {
+         "question": "コップを何個こわしましたか。",
+         "answer": "24",
+         "meaning": "①1920÷80＝24個です。②たしかめ：276個×20円－24個×60円＝5520－1440＝4080円 ✓"
+        }
+       ]
+      }
+     ],
+     "12": [
+      {
+       "id": "hd5m2nd_12_1",
+       "src": "HG-0601 原簿・小5 2nd演習 No.12 大問9",
+       "hg": "HG-0601",
+       "title": "同じ満水量だから 式が1本できる",
+       "category": "tokusan",
+       "unit": "消去算",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある容器は **Aカップ11はいとBカップ9はい**で満水になります。また **Aカップ6はいとBカップ12はい**でも満水になります。",
+       "steps": [
+        {
+         "question": "1つ目と2つ目をくらべると、Aは何はい減っていますか。",
+         "answer": "5",
+         "meaning": "①11－6＝5はい減っています。"
+        },
+        {
+         "question": "そのかわりBは何はい増えていますか。",
+         "answer": "3",
+         "meaning": "①12－9＝3はい増えています。②**この5はいと3はいが同じ量**です。"
+        },
+        {
+         "question": "AカップとBカップの容積の比を、もっとも簡単な整数の比で表すとき、Aの数を答えなさい。（A:B＝□:5 の□）",
+         "answer": "3",
+         "meaning": "①A×5＝B×3 なので A:B＝3:5です。②**5:3と逆にしないこと。**"
+        },
+        {
+         "question": "この容器はAカップだけでは何はいで満水になりますか。",
+         "answer": "26",
+         "meaning": "①A＝3、B＝5とおくと容積は 3×11＋5×9＝78。②78÷3＝26はいです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_12_2",
+       "src": "HG-0602 原簿・小5 2nd演習 No.12 大問7",
+       "hg": "HG-0602",
+       "title": "同じ額を使うと 差は変わらない",
+       "category": "tokusan",
+       "unit": "倍数算・やりとり",
+       "grade": 5,
+       "star": 2,
+       "intro": "姉は**4000円**、妹は**2800円**持っています。2人とも**同じ金額の本**を買ったので、残金の比が**5:2**になりました。",
+       "steps": [
+        {
+         "question": "はじめの2人の所持金の差は何円ですか。",
+         "answer": "1200",
+         "meaning": "①4000－2800＝1200円です。"
+        },
+        {
+         "question": "同じ金額を使ったあと、2人の差は何円ですか。",
+         "answer": "1200",
+         "meaning": "①**同じだけ減るので差は変わりません。**②1200円のままです。"
+        },
+        {
+         "question": "残金の比5:2 の差はいくつにあたりますか。",
+         "answer": "3",
+         "meaning": "①5－2＝3です。②この3が1200円にあたります。"
+        },
+        {
+         "question": "姉の残金は何円ですか。",
+         "answer": "2000",
+         "meaning": "①1200÷3＝400円が1つぶん。②姉は 400×5＝2000円です。③たしかめ：本は2000円、妹は800円で 2000:800＝5:2 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_12_3",
+       "src": "HG-0603 原簿・小5 2nd演習 No.12 大問8",
+       "hg": "HG-0603",
+       "title": "やりとりでは 和が変わらない",
+       "category": "tokusan",
+       "unit": "倍数算・やりとり",
+       "grade": 5,
+       "star": 2,
+       "intro": "姉妹の所持金の比は**3:2**で、合計は**4000円**です。姉が妹にいくらかあげたら、比が**2:3**になりました。",
+       "steps": [
+        {
+         "question": "姉が妹にあげたあと、2人の合計は何円ですか。",
+         "answer": "4000",
+         "meaning": "①**やりとりでは合計は変わりません。**②4000円のままです。"
+        },
+        {
+         "question": "3:2 の和はいくつですか。",
+         "answer": "5",
+         "meaning": "①3＋2＝5です。②あとの 2:3 の和も5なので、**そのままくらべられます。**"
+        },
+        {
+         "question": "比の1つぶんは何円ですか。",
+         "answer": "800",
+         "meaning": "①4000÷5＝800円です。"
+        },
+        {
+         "question": "姉は妹に何円あげましたか。",
+         "answer": "800",
+         "meaning": "①姉は3つぶん→2つぶんになったので**1つぶん減りました**。②800円です。③たしかめ：2400→1600、1600→2400 で 2:3 ✓"
+        }
+       ]
+      }
+     ],
+     "13": [
+      {
+       "id": "hd5m2nd_13_1",
+       "src": "HG-0604 原簿・小5 2nd演習 No.13 大問6②③",
+       "hg": "HG-0604",
+       "title": "比の「1」の 大きさがちがう",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "2つの箱**甲・乙**に白玉と黒玉が入っています。\n**②** 甲と乙の玉の**全体の個数の比が1:3**、白黒の比は**甲が2:1**、**乙が4:5**。\n**③** 全体の比が**3:4**、白黒の比は**甲が2:3**、**乙が1:4**。",
+       "steps": [
+        {
+         "question": "②で、甲の玉を1、乙の玉を3とします。甲の白玉はいくつにあたりますか。分数で答えなさい。",
+         "answer": "2/3",
+         "meaning": "①甲は2:1に分けるので、白は全体の2/3。②1×2/3＝2/3です。"
+        },
+        {
+         "question": "②で、乙の白玉はいくつにあたりますか。分数で答えなさい。",
+         "answer": "4/3",
+         "meaning": "①乙は4:5に分けるので白は4/9。②3×4/9＝4/3です。"
+        },
+        {
+         "question": "②で、合わせた白玉と黒玉の比を もっとも簡単な整数の比で表すとき、白の数を答えなさい。（白:黒＝□:1 の□）",
+         "answer": "1",
+         "meaning": "①白は 2/3＋4/3＝2、黒は 1/3＋5/3＝2。②白:黒＝1:1です。③**甲の2と乙の4をそのまま足して6:6としてはいけません**（1つぶんの大きさがちがうため）。"
+        },
+        {
+         "question": "③で、合わせた白玉と黒玉の比が □:5 になるとき、□はいくつですか。",
+         "answer": "2",
+         "meaning": "①甲3を2:3に分けて白6/5、乙4を1:4に分けて白4/5 → 白は2。②黒は 9/5＋16/5＝5。③白:黒＝2:5です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_2",
+       "src": "HG-0605 原簿・小5 2nd演習 No.13 大問7",
+       "hg": "HG-0605",
+       "title": "1種類に そろえてしまう",
+       "category": "tokusan",
+       "unit": "消去算",
+       "grade": 5,
+       "star": 2,
+       "intro": "**①** みかん5個とりんご2個の値段が等しく、みかん3個とりんご1個で**770円**です。\n**②** 10円玉・50円玉・100円玉の枚数の比が**2:3:4**で、合計**8550円**です。",
+       "steps": [
+        {
+         "question": "①で、りんご1個はみかん何個ぶんの値段ですか。小数で答えなさい。",
+         "answer": "2.5",
+         "meaning": "①みかん5個＝りんご2個なので、りんご1個＝みかん2.5個ぶんです。"
+        },
+        {
+         "question": "①で、みかん3個とりんご1個は、みかん何個ぶんですか。小数で答えなさい。",
+         "answer": "5.5",
+         "meaning": "①3＋2.5＝5.5個ぶんです。"
+        },
+        {
+         "question": "①で、みかん1個は何円ですか。",
+         "answer": "140",
+         "meaning": "①770÷5.5＝140円です。"
+        },
+        {
+         "question": "②で、10円玉2枚・50円玉3枚・100円玉4枚の金額はいくらですか。",
+         "answer": "570",
+         "meaning": "①20＋150＝170、400を足して570円です。②**枚数の比をそのまま金額の比にしないこと。**"
+        },
+        {
+         "question": "②で、100円玉は何枚ありますか。",
+         "answer": "60",
+         "meaning": "①8550÷570＝15。②100円玉は 4×15＝60枚です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_3",
+       "src": "HG-0606 原簿・小5 2nd演習 No.13 大問8",
+       "hg": "HG-0606",
+       "title": "重なりを ①とおく",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "大小2つの長方形が一部重なっています。**重なりの部分は、大きい方の 1/5、小さい方の 2/7**です。**2つの長方形の面積の和は510cm²**です（重なっている部分は2回数えています）。",
+       "svg": "<svg viewBox='0 0 280 150' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='13' fill='#ffd166' font-size='9.5'>[図] 2つの長方形が 一部だけ重なっている</text><rect x='24' y='28' width='150' height='78' fill='rgba(79,124,255,0.16)' stroke='#eef2ff' stroke-width='1.4'/><rect x='128' y='62' width='126' height='72' fill='rgba(255,209,102,0.16)' stroke='#eef2ff' stroke-width='1.4'/><rect x='128' y='62' width='46' height='44' fill='rgba(255,107,107,0.35)' stroke='#ff6b6b' stroke-width='1.4'/><text x='70' y='48' fill='#8ab4ff' font-size='11'>大きい長方形</text><text x='196' y='126' fill='#ffd166' font-size='11'>小さい長方形</text><text x='151' y='88' fill='#ff6b6b' font-size='10' text-anchor='middle'>重なり</text></svg>",
+       "steps": [
+        {
+         "question": "重なりを①とすると、大きい長方形の面積はいくつにあたりますか。",
+         "answer": "5",
+         "meaning": "①重なりが大きい方の1/5なので、大きい方は⑤です。"
+        },
+        {
+         "question": "小さい長方形の面積はいくつにあたりますか。小数で答えなさい。",
+         "answer": "3.5",
+         "meaning": "①重なりが小さい方の2/7なので、小さい方は 7/2＝3.5です。"
+        },
+        {
+         "question": "2つの面積の和はいくつにあたりますか。小数で答えなさい。",
+         "answer": "8.5",
+         "meaning": "①5＋3.5＝8.5です。②**510cm²は重なりを2回数えた「たんなる和」**なので、これでよいです。"
+        },
+        {
+         "question": "重なりの面積は何cm²ですか。",
+         "answer": "60",
+         "meaning": "①510÷8.5＝60cm²です。②大きい方は300cm²、小さい方は210cm²になります。"
+        },
+        {
+         "question": "2つの長方形がおおっている部分（重なりを1回だけ数えた面積）は何cm²ですか。",
+         "answer": "450",
+         "meaning": "①510から重なり60を1回引きます。②450cm²です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_4",
+       "src": "HG-0607 原簿・小5 2nd演習 No.13 大問9",
+       "hg": "HG-0607",
+       "title": "合格＋不合格＝全体で つなぐ",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "ある試験の**受験者の男女比は5:4**です。**合格者は男女あわせて153人**でその比は**9:8**、**不合格者の比は4:3**でした。",
+       "steps": [
+        {
+         "question": "合格者の比 9:8 の和はいくつですか。",
+         "answer": "17",
+         "meaning": "①9＋8＝17です。"
+        },
+        {
+         "question": "比の1つぶんは何人ですか。",
+         "answer": "9",
+         "meaning": "①153÷17＝9人です。②**153が17でわり切れる**ように作ってあります。"
+        },
+        {
+         "question": "合格した男子は何人ですか。",
+         "answer": "81",
+         "meaning": "①9×9＝81人です。（女子は8×9＝72人）"
+        },
+        {
+         "question": "不合格者を 男子4×□人・女子3×□人 とすると、□はいくつですか。",
+         "answer": "36",
+         "meaning": "①受験者は男子81＋4×□、女子72＋3×□で、この比が5:4。②(81＋4□)×4＝(72＋3□)×5 → 324＋16□＝360＋15□ → □＝36です。"
+        },
+        {
+         "question": "受験者は全部で何人ですか。",
+         "answer": "405",
+         "meaning": "①不合格は 4×36＋3×36＝252人。②153＋252＝405人です。③たしかめ：男子81＋144＝225、女子72＋108＝180、225:180＝5:4 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_5",
+       "src": "HG-0608 原簿・小5 2nd演習 No.13 V2回目 大問5",
+       "hg": "HG-0608",
+       "title": "つかっている長さが 同じ＝逆比",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "2本の棒A・Bを、池の**同じ深さ**のところにまっすぐ底まで立てました。\n**(2)** Aは全体の**2/5**、Bは全体の**3/4**が水につかり、**2本の長さの差は14cm**でした。\n**(3)** べつの日、Aは**1/4**、Bは**2/5**がつかり、**2本の長さの和は65cm**でした。",
+       "steps": [
+        {
+         "question": "(2)で、水につかっている長さはA・Bどちらが長いですか。同じなら1、Aが長いなら2。",
+         "answer": "1",
+         "meaning": "①どちらも**池の深さと同じ**なので同じです。②ここがこの問題の入口です。"
+        },
+        {
+         "question": "(2)で、A×(2/5)＝B×(3/4) です。A:B をもっとも簡単な整数の比にすると 15:□。□はいくつですか。",
+         "answer": "8",
+         "meaning": "①分数の**逆比**になるので A:B＝(3/4):(2/5)。②通分して 15:8です。"
+        },
+        {
+         "question": "(2)で、棒Aの長さは何cmですか。",
+         "answer": "30",
+         "meaning": "①比の差 15－8＝7 が14cm。②1つぶん2cmなので A＝15×2＝30cmです。"
+        },
+        {
+         "question": "(3)で、A:B をもっとも簡単な整数の比にすると 8:□。□はいくつですか。",
+         "answer": "5",
+         "meaning": "①A×(1/4)＝B×(2/5) なので A:B＝(2/5):(1/4)＝8:5です。"
+        },
+        {
+         "question": "(3)で、棒Aの長さは何cmですか。",
+         "answer": "40",
+         "meaning": "①比の和 8＋5＝13 が65cm。②1つぶん5cmなので A＝40cmです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_6",
+       "src": "HG-0609 原簿・小5 2nd演習 No.13 V2回目 大問7",
+       "hg": "HG-0609",
+       "title": "和も差も 使えないとき",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "AとBのおこづかいの比は**4:7**でした。**Aは300円、Bは900円**使ったので、比が**2:3**になりました。",
+       "steps": [
+        {
+         "question": "2人が使った金額はちがいます。使ったあと、2人の所持金の和は変わりますか。変わるなら1、変わらないなら2。",
+         "answer": "1",
+         "meaning": "①合計 1200円 減るので変わります。"
+        },
+        {
+         "question": "では2人の差は変わりますか。変わるなら1、変わらないなら2。",
+         "answer": "1",
+         "meaning": "①Bのほうが600円多く使ったので差も変わります。②**和も差も使えない**ので、比例式を立てるしかありません。"
+        },
+        {
+         "question": "はじめを ④と⑦ とすると、(④－300):(⑦－900)＝2:3 です。①はいくらですか。",
+         "answer": "450",
+         "meaning": "①内側どうし・外側どうしをかけて 3×(4□－300)＝2×(7□－900)。②12□－900＝14□－1800 → 2□＝900 → □＝450円です。"
+        },
+        {
+         "question": "Aのおこづかいは、使ったあといくらになりましたか。",
+         "answer": "1500",
+         "meaning": "①はじめは 450×4＝1800円。②300円使って1500円です。③たしかめ：Bは3150－900＝2250、1500:2250＝2:3 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_7",
+       "src": "HG-0610 原簿・小5 2nd演習 No.13 V2回目 大問8",
+       "hg": "HG-0610",
+       "title": "実際の人数が 1つも出てこない",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "ある試験の**受験者の男女比は8:9**、**合格者の男女比は4:3**、**不合格者の男女比は4:5**でした。実際の人数は1つも分かっていません。",
+       "steps": [
+        {
+         "question": "合格者を 4×p 人と 3×p 人、不合格者を 4×q 人と 5×q 人とします。男子の受験者は 4p＋4q 人です。女子は何人ですか。3p＋5q なら1、3p＋4q なら2。",
+         "answer": "1",
+         "meaning": "①女子は合格3p人と不合格5q人。②3p＋5q人です。"
+        },
+        {
+         "question": "(4p＋4q):(3p＋5q)＝8:9 から、qはpの何倍ですか。",
+         "answer": "3",
+         "meaning": "①9×(4p＋4q)＝8×(3p＋5q) → 36p＋36q＝24p＋40q。②12p＝4q → q＝3pです。"
+        },
+        {
+         "question": "男子の合格者と不合格者の比を もっとも簡単な整数の比にすると 1:□。□はいくつですか。",
+         "answer": "3",
+         "meaning": "①男子の合格は4p人、不合格は 4q＝12p人。②4p:12p＝1:3です。③**pの値が分からなくても比は出ます。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_8",
+       "src": "HG-0611 原簿・小5 マスターV/VS No.13 2nd 2回目 大問1",
+       "hg": "HG-0611",
+       "title": "「水面の上」を 水中に言いかえる",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "A・B2本の棒を池の同じところに立てたら、**Aは3/5だけ水にぬれ**、**Bは1/3だけ水面の上に出ました**。",
+       "steps": [
+        {
+         "question": "Bのうち、水につかっているのは全体のどれだけですか。分数で答えなさい。",
+         "answer": "2/3",
+         "meaning": "①上に出ているのが1/3なので、水中は 1－1/3＝2/3です。②**ここを言いかえないと先に進めません。**"
+        },
+        {
+         "question": "A×(3/5)＝B×(2/3) です。A:B をもっとも簡単な整数の比にすると 10:□。□はいくつですか。",
+         "answer": "9",
+         "meaning": "①A:B＝(2/3):(3/5)。②通分して 10:9です。"
+        },
+        {
+         "question": "AとBでは どちらが長いですか。Aなら1、Bなら2。",
+         "answer": "1",
+         "meaning": "①10:9なのでAのほうが長いです。②**1/3をそのまま水中とみて5:9としてはいけません。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_9",
+       "src": "HG-0612 原簿・小5 マスターV/VS No.13 2nd 2回目 大問3",
+       "hg": "HG-0612",
+       "title": "重さが同じ＝冊数は 逆比",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "大小2種類のノートが、**同じ重さになるように**積んであります。**1冊の重さの比は 大:小＝3:2** です。それぞれから**12冊ずつ取りのぞく**と、重さの比が**5:6**になりました。",
+       "steps": [
+        {
+         "question": "全体の重さが同じとき、冊数の比 大:小 はいくつですか。2:□ の□を答えなさい。",
+         "answer": "3",
+         "meaning": "①1冊が重いほうが冊数は少なくなります。②**逆比**で 大:小＝2:3です。③3:2としないこと。"
+        },
+        {
+         "question": "冊数を 2×m 冊と 3×m 冊とします。12冊ずつ取ったあとの重さの比が5:6になるとき、mはいくつですか。",
+         "answer": "16",
+         "meaning": "①大の重さは 3×(2m－12)、小の重さは 2×(3m－12)。②(6m－36):(6m－24)＝5:6 → 6×(6m－36)＝5×(6m－24) → 36m－216＝30m－120 → m＝16です。"
+        },
+        {
+         "question": "大きいノートははじめ何冊ありましたか。",
+         "answer": "32",
+         "meaning": "①2×16＝32冊です。"
+        },
+        {
+         "question": "小さいノートははじめ何冊ありましたか。",
+         "answer": "48",
+         "meaning": "①3×16＝48冊です。②たしかめ：取ったあと大20冊×3＝60、小36冊×2＝72、60:72＝5:6 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_13_10",
+       "src": "HG-0613 原簿・小5 マスターV/VS No.13 2nd 2回目 大問4",
+       "hg": "HG-0613",
+       "title": "2つの比の「1」は 別物",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "5つの皿A〜Eに、あわせて**80個**のあめをのせます。**A:B＝3:4**、**CはEの半分**、**(C＋E):D＝6:5** です。",
+       "steps": [
+        {
+         "question": "CとEの比を もっとも簡単な整数の比にすると 1:□。□はいくつですか。",
+         "answer": "2",
+         "meaning": "①CはEの半分なので C:E＝1:2です。"
+        },
+        {
+         "question": "C:D:E を もっとも簡単な整数の比にすると 2:□:4。□はいくつですか。",
+         "answer": "5",
+         "meaning": "①C:E＝1:2＝2:4 とすると C＋E＝6。②(C＋E):D＝6:5 なのでDは5。③2:5:4です。"
+        },
+        {
+         "question": "C＋D＋E は 11の倍数になります。A＋B は何の倍数になりますか。",
+         "answer": "7",
+         "meaning": "①A:B＝3:4 なので A＋B＝7の倍数です。②**A:B の「1」と C:D:E の「1」は大きさがちがいます。**"
+        },
+        {
+         "question": "C＋D＋E は何個ですか。",
+         "answer": "66",
+         "meaning": "①A＋Bが7の倍数、C＋D＋Eが11の倍数で、合わせて80。②11×6＝66 のとき A＋B＝14 で7の倍数 ✓ ほかにありません。③66個です。"
+        },
+        {
+         "question": "Aは何個ですか。",
+         "answer": "6",
+         "meaning": "①A＋B＝14 で 3:4 に分けるので、A＝14×3/7＝6個です。"
+        },
+        {
+         "question": "Eは何個ですか。",
+         "answer": "24",
+         "meaning": "①C＋D＋E＝66 を 2:5:4 に分けます。②66÷11＝6 なので E＝6×4＝24個です。"
+        }
+       ]
+      }
+     ],
+     "14": [
+      {
+       "id": "hd5m2nd_14_1",
+       "src": "HG-0621 原簿・小5 2nd演習 No.14 大問10",
+       "hg": "HG-0621",
+       "title": "のこりの基準が 全体ではない",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 3,
+       "intro": "あるテープを、**全体の3/4と、さらに20cm**だけ使いました。すると**使った長さの2/7**が残りました。",
+       "steps": [
+        {
+         "question": "使った長さを7とすると、残りはいくつにあたりますか。",
+         "answer": "2",
+         "meaning": "①残りは**使った長さの**2/7。②使った長さを7とみれば残りは2です。"
+        },
+        {
+         "question": "そのとき、テープ全体はいくつにあたりますか。",
+         "answer": "9",
+         "meaning": "①使った7＋残り2＝9です。"
+        },
+        {
+         "question": "使った長さは、全体のどれだけにあたりますか。分数で答えなさい。",
+         "answer": "7/9",
+         "meaning": "①全体9のうち使ったのが7。②7/9です。**ここで基準が全体にもどります。**"
+        },
+        {
+         "question": "7/9 と 3/4 の差はいくつですか。分数で答えなさい。",
+         "answer": "1/36",
+         "meaning": "①通分して 28/36－27/36＝1/36です。②**この1/36が20cmにあたります。**"
+        },
+        {
+         "question": "もとのテープの長さは何cmですか。",
+         "answer": "720",
+         "meaning": "①20÷(1/36)＝720cmです。②たしかめ：使ったのは 720×7/9＝560cm（＝540＋20）、残り160cm、160÷560＝2/7 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_14_2",
+       "src": "HG-0622 原簿・小5 2nd演習 No.14 大問9",
+       "hg": "HG-0622",
+       "title": "池の深さを ①とおく",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "2本の棒A・Bを池の**同じ深さ**のところにまっすぐ底まで立てたら、**Aはその4/9**が、**Bはその3/7**が水の中に入りました。",
+       "steps": [
+        {
+         "question": "池の深さを1とすると、棒Aの長さはいくつにあたりますか。分数で答えなさい。",
+         "answer": "2.25",
+         "meaning": "①Aの4/9が深さ1なので、A＝1÷(4/9)＝9/4です。"
+        },
+        {
+         "question": "棒Bの長さはいくつにあたりますか。分数で答えなさい。",
+         "answer": "7/3",
+         "meaning": "①1÷(3/7)＝7/3です。"
+        },
+        {
+         "question": "AとBでは どちらが長いですか。Aなら1、Bなら2。",
+         "answer": "2",
+         "meaning": "①9/4＝2.25、7/3＝2.33…。②Bのほうが長いです。"
+        },
+        {
+         "question": "A・Bの長さの差が14cmのとき、池の深さは何cmですか。",
+         "answer": "168",
+         "meaning": "①差は 7/3－9/4＝28/12－27/12＝1/12。②14÷(1/12)＝168cmです。③たしかめ：A＝378cm、B＝392cm、水中はどちらも168cm ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_14_3",
+       "src": "HG-0623 原簿・小5 2nd演習 No.14 大問7②",
+       "hg": "HG-0623",
+       "title": "ふえるときと へるときで 基準がちがう",
+       "category": "wariai",
+       "unit": "割合",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある固体が液体になると、体積は**2/25だけ増える**そうです。",
+       "steps": [
+        {
+         "question": "固体の体積を25とすると、液体になったときの体積はいくつですか。",
+         "answer": "27",
+         "meaning": "①25×(2/25)＝2 だけ増えるので 27です。"
+        },
+        {
+         "question": "液体が固体にもどるとき、へる体積はいくつですか。",
+         "answer": "2",
+         "meaning": "①27から25にもどるので2へります。"
+        },
+        {
+         "question": "そのへった分は、液体の体積のどれだけにあたりますか。分数で答えなさい。",
+         "answer": "2/27",
+         "meaning": "①**もとにする量は液体の27**です。②2÷27＝2/27です。③**「2/25増えたから2/25減る」ではありません。**ふえるときの基準は固体、へるときの基準は液体だからです。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_14_4",
+       "src": "HG-0628 原簿・小5 2nd演習 No.14 大問6①",
+       "hg": "HG-0628",
+       "title": "2人の取り分を 足すと 全体",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 2,
+       "intro": "1本のテープを兄弟で分けました。**兄はもとの全体の3/8より50cm長く**、**弟は全体の2/5より22cm長い**分をとりました。",
+       "steps": [
+        {
+         "question": "3/8 と 2/5 をたすといくつですか。分数で答えなさい。",
+         "answer": "0.775",
+         "meaning": "①通分して 15/40＋16/40＝31/40です。"
+        },
+        {
+         "question": "のこりの 9/40 は何cmにあたりますか。",
+         "answer": "72",
+         "meaning": "①2人の取り分を足すと全体になります。②分数でない部分の 50＋22＝72cm が、のこりの 9/40 にあたります。"
+        },
+        {
+         "question": "もとのテープの長さは何cmですか。",
+         "answer": "320",
+         "meaning": "①72÷(9/40)＝320cmです。"
+        },
+        {
+         "question": "兄の取り分は何cmですか。",
+         "answer": "170",
+         "meaning": "①320×3/8＝120、＋50で170cmです。②弟は 128＋22＝150cm。合わせて320cm ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_14_5",
+       "src": "HG-0629 原簿・小5 2nd演習 No.14 大問6②",
+       "hg": "HG-0629",
+       "title": "同じものを 2通りに書いて 差をとる",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある学校の**男子の人数**は、**全体の7/15より25人多く**、また**全体の5/9より23人少ない**そうです。",
+       "steps": [
+        {
+         "question": "5/9 と 7/15 の差はいくつですか。分数で答えなさい。",
+         "answer": "4/45",
+         "meaning": "①通分して 25/45－21/45＝4/45です。"
+        },
+        {
+         "question": "その差は何人にあたりますか。",
+         "answer": "48",
+         "meaning": "①「25人多い」と「23人少ない」なので、2つの表し方の差は 25＋23＝48人です。"
+        },
+        {
+         "question": "全体は何人ですか。",
+         "answer": "540",
+         "meaning": "①48÷(4/45)＝540人です。"
+        },
+        {
+         "question": "男子は何人ですか。",
+         "answer": "277",
+         "meaning": "①540×7/15＝252、＋25で277人です。②たしかめ：540×5/9＝300、300－23＝277 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_14_6",
+       "src": "HG-0630 原簿・小5 2nd演習 No.14 大問8",
+       "hg": "HG-0630",
+       "title": "わたしても 合計は 変わらない",
+       "category": "tokusan",
+       "unit": "倍数算・やりとり",
+       "grade": 5,
+       "star": 2,
+       "intro": "A君とB君は**同じ個数**のチョコレートを持っていましたが、**A君がB君に25個わたした**ので、A君はB君の**7/8**になりました。",
+       "steps": [
+        {
+         "question": "25個わたしたあと、2人の差は何個ですか。",
+         "answer": "50",
+         "meaning": "①わたした側は25減り、受け取った側は25増えます。②差は**25×2＝50個**です。③**25個としないこと。**"
+        },
+        {
+         "question": "7:8 の差はいくつにあたりますか。",
+         "answer": "1",
+         "meaning": "①8－7＝1です。②この1が50個にあたります。"
+        },
+        {
+         "question": "2人あわせて何個持っていますか。",
+         "answer": "750",
+         "meaning": "①7＋8＝15。②50×15＝750個です。"
+        },
+        {
+         "question": "はじめは1人何個ずつ持っていましたか。",
+         "answer": "375",
+         "meaning": "①同じ個数だったので 750÷2＝375個ずつです。②たしかめ：350と400で 350:400＝7:8 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_14_7",
+       "src": "HG-0631 原簿・小5 2nd演習 No.14 大問7①",
+       "hg": "HG-0631",
+       "title": "「弟の」2/7 だから 基準は弟",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "兄の体重は弟より、**弟の体重の2/7**だけ重いそうです。**2人の体重の和は88kg**です。",
+       "steps": [
+        {
+         "question": "弟の体重を7とすると、兄の体重はいくつにあたりますか。",
+         "answer": "9",
+         "meaning": "①弟の2/7だけ重いので、7＋2＝9です。②**基準は弟**です。"
+        },
+        {
+         "question": "2人の和はいくつにあたりますか。",
+         "answer": "16",
+         "meaning": "①7＋9＝16です。"
+        },
+        {
+         "question": "1つぶんは何kgですか。",
+         "answer": "5.5",
+         "meaning": "①88÷16＝5.5kgです。"
+        },
+        {
+         "question": "兄の体重は何kgですか。",
+         "answer": "49.5",
+         "meaning": "①5.5×9＝49.5kgです。②弟は38.5kg、差は11kg＝38.5×2/7 ✓"
+        }
+       ]
+      }
+     ],
+     "15": [
+      {
+       "id": "hd5m2nd_15_1",
+       "src": "HG-0624 原簿・小5 2nd演習 No.15 大問7",
+       "hg": "HG-0624",
+       "title": "整数になる人数で しぼりこむ",
+       "category": "baai",
+       "unit": "なかま調べ（集合・ベン図）",
+       "grade": 5,
+       "star": 3,
+       "intro": "ある試験で、**国語に合格した生徒は全体の3/5**、**算数に合格した生徒は全体の3/8**でした。**国語だけ合格した人と算数だけ合格した人の比は2:1**です。",
+       "steps": [
+        {
+         "question": "両方合格した割合を□とすると、国語だけは 3/5－□、算数だけは 3/8－□ です。「国語だけ＝算数だけの2倍」から、3/5－□ は 3/8－□ の何倍ですか。",
+         "answer": "2",
+         "meaning": "①比が2:1なので2倍です。"
+        },
+        {
+         "question": "両方合格した生徒は全体の何％ですか。",
+         "answer": "15",
+         "meaning": "①3/5－□＝2×(3/8－□) → 3/5－□＝3/4－2□ → □＝3/4－3/5＝3/20。②15％です。"
+        },
+        {
+         "question": "国語3/5、算数3/8、両方3/20 が全部整数人になるには、全体は何の倍数ですか。",
+         "answer": "40",
+         "meaning": "①5・8・20の最小公倍数は40です。②全体は40の倍数になります。"
+        },
+        {
+         "question": "両方合格が50人以上、全体が400人より少ないとき、生徒は何人ですか。",
+         "answer": "360",
+         "meaning": "①両方は全体の3/20なので、50人以上には全体334人以上。②40の倍数で334以上400未満は360だけ。③360人です。④たしかめ：両方54人、国語216人、算数135人、国語だけ162人・算数だけ81人＝2:1 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_15_2",
+       "src": "HG-0625 原簿・小5 2nd演習 No.15 大問6",
+       "hg": "HG-0625",
+       "title": "％が同じなのに 人数がふえている",
+       "category": "wariai",
+       "unit": "割合",
+       "grade": 5,
+       "star": 3,
+       "intro": "[表]は、ある学校の通学の方法の割合です。**いまの徒歩は10年前より41人少なく、バスは10人多い**そうです。",
+       "svg": "<svg viewBox='0 0 188 114' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='13' fill='#ffd166' font-size='9.5'>[表] 通学の方法（わりあい）</text><rect x='8' y='20' width='56' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='36.0' y='34.96' fill='#eef2ff' font-size='10' text-anchor='middle'></text><rect x='64' y='20' width='58' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='93.0' y='34.96' fill='#eef2ff' font-size='10' text-anchor='middle'>10年前</text><rect x='122' y='20' width='58' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='151.0' y='34.96' fill='#eef2ff' font-size='10' text-anchor='middle'>今 年</text><rect x='8' y='42' width='56' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='36.0' y='56.96' fill='#eef2ff' font-size='10' text-anchor='middle'>徒歩</text><rect x='64' y='42' width='58' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='93.0' y='56.96' fill='#eef2ff' font-size='10' text-anchor='middle'>50%</text><rect x='122' y='42' width='58' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='151.0' y='56.96' fill='#eef2ff' font-size='10' text-anchor='middle'>35%</text><rect x='8' y='64' width='56' height='22' fill='rgba(255,209,102,0.14)' stroke='#64748b' stroke-width='0.9'/><text x='36.0' y='78.96000000000001' fill='#eef2ff' font-size='10' text-anchor='middle'>バス</text><rect x='64' y='64' width='58' height='22' fill='rgba(255,209,102,0.14)' stroke='#64748b' stroke-width='0.9'/><text x='93.0' y='78.96000000000001' fill='#eef2ff' font-size='10' text-anchor='middle'>20%</text><rect x='122' y='64' width='58' height='22' fill='rgba(255,209,102,0.14)' stroke='#64748b' stroke-width='0.9'/><text x='151.0' y='78.96000000000001' fill='#eef2ff' font-size='10' text-anchor='middle'>20%</text><rect x='8' y='86' width='56' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='36.0' y='100.96000000000001' fill='#eef2ff' font-size='10' text-anchor='middle'>自転車</text><rect x='64' y='86' width='58' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='93.0' y='100.96000000000001' fill='#eef2ff' font-size='10' text-anchor='middle'>30%</text><rect x='122' y='86' width='58' height='22' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.9'/><text x='151.0' y='100.96000000000001' fill='#eef2ff' font-size='10' text-anchor='middle'>45%</text></svg>",
+       "steps": [
+        {
+         "question": "バスの割合は10年前と今で同じですか。同じなら1、ちがうなら2。",
+         "answer": "1",
+         "meaning": "①どちらも20%で同じです。"
+        },
+        {
+         "question": "割合が同じなのに人数が10人ふえたということは、何がふえたからですか。全体がふえたなら1、バスだけがふえたなら2。",
+         "answer": "1",
+         "meaning": "①割合が同じで人数がふえる＝**もとにする全体そのものがふえた**ということです。"
+        },
+        {
+         "question": "生徒全体は何人ふえましたか。",
+         "answer": "50",
+         "meaning": "①バスの10人は全体の20%にあたるふえ方。②10÷0.2＝50人です。"
+        },
+        {
+         "question": "10年前の生徒は何人でしたか。",
+         "answer": "390",
+         "meaning": "①10年前を□人とすると今は□＋50人。②0.5×□－0.35×(□＋50)＝41 → 0.15×□＝58.5 → □＝390人です。"
+        },
+        {
+         "question": "自転車で通う生徒は何人ふえましたか。",
+         "answer": "81",
+         "meaning": "①10年前 390×0.3＝117人、今 440×0.45＝198人。②81人ふえました。③**割合の差15%に全体をかけてはいけません**（もとにする量がちがうため）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_15_3",
+       "src": "HG-0626 原簿・小5 2nd演習 No.15 大問4",
+       "hg": "HG-0626",
+       "title": "部分はへり 全体はふえる",
+       "category": "wariai",
+       "unit": "割合",
+       "grade": 5,
+       "star": 3,
+       "intro": "[図]は先月の支出の円グラフです。**貯金60°、食費90°、その他120°**で、**のこりが衣料費**です。今月は**衣料費が12%へり**、**全体の支出は20%ふえました**。",
+       "svg": "<svg viewBox='0 0 280 178' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='13' fill='#ffd166' font-size='9.5'>[図] 先月の支出（衣料費の角度だけ書いていない）</text><path d='M140,100 L140.0,38.0 A62,62 0 0 1 193.7,69.0 Z' fill='#4f7cff' opacity='0.5' stroke='#eef2ff' stroke-width='1'/><text x='158.6' y='67.8' fill='#141a2e' font-size='9.5' text-anchor='middle'>貯金60°</text><path d='M140,100 L193.7,69.0 A62,62 0 0 1 171.0,153.7 Z' fill='#7ee787' opacity='0.5' stroke='#eef2ff' stroke-width='1'/><text x='175.9' y='109.6' fill='#141a2e' font-size='9.5' text-anchor='middle'>食費90°</text><path d='M140,100 L171.0,153.7 A62,62 0 0 1 78.0,100.0 Z' fill='#ffd166' opacity='0.5' stroke='#eef2ff' stroke-width='1'/><text x='121.4' y='132.2' fill='#141a2e' font-size='9.5' text-anchor='middle'>その他120°</text><path d='M140,100 L78.0,100.0 A62,62 0 0 1 140.0,38.0 Z' fill='#ff6b6b' opacity='0.5' stroke='#eef2ff' stroke-width='1'/><text x='113.7' y='73.7' fill='#141a2e' font-size='9.5' text-anchor='middle'>衣料費?°</text></svg>",
+       "steps": [
+        {
+         "question": "先月の衣料費の中心角は何度ですか。",
+         "answer": "90",
+         "meaning": "①360－(60＋90＋120)＝90°です。②**グラフに書いていないので自分で出します。**"
+        },
+        {
+         "question": "先月の衣料費は全体の何%ですか。",
+         "answer": "25",
+         "meaning": "①90÷360＝0.25。②25%です。"
+        },
+        {
+         "question": "先月の全体を100とすると、今月の全体はいくつですか。",
+         "answer": "120",
+         "meaning": "①20%ふえるので120です。"
+        },
+        {
+         "question": "先月の衣料費を25とすると、今月の衣料費はいくつですか。",
+         "answer": "22",
+         "meaning": "①12%へるので 25×0.88＝22です。"
+        },
+        {
+         "question": "今月の円グラフで、衣料費の中心角は何度ですか。",
+         "answer": "66",
+         "meaning": "①22÷120＝11/60。②360×11/60＝66°です。③**全体がふえたことを忘れて 90×0.88＝79.2° としないこと。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_15_4",
+       "src": "HG-0627 原簿・小5 2nd演習 No.15 大問5",
+       "hg": "HG-0627",
+       "title": "足すと100%をこえる",
+       "category": "baai",
+       "unit": "なかま調べ（集合・ベン図）",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある学校で、**ネコを飼っている人は全体の60%**、**イヌは65%**、**両方飼っている人は40%**、**どちらも飼っていない人は24人**です。",
+       "steps": [
+        {
+         "question": "少なくとも一方を飼っている人は全体の何%ですか。",
+         "answer": "85",
+         "meaning": "①60＋65＝125%だと**両方の人を2回数えて**しまいます。②40%を1回引いて85%です。"
+        },
+        {
+         "question": "どちらも飼っていない人は全体の何%ですか。",
+         "answer": "15",
+         "meaning": "①100－85＝15%です。"
+        },
+        {
+         "question": "学校全体の人数は何人ですか。",
+         "answer": "160",
+         "meaning": "①15%が24人。②24÷0.15＝160人です。"
+        },
+        {
+         "question": "イヌだけを飼っている人は何人ですか。",
+         "answer": "40",
+         "meaning": "①イヌ65%から両方40%を引いて25%。②160×0.25＝40人です。③**65%×160＝104人としないこと**（それは両方の人もふくむ数です）。"
+        }
+       ]
+      }
+     ],
+     "16": [
+      {
+       "id": "hd5m2nd_16_1",
+       "src": "HG-0641 原簿・小5 2nd演習 No.16 大問2(6)",
+       "hg": "HG-0641",
+       "title": "％は 足し引きできない",
+       "category": "wariai",
+       "unit": "割合",
+       "grade": 5,
+       "star": 2,
+       "intro": "**AはBより20％多く**、**BはCより25％少ない**そうです。",
+       "steps": [
+        {
+         "question": "Cを100とすると、Bはいくつですか。",
+         "answer": "75",
+         "meaning": "①25％少ないので 100×0.75＝75です。"
+        },
+        {
+         "question": "Aはいくつですか。",
+         "answer": "90",
+         "meaning": "①BはAの基準です。②75×1.2＝90です。"
+        },
+        {
+         "question": "AはCより何％少ないですか。",
+         "answer": "10",
+         "meaning": "①100と90の差は10。②10％少ないです。③**20－25＝－5％としてはいけません**（もとにする量がちがうため）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_16_2",
+       "src": "HG-0642 原簿・小5 2nd演習 No.16 大問4",
+       "hg": "HG-0642",
+       "title": "「のこりの」を 最初の基準に直す",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 3,
+       "intro": "**最初の1/3**でCDを買い、次に**のこりの2/5**で本を買いました。そのあと**1200円もらった**ので、いま持っているお金は**最初の3/5**になりました。",
+       "steps": [
+        {
+         "question": "CDを買ったあとの のこりは、最初のどれだけですか。分数で答えなさい。",
+         "answer": "2/3",
+         "meaning": "①1－1/3＝2/3です。"
+        },
+        {
+         "question": "本の代金は、最初のどれだけですか。分数で答えなさい。",
+         "answer": "4/15",
+         "meaning": "①のこり2/3の2/5なので 2/3×2/5＝4/15です。②**「のこりの」は最初の基準に直してから足し引きします。**"
+        },
+        {
+         "question": "本を買ったあとの のこりは、最初のどれだけですか。分数で答えなさい。",
+         "answer": "0.4",
+         "meaning": "①2/3－4/15＝10/15－4/15＝6/15＝2/5です。"
+        },
+        {
+         "question": "1200円は、最初のどれだけにあたりますか。分数で答えなさい。",
+         "answer": "0.2",
+         "meaning": "①3/5－2/5＝1/5です。"
+        },
+        {
+         "question": "最初に持っていたお金は何円ですか。",
+         "answer": "6000",
+         "meaning": "①1200÷(1/5)＝6000円です。②たしかめ：CD2000円、のこり4000円の2/5＝1600円が本、のこり2400円＋1200円＝3600円＝6000×3/5 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_16_3",
+       "src": "HG-0643 原簿・小5 2nd演習 No.16 大問5",
+       "hg": "HG-0643",
+       "title": "うしろから 1段ずつ もどす",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 2,
+       "intro": "みかんを4人で分けました。**Aは全体の1/5と2個**、**Bはのこりの1/2と2個**、**Cはそのまたのこりの1/3と3個**をとり、**Dは7個**でした。",
+       "steps": [
+        {
+         "question": "Cがとる前にあったみかんは何個ですか。",
+         "answer": "15",
+         "meaning": "①Cは「のこりの1/3と3個」なので、Cのあとに残るのは のこりの2/3から3個引いた数。②(7＋3)÷(2/3)＝15個です。"
+        },
+        {
+         "question": "Bがとる前にあったみかんは何個ですか。",
+         "answer": "34",
+         "meaning": "①Bは「のこりの1/2と2個」。②(15＋2)÷(1/2)＝34個です。"
+        },
+        {
+         "question": "みかんは全部で何個ありましたか。",
+         "answer": "45",
+         "meaning": "①Aは「全体の1/5と2個」。②(34＋2)÷(4/5)＝45個です。③たしかめ：A＝11、B＝19、C＝8、D＝7 で合計45 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_16_4",
+       "src": "HG-0644 原簿・小5 2nd演習 No.16 大問6",
+       "hg": "HG-0644",
+       "title": "「ちょうどなくなる」が 出発点",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 3,
+       "intro": "1本のひもを3人で分けました。**太郎は全体の1/4より3m長く**、**次郎はのこりの2/3より1m短く**、**三郎は次郎のとったのこりの3/4より3m長く**とったら、**ちょうどなくなりました**。",
+       "steps": [
+        {
+         "question": "三郎がとる前にのこっていたひもを□mとすると、三郎は (3/4)×□＋3 m とりました。ちょうどなくなったので、のこりの1/4は何mですか。",
+         "answer": "3",
+         "meaning": "①□－((3/4)□＋3)＝0 なので (1/4)□＝3です。"
+        },
+        {
+         "question": "三郎がとる前にのこっていたひもは何mですか。",
+         "answer": "12",
+         "meaning": "①3÷(1/4)＝12mです。②**ここが唯一の確定点**で、ここから逆にたどります。"
+        },
+        {
+         "question": "三郎のとった長さは何mですか。",
+         "answer": "12",
+         "meaning": "①12×3/4＋3＝9＋3＝12m。②のこり全部をとったので12mです。"
+        },
+        {
+         "question": "次郎がとる前にのこっていたひもは何mですか。",
+         "answer": "33",
+         "meaning": "①次郎は (2/3)□－1 をとるので、のこりは □－((2/3)□－1)＝(1/3)□＋1＝12。②(1/3)□＝11 → □＝33mです。"
+        },
+        {
+         "question": "分ける前のひもは何mでしたか。",
+         "answer": "48",
+         "meaning": "①太郎のあとのこりは (3/4)□－3＝33。②(3/4)□＝36 → □＝48mです。③たしかめ：太郎15m、次郎21m、三郎12m で合計48m ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_16_5",
+       "src": "HG-0645 原簿・小5 2nd演習 No.16 大問7",
+       "hg": "HG-0645",
+       "title": "去年を ⑧と⑦で おく",
+       "category": "wariai",
+       "unit": "割合",
+       "grade": 5,
+       "star": 2,
+       "intro": "**昨年度の入学者の男女比は8:7**でした。今年度は**男子が2割5分増え、女子が2割減り**、**あわせて624人**になりました。",
+       "steps": [
+        {
+         "question": "昨年の男子を⑧とすると、今年の男子はいくつにあたりますか。",
+         "answer": "10",
+         "meaning": "①8×1.25＝10です。"
+        },
+        {
+         "question": "昨年の女子を⑦とすると、今年の女子はいくつにあたりますか。小数で答えなさい。",
+         "answer": "5.6",
+         "meaning": "①7×0.8＝5.6です。"
+        },
+        {
+         "question": "①はいくつにあたりますか（何人ですか）。",
+         "answer": "40",
+         "meaning": "①10＋5.6＝15.6が624人。②624÷15.6＝40人です。"
+        },
+        {
+         "question": "今年度の男子は何人ですか。",
+         "answer": "400",
+         "meaning": "①10×40＝400人です。②**昨年の320人と混同しないこと。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_16_6",
+       "src": "HG-0646 原簿・小5 2nd演習 No.16 大問8",
+       "hg": "HG-0646",
+       "title": "はねるたびに 分数をかける",
+       "category": "wariai",
+       "unit": "割合",
+       "grade": 5,
+       "star": 3,
+       "intro": "**A球は落ちた高さの2/5**、**B球は1/2**だけはね返ります。",
+       "steps": [
+        {
+         "question": "A球をある高さから落とすと、2回目にはね上がる高さは、落とした高さのどれだけですか。分数で答えなさい。",
+         "answer": "0.16",
+         "meaning": "①1回目が2/5、その2/5が2回目。②2/5×2/5＝4/25です。"
+        },
+        {
+         "question": "B球の2回目は、落とした高さのどれだけですか。分数で答えなさい。",
+         "answer": "0.25",
+         "meaning": "①1/2×1/2＝1/4です。"
+        },
+        {
+         "question": "同じ高さから落として2回目の高さの差が1.8mでした。落とした高さは何mですか。",
+         "answer": "20",
+         "meaning": "①1/4－4/25＝25/100－16/100＝9/100。②1.8÷(9/100)＝20mです。"
+        },
+        {
+         "question": "B球をA球より2.1m高いところから落としたら、Aの2回目とBの3回目が同じ高さになりました。Aを落とした高さは何mですか。",
+         "answer": "7.5",
+         "meaning": "①Bの3回目は落とした高さの1/8。②□×4/25＝(□＋2.1)×1/8。③32□＝25□＋52.5 → 7□＝52.5 → □＝7.5mです。（どちらも1.2m）"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_16_7",
+       "src": "HG-0647 原簿・小5 2nd演習 No.16 大問9",
+       "hg": "HG-0647",
+       "title": "最後だけ 基準が 全体にもどる",
+       "category": "wariai",
+       "unit": "相当算・還元算",
+       "grade": 5,
+       "star": 3,
+       "intro": "はじめに**全体の4/9より45個多く**とり、次に**のこりの2/5**をとったら、**最初にあった個数の1/6**が残りました。",
+       "steps": [
+        {
+         "question": "はじめにとったあとの のこりは、全体の 5/9 から何個引いたものですか。",
+         "answer": "45",
+         "meaning": "①全体の4/9より45個多くとったので、のこりは 全体の5/9より45個少なくなります。"
+        },
+        {
+         "question": "次にのこりの2/5をとると、そのまた のこりは、直前ののこりのどれだけですか。分数で答えなさい。",
+         "answer": "0.6",
+         "meaning": "①1－2/5＝3/5です。"
+        },
+        {
+         "question": "最後にのこったのは「全体の5/9－45個」の3/5です。全体の 5/9×3/5 は 全体のどれだけですか。分数で答えなさい。",
+         "answer": "1/3",
+         "meaning": "①5/9×3/5＝1/3です。"
+        },
+        {
+         "question": "最初にあったのは何個ですか。",
+         "answer": "162",
+         "meaning": "①最後ののこりは 全体の1/3 －(45×3/5)個＝全体の1/3－27個。②これが全体の1/6なので、1/3－1/6＝1/6 が27個。③全体は 27×6＝162個です。④たしかめ：72＋45＝117とる→のこり45→18とる→27＝162÷6 ✓"
+        }
+       ]
+      }
+     ],
+     "17": [
+      {
+       "id": "hd5m2nd_17_1",
+       "src": "HG-0648 原簿・小5 2nd演習 No.17 大問1②",
+       "hg": "HG-0648",
+       "title": "3個ずつで 区切ると 見える",
+       "category": "kisoku",
+       "unit": "群数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "**1, 3, 5, 3, 5, 7, 5, 7, 9, ……** と数がならんでいます。",
+       "steps": [
+        {
+         "question": "3個ずつの組に区切ると、第1組は 1,3,5 です。第2組の最初の数はいくつですか。",
+         "answer": "3",
+         "meaning": "①第2組は 3,5,7。②最初は3です。"
+        },
+        {
+         "question": "第n組の最初の数は 2×n－1 です。第17組の最初の数はいくつですか。",
+         "answer": "33",
+         "meaning": "①2×17－1＝33です。"
+        },
+        {
+         "question": "はじめから50番目の数はいくつですか。",
+         "answer": "35",
+         "meaning": "①50÷3＝16あまり2 → 第17組の2番目。②33の次なので35です。"
+        },
+        {
+         "question": "51番目の数はいくつですか。",
+         "answer": "37",
+         "meaning": "①51÷3＝17わり切れる → **第17組の3番目**（第18組ではありません）。②37です。③**わり切れるときが境目のワナ**です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_2",
+       "src": "HG-0649 原簿・小5 2nd演習 No.17 大問2①",
+       "hg": "HG-0649",
+       "title": "分母と分子の 差は変わらない",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 3,
+       "intro": "**2/3** の分母と分子から**同じ数**を引いたら **3/5** になりました。",
+       "steps": [
+        {
+         "question": "2/3 の分母と分子の差はいくつですか。",
+         "answer": "1",
+         "meaning": "①3－2＝1です。"
+        },
+        {
+         "question": "同じ数を引いても、分母と分子の差は変わりますか。変わるなら1、変わらないなら2。",
+         "answer": "2",
+         "meaning": "①両方から同じだけ引くので差は変わりません。②**ここがこの問題のすべて**です。"
+        },
+        {
+         "question": "3/5 の差は2です。差を1にそろえると分子はいくつになりますか。小数で答えなさい。",
+         "answer": "1.5",
+         "meaning": "①3/5 の分母分子を半分にして 1.5/2.5。②差が1になります。"
+        },
+        {
+         "question": "引いた数はいくつですか。小数で答えなさい。",
+         "answer": "0.5",
+         "meaning": "①2－1.5＝0.5です。②たしかめ：(2－0.5)/(3－0.5)＝1.5/2.5＝3/5 ✓③**答えが整数とはかぎりません。**"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_3",
+       "src": "HG-0650 原簿・小5 2nd演習 No.17 大問6",
+       "hg": "HG-0650",
+       "title": "精算のあとは 3人とも同額",
+       "category": "tokusan",
+       "unit": "消去算",
+       "grade": 5,
+       "star": 3,
+       "intro": "A・B・Cの3人が旅行に行き、**3人ぶんの交通費**をそれぞれ**電車・バス・船**で立てかえて払いました。あとで精算して、**BはAに480円、Cに120円**払いました。**電車代はバス代の4倍**です。",
+       "steps": [
+        {
+         "question": "精算が終わったあと、3人の負担は同じですか。同じなら1、ちがうなら2。",
+         "answer": "1",
+         "meaning": "①3人ぶんを分け合うので、精算後は**全員が総額の1/3**を負担します。"
+        },
+        {
+         "question": "Aは480円を受け取りました。Aが払った電車代は「1人ぶん」よりいくら多いですか。",
+         "answer": "480",
+         "meaning": "①受け取った分だけ払いすぎていたということです。②480円多く払っていました。"
+        },
+        {
+         "question": "Bは合わせて600円払いました。Bのバス代は「1人ぶん」よりいくら少ないですか。",
+         "answer": "600",
+         "meaning": "①480＋120＝600円。②その分だけ払い足りませんでした。"
+        },
+        {
+         "question": "バス代を①とすると電車代は④です。④－480＝①＋600 から、①はいくらですか。",
+         "answer": "360",
+         "meaning": "①どちらも「1人ぶん」を表しています。②③＝1080 → ①＝360円です。"
+        },
+        {
+         "question": "3人ぶんの電車代は何円ですか。",
+         "answer": "1440",
+         "meaning": "①360×4＝1440円です。②たしかめ：バス360、船は 2880－1440－360＝1080。1人ぶんは960円 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_4",
+       "src": "HG-0651 原簿・小5 2nd演習 No.17 大問7②",
+       "hg": "HG-0651",
+       "title": "やりとりでは 和がそろう",
+       "category": "tokusan",
+       "unit": "倍数算・やりとり",
+       "grade": 5,
+       "star": 3,
+       "intro": "**AがBから150円もらえば、AはBの4倍**になります。**BがAから150円もらえば、AはBの3倍**になります。",
+       "steps": [
+        {
+         "question": "やりとりをしても、2人の所持金の和は変わりますか。変わるなら1、変わらないなら2。",
+         "answer": "2",
+         "meaning": "①一方が減って他方が増えるだけなので変わりません。"
+        },
+        {
+         "question": "4:1 の和はいくつですか。",
+         "answer": "5",
+         "meaning": "①4＋1＝5です。"
+        },
+        {
+         "question": "3:1 の和はいくつですか。",
+         "answer": "4",
+         "meaning": "①3＋1＝4です。②和が5と4でちがうので、**そのままではくらべられません。**"
+        },
+        {
+         "question": "和を20にそろえると、1つ目は16:4、2つ目は15:5になります。16と15の差①は何円にあたりますか。",
+         "answer": "300",
+         "meaning": "①1つ目のAは150円もらった状態、2つ目のAは150円わたした状態。②その差は 150×2＝300円。③⑯－⑮＝①なので ①＝300円です。"
+        },
+        {
+         "question": "Aははじめ何円持っていますか。",
+         "answer": "4650",
+         "meaning": "①⑯＝4800円は「150円もらったあと」。②4800－150＝4650円です。③たしかめ：B＝1350円。4800:1200＝4:1 ✓／4500:1500＝3:1 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_5",
+       "src": "HG-0652 原簿・小5 2nd演習 No.17 大問8②",
+       "hg": "HG-0652",
+       "title": "だれを ①にするかで 楽さがちがう",
+       "category": "tokusan",
+       "unit": "消去算",
+       "grade": 5,
+       "star": 2,
+       "intro": "**6000円**をA・B・Cの3人で分けます。**AはBの2倍より800円少なく**、**BはCの1/2より600円多い**そうです。",
+       "steps": [
+        {
+         "question": "Cを①とすると、Bはどう表せますか。①÷2＋600 なら1、①×2＋600 なら2。",
+         "answer": "1",
+         "meaning": "①BはCの1/2より600円多いので、①÷2＋600です。"
+        },
+        {
+         "question": "Aを①で表すと、①＋400 になります。Bの2倍から800円引くとそうなりますか。なるなら1、ならないなら2。",
+         "answer": "1",
+         "meaning": "①B＝①/2＋600 なので 2B＝①＋1200。②2B－800＝①＋400です。"
+        },
+        {
+         "question": "3人の合計を①で表すと、②.5＋1000 になります。①はいくらですか。",
+         "answer": "2000",
+         "meaning": "①①＋(①/2＋600)＋(①＋400)＝2.5×①＋1000＝6000。②2.5×①＝5000 → ①＝2000円です。"
+        },
+        {
+         "question": "Aの取り分は何円ですか。",
+         "answer": "2400",
+         "meaning": "①2000＋400＝2400円です。②B＝1600円、C＝2000円で合計6000円 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_6",
+       "src": "HG-0653 原簿・小5 2nd演習 No.17 大問9",
+       "hg": "HG-0653",
+       "title": "3手を うしろから 巻きもどす",
+       "category": "tokusan",
+       "unit": "倍数算・やりとり",
+       "grade": 5,
+       "star": 3,
+       "intro": "AとBがお金を持っています。\n**①まずAが、Bの所持金の半分と同じ額をBに与えます。**\n**②次にBが、そのときのAの1/3と同じ額をAに与えます。**\n**③最後にAが、そのときのBの1/4と同じ額をBに与えます。**\nすると**2人とも3000円**になりました。",
+       "steps": [
+        {
+         "question": "3回のやりとりで、2人の合計は変わりますか。変わるなら1、変わらないなら2。",
+         "answer": "2",
+         "meaning": "①わたし合うだけなので合計は変わりません。②いつでも6000円です。"
+        },
+        {
+         "question": "③のあとBは3000円です。③でBは 直前の1/4 だけ増えたので、直前のBはいくらですか。",
+         "answer": "2400",
+         "meaning": "①直前のBの5/4が3000円。②3000÷(5/4)＝2400円です。"
+        },
+        {
+         "question": "そのときAはいくらでしたか。",
+         "answer": "3600",
+         "meaning": "①合計6000円なので 6000－2400＝3600円です。"
+        },
+        {
+         "question": "②でAは 直前の1/3 だけ増えて3600円になりました。直前のAはいくらですか。",
+         "answer": "2700",
+         "meaning": "①直前のAの4/3が3600円。②3600÷(4/3)＝2700円です。"
+        },
+        {
+         "question": "①でBは 直前の1/2 だけ増えました。①のあとBは3300円です。はじめのBはいくらですか。",
+         "answer": "2200",
+         "meaning": "①直前のBの3/2が3300円。②3300÷(3/2)＝2200円です。"
+        },
+        {
+         "question": "はじめAはいくら持っていましたか。",
+         "answer": "3800",
+         "meaning": "①6000－2200＝3800円です。②たしかめ：3800/2200 →2700/3300 →3600/2400 →3000/3000 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_7",
+       "src": "HG-0654 原簿・小5 2nd演習 No.17 大問11③",
+       "hg": "HG-0654",
+       "title": "差を ⑥とおく",
+       "category": "tokusan",
+       "unit": "年齢算",
+       "grade": 5,
+       "star": 3,
+       "intro": "現在、**兄と弟の年令の差は兄の年令の3/11**です。**10年後には、差はそのときの兄の年令の2/9**になります。",
+       "steps": [
+        {
+         "question": "何年たっても変わらないのは何ですか。年令の差なら1、年令の和なら2。",
+         "answer": "1",
+         "meaning": "①2人とも同じだけ年をとるので**差は変わりません**。"
+        },
+        {
+         "question": "差を⑥とすると、現在の兄の年令はいくつにあたりますか。",
+         "answer": "22",
+         "meaning": "①差が兄の3/11なので、兄は差の11/3倍。②6×11/3＝22です。"
+        },
+        {
+         "question": "10年後の兄の年令はいくつにあたりますか。",
+         "answer": "27",
+         "meaning": "①差が兄の2/9なので、兄は差の9/2倍。②6×9/2＝27です。"
+        },
+        {
+         "question": "①はいくつ（何才）にあたりますか。",
+         "answer": "2",
+         "meaning": "①27－22＝5 が10年にあたります。②①＝2才です。"
+        },
+        {
+         "question": "現在の弟は何才ですか。",
+         "answer": "32",
+         "meaning": "①差は 2×6＝12才、兄は 2×22＝44才。②弟は 44－12＝32才です。③たしかめ：10年後は兄54・弟42で差12＝54×2/9 ✓"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_17_8",
+       "src": "HG-0655 原簿・小5 2nd演習 No.17 大問12",
+       "hg": "HG-0655",
+       "title": "移した側は 4/5倍になる",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "3つの容器A・B・Cに水が入っています。\n**①Aの水の1/5をBに移し、②次にそのときのBの1/5をCに移し、③最後にそのときのCの1/5をAに移した**ところ、**A:B:C＝4:5:6**になりました。",
+       "steps": [
+        {
+         "question": "1/5を移すと、移した側は もとの何倍になりますか。分数で答えなさい。",
+         "answer": "0.8",
+         "meaning": "①1－1/5＝4/5倍です。"
+        },
+        {
+         "question": "3回のやりとりで、Bが動かないのは何回目のあとですか。",
+         "answer": "3",
+         "meaning": "①Bは①で受け取り、②で渡しました。②**③ではBは動きません。**だからBの最後の値がそのまま②のあとの値です。"
+        },
+        {
+         "question": "最後の比を 4:5:6 とし、全体を15とみます。②のあとのBはいくつですか。",
+         "answer": "5",
+         "meaning": "①③でBは変わらないので5のままです。"
+        },
+        {
+         "question": "②の前（①のあと）のBはいくつですか。小数で答えなさい。",
+         "answer": "6.25",
+         "meaning": "①②でBは4/5倍になったので、5÷(4/5)＝6.25です。"
+        },
+        {
+         "question": "はじめのA:B:C を もっとも簡単な整数の比にすると 5:9:□。□はいくつですか。",
+         "answer": "10",
+         "meaning": "①②で移した量は 6.25×1/5＝1.25 → ②のあとC＝直前C＋1.25。③でCは4/5倍になって6なので、③の前のCは7.5。②のあとC＝7.5 → ②の前のC＝6.25。②はじめのAをaとすると ①のあとA＝0.8a、③でCの1/5＝1.5を受け取って4 → 0.8a＝2.5 → a＝3.125。③3.125:5.625:6.25 を15でそろえると **5:9:10** です。"
+        }
+       ]
+      }
+     ],
+     "18": [
+      {
+       "id": "hd5m2nd_18_1",
+       "src": "HG-0586 原簿・小5 2nd演習 No.18 大問6",
+       "hg": "HG-0586",
+       "title": "まん中のBを 消してつなぐ",
+       "category": "wariai",
+       "unit": "比例・反比例",
+       "grade": 5,
+       "star": 3,
+       "intro": "[図]のグラフ**(ア)**はAとBの関係で、**Bが3のときA＝5、Bが6のときA＝10**の**比例**です。グラフ**(イ)**はBとCの関係で、**Cが3のときB＝8、Cが8のときB＝3**の**反比例**です。",
+       "svg": "<svg viewBox='0 0 300 152' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9'>グラフ(ア) たて A・横 B</text><line x1='32' y1='118' x2='128' y2='118' stroke='#eef2ff' stroke-width='1.1'/><line x1='32' y1='118' x2='32' y2='30' stroke='#eef2ff' stroke-width='1.1'/><line x1='32' y1='118' x2='116' y2='48.0' stroke='#7ee787' stroke-width='2'/><circle cx='68' cy='83' r='2.2' fill='#ffd166'/><text x='71' y='80' fill='#ffd166' font-size='8'>(3,5)</text><circle cx='104' cy='48' r='2.2' fill='#ffd166'/><text x='107' y='45' fill='#ffd166' font-size='8'>(6,10)</text><text x='164' y='12' fill='#ffd166' font-size='9'>グラフ(イ) たて B・横 C</text><line x1='190' y1='118' x2='286' y2='118' stroke='#eef2ff' stroke-width='1.1'/><line x1='190' y1='118' x2='190' y2='30' stroke='#eef2ff' stroke-width='1.1'/><polyline points='210.0,22.0 220.0,54.0 230.0,70.0 240.0,79.6 250.0,86.0 260.0,90.6 270.0,94.0 280.0,96.7 290.0,98.8' fill='none' stroke='#ff6b6b' stroke-width='2'/><circle cx='220' cy='54' r='2.2' fill='#ffd166'/><text x='223' y='51' fill='#ffd166' font-size='8'>(3,8)</text><circle cx='270' cy='94' r='2.2' fill='#ffd166'/><text x='273' y='91' fill='#ffd166' font-size='8'>(8,3)</text></svg>",
+       "steps": [
+        {
+         "question": "AはBの何倍ですか。分数で答えなさい。",
+         "answer": "5/3",
+         "meaning": "①5÷3＝5/3倍です。②比例なのでどこで見ても同じです。"
+        },
+        {
+         "question": "BとCをかけるといくつになりますか。",
+         "answer": "24",
+         "meaning": "①3×8＝24、8×3＝24。②**反比例は積が一定**です。"
+        },
+        {
+         "question": "Aが20のとき、Bはいくつですか。",
+         "answer": "12",
+         "meaning": "①20÷(5/3)＝12です。"
+        },
+        {
+         "question": "Aが20のとき、Cはいくつですか。",
+         "answer": "2",
+         "meaning": "①B＝12なので C＝24÷12＝2です。②**Bを通してAとCがつながります。**"
+        },
+        {
+         "question": "Bが4.8のとき、AはCの何倍ですか。小数で答えなさい。",
+         "answer": "1.6",
+         "meaning": "①A＝4.8×5/3＝8、C＝24÷4.8＝5。②8÷5＝1.6倍です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_18_2",
+       "src": "HG-0587 原簿・小5 2nd演習 No.18 大問7(3)",
+       "hg": "HG-0587",
+       "title": "歯数の比 → 回転数は 逆比",
+       "category": "wariai",
+       "unit": "比例・反比例",
+       "grade": 5,
+       "star": 3,
+       "intro": "かみ合った歯車A・B・Cがあります。**Bが5回転するとCは9回転**します。また、**AとBの歯数の比は2:3**です。",
+       "steps": [
+        {
+         "question": "歯数の比が 2:3 のとき、回転数の比 A:B はいくつですか。3:□ の□を答えなさい。",
+         "answer": "2",
+         "meaning": "①歯数が多いほうがゆっくり回ります。②**逆比**で 3:2です。"
+        },
+        {
+         "question": "A:B＝3:2、B:C＝5:9 をつなぐと A:B:C＝15:10:□。□はいくつですか。",
+         "answer": "18",
+         "meaning": "①Bを10にそろえます。②A:B＝15:10、B:C＝10:18です。"
+        },
+        {
+         "question": "Aが60回転するとき、Bは何回転しますか。",
+         "answer": "40",
+         "meaning": "①60×10/15＝40回転です。"
+        },
+        {
+         "question": "Bが90回転するあいだに、Cは何回転しますか。",
+         "answer": "162",
+         "meaning": "①90×18/10＝162回転です。"
+        },
+        {
+         "question": "Cが4分間で900回転するとき、Aが150回転するのに何秒かかりますか。",
+         "answer": "48",
+         "meaning": "①Cは毎分 900÷4＝225回転。②Aは 225×15/18＝187.5回転／分。③150÷187.5＝0.8分＝48秒です。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_18_3",
+       "src": "HG-0588 原簿・小5 2nd演習 No.18 大問8",
+       "hg": "HG-0588",
+       "title": "比の世界に 実数を1つだけ さす",
+       "category": "wariai",
+       "unit": "比例・反比例",
+       "grade": 5,
+       "star": 3,
+       "intro": "2つの砂時計**ア・イ**があります。もっとも細い部分を水平に切った切り口は円で、その**面積の比は ア:イ＝2:3**、**砂の量の比は ア:イ＝1:3**です。**イの砂を全部アに加えると、アは8分計**になります。はかれる時間は**砂の量に比例し、もっとも細い部分の面積に反比例**します。",
+       "steps": [
+        {
+         "question": "アの「量÷面積」はいくつですか。分数で答えなさい。",
+         "answer": "0.5",
+         "meaning": "①量1、面積2なので 1÷2＝1/2です。"
+        },
+        {
+         "question": "イの「量÷面積」はいくつですか。",
+         "answer": "1",
+         "meaning": "①量3、面積3なので1です。"
+        },
+        {
+         "question": "イの砂を全部アに入れると、量はいくつ、面積はいくつになりますか。そのときの「量÷面積」を答えなさい。",
+         "answer": "2",
+         "meaning": "①量は 1＋3＝4、面積はアのままなので2。②4÷2＝2です。③**面積は変わりません**（砂を足しても穴の大きさは同じ）。"
+        },
+        {
+         "question": "「量÷面積」が1のとき、何分計になりますか。",
+         "answer": "4",
+         "meaning": "①「量÷面積」＝2 のとき8分計。②1のときはその半分の4分計です。"
+        },
+        {
+         "question": "アは何分計ですか。",
+         "answer": "2",
+         "meaning": "①アの「量÷面積」は1/2。②4×1/2＝2分計です。"
+        },
+        {
+         "question": "イは何分計ですか。",
+         "answer": "4",
+         "meaning": "①イの「量÷面積」は1。②4分計です。"
         }
        ]
       }

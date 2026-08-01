@@ -1760,6 +1760,9 @@ const UNIT_GROUPS = {
   // ただし unit は分けて持つ：仕事算＝複数で1つの仕事／ニュートン算＝増える量と減る量が同時（本人指摘 2026-07-26）
   '相当算・やりとり': ['相当算・還元算', '倍数算・やりとり', '仕事算', 'ニュートン算'],
   '割合・食塩水': ['割合', '食塩水・濃度'],
+  // 売買損益は小5マスターNo.20が1回まるごとこの単元（実物）。骨は「もとにする量を仕入れ値に
+  // 固定して倍率を掛け算でつなぐ」1つだけなので、割合とは分けて持つ（2026-08-01）
+  '売買損益': ['売買損益'],
   // 比例・反比例は小5マスターNo.18の単元（実物の印字は「比例と反比例」）。比の親戚なのでここに寄せる
   '比': ['比', '比例・反比例'],
   '速さ（旅人算）': ['速さ（旅人算）'],
@@ -2325,8 +2328,14 @@ async function renderHamaPanel() {
   }
   unitWrap.classList.add('hidden');
   document.getElementById('hama-no-row').style.display = 'flex';
-  // 単元モードで書きかえたラベルを戻す
-  document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent = '📝 今週の復習テスト';
+  // 単元モードで書きかえたラベルを戻す。
+  // ★算数2nd（木）は復習テストではなく演習プリント＝点数がA表に残らないぶん難度が高い。
+  //   名前まで「復習テスト」にすると1stと混ざって見えるので、ここだけ言いかえる（本人指示 2026-08-01）
+  const is2nd = (course === 'master2nd');
+  document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
+    is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
+  document.querySelector('.hama-act-btn[data-hama-act="weekq"] .hama-act-name').textContent =
+    is2nd ? '🔥 今週の演習プリント（大問）' : '🧩 今週の復習テスト（大問）';
   document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.remove('hidden');
 
   let no = hamaCurrent(grade, course);
@@ -2347,7 +2356,8 @@ async function renderHamaPanel() {
 
   // 公開学力テストの出題範囲に最高レベル特訓の内容は含まれない（本人確認 2026-07-26）。
   // 最レを選んでいるときは「公開テストのはんい」ボタン自体を出さない。
-  const showKokai = (course !== 'sairei');
+  // 算数2nd も同じ。公開の範囲は1st（マスター）の回番号で数えるので、2ndの回番号で出すとズレる。
+  const showKokai = (course !== 'sairei' && !is2nd);
   const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
   if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
 
@@ -6369,10 +6379,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,861
-  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 982, tokusan: 562, baai: 562, kazu: 662,
-            wariai: 380, hayasa: 172, rittai: 419 },                                         // 7,009（2026-07-31 比例・反比例40問）
-  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 273,
-            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,093（2026-07-28 小4理科の全42回を30問以上に）
+  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
+            wariai: 420, hayasa: 172, rittai: 419 },                                         // 6,900（2026-07-31 比例・反比例40問）
+  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
+            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,118（2026-07-28 小4理科の全42回を30問以上に）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
