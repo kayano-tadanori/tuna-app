@@ -4,12 +4,13 @@
 方針（yomi_map_low_grade.py の表に従う）
   ① 表にある言葉は ひらがなに開く
   ② 表に無い言葉／読みを決められない言葉は 開かずに、その問題を 小3へ移す
-     （解説だけが開けない場合は 学年を上げず、解説を そのまま残す）
+     解説（meaning）が開けない場合も、その学年には むずかしすぎるとみなして 上げる
 
 やること
   0. REPAIR … すでに入ってしまった 読みまちがいを 直す（学年に関係なく）
-  1. 問題文・答え・選択肢 … ①②のとおり
-  2. 解説（meaning） … 丸ごと開けるときだけ 開く。結び「答えは○○です」は 答えに合わせる
+  1. 解説（meaning） … 丸ごと開けなければ 学年を上げる。開ければ 開く
+  2. 問題文・答え・選択肢 … ①②のとおり
+  3. 解説の結び「答えは○○です」は 答えに合わせる
 
 対象外＝漢字そのものが問題の素材になっている kanji_kaki / kanji_yomi / kokugo_bushu。
 
@@ -143,17 +144,18 @@ def repair(q):
 
 
 def fix_meaning(q, allow):
-    """解説を 丸ごと開けるときだけ 開く。開けなければ さわらない。"""
+    """解説を 丸ごと開けるかを見る。
+    返り値 'none'＝直す所なし／'opened'＝開いた／'blocked'＝開けない（学年を上げる）"""
     m = q.get("meaning")
     if not isinstance(m, str) or not has_unlearned(m, allow):
-        return False
+        return "none"
     if any(w in m for w in FORCE_BUMP):
-        return False
+        return "blocked"
     good, rep = convert(m, allow)
     if not good or has_unlearned(rep, allow):
-        return False
+        return "blocked"
     q["meaning"] = rep
-    return True
+    return "opened"
 
 
 def align_meaning_end(q):
@@ -261,6 +263,20 @@ def main(write):
                 stat["読みまちがいを直した"] += 1
                 touched = True
 
+            # 解説が開けない＝その学年には むずかしすぎるので 問題ごと上げる
+            meaning_state = fix_meaning(q, allow)
+            if meaning_state == "blocked":
+                q["grade"] = BUMP_TO
+                stat["学年を上げた（解説が開けない）"] += 1
+                per_file[name] += 1
+                touched = True
+                if len(bumped_samples[name]) < 6:
+                    bumped_samples[name].append(q.get("id"))
+                continue
+            if meaning_state == "opened":
+                stat["解説をひらがなに開いた"] += 1
+                touched = True
+
             fields = list(texts_of(q))
             if not any(has_unlearned(s, allow) for _, _, s in fields):
                 if collapse_paren(q):
@@ -268,9 +284,6 @@ def main(write):
                     touched = True
                 if fix_dup_choices(q):
                     stat["だぶった選択肢を直した"] += 1
-                    touched = True
-                if fix_meaning(q, allow):
-                    stat["解説をひらがなに開いた"] += 1
                     touched = True
                 if align_meaning_end(q):
                     stat["解説の結びを答えに合わせた"] += 1
@@ -290,7 +303,7 @@ def main(write):
 
             if blocked or not ok:
                 q["grade"] = BUMP_TO
-                stat["学年を上げた"] += 1
+                stat["学年を上げた（問題文が開けない）"] += 1
                 per_file[name] += 1
                 touched = True
                 if len(bumped_samples[name]) < 6:
@@ -310,8 +323,6 @@ def main(write):
                 key = "答えは" + old_answer
                 if key in q["meaning"]:
                     q["meaning"] = q["meaning"].replace(key, "答えは" + q["answer"])
-            if fix_meaning(q, allow):
-                stat["解説をひらがなに開いた"] += 1
             if align_meaning_end(q):
                 stat["解説の結びを答えに合わせた"] += 1
             stat["ひらがなに開いた"] += 1
