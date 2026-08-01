@@ -8319,8 +8319,9 @@ const GACHA_CHARS = [
 ];
 
 const GACHA_RATES = { N: 65.5, R: 28, SR: 5, UR: 1.5 };
-const DUPE_REFUND = { N: 5, R: 10, SR: 20, UR: 50 };
-const GACHA_COST = 30, GACHA_COST_10 = 270;
+// まとめ引きは 10回ぶんのコイン（270）で11回。かぶってもコインは返さず、
+// そのかわり同じ子の枚数が積み上がる（図鑑の「所持数」が増える）。
+const GACHA_COST = 30, GACHA_COST_10 = 270, GACHA_SET_PULLS = 11;
 // 抽選は未所持を優先する（rollGacha）ので、同じレアリティ内でかぶりは出ない。
 // つまりコンプ速度を決めているのは UR がどれだけ出にくいかだけ。
 // 天井が短いとそこが実質のUR排出間隔になるので、率より天井のほうが効く。
@@ -8347,31 +8348,34 @@ function rollGacha(g, forceRarity) {
   const rarity = forceRarity || (g.pityUR >= GACHA_PITY - 1 ? 'UR' : rollRarity());
   const pool = charsByRarity(rarity);
   // 同じレアリティの中から、持っているかどうかに関係なく素直に引く。
-  // （以前は未所持を優先していたので、そのレアリティを集めきるまで
-  //   一度もかぶらず、コンプが早すぎた）
+  // （未所持を優先すると、そのレアリティを集めきるまで一度もかぶらず、
+  //   コンプが早くなりすぎる）
   const pick = pool[Math.floor(Math.random() * pool.length)];
   const isDupe = !!g.owned[pick.id];
   g.owned[pick.id] = (g.owned[pick.id] || 0) + 1;
   g.pulls++;
-  g.pityUR = rarity === 'UR' ? 0 : g.pityUR + 1;
-  return { char: pick, isDupe };
+  g.pityUR = pick.rarity === 'UR' ? 0 : g.pityUR + 1;
+  // かぶったぶんは、その子の枚数として積み上がる（コインでは返さない）
+  return { char: pick, isDupe, count: g.owned[pick.id] };
 }
 
-// n回ガチャを回す（コイン消費・保存込み）。10連はSR以上を1体保証
+// n回ガチャを回す（コイン消費・保存込み）
+// まとめ引きは 10回ぶんのコインで11回まわせて、最後の1枚はSR以上を保証。
+// かぶってもコインは返さない。そのかわり同じ子の枚数が増えていく。
 function doGacha(n) {
-  const cost = n === 10 ? GACHA_COST_10 : GACHA_COST;
+  const cost = n >= GACHA_SET_PULLS ? GACHA_COST_10 : GACHA_COST;
   if (getCoins() < cost) { showToast('コインが足りへんで！勉強してためよう！'); return null; }
   addCoins(-cost);
   const g = getGacha();
   const results = [];
   let gotSRPlus = false;
   for (let i = 0; i < n; i++) {
-    const forceRarity = (n === 10 && i === 9 && !gotSRPlus) ? (Math.random() < 0.3 ? 'UR' : 'SR') : null;
+    const isLast = i === n - 1;
+    const forceRarity = (n >= GACHA_SET_PULLS && isLast && !gotSRPlus)
+      ? (Math.random() < 0.3 ? 'UR' : 'SR') : null;
     const res = rollGacha(g, forceRarity);
     if (RARITY_ORDER[res.char.rarity] >= RARITY_ORDER.SR) gotSRPlus = true;
-    let refund = 0;
-    if (res.isDupe) { refund = DUPE_REFUND[res.char.rarity]; addCoins(refund); }
-    results.push({ char: res.char, isDupe: res.isDupe, refund });
+    results.push({ char: res.char, isDupe: res.isDupe, count: res.count });
   }
   saveGachaData(g);
   return results;
@@ -8418,7 +8422,7 @@ function checkZukanRewards() {
 function initGacha() {
   document.getElementById('gacha-coins').textContent = getCoins();
   document.getElementById('gacha-btn-1').onclick = () => runGachaAnim(1);
-  document.getElementById('gacha-btn-10').onclick = () => runGachaAnim(10);
+  document.getElementById('gacha-btn-10').onclick = () => runGachaAnim(GACHA_SET_PULLS);
   document.getElementById('gacha-btn-zukan').onclick = () => { initZukan(); showScreen('zukan'); };
   document.querySelectorAll('#screen-gacha [data-back="subject"]').forEach(b => { b.onclick = () => showScreen('subject'); });
   document.getElementById('gacha-capsule').className = 'gacha-capsule';
@@ -8428,7 +8432,7 @@ function initGacha() {
 }
 
 async function runGachaAnim(n) {
-  const cost = n === 10 ? GACHA_COST_10 : GACHA_COST;
+  const cost = n >= GACHA_SET_PULLS ? GACHA_COST_10 : GACHA_COST;
   if (getCoins() < cost) { showToast('コインが足りへんで！勉強してためよう！'); return; }
   const btn1 = document.getElementById('gacha-btn-1'), btn10 = document.getElementById('gacha-btn-10');
   btn1.disabled = true; btn10.disabled = true;
@@ -8463,7 +8467,7 @@ function showGachaResults(results) {
 
     let i = 0;
     const showOne = () => {
-      const { char, isDupe, refund } = results[i];
+      const { char, isDupe, count } = results[i];
       ctx.clearRect(0, 0, cv.width, cv.height);
       ctx.fillStyle = { N: '#3a3f55', R: '#1c3f7a', SR: '#7a5a10', UR: '#4a1c7a' }[char.rarity];
       ctx.fillRect(0, 0, cv.width, cv.height);
@@ -8473,7 +8477,9 @@ function showGachaResults(results) {
       rarityEl.textContent = char.rarity;
       rarityEl.className = 'gacha-rarity-badge rarity-' + char.rarity;
       const tagEl = document.getElementById('gacha-result-tag');
-      tagEl.textContent = isDupe ? `かぶり！🪙+${refund}` : 'NEW!';
+      // かぶりはコインでは返さず、その子の枚数として積み上がる。
+      // 「また同じか」ではなく「その子が強くなった」と見えるようにする。
+      tagEl.textContent = isDupe ? `+1 つよくなった！ ×${count}` : 'NEW!';
       tagEl.className = 'gacha-tag ' + (isDupe ? 'dupe' : 'new');
       document.getElementById('gacha-result-name').textContent = char.name;
       document.getElementById('gacha-result-desc').textContent = char.desc;
