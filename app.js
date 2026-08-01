@@ -8346,9 +8346,10 @@ function rollRarity() {
 function rollGacha(g, forceRarity) {
   const rarity = forceRarity || (g.pityUR >= GACHA_PITY - 1 ? 'UR' : rollRarity());
   const pool = charsByRarity(rarity);
-  const unowned = pool.filter(c => !g.owned[c.id]);
-  const pick = unowned.length ? unowned[Math.floor(Math.random() * unowned.length)]
-                               : pool[Math.floor(Math.random() * pool.length)];
+  // 同じレアリティの中から、持っているかどうかに関係なく素直に引く。
+  // （以前は未所持を優先していたので、そのレアリティを集めきるまで
+  //   一度もかぶらず、コンプが早すぎた）
+  const pick = pool[Math.floor(Math.random() * pool.length)];
   const isDupe = !!g.owned[pick.id];
   g.owned[pick.id] = (g.owned[pick.id] || 0) + 1;
   g.pulls++;
