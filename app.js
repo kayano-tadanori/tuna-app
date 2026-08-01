@@ -8321,7 +8321,10 @@ const GACHA_CHARS = [
 const GACHA_RATES = { N: 65.5, R: 28, SR: 5, UR: 1.5 };
 const DUPE_REFUND = { N: 5, R: 10, SR: 20, UR: 50 };
 const GACHA_COST = 30, GACHA_COST_10 = 270;
-const GACHA_PITY = 80; // 80連引いてもURが出なければ次で確定
+// 抽選は未所持を優先する（rollGacha）ので、同じレアリティ内でかぶりは出ない。
+// つまりコンプ速度を決めているのは UR がどれだけ出にくいかだけ。
+// 天井が短いとそこが実質のUR排出間隔になるので、率より天井のほうが効く。
+const GACHA_PITY = 150; // 150連引いてもURが出なければ次で確定
 const RARITY_ORDER = { N: 0, R: 1, SR: 2, UR: 3 };
 
 function charsByRarity(rarity) { return GACHA_CHARS.filter(c => c.rarity === rarity && !c.secret); }
