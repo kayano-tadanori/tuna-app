@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
-"""小1・小2の問題文・答え・選択肢から「まだ習っていない漢字」を消す。
+"""小1・小2の問題から「まだ習っていない漢字」を消す。
 
 方針（yomi_map_low_grade.py の表に従う）
   ① 表にある言葉は ひらがなに開く
   ② 表に無い言葉／読みを決められない言葉は 開かずに、その問題を 小3へ移す
+     （解説だけが開けない場合は 学年を上げず、解説を そのまま残す）
+
+やること
+  0. REPAIR … すでに入ってしまった 読みまちがいを 直す（学年に関係なく）
+  1. 問題文・答え・選択肢 … ①②のとおり
+  2. 解説（meaning） … 丸ごと開けるときだけ 開く。結び「答えは○○です」は 答えに合わせる
 
 対象外＝漢字そのものが問題の素材になっている kanji_kaki / kanji_yomi / kokugo_bushu。
-解説（meaning）は今回の対象外。ただし 答えが変わったときは 解説の中の答えも合わせる。
 
   python scripts/fix_low_grade_kanji.py          … 何が変わるかを出すだけ
   python scripts/fix_low_grade_kanji.py --write  … 実際に書きこむ
@@ -15,7 +20,7 @@ import json, os, re, sys, collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from yomi_map_low_grade import CTX, READ, PRE, PRE_RE, FORCE_BUMP
+from yomi_map_low_grade import CTX, READ, PRE, PRE_RE, FORCE_BUMP, REPAIR
 
 DATA = os.path.join(os.path.dirname(HERE), "data")
 SKIP = {"kanji_kaki.json", "kanji_yomi.json", "kokugo_bushu.json"}
@@ -112,6 +117,58 @@ def has_unlearned(text, allow):
     return any(c not in allow for c in IS_KANJI.findall(text))
 
 
+def repair(q):
+    """すでに入ってしまった 読みまちがいを 直す（解説もふくむ）。"""
+    hit = False
+    for f in ("question", "answer", "meaning"):
+        v = q.get(f)
+        if not isinstance(v, str):
+            continue
+        new = v
+        for a, b in REPAIR:
+            new = new.replace(a, b)
+        if new != v:
+            q[f] = new
+            hit = True
+    for i, c in enumerate(q.get("choices") or []):
+        if not isinstance(c, str):
+            continue
+        new = c
+        for a, b in REPAIR:
+            new = new.replace(a, b)
+        if new != c:
+            q["choices"][i] = new
+            hit = True
+    return hit
+
+
+def fix_meaning(q, allow):
+    """解説を 丸ごと開けるときだけ 開く。開けなければ さわらない。"""
+    m = q.get("meaning")
+    if not isinstance(m, str) or not has_unlearned(m, allow):
+        return False
+    if any(w in m for w in FORCE_BUMP):
+        return False
+    good, rep = convert(m, allow)
+    if not good or has_unlearned(rep, allow):
+        return False
+    q["meaning"] = rep
+    return True
+
+
+def align_meaning_end(q):
+    """解説の結び「答えは○○です」を 答えに合わせる。答えのほうが 正しいので それに寄せる。"""
+    m = q.get("meaning")
+    a = q.get("answer")
+    if not isinstance(m, str) or not isinstance(a, str) or not a:
+        return False
+    hit = re.search(r"答えは(.+?)です", m)
+    if not hit or hit.group(1) == a:
+        return False
+    q["meaning"] = m.replace("答えは" + hit.group(1) + "です", "答えは" + a + "です")
+    return True
+
+
 def collapse_paren(q):
     """「した（した）」→「した」。答えを直したら 選択肢の同じ文も そろえる。"""
     hit = False
@@ -200,15 +257,9 @@ def main(write):
             allow = ALLOW[g]
             cells_before[(g, q.get("difficulty"))] += 1
 
-            # 前の直しで 答えだけ ひらがなにして 解説の結びが 漢字のまま 残っている分
-            m = re.search(r"答えは(.+?)です", q.get("meaning") or "")
-            if m and q.get("answer") and m.group(1) != q["answer"]:
-                good, opened = convert(m.group(1), allow)
-                if good and opened == q["answer"]:
-                    q["meaning"] = q["meaning"].replace("答えは" + m.group(1) + "です",
-                                                        "答えは" + q["answer"] + "です")
-                    stat["解説の結びを答えに合わせた"] += 1
-                    touched = True
+            if repair(q):
+                stat["読みまちがいを直した"] += 1
+                touched = True
 
             fields = list(texts_of(q))
             if not any(has_unlearned(s, allow) for _, _, s in fields):
@@ -217,6 +268,12 @@ def main(write):
                     touched = True
                 if fix_dup_choices(q):
                     stat["だぶった選択肢を直した"] += 1
+                    touched = True
+                if fix_meaning(q, allow):
+                    stat["解説をひらがなに開いた"] += 1
+                    touched = True
+                if align_meaning_end(q):
+                    stat["解説の結びを答えに合わせた"] += 1
                     touched = True
                 cells_after[(g, q.get("difficulty"))] += 1
                 continue
@@ -248,13 +305,15 @@ def main(write):
                     q[f] = rep
             collapse_paren(q)
             fix_dup_choices(q)
-            new_answer = q.get("answer", "")
-            # 解説の結び「よって答えは○○です」だけ 新しい答えに合わせる
-            if old_answer and new_answer != old_answer and isinstance(q.get("meaning"), str):
+            # 解説の結び「よって答えは○○です」を 新しい答えに合わせる
+            if old_answer and q.get("answer") != old_answer and isinstance(q.get("meaning"), str):
                 key = "答えは" + old_answer
                 if key in q["meaning"]:
-                    q["meaning"] = q["meaning"].replace(key, "答えは" + new_answer)
-                    stat["解説の結びも直した"] += 1
+                    q["meaning"] = q["meaning"].replace(key, "答えは" + q["answer"])
+            if fix_meaning(q, allow):
+                stat["解説をひらがなに開いた"] += 1
+            if align_meaning_end(q):
+                stat["解説の結びを答えに合わせた"] += 1
             stat["ひらがなに開いた"] += 1
             cells_after[(g, q.get("difficulty"))] += 1
             touched = True

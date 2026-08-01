@@ -59,7 +59,9 @@ def main():
             mean = q.get("meaning") or ""
             m = re.search(r"答えは(.+?)です", mean)
             if m and q.get("answer") and m.group(1) != q["answer"]:
-                soft["解説の結びが答えと合わない（対象外）"] += 1
+                soft["解説の結びが答えと合わない"] += 1
+            if any(c not in allow for c in IS_KANJI.findall(mean)):
+                soft["解説に未習漢字が残っている（開けなかった分）"] += 1
 
     print("=== 小1小2の 学年×難易度 ===")
     zero = 0
