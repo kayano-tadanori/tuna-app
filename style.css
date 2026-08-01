@@ -163,6 +163,9 @@ button { cursor: pointer; font-family: inherit; }
 .char-name-yellow { background: linear-gradient(135deg,#ffd166,#ff9d38); -webkit-background-clip: text; background-clip: text; }
 .char-realname { font-size: 0.85rem; color: var(--sub2); font-weight: 700; margin-top: 4px; }
 .char-voice-pink { color: #ff7cb0; background: rgba(230,60,130,0.10); border-color: rgba(230,60,130,0.35); box-shadow: 0 0 18px rgba(230,60,130,0.25); }
+.jade-img { width: min(54vw, 215px); filter: drop-shadow(0 4px 32px rgba(90,200,110,0.45)); }
+.char-name-green { background: linear-gradient(135deg,#9be07a,#3f9d3f); -webkit-background-clip: text; background-clip: text; }
+.char-voice-green { color: #9be07a; background: rgba(63,157,63,0.10); border-color: rgba(63,157,63,0.35); box-shadow: 0 0 18px rgba(63,157,63,0.25); }
 .char-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
 .char-card { background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 16px 12px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
 .char-card-icon { font-size: 1.7rem; line-height: 1; }
