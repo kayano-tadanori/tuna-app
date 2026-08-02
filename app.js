@@ -2172,6 +2172,7 @@ function expandKaisetsu(pack, grade) {
 おなじやり方で やってみよう` : '',
       svg: r.svg || '',
       answer: r.answer,
+      choices: r.choices,
       meaning: r.meaning,
       grade, _cat: 'kaisetsu',
     }));
@@ -2582,9 +2583,9 @@ async function renderHamaPanel() {
     btn.disabled = !n;
     el.textContent = n ? `${d.span}・大問${d.sets.length}（${n}問）` : `${d.span}・じゅんび中`;
   }
-  // 回番号モードのかんたん解説＝旧カリキュラム（原簿から作ったもの）
+  // 回番号モードのかんたん解説＝旧カリキュラム（最レ）／同じカリキュラムがそのまま続く国語（原簿から作ったもの）
   if (kxBtn) {
-    const pack = isSairei ? await hamaKaisetsuForNo(grade, course, no) : null;
+    const pack = (isSairei || isKokugo) ? await hamaKaisetsuForNo(grade, course, no) : null;
     const n2 = pack ? expandKaisetsu(pack, grade).length : 0;
     kxBtn.classList.toggle('hidden', !n2);
     kxBtn.disabled = !n2;
@@ -2683,8 +2684,9 @@ async function startHamaSession(kind) {
   //   実物の大問4がそのまま1セットなので、シャッフルも出題数のしぼりもしない。
   if (hamaSubj === 'kokugo') {
     // ことば＝四択の画面、漢字＝手書きの画面。同じ回でも出す画面がちがう
+    // かんたん解説だけは算数・理科と共通の画面（下のkaisetsu分岐）に流す（2026-08-03）
     if (kind === 'kotoba') { await startKokugoKotobaSession(grade, course); return; }
-    await startKokugoHamaSession(grade, course); return;
+    if (kind !== 'kaisetsu') { await startKokugoHamaSession(grade, course); return; }
   }
 
   // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
