@@ -8745,7 +8745,11 @@ const QUESTION_COUNTS = {
             // ★kanji_kaki に相乗りさせない。480問の分母に混ぜると、本物の書き取りを1問も
             //   解かないまま達成率が9割近くまで上がってしまう。
             // ⚠ scripts/sync_question_counts.js の MAP には足さないこと（入れ子JSONで落ちる）
-            hama_kokugo: 418 },                                                              // 4,930
+            hama_kokugo: 418,
+            // こころの探偵・要約記者。★以前はここに登録が無く、IDの先頭2文字が偶然
+            //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
+            //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
+            tantei: 123, youyaku: 128 },                                                     // 5,235
   sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
             wariai: 420, hayasa: 172, rittai: 419 },                                         // 6,900（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
@@ -8763,6 +8767,14 @@ const ID_PREFIX_MAP = {
   gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
   hk: ['kokugo:hama_kokugo'],   // じゅくナビ国語（hk3_04_01 …）。hd＝大問／ho＝光と音 とは別
   kb: ['kokugo:kokugo_bun'],    // 文のしくみ（kb001 …）
+  // ★こころの探偵(kt1_01_1…)・要約記者(ky1_01_1…)は、素の先頭文字だけで見ると
+  //   rika:kitai（kt001…）・kanji_yomi（ky001…）と同じ "kt"/"ky" になってしまう。
+  //   「英字＋数字のすぐ後に _ が続く」ものだけ別ものと見なす（extractIdPrefix）ので、
+  //   ここは "_" ありの形（kt1_・ky1_ …）だけを登録する（2026-08-02・達成率の誤加算を修正）
+  kt1_: ['kokugo:tantei'], kt2_: ['kokugo:tantei'], kt3_: ['kokugo:tantei'],
+  kt4_: ['kokugo:tantei'], kt5_: ['kokugo:tantei'], kt6_: ['kokugo:tantei'],
+  ky1_: ['kokugo:youyaku'], ky2_: ['kokugo:youyaku'], ky3_: ['kokugo:youyaku'],
+  ky4_: ['kokugo:youyaku'], ky5_: ['kokugo:youyaku'], ky6_: ['kokugo:youyaku'],
 
   sk: ['sansu:keisan', 'shakai:kokudo'],
   sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
@@ -8803,6 +8815,18 @@ const ITEM_DEFS = {
   rocket: { icon: '🚀', label: 'ロケット', desc: 'チッチジャンプ：一気に高くジャンプ' },
 };
 
+// IDから、旧素ID→カテゴリの振り分けに使うプレフィックスを取り出す。
+// 「英字＋数字のすぐあとに _ が続く」形（kt1_01_1 など）を優先して見る。
+//   これが無ければ「英字だけ」（kt001 のような素の連番ID）にフォールバックする。
+// ★これが無いと、こころの探偵(kt1_…)がrika:kitai(kt001…)に、要約記者(ky1_…)が
+//   kanji_yomi(ky001…)に化ける（どちらも先頭2文字が同じ "kt"/"ky" なだけの別物）
+function extractIdPrefix(id) {
+  const withUnderscore = id.match(/^[a-zA-Z]+[0-9]+_/);
+  if (withUnderscore && ID_PREFIX_MAP[withUnderscore[0]]) return withUnderscore[0];
+  const lettersOnly = id.match(/^[a-zA-Z]+/);
+  return lettersOnly ? lettersOnly[0] : null;
+}
+
 // ── 達成率の集計（一度でも正解した問題＝クリア） ──────────
 function buildClearedSets() {
   const sets = {};
@@ -8824,16 +8848,16 @@ function buildClearedSets() {
       // カテゴリが取れていない記録（sansu_null: など）をIDの頭文字から救う。
       // 2026-07-26 以前に「単元でえらぶ」「じゅくナビ」で解いた分がこれに当たる
       const id = key.slice(ci + 1);
-      const pm = id.match(/^[a-zA-Z]+/);
+      const pm = extractIdPrefix(id);
       if (!pm) continue;
-      (ID_PREFIX_MAP[pm[0]] || [])
+      (ID_PREFIX_MAP[pm] || [])
         .filter(b => b.startsWith(subj + ':'))
         .forEach(b => { if (sets[b]) sets[b].add(id); });
     } else {
       // 旧素ID：プレフィックスで振り分け（Setなので新キーと重複しても二重計上されない）
-      const m = key.match(/^[a-zA-Z]+/);
+      const m = extractIdPrefix(key);
       if (!m) continue;
-      const targets = ID_PREFIX_MAP[m[0]];
+      const targets = ID_PREFIX_MAP[m];
       if (targets) targets.forEach(b => { if (sets[b]) sets[b].add(key); });
     }
   }
