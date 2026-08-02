@@ -236,8 +236,9 @@ function initHome() {
   document.getElementById('home-nickname').textContent = state.nickname;
 
   // ステップを初期状態に
-  ['kokugo-step-topmode', 'kokugo-step-cat', 'kokugo-step-diff'].forEach(id => {
-    document.getElementById(id).classList.add('hidden');
+  ['kokugo-step-topmode', 'kokugo-step-cat', 'kokugo-step-diff', 'sansu-step-hama'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');   // じゅくナビのパネルは教科をまたいで使い回すので毎回たたむ
   });
   document.querySelectorAll('.kokugo-grade-btn').forEach(b => b.classList.remove('selected'));
   document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
@@ -276,6 +277,10 @@ function initHome() {
       document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('kokugo-step-diff').classList.add('hidden');
       document.getElementById('kokugo-step-cat').classList.add('hidden');
+      document.getElementById('sansu-step-hama').classList.add('hidden');
+      // ★じゅくナビ国語は小3の本科教材だけ（原簿 HG-2501〜2543）。ほかの学年では出さない
+      const kHama = document.querySelector('.kokugo-topmode-btn[data-topmode="hama"]');
+      if (kHama) kHama.classList.toggle('hidden', state.grade !== 3);
       document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
       showStep('kokugo-step-topmode');
       maybeShowStart();
@@ -305,6 +310,25 @@ function initHome() {
         document.getElementById('kokugo-step-cat').classList.add('hidden');
         showStep('kokugo-step-diff');
         maybeShowStart();
+      } else if (topmode === 'hama') {
+        // ★国語のじゅくナビ（2026-08-02）。算数・理科と同じパネルを画面ごと移して使い回す。
+        //   国語は回番号→漢字10問を hama_kokugo.json から直接引く（ID帯でも単元名でもない）
+        state.selectedCat = null;
+        state.selectedMode = null;
+        state.selectedDiff = null;
+        document.querySelectorAll('.cat-card').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.kokugo-diff-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('kokugo-step-cat').classList.add('hidden');
+        document.getElementById('kokugo-step-diff').classList.add('hidden');
+        document.getElementById('start-zone').classList.add('hidden');
+        sansuState.subject = 'kokugo';   // ★hamaCourses/hamaCurrent がこれを見る
+        sansuState.grade = state.grade;
+        sansuState.hamaMode = 'no';
+        sansuState.hamaUnit = null;
+        moveHamaPanelTo('screen-home', 'start-zone');
+        loadHamaMap()
+          .then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
+          .catch(() => showToast('じゅくの対応表が読みこめませんでした'));
       }
     };
   });
@@ -633,8 +657,14 @@ function drawKanjiPad() {
   paint(kanjiPad.current);
 }
 
-function startKanji() {
-  document.getElementById('kanji-title').textContent = `書き取り（小${state.grade}）`;
+// qs を渡すと、その配列をそのままの順で出題する（じゅくナビ国語＝実物の1〜10の順を崩さない）。
+// 引数なしの呼び出し（btn-start 経由）は これまでどおり state.sessionQs をそのまま使う。
+function startKanji(qs, title) {
+  if (qs) {
+    state.sessionQs = qs;
+    state.current = 0; state.correct = 0; state.wrong = 0;
+  }
+  document.getElementById('kanji-title').textContent = title || `書き取り（小${state.grade}）`;
   document.getElementById('kanji-correct').textContent = '0';
   document.getElementById('kanji-wrong').textContent = '0';
   if (!kanjiPad.ctx) initKanjiPad();
@@ -739,23 +769,33 @@ function endSession() {
 
   // 結果画面のボタンを国語用に結線（算数・理科・社会が上書きするため毎回再設定）
   document.getElementById('btn-result-home').onclick = async () => {
-    await loadQuestions(state.selectedCat);
+    // ★じゅくナビ国語(hama_kokugo)は CATEGORIES に無い＝loadQuestions に渡すと落ちる
+    if (CATEGORIES[state.selectedCat]) await loadQuestions(state.selectedCat);
     initHome();
     showScreen('home');
   };
   document.getElementById('btn-result-retry').onclick = () => {
+    // ★じゅくナビ国語は通常の出題フロー(btn-start)に戻せないので、同じ回をもう一度出す
+    if (state.selectedCat === 'hama_kokugo') {
+      startKokugoHamaSession(sansuState.grade, sansuState.hamaCourse);
+      return;
+    }
     document.getElementById('btn-start').click();
   };
 }
 
 document.getElementById('btn-result-home').onclick = async () => {
   // キャッシュを再取得してレート更新
-  await loadQuestions(state.selectedCat);
+  if (CATEGORIES[state.selectedCat]) await loadQuestions(state.selectedCat);
   initHome();
   showScreen('home');
 };
 
 document.getElementById('btn-result-retry').onclick = () => {
+  if (state.selectedCat === 'hama_kokugo') {
+    startKokugoHamaSession(sansuState.grade, sansuState.hamaCourse);
+    return;
+  }
   // 同じカテゴリ・モードで再スタート
   document.getElementById('btn-start').click();
 };
@@ -1941,6 +1981,35 @@ async function hamaDaimonKokai(grade, course, no) {
 }
 function daimonSteps(sets) { return sets.reduce((n, d) => n + (d.steps || []).length, 0); }
 
+// ── 国語の回別データ（じゅくナビ専用データ）────────────────────────
+// 「今週の漢字」＝その回の大問4（カタカナ→漢字10問）を、原簿(HG-25xx)の実物どおりに置く。
+// 算数のようなID帯も、理科のような単元名も使わない。回そのものが1セットだから。
+//   grades[学年][コース].lessons[回番号].kanji = [問題, …]
+// 1問の形は kanji_kaki.json とそろえてあるので、手書きの画面(renderKanji)がそのまま使える。
+const HAMA_KOKUGO_FILE = 'data/hama_kokugo.json';
+let hamaKokugoCache = null;
+async function loadHamaKokugo() {
+  if (hamaKokugoCache) return hamaKokugoCache;
+  try { hamaKokugoCache = await (await fetch(HAMA_KOKUGO_FILE)).json(); }
+  catch (e) { hamaKokugoCache = { grades: {} }; }
+  return hamaKokugoCache;
+}
+function hamaKokugoNode(d, grade, course) {
+  const g = d.grades && d.grades[String(grade)];
+  return (g && g[course]) || null;
+}
+// 回のリストを、原簿にある順のまま1本につなぐ（シャッフルしない＝実物の1〜10の順）
+async function hamaKokugoCollect(grade, course, lessons) {
+  const node = hamaKokugoNode(await loadHamaKokugo(), grade, course);
+  if (!node || !node.lessons) return [];
+  const out = [];
+  for (const l of lessons) {
+    const rec = node.lessons[String(l.no)];
+    (rec && rec.kanji || []).forEach(q => out.push({ ...q, grade, _cat: 'hama_kokugo' }));
+  }
+  return out;
+}
+
 const HAMA_KAISETSU_FILE = 'data/hama_kaisetsu.json';
 let hamaKaisetsuCache = null;
 async function loadHamaKaisetsu() {
@@ -2079,8 +2148,10 @@ async function hamaCollect(grade, course, fromNo, toNo) {
   const courses = hamaCourses(grade);
   if (!courses || !courses[course]) return [];
   const lessons = courses[course].lessons.filter(l => l.no >= fromNo && l.no <= toNo);
-  // ★理科などのコースは ID帯を持たない。回に書いてある単元名で集める（2026-07-27）
   const subj = courses[course].subject;
+  // ★国語は回そのものが1セット（実物の大問4）。ID帯でも単元名でもなく回番号で引く（2026-08-02）
+  if (subj === 'kokugo') return await hamaKokugoCollect(grade, course, lessons);
+  // ★理科などのコースは ID帯を持たない。回に書いてある単元名で集める（2026-07-27）
   if (subj && subj !== 'sansu') {
     const seen = new Set(); const out = [];
     for (const l of lessons) {
@@ -2332,8 +2403,10 @@ async function renderHamaPanel() {
   // ★算数2nd（木）は復習テストではなく演習プリント＝点数がA表に残らないぶん難度が高い。
   //   名前まで「復習テスト」にすると1stと混ざって見えるので、ここだけ言いかえる（本人指示 2026-08-01）
   const is2nd = (course === 'master2nd');
+  // ★国語は実物の大問4（カタカナ→漢字10問）をそのまま出す＝手書きの書き取り（2026-08-02）
+  const isKokugo = (courses[course].subject === 'kokugo');
   document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
-    is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
+    isKokugo ? '✍️ 今週の漢字' : is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
   document.querySelector('.hama-act-btn[data-hama-act="weekq"] .hama-act-name').textContent =
     is2nd ? '🔥 今週の演習プリント（大問）' : '🧩 今週の復習テスト（大問）';
   document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.remove('hidden');
@@ -2357,7 +2430,8 @@ async function renderHamaPanel() {
   // 公開学力テストの出題範囲に最高レベル特訓の内容は含まれない（本人確認 2026-07-26）。
   // 最レを選んでいるときは「公開テストのはんい」ボタン自体を出さない。
   // 算数2nd も同じ。公開の範囲は1st（マスター）の回番号で数えるので、2ndの回番号で出すとズレる。
-  const showKokai = (course !== 'sairei' && !is2nd);
+  // 国語は kokai:false（対応表）。公開の範囲は算数の回番号で数えるので国語の回では出せない
+  const showKokai = (course !== 'sairei' && !is2nd && courses[course].kokai !== false);
   const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
   if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
 
@@ -2368,14 +2442,15 @@ async function renderHamaPanel() {
 
   // ★大問モード（原簿どおりの3問1組）。まだ問題が無いところは暗転して残す（本人指示 2026-07-28）
   const byUnitMode = (sansuState.hamaMode === 'unit' && sansuState.hamaUnit);
-  const weekSets = byUnitMode
+  const weekSets = (byUnitMode && !isKokugo)
     ? await hamaDaimonUnit(grade, course, sansuState.hamaUnit)
-    : await hamaDaimonWeek(grade, course, no);
+    : isKokugo ? [] : await hamaDaimonWeek(grade, course, no);
   const kokaiSets = showKokai ? await hamaDaimonKokai(grade, course, no) : [];
   const mNow = hamaMonthOf(grade, course, no);
   const mFrom = ((mNow - 1 - 2) % 12 + 12) % 12 + 1;
   const dq = [
-    { k: 'weekq', show: true, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
+    // 国語には大問データが無い（読解の本文は著作物なので入れない）。ボタンごと出さない
+    { k: 'weekq', show: !isKokugo, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
     { k: 'kokaiq', show: showKokai, sets: kokaiSets, span: `${mFrom}〜${mNow}月` },
   ];
   for (const d of dq) {
@@ -2484,6 +2559,10 @@ async function startHamaSession(kind) {
   //   以前は無条件に sansuState.subject='sansu' としていたため、理科で開いても算数に切りかわっていた
   const hamaSubj = courses[course].subject || 'sansu';
 
+  // ★国語のじゅくナビは手書き＋自己採点（既存の漢字書き取り画面）に流す（2026-08-02）。
+  //   実物の大問4がそのまま1セットなので、シャッフルも出題数のしぼりもしない。
+  if (hamaSubj === 'kokugo') { await startKokugoHamaSession(grade, course); return; }
+
   // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
   if (kind === 'kaisetsu') {
     showLoading();
@@ -2578,6 +2657,25 @@ async function startHamaSession(kind) {
   } catch (e) {
     showToast('問題の読み込みに失敗しました'); hideLoading();
   }
+}
+
+// 国語のじゅくナビ：その回の漢字を、原簿の順のまま手書きの画面へ流す。
+// 実物の大問4は1〜10がひとつづきの1セットなので、まぜない・数を減らさない・クラス帯でしぼらない。
+// 状態は「ナビ側＝sansuState／出題側＝state」で分ける（既存の関数がそれぞれを直に読むため）。
+async function startKokugoHamaSession(grade, course) {
+  showLoading();
+  try {
+    const no = hamaCurrent(grade, course);
+    const qs = await hamaCollect(grade, course, no, no);
+    if (!qs.length) { showToast('この回の漢字はまだ用意していません'); hideLoading(); return; }
+    state.grade = grade;
+    state.selectedCat = 'hama_kokugo';   // CATEGORIES には入れない（結果画面・記録の振り分けキー）
+    state.selectedMode = 'kaki';
+    state.selectedDiff = null;
+    coinSessionEarned = 0;
+    hideLoading();
+    startKanji(qs, `じゅくナビ No.${no}（${qs.length}問）`);
+  } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
 }
 
 // ── 算数ホーム初期化（階層式ステップUI） ──────────────────
@@ -8561,7 +8659,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // 教科→カテゴリ→問題数（データは静的なのでハードコード。問題追加時はここを更新）
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 473, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
-            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },   // 4,512
+            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
+            // じゅくナビ国語＝小3本科教材の大問4（原簿 HG-2501〜2543）。data/hama_kokugo.json。
+            // ★kanji_kaki に相乗りさせない。480問の分母に混ぜると、本物の書き取りを1問も
+            //   解かないまま達成率が9割近くまで上がってしまう。
+            // ⚠ scripts/sync_question_counts.js の MAP には足さないこと（入れ子JSONで落ちる）
+            hama_kokugo: 418 },                                                              // 4,930
   sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
             wariai: 420, hayasa: 172, rittai: 419 },                                         // 6,900（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
@@ -8577,6 +8680,8 @@ const ID_PREFIX_MAP = {
   k: ['kokugo:kotowaza'], y: ['kokugo:kanyoku'], j: ['kokugo:yojijukugo'], g: ['kokugo:gairaigo'],
   kk: ['kokugo:kanji_kaki'], ky: ['kokugo:kanji_yomi'], kg: ['kokugo:kokugo_keigo'],
   gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
+  hk: ['kokugo:hama_kokugo'],   // じゅくナビ国語（hk3_04_01 …）。hd＝大問／ho＝光と音 とは別
+
   sk: ['sansu:keisan', 'shakai:kokudo'],
   sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
   rd: ['rika:doubutsu', 'rika:denki'],
@@ -9212,8 +9317,10 @@ async function renderDiffBadgesKokugo() {
 }
 
 // ── がんばりの記録画面 ────────────────────────────────────
+// CATEGORIES に入れられないカテゴリの名前（じゅくナビ国語＝入れ子JSONなので loadQuestions に渡せない）
+const KOKUGO_EXTRA_CAT_LABELS = { hama_kokugo: 'じゅくナビ漢字（小3本科）' };
 function gamiCatLabel(subject, cat) {
-  if (subject === 'kokugo') return (CATEGORIES[cat] || {}).label || cat;
+  if (subject === 'kokugo') return (CATEGORIES[cat] || {}).label || KOKUGO_EXTRA_CAT_LABELS[cat] || cat;
   const map = subject === 'rika' ? RIKA_CAT_LABELS : subject === 'shakai' ? SHAKAI_CAT_LABELS : SANSU_CAT_LABELS;
   return map[cat] || cat;
 }
