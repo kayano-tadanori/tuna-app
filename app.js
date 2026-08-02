@@ -100,6 +100,11 @@ function addNicknameHistory(name) {
   h.unshift(name);
   localStorage.setItem('nicknameHistory', JSON.stringify(h.slice(0, 5)));
 }
+function removeNicknameHistory(name) {
+  const h = getNicknameHistory().filter(n => n !== name);
+  localStorage.setItem('nicknameHistory', JSON.stringify(h));
+  renderNicknameHistory();
+}
 
 function getProgress() {
   return JSON.parse(localStorage.getItem('progress') || '{}');
@@ -1045,6 +1050,8 @@ function renderNicknameHistory() {
   const row = document.createElement('div');
   row.className = 'nick-history-row';
   names.forEach(n => {
+    const item = document.createElement('div');
+    item.className = 'nick-history-item';
     const b = document.createElement('button');
     b.className = 'nick-history-btn';
     b.textContent = '👤 ' + n;
@@ -1054,7 +1061,17 @@ function renderNicknameHistory() {
       initSubject();
       showScreen('subject');
     };
-    row.appendChild(b);
+    const del = document.createElement('button');
+    del.className = 'nick-history-del';
+    del.textContent = '✕';
+    del.setAttribute('aria-label', n + 'の履歴を消す');
+    del.onclick = (e) => {
+      e.stopPropagation();
+      removeNicknameHistory(n);
+    };
+    item.appendChild(b);
+    item.appendChild(del);
+    row.appendChild(item);
   });
   box.appendChild(row);
 }

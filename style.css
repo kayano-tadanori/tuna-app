@@ -89,6 +89,9 @@ button { cursor: pointer; font-family: inherit; }
 .nick-history-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .nick-history-btn { background: #f5f8ff; border: 2px solid #c5d5ee; color: #0f2d6e; border-radius: 24px; padding: 12px 20px; font-size: 1rem; font-weight: 800; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .nick-history-btn:active { transform: scale(0.95); background: #e8efff; }
+.nick-history-item { position: relative; display: inline-flex; }
+.nick-history-del { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #ff6b6b; color: #fff; border: 2px solid #fff; font-size: 0.75rem; font-weight: 900; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.nick-history-del:active { transform: scale(0.9); }
 
 /* 旧互換クラス */
 .center-box { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100dvh; padding: 32px 24px; gap: 14px; }
