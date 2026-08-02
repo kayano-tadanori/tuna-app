@@ -389,6 +389,12 @@
           <span class="cat-name">文学史・季語</span>
           <span class="cat-count">359問</span>
         </button>
+        <!-- 浜学園 小3国語 本科教材から。小3の内容だけなので小3のときだけ出す -->
+        <button class="cat-card" data-cat="kokugo_bun" data-min-grade="3" data-max-grade="3">
+          <span class="cat-icon">🧩</span>
+          <span class="cat-name">文のしくみ</span>
+          <span class="cat-count">54問・小3</span>
+        </button>
       </div>
     </div>
 
@@ -760,6 +766,12 @@
           <button class="hama-act-btn" data-hama-act="week">
             <span class="hama-act-name">📝 今週の復習テスト</span>
             <span class="hama-act-sub" id="hama-cnt-week">—</span>
+          </button>
+          <!-- 国語だけ：その回で習う「ことば」を四択で出す（文のしくみ）。
+               漢字は手書きの画面、ことばは四択の画面と、答え方がちがうのでボタンを分ける -->
+          <button class="hama-act-btn hidden" data-hama-act="kotoba">
+            <span class="hama-act-name">📖 今週のことば</span>
+            <span class="hama-act-sub" id="hama-cnt-kotoba">—</span>
           </button>
           <!-- 大問＝原簿（実物）から採った3問1組の誘導。浜学園は復習主義なので先どりは置かない -->
           <button class="hama-act-btn hama-act-dq" data-hama-act="weekq">

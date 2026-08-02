@@ -73,6 +73,14 @@ HEAD = re.compile(
 VERIFIED = re.compile(r"模範解答")
 # HG-2519（No.18）の1〜4は「かん字→読み」の問題。第1弾は書きだけなので外す
 SKIP_ITEMS = {"2519": {1, 2, 3, 4}}
+# ★その回の「ことば」の単元 → data/kokugo_bun.json（文のしくみ）の unit。
+#   原簿に「★1回まるごと◯◯の回」と書いてある回だけ。ほかの回は推測で足さない
+UNITS = {
+    "14": ["こそあどことば"],     # HG-2515
+    "20": ["主語・じゅつ語"],     # HG-2521
+    "22": ["しゅうしょく語"],     # HG-2523
+    "24": ["文図"],               # HG-2525
+}
 
 
 def strip_md(s):
@@ -215,6 +223,11 @@ def main():
             })
         items.sort(key=lambda x: x["id"])
         rec = {"src": "HG-%s" % hg, "title": title, "kanji": items}
+        # ★その回で習う「ことば」の単元。じゅくナビの「📖 今週のことば」がこれを見て
+        #   data/kokugo_bun.json（文のしくみ）から問題を集める。
+        #   実物に単元がはっきり出ている回だけ入れる（推測で足さない）
+        if str(no) in UNITS:
+            rec["units"] = UNITS[str(no)]
         # 原簿のレコード見出しに「🎁模範解答つき」と書いてある回だけ。本文中の言及は拾わない
         if VERIFIED.search(head):
             rec["verified"] = "模範解答"

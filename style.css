@@ -349,6 +349,17 @@ button { cursor: pointer; font-family: inherit; }
 .quiz-question .tantei-passage strong { color: var(--gold); font-weight: 800; }
 .quiz-question .tantei-q { font-size: 1.15rem; font-weight: 900; line-height: 1.55; }
 .quiz-question .tantei-q::before { content: "🔍 "; }
+/* 文図（国語・文のしくみ／小3本科 No.24）。主語・じゅつ語・しゅうしょく語のつながりを、
+   はこと矢印で見せる。下の段ほど、その上のはこをくわしくしていることばになる。 */
+.quiz-question .bunzu { font-size: 0.95rem; font-weight: 600; line-height: 1.5; text-align: left; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 12px 14px; margin-top: 14px; overflow-x: auto; }
+.quiz-question .bz-cap { font-size: 0.72rem; font-weight: 800; color: var(--sub2); letter-spacing: 0.08em; margin-bottom: 8px; }
+.quiz-question .bz-lab { font-size: 0.68rem; font-weight: 700; color: var(--sub2); margin-right: 6px; }
+.quiz-question .bz-ar  { color: var(--sub2); margin-right: 6px; }
+.quiz-question .bz-l1  { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; white-space: nowrap; }
+.quiz-question .bz-l2  { padding-left: 22px; margin-bottom: 4px; white-space: nowrap; }
+.quiz-question .bz-l3  { padding-left: 48px; margin-bottom: 4px; white-space: nowrap; }
+.quiz-question .bz-box { display: inline-block; border: 1.5px solid var(--glass-border); border-radius: var(--radius-xs); background: rgba(255,255,255,0.05); padding: 3px 11px; margin-right: 6px; color: var(--text); }
+.quiz-question .bz-blank { border-style: dashed; border-color: var(--gold); color: var(--gold); font-weight: 900; background: rgba(255,200,60,0.10); }
 /* 大問モードの設定文（じゅくナビ）。題名は入れない。改行を活かして問題文とはっきり離す（2026-07-28） */
 #sq-chain-intro { font-size: 1.0rem; font-weight: 600; line-height: 1.95; color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-left: 3px solid var(--accent2); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 18px; text-align: left; white-space: pre-line; }
 /* ★大問の(2)(3)で、前の設問と その答えを上に残す（2026-07-29）。

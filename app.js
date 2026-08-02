@@ -13,6 +13,8 @@ const CATEGORIES = {
   kokugo_goi:     { label: '語い',           file: 'data/kokugo_goi.json' },
   kokugo_bushu:   { label: '部首・画数',     file: 'data/kokugo_bushu.json' },
   kokugo_bungaku: { label: '文学史・季語',   file: 'data/kokugo_bungaku.json' },
+  // 文のしくみ＝浜学園 小3国語 本科教材（原簿 HG-2515/2521/2523/2525）。小3の内容だけなので小3限定
+  kokugo_bun:     { label: '文のしくみ',     file: 'data/kokugo_bun.json' },
   tantei:         { label: 'こころの探偵',   file: 'data/kokugo_tantei.json' },
   youyaku:        { label: '要約記者',       file: 'data/kokugo_youyaku.json' },
 };
@@ -260,9 +262,12 @@ function initHome() {
       state.grade = Number(btn.dataset.grade);
 
       // 学年に応じてカテゴリの表示・非表示を切り替え
+      // ★data-max-grade：その学年ぶんしか問題が無いカテゴリを、上の学年に出さないため。
+      //   出したまま0問だと「問題がありません」で行き止まりになる（2026-08-02・文のしくみ）
       document.querySelectorAll('.cat-card').forEach(cb => {
         const minGrade = Number(cb.dataset.minGrade || 1);
-        cb.classList.toggle('hidden', state.grade < minGrade);
+        const maxGrade = Number(cb.dataset.maxGrade || 6);
+        cb.classList.toggle('hidden', state.grade < minGrade || state.grade > maxGrade);
       });
       // 選べなくなったカテゴリはリセット
       if (state.selectedCat) {
@@ -293,6 +298,9 @@ function initHome() {
       document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       const topmode = btn.dataset.topmode;
+      // ★じゅくナビのパネルは国語ホームに置きっぱなしになるので、
+      //   ほかのモードを選んだら必ずたたむ（2026-08-02・「通常問題なのに下にじゅくナビが出る」）
+      if (topmode !== 'hama') document.getElementById('sansu-step-hama').classList.add('hidden');
       if (topmode === 'normal') {
         state.selectedCat = null;
         state.selectedMode = null;
@@ -327,6 +335,7 @@ function initHome() {
         sansuState.hamaUnit = null;
         moveHamaPanelTo('screen-home', 'start-zone');
         loadHamaMap()
+          .then(() => ensureHamaCourses(state.grade, 'kokugo'))   // 古い対応表をつかんでいたら取り直す
           .then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
           .catch(() => showToast('じゅくの対応表が読みこめませんでした'));
       }
@@ -397,6 +406,7 @@ function maybeShowStart() {
 
 document.getElementById('btn-start').onclick = async () => {
   showLoading();
+  state.fromHamaKotoba = false;   // ふつうの出題。じゅくナビの「今週のことば」ではない
   try {
     const isChain = state.selectedDiff === 5;
     let pool;
@@ -778,6 +788,10 @@ function endSession() {
     // ★じゅくナビ国語は通常の出題フロー(btn-start)に戻せないので、同じ回をもう一度出す
     if (state.selectedCat === 'hama_kokugo') {
       startKokugoHamaSession(sansuState.grade, sansuState.hamaCourse);
+      return;
+    }
+    if (state.fromHamaKotoba) {
+      startKokugoKotobaSession(sansuState.grade, sansuState.hamaCourse);
       return;
     }
     document.getElementById('btn-start').click();
@@ -2009,6 +2023,20 @@ async function hamaKokugoCollect(grade, course, lessons) {
   }
   return out;
 }
+// その回で習う「ことば」の単元。原簿に「1回まるごと◯◯の回」と書いてある回にだけ入っている
+async function hamaKokugoUnitsOf(grade, course, no) {
+  const node = hamaKokugoNode(await loadHamaKokugo(), grade, course);
+  const rec = node && node.lessons && node.lessons[String(no)];
+  return (rec && rec.units) || [];
+}
+// 「文のしくみ」からその単元の問題を集める。
+// まぜないで、やさしい順に並べる（実物もA→B→C→Dで答え方が重くなっていく）
+async function kokugoBunFor(units) {
+  if (!units || !units.length) return [];
+  const all = await loadQuestions('kokugo_bun');
+  return all.filter(q => units.includes(q.unit))
+    .sort((a, b) => (a.difficulty - b.difficulty) || String(a.id).localeCompare(String(b.id)));
+}
 
 const HAMA_KAISETSU_FILE = 'data/hama_kaisetsu.json';
 let hamaKaisetsuCache = null;
@@ -2082,12 +2110,21 @@ function expandKaisetsu(pack, grade) {
 }
 const HAMA_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
-async function loadHamaMap() {
-  if (!hamaMap) {
-    const res = await fetch('data/hama_map.json');
+// ★force=true で必ず取り直す。
+//   古いキャッシュ（＝国語のコースが入っていない対応表）をつかんだままだと
+//   「この学年の対応表はまだありません」になるので、そのときは取り直せるようにした（2026-08-02）
+async function loadHamaMap(force) {
+  if (!hamaMap || force) {
+    const res = await fetch('data/hama_map.json', { cache: 'no-cache' });
     hamaMap = await res.json();
   }
   return hamaMap;
+}
+// その教科のコースが対応表に見あたらないときだけ、対応表を取り直してもう一度見る
+async function ensureHamaCourses(grade, subject) {
+  if (hamaCourses(grade, subject)) return true;
+  try { await loadHamaMap(true); } catch (e) { return false; }
+  return !!hamaCourses(grade, subject);
 }
 // じゅくナビのパネル(sansu-step-hama)は1つしか作っていないので、
 // 開く画面へ移動して使い回す。IDを複製しないための方法（2026-07-27・理科対応）
@@ -2289,6 +2326,9 @@ function wireHamaButtons() {
 
 async function renderHamaPanel() {
   wireHamaButtons();
+  // 「今週のことば」は国語の回番号モードのときだけ出す。まず消しておいて、条件がそろったら下で出す
+  const kotobaBtn = document.querySelector('.hama-act-btn[data-hama-act="kotoba"]');
+  if (kotobaBtn) { kotobaBtn.classList.add('hidden'); kotobaBtn.disabled = true; }
   const grade = sansuState.grade;
   const courses = hamaCourses(grade);
   const row = document.getElementById('hama-course-row');
@@ -2422,6 +2462,16 @@ async function renderHamaPanel() {
   }
   label.textContent = `No.${no}`;
   title.textContent = hamaLessonTitle(grade, course, no) || '—';
+
+  // ★国語だけ：その回で習う「ことば」（文のしくみ）。単元が分かっている回にだけ出す
+  if (kotobaBtn) {
+    const kUnits = isKokugo ? await hamaKokugoUnitsOf(grade, course, no) : [];
+    const kQs = await kokugoBunFor(kUnits);
+    kotobaBtn.classList.toggle('hidden', !kQs.length);
+    kotobaBtn.disabled = !kQs.length;
+    const el = document.getElementById('hama-cnt-kotoba');
+    if (el) el.textContent = kQs.length ? `${kUnits.join('・')}・${kQs.length}問` : '—';
+  }
 
   const minNo = lessons[0].no, maxNo = lessons[lessons.length - 1].no;
   document.getElementById('hama-minus').disabled = no <= minNo;
@@ -2561,7 +2611,11 @@ async function startHamaSession(kind) {
 
   // ★国語のじゅくナビは手書き＋自己採点（既存の漢字書き取り画面）に流す（2026-08-02）。
   //   実物の大問4がそのまま1セットなので、シャッフルも出題数のしぼりもしない。
-  if (hamaSubj === 'kokugo') { await startKokugoHamaSession(grade, course); return; }
+  if (hamaSubj === 'kokugo') {
+    // ことば＝四択の画面、漢字＝手書きの画面。同じ回でも出す画面がちがう
+    if (kind === 'kotoba') { await startKokugoKotobaSession(grade, course); return; }
+    await startKokugoHamaSession(grade, course); return;
+  }
 
   // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
   if (kind === 'kaisetsu') {
@@ -2675,6 +2729,31 @@ async function startKokugoHamaSession(grade, course) {
     coinSessionEarned = 0;
     hideLoading();
     startKanji(qs, `じゅくナビ No.${no}（${qs.length}問）`);
+  } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+}
+
+// 国語のじゅくナビ：その回で習う「ことば」を、いつもの四択の画面で出す（2026-08-02）。
+// 種本は data/kokugo_bun.json（文のしくみ＝原簿 HG-2515/2521/2523/2525）。
+// まぜないでやさしい順に出す＝実物と同じで、答え方がだんだん重くなる並びになる。
+async function startKokugoKotobaSession(grade, course) {
+  showLoading();
+  try {
+    const no = hamaCurrent(grade, course);
+    const units = await hamaKokugoUnitsOf(grade, course, no);
+    const qs = await kokugoBunFor(units);
+    if (!qs.length) { showToast('この回のことばはまだ用意していません'); hideLoading(); return; }
+    state.grade = grade;
+    state.selectedCat = 'kokugo_bun';
+    state.selectedMode = 'quiz';
+    state.selectedDiff = 'all';
+    state.weakOnly = false;
+    state.fromHamaKotoba = true;      // 結果画面の「もう一度」でこの回に戻すため
+    state.sessionQs = qs;
+    state.questions = await loadQuestions('kokugo_bun');
+    state.current = 0; state.correct = 0; state.wrong = 0;
+    coinSessionEarned = 0;
+    hideLoading();
+    startQuiz();
   } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
 }
 
@@ -8660,6 +8739,8 @@ document.addEventListener('DOMContentLoaded', () => {
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 473, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
+            // 文のしくみ＝浜学園 小3国語 本科教材（原簿 HG-2515/2521/2523/2525）。data/kokugo_bun.json
+            kokugo_bun: 54,
             // じゅくナビ国語＝小3本科教材の大問4（原簿 HG-2501〜2543）。data/hama_kokugo.json。
             // ★kanji_kaki に相乗りさせない。480問の分母に混ぜると、本物の書き取りを1問も
             //   解かないまま達成率が9割近くまで上がってしまう。
@@ -8681,6 +8762,7 @@ const ID_PREFIX_MAP = {
   kk: ['kokugo:kanji_kaki'], ky: ['kokugo:kanji_yomi'], kg: ['kokugo:kokugo_keigo'],
   gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
   hk: ['kokugo:hama_kokugo'],   // じゅくナビ国語（hk3_04_01 …）。hd＝大問／ho＝光と音 とは別
+  kb: ['kokugo:kokugo_bun'],    // 文のしくみ（kb001 …）
 
   sk: ['sansu:keisan', 'shakai:kokudo'],
   sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
