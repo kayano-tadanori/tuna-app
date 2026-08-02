@@ -1423,6 +1423,10 @@ function backupLocalData() {
     const v = localStorage.getItem(k);
     if (v !== null) payload[k] = v;
   });
+  // 端末にまだ実データが無い（新しい端末・復元前）ときは書き込まない。
+  // .set()は上書きなので、空のpayloadで書くと同じニックネームの人の
+  // クラウドバックアップを消してしまう（2026-08-02・実被害あり）。
+  if (!payload.progress && !payload.gacha) return;
   saveLocalBackup(state.nickname, payload);
 }
 
