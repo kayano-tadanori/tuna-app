@@ -128,6 +128,17 @@ async function saveAchievement(nickname, pct, cleared, titleIdx) {
   }
 }
 
+async function getAchievementDoc(nickname) {
+  if (!firebaseReady || !nickname) return null;
+  try {
+    const snap = await db.collection('achievement').doc(nickname).get();
+    return snap.exists ? snap.data() : null;
+  } catch (e) {
+    console.warn('達成率取得失敗:', e.message);
+    return null;
+  }
+}
+
 async function getAchievementRanking() {
   if (!firebaseReady) return null;
   try {

@@ -1416,7 +1416,7 @@ const BACKUP_KEYS = [
   'progress',
 ];
 
-function backupLocalData() {
+async function backupLocalData() {
   if (!state.nickname || typeof saveLocalBackup !== 'function') return;
   const payload = {};
   BACKUP_KEYS.forEach(k => {
@@ -1427,6 +1427,19 @@ function backupLocalData() {
   // .set()は上書きなので、空のpayloadで書くと同じニックネームの人の
   // クラウドバックアップを消してしまう（2026-08-02・実被害あり）。
   if (!payload.progress && !payload.gacha) return;
+  // この端末の達成率が、クラウドに保存済みの達成率より明らかに低いときも書き込まない。
+  // 別の人が同じニックネームを使った・復元前に少しだけ遊んだ、などで
+  // 少ないデータのほうが後勝ちで本物の記録を消してしまう事故を防ぐ（本人提案・2026-08-02）。
+  if (typeof getAchievementDoc === 'function') {
+    try {
+      const localPct = getAchievement().titlePct;
+      const remote = await getAchievementDoc(state.nickname);
+      if (remote && typeof remote.pct === 'number' && localPct < remote.pct - 0.5) {
+        console.warn('バックアップ保留：達成率がクラウドより低い', localPct, remote.pct);
+        return;
+      }
+    } catch (e) { /* 比較に失敗したときは通常どおり保存を続ける */ }
+  }
   saveLocalBackup(state.nickname, payload);
 }
 
