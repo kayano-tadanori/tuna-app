@@ -78,7 +78,9 @@ for path in sorted(glob.glob(os.path.join(BASE, "data", "*.json"))):
                 packs = list(cv.get("units", {}).items()) + list(cv.get("lessons", {}).items())
                 for key, pack in packs:
                     for x in pack["items"]:
-                        for q in [x["rei"]] + x["ruidai"]:
+                        # ★例題(rei)は「やり方を見せるだけ」で入力させない（app.js の q.rei 分岐）。
+                        #   だから答えがテンキーで打てなくてよい（例：点の位置 "(8, 5)"）。
+                        for q in x["ruidai"]:
                             tot += 1
                             if numpad(q["answer"]):
                                 continue

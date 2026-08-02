@@ -1181,6 +1181,216 @@
         ]
        }
       ]
+     },
+     "平面図形(1)": {
+      "title": "平面図形(1) いろいろな図形",
+      "poolUnit": "平面図形（面積）",
+      "items": [
+       {
+        "bone": "まわりは たて2本と よこ2本",
+        "rei": {
+         "question": "長方形の たての長さが 12cm で、よこの長さが たてより 4cm 長いとき、この長方形の まわりの長さは 何cm ですか。",
+         "svg": "<svg viewBox=\"0 0 236 164\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 206,26 206,134 62,134\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"62\" y1=\"18\" x2=\"206\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"134.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">16cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"134\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"84.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">12cm</text><text x=\"118.0\" y=\"161\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たて12cm・よこ16cm</text></svg>",
+         "kaisetsu": [
+          "**まわりを1周すると、たてを2本、よこを2本 通ります。**だから **(たて＋よこ)×2** です。",
+          "よこは たてより4cm長いので 12＋4＝**16cm**。",
+          "(12＋16)×2。",
+          "**56cm**。**たてとよこを1本ずつ足してから2倍する**のが速いです。"
+         ],
+         "answer": "56"
+        },
+        "ruidai": [
+         {
+          "question": "たてと よこの長さが 同じ長方形（正方形）の まわりが 84cm のとき、1辺の長さは 何cm ですか。",
+          "answer": "21",
+          "meaning": "4本とも同じ長さなので 84÷4＝21cmです。",
+          "svg": ""
+         },
+         {
+          "question": "たて 7cm、よこ 13cm の長方形の まわりの長さは 何cm ですか。",
+          "answer": "40",
+          "meaning": "(7＋13)×2＝40cmです。",
+          "svg": ""
+         },
+         {
+          "question": "まわりの長さが 30cm で、たてが 4cm の長方形の よこの長さは 何cm ですか。",
+          "answer": "11",
+          "meaning": "30÷2＝15が「たて＋よこ」。15−4＝11cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "かどを切り取っても まわりは 変わらない",
+        "rei": {
+         "question": "たて 8cm、よこ 10cm の長方形の 右上のかどを、たて 3cm・よこ 4cm だけ 四角く切り取りました。のこった図形の まわりの長さは 何cm ですか。",
+         "svg": "<svg viewBox=\"0 0 222 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 140,26 140,65 192,65 192,130 62,130\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><path d=\"M 140 26 L 192 26 L 192 65\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.4\" stroke-dasharray=\"4 3\"/><line x1=\"62\" y1=\"18\" x2=\"192\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"127.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">よこ 10cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"130\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"82.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">たて 8cm</text><text x=\"170.0\" y=\"49.5\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">切り取り</text><text x=\"111.0\" y=\"157\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">右上のかどを切り取った形</text></svg>",
+         "kaisetsu": [
+          "**切り取ったところの 2本の線を、外がわへ ずらしてみます。**",
+          "上に出ている よこの線を右へ、右に出ている たての線を上へ動かすと、**もとの長方形に ぴったり もどります**。",
+          "だから まわりは (10＋8)×2。",
+          "**36cm**。**線は動いただけで、ふえても へっても いません。**"
+         ],
+         "answer": "36"
+        },
+        "ruidai": [
+         {
+          "question": "たて 6cm、よこ 9cm の長方形の 右上のかどを 四角く切り取った図形の まわりの長さは 何cm ですか。",
+          "answer": "30",
+          "meaning": "かどを切り取っても変わらないので (9＋6)×2＝30cmです。",
+          "svg": "<svg viewBox=\"0 0 209 134\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 140,26 140,52 179,52 179,104 62,104\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><path d=\"M 140 26 L 179 26 L 179 52\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.4\" stroke-dasharray=\"4 3\"/><line x1=\"62\" y1=\"18\" x2=\"179\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"120.5\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">よこ 9cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"104\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"69.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">たて 6cm</text><text x=\"163.5\" y=\"43.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">切り取り</text><text x=\"104.5\" y=\"131\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">右上のかどを切り取った形</text></svg>"
+         },
+         {
+          "question": "たて 5cm、よこ 8cm の長方形の 左下のかどを 四角く切り取った図形の まわりの長さは 何cm ですか。",
+          "answer": "26",
+          "meaning": "どのかどでも同じです。(8＋5)×2＝26cmです。",
+          "svg": ""
+         },
+         {
+          "question": "たて 1cm・よこ 2cm の紙を、下に3まい・その上に2まい・いちばん上に1まい つみました。外がわは よこ 6cm・たて 3cm です。この階段のような図形の まわりの長さは 何cm ですか。",
+          "answer": "18",
+          "meaning": "階段も かどの切り取りと同じで、外へずらすと 6cm×3cm の長方形になります。(6＋3)×2＝18cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "まん中が へこむと、深さの2倍 ふえる",
+        "rei": {
+         "question": "たて 4cm、よこ 6cm の長方形の 上の辺の まん中を、よこ 2cm・深さ 2cm だけ 四角く へこませました。この図形の まわりの長さは 何cm ですか。",
+         "svg": "<svg viewBox=\"0 0 182 116\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 92.0,26 92.0,56 122.0,56 122.0,26 152,26 152,86 62,86\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"62\" y1=\"18\" x2=\"152\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"107.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">よこ 6cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"86\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"60.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">たて 4cm</text><line x1=\"86.0\" y1=\"26\" x2=\"86.0\" y2=\"56\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><text x=\"82.0\" y=\"45.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#ff6b6b\">2cm</text><text x=\"91.0\" y=\"113\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">まん中が へこんだ形</text></svg>",
+         "kaisetsu": [
+          "**かどの切り取りとちがって、まん中のへこみは 外へずらして もどせません。**",
+          "へこみの **左右の たての線が2本ふえます**。1本 2cm なので 2×2＝**4cm ふえる**。（へこみの底の 2cm は、上の辺から その分 へったので 差し引き 0）",
+          "もとの長方形は (6＋4)×2＝20cm。20＋4。",
+          "**24cm**。**へこみの深さの2倍だけ ふえる**、とおぼえます。"
+         ],
+         "answer": "24"
+        },
+        "ruidai": [
+         {
+          "question": "たて 5cm、よこ 8cm の長方形の 上の辺の まん中を、深さ 3cm へこませました。まわりの長さは 何cm ですか。",
+          "answer": "32",
+          "meaning": "(8＋5)×2＝26cm。深さ3cmの2倍＝6cm ふえて 32cmです。",
+          "svg": "<svg viewBox=\"0 0 212 131\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 99.5,26 99.5,71 144.5,71 144.5,26 182,26 182,101 62,101\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"62\" y1=\"18\" x2=\"182\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"122.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">よこ 8cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"101\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"67.5\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">たて 5cm</text><line x1=\"93.5\" y1=\"26\" x2=\"93.5\" y2=\"71\" stroke=\"#ff6b6b\" stroke-width=\"1.4\"/><text x=\"89.5\" y=\"52.5\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#ff6b6b\">3cm</text><text x=\"106.0\" y=\"128\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">深さ3cmの へこみ</text></svg>"
+         },
+         {
+          "question": "まわりの長さが 40cm の長方形の 上の辺の まん中を、深さ 5cm へこませると、まわりの長さは 何cm に なりますか。",
+          "answer": "50",
+          "meaning": "40＋5×2＝50cm。もとの たてや よこが 分からなくても 出せます。",
+          "svg": ""
+         },
+         {
+          "question": "たて 3cm、よこ 7cm の長方形の 上の辺に、深さ 2cm の へこみを 2か所 作りました。まわりの長さは 何cm ですか。",
+          "answer": "28",
+          "meaning": "(7＋3)×2＝20cm。へこみ1か所で4cm ふえるので 2か所で8cm。20＋8＝28cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "くっつけると 短くなる。正方形に近いほど 短い",
+        "rei": {
+         "question": "1辺 2cm の 正方形の紙が たくさん あります。この紙を 4まい、重ならないように ならべて 図形を作ります。まわりの長さが 1番 短くなるように するとき、まわりの長さは 何cm ですか。",
+         "svg": "<svg viewBox=\"0 0 192 116\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 122,26 122,86 62,86\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"92\" y1=\"26\" x2=\"92\" y2=\"86\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"56\" x2=\"122\" y2=\"56\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"18\" x2=\"122\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"92.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">4cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"86\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"60.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">4cm</text><text x=\"96.0\" y=\"113\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2まい×2まい＝4cmの正方形</text></svg>",
+         "kaisetsu": [
+          "**ばらばらに置くと** まわりは 8×4＝**32cm**。ここから どれだけ へらせるかです。",
+          "**2まいを くっつけると、くっついた辺2本（2cm＋2cm）が 内がわに かくれて 4cm へります。**だから **くっつく辺を いちばん 多くしたい**。",
+          "4まいなら **2まい×2まい** にならべると 4cm×4cm の正方形。(4＋4)×2。",
+          "**16cm**。**同じ枚数なら、正方形に 近い形ほど まわりは 短い**のです。"
+         ],
+         "answer": "16"
+        },
+        "ruidai": [
+         {
+          "question": "1辺 2cm の正方形の紙 4まいを、横一列に ならべました。まわりの長さは 何cm ですか。",
+          "answer": "20",
+          "meaning": "よこ8cm・たて2cmの長方形になります。(8＋2)×2＝20cm。正方形にならべた16cmより長いですね。",
+          "svg": "<svg viewBox=\"0 0 212 86\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 182,26 182,56 62,56\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"92\" y1=\"26\" x2=\"92\" y2=\"56\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"122\" y1=\"26\" x2=\"122\" y2=\"56\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"152\" y1=\"26\" x2=\"152\" y2=\"56\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"18\" x2=\"182\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"122.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">8cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"56\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"45.0\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">2cm</text><text x=\"106.0\" y=\"83\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">横一列にならべた形</text></svg>"
+         },
+         {
+          "question": "たて 1cm、よこ 5cm の 細長い紙 5まいを ならべます。まわりの長さが 1番 短くなるようにすると 何cm ですか。",
+          "answer": "20",
+          "meaning": "5まいを たてに かさねると 5cm×5cm の正方形。(5＋5)×2＝20cmです。**細長い紙でも 正方形が作れる**のがコツ。",
+          "svg": "<svg viewBox=\"0 0 215 131\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 137,26 137,101 62,101\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"62\" y1=\"41\" x2=\"137\" y2=\"41\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"56\" x2=\"137\" y2=\"56\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"71\" x2=\"137\" y2=\"71\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"86\" x2=\"137\" y2=\"86\" stroke=\"#4f7cff\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"62\" y1=\"18\" x2=\"137\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"99.5\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">5cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"101\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"67.5\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">5cm</text><text x=\"107.5\" y=\"128\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5まいで 5cm×5cm の正方形</text></svg>"
+         },
+         {
+          "question": "1辺 3cm の正方形の紙 9まいを ならべて、まわりの長さが 1番 短くなるようにすると 何cm ですか。",
+          "answer": "36",
+          "meaning": "3まい×3まいで 9cm×9cm の正方形。(9＋9)×2＝36cmです。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "切ると、切り口 2本ぶん ふえる",
+        "rei": {
+         "question": "たて 9cm、よこ 14cm の長方形の紙を、よこの まん中で たてに 1回 切って 2まいに しました。2つの四角形の まわりの長さの 合計は、もとの長方形の まわりより 何cm 長いですか。",
+         "svg": "<svg viewBox=\"0 0 274 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62,26 244,26 244,143 62,143\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#1a2340\" stroke-width=\"2.4\" /><line x1=\"153.0\" y1=\"22\" x2=\"153.0\" y2=\"147\" stroke=\"#ff6b6b\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/><text x=\"153.0\" y=\"157\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">ここで切る</text><line x1=\"62\" y1=\"18\" x2=\"244\" y2=\"18\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"153.0\" y=\"13.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\">よこ 14cm</text><line x1=\"54\" y1=\"26\" x2=\"54\" y2=\"143\" stroke=\"#4f7cff\" stroke-width=\"1.2\"/><text x=\"50.0\" y=\"88.5\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">たて 9cm</text><text x=\"137.0\" y=\"182\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たてに1回 切る</text></svg>",
+         "kaisetsu": [
+          "**切ると、切り口が 2まいの紙 それぞれに できます。**もともと1本だった線が、2本に なるのです。",
+          "切り口の長さは **たての 9cm**。それが **2本ぶん** ふえます。",
+          "9×2。",
+          "**18cm 長い**。**よこの14cmは まったく 関係ありません。**"
+         ],
+         "answer": "18"
+        },
+        "ruidai": [
+         {
+          "question": "長方形の紙を 半分に おって、はさみで おり目の ところを 切りました。2つの四角形の まわりの長さの 合計は、もとの長方形より 18cm 長くなりました。切った線（おり目）の長さは 何cm ですか。",
+          "answer": "9",
+          "meaning": "ふえた18cmは 切り口2本ぶん。18÷2＝9cmです。",
+          "svg": ""
+         },
+         {
+          "question": "たて 6cm、よこ 20cm の紙を、たてに 2回 切って 3まいに しました。まわりの長さの 合計は もとより 何cm 長いですか。",
+          "answer": "24",
+          "meaning": "1回切るごとに 6×2＝12cm ふえます。2回なので 24cmです。",
+          "svg": ""
+         },
+         {
+          "question": "たて 8cm、よこ 10cm の紙を 1回 切って 2まいに したら、まわりの長さの 合計が もとより 20cm 長くなりました。切った線の長さは 何cm ですか。",
+          "answer": "10",
+          "meaning": "20÷2＝10cm。よこに切った（切り口が よこの10cm）と分かります。",
+          "svg": ""
+         }
+        ]
+       },
+       {
+        "bone": "点は（よこ, たて）で表す。一直線では 三角形にならない",
+        "rei": {
+         "question": "たて 5cm、よこ 8cm の紙に 1cm ごとに 線が ひかれ、線と線が 交わるところに 点が うたれています。点の位置を（よこ, たて）で表すことにすると、点アは (1, 2) です。右上のはしの 点ウの位置は どのように 表されますか。",
+         "svg": "<svg viewBox=\"0 0 268 194\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"34\" y1=\"24\" x2=\"34\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"60\" y1=\"24\" x2=\"60\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"86\" y1=\"24\" x2=\"86\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"112\" y1=\"24\" x2=\"112\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"138\" y1=\"24\" x2=\"138\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"164\" y1=\"24\" x2=\"164\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"190\" y1=\"24\" x2=\"190\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"216\" y1=\"24\" x2=\"216\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"242\" y1=\"24\" x2=\"242\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"34\" y1=\"24\" x2=\"242\" y2=\"24\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"34\" y1=\"50\" x2=\"242\" y2=\"50\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"34\" y1=\"76\" x2=\"242\" y2=\"76\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"34\" y1=\"102\" x2=\"242\" y2=\"102\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"34\" y1=\"128\" x2=\"242\" y2=\"128\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><line x1=\"34\" y1=\"154\" x2=\"242\" y2=\"154\" stroke=\"#6c7086\" stroke-width=\"0.8\"/><circle cx=\"34\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"34\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"34\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"34\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"34\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"34\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"86\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"86\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"86\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"86\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"86\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"86\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"112\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"112\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"112\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"112\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"112\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"112\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"138\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"138\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"138\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"138\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"138\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"138\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"164\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"164\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"164\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"164\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"164\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"164\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"190\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"190\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"190\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"190\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"190\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"190\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"216\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"216\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"216\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"216\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"216\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"216\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"242\" cy=\"154\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"242\" cy=\"128\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"242\" cy=\"102\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"242\" cy=\"76\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"242\" cy=\"50\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"242\" cy=\"24\" r=\"2.6\" fill=\"#1a2340\"/><circle cx=\"60\" cy=\"102\" r=\"5\" fill=\"#ff6b6b\"/><text x=\"60\" y=\"93\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">ア</text><circle cx=\"164\" cy=\"102\" r=\"5\" fill=\"#ff6b6b\"/><text x=\"164\" y=\"93\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">イ</text><circle cx=\"242\" cy=\"24\" r=\"5\" fill=\"#22c55e\"/><text x=\"242\" y=\"15\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#22c55e\">ウ</text><text x=\"34\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">0</text><text x=\"60\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"86\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"112\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"138\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"164\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"190\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text><text x=\"216\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">7</text><text x=\"242\" y=\"168\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">8</text><text x=\"26\" y=\"158\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">0</text><text x=\"26\" y=\"132\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text><text x=\"26\" y=\"106\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text><text x=\"26\" y=\"80\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text><text x=\"26\" y=\"54\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text><text x=\"26\" y=\"28\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text><text x=\"134.0\" y=\"191\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">よこ0〜8・たて0〜5 の点</text></svg>",
+         "kaisetsu": [
+          "**先に よこ、あとで たて**の順に読みます。点アは よこに1、たてに2 のところなので (1, 2)。",
+          "点ウは いちばん右で いちばん上。よこは 0から数えて **8**、たては 0から数えて **5**。",
+          "だから (よこ, たて) ＝ (8, 5)。",
+          "**(8, 5)**。**0から数え始める**ことに気をつけます。"
+         ],
+         "answer": "(8, 5)"
+        },
+        "ruidai": [
+         {
+          "question": "この図の 点は 全部で 何こ ありますか。",
+          "answer": "54",
+          "meaning": "よこは 0〜8 の 9こ、たては 0〜5 の 6こ。9×6＝54こです。",
+          "svg": ""
+         },
+         {
+          "question": "点アは (1, 2)、点イは (5, 2) です。この2つと 同じ「たて2」の線の上には、点は 全部で 何こ ありますか。",
+          "answer": "9",
+          "meaning": "たて2の線の上に、よこ0〜8の 9こ ならんでいます。",
+          "svg": ""
+         },
+         {
+          "question": "点アと 点イと、あと1つの点を むすんで 三角形を 作ります。三角形は 何こ 作れますか。",
+          "answer": "45",
+          "meaning": "3つ目の点が **たて2の線の上にあると 一直線になって 三角形になりません**。だから 全部の54こから その9こを ひいて 54−9＝45こです。",
+          "svg": ""
+         }
+        ]
+       }
+      ]
      }
     },
     "lessons": {
