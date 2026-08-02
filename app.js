@@ -1180,7 +1180,9 @@ function initSubject() {
 
   document.getElementById('btn-subject-refresh').onclick = () => forceAppUpdate();
   document.getElementById('btn-subject-settings').onclick = () => { initSettingsScreen(); showScreen('settings'); };
-  document.getElementById('btn-subject-change').onclick = () => {
+  document.getElementById('btn-subject-change').onclick = async () => {
+    await backupLocalData(); // 切り替え前に、今の進捗を確実にクラウドへ保存しておく
+    BACKUP_KEYS.forEach(k => localStorage.removeItem(k));
     localStorage.removeItem('nickname');
     state.nickname = '';
     document.getElementById('nickname-input').value = '';
