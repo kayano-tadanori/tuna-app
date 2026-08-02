@@ -1333,6 +1333,40 @@ function bindDebugHandlers() {
     };
   }
 
+  const rcBtn = document.getElementById('debug-restore-check');
+  if (rcBtn && !rcBtn.dataset.dbgBound) {
+    rcBtn.dataset.dbgBound = '1';
+    rcBtn.onclick = async () => {
+      const el = document.getElementById('debug-restore-state');
+      el.textContent = '調べています…';
+      const NL = String.fromCharCode(10);
+      const hasProgress = !!localStorage.getItem('progress');
+      const hasGacha = !!localStorage.getItem('gacha');
+      const declined = !!localStorage.getItem('restoreDeclined_' + state.nickname);
+      let cloudLine = 'Firebaseにつながっていません';
+      if (typeof getLocalBackup === 'function') {
+        try {
+          const backup = await getLocalBackup(state.nickname);
+          if (!backup) {
+            cloudLine = 'なし（このニックネームのバックアップはクラウドに無い）';
+          } else {
+            const t = backup.lastUpdated && backup.lastUpdated.toDate ? backup.lastUpdated.toDate().toISOString().slice(0, 19) : '不明';
+            cloudLine = 'あり（最終更新 ' + t + '）';
+          }
+        } catch (e) {
+          cloudLine = 'エラー: ' + e.message;
+        }
+      }
+      el.textContent =
+        'ニックネーム: ' + state.nickname + NL +
+        'ローカルにprogress: ' + (hasProgress ? 'あり' : 'なし') + NL +
+        'ローカルにgacha: ' + (hasGacha ? 'あり' : 'なし') + NL +
+        '「復元しない」済みフラグ: ' + (declined ? 'あり（次から聞かれません）' : 'なし') + NL +
+        'クラウドのバックアップ: ' + cloudLine;
+      el.style.whiteSpace = 'pre-wrap';
+    };
+  }
+
   const allmax = document.getElementById('debug-allmax');
   if (allmax) allmax.onclick = () => {
     Object.keys(ITEM_DEFS).forEach(k => addItem(k, 99));
