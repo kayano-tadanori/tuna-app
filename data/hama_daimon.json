@@ -2303,6 +2303,60 @@
          "meaning": "たて6・よこ7の長方形（42こ分）でかこみ、四すみの三角形 10・3・6・3 をひく。42−22＝20。"
         }
        ]
+      },
+      {
+       "id": "hd_3m_k02_635_3",
+       "src": "HG-2655",
+       "title": "くりかえす数の ならび",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 3,
+       "star": 2,
+       "intro": "1，2，3の 3しゅるいの数を、あるきまりで つぎのように ならべます。\n1，1，1，2，2，3，1，1，1，2，2，3，……",
+       "steps": [
+        {
+         "question": "左から 20番目の数は 何ですか。",
+         "answer": "1",
+         "meaning": "「1，1，1，2，2，3」の 6こで 1かたまり。20÷6＝3あまり2 だから かたまりの2番目＝1。"
+        },
+        {
+         "question": "1番目から 28番目までの 数を すべて たすと いくつですか。",
+         "answer": "45",
+         "meaning": "1かたまりの和は 1+1+1+2+2+3＝10。28÷6＝4あまり4 で 10×4＝40。あまりの4こ（1，1，1，2）で 5。合わせて45。"
+        },
+        {
+         "question": "1番目から ☆番目までに、2が ぜんぶで 18こ ならんでいました。☆に あてはまる数は 何ですか。",
+         "answer": "53",
+         "meaning": "1かたまりに 2は 2こ。18こ目の2は 9かたまり目の 2こ目。9かたまり目は 49〜54番目で、52番目が1こ目の2、53番目が2こ目の2。だから 53。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k02_635_4",
+       "src": "HG-2656",
+       "title": "63を たして 十のくらいを 見る",
+       "category": "kazu",
+       "unit": "記号定義（約束）",
+       "grade": 3,
+       "star": 3,
+       "intro": "〈ア〉は、アに 63を たしたときの 十のくらいの数を あらわします。\n〈8〉…8+63＝71 なので 〈8〉＝7。　〈17〉…17+63＝80 なので 〈17〉＝8。",
+       "steps": [
+        {
+         "question": "〈56〉は いくつですか。",
+         "answer": "1",
+         "meaning": "56+63＝119。十のくらいは 1。"
+        },
+        {
+         "question": "〈イ〉＝0 に なるとき、イに あてはまる数の うち いちばん 小さい数は 何ですか。",
+         "answer": "37",
+         "meaning": "十のくらいが0に なるのは たした答えが 100〜109 のとき（100より小さいと 2けたで0に ならない）。いちばん小さいのは 100 のときで イ＝100−63＝37。"
+        },
+        {
+         "question": "〈ウ〉+〈19〉＝12 に なりました。ウに あてはまる 3けたの数の うち いちばん 大きい数は 何ですか。",
+         "answer": "986",
+         "meaning": "〈19〉は 19+63＝82 で 8。だから 〈ウ〉＝4。ウ+63 の十のくらいが4に なる いちばん大きい3けたの数は 986（986+63＝1049）。"
+        }
+       ]
       }
      ],
      "3": [
@@ -2389,6 +2443,88 @@
          "meaning": "80−（☆+☆）×2＝60 なので ☆×4＝20、☆＝5。"
         }
        ]
+      },
+      {
+       "id": "hd_3m_k03_636_3",
+       "src": "HG-2658",
+       "title": "◎は 大きさの ちがい",
+       "category": "kazu",
+       "unit": "記号定義（約束）",
+       "grade": 3,
+       "star": 3,
+       "intro": "A◎B は、AとBの 大きさの ちがいを あらわします。\n8◎4＝8−4＝4　　5◎7＝7−5＝2\n●、★、■には 0より大きい数が 入ります。",
+       "steps": [
+        {
+         "question": "29◎43 は いくつですか。",
+         "answer": "14",
+         "meaning": "43−29＝14。大きい方から 小さい方を ひく。"
+        },
+        {
+         "question": "126◎●＝☆、●◎552＝☆ の とき、●は いくつですか。",
+         "answer": "339",
+         "meaning": "126からの ちがいと 552からの ちがいが 同じ＝●は 126と552の ちょうど まん中。(126+552)÷2＝339。（このとき ☆＝213）"
+        },
+        {
+         "question": "★◎88＝■、■◎100＝23 の とき、★に あてはまる数を すべて たすと いくつですか。",
+         "answer": "387",
+         "meaning": "■◎100＝23 から ■は 123 か 77。■＝123 のとき ★は 88+123＝211（88−123は マイナスなので なし）。■＝77 のとき ★は 88+77＝165 と 88−77＝11。211+165+11＝387。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k03_636_4",
+       "src": "HG-2659",
+       "title": "つぼと はこの カードこうかん",
+       "category": "baai",
+       "unit": "場合の数",
+       "grade": 3,
+       "star": 3,
+       "intro": "つぼには 1，3，5，7，9 の カードが、はこには 2，4，6，8 の カードが 1まいずつ 入っています。\n【そうさ】つぼから1まい（十のくらい）、はこから1まい（一のくらい）を とり出して 2けたの数を 記ろくし、そのあと とった2まいを 入れかえます（つぼのカードは はこへ、はこのカードは つぼへ）。\nこの そうさを 2回 行います。",
+       "svg": "<svg viewBox='0 0 300 116' xmlns='http://www.w3.org/2000/svg'><text x='70' y='14' fill='#ffd166' font-size='10' text-anchor='middle'>つぼ</text><text x='228' y='14' fill='#ffd166' font-size='10' text-anchor='middle'>はこ</text><ellipse cx='70' cy='58' rx='58' ry='34' fill='#1e293b' stroke='#4f9eff' stroke-width='1.3'/><rect x='172' y='26' width='112' height='64' rx='4' fill='#1e293b' stroke='#4f9eff' stroke-width='1.3'/><text x='28' y='63' fill='#06d6a0' font-size='13' text-anchor='middle' font-weight='bold'>1</text><text x='49' y='63' fill='#06d6a0' font-size='13' text-anchor='middle' font-weight='bold'>3</text><text x='70' y='63' fill='#06d6a0' font-size='13' text-anchor='middle' font-weight='bold'>5</text><text x='91' y='63' fill='#06d6a0' font-size='13' text-anchor='middle' font-weight='bold'>7</text><text x='112' y='63' fill='#06d6a0' font-size='13' text-anchor='middle' font-weight='bold'>9</text><text x='196' y='63' fill='#ffd166' font-size='13' text-anchor='middle' font-weight='bold'>2</text><text x='220' y='63' fill='#ffd166' font-size='13' text-anchor='middle' font-weight='bold'>4</text><text x='244' y='63' fill='#ffd166' font-size='13' text-anchor='middle' font-weight='bold'>6</text><text x='268' y='63' fill='#ffd166' font-size='13' text-anchor='middle' font-weight='bold'>8</text><text x='70' y='106' fill='#f8fafc' font-size='8' text-anchor='middle'>十のくらい</text><text x='228' y='106' fill='#f8fafc' font-size='8' text-anchor='middle'>一のくらい</text></svg>",
+       "steps": [
+        {
+         "question": "1回目の そうさで 記ろくする数の うち、50より 大きい数は 何とおり ありますか。",
+         "answer": "12",
+         "meaning": "十のくらいが 5，7，9 なら かならず 50より大きい。3×4＝12とおり。"
+        },
+        {
+         "question": "1回目に つぼから 7を とりました。2回目の 記ろくが 1回目より 大きくなる とり出し方は 何とおり ありますか。",
+         "answer": "20",
+         "meaning": "はこから とったカードが 2，4，6，8 の どれかで 場合分けする。入れかえたあとの つぼ・はこで 数え上げると 4+4+4+8＝20とおり。"
+        },
+        {
+         "question": "1回目の 記ろくから 2回目の 記ろくを ひくと 9に なりました。1回目の 記ろくは 何とおり 考えられますか。",
+         "answer": "4",
+         "meaning": "入れかえたあと 同じ2まいを 引き返すと 差は 9×(十−一)。差が9に なるのは 十のくらいと 一のくらいが 1ちがいのとき。32，54，76，98 の 4とおり。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k03_636_5",
+       "src": "HG-2660",
+       "title": "ポケットを たたくと ふえる",
+       "category": "baai",
+       "unit": "最大最小・最適化",
+       "grade": 3,
+       "star": 3,
+       "intro": "ふしぎな ポケットが あります。ポケットを 1回 たたくと、そのときの まい数が 「3まい ふえる」か「2ばいに なる」の どちらかに なります。\n（たとえば 4まいのとき 1回 たたくと 7まい か 8まい）",
+       "steps": [
+        {
+         "question": "3まい 入れて 2回 たたくと、いちばん 多くて 何まいに なりますか。",
+         "answer": "12",
+         "meaning": "2ばい→2ばい が いちばん多い。3→6→12。"
+        },
+        {
+         "question": "2まい 入れて 2回 たたくとき、いちばん 少ないまい数と いちばん 多いまい数を たすと 何まいですか。",
+         "answer": "17",
+         "meaning": "4とおり ぜんぶ しらべる。2→5→8／2→5→10／2→4→7／2→4→8。いちばん少ないのは 7まい、いちばん多いのは 10まい。7+10＝17。（先に 2ばいに してから 3を たすと いちばん 少なくなる）"
+        },
+        {
+         "question": "□まい 入れて 4回 たたくと 54まいに なりました。□に あてはまる数の うち 小さい方から 4番目は 何ですか。",
+         "answer": "18",
+         "meaning": "4回の たたき方は 2×2×2×2＝16とおり。54に なる □を すべてさがすと 6，9，12，18，21，42 の 6こ。小さい方から4番目は 18。"
+        }
+       ]
       }
      ],
      "4": [
@@ -2455,6 +2591,107 @@
           "ウ（A あやめ／B さつき）"
          ],
          "meaning": "3通りは さつき・あやめ・みづき／さつき・みづき・あやめ／みづき・さつき・あやめ。みづきが あやめより後になるのは1通りだけ。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k04_637_2f",
+       "src": "HG-2661",
+       "title": "三角形は いくつ かくれている",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "grade": 3,
+       "star": 3,
+       "intro": "三角形の 3つの ちょう点から、むかい合う 辺に 1本ずつ 直線を ひきました。\n（3本が 1つの点で 交わることは ありません）",
+       "svg": "<svg viewBox='0 0 300 132' xmlns='http://www.w3.org/2000/svg'><polygon points='16,118 152,14 288,118' fill='none' stroke='#4f9eff' stroke-width='1.6'/><line x1='16' y1='118' x2='206.4' y2='55.6' stroke='#06d6a0' stroke-width='1.3'/><line x1='152' y1='14' x2='138.4' y2='118.0' stroke='#06d6a0' stroke-width='1.3'/><line x1='288' y1='118' x2='56.8' y2='86.8' stroke='#06d6a0' stroke-width='1.3'/><text x='10' y='127' fill='#ffd166' font-size='9' text-anchor='middle'>ア</text><text x='152' y='10' fill='#ffd166' font-size='9' text-anchor='middle'>イ</text><text x='295' y='127' fill='#ffd166' font-size='9' text-anchor='middle'>ウ</text></svg>",
+       "steps": [
+        {
+         "question": "この図の中に 三角形は 全部で 何こ ありますか。",
+         "answer": "17",
+         "meaning": "ひかれている 直線は 三角形の3辺と 中の3本で ぜんぶで 6本。そこから 3本を えらぶ えらび方は 20とおり。そのうち 同じ ちょう点に 3本とも 集まる 3とおりは 三角形に ならないので 20−3＝17こ。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k04_637_3",
+       "src": "HG-2662",
+       "title": "正方形を ならべた形の まわり",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "grade": 3,
+       "star": 2,
+       "intro": "いろいろな 大きさの 正方形を、辺と辺が ぴったり くっつくように 横に ならべます。",
+       "svg": "<svg viewBox='0 0 300 164' xmlns='http://www.w3.org/2000/svg'><text x='6' y='12' fill='#ffd166' font-size='9' text-anchor='start'>(1)</text><rect x='24.0' y='18' width='32.0' height='32.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><rect x='56.0' y='18' width='32.0' height='32.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='56.0' y='61.0' fill='#f8fafc' font-size='8' text-anchor='middle'>1辺4cmの正方形が2こ</text><text x='160' y='12' fill='#ffd166' font-size='9' text-anchor='start'>(2)</text><rect x='178' y='34.0' width='16.0' height='16.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><rect x='194.0' y='26.0' width='24.0' height='24.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><rect x='218.0' y='18.0' width='32.0' height='32.0' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='214' y='62' fill='#f8fafc' font-size='8' text-anchor='middle'>2cm・3cm・4cmの正方形</text><text x='6' y='84' fill='#ffd166' font-size='9' text-anchor='start'>(3)</text><rect x='34' y='109.2' width='28.8' height='28.8' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><rect x='62.8' y='99.6' width='38.400000000000006' height='38.400000000000006' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><rect x='101.2' y='115.6' width='22.400000000000002' height='22.400000000000002' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><line x1='62.8' y1='109.2' x2='62.8' y2='99.6' stroke='#ffd166' stroke-width='1.2'/><text x='58.8' y='107.4' fill='#ffd166' font-size='8' text-anchor='end'>3cm</text><line x1='101.2' y1='99.6' x2='101.2' y2='115.6' stroke='#ffd166' stroke-width='1.2'/><text x='105.2' y='110.6' fill='#ffd166' font-size='8' text-anchor='start'>5cm</text><line x1='34' y1='145' x2='123.60000000000001' y2='145' stroke='#ffd166' stroke-width='1.1'/><text x='78.80000000000001' y='156' fill='#ffd166' font-size='8' text-anchor='middle'>28cm</text></svg>",
+       "steps": [
+        {
+         "question": "1辺4cmの 正方形を 2こ 横に ならべた形の まわりの 長さは 何cmですか。",
+         "answer": "24",
+         "meaning": "たて4cm・よこ8cmの 長方形と 同じ。(4+8)×2＝24cm。"
+        },
+        {
+         "question": "1辺が 2cm・3cm・4cmの 正方形を、高さが だんだん 高くなるように 左から ならべた形の まわりの 長さは 何cmですか。",
+         "answer": "26",
+         "meaning": "だんだん 高くなる 階だん形は、へこみを 外へ 押し出すと 外がわの長方形と 同じ。よこ 2+3+4＝9cm、いちばん高い ところ 4cm。(9+4)×2＝26cm。"
+        },
+        {
+         "question": "左・まん中・右に 正方形を ならべます。まん中は 左より 3cm 高く、右は まん中より 5cm ひくく、3つの 正方形の 底辺の 合計は 28cmです。この形の まわりの 長さは 何cmですか。",
+         "answer": "80",
+         "meaning": "左を □cm とすると まん中は □+3、右は □−2。□+(□+3)+(□−2)＝28 より □＝9。左9・まん中12・右7。山の形なので 外がわの長方形の 近道は 使えない。9+9+3+12+5+7+7+28＝80cm。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k04_637_4",
+       "src": "HG-2663",
+       "title": "ならんだ数の きまり",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 3,
+       "star": 2,
+       "intro": "つぎのように 数が ならんでいます。\n1，2，3，3，4，5，5，6，7，7，8，9，9，……\n2こ目の 3は 左から 4番目です。",
+       "steps": [
+        {
+         "question": "2こ目の 13は 左から 何番目ですか。",
+         "answer": "19",
+         "meaning": "3こずつ 区切ると 1組目(1,2,3)・2組目(3,4,5)・3組目(5,6,7)…で □組目は (2×□−1, 2×□, 2×□+1)。13は 6組目の さいご（18番目）と 7組目の さいしょ（19番目）に 出る。"
+        },
+        {
+         "question": "左から 23番目の 数は 何ですか。",
+         "answer": "16",
+         "meaning": "23＝3×7+2 だから 8組目の 2番目。8組目は (15,16,17) なので 16。"
+        },
+        {
+         "question": "1番目から 28番目までの 数を すべて たすと いくつですか。",
+         "answer": "289",
+         "meaning": "1組の和は (2□−1)+2□+(2□+1)＝6×□。1〜9組目で 6×(1+2+…+9)＝270。28番目は 10組目の 1番目＝19。270+19＝289。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k04_637_5",
+       "src": "HG-2664",
+       "title": "カードの 重ねかえ",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 3,
+       "star": 3,
+       "intro": "1から90までの 数を かいた 90まいの カードが、1が 一番上に なるように 小さいじゅんに 重ねて あります。",
+       "svg": "<svg viewBox='0 0 300 92' xmlns='http://www.w3.org/2000/svg'><text x='6' y='12' fill='#ffd166' font-size='8' text-anchor='start'>[図1] 1が一番上</text><rect x='14' y='18' width='52' height='46' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='40' y='34' fill='#06d6a0' font-size='10' text-anchor='middle' font-weight='bold'>1</text><text x='40' y='46' fill='#f8fafc' font-size='9' text-anchor='middle'>↓</text><text x='40' y='58' fill='#f8fafc' font-size='9' text-anchor='middle'>90</text><text x='86' y='12' fill='#ffd166' font-size='8' text-anchor='start'>[図2] 45まいずつ2つ</text><rect x='94' y='18' width='60' height='20' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><text x='124' y='32' fill='#f8fafc' font-size='9' text-anchor='middle'>1〜45</text><rect x='94' y='42' width='60' height='20' rx='2' fill='#3730a3' stroke='#4f9eff' stroke-width='1.2'/><text x='124' y='56' fill='#f8fafc' font-size='9' text-anchor='middle'>46〜90</text><text x='160' y='32' fill='#f8fafc' font-size='8' text-anchor='start'>下を</text><text x='160' y='44' fill='#f8fafc' font-size='8' text-anchor='start'>上へ</text><text x='196' y='12' fill='#ffd166' font-size='8' text-anchor='start'>[図3] 30まいずつ3つ</text><rect x='204' y='18' width='56' height='13' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><rect x='204' y='34' width='56' height='13' rx='2' fill='#3730a3' stroke='#4f9eff' stroke-width='1.0'/><rect x='204' y='50' width='56' height='13' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='232' y='27' fill='#f8fafc' font-size='8' text-anchor='middle'>上</text><text x='232' y='43' fill='#ffd166' font-size='8' text-anchor='middle'>まん中</text><text x='232' y='59' fill='#f8fafc' font-size='8' text-anchor='middle'>下</text><text x='150' y='82' fill='#06d6a0' font-size='8' text-anchor='middle'>まん中のまとまりを 一番上に もってくる</text></svg>",
+       "steps": [
+        {
+         "question": "上から 45まいずつ 2つに 分け、下の まとまりを 一番上に 重ねました。一番上の カードの数は 何ですか。",
+         "answer": "46",
+         "meaning": "下の まとまりは 46〜90。それを 上に もってくるので 一番上は 46。"
+        },
+        {
+         "question": "そのあと 上から 30まいずつ 3つに 分け、まん中の まとまりを 一番上に 重ねました。一番上の カードの数は 何ですか。",
+         "answer": "76",
+         "meaning": "このときの ならびは 46〜90，1〜45。上から30まいは 46〜75、まん中の30まいは 76〜90，1〜15。まん中を 上に もってくるので 一番上は 76。"
+        },
+        {
+         "question": "さらに 上から 10まいずつ 9つに 分け、まん中（5つ目）の まとまりを 一番上に 重ねました。「12」は 上から 何まい目に ありますか。",
+         "answer": "37",
+         "meaning": "このときの ならびは 76〜90，1〜45，46〜75。10まいずつに 分けると 5つ目は 26〜35。それを 上に もってくると、そのあとに 76〜85、86〜90と1〜5、つぎに 6〜15 が つづく。12は その 7番目 なので 10+10+10+7＝37まい目。"
         }
        ]
       }
@@ -2549,6 +2786,84 @@
          "meaning": "すてたカードの和は 55−41＝14。2まいなら3通り、3まいなら9通り、4まいなら5通り、5まい以上は いちばん小さくても15なのでむり。合わせて17通り。"
         }
        ]
+      },
+      {
+       "id": "hd_3m_k05_638_3",
+       "src": "HG-2665",
+       "title": "サ・ン・ネの 計算",
+       "category": "kazu",
+       "unit": "記号定義（約束）",
+       "grade": 3,
+       "star": 2,
+       "intro": "サ、ン、ネ に それぞれ 2けたの数を あてはめて、\n　　サ ＋ ン ＋ ネ ＋ ン\nを 計算します。",
+       "steps": [
+        {
+         "question": "サ＝34、ン＝26、ネ＝46 の とき、答えは いくつですか。",
+         "answer": "132",
+         "meaning": "34+26+46+26＝132。ンが 2回 出てくることに 気をつける。"
+        },
+        {
+         "question": "サ＝28、ネ＝90 で、答えが 218 に なりました。ンは いくつですか。",
+         "answer": "50",
+         "meaning": "28+90＝118。218−118＝100 が ンの2こ分。100÷2＝50。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k05_638_4",
+       "src": "HG-2666",
+       "title": "長方形を 点線で 切る",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "grade": 3,
+       "star": 2,
+       "intro": "長方形の 紙を、点線の ところで 2つに 切ります。",
+       "svg": "<svg viewBox='0 0 300 82' xmlns='http://www.w3.org/2000/svg'><text x='8' y='12' fill='#ffd166' font-size='8' text-anchor='start'>[図1]</text><rect x='8' y='18' width='84' height='42' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><line x1='50' y1='18' x2='50' y2='60' stroke='#ffd166' stroke-width='1.2' stroke-dasharray='3 3'/><text x='50' y='72' fill='#f8fafc' font-size='8' text-anchor='middle'>1辺7cmの正方形2つ</text><text x='110' y='12' fill='#ffd166' font-size='8' text-anchor='start'>[図2]</text><rect x='110' y='18' width='80' height='42' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><line x1='166' y1='18' x2='166' y2='60' stroke='#ffd166' stroke-width='1.2' stroke-dasharray='3 3'/><text x='150' y='72' fill='#f8fafc' font-size='8' text-anchor='middle'>まわり68cm</text><text x='202' y='39' fill='#06d6a0' font-size='10' text-anchor='start' font-weight='bold'>⑦</text><line x1='196' y1='18' x2='196' y2='60' stroke='#06d6a0' stroke-width='1.1'/><text x='216' y='12' fill='#ffd166' font-size='8' text-anchor='start'>[図3]</text><rect x='216' y='18' width='64' height='42' rx='2' fill='#1e293b' stroke='#4f9eff' stroke-width='1.2'/><line x1='248' y1='18' x2='248' y2='60' stroke='#ffd166' stroke-width='1.2' stroke-dasharray='3 3'/><text x='248' y='72' fill='#f8fafc' font-size='8' text-anchor='middle'>まわり110cm</text><text x='290' y='39' fill='#06d6a0' font-size='10' text-anchor='middle' font-weight='bold'>④</text><line x1='285' y1='18' x2='285' y2='60' stroke='#06d6a0' stroke-width='1.1'/></svg>",
+       "steps": [
+        {
+         "question": "[図1]は 1辺7cmの 正方形 2つに 分かれます。切る前の 長方形の まわりの 長さは 何cmですか。",
+         "answer": "42",
+         "meaning": "たて7cm・よこ14cmの 長方形。(7+14)×2＝42cm。"
+        },
+        {
+         "question": "[図2]の まわりの 長さは 68cmです。切ると 正方形と 長方形に 分かれ、できた 長方形の まわりの 長さは 40cmでした。⑦は いくつですか。",
+         "answer": "14",
+         "meaning": "よこを □、たてを ⑦ とすると □+⑦＝34。できた長方形は よこ(□−⑦)・たて⑦ で まわりは (□−⑦+⑦)×2＝□×2＝40 → □＝20。だから ⑦＝34−20＝14。"
+        },
+        {
+         "question": "[図3]の まわりの 長さは 110cmです。切ると 同じ大きさの 長方形 2つに 分かれ、1つ分の まわりの 長さは 78cmでした。④は いくつですか。",
+         "answer": "23",
+         "meaning": "よこ□・たて④ で □+④＝55。半分に 切った 長方形の まわりは □÷2×2+④×2＝□+④×2＝78。2つの式から ④＝23（□＝32）。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k05_638_5",
+       "src": "HG-2667",
+       "title": "花を かざる きまり",
+       "category": "baai",
+       "unit": "推理・論理",
+       "grade": 3,
+       "star": 3,
+       "intro": "アヤメ、ツツジ、バラ、カーネーションの 4しゅるいの 花から、2しゅるい以上 えらんで かざります。\n【きまり1】アヤメを かざるなら、ツツジも かざる。\n【きまり2】バラを かざるなら、ほかに 2しゅるい以上 かざる。\nねだんは アヤメ＜ツツジ＜バラ＜カーネーション です。",
+       "steps": [
+        {
+         "question": "アヤメを かざることに したとき、【きまり1】だけを 守る えらび方は 何とおり ありますか。",
+         "answer": "4",
+         "meaning": "アヤメを 入れるなら ツツジも 入る。のこりの バラ・カーネーションを 入れるか どうかで 2×2＝4とおり。"
+        },
+        {
+         "question": "【きまり1】と【きまり2】を 守る えらび方の うち、4番目に 安い 組み合わせは どれですか。",
+         "answer": "アヤメ・ツツジ・カーネーション",
+         "choices": [
+          "アヤメ・ツツジ・カーネーション",
+          "アヤメ・ツツジ・バラ",
+          "ツツジ・カーネーション",
+          "アヤメ・ツツジ"
+         ],
+         "meaning": "2つの きまりを 守る えらび方は ぜんぶで 6とおり。それを 安いじゅんに ならべると、ねだんの 数が わからなくても 4番目は かならず アヤメ・ツツジ・カーネーション に なる。"
+        }
+       ]
       }
      ],
      "6": [
@@ -2605,6 +2920,79 @@
          "question": "［図5］の図形の広さは［図1］の正方形何こ分の広さになりますか。",
          "answer": "104",
          "meaning": "1辺を2回かけて 6つ たさなくても、13×8＝104 で一発で出る。（1+1+4+9+25+64＝104 と同じ）"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k06_639_3",
+       "src": "HG-2668",
+       "title": "〈 〉と《 》の 計算",
+       "category": "kazu",
+       "unit": "記号定義（約束）",
+       "grade": 3,
+       "star": 3,
+       "intro": "〈n〉は「1から 2ずつ ふえる数を n こ たす」計算です。〈3〉＝1+3+5＝9、〈4〉＝1+3+5+7＝16。\n《n》は「2から 2ずつ ふえる数を n こ たす」計算です。《5》＝2+4+6+8+10＝30、《6》＝42。",
+       "steps": [
+        {
+         "question": "〈6〉は いくつですか。",
+         "answer": "36",
+         "meaning": "1+3+5+7+9+11＝36。（n こ たすと n×n に なる）"
+        },
+        {
+         "question": "《9》−〈9〉は いくつですか。",
+         "answer": "9",
+         "meaning": "《9》は 〈9〉の それぞれの数より 1ずつ 大きい数を 9こ たしたもの。だから ちがいは 9。"
+        },
+        {
+         "question": "《ア》−《イ》＝〈6〉で、アは イより 3 大きいとき、イは いくつですか。",
+         "answer": "4",
+         "meaning": "〈6〉＝36。《n》＝n×(n+1) なので (イ+3)×(イ+4)−イ×(イ+1)＝6×イ+12＝36 → イ＝4（ア＝7）。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k06_639_4",
+       "src": "HG-2669",
+       "title": "2しゅるいの 三角形を くっつける",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "grade": 3,
+       "star": 3,
+       "intro": "3つの 辺が 5cm、5cm、3cm の 三角形アと、3つの 辺が 3cm、4cm、5cm の 三角形イが たくさん あります。これらを 辺の 長さが 同じ ところで ぴったり くっつけます。",
+       "svg": "<svg viewBox='0 0 300 184' xmlns='http://www.w3.org/2000/svg'><text x='8' y='12' fill='#ffd166' font-size='9' text-anchor='start'>三角形ア</text><polygon points='20,96 71.0,96 45.5,14.915167879559618' fill='none' stroke='#4f9eff' stroke-width='1.5'/><text x='45.5' y='107' fill='#f8fafc' font-size='8' text-anchor='middle'>3cm</text><text x='16' y='55.45758393977981' fill='#f8fafc' font-size='8' text-anchor='end'>5cm</text><text x='77.0' y='55.45758393977981' fill='#f8fafc' font-size='8' text-anchor='start'>5cm</text><text x='112' y='12' fill='#ffd166' font-size='9' text-anchor='start'>三角形イ</text><polygon points='124,96 175.0,96 124,28.0' fill='none' stroke='#06d6a0' stroke-width='1.5'/><text x='149.5' y='107' fill='#f8fafc' font-size='8' text-anchor='middle'>3cm</text><text x='120' y='62.0' fill='#f8fafc' font-size='8' text-anchor='end'>4cm</text><text x='156.3' y='58.599999999999994' fill='#f8fafc' font-size='8' text-anchor='start'>5cm</text><text x='212' y='12' fill='#ffd166' font-size='9' text-anchor='start'>[図2]</text><polygon points='226,96 277.0,96 251.5,14.915167879559618' fill='none' stroke='#4f9eff' stroke-width='1.5'/><polygon points='226,96 277.0,96 226,164.0' fill='none' stroke='#06d6a0' stroke-width='1.5'/><line x1='226' y1='96' x2='277.0' y2='96' stroke='#ffd166' stroke-width='1.0' stroke-dasharray='3 2'/><text x='251.5' y='177.0' fill='#f8fafc' font-size='8' text-anchor='middle'>アとイを くっつけた形</text></svg>",
+       "steps": [
+        {
+         "question": "[図2]は アと イを 1つずつ くっつけた 形です。まわりの 長さは 何cmですか。",
+         "answer": "19",
+         "meaning": "アの まわりは 5+5+3＝13cm、イの まわりは 3+4+5＝12cm。くっつけた 3cmの 辺は 内がわに なって まわりから 消えるので、13+12−3×2＝19cm。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k06_639_5",
+       "src": "HG-2670",
+       "title": "電車に 乗る人 おりる人",
+       "category": "baai",
+       "unit": "推理・論理",
+       "grade": 3,
+       "star": 3,
+       "intro": "電車が 5つの 駅に とまります。それぞれの 駅で 乗った人と おりた人の 数は 表の とおりです。\nはじめの 駅で 44人が 乗りました。",
+       "svg": "<svg viewBox='0 0 300 142' xmlns='http://www.w3.org/2000/svg'><text x='150' y='13' fill='#ffd166' font-size='10' text-anchor='middle'>電車に 乗った人と おりた人</text><rect x='20' y='20' width='260' height='114' rx='3' fill='none' stroke='#4f9eff' stroke-width='1.2'/><text x='78' y='33' fill='#ffd166' font-size='9' text-anchor='middle'>駅</text><text x='178' y='33' fill='#ffd166' font-size='9' text-anchor='middle'>乗った人</text><text x='248' y='33' fill='#ffd166' font-size='9' text-anchor='middle'>おりた人</text><line x1='20' y1='39' x2='280' y2='39' stroke='#4f9eff' stroke-width='0.8'/><text x='78' y='52' fill='#f8fafc' font-size='9' text-anchor='middle'>はじめの駅</text><text x='178' y='52' fill='#06d6a0' font-size='9' text-anchor='middle'>44</text><text x='248' y='52' fill='#f8fafc' font-size='9' text-anchor='middle'>—</text><line x1='20' y1='58' x2='280' y2='58' stroke='#4f9eff' stroke-width='0.8'/><text x='78' y='71' fill='#f8fafc' font-size='9' text-anchor='middle'>2つ目の駅</text><text x='178' y='71' fill='#06d6a0' font-size='9' text-anchor='middle'>13</text><text x='248' y='71' fill='#f8fafc' font-size='9' text-anchor='middle'>11</text><line x1='20' y1='77' x2='280' y2='77' stroke='#4f9eff' stroke-width='0.8'/><text x='78' y='90' fill='#f8fafc' font-size='9' text-anchor='middle'>3つ目の駅</text><text x='178' y='90' fill='#06d6a0' font-size='9' text-anchor='middle'>10</text><text x='248' y='90' fill='#f8fafc' font-size='9' text-anchor='middle'>8</text><line x1='20' y1='96' x2='280' y2='96' stroke='#4f9eff' stroke-width='0.8'/><text x='78' y='109' fill='#f8fafc' font-size='9' text-anchor='middle'>4つ目の駅</text><text x='178' y='109' fill='#06d6a0' font-size='9' text-anchor='middle'>7</text><text x='248' y='109' fill='#f8fafc' font-size='9' text-anchor='middle'>18</text><line x1='20' y1='115' x2='280' y2='115' stroke='#4f9eff' stroke-width='0.8'/><text x='78' y='128' fill='#f8fafc' font-size='9' text-anchor='middle'>さいごの駅</text><text x='178' y='128' fill='#06d6a0' font-size='9' text-anchor='middle'>14</text><text x='248' y='128' fill='#f8fafc' font-size='9' text-anchor='middle'>15</text><line x1='136' y1='20' x2='136' y2='134' stroke='#4f9eff' stroke-width='0.8'/><line x1='214' y1='20' x2='214' y2='134' stroke='#4f9eff' stroke-width='0.8'/></svg>",
+       "steps": [
+        {
+         "question": "2つ目の 駅を 出発したとき、電車に 乗っている人は 何人ですか。",
+         "answer": "46",
+         "meaning": "44−11+13＝46人。"
+        },
+        {
+         "question": "4つ目の 駅を 出発したとき、はじめの駅から ずっと 乗っている人は 少なくとも 何人ですか。",
+         "answer": "7",
+         "meaning": "はじめの人を できるだけ 先に おろすと いちばん 少なくなる。44−11＝33、33−8＝25、25−18＝7。だから 少なくとも 7人。"
+        },
+        {
+         "question": "さいごの 駅まで ずっと 乗っている人は 多くて 何人ですか。",
+         "answer": "22",
+         "meaning": "こんどは あとから 乗った人を 先に おろす。2つ目の駅…あとの人が まだ いないので 元の人が11人 おりて 33人。3つ目の駅…あとの13人から 8人 おろせるので 元の人は 33人のまま。4つ目の駅…18人 おりるが あとの人は15人しか いないので、たりない3人は 元の人。33−3＝30人。さいごの駅…15人 おりるが あとの人は7人しか いないので、たりない8人は 元の人。30−8＝22人。"
         }
        ]
       }
@@ -2700,6 +3088,95 @@
          "answer": "60",
          "svg": "<svg viewBox='0 0 160 118' xmlns='http://www.w3.org/2000/svg'><polygon points='20.0,18.0 132.0,18.0 132.0,34.0 84.0,34.0 84.0,74.0 132.0,74.0 132.0,98.0 20.0,98.0' fill='#3b82f6' fill-opacity='0.28' stroke='#4f9eff' stroke-width='1.6'/><text x='76.0' y='109.2' fill='#ffd166' font-size='9' text-anchor='middle'>14cm</text><text x='108.0' y='34.8' fill='#ffd166' font-size='9' text-anchor='middle'>6cm</text><text x='136.8' y='30.0' fill='#ffd166' font-size='9' text-anchor='middle'>2cm</text><text x='79.2' y='59.6' fill='#ffd166' font-size='9' text-anchor='middle'>5cm</text><text x='136.8' y='91.6' fill='#ffd166' font-size='9' text-anchor='middle'>3cm</text><text x='8' y='12' fill='#ffd166' font-size='9' text-anchor='start'>かどが みんな直角の図形</text></svg>",
          "meaning": "たては 2+5+3＝10cm。外がわの長方形は (14+10)×2＝48cm。へこみの深さ6cmが2回分で 48+12＝60cm。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k07_640_3",
+       "src": "HG-2671",
+       "title": "【ア＊イ】の きまり",
+       "category": "kazu",
+       "unit": "記号定義（約束）",
+       "grade": 3,
+       "star": 2,
+       "intro": "【ア＊イ】は、アと イを たした数に、アと イの ちがいを たした数です。\n【5＊3】＝(5+3)+(5−3)＝10\n【【5＊8】＊【3＊7】】＝【16＊14】＝32",
+       "steps": [
+        {
+         "question": "【425＊387】は いくつですか。",
+         "answer": "850",
+         "meaning": "(425+387)+(425−387)＝812+38＝850。じつは 大きい方の 2ばいに なる。"
+        },
+        {
+         "question": "【【34＊98】＊【82＊69】】は いくつですか。",
+         "answer": "392",
+         "meaning": "【34＊98】＝196、【82＊69】＝164。【196＊164】＝196×2＝392。"
+        },
+        {
+         "question": "【【37＊45】＊□】＝512 の とき、□は いくつですか。",
+         "answer": "256",
+         "meaning": "【37＊45】＝90。【90＊□】は 大きい方の 2ばい。512÷2＝256 で、256は 90より 大きいので □＝256。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k07_640_4",
+       "src": "HG-2672",
+       "title": "白と黒の 石を ならべる",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 3,
+       "star": 3,
+       "intro": "白と黒の 石を、三角形の形に ならべます。\n奇数番目（1番目、3番目…）は 白から はじまり 白で おわり、\n偶数番目（2番目、4番目…）は 黒から はじまり 黒で おわります。",
+       "svg": "<svg viewBox='0 0 300 94' xmlns='http://www.w3.org/2000/svg'><text x='17.2' y='14' fill='#ffd166' font-size='8' text-anchor='middle'>1番目</text><circle cx='17.2' cy='26.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><text x='51.2' y='14' fill='#ffd166' font-size='8' text-anchor='middle'>2番目</text><circle cx='51.2' cy='26.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='40.8' cy='36.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='51.2' cy='36.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='61.8' cy='36.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><text x='106.2' y='14' fill='#ffd166' font-size='8' text-anchor='middle'>3番目</text><circle cx='106.2' cy='26.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='95.8' cy='36.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='106.2' cy='36.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='116.8' cy='36.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='85.2' cy='47.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='95.8' cy='47.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='106.2' cy='47.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='116.8' cy='47.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='127.2' cy='47.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><text x='182.2' y='14' fill='#ffd166' font-size='8' text-anchor='middle'>4番目</text><circle cx='182.2' cy='26.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='171.8' cy='36.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='182.2' cy='36.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='192.8' cy='36.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='161.2' cy='47.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='171.8' cy='47.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='182.2' cy='47.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='192.8' cy='47.0' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='203.2' cy='47.0' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='150.8' cy='57.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='161.2' cy='57.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='171.8' cy='57.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='182.2' cy='57.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='192.8' cy='57.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><circle cx='203.2' cy='57.5' r='4.0' fill='#f8fafc' stroke='#94a3b8' stroke-width='1.2'/><circle cx='213.8' cy='57.5' r='4.0' fill='#0f172a' stroke='#94a3b8' stroke-width='1.2'/><text x='150' y='84' fill='#f8fafc' font-size='8' text-anchor='middle'>白くぬった石が 白い石、黒くぬった石が 黒い石</text></svg>",
+       "steps": [
+        {
+         "question": "8番目の 三角形の 石は ぜんぶで 何こですか。",
+         "answer": "64",
+         "meaning": "□番目は 1+3+5+…と ならぶので □×□ こ。8×8＝64こ。"
+        },
+        {
+         "question": "白い石と 黒い石の 数の ちがいが 72こに なるのは 何番目ですか。",
+         "answer": "72",
+         "meaning": "□番目の ちがいは いつも □ こ。だから 72番目。"
+        },
+        {
+         "question": "20番目の 三角形の 黒い石は 何こですか。",
+         "answer": "210",
+         "meaning": "20番目は 偶数番目なので 黒が 多い。ぜんぶで 400こ、ちがいが 20こ なので 黒は (400+20)÷2＝210こ。"
+        }
+       ]
+      },
+      {
+       "id": "hd_3m_k07_640_5",
+       "src": "HG-2673",
+       "title": "ななめに ならべた 数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 3,
+       "star": 3,
+       "intro": "1から じゅんに 数を ななめに ならべます。1を 第1グループ、2と3を 第2グループ、4と5と6を 第3グループ…と 区切ります。\n数の 位置は （□列目，△行目）で あらわします。たとえば 14は （4，2）です。",
+       "svg": "<svg viewBox='0 0 300 149' xmlns='http://www.w3.org/2000/svg'><text x='150' y='12' fill='#ffd166' font-size='9' text-anchor='middle'>1から じゅんに ななめに ならべる</text><text x='63.0' y='30' fill='#06d6a0' font-size='8' text-anchor='middle'>1列</text><text x='97.0' y='30' fill='#06d6a0' font-size='8' text-anchor='middle'>2列</text><text x='131.0' y='30' fill='#06d6a0' font-size='8' text-anchor='middle'>3列</text><text x='165.0' y='30' fill='#06d6a0' font-size='8' text-anchor='middle'>4列</text><text x='199.0' y='30' fill='#06d6a0' font-size='8' text-anchor='middle'>5列</text><text x='38' y='48' fill='#06d6a0' font-size='8' text-anchor='end'>1行</text><rect x='46' y='34' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='63.0' y='48' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>1</text><rect x='80' y='34' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='97.0' y='48' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>2</text><rect x='114' y='34' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='131.0' y='48' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>6</text><rect x='148' y='34' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='165.0' y='48' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>7</text><rect x='182' y='34' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='199.0' y='48' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>15</text><text x='38' y='69' fill='#06d6a0' font-size='8' text-anchor='end'>2行</text><rect x='46' y='55' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='63.0' y='69' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>3</text><rect x='80' y='55' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='97.0' y='69' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>5</text><rect x='114' y='55' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='131.0' y='69' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>8</text><rect x='148' y='55' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='165.0' y='69' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>14</text><rect x='182' y='55' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='38' y='90' fill='#06d6a0' font-size='8' text-anchor='end'>3行</text><rect x='46' y='76' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='63.0' y='90' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>4</text><rect x='80' y='76' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='97.0' y='90' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>9</text><rect x='114' y='76' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='131.0' y='90' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>13</text><rect x='148' y='76' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><rect x='182' y='76' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='38' y='111' fill='#06d6a0' font-size='8' text-anchor='end'>4行</text><rect x='46' y='97' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='63.0' y='111' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>10</text><rect x='80' y='97' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='97.0' y='111' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>12</text><rect x='114' y='97' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><rect x='148' y='97' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><rect x='182' y='97' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='38' y='132' fill='#06d6a0' font-size='8' text-anchor='end'>5行</text><rect x='46' y='118' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><text x='63.0' y='132' fill='#f8fafc' font-size='10' text-anchor='middle' font-weight='bold'>11</text><rect x='80' y='118' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><rect x='114' y='118' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><rect x='148' y='118' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/><rect x='182' y='118' width='34' height='21' rx='1' fill='#1e293b' stroke='#4f9eff' stroke-width='0.8'/></svg>",
+       "steps": [
+        {
+         "question": "20が かかれた 位置は どこですか。",
+         "answer": "（2，5）",
+         "choices": [
+          "（2，5）",
+          "（5，2）",
+          "（3，4）",
+          "（4，3）"
+         ],
+         "meaning": "第5グループは 11〜15、第6グループは 16〜21。20は 第6グループの 5番目。第6グループは 偶数なので 小さい数ほど 右上。5番目は （2，5）。"
+        },
+        {
+         "question": "第8グループの 数を すべて たすと いくつですか。",
+         "answer": "260",
+         "meaning": "第7グループの さいごは 28、第8グループは 29〜36 の 8こ。(29+36)×8÷2＝260。"
+        },
+        {
+         "question": "（22，4）に かかれた 数は 何ですか。",
+         "answer": "322",
+         "meaning": "列と行を たして 1を ひくと グループ番号。22+4−1＝25 で 第25グループ。奇数なので 小さい数ほど 左下。22列目は グループの 22番目。第24グループの さいごは 300 なので 300+22＝322。"
         }
        ]
       }
