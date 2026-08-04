@@ -1337,6 +1337,12 @@ function bindDebugHandlers() {
           '（少ないデータで本物の記録を消さないための安全装置）';
         return;
       }
+      if (skipped === 'fewer-records') {
+        el.textContent = '⏸ 解いた問題の数がクラウドより大幅に少ないので送っていません' + NL0 +
+          '（本物の記録を上書きしないための安全装置）' + NL0 +
+          '※この端末を使い続けるなら、先に「☁️ クラウドから復元する」を押してください';
+        return;
+      }
       await new Promise(r => setTimeout(r, 1500));
       const i = window.lastBackupInfo;
       if (!i) { el.textContent = 'Firebaseにつながっていません（オフラインか設定なし）'; return; }
@@ -1545,6 +1551,23 @@ async function backupLocalData() {
       if (remote && typeof remote.pct === 'number' && localPct < remote.pct - 0.5) {
         console.warn('バックアップ保留：達成率がクラウドより低い', localPct, remote.pct);
         return 'lower-achievement';
+      }
+    } catch (e) { /* 比較に失敗したときは通常どおり保存を続ける */ }
+  }
+  // ★クラウドのバックアップ本体（解いた問題の数）とも比べる。
+  //   上の達成率チェックだけでは守れない。達成率は「先に保存 → その値と比べる」順なので、
+  //   自分で判定基準を下げてしまうため（2026-08-04・実際にこれで94問ぶんの記録が
+  //   15問ぶんに上書きされた）。こちらは他人の書き込みに依存しないので確実。
+  if (typeof getLocalBackup === 'function') {
+    try {
+      const cloud = await getLocalBackup(state.nickname);
+      if (cloud && typeof cloud.progress === 'string') {
+        const mine   = Object.keys(JSON.parse(payload.progress || '{}')).length;
+        const theirs = Object.keys(JSON.parse(cloud.progress || '{}')).length;
+        if (theirs >= 5 && mine < theirs * 0.6) {
+          console.warn('バックアップ保留：解いた問題の数がクラウドより大幅に少ない', mine, theirs);
+          return 'fewer-records';
+        }
       }
     } catch (e) { /* 比較に失敗したときは通常どおり保存を続ける */ }
   }
@@ -9282,16 +9305,28 @@ function maybeAwardPerfect(pct, totalQ) {
 }
 
 // 達成率をFirestoreランキングへ（オフライン時はfirebase.js側でスキップ）
-function pushAchievementToRanking() {
+// ★必ず backupLocalData を先に。達成率を先に保存すると、backupLocalData の安全装置が
+//   「自分がさっき下げた達成率」と比べることになり、判定が自壊する
+//   （2026-08-04・これで94問ぶんの記録が15問ぶんに上書きされた）。
+//   安全装置が見送ったときは、達成率も送らない＝クラウドの値を下げない。
+async function pushAchievementToRanking() {
   if (!state.nickname || typeof saveAchievement !== 'function') return;
-  const a = getAchievement();
-  const t = getTitleInfo(a.titlePct);
-  saveAchievement(state.nickname, Math.round(a.titlePct * 10) / 10, a.titleCleared, t.idx);
   // ★成績の中身（progress）も一緒に上げる。
   //   達成率だけは解き終わるたびに送られるのに、progress は「アプリを閉じたとき」しか
   //   送っていなかったため、管理ツールで「％は増えているのに解いた形跡が見えない」状態になっていた。
   //   （2026-07-26・本人が「れっぴ」の記録で発見）
-  backupLocalData();
+  try {
+    const skipped = await backupLocalData();
+    if (skipped) {
+      console.warn('達成率の保存も見送り（クラウドを守るため）:', skipped);
+      return;
+    }
+    const a = getAchievement();
+    const t = getTitleInfo(a.titlePct);
+    saveAchievement(state.nickname, Math.round(a.titlePct * 10) / 10, a.titleCleared, t.idx);
+  } catch (e) {
+    console.warn('達成率の保存に失敗:', e && e.message);
+  }
 }
 
 // ── テトリスお助けアイテム ────────────────────────────────
