@@ -14939,6 +14939,69 @@
          "meaning": "3つの円が すべて 重なる **エ** が いちばん 明るい（3まい分）。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k04_565_4",
+       "src": "HG-2802",
+       "title": "同じ体積の 木・鉄・アルミニウム",
+       "category": "mono",
+       "unit": "ものの重さ",
+       "grade": 4,
+       "star": 2,
+       "intro": "同じ体積の物体A・B・Cがあります。A〜Cは木、鉄、アルミニウムのいずれかでできていて、それぞれの重さは表のとおりです。\nなお、アルミニウムは金ぞくの中では軽い金ぞくです。",
+       "svg": "<svg viewBox='0 0 300 68' xmlns='http://www.w3.org/2000/svg'><text x='150' y='13' fill='#ffd166' font-size='9' text-anchor='middle'>同じ体積の物体A〜Cの重さ</text><rect x='6' y='20' width='80' height='21' rx='0' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.0'/><text x='46.0' y='34' fill='#06d6a0' font-size='8' text-anchor='middle'>物体</text><rect x='86.0' y='20' width='70.7' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='121.3' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>A</text><rect x='156.7' y='20' width='70.7' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='192.0' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>B</text><rect x='227.3' y='20' width='70.7' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='262.7' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>C</text><rect x='6' y='41' width='80' height='21' rx='0' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.0'/><text x='46.0' y='55' fill='#06d6a0' font-size='8' text-anchor='middle'>重さ(g)</text><rect x='86.0' y='41' width='70.7' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='121.3' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>270</text><rect x='156.7' y='41' width='70.7' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='192.0' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>790</text><rect x='227.3' y='41' width='70.7' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='262.7' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>50</text></svg>",
+       "steps": [
+        {
+         "question": "物体Aは何でできていますか。",
+         "answer": "アルミニウム",
+         "choices": [
+          "アルミニウム",
+          "木",
+          "鉄"
+         ],
+         "meaning": "同じ体積なので、重い順に鉄・アルミニウム・木。Bが790gでいちばん重いので鉄、Aが270gでアルミニウム、Cが50gで木。"
+        },
+        {
+         "question": "物体Cは何でできていますか。",
+         "answer": "木",
+         "choices": [
+          "木",
+          "鉄",
+          "アルミニウム"
+         ],
+         "meaning": "いちばん軽い50gなので木。"
+        },
+        {
+         "question": "物体A〜Cと同じ体積の水の重さは100gです。A〜Cのうち水にうくものはどれですか。",
+         "answer": "C",
+         "choices": [
+          "C",
+          "A",
+          "B"
+         ],
+         "meaning": "同じ体積の水（100g）より軽ければうく。50gのCだけが軽い。"
+        },
+        {
+         "question": "同じ体積の木、鉄、アルミニウムをくらべると、重さがもっとも軽いものはどれですか。",
+         "answer": "木",
+         "choices": [
+          "木",
+          "鉄",
+          "アルミニウム"
+         ],
+         "meaning": "表からCの木がいちばん軽い。"
+        },
+        {
+         "question": "同じ重さの木、鉄、アルミニウムをくらべると、体積がもっとも大きいものはどれですか。",
+         "answer": "木",
+         "choices": [
+          "木",
+          "鉄",
+          "アルミニウム"
+         ],
+         "meaning": "こんどは重さをそろえて比べる。同じ体積でいちばん軽いものは、同じ重さにすると体積がいちばん大きくなる。だから木。"
+        }
+       ]
       }
      ],
      "5": [
@@ -15559,6 +15622,127 @@
          "meaning": "重さが 同じなら 体積は **密度に 反比例**。いちばん 密度が 小さい **D（0.6）**。\n④と⑤は 計算せずに **向きだけ** 見れば 答えられる。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k12_585_4",
+       "src": "HG-2822",
+       "title": "熱は「道のり」で伝わる",
+       "category": "mono",
+       "unit": "もののあたたまり方",
+       "grade": 4,
+       "star": 2,
+       "intro": "金ぞくのぼうの左はしをA点、右はしをB点、まん中をC点とします。\n[図1]のようにぼうを水平にしてA点を加熱すると、C点があたたまってからB点があたたまりました。",
+       "svg": "<svg viewBox='0 0 300 92' xmlns='http://www.w3.org/2000/svg'><text x='150' y='12' fill='#ffd166' font-size='8' text-anchor='middle'>金ぞくのぼう（A＝左はし、B＝右はし、C＝まん中）</text><text x='50' y='30' fill='#ffd166' font-size='8' text-anchor='middle'>[図1] 水平</text><line x1='14' y1='46' x2='86' y2='46' stroke='#94a3b8' stroke-width='3.4'/><text x='10' y='50' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>A</text><text x='50' y='40' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>C</text><text x='90' y='50' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>B</text><text x='50' y='62' fill='#f8fafc' font-size='7' text-anchor='middle'>↑Aを熱する</text><text x='150' y='30' fill='#ffd166' font-size='8' text-anchor='middle'>[図2] ななめ</text><line x1='116' y1='56' x2='186' y2='34' stroke='#94a3b8' stroke-width='3.4'/><text x='112' y='62' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>A</text><text x='151' y='40' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>C</text><text x='190' y='30' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>B</text><text x='150' y='70' fill='#f8fafc' font-size='7' text-anchor='middle'>↑Cを熱する</text><text x='252' y='30' fill='#ffd166' font-size='8' text-anchor='middle'>[図3] 折り曲げる</text><line x1='222' y1='44' x2='252' y2='44' stroke='#94a3b8' stroke-width='3.4'/><line x1='252' y1='44' x2='252' y2='66' stroke='#94a3b8' stroke-width='3.4'/><line x1='252' y1='66' x2='284' y2='66' stroke='#94a3b8' stroke-width='3.4'/><text x='216' y='48' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>A</text><text x='246' y='58' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>C</text><text x='288' y='70' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>B</text><text x='252' y='82' fill='#f8fafc' font-size='7' text-anchor='middle'>↑Cを熱する</text></svg>",
+       "steps": [
+        {
+         "question": "このような熱の伝わり方を何といいますか。",
+         "answer": "伝どう",
+         "choices": [
+          "伝どう",
+          "対流",
+          "放しゃ"
+         ],
+         "meaning": "ものの中を順に伝わっていく熱の伝わり方を伝どうという。"
+        },
+        {
+         "question": "[図2]のように、ぼうをななめにしてC点を加熱しました。A点とB点があたたまる順はどうなりますか。",
+         "answer": "ほぼ同時にあたたまる",
+         "choices": [
+          "ほぼ同時にあたたまる",
+          "Aが先にあたたまる",
+          "Bが先にあたたまる"
+         ],
+         "meaning": "CからAまでとCからBまでの、ぼうにそった道のりが同じ。伝どうは上下と関係ないので、ななめにしても同時。"
+        },
+        {
+         "question": "[図3]のように、金ぞくのぼうを折り曲げてからC点を加熱しました。A点とB点があたたまる順はどうなりますか。",
+         "answer": "ほぼ同時にあたたまる",
+         "choices": [
+          "ほぼ同時にあたたまる",
+          "Aが先にあたたまる",
+          "Bが先にあたたまる"
+         ],
+         "meaning": "折り曲げても、Cから両はしまでのぼうにそった道のりは変わらないので同時。「まっすぐな長さ」ではなく「ぼうにそった道のり」で考える。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k12_597_4",
+       "src": "HG-2834",
+       "title": "水の すがたの 変化",
+       "category": "mono",
+       "unit": "水の状態変化",
+       "grade": 4,
+       "star": 2,
+       "intro": "図は水の状態変化（固体・液体・気体とすがたを変えること）を表したものです。\n図の矢印A〜Fは、あたためたときの変化か、冷やしたときの変化のいずれかです。",
+       "svg": "<svg viewBox='0 0 300 134' xmlns='http://www.w3.org/2000/svg'><text x='150' y='13' fill='#ffd166' font-size='9' text-anchor='middle'>水の すがたの 変化</text><rect x='9.0' y='39.0' width='62' height='30' rx='4' fill='rgba(30,41,59,0.95)' stroke='#4f9eff' stroke-width='1.3'/><text x='40' y='52' fill='#f8fafc' font-size='8' text-anchor='middle'>固体</text><text x='40' y='63' fill='#f8fafc' font-size='8' text-anchor='middle'>（氷）</text><rect x='119.0' y='91.0' width='62' height='30' rx='4' fill='rgba(30,41,59,0.95)' stroke='#4f9eff' stroke-width='1.3'/><text x='150' y='104' fill='#f8fafc' font-size='8' text-anchor='middle'>液体</text><text x='150' y='115' fill='#f8fafc' font-size='8' text-anchor='middle'>（水）</text><rect x='220.0' y='39.0' width='76' height='30' rx='4' fill='rgba(30,41,59,0.95)' stroke='#4f9eff' stroke-width='1.3'/><text x='258' y='52' fill='#f8fafc' font-size='8' text-anchor='middle'>気体</text><text x='258' y='63' fill='#f8fafc' font-size='8' text-anchor='middle'>（水じょう気）</text><line x1='65.4' y1='58.4' x2='106.6' y2='91.6' stroke='#06d6a0' stroke-width='1.4'/><polygon points='106.6,91.6 101.8,85.4 98.8,91.8' fill='#06d6a0' stroke='#06d6a0' stroke-width='1'/><text x='71.0' y='84.0' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>C</text><line x1='126.6' y1='105.6' x2='85.4' y2='72.4' stroke='#ffd166' stroke-width='1.4'/><polygon points='85.4,72.4 90.2,78.6 93.2,72.2' fill='#ffd166' stroke='#ffd166' stroke-width='1'/><text x='123.0' y='84.0' fill='#ffd166' font-size='9' text-anchor='middle' font-weight='bold'>E</text><line x1='193.2' y1='91.5' x2='232.8' y2='58.5' stroke='#06d6a0' stroke-width='1.4'/><polygon points='232.8,58.5 224.9,58.4 228.0,64.7' fill='#06d6a0' stroke='#06d6a0' stroke-width='1'/><text x='228.0' y='84.0' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>B</text><line x1='212.8' y1='72.5' x2='173.2' y2='105.5' stroke='#ffd166' stroke-width='1.4'/><polygon points='173.2,105.5 181.1,105.6 178.0,99.3' fill='#ffd166' stroke='#ffd166' stroke-width='1'/><text x='176.0' y='84.0' fill='#ffd166' font-size='9' text-anchor='middle' font-weight='bold'>D</text><line x1='78.0' y1='38.0' x2='220.0' y2='38.0' stroke='#06d6a0' stroke-width='1.4'/><polygon points='220.0,38.0 213.0,34.5 213.0,41.5' fill='#06d6a0' stroke='#06d6a0' stroke-width='1'/><text x='149.0' y='31.0' fill='#06d6a0' font-size='9' text-anchor='middle' font-weight='bold'>F</text><line x1='220.0' y1='58.0' x2='78.0' y2='58.0' stroke='#ffd166' stroke-width='1.4'/><polygon points='78.0,58.0 85.0,61.5 85.0,54.5' fill='#ffd166' stroke='#ffd166' stroke-width='1'/><text x='149.0' y='69.0' fill='#ffd166' font-size='9' text-anchor='middle' font-weight='bold'>A</text></svg>",
+       "steps": [
+        {
+         "question": "「氷」は水のどのすがたですか。",
+         "answer": "固体",
+         "choices": [
+          "固体",
+          "液体",
+          "気体"
+         ],
+         "meaning": "氷は水の固体。"
+        },
+        {
+         "question": "図の矢印A〜Fのうち、あたためたときの変化をすべてえらびなさい。",
+         "answer": "B、C、F",
+         "choices": [
+          "B、C、F",
+          "A、D、E",
+          "B、D、F",
+          "A、C、E"
+         ],
+         "meaning": "あたためると 固体→液体→気体 の向きに進む。C（氷→水）、B（水→水じょう気）、F（氷→水じょう気）の3つ。"
+        },
+        {
+         "question": "図の矢印Cの変化を何といいますか。",
+         "answer": "ゆうかい",
+         "choices": [
+          "ゆうかい",
+          "ぎょう固",
+          "気化",
+          "液化"
+         ],
+         "meaning": "固体がとけて液体になる変化をゆうかい（ゆう解）という。"
+        },
+        {
+         "question": "図の矢印Eの変化を何といいますか。",
+         "answer": "ぎょう固",
+         "choices": [
+          "ぎょう固",
+          "ゆうかい",
+          "気化",
+          "液化"
+         ],
+         "meaning": "液体が冷えて固体になる変化をぎょう固という。"
+        },
+        {
+         "question": "液体の水1gの体積は1cm³です。液体の水1gがすべて氷に変化すると、重さと体積はそれぞれいくらになりますか。",
+         "answer": "重さ1g・体積1.1cm³",
+         "choices": [
+          "重さ1g・体積1.1cm³",
+          "重さ1g・体積1cm³",
+          "重さ1.1g・体積1.1cm³",
+          "重さ1g・体積0.9cm³"
+         ],
+         "meaning": "すがたが変わっても重さは変わらないので1g。水が氷になると体積は約1.1倍にふえる。"
+        },
+        {
+         "question": "氷1cm³の重さは、水1cm³の重さの何倍ですか。",
+         "answer": "0.9倍",
+         "choices": [
+          "0.9倍",
+          "1.1倍",
+          "0.11倍",
+          "1700倍"
+         ],
+         "meaning": "同じ重さで体積が1.1倍になるので、1cm³あたりの重さは 1÷1.1＝0.9倍。だから氷は水にうく。"
+        }
+       ]
       }
      ],
      "1": [
@@ -15764,6 +15948,82 @@
          "meaning": "100gのときは 氷が1℃あたり0.1分、とかすのに16分、水が1℃あたり0.2分。300gなのですべて3倍。−10℃から0℃まで 0.1×10×3＝3分、とかすのに48分で合わせて51分。60℃まで 0.2×60×3＝36分。51+36＝87分後。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k01_574_4",
+       "src": "HG-2811",
+       "title": "ゆう点と ふっ点",
+       "category": "mono",
+       "unit": "もののせいしつ",
+       "grade": 4,
+       "star": 2,
+       "intro": "固体が液体に変化することをゆう解といい、その温度をゆう点といいます。\n液体が表面からだけでなく内部から気体に変化する温度をふっ点といいます。\n表は、いろいろな物質のゆう点とふっ点です。",
+       "svg": "<svg viewBox='0 0 300 68' xmlns='http://www.w3.org/2000/svg'><text x='150' y='13' fill='#ffd166' font-size='9' text-anchor='middle'>物質は 左から 水・エタノール・鉄・酸素</text><rect x='6' y='20' width='86' height='21' rx='0' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.0'/><text x='49.0' y='34' fill='#06d6a0' font-size='8' text-anchor='middle'>ゆう点(℃)</text><rect x='92.0' y='20' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='117.8' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>0</text><rect x='143.5' y='20' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='169.2' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>-114</text><rect x='195.0' y='20' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='220.8' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>1536</text><rect x='246.5' y='20' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='272.2' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>-218</text><rect x='6' y='41' width='86' height='21' rx='0' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.0'/><text x='49.0' y='55' fill='#06d6a0' font-size='8' text-anchor='middle'>ふっ点(℃)</text><rect x='92.0' y='41' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='117.8' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>100</text><rect x='143.5' y='41' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='169.2' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>78</text><rect x='195.0' y='41' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='220.8' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>2863</text><rect x='246.5' y='41' width='51.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='272.2' y='55' fill='#f8fafc' font-size='9' text-anchor='middle'>-182</text></svg>",
+       "steps": [
+        {
+         "question": "液体が、表面からだけでなく内部から気体に変化することを何といいますか。ひらがな4字で答えなさい。",
+         "answer": "ふっとう",
+         "choices": [
+          "ふっとう",
+          "じょうはつ",
+          "ゆうかい",
+          "ぎょうこ"
+         ],
+         "meaning": "内部からもあわが出る変化をふっとうという。"
+        },
+        {
+         "question": "氷100gの体積は110cm³です。氷100gがゆう解してすべて液体の水に変化すると、重さと体積はどうなりますか。",
+         "answer": "重さは変わらず、体積は110cm³より小さくなる",
+         "choices": [
+          "重さは変わらず、体積は110cm³より小さくなる",
+          "重さも体積も変わらない",
+          "重さは変わらず、体積は110cm³より大きくなる",
+          "重さは小さくなり、体積も小さくなる"
+         ],
+         "meaning": "すがたが変わっても重さは変わらない。氷がとけると体積は小さくなる（水にうくのはそのため）。"
+        },
+        {
+         "question": "液体の水1cm³の重さと氷1cm³の重さをくらべると、どちらのほうが重いですか。",
+         "answer": "液体の水",
+         "choices": [
+          "液体の水",
+          "氷",
+          "どちらも同じ"
+         ],
+         "meaning": "同じ重さで氷のほうが体積が大きいので、1cm³あたりでは水のほうが重い。"
+        },
+        {
+         "question": "20℃のとき、エタノールはどのすがたになっていますか。",
+         "answer": "液体",
+         "choices": [
+          "液体",
+          "固体",
+          "気体"
+         ],
+         "meaning": "エタノールはゆう点−114℃・ふっ点78℃。20℃はその間なので液体。"
+        },
+        {
+         "question": "20℃のとき、酸素はどのすがたになっていますか。",
+         "answer": "気体",
+         "choices": [
+          "気体",
+          "固体",
+          "液体"
+         ],
+         "meaning": "酸素のふっ点は−182℃。20℃はそれより高いので気体。"
+        },
+        {
+         "question": "−30℃のときに液体で、95℃のときにはすべて気体になっている物質はどれですか。",
+         "answer": "エタノール",
+         "choices": [
+          "エタノール",
+          "水",
+          "鉄",
+          "酸素"
+         ],
+         "meaning": "エタノールは−30℃なら液体（−114〜78の間）、95℃なら気体（78より上）。水は−30℃で固体、鉄はどちらも固体、酸素は−30℃ですでに気体。"
+        }
+       ]
       }
      ],
      "7": [
@@ -15807,6 +16067,70 @@
           "のばせばのばすほど、もとにもどろうとする力は小さくなる"
          ],
          "meaning": "のびが大きいほど、もとにもどろうとする力も大きくなる。だから重いおもりほど長くのびてつり合う。"
+        }
+       ]
+      }
+     ],
+     "2": [
+      {
+       "id": "hd_4r_k02_575_3",
+       "src": "HG-2812",
+       "title": "ねん土の形を変えても 重さは変わらない",
+       "category": "mono",
+       "unit": "ものの重さ",
+       "grade": 4,
+       "star": 2,
+       "intro": "ねん土を台ばかりにのせると、はりは200gを指しました。\nこのねん土を、A：丸い形にかえてのせたとき、B：細かく分けてすべてのせたとき、はりはどうなるかを考えます。\nまた、同じ体積の鉄・ゴム・アルミニウム・木でできた4個のおもりの重さは表のとおりです。",
+       "svg": "<svg viewBox='0 0 300 47' xmlns='http://www.w3.org/2000/svg'><text x='150' y='13' fill='#ffd166' font-size='9' text-anchor='middle'>同じ体積の 鉄・ゴム・アルミニウム・木</text><rect x='6' y='20' width='70' height='21' rx='0' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.0'/><text x='41.0' y='34' fill='#06d6a0' font-size='8' text-anchor='middle'>重さ(g)</text><rect x='76.0' y='20' width='55.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='103.8' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>390</text><rect x='131.5' y='20' width='55.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='159.2' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>81</text><rect x='187.0' y='20' width='55.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='214.8' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>135</text><rect x='242.5' y='20' width='55.5' height='21' rx='0' fill='#1e293b' stroke='#4f9eff' stroke-width='1.0'/><text x='270.2' y='34' fill='#f8fafc' font-size='9' text-anchor='middle'>23</text></svg>",
+       "steps": [
+        {
+         "question": "Aのように丸い形にかえてのせると、はりは何を指しますか。",
+         "answer": "200gの目もりを指す",
+         "choices": [
+          "200gの目もりを指す",
+          "200gより重い",
+          "200gより軽い"
+         ],
+         "meaning": "形を変えても、ものの重さは変わらない。"
+        },
+        {
+         "question": "Bのように細かく分けてすべてのせると、はりは何を指しますか。",
+         "answer": "200gの目もりを指す",
+         "choices": [
+          "200gの目もりを指す",
+          "200gより重い",
+          "200gより軽い"
+         ],
+         "meaning": "分けても、全部のせれば合計の重さは変わらない。"
+        },
+        {
+         "question": "表の結果からわかることはどれですか。",
+         "answer": "体積が同じでも、ものの種類がちがえば重さはちがう",
+         "choices": [
+          "体積が同じでも、ものの種類がちがえば重さはちがう",
+          "体積が同じであれば、ものの種類がちがっても重さはちがわない"
+         ],
+         "meaning": "同じ体積なのに 390g・81g・135g・23g とちがっている。"
+        },
+        {
+         "question": "鉄でできた物体「あ」とアルミニウムでできた物体「い」があります。この2つは体積が同じで、内部に空どうはありません。どちらが重いですか。",
+         "answer": "あ（鉄）",
+         "choices": [
+          "あ（鉄）",
+          "い（アルミニウム）",
+          "同じ"
+         ],
+         "meaning": "同じ体積なら、表で重い鉄のほうが重い。"
+        },
+        {
+         "question": "鉄でできた物体「あ」と木でできた物体「う」があります。この2つは重さが同じで、内部に空どうはありません。どちらが体積が大きいですか。",
+         "answer": "う（木）",
+         "choices": [
+          "う（木）",
+          "あ（鉄）",
+          "同じ"
+         ],
+         "meaning": "同じ重さでくらべるので、1cm³あたりが軽い木のほうが体積は大きくなる。"
         }
        ]
       }
