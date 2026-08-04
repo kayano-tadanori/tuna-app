@@ -1275,6 +1275,31 @@ document.getElementById('btn-settings-back').onclick = () => showScreen('subject
 document.getElementById('btn-settings-char').onclick = () => showScreen('character');
 document.getElementById('btn-char-back').onclick = () => showScreen('settings');
 
+// ── 使い方ガイド ──
+document.getElementById('btn-settings-help').onclick = () => { initHelpScreen(); showScreen('help'); };
+document.getElementById('btn-help-back').onclick = () => showScreen('settings');
+
+// 目次チップ → その節を開いてスクロール。閉じたまま飛ぶと何も見えないので必ず open にする
+document.querySelectorAll('[data-help-jump]').forEach(chip => {
+  chip.onclick = () => {
+    const sec = document.getElementById(chip.dataset.helpJump);
+    if (!sec) return;
+    sec.open = true;
+    document.querySelectorAll('.help-chip').forEach(c => c.classList.toggle('is-on', c === chip));
+    // details を開いた直後は高さが確定していないので、1フレーム待ってから位置を測る
+    requestAnimationFrame(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    if (window.Snd) Snd.tap();
+  };
+});
+
+// クレジットに、いま動いている版数を出す（不具合の問い合わせのときに効く）。
+// 版数は initUpdateBanner が updates.json を読んだときに latestAppVer に控えてある
+function initHelpScreen() {
+  const el = document.getElementById('credits-ver');
+  if (!el) return;
+  el.textContent = latestAppVer ? `オトン学園 ${latestAppVer}` : 'オトン学園';
+}
+
 // クイズ中のヘッダー右上の音トグル（効果音🔔/🔕・音楽🎵）
 function updateSndMini() {
   const c = Snd.get();
@@ -1505,11 +1530,14 @@ function initDebugTool() {
 // ============================================================
 // アップデート情報（お知らせ）
 // ============================================================
+let latestAppVer = ''; // 使い方ガイドのクレジットに出す版数
+
 async function initUpdateBanner() {
   try {
     const res = await fetch('data/updates.json');
     const updates = await res.json(); // 新しい順の配列
     if (!updates.length) return;
+    latestAppVer = updates[0].ver || '';
 
     document.getElementById('update-banner-latest').textContent = updates[0].title;
     const lastSeen = localStorage.getItem('updateLastSeenDate') || '';

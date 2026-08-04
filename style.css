@@ -1079,3 +1079,192 @@ body.oton-dark #hama-hint.hama-warn {
   background: rgba(245, 158, 11, .14);
   border-color: rgba(245, 158, 11, .40);
 }
+
+/* ============================================================
+   📘 使い方ガイド（設定 → 使い方ガイド）
+   ============================================================ */
+.help-main {
+  height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 14px 14px calc(40px + var(--safe-b));
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+/* ヒーロー（オットンのひとこと） */
+.help-hero { display: flex; align-items: center; gap: 10px; }
+.help-hero-img { width: 74px; flex: 0 0 auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
+.help-hero-bubble {
+  position: relative; flex: 1;
+  background: var(--card); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm); padding: 11px 13px;
+  font-size: .82rem; line-height: 1.6; color: var(--text);
+}
+.help-hero-bubble::before {
+  content: ''; position: absolute; left: -7px; top: 50%; transform: translateY(-50%);
+  border: 7px solid transparent; border-right-color: var(--glass-border);
+}
+
+/* 目次チップ */
+.help-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.help-chip {
+  font: inherit; font-size: .72rem; font-weight: 700; color: var(--sub2);
+  background: var(--card2); border: 1px solid var(--glass-border);
+  border-radius: 999px; padding: 6px 11px; cursor: pointer;
+  transition: transform .12s, color .12s, border-color .12s;
+}
+.help-chip:active { transform: scale(.94); }
+.help-chip.is-on { color: #fff; border-color: var(--accent); box-shadow: var(--glow-accent); }
+
+/* アコーディオン */
+.help-sec {
+  background: var(--card); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm); overflow: hidden;
+}
+.help-sec > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 9px;
+  padding: 14px 14px; font-size: .92rem; font-weight: 800; color: var(--text);
+}
+.help-sec > summary::-webkit-details-marker { display: none; }
+.help-sec > summary::after {
+  content: '＋'; margin-left: auto; font-size: .95rem; color: var(--sub);
+  transition: transform .2s;
+}
+.help-sec[open] > summary::after { content: '−'; }
+.help-sec[open] > summary { border-bottom: 1px solid var(--glass-border); }
+.help-sec-icon { font-size: 1.15rem; line-height: 1; }
+.help-body { padding: 12px 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+.help-sub {
+  font-size: .8rem; font-weight: 800; color: var(--accent2);
+  margin-top: 4px; letter-spacing: .02em;
+}
+.help-note { font-size: .78rem; line-height: 1.75; color: var(--sub2); }
+.help-note b, .help-list b, .help-steps b { color: var(--text); }
+
+.help-steps { margin: 0; padding-left: 1.25em; display: flex; flex-direction: column; gap: 7px; }
+.help-steps li { font-size: .79rem; line-height: 1.7; color: var(--sub2); }
+.help-list { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 6px; }
+.help-list li { font-size: .78rem; line-height: 1.7; color: var(--sub2); }
+
+/* 表（横に長いときはスクロールさせて、本文は横スクロールさせない） */
+.help-table {
+  width: 100%; border-collapse: collapse; font-size: .75rem;
+  display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.help-table th, .help-table td {
+  border: 1px solid var(--glass-border); padding: 7px 9px;
+  text-align: left; line-height: 1.6; vertical-align: top;
+}
+.help-table th { background: rgba(79,124,255,.16); color: var(--text); font-weight: 800; white-space: nowrap; }
+.help-table td { color: var(--sub2); }
+.help-table td b { color: var(--text); }
+.help-table tr td:first-child { white-space: nowrap; color: var(--text); font-weight: 700; }
+
+/* 補足ブロック */
+.help-tip {
+  background: rgba(40,200,138,.10); border: 1px solid rgba(40,200,138,.32);
+  border-radius: var(--radius-xs); padding: 10px 12px;
+  font-size: .77rem; line-height: 1.7; color: var(--sub2);
+}
+.help-tip b { color: var(--green); }
+.help-callout {
+  border-radius: var(--radius-xs); padding: 10px 12px;
+  font-size: .77rem; line-height: 1.7; color: var(--sub2);
+}
+.help-callout-gold { background: rgba(255,186,0,.10); border: 1px solid rgba(255,186,0,.34); }
+.help-callout-gold b { color: var(--gold); }
+.help-callout-red { background: rgba(255,68,102,.10); border: 1px solid rgba(255,68,102,.32); }
+.help-callout-red b { color: var(--red2); }
+
+/* ============================================================
+   ✨ クレジット（スタッフロール）
+   ============================================================ */
+.credits {
+  position: relative; overflow: hidden;
+  margin-top: 10px; padding: 26px 20px 22px;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 90% at 50% -20%, rgba(255,209,102,.20) 0%, rgba(255,209,102,0) 60%),
+    linear-gradient(160deg, #101c42 0%, #0a1230 60%, #070d22 100%);
+  border: 1px solid rgba(255,209,102,.30);
+  box-shadow: 0 12px 34px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+  text-align: center;
+}
+/* 斜めに走る一条の光 */
+.credits-shine {
+  position: absolute; inset: -60% -30%; pointer-events: none;
+  background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.13) 50%, transparent 58%);
+  animation: creditsShine 5.5s ease-in-out infinite;
+}
+@keyframes creditsShine {
+  0%, 70% { transform: translateX(-70%); }
+  100%    { transform: translateX(70%); }
+}
+/* 上の紋章 */
+.credits-crest {
+  position: relative; width: 46px; height: 46px; margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, rgba(255,209,102,.26), rgba(255,209,102,.05) 70%);
+  border: 1px solid rgba(255,209,102,.45);
+  box-shadow: 0 0 22px rgba(255,186,0,.25), inset 0 0 14px rgba(255,209,102,.12);
+}
+.credits-crest span { font-size: 1.35rem; line-height: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,.5)); }
+
+.credits-kicker {
+  position: relative; font-size: .60rem; font-weight: 800; letter-spacing: .42em;
+  text-indent: .42em; color: rgba(255,209,102,.72); margin-bottom: 4px;
+}
+.credits-title {
+  position: relative; font-size: 1.5rem; font-weight: 900; letter-spacing: .30em;
+  text-indent: .30em; line-height: 1.1;
+  background: linear-gradient(180deg, #fff6d8 0%, #ffd166 45%, #e0a02c 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(255,186,0,.30));
+}
+.credits-rule {
+  position: relative; height: 1px; margin: 14px auto; width: 78%;
+  background: linear-gradient(90deg, transparent, rgba(255,209,102,.55), transparent);
+}
+.credits-row {
+  position: relative; display: flex; align-items: baseline; gap: 8px;
+  padding: 9px 2px; text-align: left;
+}
+.credits-role {
+  flex: 0 0 auto; font-size: .70rem; font-weight: 800; letter-spacing: .10em;
+  color: rgba(255,209,102,.88); white-space: nowrap;
+}
+.credits-dots {
+  flex: 1 1 auto; height: 0; border-bottom: 1px dotted rgba(255,209,102,.30);
+  transform: translateY(-3px);
+}
+.credits-name {
+  flex: 0 1 auto; min-width: 0; text-align: right;
+  font-size: 1.02rem; font-weight: 900; color: #fff;
+  letter-spacing: .04em; text-shadow: 0 0 18px rgba(255,209,102,.35);
+}
+/* 「Claude AI」は名前の下に小さく置く（横に足すと右端が詰まる） */
+.credits-name small {
+  display: block; font-size: .56rem; font-weight: 700; letter-spacing: .14em;
+  color: var(--sub2); margin-top: 2px; text-shadow: none;
+}
+.credits-thanks {
+  position: relative; font-size: .74rem; color: rgba(255,255,255,.62);
+  letter-spacing: .10em; margin-top: 2px;
+}
+.credits-motto {
+  position: relative; margin-top: 8px;
+  font-size: .82rem; font-weight: 900; letter-spacing: .52em; text-indent: .52em;
+  background: linear-gradient(180deg, #fff6d8 0%, #ffd166 60%, #d9982a 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  opacity: .92;
+}
+.credits-ver {
+  position: relative; font-size: .62rem; color: var(--sub);
+  letter-spacing: .10em; margin-top: 12px;
+}
+
+/* 動きを減らす設定の人には光を止める */
+@media (prefers-reduced-motion: reduce) {
+  .credits-shine { animation: none; }
+}

@@ -194,6 +194,14 @@
       <p class="snd-note">科目の画面に入ると、科目の雰囲気に合った音楽が流れます（算数ドリルは緊張感のある曲）</p>
       <p class="snd-note" id="snd-diag" style="opacity:.75"></p>
     </div>
+    <button id="btn-settings-help" class="subject-card">
+      <span class="subject-icon-wrap"><span class="subject-icon">📘</span></span>
+      <span class="game-text">
+        <span class="subject-name">使い方ガイド</span>
+        <span class="subject-detail">モードのせつめい・難易度・こまったとき</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
     <button id="btn-settings-char" class="subject-card">
       <span class="subject-icon-wrap"><span class="subject-icon">🎭</span></span>
       <span class="game-text">
@@ -202,6 +210,319 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+  </div>
+</div>
+
+<!-- =============== 使い方ガイド =============== -->
+<div id="screen-help" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" id="btn-help-back">‹ 戻る</button>
+    <h2 class="top-title">📘 使い方ガイド</h2>
+  </header>
+  <div class="help-main">
+
+    <div class="help-hero">
+      <img src="images/otton.png" alt="オットン" class="help-hero-img" onerror="this.style.display='none'">
+      <div class="help-hero-bubble">わからんことは、ここ見たら大丈夫や！<br>気になるところをタップして開いてな。</div>
+    </div>
+
+    <div class="help-chips">
+      <button class="help-chip" data-help-jump="h-start">🚀 はじめかた</button>
+      <button class="help-chip" data-help-jump="h-diff">🎚 難易度</button>
+      <button class="help-chip" data-help-jump="h-navi">🎒 じゅくナビ</button>
+      <button class="help-chip" data-help-jump="h-kokugo">📖 国語</button>
+      <button class="help-chip" data-help-jump="h-sansu">🔢 算数</button>
+      <button class="help-chip" data-help-jump="h-rika">🔬 理科</button>
+      <button class="help-chip" data-help-jump="h-shakai">🗾 社会</button>
+      <button class="help-chip" data-help-jump="h-record">🏅 記録</button>
+      <button class="help-chip" data-help-jump="h-coin">🪙 コイン</button>
+      <button class="help-chip" data-help-jump="h-trouble">🛠 こまったとき</button>
+    </div>
+
+    <!-- ① はじめかた -->
+    <details class="help-sec" id="h-start" open>
+      <summary><span class="help-sec-icon">🚀</span>はじめかた（3ステップ）</summary>
+      <div class="help-body">
+        <ol class="help-steps">
+          <li><b>科目をえらぶ</b>　国語・算数・理科・社会の4つ。下には息抜きのゲームもあるで。</li>
+          <li><b>学年 → モード → カテゴリ → 難易度</b>　の順にえらぶ。えらぶたびに次のSTEPが出てくるで。</li>
+          <li><b>出題数をきめて「常在戦場！スタート！」</b>　10問・20問・全問からえらべる。</li>
+        </ol>
+        <p class="help-note">迷ったら <b>ミックス</b>（全単元からごちゃまぜ）＋<b>10問</b>が おすすめ。まずは1回まわしてみよう。</p>
+        <div class="help-tip">
+          <b>💡 毎回おなじ問題ばっかり出ない</b><br>
+          一度クリアした問題より、まだやってない問題・まちがえた問題が先に出るようになってるで。
+        </div>
+        <p class="help-note">画面の右上のボタン：<b>💾</b>きろくをセーブ／<b>🔄</b>最新版に更新／<b>⚙️</b>設定／<b>👤</b>ユーザー切替</p>
+      </div>
+    </details>
+
+    <!-- ② 難易度 -->
+    <details class="help-sec" id="h-diff">
+      <summary><span class="help-sec-icon">🎚</span>難易度の見方</summary>
+      <div class="help-body">
+        <p class="help-note">数字は「浜学園の公開学力テストで、このくらいの偏差値の子が正解できる」めやすやで。</p>
+        <table class="help-table">
+          <tr><th>難易度</th><th>めやす</th><th>どんな問題？</th></tr>
+          <tr><td><b>やさしい</b></td><td>偏差値〜50</td><td>習ったことを そのまま使えば解ける</td></tr>
+          <tr><td><b>難しい</b></td><td>偏差値53</td><td>ひと手間 考える。条件が1つ増える</td></tr>
+          <tr><td><b>チャレンジ</b></td><td>偏差値58</td><td>最レのライン。2つ以上を組み合わせる</td></tr>
+          <tr><td><b>激ムズ</b></td><td>偏差値62</td><td>100傑のライン。しくみに気づかないと解けない</td></tr>
+        </table>
+        <div class="help-callout help-callout-gold">
+          <b>🔎 発見算</b>（算数・理科）<br>
+          <b>3問で1セット</b>の連鎖問題。①でヒントになる小さい発見をして、②③でそれを使って深いところまで進む作り。
+          <b>1問ずつバラバラに解く問題ではない</b>ので、①から順にやってな。出題数は「1セット（3問）／3セット（9問）」からえらぶ。
+        </div>
+        <div class="help-callout help-callout-red">
+          <b>🧩 灘中レベル（ガチ）</b>（算数・理科）<br>
+          <b>パズル</b>。公式を当てはめても解けへん。習った道具だけで、自分で見つけ方を掘りあてる問題や。
+          答えが1つに決まることは、ぜんぶ機械で全部調べて たしかめてある。じっくり時間をかけて挑もう。
+        </div>
+        <p class="help-note"><b>灘中レベル</b>（国語・社会）も同じく3問で1セットの連鎖問題やで。</p>
+        <p class="help-note">※ その学年・そのカテゴリに連鎖問題が無いときは、ボタンがグレーになって押せへん。問題数はボタンの中に出るで。</p>
+      </div>
+    </details>
+
+    <!-- ③ じゅくナビ -->
+    <details class="help-sec" id="h-navi">
+      <summary><span class="help-sec-icon">🎒</span>じゅくナビの使い方（いちばん大事）</summary>
+      <div class="help-body">
+        <p class="help-note"><b>塾の進みに合わせて、今週やるところだけを出すモード</b>。国語・算数・理科にあるで。</p>
+        <ol class="help-steps">
+          <li><b>コースをえらぶ</b>　マスター／最レ／算数2nd／理科／国語 など、その学年にあるものが出る。</li>
+          <li><b>回番号を合わせる</b>　<b>＋ −</b> で今週のNo.に合わせる。<b>いちど合わせたら、毎週じどうで1つ進む</b>ので、あとはさわらんでええ。</li>
+          <li><b>やることをえらぶ</b>　下のボタンから。</li>
+        </ol>
+        <table class="help-table">
+          <tr><th>ボタン</th><th>中身</th></tr>
+          <tr><td>📝 今週の復習テスト</td><td>その回で習った単元の問題。<b>ふだんはこれ</b></td></tr>
+          <tr><td>📖 今週のことば</td><td>国語だけ。その回で習う ことばの問題（四択）</td></tr>
+          <tr><td>🧩 今週の復習テスト（大問）</td><td><b>塾の実物から起こした本物の大問</b>。3問ひとつづきの誘導つき</td></tr>
+          <tr><td>🎯 公開テストのはんい</td><td>次の公開学力テストの出題はんいから出す</td></tr>
+          <tr><td>🧩 公開テストのはんい（大問）</td><td>公開のはんいを 大問の形で</td></tr>
+          <tr><td>💡 かんたん解説</td><td>その単元の考え方を、といっしょに読む</td></tr>
+        </table>
+        <div class="help-tip">
+          <b>🎓 クラス帯をえらんでおくと精度が上がる</b><br>
+          設定の「じゅくのクラス帯」で自分のクラス（H／SHH／SHS／S／VSS／VSV／V）をえらんでおくと、
+          <b>復習テストで その帯のむずかしさ</b>で出るようになるで。えらばなければ全部から出る。
+        </div>
+        <p class="help-note"><b>回番号でえらぶ／単元でえらぶ</b>の切りかえもあるで。最レのように「回番号の中身が年度で入れかわる」教材は、<b>単元でえらぶ</b>ほうが確実。</p>
+        <p class="help-note">※ 先どりのボタンは わざと置いてへん。塾は<b>復習でのばす</b>やり方やから、それに合わせてるで。</p>
+      </div>
+    </details>
+
+    <!-- ④ 国語 -->
+    <details class="help-sec" id="h-kokugo">
+      <summary><span class="help-sec-icon">📖</span>国語のモード（4,861問）</summary>
+      <div class="help-body">
+        <table class="help-table">
+          <tr><th>モード</th><th>中身</th></tr>
+          <tr><td>🎒 じゅくナビ</td><td>塾の進みに合わせる（いまは小3の国語のみ）</td></tr>
+          <tr><td>📝 通常問題</td><td>カテゴリをえらんで挑戦。ふだんはこれ</td></tr>
+          <tr><td>🕵️ こころの探偵</td><td><b>登場人物の気持ちを読み解く</b>。物語文の練習</td></tr>
+          <tr><td>📰 要約記者</td><td><b>文章の要点をつかむ</b>。説明文の練習</td></tr>
+        </table>
+        <p class="help-sub">📚 えらべるカテゴリ</p>
+        <ul class="help-list">
+          <li><b>漢字の書き取り</b>（480問・<b>手書き</b>）／<b>漢字の読み</b>（480問）</li>
+          <li><b>ことわざ</b>473／<b>慣用句</b>536／<b>四字熟語</b>529／<b>外来語</b>587</li>
+          <li><b>敬語・文法</b>232／<b>語い（類義・対義）</b>447／<b>部首・画数</b>389／<b>文学史・季語</b>359</li>
+          <li><b>文のしくみ</b>54（小3のとき限定。主語・述語・修飾語）</li>
+        </ul>
+        <div class="help-tip">
+          <b>✍️ 漢字の書き取りは「手書き＋自分で丸つけ」</b><br>
+          指で書いてから、合ってたかを自分でえらぶ形。<b>書けたつもりを 見のがさへん</b>ためやで。
+        </div>
+      </div>
+    </details>
+
+    <!-- ⑤ 算数 -->
+    <details class="help-sec" id="h-sansu">
+      <summary><span class="help-sec-icon">🔢</span>算数のモード（6,070問）</summary>
+      <div class="help-body">
+        <table class="help-table">
+          <tr><th>モード</th><th>中身</th></tr>
+          <tr><td>🎒 じゅくナビ</td><td>塾の進みに合わせる</td></tr>
+          <tr><td>📝 通常問題</td><td>カテゴリをえらんで挑戦</td></tr>
+          <tr><td>⚡ 計算ドリル</td><td><b>時間をはかって四則計算</b>。ランキングあり</td></tr>
+          <tr><td>📕 虎の巻</td><td>「知ってると強い」考え方を <b>読んで覚える</b>ページ</td></tr>
+        </table>
+        <p class="help-sub">📚 えらべるカテゴリ（2つの えらび方）</p>
+        <ul class="help-list">
+          <li><b>📚 種類でえらぶ</b>　計算／💥バクハツ（小2まで）／数の性質／平面図形／立体図形／文章題／割合と比／速さ／規則性／特殊算／場合の数</li>
+          <li><b>🎯 じゅくの単元でえらぶ</b>　つるかめ算・場合の数… のように、<b>塾の単元名</b>で集めて出す。種類をまたいで出るで</li>
+        </ul>
+        <p class="help-sub">⚡ 計算ドリルの使い方</p>
+        <p class="help-note">足し算／引き算／かけ算／割り算／余りあり／小数／分数／ミックス の8種類 × 難易度4 × 時間（60秒・90秒・120秒・無制限）。
+        <b>タイムを競うので、同じ設定でくり返すと のびが見える</b>で。</p>
+        <p class="help-note">※ 答えはテンキーで入力する形。分数や単位の答えも入力できるようにしてあるで。</p>
+      </div>
+    </details>
+
+    <!-- ⑥ 理科 -->
+    <details class="help-sec" id="h-rika">
+      <summary><span class="help-sec-icon">🔬</span>理科のモード（5,958問）</summary>
+      <div class="help-body">
+        <table class="help-table">
+          <tr><th>モード</th><th>中身</th></tr>
+          <tr><td>🎒 じゅくナビ</td><td>塾の進みに合わせる</td></tr>
+          <tr><td>📝 通常問題</td><td>カテゴリをえらんで挑戦</td></tr>
+          <tr><td>👨‍🔬 はかせの図鑑</td><td>覚えておきたい知識を <b>図とイラストでまとめ読み</b></td></tr>
+          <tr><td>🧪 実験室</td><td><b>道具をえらんで自分で実験</b>。結果を見て確かめる</td></tr>
+        </table>
+        <p class="help-sub">📚 えらべるカテゴリ</p>
+        <ul class="help-list">
+          <li><b>🌱 生物</b>　植物／動物／人体</li>
+          <li><b>🌍 地学</b>　天体／天気／大地の変化</li>
+          <li><b>⚗️ 化学</b>　もののせいしつ／気体／水よう液</li>
+          <li><b>⚡ 物理</b>　電気と磁石／力のつり合い／光と音</li>
+        </ul>
+        <p class="help-note">※ 小1・小2では やさしいカテゴリだけ出る。小3からは受験のカテゴリが出てくるで。</p>
+      </div>
+    </details>
+
+    <!-- ⑦ 社会 -->
+    <details class="help-sec" id="h-shakai">
+      <summary><span class="help-sec-icon">🗾</span>社会のモード（2,574問・小3〜）</summary>
+      <div class="help-body">
+        <table class="help-table">
+          <tr><th>モード</th><th>中身</th></tr>
+          <tr><td>📝 通常問題</td><td>カテゴリをえらんで挑戦</td></tr>
+          <tr><td>🧭 ニッポンのあゆみ</td><td>国土・産業・歴史・政治を <b>地図と年表でまとめ読み</b></td></tr>
+          <tr><td>🎮 社会でGO!</td><td>遊びながら社会をきたえる3つのゲーム</td></tr>
+        </table>
+        <p class="help-sub">🎮 社会でGO! の中身</p>
+        <ul class="help-list">
+          <li><b>🗾 ニッポン地図たんけん</b>　都道府県を 地図の上でさがす</li>
+          <li><b>⏳ タイムトラベル日本史</b>　できごとを 古い順にならべる</li>
+          <li><b>🏛️ 三権タウン事件簿</b>　国会・内閣・裁判所の立場で事案を解決する。<b>世論の支持率</b>を上げながら実現を目指す</li>
+        </ul>
+        <p class="help-sub">📚 えらべるカテゴリ</p>
+        <ul class="help-list">
+          <li><b>🗾 地理</b>　国土と自然／産業とくらし</li>
+          <li><b>📜 歴史・公民</b>　日本の歴史／政治と国際</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- ⑧ 記録 -->
+    <details class="help-sec" id="h-record">
+      <summary><span class="help-sec-icon">🏅</span>がんばりの記録・称号</summary>
+      <div class="help-body">
+        <p class="help-note">トップの <b>🏅 がんばりの記録</b> から見られるで。</p>
+        <ul class="help-list">
+          <li><b>達成率</b>　国語・算数・理科をどれだけクリアしたか。<b>称号はこの3科目で決まる</b></li>
+          <li><b>教科べつ達成率</b>　タップすると <b>単元べつ</b>まで開く。苦手さがしに使える</li>
+          <li><b>勉強時間</b>　今日ぶんと 合計</li>
+          <li><b>連続ログイン</b>　毎日やると のびる</li>
+          <li><b>お助けアイテム</b>　ゲームで使えるアイテム（下を見てな）</li>
+        </ul>
+        <p class="help-sub">👑 称号は16段階</p>
+        <p class="help-note">
+          🎒普通の小学生 → 📝優等生 → 📗Hクラス → 📔SHHクラス → 📒SHSクラス → 📘Sクラス → 📓VSSクラス → 🔖VSVクラス →
+          📙最レ受講生 → 📕V2クラス → 🏵️V1クラス → 🥉100傑 → 🥈灘合2組 → 🏆灘合1組 → 🥇10傑 → 👑スーパーウルトラ神ゴッド
+        </p>
+        <p class="help-sub">📉 苦手問題のみ／📊 進捗を見る</p>
+        <p class="help-note">各科目のホーム下にあるボタン。<b>正解率50%以下</b>の問題だけを集めて出し直せるで。<b>ここをつぶすのが いちばん点が上がる</b>。</p>
+        <p class="help-note"><b>➕ 問題を追加</b>（国語）＝ことわざ・慣用句・四字熟語・外来語に、自分で問題を足せるで。</p>
+      </div>
+    </details>
+
+    <!-- ⑨ コイン -->
+    <details class="help-sec" id="h-coin">
+      <summary><span class="help-sec-icon">🪙</span>コイン・遊び券・アイテム</summary>
+      <div class="help-body">
+        <p class="help-sub">🪙 コイン（ガチャに使う）</p>
+        <ul class="help-list">
+          <li>正解1問につき <b>1まい</b>。<b>はじめて正解した問題は +2まい</b></li>
+          <li>同じ問題でもらえるのは <b>1日2まいまで</b>（くり返しの荒かせぎ よけ）</li>
+          <li>5問以上で <b>100点満点</b>を取ると <b>+10まい</b></li>
+          <li>1日にためられるのは <b>200まいまで</b></li>
+        </ul>
+        <p class="help-sub">🎟 遊び券（ゲームで遊ぶのに使う）</p>
+        <p class="help-note"><b>5問以上のセッションを1回おわらせると 1まい</b>。1日8まいまで。<b>勉強せんとゲームで遊べへん</b>しくみやで。</p>
+        <p class="help-sub">🎁 お助けアイテム</p>
+        <ul class="help-list">
+          <li>💣 <b>ボム</b>　テトリス：下2行を消す</li>
+          <li>🐢 <b>スロー</b>　テトリス：15秒ゆっくり</li>
+          <li>🔍 <b>サーチ</b>　スイーパー：安全なマスを1つ開く</li>
+          <li>🛡 <b>おまもり</b>　スイーパー：ゴキブリを1回セーフ</li>
+          <li>🪽 <b>つばさ</b>　チッチジャンプ：6秒ミス無効で浮く</li>
+          <li>🚀 <b>ロケット</b>　チッチジャンプ：一気に高くジャンプ</li>
+        </ul>
+        <p class="help-note">100点満点か ログインボーナスでもらえるで。</p>
+      </div>
+    </details>
+
+    <!-- ⑩ ガチャ・ゲーム -->
+    <details class="help-sec" id="h-gacha">
+      <summary><span class="help-sec-icon">🎰</span>ガチャ図鑑・息抜きゲーム</summary>
+      <div class="help-body">
+        <p class="help-sub">🎰 ガチャ図鑑</p>
+        <ul class="help-list">
+          <li><b>1回 30コイン</b>／<b>11連 270コイン</b>（10回ぶんの値段で11回。<b>最後の1枚はSR以上が確定</b>）</li>
+          <li>レアリティは <b>N・R・SR・UR</b> の4段階。URは出にくいけど、<b>150連まわせば次で確定</b>で出る</li>
+          <li>かぶっても損はせえへん。<b>同じ子の枚数がたまっていく</b></li>
+          <li><b>レアリティごとに全部そろえる</b>と ボーナスコイン。ぜんぶ集めると <b>シークレット</b>が出てくるで…</li>
+        </ul>
+        <p class="help-sub">🎮 息抜きゲーム（遊び券が1まい必要）</p>
+        <ul class="help-list">
+          <li><b>🎮 オトンテトリス</b>　ブロックを積んで消す定番</li>
+          <li><b>🪳 おかんスイーパー</b>　ゴキブリをよけて ぜんぶ開ける</li>
+          <li><b>🐣 チッチジャンプ2</b>　月をこえて火星まで！どこまで高く跳べるか</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- ⑪ こまったとき -->
+    <details class="help-sec" id="h-trouble">
+      <summary><span class="help-sec-icon">🛠</span>こまったときは</summary>
+      <div class="help-body">
+        <table class="help-table">
+          <tr><th>こまりごと</th><th>どうする</th></tr>
+          <tr><td>新しい問題が出てけえへん</td><td>右上の <b>🔄</b>（最新版に更新）を押す</td></tr>
+          <tr><td>きろくを残したい／機種を変える</td><td>右上の <b>💾</b>（きろくをセーブ）を押しておく</td></tr>
+          <tr><td>きょうだいで使いたい</td><td>右上の <b>👤</b> でユーザーを切りかえる</td></tr>
+          <tr><td>音がうるさい／静かにしたい</td><td>⚙️設定で 効果音・音楽を OFF にできる。クイズ中は右上の 🔔 🎵 でも切りかえられる</td></tr>
+          <tr><td>難易度ボタンが押せへん</td><td>その学年・カテゴリに その難易度の問題が無いということ。ほかのカテゴリを試してみて</td></tr>
+          <tr><td>親のほうで見たい</td><td>トップ右の <b>中受伴走アプリ</b> へ。成績グラフ・塾のスケジュール・プリント管理があるで</td></tr>
+        </table>
+        <p class="help-note"><b>データは この端末の中だけ</b>に保存されるで（セーブしたときだけクラウドに送る）。</p>
+      </div>
+    </details>
+
+    <!-- クレジット -->
+    <div class="credits">
+      <div class="credits-shine"></div>
+      <div class="credits-crest"><span>🎓</span></div>
+      <p class="credits-kicker">OTON GAKUEN</p>
+      <h3 class="credits-title">STAFF</h3>
+      <div class="credits-rule"></div>
+
+      <div class="credits-row">
+        <span class="credits-role">企画</span>
+        <span class="credits-dots"></span>
+        <span class="credits-name">おとん</span>
+      </div>
+      <div class="credits-row">
+        <span class="credits-role">資料採集</span>
+        <span class="credits-dots"></span>
+        <span class="credits-name">おかん</span>
+      </div>
+      <div class="credits-row">
+        <span class="credits-role">プログラマー</span>
+        <span class="credits-dots"></span>
+        <span class="credits-name">バディ<small>Claude AI</small></span>
+      </div>
+
+      <div class="credits-rule"></div>
+      <p class="credits-thanks">— 二人の息子のために —</p>
+      <p class="credits-motto">常在戦場</p>
+      <p class="credits-ver" id="credits-ver"></p>
+    </div>
+
   </div>
 </div>
 
