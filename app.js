@@ -1320,8 +1320,23 @@ function bindDebugHandlers() {
     bkBtn.dataset.dbgBound = '1';
     bkBtn.onclick = async () => {
       const el = document.getElementById('debug-backup-state');
+      el.style.whiteSpace = 'pre-wrap';
       el.textContent = '送信中…';
-      backupLocalData();
+      const NL0 = String.fromCharCode(10);
+      const skipped = await backupLocalData();
+      // 送らなかったとき（クラウドのデータを守るためのガード）は理由を出す。
+      // 以前はここも「Firebaseにつながっていません」と出ていて誤解のもとだった。
+      if (skipped === 'no-local-data') {
+        el.textContent = '⏸ この端末にはまだデータが無いので送っていません' + NL0 +
+          '（空で上書きしてクラウドの記録を消さないための安全装置）' + NL0 +
+          '※クラウドに記録があるなら、下の「☁️ クラウドから復元する」で戻せます';
+        return;
+      }
+      if (skipped === 'lower-achievement') {
+        el.textContent = '⏸ この端末の達成率がクラウドより低いので送っていません' + NL0 +
+          '（少ないデータで本物の記録を消さないための安全装置）';
+        return;
+      }
       await new Promise(r => setTimeout(r, 1500));
       const i = window.lastBackupInfo;
       if (!i) { el.textContent = 'Firebaseにつながっていません（オフラインか設定なし）'; return; }
@@ -1366,6 +1381,46 @@ function bindDebugHandlers() {
         '「復元しない」済みフラグ: ' + (declined ? 'あり（次から聞かれません）' : 'なし') + NL +
         'クラウドのバックアップ: ' + cloudLine;
       el.style.whiteSpace = 'pre-wrap';
+    };
+  }
+
+  // ☁️ クラウドから復元する（「復元しない」を押したあとの救済。フラグを無視して復元する）
+  const rnBtn = document.getElementById('debug-restore-now');
+  if (rnBtn && !rnBtn.dataset.dbgBound) {
+    rnBtn.dataset.dbgBound = '1';
+    rnBtn.onclick = async () => {
+      const el = document.getElementById('debug-restore-state');
+      el.style.whiteSpace = 'pre-wrap';
+      if (!state.nickname || typeof getLocalBackup !== 'function') {
+        el.textContent = 'クラウドにつながっていないので復元できません';
+        return;
+      }
+      el.textContent = 'クラウドから読んでいます…';
+      let backup;
+      try {
+        backup = await getLocalBackup(state.nickname);
+      } catch (e) {
+        el.textContent = 'エラー: ' + e.message;
+        return;
+      }
+      if (!backup) {
+        el.textContent = '「' + state.nickname + '」のバックアップはクラウドにありません';
+        return;
+      }
+      const NL = String.fromCharCode(10);
+      const t = backup.lastUpdated && backup.lastUpdated.toDate
+        ? backup.lastUpdated.toDate().toISOString().slice(0, 19) : '不明';
+      if (!confirm('「' + state.nickname + '」のクラウドのデータ（最終更新 ' + t + '）で' + NL +
+                   'この端末のデータを上書きします。よろしいですか？')) {
+        el.textContent = '復元をやめました';
+        return;
+      }
+      BACKUP_KEYS.forEach(k => { if (backup[k] !== undefined) localStorage.setItem(k, backup[k]); });
+      // 次から起動時にも聞かれるように、断った記録を消しておく
+      localStorage.removeItem('restoreDeclined_' + state.nickname);
+      el.textContent = '✅ 復元しました。読み込み直します…';
+      showToast('復元したで！');
+      setTimeout(() => location.reload(), 800);
     };
   }
 
@@ -1479,7 +1534,7 @@ async function backupLocalData() {
   // 端末にまだ実データが無い（新しい端末・復元前）ときは書き込まない。
   // .set()は上書きなので、空のpayloadで書くと同じニックネームの人の
   // クラウドバックアップを消してしまう（2026-08-02・実被害あり）。
-  if (!payload.progress && !payload.gacha) return;
+  if (!payload.progress && !payload.gacha) return 'no-local-data';
   // この端末の達成率が、クラウドに保存済みの達成率より明らかに低いときも書き込まない。
   // 別の人が同じニックネームを使った・復元前に少しだけ遊んだ、などで
   // 少ないデータのほうが後勝ちで本物の記録を消してしまう事故を防ぐ（本人提案・2026-08-02）。
@@ -1489,7 +1544,7 @@ async function backupLocalData() {
       const remote = await getAchievementDoc(state.nickname);
       if (remote && typeof remote.pct === 'number' && localPct < remote.pct - 0.5) {
         console.warn('バックアップ保留：達成率がクラウドより低い', localPct, remote.pct);
-        return;
+        return 'lower-achievement';
       }
     } catch (e) { /* 比較に失敗したときは通常どおり保存を続ける */ }
   }
