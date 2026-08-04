@@ -24480,6 +24480,86 @@
          "meaning": "電池2個の 直列の 両はしが E と K に なる。E から K へ 行く道が\n　①E→い→A→K（い）　②E→お→I→B→あ→C→う→(GHL)→か→K（お・あ・う・か）\nの **2本の 並列** に なるので、両方に 電流が 流れて **5個**（え だけ 行き止まり）。"
         }
        ]
+      },
+      {
+       "id": "hd_5r_k06_639_4",
+       "src": "HG-2864",
+       "title": "日の出・日の入りから南中と経度",
+       "category": "sora",
+       "unit": "太陽の動きとかげ",
+       "grade": 5,
+       "star": 3,
+       "intro": "地点P（北緯34度）でのある日の日の出は4時50分、日の入りは19時18分でした。\n南中時刻は、経度が1度ちがうごとに4分ずれます。",
+       "svg": "<svg viewBox='0 0 300 110' xmlns='http://www.w3.org/2000/svg'><text x='150' y='12' fill='#ffd166' font-size='8' text-anchor='middle'>[図1] 棒のかげの先たんが動いたあと（真上から見た図）</text><line x1='40' y1='40' x2='260' y2='40' stroke='#f8fafc' stroke-width='1.8'/><circle cx='150' cy='74' r='3.4' fill='#ffd166' stroke='#ffd166' stroke-width='1'/><text x='150' y='89' fill='#ffd166' font-size='8' text-anchor='middle'>棒</text><text x='150' y='30' fill='#06d6a0' font-size='10' text-anchor='middle'>B</text><text x='28' y='44' fill='#06d6a0' font-size='10' text-anchor='middle'>A</text><text x='272' y='44' fill='#06d6a0' font-size='10' text-anchor='middle'>C</text><text x='150' y='100' fill='#06d6a0' font-size='10' text-anchor='middle'>D</text><line x1='150' y1='74' x2='60' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='60' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/><line x1='150' y1='74' x2='90' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='90' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/><line x1='150' y1='74' x2='120' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='120' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/><line x1='150' y1='74' x2='150' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='150' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/><line x1='150' y1='74' x2='180' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='180' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/><line x1='150' y1='74' x2='210' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='210' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/><line x1='150' y1='74' x2='240' y2='40' stroke='#334155' stroke-width='0.8'/><circle cx='240' cy='40' r='2.2' fill='#f8fafc' stroke='#f8fafc' stroke-width='1'/></svg>",
+       "steps": [
+        {
+         "question": "この日の地点Pでの南中時刻は何時何分ですか。（24時制で、たとえば12時4分なら「12時4分」）",
+         "answer": "12時4分",
+         "choices": [
+          "12時4分",
+          "12時0分",
+          "11時56分",
+          "12時14分"
+         ],
+         "meaning": "南中は日の出と日の入りのちょうどまん中。4時50分＝290分、19時18分＝1158分。(290+1158)÷2＝724分＝12時4分。"
+        },
+        {
+         "question": "この日、太陽は兵庫県明石市（東経135度）で正午に南中しました。地点Pの東経は何度ですか。",
+         "answer": "134",
+         "choices": [
+          "134",
+          "130",
+          "132",
+          "136",
+          "138"
+         ],
+         "meaning": "地点Pの南中は12時4分で、明石より4分おそい。4分＝1度なので、明石より1度西。135−1＝134度。"
+        },
+        {
+         "question": "この日の地点Pでの昼の長さは何時間何分ですか。",
+         "answer": "14時間28分",
+         "choices": [
+          "14時間28分",
+          "13時間28分",
+          "14時間8分",
+          "15時間28分"
+         ],
+         "meaning": "19時18分−4時50分＝14時間28分。"
+        },
+        {
+         "question": "この日はいつだと考えられますか。",
+         "answer": "6月21日",
+         "choices": [
+          "6月21日",
+          "3月21日",
+          "9月23日",
+          "12月22日"
+         ],
+         "meaning": "昼の長さが14時間28分と長い。1年でいちばん昼が長いのは夏至の6月21日ごろ。"
+        },
+        {
+         "question": "春分の日に明石市で、水平な地面に垂直に立てた棒のかげの先たんが動いたあとが図の実線です。日の出すぐの棒のかげは、棒からどの方位に向かってできますか。",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "かげの先たんが集まっている側が北なのでB＝北。するとA＝西、C＝東、D＝南。日の出のとき太陽は東にあるので、かげは反対の西＝Aにできる。"
+        },
+        {
+         "question": "1時間ごとの棒のかげの先たんどうしの間かくはどうなりますか。",
+         "answer": "正午に近いときほど短くなる",
+         "choices": [
+          "正午に近いときほど短くなる",
+          "いつも同じ",
+          "正午に近いときほど長くなる",
+          "午前は正午に近いほど長く、午後は短くなる"
+         ],
+         "meaning": "太陽は一定の速さで動くのに、かげの先たんは一定の速さでは動かない。太陽が高いほどかげは短く、動きもゆっくりになる。"
+        }
+       ]
       }
      ],
      "7": [
@@ -24542,6 +24622,54 @@
           "物体E"
          ],
          "meaning": "体積は 5つとも 同じなので、1gあたりの体積は **重さと 反比例**。いちばん 軽い **物体C（木・18g）** が いちばん 大きい。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_k07_640_4",
+       "src": "HG-2865",
+       "title": "電圧と電流の比例で回路を読む",
+       "category": "denki",
+       "unit": "電気（直列・並列）",
+       "grade": 5,
+       "star": 3,
+       "intro": "豆電球1個にかん電池1個分の電圧がかかるとき流れる電流の大きさを 1 とします。\n豆電球にかかる電圧と、その豆電球に流れる電流の大きさは比例します。\n・豆電球が直列につながっていると、電圧はその個数で分け合う\n・枝分かれ（並列）した枝どうしには、それぞれ同じ電圧がかかる\n・かん電池を並列にしても電圧は増えない\n図1〜図4の①〜⑦の豆電球に流れる電流の大きさを答えなさい。",
+       "svg": "<svg viewBox='0 0 300 224' xmlns='http://www.w3.org/2000/svg'><text x='69.0' y='18' fill='#ffd166' font-size='8' text-anchor='middle'>[図1] 電池1個</text><line x1='20' y1='28' x2='63.0' y2='28' stroke='#94a3b8' stroke-width='1.2'/><line x1='63.0' y1='21' x2='63.0' y2='35' stroke='#94a3b8' stroke-width='1.3'/><line x1='68.0' y1='24' x2='68.0' y2='32' stroke='#94a3b8' stroke-width='3.0'/><line x1='68.0' y1='28' x2='118' y2='28' stroke='#94a3b8' stroke-width='1.2'/><line x1='20' y1='28' x2='20' y2='52' stroke='#94a3b8' stroke-width='1.2'/><line x1='118' y1='28' x2='118' y2='52' stroke='#94a3b8' stroke-width='1.2'/><line x1='20' y1='52' x2='118' y2='52' stroke='#94a3b8' stroke-width='1.2'/><circle cx='52.7' cy='52' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='48.1' y1='47.5' x2='57.2' y2='56.5' stroke='#ffd166' stroke-width='1.1'/><line x1='48.1' y1='56.5' x2='57.2' y2='47.5' stroke='#ffd166' stroke-width='1.1'/><circle cx='85.3' cy='52' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='80.8' y1='47.5' x2='89.9' y2='56.5' stroke='#ffd166' stroke-width='1.1'/><line x1='80.8' y1='56.5' x2='89.9' y2='47.5' stroke='#ffd166' stroke-width='1.1'/><text x='125' y='55' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>①</text><text x='223.0' y='18' fill='#ffd166' font-size='8' text-anchor='middle'>[図2] 電池3個</text><line x1='174' y1='28' x2='205.0' y2='28' stroke='#94a3b8' stroke-width='1.2'/><line x1='205.0' y1='21' x2='205.0' y2='35' stroke='#94a3b8' stroke-width='1.3'/><line x1='210.0' y1='24' x2='210.0' y2='32' stroke='#94a3b8' stroke-width='3.0'/><line x1='210.0' y1='28' x2='217.0' y2='28' stroke='#94a3b8' stroke-width='1.2'/><line x1='217.0' y1='21' x2='217.0' y2='35' stroke='#94a3b8' stroke-width='1.3'/><line x1='222.0' y1='24' x2='222.0' y2='32' stroke='#94a3b8' stroke-width='3.0'/><line x1='222.0' y1='28' x2='229.0' y2='28' stroke='#94a3b8' stroke-width='1.2'/><line x1='229.0' y1='21' x2='229.0' y2='35' stroke='#94a3b8' stroke-width='1.3'/><line x1='234.0' y1='24' x2='234.0' y2='32' stroke='#94a3b8' stroke-width='3.0'/><line x1='234.0' y1='28' x2='272' y2='28' stroke='#94a3b8' stroke-width='1.2'/><line x1='174' y1='28' x2='174' y2='76' stroke='#94a3b8' stroke-width='1.2'/><line x1='272' y1='28' x2='272' y2='76' stroke='#94a3b8' stroke-width='1.2'/><line x1='174' y1='52' x2='272' y2='52' stroke='#94a3b8' stroke-width='1.2'/><circle cx='206.7' cy='52' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='202.1' y1='47.5' x2='211.2' y2='56.5' stroke='#ffd166' stroke-width='1.1'/><line x1='202.1' y1='56.5' x2='211.2' y2='47.5' stroke='#ffd166' stroke-width='1.1'/><circle cx='239.3' cy='52' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='234.8' y1='47.5' x2='243.9' y2='56.5' stroke='#ffd166' stroke-width='1.1'/><line x1='234.8' y1='56.5' x2='243.9' y2='47.5' stroke='#ffd166' stroke-width='1.1'/><text x='279' y='55' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>②</text><line x1='174' y1='76' x2='272' y2='76' stroke='#94a3b8' stroke-width='1.2'/><circle cx='198.5' cy='76' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='193.9' y1='71.5' x2='203.1' y2='80.5' stroke='#ffd166' stroke-width='1.1'/><line x1='193.9' y1='80.5' x2='203.1' y2='71.5' stroke='#ffd166' stroke-width='1.1'/><circle cx='223.0' cy='76' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='218.4' y1='71.5' x2='227.6' y2='80.5' stroke='#ffd166' stroke-width='1.1'/><line x1='218.4' y1='80.5' x2='227.6' y2='71.5' stroke='#ffd166' stroke-width='1.1'/><circle cx='247.5' cy='76' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='242.9' y1='71.5' x2='252.1' y2='80.5' stroke='#ffd166' stroke-width='1.1'/><line x1='242.9' y1='80.5' x2='252.1' y2='71.5' stroke='#ffd166' stroke-width='1.1'/><text x='279' y='79' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>③</text><text x='69.0' y='110' fill='#ffd166' font-size='8' text-anchor='middle'>[図3] 電池2個</text><line x1='20' y1='120' x2='57.0' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='57.0' y1='113' x2='57.0' y2='127' stroke='#94a3b8' stroke-width='1.3'/><line x1='62.0' y1='116' x2='62.0' y2='124' stroke='#94a3b8' stroke-width='3.0'/><line x1='62.0' y1='120' x2='69.0' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='69.0' y1='113' x2='69.0' y2='127' stroke='#94a3b8' stroke-width='1.3'/><line x1='74.0' y1='116' x2='74.0' y2='124' stroke='#94a3b8' stroke-width='3.0'/><line x1='74.0' y1='120' x2='118' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='20' y1='120' x2='20' y2='168' stroke='#94a3b8' stroke-width='1.2'/><line x1='118' y1='120' x2='118' y2='168' stroke='#94a3b8' stroke-width='1.2'/><line x1='20' y1='144' x2='118' y2='144' stroke='#94a3b8' stroke-width='1.2'/><circle cx='69.0' cy='144' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='64.5' y1='139.4' x2='73.5' y2='148.6' stroke='#ffd166' stroke-width='1.1'/><line x1='64.5' y1='148.6' x2='73.5' y2='139.4' stroke='#ffd166' stroke-width='1.1'/><text x='125' y='147' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>④</text><line x1='20' y1='168' x2='118' y2='168' stroke='#94a3b8' stroke-width='1.2'/><circle cx='39.6' cy='168' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='35.1' y1='163.4' x2='44.1' y2='172.6' stroke='#ffd166' stroke-width='1.1'/><line x1='35.1' y1='172.6' x2='44.1' y2='163.4' stroke='#ffd166' stroke-width='1.1'/><circle cx='59.2' cy='168' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='54.7' y1='163.4' x2='63.8' y2='172.6' stroke='#ffd166' stroke-width='1.1'/><line x1='54.7' y1='172.6' x2='63.8' y2='163.4' stroke='#ffd166' stroke-width='1.1'/><circle cx='78.8' cy='168' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='74.2' y1='163.4' x2='83.3' y2='172.6' stroke='#ffd166' stroke-width='1.1'/><line x1='74.2' y1='172.6' x2='83.3' y2='163.4' stroke='#ffd166' stroke-width='1.1'/><circle cx='98.4' cy='168' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='93.9' y1='163.4' x2='103.0' y2='172.6' stroke='#ffd166' stroke-width='1.1'/><line x1='93.9' y1='172.6' x2='103.0' y2='163.4' stroke='#ffd166' stroke-width='1.1'/><text x='125' y='171' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>⑤</text><text x='223.0' y='110' fill='#ffd166' font-size='8' text-anchor='middle'>[図4] 電池4個の直列を2列</text><line x1='174' y1='136' x2='199.0' y2='136' stroke='#94a3b8' stroke-width='1.2'/><line x1='199.0' y1='129' x2='199.0' y2='143' stroke='#94a3b8' stroke-width='1.3'/><line x1='204.0' y1='132' x2='204.0' y2='140' stroke='#94a3b8' stroke-width='3.0'/><line x1='204.0' y1='136' x2='211.0' y2='136' stroke='#94a3b8' stroke-width='1.2'/><line x1='211.0' y1='129' x2='211.0' y2='143' stroke='#94a3b8' stroke-width='1.3'/><line x1='216.0' y1='132' x2='216.0' y2='140' stroke='#94a3b8' stroke-width='3.0'/><line x1='216.0' y1='136' x2='223.0' y2='136' stroke='#94a3b8' stroke-width='1.2'/><line x1='223.0' y1='129' x2='223.0' y2='143' stroke='#94a3b8' stroke-width='1.3'/><line x1='228.0' y1='132' x2='228.0' y2='140' stroke='#94a3b8' stroke-width='3.0'/><line x1='228.0' y1='136' x2='235.0' y2='136' stroke='#94a3b8' stroke-width='1.2'/><line x1='235.0' y1='129' x2='235.0' y2='143' stroke='#94a3b8' stroke-width='1.3'/><line x1='240.0' y1='132' x2='240.0' y2='140' stroke='#94a3b8' stroke-width='3.0'/><line x1='240.0' y1='136' x2='272' y2='136' stroke='#94a3b8' stroke-width='1.2'/><line x1='174' y1='120' x2='199.0' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='199.0' y1='113' x2='199.0' y2='127' stroke='#94a3b8' stroke-width='1.3'/><line x1='204.0' y1='116' x2='204.0' y2='124' stroke='#94a3b8' stroke-width='3.0'/><line x1='204.0' y1='120' x2='211.0' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='211.0' y1='113' x2='211.0' y2='127' stroke='#94a3b8' stroke-width='1.3'/><line x1='216.0' y1='116' x2='216.0' y2='124' stroke='#94a3b8' stroke-width='3.0'/><line x1='216.0' y1='120' x2='223.0' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='223.0' y1='113' x2='223.0' y2='127' stroke='#94a3b8' stroke-width='1.3'/><line x1='228.0' y1='116' x2='228.0' y2='124' stroke='#94a3b8' stroke-width='3.0'/><line x1='228.0' y1='120' x2='235.0' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='235.0' y1='113' x2='235.0' y2='127' stroke='#94a3b8' stroke-width='1.3'/><line x1='240.0' y1='116' x2='240.0' y2='124' stroke='#94a3b8' stroke-width='3.0'/><line x1='240.0' y1='120' x2='272' y2='120' stroke='#94a3b8' stroke-width='1.2'/><line x1='174' y1='120' x2='174' y2='208' stroke='#94a3b8' stroke-width='1.2'/><line x1='272' y1='120' x2='272' y2='208' stroke='#94a3b8' stroke-width='1.2'/><line x1='174' y1='160' x2='272' y2='160' stroke='#94a3b8' stroke-width='1.2'/><circle cx='206.7' cy='160' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='202.1' y1='155.4' x2='211.2' y2='164.6' stroke='#ffd166' stroke-width='1.1'/><line x1='202.1' y1='164.6' x2='211.2' y2='155.4' stroke='#ffd166' stroke-width='1.1'/><circle cx='239.3' cy='160' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='234.8' y1='155.4' x2='243.9' y2='164.6' stroke='#ffd166' stroke-width='1.1'/><line x1='234.8' y1='164.6' x2='243.9' y2='155.4' stroke='#ffd166' stroke-width='1.1'/><text x='279' y='163' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>⑥</text><line x1='174' y1='184' x2='272' y2='184' stroke='#94a3b8' stroke-width='1.2'/><circle cx='198.5' cy='184' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='193.9' y1='179.4' x2='203.1' y2='188.6' stroke='#ffd166' stroke-width='1.1'/><line x1='193.9' y1='188.6' x2='203.1' y2='179.4' stroke='#ffd166' stroke-width='1.1'/><circle cx='223.0' cy='184' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='218.4' y1='179.4' x2='227.6' y2='188.6' stroke='#ffd166' stroke-width='1.1'/><line x1='218.4' y1='188.6' x2='227.6' y2='179.4' stroke='#ffd166' stroke-width='1.1'/><circle cx='247.5' cy='184' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='242.9' y1='179.4' x2='252.1' y2='188.6' stroke='#ffd166' stroke-width='1.1'/><line x1='242.9' y1='188.6' x2='252.1' y2='179.4' stroke='#ffd166' stroke-width='1.1'/><line x1='174' y1='208' x2='272' y2='208' stroke='#94a3b8' stroke-width='1.2'/><circle cx='223.0' cy='208' r='6.5' fill='none' stroke='#ffd166' stroke-width='1.4'/><line x1='218.4' y1='203.4' x2='227.6' y2='212.6' stroke='#ffd166' stroke-width='1.1'/><line x1='218.4' y1='212.6' x2='227.6' y2='203.4' stroke='#ffd166' stroke-width='1.1'/><text x='279' y='211' fill='#06d6a0' font-size='9' text-anchor='start' font-weight='bold'>⑦</text></svg>",
+       "steps": [
+        {
+         "question": "図1の①（かん電池1個・豆電球2個の直列）に流れる電流の大きさはいくつですか。",
+         "answer": "0.5",
+         "meaning": "電圧1を豆電球2個で分け合うので 1÷2＝0.5。"
+        },
+        {
+         "question": "図2の②（かん電池3個の直列・豆電球2個の直列の枝）はいくつですか。",
+         "answer": "1.5",
+         "meaning": "電圧3を2個で分け合うので 3÷2＝1.5。"
+        },
+        {
+         "question": "図2の③（豆電球3個の直列の枝）はいくつですか。",
+         "answer": "1",
+         "meaning": "3÷3＝1。"
+        },
+        {
+         "question": "図3の④（かん電池2個の直列・豆電球1個の枝）はいくつですか。",
+         "answer": "2",
+         "meaning": "枝分かれした枝には電池2個分の電圧2がそのままかかる。2÷1＝2。"
+        },
+        {
+         "question": "図3の⑤（豆電球4個の直列の枝）はいくつですか。",
+         "answer": "0.5",
+         "meaning": "2÷4＝0.5。"
+        },
+        {
+         "question": "図4の⑥（かん電池4個の直列を2列にならべた回路・豆電球2個の直列の枝）はいくつですか。",
+         "answer": "2",
+         "meaning": "かん電池を並列（2列）にしても電圧は4のまま増えない。4÷2＝2。"
+        },
+        {
+         "question": "図4の⑦（豆電球1個の枝）はいくつですか。",
+         "answer": "4",
+         "meaning": "4÷1＝4。"
         }
        ]
       }
@@ -24929,6 +25057,60 @@
          "meaning": "南中が 午前0時なので 出ているのは 午後6時〜翌午前6時。観測できる 時間と **ぴったり 同じ** なので **12時間**。"
         }
        ]
+      },
+      {
+       "id": "hd_5r_k02_635_4",
+       "src": "HG-2860",
+       "title": "氷50gをあたためるグラフ",
+       "category": "mono",
+       "unit": "水の状態変化",
+       "grade": 5,
+       "star": 3,
+       "intro": "1分間あたりに加える熱の量を一定にして、ビーカーに入れた −20℃の氷50g をあたためていくときの温度変化がグラフです。加える熱は温度上昇や状態変化だけに使われるものとします。",
+       "svg": "<svg viewBox='0 0 300 130' xmlns='http://www.w3.org/2000/svg'><line x1='44' y1='24' x2='44' y2='108' stroke='#94a3b8' stroke-width='1.2'/><line x1='44' y1='108' x2='276' y2='108' stroke='#94a3b8' stroke-width='1.2'/><text x='39' y='27.0' fill='#f8fafc' font-size='8' text-anchor='end'>100</text><line x1='41' y1='24.0' x2='47' y2='24.0' stroke='#94a3b8' stroke-width='1'/><text x='39' y='97.0' fill='#f8fafc' font-size='8' text-anchor='end'>0</text><line x1='41' y1='94.0' x2='47' y2='94.0' stroke='#94a3b8' stroke-width='1'/><text x='39' y='111.0' fill='#f8fafc' font-size='8' text-anchor='end'>−20</text><line x1='41' y1='108.0' x2='47' y2='108.0' stroke='#94a3b8' stroke-width='1'/><text x='55.2' y='120' fill='#f8fafc' font-size='8' text-anchor='middle'>1</text><line x1='55.2' y1='105' x2='55.2' y2='111' stroke='#94a3b8' stroke-width='1'/><text x='144.8' y='120' fill='#f8fafc' font-size='8' text-anchor='middle'>9</text><line x1='144.8' y1='105' x2='144.8' y2='111' stroke='#94a3b8' stroke-width='1'/><text x='256.8' y='120' fill='#f8fafc' font-size='8' text-anchor='middle'>19</text><line x1='256.8' y1='105' x2='256.8' y2='111' stroke='#94a3b8' stroke-width='1'/><line x1='44.0' y1='108.0' x2='55.2' y2='94.0' stroke='#ffd166' stroke-width='2.0'/><line x1='55.2' y1='94.0' x2='144.8' y2='94.0' stroke='#ffd166' stroke-width='2.0'/><line x1='144.8' y1='94.0' x2='256.8' y2='24.0' stroke='#ffd166' stroke-width='2.0'/><text x='51.2' y='87.0' fill='#06d6a0' font-size='10' text-anchor='end' font-weight='bold'>P</text><text x='48' y='15' fill='#06d6a0' font-size='8' text-anchor='start'>温度(℃)</text><text x='276' y='120' fill='#06d6a0' font-size='8' text-anchor='middle'>時間(分)</text></svg>",
+       "steps": [
+        {
+         "question": "グラフのPにあてはまる数値はどれですか。",
+         "answer": "0",
+         "choices": [
+          "0",
+          "−10",
+          "−5",
+          "10"
+         ],
+         "meaning": "氷がとけている間は温度が変わらない。その温度は0℃。1分から9分までたいらなのは、氷がとけている時間。"
+        },
+        {
+         "question": "氷がちょうど半分だけとけたのは、あたため始めてから何分後ですか。",
+         "answer": "5",
+         "meaning": "とけている時間は1分から9分までの8分間。その半分は4分。1+4＝5分後。"
+        },
+        {
+         "question": "水の温度が60℃になるのは何分後ですか。",
+         "answer": "15",
+         "meaning": "9分から19分の10分で100℃上がるので、1分で10℃。60℃には6分かかる。9+6＝15分後。"
+        },
+        {
+         "question": "同じ重さの氷と水にそれぞれ同じ量の熱を加えると、水の温度が4℃上昇しました。このとき氷の温度は何℃上昇しますか。（氷はとけず、水は水蒸気にならないものとします）",
+         "answer": "8",
+         "meaning": "氷は1分で20℃、水は1分で10℃上がる。同じ熱なら氷は水の2倍上がる。4×2＝8℃。"
+        },
+        {
+         "question": "別のビーカーに −20℃の氷100g を入れて同じようにあたためると、水の温度が初めて100℃になるのは何分後ですか。",
+         "answer": "38",
+         "meaning": "重さが2倍なので、どの区間も2倍の時間がかかる。(1+8+10)×2＝38分後。"
+        },
+        {
+         "question": "別のビーカーに −40℃の氷50g を入れてあたためると、水の温度が50℃になるのは何分後ですか。",
+         "answer": "15",
+         "meaning": "氷を40℃上げるのに2分、とかすのに8分、水を50℃にするのに5分。2+8+5＝15分後。"
+        },
+        {
+         "question": "別のビーカーに 0℃の氷200g を入れてあたためると、水の温度が50℃になるのは何分後ですか。",
+         "answer": "52",
+         "meaning": "0℃から始まるので、とかす時間だけ。200gは4倍なので 8×4＝32分。水を50℃にするのは 5×4＝20分。32+20＝52分後。"
+        }
+       ]
       }
      ],
      "3": [
@@ -25025,6 +25207,52 @@
          "meaning": "卵から 成虫に なれるのは 18÷1800＝**100分の1**。\n成虫18匹の うち メスは 9匹。9匹が □個ずつ 産むと 9×□個の 卵。\nその100分の1が 18匹に なれば よいので 9×□＝1800 → **□＝200個**。"
         }
        ]
+      },
+      {
+       "id": "hd_5r_k03_636_4",
+       "src": "HG-2861",
+       "title": "3種類の金属棒と熱の伝わる時間",
+       "category": "mono",
+       "unit": "もののあたたまり方",
+       "grade": 5,
+       "star": 3,
+       "intro": "いずれもちがう金属でできた、同じ形の長さ30cmの細長い棒A・B・Cを2本ずつ用意し、図のようにつないで、一方のはしに小さなろうのつぶを置き、もう一方のはし（▲）を加熱しました。\nろうがとけ始めるまでの時間は、A＋Bで18分、A＋Cで8分、B＋Cで20分でした。",
+       "svg": "<svg viewBox='0 0 300 140' xmlns='http://www.w3.org/2000/svg'><text x='86.0' y='18' fill='#ffd166' font-size='8' text-anchor='middle'>[図4] A＋B ＝18分</text><rect x='20' y='26' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.5'/><text x='53.0' y='35' fill='#4f9eff' font-size='8' text-anchor='middle'>A</text><rect x='86.0' y='26' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#06d6a0' stroke-width='1.5'/><text x='119.0' y='35' fill='#06d6a0' font-size='8' text-anchor='middle'>B</text><text x='224.0' y='18' fill='#ffd166' font-size='8' text-anchor='middle'>[図5] A＋C ＝8分</text><rect x='158' y='26' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.5'/><text x='191.0' y='35' fill='#4f9eff' font-size='8' text-anchor='middle'>A</text><rect x='224.0' y='26' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#ffd166' stroke-width='1.5'/><text x='257.0' y='35' fill='#ffd166' font-size='8' text-anchor='middle'>C</text><text x='86.0' y='54' fill='#ffd166' font-size='8' text-anchor='middle'>[図6] B＋C ＝20分</text><rect x='20' y='62' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#06d6a0' stroke-width='1.5'/><text x='53.0' y='71' fill='#06d6a0' font-size='8' text-anchor='middle'>B</text><rect x='86.0' y='62' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#ffd166' stroke-width='1.5'/><text x='119.0' y='71' fill='#ffd166' font-size='8' text-anchor='middle'>C</text><text x='171.0' y='90' fill='#ffd166' font-size='8' text-anchor='middle'>[図7] 棒P（A・B・Cを1本ずつ）</text><rect x='72' y='98' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#4f9eff' stroke-width='1.5'/><text x='105.0' y='107' fill='#4f9eff' font-size='8' text-anchor='middle'>A</text><rect x='138.0' y='98' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#06d6a0' stroke-width='1.5'/><text x='171.0' y='107' fill='#06d6a0' font-size='8' text-anchor='middle'>B</text><rect x='204.0' y='98' width='66.0' height='11' rx='1' fill='rgba(30,41,59,0.9)' stroke='#ffd166' stroke-width='1.5'/><text x='237.0' y='107' fill='#ffd166' font-size='8' text-anchor='middle'>C</text><text x='150' y='130' fill='#f8fafc' font-size='8' text-anchor='middle'>▲の側を熱し、反対のはしのろうがとけるまでの時間</text></svg>",
+       "steps": [
+        {
+         "question": "棒A・B・Cを1本ずつつないだ棒Pのはしを加熱すると、ろうがとけ始めるまで何分ですか。",
+         "answer": "23",
+         "choices": [
+          "23",
+          "17",
+          "20",
+          "26"
+         ],
+         "meaning": "（A+B）＋（A+C）＋（B+C）＝18+8+20＝46。これはA+B+Cの2倍なので A+B+C＝23分。これが棒Pの時間そのもの。"
+        },
+        {
+         "question": "棒A 1本では何分ですか。",
+         "answer": "3",
+         "meaning": "A＝(A+B+C)−(B+C)＝23−20＝3分。"
+        },
+        {
+         "question": "棒C 1本では何分ですか。",
+         "answer": "5",
+         "meaning": "C＝(A+B+C)−(A+B)＝23−18＝5分。"
+        },
+        {
+         "question": "棒Pの両はしにろうのつぶを置き、棒Pの左はしから右に☆cmのところを加熱すると、両はしのろうが同時にとけ始めました。☆にあてはまる数はどれですか。",
+         "answer": "47",
+         "choices": [
+          "47",
+          "32",
+          "37",
+          "42",
+          "52"
+         ],
+         "meaning": "1cmあたりの時間は A＝0.1分、B＝0.5分、C＝1/6分。加熱する点は棒Bの中にある。Bの左はしから□cmの点とすると、左のはしまで 0.5×□＋3分、右のはしまで 0.5×(30−□)＋5分。等しいとして □＝17。☆＝30＋17＝47cm。"
+        }
+       ]
       }
      ],
      "4": [
@@ -25069,6 +25297,63 @@
           "Q"
          ],
          "meaning": "左からの熱は 5.4秒で PとQ を 通りぬけて R に 入る。右からの熱は 鉄の中を ゆっくり（30cmに5秒）しか 進めない。\n出会うのは 左はしから 約133.8cm の ところ＝**ぼうRの中**。\n**区間ごとに 速さが 変わる 出会い算**。"
+        }
+       ]
+      },
+      {
+       "id": "hd_5r_k04_637_4",
+       "src": "HG-2862",
+       "title": "ぼう磁石6本の間の方位磁針",
+       "category": "denki",
+       "unit": "電磁石・磁石",
+       "grade": 5,
+       "star": 3,
+       "intro": "ぼう磁石6本と方位磁針①〜④を、水平な台の上に固定しました（あみかけがN極）。\n方位磁針がさす向きは次のア〜エのいずれかになりました。\n　ア＝N極が上　イ＝N極が右　ウ＝N極が下　エ＝N極が左\n（同じ記号をくり返し選んでもかまいません）",
+       "svg": "<svg viewBox='0 0 300 130' xmlns='http://www.w3.org/2000/svg'><text x='150' y='12' fill='#ffd166' font-size='8' text-anchor='middle'>ぼう磁石6本（あみかけがN極）と 方位磁針①〜④</text><rect x='40' y='24' width='74' height='18' rx='2' fill='#1e293b' stroke='#94a3b8' stroke-width='1.2'/><rect x='40' y='24' width='37.0' height='18' rx='2' fill='rgba(148,163,184,0.45)' stroke='#94a3b8' stroke-width='1.0'/><text x='58.5' y='37' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>N</text><text x='95.5' y='37' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>S</text><rect x='150' y='24' width='74' height='18' rx='2' fill='#1e293b' stroke='#94a3b8' stroke-width='1.2'/><rect x='150' y='24' width='37.0' height='18' rx='2' fill='rgba(148,163,184,0.45)' stroke='#94a3b8' stroke-width='1.0'/><text x='168.5' y='37' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>N</text><text x='205.5' y='37' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>S</text><rect x='40' y='58' width='74' height='18' rx='2' fill='#1e293b' stroke='#94a3b8' stroke-width='1.2'/><rect x='40' y='58' width='37.0' height='18' rx='2' fill='rgba(148,163,184,0.45)' stroke='#94a3b8' stroke-width='1.0'/><text x='58.5' y='71' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>N</text><text x='95.5' y='71' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>S</text><rect x='150' y='58' width='74' height='18' rx='2' fill='#1e293b' stroke='#94a3b8' stroke-width='1.2'/><rect x='187.0' y='58' width='37.0' height='18' rx='2' fill='rgba(148,163,184,0.45)' stroke='#94a3b8' stroke-width='1.0'/><text x='168.5' y='71' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>S</text><text x='205.5' y='71' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>N</text><rect x='40' y='92' width='74' height='18' rx='2' fill='#1e293b' stroke='#94a3b8' stroke-width='1.2'/><rect x='77.0' y='92' width='37.0' height='18' rx='2' fill='rgba(148,163,184,0.45)' stroke='#94a3b8' stroke-width='1.0'/><text x='58.5' y='105' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>S</text><text x='95.5' y='105' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>N</text><rect x='150' y='92' width='74' height='18' rx='2' fill='#1e293b' stroke='#94a3b8' stroke-width='1.2'/><rect x='150' y='92' width='37.0' height='18' rx='2' fill='rgba(148,163,184,0.45)' stroke='#94a3b8' stroke-width='1.0'/><text x='168.5' y='105' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>N</text><text x='205.5' y='105' fill='#f8fafc' font-size='9' text-anchor='middle' font-weight='bold'>S</text><circle cx='132' cy='33' r='7.5' fill='#1e293b' stroke='#06d6a0' stroke-width='1.3'/><text x='132' y='36.5' fill='#06d6a0' font-size='7' text-anchor='middle'>①</text><circle cx='22' cy='50' r='7.5' fill='#1e293b' stroke='#06d6a0' stroke-width='1.3'/><text x='22' y='53.5' fill='#06d6a0' font-size='7' text-anchor='middle'>②</text><circle cx='132' cy='84' r='7.5' fill='#1e293b' stroke='#06d6a0' stroke-width='1.3'/><text x='132' y='87.5' fill='#06d6a0' font-size='7' text-anchor='middle'>③</text><circle cx='262' cy='84' r='7.5' fill='#1e293b' stroke='#06d6a0' stroke-width='1.3'/><text x='262' y='87.5' fill='#06d6a0' font-size='7' text-anchor='middle'>④</text></svg>",
+       "steps": [
+        {
+         "question": "方位磁針①がさす向きはどれですか。",
+         "answer": "エ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ"
+         ],
+         "meaning": "①の左どなりは上段左の磁石のS極、右どなりは上段右の磁石のN極。磁力はN極から出てS極へ入るので、向きは右から左。N極は左を向く。"
+        },
+        {
+         "question": "方位磁針②がさす向きはどれですか。",
+         "answer": "エ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ"
+         ],
+         "meaning": "②は左はしにあり、右側に上段左のN極と中段左のN極がある。N極から出る向き＝Nから遠ざかる向きなので、左を向く。"
+        },
+        {
+         "question": "方位磁針③がさす向きはどれですか。",
+         "answer": "ア",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ"
+         ],
+         "meaning": "③の下には下段のN極、上には中段のS極。下から上へ向かうので、N極は上。"
+        },
+        {
+         "question": "方位磁針④がさす向きはどれですか。",
+         "answer": "ウ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ"
+         ],
+         "meaning": "④の上には中段右のN極、下には下段右のS極。上から下へ向かうので、N極は下。"
         }
        ]
       }
