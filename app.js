@@ -215,11 +215,15 @@ function showScreen(id) {
 // トースト通知
 // ============================================================
 
+let _toastTimer = null;
 function showToast(msg, duration = 2000) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.classList.remove('hidden');
-  setTimeout(() => el.classList.add('hidden'), duration);
+  // 前のトーストのタイマーを止める。止めないと「送信中…→送信完了」のように
+  // 続けて出したとき、前のタイマーが後のトーストを消してしまう。
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.add('hidden'), duration);
 }
 
 // ============================================================
@@ -1178,6 +1182,11 @@ function initSubject() {
     };
   });
 
+  // 💾 セーブは科目えらびと「がんばりの記録」の両方から押せる
+  ['btn-subject-save', 'btn-record-save'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.onclick = () => saveNow(b);
+  });
   document.getElementById('btn-subject-refresh').onclick = () => forceAppUpdate();
   document.getElementById('btn-subject-settings').onclick = () => { initSettingsScreen(); showScreen('settings'); };
   document.getElementById('btn-subject-change').onclick = async () => {
@@ -1188,15 +1197,16 @@ function initSubject() {
     try { solved = Object.keys(JSON.parse(localStorage.getItem('progress') || '{}')).length; } catch (e) {}
     if (solved > 0 && !confirm(
         '受験番号を かえると、この iPad の きろく（' + solved + '問ぶん）は 消えます。' + NL +
-        'きろくは クラウドに のこるので、おなじ 受験番号で 入りなおせば もどせます。' + NL + NL +
-        'かえますか？')) {
+        'さきに 💾セーブ してから かえます。' + NL +
+        'セーブして あれば、おなじ 受験番号で 入りなおせば もどせます。' + NL + NL +
+        'セーブして つづけますか？')) {
       return;
     }
-    const skipped = await backupLocalData(); // 切り替え前に、今の進捗を確実にクラウドへ保存しておく
+    // 切り替え前に必ずセーブ。結果を画面に出すので、送れたかどうかが子どもにも見える。
+    const skipped = await saveNow(document.getElementById('btn-subject-save'));
     // 保存できていないのに消すと、その記録はどこにも残らない。
-    // ガードで見送ったとき（クラウドのほうが多い）は消してよいので分けて扱う。
-    if (solved > 0 && (skipped === 'no-firebase' || skipped === 'save-failed') && !confirm(
-        'いま クラウドに ほぞんできませんでした。' + NL +
+    if (solved > 0 && !isSaveSafe(skipped) && !confirm(
+        'いま クラウドに セーブできませんでした。' + NL +
         'このまま かえると、この iPad の きろく（' + solved + '問ぶん）は もどせなく なります。' + NL + NL +
         'それでも つづけますか？')) {
       return;
@@ -1586,8 +1596,12 @@ async function backupLocalData() {
       if (cloud && typeof cloud.progress === 'string') {
         const mine   = Object.keys(JSON.parse(payload.progress || '{}')).length;
         const theirs = Object.keys(JSON.parse(cloud.progress || '{}')).length;
-        if (theirs >= 5 && mine < theirs * 0.6) {
-          console.warn('バックアップ保留：解いた問題の数がクラウドより大幅に少ない', mine, theirs);
+        // ★クラウドのほうが1問でも多ければ書かない（本人指示・2026-08-04）。
+        //   以前は theirs*0.6 まで許していたが、それだと「クラウド100問・端末70問」で
+        //   30問ぶんが消えてしまう。同じ端末で遊び続けているかぎり端末のほうが必ず多いので、
+        //   少ないということは「この端末が知らない記録がクラウドにある」＝守るべき状態。
+        if (theirs >= 5 && mine < theirs) {
+          console.warn('バックアップ保留：解いた問題の数がクラウドより少ない', mine, theirs);
           return 'fewer-records';
         }
       }
@@ -1597,6 +1611,47 @@ async function backupLocalData() {
   //   保存に失敗したまま端末のデータを消してしまわないようにするため（2026-08-04）。
   await saveLocalBackup(state.nickname, payload);
   if (!window.lastBackupInfo || !window.lastBackupInfo.ok) return 'save-failed';
+}
+
+// ============================================================
+// 💾 手動セーブ（いつでも押せるボタン）
+// ============================================================
+// 自動バックアップ（画面を閉じたとき・問題を解き終えたとき）は前からあるが、
+// 「ちゃんと保存できたのか」が見えないので、押して確かめられるボタンを置いた。
+// 2026-08-04・記録が消えた件のあと、本人の希望。
+
+const SAVE_RESULT_MSG = {
+  'ok':                '✅ セーブ かんりょう！',
+  'no-nickname':       '受験番号が わかりません',
+  'no-firebase':       '❌ ネットに つながっていません',
+  'save-failed':       '❌ おくれませんでした。もう一度おしてね',
+  'no-local-data':     'まだ セーブする きろくが ありません',
+  'lower-achievement': '🛡 クラウドの きろくのほうが 多いので 上書きしません',
+  'fewer-records':     '🛡 クラウドの きろくのほうが 多いので 上書きしません',
+};
+
+// 押されたら送って、結果をはっきり出す。戻り値は結果コード（'ok' か理由）。
+async function saveNow(btn) {
+  const label = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
+  showToast('☁️ 送信中…', 8000);
+  let code;
+  try {
+    code = (await backupLocalData()) || 'ok';
+  } catch (e) {
+    code = 'save-failed';
+  }
+  if (btn) { btn.disabled = false; btn.textContent = label; }
+  showToast(SAVE_RESULT_MSG[code] || ('おくれませんでした（' + code + '）'), 2600);
+  if (code === 'ok' && window.Snd) Snd.correct();
+  return code;
+}
+
+// セーブできたと言い切れるかどうか。
+// ガードで見送ったとき（クラウドのほうが記録が多い）は、消えて困るものが無いので「安全」に含める。
+function isSaveSafe(code) {
+  return code === 'ok' || code === 'no-local-data'
+      || code === 'lower-achievement' || code === 'fewer-records';
 }
 
 // 端末にローカルデータがほぼ無い（新しい端末・キャッシュ消去後）状態で、
