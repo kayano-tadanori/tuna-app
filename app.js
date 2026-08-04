@@ -1181,7 +1181,26 @@ function initSubject() {
   document.getElementById('btn-subject-refresh').onclick = () => forceAppUpdate();
   document.getElementById('btn-subject-settings').onclick = () => { initSettingsScreen(); showScreen('settings'); };
   document.getElementById('btn-subject-change').onclick = async () => {
-    await backupLocalData(); // 切り替え前に、今の進捗を確実にクラウドへ保存しておく
+    // ⚠️このボタンは端末のきろくを消す。子どもが押しただけで消えないよう必ず確認する。
+    //   （2026-08-04・ずっと同じiPadを使っていた子の記録が消えた原因がこれ）
+    const NL = String.fromCharCode(10);
+    let solved = 0;
+    try { solved = Object.keys(JSON.parse(localStorage.getItem('progress') || '{}')).length; } catch (e) {}
+    if (solved > 0 && !confirm(
+        '受験番号を かえると、この iPad の きろく（' + solved + '問ぶん）は 消えます。' + NL +
+        'きろくは クラウドに のこるので、おなじ 受験番号で 入りなおせば もどせます。' + NL + NL +
+        'かえますか？')) {
+      return;
+    }
+    const skipped = await backupLocalData(); // 切り替え前に、今の進捗を確実にクラウドへ保存しておく
+    // 保存できていないのに消すと、その記録はどこにも残らない。
+    // ガードで見送ったとき（クラウドのほうが多い）は消してよいので分けて扱う。
+    if (solved > 0 && (skipped === 'no-firebase' || skipped === 'save-failed') && !confirm(
+        'いま クラウドに ほぞんできませんでした。' + NL +
+        'このまま かえると、この iPad の きろく（' + solved + '問ぶん）は もどせなく なります。' + NL + NL +
+        'それでも つづけますか？')) {
+      return;
+    }
     BACKUP_KEYS.forEach(k => localStorage.removeItem(k));
     localStorage.removeItem('nickname');
     state.nickname = '';
@@ -1531,7 +1550,10 @@ const BACKUP_KEYS = [
 ];
 
 async function backupLocalData() {
-  if (!state.nickname || typeof saveLocalBackup !== 'function') return;
+  if (!state.nickname) return 'no-nickname';
+  if (typeof saveLocalBackup !== 'function' || typeof firebaseReady === 'undefined' || !firebaseReady) {
+    return 'no-firebase';
+  }
   const payload = {};
   BACKUP_KEYS.forEach(k => {
     const v = localStorage.getItem(k);
@@ -1571,7 +1593,10 @@ async function backupLocalData() {
       }
     } catch (e) { /* 比較に失敗したときは通常どおり保存を続ける */ }
   }
-  saveLocalBackup(state.nickname, payload);
+  // ★保存できたかどうかを呼び出し元に返す。「消してから切り替える」処理が、
+  //   保存に失敗したまま端末のデータを消してしまわないようにするため（2026-08-04）。
+  await saveLocalBackup(state.nickname, payload);
+  if (!window.lastBackupInfo || !window.lastBackupInfo.ok) return 'save-failed';
 }
 
 // 端末にローカルデータがほぼ無い（新しい端末・キャッシュ消去後）状態で、
