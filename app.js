@@ -1602,21 +1602,47 @@ async function checkCloudRestore() {
   if (!state.nickname || typeof getLocalBackup !== 'function') return;
   const hasLocalData = !!localStorage.getItem('progress') || !!localStorage.getItem('gacha');
   if (hasLocalData) return;
-  if (localStorage.getItem('restoreDeclined_' + state.nickname)) return;
   const backup = await getLocalBackup(state.nickname);
   if (!backup) return;
-  showRestoreConfirm(backup);
+  let solved = 0;
+  try { solved = Object.keys(JSON.parse(backup.progress || '{}')).length; } catch (e) { /* 数えられなくても聞く */ }
+  // ★中身のある記録が残っているときは、前に「あとで」を押していても毎回たずねる。
+  //   別の端末で空のまま遊び始めるのが、記録が消える一番の原因だったため
+  //   （2026-08-04・断った記録が永久に残り、復元をたずねなくなっていた）。
+  if (solved < 5 && localStorage.getItem('restoreDeclined_' + state.nickname)) return;
+  showRestoreConfirm(backup, solved);
 }
 
-function showRestoreConfirm(backup) {
+function showRestoreConfirm(backup, solved) {
+  const detail = document.getElementById('restore-detail');
+  if (detail) {
+    let when = '';
+    try {
+      if (backup.lastUpdated && backup.lastUpdated.toDate) {
+        const d = backup.lastUpdated.toDate();
+        when = `（さいご に あそんだ 日：${d.getMonth() + 1}月${d.getDate()}日）`;
+      }
+    } catch (e) { /* 日付が読めなくても本文は出す */ }
+    detail.innerHTML = solved
+      ? `「${state.nickname}」の きろくが <b>${solved}問ぶん</b> クラウドに あります。${when}`
+      : `「${state.nickname}」の きろくが クラウドに あります。${when}`;
+  }
   document.getElementById('restore-modal').classList.remove('hidden');
   document.getElementById('restore-yes').onclick = () => {
     BACKUP_KEYS.forEach(k => { if (backup[k] !== undefined) localStorage.setItem(k, backup[k]); });
+    localStorage.removeItem('restoreDeclined_' + state.nickname);
     document.getElementById('restore-modal').classList.add('hidden');
     showToast('復元したで！');
     location.reload();
   };
   document.getElementById('restore-no').onclick = () => {
+    const NL = String.fromCharCode(10);
+    if (solved >= 5 && !confirm(
+        '復元しないと、この端末の きろくは クラウドの ' + solved + '問ぶんとは 別に なります。' + NL + NL +
+        'あとから 管理ツールの「☁️ クラウドから復元する」でも もどせます。' + NL +
+        'このまま 始めますか？')) {
+      return;
+    }
     localStorage.setItem('restoreDeclined_' + state.nickname, '1');
     document.getElementById('restore-modal').classList.add('hidden');
   };
