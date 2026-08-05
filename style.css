@@ -28,7 +28,9 @@
   --glow-green: 0 0 24px rgba(40,200,138,0.40);
   --glow-red: 0 0 20px rgba(255,68,102,0.35);
   --glow-gold: 0 0 20px rgba(255,186,0,0.45);
-  --radius: 20px; --radius-sm: 14px; --radius-xs: 10px;
+  /* --radius-lg は .gami-card（ごほうびモーダル）と .drill-question-box が使う。
+     定義が無いまま使われていて border-radius が効かず、角が四角いままだった（2026-08-05に発見） */
+  --radius-lg: 26px; --radius: 20px; --radius-sm: 14px; --radius-xs: 10px;
   --safe-b: env(safe-area-inset-bottom,0px);
   --safe-t: env(safe-area-inset-top,0px);
 }
