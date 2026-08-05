@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>オトン学園 管理ツール</title>
+<!-- ホーム画面に追加してアプリのように使う（PWA） -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="オトン管理">
+<meta name="theme-color" content="#10142a">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Hiragino Kaku Gothic ProN','Meiryo',sans-serif; background: #10142a; color: #eef2ff; margin: 0; padding: 24px; }
+  h1 { font-size: 1.3rem; margin: 0 0 4px; }
+  .sub { color: #8b98c9; font-size: 0.85rem; margin-bottom: 20px; }
+  .status { padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 0.9rem; }
+  .status.ok { background: rgba(40,200,138,0.15); border: 1px solid rgba(40,200,138,0.4); color: #6be0b0; }
+  .status.err { background: rgba(255,68,102,0.15); border: 1px solid rgba(255,68,102,0.4); color: #ff8fa3; }
+  .status.loading { background: rgba(79,124,255,0.15); border: 1px solid rgba(79,124,255,0.4); color: #9db8ff; }
+  input#search { width: 100%; max-width: 320px; padding: 10px 12px; border-radius: 8px; border: 1px solid #2a3466; background: #171c3d; color: #eef2ff; font-size: 0.95rem; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; background: #171c3d; border-radius: 10px; overflow: hidden; }
+  th, td { padding: 10px 12px; text-align: left; font-size: 0.88rem; border-bottom: 1px solid #262c52; }
+  th { background: #1e2450; color: #9db8ff; font-weight: 700; }
+  tr:hover td { background: #1c2148; }
+  .btn { padding: 6px 12px; border-radius: 6px; border: none; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+  .btn-view { background: #38c8f0; color: #06213a; }
+  .btn-del { background: #ff4466; color: #fff; margin-left: 6px; }
+  .btn-refresh { background: #4f7cff; color: #fff; padding: 8px 16px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; margin-bottom: 14px; }
+  .empty { color: #8b98c9; padding: 30px; text-align: center; }
+
+  .overlay { position: fixed; inset: 0; background: rgba(6,9,24,0.75); display: flex; align-items: center; justify-content: center; z-index: 50; }
+  .overlay.hidden { display: none; }
+  .panel { background: #171c3d; border: 1px solid #2a3466; border-radius: 14px; padding: 26px; width: min(92vw, 560px); max-height: 86vh; overflow-y: auto; }
+  .panel h2 { margin: 0 0 4px; font-size: 1.15rem; }
+  .panel .close { float: right; background: none; border: none; color: #8b98c9; font-size: 1.3rem; cursor: pointer; }
+  .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #262c52; font-size: 0.9rem; }
+  .row span:first-child { color: #8b98c9; }
+  .section-title { margin: 18px 0 8px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: #6f7ec2; font-weight: 800; }
+  .bar-track { height: 8px; background: #262c52; border-radius: 4px; overflow: hidden; margin-top: 4px; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg,#4f7cff,#38c8f0); }
+  .subj-row { margin-bottom: 10px; }
+  .subj-row .label { display: flex; justify-content: space-between; font-size: 0.82rem; color: #c4cdef; }
+  .danger-zone { margin-top: 22px; padding-top: 16px; border-top: 1px solid #3a1f30; }
+  .danger-zone .btn-del { width: 100%; padding: 12px; font-size: 0.9rem; }
+  .btn-del:disabled { background: #4a2b38; color: #9c8391; cursor: not-allowed; }
+
+  /* ── 管理者ログイン ── */
+  .admin-badge { font-size: 0.78rem; font-weight: 700; padding: 5px 11px; border-radius: 999px; }
+  .admin-badge.locked { background: #23306a; border: 1px solid #38499a; color: #9db8ff; }
+  .admin-badge.unlocked { background: rgba(40,200,138,0.15); border: 1px solid rgba(40,200,138,0.45); color: #6be0b0; }
+  .login-input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #2a3466;
+                 background: #10142a; color: #eef2ff; font-size: 0.95rem; margin-bottom: 10px; }
+  .grant-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .grant-btn { background: #23306a; border: 1px solid #38499a; color: #dfe6ff; border-radius: 9px; padding: 10px 8px; font-size: 0.85rem; cursor: pointer; font-weight: 700; }
+  .grant-btn:hover { background: #2c3d86; }
+  .grant-btn:active { transform: scale(0.97); }
+  .grant-clear { background: #3a1f30; border-color: #6b3350; color: #ffb3c8; padding: 6px 10px; font-size: 0.78rem; font-weight: 600; }
+  .grant-pending { margin-top: 10px; padding: 10px 12px; background: #1a2247; border: 1px solid #2f3d7d; border-radius: 9px; font-size: 0.86rem; color: #dfe6ff; line-height: 1.6; }
+  .grant-pending-title { color: #8b98c9; font-weight: 700; }
+  .grant-none { color: #6f7ec2; font-size: 0.8rem; }
+
+  /* ── のびの記録（グラフ）── */
+  .chart-wrap { position: relative; margin-bottom: 20px; }
+  .chart-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart-title { font-size: 0.84rem; color: #dfe6ff; font-weight: 700; margin-bottom: 2px; }
+  .chart-note { font-size: 0.74rem; color: #6f7ec2; margin: 0 0 6px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 4px 0 6px; font-size: 0.76rem; color: #c4cdef; }
+  .legend b { font-weight: 400; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .tip { position: absolute; pointer-events: none; background: #0d1230; border: 1px solid #38499a; border-radius: 8px;
+         padding: 7px 10px; font-size: 0.75rem; color: #eef2ff; white-space: nowrap; line-height: 1.55;
+         opacity: 0; transition: opacity .1s; z-index: 5; box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
+  .tip b { color: #8b98c9; font-weight: 700; }
+  .range-btns { display: flex; gap: 6px; margin-bottom: 10px; }
+  .range-btn { background: #23306a; border: 1px solid #38499a; color: #c4cdef; border-radius: 7px; padding: 5px 11px; font-size: 0.78rem; cursor: pointer; }
+  .range-btn.on { background: #4f7cff; color: #fff; border-color: #4f7cff; }
+  .growth-empty { color: #8b98c9; font-size: 0.82rem; background: #1a2247; border: 1px solid #2f3d7d; border-radius: 9px; padding: 12px 14px; line-height: 1.65; }
+  .head-btns { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .btn-sub { background: #23306a; color: #dfe6ff; border: 1px solid #38499a; padding: 8px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.82rem; }
+  .growth-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 4px; }
+  .growth-table th, .growth-table td { padding: 5px 8px; border-bottom: 1px solid #262c52; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .growth-table th { color: #8b98c9; font-weight: 700; background: none; }
+  .growth-table td:first-child, .growth-table th:first-child { text-align: left; white-space: nowrap; }
+  details.table-view summary { cursor: pointer; color: #8b98c9; font-size: 0.78rem; margin-bottom: 4px; }
+
+  /* ══ スマホ最適化 ══════════════════════════════════════════
+     ・ノッチ/ホームバーを避ける（safe-area）
+     ・一覧テーブルはスマホでは横スクロールをやめ、1件=1カードの縦並びにする
+     ・ボタン・入力を指で押しやすい大きさに */
+  body { padding-left: max(24px, env(safe-area-inset-left));
+         padding-right: max(24px, env(safe-area-inset-right));
+         padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  @media (max-width: 600px) {
+    body { padding: 16px 14px calc(16px + env(safe-area-inset-bottom)); }
+    h1 { font-size: 1.15rem; }
+    input#search { max-width: 100%; }
+    .head-btns .btn-refresh, .head-btns .btn-sub { flex: 1 1 auto; text-align: center; }
+
+    /* テーブルをカードに組み替える（thead を隠し、各行を枠付きカードに） */
+    table { background: none; border-radius: 0; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    tbody tr { display: block; background: #171c3d; border: 1px solid #262c52; border-radius: 12px;
+               padding: 12px 14px; margin-bottom: 12px; }
+    tbody tr:hover td { background: none; }
+    tbody td { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+               border: none; padding: 5px 0; font-size: 0.95rem; }
+    /* 各セルの前に項目名を出す（thead が無くても何の値か分かる） */
+    tbody td::before { content: attr(data-label); color: #8b98c9; font-size: 0.8rem; font-weight: 700; }
+    tbody td[data-label="受験番号"] { font-size: 1.05rem; font-weight: 800;
+               border-bottom: 1px solid #262c52; padding-bottom: 10px; margin-bottom: 4px; }
+    tbody td:last-child { padding-top: 10px; }
+    tbody td:last-child::before { content: ""; }
+    .btn-view { width: 100%; padding: 11px; font-size: 0.95rem; }
+    .panel { padding: 20px 16px; }
+    .grant-grid { grid-template-columns: 1fr 1fr; }
+    .grant-btn { padding: 12px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🎒 オトン学園 管理ツール</h1>
+<p class="sub">受験番号（ニックネーム）ごとの利用状況を確認・削除できます。保護者用の管理画面で、オトン学園本体アプリからはリンクされていません。<br>
+削除は<b>管理者ログイン中だけ</b>できます（Firestoreのルールでも管理者以外の削除を拒否しています）。</p>
+
+<div id="status" class="status loading">Firebaseに接続中…</div>
+<div class="head-btns">
+  <button class="btn-refresh" style="margin-bottom:0" onclick="loadList()">🔄 更新</button>
+  <button class="btn-sub" onclick="exportHistory()">💾 のびの記録を書き出す</button>
+  <button class="btn-sub" onclick="document.getElementById('import-file').click()">📥 読み込む</button>
+  <input id="import-file" type="file" accept="application/json,.json" style="display:none" onchange="importHistory(this)">
+  <span id="admin-badge" class="admin-badge locked">🔒 閲覧のみ</span>
+  <button id="admin-btn" class="btn-sub" onclick="toggleAdmin()">管理者ログイン</button>
+  <span id="hist-msg" class="sub" style="margin:0"></span>
+</div>
+<input id="search" type="text" placeholder="受験番号で絞り込み…" oninput="renderList()">
+
+<table>
+  <thead>
+    <tr><th>受験番号</th><th>称号</th><th>達成率</th><th>最終更新</th><th></th></tr>
+  </thead>
+  <tbody id="list-body"></tbody>
+</table>
+<div id="empty-msg" class="empty" style="display:none;">まだデータがありません</div>
+
+<!-- 詳細モーダル -->
+<div id="detail-overlay" class="overlay hidden">
+  <div class="panel">
+    <button class="close" onclick="closeDetail()">×</button>
+    <h2 id="detail-name"></h2>
+    <p class="sub" id="detail-updated"></p>
+    <div id="detail-body"></div>
+    <div class="danger-zone">
+      <button id="btn-delete" class="btn btn-del" onclick="deleteCurrentNickname()" disabled>🗑 この受験番号を削除する</button>
+      <p id="delete-note" class="sub" style="margin:8px 0 0; font-size:0.78rem"></p>
+    </div>
+  </div>
+</div>
+
+<!-- 管理者ログイン -->
+<div id="login-overlay" class="overlay hidden">
+  <div class="panel" style="width:min(92vw,400px)">
+    <button class="close" onclick="closeLogin()">×</button>
+    <h2>🔑 管理者ログイン</h2>
+    <p class="sub" style="margin-bottom:14px">Firebaseに登録した管理用アカウントで入ります。<br>受験番号の削除は、このログイン中だけできます。</p>
+    <input id="admin-email" class="login-input" type="email" placeholder="メールアドレス" autocomplete="username">
+    <input id="admin-pass" class="login-input" type="password" placeholder="パスワード" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-refresh" style="width:100%;margin:4px 0 0" onclick="doLogin()">ログイン</button>
+    <p id="login-msg" class="sub" style="margin:10px 0 0"></p>
+  </div>
+</div>
+
+<!-- Firebase SDK (compat / 本体アプリと同じ設定を利用) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyCEWbHfGMcSQpELPGNdVgLiXZ_mmYTqsPg",
+  authDomain:        "tuna-app-4eeab.firebaseapp.com",
+  projectId:         "tuna-app-4eeab",
+  storageBucket:     "tuna-app-4eeab.firebasestorage.app",
+  messagingSenderId: "84928365508",
+  appId:             "1:84928365508:web:89190838d4d7dd93e89a91",
+};
+firebase.initializeApp(FIREBASE_CONFIG);
+const db = firebase.firestore();
+
+// ── 管理者ログイン ────────────────────────────────────────────
+// 受験番号の削除は Firestoreルールで「管理者だけ」に絞ってある（firestore.rules の isAdmin）。
+// ここでログインしたアカウントのメールがルールの許可リストに載っていれば削除できる。
+// ログイン状態はブラウザに残るので、毎回入れ直す必要はない。
+const auth = firebase.auth();
+let adminUser = null;
+
+auth.onAuthStateChanged(user => {
+  adminUser = user;
+  const badge = document.getElementById('admin-badge');
+  const btn   = document.getElementById('admin-btn');
+  if (user) {
+    badge.className = 'admin-badge unlocked';
+    badge.textContent = '🔓 管理者：' + (user.email || '');
+    btn.textContent = 'ログアウト';
+    closeLogin();
+  } else {
+    badge.className = 'admin-badge locked';
+    badge.textContent = '🔒 閲覧のみ';
+    btn.textContent = '管理者ログイン';
+  }
+  updateDeleteButton();
+});
+
+function updateDeleteButton() {
+  const btn  = document.getElementById('btn-delete');
+  const note = document.getElementById('delete-note');
+  if (!btn) return;
+  btn.disabled = !adminUser;
+  note.textContent = adminUser
+    ? '⚠️ 進捗・ランキング・バックアップを全部消します。元に戻せません。'
+    : '削除するには上の「管理者ログイン」が必要です。';
+}
+
+function toggleAdmin() {
+  if (adminUser) {
+    if (confirm('管理者ログアウトします。よろしいですか？')) auth.signOut();
+  } else {
+    document.getElementById('login-msg').textContent = '';
+    document.getElementById('login-overlay').classList.remove('hidden');
+    document.getElementById('admin-email').focus();
+  }
+}
+function closeLogin() { document.getElementById('login-overlay').classList.add('hidden'); }
+
+async function doLogin() {
+  const email = document.getElementById('admin-email').value.trim();
+  const pass  = document.getElementById('admin-pass').value;
+  const msg   = document.getElementById('login-msg');
+  if (!email || !pass) { msg.textContent = 'メールアドレスとパスワードを入れてください'; return; }
+  msg.textContent = 'ログイン中…';
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+    document.getElementById('admin-pass').value = '';
+  } catch (e) {
+    // よくある失敗を日本語に置き換える（コードのままだと原因が分からない）
+    const known = {
+      'auth/invalid-credential':      'メールアドレスかパスワードが違います',
+      'auth/wrong-password':          'パスワードが違います',
+      'auth/user-not-found':          'そのアカウントは登録されていません',
+      'auth/invalid-email':           'メールアドレスの形式が正しくありません',
+      'auth/too-many-requests':       '失敗が続いたため一時的にロックされています。しばらく待ってください',
+      'auth/operation-not-allowed':   'Firebaseコンソールで「メール／パスワード」を有効にしてください',
+      'auth/network-request-failed':  'ネットワークに接続できませんでした',
+    };
+    msg.textContent = '❌ ' + (known[e.code] || `${e.message}（${e.code || '不明'}）`);
+  }
+}
+
+// ── オトン学園本体（app.js）と同じ達成率ロジック ──────────────
+const QUESTION_COUNTS = {
+  kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
+            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },
+  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
+            wariai: 420, hayasa: 172, rittai: 419 },
+  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
+            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },
+  shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },
+};
+const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
+const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika'];
+const ID_PREFIX_MAP = {
+  k: ['kokugo:kotowaza'], y: ['kokugo:kanyoku'], j: ['kokugo:yojijukugo'], g: ['kokugo:gairaigo'],
+  kk: ['kokugo:kanji_kaki'], ky: ['kokugo:kanji_yomi'], kg: ['kokugo:kokugo_keigo'],
+  gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
+  sk: ['sansu:keisan', 'shakai:kokudo'],
+  sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
+  rd: ['rika:doubutsu', 'rika:denki'],
+  sb: ['sansu:bun'], sz: ['sansu:zu'], st: ['sansu:tokusan'], sc: ['sansu:baai'],
+  sn: ['sansu:kazu'], sw: ['sansu:wariai'], sh: ['sansu:hayasa'],
+  rp: ['rika:shokubutsu'], rk: ['rika:sora'], rg: ['rika:daichi'], rm: ['rika:mono'],
+  rs: ['rika:suiyoueki'], rc: ['rika:chikara'], ho: ['rika:hikari_oto'],
+  tk: ['rika:tenki'], kt: ['rika:kitai'], jt: ['rika:jintai'],
+  ss: ['shakai:sangyo'], sm: ['shakai:komin'],
+};
+// アプリ本体（app.js の TITLES）と必ず同じ内容にする。ズレると管理ツールの称号が実際と食い違う
+const TITLES = [
+  { name: '普通の小学生', pct: 0,  icon: '🎒' },
+  { name: '優等生',       pct: 1,  icon: '📝' },
+  { name: 'Hクラス',      pct: 3,  icon: '📗' },
+  { name: 'SHHクラス',    pct: 5,  icon: '📔' },
+  { name: 'SHSクラス',    pct: 7,  icon: '📒' },
+  { name: 'Sクラス',      pct: 9,  icon: '📘' },
+  { name: 'VSSクラス',    pct: 12, icon: '📓' },
+  { name: 'VSVクラス',    pct: 15, icon: '🔖' },
+  { name: '最レ受講生',   pct: 18, icon: '📙' },
+  { name: 'V2クラス',     pct: 23, icon: '📕' },
+  { name: 'V1クラス',     pct: 28, icon: '🏵️' },
+  { name: '100傑',        pct: 35, icon: '🥉' },
+  { name: '灘合2組',      pct: 45, icon: '🥈' },
+  { name: '灘合1組',      pct: 55, icon: '🏆' },
+  { name: '10傑',         pct: 72, icon: '🥇' },
+  { name: 'スーパーウルトラ神ゴッド', pct: 95, icon: '👑' },
+];
+const ITEM_DEFS = {
+  bomb: { icon: '💣', label: 'ボム' }, slow: { icon: '🐢', label: 'スロー' },
+  search: { icon: '🔍', label: 'サーチ' }, shield: { icon: '🛡', label: 'おまもり' },
+  wing: { icon: '🪽', label: 'つばさ' }, rocket: { icon: '🚀', label: 'ロケット' },
+};
+// 図鑑の総数。本体 app.js の GACHA_CHARS と二重管理なので、増やしたらここも直す。
+// ownedCount はシークレットも数えるため、こちらもシークレット込みの総数にする。
+const GACHA_TOTAL = 157; // シークレット4体を含む総数（2026-08-01時点。排出対象は153体）
+// 削除は「国語だけ」ではダメ。progress / leaderboard は4教科ぶん全部消す（2026-08-01）
+const ALL_CATEGORIES = Object.values(QUESTION_COUNTS).flatMap(o => Object.keys(o));
+const GAME_IDS = ['tetris', 'mine_easy', 'mine_normal', 'mine_hard', 'jump'];
+
+function buildClearedSets(prog) {
+  const sets = {};
+  for (const [s, cats] of Object.entries(QUESTION_COUNTS)) {
+    for (const c of Object.keys(cats)) sets[`${s}:${c}`] = new Set();
+  }
+  for (const [key, p] of Object.entries(prog)) {
+    if (!p || !p.correct) continue;
+    const ci = key.indexOf(':');
+    if (ci > 0) {
+      const head = key.slice(0, ci);
+      const ui = head.indexOf('_');
+      if (ui < 0) continue;
+      const subj = head.slice(0, ui);
+      const bucket = `${subj}:${head.slice(ui + 1)}`;
+      if (sets[bucket]) { sets[bucket].add(key.slice(ci + 1)); continue; }
+      // ★カテゴリが取れていない記録（sansu_null: / sansu_hama: など）をIDの頭文字から救う。
+      //   2026-07-26以前は「単元でえらぶ」「じゅくナビ」で解いた分がここで捨てられていた（アプリ側と同じ修正）
+      const id2 = key.slice(ci + 1);
+      const pm = id2.match(/^[a-zA-Z]+/);
+      if (!pm) continue;
+      (ID_PREFIX_MAP[pm[0]] || [])
+        .filter(b => b.startsWith(subj + ':'))
+        .forEach(b => { if (sets[b]) sets[b].add(id2); });
+    } else {
+      const m = key.match(/^[a-zA-Z]+/);
+      if (!m) continue;
+      const targets = ID_PREFIX_MAP[m[0]];
+      if (targets) targets.forEach(b => { if (sets[b]) sets[b].add(key); });
+    }
+  }
+  return sets;
+}
+// 解いた記録（のべ）。達成率は「一度でも正解した問題の数」なので、
+// 「何回といたか」「まちがえた分」はこちらで数える（2026-07-26 追加）
+function tallyAnswers(prog) {
+  const subjects = {};
+  for (const s of Object.keys(QUESTION_COUNTS)) subjects[s] = { total: 0, correct: 0 };
+  let total = 0, correct = 0, items = 0;
+  for (const [key, p] of Object.entries(prog)) {
+    if (!p) continue;
+    const t = p.total || 0, c = p.correct || 0;
+    total += t; correct += c; items++;
+    let subj = null;
+    const ci = key.indexOf(':');
+    if (ci > 0) {
+      const head = key.slice(0, ci), ui = head.indexOf('_');
+      if (ui > 0) subj = head.slice(0, ui);
+    }
+    if (!subj || !subjects[subj]) {          // sansu_null: など、教科が読めない形も救う
+      const id = ci > 0 ? key.slice(ci + 1) : key;
+      const pm = id.match(/^[a-zA-Z]+/);
+      const cand = pm ? (ID_PREFIX_MAP[pm[0]] || [])[0] : null;
+      subj = cand ? cand.split(':')[0] : null;
+    }
+    if (subj && subjects[subj]) { subjects[subj].total += t; subjects[subj].correct += c; }
+  }
+  return { total, correct, items, pct: total ? Math.round((correct / total) * 100) : 0, subjects };
+}
+function computeAchievement(prog) {
+  const sets = buildClearedSets(prog);
+  const subjects = {};
+  let titleCleared = 0, titleCount = 0;
+  for (const [s, cats] of Object.entries(QUESTION_COUNTS)) {
+    let sc = 0, st = 0;
+    for (const [c, n] of Object.entries(cats)) {
+      const cleared = Math.min(sets[`${s}:${c}`].size, n);
+      sc += cleared; st += n;
+    }
+    subjects[s] = { cleared: sc, count: st, pct: st ? Math.floor((sc / st) * 100) : 0 };
+    if (TITLE_SUBJECTS.includes(s)) { titleCleared += sc; titleCount += st; }
+  }
+  const titlePct = titleCount ? (titleCleared / titleCount) * 100 : 0;
+  return { titlePct, subjects };
+}
+function getTitleInfo(titlePct) {
+  let idx = 0;
+  for (let i = TITLES.length - 1; i >= 0; i--) { if (titlePct >= TITLES[i].pct) { idx = i; break; } }
+  return { idx, name: TITLES[idx].name, icon: TITLES[idx].icon };
+}
+function fmtDate(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+function fmtMinutes(sec) {
+  const min = Math.floor((sec || 0) / 60);
+  if (min < 60) return `${min}分`;
+  return `${Math.floor(min / 60)}時間${min % 60}分`;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  のびの記録（履歴）
+//  アプリ本体の progress には「いつ解いたか」が無いので、過去にさかのぼった
+//  推移は復元できない。そこで【この管理ツールを開いた日】のスナップショットを
+//  このPCの localStorage にためて、点をつないでグラフにする。
+//  Firestore に置かないのは firestore.rules が新しいコレクションを全拒否のため
+//  （ルール変更なしで動く＝本体・ルールを一切触らない）。
+//  PCを替えるときは「書き出す／読み込む」でJSONを移す。
+// ════════════════════════════════════════════════════════════════
+const HIST_KEY  = 'otonAdminHistory';   // { 受験番号: { 'YYYY-MM-DD': スナップショット } }
+const PTIME_KEY = 'otonAdminPlayTime';  // { 受験番号: { 'YYYY-MM-DD': 秒 } }
+const HIST_MAX_DAYS = 900;              // 1受験番号あたりの保持日数
+
+function loadJSON(key) { try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) { return {}; } }
+function dayStr(d) {
+  d = d || new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function dayToTime(s) { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).getTime(); }
+
+// backup（Firestoreの生データ）から、その日1点分のスナップショットを作る
+function makeSnapshot(backup) {
+  if (!backup || !backup.progress) return null;
+  let prog;
+  try { prog = JSON.parse(backup.progress); } catch (e) { return null; }
+  const ach = computeAchievement(prog);
+  const tal = tallyAnswers(prog);
+  const s = {};
+  for (const [k, v] of Object.entries(ach.subjects)) s[k] = { c: v.cleared, n: v.count };
+  let zukan = 0;
+  try { zukan = Object.keys((JSON.parse(backup.gacha || '{}').owned) || {}).length; } catch (e) {}
+  let ptTotal = 0;
+  try { ptTotal = JSON.parse(backup.playTime || '{}').total || 0; } catch (e) {}
+  return {
+    p: Number(ach.titlePct.toFixed(2)),   // 総合達成率（国算理）
+    s,                                     // 教科別 {cleared, count}
+    tot: tal.total, cor: tal.correct, items: tal.items,
+    coins: Number(backup.coins || 0), zukan, time: ptTotal,
+  };
+}
+
+// その日の記録を保存（同じ日に何度開いても最新で上書き）。
+// あわせて本体の playTime.byDate（直近30日ぶん）を吸い出して蓄積する
+// ＝本体は30日で捨てるが、こちらに移せば何年分でも残る。
+function recordSnapshot(nickname, backup) {
+  const snap = makeSnapshot(backup);
+  if (!snap) return;
+  const h = loadJSON(HIST_KEY);
+  (h[nickname] = h[nickname] || {})[dayStr()] = snap;
+  const keys = Object.keys(h[nickname]).sort();
+  while (keys.length > HIST_MAX_DAYS) delete h[nickname][keys.shift()];
+  localStorage.setItem(HIST_KEY, JSON.stringify(h));
+
+  try {
+    const byDate = JSON.parse(backup.playTime || '{}').byDate || {};
+    if (Object.keys(byDate).length) {
+      const pt = loadJSON(PTIME_KEY);
+      pt[nickname] = Object.assign(pt[nickname] || {}, byDate);
+      localStorage.setItem(PTIME_KEY, JSON.stringify(pt));
+    }
+  } catch (e) {}
+}
+
+// 一覧を読んだタイミングで、表示中の全員ぶんを自動で記録する
+async function snapshotAll(entries) {
+  const targets = entries.slice(0, 20);   // 読み取り回数を抑える保険
+  let n = 0;
+  await Promise.all(targets.map(async e => {
+    try {
+      const snap = await db.collection('users').doc(e.nickname).collection('backup').doc('data').get();
+      if (snap.exists) { recordSnapshot(e.nickname, snap.data()); n++; }
+    } catch (_) {}
+  }));
+  return n;
+}
+
+function exportHistory() {
+  const data = { kind: 'oton-admin-history', savedAt: new Date().toISOString(),
+                 history: loadJSON(HIST_KEY), playtime: loadJSON(PTIME_KEY) };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = `オトン学園-のびの記録-${dayStr()}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  document.getElementById('hist-msg').textContent = '💾 書き出しました';
+}
+
+function importHistory(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const msg = document.getElementById('hist-msg');
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      const h = loadJSON(HIST_KEY), pt = loadJSON(PTIME_KEY);
+      let added = 0;
+      for (const [nick, days] of Object.entries(data.history || {})) {
+        h[nick] = h[nick] || {};
+        for (const [d, snap] of Object.entries(days)) {
+          const cur = h[nick][d];
+          // 同じ日が両方にあるときは「のべ解答数が多い＝あとの状態」を採用
+          if (!cur || (snap.tot || 0) > (cur.tot || 0)) { h[nick][d] = snap; added++; }
+        }
+      }
+      for (const [nick, days] of Object.entries(data.playtime || {})) {
+        pt[nick] = pt[nick] || {};
+        for (const [d, sec] of Object.entries(days)) {
+          if (!pt[nick][d] || sec > pt[nick][d]) pt[nick][d] = sec;
+        }
+      }
+      localStorage.setItem(HIST_KEY, JSON.stringify(h));
+      localStorage.setItem(PTIME_KEY, JSON.stringify(pt));
+      msg.textContent = `📥 ${added}日分を取り込みました`;
+      if (currentNickname) renderGrowth(currentNickname);
+    } catch (e) {
+      msg.textContent = '⚠ 読み込めませんでした（JSONの形が違います）';
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  グラフ（外部ライブラリなしのSVG。オフラインでも動く）
+// ════════════════════════════════════════════════════════════════
+const SERIES = [
+  { key: 'total',  name: '総合(国算理)', color: '#3987e5' },
+  { key: 'kokugo', name: '国語',         color: '#d95926' },
+  { key: 'sansu',  name: '算数',         color: '#199e70' },
+  { key: 'rika',   name: '理科',         color: '#c98500' },
+  { key: 'shakai', name: '社会',         color: '#d55181' },
+];
+const INK_MUTED = '#7f8cc0', GRID = '#262c52', BASELINE = '#3a4374';
+
+// 目盛りが半端な数（12.5分…）にならないよう、きれいな刻み幅から天井を決める
+function scaleY(max, intOnly) {
+  if (!(max > 0)) return { step: 1, ymax: 1, dec: 0, ticks: 1 };
+  const raw = max / 4;
+  const e = Math.pow(10, Math.floor(Math.log10(raw)));
+  const n = raw / e;
+  let step = (n <= 1 ? 1 : n <= 2 ? 2 : n <= 3 ? 3 : n <= 4 ? 4 : n <= 5 ? 5 : 10) * e;
+  if (intOnly) step = Math.max(1, Math.round(step));
+  const ymax = Math.max(step, Math.ceil((max * 1.08) / step) * step);
+  return { step, ymax, dec: step >= 1 ? 0 : step >= 0.1 ? 1 : 2, ticks: Math.round(ymax / step) };
+}
+function mmdd(t) { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()}`; }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+// 上だけ角丸のバー（ベースラインに接地したまま端を4px丸める）
+function barPath(x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w / 2, h));
+  return `M${x},${y + h}L${x},${y + r}Q${x},${y} ${x + r},${y}L${x + w - r},${y}Q${x + w},${y} ${x + w},${y + r}L${x + w},${y + h}Z`;
+}
+
+// points: [{ t: ミリ秒, v: { 系列キー: 数値|null } }]
+function renderLineChart(host, points, series, fmt) {
+  const W = 560, H = 200, ML = 46, MR = 52, MT = 14, MB = 26;   // 右は直ラベルのぶん広くとる
+  const iw = W - ML - MR, ih = H - MT - MB;
+  const t0 = points[0].t, t1 = points[points.length - 1].t, span = (t1 - t0) || 1;
+  let max = 0;
+  points.forEach(p => series.forEach(s => { const v = p.v[s.key]; if (v != null && v > max) max = v; }));
+  const sc = scaleY(max);
+  const X = t => ML + (points.length === 1 ? iw / 2 : ((t - t0) / span) * iw);
+  const Y = v => MT + ih - (v / sc.ymax) * ih;
+
+  let g = '';
+  for (let i = 0; i <= sc.ticks; i++) {
+    const val = sc.step * i, y = Y(val);
+    g += `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}" stroke="${i ? GRID : BASELINE}" stroke-width="1"/>`;
+    g += `<text x="${ML - 7}" y="${y + 3.5}" text-anchor="end" font-size="9.5" fill="${INK_MUTED}">${fmt(val, sc.dec)}</text>`;
+  }
+  const nLab = Math.min(points.length, 4);
+  for (let i = 0; i < nLab; i++) {
+    const p = points[nLab === 1 ? 0 : Math.round(i * (points.length - 1) / (nLab - 1))];
+    g += `<text x="${X(p.t)}" y="${H - 8}" text-anchor="middle" font-size="9.5" fill="${INK_MUTED}">${mmdd(p.t)}</text>`;
+  }
+  const ends = [];
+  series.forEach(s => {
+    const pts = points.filter(p => p.v[s.key] != null);
+    if (!pts.length) return;
+    if (pts.length > 1) {
+      g += `<path d="${pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.t).toFixed(1)},${Y(p.v[s.key]).toFixed(1)}`).join('')}"
+             fill="none" stroke="${s.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    // 点が少ないときだけ常時マーカー（多いとノイズになる）
+    if (pts.length <= 14) {
+      pts.forEach(p => { g += `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v[s.key]).toFixed(1)}" r="3.4" fill="${s.color}" stroke="#171c3d" stroke-width="2"/>`; });
+    }
+    const last = pts[pts.length - 1];
+    ends.push({ x: X(last.t) + 7, y: Y(last.v[s.key]), text: fmt(last.v[s.key]) });
+  });
+  // 直近の値だけ直接ラベル（凡例＋直ラベルで色だけに頼らない）。近すぎるものは押し下げて重なりを防ぐ
+  ends.sort((a, b) => a.y - b.y);
+  for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 11) ends[i].y = ends[i - 1].y + 11;
+  ends.forEach(e => { g += `<text x="${e.x.toFixed(1)}" y="${(e.y + 3).toFixed(1)}" font-size="9.5" fill="#c4cdef">${e.text}</text>`; });
+  // ホバー用
+  g += `<line id="cross" x1="0" y1="${MT}" x2="0" y2="${MT + ih}" stroke="#8b98c9" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>`;
+  g += `<g id="focus"></g>`;
+  g += `<rect x="${ML}" y="${MT}" width="${iw}" height="${ih}" fill="transparent" id="hitarea"/>`;
+
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg><div class="tip"></div>`;
+  bindHover(host, points, series, fmt, X, Y, W, H, x => {
+    let best = 0, bd = Infinity;
+    points.forEach((p, i) => { const d = Math.abs(X(p.t) - x); if (d < bd) { bd = d; best = i; } });
+    return best;
+  });
+}
+
+// 棒グラフ（1系列）
+function renderBarChart(host, points, color, fmt, unitName) {
+  const W = 560, H = 170, ML = 46, MR = 14, MT = 14, MB = 26;
+  const iw = W - ML - MR, ih = H - MT - MB;
+  const max = points.reduce((m, p) => Math.max(m, p.v.val || 0), 0);
+  const sc = scaleY(max, true);   // 問数・分は整数目盛り
+  const slot = iw / points.length;
+  const bw = Math.max(2, Math.min(28, slot - 2));      // 隣どうしに2pxのすき間
+  const X = i => ML + slot * i + (slot - bw) / 2;
+  const Y = v => MT + ih - (v / sc.ymax) * ih;
+
+  let g = '';
+  for (let i = 0; i <= sc.ticks; i++) {
+    const val = sc.step * i, y = Y(val);
+    g += `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}" stroke="${i ? GRID : BASELINE}" stroke-width="1"/>`;
+    g += `<text x="${ML - 7}" y="${y + 3.5}" text-anchor="end" font-size="9.5" fill="${INK_MUTED}">${fmt(val, sc.dec)}</text>`;
+  }
+  points.forEach((p, i) => {
+    const v = p.v.val || 0;
+    if (v > 0) g += `<path d="${barPath(X(i), Y(v), bw, ih - (Y(v) - MT), 4)}" fill="${color}"/>`;
+  });
+  const nLab = Math.min(points.length, 5);
+  for (let i = 0; i < nLab; i++) {
+    const idx = nLab === 1 ? 0 : Math.round(i * (points.length - 1) / (nLab - 1));
+    g += `<text x="${X(idx) + bw / 2}" y="${H - 8}" text-anchor="middle" font-size="9.5" fill="${INK_MUTED}">${mmdd(points[idx].t)}</text>`;
+  }
+  g += `<line id="cross" x1="0" y1="${MT}" x2="0" y2="${MT + ih}" stroke="#8b98c9" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>`;
+  g += `<g id="focus"></g>`;
+  g += `<rect x="${ML}" y="${MT}" width="${iw}" height="${ih}" fill="transparent" id="hitarea"/>`;
+
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg><div class="tip"></div>`;
+  bindHover(host, points, [{ key: 'val', name: unitName, color }], fmt, i => X(i) + bw / 2, Y, W, H,
+    x => Math.max(0, Math.min(points.length - 1, Math.floor((x - ML) / slot))), true);
+}
+
+// ホバー：十字線＋ツールチップ（指でも押せるようtouchも拾う）
+function bindHover(host, points, series, fmt, X, Y, W, H, hitToIndex, byIndex) {
+  const svg = host.querySelector('svg'), tip = host.querySelector('.tip');
+  const cross = svg.querySelector('#cross'), focus = svg.querySelector('#focus');
+  const px = i => (byIndex ? X(i) : X(points[i].t));
+
+  function show(clientX, clientY) {
+    const box = svg.getBoundingClientRect();
+    const sx = (clientX - box.left) * (W / box.width);
+    const i = hitToIndex(sx);
+    const p = points[i];
+    if (!p) return;
+    const cx = px(i);
+    cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('opacity', '1');
+    focus.innerHTML = series.map(s => p.v[s.key] == null ? '' :
+      `<circle cx="${cx}" cy="${Y(p.v[s.key])}" r="5" fill="${s.color}" stroke="#171c3d" stroke-width="2"/>`).join('');
+    const rows = series.filter(s => p.v[s.key] != null)
+      .map(s => `<i style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${s.color};margin-right:5px"></i>${esc(s.name)}　${fmt(p.v[s.key])}`).join('<br>');
+    tip.innerHTML = `<b>${esc(p.label || mmdd(p.t))}</b><br>${rows}`;
+    tip.style.opacity = '1';
+    const hostBox = host.getBoundingClientRect();
+    const left = (cx / W) * hostBox.width;
+    tip.style.left = Math.max(0, Math.min(left + 12, hostBox.width - tip.offsetWidth - 4)) + 'px';
+    tip.style.top = Math.max(0, ((clientY - hostBox.top) - tip.offsetHeight - 12)) + 'px';
+  }
+  function hide() { tip.style.opacity = '0'; cross.setAttribute('opacity', '0'); focus.innerHTML = ''; }
+  svg.addEventListener('mousemove', e => show(e.clientX, e.clientY));
+  svg.addEventListener('mouseleave', hide);
+  svg.addEventListener('touchstart', e => { const t = e.touches[0]; show(t.clientX, t.clientY); }, { passive: true });
+  svg.addEventListener('touchmove',  e => { const t = e.touches[0]; show(t.clientX, t.clientY); }, { passive: true });
+  svg.addEventListener('touchend', hide);
+}
+
+let allEntries = [];
+let currentNickname = null;
+let currentBackup = null;   // 開いている受験番号の backup/data（削除時のドリル記録の割り出しに使う）
+let growthRange = 30;   // 表示期間（日）。0 = ぜんぶ
+
+async function loadList() {
+  const status = document.getElementById('status');
+  status.className = 'status loading';
+  status.textContent = 'Firebaseに接続中…';
+  try {
+    const snap = await db.collection('achievement').get();
+    allEntries = snap.docs.map(d => ({ nickname: d.id, ...d.data() }));
+    status.className = 'status ok';
+    status.textContent = `接続成功：${allEntries.length}件の受験番号が見つかりました`;
+    renderList();
+    // 開いた日を1点として全員ぶん自動記録する（＝グラフの点が増える）
+    const n = await snapshotAll(allEntries);
+    if (n) status.textContent += `　📈 今日の記録を${n}件ためました`;
+  } catch (e) {
+    console.error('一覧読み込みエラー:', e);
+    status.className = 'status err';
+    status.textContent = `接続に失敗しました（種類: ${e.code || '不明'}）：${e.message}`;
+  }
+}
+
+function renderList() {
+  const q = document.getElementById('search').value.trim();
+  const body = document.getElementById('list-body');
+  const filtered = allEntries.filter(e => !q || e.nickname.includes(q));
+  document.getElementById('empty-msg').style.display = filtered.length ? 'none' : 'block';
+  body.innerHTML = '';
+  filtered.sort((a, b) => (b.pct || 0) - (a.pct || 0));
+  filtered.forEach(e => {
+    const title = getTitleInfo(e.pct || 0);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td data-label="受験番号">${e.nickname}</td>
+      <td data-label="称号">${title.icon} ${title.name}</td>
+      <td data-label="達成率">${(e.pct || 0).toFixed(1)}%</td>
+      <td data-label="最終更新">${fmtDate(e.lastUpdated)}</td>
+      <td data-label=""><button class="btn btn-view" data-n="${e.nickname}">詳細</button></td>
+    `;
+    tr.querySelector('.btn-view').onclick = () => showDetail(e.nickname);
+    body.appendChild(tr);
+  });
+}
+
+async function showDetail(nickname) {
+  currentNickname = nickname;
+  currentBackup = null;
+  updateDeleteButton();
+  document.getElementById('detail-name').textContent = '🎒 ' + nickname;
+  document.getElementById('detail-updated').textContent = '読み込み中…';
+  document.getElementById('detail-body').innerHTML = '';
+  document.getElementById('detail-overlay').classList.remove('hidden');
+
+  try {
+    const snap = await db.collection('users').doc(nickname).collection('backup').doc('data').get();
+    const backup = snap.exists ? snap.data() : null;
+    currentBackup = backup;                         // 削除のとき計算ドリルの記録名を引くのに使う
+    if (backup) recordSnapshot(nickname, backup);   // 開いた時点を1点として記録
+    document.getElementById('detail-updated').textContent = backup && backup.lastUpdated
+      ? '最終バックアップ: ' + fmtDate(backup.lastUpdated) : 'クラウドバックアップなし（この端末のデータのみ集計）';
+
+    let html = '';
+    if (backup && backup.progress) {
+      const prog = JSON.parse(backup.progress);
+      const ach = computeAchievement(prog);
+      const title = getTitleInfo(ach.titlePct);
+      html += `<div class="section-title">称号・達成率</div>`;
+      html += `<div class="row"><span>称号</span><span>${title.icon} ${title.name}</span></div>`;
+      html += `<div class="row"><span>総合達成率（国算理）</span><span>${(ach.titlePct).toFixed(1)}%</span></div>`;
+      html += `<div class="section-title">教科別</div>`;
+      for (const [s, info] of Object.entries(ach.subjects)) {
+        html += `<div class="subj-row"><div class="label"><span>${SUBJECT_LABELS[s]}</span><span>${info.cleared} / ${info.count}（${info.pct}%）</span></div><div class="bar-track"><div class="bar-fill" style="width:${info.pct}%"></div></div></div>`;
+      }
+
+      // ── 解いた記録（達成率＝はじめて正解した数、なので「といた回数」は別に出す）──
+      const tal = tallyAnswers(prog);
+      html += `<div class="section-title">解いた記録</div>`;
+      html += `<p class="sub">上の達成率は「はじめて正解した問題の数」です。まちがえた分・くり返し解いた分はこちらに出ます。</p>`;
+      html += `<div class="row"><span>のべ解答数</span><span>${tal.total}回</span></div>`;
+      html += `<div class="row"><span>正解</span><span>${tal.correct}回（正答率 ${tal.pct}%）</span></div>`;
+      html += `<div class="row"><span>手をつけた問題</span><span>${tal.items}問</span></div>`;
+      for (const [s, v] of Object.entries(tal.subjects)) {
+        if (!v.total) continue;
+        html += `<div class="row"><span>　${SUBJECT_LABELS[s]}</span><span>${v.total}回（正解 ${v.correct}）</span></div>`;
+      }
+    } else {
+      html += `<p class="sub">進捗の詳細データ（backup.progress）が見つかりません。</p>`;
+    }
+
+    html += `<div id="growth-section"></div>`;
+
+    if (backup) {
+      const coins = backup.coins || '0';
+      const items = backup.items ? JSON.parse(backup.items) : {};
+      const gacha = backup.gacha ? JSON.parse(backup.gacha) : { owned: {} };
+      const ownedCount = Object.keys(gacha.owned || {}).length;
+      const loginBonus = backup.loginBonus ? JSON.parse(backup.loginBonus) : {};
+      const playTime = backup.playTime ? JSON.parse(backup.playTime) : {};
+
+      html += `<div class="section-title">ガチャ・アイテム</div>`;
+      html += `<div class="row"><span>🪙 所持コイン</span><span>${coins}枚</span></div>`;
+      html += `<div class="row"><span>📖 図鑑コンプ</span><span>${ownedCount} / ${GACHA_TOTAL}体</span></div>`;
+      const itemStr = Object.entries(ITEM_DEFS).map(([k, def]) => `${def.icon}${items[k] || 0}`).join('　');
+      html += `<div class="row"><span>🎁 お助けアイテム</span><span>${itemStr}</span></div>`;
+
+      // ── プレゼント付与（次回アプリ起動時に反映）──
+      html += `<div class="section-title">🎁 プレゼントを送る</div>`;
+      html += `<p class="sub">押すと「予約」され、お子さんが次にアプリを開いたときに反映されます（何回でも押せます）。</p>`;
+      html += `<div class="grant-grid">`;
+      html += Object.entries(ITEM_DEFS).map(([k, def]) =>
+        `<button class="grant-btn" data-gt="items" data-gk="${k}" data-gn="1">${def.icon}${def.label} +1</button>`).join('');
+      html += `<button class="grant-btn" data-gt="coins" data-gn="10">🪙 コイン +10</button>`;
+      html += `<button class="grant-btn" data-gt="coins" data-gn="50">🪙 コイン +50</button>`;
+      html += `<button class="grant-btn" data-gt="tickets" data-gn="1">🎟 遊び券 +1</button>`;
+      html += `<button class="grant-btn" data-gt="tickets" data-gn="5">🎟 遊び券 +5</button>`;
+      html += `</div>`;
+      html += `<div id="grant-pending" class="grant-pending">予約を読み込み中…</div>`;
+      html += `<div class="row" style="margin-top:6px"><span id="grant-msg" class="sub"></span><button class="grant-btn grant-clear" data-gt="clear">予約を取り消す</button></div>`;
+
+      html += `<div class="section-title">その他</div>`;
+      html += `<div class="row"><span>🔥 連続ログイン</span><span>${loginBonus.streak || 0}日（最長${loginBonus.best || 0}日）</span></div>`;
+      html += `<div class="row"><span>⏱ 累計プレイ時間</span><span>${fmtMinutes(playTime.total)}</span></div>`;
+      html += `<div class="row"><span>🎮 テトリスベスト</span><span>${backup.tetrisBest || 0}点</span></div>`;
+      html += `<div class="row"><span>🐣 ジャンプベスト</span><span>${backup.jumpBest || 0}点</span></div>`;
+      html += `<div class="row"><span>💣 スイーパー(かんたん)</span><span>${backup.mineBest_easy ? backup.mineBest_easy + '秒' : '—'}</span></div>`;
+      html += `<div class="row"><span>💣 スイーパー(ふつう)</span><span>${backup.mineBest_normal ? backup.mineBest_normal + '秒' : '—'}</span></div>`;
+      html += `<div class="row"><span>💣 スイーパー(むずかしい)</span><span>${backup.mineBest_hard ? backup.mineBest_hard + '秒' : '—'}</span></div>`;
+    }
+
+    document.getElementById('detail-body').innerHTML = html;
+    renderGrowth(nickname);
+    renderPendingGrants(nickname);
+  } catch (e) {
+    console.error('詳細読み込みエラー:', e);
+    document.getElementById('detail-body').innerHTML =
+      `<p class="sub">読み込みに失敗しました<br>種類: ${e.code || '不明'}<br>内容: ${e.message}</p>`;
+  }
+}
+
+// ── のびの記録セクションを描く ──────────────────────────────
+function setGrowthRange(d) { growthRange = d; renderGrowth(currentNickname); }
+
+function renderGrowth(nickname) {
+  const host = document.getElementById('growth-section');
+  if (!host || !nickname) return;
+  const days = loadJSON(HIST_KEY)[nickname] || {};
+  const ptime = loadJSON(PTIME_KEY)[nickname] || {};
+  const allKeys = Object.keys(days).sort();
+  const ptKeys = Object.keys(ptime).sort();
+
+  const limit = growthRange ? Date.now() - growthRange * 86400000 : 0;
+  const keys = allKeys.filter(k => dayToTime(k) >= limit);
+  const ptSel = ptKeys.filter(k => dayToTime(k) >= limit);
+
+  let html = `<div class="section-title">📈 のびの記録</div>`;
+  html += `<div class="range-btns">`;
+  [[7, '7日'], [30, '30日'], [90, '90日'], [0, 'ぜんぶ']].forEach(([d, label]) => {
+    html += `<button class="range-btn ${growthRange === d ? 'on' : ''}" onclick="setGrowthRange(${d})">${label}</button>`;
+  });
+  html += `</div>`;
+
+  if (allKeys.length < 2 && !ptKeys.length) {
+    html += `<div class="growth-empty">まだ記録が${allKeys.length}日ぶんです。<br>
+      この管理ツールを開いた日が1点として自動でたまります。<b>ときどき開くだけ</b>で線になります。<br>
+      <span class="grant-none">※記録はこのPCの中だけに残ります。PCを替えるときは上の「書き出す／読み込む」でJSONを移してください。</span></div>`;
+    host.innerHTML = html;
+    return;
+  }
+  host.innerHTML = html;   // 先に枠を作ってからグラフを流し込む（描画時に幅が要る）
+
+  // ① 達成率の推移
+  if (keys.length >= 1) {
+    const pts = keys.map(k => {
+      const s = days[k], v = { total: s.p };
+      for (const sub of ['kokugo', 'sansu', 'rika', 'shakai']) {
+        const e = s.s && s.s[sub];
+        v[sub] = e && e.n ? Number((e.c / e.n * 100).toFixed(2)) : null;
+      }
+      return { t: dayToTime(k), label: k, v };
+    });
+    const box = document.createElement('div');
+    box.innerHTML = `<div class="chart-title">達成率の推移</div>
+      <p class="chart-note">はじめて正解した問題の割合。総合は国語・算数・理科の合計（称号の基準）。</p>
+      <div class="legend">${SERIES.map(s => `<b><i style="background:${s.color}"></i>${s.name}</b>`).join('')}</div>
+      <div class="chart-wrap"></div>`;
+    host.appendChild(box);
+    renderLineChart(box.querySelector('.chart-wrap'), pts, SERIES, (v, dec) => v.toFixed(dec == null ? 1 : dec) + '%');
+  }
+
+  // ② 前に見たときからの伸び（新しく正解した問題数）
+  if (keys.length >= 2) {
+    const clearedOf = k => Object.values(days[k].s || {}).reduce((a, e) => a + (e.c || 0), 0);
+    const solvedOf  = k => days[k].tot || 0;
+    const pts = [];
+    for (let i = 1; i < keys.length; i++) {
+      pts.push({
+        t: dayToTime(keys[i]), label: `${keys[i - 1]} → ${keys[i]}`,
+        v: { val: Math.max(0, clearedOf(keys[i]) - clearedOf(keys[i - 1])) },
+        solved: Math.max(0, solvedOf(keys[i]) - solvedOf(keys[i - 1])),
+      });
+    }
+    const box = document.createElement('div');
+    box.innerHTML = `<div class="chart-title">新しく正解した問題の数</div>
+      <p class="chart-note">前に管理ツールを開いたときからの増分。毎日開けば「その日ぶん」になります。</p>
+      <div class="chart-wrap"></div>`;
+    host.appendChild(box);
+    renderBarChart(box.querySelector('.chart-wrap'), pts, '#3987e5', v => Math.round(v) + '問', '新しく正解');
+  }
+
+  // ③ 学習時間（本体が持っている日別データ。30日で消える分をこちらに移して保存済み）
+  if (ptSel.length >= 1) {
+    // やらなかった日を0分として詰める（詰めないと「毎日やった」ように見えてしまう）
+    const pts = [];
+    const from = dayToTime(ptSel[0]), to = Math.max(dayToTime(ptSel[ptSel.length - 1]), dayToTime(dayStr()));
+    const nDays = Math.min(Math.round((to - from) / 86400000) + 1, 400);
+    for (let i = 0; i < nDays; i++) {
+      const d = new Date(from + i * 86400000), k = dayStr(d);
+      pts.push({ t: d.getTime(), label: k, v: { val: Math.round((ptime[k] || 0) / 60) } });
+    }
+    const box = document.createElement('div');
+    box.innerHTML = `<div class="chart-title">1日の学習時間</div>
+      <p class="chart-note">アプリを開いていた時間（分）。アプリ本体は30日で消しますが、ここには残していきます。</p>
+      <div class="chart-wrap"></div>`;
+    host.appendChild(box);
+    renderBarChart(box.querySelector('.chart-wrap'), pts, '#199e70', v => Math.round(v) + '分', '学習時間');
+  }
+
+  // 表でも読めるようにする（色だけに頼らない）
+  if (keys.length >= 1) {
+    const rows = keys.slice().reverse().slice(0, 60).map(k => {
+      const s = days[k];
+      const cell = sub => { const e = s.s && s.s[sub]; return e && e.n ? (e.c / e.n * 100).toFixed(1) + '%' : '—'; };
+      return `<tr><td>${k}</td><td>${(s.p || 0).toFixed(1)}%</td><td>${cell('kokugo')}</td><td>${cell('sansu')}</td>
+              <td>${cell('rika')}</td><td>${cell('shakai')}</td><td>${s.tot || 0}</td><td>${Math.round((s.time || 0) / 60)}分</td></tr>`;
+    }).join('');
+    const box = document.createElement('div');
+    box.innerHTML = `<details class="table-view"><summary>数字で見る（表）</summary>
+      <table class="growth-table"><thead><tr><th>日付</th><th>総合</th><th>国語</th><th>算数</th><th>理科</th><th>社会</th><th>のべ解答</th><th>累計時間</th></tr></thead>
+      <tbody>${rows}</tbody></table></details>`;
+    host.appendChild(box);
+  }
+}
+
+function closeDetail() {
+  document.getElementById('detail-overlay').classList.add('hidden');
+  currentNickname = null;
+}
+
+// 現在たまっている付与予約（backup/grants）を読み取って表示する
+async function renderPendingGrants(nickname) {
+  const el = document.getElementById('grant-pending');
+  if (!el) return;
+  try {
+    const snap = await db.collection('users').doc(nickname).collection('backup').doc('grants').get();
+    if (!snap.exists) { el.innerHTML = '<span class="grant-none">📭 未反映の予約はありません</span>'; return; }
+    const g = snap.data();
+    const parts = [];
+    if (g.items) for (const [k, v] of Object.entries(g.items)) { const n = Number(v); if (n > 0 && ITEM_DEFS[k]) parts.push(`${ITEM_DEFS[k].icon}${ITEM_DEFS[k].label}×${n}`); }
+    if (g.coins && Number(g.coins) > 0) parts.push(`🪙コイン×${Number(g.coins)}`);
+    if (g.tickets && Number(g.tickets) > 0) parts.push(`🎟遊び券×${Number(g.tickets)}`);
+    el.innerHTML = parts.length
+      ? `<span class="grant-pending-title">📦 未反映の予約：</span>${parts.join('　')}<br><span class="grant-none">お子さんが次にアプリを開くと反映されます</span>`
+      : '<span class="grant-none">📭 未反映の予約はありません</span>';
+  } catch (e) {
+    el.innerHTML = '<span class="grant-none">予約の読み取りに失敗しました</span>';
+  }
+}
+
+// ── プレゼント付与：users/{nickname}/backup/grants に加算予約 ──
+// アプリ側が起動時に読み取り、アイテム/コイン/遊び券をローカルに加算して予約を削除する。
+document.addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('.grant-btn');
+  if (!btn || !currentNickname) return;
+  const msgEl = document.getElementById('grant-msg');
+  const ref = db.collection('users').doc(currentNickname).collection('backup').doc('grants');
+  try {
+    if (btn.dataset.gt === 'clear') {
+      await ref.delete();
+      if (msgEl) msgEl.textContent = '🗑 予約を取り消しました。';
+      renderPendingGrants(currentNickname);
+      return;
+    }
+    const n = Number(btn.dataset.gn);
+    const inc = firebase.firestore.FieldValue.increment(n);
+    const payload = { ts: firebase.firestore.FieldValue.serverTimestamp() };
+    if (btn.dataset.gt === 'items') payload.items = { [btn.dataset.gk]: inc };
+    else payload[btn.dataset.gt] = inc; // coins / tickets
+    await ref.set(payload, { merge: true });
+    if (msgEl) msgEl.textContent = '✅ 予約しました。お子さんが次にアプリを開くと反映されます。';
+    renderPendingGrants(currentNickname);
+  } catch (e) {
+    if (msgEl) msgEl.textContent = '⚠ 失敗: ' + (e.message || e.code || e);
+  }
+});
+
+// 計算ドリルのランキングは game_scores/drill_g5_mul_d3_t60/... のように名前が可変で、
+// クライアントからは一覧できない。その子の drillBest（backup/data）に残っている名前だけ消す。
+function drillGamesOf(backup) {
+  try {
+    return Object.keys(JSON.parse((backup && backup.drillBest) || '{}'))
+      .filter(k => /^drill_g[1-6]_(add|sub|mul|div|divrem|decimal|fraction|mix)_d[1-4]_t(60|90|120)$/.test(k));
+  } catch (e) { return []; }
+}
+
+async function deleteCurrentNickname() {
+  const nickname = currentNickname;
+  if (!nickname) return;
+  if (!adminUser) { alert('削除するには管理者ログインが必要です。'); return; }
+
+  // 受験番号は打ち間違いで消すと戻せないので、名前をそのまま打ってもらう
+  const typed = prompt(`「${nickname}」のデータを完全に削除します。元に戻せません。\n消してよければ、受験番号をそのまま入力してください。`);
+  if (typed === null) return;
+  if (typed.trim() !== nickname) { alert('入力が一致しなかったので、削除をやめました。'); return; }
+
+  const status = document.getElementById('status');
+  status.className = 'status loading';
+  status.textContent = `「${nickname}」のデータを削除中…`;
+
+  const userRef = db.collection('users').doc(nickname);
+  const tasks = [
+    { label: '達成率',       p: db.collection('achievement').doc(nickname).delete() },
+    { label: 'バックアップ', p: userRef.collection('backup').doc('data').delete() },
+    { label: 'プレゼント',   p: userRef.collection('backup').doc('grants').delete() },
+  ];
+  ALL_CATEGORIES.forEach(cat => {
+    tasks.push({ label: `進捗:${cat}`,   p: userRef.collection('progress').doc(cat).delete() });
+    tasks.push({ label: `ランキング:${cat}`, p: db.collection('leaderboard').doc(cat).collection('scores').doc(nickname).delete() });
+  });
+  GAME_IDS.concat(drillGamesOf(currentBackup)).forEach(game => {
+    tasks.push({ label: `ゲーム:${game}`, p: db.collection('game_scores').doc(game).collection('scores').doc(nickname).delete() });
+  });
+
+  // 存在しないドキュメントの delete は成功扱いなので、落ちたぶんは本当の失敗。
+  // ここを握りつぶすと「消せていないのに消しました」と出る（2026-08-01に修正）
+  const results = await Promise.allSettled(tasks.map(t => t.p));
+  const failed = results
+    .map((r, i) => ({ r, label: tasks[i].label }))
+    .filter(x => x.r.status === 'rejected');
+
+  if (!failed.length) {
+    status.className = 'status ok';
+    status.textContent = `「${nickname}」のデータを削除しました（${tasks.length}件）`;
+    closeDetail();
+    loadList();
+    return;
+  }
+
+  const code = failed[0].r.reason && failed[0].r.reason.code;
+  status.className = 'status err';
+  status.textContent = code === 'permission-denied'
+    ? `削除できませんでした（${failed.length}/${tasks.length}件が拒否）。Firestoreルールの管理者リストに、いまログイン中の ${adminUser.email} が入っているか確認してください。`
+    : `削除に失敗しました（${failed.length}/${tasks.length}件）：${failed[0].label} — ${(failed[0].r.reason && failed[0].r.reason.message) || code || '不明'}`;
+  console.error('削除失敗:', failed.map(f => [f.label, f.r.reason]));
+  loadList();
+}
+
+loadList();
+
+// ホーム画面に追加して使えるようにする（PWA）。
+// Firebaseなどの外部通信には介入せず、常に最新データを取りにいく（sw.js 参照）。
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW登録失敗:', e));
+  });
+}
+</script>
+</body>
+</html>
