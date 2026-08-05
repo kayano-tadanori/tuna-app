@@ -1085,10 +1085,14 @@ body.oton-dark #hama-hint.hama-warn {
 /* ============================================================
    📘 使い方ガイド（設定 → 使い方ガイド）
    ============================================================ */
+/* ★スクロールするのは .screen 側（position:fixed + overflow-y:auto）。
+   ここに height:100% や overflow を付けると、ヘッダーの高さぶんだけ縦に長くなって
+   二重スクロールになり、いちばん下（クレジット）まで届かなくなる。
+   他の画面（.settings-main / .record-main …）と同じく、中身を置くだけにする */
 .help-main {
-  height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: 14px 14px calc(40px + var(--safe-b));
+  padding: 14px 16px calc(40px + var(--safe-b));
   display: flex; flex-direction: column; gap: 12px;
+  max-width: 560px; margin: 0 auto; width: 100%;
 }
 
 /* ヒーロー（オットンのひとこと） */
