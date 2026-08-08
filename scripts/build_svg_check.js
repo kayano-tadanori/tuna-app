@@ -18,7 +18,8 @@
 // style.css をインラインで読ませる（フォントが違うと幅が変わる）
 const fs = require('fs');
 const path = require('path');
-const ROOT = 'C:\\Users\\茅野　忠徳\\Desktop\\Claude\\tuna app';
+// ★PCによってユーザー名がちがうので決め打ちしない（[[jikka_pc_setup]]）
+const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 const OUT = path.join(__dirname, 'svg_check.html');
 
@@ -27,22 +28,24 @@ const SKIP_FILE = new Set(['shakai_nippon.json', 'japan_map.svg']);
 
 const items = [];
 const seen = new Set();
-function walk(o, file, id) {
-  if (Array.isArray(o)) return o.forEach((v) => walk(v, file, id));
+// ★id を持たないデータ（hama_kaisetsu は回番号のキーで並んでいる）は、JSON上の位置を名前にする。
+//   前は id が空のまま出ていて、17件が「どの図か分からないので直せない」状態だった（2026-08-08）
+function walk(o, file, id, at) {
+  if (Array.isArray(o)) return o.forEach((v, i) => walk(v, file, id, `${at}[${i}]`));
   if (!o || typeof o !== 'object') return;
   const myId = o.id || id;
   for (const [k, v] of Object.entries(o)) {
     if (k === 'svg' && typeof v === 'string' && v.trim().startsWith('<svg')) {
       const key = v;
-      if (!seen.has(key)) { seen.add(key); items.push({ file, id: myId, svg: v }); }
-    } else walk(v, file, myId);
+      if (!seen.has(key)) { seen.add(key); items.push({ file, id: myId || at, svg: v }); }
+    } else walk(v, file, myId, at ? `${at}.${k}` : k);
   }
 }
 
 for (const f of fs.readdirSync(DATA).filter((x) => x.endsWith('.json')).sort()) {
   if (SKIP_FILE.has(f)) continue;
   let d; try { d = JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')); } catch { continue; }
-  walk(d, f, '');
+  walk(d, f, '', '');
 }
 
 const css = fs.readFileSync(path.join(ROOT, 'style.css'), 'utf8');
@@ -69,7 +72,12 @@ function measure() {
           b: (bb.y + bb.height) - (vb.y + vb.height),
         };
         const worst = Math.max(d.l, d.t, d.r, d.b);
-        if (worst > 0.5) out.over.push(Object.assign({ worst: +worst.toFixed(1) }, meta));
+        // ★どの辺がどれだけ出ているかも残す。これが無いと「広げるだけ」の自動修正が書けない
+        if (worst > 0.5) out.over.push(Object.assign({
+          worst: +worst.toFixed(1),
+          d: { l: +d.l.toFixed(2), t: +d.t.toFixed(2), r: +d.r.toFixed(2), b: +d.b.toFixed(2) },
+          vb: [vb.x, vb.y, vb.width, vb.height],
+        }, meta));
       }
     } catch (e) {}
     // ② 文字の重なり（画面座標で総当たり）
@@ -124,4 +132,7 @@ fs.writeFileSync(OUT,
 .cell{width:340px;display:inline-block;vertical-align:top;margin:2px;background:#fff}
 .cell svg{max-width:100%}</style>
 <body><pre id="out"></pre>${cells}${measure}</body>`);
+// ★直す側（fix_svg_viewbox.js）が「何番目＝どのSVG」を引けるように、同じ並びで書き出す。
+//   直す側で walk を書き直すと基準が2つになって、番号がズレる（[[method_measure_first]]）
+fs.writeFileSync(path.join(__dirname, 'svg_items.json'), JSON.stringify(items));
 console.log(`SVG ${items.length}枚を書き出した → ${OUT}`);

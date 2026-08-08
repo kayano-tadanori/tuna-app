@@ -6,3 +6,9 @@
 *.orig
 _svgcheck.html
 __pycache__/
+
+# 図の検査で作る中間ファイル。いつでも作り直せるうえ大きい（svg_dom.txt は5MB超）
+scripts/svg_check.html
+scripts/svg_dom.txt
+scripts/svg_items.json
+scripts/svg_findings.json
