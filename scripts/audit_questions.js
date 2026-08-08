@@ -67,7 +67,13 @@ const add = (kind, file, id, msg, detail) => findings.push({ kind, file, id, msg
 let total = 0, withChoices = 0;
 const seenByFile = new Map();
 
+// ★問題の形をしていないデータは見ない。
+//   sanken_cases（三権タウン事件簿）は stages[].options[] という別の形で、
+//   answer を持たないので「答えが空」が36件出てしまう（誤検知）
+const SKIP_FILE = new Set(['sanken_cases.json', 'shakai_nippon.json', 'japan_pref_regions.json']);
+
 for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) {
+  if (SKIP_FILE.has(f)) continue;
   let data;
   try { data = JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')); } catch { continue; }
   const seen = new Map();
@@ -100,10 +106,20 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
       if (ndup.length && !dup.length) {
         add('見分けのつかない選択肢', f, id, ch.join(' / '));
       }
-      // ⑦ 壊れた選択肢（英単語まじり・異様に長い）
+      // ⑦ 壊れた選択肢（英単語のまぎれこみ・異様に長い）
+      // ★大文字の略語（LED・BTB・PKO）やかっこ書きの原語（Primary（最初））は正当。
+      //   こわれているのは「小文字の英単語が日本語のとなりに素で入っている」もの
+      //   （changes改善／north向きにする／one人で生きる）。ここを分けないと
+      //   85件の正当な表記に本物7件が埋もれる（2026-08-08に実測）
       for (const c of ch) {
-        if (/[A-Za-z]{3,}/.test(c) && !/^[A-Za-z0-9 .,'-]+$/.test(c)) {
-          add('選択肢に英字がまじる', f, id, c);
+        if (/[ぁ-んァ-ヶ一-鿿]/.test(c)) {
+          for (const m of c.matchAll(/(?<![A-Za-z])([a-z]{2,})(?![A-Za-z])/g)) {
+            const before = c.slice(0, m.index), after = c.slice(m.index + m[1].length);
+            if (before.endsWith('（') || before.endsWith('(')) continue;
+            if (after.startsWith('）') || after.startsWith(')')) continue;
+            if (['cm', 'mm', 'km', 'kg', 'mg', 'ml', 'ha', 'pH'].includes(m[1])) continue;
+            add('選択肢に英単語がまぎれている', f, id, `${m[1]} → ${c}`);
+          }
         }
         if (c.length > 60) add('選択肢が長すぎる', f, id, c.slice(0, 50) + '…');
       }
@@ -114,10 +130,14 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
     if (mean) {
       const m = mean.match(/よって、?答えは(.+?)です。/);
       if (m) {
-        const said = norm(m[1]);
-        if (said && said !== norm(ans) && !norm(ans).includes(said) && !said.includes(norm(ans))) {
-          add('解説の結びが答えと合わない', f, id, `答え「${ans}」／解説「${m[1]}」`);
-        }
+        // ★かっこ書きの言いかえは省いてよい。
+        //   答え「夕立（にわか雨）がふった」／解説「夕立がふった」は同じことを言っている。
+        //   ここを見ないと、まっとうな短縮まで指摘されて本物が埋もれる
+        const noParen = (s) => norm(String(s).replace(/[（(][^）)]*[）)]/g, ''));
+        const A = [norm(ans), noParen(ans)];
+        const S = [norm(m[1]), noParen(m[1])];
+        const ok = A.some((a) => S.some((s) => s && a && (a === s || a.includes(s) || s.includes(a))));
+        if (!ok) add('解説の結びが答えと合わない', f, id, `答え「${ans}」／解説「${m[1]}」`);
       }
     }
 
