@@ -15,10 +15,13 @@
 
   レコードを足したら、このスクリプトと `audit_genbo.py` の両方を走らせる。
 """
-import io, re, sys, argparse
+import io, os, re, sys, argparse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-GENBO = r"C:\Users\User\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from genbo_path import find_genbo          # noqa: E402  ← PCごとにパスが違うので決め打ちしない
+
+GENBO = find_genbo()
 MARK_START = "<!-- APPENDIX:ALL-RECORDS:START -->"
 MARK_END = "<!-- APPENDIX:ALL-RECORDS:END -->"
 

@@ -17,7 +17,10 @@
 import re, io, os, sys, collections
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-GENBO = r"C:\Users\User\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from genbo_path import find_genbo          # noqa: E402  ← PCごとにパスが違うので決め打ちしない
+
+GENBO = find_genbo()
 
 # 見出しの出典 → 教材名。**上から順に当てる**（小3最レ刷新版は小3最レより先）
 BOOKS = [
@@ -35,6 +38,8 @@ BOOKS = [
     ("小5本科",        r"^小5\s*(?:マスター|本科|実力テストV|実力|No\.)"),
     ("小5復習テスト",  r"^小5\s*復習"),                                  # 別教材
     ("小5 2nd演習",    r"^小5\s*2nd"),
+    # ★「小5最レ国語」は「小5最レ」より先に当てる（後だと算数の最レに吸われる）
+    ("小5最レ国語",    r"^小5\s*最レ国語"),
     ("小5最レ",        r"^小5\s*(?:最レ|最高レベル)"),
     ("小5理科",        r"^小5\s*理科"),
     ("小5灘合",        r"^小5\s*灘合"),
@@ -46,7 +51,8 @@ BOOKS = [
 # 「第N回 大問…」だけの見出しは出典が書いてない＝灘合。**セクションは当てにならない**
 # （小5灘合のレコードが小4灘合のセクションの中に置かれている）ので、HG番号の帯で決める
 BAND_FALLBACK = [("小3灘合", 1901, 2010), ("小5灘合", 2201, 2299), ("小4灘合", 2301, 2430),
-                 ("小4国語", 2431, 2474), ("小3国語", 2501, 2543)]
+                 ("小4国語", 2431, 2474), ("小3国語", 2501, 2543),
+                 ("小5最レ国語", 2544, 2560)]
 
 # 「抜けていて当たり前」の回（本文に根拠がある。埋めなくてよい）
 KNOWN_OK = {
