@@ -2739,22 +2739,29 @@ async function renderHamaPanel() {
   const is2nd = (course === 'master2nd');
   // ★国語は実物の大問4（カタカナ→漢字10問）をそのまま出す＝手書きの書き取り（2026-08-02）
   const isKokugo = (courses[course].subject === 'kokugo');
+  // ★灘合（灘中合格特訓）は「復習テスト」という考え方が無い。公開にも復習テストにも出ない別物で、
+  //   通常問題プールも持たないので、出すのは大問だけ（本人決定 2026-08-05）
+  const isNadago = (courses[course].subject === 'nadago');
   document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
     isKokugo ? '✍️ 今週の漢字' : is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
   document.querySelector('.hama-act-btn[data-hama-act="weekq"] .hama-act-name').textContent =
-    is2nd ? '🔥 今週の演習プリント（大問）' : '🧩 今週の復習テスト（大問）';
-  document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.remove('hidden');
+    isNadago ? '🔥 この回の問題' : is2nd ? '🔥 今週の演習プリント（大問）' : '🧩 今週の復習テスト（大問）';
+  document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.toggle('hidden', isNadago);
 
   let no = hamaCurrent(grade, course);
   if (no === null) {
     // はじめて開いたときは、まん中あたりを初期値にして「合わせてね」と促す
     no = lessons[Math.floor(lessons.length / 2)].no;
     setHamaCurrent(grade, course, no);
-    hint.textContent = 'つぎの講義の番号に −／＋ で合わせてね。あとは毎週じどうで1つ進みます。';
+    hint.textContent = isNadago
+      ? 'やりたい回に −／＋ で合わせてね。'
+      : 'つぎの講義の番号に −／＋ で合わせてね。あとは毎週じどうで1つ進みます。';
   } else {
-    hint.textContent = '毎週じどうで1つ進みます。ズレたら −／＋ で直せます。';
+    hint.textContent = isNadago
+      ? '−／＋ で回をえらべます。'
+      : '毎週じどうで1つ進みます。ズレたら −／＋ で直せます。';
   }
-  label.textContent = `No.${no}`;
+  label.textContent = isNadago ? `第${no}回` : `No.${no}`;
   title.textContent = hamaLessonTitle(grade, course, no) || '—';
 
   // ★国語だけ：その回で習う「ことば」（文のしくみ）。単元が分かっている回にだけ出す
@@ -3122,10 +3129,27 @@ function initSansuHome() {
         if (sansuState.cat) showSansuStep('sansu-step-diff');
       } else if (sansuState.mode === 'hama') {
         hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        // ★灘合を見たあとに戻ってくると subject が 'nadago' のままなので、必ず算数に戻す
+        sansuState.subject = 'sansu';
+        sansuState.hamaCourse = null;
         // 理科で使ったあとはパネルが理科ホームに移っているので、算数ホームへ戻す
         moveHamaPanelTo('screen-sansu-home', 'sansu-start-zone');
         loadHamaMap().then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
           .catch(() => showToast('じゅくナビの読み込みに失敗しました'));
+      } else if (sansuState.mode === 'nadago') {
+        // ★灘合にチャレンジ（本人決定 2026-08-05）。じゅくナビと同じパネルを使い回すが、
+        //   コースに subject:'nadago' を付けてあるので、算数・理科・国語のじゅくナビには
+        //   構造上まざらない（⛔灘合は公開学力テストに出ない別物）
+        hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-drilldiff', 'sansu-step-time');
+        sansuState.subject = 'nadago';
+        sansuState.hamaCourse = 'nadago';
+        sansuState.hamaMode = 'no';
+        sansuState.hamaUnit = null;
+        moveHamaPanelTo('screen-sansu-home', 'sansu-start-zone');
+        loadHamaMap()
+          .then(() => ensureHamaCourses(sansuState.grade, 'nadago'))
+          .then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
+          .catch(() => showToast('灘合の対応表が読みこめませんでした'));
       } else if (sansuState.mode === 'drill') {
         hideSansuSteps('sansu-step-cat', 'sansu-step-diff', 'sansu-step-hama');
         refreshDrillTypeAvailability();
