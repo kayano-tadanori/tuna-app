@@ -103,7 +103,21 @@ function measure() {
       }
     }
     // ③ 箱からのはみ出し
-    const boxes = [...svg.querySelectorAll('rect')];
+    // ★見えない枠は箱ではない。塗りも線も無い rect は、置き場所を決めるためだけの
+    //   背景（例 <rect width="220" height="150" fill="none"/>）で、そこから文字が出ても
+    //   見た目には何も起きない。数えると直方体の寸法ラベル10枚が丸ごと偽陽性になった（2026-08-08）
+    const vbA = (svg.viewBox.baseVal && svg.viewBox.baseVal.width * svg.viewBox.baseVal.height) || 0;
+    const boxes = [...svg.querySelectorAll('rect')].filter((r) => {
+      const fill = (r.getAttribute('fill') || '').trim();
+      const stroke = (r.getAttribute('stroke') || '').trim();
+      const invisible = (!fill || fill === 'none' || fill === 'transparent')
+        && (!stroke || stroke === 'none');
+      if (invisible) return false;
+      // 図ぜんぶを覆うような枠も「箱」ではなく下じき
+      const w = r.width.baseVal.value, h = r.height.baseVal.value;
+      if (vbA && w * h > vbA * 0.7) return false;
+      return true;
+    });
     for (const t of texts) {
       const T = t.getBoundingClientRect();
       for (const r of boxes) {
