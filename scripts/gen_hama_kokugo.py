@@ -24,10 +24,12 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+from genbo_path import find_genbo          # noqa: E402
+
 OUT = os.path.join(ROOT, "data", "hama_kokugo.json")
-GENBO = os.path.join(
-    os.path.expanduser("~"),
-    r".claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md")
+# ★原簿の場所はPCごとに変わる（.claude/projects の下の名前が違う）ので決め打ちしない
+GENBO = find_genbo()
 
 # ── 教育漢字（小1=80／小2=160／小3=200）──────────────────────────
 # 小1・小2は scripts/fix_low_grade_kanji.py と同じ表
@@ -268,17 +270,20 @@ def main():
         print("  ✓ 0件")
 
     ok = not out_of_range and not ng2 and not dropped
-    data = {
-        "_note": [
-            "じゅくナビ 国語専用データ。通常問題プール(kanji_kaki.json)とは別のバケツ。",
-            "grades[学年][コース].lessons[回番号] = { src, title, kanji:[…] }。",
-            "回そのものが1セット（原簿の大問4＝カタカナ→漢字10問）。ID帯でも単元名でもなく回番号で引く。",
-            "answer は書く漢字だけ。okuri はもう書いてある部分（送りがな等）。",
-            "difficulty は全問1でそろえる（クラス帯フィルタで10問が欠けないため）。",
-            "scripts/gen_hama_kokugo.py で原簿から機械生成する。手で直さない。",
-        ],
-        "grades": {"3": {"kokugo": {"lessons": lessons}}},
-    }
+    # ★ファイルごと作り直すと小4（gen_hama_kokugo_g4.py が入れた grades.4）が消える。
+    #   既存を読んでから grades.3 だけ差しかえる
+    data = json.load(io.open(OUT, encoding="utf-8")) if os.path.exists(OUT) else {}
+    data["_note"] = [
+        "じゅくナビ 国語専用データ。通常問題プール(kanji_kaki.json)とは別のバケツ。",
+        "grades[学年][コース].lessons[回番号] = { src, title, kanji:[…] }。",
+        "回そのものが1セット（原簿の漢字の大問）。ID帯でも単元名でもなく回番号で引く。",
+        "answer は書く漢字だけ。okuri はもう書いてある部分（送りがな等）。",
+        "difficulty は全問1でそろえる（クラス帯フィルタで10問が欠けないため）。",
+        "小3は scripts/gen_hama_kokugo.py、小4は scripts/gen_hama_kokugo_g4.py で",
+        "それぞれ原簿から機械生成する。手で直さない。学年ごとに差しかえるので上書きし合わない。",
+    ]
+    data.setdefault("grades", {})
+    data["grades"]["3"] = {"kokugo": {"lessons": lessons}}
     if "--write" in sys.argv:
         if not ok:
             print("\n✗ 検査に引っかかっているので書きこまない")

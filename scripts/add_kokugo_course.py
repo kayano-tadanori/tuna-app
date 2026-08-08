@@ -19,8 +19,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 MAP = os.path.join(ROOT, "data", "hama_map.json")
 KOKUGO = os.path.join(ROOT, "data", "hama_kokugo.json")
-GENBO = os.path.join(os.path.expanduser("~"),
-                     r".claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md")
+sys.path.insert(0, HERE)
+from genbo_path import find_genbo          # noqa: E402
+
+# ★原簿の場所はPCごとに変わる（.claude/projects の下の名前が違う）ので決め打ちしない
+GENBO = find_genbo()
 
 UNIT = re.compile(r"★(?:1回まるごと|この回だけ)「([^」]+)」")
 
