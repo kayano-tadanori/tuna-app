@@ -120,7 +120,42 @@ for (const q of bun) {
 console.log(`  ✓ kokugo_bun ${bun.length}問を点検`);
 
 // ────────────────────────────────────────────────────────────
-sec('⑤ 学年・コースの決め打ち（データを足しても画面に出ない原因）');
+sec('⑤ 大問モード：正しく答えたら正解になるか');
+// ★2026-08-08、選択肢はあるのに答えの表記が食いちがっていて
+//   「正しく選んでも必ず不正解」になる設問が5件あった（'300gより重くなる' vs
+//   選択肢の '300gより大きくなる'）。目視では見つからない型なので機械で見る。
+const daimon = J('data/hama_daimon.json');
+// ★「テンキーで打てるか」の判定は scripts/check_answers.py の numpad() と同じにする。
+//   自分で書き直すと基準が2つになって食いちがう（帯分数「2と1/4」を打てないと誤判定した）
+const numpadOK = (a) =>
+  /^\d+(\.\d+)?$/.test(a) || /^\d+\/\d+$/.test(a) || /^\d+と\d+\/\d+$/.test(a) || a.includes('余り');
+let steps = 0;
+const walkDaimon = (n) => {
+  if (Array.isArray(n)) return n.forEach(walkDaimon);
+  if (!n || typeof n !== 'object') return;
+  if (Array.isArray(n.steps)) {
+    for (const s of n.steps) {
+      steps++;
+      const a = String(s.answer ?? '');
+      if (!a) { fail(`${n.id} 答えが空の設問がある`); continue; }
+      if (s.choices && s.choices.length) {
+        if (!s.choices.includes(s.answer)) {
+          fail(`${n.id} 答え「${a}」が選択肢に無い → ${JSON.stringify(s.choices)}`);
+        }
+        if (new Set(s.choices).size !== s.choices.length) fail(`${n.id} 選択肢が重複`);
+      } else if (!numpadOK(a)) {
+        // 選択肢が無い＝テンキー入力。数字で打てない答えは選べない
+        fail(`${n.id} テンキーで打てない答えなのに選択肢が無い →「${a}」`);
+      }
+    }
+  }
+  Object.values(n).forEach(walkDaimon);
+};
+walkDaimon(daimon.grades);
+console.log(`  ✓ 大問の設問 ${steps}問を点検`);
+
+// ────────────────────────────────────────────────────────────
+sec('⑥ 学年・コースの決め打ち（データを足しても画面に出ない原因）');
 const jsFiles = ['app.js', ...(fs.existsSync(path.join(ROOT, 'js'))
   ? fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.endsWith('.js')).map(f => 'js/' + f) : [])];
 for (const f of jsFiles) {
