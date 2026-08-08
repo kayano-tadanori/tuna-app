@@ -39,6 +39,25 @@ def _t(x, y, s, fill=INK, size=13, anchor="middle", bold=False):
             'fill="%s"%s>%s</text>' % (x, y, size, anchor, fill, ' font-weight="bold"' if bold else '', s))
 
 
+# ★角度の図は**弧を描かないとどの角か分からない**（本人指摘 2026-08-09）。
+#   頂点pと、そこから出る2本（p→q・p→r）を渡すと、その2本の**間**に弧を描き、
+#   弧のまん中の外がわにラベルを置く。ラベルの位置を人が決めると必ずずれる。
+def _angle(p, q, r, label, color=RED, rad=20.0, lab=34.0, size=12):
+    import math as _m
+    a1 = _m.atan2(-(q[1] - p[1]), q[0] - p[0])
+    a2 = _m.atan2(-(r[1] - p[1]), r[0] - p[0])
+    d = (a2 - a1 + _m.pi) % (2 * _m.pi) - _m.pi        # −180°〜180°にそろえる
+    P = lambda a, R: (p[0] + R * _m.cos(a), p[1] - R * _m.sin(a))
+    s, e = P(a1, rad), P(a1 + d, rad)
+    sweep = 0 if d > 0 else 1                          # 画面はy下向きなので反時計回り＝0
+    mid = P(a1 + d / 2, lab)
+    out = ['<path d="M %.1f %.1f A %.1f %.1f 0 0 %d %.1f %.1f" fill="none" stroke="%s" '
+           'stroke-width="1.8"/>' % (s[0], s[1], rad, rad, sweep, e[0], e[1], color)]
+    if label:
+        out.append(_t("%.1f" % mid[0], "%.1f" % (mid[1] + 4), label, color, size, bold=True))
+    return "\n".join(out)
+
+
 # ── HG-1901 星形六角形の魔方陣 ─────────────────────────────
 # 原簿の図の仕様どおり：〇は12個＝外側のとがった点6個＋内側の六角形の頂点6個。
 #   外側 上=6・下=10、左上/右上/左下/右下は空（㋐㋑㋒㋓）
@@ -1023,6 +1042,7 @@ def _fold_rect_svg():
     th = _m.radians(70)
     top = 50.0
     qx = P[0] + (P[1] - top) / _m.tan(th)   # 折り目が上辺と交わる点
+    Q = (qx, top)
     fold_len = 70.0
     fa = _m.radians(140)                    # 折り返された下辺の向き（左上へ）
     F = (P[0] + fold_len * _m.cos(fa), P[1] - fold_len * _m.sin(fa))
@@ -1039,8 +1059,10 @@ def _fold_rect_svg():
         # 折り返された下の辺
         '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2.4"/>'
         % (P[0], P[1], F[0], F[1], ORANGE),
-        _t(P[0] - 34, P[1] - 12, "40°", ORANGE, 12, bold=True),
-        _t(qx - 26, top + 18, "㋐", RED, 13, bold=True),
+        # 40°＝もとの下の辺（左向き）と 折り返された下の辺 の間
+        _angle(P, (20.0, P[1]), F, "40°", ORANGE, 26, 42),
+        # ㋐＝もとの上の辺（左向き）と 折り目 の間
+        _angle(Q, (20.0, top), P, "㋐", RED, 24, 40, 13),
         _t(124, 176, "点線は 折る前の 位置", GRAY, 11),
     ]
     return _svg(248, 190, "\n".join(body))
@@ -1070,11 +1092,11 @@ def _fold_tri_svg():
         _t(a_[0] - 14, a_[1], "ア", RED, 12, bold=True),
         _t(i_[0] + 14, i_[1], "イ", RED, 12, bold=True),
         _t(Ad[0], Ad[1] + 16, "A", ORANGE, 12, bold=True),
-        _t(B[0] + 26, B[1] - 6, "40°", GRAY, 11),
-        _t(C[0] - 30, C[1] - 6, "60°", GRAY, 11),
-        _t(Ad[0] - 22, Ad[1] - 8, "x", BLUE, 13, bold=True),
-        _t(Ad[0] + 30, Ad[1] - 8, "20°", ORANGE, 11, bold=True),
-        _t(i_[0] - 16, i_[1] - 14, "y", BLUE, 13, bold=True),
+        _angle(B, C, a_, "40°", GRAY, 26, 42, 11),
+        _angle(C, i_, B, "60°", GRAY, 26, 42, 11),
+        _angle(Ad, B, a_, "x", BLUE, 20, 34, 13),        # A'で BA' と A'ア の間
+        _angle(Ad, i_, C, "20°", ORANGE, 26, 44, 11),    # A'で A'イ と A'C の間
+        _angle(i_, a_, Ad, "y", BLUE, 18, 32, 13),       # イで イア と イA' の間
         _t(130, 186, "点線は 折る前の 三角形ABC", GRAY, 11),
     ]
     return _svg(266, 200, "\n".join(body))
@@ -1090,11 +1112,11 @@ def _star7_svg():
         '<polygon points="%s" fill="rgba(255,154,68,0.12)" stroke="%s" stroke-width="2"/>'
         % (" ".join("%.0f,%.0f" % p for p in quad), ORANGE),
     ]
-    for p, s, dx, dy in ((tri[0], "ア", 0, 20), (tri[1], "ウ", 16, -6), (tri[2], "カ", -20, 4)):
-        body.append(_t(p[0] + dx, p[1] + dy, s, BLUE, 13, bold=True))
-    for p, s, dx, dy in ((quad[0], "イ", 16, 12), (quad[1], "キ", -16, 18),
-                         (quad[2], "オ", -14, -8), (quad[3], "エ", 14, -10)):
-        body.append(_t(p[0] + dx, p[1] + dy, s, ORANGE, 13, bold=True))
+    # ★弧はその図形の**内角**に描く。どの角がどちらの図形のものかが、これで一目でわかる
+    for i, s in enumerate(("ア", "ウ", "カ")):
+        body.append(_angle(tri[i], tri[(i + 1) % 3], tri[(i + 2) % 3], s, BLUE, 22, 38, 13))
+    for i, s in enumerate(("イ", "キ", "オ", "エ")):
+        body.append(_angle(quad[i], quad[(i - 1) % 4], quad[(i + 1) % 4], s, ORANGE, 22, 38, 13))
     body.append(_t(126, 204, "青＝三角形の角／オレンジ＝四角形の角", GRAY, 11))
     return _svg(252, 216, "\n".join(body))
 
@@ -1161,6 +1183,191 @@ L6 = [
                         "記号が7つあるので七角形の内角の和（900°）と答えたくなりますが、"
                         "7つの角は三角形の3つと四角形の4つに分かれています。"
                         "重なりは答えにまったく関係ありません。"},
+        ],
+    },
+]
+
+def _daikei_svg():
+    """HG-1946 台形ABCD（AD∥BC・AD=CD・AC=BC・∠ACD=28°）"""
+    B, C = (30.0, 144.0), (230.0, 144.0)
+    A, D = (53.4, 50.1), (166.7, 50.1)
+    L = lambda p, q, c, w=2: ('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                              'stroke-width="%s"/>' % (p[0], p[1], q[0], q[1], c, w))
+    body = ['<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="#eaf0ff" '
+            'stroke="%s" stroke-width="2"/>' % (A[0], A[1], D[0], D[1], C[0], C[1], B[0], B[1], BLUE),
+            L(A, C, RED, 2.2)]
+    for p, s, dx, dy in ((A, "A", -14, -4), (D, "D", 12, -4), (B, "B", -14, 14), (C, "C", 14, 14)):
+        body.append(_t(p[0] + dx, p[1] + dy, s, INK, 12, bold=True))
+    # 等しい辺のしるし（AD=CD に1本／AC=BC に2本）
+    body.append(_t((A[0] + D[0]) / 2, A[1] - 8, "／", GREEN, 12))
+    body.append(_t((D[0] + C[0]) / 2 + 10, (D[1] + C[1]) / 2, "／", GREEN, 12))
+    body.append(_t((A[0] + C[0]) / 2 - 6, (A[1] + C[1]) / 2 + 4, "＝", ORANGE, 12))
+    body.append(_t((B[0] + C[0]) / 2, B[1] + 16, "＝", ORANGE, 12))
+    body.append(_angle(C, A, D, "28°", RED, 26, 44))          # Cで CA と CD の間
+    body.append(_angle(B, C, A, "x", BLUE, 24, 40, 13))       # Bで BC と BA の間
+    body.append(_t(130, 178, "AD∥BC・AD＝CD（／）・AC＝BC（＝）", GRAY, 11))
+    return _svg(266, 192, "\n".join(body))
+
+
+def _seisankaku2_svg():
+    """HG-1948 正三角形ABCとADE。CはED上。∠ACE=80° → x=∠BAD=40°, y=∠DBC=20°"""
+    # ★左はしのEのラベルが枠から3.2px出ていたので、図ぜんぶを右へ10ずらした（実測 2026-08-09）。
+    #   相対位置は変えていないので角度も長さもそのまま
+    E, D, C = (30.0, 40.0), (130.0, 40.0), (95.3, 40.0)
+    A, B = (80.0, 126.6), (162.7, 96.6)
+    L = lambda p, q, c, w=2: ('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                              'stroke-width="%s"/>' % (p[0], p[1], q[0], q[1], c, w))
+    body = ['<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="rgba(79,124,255,0.12)" '
+            'stroke="%s" stroke-width="2"/>' % (A[0], A[1], B[0], B[1], C[0], C[1], BLUE),
+            '<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="rgba(255,154,68,0.12)" '
+            'stroke="%s" stroke-width="2"/>' % (A[0], A[1], D[0], D[1], E[0], E[1], ORANGE),
+            L(A, C, GRAY, 1.4), L(B, D, GRAY, 1.4)]
+    for p, s, dx, dy in ((A, "A", -14, 8), (B, "B", 14, 8), (C, "C", 0, -10),
+                         (D, "D", 14, -4), (E, "E", -14, -4)):
+        body.append(_t(p[0] + dx, p[1] + dy, s, INK, 12, bold=True))
+    body.append(_angle(C, A, E, "80°", RED, 22, 38, 11))      # Cで CA と CE の間
+    body.append(_angle(A, B, D, "x", BLUE, 26, 42, 13))       # Aで AB と AD の間
+    body.append(_angle(B, D, C, "y", BLUE, 20, 34, 13))       # Bで BD と BC の間
+    body.append(_t(106, 168, "どちらも正三角形。点Cは辺ED上にある", GRAY, 11))
+    return _svg(216, 182, "\n".join(body))
+
+
+def _en_seigokaku_svg():
+    """HG-1949 同じ円に内接する正方形と正五角形（上の頂点を共有）"""
+    import math as _m
+    O, R = (132.0, 132.0), 96.0
+    P = lambda deg: (O[0] + R * _m.cos(_m.radians(deg)), O[1] - R * _m.sin(_m.radians(deg)))
+    pen = [P(90), P(18), P(-54), P(-126), P(162)]
+    sq = [P(90), P(0), P(-90), P(180)]
+
+    def cross(p1, p2, p3, p4):
+        d = (p2[0] - p1[0]) * (p4[1] - p3[1]) - (p2[1] - p1[1]) * (p4[0] - p3[0])
+        t = ((p3[0] - p1[0]) * (p4[1] - p3[1]) - (p3[1] - p1[1]) * (p4[0] - p3[0])) / d
+        return (p1[0] + t * (p2[0] - p1[0]), p1[1] + t * (p2[1] - p1[1]))
+
+    a = cross(sq[3], sq[0], pen[4], pen[3])      # （あ）正方形の辺と正五角形の辺
+    i = cross(O, pen[3], sq[3], sq[2])           # （い）中心からの点線と正方形の辺
+    body = ['<circle cx="%.0f" cy="%.0f" r="%.0f" fill="none" stroke="%s" stroke-width="1.4"/>'
+            % (O[0], O[1], R, GRAY),
+            '<polygon points="%s" fill="none" stroke="%s" stroke-width="2"/>'
+            % (" ".join("%.1f,%.1f" % p for p in sq), BLUE),
+            '<polygon points="%s" fill="none" stroke="%s" stroke-width="2"/>'
+            % (" ".join("%.1f,%.1f" % p for p in pen), ORANGE),
+            '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.4" '
+            'stroke-dasharray="4 3"/>' % (O[0], O[1], pen[3][0], pen[3][1], GREEN),
+            '<circle cx="%.0f" cy="%.0f" r="3" fill="%s"/>' % (O[0], O[1], INK),
+            _t(O[0] + 12, O[1] + 5, "O", INK, 11, bold=True),
+            # （あ）＝正方形の辺（上の頂点のほう）と 正五角形の辺（左下の頂点のほう）の間＝右に開いた側
+            # ★ラベルを遠くに置くと（あ）と（い）が中央で近づいてしまう。弧のすぐ外に置く
+            _angle(a, sq[0], pen[3], "あ", RED, 18, 28),
+            # （い）＝中心Oへ向かう点線と 正方形の辺（左の頂点のほう）の間＝**上に開いた側**
+            _angle(i, O, sq[3], "い", RED, 18, 28),
+            _t(132, 254, "青＝正方形／オレンジ＝正五角形（上の頂点は同じ）", GRAY, 11)]
+    return _svg(264, 268, "\n".join(body))
+
+
+def _nitohen_svg():
+    """HG-1950 AB＝DE・AC＝CD の二等辺の連鎖。B・C・Dは一直線、EはAC上"""
+    B, C, D = (24.0, 150.0), (134.0, 150.0), (244.0, 150.0)
+    A, E = (111.1, 42.4), (120.6, 87.1)
+    L = lambda p, q, c, w=2: ('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                              'stroke-width="%s"/>' % (p[0], p[1], q[0], q[1], c, w))
+    body = [L(B, D, INK, 2), L(A, B, BLUE, 2), L(A, C, BLUE, 2), L(E, D, ORANGE, 2)]
+    # ★Eのラベルを左に置くと 51°の弧のラベルとぶつかる。右下へ逃がす
+    for p, s, dx, dy in ((A, "A", 0, -10), (B, "B", -14, 14), (C, "C", 0, 16),
+                         (D, "D", 14, 14), (E, "E", 14, 6)):
+        body.append(_t(p[0] + dx, p[1] + dy, s, INK, 12, bold=True))
+    body.append(_angle(A, B, E, "51°", RED, 24, 36, 11))      # Aで AB と AE の間
+    body.append(_angle(D, E, C, "27°", ORANGE, 30, 48, 11))   # Dで DE と DC の間
+    body.append(_angle(B, A, C, "あ", BLUE, 26, 42, 13))       # Bで BA と BC の間
+    body.append(_t(134, 186, "AB＝DE・AC＝CD。B・C・Dは一直線、EはAC上", GRAY, 10))
+    return _svg(272, 198, "\n".join(body))
+
+
+L6 += [
+    {
+        "id": "hd3n_06_4", "src": "HG-1946", "star": 3,
+        "title": "台形と2組の等しい辺", "category": "zu", "unit": "平面図形（角度）",
+        "intro": "右の図で、四角形ABCDは台形で、ADとCDの長さが等しく、"
+                 "また、ACとBCの長さも等しくなっています。ADとBCは平行です。"
+                 "∠ACD（対角線ACと辺CDの間の角）は28°です。xの角の大きさをもとめなさい。",
+        "svg": _daikei_svg(),
+        "steps": [
+            {"question": "∠DAC（辺ADと対角線ACの間の角）は何度ですか。", "answer": "28",
+             "meaning": "AD＝CD なので三角形ACDは二等辺三角形。"
+                        "等しい辺の向かい合う角は等しいので ∠DAC＝∠DCA＝28°です。"},
+            {"question": "∠ACB（対角線ACと辺BCの間の角）は何度ですか。", "answer": "28",
+             "meaning": "AD∥BC なので、∠DAC と ∠ACB は錯角。28°がそのまま移ります。"
+                        "28°という数字が図の中を渡り歩くのがこの問題です。"},
+            {"question": "xは何度ですか。", "answer": "76",
+             "meaning": "AC＝BC なので三角形ABCも二等辺三角形。∠BAC＝∠ABC＝x です。"
+                        "三角形の内角の和から x＋x＋28＝180 で x＝76°。"
+                        "たしかめ 四角形の内角の和は 104＋124＋56＋76＝360° ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_06_5", "src": "HG-1948", "star": 3,
+        "title": "正三角形2つ・回転して重なる", "category": "zu", "unit": "平面図形（角度）",
+        "intro": "右の図で、三角形ABCと三角形ADEはどちらも正三角形で、点Cは辺ED上にあります。"
+                 "∠ACE（Cで、CAとCEの間の角）は80°です。xとyの大きさをもとめなさい。",
+        "svg": _seisankaku2_svg(),
+        "steps": [
+            {"question": "∠EAC（Aで、AEとACの間の角）は何度ですか。", "answer": "40",
+             "meaning": "三角形ADEは正三角形なので ∠AEC＝60°。"
+                        "三角形ACEの内角の和から 180−60−80＝40°です。"},
+            {"question": "∠CAD（Aで、ACとADの間の角）は何度ですか。", "answer": "20",
+             "meaning": "∠EAD＝60°（正三角形）なので、60−40＝20°です。"},
+            {"question": "xは何度ですか。", "answer": "40",
+             "meaning": "x＝∠BAD。∠BAC＝60°（正三角形）なので 60−20＝40°です。"},
+            {"question": "yは何度ですか。", "answer": "20",
+             "meaning": "AB＝AC、AD＝AE、∠BAD＝∠CAE＝40° なので、"
+                        "三角形ABDと三角形ACEはぴったり重なります（回転させると重なる形）。"
+                        "だから ∠ABD＝∠ACE＝80°。∠ABC＝60°なので y＝80−60＝20°です。"},
+        ],
+    },
+    {
+        "id": "hd3n_06_6", "src": "HG-1949", "star": 3,
+        "title": "同じ円にかいた正方形と正五角形", "category": "zu", "unit": "平面図形（角度）",
+        "intro": "右の図は、同じ円に正方形と正五角形をかいたものです。点Oは円の中心で、"
+                 "正方形と正五角形は円のいちばん上の頂点を共有しています。"
+                 "点線は、中心Oから正五角形の左下の頂点へ引いた線です。"
+                 "角（あ）と角（い）の大きさをもとめなさい。",
+        "svg": _en_seigokaku_svg(),
+        "steps": [
+            {"question": "円のまわりを正五角形は何度ずつに分けますか。", "answer": "72",
+             "meaning": "360÷5＝72°ずつです。正方形は 360÷4＝90°ずつに分けます。"},
+            {"question": "上の共有した頂点から見て、正五角形の頂点と正方形の頂点のずれは何度ですか。",
+             "answer": "18",
+             "meaning": "90−72＝18°です。この18°が、この問題の答えを全部つくります。"},
+            {"question": "角（あ）は何度ですか。", "answer": "117",
+             "meaning": "（あ）は2本の弦が交わってできる角なので、"
+                        "向かい合う2つの弧の大きさの和の半分になります。"
+                        "(18＋216)÷2＝117°です。"},
+            {"question": "角（い）は何度ですか。", "answer": "81",
+             "meaning": "中心Oから正五角形の頂点へ引いた線は、その頂点の内角108°を半分に分けます。"
+                        "中心のがわの角は54°。正方形の対角線の向きは45°。"
+                        "三角形の内角の和から 180−54−45＝81°です。"},
+        ],
+    },
+    {
+        "id": "hd3n_06_7", "src": "HG-1950", "star": 3,
+        "title": "二等辺の連鎖（使わない数字がある）", "category": "zu", "unit": "平面図形（角度）",
+        "intro": "右の図で、点Cは直線BD上にあり、点Eは辺AC上にあります。"
+                 "辺ABの長さは辺DEの長さに等しく、辺ACの長さは辺CDの長さに等しくなっています。"
+                 "∠BAE＝51°、∠EDC＝27°です。角（あ）＝∠ABC の大きさをもとめなさい。",
+        "svg": _nitohen_svg(),
+        "steps": [
+            {"question": "（あ）が51°だとすると、∠ACBは何度になりますか。", "answer": "78",
+             "meaning": "点EはAC上にあるので ∠BAC＝∠BAE＝51°。"
+                        "三角形ABCの内角の和から 180−51−51＝78°です。"},
+            {"question": "そのとき、三角形ABCはどんな三角形ですか。",
+             "answer": "二等辺三角形", "choices": ["二等辺三角形", "正三角形", "直角三角形"],
+             "meaning": "∠BAC＝∠ABC＝51°なので、その向かい合う辺 BC と AC が等しくなります。"
+                        "AC＝CD もあるので、CはBDのまん中の点になります。"},
+            {"question": "角（あ）は何度ですか。", "answer": "51",
+             "meaning": "AC＝CD で CがBDのまん中にあるとき、AB＝DE がちょうど成り立ちます。"
+                        "だから（あ）＝51°。∠BAE と同じ大きさです。"
+                        "この問題では27°を一度も使いません。使わない数字がまざっているのがこの問題のしかけです。"},
         ],
     },
 ]
