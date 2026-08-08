@@ -7,18 +7,24 @@ const QUESTION_COUNTS = {
   kokugo: { kotowaza: 473, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
             // 文のしくみ＝浜学園 小3国語 本科教材（原簿 HG-2515/2521/2523/2525）。data/kokugo_bun.json
-            kokugo_bun: 54,
+            kokugo_bun: 201,
+            // 和語＝浜学園 小5最レ国語の演習プリントII（原簿 HG-2546/2550/2557）。data/kokugo_wago.json
+            // 78語 × 2通り（意味→語／語→意味）＝156問。★grade は全部5（実物が小5の教材）
+            kokugo_wago: 156,
             // じゅくナビ国語＝小3本科教材の大問4（原簿 HG-2501〜2543）。data/hama_kokugo.json。
             // ★kanji_kaki に相乗りさせない。480問の分母に混ぜると、本物の書き取りを1問も
             //   解かないまま達成率が9割近くまで上がってしまう。
             // ⚠ scripts/sync_question_counts.js の MAP には足さないこと（入れ子JSONで落ちる）
-            hama_kokugo: 418,
+            // ⚠2026-08-08：418 は小3ぶんだけの数で、小4の404問が分母に入っていなかった
+            //   （＝小4をやっても達成率が上がらない）。実データに合わせて 822 に直した。
+            //   内わけ＝小3 418 ＋ 小4 404 ＋ 小5最レ国語 92。入れ子JSONなので sync では数えられず手で直す
+            hama_kokugo: 914,
             // こころの探偵・要約記者。★以前はここに登録が無く、IDの先頭2文字が偶然
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
-            tantei: 123, youyaku: 128 },                                                     // 5,235
-  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
-            wariai: 420, hayasa: 172, rittai: 419 },                                         // 6,900（2026-07-31 比例・反比例40問）
+            tantei: 123, youyaku: 128 },                                                     // 4,869
+  sansu:  { bakuhatsu: 160, keisan: 1284, bun: 779, zu: 1040, kisoku: 988, tokusan: 557, baai: 556, kazu: 597,
+            wariai: 418, hayasa: 170, rittai: 375 },                                         // 6,764（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
             daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,118（2026-07-28 小4理科の全42回を30問以上に）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
@@ -34,6 +40,7 @@ const ID_PREFIX_MAP = {
   gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
   hk: ['kokugo:hama_kokugo'],   // じゅくナビ国語（hk3_04_01 …）。hd＝大問／ho＝光と音 とは別
   kb: ['kokugo:kokugo_bun'],    // 文のしくみ（kb001 …）
+  wg: ['kokugo:kokugo_wago'],   // 和語（wg001 …）
   // ★こころの探偵(kt1_01_1…)・要約記者(ky1_01_1…)は、素の先頭文字だけで見ると
   //   rika:kitai（kt001…）・kanji_yomi（ky001…）と同じ "kt"/"ky" になってしまう。
   //   「英字＋数字のすぐ後に _ が続く」ものだけ別ものと見なす（extractIdPrefix）ので、

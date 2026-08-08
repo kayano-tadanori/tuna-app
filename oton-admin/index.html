@@ -263,7 +263,8 @@ async function doLogin() {
 // ── オトン学園本体（app.js）と同じ達成率ロジック ──────────────
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
-            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359 },
+            kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
+            kokugo_bun: 54, kokugo_wago: 156 },
   sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
             wariai: 420, hayasa: 172, rittai: 419 },
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
@@ -276,6 +277,7 @@ const ID_PREFIX_MAP = {
   k: ['kokugo:kotowaza'], y: ['kokugo:kanyoku'], j: ['kokugo:yojijukugo'], g: ['kokugo:gairaigo'],
   kk: ['kokugo:kanji_kaki'], ky: ['kokugo:kanji_yomi'], kg: ['kokugo:kokugo_keigo'],
   gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
+  kb: ['kokugo:kokugo_bun'], wg: ['kokugo:kokugo_wago'],
   sk: ['sansu:keisan', 'shakai:kokudo'],
   sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
   rd: ['rika:doubutsu', 'rika:denki'],

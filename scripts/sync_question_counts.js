@@ -3,12 +3,14 @@
 // （科目選択の表示は QUESTION_COUNTS から自動計算されるので、ここを直せば表示も直る）
 const fs = require('fs');
 const path = require('path');
-const APP = path.join(__dirname, '..', 'app.js');
+// ⚠ QUESTION_COUNTS は app.js 分割（2026-08-08）で js/gamify.js に移った。
+//    app.js を見ていたので「見つかりません」で落ちていた
+const APP = path.join(__dirname, '..', 'js', 'gamify.js');
 const DATA = path.join(__dirname, '..', 'data');
 
 // カテゴリ → データファイル名（拡張子なし）
 const MAP = {
-  kokugo: { kotowaza: 'kotowaza', kanyoku: 'kanyoku', yojijukugo: 'yojijukugo', gairaigo: 'gairaigo', kanji_kaki: 'kanji_kaki', kanji_yomi: 'kanji_yomi', kokugo_keigo: 'kokugo_keigo', kokugo_goi: 'kokugo_goi', kokugo_bushu: 'kokugo_bushu', kokugo_bungaku: 'kokugo_bungaku' },
+  kokugo: { kotowaza: 'kotowaza', kanyoku: 'kanyoku', yojijukugo: 'yojijukugo', gairaigo: 'gairaigo', kanji_kaki: 'kanji_kaki', kanji_yomi: 'kanji_yomi', kokugo_keigo: 'kokugo_keigo', kokugo_goi: 'kokugo_goi', kokugo_bushu: 'kokugo_bushu', kokugo_bungaku: 'kokugo_bungaku', kokugo_bun: 'kokugo_bun', kokugo_wago: 'kokugo_wago' },
   sansu: { keisan: 'sansu_keisan', bun: 'sansu_bun', zu: 'sansu_zu', kisoku: 'sansu_kisoku', tokusan: 'sansu_tokusan', baai: 'sansu_baai', kazu: 'sansu_kazu', wariai: 'sansu_wariai', hayasa: 'sansu_hayasa', rittai: 'sansu_rittai' },
   rika: { shokubutsu: 'rika_shokubutsu', doubutsu: 'rika_doubutsu', jintai: 'rika_jintai', sora: 'rika_sora', tenki: 'rika_tenki', mono: 'rika_mono', kitai: 'rika_kitai', daichi: 'rika_daichi', suiyoueki: 'rika_suiyoueki', denki: 'rika_denki', chikara: 'rika_chikara', hikari_oto: 'rika_hikarioto' },
   shakai: { kokudo: 'shakai_kokudo', sangyo: 'shakai_sangyo', rekishi: 'shakai_rekishi', komin: 'shakai_komin' },

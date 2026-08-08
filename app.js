@@ -13,6 +13,10 @@ const CATEGORIES = {
   kokugo_goi:     { label: '語い',           file: 'data/kokugo_goi.json' },
   kokugo_bushu:   { label: '部首・画数',     file: 'data/kokugo_bushu.json' },
   kokugo_bungaku: { label: '文学史・季語',   file: 'data/kokugo_bungaku.json' },
+  // 和語＝浜学園 小5最高レベル特訓 国語《演習プリントII》の和語(1)(2)(3)（原簿 HG-2546/2550/2557）。
+  // あ〜わを一周する78語を、意味→語／語→意味の2通りで出す。実物は□の穴うめ（記述）なので、
+  // そちらは じゅくナビ側（手書き＋自己採点）で再現する
+  kokugo_wago:    { label: '和語',           file: 'data/kokugo_wago.json' },
   // 文のしくみ＝浜学園 小3国語 本科教材（原簿 HG-2515/2521/2523/2525）。小3の内容だけなので小3限定
   kokugo_bun:     { label: '文のしくみ',     file: 'data/kokugo_bun.json' },
   tantei:         { label: 'こころの探偵',   file: 'data/kokugo_tantei.json' },

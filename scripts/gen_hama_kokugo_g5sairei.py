@@ -1,0 +1,182 @@
+# -*- coding: utf-8 -*-
+"""じゅくナビ 小5最レ国語《演習プリントII》を、原簿からそのまま起こす。
+
+種本＝原簿の「📘 小5 最レ国語《演習プリントII》」節（HG-2544〜2559）。
+★実物は「□にひらがな／カタカナを入れる」記述式なので、4択に作り変えない
+  （→ [[feedback_genbo_dori]]）。じゅくナビの手書き＋自己採点の画面にそのまま載せる。
+★答えが⚠（未確定）の問は落とす（→ [[feedback_kaisetsu_reader]]）。
+★★【じゅくナビの絶対のルール・本人指示 2026-08-08】
+   **じゅくナビで出す問題は、原簿に無いものを勝手に作らない。**
+   このスクリプトは原簿の「設問・意味・答え」をそのまま写すだけで、1問も自作していない。
+   （算数の2nd演習を入れないのは「通常マスターと難易度が別物だから別枠」という理由。
+     最レ国語の演習プリントは最レ国語の授業の中でやる教材なので、じゅくナビに入れてよい）
+
+出し先＝data/hama_kokugo.json の grades["5"]["sairei_kokugo"].lessons[回番号].kanji
+（形は kanji_kaki.json とそろえてあるので、手書きの画面がそのまま使える）
+
+  python scripts/gen_hama_kokugo_g5sairei.py          … 検査だけ
+  python scripts/gen_hama_kokugo_g5sairei.py --write  … 書きこむ
+"""
+import io, json, os, re, sys
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+from genbo_path import find_genbo          # noqa: E402
+
+KOKUGO = os.path.join(ROOT, "data", "hama_kokugo.json")
+MAP = os.path.join(ROOT, "data", "hama_map.json")
+COURSE = "sairei_kokugo"
+GRADE = "5"
+
+# 拾う回：(HG, 回番号, 回の名前, 何を書かせるか, 解説ファイル)
+# ⚠ units も持たせる。かんたん解説は「単元名」で引く決まりで、回番号にひもづけない
+#   （最レの回番号は年度で中身が入れかわる・本人指示 2026-07-27）
+SPECS = [
+    ("2546", 3, "ことばの問題② 和語(1)", "ひらがな", "meanings_kokugo_wago.json", ["和語"]),
+    ("2550", 7, "ことばの問題③ 和語(2)", "ひらがな", "meanings_kokugo_wago.json", ["和語"]),
+    ("2555", 11, "ことばの問題⑤ 外来語", "カタカナ", "meanings_hama_g5sairei.json", ["外来語"]),
+    ("2557", 13, "ことばの問題⑥ 和語(3)", "ひらがな", "meanings_kokugo_wago.json", ["和語"]),
+]
+# 回の一覧（じゅくナビの画面に出す。問題がまだ無い回も名前だけ載せる＝実物の並びを見せる）
+LESSONS = [
+    (1, "ことばの問題① 慣用表現(1)"), (2, "漢字の問題① 読みと書き"),
+    (3, "ことばの問題② 和語(1)"), (4, "漢字の問題② 熟語"),
+    (5, "韻文を読む① 詩"), (6, "韻文を読む② 短歌・俳句"),
+    (7, "ことばの問題③ 和語(2)"), (8, "ことばのきまり① 文の成分"),
+    (9, "ことばの問題④ 慣用表現(2)"), (10, "ことばのきまり② 品詞（全体像）"),
+    (11, "ことばの問題⑤ 外来語"), (12, "ことばのきまり③ 品詞（体言と用言）"),
+    (13, "ことばの問題⑥ 和語(3)"),
+]
+LINE = re.compile(r"\((\d+)\)\s*([^／/\n]+?)／([^＝=\n]+?)＝\*\*([^*\n]+?)\*\*")
+
+
+def body(text, hg):
+    m = re.search(r"^### 【HG-%s】.*?$(.*?)(?=^### 【HG-|\Z)" % hg, text, re.S | re.M)
+    return m.group(1) if m else ""
+
+
+def fill(mask, ans):
+    """マスクと答えから「語全体」と「□に入る部分」を返す。合わなければ (None, None)"""
+    boxes = mask.count("□")
+    fixed = len(mask) - boxes
+    if len(ans) == boxes + fixed and "□" not in ans:
+        part, i = [], 0
+        for ch in mask:
+            if ch == "□":
+                part.append(ans[i])
+            i += 1
+        return ans, "".join(part)
+    if len(ans) == boxes:
+        it = iter(ans)
+        return "".join(next(it) if ch == "□" else ch for ch in mask), ans
+    return None, None
+
+
+def main():
+    text = io.open(find_genbo(), encoding="utf-8").read()
+    notes = {}
+    for f in {s[4] for s in SPECS}:
+        for m in json.load(io.open(os.path.join(HERE, f), encoding="utf-8")):
+            notes[m["word"]] = m["note"].replace("**", "")
+
+    lessons, total, dropped, nomean = {}, 0, [], []
+    for hg, no, title, kana, _, units in SPECS:
+        b = body(text, hg)
+        assert b, "HG-%s が原簿に無い" % hg
+        qs = []
+        for m in LINE.finditer(b):
+            n, mask, mean, ans = (s.strip() for s in m.groups())
+            if "⚠" in ans or "未確定" in ans:
+                dropped.append((no, n, mask)); continue
+            ans = re.sub(r"（.*?）", "", ans).strip()
+            word, part = fill(mask, ans)
+            if word is None:
+                dropped.append((no, n, mask)); continue
+            if word not in notes:
+                nomean.append((no, n, word)); continue
+            qs.append({
+                "id": "hk5s_%02d_%02d" % (no, int(n)),
+                "question": "%s（%s） ─ □に入る%sを書こう" % (mask, mean.rstrip("。"), kana),
+                "answer": part,
+                "okuri": "",
+                "meaning": "%s よって、□に入るのは「%s」で、答えは %s です。〔浜学園 小5最レ国語 No.%d・原簿 HG-%s〕"
+                           % (notes[word], part, word, no, hg),
+                "grade": 5,
+                "difficulty": 1,   # ★じゅくナビは全問1でそろえる（クラス帯フィルタで欠けないため）
+            })
+        lessons[str(no)] = {"src": "HG-" + hg, "title": "No.%d %s" % (no, title),
+                            "units": units, "kanji": qs}
+        total += len(qs)
+        print("No.%-2d %-22s … %2d問（落とした %d）"
+              % (no, title, len(qs), sum(1 for d in dropped if d[0] == no)))
+
+    print("\n合計 %d問" % total)
+    if nomean:
+        print("\n✗ 解説が無い語があります（書いてから出してください）：")
+        for no, n, w in nomean:
+            print("   No.%d (%s) %s" % (no, n, w))
+        sys.exit(1)
+
+    # ── 検査 ────────────────────────────────────────────
+    ng = []
+    ids = []
+    for no, rec in lessons.items():
+        for q in rec["kanji"]:
+            ids.append(q["id"])
+            if not q["answer"]:
+                ng.append((q["id"], "答えが空"))
+            if "□" in q["answer"]:
+                ng.append((q["id"], "答えに□が残っている"))
+            if len(q["meaning"]) < 50:
+                ng.append((q["id"], "解説が短すぎる"))
+            if q["answer"] not in q["meaning"]:
+                ng.append((q["id"], "解説の結びと答えが合わない"))
+    if len(ids) != len(set(ids)):
+        ng.append(("-", "IDの重複"))
+    if ng:
+        print("\n✗ 検査でひっかかった %d件" % len(ng))
+        for qid, why in ng[:15]:
+            print("   %s … %s" % (qid, why))
+        sys.exit(1)
+    print("✅ 検査ぜんぶ通過（答えが空でない／□が残っていない／解説あり／結びが答えと一致／IDの重複なし）")
+
+    print("\n--- 見本 ---")
+    for no in ("3", "11"):
+        q = lessons[no]["kanji"][0]
+        print("[%s] %s" % (q["id"], q["question"]))
+        print("   answer : %s" % q["answer"])
+        print("   解説   : %s" % q["meaning"][:150])
+
+    if "--write" not in sys.argv:
+        print("\n（--write を付けると data/hama_kokugo.json と data/hama_map.json に書きます）")
+        return
+
+    # ① hama_kokugo.json に grades["5"]["sairei_kokugo"] を足す
+    d = json.load(io.open(KOKUGO, encoding="utf-8"))
+    d["grades"].setdefault(GRADE, {})[COURSE] = {"lessons": lessons}
+    json.dump(d, io.open(KOKUGO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("\n→ data/hama_kokugo.json の grades.5.%s に %d問 書きこんだ" % (COURSE, total))
+
+    # ② hama_map.json の小5に国語コースを足す（じゅくナビの画面に出すため）
+    mp = json.load(io.open(MAP, encoding="utf-8"))
+    mp["grades"][GRADE]["courses"][COURSE] = {
+        "subject": "kokugo",
+        "label": "最レ国語（演習プリントII）",
+        "curriculum": "新",
+        "kokai": False,
+        "source": ("浜学園 小5最高レベル特訓 国語《演習プリントII》No.1〜No.13（原簿 HG-2544〜2559）。"
+                   "実物は「□にひらがな／カタカナを入れる」記述式なので、手書き＋自己採点でそのまま出す。"
+                   "いま入れてあるのは和語(1)(2)(3)と外来語の4回ぶん。"
+                   "ことわざ・慣用表現・漢字・品詞の回は解説を書いてから入れる。"),
+        "lessons": [{"no": no, "title": title,
+                      **({"units": u} if (u := next((sp[5] for sp in SPECS if sp[1] == no), None)) else {})}
+                     for no, title in LESSONS],
+    }
+    json.dump(mp, io.open(MAP, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("→ data/hama_map.json の grades.5.courses.%s を作った（全%d回）" % (COURSE, len(LESSONS)))
+
+
+if __name__ == "__main__":
+    main()
