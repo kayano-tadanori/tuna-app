@@ -165,9 +165,13 @@ if (process.argv.includes('--json')) {
     for (const [f, n2] of [...byFile].sort((a, b) => b[1] - a[1])) {
       console.log(`   ${f} … ${n2}件`);
     }
-    for (const r of rows.slice(0, 4)) {
-      console.log(`     例 ${r.id}: ${r.msg}${r.detail ? '  → ' + r.detail.slice(0, 62) : ''}`);
+    // 既定は「例4件」。直すときは全部いるので --full で出す。
+    // ★件数だけ見て自分で検出を書き直すと、判定式が2つになって偽陽性が出る（実際に踏んだ）
+    const show = process.argv.includes('--full') ? rows : rows.slice(0, 4);
+    for (const r of show) {
+      console.log(`     ${process.argv.includes('--full') ? '・' : '例'} ${r.id}: ${r.msg}${r.detail ? '  → ' + r.detail.slice(0, 62) : ''}`);
     }
+    if (show.length < rows.length) console.log(`     …ほか ${rows.length - show.length}件（--full で全部出る）`);
     console.log('');
   }
 }
