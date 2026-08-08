@@ -72,18 +72,16 @@ SPECS = [
     # 【B群】から選ぶ形式。実物が記号で答えさせているのでそのまま選択肢にできる
     ("2473", 5, "文学史（外国の作家）", "pool",
      None, "「%s」の作品はどれ？"),
-]
-
-# ⏭ 次に足す大問。パーサはもう通ることを確かめてある（2026-08-08）。
-#   ★ただし解説（meanings_hama_kotoba_g4.json）を書いてから SPECS に移すこと。
-#   解説の無い問題を出すのは、このアプリの本体（＝わかりやすく教えること）を欠いた状態なので出さない。
-#   完全マッチング（n対n）は語群ぜんぶを選択肢にして、実物の選択の広さを保つ
-#   （4択に削ると原簿の言う「実物より1段浅い」になる）。
-SPECS_NEXT = [
     ("2438", 6, "熟語の組み立て", "pick",
      None, "── 線の漢字が同じ意味で使われているのはどれ？"),
     ("2451", 3, "形声文字", "pool",
      None, "形声文字「%s」の読み方はどれ？"),
+    # ★A／Bの二択。四択とちがい まぐれが効かない実物どおりの型
+    ("2439", 2, "ことばの使い方", "labelq",
+     {"A": "正しい", "B": "まちがい"},
+     "%s ─ 「　」の使い方は？"),
+    # ★完全マッチング（n対n）。語群ぜんぶを選択肢にして実物の選択の広さを保つ。
+    #   4択に削ると原簿の言う「実物より1段浅い」になるので、語群をそのまま出す
     ("2438", 3, "ことばの意味", "pool",
      None, "%s ─ （　）に入る言葉はどれ？"),
     ("2439", 4, "慣用句", "pool",
@@ -136,11 +134,31 @@ def item_lines(rec, daimon):
     return None, None, None
 
 
+def split_slash(s):
+    """／で割る。ただし（ ）の中の／では割らない。
+
+    原簿は理由をかっこ書きする：「① **箱** → **イ ソウ**（竹＝意味／相＝ソウ）」。
+    素直に split すると設問が真っ二つになって、大問まるごと取れなくなる（実際になった）。
+    """
+    out, buf, depth = [], [], 0
+    for ch in s:
+        if ch in "（(":
+            depth += 1
+        elif ch in "）)":
+            depth = max(0, depth - 1)
+        if ch == "／" and depth == 0:
+            out.append("".join(buf)); buf = []
+        else:
+            buf.append(ch)
+    out.append("".join(buf))
+    return out
+
+
 def split_items(chunks):
     """／で割って (番号, 本文) にする。丸数字・(1)・(1)の全角に対応"""
     got = []
     for chunk in chunks:
-        for piece in chunk.split("／"):
+        for piece in split_slash(chunk):
             t = piece.strip()
             if not t:
                 continue
@@ -234,6 +252,23 @@ def tail_note(body):
     return note
 
 
+def parse_labelq(body, labels):
+    """「(1) 次の試合で**汚名ばんかい**できる…。→ **B**（理由）」→ (「」付きの文, 分類名)
+
+    太字＝実物の ── 線。四択とちがい画面に記号が出ないので、「」でどこを見るか示す。
+    """
+    if "→" not in body:
+        return None
+    left, right = body.split("→", 1)
+    mk = re.match(r"^\**([A-Za-z%s])" % LETTERS, right.strip())
+    if not mk or mk.group(1) not in labels:
+        return None
+    sent = re.sub(r"\*\*(.+?)\*\*", r"「\1」", left).strip().rstrip("。")
+    if "「" not in sent:
+        return None
+    return sent, labels[mk.group(1)]
+
+
 def parse_pool(pool_line):
     """「【B群】ア アルプスの少女／**イ ロミオとジュリエット（ダミー）**／…」→ 選択肢[]
 
@@ -243,12 +278,14 @@ def parse_pool(pool_line):
         return None
     body = strip_md(pool_line.split("】", 1)[1] if "】" in pool_line else pool_line)
     opts = []
-    for p in body.split("／"):
+    for p in split_slash(body):
         p = p.strip()
         m = re.match(r"^([%s])[ 　]*(.+)$" % LETTERS, p)
         if not m:
             continue
-        text = re.sub(r"（ダミー）|\(ダミー\)", "", m.group(2)).strip()
+        text = m.group(2).strip()
+        # 末尾の注記（「（ダミー）」「（ウとオが余る…）」）は私のメモ。選択肢の文言ではない
+        text = re.sub(r"[（(][^（(]*(?:ダミー|余る)[^）)]*[）)]\s*$", "", text).strip()
         if text:
             opts.append(text)
     return opts or None
@@ -329,12 +366,25 @@ def main():
                 if got:
                     word, choices, a = got
                     q = tmpl % word
-            elif kind == "pool":
-                got = parse_pool_item(body)
-                if got and got[1] in pool:
+            elif kind == "labelq":
+                got = parse_labelq(body, labels)
+                if got:
                     word, a = got
                     q = tmpl % word
-                    choices = list(pool)
+                    choices = list(dict.fromkeys(labels.values()))
+            elif kind == "pool":
+                got = parse_pool_item(body)
+                if got:
+                    word, ans = got
+                    if ans not in pool:
+                        # 原簿は答えのうしろに理由を書くことがある（「ソウ（竹＝意味…）」）。
+                        # ただし「ピノッキオ（の冒険）」のようにかっこが答えの一部のこともあるので、
+                        # 完全一致を先に試し、だめなときだけ末尾のかっこを外して照合する
+                        ans = re.sub(r"[（(][^（(]*[）)]\s*$", "", ans).strip()
+                    if ans in pool:
+                        a = ans
+                        q = tmpl % word
+                        choices = list(pool)
             if not q or not a:
                 continue
             qid = "hb4_%02d_%d_%02d" % (no, daimon, n)
