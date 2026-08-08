@@ -1,0 +1,322 @@
+# -*- coding: utf-8 -*-
+"""じゅくナビ「かんたん解説」モードに国語（小4本科V）を足す。
+
+小3（gen_kokugo_kaisetsu.py）と同じ作り。ちがうのは種本だけ：
+  種本＝data/kokugo_bun.json の hb4_ 問題（原簿 HG-2431〜2473 から機械生成したもの）
+
+★置く回は「手順を見せれば解けるようになる回」だけにする。
+  小3で選んだ4回（主語述語・しゅうしょく語・こそあど・文図）と同じ考え方。
+  ことばの意味（No.7）や文学史（No.42）は覚えるだけで手順が無いので置かない。
+
+★るいだい（類題）は既存の hb4_ id からそのまま引く＝答え・選択肢・解説を書き直さない
+  （[[feedback_genbo_dori]]：すでに検算ずみのものを壊さない）。
+
+  python scripts/gen_kokugo_kaisetsu_g4.py          … 中身を見るだけ
+  python scripts/gen_kokugo_kaisetsu_g4.py --write  … data/hama_kaisetsu.json に書きこむ
+"""
+import io, json, os, sys
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+KAISETSU = os.path.join(ROOT, "data", "hama_kaisetsu.json")
+BUN = os.path.join(ROOT, "data", "kokugo_bun.json")
+
+# 既存の算数・小3国語と同じ色づかい（青#4f7cff・緑#28c88a・橙#ff9a44・文字#1a2340）
+BLUE, GREEN, ORANGE, INK, GRAY = "#4f7cff", "#28c88a", "#ff9a44", "#1a2340", "#6c7086"
+
+
+def _svg(h, body):
+    return ('<svg viewBox="0 0 420 %d" xmlns="http://www.w3.org/2000/svg" '
+            'style="display:block;margin:0 auto;max-width:100%%">\n%s\n</svg>' % (h, body))
+
+
+def _t(x, y, s, fill=INK, size=15, anchor="middle", bold=False):
+    return ('<text x="%d" y="%d" font-size="%d" text-anchor="%s" font-family="sans-serif" '
+            'fill="%s"%s>%s</text>' % (x, y, size, anchor, fill, ' font-weight="bold"' if bold else '', s))
+
+
+# ── ① 品詞のなかま分け ────────────────────────────────────────
+# 「言い切りの形にもどす → 終わりの音で分ける」という手順そのものを見せる
+_rows = [("勉強し", "勉強する", "動詞", BLUE),
+         ("まばゆい", "まばゆい", "形容詞", GREEN),
+         ("真っ赤に", "真っ赤だ", "形容動詞", ORANGE),
+         ("鉛筆", "鉛筆", "名詞", GRAY)]
+SVG_HINSHI = _svg(160, "\n".join(
+    [_t(210, 20, "言い切りの形にもどして、終わりの音で分ける", GRAY, 12)] +
+    sum([[_t(58, 48 + i * 28, w, INK, 15),
+          _t(140, 48 + i * 28, "→", GRAY, 13),
+          _t(215, 48 + i * 28, base, c, 15, bold=True),
+          _t(300, 48 + i * 28, "→", GRAY, 13),
+          _t(370, 48 + i * 28, name, c, 14, bold=True)]
+         for i, (w, base, name, c) in enumerate(_rows)], [])))
+
+# ── ② 文の種類 ─────────────────────────────────────────────
+SVG_BUNSHU = _svg(150, "\n".join([
+    _t(210, 20, "文の終わりと、はじめの言葉を見る", GRAY, 12),
+    _t(30, 46, "平叙文", BLUE, 14, "start", True), _t(120, 46, "明日は、遠足です。", INK, 14, "start"),
+    _t(30, 74, "疑問文", GREEN, 14, "start", True), _t(120, 74, "これは、何ですか。", INK, 14, "start"),
+    _t(30, 102, "命令文", ORANGE, 14, "start", True), _t(120, 102, "早く起きなさい。", INK, 14, "start"),
+    _t(30, 130, "感動文", "#e0567a", 14, "start", True), _t(120, 130, "まあ、元気がいいこと。", INK, 14, "start"),
+]))
+
+# ── ③ 単文・重文・複文 ─────────────────────────────────────
+# 主語述語の「組」が いくつあって どうつながるか を線で見せる
+SVG_BUNKEI = _svg(190, "\n".join([
+    _t(210, 20, "主語と述語の「組」がいくつあるかを数える", GRAY, 12),
+
+    _t(30, 48, "単文", BLUE, 14, "start", True),
+    _t(96, 48, '<tspan fill="%s" font-weight="bold">趣味は</tspan>、<tspan fill="%s" font-weight="bold">つりである</tspan>。'
+     % (BLUE, GREEN), INK, 14, "start"),
+    _t(96, 66, "組が1つだけ", GRAY, 11, "start"),
+
+    _t(30, 100, "重文", ORANGE, 14, "start", True),
+    _t(96, 100, '<tspan fill="%s" font-weight="bold">兄は</tspan><tspan fill="%s" font-weight="bold">明るく</tspan>、'
+                '<tspan fill="%s" font-weight="bold">弟は</tspan><tspan fill="%s" font-weight="bold">おとなしい</tspan>。'
+     % (BLUE, GREEN, BLUE, GREEN), INK, 14, "start"),
+    _t(96, 118, "組が2つ・対等にならぶ", GRAY, 11, "start"),
+
+    _t(30, 152, "複文", "#e0567a", 14, "start", True),
+    _t(96, 152, '<tspan fill="%s" font-weight="bold">雨が</tspan><tspan fill="%s" font-weight="bold">降る</tspan>日は、'
+                '<tspan fill="%s" font-weight="bold">頭が</tspan><tspan fill="%s" font-weight="bold">痛くなる</tspan>。'
+     % (BLUE, GREEN, BLUE, GREEN), INK, 14, "start"),
+    _t(96, 170, "組が2つ・かた方が「日」をくわしくしている", GRAY, 11, "start"),
+]))
+
+# ── ④ 重箱読み・湯桶読み ────────────────────────────────────
+# 名前の由来がそのまま見分け方になっている
+SVG_JUBAKO = _svg(160, "\n".join([
+    _t(210, 20, "名前が そのまま 読み方の見本になっている", GRAY, 12),
+    _t(105, 54, "重箱", INK, 20, bold=True),
+    _t(105, 76, '<tspan fill="%s" font-weight="bold">ジュウ</tspan>（音）＋<tspan fill="%s" font-weight="bold">ばこ</tspan>（訓）'
+     % (BLUE, ORANGE), INK, 13),
+    _t(105, 96, "上が音・下が訓", GRAY, 12),
+    _t(315, 54, "湯桶", INK, 20, bold=True),
+    _t(315, 76, '<tspan fill="%s" font-weight="bold">ゆ</tspan>（訓）＋<tspan fill="%s" font-weight="bold">トウ</tspan>（音）'
+     % (ORANGE, BLUE), INK, 13),
+    _t(315, 96, "上が訓・下が音", GRAY, 12),
+    _t(105, 130, '<tspan fill="%s" font-weight="bold">えき</tspan>＋<tspan fill="%s" font-weight="bold">まえ</tspan>＝駅前'
+     % (BLUE, ORANGE), INK, 14),
+    _t(315, 130, '<tspan fill="%s" font-weight="bold">あま</tspan>＋<tspan fill="%s" font-weight="bold">ぐ</tspan>＝雨具'
+     % (ORANGE, BLUE), INK, 14),
+    _t(105, 148, "重箱読み", BLUE, 12, bold=True),
+    _t(315, 148, "湯桶読み", ORANGE, 12, bold=True),
+]))
+
+# ── ⑤ 熟語の組み立て ───────────────────────────────────────
+# 「読みかえてみる」という一手を見せる
+SVG_JUKUGO = _svg(150, "\n".join([
+    _t(210, 20, "訓読みで読みかえると、関係が見える", GRAY, 12),
+    _t(70, 52, "海上", INK, 17, bold=True), _t(140, 52, "→", GRAY, 14),
+    _t(220, 52, "海の上", BLUE, 15, bold=True), _t(350, 52, "上が下を説明", BLUE, 12),
+    _t(70, 88, "着席", INK, 17, bold=True), _t(140, 88, "→", GRAY, 14),
+    _t(220, 88, "席に着く", GREEN, 15, bold=True), _t(350, 88, "下が上の目的", GREEN, 12),
+    _t(70, 124, "骨折", INK, 17, bold=True), _t(140, 124, "→", GRAY, 14),
+    _t(220, 124, "骨が折れる", ORANGE, 15, bold=True), _t(350, 124, "上が主語・下が述語", ORANGE, 11),
+]))
+
+
+LESSONS = {
+    "19": {
+        "title": "重箱読み・湯桶読み",
+        "items": [{
+            "bone": "上と下を べつべつに「音か訓か」で見る",
+            "rei": {
+                "question": "「役場（やく・ば）」は、音音読み・訓訓読み・重箱読み・湯桶読みのどれですか。",
+                "svg": SVG_JUBAKO,
+                "kaisetsu": [
+                    "二字の熟語は、上の字と下の字を べつべつに「音読みか訓読みか」で見ます。"
+                    "音＋音なら音音読み、訓＋訓なら訓訓読みです。",
+                    "まざっているときは名前が二つあります。上が音で下が訓なら重箱読み、"
+                    "上が訓で下が音なら湯桶読みです。",
+                    "この名前の付け方には理由があります。「重箱」を「ジュウ（音）＋ばこ（訓）」、"
+                    "「湯桶」を「ゆ（訓）＋トウ（音）」と読むからです。名前そのものが見本になっています。",
+                    "「役場」は「やく」が音読み、「ば」が訓読みです。上が音・下が訓なので、"
+                    "よって、答えは重箱読みです。",
+                ],
+                "answer": "重箱読み",
+            },
+            "ruidai": [],
+        }],
+    },
+    "23": {
+        "title": "熟語の組み立て",
+        "items": [{
+            "bone": "訓読みで読みかえて、上と下の関係を見る",
+            "rei": {
+                "question": "「着席」は、どのような組み立ての熟語ですか。",
+                "svg": SVG_JUKUGO,
+                "kaisetsu": [
+                    "二字の熟語は、上の字と下の字の関係で分けられます。"
+                    "見分けるコツは、音読みのままにせず「訓読みで読みかえてみる」ことです。",
+                    "「着席」は「席に着く」と読みかえられます。「着く」が動作で、"
+                    "「席」はその動作の相手（目的）になっています。",
+                    "同じように、「海上」は「海の上」なので上の字が下の字を説明している型、"
+                    "「骨折」は「骨が折れる」なので上が主語・下が述語の型です。",
+                    "ほかに、河川（どちらも「かわ」）のように似た意味を重ねる型、"
+                    "貧富のように反対の意味を重ねる型、非常のように上の字が打ち消す型があります。",
+                    "「着席」は「席に着く」と読みかえられるので、"
+                    "よって、答えは下の字が上の字の目的です。",
+                ],
+                "answer": "下の字が上の字の目的",
+            },
+            "ruidai": [],
+        }],
+    },
+    "33": {
+        "title": "品詞のなかま分け",
+        "items": [{
+            "bone": "言い切りの形にもどして、終わりの音で分ける",
+            "rei": {
+                "question": "「勉強し」「まばゆい」「真っ赤に」「鉛筆」は、それぞれ何という品詞ですか。",
+                "svg": SVG_HINSHI,
+                "kaisetsu": [
+                    "品詞は、文の中の形のままでは見分けられません。"
+                    "まず「言い切りの形」にもどしてから、終わりの音で分けます。",
+                    "「勉強し」は言い切ると「勉強する」で、う段の音で終わります。"
+                    "動作を表してう段で終わるものが動詞です。",
+                    "「まばゆい」は言い切りが「い」で終わります。ようすを表して「い」で終わるものが形容詞です。"
+                    "「真っ赤に」は言い切ると「真っ赤だ」で、「だ」で終わります。これが形容動詞です。",
+                    "「鉛筆」は形が変わりません。物や事がらの名前で形が変わらないものが名詞です。",
+                    "つまり、動詞＝う段／形容詞＝い／形容動詞＝だ／名詞＝形が変わらない、"
+                    "の4つで分けられます。よって、答えは順に動詞・形容詞・形容動詞・名詞です。",
+                ],
+                "answer": "勉強し＝動詞／まばゆい＝形容詞／真っ赤に＝形容動詞／鉛筆＝名詞",
+            },
+            "ruidai": [],
+        }],
+    },
+    "36": {
+        "title": "文の種類・文型",
+        "items": [
+            {
+                "bone": "文の終わりと、はじめの言葉を見る",
+                "rei": {
+                    "question": "「なんときれいな花ではないか。」は、平叙文・疑問文・命令文・感動文のどれですか。",
+                    "svg": SVG_BUNSHU,
+                    "kaisetsu": [
+                        "文は、話し手が何をしようとしているかで4つに分けられます。"
+                        "ふつうに伝えるのが平叙文、たずねるのが疑問文、"
+                        "命じたりたのんだりするのが命令文、おどろきや感動を表すのが感動文です。",
+                        "見分けるときは、文の終わりだけでなく、はじめの言葉も見ます。"
+                        "「なんと」「まあ」で始まっていたら感動文の目印です。",
+                        "「なんときれいな花ではないか。」は、終わりが「〜ではないか」で疑問文に似ています。"
+                        "しかし相手に答えを求めてはいません。「なんと」から、おどろきを表しているとわかります。",
+                        "同じ「〜ないか」でも、「だれか、本当のことを知らないか。」は本当にたずねているので疑問文です。"
+                        "形だけで決めないのが大事です。よって、答えは感動文です。",
+                    ],
+                    "answer": "感動文",
+                },
+                "ruidai": [],
+            },
+            {
+                "bone": "主語と述語の「組」がいくつあるかを数える",
+                "rei": {
+                    "question": "「雨が降る日は、頭が痛くなる。」は、単文・重文・複文のどれですか。",
+                    "svg": SVG_BUNKEI,
+                    "kaisetsu": [
+                        "文型は、主語と述語の「組」がいくつあって、どうつながっているかで決まります。"
+                        "まず組をぜんぶ見つけるのが先です。",
+                        "組が1つだけなら単文です。「趣味は・つりである」で1組だけの文がこれにあたります。",
+                        "組が2つ以上あって、どちらも同じ重さでならんでいるなら重文です。"
+                        "「兄は明るく、弟はおとなしい」は、2つの組が対等にならんでいます。",
+                        "組が2つ以上あって、かた方がもうかた方の一部になっている（くわしくしている）なら複文です。",
+                        "「雨が降る日は、頭が痛くなる。」は、「雨が・降る」という組が「日」をくわしくしていて、"
+                        "文全体の中身は「頭が・痛くなる」です。組が対等ではなく入れ子になっています。"
+                        "よって、答えは複文です。",
+                    ],
+                    "answer": "複文",
+                },
+                "ruidai": [],
+            },
+        ],
+    },
+}
+
+# るいだいに使う既存問題（data/kokugo_bun.json の hb4_ id）。
+# ★やさしい順に置く＝れいで見せた手順をそのまま試せる並びにする
+RUIDAI_IDS = {
+    ("19", 0): ["hb4_19_3_01", "hb4_19_3_03", "hb4_19_3_06", "hb4_19_3_07"],
+    ("23", 0): ["hb4_23_3_01", "hb4_23_3_03", "hb4_23_3_06", "hb4_23_3_07"],
+    # 品詞は「1語を分類する（No.34の型）」→「4語を分類して仲間はずれを探す（No.33の型）」の順
+    ("33", 0): ["hb4_34_3_02", "hb4_34_3_04", "hb4_34_3_01", "hb4_34_3_08",
+                "hb4_33_4_01", "hb4_33_4_05"],
+    ("36", 0): ["hb4_36_2_02", "hb4_36_2_03", "hb4_36_2_07", "hb4_36_2_10"],
+    ("36", 1): ["hb4_36_3_02", "hb4_36_3_01", "hb4_36_3_04", "hb4_36_3_08"],
+}
+
+
+def ruidai_from(bun_data, ids):
+    """kokugo_bun.json の id から類題を作る（答え・選択肢・解説はそのまま流用）"""
+    by_id = {d["id"]: d for d in bun_data}
+    out = []
+    for i in ids:
+        if i not in by_id:
+            print("  ✗ るいだいの id が見つからない: %s" % i)
+            sys.exit(1)
+        d = by_id[i]
+        out.append({
+            "question": d["question"],
+            "answer": d["answer"],
+            "choices": d["choices"],
+            "meaning": d["meaning"],
+        })
+    return out
+
+
+def main():
+    bun_data = json.load(io.open(BUN, encoding="utf-8"))
+    for (no, idx), ids in RUIDAI_IDS.items():
+        LESSONS[no]["items"][idx]["ruidai"] = ruidai_from(bun_data, ids)
+
+    # 検査：るいだいが空／答えが選択肢に無い／れいに答えが書かれていない
+    bad = []
+    for no, v in LESSONS.items():
+        for i, it in enumerate(v["items"]):
+            if not it["ruidai"]:
+                bad.append("No.%s item%d ： るいだいが空" % (no, i))
+            for r in it["ruidai"]:
+                if r["answer"] not in r["choices"]:
+                    bad.append("No.%s ： 答えが選択肢に無い（%s）" % (no, r["answer"]))
+            # れいの解説は必ず「よって、答えは…」で結ぶ（→ [[oton_kokugo_audit]]の検算と同じ）
+            k = "".join(it["rei"]["kaisetsu"])
+            if "よって、答えは" not in k:
+                bad.append("No.%s item%d ： れいの解説が「よって、答えは…」で結ばれていない" % (no, i))
+            # 答えが1つの設問は、その答えが解説文に出てくることも見る
+            ans = it["rei"]["answer"]
+            if "／" not in ans and ans not in k:
+                bad.append("No.%s item%d ： れいの解説に答え（%s）が出てこない" % (no, i, ans))
+
+    n_items = sum(len(v["items"]) for v in LESSONS.values())
+    n_ruidai = sum(len(it["ruidai"]) for v in LESSONS.values() for it in v["items"])
+    print("小4国語のかんたん解説：%d回ぶん／れい%d本＋るいだい%d問" % (len(LESSONS), n_items, n_ruidai))
+    for no in sorted(LESSONS, key=int):
+        v = LESSONS[no]
+        for i, it in enumerate(v["items"]):
+            print("  No.%-2s %-12s ｜ %s ｜ るいだい%d問"
+                  % (no, v["title"] if i == 0 else "", it["bone"], len(it["ruidai"])))
+
+    print("\n【検査】")
+    if bad:
+        for b in bad:
+            print("  ✗ " + b)
+    else:
+        print("  ✓ 0件")
+
+    if "--write" in sys.argv:
+        if bad:
+            print("\n✗ 検査に引っかかっているので書きこまない")
+            sys.exit(1)
+        d = json.load(io.open(KAISETSU, encoding="utf-8"))
+        d["grades"].setdefault("4", {})
+        d["grades"]["4"]["kokugo"] = {"lessons": LESSONS}
+        with io.open(KAISETSU, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, indent=1)
+        print("\n✓ 書きこんだ → %s" % KAISETSU)
+    else:
+        print("\n（--write で data/hama_kaisetsu.json に書きこむ）")
+
+
+if __name__ == "__main__":
+    main()
