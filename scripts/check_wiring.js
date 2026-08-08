@@ -165,6 +165,11 @@ for (const f of jsFiles) {
     // 例：state.grade !== 3 ／ grade === 4
     const m = line.match(/\b(?:state\.)?grade\s*[=!]==?\s*([1-6])\b/);
     if (m) warnf(`${f}:${i + 1} 学年の決め打ち → ${line.trim().slice(0, 76)}`);
+    // ★教科ごとの表は subjectFiles()/subjectLabels()/subjectHome() で引く。
+    //   前は同じ三項演算子が6か所にコピーされていて、教科を足すたびに全部直す必要があった
+    if (/\?\s*(?:RIKA|SHAKAI)_(?:FILES|CAT_LABELS)\s*:/.test(line)) {
+      fail(`${f}:${i + 1} 教科ごとの表を直に振り分けている。subjectFiles()/subjectLabels() を使う`);
+    }
   });
 }
 if (!warn) console.log('  ✓ 学年の決め打ちなし');

@@ -74,6 +74,22 @@ const SHAKAI_CAT_LABELS = {
   kokudo:'国土と自然', sangyo:'産業とくらし', rekishi:'日本の歴史', komin:'政治と国際',
 };
 
+// ── 教科ごとの表は、ここ1か所で引く ──────────────────────
+// 前は subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES
+// という同じ三項演算子が6か所にコピーされていた。教科を1つ足すたびに6か所すべてを
+// 直す必要があり、直し忘れると「データはあるのに画面に出ない」になる（2026-08-08に整理）。
+// ★中身を関数で包んであるのは、表の定義より先に読まれても平気にするため。
+const SUBJECT_TABLES = {
+  sansu:  { files: () => SANSU_FILES,  labels: () => SANSU_CAT_LABELS,  home: 'sansu-home' },
+  rika:   { files: () => RIKA_FILES,   labels: () => RIKA_CAT_LABELS,   home: 'rika-home' },
+  shakai: { files: () => SHAKAI_FILES, labels: () => SHAKAI_CAT_LABELS, home: 'shakai-home' },
+};
+// 知らない教科（国語のじゅくナビ・灘合など）は算数の表にそろえる＝前と同じふるまい
+const subjectTable  = (subject) => SUBJECT_TABLES[subject] || SUBJECT_TABLES.sansu;
+const subjectFiles  = (subject) => subjectTable(subject).files();
+const subjectLabels = (subject) => subjectTable(subject).labels();
+const subjectHome   = (subject) => subjectTable(subject).home;
+
 // 連鎖問題（難易度5・灘中レベル）ファイル
 const CHAIN_FILES = {
   sansu: 'data/sansu_chain.json',
@@ -252,8 +268,7 @@ const sansuState = {
 };
 
 async function loadSansuQuestions(cat, grade, diff) {
-  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
-    : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+  const fileMap = subjectFiles(sansuState.subject);
   // 単元グループでしぼる場合は、カテゴリをまたいで集める
   // （同じ単元が bun/tokusan/kisoku などに分散しているため。本人要望 2026-07-26）
   // ★cat より先に見る。「単元でえらぶ」入り口では cat が null なので fileMap[cat] が引けない
@@ -755,7 +770,7 @@ async function sansuUnitPool(grade, unit) { return unitPool('sansu', grade, unit
 //   hama_map の lessons に units（単元名）だけを書いて、問題データの unit と突き合わせる方式にした。
 //   こうすると問題データ側を触らずにカリキュラム連動でき、回の順序が変わっても壊れない。
 async function unitPool(subject, grade, unit) {
-  const files = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+  const files = subjectFiles(subject);
   const out = [];
   for (const k of Object.keys(files)) {
     if (k === 'mix') continue;
@@ -862,12 +877,14 @@ async function renderHamaPanel() {
   //   小5最レのように回番号がそのまま今年のカリキュラムなら、単元でえらぶは要らない。
   const curriculum = courses[course].curriculum || '新';
   const isOldCurr = (curriculum === '旧');
-  const kxUnits = (course === 'sairei') ? await hamaKaisetsuUnits(grade, course) : [];
-  const dqUnits = (course === 'sairei') ? await hamaDaimonUnits(grade, course) : [];
+  // ★「単元でえらぶ」は回番号が旧カリキュラムを指すコース用。コース名で決めない
+  //   （前は course === 'sairei' 決め打ちだった。対応表の curriculum を見れば足りる）
+  const kxUnits = isOldCurr ? await hamaKaisetsuUnits(grade, course) : [];
+  const dqUnits = isOldCurr ? await hamaDaimonUnits(grade, course) : [];
   const newUnits = [...new Set([...kxUnits, ...dqUnits])].sort();
   // 単元でえらぶ＝今年のカリキュラム用。今年ぶんの単元データがあるときだけ出す。
   //   回についている単元名は去年までのものなので使わない。
-  const canUnit = course === 'sairei' && isOldCurr && newUnits.length > 0;
+  const canUnit = isOldCurr && newUnits.length > 0;
   modeRow.style.display = canUnit ? 'flex' : 'none';
   modeRow.querySelectorAll('[data-hama-mode="no"]').forEach(b => { b.textContent = '回番号でえらぶ（去年まで）'; });
   modeRow.querySelectorAll('[data-hama-mode="unit"]').forEach(b => { b.textContent = '単元でえらぶ（今年）'; });
@@ -979,13 +996,15 @@ async function renderHamaPanel() {
   // 最レを選んでいるときは「公開テストのはんい」ボタン自体を出さない。
   // 算数2nd も同じ。公開の範囲は1st（マスター）の回番号で数えるので、2ndの回番号で出すとズレる。
   // 国語は kokai:false（対応表）。公開の範囲は算数の回番号で数えるので国語の回では出せない
-  const showKokai = (course !== 'sairei' && !is2nd && courses[course].kokai !== false);
+  // ★公開テストの範囲を出すかどうかは、対応表の kokai だけで決める。
+  //   前は course !== 'sairei' && !is2nd という決め打ちが入っていた（コースを足すたびに
+  //   ここを直す必要があった）。最レと算数2nd の対応表に kokai:false を書いて同じ結果にした
+  const showKokai = (courses[course].kokai !== false);
   const kokaiBtn = document.querySelector('.hama-act-btn[data-hama-act="kokai"]');
   if (kokaiBtn) kokaiBtn.classList.toggle('hidden', !showKokai);
 
   // 「先どり」は廃止した（浜学園は復習主義／本人指示 2026-07-28）。その場所が大問モード。
   // かんたん解説は「単元でえらぶ」モードのほうに出す（回番号は旧カリキュラムなので使わない）
-  const isSairei = (course === 'sairei');
   const kxBtn = document.querySelector('.hama-act-btn[data-hama-act="kaisetsu"]');
 
   // ★大問モード（原簿どおりの3問1組）。まだ問題が無いところは暗転して残す（本人指示 2026-07-28）
@@ -1012,7 +1031,10 @@ async function renderHamaPanel() {
   }
   // 回番号モードのかんたん解説＝旧カリキュラム（最レ）／同じカリキュラムがそのまま続く国語（原簿から作ったもの）
   if (kxBtn) {
-    const pack = (isSairei || isKokugo) ? await hamaKaisetsuForNo(grade, course, no) : null;
+    // ★かんたん解説があるかどうかは、データが持っているかで決める。
+  //   前は (isSairei || isKokugo) の決め打ちで、最レ専用→国語を足すときに || を継ぎ足していた。
+  //   hamaKaisetsuForNo は無ければ null を返すので、そのまま呼べばよい
+  const pack = await hamaKaisetsuForNo(grade, course, no);
     const n2 = pack ? expandKaisetsu(pack, grade).length : 0;
     kxBtn.classList.toggle('hidden', !n2);
     kxBtn.disabled = !n2;
@@ -1167,8 +1189,11 @@ async function startHamaSession(kind) {
     return;
   }
 
-  // 単元でえらぶモード（最レ）はここで出題する
-  if (course === 'sairei' && sansuState.hamaMode === 'unit' && sansuState.hamaUnit) {
+  // 単元でえらぶモードはここで出題する。
+  // ★コース名で判定しない。hamaMode が 'unit' になるのは renderHamaPanel が
+  //   canUnit（＝旧カリキュラム＋単元データあり）と判断したときだけで、
+  //   そうでないときは 'no' に戻される
+  if (sansuState.hamaMode === 'unit' && sansuState.hamaUnit) {
     showLoading();
     try {
       const all = filterByBand(await hamaCollectUnit(grade, course, await hamaPoolUnit(grade, course, sansuState.hamaUnit)));
@@ -1785,21 +1810,15 @@ async function startSansuSession() {
 }
 
 // ── 算数・理科クイズ（通常問題） ──────────────────────
-function subjectCatLabels() {
-  return sansuState.subject === 'rika' ? RIKA_CAT_LABELS
-    : sansuState.subject === 'shakai' ? SHAKAI_CAT_LABELS : SANSU_CAT_LABELS;
-}
-function subjectHomeScreen() {
-  return sansuState.subject === 'rika' ? 'rika-home'
-    : sansuState.subject === 'shakai' ? 'shakai-home' : 'sansu-home';
-}
+function subjectCatLabels() { return subjectLabels(sansuState.subject); }
+function subjectHomeScreen() { return subjectHome(sansuState.subject); }
 
 // カテゴリの全問題（学年・難易度を問わず）から苦手問題（正解率50%以下）を集める
 // loadSansuQuestions と同じキャッシュキー（`${subject}-${cat}`）を使い、二重取得を避ける
 async function getWeakItemsForCat(subject, cat) {
   const key = `${subject}-${cat}`;
   if (!sansuCache[key]) {
-    const fileMap = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+    const fileMap = subjectFiles(subject);
     const res = await fetch(fileMap[cat]);
     sansuCache[key] = await res.json();
   }

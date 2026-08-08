@@ -491,8 +491,7 @@ RIKA_CAT_LABELS.mix = 'ミックス';
 SHAKAI_CAT_LABELS.mix = 'ミックス';
 
 async function loadMixQuestions(grade, diff) {
-  const fileMap = sansuState.subject === 'rika' ? RIKA_FILES
-    : sansuState.subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+  const fileMap = subjectFiles(sansuState.subject);
   const cats = Object.keys(fileMap);
   const lists = await Promise.all(cats.map(c => loadSansuQuestions(c, grade, diff).catch(() => [])));
   const all = [];
@@ -546,7 +545,7 @@ async function renderGradeCrowns(subject) {
         });
       }
     } else {
-      const fileMap = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+      const fileMap = subjectFiles(subject);
       for (const [cat, file] of Object.entries(fileMap)) {
         const key = `${subject}-${cat}`;
         if (!sansuCache[key]) {
@@ -596,7 +595,7 @@ function setDiffProgress(btn, cleared, total) {
 async function ensureSansuFile(subject, cat) {
   const key = `${subject}-${cat}`;
   if (!sansuCache[key]) {
-    const fileMap = subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES;
+    const fileMap = subjectFiles(subject);
     const res = await fetch(fileMap[cat]);
     sansuCache[key] = await res.json();
   }
@@ -635,7 +634,7 @@ async function renderDiffBadgesSansu() {
     const cats = unitSel && UNIT_GROUPS[unitSel]
       ? Object.keys(SANSU_FILES).filter(k => k !== 'mix')
       : cat === 'mix'
-        ? Object.keys(subject === 'rika' ? RIKA_FILES : subject === 'shakai' ? SHAKAI_FILES : SANSU_FILES)
+        ? Object.keys(subjectFiles(subject))
         : [cat];
     for (const c of cats) {
       const qs = await ensureSansuFile(subject, c);
@@ -706,7 +705,7 @@ async function renderDiffBadgesKokugo() {
 const KOKUGO_EXTRA_CAT_LABELS = { hama_kokugo: 'じゅくナビ漢字（小3本科）' };
 function gamiCatLabel(subject, cat) {
   if (subject === 'kokugo') return (CATEGORIES[cat] || {}).label || KOKUGO_EXTRA_CAT_LABELS[cat] || cat;
-  const map = subject === 'rika' ? RIKA_CAT_LABELS : subject === 'shakai' ? SHAKAI_CAT_LABELS : SANSU_CAT_LABELS;
+  const map = subjectLabels(subject);
   return map[cat] || cat;
 }
 
