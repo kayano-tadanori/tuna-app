@@ -42,6 +42,11 @@ SPECS = [
     ("2557", 13, "ことばの問題⑥ 和語(3)", "ひらがな", "meanings_kokugo_wago.json", ["和語"]),
 ]
 # 回の一覧（じゅくナビの画面に出す。問題がまだ無い回も名前だけ載せる＝実物の並びを見せる）
+# 穴うめ以外の形式で拾う回：(HG, 回番号, 回の名前, 形式, units)
+SPECS2 = [
+    ("2545", 2, "漢字の問題① 読みと書き", ["yomi", "misprint"], ["漢字の読み書き"]),
+    ("2547", 4, "漢字の問題② 熟語", ["doukun"], ["同音異義語"]),
+]
 LESSONS = [
     (1, "ことばの問題① 慣用表現(1)"), (2, "漢字の問題① 読みと書き"),
     (3, "ことばの問題② 和語(1)"), (4, "漢字の問題② 熟語"),
@@ -52,6 +57,44 @@ LESSONS = [
     (13, "ことばの問題⑥ 和語(3)"),
 ]
 LINE = re.compile(r"\((\d+)\)\s*([^／/\n]+?)／([^＝=\n]+?)＝\*\*([^*\n]+?)\*\*")
+
+# 原簿には穴うめ以外の書き方も混ざっているので、形式ごとに読み分ける
+MARU = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚"
+# (a) 熟語の口に漢字を入れる：「1)口起（ほっき）＝**発**」
+YOMI = re.compile("([" + MARU + r"])([^（\s]*□[^（\s]*)（([^）]+)）＝\*\*([^*]+)\*\*")
+# (b) まちがいさがし：「2) 世界一**週**旅行の…。→ **週→周**」
+MIS = re.compile("([" + MARU + r"])\s*(.+?)。→ \*\*(.)→(.)\*\*([^\n]*)")
+# (c) 同音異義語：「1)北海道を**カンコウ**する＝**観光**」
+DOU = re.compile("([" + MARU + r"])([^＝]*?)\*\*([ァ-ヶー]+)\*\*([^＝]*?)＝\*\*([^*⚠]+)\*\*")
+
+
+def maru_no(ch):
+    return MARU.index(ch) + 1
+
+
+def extra_specs(b, kind):
+    """穴うめ以外の形式を (番号, 解説を引く語, 問題文, 答え) にする"""
+    out = []
+    if kind == "yomi":
+        for m in YOMI.finditer(b):
+            n, mask, yomi, ans = m.groups()
+            out.append((maru_no(n), mask.replace("□", ans),
+                        "%s（%s） ─ □に入る漢字を書こう" % (mask, yomi), ans))
+    elif kind == "misprint":
+        for m in MIS.finditer(b):
+            n, sent, wrong, right, tail = m.groups()
+            if "⚠" in tail:
+                continue          # 要現物照合の問は出さない
+            out.append((maru_no(n), right,
+                        "%s。 ─ まちがっている漢字1字を正しく直そう" % sent.replace("**", ""), right))
+    elif kind == "doukun":
+        for m in DOU.finditer(b):
+            n, pre, kana, post, ans = m.groups()
+            out.append((maru_no(n), ans.strip(),
+                        "%s%s%s ─ 「%s」を漢字で書こう"
+                        % (pre.strip(), kana, post.strip(), kana), ans.strip()))
+    return out
+
 
 
 def body(text, hg):
@@ -113,6 +156,33 @@ def main():
         total += len(qs)
         print("No.%-2d %-22s … %2d問（落とした %d）"
               % (no, title, len(qs), sum(1 for d in dropped if d[0] == no)))
+
+    for hg, no, title, kinds, units in SPECS2:
+        b = body(text, hg)
+        assert b, "HG-%s が原簿に無い" % hg
+        qs = []
+        # ⚠ 同じ回に形式が2つあると丸数字がぶつかる（読み②とまちがいさがし②）。
+        #   形式ごとに1文字はさんでIDを分ける
+        TAG = {"yomi": "", "misprint": "m", "doukun": ""}
+        for kind in kinds:
+            for n, word, question, ans in extra_specs(b, kind):
+                if word not in notes:
+                    nomean.append((no, n, word)); continue
+                qs.append({
+                    "id": "hk5s_%02d_%s%02d" % (no, TAG[kind], n),
+                    "question": question,
+                    "answer": ans,
+                    "okuri": "",
+                    "meaning": "%s よって、答えは %s です。〔浜学園 小5最レ国語 No.%d・原簿 HG-%s〕"
+                               % (notes[word], ans, no, hg),
+                    "grade": 5,
+                    "difficulty": 1,
+                })
+        qs.sort(key=lambda q: q["id"])
+        lessons[str(no)] = {"src": "HG-" + hg, "title": "No.%d %s" % (no, title),
+                            "units": units, "kanji": qs}
+        total += len(qs)
+        print("No.%-2d %-22s … %2d問" % (no, title, len(qs)))
 
     print("\n合計 %d問" % total)
     if nomean:
