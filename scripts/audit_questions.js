@@ -31,10 +31,11 @@ function* questionsOf(obj, file, trail = []) {
       if (q && typeof q === 'object' && (q.question || q.answer !== undefined)) {
         if (Array.isArray(q.steps)) {
           for (const [i, s] of q.steps.entries()) {
-            yield { q: s, file, id: `${q.id}#${i + 1}`, kind: 'step' };
+            // ★大問1本が1つの出題プール。同じ配列にいる別の大問とは混ざらない
+            yield { q: s, file, id: `${q.id}#${i + 1}`, at: String(q.id ?? trail.join('/')), kind: 'step' };
           }
         } else {
-          yield { q, file, id: q.id || trail.join('/'), kind: 'q' };
+          yield { q, file, id: q.id || trail.join('/'), at: trail.join('/'), kind: 'q' };
         }
       } else if (q && typeof q === 'object') {
         yield* questionsOf(q, file, trail);
@@ -43,7 +44,7 @@ function* questionsOf(obj, file, trail = []) {
   } else if (obj && typeof obj === 'object') {
     if (Array.isArray(obj.steps)) {
       for (const [i, s] of obj.steps.entries()) {
-        yield { q: s, file, id: `${obj.id}#${i + 1}`, kind: 'step' };
+        yield { q: s, file, id: `${obj.id}#${i + 1}`, at: String(obj.id ?? trail.join('/')), kind: 'step' };
       }
     }
     for (const [k, v] of Object.entries(obj)) {
@@ -61,11 +62,21 @@ const norm = (s) => String(s ?? '')
   .replace(/[\s・、。，．「」『』（）()]/g, '')
   .toLowerCase();
 
+// 図は長いので、全文から鍵を作る。
+// ★「長さ＋先頭60字」で済ませたら、同じ大きさの魔方陣（sc3358/sc3359）が同じ図に見えた。
+//   数字だけがちがう図は先頭が同じなので、**必ず全文を通す**
+const hash = (s) => {
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0;
+  return `${s.length}:${h.toString(36)}`;
+};
+
 const findings = [];
 const add = (kind, file, id, msg, detail) => findings.push({ kind, file, id, msg, detail });
 
-let total = 0, withChoices = 0;
+let total = 0, withChoices = 0, crossPool = 0;
 const seenByFile = new Map();
+const seenBody = new Map();   // プールを無視した鍵。別プールへの再出題を数えるだけに使う
 
 // ★問題の形をしていないデータは見ない。
 //   sanken_cases（三権タウン事件簿）は stages[].options[] という別の形で、
@@ -79,7 +90,7 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
   const seen = new Map();
   seenByFile.set(f, seen);
 
-  for (const { q, id } of questionsOf(data, f)) {
+  for (const { q, id, at } of questionsOf(data, f)) {
     total++;
     const ans = q.answer;
     const qt = String(q.question ?? '');
@@ -141,11 +152,28 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
       }
     }
 
-    // ⑥ 同じ問題文＋同じ答えが2回
+    // ⑥ 同じ問題が2回ある
+    // ★「同じ出題プールの中で2回出る」ことだけが不具合。
+    //   ちがう学年・ちがう回に同じ問題があるのは**正常**で、実害が無い：
+    //     ・浜学園は復習主義なので、同じ漢字・同じ設問が別の回にも出る（原簿どおり）
+    //     ・小3最レが小5単元を先取りするので、同じ問題が2つの学年の玉手箱に入る
+    //   1回のセッションで同じ問題に2回当たるのは、プールが同じときだけ。
+    //   前はプールを見ずに数えていたので、77件のうち大半が正常なものだった（2026-08-08）。
+    // ★選択肢と図も鍵に入れる。問題文と答えが同じでも、
+    //   選択肢がちがえば別問題（「音読みしかできない漢字はどれ？」は毎回選択肢がちがう）。
+    //   図がちがっても別問題（[[oton_quality_audit]] で9グループを誤って消しかけた）
     if (qt.trim()) {
-      const key = norm(qt) + '|' + norm(ans);
+      const pool = `${at || ''}|g${q.grade ?? ''}d${q.difficulty ?? ''}`;
+      const body = norm(qt) + '|' + norm(ans)
+        + '|' + norm((q.choices || []).join('␟'))
+        + '|' + (q.svg ? hash(String(q.svg)) : '');
+      const key = body + '|' + pool;
       if (seen.has(key)) add('同じ問題が2回ある', f, id, `先に ${seen.get(key)}`, qt.slice(0, 46));
-      else seen.set(key, id);
+      else {
+        seen.set(key, id);
+        if (seenBody.has(body)) crossPool++;   // 別プールの再出題。数だけ控える
+        else seenBody.set(body, id);
+      }
     }
   }
 }
@@ -156,7 +184,8 @@ if (process.argv.includes('--json')) {
   const byKind = new Map();
   for (const x of findings) byKind.set(x.kind, (byKind.get(x.kind) || 0) + 1);
   console.log(`点検した問題 ${total}問（うち選択肢つき ${withChoices}問）`);
-  console.log(`見つかった件数 ${findings.length}件\n`);
+  console.log(`見つかった件数 ${findings.length}件`);
+  console.log(`（別の学年・別の回への再出題 ${crossPool}件＝復習主義・先取りなので正常。不具合には数えない）\n`);
   for (const [k, n] of [...byKind].sort((a, b) => b[1] - a[1])) {
     console.log(`【${k}】${n}件`);
     const rows = findings.filter((x) => x.kind === k);
