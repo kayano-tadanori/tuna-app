@@ -11,18 +11,20 @@ const QUESTION_COUNTS = {
             // 和語＝浜学園 小5最レ国語の演習プリントII（原簿 HG-2546/2550/2557）。data/kokugo_wago.json
             // 78語 × 2通り（意味→語／語→意味）＝156問。★grade は全部5（実物が小5の教材）
             kokugo_wago: 156,
+            // 小5最レ国語の記号で答える大問（原簿 HG-2552/2556）。data/kokugo_sairei5.json
+            kokugo_sairei5: 14,
             // じゅくナビ国語＝小3本科教材の大問4（原簿 HG-2501〜2543）。data/hama_kokugo.json。
             // ★kanji_kaki に相乗りさせない。480問の分母に混ぜると、本物の書き取りを1問も
             //   解かないまま達成率が9割近くまで上がってしまう。
             // ⚠ scripts/sync_question_counts.js の MAP には足さないこと（入れ子JSONで落ちる）
             // ⚠2026-08-08：418 は小3ぶんだけの数で、小4の404問が分母に入っていなかった
             //   （＝小4をやっても達成率が上がらない）。実データに合わせて直した。
-            //   内わけ＝小3 418 ＋ 小4 404 ＋ 小5最レ国語 185。入れ子JSONなので sync では数えられず手で直す
-            hama_kokugo: 1007,
+            //   内わけ＝小3 418 ＋ 小4 404 ＋ 小5最レ国語 195。入れ子JSONなので sync では数えられず手で直す
+            hama_kokugo: 1017,
             // こころの探偵・要約記者。★以前はここに登録が無く、IDの先頭2文字が偶然
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
-            tantei: 123, youyaku: 128 },                                                     // 6,127
+            tantei: 123, youyaku: 128 },                                                     // 6,151
   sansu:  { bakuhatsu: 160, keisan: 1284, bun: 779, zu: 1040, kisoku: 988, tokusan: 557, baai: 556, kazu: 597,
             wariai: 418, hayasa: 170, rittai: 375 },                                         // 6,764（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
@@ -41,6 +43,7 @@ const ID_PREFIX_MAP = {
   hk: ['kokugo:hama_kokugo'],   // じゅくナビ国語（hk3_04_01 …）。hd＝大問／ho＝光と音 とは別
   kb: ['kokugo:kokugo_bun'],    // 文のしくみ（kb001 …）
   wg: ['kokugo:kokugo_wago'],   // 和語（wg001 …）
+  ks: ['kokugo:kokugo_sairei5'],// 最レ国語の文法（ks5_08_01 …）
   // ★こころの探偵(kt1_01_1…)・要約記者(ky1_01_1…)は、素の先頭文字だけで見ると
   //   rika:kitai（kt001…）・kanji_yomi（ky001…）と同じ "kt"/"ky" になってしまう。
   //   「英字＋数字のすぐ後に _ が続く」ものだけ別ものと見なす（extractIdPrefix）ので、

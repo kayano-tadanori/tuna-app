@@ -17,6 +17,9 @@ const CATEGORIES = {
   // あ〜わを一周する78語を、意味→語／語→意味の2通りで出す。実物は□の穴うめ（記述）なので、
   // そちらは じゅくナビ側（手書き＋自己採点）で再現する
   kokugo_wago:    { label: '和語',           file: 'data/kokugo_wago.json' },
+  // 小5最レ国語の「記号で答える大問」（原簿 HG-2552/2556）。じゅくナビが unit で引くだけで、
+  // カテゴリの画面には出さない（index.html にボタンを作らない）
+  kokugo_sairei5:  { label: '最レ国語（文法）', file: 'data/kokugo_sairei5.json' },
   // 文のしくみ＝浜学園 小3国語 本科教材（原簿 HG-2515/2521/2523/2525）。小3の内容だけなので小3限定
   kokugo_bun:     { label: '文のしくみ',     file: 'data/kokugo_bun.json' },
   tantei:         { label: 'こころの探偵',   file: 'data/kokugo_tantei.json' },
@@ -1804,4 +1807,4 @@ async function forceAppUpdate() {
     location.reload();
   }
 }
-
+

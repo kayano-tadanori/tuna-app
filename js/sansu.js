@@ -536,11 +536,18 @@ async function hamaKokugoUnitsOf(grade, course, no) {
 }
 // 「文のしくみ」からその単元の問題を集める。
 // まぜないで、やさしい順に並べる（実物もA→B→C→Dで答え方が重くなっていく）
+// ★じゅくナビの「ことば」は2つのバケツから引く（2026-08-08）。
+//   kokugo_bun     … 小3・小4本科ぶん（文のしくみ／小4国語のことば）
+//   kokugo_sairei5  … 小5最レぶん（文の成分・品詞。原簿 HG-2552/2556）
+const KOKUGO_UNIT_CATS = ['kokugo_bun', 'kokugo_sairei5'];
 async function kokugoBunFor(units) {
   if (!units || !units.length) return [];
-  const all = await loadQuestions('kokugo_bun');
-  return all.filter(q => units.includes(q.unit))
-    .sort((a, b) => (a.difficulty - b.difficulty) || String(a.id).localeCompare(String(b.id)));
+  const out = [];
+  for (const cat of KOKUGO_UNIT_CATS) {
+    const all = await loadQuestions(cat).catch(() => []);
+    out.push(...all.filter(q => units.includes(q.unit)));
+  }
+  return out.sort((a, b) => (a.difficulty - b.difficulty) || String(a.id).localeCompare(String(b.id)));
 }
 
 const HAMA_KAISETSU_FILE = 'data/hama_kaisetsu.json';
@@ -2819,4 +2826,4 @@ function endDrill() {
   document.getElementById('drill-btn-again').onclick = () => startDrill();
   document.getElementById('drill-btn-home').onclick = () => { initSansuHome(); showScreen('sansu-home'); };
 }
-
+
