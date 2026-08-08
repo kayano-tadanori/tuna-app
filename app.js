@@ -171,8 +171,11 @@ function checkAnswer(input, question) {
 
 function buildChoices(question, allQuestions) {
   const correctAns = question.answer;
-  // JSONに選択肢があればそれを使い、ランダムにシャッフル
-  if (question.choices && question.choices.length >= 4) {
+  // JSONに選択肢があればそれを使い、ランダムにシャッフル。
+  // ★2個以上で採用する（以前は4個以上だった）。実物には二択・三択の大問があり
+  //   （常体文/敬体文の2択・単文/重文/複文の3択）、4個未満だと選択肢が捨てられて
+  //   他の問題の答えが誤答として混ざってしまっていた（2026-08-08）
+  if (question.choices && question.choices.length >= 2) {
     return shuffle([...question.choices]);
   }
   // なければ他問題の答えからランダムに3つ取る

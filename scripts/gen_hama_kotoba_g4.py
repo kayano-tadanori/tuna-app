@@ -24,6 +24,9 @@ from genbo_path import find_genbo          # noqa: E402
 
 BUN = os.path.join(ROOT, "data", "kokugo_bun.json")
 KOKUGO = os.path.join(ROOT, "data", "hama_kokugo.json")
+# ★解説は原簿に無いので、ここに書いて id で結ぶ（scripts/meanings_kokugo_*.json と同じやり方）。
+#   「なぜそうなるか」を書くのがこのアプリの本体（→ [[project_oton_gakuen]]「評価軸はわかりやすいか」）
+MEANINGS = os.path.join(HERE, "meanings_hama_kotoba_g4.json")
 
 # ── どの大問を拾うか ─────────────────────────────────────────────
 # kind:
@@ -69,6 +72,28 @@ SPECS = [
     # 【B群】から選ぶ形式。実物が記号で答えさせているのでそのまま選択肢にできる
     ("2473", 5, "文学史（外国の作家）", "pool",
      None, "「%s」の作品はどれ？"),
+]
+
+# ⏭ 次に足す大問。パーサはもう通ることを確かめてある（2026-08-08）。
+#   ★ただし解説（meanings_hama_kotoba_g4.json）を書いてから SPECS に移すこと。
+#   解説の無い問題を出すのは、このアプリの本体（＝わかりやすく教えること）を欠いた状態なので出さない。
+#   完全マッチング（n対n）は語群ぜんぶを選択肢にして、実物の選択の広さを保つ
+#   （4択に削ると原簿の言う「実物より1段浅い」になる）。
+SPECS_NEXT = [
+    ("2438", 6, "熟語の組み立て", "pick",
+     None, "── 線の漢字が同じ意味で使われているのはどれ？"),
+    ("2451", 3, "形声文字", "pool",
+     None, "形声文字「%s」の読み方はどれ？"),
+    ("2438", 3, "ことばの意味", "pool",
+     None, "%s ─ （　）に入る言葉はどれ？"),
+    ("2439", 4, "慣用句", "pool",
+     None, "慣用句「%s」に続くのはどれ？"),
+    ("2440", 2, "慣用句", "pool",
+     None, "「%s」の意味はどれ？"),
+    ("2440", 3, "ことわざ", "pool",
+     None, "「%s」の意味はどれ？"),
+    ("2471", 5, "俳句", "pool",
+     None, "%s ─ （　）に入ることばはどれ？"),
 ]
 # ★出さないと決めた大問（理由を残す）
 #   HG-2462 大問4（敬語の正誤A/B・6問）… 原簿に「(1)(2)(3)は判定が割れうる。模範解答が無いので
@@ -259,7 +284,14 @@ def main():
     for r in re.split(r"(?=^### 【HG-24)", sec, flags=re.M)[1:]:
         recs[re.match(r"### 【HG-(\d+)】", r).group(1)] = r
 
-    out, units_of, problems = [], collections.defaultdict(set), []
+    MEAN = {}
+    if os.path.exists(MEANINGS):
+        for r in json.load(io.open(MEANINGS, encoding="utf-8")):
+            if r["id"] in MEAN:
+                print("  ! 解説のidが重複している: %s" % r["id"])
+            MEAN[r["id"]] = r["meaning"]
+
+    out, units_of, problems, missing = [], collections.defaultdict(set), [], []
     for hg, daimon, unit, kind, labels, tmpl in SPECS:
         rec = recs.get(hg)
         if rec is None:
@@ -305,15 +337,15 @@ def main():
                     choices = list(pool)
             if not q or not a:
                 continue
-            note = tail_note(body)
-            if note and (note in a or note in q):
-                note = ""      # 答えの一部の（ ）を理由と取りちがえない（例「ピノッキオ（の冒険）」）
-            mean = "答えは「%s」。" % a
-            if note:
-                mean += "%s\n" % note          # 原簿が書いた理由をそのまま解説にする
-            mean += "〔浜学園 小4国語 No.%d 大問%d・原簿 HG-%s〕" % (no, daimon, hg)
+            qid = "hb4_%02d_%d_%02d" % (no, daimon, n)
+            mean = MEAN.get(qid, "")
+            if not mean:
+                # 解説をまだ書いていない問題。検査で拾えるように印を残す
+                missing.append((qid, q, a))
+                mean = "答えは「%s」。" % a
+            mean += "\n〔浜学園 小4国語 No.%d 大問%d・原簿 HG-%s〕" % (no, daimon, hg)
             out.append({
-                "id": "hb4_%02d_%d_%02d" % (no, daimon, n),
+                "id": qid,
                 "question": q,
                 "answer": a,
                 "choices": choices,
@@ -349,15 +381,42 @@ def main():
             bad.append("選択肢が重複: " + q["id"] + " " + "/".join(q["choices"]))
         if len(q["choices"]) < 2:
             bad.append("選択肢が少なすぎる: " + q["id"])
-    print("\n【検査】選択肢の整合")
+    print("\n【検査1】選択肢の整合")
     if bad:
         for b in bad:
             print("  ✗ " + b)
     else:
         print("  ✓ 0件")
 
+    # ★解説の検査。merge_meanings_kokugo.js と同じ考え方＝
+    #   「答えが解説文に出てくるか」「結びが答えと食いちがっていないか」を機械で見る
+    #   （→ [[oton_kokugo_audit]]「結びが答えと食い違っていた353本」）
+    bad2 = []
+    missing_ids = {m[0] for m in missing}
+    for q in out:
+        body = q["meaning"].split("\n")[0]
+        if q["id"] in missing_ids:
+            continue
+        if q["answer"] not in body:
+            bad2.append("答えが解説文に出てこない: %s（答え=%s）" % (q["id"], q["answer"]))
+        elif not body.endswith("よって、答えは%sです。" % q["answer"]):
+            bad2.append("結びが答えと合わない: %s ： …%s" % (q["id"], body[-26:]))
+    unused = sorted(set(MEAN) - {q["id"] for q in out})
+
+    print("\n【検査2】解説（%d問中 %d問に解説あり）" % (len(out), len(out) - len(missing)))
+    if missing:
+        for qid, qq, aa in missing[:20]:
+            print("  ✗ 解説がまだ無い: %s ｜ %s → %s" % (qid, qq[:30], aa))
+    if bad2:
+        for b in bad2:
+            print("  ✗ " + b)
+    if unused:
+        print("  ! どの問題にも結びつかない解説: " + ", ".join(unused[:10]))
+    if not missing and not bad2 and not unused:
+        print("  ✓ 0件（全問に解説あり・結びも答えと一致）")
+
     if "--write" in sys.argv:
-        if bad:
+        if bad or bad2 or missing or unused:
             print("\n✗ 検査に引っかかっているので書きこまない")
             sys.exit(1)
         cur = json.load(io.open(BUN, encoding="utf-8"))
