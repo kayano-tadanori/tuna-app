@@ -6567,6 +6567,309 @@
       }
      ]
     }
+   },
+   "nadago": {
+    "fukushu": {
+     "2": [
+      {
+       "id": "hd3n_02_1",
+       "src": "HG-1901",
+       "star": 2,
+       "title": "星形の魔方陣（1〜12）",
+       "category": "kazu",
+       "unit": "数の性質",
+       "intro": "下の図は、1から12までの整数をそれぞれ一回だけ使って、六角形の星形にならべ、一直線にならんだ4つの数の和がすべて等しくなるようにしたものです。㋐㋑㋒㋓には、まだ数が入っていません。",
+       "svg": "<svg viewBox=\"0 0 248 258\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"124.0,26.0 207.1,170.0 40.9,170.0\" fill=\"none\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<polygon points=\"124.0,218.0 40.9,74.0 207.1,74.0\" fill=\"none\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<circle cx=\"124.0\" cy=\"26.0\" r=\"13\" fill=\"#fff\" stroke=\"#1a2340\" stroke-width=\"1.8\"/>\n<text x=\"124.0\" y=\"31.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">6</text>\n<circle cx=\"124.0\" cy=\"218.0\" r=\"13\" fill=\"#fff\" stroke=\"#1a2340\" stroke-width=\"1.8\"/>\n<text x=\"124.0\" y=\"223.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">10</text>\n<circle cx=\"40.9\" cy=\"74.0\" r=\"13\" fill=\"#fff\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<text x=\"40.9\" y=\"79.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">㋐</text>\n<circle cx=\"207.1\" cy=\"74.0\" r=\"13\" fill=\"#fff\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<text x=\"207.1\" y=\"79.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">㋑</text>\n<circle cx=\"40.9\" cy=\"170.0\" r=\"13\" fill=\"#fff\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<text x=\"40.9\" y=\"175.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">㋒</text>\n<circle cx=\"207.1\" cy=\"170.0\" r=\"13\" fill=\"#fff\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<text x=\"207.1\" y=\"175.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">㋓</text>\n<circle cx=\"96.3\" cy=\"74.0\" r=\"13\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"96.3\" y=\"79.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">2</text>\n<circle cx=\"151.7\" cy=\"74.0\" r=\"13\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"151.7\" y=\"79.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">8</text>\n<circle cx=\"179.4\" cy=\"122.0\" r=\"13\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"179.4\" y=\"127.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">3</text>\n<circle cx=\"151.7\" cy=\"170.0\" r=\"13\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"151.7\" y=\"175.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">1</text>\n<circle cx=\"96.3\" cy=\"170.0\" r=\"13\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"96.3\" y=\"175.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">5</text>\n<circle cx=\"68.6\" cy=\"122.0\" r=\"13\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"68.6\" y=\"127.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">7</text>\n<text x=\"124\" y=\"248\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">一直線にならんだ4つの数の和が、6本とも同じ</text>\n</svg>",
+       "steps": [
+        {
+         "question": "一直線にならんだ4つの数の和はいくつですか。",
+         "answer": "26",
+         "meaning": "まだ使っていない数は 4・9・11・12 で、合計36です。㋒は（和−15）、㋓は（和−17）、㋐は（和−22）、㋑は（和−14）と書けるので、4つ足すと（和×4−68）＝36。よって和は26です。"
+        },
+        {
+         "question": "㋐（左上）にあてはまる数はいくつですか。",
+         "answer": "4",
+         "meaning": "㋐は 7・5・10 とならぶ直線にあるので、26−7−5−10＝4です。"
+        },
+        {
+         "question": "㋑（右上）にあてはまる数はいくつですか。",
+         "answer": "12",
+         "meaning": "㋑は 3・1・10 とならぶ直線にあるので、26−3−1−10＝12です。"
+        },
+        {
+         "question": "㋒（左下）にあてはまる数はいくつですか。",
+         "answer": "11",
+         "meaning": "㋒は 6・2・7 とならぶ直線にあるので、26−6−2−7＝11です。"
+        },
+        {
+         "question": "㋓（右下）にあてはまる数はいくつですか。",
+         "answer": "9",
+         "meaning": "㋓は 6・8・3 とならぶ直線にあるので、26−6−8−3＝9です。残りの直線も 4+2+8+12＝26、11+5+1+9＝26 で合っています。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_2",
+       "src": "HG-1902",
+       "star": 2,
+       "title": "さいころ3こ・うらの積",
+       "category": "kazu",
+       "unit": "数の性質",
+       "intro": "さいころは向かい合った面の数の和が7になるようにつくってあります。3このさいころを投げたら、出た目の数の積（かけ算のこたえ）が36になりました。このとき、うらの面の目の数の積は3しゅるいあります。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "3しゅるいのうち、いちばん小さいものはいくつですか。",
+         "answer": "6",
+         "meaning": "目が 1・6・6 のとき。うらは 6・1・1 なので 6×1×1＝6です。"
+        },
+        {
+         "question": "3しゅるいのうち、2番目に大きいものはいくつですか。",
+         "answer": "20",
+         "meaning": "目が 2・3・6 のとき。うらは 5・4・1 なので 5×4×1＝20です。"
+        },
+        {
+         "question": "3しゅるいのうち、いちばん大きいものはいくつですか。",
+         "answer": "48",
+         "meaning": "目が 3・3・4 のとき。うらは 4・4・3 なので 4×4×3＝48です。36＝6×6×1、6×3×2、4×3×3 の3通りしかないので、答えは3しゅるいです。うらの積は「7×7×7−36」のようには計算できません。向かい合う面は和が7であって、積には分けられないからです。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_3",
+       "src": "HG-1903",
+       "star": 2,
+       "title": "まん中の木に赤と青の両方がつく",
+       "category": "tokusan",
+       "unit": "植木算",
+       "intro": "下の図のように、AからBまで何本かの木が1列にならんでいます。これらの木に、Aからは2本おきに赤ひもをつけ、Bからは3本おきに青ひもをつけたところ、ちょうどまん中の木には赤と青のひもがつきました。ただし、木の数は40本以下です。",
+       "svg": "<svg viewBox=\"0 0 300 146\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"14\" y1=\"96\" x2=\"286\" y2=\"96\" stroke=\"#6c7086\" stroke-width=\"2\"/>\n<line x1=\"40\" y1=\"96\" x2=\"40\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"40\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"68\" y1=\"96\" x2=\"68\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"68\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"96\" y1=\"96\" x2=\"96\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"96\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"124\" y1=\"96\" x2=\"124\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"124\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"176\" y1=\"96\" x2=\"176\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"176\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"204\" y1=\"96\" x2=\"204\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"204\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"232\" y1=\"96\" x2=\"232\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"232\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<line x1=\"260\" y1=\"96\" x2=\"260\" y2=\"74\" stroke=\"#28c88a\" stroke-width=\"2\"/>\n<circle cx=\"260\" cy=\"66\" r=\"9\" fill=\"#eafaf3\" stroke=\"#28c88a\" stroke-width=\"1.6\"/>\n<text x=\"150\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">……</text>\n<text x=\"26\" y=\"112\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">A</text>\n<text x=\"276\" y=\"112\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">B</text>\n<text x=\"76\" y=\"34\" font-size=\"11\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#ff6b6b\">Aから 2本おきに 赤ひも →</text>\n<text x=\"224\" y=\"132\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#4f7cff\">← Bから 3本おきに 青ひも</text>\n</svg>",
+       "steps": [
+        {
+         "question": "「2本おき」につけるとき、赤ひもは何本ごとにつきますか。",
+         "answer": "3",
+         "meaning": "2本とばすので、1本目・4本目・7本目…＝3本ごとです。「2本おき」を「2本ごと」と読むのが、この問題の第一の関門です。"
+        },
+        {
+         "question": "「3本おき」につけるとき、青ひもは何本ごとにつきますか。",
+         "answer": "4",
+         "meaning": "3本とばすので4本ごとです。Bから数えて 1本目・5本目・9本目…になります。"
+        },
+        {
+         "question": "木は全部で何本ありますか。",
+         "answer": "25",
+         "meaning": "木の数を□とすると、まん中は（□＋1）÷2 本目。Aの条件から（□−1）÷2 が3の倍数、Bの条件から（□−1）÷2 が4の倍数。よって（□−1）÷2 は12の倍数で、□＝25、49、73…。40本以下なので25本です。たしかめると まん中は13本目。Aから 1・4・7・10・13 ✓、Bから 25・21・17・13 ✓。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_4",
+       "src": "HG-1904",
+       "star": 2,
+       "title": "ア〜キ・1から9までの相異なる整数",
+       "category": "baai",
+       "unit": "推理・論理",
+       "intro": "ア, イ, ウ, エ, オ, カ, キ は、1から9までの整数のうちのいずれかです。同じ数はありません。それらの数には次の関係があります。\n〔1〕オ＋キ＝イ　〔2〕ウ＋カ＝ア　〔3〕エ×エ＝ア　〔4〕オ×カ＝イ",
+       "svg": "",
+       "steps": [
+        {
+         "question": "エにあてはまる数はいくつですか。",
+         "answer": "3",
+         "meaning": "〔3〕エ×エ＝ア で、1から9でかけて1けたになるのは 1×1・2×2＝4・3×3＝9 だけ。エ＝1 だとアも1になって同じ数になるので、エは2か3。エ＝2（ア＝4）だと先に進めなくなるので、エ＝3 です。"
+        },
+        {
+         "question": "アにあてはまる数はいくつですか。",
+         "answer": "9",
+         "meaning": "エ＝3 なので、〔3〕より ア＝3×3＝9 です。"
+        },
+        {
+         "question": "カにあてはまる数はいくつですか。",
+         "answer": "4",
+         "meaning": "〔4〕オ×カ＝イ と〔1〕オ＋キ＝イ を合わせると オ×カ＝オ＋キ。〔2〕ウ＋カ＝9 も使うと、カ＝4・オ＝2 のときだけ全部が別の数になります。"
+        },
+        {
+         "question": "オにあてはまる数はいくつですか。",
+         "answer": "2",
+         "meaning": "カ＝4 のとき オ×4＝オ＋キ。オ＝2 なら イ＝8、キ＝6 で成り立ちます。"
+        },
+        {
+         "question": "ウにあてはまる数はいくつですか。",
+         "answer": "5",
+         "meaning": "〔2〕ウ＋カ＝ア より ウ＝9−4＝5 です。答えは ア9・イ8・ウ5・エ3・オ2・カ4・キ6 で、7つとも別の数になっています。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_5",
+       "src": "HG-1905",
+       "star": 3,
+       "title": "積の魔方陣（3つの積がどれも1000）",
+       "category": "kazu",
+       "unit": "数の性質",
+       "intro": "右の正方形のアからクまでのところに、100以外のべつべつの8この整数を入れて、たて、横、ななめの3この整数をかけると、いずれも1000になるようにします。ただし、アはイより小さい数とします。",
+       "svg": "<svg viewBox=\"0 0 246 228\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"30\" y=\"20\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"61\" y=\"55\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ア</text>\n<rect x=\"92\" y=\"20\" width=\"62\" height=\"56\" fill=\"#fff7f0\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"123\" y=\"55\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">100</text>\n<rect x=\"154\" y=\"20\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"185\" y=\"55\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">イ</text>\n<rect x=\"30\" y=\"76\" width=\"62\" height=\"56\" fill=\"#eafaf3\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"61\" y=\"111\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#28c88a\" font-weight=\"bold\">ウ</text>\n<rect x=\"92\" y=\"76\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"123\" y=\"111\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">エ</text>\n<rect x=\"154\" y=\"76\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"185\" y=\"111\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">オ</text>\n<rect x=\"30\" y=\"132\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"61\" y=\"167\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">カ</text>\n<rect x=\"92\" y=\"132\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"123\" y=\"167\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">キ</text>\n<rect x=\"154\" y=\"132\" width=\"62\" height=\"56\" fill=\"#f8f9ff\" stroke=\"#6c7086\" stroke-width=\"1.6\"/>\n<text x=\"185\" y=\"167\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ク</text>\n<text x=\"123\" y=\"214\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たて・横・ななめの 3この 積が どれも 1000</text>\n</svg>",
+       "steps": [
+        {
+         "question": "エ（まん中）にあてはまる数はいくつですか。",
+         "answer": "10",
+         "meaning": "エはたて・横・ななめの3本が通るまん中です。その3本の積をかけ合わせると エ×エ×エ＝1000 になるので、エ＝10 です。100は上の段のまん中であって、まん中のマスではありません。ここが図の読みどころです。"
+        },
+        {
+         "question": "アにあてはまる数はいくつですか。",
+         "answer": "2",
+         "meaning": "上の段は ア×100×イ＝1000 なので ア×イ＝10。（1, 10）か（2, 5）ですが、1と10はキとエで使うので ア＝2、イ＝5。「アはイより小さい」という条件で、2と5の入れかえも決まります。"
+        },
+        {
+         "question": "キにあてはまる数はいくつですか。",
+         "answer": "1",
+         "meaning": "まん中のたての列は 100×10×キ＝1000 なので キ＝1 です。"
+        },
+        {
+         "question": "カにあてはまる数はいくつですか。",
+         "answer": "20",
+         "meaning": "ななめの イ×エ×カ＝5×10×カ＝1000 なので カ＝20 です。"
+        },
+        {
+         "question": "ウにあてはまる数はいくつですか。",
+         "answer": "25",
+         "meaning": "左のたての列は ア×ウ×カ＝2×ウ×20＝1000 なので ウ＝25 です。全部そろえると ア2・イ5・ウ25・エ10・オ4・カ20・キ1・ク50 で、8本とも積が1000になります。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_6",
+       "src": "HG-1906",
+       "star": 2,
+       "title": "さかさまにしてたす（回文数）",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "intro": "39に、十の位と一の位を入れかえた数93をたすと 39＋93＝132 です。この和132に数字をさかさまにならべた231をたすと363となって、前から読んでも後ろから読んでも同じならび方の数になります。78という数は、右のように4回のたし算でこのような数になります。",
+       "svg": "<svg viewBox=\"0 0 268 228\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"150\" y=\"26\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">78 ＋ 87 ＝ 165</text>\n<text x=\"8\" y=\"26\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#6c7086\">1回目</text>\n<text x=\"150\" y=\"72\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">165 ＋ 561 ＝ 726</text>\n<text x=\"8\" y=\"72\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#6c7086\">2回目</text>\n<text x=\"150\" y=\"118\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">726 ＋ 627 ＝ 1353</text>\n<text x=\"8\" y=\"118\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#6c7086\">3回目</text>\n<text x=\"150\" y=\"164\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#28c88a\" font-weight=\"bold\">1353 ＋ 3531 ＝ 4884</text>\n<text x=\"8\" y=\"164\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#6c7086\">4回目</text>\n<text x=\"134\" y=\"214\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#28c88a\">4884 は 前から読んでも 後ろから読んでも 同じ</text>\n</svg>",
+       "steps": [
+        {
+         "question": "547に745をたすといくつですか。",
+         "answer": "1292",
+         "meaning": "547＋745＝1292。まだ前から読んでも後ろから読んでも同じにはなりません。"
+        },
+        {
+         "question": "547は何回のたし算でこのような数になりますか。",
+         "answer": "3",
+         "meaning": "547+745＝1292 → 1292+2921＝4213 → 4213+3124＝7337。3回です。けたが増えたら、増えたまま さかさまにするのがきまりです。"
+        },
+        {
+         "question": "846は何回のたし算でこのような数になりますか。",
+         "answer": "5",
+         "meaning": "846+648＝1494 → 1494+4941＝6435 → 6435+5346＝11781 → 11781+18711＝30492 → 30492+29403＝59895。5回です。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_7",
+       "src": "HG-1907",
+       "star": 1,
+       "title": "めがねと虫歯・いずれかだけ",
+       "category": "baai",
+       "unit": "なかま調べ（集合・ベン図）",
+       "intro": "ある小学校の3年生123人について、めがねをかけている人と虫歯のある人を調べました。めがねをかけている人が56人、虫歯のある人が64人いました。また、めがねをかけているか、虫歯があるかいずれかだけの人が90人いました。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "めがねをかけていて、虫歯もある人は何人ですか。",
+         "answer": "15",
+         "meaning": "両方の人を□とすると、めがねだけは 56−□、虫歯だけは 64−□。「いずれかだけ」はこの2つの合計なので 120−□×2＝90 となり、□＝15人です。"
+        },
+        {
+         "question": "めがねをかけているか、虫歯があるかの少なくとも一方にあてはまる人は何人ですか。",
+         "answer": "105",
+         "meaning": "56＋64では両方の人を2回数えているので、1回分を引いて 56+64−15＝105人です。「いずれかだけ」の90人と、この105人はちがう数です。ここが読みどころです。"
+        },
+        {
+         "question": "めがねもかけず、虫歯もない人は何人ですか。",
+         "answer": "18",
+         "meaning": "123−105＝18人です。内わけは めがねだけ41人・虫歯だけ49人・両方15人・どちらもなし18人で、合計123人になります。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_8",
+       "src": "HG-1908",
+       "star": 3,
+       "title": "4つの数の2つずつの和",
+       "category": "kazu",
+       "unit": "数の性質",
+       "intro": "4つの整数ア, イ, ウ, エのうち、1つは偶数で、他の3つは奇数です。これらの中から2つずつの和をつくったら、22, 31, 43, 54, 66, 75 となりました。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "3つの奇数の和はいくつですか。",
+         "answer": "71",
+         "meaning": "奇数どうしの和は偶数、奇数と偶数の和は奇数です。だから偶数の和 22・54・66 の3つが「奇数どうしの和」。この3つを足すと、3つの奇数がそれぞれ2回ずつ数えられるので 142÷2＝71 が3つの奇数の和です。"
+        },
+        {
+         "question": "4つの整数の和はいくつですか。",
+         "answer": "97",
+         "meaning": "6つの和を全部足すと 291。どの数も3回ずつ出てくるので 291÷3＝97 です。4で割ってしまうまちがいに気をつけます。"
+        },
+        {
+         "question": "偶数はいくつですか。",
+         "answer": "26",
+         "meaning": "97−71＝26 です。"
+        },
+        {
+         "question": "もっとも大きい数と、もっとも小さい数との差はいくつですか。",
+         "answer": "44",
+         "meaning": "奇数と偶数の和 31・43・75 から26を引くと、3つの奇数は 5・17・49。4つの数は 5・17・26・49 で、49−5＝44 です。たしかめ 5+17=22、5+26=31、5+49=54、17+26=43、17+49=66、26+49=75 ✓"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_02_9",
+       "src": "HG-1909",
+       "star": 3,
+       "title": "71×□ − 25×□ の階段",
+       "category": "kazu",
+       "unit": "数の性質",
+       "intro": "次のそれぞれの□に、あてはまる整数を書きなさい。ただし、□には1以上71以下の整数を入れなさい。\n(1) 71×25 − 25×□ ＝ 0　(2) 71×□ − 25×17 ＝ 1\n(3) 71×□ − 25×□ ＝ 3　(4) 71×□ − 25×□ ＝ 4　(5) 71×□ − 25×□ ＝ 5",
+       "svg": "",
+       "steps": [
+        {
+         "question": "(1) の□にあてはまる数はいくつですか。",
+         "answer": "71",
+         "meaning": "71×25＝25×71 なので□は71です。これが「差を0にする手」になります。"
+        },
+        {
+         "question": "(2) の□にあてはまる数はいくつですか。",
+         "answer": "6",
+         "meaning": "71×6＝426、25×17＝425 で差は1。これが「差を1にする手」です。"
+        },
+        {
+         "question": "(3) の左の□（71にかける数）はいくつですか。",
+         "answer": "18",
+         "meaning": "(2)の手を3倍します。6×3＝18、17×3＝51。71×18＝1278、25×51＝1275 で差は3です。右の□は51。"
+        },
+        {
+         "question": "(4) の左の□（71にかける数）はいくつですか。",
+         "answer": "24",
+         "meaning": "(2)の手を4倍します。6×4＝24、17×4＝68。71×24＝1704、25×68＝1700 で差は4です。右の□は68。"
+        },
+        {
+         "question": "(5) の左の□（71にかける数）はいくつですか。",
+         "answer": "5",
+         "meaning": "5倍すると 6×5＝30、17×5＝85 ですが、85は71をこえてしまいます。そこで(1)の「差を0にする手」を1回引きます。30−25＝5、85−71＝14。71×5＝355、25×14＝350 で差は5。右の□は14です。この問題は(1)で道具Aを、(2)で道具Bをもらい、(3)(4)はBだけ、(5)でAとBを両方使う、という並びになっています。"
+        }
+       ],
+       "grade": 3
+      }
+     ]
+    }
    }
   },
   "4": {
