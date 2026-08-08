@@ -175,6 +175,52 @@ for (const f of jsFiles) {
 if (!warn) console.log('  ✓ 学年の決め打ちなし');
 
 // ────────────────────────────────────────────────────────────
+// ⑦ じゅくナビ国語のボタン名が、その回の中身とうそをついていないか。
+//    最レ国語は回ごとに書くものがちがう（漢字／ひらがな／カタカナ）のに、名前が
+//    「今週の漢字」で固定になっていて、ひらがなの回まで漢字と名のっていた（2026-08-08）。
+//    ★名前をつける関数は js/sansu.js の本物を取り出して動かす。ここに写すとズレる
+sec('⑦ じゅくナビ国語：ボタン名と中身が合っているか');
+{
+  const ng0 = ng;                       // 前の検査の件数に引きずられないよう、この節ぶんだけ数える
+  const sansu = R('js/sansu.js');
+  const grab = (re, what) => {
+    const m = sansu.match(re);
+    if (!m) { fail(`js/sansu.js から ${what} が取り出せない（名前が変わった？ ここも直す）`); return null; }
+    return m[0];
+  };
+  const fn = grab(/function hamaKakiKind\(q\) \{[\s\S]*?\n\}/, 'hamaKakiKind');
+  const tbl = grab(/const HAMA_KAKI_LABEL = \{[\s\S]*?\n\};/, 'HAMA_KAKI_LABEL');
+  if (fn && tbl) {
+    const m = { exports: {} };
+    new Function('module', `${fn}\n${tbl}\nmodule.exports={hamaKakiKind,HAMA_KAKI_LABEL};`)(m);
+    const { hamaKakiKind, HAMA_KAKI_LABEL } = m.exports;
+    // 四択ボタンの名前と丸かぶりしていないか（手書きか四択か見分けがつかなくなる）
+    const kotoba = (html.match(/<span class="hama-act-name">📖 ([^<]+)<\/span>/) || [])[1];
+    Object.values(HAMA_KAKI_LABEL).forEach(v => {
+      if (kotoba && v.replace(/^\S+\s*/, '') === kotoba) fail(`書き取りボタン「${v}」が四択ボタン「📖 ${kotoba}」と同じ名前`);
+    });
+    let n = 0;
+    for (const g of Object.keys(kok.grades || {})) {
+      for (const c of Object.keys(kok.grades[g])) {
+        const L = (kok.grades[g][c] || {}).lessons || {};
+        for (const no of Object.keys(L)) {
+          const qs = L[no].kanji || [];
+          if (!qs.length) continue;
+          n++;
+          const kinds = [...new Set(qs.map(hamaKakiKind))];
+          const label = kinds.length === 1 ? HAMA_KAKI_LABEL[kinds[0]] : '✍️ 今週の書き取り';
+          if (!label) { fail(`学年${g} ${c} No.${no}：種別「${kinds[0]}」に名前が無い`); continue; }
+          // 「漢字」と名のる回に、ひらがな・カタカナを書く問題が混ざっていないか
+          if (label.includes('漢字') && kinds.some(k => k !== '漢字'))
+            fail(`学年${g} ${c} No.${no}：「${label}」なのに中身は ${kinds.join('・')}`);
+        }
+      }
+    }
+    if (ng === ng0) console.log(`  ✓ 書き取りのある ${n} 回とも、ボタン名と中身が一致`);
+  }
+}
+
+// ────────────────────────────────────────────────────────────
 console.log('\n' + '='.repeat(56));
 console.log(ng === 0 ? `✓ 問題なし（警告 ${warn} 件）` : `✗ ${ng} 件の不具合（警告 ${warn} 件）`);
 process.exit(ng ? 1 : 0);

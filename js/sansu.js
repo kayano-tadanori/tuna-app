@@ -528,6 +528,36 @@ async function hamaKokugoCollect(grade, course, lessons) {
   }
   return out;
 }
+// その回のマス目に「何を書くのか」を、問題そのものから決める。
+// ★本科（小3・小4）は全部が漢字なので「今週の漢字」で合っていたが、最レ国語は回ごとに
+//   中身がちがう（慣用表現・和語＝ひらがな／外来語＝カタカナ／漢字の問題＝漢字）。
+//   固定にしていたので、ひらがなを書く回まで「今週の漢字」と名のっていた（本人指摘 2026-08-08）。
+//   回ごとにデータへ種別を書き足すのではなく、問題文から見る＝原簿を足しても直す所が増えない。
+function hamaKakiKind(q) {
+  const t = String((q && q.question) || '');
+  if (t.includes('カタカナを書')) return 'カタカナ';
+  if (t.includes('ひらがなを書')) return 'ひらがな';
+  if (t.includes('漢字')) return '漢字';        // 「漢字で書こう」「漢字1字を正しく直そう」
+  return 'ことば';                              // 「この品詞の名前を書こう」など
+}
+// ★「今週のことば」は四択ボタン（📖）の名前なので、こちらでは使わない。
+//   同じ名前が2つ並ぶと、手書きなのか四択なのか見分けがつかなくなる
+const HAMA_KAKI_LABEL = {
+  '漢字': '✍️ 今週の漢字',
+  'ひらがな': '✍️ 今週の書き取り（ひらがな）',
+  'カタカナ': '✍️ 今週の書き取り（カタカナ）',
+  'ことば': '✍️ 今週の書き取り',
+};
+async function hamaKokugoKakiLabel(grade, course, no) {
+  const node = hamaKokugoNode(await loadHamaKokugo(), grade, course);
+  const rec = node && node.lessons && node.lessons[String(no)];
+  const qs = (rec && rec.kanji) || [];
+  if (!qs.length) return HAMA_KAKI_LABEL['漢字'];
+  const kinds = new Set(qs.map(hamaKakiKind));
+  // 1回の中でまざっている回は、どれか一つに寄せると うそになるので ひとまとめの名前にする
+  return kinds.size === 1 ? HAMA_KAKI_LABEL[[...kinds][0]] : '✍️ 今週の書き取り';
+}
+
 // その回で習う「ことば」の単元。原簿に「1回まるごと◯◯の回」と書いてある回にだけ入っている
 async function hamaKokugoUnitsOf(grade, course, no) {
   const node = hamaKokugoNode(await loadHamaKokugo(), grade, course);
@@ -963,8 +993,9 @@ async function renderHamaPanel() {
   // ★灘合（灘中合格特訓）は「復習テスト」という考え方が無い。公開にも復習テストにも出ない別物で、
   //   通常問題プールも持たないので、出すのは大問だけ（本人決定 2026-08-05）
   const isNadago = (courses[course].subject === 'nadago');
+  // 国語はこのあと、回がきまってから中身を見て名前をつけ直す（回ごとに書くものがちがうため）
   document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
-    isKokugo ? '✍️ 今週の漢字' : is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
+    isKokugo ? '✍️ 今週の書き取り' : is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
   document.querySelector('.hama-act-btn[data-hama-act="weekq"] .hama-act-name').textContent =
     isNadago ? '🔥 この回の問題' : is2nd ? '🔥 今週の演習プリント（大問）' : '🧩 今週の復習テスト（大問）';
   document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.toggle('hidden', isNadago);
@@ -984,6 +1015,12 @@ async function renderHamaPanel() {
   }
   label.textContent = isNadago ? `第${no}回` : `No.${no}`;
   title.textContent = hamaLessonTitle(grade, course, no) || '—';
+
+  // ★回がきまったので、マス目に何を書く回なのかで名前をつけ直す（本人指摘 2026-08-08）
+  if (isKokugo) {
+    document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
+      await hamaKokugoKakiLabel(grade, course, no);
+  }
 
   // ★国語だけ：その回で習う「ことば」（文のしくみ）。単元が分かっている回にだけ出す
   if (kotobaBtn) {
@@ -1252,7 +1289,7 @@ async function startKokugoHamaSession(grade, course) {
   try {
     const no = hamaCurrent(grade, course);
     const qs = await hamaCollect(grade, course, no, no);
-    if (!qs.length) { showToast('この回の漢字はまだ用意していません'); hideLoading(); return; }
+    if (!qs.length) { showToast('この回の書き取りはまだ用意していません'); hideLoading(); return; }
     state.grade = grade;
     state.selectedCat = 'hama_kokugo';   // CATEGORIES には入れない（結果画面・記録の振り分けキー）
     state.selectedMode = 'kaki';
