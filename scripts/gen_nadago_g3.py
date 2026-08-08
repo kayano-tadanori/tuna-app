@@ -1198,14 +1198,12 @@ def _daikei_svg():
             L(A, C, RED, 2.2)]
     for p, s, dx, dy in ((A, "A", -14, -4), (D, "D", 12, -4), (B, "B", -14, 14), (C, "C", 14, 14)):
         body.append(_t(p[0] + dx, p[1] + dy, s, INK, 12, bold=True))
-    # 等しい辺のしるし（AD=CD に1本／AC=BC に2本）
-    body.append(_t((A[0] + D[0]) / 2, A[1] - 8, "／", GREEN, 12))
-    body.append(_t((D[0] + C[0]) / 2 + 10, (D[1] + C[1]) / 2, "／", GREEN, 12))
-    body.append(_t((A[0] + C[0]) / 2 - 6, (A[1] + C[1]) / 2 + 4, "＝", ORANGE, 12))
-    body.append(_t((B[0] + C[0]) / 2, B[1] + 16, "＝", ORANGE, 12))
+    # ★等しい辺のしるし（／や＝）は入れない。文字として置くと辺の上に乗らず、
+    #   図と関係のない線が浮いているように見えた（本人指摘 2026-08-09）。
+    #   等しいことは問題文と下の一行で言えばよい
     body.append(_angle(C, A, D, "28°", RED, 26, 44))          # Cで CA と CD の間
     body.append(_angle(B, C, A, "x", BLUE, 24, 40, 13))       # Bで BC と BA の間
-    body.append(_t(130, 178, "AD∥BC・AD＝CD（／）・AC＝BC（＝）", GRAY, 11))
+    body.append(_t(130, 178, "AD と BC は平行。AD＝CD、AC＝BC", GRAY, 11))
     return _svg(266, 192, "\n".join(body))
 
 
