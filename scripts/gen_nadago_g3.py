@@ -125,7 +125,32 @@ def _kaibun_svg():
     return _svg(268, 228, "\n".join(body))
 
 
-D = [
+# ── HG-1913 5人の線分図（となりとの差が段になっている） ──────────
+def _senbun_svg():
+    # オルパスを①として ①+22, ①+15, ①+9, ①+4, ① の順に短くなる。
+    # 実際の長さ（52,45,39,34,30）に比例させて描く＝図の上で解いても合う
+    rows = [("アトム", 52), ("イチゴ", 45), ("ウサギ", 39), ("エンマ", 34), ("オルパス", 30)]
+    gaps = [7, 6, 5, 4]
+    x0, unit = 74.0, 3.4
+    body = []
+    for i, (name, n) in enumerate(rows):
+        y = 26 + i * 34
+        w = n * unit
+        body.append('<rect x="%.1f" y="%d" width="%.1f" height="20" rx="3" fill="#eaf0ff" '
+                    'stroke="%s" stroke-width="1.6"/>' % (x0, y, w, BLUE))
+        body.append(_t(68, y + 15, name, INK, 11, anchor="end"))
+        if i < len(gaps):
+            nx = x0 + rows[i + 1][1] * unit
+            body.append('<line x1="%.1f" y1="%d" x2="%.1f" y2="%d" stroke="%s" '
+                        'stroke-width="1.2" stroke-dasharray="3 2"/>' % (nx, y, nx, y + 54, ORANGE))
+            body.append(_t("%.1f" % ((nx + x0 + w) / 2), y + 33, "%dこ" % gaps[i], ORANGE, 10))
+    body.append('<path d="M %.1f 22 q 10 0 10 10 v 46 q 0 10 10 10 q -10 0 -10 10 v 46 q 0 10 -10 10" '
+                'fill="none" stroke="%s" stroke-width="1.6"/>' % (x0 + 52 * unit + 8, GRAY))
+    body.append(_t(x0 + 52 * unit + 40, 104, "200こ", INK, 13, bold=True))
+    return _svg(320, 214, "\n".join(body))
+
+
+L2 = [
     {
         "id": "hd3n_02_1", "src": "HG-1901", "star": 2,
         "title": "星形の魔方陣（1〜12）", "category": "kazu", "unit": "数の性質",
@@ -328,7 +353,202 @@ D = [
     },
 ]
 
-LESSON = "2"
+L3 = [
+    {
+        "id": "hd3n_03_1", "src": "HG-1911", "star": 2,
+        "title": "やりとり算・差は2倍ずつ動く", "category": "tokusan", "unit": "倍数算・やりとり",
+        "intro": "いちろうくんは、じろうくんより100まい多くのカードを持っています。"
+                 "カードをやりとりすると、2人のまい数のちがいはどうなるでしょうか。",
+        "svg": "",
+        "steps": [
+            {"question": "いちろうくんがじろうくんに45まいあげたとき、2人のまい数のちがいは何まいですか。",
+             "answer": "10",
+             "meaning": "あげた人は45へり、もらった人は45ふえるので、ちがいは45×2＝90だけちぢみます。"
+                        "100−90＝10まい。まだいちろうくんのほうが多いです。"},
+            {"question": "いちろうくんがじろうくんに63まいあげたとき、2人のまい数のちがいは何まいですか。",
+             "answer": "26",
+             "meaning": "63×2＝126 だけちぢみます。100−126＝−26 なので、ちがいは26まい。"
+                        "ここで多い人が入れかわります。"},
+            {"question": "そのとき、まい数が多いのはどちらですか。",
+             "answer": "じろうくん", "choices": ["じろうくん", "いちろうくん"],
+             "meaning": "126まいぶんちぢめすぎて追いこしたので、じろうくんのほうが26まい多くなります。"
+                        "やりとり算では「どちらが多いか」が途中で入れかわります。"},
+            {"question": "じろうくんがいちろうくんに22まいあげたとき、2人のまい数のちがいは何まいですか。",
+             "answer": "144",
+             "meaning": "こんどは差が広がる向きです。100＋22×2＝144まい。いちろうくんのほうが多いままです。"},
+            {"question": "いちろうくんが何まいあげると、2人のまい数が同じになりますか。", "answer": "50",
+             "meaning": "差100をちょうど0にするので 100÷2＝50まいです。"},
+            {"question": "いちろうくんが何まいあげると、じろうくんのほうが14まい多くなりますか。",
+             "answer": "57",
+             "meaning": "差を100から −14 まで動かすので、動かす量は114。114÷2＝57まいです。"},
+        ],
+    },
+    {
+        "id": "hd3n_03_2", "src": "HG-1912", "star": 1,
+        "title": "本のページ数・読み終わる日数の差", "category": "tokusan", "unit": "過不足算・差集め算",
+        "intro": "ある本を、毎日8ページずつ読んでいくときと、毎日9ページずつ読んでいくときとでは、"
+                 "読み終わるのに3日のちがいがあります。"
+                 "ただし、どちらのばあいも、最後の日まで同じページ数ずつ読みました。",
+        "svg": "",
+        "steps": [
+            {"question": "72ページ読むごとに、日数のちがいは何日つきますか。", "answer": "1",
+             "meaning": "72ページなら 72÷8＝9日、72÷9＝8日で、ちがいは1日です。"
+                        "72は8と9の最小公倍数です。"},
+            {"question": "この本は何ページありますか。", "answer": "216",
+             "meaning": "72ページごとに1日の差がつくので、3日の差なら 72×3＝216ページです。"
+                        "たしかめると 216÷8＝27日、216÷9＝24日で、ちがいは3日 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_3", "src": "HG-1913", "star": 2,
+        "title": "5人で分けたおはじき（線分図）", "category": "bun", "unit": "和差算・分配算",
+        "intro": "200このおはじきを5人で分け合ったようすを、下のような線分図にまとめました。"
+                 "となりの人とのちがいが図に書きこんであります。",
+        "svg": _senbun_svg(),
+        "steps": [
+            {"question": "オルパスとアトムのこ数のちがいは何こですか。", "answer": "22",
+             "meaning": "となりどうしの差を足していきます。4＋5＋6＋7＝22こです。"
+                        "「となりとの差」なので、足し上げないとアトムまで届きません。"},
+            {"question": "5人ぶんを、オルパスと同じこ数にそろえると、あまりは何こですか。", "answer": "50",
+             "meaning": "エンマは＋4、ウサギは＋9、イチゴは＋15、アトムは＋22 多いので、"
+                        "4＋9＋15＋22＝50こです。"},
+            {"question": "オルパスがもらったおはじきは何こですか。", "answer": "30",
+             "meaning": "200から50を引くと150。これがオルパス5人ぶんなので 150÷5＝30こです。"
+                        "たしかめ 30＋34＋39＋45＋52＝200 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_4", "src": "HG-1914", "star": 1,
+        "title": "正解＋5点・まちがい−3点", "category": "tokusan", "unit": "つるかめ算",
+        "intro": "正解すると1題につき5点もらえ、まちがうと3点ひかれるという約そくで、"
+                 "算数の問題を100題解いたところ、324点でした。",
+        "svg": "",
+        "steps": [
+            {"question": "1題まちがえると、全部正解のときより何点少なくなりますか。", "answer": "8",
+             "meaning": "もらえるはずの5点がなくなり、さらに3点ひかれるので 5＋3＝8点です。"
+                        "ここを「3点」と考えるのがいちばん多いまちがいです。"},
+            {"question": "まちがえた問題は何題ですか。", "answer": "22",
+             "meaning": "全問正解なら 5×100＝500点。実際は324点で176点少ないので 176÷8＝22題です。"},
+            {"question": "正解した問題は何題ですか。", "answer": "78",
+             "meaning": "100−22＝78題。たしかめ 5×78−3×22＝390−66＝324点 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_5", "src": "HG-1915", "star": 2,
+        "title": "父母の年れいの和が子ども3人の3倍", "category": "tokusan", "unit": "年齢算",
+        "intro": "父は38才、母は34才で、3人の子どもは6才、3才、1才です。",
+        "svg": "",
+        "steps": [
+            {"question": "いま、父と母の年れいの和は何才ですか。", "answer": "72",
+             "meaning": "38＋34＝72才です。"},
+            {"question": "いま、3人の子どもの年れいの和は何才ですか。", "answer": "10",
+             "meaning": "6＋3＋1＝10才です。"},
+            {"question": "1年たつと、子ども3人の和の3倍は何ふえますか。", "answer": "9",
+             "meaning": "子ども3人の和は1年で3ふえるので、その3倍は 3×3＝9 ふえます。"
+                        "父と母は2人なので1年で2しかふえません。だんだん追いつかれます。"},
+            {"question": "父と母の年れいの和が、3人の子どもの年れいの和の3倍になるのは今から何年後ですか。",
+             "answer": "6",
+             "meaning": "□年後に 72＋2×□ ＝ 3×(10＋3×□)。右は 30＋9×□ なので 42＝7×□ で □＝6。"
+                        "たしかめ 6年後は 44＋40＝84、子どもは 12＋9＋7＝28、84＝3×28 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_6", "src": "HG-1916", "star": 2,
+        "title": "同じ額を出して分けた絵葉書の精算", "category": "tokusan", "unit": "平均算",
+        "intro": "たろうくんとじろうくんが、どちらも450円ずつ出して絵葉書を20まい買いました。"
+                 "じろうくんはたろうくんより何まいか多くとったので、たろうくんに90円はらいました。",
+        "svg": "",
+        "steps": [
+            {"question": "絵葉書1まいのねだんは何円ですか。", "answer": "45",
+             "meaning": "2人で 450×2＝900円出して20まい買ったので 900÷20＝45円です。"},
+            {"question": "じろうくんがとったぶんの代金は何円ですか。", "answer": "540",
+             "meaning": "じろうくんは450円しか出していないのに90円はらいました。"
+                        "この90円は足りなかった分なので 450＋90＝540円です。"
+                        "90円を「差の半分」と読むとまちがえます。"},
+            {"question": "じろうくんは何まいとりましたか。", "answer": "12",
+             "meaning": "540÷45＝12まいです。たろうくんは8まいで 8×45＝360円。"
+                        "450円出しているので90円もどってきます ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_7", "src": "HG-1917", "star": 2,
+        "title": "50円と90円のえん筆・代金の差", "category": "tokusan", "unit": "つるかめ算",
+        "intro": "1本50円のえん筆と1本90円のえん筆を合計30本買いました。"
+                 "90円のえん筆の代金のほうが、50円のえん筆の代金より1020円多くなりました。",
+        "svg": "",
+        "steps": [
+            {"question": "30本ぜんぶ90円のえん筆だとすると、代金の差は何円ですか。", "answer": "2700",
+             "meaning": "90×30＝2700円で、50円のえん筆は0円。だから差も2700円です。"},
+            {"question": "50円のえん筆を1本ふやすと、代金の差は何円ちぢみますか。", "answer": "140",
+             "meaning": "90円側が90円へり、50円側が50円ふえるので 90＋50＝140円ちぢみます。"},
+            {"question": "50円のえん筆は何本買いましたか。", "answer": "12",
+             "meaning": "(2700−1020)÷140＝1680÷140＝12本です。"
+                        "たしかめ 50×12＝600円、90×18＝1620円、差は1020円 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_8", "src": "HG-1918", "star": 2,
+        "title": "チョコとキャラメル・あまりと不足", "category": "tokusan", "unit": "過不足算・差集め算",
+        "intro": "合わせて155こあるチョコレートとキャラメルを、クラス全員にくばります。"
+                 "チョコレートを2こずつくばると2人分あまり、"
+                 "キャラメルを3こずつくばると3人分たりなくなります。",
+        "svg": "",
+        "steps": [
+            {"question": "「2人分あまる」とき、チョコレートは何こあまりますか。", "answer": "4",
+             "meaning": "2こずつくばるので、2人分は 2×2＝4こです。"
+                        "「2こあまる」ではありません。ここが第一の関門です。"},
+            {"question": "「3人分たりない」とき、キャラメルは何こたりませんか。", "answer": "9",
+             "meaning": "3こずつくばるので、3人分は 3×3＝9こです。"},
+            {"question": "クラスは何人ですか。", "answer": "32",
+             "meaning": "人数を□人とすると チョコ＝2×□＋4、キャラメル＝3×□−9。"
+                        "合わせて 5×□−5＝155 なので □＝32人です。"},
+            {"question": "チョコレートは何こありますか。", "answer": "68",
+             "meaning": "2×32＋4＝68こ。キャラメルは 3×32−9＝87こで、合わせて155こ ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_9", "src": "HG-1919", "star": 3,
+        "title": "A・B・Cのこ数を入れかえる", "category": "tokusan", "unit": "消去算",
+        "intro": "3つの品物A, B, Cがあり、1このねだんはAが20円、Bが30円、Cが50円です。"
+                 "A, B, Cをそれぞれ何こかずつ買って、全部で1980円はらいました。"
+                 "もし、AとBのこ数をとりかえて買うと2020円になり、"
+                 "AとCのこ数をとりかえて買うと2160円になります。",
+        "svg": "",
+        "steps": [
+            {"question": "AとBのこ数をとりかえると、代金は何円ふえますか。", "answer": "40",
+             "meaning": "2020−1980＝40円です。Cのこ数は動かないので、Cはまるごと消えます。"},
+            {"question": "Aのこ数はBのこ数より何こ多いですか。", "answer": "4",
+             "meaning": "とりかえると代金は (30−20)×(Aのこ数−Bのこ数)＝10×ちがい だけ動きます。"
+                        "40÷10＝4こです。"},
+            {"question": "Aのこ数はCのこ数より何こ多いですか。", "answer": "6",
+             "meaning": "AとCをとりかえると 2160−1980＝180円ふえます。"
+                        "(50−20)×ちがい＝30×ちがい なので 180÷30＝6こです。"},
+            {"question": "Aは何こ買いましたか。", "answer": "24",
+             "meaning": "B＝A−4、C＝A−6 なので 20×A＋30×(A−4)＋50×(A−6)＝1980。"
+                        "100×A＝2400 で A＝24こ。B＝20こ、C＝18こ。"
+                        "たしかめ 480＋600＋900＝1980 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_03_10", "src": "HG-1920", "star": 2,
+        "title": "入園料を値下げしたら合計がふえた", "category": "tokusan", "unit": "消去算",
+        "intro": "ある動物園で、100円の入園料を80円に値下げしたところ、"
+                 "前の日よりも入園者が200人多くなり、入園料の合計が4000円ふえました。",
+        "svg": "",
+        "steps": [
+            {"question": "ふえた200人がはらった入園料は、合わせて何円ですか。", "answer": "16000",
+             "meaning": "80×200＝16000円です。これは合計をふやす向きにはたらきます。"},
+            {"question": "前の日からいた人は、1人あたり何円安くなりましたか。", "answer": "20",
+             "meaning": "100−80＝20円です。これは合計をへらす向きにはたらきます。"},
+            {"question": "前の日の入園者は何人でしたか。", "answer": "600",
+             "meaning": "16000円ふえて、値引きぶんだけへって、差し引き4000円ふえました。"
+                        "値引きぶんは 16000−4000＝12000円。1人20円なので 12000÷20＝600人です。"
+                        "たしかめ 前日 100×600＝60000円、当日 80×800＝64000円で+4000円 ✓"},
+        ],
+    },
+]
+
+LESSONS = {"2": L2, "3": L3}
 
 
 def main():
@@ -336,43 +556,52 @@ def main():
     node = d["grades"].setdefault("3", {}).setdefault("nadago", {})
     node.setdefault("fukushu", {})
 
-    out, bad = [], []
-    for q in D:
-        q = dict(q, grade=3)
-        out.append(q)
-        if not q.get("steps"):
-            bad.append("%s：設問が無い" % q["id"])
-        for i, s in enumerate(q["steps"], 1):
-            if not str(s.get("answer", "")).strip():
-                bad.append("%s (%d)：答えが空" % (q["id"], i))
-            if not str(s.get("meaning", "")).strip():
-                bad.append("%s (%d)：解説が無い" % (q["id"], i))
-            a = str(s["answer"])
-            if not (a.replace(".", "", 1).isdigit() or s.get("choices")):
-                bad.append("%s (%d)：数字でないのに選択肢が無い（テンキーで答えられない）" % (q["id"], i))
-        if not q.get("src", "").startswith("HG-"):
-            bad.append("%s：出典(src)が無い" % q["id"])
+    bad, allids, total = [], [], 0
+    for lesson in sorted(LESSONS, key=int):
+        out = [dict(q, grade=3) for q in LESSONS[lesson]]
+        total += sum(len(q["steps"]) for q in out)
+        print("小3灘合 第%s回：大問%d本／設問%d問"
+              % (lesson, len(out), sum(len(q["steps"]) for q in out)))
+        for q in out:
+            allids.append(q["id"])
+            print("  ★%d %-11s %-28s 設問%d問 図%s  (%s)"
+                  % (q["star"], q["id"], q["title"], len(q["steps"]),
+                     "あり" if q["svg"] else "なし", q["src"]))
+            if not q.get("steps"):
+                bad.append("%s：設問が無い" % q["id"])
+            if not q.get("src", "").startswith("HG-"):
+                bad.append("%s：出典(src)が無い" % q["id"])
+            for i, s in enumerate(q["steps"], 1):
+                if not str(s.get("answer", "")).strip():
+                    bad.append("%s (%d)：答えが空" % (q["id"], i))
+                if not str(s.get("meaning", "")).strip():
+                    bad.append("%s (%d)：解説が無い" % (q["id"], i))
+                a = str(s["answer"])
+                # ★数字でないなら選択肢が要る。テンキーでは答えられない（_note のきまり）
+                if not (a.replace(".", "", 1).isdigit() or s.get("choices")):
+                    bad.append("%s (%d)：数字でないのに選択肢が無い" % (q["id"], i))
+                if s.get("choices") and a not in s["choices"]:
+                    bad.append("%s (%d)：答えが選択肢に入っていない" % (q["id"], i))
+        LESSONS[lesson] = out
+        print("")
 
-    ids = [q["id"] for q in out]
-    if len(set(ids)) != len(ids):
+    if len(set(allids)) != len(allids):
         bad.append("id が重複している")
 
-    print("小3灘合 第%s回：大問%d本／設問%d問" % (LESSON, len(out), sum(len(q["steps"]) for q in out)))
-    for q in out:
-        print("  ★%d %-10s %-26s 設問%d問 図%s  (%s)"
-              % (q["star"], q["id"], q["title"], len(q["steps"]),
-                 "あり" if q["svg"] else "なし", q["src"]))
+    print("合計：大問%d本／設問%d問" % (len(allids), total))
     print("\n【検査】")
     print("  ✓ 0件" if not bad else "\n".join("  ✗ " + b for b in bad))
     if bad:
         sys.exit(1)
 
     if "--write" in sys.argv:
-        node["fukushu"][LESSON] = out
+        for lesson, out in LESSONS.items():
+            node["fukushu"][lesson] = out
         with io.open(DAIMON, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, indent=1)
         json.load(io.open(DAIMON, encoding="utf-8"))
-        print("\n✓ 書きこんだ → data/hama_daimon.json（grades/3/nadago/fukushu/%s）" % LESSON)
+        print("\n✓ 書きこんだ → data/hama_daimon.json（grades/3/nadago/fukushu/%s）"
+              % "・".join(sorted(LESSONS, key=int)))
     else:
         print("\n（--write で書きこむ）")
 
