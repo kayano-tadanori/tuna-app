@@ -2144,6 +2144,18 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="firebase.js"></script>
 <script src="sound.js"></script>
+<!-- app.js が12,000行を超えたので、セクション単位でファイルを分けた（2026-08-08）。
+     ★コードは1行も書き換えていない。クラシックスクリプトのままなので、
+       const/let/function は今までどおり全ファイルで共有される。
+     ⚠ この読み込み順は元の app.js の並び順そのもの。順番を変えないこと。 -->
 <script src="app.js"></script>
+<script src="js/sansu.js"></script>
+<script src="js/books.js"></script>
+<script src="js/shakai-go.js"></script>
+<script src="js/tetris.js"></script>
+<script src="js/gacha.js"></script>
+<script src="js/gamify.js"></script>
+<script src="js/sweeper.js"></script>
+<script src="js/jump.js"></script>
 </body>
 </html>
