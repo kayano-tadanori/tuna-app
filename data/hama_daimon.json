@@ -7707,6 +7707,97 @@
        ],
        "grade": 3
       }
+     ],
+     "6": [
+      {
+       "id": "hd3n_06_1",
+       "src": "HG-1943",
+       "star": 2,
+       "title": "長方形の紙を折る",
+       "category": "zu",
+       "unit": "平面図形（角度）",
+       "intro": "右の図のように長方形の紙を折りました。点線は折る前の位置です。折り返された下の辺は、もとの下の辺と40°をなしています。角㋐（もとの上の辺と折り目がつくる角）は何度ですか。",
+       "svg": "<svg viewBox=\"0 0 248 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"20\" y=\"50\" width=\"200\" height=\"80\" fill=\"none\" stroke=\"#6c7086\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/>\n<path d=\"M 20 50 L 179.1 50 L 150.0 130.0 L 20 130.0 Z\" fill=\"#eaf0ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"179.1\" y1=\"50\" x2=\"150.0\" y2=\"130.0\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/>\n<line x1=\"150.0\" y1=\"130.0\" x2=\"96.4\" y2=\"85.0\" stroke=\"#ff9a44\" stroke-width=\"2.4\"/>\n<text x=\"116.0\" y=\"118.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">40°</text>\n<text x=\"153.11761874129618\" y=\"68.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">㋐</text>\n<text x=\"124\" y=\"176\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">点線は 折る前の 位置</text>\n</svg>",
+       "steps": [
+        {
+         "question": "折り目と下の辺がつくる角を□度とすると、折り返された下の辺は何度回りますか。",
+         "answer": "2",
+         "meaning": "折り返しは折り目をはさんだ線対称なので、辺は折り目をこえて同じ角だけ回ります。だからもとの向きから見ると□の2倍だけ回ります。□×2 の「2」が答えです。"
+        },
+        {
+         "question": "折り目と下の辺がつくる角は何度ですか。",
+         "answer": "70",
+         "meaning": "もとの下の辺と折り返された下の辺のなす角が40°なので、180−□×2＝40。□＝70°です。"
+        },
+        {
+         "question": "角㋐は何度ですか。",
+         "answer": "70",
+         "meaning": "長方形の上の辺と下の辺は平行なので、錯角で㋐＝70°です。「折り目の角」を聞かれたら（180−与えられた角）÷2、「折り返された辺の角」を聞かれたら 180−折り目の角×2 になります。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_06_2",
+       "src": "HG-1944",
+       "star": 3,
+       "title": "三角形の紙を折って頂点を辺の上にのせる",
+       "category": "zu",
+       "unit": "平面図形（角度）",
+       "intro": "三角形の紙ABCを、右の図のようにア−イのところで折ったら、頂点AがちょうどBC上にきて、ウの角が20°になりました。Bの角は40°、Cの角は60°です。角xと角yの大きさをもとめなさい。",
+       "svg": "<svg viewBox=\"0 0 266 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M 30.0 150.0 L 164.7 36.9 L 230.0 150.0 Z\" fill=\"none\" stroke=\"#6c7086\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/>\n<path d=\"M 30.0 150.0 L 111.5 81.5 L 123.6 150.0 L 211.5 118.0 L 230.0 150.0 Z\" fill=\"#eaf0ff\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"111.5\" y1=\"81.5\" x2=\"211.5\" y2=\"118.0\" stroke=\"#ff6b6b\" stroke-width=\"2.4\"/>\n<line x1=\"111.5\" y1=\"81.5\" x2=\"123.6\" y2=\"150.0\" stroke=\"#ff9a44\" stroke-width=\"2.2\"/>\n<line x1=\"211.5\" y1=\"118.0\" x2=\"123.6\" y2=\"150.0\" stroke=\"#ff9a44\" stroke-width=\"2.2\"/>\n<text x=\"20.0\" y=\"164.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">B</text>\n<text x=\"240.0\" y=\"164.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">C</text>\n<text x=\"170.7\" y=\"30.9\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#6c7086\">A（もとの位置）</text>\n<text x=\"97.5\" y=\"81.5\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">ア</text>\n<text x=\"225.5\" y=\"118.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">イ</text>\n<text x=\"123.6\" y=\"166.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">A</text>\n<text x=\"56.0\" y=\"144.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">40°</text>\n<text x=\"200.0\" y=\"144.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">60°</text>\n<text x=\"101.6\" y=\"142.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">x</text>\n<text x=\"153.6\" y=\"142.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">20°</text>\n<text x=\"195.5\" y=\"104.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">y</text>\n<text x=\"130\" y=\"186\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">点線は 折る前の 三角形ABC</text>\n</svg>",
+       "steps": [
+        {
+         "question": "もとの三角形の頂点Aの角は何度ですか。",
+         "answer": "80",
+         "meaning": "180−40−60＝80°です。この80°は図に書かれていませんが、この問題の中心になります。"
+        },
+        {
+         "question": "折ったあと、BC上にきた点Aのところの角（アAとイAの間）は何度ですか。",
+         "answer": "80",
+         "meaning": "折り返しても角の大きさは変わらないので、そのまま80°が写ります。"
+        },
+        {
+         "question": "角xは何度ですか。",
+         "answer": "80",
+         "meaning": "BCは直線なので、その上にならぶ x と 80° と 20° をたすと180°。x＝180−80−20＝80°です。"
+        },
+        {
+         "question": "角yは何度ですか。",
+         "answer": "40",
+         "meaning": "イは辺AC上にあるので、イのまわりの角をたすと180°。折り返しでイのところの2つの角は等しいので、それぞれをyとすると y＋y＋（Cのほうへ向かう角100°）＝180。y×2＝80 で y＝40°です。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_06_3",
+       "src": "HG-1945",
+       "star": 3,
+       "title": "重なった三角形と四角形・7つの角の和",
+       "category": "zu",
+       "unit": "平面図形（角度）",
+       "intro": "右の図で、三角形と四角形が重なって星のような形になっています。角ア, 角イ, 角ウ, 角エ, 角オ, 角カ, 角キ の大きさの和は何度ですか。",
+       "svg": "<svg viewBox=\"0 0 252 216\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"124,24 30,158 222,120\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<polygon points=\"46,62 206,46 188,176 66,150\" fill=\"rgba(255,154,68,0.12)\" stroke=\"#ff9a44\" stroke-width=\"2\"/>\n<text x=\"124.0\" y=\"44.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">ア</text>\n<text x=\"46.0\" y=\"152.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">ウ</text>\n<text x=\"202.0\" y=\"124.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">カ</text>\n<text x=\"62.0\" y=\"74.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">イ</text>\n<text x=\"190.0\" y=\"64.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">キ</text>\n<text x=\"174.0\" y=\"168.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">オ</text>\n<text x=\"80.0\" y=\"140.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">エ</text>\n<text x=\"126\" y=\"204\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">青＝三角形の角／オレンジ＝四角形の角</text>\n</svg>",
+       "steps": [
+        {
+         "question": "ア・ウ・カの3つの角の和は何度ですか。",
+         "answer": "180",
+         "meaning": "この3つは三角形の3つの頂点の角なので、和は180°です。重なっていても、三角形の内角であることは変わりません。"
+        },
+        {
+         "question": "イ・キ・オ・エの4つの角の和は何度ですか。",
+         "answer": "360",
+         "meaning": "この4つは四角形の4つの頂点の角なので、和は360°です。"
+        },
+        {
+         "question": "7つの角の和は何度ですか。",
+         "answer": "540",
+         "meaning": "180＋360＝540°です。記号が7つあるので七角形の内角の和（900°）と答えたくなりますが、7つの角は三角形の3つと四角形の4つに分かれています。重なりは答えにまったく関係ありません。"
+        }
+       ],
+       "grade": 3
+      }
      ]
     }
    }
