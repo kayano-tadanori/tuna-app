@@ -14,6 +14,7 @@
 //   ⑤ 答えや問題文が空                  …画面が壊れる
 //   ⑥ 同じ問題が2回入っている           …同一カテゴリ内の重複
 //   ⑦ 選択肢に説明文や壊れた文字列      …英字混入・異様に長い選択肢
+//   ⑧ 同じ学年で難易度が割れている      …同じ子が同じ問題に2回当たる
 //
 //   node scripts/audit_questions.js          … 一覧を出す
 //   node scripts/audit_questions.js --json   … 直す用に機械可読で出す
@@ -88,6 +89,7 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
   let data;
   try { data = JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')); } catch { continue; }
   const seen = new Map();
+  const seenGrade = new Map();   // ⑧用。学年ごとに「この問題は難いくつで出したか」を控える
   seenByFile.set(f, seen);
 
   for (const { q, id, at } of questionsOf(data, f)) {
@@ -173,6 +175,20 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
         seen.set(key, id);
         if (seenBody.has(body)) crossPool++;   // 別プールの再出題。数だけ控える
         else seenBody.set(body, id);
+      }
+
+      // ⑧ 同じ学年の中で難易度が割れている
+      // ★学年がちがうのは正常（先取り）だが、**同じ学年で難1と難3の両方にある**と、
+      //   同じ子が同じ問題に2回当たる。玉手箱がちがうので⑥では拾えない
+      if (q.grade !== undefined && q.difficulty !== undefined) {
+        const gkey = `g${q.grade}|${body}`;
+        const prev = seenGrade.get(gkey);
+        if (prev && String(prev.d) !== String(q.difficulty)) {
+          add('同じ学年で難易度が割れている', f, id,
+            `難${q.difficulty}。同じ問題が ${prev.id}（難${prev.d}）にもある`, qt.slice(0, 46));
+        } else if (!prev) {
+          seenGrade.set(gkey, { id, d: q.difficulty });
+        }
       }
     }
   }
