@@ -292,9 +292,17 @@ function initHome() {
       document.getElementById('kokugo-step-diff').classList.add('hidden');
       document.getElementById('kokugo-step-cat').classList.add('hidden');
       document.getElementById('sansu-step-hama').classList.add('hidden');
-      // ★じゅくナビ国語は小3の本科教材だけ（原簿 HG-2501〜2543）。ほかの学年では出さない
+      // ★じゅくナビ国語は「対応表にその学年の国語コースがある学年」だけに出す。
+      //   小3(HG-2501〜2543)に小4(HG-2431〜2473)が加わったので、学年の決め打ちをやめた（2026-08-08）。
+      //   ensureHamaCourses は、古い対応表をつかんでいたら取り直してからもう一度見てくれる
       const kHama = document.querySelector('.kokugo-topmode-btn[data-topmode="hama"]');
-      if (kHama) kHama.classList.toggle('hidden', state.grade !== 3);
+      if (kHama) {
+        kHama.classList.add('hidden');
+        const g = state.grade;
+        ensureHamaCourses(g, 'kokugo')
+          .then(ok => { if (state.grade === g) kHama.classList.toggle('hidden', !ok); })
+          .catch(() => {});
+      }
       document.querySelectorAll('.kokugo-topmode-btn').forEach(b => b.classList.remove('selected'));
       showStep('kokugo-step-topmode');
       maybeShowStart();
