@@ -12,19 +12,19 @@ const QUESTION_COUNTS = {
             // 78語 × 2通り（意味→語／語→意味）＝156問。★grade は全部5（実物が小5の教材）
             kokugo_wago: 156,
             // 小5最レ国語の記号で答える大問（原簿 HG-2552/2556）。data/kokugo_sairei5.json
-            kokugo_sairei5: 14,
+            kokugo_sairei5: 48,
             // じゅくナビ国語＝小3本科教材の大問4（原簿 HG-2501〜2543）。data/hama_kokugo.json。
             // ★kanji_kaki に相乗りさせない。480問の分母に混ぜると、本物の書き取りを1問も
             //   解かないまま達成率が9割近くまで上がってしまう。
             // ⚠ scripts/sync_question_counts.js の MAP には足さないこと（入れ子JSONで落ちる）
             // ⚠2026-08-08：418 は小3ぶんだけの数で、小4の404問が分母に入っていなかった
             //   （＝小4をやっても達成率が上がらない）。実データに合わせて直した。
-            //   内わけ＝小3 418 ＋ 小4 404 ＋ 小5最レ国語 195。入れ子JSONなので sync では数えられず手で直す
-            hama_kokugo: 1017,
+            //   内わけ＝小3 418 ＋ 小4 404 ＋ 小5最レ国語 200。入れ子JSONなので sync では数えられず手で直す
+            hama_kokugo: 1022,
             // こころの探偵・要約記者。★以前はここに登録が無く、IDの先頭2文字が偶然
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
-            tantei: 123, youyaku: 128 },                                                     // 6,151
+            tantei: 123, youyaku: 128 },                                                     // 6,190
   sansu:  { bakuhatsu: 160, keisan: 1284, bun: 779, zu: 1040, kisoku: 988, tokusan: 557, baai: 556, kazu: 597,
             wariai: 418, hayasa: 170, rittai: 375 },                                         // 6,764（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,

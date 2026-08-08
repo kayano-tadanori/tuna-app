@@ -24,7 +24,8 @@ from genbo_path import find_genbo          # noqa: E402
 
 OUT = os.path.join(ROOT, "data", "kokugo_sairei5.json")
 MEAN = os.path.join(HERE, "meanings_hama_g5sairei.json")
-MARU = "①②③④⑤⑥⑦⑧⑨⑩"
+MARU = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳"
+SPLIT_NL = chr(10)   # 改行で行に分ける（ヒアドキュメント経由で壊れないように定数化）
 
 
 def body(text, hg):
@@ -81,6 +82,107 @@ def main():
         })
         n += 1
     print("No.12 ことばのはたらき … %d問" % n)
+
+
+    # ── HG-2545 枠1：漢字の成り立ち（六書）8問 ─────────────
+    b = body(text, "2545")
+    ROKUSHO = {"ア": "象形文字", "イ": "指事文字", "ウ": "会意文字", "エ": "形声文字"}
+    lq = next(l for l in b.split(SPLIT_NL) if "①森" in l)
+    la = next(l for l in b.split(SPLIT_NL) if "答え **①ウ" in l)
+    W = dict((m.group(1), m.group(2)) for m in re.finditer(r"([" + MARU + r"])([^\s]+)", lq))
+    A = dict((m.group(1), m.group(2)) for m in re.finditer(r"([" + MARU + r"])([アイウエ])", la))
+    n = 0
+    for no in MARU[:8]:
+        if no not in W or no not in A:
+            continue
+        ans = ROKUSHO[A[no]]
+        qs.append({
+            "id": "ks5_02_r%02d" % (MARU.index(no) + 1),
+            "unit": "漢字のしくみ",
+            "question": "「%s」のでき方は？" % W[no],
+            "answer": ans,
+            "choices": sorted(ROKUSHO.values()),
+            "meaning": notes[ans] + "よって、答えは%sです。〔浜学園 小5最レ国語 No.2・原簿 HG-2545〕" % ans,
+            "difficulty": 2, "grade": 5,
+        })
+        n += 1
+    print("No.2 漢字の成り立ち … %d問" % n)
+
+    # ── HG-2545 枠1：重箱読み・湯桶読み4問 ────────────────
+    JU = {"ア": "重箱読み", "イ": "湯桶読み"}
+    lj = next(l for l in b.split(SPLIT_NL) if "①ばしょ・イ" in l)
+    n = 0
+    for m in re.finditer(r"([" + MARU + r"])([ぁ-ゖー]+)・([アイ])", lj):
+        no, yomi, sym = m.groups()
+        ans = JU[sym]
+        w = next((mm.group(2) for mm in re.finditer(r"([" + MARU + r"])([^\s]+)", next(l for l in b.split(SPLIT_NL) if "①場所" in l)) if mm.group(1) == no), None)
+        if not w:
+            continue
+        qs.append({
+            "id": "ks5_02_j%02d" % (MARU.index(no) + 1),
+            "unit": "漢字のしくみ",
+            "question": "「%s（%s）」の読み方の組み合わせは？" % (w, yomi),
+            "answer": ans,
+            "choices": ["重箱読み", "湯桶読み", "音音読み", "訓訓読み"],
+            "meaning": notes[ans] + "「%s」は「%s」と読むのでこちらです。〔浜学園 小5最レ国語 No.2・原簿 HG-2545〕" % (w, yomi),
+            "difficulty": 3, "grade": 5,
+        })
+        n += 1
+    print("No.2 重箱読み・湯桶読み … %d問" % n)
+
+    # ── HG-2547 枠1：熟語の構成15問 ──────────────────────
+    b4 = body(text, "2547")
+    KOUSEI = {"ア": "反対の意味の組み合わせ", "イ": "同じような意味の組み合わせ",
+              "ウ": "上が下を修飾", "エ": "下から上に返って読む",
+              "オ": "主語と述語の関係", "カ": "省略された字がある"}
+    lq4 = next(l for l in b4.split(SPLIT_NL) if "①乗船" in l)
+    la4 = next(l for l in b4.split(SPLIT_NL) if "答え **①エ" in l)
+    W4 = dict((m.group(1), m.group(2)) for m in re.finditer(r"([" + MARU + r"])([^\s]+)", lq4))
+    A4 = dict((m.group(1), m.group(2)) for m in re.finditer(r"([" + MARU + r"])([アイウエオカ])", la4))
+    n = 0
+    for no in MARU:
+        if no not in W4 or no not in A4:
+            continue
+        ans = KOUSEI[A4[no]]
+        qs.append({
+            "id": "ks5_04_k%02d" % (MARU.index(no) + 1),
+            "unit": "熟語",
+            "question": "熟語「%s」の組み立ては？" % W4[no],
+            "answer": ans,
+            "choices": sorted(KOUSEI.values()),
+            "meaning": notes[ans] + "よって、答えは「%s」です。〔浜学園 小5最レ国語 No.4・原簿 HG-2547〕" % ans,
+            "difficulty": 3, "grade": 5,
+        })
+        n += 1
+    print("No.4 熟語の構成 … %d問" % n)
+
+
+    # ── HG-2547 枠1：同意語・反意語7問 ──────────────────
+    #   原簿：①悪運=ス幸運 ②地域=ウ地区 ④例外=ケ特殊 ⑤努力=サ勤勉
+    #        ⑦円満=オ不和 ⑧分解=ア合成 ⑩発信=コ受信（③⑥⑨と選択肢エ・ク・シは未読）
+    #   ①〜⑤は「同じような意味」、⑥〜⑩は「反対の意味」を選ぶ大問
+    IMI7 = [
+        (1,  "悪運", "幸運", "反対", "悪運⇔幸運"),
+        (2,  "地域", "地区", "同じ", "地域＝地区"),
+        (4,  "例外", "特殊", "同じ", "例外＝特殊"),
+        (5,  "努力", "勤勉", "同じ", "努力＝勤勉"),
+        (7,  "円満", "不和", "反対", "円満⇔不和"),
+        (8,  "分解", "合成", "反対", "分解⇔合成"),
+        (10, "発信", "受信", "反対", "発信⇔受信"),
+    ]
+    POOL = ["合成", "安全", "地区", "不和", "承知", "順調", "特殊", "受信", "勤勉", "幸運"]
+    for n, q, ans, kind, key in IMI7:
+        others = [w for w in POOL if w != ans][:3]
+        qs.append({
+            "id": "ks5_04_i%02d" % n,
+            "unit": "熟語",
+            "question": "「%s」と%s意味の熟語はどれ？" % (q, "同じような" if kind == "同じ" else "反対の"),
+            "answer": ans,
+            "choices": sorted([ans] + others),
+            "meaning": notes[key] + "〔浜学園 小5最レ国語 No.4・原簿 HG-2547〕",
+            "difficulty": 3, "grade": 5,
+        })
+    print("No.4 同意語・反意語 … %d問" % len(IMI7))
 
     # ── 検査 ────────────────────────────────────────────
     ng = []
