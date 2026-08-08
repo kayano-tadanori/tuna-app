@@ -37,6 +37,16 @@ KEY = {
     "なつのむし": "飛んで火に入る夏の虫", "こつぶ": "山椒は小粒でもぴりりとからい",
     "はじ": "旅の恥はかきすて", "うれい": "備えあれば憂いなし",
 }
+
+# ── 漢字の書き取り（夏期講習V の大問1のうち、カタカナが対象として明示されているもの）──
+#   出し先は data/kanji_kaki.json。IDは kk9xxx 帯（既存の kk001〜480 は触らない）
+KAKI_OUT = os.path.join(ROOT, "data", "kanji_kaki.json")
+KAKI_PREFIX = "kk9"
+MARU50 = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿"
+# ⚠出せないもの：原簿の記録が問題文と答えで合わないもの
+#   「スギの村…」＝原簿の文が途中で切れている／「あくシュする＝握手」＝◯1字に答え2字
+KAKI_SKIP = {"スギ", "シュ"}
+
 LINE = re.compile(r"\((\d+)\)\s*([^＝\n]+?)＝\*\*([^*⚠\n]+?)\*\*")
 
 
@@ -87,6 +97,52 @@ def main():
             "difficulty": 3, "grade": 5,
         })
 
+
+    # ── 漢字の書き取り58問 → kanji_kaki ────────────────────
+    KW = re.compile(r"([" + MARU50 + r"])([^＝" + MARU50 + r"]*?)\*\*([ァ-ヶー]+)\*\*([^＝" + MARU50 + r"]*?)＝\*\*([^*⚠]+?)\*\*")
+    kaki, kaki_nomean = [], []
+    for hg, tag in (("2558", "1"), ("2559", "2")):
+        b = body(text, hg)
+        n = 0
+        for m in KW.finditer(b):
+            no, pre, kana, post, ans = (x.strip() for x in m.groups())
+            if kana in KAKI_SKIP:
+                continue
+            key = "%s＝%s" % (kana, ans)
+            if key not in notes:
+                kaki_nomean.append(key); continue
+            # 送りがなを分ける（「丸い」→ 漢字「丸」＋おくりがな「い」）
+            kanji_part, okuri = ans, ""
+            while kanji_part and ("ぁ" <= kanji_part[-1] <= "ゖ"):
+                okuri = kanji_part[-1] + okuri
+                kanji_part = kanji_part[:-1]
+            kaki.append({
+                "id": "%s%s%02d" % (KAKI_PREFIX, tag, MARU50.index(no) + 1),
+                "question": "%s%s%s ─ 「%s」を漢字で書こう" % (pre, kana, post, kana),
+                "answer": kanji_part,
+                "okuri": okuri,
+                "meaning": notes[key] + "〔浜学園 小5最レ国語 夏期講習V No.%s・原簿 HG-%s〕" % (tag, hg),
+                "grade": 5, "difficulty": 3,
+            })
+            n += 1
+        print("夏期講習V No.%s 漢字の書き取り … %d問" % (tag, n))
+    if kaki_nomean:
+        print("✗ 解説が無い語:", kaki_nomean[:8]); sys.exit(1)
+    kng = []
+    for q in kaki:
+        if not q["answer"]:
+            kng.append((q["id"], "漢字が空"))
+        if any("ぁ" <= c <= "ゖ" for c in q["answer"]):
+            kng.append((q["id"], "答えにひらがなが残っている"))
+        if len(q["meaning"]) < 25:
+            kng.append((q["id"], "解説が短い"))
+    if len(kaki) != len({q["id"] for q in kaki}):
+        kng.append(("-", "IDの重複"))
+    print("漢字の書き取り 合計 %d問" % len(kaki))
+    if kng:
+        print("✗ 検査でひっかかった:", kng[:8]); sys.exit(1)
+    print("✅ 漢字の検査通過（漢字が空でない／ひらがなが残っていない／解説あり／IDの重複なし）")
+
     ng = []
     for q in qs:
         if q["answer"] not in q["choices"]:
@@ -117,6 +173,11 @@ def main():
         json.dump(keep + qs, io.open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         print("\n→ data/kotowaza.json に %d問 足した（既存 %d問 ＋ %d問 ＝ %d問）"
               % (len(qs), len(keep), len(qs), len(keep) + len(qs)))
+        cur2 = json.load(io.open(KAKI_OUT, encoding="utf-8"))
+        keep2 = [q for q in cur2 if not str(q.get("id", "")).startswith(KAKI_PREFIX)]
+        json.dump(keep2 + kaki, io.open(KAKI_OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        print("→ data/kanji_kaki.json に %d問 足した（既存 %d問 ＋ %d問 ＝ %d問）"
+              % (len(kaki), len(keep2), len(kaki), len(keep2) + len(kaki)))
 
 
 if __name__ == "__main__":
