@@ -24,7 +24,7 @@ const QUESTION_COUNTS = {
             // こころの探偵・要約記者。★以前はここに登録が無く、IDの先頭2文字が偶然
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
-            tantei: 123, youyaku: 128 },                                                     // 6,121
+            tantei: 123, youyaku: 128 },                                                     // 6,249
   sansu:  { bakuhatsu: 160, keisan: 1284, bun: 779, zu: 1040, kisoku: 988, tokusan: 557, baai: 556, kazu: 597,
             wariai: 418, hayasa: 170, rittai: 375 },                                         // 6,764（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
