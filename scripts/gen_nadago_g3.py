@@ -2643,6 +2643,93 @@ G4_2 = [
 ]
 
 
+G5 = [
+    {
+        "id": "hd5n_06_3", "src": "HG-2203", "star": 3,
+        "title": "円柱の水に円すいのおもり", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "底面の半径が6cmの円柱形の容器Aと、底面の半径が6cmの円すいのおもりBがあります。"
+                 "Aに水面の高さが10cmになるまで水を入れ、"
+                 "さらに、Bの底面がAの底面と一致するようにおもりBをAの中に入れると、"
+                 "水面はおもりBの頂点に一致しました。円周率は3.14とします。",
+        "svg": "",
+        "steps": [
+            {"question": "おもりBの高さは何cmですか。", "answer": "15",
+             "meaning": "水の量は変わりません。おもりの高さを□cmとすると、"
+                        "水面も□cmになるので、円柱□cmぶんから円すい□cmぶんを引いた分が水。"
+                        "円すいは同じ底面・同じ高さの円柱の3分の1なので、"
+                        "円柱□cmの3分の2が水にあたります。"
+                        "はじめの水は円柱10cmぶんなので □×2/3＝10 で □＝15cmです。"},
+            {"question": "水面の高さを9cmにするには、はじめ容器Aに何cmの高さまで"
+                         "水を入れるとよいですか。", "answer": "4.32",
+             "meaning": "高さ9cmまでにしずんでいるおもりの部分は、"
+                        "円すい全部から上の小さい円すい（高さ6cm）を取りのぞいた形です。"
+                        "小さい円すいの底面の半径は 6×6÷15＝2.4cm。"
+                        "しずんだ体積は 円すい全部−小さい円すい＝(36×15−2.4×2.4×6)÷3×円周率"
+                        "＝168.48×円周率。"
+                        "水は 円柱9cmぶん−しずんだ体積＝(36×9−168.48)×円周率＝155.52×円周率。"
+                        "これを底面積36×円周率でわって 4.32cmです。"},
+        ],
+    },
+    {
+        "id": "hd5n_06_4", "src": "HG-2204", "star": 3,
+        "title": "正方形から作る四角すい", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "1辺が18cmの正方形から、底辺が18cmで高さが4.5cmの二等辺三角形4つを"
+                 "切り取ってできた形（風車のような形）を組み立てると、四角すいができます。"
+                 "角すいの体積は（底面積）×（高さ）×3分の1でもとめられます。",
+        "svg": "",
+        "steps": [
+            {"question": "組み立てたとき、底面になる正方形の面積は何cm²ですか。", "answer": "40.5",
+             "meaning": "切り取った4つの三角形の頂点が、底面の正方形の4つの頂点になります。"
+                        "その正方形は対角線が9cmずつなので、面積は 9×9÷2＝40.5cm²です。"},
+            {"question": "この四角すいの高さは何cmですか。", "answer": "9",
+             "meaning": "もとの正方形の頂点から底面の頂点までの長さは 10.06…cmで、"
+                        "底面の中心から頂点までは4.5cm。"
+                        "直角三角形で 高さ×高さ＝101.25−20.25＝81 なので高さは9cmです。"},
+            {"question": "この四角すいの体積は何cm³ですか。", "answer": "121.5",
+             "meaning": "40.5×9÷3＝121.5cm³です。"},
+        ],
+    },
+    {
+        "id": "hd5n_06_5", "src": "HG-2205", "star": 2,
+        "title": "立方体の中の正八面体", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "1辺が15cmの立方体の、各面の中心を結んでできる正八面体を考えます。",
+        "svg": "",
+        "steps": [
+            {"question": "正八面体を上下2つに分けると、どんな形が2つできますか。",
+             "answer": "四角すい", "choices": ["四角すい", "三角すい", "円すい", "立方体"],
+             "meaning": "まん中で水平に切ると、上下に同じ四角すいが2つできます。"},
+            {"question": "その四角すい1つの底面積は何cm²ですか。", "answer": "112.5",
+             "meaning": "底面は立方体の側面4つの中心を結んだ正方形で、"
+                        "対角線が15cmずつ。15×15÷2＝112.5cm²です。"},
+            {"question": "正八面体の体積は何cm³ですか。", "answer": "562.5",
+             "meaning": "四角すい1つの高さは 15÷2＝7.5cm。"
+                        "112.5×7.5÷3＝281.25cm³。2つで562.5cm³です。"
+                        "じつは立方体の体積 15×15×15＝3375 の6分の1になっています。"},
+        ],
+    },
+    {
+        "id": "hd5n_06_6", "src": "HG-2206", "star": 3,
+        "title": "直方体の中の三角すい", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "直方体ABCD-EFGHがあって、底面は対角線の長さが12cmの正方形、"
+                 "高さAEは8cmです。正方形EFGHの対角線EG上に2点P、Qを、"
+                 "EP＝2cm、QG＝2cm となるようにとります。",
+        "svg": "",
+        "steps": [
+            {"question": "PQの長さは何cmですか。", "answer": "8",
+             "meaning": "EGは12cmで、両はしから2cmずつ内がわなので 12−2−2＝8cmです。"},
+            {"question": "底面の正方形の面積は何cm²ですか。", "answer": "72",
+             "meaning": "対角線が12cmずつなので 12×12÷2＝72cm²です。"},
+            {"question": "4点P、B、D、Qを結んでできる三角すいの体積は何cm³ですか。",
+             "answer": "128",
+             "meaning": "BDとPQはねじれの位置にあり、BDは12cm、PQは8cm、"
+                        "上下のへだたりは8cmです。"
+                        "このような立体の体積は BD×PQ×高さ÷6 でもとめられて "
+                        "12×8×8÷6＝128cm³です。"},
+        ],
+    },
+]
+
+
 def check(out, bad, allids):
     for q in out:
         allids.append(q["id"])
@@ -2668,6 +2755,8 @@ def main():
     node.setdefault("fukushu", {})
     node4 = d["grades"].setdefault("4", {}).setdefault("nadago", {})
     node4.setdefault("fukushu", {})
+    node5 = d["grades"].setdefault("5", {}).setdefault("nadago", {})
+    node5.setdefault("fukushu", {})
 
     bad, allids, total = [], [], 0
     G4LESSONS = {"1": [dict(q, grade=4) for q in G4],
@@ -2683,6 +2772,16 @@ def main():
                   % (q["star"], q["id"], q["title"], len(q["steps"]),
                      "あり" if q["svg"] else "なし", q["src"]))
         print("")
+
+    g5 = [dict(q, grade=5) for q in G5]
+    check(g5, bad, allids)
+    total += sum(len(q["steps"]) for q in g5)
+    print("小5灘合 第6回：大問%d本／設問%d問" % (len(g5), sum(len(q["steps"]) for q in g5)))
+    for q in g5:
+        print("  ★%d %-11s %-28s 設問%d問 図%s  (%s)"
+              % (q["star"], q["id"], q["title"], len(q["steps"]),
+                 "あり" if q["svg"] else "なし", q["src"]))
+    print("")
 
     for lesson in sorted(LESSONS, key=int):
         out = [dict(q, grade=3) for q in LESSONS[lesson]]
@@ -2726,6 +2825,7 @@ def main():
             node["fukushu"][lesson] = out
         for lesson, out in G4LESSONS.items():
             node4["fukushu"][lesson] = out
+        node5["fukushu"]["6"] = g5
         with io.open(DAIMON, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, indent=1)
         json.load(io.open(DAIMON, encoding="utf-8"))
