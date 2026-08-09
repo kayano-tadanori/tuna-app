@@ -39789,6 +39789,54 @@
        "grade": 5
       },
       {
+       "id": "hd5n_06_2",
+       "src": "HG-2202",
+       "star": 2,
+       "title": "ふたのない容器の展開図",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "右の図は、**ふたのない容器の展開図**です。こい色の部分が底になり、まわりの4つの面が立ち上がります。\nこの容器にぴったりのふたを作るとすれば、ふたの面積は何cm²で、この容器に入る水の体積は何cm³ですか。",
+       "svg": "<svg viewBox=\"0 0 300 324\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"91.2,106.0 219.2,106.0 219.2,234.0 187.2,234.0\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"91.2,106.0 91.2,42.0 187.2,42.0 219.2,106.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"219.2,106.0 290.8,106.0 290.8,234.0 219.2,234.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"91.2,106.0 40.0,144.4 136.0,272.4 187.2,234.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"187.2,234.0 219.2,234.0 187.2,298.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<text x=\"139.2\" y=\"35.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">15cm</text>\n<text x=\"67.2\" y=\"78.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">10cm</text>\n<text x=\"155.2\" y=\"121.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<text x=\"241.2\" y=\"174.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<text x=\"201.2\" y=\"226.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">5cm</text>\n<text x=\"139.2\" y=\"170.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">底</text>\n<text x=\"150.0\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ふたのない容器の展開図（長さは実物どおり）</text>\n<text x=\"150.0\" y=\"316.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">こい色が底の面。まわりの4面が立ち上がる</text>\n</svg>",
+       "steps": [
+        {
+         "question": "底の面は、平行な2つの辺が20cmと5cm、高さが20cmの台形です。底の面積は何cm²ですか。",
+         "answer": "250",
+         "meaning": "(20＋5)×20÷2＝250cm²です。"
+        },
+        {
+         "question": "まわりの4つの面は、どれも底から何cmのところまで立ち上がりますか。",
+         "answer": "10",
+         "meaning": "斜めの辺につく長方形のはばが10cm、上の面の高さも10cm、三角形の面の たての辺も10cm。**どれも10cm**なので、容器の深さは10cmです。"
+        },
+        {
+         "question": "上の面は、底の20cmの辺につきますが、上のはしは15cmしかありません。たりない分は何cmですか。",
+         "answer": "5",
+         "meaning": "20−15＝5cmです。このすき間と、下の5cmのところのすき間を、**右の面がななめに たおれて ふさぎます**。だから右の面のはばだけ、目もりがついていません。"
+        },
+        {
+         "question": "ふたは水平な直角三角形になります。直角をはさむ2つの辺は15cmと20cmです。ふたの面積は何cm²ですか。",
+         "answer": "150",
+         "meaning": "15×20÷2＝**150cm²**です。上の面の15cmと、底の高さの20cmが、そのまま直角をはさむ2辺になります。"
+        },
+        {
+         "question": "ふたの真下の部分（三角柱）の体積は何cm³ですか。",
+         "answer": "1500",
+         "meaning": "150×10＝1500cm³です。"
+        },
+        {
+         "question": "のこりの部分は、上がななめに落ちる形（くさび形）です。その体積は何cm³ですか。",
+         "answer": "500",
+         "meaning": "底は 5cm×20cm の長方形で、高さが10cmから0cmへ ななめに落ちます。5×10÷2×20＝500cm³です。"
+        },
+        {
+         "question": "この容器に入る水の体積は何cm³ですか。",
+         "answer": "2000",
+         "meaning": "1500＋500＝**2000cm³**です。細かく切って足し合わせる計算でも2000になりました。\n**たしかめ**：はり合わせる辺は、Aのところで10cmと10cm、Dのところで10cmと10cm、BとCのところでは上の面のななめの辺・三角形の斜辺・右の面のはばがどれも同じ長さになり、4か所ともぴったり合います。"
+        }
+       ],
+       "grade": 5
+      },
+      {
        "id": "hd5n_06_3",
        "src": "HG-2203",
        "star": 3,
