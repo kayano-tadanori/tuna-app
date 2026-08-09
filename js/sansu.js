@@ -992,7 +992,8 @@ async function renderHamaPanel() {
   const isKokugo = (courses[course].subject === 'kokugo');
   // ★灘合（灘中合格特訓）は「復習テスト」という考え方が無い。公開にも復習テストにも出ない別物で、
   //   通常問題プールも持たないので、出すのは大問だけ（本人決定 2026-08-05）
-  const isNadago = (courses[course].subject === 'nadago');
+  // 算数の 'nadago' と 理科の 'nadago_rika' の両方をひろう（2026-08-09）
+  const isNadago = String(courses[course].subject || '').startsWith('nadago');
   // 国語はこのあと、回がきまってから中身を見て名前をつけ直す（回ごとに書くものがちがうため）
   document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
     isKokugo ? '✍️ 今週の書き取り' : is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
@@ -1626,9 +1627,28 @@ function initRikaHome() {
         //   理科は回番号→ID帯の表を持たず、hama_map の units（単元名）で問題を引く
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         document.getElementById('rika-start-zone').classList.add('hidden');
+        sansuState.subject = 'rika';
+        sansuState.hamaCourse = null;
         moveHamaPanelTo('screen-rika-home', 'rika-start-zone');
         loadHamaMap().then(() => { showSansuStep('sansu-step-hama'); renderHamaPanel(); })
           .catch(() => showToast('じゅくの対応表が読みこめませんでした'));
+      } else if (btn.dataset.topmode === 'nadago') {
+        // ★理科の灘合（本人指摘 2026-08-09）。算数の灘合に理科が混ざっていたので分けた。
+        //   コースの subject を 'nadago_rika' にしてあるので、算数の灘合には出てこない
+        hideSansuSteps('rika-step-cat', 'rika-step-diff');
+        document.getElementById('rika-start-zone').classList.add('hidden');
+        sansuState.subject = 'nadago_rika';
+        sansuState.hamaCourse = 'nadago_rika';
+        sansuState.hamaMode = 'no';
+        sansuState.hamaUnit = null;
+        moveHamaPanelTo('screen-rika-home', 'rika-start-zone');
+        loadHamaMap()
+          .then(() => ensureHamaCourses(sansuState.grade, 'nadago_rika'))
+          .then(ok => {
+            if (!ok) { showToast('この学年の理科の灘合はまだ準備中です'); return; }
+            showSansuStep('sansu-step-hama'); renderHamaPanel();
+          })
+          .catch(() => showToast('灘合の対応表が読みこめませんでした'));
       } else {
         hideSansuSteps('rika-step-cat', 'rika-step-diff');
         showToast('もうすぐ追加されます！工事中🚧');

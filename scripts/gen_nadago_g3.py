@@ -4815,6 +4815,10 @@ def main():
     node4.setdefault("fukushu", {})
     node5 = d["grades"].setdefault("5", {}).setdefault("nadago", {})
     node5.setdefault("fukushu", {})
+    # ★理科は算数と別コースにする（本人指摘 2026-08-09）。
+    #   「算数の灘合にチャレンジ」に理科が混ざっていたので、理科ホームの灘合へ移した。
+    node5r = d["grades"].setdefault("5", {}).setdefault("nadago_rika", {})
+    node5r.setdefault("fukushu", {})
 
     bad, allids, total = [], [], 0
     G4LESSONS = {"1": [dict(q, grade=4) for q in G4],
@@ -4831,15 +4835,22 @@ def main():
                      "あり" if q["svg"] else "なし", q["src"]))
         print("")
 
-    g5 = sorted([dict(q, grade=5) for q in G5], key=_order)
-    check(g5, bad, allids)
-    total += sum(len(q["steps"]) for q in g5)
-    print("小5灘合 第6回：大問%d本／設問%d問" % (len(g5), sum(len(q["steps"]) for q in g5)))
-    for q in g5:
-        print("  ★%d %-11s %-28s 設問%d問 図%s  (%s)"
-              % (q["star"], q["id"], q["title"], len(q["steps"]),
-                 "あり" if q["svg"] else "なし", q["src"]))
-    print("")
+    g5all = sorted([dict(q, grade=5) for q in G5], key=_order)
+    check(g5all, bad, allids)
+    total += sum(len(q["steps"]) for q in g5all)
+    # 番号の前に r が付いているものが理科（hd5n_06_r1 など）
+    is_rika = lambda q: q["id"].rsplit("_", 1)[-1].startswith("r")
+    g5 = [q for q in g5all if not is_rika(q)]
+    g5r = [q for q in g5all if is_rika(q)]
+    assert len(g5) + len(g5r) == len(g5all) and g5r, "算数と理科の分け方がおかしい"
+    for nm, lst in (("算数", g5), ("理科", g5r)):
+        print("小5灘合（%s） 第6回：大問%d本／設問%d問"
+              % (nm, len(lst), sum(len(q["steps"]) for q in lst)))
+        for q in lst:
+            print("  ★%d %-11s %-28s 設問%d問 図%s  (%s)"
+                  % (q["star"], q["id"], q["title"], len(q["steps"]),
+                     "あり" if q["svg"] else "なし", q["src"]))
+        print("")
 
     for lesson in sorted(LESSONS, key=int):
         out = sorted([dict(q, grade=3) for q in LESSONS[lesson]], key=_order)
@@ -4884,6 +4895,7 @@ def main():
         for lesson, out in G4LESSONS.items():
             node4["fukushu"][lesson] = out
         node5["fukushu"]["6"] = g5
+        node5r["fukushu"]["6"] = g5r
         with io.open(DAIMON, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, indent=1)
         json.load(io.open(DAIMON, encoding="utf-8"))

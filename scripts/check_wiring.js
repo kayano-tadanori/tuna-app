@@ -69,8 +69,24 @@ for (const g of Object.keys(map.grades)) {
   }
   // ⛔灘合は公開学力テストに出ない別物。ほかの教科のじゅくナビに混ざってはいけない
   for (const subj of ['sansu', 'rika', 'kokugo']) {
-    if (Object.keys(coursesOf(g, subj)).includes('nadago')) {
-      fail(`小${g} の${subj}じゅくナビに灘合が混ざっている`);
+    for (const bad of ['nadago', 'nadago_rika']) {
+      if (Object.keys(coursesOf(g, subj)).includes(bad)) {
+        fail(`小${g} の${subj}じゅくナビに灘合(${bad})が混ざっている`);
+      }
+    }
+  }
+  // ⛔算数の灘合に理科が混ざってはいけない（本人指摘 2026-08-09）
+  if (Object.keys(coursesOf(g, 'nadago')).includes('nadago_rika')) {
+    fail(`小${g} の算数の灘合に理科の灘合が混ざっている`);
+  }
+  const dm = J('data/hama_daimon.json');
+  const nd = ((dm.grades[String(g)] || {}).nadago || {}).fukushu || {};
+  for (const [kai, list] of Object.entries(nd)) {
+    for (const q of list) {
+      if (['kitai', 'suiyoueki', 'denki', 'chikara', 'hikari_oto', 'shokubutsu',
+           'doubutsu', 'jintai', 'sora', 'tenki', 'daichi', 'mono'].includes(q.category)) {
+        fail(`小${g} 灘合(算数) 第${kai}回 の ${q.id} が理科の問題（category=${q.category}）`);
+      }
     }
   }
 }
