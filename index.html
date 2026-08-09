@@ -2153,8 +2153,10 @@
 <!-- app.js が12,000行を超えたので、セクション単位でファイルを分けた（2026-08-08）。
      ★コードは1行も書き換えていない。クラシックスクリプトのままなので、
        const/let/function は今までどおり全ファイルで共有される。
-     ⚠ この読み込み順は元の app.js の並び順そのもの。順番を変えないこと。 -->
+     ⚠ この読み込み順は元の app.js の並び順そのもの。順番を変えないこと。
+     ★2026-08-09：3ゲーム共通の音・ドット絵・ランキングを js/game-core.js に切り出した。 -->
 <script src="app.js"></script>
+<script src="js/game-core.js"></script>  <!-- ★ゲーム3種の共通土台。どのゲームより先に読む -->
 <script src="js/sansu.js"></script>
 <script src="js/books.js"></script>
 <script src="js/shakai-go.js"></script>
