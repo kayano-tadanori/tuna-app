@@ -1419,6 +1419,143 @@ L6.append({
     ],
 })
 
+def _kihon1_svg():
+    """HG-1941 ①直角二等辺（x=45°）と ③合同な2つの三角形（x=50°）"""
+    P = lambda x, y: (x, y)
+    body = []
+    # ① 直角二等辺三角形。左の辺と下の辺が等しく、左下が直角
+    # ★左の寸法は anchor=end なので、図を左はしに置くと枠から出る（実測 2026-08-09）
+    a, b, c = P(52, 116), P(52, 46), P(122, 116)     # 左下（直角）・上・右下
+    body.append('<polygon points="%d,%d %d,%d %d,%d" fill="#eaf0ff" stroke="%s" '
+                'stroke-width="2"/>' % (a[0], a[1], b[0], b[1], c[0], c[1], BLUE))
+    body.append('<path d="M 52 104 L 64 104 L 64 116" fill="none" stroke="%s" stroke-width="1.4"/>' % GRAY)
+    body.append(_t(44, 86, "5cm", GRAY, 10, anchor="end"))
+    body.append(_t(87, 132, "5cm", GRAY, 10))
+    body.append(_angle(b, a, c, "x", RED, 22, 38, 13))
+    body.append(_t(87, 26, "①", INK, 12, bold=True))
+    # ③ 四角形 ABCD。AB＝CD、BC＝DA。対角線BD。∠A＝60°、∠BDC＝70° → x＝∠DBC＝50°
+    o = 180.0
+    A, B, C, D = P(o + 30, 120), P(o + 65, 59.4), P(o + 150.8, 59.4), P(o + 115.8, 120)
+    body.append('<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="#eaf0ff" '
+                'stroke="%s" stroke-width="2"/>'
+                % (A[0], A[1], B[0], B[1], C[0], C[1], D[0], D[1], BLUE))
+    body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2"/>'
+                % (B[0], B[1], D[0], D[1], RED))
+    for p, s, dx, dy in ((A, "A", -12, 6), (B, "B", -10, -6), (C, "C", 12, -6), (D, "D", 10, 16)):
+        body.append(_t(p[0] + dx, p[1] + dy, s, INK, 11, bold=True))
+    body.append(_angle(A, B, D, "60°", ORANGE, 24, 40, 10))
+    # ★70°（Dのところ）と x（Bのところ）は対角線BDをはさんで向かい合うので、
+    #   ラベルを遠くに置くとたがいに近づく。半径を小さくして離す（実測 2026-08-09）
+    body.append(_angle(D, B, C, "70°", ORANGE, 20, 32, 10))
+    body.append(_angle(B, D, C, "x", RED, 20, 30, 13))
+    body.append(_t(o + 90, 26, "③", INK, 12, bold=True))
+    body.append(_t(o + 90, 150, "AB＝CD、BC＝DA", GRAY, 10))
+    return _svg(376, 164, "\n".join(body))
+
+
+def _kihon2_svg():
+    """HG-1942 ①30°（斜辺が2倍）②75°（長方形の中の2直線）③32°（円）"""
+    import math as _m
+    body = []
+    # ① 左の辺4cm・斜辺8cm・左下が直角。x は右下
+    a, b, c = (52.0, 116.0), (52.0, 76.0), (121.3, 116.0)
+    body.append('<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="#eaf0ff" stroke="%s" '
+                'stroke-width="2"/>' % (a[0], a[1], b[0], b[1], c[0], c[1], BLUE))
+    body.append('<path d="M 52 104 L 64 104 L 64 116" fill="none" stroke="%s" stroke-width="1.4"/>' % GRAY)
+    body.append(_t(44, 98, "4cm", GRAY, 10, anchor="end"))
+    body.append(_t(94, 88, "8cm", GRAY, 10))
+    body.append(_angle(c, b, a, "x", RED, 22, 38, 13))
+    body.append(_t(86, 26, "①", INK, 12, bold=True))
+    # ② 長方形の中に2本の直線。交点の左下が105°、x は ゆるい線と右の辺
+    o = 158.0
+    body.append('<rect x="%.0f" y="36" width="120" height="80" fill="none" stroke="%s" '
+                'stroke-width="2"/>' % (o, BLUE))
+    s1, e1 = (o + 30, 36.0), (o + 76.2, 116.0)          # 急な線（水平から60°下）
+    s2, e2 = (o, 96.0), (o + 120, 63.8)                 # ゆるい線（水平から15°上）
+    X = (o + 55.98, 81.0)
+    for s, e in ((s1, e1), (s2, e2)):
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.8"/>'
+                    % (s[0], s[1], e[0], e[1], ORANGE))
+    body.append(_angle(s1, (o + 120, 36.0), e1, "60°", GRAY, 20, 34, 10))
+    body.append(_angle(X, s2, e1, "105°", GRAY, 20, 36, 10))
+    # ★xは右の辺の**下向き**とのなす角（上向きだと105°になってしまう。実測で気づいた）
+    body.append(_angle(e2, X, (o + 120, 116.0), "x", RED, 18, 32, 13))
+    body.append(_t(o + 60, 26, "②", INK, 12, bold=True))
+    # ③ 円。直径ACと弦AB・BC。∠BAC＝58° → x＝∠BCA＝32°
+    o2, R = 330.0, 46.0
+    O = (o2 + 56, 82.0)
+    A = (O[0] - R, O[1])
+    C = (O[0] + R, O[1])
+    th = _m.radians(116)
+    B = (O[0] + R * _m.cos(th), O[1] - R * _m.sin(th))
+    body.append('<circle cx="%.1f" cy="%.1f" r="%.0f" fill="none" stroke="%s" stroke-width="1.6"/>'
+                % (O[0], O[1], R, GRAY))
+    for p, q in ((A, C), (A, B), (B, C)):
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2"/>'
+                    % (p[0], p[1], q[0], q[1], BLUE))
+    body.append('<circle cx="%.1f" cy="%.1f" r="2.6" fill="%s"/>' % (O[0], O[1], INK))
+    body.append(_t(O[0] + 2, O[1] + 14, "O", INK, 10, bold=True))
+    body.append(_t(A[0] - 10, A[1] + 4, "A", INK, 11, bold=True))
+    body.append(_t(C[0] + 10, C[1] + 4, "C", INK, 11, bold=True))
+    body.append(_t(B[0] - 4, B[1] - 8, "B", INK, 11, bold=True))
+    body.append(_angle(A, C, B, "58°", ORANGE, 24, 40, 10))
+    body.append(_angle(C, B, A, "x", RED, 24, 40, 13))
+    body.append(_t(o2 + 56, 26, "③", INK, 12, bold=True))
+    body.append(_t(o2 + 56, 150, "ACは直径", GRAY, 10))
+    return _svg(448, 164, "\n".join(body))
+
+
+L6 += [
+    {
+        "id": "hd3n_06_9", "src": "HG-1941", "star": 1,
+        "title": "角度の基本（二等辺と合同）", "category": "zu", "unit": "平面図形（角度）",
+        "intro": "長さが等しいことから角の大きさを決めます。\n"
+                 "①は左の辺と下の辺の長さが等しく、左下が直角の三角形です。\n"
+                 "③は四角形ABCDで、ABとCDの長さが等しく、BCとDAの長さも等しくなっています。"
+                 "対角線BDが引いてあり、Aの角は60°、Dのところの角（BDとDCの間）は70°です。",
+        "svg": _kihon1_svg(),
+        "steps": [
+            {"question": "①のxは何度ですか。", "answer": "45",
+             "meaning": "左の辺と下の辺が等しいので二等辺三角形。"
+                        "左下が直角なので、のこりの2つの角は等しく (180−90)÷2＝45°です。"
+                        "分度器を使わなくても、長さが等しいことだけで決まります。"},
+            {"question": "③で、Cの角（BCとCDの間）は何度ですか。", "answer": "60",
+             "meaning": "AB＝CD、BC＝DA、BDは共通なので、"
+                        "三角形ABDと三角形CDBはぴったり重なります（3つの辺が等しい）。"
+                        "だからCの角はAの角と同じ60°です。"},
+            {"question": "③のx（BDとBCの間の角）は何度ですか。", "answer": "50",
+             "meaning": "三角形BCDの内角の和から 180−60−70＝50°です。"
+                        "「60°を反対がわにも書ける」と気づけるかどうかがこの問題です。"},
+        ],
+    },
+    {
+        "id": "hd3n_06_10", "src": "HG-1942", "star": 2,
+        "title": "角度の基本（30°の三角形・平行線・円）", "category": "zu", "unit": "平面図形（角度）",
+        "intro": "①は左の辺が4cm、斜辺が8cmで、左下が直角の三角形です。\n"
+                 "②は長方形の中に2本の直線をひいたもので、"
+                 "急なほうの線が上の辺となす角は60°、2直線の交点の左下の角は105°です。\n"
+                 "③は円で、ACは直径です。Aのところの角（ACとABの間）は58°です。",
+        "svg": _kihon2_svg(),
+        "steps": [
+            {"question": "①のxは何度ですか。", "answer": "30",
+             "meaning": "斜辺8cmが左の辺4cmのちょうど2倍です。"
+                        "正三角形を半分にした形なので、xは30°になります。"},
+            {"question": "②で、ゆるいほうの線は水平から何度かたむいていますか。", "answer": "15",
+             "meaning": "急な線は水平から60°下を向いています。"
+                        "交点の左下の角が105°なので、ゆるい線は水平から15°上を向いています。"},
+            {"question": "②のx（ゆるい線と右の辺がつくる角）は何度ですか。", "answer": "75",
+             "meaning": "右の辺は垂直なので 90−15＝75°です。"},
+            {"question": "③のx（ACとCBの間の角）は何度ですか。", "answer": "32",
+             "meaning": "OA・OB・OCはどれも半径で長さが等しいので、"
+                        "三角形OABも三角形OBCも二等辺三角形です。"
+                        "∠OBA＝58°なので∠AOB＝180−58×2＝64°。"
+                        "一直線なので∠BOC＝180−64＝116°。"
+                        "三角形OBCから x＝(180−116)÷2＝32°です。"
+                        "58＋32＝90° になっていて、じつは∠ABCは直角です。"},
+        ],
+    },
+]
+
 LESSONS = {"2": L2, "3": L3, "4": L4, "5": L5, "6": L6}
 
 
