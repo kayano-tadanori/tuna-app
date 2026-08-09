@@ -2276,6 +2276,7 @@ LESSONS = {"2": L2, "3": L3, "4": L4, "5": L5, "6": L6, "7": L7,
 
 
 # ══════════ 小4 灘合 ══════════════════════════════════
+# （L8_9_10_ADD は下で定義してから LESSONS に足す）
 def _venn_svg():
     """HG-2304 3つの円の7つの部分。ふちどりの3つ（2つだけ重なる所）に斜線"""
     import math as _m
@@ -2641,6 +2642,196 @@ G4_2 = [
         ],
     },
 ]
+
+
+def _octagon2tri_svg():
+    """HG-1964 細長い三角形2つが交わって八角形をつくる。
+
+    ★交点がちょうど4つになるように置く。そうすると
+      「どちらの三角形にも属さない頂点2つ×2 ＋ 交点4つ ＝ 八角形」になる。
+      重なった部分（四角形）は点線、外がわ（八角形）は実線で描き分ける。
+    """
+    # ★八角形になる条件＝**交点4つ＋たがいに頂点を1つずつ内がわに差しこむ**（4＋2＋2＝8）。
+    #   「左右対称の細い三角形2つ」だと辺が平行になり交点が2つしかできず六角形になる。
+    #   下の座標は、その条件を満たすものを機械でさがして決めた（2026-08-09）
+    t1 = [(37.0, 43.0), (208.0, 48.0), (188.0, 138.0)]
+    t2 = [(188.0, 136.0), (38.0, 72.0), (243.0, 42.0)]
+
+    def seg_x(p1, p2, p3, p4):
+        d = (p2[0] - p1[0]) * (p4[1] - p3[1]) - (p2[1] - p1[1]) * (p4[0] - p3[0])
+        if abs(d) < 1e-9:
+            return None
+        t = ((p3[0] - p1[0]) * (p4[1] - p3[1]) - (p3[1] - p1[1]) * (p4[0] - p3[0])) / d
+        u = ((p3[0] - p1[0]) * (p2[1] - p1[1]) - (p3[1] - p1[1]) * (p2[0] - p1[0])) / d
+        if 0 < t < 1 and 0 < u < 1:
+            return (p1[0] + t * (p2[0] - p1[0]), p1[1] + t * (p2[1] - p1[1]))
+        return None
+
+    pts = []
+    for i in range(3):
+        for j in range(3):
+            r = seg_x(t1[i], t1[(i + 1) % 3], t2[j], t2[(j + 1) % 3])
+            if r:
+                pts.append(r)
+    body = ['<polygon points="%s" fill="none" stroke="%s" stroke-width="2"/>'
+            % (" ".join("%.1f,%.1f" % p for p in t1), BLUE),
+            '<polygon points="%s" fill="none" stroke="%s" stroke-width="2"/>'
+            % (" ".join("%.1f,%.1f" % p for p in t2), ORANGE)]
+    if len(pts) == 4:
+        cx = sum(p[0] for p in pts) / 4
+        cy = sum(p[1] for p in pts) / 4
+        import math as _m
+        pts.sort(key=lambda p: _m.atan2(p[1] - cy, p[0] - cx))
+        body.append('<polygon points="%s" fill="rgba(255,107,107,0.14)" stroke="%s" '
+                    'stroke-width="2" stroke-dasharray="5 3"/>'
+                    % (" ".join("%.1f,%.1f" % p for p in pts), RED))
+        body.append(_t("%.1f" % cx, "%.1f" % (cy + 4), "34cm", RED, 11, bold=True))
+    body.append(_t(136, 22, "どちらも3辺が 15cm・25cm・35cm の三角形", GRAY, 10))
+    body.append(_t(136, 158, "外がわの実線が八角形", GRAY, 10))
+    body.append(_t(136, 172, "点線が重なった部分（まわり34cm）", GRAY, 10))
+    return _svg(272, 184, "\n".join(body))
+
+
+def _cubocta_svg():
+    """HG-1974 立方体（点線）のかどを、各辺のまん中まで切り落とした立体"""
+    import math as _m
+    s, cx, cy = 30.0, 118.0, 108.0
+    P = lambda x, y, z: (cx + (x - y) * s * 0.866, cy + (x + y) * s * 0.5 - z * s)
+    cube = [(-1, -1, -1), (1, -1, -1), (1, 1, -1), (-1, 1, -1),
+            (-1, -1, 1), (1, -1, 1), (1, 1, 1), (-1, 1, 1)]
+    edges = [(0, 1), (1, 2), (2, 3), (3, 0), (4, 5), (5, 6), (6, 7), (7, 4),
+             (0, 4), (1, 5), (2, 6), (3, 7)]
+    body = []
+    for a, b in edges:                       # もとの立方体は点線
+        p, q = P(*cube[a]), P(*cube[b])
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                    'stroke-width="1.1" stroke-dasharray="4 3"/>' % (p[0], p[1], q[0], q[1], GRAY))
+    # 各辺のまん中＝新しい頂点（12こ）
+    mids = []
+    for a, b in edges:
+        mids.append(tuple((cube[a][i] + cube[b][i]) / 2 for i in range(3)))
+    for m in mids:
+        p = P(*m)
+        body.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s"/>' % (p[0], p[1], RED))
+    # 立方八面体の辺＝中点どうしの距離が √2 のもの
+    for i in range(len(mids)):
+        for j in range(i + 1, len(mids)):
+            d = _m.dist(mids[i], mids[j])
+            if abs(d - _m.sqrt(2)) < 1e-6:
+                p, q = P(*mids[i]), P(*mids[j])
+                body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                            'stroke-width="1.8"/>' % (p[0], p[1], q[0], q[1], BLUE))
+    body.append(_t(118, 204, "点線＝もとの立方体。●＝各辺のまん中", GRAY, 11))
+    return _svg(236, 216, "\n".join(body))
+
+
+def _spiral_svg():
+    """HG-1990 うずまきに1から整数をうめた方眼。㋐と㋑の場所に印"""
+    grid = {}
+    grid[(0, 0)] = 1
+    n = 1
+    for k in range(1, 5):
+        x, y = 0, -k
+        n += 1
+        grid[(x, y)] = n
+        for dx, dy, cnt in ((-1, 0, k), (0, 1, 2 * k), (1, 0, 2 * k),
+                            (0, -1, 2 * k), (-1, 0, k - 1)):
+            for _ in range(cnt):
+                x, y = x + dx, y + dy
+                n += 1
+                grid[(x, y)] = n
+    cell = 30.0
+    ox, oy = 118.0, 96.0
+    body = []
+    for gx in range(-2, 3):
+        for gy in range(-4, 3):
+            v = grid.get((gx, gy))
+            X, Y = ox + gx * cell, oy - gy * cell
+            show = v is not None and v <= 27
+            mark = "㋐" if (gx, gy) == (1, -4) else ""
+            if not show and not mark:
+                continue
+            body.append('<rect x="%.1f" y="%.1f" width="%.0f" height="%.0f" fill="%s" '
+                        'stroke="%s" stroke-width="1.2"/>'
+                        % (X - cell / 2, Y - cell / 2, cell, cell,
+                           "#fff7f0" if mark else "#f8f9ff", GRAY))
+            body.append(_t("%.1f" % X, "%.1f" % (Y + 5), mark or str(v),
+                           RED if mark else INK, 13, bold=bool(mark)))
+    # ㋑＝1から右へ5番目（この図の外なので、右に矢印で示す）
+    body.append(_t(ox + 2.6 * cell, oy + 5, "→", GRAY, 16, anchor="start"))
+    body.append(_t(ox + 3.4 * cell, oy + 5, "㋑", RED, 13, anchor="start", bold=True))
+    body.append(_t(118, 264, "㋑は1から右へ5番目のマス", GRAY, 11))
+    return _svg(252, 276, "\n".join(body))
+
+
+L8_9_10_ADD = [
+    {
+        "id": "hd3n_08_4", "src": "HG-1964", "star": 3,
+        "title": "三角形2つを重ねて八角形をつくる", "category": "zu", "unit": "平面図形（面積）",
+        "intro": "3辺が15cm、25cm、35cmの三角形2こを、右の図のように重ね合わせたところ、"
+                 "重なった部分（点線部分）のまわりの長さは34cmになりました。",
+        "svg": _octagon2tri_svg(),
+        "steps": [
+            {"question": "三角形1このまわりの長さは何cmですか。", "answer": "75",
+             "meaning": "15＋25＋35＝75cmです。"},
+            {"question": "三角形2この まわりの長さの合計は何cmですか。", "answer": "150",
+             "meaning": "75×2＝150cmです。"},
+            {"question": "八角形（実線部分）のまわりの長さは何cmですか。", "answer": "116",
+             "meaning": "2つの三角形のまわりを足すと、重なった部分のまわりを2回数えたことになります。"
+                        "そのうち1回ぶん（34cm）は八角形の外がわではないので引きます。"
+                        "150−34＝116cmです。"},
+        ],
+    },
+    {
+        "id": "hd3n_09_4", "src": "HG-1974", "star": 3,
+        "title": "立方体のかどを切り取った立体", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "立方体のかどを、各辺のまん中まで同じように切り取って、右の図の立体を作りました。"
+                 "切り口は三角形になります。",
+        "svg": _cubocta_svg(),
+        "steps": [
+            {"question": "この立体の頂点は、もとの立方体の何と同じ数ですか。",
+             "answer": "辺", "choices": ["辺", "頂点", "面"],
+             "meaning": "切り口が各辺のまん中を通るので、新しい頂点はもとの辺の上に1つずつできます。"},
+            {"question": "この立体の頂点は何こありますか。", "answer": "12",
+             "meaning": "立方体の辺は12本なので12こです。"},
+            {"question": "この立体の辺は何本ありますか。", "answer": "24",
+             "meaning": "もとの頂点8こそれぞれに切り口の三角形（辺3本）ができるので 8×3＝24本。"
+                        "もとの面6つそれぞれに正方形（辺4本）ができるので 6×4＝24本。"
+                        "2通りの数え方が同じ答えになります。"},
+            {"question": "この立体の面はいくつありますか。", "answer": "14",
+             "meaning": "もとの面から残った正方形6つと、切り口の三角形8つで14です。"
+                        "たしかめ 頂点12＋面14−辺24＝2 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_10_10", "src": "HG-1990", "star": 3,
+        "title": "方眼にうずまき状に整数をうめる", "category": "kisoku", "unit": "規則性・数列",
+        "intro": "方眼に、1から順に整数を右の図のようにうずまき状にうめていきます。",
+        "svg": _spiral_svg(),
+        "steps": [
+            {"question": "1のすぐ右の列を下へ見ていくと 9, 25, 49, … とならびます。"
+                         "これは何の数の2乗ですか。3つ目の49は何の2乗ですか。", "answer": "7",
+             "meaning": "9＝3×3、25＝5×5、49＝7×7 と、奇数の2乗がならびます。"
+                        "うずまきが一周し終わる場所です。"},
+            {"question": "㋐に入る数はいくつですか。", "answer": "81",
+             "meaning": "㋐は1のすぐ右の列を下に4つ目なので 9×9＝81です。"},
+            {"question": "1から右へ 8, 22, 44, 74, … とならびます。"
+                         "この差は 14, 22, 30, … と何ずつふえますか。", "answer": "8",
+             "meaning": "22−8＝14、44−22＝22、74−44＝30 と、差が8ずつふえます。"},
+            {"question": "㋑（1から右へ5番目）に入る数はいくつですか。", "answer": "112",
+             "meaning": "74に次の差38をたして112です。"},
+            {"question": "1から右へ10番目の場所に入る数はいくつですか。", "answer": "422",
+             "meaning": "112から 46, 54, 62, 70, 78 と足していくと "
+                        "158, 212, 274, 344, 422。10番目は422です。"},
+        ],
+    },
+]
+
+# 図が要るぶんを、それぞれの回に足す
+LESSONS.setdefault("8", [])
+for _q in L8_9_10_ADD:
+    _no = _q["id"].split("_")[1]              # hd3n_08_4 → "08"
+    LESSONS.setdefault(str(int(_no)), []).append(_q)
 
 
 G5 = [
