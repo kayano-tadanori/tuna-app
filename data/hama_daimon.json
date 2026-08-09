@@ -39752,86 +39752,38 @@
        "title": "方眼の図形を軸で1回転させる",
        "category": "rittai",
        "unit": "立体図形（体積・表面積）",
-       "intro": "右の方眼紙（1マス＝1cm）に2つの図形㋐、㋑をかきました。㋐、㋑を太線ℓを軸として1回転させてできる立体を、それぞれA、Bとします。㋑はいちばん下の段だけ軸からはなれているので、Bは下のほうがドーナツのように中がうつろになります。円周率は3.14とします。",
-       "svg": "<svg viewBox=\"0 0 240 322\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"64.0\" y1=\"22.0\" x2=\"64.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"80.0\" y1=\"22.0\" x2=\"80.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"96.0\" y1=\"22.0\" x2=\"96.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"112.0\" y1=\"22.0\" x2=\"112.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"128.0\" y1=\"22.0\" x2=\"128.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"144.0\" y1=\"22.0\" x2=\"144.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"160.0\" y1=\"22.0\" x2=\"160.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"176.0\" y1=\"22.0\" x2=\"176.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"22.0\" x2=\"176.0\" y2=\"22.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"38.0\" x2=\"176.0\" y2=\"38.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"54.0\" x2=\"176.0\" y2=\"54.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"70.0\" x2=\"176.0\" y2=\"70.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"86.0\" x2=\"176.0\" y2=\"86.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"102.0\" x2=\"176.0\" y2=\"102.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"118.0\" x2=\"176.0\" y2=\"118.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"134.0\" x2=\"176.0\" y2=\"134.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"150.0\" x2=\"176.0\" y2=\"150.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"166.0\" x2=\"176.0\" y2=\"166.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"182.0\" x2=\"176.0\" y2=\"182.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"198.0\" x2=\"176.0\" y2=\"198.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"214.0\" x2=\"176.0\" y2=\"214.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"230.0\" x2=\"176.0\" y2=\"230.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"246.0\" x2=\"176.0\" y2=\"246.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"262.0\" x2=\"176.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"278.0\" x2=\"176.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"22.0\" x2=\"64.0\" y2=\"278.0\" stroke=\"#1a2340\" stroke-width=\"3.2\"/>\n<text x=\"64.0\" y=\"15.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ℓ</text>\n<polygon points=\"64.0,38.0 128.0,38.0 128.0,86.0 64.0,86.0\" fill=\"#4f7cff\" fill-opacity=\"0.13\" stroke=\"#4f7cff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<text x=\"84.8\" y=\"68.4\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">㋐</text>\n<polygon points=\"64.0,118.0 96.0,118.0 96.0,166.0 160.0,166.0 160.0,262.0 96.0,262.0 96.0,214.0 64.0,214.0\" fill=\"#ff9a44\" fill-opacity=\"0.13\" stroke=\"#ff9a44\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<text x=\"83.2\" y=\"143.6\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">㋑</text>\n<text x=\"64.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">0</text>\n<text x=\"80.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text>\n<text x=\"96.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text>\n<text x=\"112.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text>\n<text x=\"128.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text>\n<text x=\"144.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text>\n<text x=\"160.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text>\n<text x=\"120.0\" y=\"310.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1マス＝1cm　太線ℓが回転の軸</text>\n</svg>",
+       "intro": "右の方眼紙（1マス＝1cm）に2つの図形㋐、㋑をかきました。㋐、㋑を太線ℓを軸として1回転させてできる立体を、それぞれA、Bとします。㋑の下半分は軸からはなれているので、Bはドーナツのように中がうつろになります。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"0 0 240 306\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"64.0\" y1=\"22.0\" x2=\"64.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"80.0\" y1=\"22.0\" x2=\"80.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"96.0\" y1=\"22.0\" x2=\"96.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"112.0\" y1=\"22.0\" x2=\"112.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"128.0\" y1=\"22.0\" x2=\"128.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"144.0\" y1=\"22.0\" x2=\"144.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"160.0\" y1=\"22.0\" x2=\"160.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"176.0\" y1=\"22.0\" x2=\"176.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"22.0\" x2=\"176.0\" y2=\"22.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"38.0\" x2=\"176.0\" y2=\"38.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"54.0\" x2=\"176.0\" y2=\"54.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"70.0\" x2=\"176.0\" y2=\"70.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"86.0\" x2=\"176.0\" y2=\"86.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"102.0\" x2=\"176.0\" y2=\"102.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"118.0\" x2=\"176.0\" y2=\"118.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"134.0\" x2=\"176.0\" y2=\"134.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"150.0\" x2=\"176.0\" y2=\"150.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"166.0\" x2=\"176.0\" y2=\"166.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"182.0\" x2=\"176.0\" y2=\"182.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"198.0\" x2=\"176.0\" y2=\"198.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"214.0\" x2=\"176.0\" y2=\"214.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"230.0\" x2=\"176.0\" y2=\"230.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"246.0\" x2=\"176.0\" y2=\"246.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"262.0\" x2=\"176.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"22.0\" x2=\"64.0\" y2=\"262.0\" stroke=\"#1a2340\" stroke-width=\"3.2\"/>\n<text x=\"64.0\" y=\"15.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ℓ</text>\n<polygon points=\"64.0,38.0 128.0,38.0 128.0,86.0 64.0,86.0\" fill=\"#4f7cff\" fill-opacity=\"0.13\" stroke=\"#4f7cff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<text x=\"84.8\" y=\"68.4\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">㋐</text>\n<polygon points=\"64.0,118.0 96.0,118.0 96.0,150.0 128.0,150.0 128.0,182.0 160.0,182.0 160.0,246.0 128.0,246.0 128.0,214.0 96.0,214.0 96.0,182.0 64.0,182.0\" fill=\"#ff9a44\" fill-opacity=\"0.13\" stroke=\"#ff9a44\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<text x=\"83.2\" y=\"140.4\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">㋑</text>\n<text x=\"64.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">0</text>\n<text x=\"80.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text>\n<text x=\"96.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text>\n<text x=\"112.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text>\n<text x=\"128.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text>\n<text x=\"144.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text>\n<text x=\"160.0\" y=\"275.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text>\n<text x=\"120.0\" y=\"294.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1マス＝1cm　太線ℓが回転の軸</text>\n</svg>",
        "steps": [
         {
          "question": "Aの体積は □×3.14 cm³ と表せます。□に入る数はいくつですか。",
          "answer": "48",
-         "meaning": "㋐は横4cm・たて3cmで軸ℓにぴったりくっついているので、Aは半径4cm・高さ3cmの円柱です。4×4×3＝48 なので 48×3.14 cm³ です。"
+         "meaning": "㋐は横4cm・たて3cmで軸ℓにぴったりくっついているので、Aは半径4cm・高さ3cmの円柱です。4×4×3＝48です。"
         },
         {
          "question": "Bの体積は □×3.14 cm³ です。□に入る数はいくつですか。",
-         "answer": "216",
-         "meaning": "㋑は高さ3cmずつの3段です。上の段は半径2の円柱で 2×2×3＝12。まん中の段は半径6の円柱で 6×6×3＝108。下の段は外6・内2のドーナツで (6×6−2×2)×3＝96。12＋108＋96＝216 です。"
+         "answer": "144",
+         "meaning": "㋑は高さ2cmずつの4段です。上から順に、半径2の円柱＝2×2×2＝8、半径4の円柱＝4×4×2＝32、外6・内2のドーナツ＝(36−4)×2＝64、外6・内4のドーナツ＝(36−16)×2＝40。8＋32＋64＋40＝144です。"
         },
         {
-         "question": "AとBの体積の比を、いちばん簡単な整数の比で 2：□ と表すと□はいくつですか。",
-         "answer": "9",
-         "meaning": "48：216 を24でわって **2：9** です。3.14 は両方にかかっているので、比では消えます。"
+         "question": "AとBの体積の比を、いちばん簡単な整数の比で 1：□ と表すと□はいくつですか。",
+         "answer": "3",
+         "meaning": "48：144＝**1：3** です。3.14 は両方にかかっているので、比では消えます。"
         },
         {
          "question": "Aの表面積は □×3.14 cm² です。□に入る数はいくつですか。",
          "answer": "56",
-         "meaning": "側面が 2×4×3＝24、上と下のまるい面が 4×4×2＝32。24＋32＝56 です。"
+         "meaning": "側面が 2×4×3＝24、上と下のまるい面が 4×4×2＝32。24＋32＝56です。"
         },
         {
          "question": "Bの表面積は □×3.14 cm² です。□に入る数はいくつですか。",
          "answer": "168",
-         "meaning": "**横を向いた面**（輪）は、いちばん上のふた 2×2＝4、まん中の段がはみ出した輪 6×6−2×2＝32、うつろの天井 2×2＝4、いちばん下の輪 32 で、合わせて72。\n**たてを向いた面**（筒）は、外がわが 2×2×3＝12、2×6×3＝36、2×6×3＝36 で84、内がわのかべが 2×2×3＝12。合わせて96。\n72＋96＝168 です。**うつろの中のかべ12を数え落とすと156**になってしまいます。"
+         "meaning": "**横を向いた面**（輪）は 上を向いたものが 4＋12＋20＝36、下を向いたものも36で72。\n**たてを向いた面**（筒）は、外がわが 8＋16＋24＋24＝72、内がわのかべが 8＋16＝24 で96。\n72＋96＝168です。**うつろの中のかべ24を数え落とすと144**になってしまいます。"
         },
         {
          "question": "AとBの表面積の比は 1：□ になります。□はいくつですか。",
          "answer": "3",
-         "meaning": "56：168＝**1：3** です。\n体積の比は2：9だったのに、表面積の比は1：3。**体積の比と表面積の比はちがう**というのが、この問題のいちばんの見どころです。"
-        }
-       ],
-       "grade": 5
-      },
-      {
-       "id": "hd5n_06_2",
-       "src": "HG-2202",
-       "star": 2,
-       "title": "ふたのない容器の展開図",
-       "category": "rittai",
-       "unit": "立体図形（体積・表面積）",
-       "intro": "右の図は、**ふたのない容器の展開図**です。こい色の部分が底になり、まわりの4つの面が立ち上がります。\nこの容器にぴったりのふたを作るとすれば、ふたの面積は何cm²で、この容器に入る水の体積は何cm³ですか。",
-       "svg": "<svg viewBox=\"0 0 300 324\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"91.2,106.0 219.2,106.0 219.2,234.0 187.2,234.0\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"91.2,106.0 91.2,42.0 187.2,42.0 219.2,106.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"219.2,106.0 290.8,106.0 290.8,234.0 219.2,234.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"91.2,106.0 40.0,144.4 136.0,272.4 187.2,234.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"187.2,234.0 219.2,234.0 187.2,298.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<text x=\"139.2\" y=\"35.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">15cm</text>\n<text x=\"67.2\" y=\"78.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">10cm</text>\n<text x=\"155.2\" y=\"121.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<text x=\"241.2\" y=\"174.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<text x=\"201.2\" y=\"226.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">5cm</text>\n<text x=\"139.2\" y=\"170.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">底</text>\n<text x=\"150.0\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ふたのない容器の展開図（長さは実物どおり）</text>\n<text x=\"150.0\" y=\"316.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">こい色が底の面。まわりの4面が立ち上がる</text>\n</svg>",
-       "steps": [
-        {
-         "question": "底の面は、平行な2つの辺が20cmと5cm、高さが20cmの台形です。底の面積は何cm²ですか。",
-         "answer": "250",
-         "meaning": "(20＋5)×20÷2＝250cm²です。"
-        },
-        {
-         "question": "まわりの4つの面は、どれも底から何cmのところまで立ち上がりますか。",
-         "answer": "10",
-         "meaning": "斜めの辺につく長方形のはばが10cm、上の面の高さも10cm、三角形の面の たての辺も10cm。**どれも10cm**なので、容器の深さは10cmです。"
-        },
-        {
-         "question": "上の面は、底の20cmの辺につきますが、上のはしは15cmしかありません。たりない分は何cmですか。",
-         "answer": "5",
-         "meaning": "20−15＝5cmです。このすき間と、下の5cmのところのすき間を、**右の面がななめに たおれて ふさぎます**。だから右の面のはばだけ、目もりがついていません。"
-        },
-        {
-         "question": "ふたは水平な直角三角形になります。直角をはさむ2つの辺は15cmと20cmです。ふたの面積は何cm²ですか。",
-         "answer": "150",
-         "meaning": "15×20÷2＝**150cm²**です。上の面の15cmと、底の高さの20cmが、そのまま直角をはさむ2辺になります。"
-        },
-        {
-         "question": "ふたの真下の部分（三角柱）の体積は何cm³ですか。",
-         "answer": "1500",
-         "meaning": "150×10＝1500cm³です。"
-        },
-        {
-         "question": "のこりの部分は、上がななめに落ちる形（くさび形）です。その体積は何cm³ですか。",
-         "answer": "500",
-         "meaning": "底は 5cm×20cm の長方形で、高さが10cmから0cmへ ななめに落ちます。5×10÷2×20＝500cm³です。"
-        },
-        {
-         "question": "この容器に入る水の体積は何cm³ですか。",
-         "answer": "2000",
-         "meaning": "1500＋500＝**2000cm³**です。細かく切って足し合わせる計算でも2000になりました。\n**たしかめ**：はり合わせる辺は、Aのところで10cmと10cm、Dのところで10cmと10cm、BとCのところでは上の面のななめの辺・三角形の斜辺・右の面のはばがどれも同じ長さになり、4か所ともぴったり合います。"
+         "meaning": "56：168＝**1：3** です。体積の比も表面積の比も1：3になります。"
         }
        ],
        "grade": 5
@@ -39978,6 +39930,92 @@
          "question": "この立体の表面積は何cm²ですか。",
          "answer": "1848",
          "meaning": "**わになって閉じているので、切り口（だ円）はすべて内側にかくれます**。だから表面は側面だけで1848cm²です。切り口を数えてしまうと まちがいになります。円周率が22/7 なのは、98が7でわり切れて答えがきれいになるためです。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_8",
+       "src": "HG-2268",
+       "star": 3,
+       "title": "方眼の図形を軸で1回転させる（本体・大問2）",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "こんどは㋑の形がちがいます。右の方眼紙（1マス＝1cm）の㋐、㋑を、太線ℓを軸として1回転させてできる立体をA、Bとします。㋑はいちばん下の段だけ軸からはなれています。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"0 0 240 322\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"64.0\" y1=\"22.0\" x2=\"64.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"80.0\" y1=\"22.0\" x2=\"80.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"96.0\" y1=\"22.0\" x2=\"96.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"112.0\" y1=\"22.0\" x2=\"112.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"128.0\" y1=\"22.0\" x2=\"128.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"144.0\" y1=\"22.0\" x2=\"144.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"160.0\" y1=\"22.0\" x2=\"160.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"176.0\" y1=\"22.0\" x2=\"176.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"22.0\" x2=\"176.0\" y2=\"22.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"38.0\" x2=\"176.0\" y2=\"38.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"54.0\" x2=\"176.0\" y2=\"54.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"70.0\" x2=\"176.0\" y2=\"70.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"86.0\" x2=\"176.0\" y2=\"86.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"102.0\" x2=\"176.0\" y2=\"102.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"118.0\" x2=\"176.0\" y2=\"118.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"134.0\" x2=\"176.0\" y2=\"134.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"150.0\" x2=\"176.0\" y2=\"150.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"166.0\" x2=\"176.0\" y2=\"166.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"182.0\" x2=\"176.0\" y2=\"182.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"198.0\" x2=\"176.0\" y2=\"198.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"214.0\" x2=\"176.0\" y2=\"214.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"230.0\" x2=\"176.0\" y2=\"230.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"246.0\" x2=\"176.0\" y2=\"246.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"262.0\" x2=\"176.0\" y2=\"262.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"278.0\" x2=\"176.0\" y2=\"278.0\" stroke=\"#dde3f5\" stroke-width=\"1\"/>\n<line x1=\"64.0\" y1=\"22.0\" x2=\"64.0\" y2=\"278.0\" stroke=\"#1a2340\" stroke-width=\"3.2\"/>\n<text x=\"64.0\" y=\"15.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ℓ</text>\n<polygon points=\"64.0,38.0 128.0,38.0 128.0,86.0 64.0,86.0\" fill=\"#4f7cff\" fill-opacity=\"0.13\" stroke=\"#4f7cff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<text x=\"84.8\" y=\"68.4\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">㋐</text>\n<polygon points=\"64.0,118.0 96.0,118.0 96.0,166.0 160.0,166.0 160.0,262.0 96.0,262.0 96.0,214.0 64.0,214.0\" fill=\"#ff9a44\" fill-opacity=\"0.13\" stroke=\"#ff9a44\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<text x=\"83.2\" y=\"143.6\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">㋑</text>\n<text x=\"64.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">0</text>\n<text x=\"80.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1</text>\n<text x=\"96.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2</text>\n<text x=\"112.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3</text>\n<text x=\"128.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">4</text>\n<text x=\"144.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5</text>\n<text x=\"160.0\" y=\"291.0\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">6</text>\n<text x=\"120.0\" y=\"310.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1マス＝1cm　太線ℓが回転の軸</text>\n</svg>",
+       "steps": [
+        {
+         "question": "Aの体積は □×3.14 cm³ です。□に入る数はいくつですか。",
+         "answer": "48",
+         "meaning": "半径4cm・高さ3cmの円柱なので 4×4×3＝48です（㋐は前の問題と同じ）。"
+        },
+        {
+         "question": "Bの体積は □×3.14 cm³ です。□に入る数はいくつですか。",
+         "answer": "216",
+         "meaning": "㋑は高さ3cmずつの3段です。上の段は半径2の円柱で 2×2×3＝12。まん中の段は半径6の円柱で 6×6×3＝108。下の段は外6・内2のドーナツで (36−4)×3＝96。12＋108＋96＝216です。"
+        },
+        {
+         "question": "AとBの体積の比を、いちばん簡単な整数の比で 2：□ と表すと□はいくつですか。",
+         "answer": "9",
+         "meaning": "48：216 を24でわって **2：9** です。"
+        },
+        {
+         "question": "Bの表面積は □×3.14 cm² です。□に入る数はいくつですか。",
+         "answer": "168",
+         "meaning": "横を向いた面は 上のふた4＋はみ出した輪32＋うつろの天井4＋下の輪32＝72。たてを向いた面は 外がわ 12＋36＋36＝84、内がわのかべ12で96。72＋96＝168です。"
+        },
+        {
+         "question": "AとBの表面積の比は 1：□ になります。□はいくつですか。",
+         "answer": "3",
+         "meaning": "56：168＝**1：3**。\n**体積の比は2：9なのに、表面積の比は1：3**。前の問題（どちらも1：3）とくらべると、**形が少しちがうだけで比がそろわなくなる**ことが分かります。ここがこの問題のいちばんの見どころです。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_9",
+       "src": "HG-2269",
+       "star": 2,
+       "title": "ふたのない容器の展開図（本体・大問3）",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "右の図は、**ふたのない容器の展開図**です。こい色の部分が底になり、まわりの4つの面が立ち上がります。\nこの容器にぴったりのふたを作るとすれば、ふたの面積は何cm²で、この容器に入る水の体積は何cm³ですか。",
+       "svg": "<svg viewBox=\"0 0 300 324\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"91.2,106.0 219.2,106.0 219.2,234.0 187.2,234.0\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"91.2,106.0 91.2,42.0 187.2,42.0 219.2,106.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"219.2,106.0 290.8,106.0 290.8,234.0 219.2,234.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"91.2,106.0 40.0,144.4 136.0,272.4 187.2,234.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<polygon points=\"187.2,234.0 219.2,234.0 187.2,298.0\" fill=\"rgba(79,124,255,0.06)\" stroke=\"#1a2340\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>\n<text x=\"139.2\" y=\"35.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">15cm</text>\n<text x=\"67.2\" y=\"78.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">10cm</text>\n<text x=\"155.2\" y=\"121.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<text x=\"241.2\" y=\"174.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<text x=\"201.2\" y=\"226.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">5cm</text>\n<text x=\"139.2\" y=\"170.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">底</text>\n<text x=\"150.0\" y=\"18\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">ふたのない容器の展開図（長さは実物どおり）</text>\n<text x=\"150.0\" y=\"316.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">こい色が底の面。まわりの4面が立ち上がる</text>\n</svg>",
+       "steps": [
+        {
+         "question": "底の面は、平行な2つの辺が20cmと5cm、高さが20cmの台形です。底の面積は何cm²ですか。",
+         "answer": "250",
+         "meaning": "(20＋5)×20÷2＝250cm²です。"
+        },
+        {
+         "question": "まわりの4つの面は、どれも底から何cmのところまで立ち上がりますか。",
+         "answer": "10",
+         "meaning": "斜めの辺につく長方形のはばが10cm、上の面の高さも10cm、三角形の面の たての辺も10cm。**どれも10cm**なので、容器の深さは10cmです。"
+        },
+        {
+         "question": "上の面は、底の20cmの辺につきますが、上のはしは15cmしかありません。たりない分は何cmですか。",
+         "answer": "5",
+         "meaning": "20−15＝5cmです。このすき間と、下の5cmのところのすき間を、**右の面がななめに たおれて ふさぎます**。だから右の面のはばだけ、目もりがついていません。"
+        },
+        {
+         "question": "ふたは水平な直角三角形になります。直角をはさむ2つの辺は15cmと20cmです。ふたの面積は何cm²ですか。",
+         "answer": "150",
+         "meaning": "15×20÷2＝**150cm²**です。上の面の15cmと、底の高さの20cmが、そのまま直角をはさむ2辺になります。"
+        },
+        {
+         "question": "ふたの真下の部分（三角柱）の体積は何cm³ですか。",
+         "answer": "1500",
+         "meaning": "150×10＝1500cm³です。"
+        },
+        {
+         "question": "のこりの部分は、上がななめに落ちる形（くさび形）です。その体積は何cm³ですか。",
+         "answer": "500",
+         "meaning": "底は 5cm×20cm の長方形で、高さが10cmから0cmへ ななめに落ちます。5×10÷2×20＝500cm³です。"
+        },
+        {
+         "question": "この容器に入る水の体積は何cm³ですか。",
+         "answer": "2000",
+         "meaning": "1500＋500＝**2000cm³**です。細かく切って足し合わせる計算でも2000になりました。\n**たしかめ**：はり合わせる辺は、Aのところで10cmと10cm、Dのところで10cmと10cm、BとCのところでは上の面のななめの辺・三角形の斜辺・右の面のはばがどれも同じ長さになり、4か所ともぴったり合います。"
         }
        ],
        "grade": 5
