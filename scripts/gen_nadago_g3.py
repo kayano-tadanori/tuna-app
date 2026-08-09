@@ -2275,12 +2275,224 @@ LESSONS = {"2": L2, "3": L3, "4": L4, "5": L5, "6": L6, "7": L7,
            "9": L9, "10": L10, "11": L11, "12": L12}
 
 
+# ══════════ 小4 灘合 ══════════════════════════════════
+def _venn_svg():
+    """HG-2304 3つの円の7つの部分。ふちどりの3つ（2つだけ重なる所）に斜線"""
+    import math as _m
+    R, r = 46.0, 30.0
+    O = (110.0, 100.0)
+    cs = [(O[0] + r * _m.cos(_m.radians(90 + i * 120)),
+           O[1] - r * _m.sin(_m.radians(90 + i * 120))) for i in range(3)]
+    body = ['<defs><pattern id="hat" width="7" height="7" patternUnits="userSpaceOnUse" '
+            'patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="%s" '
+            'stroke-width="2"/></pattern></defs>' % GRAY]
+    for c in cs:
+        body.append('<circle cx="%.1f" cy="%.1f" r="%.0f" fill="rgba(79,124,255,0.08)" '
+                    'stroke="%s" stroke-width="2"/>' % (c[0], c[1], R, BLUE))
+    # 「2つだけ重なる」3か所の目印（斜線のかわりに小さな印を置く）
+    for i in range(3):
+        a, b = cs[i], cs[(i + 1) % 3]
+        mx, my = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
+        px = O[0] + (mx - O[0]) * 1.75
+        py = O[1] + (my - O[1]) * 1.75
+        body.append('<circle cx="%.1f" cy="%.1f" r="9" fill="url(#hat)" stroke="%s" '
+                    'stroke-width="1"/>' % (px, py, GRAY))
+    # ★1行だと枠から左右にはみ出す（実測 2026-08-09）。2行に分ける
+    body.append(_t(110, 190, "しゃ線の3か所は同じ色", GRAY, 10))
+    body.append(_t(110, 206, "のこり4か所に3色を全部使う", GRAY, 10))
+    return _svg(220, 218, "\n".join(body))
+
+
+G4 = [
+    {
+        "id": "hd4n_01_1", "src": "HG-2301", "star": 3,
+        "title": "3人が4種類から2種類ずつ", "category": "baai", "unit": "場合の数",
+        "intro": "レストランでA、B、Cの3人が、4種類の料理の中から1人2種類ずつ注文します。"
+                 "AとBの2人について共通に選んだ料理は1種類だけであり、"
+                 "AとC、BとCについても共通に選んだ料理が1種類だけです。",
+        "svg": "",
+        "steps": [
+            {"question": "4種類から2種類を選ぶ選び方は何通りですか。", "answer": "6",
+             "meaning": "4×3÷2＝6通りです。"},
+            {"question": "Aの選び方が決まったとき、Bの選び方は何通りありますか。", "answer": "4",
+             "meaning": "Aと共通が1種類だけになるのは、Aの2種類のうち1つを使い、"
+                        "のこりの2種類から1つを使うとき。2×2＝4通りです。"},
+            {"question": "このような注文の仕方は全部で何通りですか。", "answer": "48",
+             "meaning": "AとBを決めると、Cは A・B の両方とちょうど1種類ずつ共通になるように"
+                        "選ぶことになり、その選び方は2通りです。6×4×2＝48通りです。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_2", "src": "HG-2302", "star": 3,
+        "title": "50円玉と100円玉のさいふ", "category": "baai", "unit": "場合の数",
+        "intro": "50円玉と100円玉ばかり、あわせて20個入ったさいふを持って本を買いに行きました。"
+                 "本を1冊買った後、さいふの中を見ると12枚の硬貨が入っており、"
+                 "その金額は本を買った金額と同じでした。おつりはもらっていません。",
+        "svg": "",
+        "steps": [
+            {"question": "本を買うのに使った硬貨は何枚ですか。", "answer": "8",
+             "meaning": "20−12＝8枚です。"},
+            {"question": "はじめにさいふに入っていた金額は、本の値だんの何倍ですか。", "answer": "2",
+             "meaning": "使った8枚も、のこった12枚も、どちらも本の値だんと同じ金額です。"
+                        "だからはじめの金額は本の値だんの2倍です。"},
+            {"question": "考えられる本の値だんは何通りありますか。", "answer": "5",
+             "meaning": "使った100円玉を□枚とすると、50円玉は 8−□ 枚。"
+                        "本の値だんは 400＋50×□ 円になります。"
+                        "枚数のつじつまが合うのは □が4〜8のときで、"
+                        "600円・650円・700円・750円・800円の5通りです。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_3", "src": "HG-2303", "star": 3,
+        "title": "西暦が昭和の年数でわり切れる年", "category": "kazu", "unit": "倍数・約数",
+        "intro": "平成元年（昭和64年）は西暦1989年です。"
+                 "昭和の時代に、西暦の年数が昭和の年数でわり切れる年は何回あったでしょうか。",
+        "svg": "",
+        "steps": [
+            {"question": "昭和□年は西暦何年ですか。□を使わずに、昭和1年の西暦を答えなさい。",
+             "answer": "1926",
+             "meaning": "昭和64年が1989年なので、昭和1年は 1989−63＝1926年です。"
+                        "つまり 昭和□年＝西暦(1925＋□)年 です。"},
+            {"question": "西暦が昭和の年数でわり切れるとき、1925は□でわり切れますか。"
+                         "わり切れるなら1、わり切れないなら0と答えなさい。", "answer": "1",
+             "meaning": "(1925＋□)÷□ の あまりは 1925÷□ の あまりと同じです。"
+                        "だから□は1925の約数です。"},
+            {"question": "そのような年は全部で何回ありましたか。", "answer": "7",
+             "meaning": "1925＝5×5×7×11 の約数のうち、64以下のものは "
+                        "1・5・7・11・25・35・55 の7つです。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_4", "src": "HG-2304", "star": 2,
+        "title": "3つの円の7つの部分をぬり分ける", "category": "baai", "unit": "場合の数",
+        "intro": "右の図のように3つの円がかかれています。円の内部の7つの部分を"
+                 "青・赤・黄・緑の4色でぬり分けます。"
+                 "図のしゃ線で示した3つの部分は同じ色をぬり、"
+                 "のこりの4つの部分には、のこりの3色を全部使います。",
+        "svg": _venn_svg(),
+        "steps": [
+            {"question": "しゃ線の3つの部分にぬる色の選び方は何通りですか。", "answer": "4",
+             "meaning": "4色から1色を選ぶので4通りです。"},
+            {"question": "のこり4つの部分に3色を全部使うぬり方は何通りですか。", "answer": "36",
+             "meaning": "3色の使い方は 3×3×3×3＝81通りありますが、"
+                        "そのうち2色しか使わないもの・1色しか使わないものを引きます。"
+                        "81−3×(2×2×2×2)＋3＝81−48＋3＝36通りです。"},
+            {"question": "ぬり方は全部で何通りですか。", "answer": "144",
+             "meaning": "4×36＝144通りです。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_5", "src": "HG-2305", "star": 2,
+        "title": "電話番号を押す時間", "category": "baai", "unit": "場合の数",
+        "intro": "プッシュボタン式の電話機で、番号1を押すときは0.1秒間、番号2は0.2秒間、…、"
+                 "番号9は0.9秒間、番号0を押すときは1秒間押すことにします。"
+                 "また、番号と番号の間は0.1秒間の間かくをあけます。"
+                 "4けたの電話番号をかけるのに1.1秒かかりました。",
+        "svg": "",
+        "steps": [
+            {"question": "番号と番号の間の間かくは、合わせて何秒ですか。", "answer": "0.3",
+             "meaning": "4けたなので間は3か所。0.1×3＝0.3秒です。"},
+            {"question": "ボタンを押していた時間は合わせて何秒ですか。", "answer": "0.8",
+             "meaning": "1.1−0.3＝0.8秒です。0.1秒を1つ分と数えると8つ分です。"},
+            {"question": "この4けたの電話番号は何通り考えられますか。", "answer": "35",
+             "meaning": "0を押すと1秒＝10こ分かかり、8こ分をこえるので0は使えません。"
+                        "1〜9の4つの数で合計8こ分になる組は、"
+                        "8を4つに分ける分け方で35通りです。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_6", "src": "HG-2306", "star": 3,
+        "title": "4つの立方体でつくる立体", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "1辺1cmの立方体を4つすべて使って、面と面がぴったり重なるようにならべて"
+                 "1つの立体を作ります。回転して動かしたときにまったく同じ形になるものは"
+                 "1種類と数えます。",
+        "svg": "",
+        "steps": [
+            {"question": "たいらな（1枚の板のような）形は何種類できますか。", "answer": "5",
+             "meaning": "正方形4つのならべ方（テトロミノ）と同じで、"
+                        "I・O・L・T・S の5種類です。"
+                        "ただし立体では、うら返しても回転で重なるので L と J は同じ、S と Z も同じです。"},
+            {"question": "立体は全部で何種類できますか。", "answer": "8",
+             "meaning": "たいらな5種類に、立体でしか作れない3種類を足して8種類です。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_7", "src": "HG-2307", "star": 3,
+        "title": "9人を3人ずつ3組に分ける", "category": "baai", "unit": "場合の数",
+        "intro": "9人の生徒がいます。A・B・Cの3人はたがいに仲が悪く、D・E・Fの3人も、"
+                 "G・H・Iの3人もたがいに仲が悪いことがわかっています。"
+                 "この9人を3人ずつの3組に分けます（組の区別はありません）。"
+                 "仲の悪い者どうしが同じ組にならないようにします。",
+        "svg": "",
+        "steps": [
+            {"question": "何の条件もつけないとき、9人を3人ずつ3組に分ける分け方は何通りですか。",
+             "answer": "280",
+             "meaning": "9人から3人を選び、のこり6人から3人を選ぶと 84×20＝1680。"
+                        "組の区別がないので 3×2×1＝6 でわって280通りです。"},
+            {"question": "仲の悪い者どうしが同じ組にならない分け方は何通りですか。", "answer": "252",
+             "meaning": "同じグループの3人がそろってしまう分け方などを取りのぞくと252通りです。"
+                        "どの組も「A・B・Cから1人、D・E・Fから1人、G・H・Iから1人」に"
+                        "なるとはかぎらないところが、この問題のむずかしさです。"},
+        ],
+    },
+    {
+        "id": "hd4n_01_8", "src": "HG-2308", "star": 3,
+        "title": "2×4のマス目に1〜8をならべる", "category": "baai", "unit": "場合の数",
+        "intro": "たて2・横4のマス目に1から8までの数字を1つずつ入れます。"
+                 "横のならびはどちらも右に行くほど大きくなり、"
+                 "たてのならびはすべて下のほうが上より大きくなるようにします。",
+        "svg": "",
+        "steps": [
+            {"question": "左上のマスに入る数はいくつですか。", "answer": "1",
+             "meaning": "右へも下へも大きくなるので、いちばん小さい1は左上にしか入りません。"},
+            {"question": "右下のマスに入る数はいくつですか。", "answer": "8",
+             "meaning": "同じ理由で、いちばん大きい8は右下です。"},
+            {"question": "ならべ方は全部で何通りですか。", "answer": "14",
+             "meaning": "上の段に入る4つの数の選び方を考えると、"
+                        "どの位置でも「上の段に入った個数」が「下の段に入った個数」以上に"
+                        "なっている必要があります。数え上げると14通りです。"},
+        ],
+    },
+]
+
+
+def check(out, bad, allids):
+    for q in out:
+        allids.append(q["id"])
+        if not q.get("steps"):
+            bad.append("%s：設問が無い" % q["id"])
+        if not q.get("src", "").startswith("HG-"):
+            bad.append("%s：出典(src)が無い" % q["id"])
+        for i, s in enumerate(q["steps"], 1):
+            if not str(s.get("answer", "")).strip():
+                bad.append("%s (%d)：答えが空" % (q["id"], i))
+            if not str(s.get("meaning", "")).strip():
+                bad.append("%s (%d)：解説が無い" % (q["id"], i))
+            a = str(s["answer"])
+            if not (a.replace(".", "", 1).isdigit() or s.get("choices")):
+                bad.append("%s (%d)：数字でないのに選択肢が無い" % (q["id"], i))
+            if s.get("choices") and a not in s["choices"]:
+                bad.append("%s (%d)：答えが選択肢に入っていない" % (q["id"], i))
+
+
 def main():
     d = json.load(io.open(DAIMON, encoding="utf-8"))
     node = d["grades"].setdefault("3", {}).setdefault("nadago", {})
     node.setdefault("fukushu", {})
+    node4 = d["grades"].setdefault("4", {}).setdefault("nadago", {})
+    node4.setdefault("fukushu", {})
 
     bad, allids, total = [], [], 0
+    g4 = [dict(q, grade=4) for q in G4]
+    check(g4, bad, allids)
+    total += sum(len(q["steps"]) for q in g4)
+    print("小4灘合 第1回：大問%d本／設問%d問" % (len(g4), sum(len(q["steps"]) for q in g4)))
+    for q in g4:
+        print("  ★%d %-11s %-28s 設問%d問 図%s  (%s)"
+              % (q["star"], q["id"], q["title"], len(q["steps"]),
+                 "あり" if q["svg"] else "なし", q["src"]))
+    print("")
+
     for lesson in sorted(LESSONS, key=int):
         out = [dict(q, grade=3) for q in LESSONS[lesson]]
         total += sum(len(q["steps"]) for q in out)
@@ -2321,10 +2533,11 @@ def main():
     if "--write" in sys.argv:
         for lesson, out in LESSONS.items():
             node["fukushu"][lesson] = out
+        node4["fukushu"]["1"] = g4
         with io.open(DAIMON, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, indent=1)
         json.load(io.open(DAIMON, encoding="utf-8"))
-        print("\n✓ 書きこんだ → data/hama_daimon.json（grades/3/nadago/fukushu/%s）"
+        print("\n✓ 書きこんだ → grades/3/nadago/fukushu/%s ＋ grades/4/nadago/fukushu/1"
               % "・".join(sorted(LESSONS, key=int)))
     else:
         print("\n（--write で書きこむ）")
