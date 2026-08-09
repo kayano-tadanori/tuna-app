@@ -85,6 +85,244 @@ def _trigrid_svg(n=6, u=38.0):
     return _svg(W, int(oy + n * h + 30), "\n".join(body))
 
 
+def _nitohen2_svg():
+    """HG-1961 直角二等辺三角形2つを重ねる（実物どおりの実寸）。
+    どちらも直角は底辺のはし。たての辺の長さ＝横の辺の長さ。
+      B（左・小さい）… たての辺 x=0 で長さ9、横の辺は右へ9
+      A（右・大きい）… たての辺 x=6 で長さ11、横の辺は左へ11
+    5cm＝Aの左はしからBのかどまで、3cm＝Aのかどからの右はし。
+    ア＝4cm、イ＝8cm（イはアの2倍）。"""
+    a, b, dd = 11.0, 9.0, 6.0
+    u, ox, oy = 15.0, 90.0, 22.0
+    X = lambda x: ox + x * u
+    Y = lambda y: oy + (a - y) * u
+    body = ['<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="rgba(79,124,255,0.10)" '
+            'stroke="%s" stroke-width="2"/>'
+            % (X(0), Y(0), X(0), Y(b), X(b), Y(0), BLUE),                 # B
+            '<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="rgba(255,154,68,0.10)" '
+            'stroke="%s" stroke-width="2"/>'
+            % (X(dd), Y(0), X(dd), Y(a), X(dd - a), Y(0), ORANGE)]        # A
+    for xx, y1, y2, col, nm in ((0, b - (0 - (dd - a)), b, RED, "ア"),
+                                (dd, a - (b - dd), a, RED, "イ")):
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                    'stroke-width="3.4"/>' % (X(xx), Y(y1), X(xx), Y(y2), col))
+        body.append(_t("%.1f" % (X(xx) - 15), "%.1f" % ((Y(y1) + Y(y2)) / 2 + 5),
+                       nm, col, 14, bold=True))
+    for x1, x2, txt in ((dd - a, 0, "5cm"), (dd, b, "3cm")):
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                    'stroke-width="1.4"/>' % (X(x1), Y(0) + 12, X(x2), Y(0) + 12, GRAY))
+        body.append(_t("%.1f" % (X((x1 + x2) / 2)), "%.1f" % (Y(0) + 27), txt, INK, 12, bold=True))
+    W = int(X(b) + 30)
+    body.append(_t(W / 2, oy - 6, "直角二等辺三角形を2つ重ねた図", GRAY, 11))
+    body.append(_t(W / 2, Y(0) + 46, "赤い太線がアとイ。イはアの2倍", GRAY, 11))
+    return _svg(W, int(Y(0) + 56), "\n".join(body))
+
+
+def _koch_svg():
+    """HG-1965 コッホの雪の結晶（2回くりかえし）。いちばん小さい辺が1cm＝もとの三角形は1辺9cm"""
+    import math as _m
+
+    def koch(p, q, n):
+        if n == 0:
+            return [p]
+        dx, dy = (q[0] - p[0]) / 3.0, (q[1] - p[1]) / 3.0
+        a = (p[0] + dx, p[1] + dy)
+        c = (p[0] + 2 * dx, p[1] + 2 * dy)
+        ang = _m.atan2(dy, dx) - _m.pi / 3                    # 外がわへ出っぱらせる
+        bpt = (a[0] + _m.cos(ang) * _m.hypot(dx, dy), a[1] + _m.sin(ang) * _m.hypot(dx, dy))
+        return koch(p, a, n - 1) + koch(a, bpt, n - 1) + koch(bpt, c, n - 1) + koch(c, q, n - 1)
+
+    S, u = 9.0, 22.0
+    h = S * _m.sqrt(3) / 2 * u
+    P = [(0.0, 0.0), (S * u, 0.0), (S * u / 2, h)]            # y は上向き
+    pts = []
+    for i in range(3):
+        pts += koch(P[i], P[(i + 1) % 3], 2)
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    W = 300
+    sx = (W - 56) / (max(xs) - min(xs))            # とがった所まで入れて実寸をはかる
+    ox = 28 - min(xs) * sx
+    oy = 30 + (max(ys) - min(ys)) * sx
+    F = lambda p: (ox + p[0] * sx, oy - p[1] * sx)
+    body = ['<polygon points="%s" fill="rgba(79,124,255,0.12)" stroke="%s" stroke-width="1.8" '
+            'stroke-linejoin="round"/>'
+            % (" ".join("%.1f,%.1f" % F(p) for p in pts), BLUE)]
+    a0, a1 = F(pts[0]), F(pts[1])
+    body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                'stroke-width="3.4"/>' % (a0[0], a0[1], a1[0], a1[1], RED))
+    mx, my = (a0[0] + a1[0]) / 2, (a0[1] + a1[1]) / 2
+    body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                'stroke-width="1.2"/>' % (mx, my, mx - 18, my - 22, RED))
+    body.append(_t("%.1f" % (mx - 24), "%.1f" % (my - 26), "1cm", RED, 12, bold=True))
+    lo = max(F(p)[1] for p in pts)                 # いちばん下の点（下向きのとがりも入る）
+    hh = int(lo + 40)
+    body.append(_t(W / 2, 18, "1辺1cmの小さな正三角形をしきつめた形", GRAY, 11))
+    body.append(_t(W / 2, hh - 12, "赤くした1辺が1cm。まわりの辺はどれも1cm", GRAY, 11))
+    return _svg(W, hh, "\n".join(body))
+
+
+def _iso3_svg(nx, ny, nz, W, uz, front, top, right, note1="", note2="", labels=()):
+    """立方体をならべた直方体を、正面・上・右の3面が見えるように描く。
+    front/top/right は「黒くぬるマス」の集合。(x,z) (x,y) (y,z) で 1 から数える。"""
+    ux, uy = uz * 1.0, uz * 0.55
+    ox, oy = 16.0, 26.0 + ny * uy
+    Pf = lambda x, z: (ox + x * ux, oy + z * uz)                  # 正面
+    Pt = lambda x, y: (ox + x * ux + y * uy * 0.92, oy - y * uy)  # 上
+    Pr = lambda y, z: (ox + nx * ux + y * uy * 0.92, oy - y * uy + z * uz)
+    body = []
+
+    def face(P, cells, na, nb, col):
+        for i in range(na):
+            for j in range(nb):
+                q = [P(i, j), P(i + 1, j), P(i + 1, j + 1), P(i, j + 1)]
+                on = (i + 1, j + 1) in cells
+                body.append('<polygon points="%s" fill="%s" stroke="%s" stroke-width="1"/>'
+                            % (" ".join("%.1f,%.1f" % p for p in q),
+                               INK if on else "#ffffff", col))
+
+    face(Pf, front, nx, nz, "#7b88a8")
+    face(Pt, top, nx, ny, "#7b88a8")
+    face(Pr, right, ny, nz, "#7b88a8")
+    for pts in ([Pf(0, 0), Pf(nx, 0), Pf(nx, nz), Pf(0, nz)],
+                [Pf(0, 0), Pt(0, ny), Pt(nx, ny), Pf(nx, 0)],
+                [Pf(nx, 0), Pt(nx, ny), Pr(ny, nz), Pf(nx, nz)]):
+        body.append('<polygon points="%s" fill="none" stroke="%s" stroke-width="2"/>'
+                    % (" ".join("%.1f,%.1f" % p for p in pts), INK))
+    for txt, p, dx, dy in labels:
+        body.append(_t("%.1f" % (p[0] + dx), "%.1f" % (p[1] + dy), txt, INK, 13, bold=True))
+    hh = oy + nz * uz
+    if note1:
+        body.append(_t(W / 2, hh + 20, note1, GRAY, 11))
+    if note2:
+        body.append(_t(W / 2, hh + 35, note2, GRAY, 11))
+    return _svg(W, int(hh + (44 if note2 else (30 if note1 else 12))), "\n".join(body))
+
+
+def _ichi3_svg():
+    """HG-1971 1辺2cmの立方体をつみあげた1辺20cmの立方体。
+    アを手前の下の頂点として、横（左おく）・たて（右おく）・上 の3つの数で位置を表す。
+    あ(8,6,20) い(0,12,6) う(16,18,20) え(16,0,18) ＝実物を測って確定。"""
+    N = 10
+    uz, ux, uy = 13.0, 10.6, 2.8            # 高さ・横（左右）・おくゆき（上下のずれ）
+    ox = 150.0
+    oy = 40.0 + N * uy + N * uz             # アの位置（手前の下）
+    Yo = lambda p, q, r: (ox - p * ux + q * ux, oy - p * uy - q * uy - r * uz)
+    body = []
+    for i in range(N + 1):                  # 上の面（方眼）
+        a, b = Yo(i, 0, N), Yo(i, N, N)
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#aab6d6" '
+                    'stroke-width="0.8"/>' % (a[0], a[1], b[0], b[1]))
+        a, b = Yo(0, i, N), Yo(N, i, N)
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#aab6d6" '
+                    'stroke-width="0.8"/>' % (a[0], a[1], b[0], b[1]))
+    for i in range(N + 1):                  # 左の面（横がわ）
+        a, b = Yo(i, 0, 0), Yo(i, 0, N)
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#aab6d6" '
+                    'stroke-width="0.8"/>' % (a[0], a[1], b[0], b[1]))
+        a, b = Yo(0, 0, i), Yo(N, 0, i)
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#aab6d6" '
+                    'stroke-width="0.8"/>' % (a[0], a[1], b[0], b[1]))
+    for i in range(N + 1):                  # 右の面（たてがわ）
+        a, b = Yo(0, i, 0), Yo(0, i, N)
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#aab6d6" '
+                    'stroke-width="0.8"/>' % (a[0], a[1], b[0], b[1]))
+        a, b = Yo(0, 0, i), Yo(0, N, i)
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#aab6d6" '
+                    'stroke-width="0.8"/>' % (a[0], a[1], b[0], b[1]))
+    for pts in ([Yo(0, 0, N), Yo(N, 0, N), Yo(N, N, N), Yo(0, N, N)],
+                [Yo(0, 0, 0), Yo(N, 0, 0), Yo(N, 0, N), Yo(0, 0, N)],
+                [Yo(0, 0, 0), Yo(0, N, 0), Yo(0, N, N), Yo(0, 0, N)]):
+        body.append('<polygon points="%s" fill="none" stroke="%s" stroke-width="1.8"/>'
+                    % (" ".join("%.1f,%.1f" % p for p in pts), INK))
+    DOT = (("あ", 4, 3, 10, -6, -12), ("い", 0, 6, 3, 20, 4),
+           ("う", 8, 9, 10, 16, -8), ("え", 8, 0, 9, -22, -4))
+    for nm, p, q, r, dx, dy in DOT:
+        c = Yo(p, q, r)
+        body.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s"/>' % (c[0], c[1], RED))
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                    'stroke-width="1"/>' % (c[0], c[1], c[0] + dx * 0.6, c[1] + dy * 0.6, RED))
+        body.append(_t("%.1f" % (c[0] + dx), "%.1f" % (c[1] + dy + 4), nm, RED, 13, bold=True))
+    a = Yo(0, 0, 0)
+    body.append('<circle cx="%.1f" cy="%.1f" r="4" fill="%s"/>' % (a[0], a[1], INK))
+    body.append(_t("%.1f" % a[0], "%.1f" % (a[1] + 30), "ア", INK, 13, bold=True))
+    body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.4" '
+                'marker-end="none"/>' % (a[0] - 8, a[1] + 16, a[0] - 60, a[1] + 16, GRAY))
+    body.append(_t("%.1f" % (a[0] - 76), "%.1f" % (a[1] + 20), "横", GRAY, 12, bold=True))
+    body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                'stroke-width="1.4"/>' % (a[0] + 8, a[1] + 16, a[0] + 60, a[1] + 16, GRAY))
+    body.append(_t("%.1f" % (a[0] + 76), "%.1f" % (a[1] + 20), "たて", GRAY, 12, bold=True))
+    body.append(_t(150, oy + 52, "1辺2cmの立方体を10こずつ、たて・横・高さにつみあげた", GRAY, 11))
+    return _svg(300, int(oy + 62), "\n".join(body))
+
+
+def _kuro_cube_svg():
+    """HG-1980 5×5×5。黒いマスは反対がわまでつらぬいている"""
+    FRONT = {(2, 2), (1, 3), (2, 4), (4, 5)}
+    TOP = {(3, 2), (2, 3), (1, 4), (4, 4), (2, 5)}
+    RIGHT = {(2, 2), (4, 3), (2, 4), (5, 5)}
+    uz = 25.0
+    ox, oy = 16.0, 26.0 + 5 * uz * 0.55
+    A = (ox + 6, oy)
+    B = (ox + 5 * uz + 5 * uz * 0.55 * 0.92, oy - 5 * uz * 0.55 + 5 * uz)
+    return _iso3_svg(5, 5, 5, 300, uz, FRONT, TOP, RIGHT,
+                     "黒が表に出ている所は、反対がわまで黒がならんでいる",
+                     "AとBは立方体の向かい合う頂点",
+                     labels=(("A", A, -14, -6), ("B", B, 14, 6)))
+
+
+def _kaidan_kuro_svg():
+    """HG-1975 かいだんの立体（4段・はば3）。すべての面を黒くぬって1cmに切る"""
+    uz = 30.0
+    uy = uz * 0.55
+    ox, oy = 40.0, 26.0 + 3 * uy
+    Hh = {1: 4, 2: 3, 3: 2, 4: 1}
+    P = lambda x, y, z: (ox + x * uz + y * uy * 0.92, oy - y * uy + (4 - z) * uz)
+    body = []
+    quads = []
+    for x in range(1, 5):
+        for y in range(1, 4):
+            for z in range(1, Hh[x] + 1):
+                if z == Hh[x]:                                  # 上の面
+                    quads.append((z * 100 + y * 10 - x, [P(x - 1, y - 1, z), P(x, y - 1, z),
+                                                         P(x, y, z), P(x - 1, y, z)]))
+                if y == 1:                                      # 手前の面
+                    quads.append((z * 100 + y * 10 - x, [P(x - 1, y - 1, z), P(x, y - 1, z),
+                                                         P(x, y - 1, z - 1), P(x - 1, y - 1, z - 1)]))
+                if x == 4 or z > Hh.get(x + 1, 0):              # 右の面（けあげ）
+                    quads.append((z * 100 + y * 10 - x, [P(x, y - 1, z), P(x, y, z),
+                                                         P(x, y, z - 1), P(x, y - 1, z - 1)]))
+    for _, q in sorted(quads):
+        body.append('<polygon points="%s" fill="rgba(79,124,255,0.10)" stroke="%s" '
+                    'stroke-width="1.1"/>'
+                    % (" ".join("%.1f,%.1f" % p for p in q), "#5c6a8c"))
+    W = 300
+    body.append(_t(W / 2, 18, "4だんのかいだん。はばは3cm", GRAY, 11))
+    body.append(_t(W / 2, oy + 4 * uz + 22, "1辺1cmの立方体に切り分ける", GRAY, 11))
+    return _svg(W, int(oy + 4 * uz + 32), "\n".join(body))
+
+
+def _sanmen_svg():
+    """HG-1977 三面図（真上・正面・右）"""
+    u = 26.0
+    body = []
+
+    def grid(ox, oy, cells, nc, nr, title):
+        for (c, r) in cells:
+            body.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
+                        'fill="rgba(79,124,255,0.12)" stroke="%s" stroke-width="1.6"/>'
+                        % (ox + (c - 1) * u, oy + (r - 1) * u, u, u, INK))
+        body.append(_t(ox + nc * u / 2, oy + nr * u + 16, title, GRAY, 11))
+
+    grid(24, 26, [(1, 1), (2, 1), (3, 1), (1, 2), (3, 2)], 3, 2, "真上から見た図")
+    grid(24, 128, [(1, 1),
+                   (1, 2), (2, 2),
+                   (1, 3), (2, 3),
+                   (1, 4), (2, 4), (3, 4)], 3, 4, "正面から見た図")
+    grid(190, 128, [(2, 1), (2, 2), (2, 3), (1, 4), (2, 4)], 2, 4, "右から見た図")
+    return _svg(300, 258, "\n".join(body))
+
+
 def _kaidan_tri_svg():
     """HG-1968 3辺9・12・15の直角三角形10こを、底辺の1/3ずつ右にずらして重ねた21角形。
     実線が外周、点線がかくれている辺。"""
@@ -2103,6 +2341,37 @@ L9 = [
         ],
     },
     {
+        "id": "hd3n_09_5", "src": "HG-1975", "star": 3,
+        "title": "かいだんの立体を黒くぬって1cmに切る", "category": "rittai",
+        "unit": "立体図形（体積・表面積）",
+        "intro": "右の図のような、かいだんの形をした木の立体があります。"
+                 "**4だんで、はばは3cm**、1だんの高さも おくゆきも1cmです。"
+                 "**すべての面を黒くぬって**から、1辺1cmの立方体に切り分けました。",
+        "svg": _kaidan_kuro_svg(),
+        "steps": [
+            {"question": "立方体は全部で何こになりますか。", "answer": "30",
+             "meaning": "高さは左から 4、3、2、1。(4＋3＋2＋1)×はば3＝10×3＝**30こ**です。"},
+            {"question": "6面とも黒くない（0面が黒い）立方体は何こですか。", "answer": "1",
+             "meaning": "まわりを立方体でぐるりと囲まれているものだけです。"
+                        "左から2番目の列の、はばのまん中で、下から2だんめの1こだけ。"},
+            {"question": "1面だけ黒い立方体は何こですか。", "answer": "6",
+             "meaning": "外に出ているのが1面だけのものを数えると6こです。"},
+            {"question": "2面が黒い立方体は何こですか。", "answer": "11",
+             "meaning": "いちばん多いのがこの2面のなかまで11こです。"},
+            {"question": "3面が黒い立方体は何こですか。", "answer": "8",
+             "meaning": "8こです。"},
+            {"question": "4面が黒い立方体は何こですか。", "answer": "4",
+             "meaning": "4こです。5面や6面が黒いものはありません。"
+                        "1＋6＋11＋8＋4＝30 で、こ数の合計と合います。"},
+            {"question": "黒い面は全部で何面ありますか（＝この立体の表面積は何cm²ですか）。",
+             "answer": "68",
+             "meaning": "0×1＋1×6＋2×11＋3×8＋4×4＝**68面**。\n"
+                        "たしかめ：底12＋上12＋左右の階段2枚で20＋高いはし12＋低いはし3"
+                        "＋けあげ9＝68 ✓\n"
+                        "たしかめ2：30×6−（となり合う56組×2）＝180−112＝68 ✓"},
+        ],
+    },
+    {
         "id": "hd3n_09_6", "src": "HG-1976", "star": 3,
         "title": "サッカーボールの辺と頂点", "category": "rittai", "unit": "立体図形（体積・表面積）",
         "intro": "正五角形12こと正六角形20こをぬい合わせたサッカーボールがあります。",
@@ -2117,6 +2386,32 @@ L9 = [
             {"question": "サッカーボールの頂点は何こですか。", "answer": "60",
              "meaning": "1つの頂点には3つの面が集まっているので 180÷3＝60こです。"
                         "たしかめ 60＋32−90＝2 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_09_7", "src": "HG-1977", "star": 3,
+        "title": "三面図から立方体の数を求める", "category": "rittai",
+        "unit": "立体図形（体積・表面積）",
+        "intro": "つくえの上に立方体を何こかつんで立体を作りました。"
+                 "この立体を真上から見た図、正面から見た図、右から見た図が右のようになりました。",
+        "svg": _sanmen_svg(),
+        "steps": [
+            {"question": "真上から見た図から、立方体が置いてある場所は何か所ありますか。",
+             "answer": "5",
+             "meaning": "3×2のうち手前のまん中だけがあいているので 6−1＝5か所です。"},
+            {"question": "正面から見た図で、まん中の列の高さは何こ分ですか。", "answer": "3",
+             "meaning": "まん中の列は3こ分の高さです。手前のまん中はあいているので、"
+                        "この3こはおくの列にあります。"},
+            {"question": "右から見た図で、手前の列の高さは何こ分ですか。", "answer": "1",
+             "meaning": "右から見た図の低いほうが1こ分。"
+                        "つまり**手前の列はどこも1こ積み**だとわかります。"},
+            {"question": "いちばん高いところは何こ積みですか。", "answer": "4",
+             "meaning": "正面から見た図のいちばん高い列が4こ分。"
+                        "手前は1こ積みなので、その4こはおくの左はしです。"},
+            {"question": "つみあげられた立方体は全部で何こですか。", "answer": "10",
+             "meaning": "おくは左から 4こ・3こ・1こ、手前は左と右に1こずつ。"
+                        "4＋3＋1＋1＋1＝**10こ**です。"
+                        "つみ方を全部しらべても、3つの図に合うのはこの1通りだけでした。"},
         ],
     },
     {
@@ -3443,6 +3738,33 @@ L8_9_10_ADD = [
         ],
     },
     {
+        "id": "hd3n_08_1", "src": "HG-1961", "star": 3,
+        "title": "直角二等辺三角形を2つ重ねる", "category": "zu", "unit": "平面図形（面積）",
+        "intro": "右の図は、直角二等辺三角形を2つ重ね合わせてできたものです。"
+                 "どちらも直角は底辺のはしにあり、**たての辺と横の辺の長さが等しい**三角形です。"
+                 "底辺の左はしから5cm、右はしから3cmのところに、それぞれの直角のかどがあります。",
+        "svg": _nitohen2_svg(),
+        "steps": [
+            {"question": "小さいほうの三角形のたての辺を9cm、大きいほうを11cmとすると、"
+                         "2つの直角のかどは何cmはなれていますか。", "answer": "6",
+             "meaning": "大きいほうの横の辺は左へ11cm、そのはしから5cmのところに"
+                        "小さいほうのかどがあるので 11−5＝6cm。"
+                        "小さいほうの横の辺は右へ9cm、そのはしから3cmもどると 9−3＝6cm。"
+                        "どちらでも6cmになります。"},
+            {"question": "アの長さは何cmですか。", "answer": "4",
+             "meaning": "アのところで、大きいほうの三角形の斜辺の高さは"
+                        "「かどから6cm手前」なので 11−6＝5cm。"
+                        "小さいほうの頂点は9cmなので ア＝9−5＝**4cm**です。"},
+            {"question": "イの長さは何cmですか。", "answer": "8",
+             "meaning": "イのところで、小さいほうの斜辺の高さは 9−6＝3cm。"
+                        "大きいほうの頂点は11cmなので イ＝11−3＝**8cm**です。"},
+            {"question": "イはアの何倍ですか。", "answer": "2",
+             "meaning": "8÷4＝2倍です。問題の条件と合っています。"
+                        "たての辺の長さを1cmずつ変えながら機械でしらべても、"
+                        "5cm・3cm・イ＝アの2倍 に合うのは 9cmと11cm の1通りだけでした。"},
+        ],
+    },
+    {
         "id": "hd3n_08_2", "src": "HG-1962", "star": 3,
         "title": "目もりが3つだけのものさし", "category": "baai", "unit": "推理・論理",
         "intro": "右のア〜カの6本のものさしは、どれも長さが10cmで、"
@@ -3514,6 +3836,31 @@ L8_9_10_ADD = [
              "meaning": "2つの三角形のまわりを足すと、重なった部分のまわりを2回数えたことになります。"
                         "そのうち1回ぶん（34cm）は八角形の外がわではないので引きます。"
                         "150−34＝116cmです。"},
+        ],
+    },
+    {
+        "id": "hd3n_08_5", "src": "HG-1965", "star": 2,
+        "title": "小さな正三角形でしきつめた星形", "category": "zu", "unit": "平面図形（面積）",
+        "intro": "右の図は、1辺1cmの小さな正三角形ばかりをしきつめてできた形です。"
+                 "**大きな正三角形の3つの辺のまん中に三角形をつける**という作業を"
+                 "2回くりかえした形になっています。",
+        "svg": _koch_svg(),
+        "steps": [
+            {"question": "もとになった大きな正三角形の1辺は何cmですか。", "answer": "9",
+             "meaning": "1回で辺が3等分されるので、2回くりかえすと 3×3＝9等分。"
+                        "いちばん小さい辺が1cmなので、もとの1辺は9cmです。"},
+            {"question": "もとの大きな正三角形は、1辺1cmの正三角形何こ分ですか。", "answer": "81",
+             "meaning": "1辺が9倍なので 9×9＝81こ分です。"},
+            {"question": "1回目の作業でふえた三角形は、合わせて何こ分ですか。", "answer": "27",
+             "meaning": "1辺3cmの正三角形が3つふえます。1つが 3×3＝9こ分なので 9×3＝27こ分です。"},
+            {"question": "2回目の作業でふえた三角形は、合わせて何こ分ですか。", "answer": "12",
+             "meaning": "1回目のあと辺は12本になっているので、1辺1cmの三角形が12こふえます。"},
+            {"question": "この図形は、小さな正三角形が全部で何こでできていますか。", "answer": "120",
+             "meaning": "81＋27＋12＝**120こ**です。"},
+            {"question": "この図形のまわりの長さは何cmですか。", "answer": "48",
+             "meaning": "辺の数は1回ごとに4倍になります。3×4×4＝48本。"
+                        "1本が1cmなので **48cm** です。"
+                        "とがった所は 3＋3＋12＝18か所あります。"},
         ],
     },
     {
@@ -3641,6 +3988,34 @@ L8_9_10_ADD = [
         ],
     },
     {
+        "id": "hd3n_09_1", "src": "HG-1971", "star": 2,
+        "title": "立体の中の位置を3つの数で表す", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "右の図は、1辺が2cmの立方体をつみあげて作った立体です。"
+                 "点アをもとに考えると、点㋐は**横に8cm、たてに6cm、上に20cm**の"
+                 "ところにあるので、㋐の位置は**(8, 6, 20)**と表せます。",
+        "svg": _ichi3_svg(),
+        "steps": [
+            {"question": "この立体は、1辺が何cmの立方体ですか。", "answer": "20",
+             "meaning": "1辺2cmの立方体がたて・横・高さに10こずつなので 2×10＝20cmです。"},
+            {"question": "点㋑の3つの数のうち、はじめの「横」はいくつですか。", "answer": "0",
+             "meaning": "㋑は**右がわの面（たての面）**の上にあります。"
+                        "この面はアから横に動かない面なので、横は0cmです。"},
+            {"question": "点㋑の「たて」は何cmですか。", "answer": "12",
+             "meaning": "アから右おくへ6マスめなので 2×6＝12cmです。"},
+            {"question": "点㋑の「上」は何cmですか。", "answer": "6",
+             "meaning": "下から3マスめなので 2×3＝6cm。㋑の位置は (0, 12, 6) です。"},
+            {"question": "点㋒は上の面にあります。「横」は何cmですか。", "answer": "16",
+             "meaning": "上の面なので上は20cm。手前のかどから左おくへ8マスで 2×8＝16cmです。"},
+            {"question": "点㋒の「たて」は何cmですか。", "answer": "18",
+             "meaning": "右おくへ9マスなので 2×9＝18cm。㋒の位置は (16, 18, 20) です。"},
+            {"question": "点㋓は左がわの面にあります。「たて」は何cmですか。", "answer": "0",
+             "meaning": "左がわ（横の面）はアからたてに動かない面なので0cmです。"},
+            {"question": "点㋓の「上」は何cmですか。", "answer": "18",
+             "meaning": "いちばん上から1マス下なので 20−2＝18cm。"
+                        "横は8マスで16cm。㋓の位置は (16, 0, 18) です。"},
+        ],
+    },
+    {
         "id": "hd3n_09_4", "src": "HG-1974", "star": 3,
         "title": "立方体のかどを切り取った立体", "category": "rittai", "unit": "立体図形（体積・表面積）",
         "intro": "立方体のかどを、各辺のまん中まで同じように切り取って、右の図の立体を作りました。"
@@ -3659,6 +4034,35 @@ L8_9_10_ADD = [
             {"question": "この立体の面はいくつありますか。", "answer": "14",
              "meaning": "もとの面から残った正方形6つと、切り口の三角形8つで14です。"
                         "たしかめ 頂点12＋面14−辺24＝2 ✓"},
+        ],
+    },
+    {
+        "id": "hd3n_09_10", "src": "HG-1980", "star": 3,
+        "title": "黒い立方体がつらぬく", "category": "rittai", "unit": "立体図形（体積・表面積）",
+        "intro": "右の図のように、黒色と白色の小さな立方体を組み合わせて、"
+                 "1辺が小さな立方体5こ分の立方体を作りました。"
+                 "**黒い立方体が表面に出ている所は、反対がわまでつらぬいて黒がならんでいます。**"
+                 "AとBは、この立方体の向かい合う頂点です。",
+        "svg": _kuro_cube_svg(),
+        "steps": [
+            {"question": "見えている3つの面に、黒いマスは合わせて何か所ありますか。",
+             "answer": "13",
+             "meaning": "正面に4か所、上に5か所、右に4か所で 4＋5＋4＝13か所です。"},
+            {"question": "1か所の黒いマスは、何この黒い立方体のすじになりますか。", "answer": "5",
+             "meaning": "反対がわまでつらぬくので、1辺のこ数と同じ5こです。"},
+            {"question": "13本のすじを、重なりを考えずに数えると何こになりますか。", "answer": "65",
+             "meaning": "5×13＝65こです。ただしこれは**同じ立方体を何回も数えて**います。"},
+            {"question": "黒い立方体は全部で何こありますか。", "answer": "51",
+             "meaning": "すじどうしが交わるところは二重に数えています。"
+                        "交わる組は15組あり、そのうち1こだけは**3本のすじが重なる**ので、"
+                        "よけいに数えたのは 15−1＝14こ分。65−14＝**51こ**です。"
+                        "1つ1つの位置を機械で数え直しても51こでした。"},
+            {"question": "頂点AからBに向かって立方体の中を直線でつらぬくと、"
+                         "小さな立方体を何こ通りますか。", "answer": "5",
+             "meaning": "対角線は、はしからはしまで1こずつ、ちょうど5こを通ります。"},
+            {"question": "そのうち黒い立方体は何こですか。", "answer": "3",
+             "meaning": "Aから1こ目は白、2こ目は黒、3こ目は白、4こ目は黒、5こ目は黒。"
+                        "**3こ**です。"},
         ],
     },
     {
