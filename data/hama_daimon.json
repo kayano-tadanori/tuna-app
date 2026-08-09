@@ -7369,6 +7369,44 @@
       },
       {
        "id": "hd3n_04_8",
+       "src": "HG-1928",
+       "star": 3,
+       "title": "三角格子の中の三角形を全部数える",
+       "category": "zu",
+       "unit": "図形の数え上げ",
+       "intro": "右の図は、1辺を6等分した正三角形です。この中にある三角形を、**大きさ**と**向き**で分けて数えます。",
+       "svg": "<svg viewBox=\"0 0 240 243\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"101.0\" y1=\"48.9\" x2=\"139.0\" y2=\"48.9\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"82.0\" y1=\"81.8\" x2=\"158.0\" y2=\"81.8\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"63.0\" y1=\"114.7\" x2=\"177.0\" y2=\"114.7\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"44.0\" y1=\"147.6\" x2=\"196.0\" y2=\"147.6\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"25.0\" y1=\"180.5\" x2=\"215.0\" y2=\"180.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"101.0\" y1=\"48.9\" x2=\"196.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"139.0\" y1=\"48.9\" x2=\"44.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"82.0\" y1=\"81.8\" x2=\"158.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"158.0\" y1=\"81.8\" x2=\"82.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"63.0\" y1=\"114.7\" x2=\"120.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"177.0\" y1=\"114.7\" x2=\"120.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"44.0\" y1=\"147.6\" x2=\"82.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"196.0\" y1=\"147.6\" x2=\"158.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"25.0\" y1=\"180.5\" x2=\"44.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<line x1=\"215.0\" y1=\"180.5\" x2=\"196.0\" y2=\"213.5\" stroke=\"#9fb2e8\" stroke-width=\"1.2\"/>\n<polygon points=\"120.0,16.0 6.0,213.5 234.0,213.5\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"2.4\"/>\n<text x=\"120.0\" y=\"233.45379206285202\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1辺を6等分した正三角形</text>\n</svg>",
+       "steps": [
+        {
+         "question": "上向き（▲）でいちばん小さい三角形は何こありますか。",
+         "answer": "21",
+         "meaning": "上から1段目に1こ、2段目に2こ、…6段目に6こ。1＋2＋3＋4＋5＋6＝21こです。"
+        },
+        {
+         "question": "上向きの三角形は、大きさ全部で何こありますか。",
+         "answer": "56",
+         "meaning": "1辺1が21こ、1辺2が15こ、1辺3が10こ、1辺4が6こ、1辺5が3こ、1辺6が1こ。21＋15＋10＋6＋3＋1＝56こです。"
+        },
+        {
+         "question": "下向き（▽）でいちばん小さい三角形は何こありますか。",
+         "answer": "15",
+         "meaning": "2段目に1こ、3段目に2こ、…6段目に5こ。1＋2＋3＋4＋5＝15こです。"
+        },
+        {
+         "question": "下向きの三角形は、大きさ全部で何こありますか。",
+         "answer": "22",
+         "meaning": "1辺1が15こ、1辺2が6こ、1辺3が1こで 15＋6＋1＝22こです。**1辺4以上の下向きは入りません**。ここが数え落としやすいところです。"
+        },
+        {
+         "question": "三角形は全部で何こありますか。",
+         "answer": "78",
+         "meaning": "56＋22＝78こです。図のマスを1つずつ当てて機械で数え直しても78こでした。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_04_9",
        "src": "HG-1929",
        "star": 3,
        "title": "0,1,1,2,3,3 のカードで3けたの整数",
@@ -7401,7 +7439,7 @@
        "grade": 3
       },
       {
-       "id": "hd3n_04_9",
+       "id": "hd3n_04_10",
        "src": "HG-1930",
        "star": 3,
        "title": "24時間デジタル時計",
@@ -8654,6 +8692,80 @@
        "grade": 3
       },
       {
+       "id": "hd3n_11_7",
+       "src": "HG-1997",
+       "star": 3,
+       "title": "曜日を「7でわったあまり」で計算する",
+       "category": "kisoku",
+       "unit": "周期算",
+       "intro": "右の表は、ある年の2月のカレンダーです（1日が木曜、28日まで）。\nこの表では、たとえば**金曜の日付は7でわると2あまり**、**土曜の日付は7でわると3あまり**です。この2つをたして7でわると5あまり、**7でわって5あまる日付の曜日は月曜**なので、**（金）＋（土）＝（月）**と書くことにします。",
+       "svg": "<svg viewBox=\"0 0 274 168\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"4.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"23.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">日</text>\n<rect x=\"42.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"61.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">月</text>\n<rect x=\"80.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"99.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">火</text>\n<rect x=\"118.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"137.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">水</text>\n<rect x=\"156.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"175.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">木</text>\n<rect x=\"194.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"213.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">金</text>\n<rect x=\"232.0\" y=\"4.0\" width=\"38.0\" height=\"24.0\" fill=\"#eef1f8\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"251.0\" y=\"20.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">土</text>\n<rect x=\"4.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<rect x=\"42.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<rect x=\"80.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<rect x=\"118.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<rect x=\"156.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"175.0\" y=\"44.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text>\n<rect x=\"194.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"213.0\" y=\"44.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text>\n<rect x=\"232.0\" y=\"28.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"251.0\" y=\"44.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text>\n<rect x=\"4.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"23.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text>\n<rect x=\"42.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"61.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text>\n<rect x=\"80.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"99.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text>\n<rect x=\"118.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"137.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text>\n<rect x=\"156.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"175.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text>\n<rect x=\"194.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"213.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text>\n<rect x=\"232.0\" y=\"52.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"251.0\" y=\"68.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text>\n<rect x=\"4.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"23.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text>\n<rect x=\"42.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"61.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text>\n<rect x=\"80.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"99.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text>\n<rect x=\"118.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"137.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text>\n<rect x=\"156.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"175.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text>\n<rect x=\"194.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"213.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text>\n<rect x=\"232.0\" y=\"76.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"251.0\" y=\"92.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text>\n<rect x=\"4.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"23.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text>\n<rect x=\"42.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"61.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text>\n<rect x=\"80.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"99.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text>\n<rect x=\"118.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"137.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text>\n<rect x=\"156.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"175.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text>\n<rect x=\"194.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"213.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text>\n<rect x=\"232.0\" y=\"100.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"251.0\" y=\"116.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text>\n<rect x=\"4.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"23.0\" y=\"140.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text>\n<rect x=\"42.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"61.0\" y=\"140.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text>\n<rect x=\"80.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"99.0\" y=\"140.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text>\n<rect x=\"118.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"137.0\" y=\"140.3\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text>\n<rect x=\"156.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<rect x=\"194.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<rect x=\"232.0\" y=\"124.0\" width=\"38.0\" height=\"24.0\" fill=\"#ffffff\" stroke=\"#c8cee0\" stroke-width=\"1\"/>\n<text x=\"137.0\" y=\"163.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">2月　1日が木曜、28日まで</text>\n</svg>",
+       "steps": [
+        {
+         "question": "水曜の日付を7でわったあまりはいくつですか。",
+         "answer": "0",
+         "meaning": "水曜は7日・14日・21日・28日。どれも7でわり切れるのであまりは0です。同じように 木＝1、金＝2、土＝3、日＝4、月＝5、火＝6 になります。"
+        },
+        {
+         "question": "（火）＋（木）は何曜ですか。",
+         "answer": "水",
+         "choices": [
+          "水",
+          "木",
+          "金",
+          "土",
+          "日",
+          "月",
+          "火"
+         ],
+         "meaning": "6＋1＝7。7でわったあまりは0なので**水**です。"
+        },
+        {
+         "question": "（日）−（金）は何曜ですか。",
+         "answer": "金",
+         "choices": [
+          "金",
+          "水",
+          "木",
+          "土",
+          "日",
+          "月",
+          "火"
+         ],
+         "meaning": "4−2＝2。あまり2は**金**です。"
+        },
+        {
+         "question": "（月）×（土）は何曜ですか。",
+         "answer": "木",
+         "choices": [
+          "木",
+          "水",
+          "金",
+          "土",
+          "日",
+          "月",
+          "火"
+         ],
+         "meaning": "5×3＝15。15÷7＝2あまり1なので**木**です。"
+        },
+        {
+         "question": "（月）×｛（火）−（水）｝−（木）×（金）は何曜ですか。",
+         "answer": "水",
+         "choices": [
+          "水",
+          "木",
+          "金",
+          "土",
+          "日",
+          "月",
+          "火"
+         ],
+         "meaning": "かっこの中から先に計算します。6−0＝6、5×6＝30。1×2＝2をひいて30−2＝28。28÷7＝4あまり0なので**水**です。あまりに直すのを わすれないのがコツです。"
+        }
+       ],
+       "grade": 3
+      },
+      {
        "id": "hd3n_11_8",
        "src": "HG-1998",
        "star": 2,
@@ -9537,6 +9649,93 @@
      ],
      "8": [
       {
+       "id": "hd3n_08_2",
+       "src": "HG-1962",
+       "star": 3,
+       "title": "目もりが3つだけのものさし",
+       "category": "baai",
+       "unit": "推理・論理",
+       "intro": "右のア〜カの6本のものさしは、どれも長さが10cmで、もともと1cmごとに目もりがうってあったものが、**3つだけ**になってしまいました。両はし（0と10のところ）も、はかるときに使えます。",
+       "svg": "<svg viewBox=\"0 0 288 256\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"34.0\" y=\"22.0\" width=\"240.0\" height=\"22.0\" fill=\"#ffffff\" stroke=\"#1a2340\" stroke-width=\"1.6\"/>\n<text x=\"18.0\" y=\"37.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ア</text>\n<line x1=\"58.0\" y1=\"22.0\" x2=\"58.0\" y2=\"44.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"82.0\" y1=\"22.0\" x2=\"82.0\" y2=\"44.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"154.0\" y1=\"22.0\" x2=\"154.0\" y2=\"44.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<rect x=\"34.0\" y=\"58.0\" width=\"240.0\" height=\"22.0\" fill=\"#ffffff\" stroke=\"#1a2340\" stroke-width=\"1.6\"/>\n<text x=\"18.0\" y=\"73.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">イ</text>\n<line x1=\"58.0\" y1=\"58.0\" x2=\"58.0\" y2=\"80.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"130.0\" y1=\"58.0\" x2=\"130.0\" y2=\"80.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"154.0\" y1=\"58.0\" x2=\"154.0\" y2=\"80.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<rect x=\"34.0\" y=\"94.0\" width=\"240.0\" height=\"22.0\" fill=\"#ffffff\" stroke=\"#1a2340\" stroke-width=\"1.6\"/>\n<text x=\"18.0\" y=\"109.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">ウ</text>\n<line x1=\"106.0\" y1=\"94.0\" x2=\"106.0\" y2=\"116.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"130.0\" y1=\"94.0\" x2=\"130.0\" y2=\"116.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"154.0\" y1=\"94.0\" x2=\"154.0\" y2=\"116.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<rect x=\"34.0\" y=\"130.0\" width=\"240.0\" height=\"22.0\" fill=\"#ffffff\" stroke=\"#1a2340\" stroke-width=\"1.6\"/>\n<text x=\"18.0\" y=\"145.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">エ</text>\n<line x1=\"58.0\" y1=\"130.0\" x2=\"58.0\" y2=\"152.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"82.0\" y1=\"130.0\" x2=\"82.0\" y2=\"152.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"202.0\" y1=\"130.0\" x2=\"202.0\" y2=\"152.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<rect x=\"34.0\" y=\"166.0\" width=\"240.0\" height=\"22.0\" fill=\"#ffffff\" stroke=\"#1a2340\" stroke-width=\"1.6\"/>\n<text x=\"18.0\" y=\"181.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">オ</text>\n<line x1=\"58.0\" y1=\"166.0\" x2=\"58.0\" y2=\"188.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"178.0\" y1=\"166.0\" x2=\"178.0\" y2=\"188.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"202.0\" y1=\"166.0\" x2=\"202.0\" y2=\"188.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<rect x=\"34.0\" y=\"202.0\" width=\"240.0\" height=\"22.0\" fill=\"#ffffff\" stroke=\"#1a2340\" stroke-width=\"1.6\"/>\n<text x=\"18.0\" y=\"217.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">カ</text>\n<line x1=\"58.0\" y1=\"202.0\" x2=\"58.0\" y2=\"224.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"130.0\" y1=\"202.0\" x2=\"130.0\" y2=\"224.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<line x1=\"250.0\" y1=\"202.0\" x2=\"250.0\" y2=\"224.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<text x=\"34.0\" y=\"12.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">0</text>\n<text x=\"274.0\" y=\"12.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">10</text>\n<text x=\"154.0\" y=\"246.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">どれも長さ10cm。赤い線が のこった目もり</text>\n</svg>",
+       "steps": [
+        {
+         "question": "アのものさしで使える点は、0・1・2・5・10の5つです。2つの点の組み合わせは何通りありますか。",
+         "answer": "10",
+         "meaning": "5つから2つを選ぶので 5×4÷2＝10通りです。"
+        },
+        {
+         "question": "アではかれる長さは何種類ありますか。",
+         "answer": "8",
+         "meaning": "0からの差が 1,2,5,10、1からが 1,4,9、2からが 3,8、5からが 5。ならべると 1,1,2,3,4,5,5,8,9,10 で、**1と5が2回ずつ**出るので 10−2＝**8種類**です。"
+        },
+        {
+         "question": "はかれる長さがいちばん多いのはどのものさしですか。",
+         "answer": "エ",
+         "choices": [
+          "エ",
+          "ア",
+          "イ",
+          "ウ",
+          "オ",
+          "カ"
+         ],
+         "meaning": "エ（0,1,2,7,10）は 1,2,3,5,6,7,8,9,10 の**9種類**で最多です。4だけがはかれません。"
+        },
+        {
+         "question": "はかれる長さがいちばん少ないのはどのものさしですか。",
+         "answer": "イ",
+         "choices": [
+          "イ",
+          "ア",
+          "ウ",
+          "エ",
+          "オ",
+          "カ"
+         ],
+         "meaning": "イ（0,1,4,5,10）は 1,3,4,5,6,9,10 の**7種類**です。1と4のあいだ・4と5のあいだが同じ1、0-4と1-5が同じ4…と**同じ長さが3組かさなる**ので種類が減ります。ア・ウ・オ・カはどれも8種類でした。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_08_3",
+       "src": "HG-1963",
+       "star": 3,
+       "title": "紙テープを折り曲げて六角形にする",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "長方形の紙テープを折り曲げて両はしを合わせたところ、内がわが1辺2cmの正三角形になり、外がわの六角形は長いほうの1辺が4cm、短いほうの1辺が2cmになりました。",
+       "svg": "<svg viewBox=\"0 0 236 205\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"66.0,155.1 170.0,155.1 196.0,110.1 144.0,20.0 92.0,20.0 40.0,110.1\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2.2\"/>\n<polygon points=\"118.0,65.0 144.0,110.1 92.0,110.1\" fill=\"#ffffff\" stroke=\"#ff6b6b\" stroke-width=\"2\"/>\n<text x=\"118.0\" y=\"172.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">長い辺 4cm</text>\n<text x=\"205.0\" y=\"140.6\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">2cm</text>\n<text x=\"118.0\" y=\"12.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">短い辺 2cm</text>\n<text x=\"118.0\" y=\"125.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">2cm</text>\n<text x=\"118.0\" y=\"195.09996299037243\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">かげの部分が紙テープ。まん中はあいている</text>\n</svg>",
+       "steps": [
+        {
+         "question": "この六角形は、1辺8cmの正三角形の角を3つ切り落とした形です。切り落とす1つの角は、1辺何cmの正三角形ですか。",
+         "answer": "2",
+         "meaning": "8−2−2＝4 で長いほうの辺が4cmになります。切り口が短いほうの辺2cmです。"
+        },
+        {
+         "question": "1辺1cmの正三角形を1こ分と数えます。1辺8cmの正三角形は何こ分ですか。",
+         "answer": "64",
+         "meaning": "1辺が8倍なので 8×8＝64こ分です。"
+        },
+        {
+         "question": "六角形は何こ分ですか。",
+         "answer": "52",
+         "meaning": "64から1辺2cm（＝4こ分）の角を3つひいて 64−4×3＝52こ分です。"
+        },
+        {
+         "question": "テープにおおわれている部分（六角形からまん中の穴をのぞいた部分）は何こ分ですか。",
+         "answer": "48",
+         "meaning": "穴は1辺2cmの正三角形で4こ分。52−4＝48こ分です。"
+        },
+        {
+         "question": "紙テープの長さは何cmですか。",
+         "answer": "15",
+         "meaning": "テープの幅は1辺2cmの正三角形の高さで、長さ1cmあたり2こ分の面積になります。\n**折り目で2重になるところが3か所**あり、そこは1辺2cm（4こ分）ずつ重なるので 4×3＝12こ分よけいに要ります。テープ全体は 48＋12＝60こ分。60÷2＝**15cm**です。\n2重になる分をわすれると12cmと出てしまいます。内がわが3cmの同じ形なら 15×3/2＝22.5cm になり、つじつまが合います。"
+        }
+       ],
+       "grade": 3
+      },
+      {
        "id": "hd3n_08_4",
        "src": "HG-1964",
        "star": 3,
@@ -9560,6 +9759,148 @@
          "question": "八角形（実線部分）のまわりの長さは何cmですか。",
          "answer": "116",
          "meaning": "2つの三角形のまわりを足すと、重なった部分のまわりを2回数えたことになります。そのうち1回ぶん（34cm）は八角形の外がわではないので引きます。150−34＝116cmです。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_08_6",
+       "src": "HG-1966",
+       "star": 3,
+       "title": "長方形を5つの正方形と1つの長方形でしきつめる",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "右の図は、たて19cm、横25cmの長方形の中に、**5つの正方形と1つの長方形**をすきまなくしきつめたものです。",
+       "svg": "<svg viewBox=\"0 0 290 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"26.0\" y=\"20.0\" width=\"80.0\" height=\"80.0\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<rect x=\"106.0\" y=\"20.0\" width=\"50.0\" height=\"50.0\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<rect x=\"156.0\" y=\"20.0\" width=\"120.0\" height=\"50.0\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<rect x=\"106.0\" y=\"70.0\" width=\"30.0\" height=\"30.0\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<rect x=\"26.0\" y=\"100.0\" width=\"110.0\" height=\"110.0\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<rect x=\"136.0\" y=\"70.0\" width=\"140.0\" height=\"140.0\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<rect x=\"26.0\" y=\"20.0\" width=\"250.0\" height=\"190.0\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2.6\"/>\n<text x=\"151.0\" y=\"14.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">25cm</text>\n<text x=\"16.0\" y=\"115.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\" transform=\"rotate(-90 16.0 115.0)\">19cm</text>\n<text x=\"145.0\" y=\"230.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">5つの正方形と1つの長方形でしきつめてある</text>\n</svg>",
+       "steps": [
+        {
+         "question": "長方形全体の面積は何cm²ですか。",
+         "answer": "475",
+         "meaning": "19×25＝475cm²です。"
+        },
+        {
+         "question": "右がわのいちばん大きな正方形の1辺は何cmですか。",
+         "answer": "14",
+         "meaning": "たては 5＋14＝19、横は 11＋14＝25。どちらもぴったり合うのは1辺14cmのときだけです。"
+        },
+        {
+         "question": "左下の正方形の1辺は何cmですか。",
+         "answer": "11",
+         "meaning": "横が 11＋14＝25 なので11cmです。たては 8＋11＝19 とも合います。"
+        },
+        {
+         "question": "いちばん小さい正方形の1辺は何cmですか。",
+         "answer": "3",
+         "meaning": "左上が8cm、そのとなりが5cm、すきまをうめるのが 8−5＝3cmの正方形です。"
+        },
+        {
+         "question": "長方形（正方形でないもの）は、たて何cm・横何cmですか。たて×横の答えを書きなさい。",
+         "answer": "60",
+         "meaning": "たて5cm・横12cmで 5×12＝60cm²です。5つの正方形 64＋25＋9＋121＋196＝415 に60をたすと475になり、**すきまも重なりもない**ことが確かめられます。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_08_7",
+       "src": "HG-1967",
+       "star": 3,
+       "title": "合同な三角形2つを3通りにならべる",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "形も大きさも同じ2つの三角形を、右の（ア）（イ）（ウ）のようにならべたところ、まわりの長さはそれぞれ46cm、50cm、64cmになりました。",
+       "svg": "<svg viewBox=\"0 0 300 232\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"36.0,92.0 102.0,92.0 102.0,56.8 36.0,56.8\" fill=\"rgba(79,124,255,0.10)\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"36.0\" y1=\"92.0\" x2=\"102.0\" y2=\"56.8\" stroke=\"#ff6b6b\" stroke-width=\"1.8\" stroke-dasharray=\"6 4\"/>\n<text x=\"69.0\" y=\"110.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">（ア）46cm</text>\n<polygon points=\"200.0,74.8 266.0,110.0 266.0,145.2 200.0,110.0\" fill=\"rgba(79,124,255,0.10)\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"200.0\" y1=\"110.0\" x2=\"266.0\" y2=\"110.0\" stroke=\"#ff6b6b\" stroke-width=\"1.8\" stroke-dasharray=\"6 4\"/>\n<text x=\"233.0\" y=\"163.2\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">（イ）50cm</text>\n<polygon points=\"216.0,200.0 150.0,200.0 84.0,164.8 150.0,164.8\" fill=\"rgba(79,124,255,0.10)\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"150.0\" y1=\"200.0\" x2=\"150.0\" y2=\"164.8\" stroke=\"#ff6b6b\" stroke-width=\"1.8\" stroke-dasharray=\"6 4\"/>\n<text x=\"150.0\" y=\"218.0\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">（ウ）64cm</text>\n<text x=\"150\" y=\"20\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">同じ三角形2まいを、点線のところではりあわせた</text>\n</svg>",
+       "steps": [
+        {
+         "question": "3つのまわりの長さをぜんぶ たすと何cmですか。",
+         "answer": "160",
+         "meaning": "46＋50＋64＝160cmです。"
+        },
+        {
+         "question": "三角形1つの3辺の長さの合計は何cmですか。",
+         "answer": "40",
+         "meaning": "はりあわせた辺は、まわりから2本ぶん消えます。1つのならべ方のまわり＝（3辺の和）×2−（はった辺）×2。3通りを たすと（3辺の和）×6−（3辺の和）×2＝（3辺の和）×4。160÷4＝40cmです。"
+        },
+        {
+         "question": "まわりが46cmのならべ方で、はりあわせた辺は何cmですか。",
+         "answer": "17",
+         "meaning": "40×2−46＝34、34÷2＝17cmです。**まわりが短いほど、はった辺は長い**ことになります。"
+        },
+        {
+         "question": "3辺のうち、いちばん短い辺は何cmですか。",
+         "answer": "8",
+         "meaning": "50cmからは（80−50）÷2＝15cm、64cmからは（80−64）÷2＝8cm。3辺は8cm・15cm・17cmで、たすと40 ✓。8×8＋15×15＝289＝17×17 なので直角三角形になり、（ア）はきちんと長方形になります。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_08_9",
+       "src": "HG-1969",
+       "star": 3,
+       "title": "長方形が直線上をころがる",
+       "category": "zu",
+       "unit": "図形の移動",
+       "intro": "たて12cm、横16cm、対角線20cmの長方形が、右の図のように直線の上をすべらずに4回ころがります。長方形の1つの頂点をAとします。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"0 0 300 164\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"8\" y1=\"122.0\" x2=\"292\" y2=\"122.0\" stroke=\"#1a2340\" stroke-width=\"2\"/>\n<rect x=\"26.0\" y=\"81.2\" width=\"54.4\" height=\"40.8\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/>\n<rect x=\"80.4\" y=\"67.6\" width=\"40.8\" height=\"54.4\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/>\n<rect x=\"121.2\" y=\"81.2\" width=\"54.4\" height=\"40.8\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/>\n<rect x=\"175.6\" y=\"67.6\" width=\"40.8\" height=\"54.4\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/>\n<rect x=\"216.4\" y=\"81.2\" width=\"54.4\" height=\"40.8\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/>\n<path d=\"M 26.0 81.2 A 68.0 68.0 0 0 1 121.2 67.6\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.8\" stroke-dasharray=\"5 4\"/>\n<text x=\"80.4\" y=\"48.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">20cm</text>\n<path d=\"M 121.2 67.6 A 54.4 54.4 0 0 1 175.6 122.0\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.8\" stroke-dasharray=\"5 4\"/>\n<text x=\"121.2\" y=\"61.6\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">16cm</text>\n<path d=\"M 175.6 122.0 A 40.8 40.8 0 0 1 216.4 81.2\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.8\" stroke-dasharray=\"5 4\"/>\n<text x=\"238.4\" y=\"67.2\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">12cm</text>\n<circle cx=\"26.0\" cy=\"81.2\" r=\"3.4\" fill=\"#ff6b6b\"/>\n<circle cx=\"121.2\" cy=\"67.6\" r=\"3.4\" fill=\"#ff6b6b\"/>\n<circle cx=\"175.6\" cy=\"122.0\" r=\"3.4\" fill=\"#ff6b6b\"/>\n<circle cx=\"216.4\" cy=\"81.2\" r=\"3.4\" fill=\"#ff6b6b\"/>\n<text x=\"16.0\" y=\"75.2\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">A</text>\n<text x=\"150\" y=\"16\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">たて12cm・横16cm・対角線20cmの長方形が4回ころがる</text>\n<text x=\"150\" y=\"140.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">赤い点線がAの通ったあと</text>\n<text x=\"150\" y=\"155.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">3回目はAが回転の中心なので動かない</text>\n</svg>",
+       "steps": [
+        {
+         "question": "1回ころがるとき、長方形は何度回りますか。",
+         "answer": "90",
+         "meaning": "長方形のかどは直角なので、1回で90°ずつ回ります。"
+        },
+        {
+         "question": "Aがえがく弧は何本ですか。",
+         "answer": "3",
+         "meaning": "4回ころがりますが、**3回目はAそのものが回転の中心**になるのでAは動きません。だから弧は3本です。"
+        },
+        {
+         "question": "3本の弧の半径をぜんぶ たすと何cmですか。",
+         "answer": "48",
+         "meaning": "1回目はAから回転の中心までが対角線で20cm、2回目は横の辺で16cm、4回目はたての辺で12cm。20＋16＋12＝48cmです。"
+        },
+        {
+         "question": "Aが動いてできる曲線の長さは何cmですか。",
+         "answer": "75.36",
+         "meaning": "どれも中心角90°＝円の4分の1なので、48×2×3.14÷4＝48×1.57＝**75.36cm**です。**半径を先にたしてから3.14を1回だけかける**のが計算のコツです。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_08_10",
+       "src": "HG-1970",
+       "star": 3,
+       "title": "正方形が半円の弧にそって動く",
+       "category": "zu",
+       "unit": "図形の移動",
+       "intro": "1辺2cmの正方形があります。半径6cmの半円の弧にそって、右の図の（あ）の位置から（い）の位置まで、**向きを変えずに**動かします。正方形のまん中（対角線が交わる点）をOとします。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"0 0 300 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M 60.0 172.0 A 90.0 90.0 0 0 1 240.0 172.0 Z\" fill=\"rgba(79,124,255,0.08)\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<text x=\"150.0\" y=\"142.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">半径6cm</text>\n<rect x=\"30.0\" y=\"142.0\" width=\"30.0\" height=\"30.0\" fill=\"rgba(255,107,107,0.12)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<circle cx=\"45.0\" cy=\"157.0\" r=\"2.6\" fill=\"#ff6b6b\"/>\n<text x=\"45.0\" y=\"134.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">（あ）</text>\n<rect x=\"120.0\" y=\"52.0\" width=\"30.0\" height=\"30.0\" fill=\"rgba(255,107,107,0.12)\" stroke=\"#6c7086\" stroke-width=\"1.8\"/>\n<circle cx=\"135.0\" cy=\"67.0\" r=\"2.6\" fill=\"#6c7086\"/>\n<rect x=\"150.0\" y=\"52.0\" width=\"30.0\" height=\"30.0\" fill=\"rgba(255,107,107,0.12)\" stroke=\"#6c7086\" stroke-width=\"1.8\"/>\n<circle cx=\"165.0\" cy=\"67.0\" r=\"2.6\" fill=\"#6c7086\"/>\n<rect x=\"240.0\" y=\"142.0\" width=\"30.0\" height=\"30.0\" fill=\"rgba(255,107,107,0.12)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<circle cx=\"255.0\" cy=\"157.0\" r=\"2.6\" fill=\"#ff6b6b\"/>\n<text x=\"255.0\" y=\"134.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">（い）</text>\n<path d=\"M 45.0 157.0 A 90.0 90.0 0 0 1 135.0 67.0 L 165.0 67.0 A 90.0 90.0 0 0 1 255.0 157.0\" fill=\"none\" stroke=\"#28c88a\" stroke-width=\"1.8\" stroke-dasharray=\"5 4\"/>\n<text x=\"150.0\" y=\"20\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">1辺2cmの正方形を、向きを変えずに弧にそって動かす</text>\n<text x=\"150.0\" y=\"190.0\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#28c88a\">緑の点線が、まん中の点Oの通ったあと</text>\n</svg>",
+       "steps": [
+        {
+         "question": "正方形の右下のかどが弧にふれているあいだ、Oは半径何cmの弧をえがきますか。",
+         "answer": "6",
+         "meaning": "向きを変えないので、Oはいつも ふれている点から同じ向き・同じ長さだけはなれた場所にあります。だから**弧をそのままずらした形**になり、半径は弧と同じ6cmです。"
+        },
+        {
+         "question": "その弧の中心角は何度ですか。",
+         "answer": "90",
+         "meaning": "左はしから頂上までで4分の1周です。"
+        },
+        {
+         "question": "その弧の長さは何cmですか。",
+         "answer": "9.42",
+         "meaning": "6×2×3.14÷4＝9.42cmです。"
+        },
+        {
+         "question": "頂上では、正方形の下の辺が弧にふれます。このときOは何cm まっすぐ動きますか。",
+         "answer": "2",
+         "meaning": "ふれるところが右下のかどから左下のかどに移るあいだ、正方形は**1辺ぶん＝2cm**だけ横にすべります。"
+        },
+        {
+         "question": "Oは全部で何cm動きますか。",
+         "answer": "20.84",
+         "meaning": "9.42＋2＋9.42＝**20.84cm**です。弧2つを合わせると 6×2×3.14÷2＝18.84cm＝円のちょうど半分になります。**「向きを変えずに」を「ころがす」と読みちがえる**と、半径が変わって答えがまったく別のものになります。"
         }
        ],
        "grade": 3

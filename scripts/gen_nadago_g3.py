@@ -64,6 +64,212 @@ def _table_svg(rows, widths, fs=12, rh=26, note="", head_col=True, head_row=Fals
     return _svg(int(W + ox * 2), int(h), "\n".join(body))
 
 
+def _trigrid_svg(n=6, u=38.0):
+    """HG-1928 1辺がn等分された正三角形（小さな正三角形 n×n こ）"""
+    import math as _m
+    h = u * _m.sqrt(3) / 2
+    ox, oy = 6.0, 16.0
+    P = lambda r, c: (ox + (n - r) * u / 2 + c * u, oy + r * h)   # r段目の左からc番目の点
+    ln = lambda a, b, c, w: ('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                             'stroke-width="%s"/>' % (a[0], a[1], b[0], b[1], c, w))
+    body = []
+    for r in range(1, n):                                # 横の線
+        body.append(ln(P(r, 0), P(r, r), "#9fb2e8", 1.2))
+    for k in range(1, n):                                # 左下がり／右下がり
+        body.append(ln(P(k, 0), P(n, n - k), "#9fb2e8", 1.2))
+        body.append(ln(P(k, k), P(n, k), "#9fb2e8", 1.2))
+    body.append('<polygon points="%s" fill="none" stroke="%s" stroke-width="2.4"/>'
+                % (" ".join("%.1f,%.1f" % p for p in (P(0, 0), P(n, 0), P(n, n))), BLUE))
+    W = int(ox * 2 + n * u)
+    body.append(_t(W / 2, oy + n * h + 20, "1辺を6等分した正三角形", GRAY, 11))
+    return _svg(W, int(oy + n * h + 30), "\n".join(body))
+
+
+def _monosashi_svg():
+    """HG-1962 目もりが3つだけになった10cmのものさし6本"""
+    RUL = (("ア", (1, 2, 5)), ("イ", (1, 4, 5)), ("ウ", (3, 4, 5)),
+           ("エ", (1, 2, 7)), ("オ", (1, 6, 7)), ("カ", (1, 4, 9)))
+    u, ox, oy, rh, gap = 24.0, 34.0, 22.0, 22.0, 14.0
+    body = []
+    for i, (nm, ms) in enumerate(RUL):
+        y = oy + i * (rh + gap)
+        body.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="#ffffff" '
+                    'stroke="%s" stroke-width="1.6"/>' % (ox, y, 10 * u, rh, INK))
+        body.append(_t(ox - 16, y + rh / 2 + 4, nm, INK, 13, bold=True))
+        for m in ms:
+            x = ox + m * u
+            body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                        'stroke-width="1.8"/>' % (x, y, x, y + rh, RED))
+    y0, y1 = oy - 8, oy + 6 * (rh + gap) - gap + 8
+    body.append(_t(ox, y0 - 2, "0", GRAY, 11))
+    body.append(_t(ox + 10 * u, y0 - 2, "10", GRAY, 11))
+    body.append(_t(ox + 5 * u, y1 + 14, "どれも長さ10cm。赤い線が のこった目もり", GRAY, 11))
+    return _svg(int(ox + 10 * u + 14), int(y1 + 24), "\n".join(body))
+
+
+def _tape_hex_svg():
+    """HG-1963 紙テープを折って作った六角形（長い辺4cm・短い辺2cm、内がわは1辺2cmの正三角形）"""
+    import math as _m
+    u = 26.0
+    ox, oy = 14.0, 20.0
+    r3 = _m.sqrt(3)
+    P = lambda x, y: (ox + x * u, oy + (3 * r3 - y) * u)          # y は上向き
+    HEX = [(2, 0), (6, 0), (7, r3), (5, 3 * r3), (3, 3 * r3), (1, r3)]
+    TRI = [(4, 2 * r3), (5, r3), (3, r3)]
+    pj = lambda ps: " ".join("%.1f,%.1f" % P(*p) for p in ps)
+    body = ['<polygon points="%s" fill="rgba(79,124,255,0.16)" stroke="%s" stroke-width="2.2"/>'
+            % (pj(HEX), BLUE),
+            '<polygon points="%s" fill="#ffffff" stroke="%s" stroke-width="2"/>'
+            % (pj(TRI), RED)]
+    mid = lambda a, b: ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+    for a, b, txt, dx, dy in ((HEX[0], HEX[1], "長い辺 4cm", 0, 17),
+                              (HEX[1], HEX[2], "2cm", 22, 8),
+                              (HEX[3], HEX[4], "短い辺 2cm", 0, -8)):
+        m = P(*mid(a, b))
+        body.append(_t("%.1f" % (m[0] + dx), "%.1f" % (m[1] + dy), txt, BLUE, 12, bold=True))
+    m = P(*mid(TRI[1], TRI[2]))
+    body.append(_t("%.1f" % m[0], "%.1f" % (m[1] + 15), "2cm", RED, 12, bold=True))
+    W = int(8 * u + ox * 2)
+    body.append(_t(W / 2, oy + 3 * r3 * u + 40, "かげの部分が紙テープ。まん中はあいている", GRAY, 11))
+    return _svg(W, int(oy + 3 * r3 * u + 50), "\n".join(body))
+
+
+def _shikitsume_svg():
+    """HG-1966 たて19cm・横25cmの長方形を5つの正方形と1つの長方形でしきつめた図"""
+    u, ox, oy = 10.0, 26.0, 20.0
+    TIL = ((0, 0, 8, 8), (8, 0, 5, 5), (13, 0, 12, 5),
+           (8, 5, 3, 3), (0, 8, 11, 11), (11, 5, 14, 14))
+    body = []
+    for x, y, w, h in TIL:
+        body.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
+                    'fill="rgba(79,124,255,0.08)" stroke="%s" stroke-width="1.8"/>'
+                    % (ox + x * u, oy + y * u, w * u, h * u, BLUE))
+    body.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="none" '
+                'stroke="%s" stroke-width="2.6"/>' % (ox, oy, 25 * u, 19 * u, INK))
+    body.append(_t(ox + 25 * u / 2, oy - 6, "25cm", INK, 12, bold=True))
+    body.append('<text x="%.1f" y="%.1f" font-size="12" text-anchor="middle" '
+                'font-family="sans-serif" fill="%s" font-weight="bold" '
+                'transform="rotate(-90 %.1f %.1f)">19cm</text>'
+                % (ox - 10, oy + 19 * u / 2, INK, ox - 10, oy + 19 * u / 2))
+    W = int(ox + 25 * u + 14)
+    body.append(_t(W / 2, oy + 19 * u + 20, "5つの正方形と1つの長方形でしきつめてある", GRAY, 11))
+    return _svg(W, int(oy + 19 * u + 30), "\n".join(body))
+
+
+def _pair3_svg():
+    """HG-1967 合同な直角三角形2つを3通りにはりあわせた図（ア＝長方形／イ・ウ＝平行四辺形）"""
+    u = 4.4
+    body = []
+
+    def draw(pts, glue, ox, oy, name):
+        f = lambda p: (ox + p[0] * u, oy - p[1] * u)
+        body.append('<polygon points="%s" fill="rgba(79,124,255,0.10)" stroke="%s" '
+                    'stroke-width="2"/>' % (" ".join("%.1f,%.1f" % f(p) for p in pts), BLUE))
+        a, b = f(glue[0]), f(glue[1])
+        body.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+                    'stroke-width="1.8" stroke-dasharray="6 4"/>' % (a[0], a[1], b[0], b[1], RED))
+        xs = [f(p)[0] for p in pts]
+        ys = [f(p)[1] for p in pts]
+        body.append(_t((min(xs) + max(xs)) / 2, max(ys) + 18, name, INK, 13, bold=True))
+
+    draw([(0, 0), (15, 0), (15, 8), (0, 8)], ((0, 0), (15, 8)), 36, 92, "（ア）46cm")
+    draw([(0, 8), (15, 0), (15, -8), (0, 0)], ((0, 0), (15, 0)), 200, 110, "（イ）50cm")
+    draw([(15, 0), (0, 0), (-15, 8), (0, 8)], ((0, 0), (0, 8)), 150, 200, "（ウ）64cm")
+    body.append(_t(150, 20, "同じ三角形2まいを、点線のところではりあわせた", GRAY, 11))
+    return _svg(300, 232, "\n".join(body))
+
+
+def _korogaru_svg():
+    """HG-1969 たて12・横16の長方形が直線上を4回ころがる。頂点Aのえがく弧は3つ"""
+    u, ox, base = 3.4, 26.0, 122.0
+    X = lambda x: ox + x * u
+    Y = lambda y: base - y * u
+    body = ['<line x1="8" y1="%.1f" x2="292" y2="%.1f" stroke="%s" stroke-width="2"/>'
+            % (base, base, INK)]
+    RECTS = ((0, 16, 12), (16, 12, 16), (28, 16, 12), (44, 12, 16), (56, 16, 12))
+    for x, w, h in RECTS:
+        body.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
+                    'fill="rgba(79,124,255,0.08)" stroke="%s" stroke-width="1.6"/>'
+                    % (X(x), Y(h), w * u, h * u, BLUE))
+    A = ((0, 12), (28, 16), (44, 0), (44, 0), (56, 12))          # 各位置でのAの場所
+    PIV = ((16, 0), (28, 0), (44, 0), (56, 0))
+    for i, (p, q) in enumerate(zip(A, A[1:])):
+        r = ((p[0] - PIV[i][0]) ** 2 + (p[1] - PIV[i][1]) ** 2) ** 0.5
+        if r == 0:
+            continue
+        body.append('<path d="M %.1f %.1f A %.1f %.1f 0 0 1 %.1f %.1f" fill="none" '
+                    'stroke="%s" stroke-width="1.8" stroke-dasharray="5 4"/>'
+                    % (X(p[0]), Y(p[1]), r * u, r * u, X(q[0]), Y(q[1]), RED))
+        dx, dy = (22, -14) if i == 3 else (0, -6)      # 4回目は弧の頂点が終点なので横へ出す
+        body.append(_t("%.1f" % (X(PIV[i][0]) + dx), "%.1f" % (Y(r) + dy),
+                       "%dcm" % int(r), RED, 11, bold=True))
+    for i, p in enumerate(A):
+        if i == 3:
+            continue
+        body.append('<circle cx="%.1f" cy="%.1f" r="3.4" fill="%s"/>' % (X(p[0]), Y(p[1]), RED))
+    body.append(_t(X(A[0][0]) - 10, Y(A[0][1]) - 6, "A", RED, 13, bold=True))
+    body.append(_t(150, 16, "たて12cm・横16cm・対角線20cmの長方形が4回ころがる", GRAY, 11))
+    body.append(_t(150, base + 18, "赤い点線がAの通ったあと", GRAY, 11))
+    body.append(_t(150, base + 33, "3回目はAが回転の中心なので動かない", GRAY, 11))
+    return _svg(300, int(base + 42), "\n".join(body))
+
+
+def _slide_svg():
+    """HG-1970 1辺2cmの正方形が、半径6cmの半円の弧にそって向きを変えずに動く"""
+    import math as _m
+    u, cx, cy = 15.0, 150.0, 172.0
+    R, S = 6.0, 2.0
+    body = ['<path d="M %.1f %.1f A %.1f %.1f 0 0 1 %.1f %.1f Z" '
+            'fill="rgba(79,124,255,0.08)" stroke="%s" stroke-width="2"/>'
+            % (cx - R * u, cy, R * u, R * u, cx + R * u, cy, BLUE)]
+    body.append(_t(cx, cy - 30, "半径6cm", BLUE, 12, bold=True))
+
+    def sq(lx, by, nm, col):                       # 左下すみ(lx,by)＝算数の向き（yは上）
+        body.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" '
+                    'fill="rgba(255,107,107,0.12)" stroke="%s" stroke-width="1.8"/>'
+                    % (cx + lx * u, cy - (by + S) * u, S * u, S * u, col))
+        ox_, oy_ = cx + (lx + S / 2) * u, cy - (by + S / 2) * u
+        body.append('<circle cx="%.1f" cy="%.1f" r="2.6" fill="%s"/>' % (ox_, oy_, col))
+        if nm:
+            body.append(_t("%.1f" % ox_, "%.1f" % (cy - (by + S) * u - 8), nm, col, 12, bold=True))
+        return (lx + S / 2, by + S / 2)
+
+    sq(-R - S, 0, "（あ）", RED)                    # 左はし：右下すみが弧に接する
+    sq(-S, R, "", GRAY)                            # てっぺんの手前
+    sq(0, R, "", GRAY)                             # てっぺんの向こう（1辺ぶん右へずれる）
+    sq(R, 0, "（い）", RED)                         # 右はし
+    d = ['M %.1f %.1f' % (cx + (-R - S / 2) * u, cy - (S / 2) * u)]
+    d.append('A %.1f %.1f 0 0 1 %.1f %.1f'
+             % (R * u, R * u, cx - (S / 2) * u, cy - (R + S / 2) * u))
+    d.append('L %.1f %.1f' % (cx + (S / 2) * u, cy - (R + S / 2) * u))
+    d.append('A %.1f %.1f 0 0 1 %.1f %.1f'
+             % (R * u, R * u, cx + (R + S / 2) * u, cy - (S / 2) * u))
+    body.append('<path d="%s" fill="none" stroke="%s" stroke-width="1.8" '
+                'stroke-dasharray="5 4"/>' % (" ".join(d), GREEN))
+    body.append(_t(cx, 20, "1辺2cmの正方形を、向きを変えずに弧にそって動かす", GRAY, 11))
+    body.append(_t(cx, cy + 18, "緑の点線が、まん中の点Oの通ったあと", GREEN, 11))
+    return _svg(300, int(cy + 28), "\n".join(body))
+
+
+def _feb_cal_svg():
+    """HG-1997 2月のカレンダー（1日が木曜・28日まで）"""
+    rows = [["日", "月", "火", "水", "木", "金", "土"]]
+    day = 1
+    for r in range(5):
+        row = []
+        for c in range(7):
+            if r == 0 and c < 4:
+                row.append("")
+            elif day <= 28:
+                row.append(str(day))
+                day += 1
+            else:
+                row.append("")
+        rows.append(row)
+    return _table_svg(rows, [38] * 7, fs=12, rh=24, head_col=False, head_row=True,
+                      note="2月　1日が木曜、28日まで")
+
+
 # ★角度の図は**弧を描かないとどの角か分からない**（本人指摘 2026-08-09）。
 #   頂点pと、そこから出る2本（p→q・p→r）を渡すと、その2本の**間**に弧を描き、
 #   弧のまん中の外がわにラベルを置く。ラベルの位置を人が決めると必ずずれる。
@@ -727,7 +933,30 @@ L4 = [
         ],
     },
     {
-        "id": "hd3n_04_8", "src": "HG-1929", "star": 3,
+        "id": "hd3n_04_8", "src": "HG-1928", "star": 3,
+        "title": "三角格子の中の三角形を全部数える", "category": "zu", "unit": "図形の数え上げ",
+        "intro": "右の図は、1辺を6等分した正三角形です。"
+                 "この中にある三角形を、**大きさ**と**向き**で分けて数えます。",
+        "svg": _trigrid_svg(),
+        "steps": [
+            {"question": "上向き（▲）でいちばん小さい三角形は何こありますか。", "answer": "21",
+             "meaning": "上から1段目に1こ、2段目に2こ、…6段目に6こ。"
+                        "1＋2＋3＋4＋5＋6＝21こです。"},
+            {"question": "上向きの三角形は、大きさ全部で何こありますか。", "answer": "56",
+             "meaning": "1辺1が21こ、1辺2が15こ、1辺3が10こ、1辺4が6こ、1辺5が3こ、1辺6が1こ。"
+                        "21＋15＋10＋6＋3＋1＝56こです。"},
+            {"question": "下向き（▽）でいちばん小さい三角形は何こありますか。", "answer": "15",
+             "meaning": "2段目に1こ、3段目に2こ、…6段目に5こ。1＋2＋3＋4＋5＝15こです。"},
+            {"question": "下向きの三角形は、大きさ全部で何こありますか。", "answer": "22",
+             "meaning": "1辺1が15こ、1辺2が6こ、1辺3が1こで 15＋6＋1＝22こです。"
+                        "**1辺4以上の下向きは入りません**。ここが数え落としやすいところです。"},
+            {"question": "三角形は全部で何こありますか。", "answer": "78",
+             "meaning": "56＋22＝78こです。"
+                        "図のマスを1つずつ当てて機械で数え直しても78こでした。"},
+        ],
+    },
+    {
+        "id": "hd3n_04_9", "src": "HG-1929", "star": 3,
         "title": "0,1,1,2,3,3 のカードで3けたの整数", "category": "baai", "unit": "場合の数",
         "intro": "0, 1, 1, 2, 3, 3 の6まいのカードから3まいを取り出してならべ、3けたの整数をつくります。"
                  "同じ数字のカードは見分けがつかないものとします。",
@@ -751,7 +980,7 @@ L4 = [
         ],
     },
     {
-        "id": "hd3n_04_9", "src": "HG-1930", "star": 3,
+        "id": "hd3n_04_10", "src": "HG-1930", "star": 3,
         "title": "24時間デジタル時計", "category": "baai", "unit": "場合の数",
         "intro": "右の図のような24時間表示のデジタル時計があって、"
                  "00時00分00秒から23時59分59秒まで1秒きざみで時刻を表示します。",
@@ -1986,6 +2215,35 @@ L11 = [
         ],
     },
     {
+        "id": "hd3n_11_7", "src": "HG-1997", "star": 3,
+        "title": "曜日を「7でわったあまり」で計算する", "category": "kisoku", "unit": "周期算",
+        "intro": "右の表は、ある年の2月のカレンダーです（1日が木曜、28日まで）。\n"
+                 "この表では、たとえば**金曜の日付は7でわると2あまり**、"
+                 "**土曜の日付は7でわると3あまり**です。"
+                 "この2つをたして7でわると5あまり、**7でわって5あまる日付の曜日は月曜**なので、"
+                 "**（金）＋（土）＝（月）**と書くことにします。",
+        "svg": _feb_cal_svg(),
+        "steps": [
+            {"question": "水曜の日付を7でわったあまりはいくつですか。", "answer": "0",
+             "meaning": "水曜は7日・14日・21日・28日。どれも7でわり切れるのであまりは0です。"
+                        "同じように 木＝1、金＝2、土＝3、日＝4、月＝5、火＝6 になります。"},
+            {"question": "（火）＋（木）は何曜ですか。",
+             "answer": "水", "choices": ["水", "木", "金", "土", "日", "月", "火"],
+             "meaning": "6＋1＝7。7でわったあまりは0なので**水**です。"},
+            {"question": "（日）−（金）は何曜ですか。",
+             "answer": "金", "choices": ["金", "水", "木", "土", "日", "月", "火"],
+             "meaning": "4−2＝2。あまり2は**金**です。"},
+            {"question": "（月）×（土）は何曜ですか。",
+             "answer": "木", "choices": ["木", "水", "金", "土", "日", "月", "火"],
+             "meaning": "5×3＝15。15÷7＝2あまり1なので**木**です。"},
+            {"question": "（月）×｛（火）−（水）｝−（木）×（金）は何曜ですか。",
+             "answer": "水", "choices": ["水", "木", "金", "土", "日", "月", "火"],
+             "meaning": "かっこの中から先に計算します。6−0＝6、5×6＝30。"
+                        "1×2＝2をひいて30−2＝28。28÷7＝4あまり0なので**水**です。"
+                        "あまりに直すのを わすれないのがコツです。"},
+        ],
+    },
+    {
         "id": "hd3n_11_8", "src": "HG-1998", "star": 2,
         "title": "年をまたぐ曜日", "category": "kisoku", "unit": "周期算",
         "intro": "ある年の3月7日は土曜日です。翌年の2月5日は何曜日ですか。"
@@ -3005,6 +3263,7 @@ def _spiral_svg():
 
 
 
+
 def _pascal_svg():
     """HG-1989 パスカルの三角形（8段目まで）"""
     rows = [[1]]
@@ -3073,6 +3332,63 @@ L8_9_10_ADD = [
         ],
     },
     {
+        "id": "hd3n_08_2", "src": "HG-1962", "star": 3,
+        "title": "目もりが3つだけのものさし", "category": "baai", "unit": "推理・論理",
+        "intro": "右のア〜カの6本のものさしは、どれも長さが10cmで、"
+                 "もともと1cmごとに目もりがうってあったものが、**3つだけ**になってしまいました。"
+                 "両はし（0と10のところ）も、はかるときに使えます。",
+        "svg": _monosashi_svg(),
+        "steps": [
+            {"question": "アのものさしで使える点は、0・1・2・5・10の5つです。"
+                         "2つの点の組み合わせは何通りありますか。", "answer": "10",
+             "meaning": "5つから2つを選ぶので 5×4÷2＝10通りです。"},
+            {"question": "アではかれる長さは何種類ありますか。", "answer": "8",
+             "meaning": "0からの差が 1,2,5,10、1からが 1,4,9、2からが 3,8、5からが 5。"
+                        "ならべると 1,1,2,3,4,5,5,8,9,10 で、"
+                        "**1と5が2回ずつ**出るので 10−2＝**8種類**です。"},
+            {"question": "はかれる長さがいちばん多いのはどのものさしですか。",
+             "answer": "エ", "choices": ["エ", "ア", "イ", "ウ", "オ", "カ"],
+             "meaning": "エ（0,1,2,7,10）は 1,2,3,5,6,7,8,9,10 の**9種類**で最多です。"
+                        "4だけがはかれません。"},
+            {"question": "はかれる長さがいちばん少ないのはどのものさしですか。",
+             "answer": "イ", "choices": ["イ", "ア", "ウ", "エ", "オ", "カ"],
+             "meaning": "イ（0,1,4,5,10）は 1,3,4,5,6,9,10 の**7種類**です。"
+                        "1と4のあいだ・4と5のあいだが同じ1、0-4と1-5が同じ4…と"
+                        "**同じ長さが3組かさなる**ので種類が減ります。"
+                        "ア・ウ・オ・カはどれも8種類でした。"},
+        ],
+    },
+    {
+        "id": "hd3n_08_3", "src": "HG-1963", "star": 3,
+        "title": "紙テープを折り曲げて六角形にする", "category": "zu", "unit": "平面図形（面積）",
+        "intro": "長方形の紙テープを折り曲げて両はしを合わせたところ、"
+                 "内がわが1辺2cmの正三角形になり、"
+                 "外がわの六角形は長いほうの1辺が4cm、短いほうの1辺が2cmになりました。",
+        "svg": _tape_hex_svg(),
+        "steps": [
+            {"question": "この六角形は、1辺8cmの正三角形の角を3つ切り落とした形です。"
+                         "切り落とす1つの角は、1辺何cmの正三角形ですか。", "answer": "2",
+             "meaning": "8−2−2＝4 で長いほうの辺が4cmになります。"
+                        "切り口が短いほうの辺2cmです。"},
+            {"question": "1辺1cmの正三角形を1こ分と数えます。"
+                         "1辺8cmの正三角形は何こ分ですか。", "answer": "64",
+             "meaning": "1辺が8倍なので 8×8＝64こ分です。"},
+            {"question": "六角形は何こ分ですか。", "answer": "52",
+             "meaning": "64から1辺2cm（＝4こ分）の角を3つひいて 64−4×3＝52こ分です。"},
+            {"question": "テープにおおわれている部分（六角形からまん中の穴をのぞいた部分）は"
+                         "何こ分ですか。", "answer": "48",
+             "meaning": "穴は1辺2cmの正三角形で4こ分。52−4＝48こ分です。"},
+            {"question": "紙テープの長さは何cmですか。", "answer": "15",
+             "meaning": "テープの幅は1辺2cmの正三角形の高さで、"
+                        "長さ1cmあたり2こ分の面積になります。\n"
+                        "**折り目で2重になるところが3か所**あり、"
+                        "そこは1辺2cm（4こ分）ずつ重なるので 4×3＝12こ分よけいに要ります。"
+                        "テープ全体は 48＋12＝60こ分。60÷2＝**15cm**です。\n"
+                        "2重になる分をわすれると12cmと出てしまいます。"
+                        "内がわが3cmの同じ形なら 15×3/2＝22.5cm になり、つじつまが合います。"},
+        ],
+    },
+    {
         "id": "hd3n_08_4", "src": "HG-1964", "star": 3,
         "title": "三角形2つを重ねて八角形をつくる", "category": "zu", "unit": "平面図形（面積）",
         "intro": "3辺が15cm、25cm、35cmの三角形2こを、右の図のように重ね合わせたところ、"
@@ -3087,6 +3403,104 @@ L8_9_10_ADD = [
              "meaning": "2つの三角形のまわりを足すと、重なった部分のまわりを2回数えたことになります。"
                         "そのうち1回ぶん（34cm）は八角形の外がわではないので引きます。"
                         "150−34＝116cmです。"},
+        ],
+    },
+    {
+        "id": "hd3n_08_6", "src": "HG-1966", "star": 3,
+        "title": "長方形を5つの正方形と1つの長方形でしきつめる", "category": "zu",
+        "unit": "平面図形（面積）",
+        "intro": "右の図は、たて19cm、横25cmの長方形の中に、"
+                 "**5つの正方形と1つの長方形**をすきまなくしきつめたものです。",
+        "svg": _shikitsume_svg(),
+        "steps": [
+            {"question": "長方形全体の面積は何cm²ですか。", "answer": "475",
+             "meaning": "19×25＝475cm²です。"},
+            {"question": "右がわのいちばん大きな正方形の1辺は何cmですか。", "answer": "14",
+             "meaning": "たては 5＋14＝19、横は 11＋14＝25。"
+                        "どちらもぴったり合うのは1辺14cmのときだけです。"},
+            {"question": "左下の正方形の1辺は何cmですか。", "answer": "11",
+             "meaning": "横が 11＋14＝25 なので11cmです。たては 8＋11＝19 とも合います。"},
+            {"question": "いちばん小さい正方形の1辺は何cmですか。", "answer": "3",
+             "meaning": "左上が8cm、そのとなりが5cm、すきまをうめるのが 8−5＝3cmの正方形です。"},
+            {"question": "長方形（正方形でないもの）は、たて何cm・横何cmですか。"
+                         "たて×横の答えを書きなさい。", "answer": "60",
+             "meaning": "たて5cm・横12cmで 5×12＝60cm²です。"
+                        "5つの正方形 64＋25＋9＋121＋196＝415 に60をたすと475になり、"
+                        "**すきまも重なりもない**ことが確かめられます。"},
+        ],
+    },
+    {
+        "id": "hd3n_08_7", "src": "HG-1967", "star": 3,
+        "title": "合同な三角形2つを3通りにならべる", "category": "zu", "unit": "平面図形（面積）",
+        "intro": "形も大きさも同じ2つの三角形を、右の（ア）（イ）（ウ）のようにならべたところ、"
+                 "まわりの長さはそれぞれ46cm、50cm、64cmになりました。",
+        "svg": _pair3_svg(),
+        "steps": [
+            {"question": "3つのまわりの長さをぜんぶ たすと何cmですか。", "answer": "160",
+             "meaning": "46＋50＋64＝160cmです。"},
+            {"question": "三角形1つの3辺の長さの合計は何cmですか。", "answer": "40",
+             "meaning": "はりあわせた辺は、まわりから2本ぶん消えます。"
+                        "1つのならべ方のまわり＝（3辺の和）×2−（はった辺）×2。"
+                        "3通りを たすと（3辺の和）×6−（3辺の和）×2＝（3辺の和）×4。"
+                        "160÷4＝40cmです。"},
+            {"question": "まわりが46cmのならべ方で、はりあわせた辺は何cmですか。", "answer": "17",
+             "meaning": "40×2−46＝34、34÷2＝17cmです。"
+                        "**まわりが短いほど、はった辺は長い**ことになります。"},
+            {"question": "3辺のうち、いちばん短い辺は何cmですか。", "answer": "8",
+             "meaning": "50cmからは（80−50）÷2＝15cm、64cmからは（80−64）÷2＝8cm。"
+                        "3辺は8cm・15cm・17cmで、たすと40 ✓。"
+                        "8×8＋15×15＝289＝17×17 なので直角三角形になり、"
+                        "（ア）はきちんと長方形になります。"},
+        ],
+    },
+    {
+        "id": "hd3n_08_9", "src": "HG-1969", "star": 3,
+        "title": "長方形が直線上をころがる", "category": "zu", "unit": "図形の移動",
+        "intro": "たて12cm、横16cm、対角線20cmの長方形が、右の図のように直線の上を"
+                 "すべらずに4回ころがります。長方形の1つの頂点をAとします。"
+                 "円周率は3.14とします。",
+        "svg": _korogaru_svg(),
+        "steps": [
+            {"question": "1回ころがるとき、長方形は何度回りますか。", "answer": "90",
+             "meaning": "長方形のかどは直角なので、1回で90°ずつ回ります。"},
+            {"question": "Aがえがく弧は何本ですか。", "answer": "3",
+             "meaning": "4回ころがりますが、**3回目はAそのものが回転の中心**になるので"
+                        "Aは動きません。だから弧は3本です。"},
+            {"question": "3本の弧の半径をぜんぶ たすと何cmですか。", "answer": "48",
+             "meaning": "1回目はAから回転の中心までが対角線で20cm、"
+                        "2回目は横の辺で16cm、4回目はたての辺で12cm。20＋16＋12＝48cmです。"},
+            {"question": "Aが動いてできる曲線の長さは何cmですか。", "answer": "75.36",
+             "meaning": "どれも中心角90°＝円の4分の1なので、"
+                         "48×2×3.14÷4＝48×1.57＝**75.36cm**です。"
+                        "**半径を先にたしてから3.14を1回だけかける**のが計算のコツです。"},
+        ],
+    },
+    {
+        "id": "hd3n_08_10", "src": "HG-1970", "star": 3,
+        "title": "正方形が半円の弧にそって動く", "category": "zu", "unit": "図形の移動",
+        "intro": "1辺2cmの正方形があります。半径6cmの半円の弧にそって、"
+                 "右の図の（あ）の位置から（い）の位置まで、**向きを変えずに**動かします。"
+                 "正方形のまん中（対角線が交わる点）をOとします。円周率は3.14とします。",
+        "svg": _slide_svg(),
+        "steps": [
+            {"question": "正方形の右下のかどが弧にふれているあいだ、"
+                         "Oは半径何cmの弧をえがきますか。", "answer": "6",
+             "meaning": "向きを変えないので、Oはいつも ふれている点から同じ向き・同じ長さだけ"
+                        "はなれた場所にあります。だから**弧をそのままずらした形**になり、"
+                        "半径は弧と同じ6cmです。"},
+            {"question": "その弧の中心角は何度ですか。", "answer": "90",
+             "meaning": "左はしから頂上までで4分の1周です。"},
+            {"question": "その弧の長さは何cmですか。", "answer": "9.42",
+             "meaning": "6×2×3.14÷4＝9.42cmです。"},
+            {"question": "頂上では、正方形の下の辺が弧にふれます。"
+                         "このときOは何cm まっすぐ動きますか。", "answer": "2",
+             "meaning": "ふれるところが右下のかどから左下のかどに移るあいだ、"
+                        "正方形は**1辺ぶん＝2cm**だけ横にすべります。"},
+            {"question": "Oは全部で何cm動きますか。", "answer": "20.84",
+             "meaning": "9.42＋2＋9.42＝**20.84cm**です。"
+                        "弧2つを合わせると 6×2×3.14÷2＝18.84cm＝円のちょうど半分になります。"
+                        "**「向きを変えずに」を「ころがす」と読みちがえる**と、"
+                        "半径が変わって答えがまったく別のものになります。"},
         ],
     },
     {
