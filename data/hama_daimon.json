@@ -8291,6 +8291,160 @@
        ],
        "grade": 3
       }
+     ],
+     "9": [
+      {
+       "id": "hd3n_09_2",
+       "src": "HG-1972",
+       "star": 3,
+       "title": "角柱と角すいの頂点・辺・面",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "三角柱、五角柱、四角すい、六角すいについて、頂点の数・辺の数・面の数を調べます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "三角柱の頂点はいくつですか。",
+         "answer": "6",
+         "meaning": "上と下の三角形にそれぞれ3つずつで 3×2＝6です。"
+        },
+        {
+         "question": "三角柱の辺はいくつですか。",
+         "answer": "9",
+         "meaning": "上の三角形に3本、下に3本、たての柱が3本で 3×3＝9本です。"
+        },
+        {
+         "question": "五角柱の辺はいくつですか。",
+         "answer": "15",
+         "meaning": "5×3＝15本です。角柱は「底面の角の数×3」が辺の数になります。"
+        },
+        {
+         "question": "四角すいの辺はいくつですか。",
+         "answer": "8",
+         "meaning": "底面の4本と、頂点へ集まる4本で 4×2＝8本です。"
+        },
+        {
+         "question": "六角すいの面はいくつですか。",
+         "answer": "7",
+         "meaning": "側面が6つと底面1つで7です。角すいは「底面の角の数＋1」が面の数、頂点の数も同じです。"
+        },
+        {
+         "question": "六角すいで、頂点の数＋面の数−辺の数はいくつですか。",
+         "answer": "2",
+         "meaning": "頂点7＋面7−辺12＝2。じつはどの角柱・角すいでも2になります。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_09_3",
+       "src": "HG-1973",
+       "star": 3,
+       "title": "5つの正多面体",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "合同な正多角形で囲まれ、どの頂点にも同じ数の面が集まっている多面体を正多面体といいます。正多面体は5つしかありません（正四面体・正六面体・正八面体・正十二面体・正二十面体）。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "正四面体の辺はいくつですか。",
+         "answer": "6",
+         "meaning": "正三角形4つ。1つの面に辺が3本で、2つの面がとなり合って1本を共有するので 3×4÷2＝6本です。"
+        },
+        {
+         "question": "正八面体の頂点はいくつですか。",
+         "answer": "6",
+         "meaning": "正三角形8つ、1つの頂点に4つの面が集まるので 3×8÷4＝6こです。"
+        },
+        {
+         "question": "正十二面体の辺はいくつですか。",
+         "answer": "30",
+         "meaning": "正五角形12こ。5×12÷2＝30本です。"
+        },
+        {
+         "question": "正十二面体の頂点はいくつですか。",
+         "answer": "20",
+         "meaning": "1つの頂点に3つの面が集まるので 5×12÷3＝20こです。"
+        },
+        {
+         "question": "正二十面体の頂点はいくつですか。",
+         "answer": "12",
+         "meaning": "正三角形20こ、1つの頂点に5つの面が集まるので 3×20÷5＝12こです。"
+        },
+        {
+         "question": "正二十面体で、頂点の数＋面の数−辺の数はいくつですか。",
+         "answer": "2",
+         "meaning": "12＋20−30＝2。正多面体でもやはり2になります。"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_09_6",
+       "src": "HG-1976",
+       "star": 3,
+       "title": "サッカーボールの辺と頂点",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "正五角形12こと正六角形20こをぬい合わせたサッカーボールがあります。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "面は全部でいくつですか。",
+         "answer": "32",
+         "meaning": "12＋20＝32です。"
+        },
+        {
+         "question": "すべての面の辺の数を合計するといくつですか。",
+         "answer": "180",
+         "meaning": "5×12＋6×20＝60＋120＝180本ぶんです。"
+        },
+        {
+         "question": "サッカーボールの辺は何本ですか。",
+         "answer": "90",
+         "meaning": "1本の辺は2つの面が共有しているので、2回数えています。180÷2＝90本です。"
+        },
+        {
+         "question": "サッカーボールの頂点は何こですか。",
+         "answer": "60",
+         "meaning": "1つの頂点には3つの面が集まっているので 180÷3＝60こです。たしかめ 60＋32−90＝2 ✓"
+        }
+       ],
+       "grade": 3
+      },
+      {
+       "id": "hd3n_09_9",
+       "src": "HG-1979",
+       "star": 3,
+       "title": "マッチ棒で作る直方体の骨組み",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "長さが5cmのマッチ棒をくっつけて、たて5cm・横10cm・高さ5cmの直方体の骨組みを作ると、マッチ棒は20本使います。同じようにして、たて45cm・横35cm・高さ25cmの直方体を作ります。マッチ棒の太さは考えなくてよいものとします。",
+       "svg": "<svg viewBox=\"0 0 260 174\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"66.0\" y1=\"94.0\" x2=\"66.0\" y2=\"42.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"118.0\" y1=\"94.0\" x2=\"118.0\" y2=\"42.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"170.0\" y1=\"94.0\" x2=\"170.0\" y2=\"42.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"66.0\" y1=\"94.0\" x2=\"118.0\" y2=\"94.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"118.0\" y1=\"94.0\" x2=\"170.0\" y2=\"94.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"66.0\" y1=\"42.0\" x2=\"118.0\" y2=\"42.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"118.0\" y1=\"42.0\" x2=\"170.0\" y2=\"42.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"40.0\" y1=\"116.0\" x2=\"40.0\" y2=\"64.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"92.0\" y1=\"116.0\" x2=\"92.0\" y2=\"64.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"144.0\" y1=\"116.0\" x2=\"144.0\" y2=\"64.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"40.0\" y1=\"116.0\" x2=\"92.0\" y2=\"116.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"92.0\" y1=\"116.0\" x2=\"144.0\" y2=\"116.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"40.0\" y1=\"64.0\" x2=\"92.0\" y2=\"64.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"92.0\" y1=\"64.0\" x2=\"144.0\" y2=\"64.0\" stroke=\"#ff9a44\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"40.0\" y1=\"116.0\" x2=\"66.0\" y2=\"94.0\" stroke=\"#6c7086\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"40.0\" y1=\"64.0\" x2=\"66.0\" y2=\"42.0\" stroke=\"#6c7086\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"92.0\" y1=\"116.0\" x2=\"118.0\" y2=\"94.0\" stroke=\"#6c7086\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"92.0\" y1=\"64.0\" x2=\"118.0\" y2=\"42.0\" stroke=\"#6c7086\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"144.0\" y1=\"116.0\" x2=\"170.0\" y2=\"94.0\" stroke=\"#6c7086\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<line x1=\"144.0\" y1=\"64.0\" x2=\"170.0\" y2=\"42.0\" stroke=\"#6c7086\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<text x=\"92\" y=\"140\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">横10cm（マッチ2本）</text>\n<text x=\"22\" y=\"92\" font-size=\"10\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">たて5cm</text>\n<text x=\"196\" y=\"44\" font-size=\"10\" text-anchor=\"start\" font-family=\"sans-serif\" fill=\"#6c7086\">高さ5cm</text>\n<text x=\"130\" y=\"160\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">マッチ棒1本は5cm。この形で20本</text>\n</svg>",
+       "steps": [
+        {
+         "question": "横35cmは、マッチ棒何本ぶんですか。",
+         "answer": "7",
+         "meaning": "35÷5＝7本ぶんです。たては 45÷5＝9本ぶん、高さは 25÷5＝5本ぶんです。"
+        },
+        {
+         "question": "横向きのマッチ棒は何本使いますか。",
+         "answer": "420",
+         "meaning": "横向きの列は、たて方向に 9＋1＝10列、高さ方向に 5＋1＝6段あります。1列に7本なので 7×10×6＝420本です。"
+        },
+        {
+         "question": "たて向きのマッチ棒は何本使いますか。",
+         "answer": "432",
+         "meaning": "9×(7＋1)×(5＋1)＝9×8×6＝432本です。"
+        },
+        {
+         "question": "マッチ棒は全部で何本使いますか。",
+         "answer": "1252",
+         "meaning": "高さ向きは 5×(7＋1)×(9＋1)＝400本。420＋432＋400＝1252本です。たしかめに、はじめの1×2×1で同じ計算をすると 8＋6＋6＝20本 ✓"
+        }
+       ],
+       "grade": 3
+      }
      ]
     }
    }
