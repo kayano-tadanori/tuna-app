@@ -17,7 +17,9 @@
 import io, os, re, sys, argparse, collections
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-GENBO = r"C:\Users\User\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from genbo_path import find_genbo
+GENBO = find_genbo()
 
 # 単元 → キーワード。**上から順に当てる**（先に書いたものが強い）
 RULES = [

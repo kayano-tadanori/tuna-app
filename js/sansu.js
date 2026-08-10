@@ -472,6 +472,16 @@ async function hamaDaimonWeek(grade, course, no) {
   const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
   return (node && node.fukushu && node.fukushu[String(no)]) || [];
 }
+// ★講座の宿題（大問）＝復習テストとは別物の、授業テキストそのもの（小5最レ第3分冊で追加・2026-08-11）。
+//   kouza は 1 か 2（第1講座／第2講座）。データがあるコースだけボタンが自動で出る（コース名の決め打ちなし）。
+async function hamaDaimonKouza(grade, course, kouza, no) {
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
+  const bucket = node && node['kouza' + kouza];
+  return (bucket && bucket[String(no)]) || [];
+}
+function hamaHasKouza(node, kouza) {
+  return !!(node && node['kouza' + kouza]);
+}
 // ★単元でえらぶモードの大問。
 //   回番号＝去年までのカリキュラム／単元＝今年のカリキュラム、という分け方に合わせる。
 //   刷新版（2026年度〜）の大問は回番号にひもづけられないので units 側に置く（2026-07-28）
@@ -1015,7 +1025,17 @@ async function renderHamaPanel() {
       : '毎週じどうで1つ進みます。ズレたら −／＋ で直せます。';
   }
   label.textContent = isNadago ? `第${no}回` : `No.${no}`;
-  title.textContent = hamaLessonTitle(grade, course, no) || '—';
+  const lessonTitle = hamaLessonTitle(grade, course, no) || '';
+  title.textContent = lessonTitle || '—';
+
+  // ★講座の宿題ボタンは「第1講座の宿題（大問）」より「第1講座（単元名）」の方がわかりやすい
+  //   （本人指摘 2026-08-11）。回のタイトルを「講座1単元・講座2単元」の形で書いてあるので、
+  //   ・で割って講座ごとの単元名をボタン名に出す。無ければ既定の文言のまま
+  const titleParts = lessonTitle.split('・');
+  const k1NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza1q"] .hama-act-name');
+  const k2NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza2q"] .hama-act-name');
+  if (k1NameEl) k1NameEl.textContent = titleParts[0] ? `📚 第1講座（${titleParts[0]}）` : '📚 第1講座の宿題（大問）';
+  if (k2NameEl) k2NameEl.textContent = titleParts[1] ? `📚 第2講座（${titleParts[1]}）` : '📚 第2講座の宿題（大問）';
 
   // ★回がきまったので、マス目に何を書く回なのかで名前をつけ直す（本人指摘 2026-08-08）
   if (isKokugo) {
@@ -1060,8 +1080,17 @@ async function renderHamaPanel() {
   const kokaiSets = showKokai ? await hamaDaimonKokai(grade, course, no) : [];
   const mNow = hamaMonthOf(grade, course, no);
   const mFrom = ((mNow - 1 - 2) % 12 + 12) % 12 + 1;
+  // ★講座の宿題（大問）。単元でえらぶモードのときは出さない（回に結びつくデータのため）
+  const daimonNode = hamaDaimonNode(await loadHamaDaimon(), grade, course);
+  const hasKouza1 = !byUnitMode && !isKokugo && hamaHasKouza(daimonNode, 1);
+  const hasKouza2 = !byUnitMode && !isKokugo && hamaHasKouza(daimonNode, 2);
+  const kouza1Sets = hasKouza1 ? await hamaDaimonKouza(grade, course, 1, no) : [];
+  const kouza2Sets = hasKouza2 ? await hamaDaimonKouza(grade, course, 2, no) : [];
   const dq = [
-    // 国語には大問データが無い（読解の本文は著作物なので入れない）。ボタンごと出さない
+    // 宿題は復習テストより先にやるもの（本人指示 2026-08-11）。国語には大問データが無い（読解の本文は
+    // 著作物なので入れない）。ボタンごと出さない
+    { k: 'kouza1q', show: hasKouza1, sets: kouza1Sets, span: `No.${no}` },
+    { k: 'kouza2q', show: hasKouza2, sets: kouza2Sets, span: `No.${no}` },
     { k: 'weekq', show: !isKokugo, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
     { k: 'kokaiq', show: showKokai, sets: kokaiSets, span: `${mFrom}〜${mNow}月` },
   ];
@@ -1164,6 +1193,43 @@ function initClassBandUI() {
   });
 }
 
+// ★宿題（大問）の「大問をえらぶ」モーダル（2026-08-11）。
+//   星順のおまかせで出すのではなく、大問番号を一覧で見て、やりたいものだけをその場で始められるようにする。
+function openDaimonPicker(sets, grade, hamaSubj, label) {
+  const modal = document.getElementById('daimon-pick-modal');
+  const listEl = document.getElementById('daimon-pick-list');
+  document.getElementById('daimon-pick-title').textContent = `${label}の宿題・大問をえらぶ`;
+  listEl.innerHTML = sets.map((s, i) => `
+    <button class="update-item daimon-pick-item" type="button" data-idx="${i}">
+      <div class="update-item-date">大問${i + 1}${s.star ? '　' + '★'.repeat(s.star) : ''}</div>
+      <div class="update-item-title">${s.title || s.unit || ''}</div>
+    </button>
+  `).join('');
+  listEl.querySelectorAll('.daimon-pick-item').forEach(btn => {
+    btn.onclick = () => {
+      modal.classList.add('hidden');
+      startDaimonSets([sets[Number(btn.dataset.idx)]], grade, hamaSubj);
+    };
+  });
+  document.getElementById('daimon-pick-all').onclick = () => {
+    modal.classList.add('hidden');
+    startDaimonSets(sets, grade, hamaSubj); // ★保存されている順（大問1→…）のまま。星順にしない
+  };
+  document.getElementById('daimon-pick-close').onclick = () => modal.classList.add('hidden');
+  modal.classList.remove('hidden');
+}
+// 大問（1本 or 複数）をそのままクイズにして始める。fillChains で①②③の順に展開するだけ＝並べかえない。
+function startDaimonSets(sets, grade, hamaSubj) {
+  const qs = fillChains(sets, grade, 'all');
+  if (!qs.length) { showToast('この大問はまだ用意していません'); return; }
+  sansuState.subject = hamaSubj;
+  sansuState.cat = 'hama';
+  sansuState.questions = qs;
+  sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
+  coinSessionEarned = 0;
+  startSansuQuiz();
+}
+
 // じゅくナビから出題を開始する
 async function startHamaSession(kind) {
   const grade = sansuState.grade, course = sansuState.hamaCourse;
@@ -1201,6 +1267,24 @@ async function startHamaSession(kind) {
       coinSessionEarned = 0;
       hideLoading();
       startSansuQuiz();
+    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+    return;
+  }
+
+  // ★講座の宿題（大問）は、星順のおまかせで出さず、大問番号を見てえらべるようにする。
+  //   「かんたんな問題から強制的にやらされるのは苦痛」という本人（長男）の声（2026-08-11）。
+  //   宿題は復習テストと違って「あの回のあの大問をやり直したい」というピンポイントの使い方をするため。
+  if (kind === 'kouza1q' || kind === 'kouza2q') {
+    showLoading();
+    try {
+      const dno = hamaCurrent(grade, course);
+      const sets = await hamaDaimonKouza(grade, course, kind === 'kouza1q' ? 1 : 2, dno);
+      hideLoading();
+      if (!sets.length) { showToast('ここの大問はまだ用意していません'); return; }
+      // ボタン名（例：📚 第1講座（数の性質(3)））をそのままモーダルの見出しにも使う
+      const btnName = document.querySelector(`.hama-act-btn[data-hama-act="${kind}"] .hama-act-name`);
+      const kouzaLabel = (btnName && btnName.textContent.replace(/^📚\s*/, '')) || (kind === 'kouza1q' ? '第1講座' : '第2講座');
+      openDaimonPicker(sets, grade, hamaSubj, `No.${dno}・${kouzaLabel}`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }

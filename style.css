@@ -736,6 +736,10 @@ button { cursor: pointer; font-family: inherit; }
 .update-item-ver { display: inline-block; margin-left: 4px; padding: 1px 6px; border-radius: 999px; background: rgba(255,186,0,0.16); border: 1px solid rgba(255,186,0,0.4); color: var(--gold); font-size: 0.6rem; font-weight: 900; vertical-align: middle; }
 .update-item-title { font-size: 0.88rem; font-weight: 900; color: var(--text); margin-bottom: 3px; }
 .update-item-body { font-size: 0.76rem; color: var(--sub2); line-height: 1.6; white-space: pre-wrap; }
+/* じゅくナビ：宿題の大問をえらぶ一覧（.update-item を流用したボタン版） */
+.daimon-pick-item { width: 100%; font: inherit; cursor: pointer; -webkit-appearance: none; appearance: none; }
+.daimon-pick-item:active { background: var(--card2); }
+#daimon-pick-all { width: 100%; margin-bottom: 4px; }
 /* 管理ツール（デバッグ） */
 .debug-main { padding: 16px; max-width: 600px; margin: 0 auto; }
 .debug-note { color: var(--sub2); font-size: 0.76rem; margin-bottom: 12px; }

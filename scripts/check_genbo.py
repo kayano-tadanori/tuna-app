@@ -9,7 +9,9 @@ import sys, io as _io
 sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GENBO = r"C:\Users\User\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from genbo_path import find_genbo
+GENBO = find_genbo()
 
 g = io.open(GENBO, encoding="utf-8").read()
 recs = [r for r in re.split(r"(?=^### 【HG-)", g, flags=re.M) if re.match(r"### 【HG-\d+】", r)]
@@ -71,7 +73,7 @@ for (grade, course) in sorted(gen):
     node = d["grades"].get(grade, {}).get(course, {})
     inapp = set()
     n = q = 0
-    for kind in ("fukushu", "kokai", "units"):
+    for kind in ("fukushu", "kokai", "units", "kouza1", "kouza2"):
         for v in node.get(kind, {}).values():
             for x in v:
                 n += 1

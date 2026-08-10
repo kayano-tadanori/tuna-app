@@ -1100,6 +1100,17 @@
         </div>
         <p class="hama-hint" id="hama-hint">つぎの講義の番号に合わせてね。毎週じどうで1つ進みます。</p>
         <div class="hama-actions">
+          <!-- 講座の宿題（大問）＝授業テキストそのもの。復習テストより先にやるものなので上に置く（本人指示 2026-08-11）。
+               復習テストとは別物なのでボタンも分ける
+               （小5最レ第3分冊のように「回」に第1講座・第2講座の宿題がある回だけ、データがあれば自動で出る） -->
+          <button class="hama-act-btn hama-act-dq hidden" data-hama-act="kouza1q">
+            <span class="hama-act-name">📚 第1講座の宿題（大問）</span>
+            <span class="hama-act-sub" id="hama-cnt-kouza1q">—</span>
+          </button>
+          <button class="hama-act-btn hama-act-dq hidden" data-hama-act="kouza2q">
+            <span class="hama-act-name">📚 第2講座の宿題（大問）</span>
+            <span class="hama-act-sub" id="hama-cnt-kouza2q">—</span>
+          </button>
           <button class="hama-act-btn" data-hama-act="week">
             <span class="hama-act-name">📝 今週の復習テスト</span>
             <span class="hama-act-sub" id="hama-cnt-week">—</span>
@@ -2102,6 +2113,19 @@
     <p class="gami-title">アップデート情報</p>
     <div id="update-list" class="update-list"></div>
     <button id="update-close" class="btn-secondary">とじる</button>
+  </div>
+</div>
+
+<!-- =============== じゅくナビ：宿題の大問をえらぶ =============== -->
+<!-- ★簡単な問題から強制的に順番にやらされるのは苦痛、というのが本人（長男）の声（2026-08-11）。
+     大問モードのボタンから、いきなりセッションを始めずに、この一覧で大問番号を見てえらべるようにする。 -->
+<div id="daimon-pick-modal" class="gami-modal hidden">
+  <div class="gami-card">
+    <p class="gami-emoji">📚</p>
+    <p class="gami-title" id="daimon-pick-title">大問をえらぶ</p>
+    <button id="daimon-pick-all" class="btn-primary">🔁 全部まとめて（大問1から順に）</button>
+    <div id="daimon-pick-list" class="update-list"></div>
+    <button id="daimon-pick-close" class="btn-secondary">とじる</button>
   </div>
 </div>
 
