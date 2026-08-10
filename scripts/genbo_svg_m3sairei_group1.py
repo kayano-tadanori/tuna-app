@@ -321,22 +321,31 @@ FIGS["HG-0416"] = svg("0 0 460 240", "".join(_s1 + _s2 + _s3 + _c1 + [
 ]))
 
 # ══ No.16 大問7（HG-0421）円周に1〜60・18とびごとに○ ═══════════════════
-_ring = []
-for i in range(1, 61):
-    ang = math.radians(-90 + (i - 1) * 6)
-    x = 200 + 115 * math.cos(ang)
-    y = 128 + 115 * math.sin(ang)
-    marked = (i - 1) % 6 == 0  # gcd(18,60)=6ごとに印がつく（1,7,13,...,55）
-    if marked:
-        _ring.append('<circle cx="%s" cy="%s" r="9" fill="none" stroke="%s" stroke-width="1.4"/>' % (
-            round(x, 1), round(y, 1), HI))
-    _ring.append(t(round(x, 1), round(y, 1) + 3.5, str(i), HI if marked else TX, 9.5))
-FIGS["HG-0421"] = svg("0 0 400 280", "".join([
-    '<circle cx="200" cy="128" r="95" fill="none" stroke="%s" stroke-width="2"/>' % LINE,
-] + _ring + [
-    defs_arrow("ar421", HI),
-    path("M155,20 A95 95 0 0 1 200,13", HI, 2, "none", ' marker-end="url(#ar421)"'),
-    t(200, 260, "1から右回りに18とびごとに○（○＝1,7,13,…,55の6とび10個）", GRAY, 11),
+# ★実物をよく見て描きなおした（2026-08-11）。実物は60個の数字を全部書いてはおらず、
+#   円は点線で、上のほうに「60 ①2 3 4 5 6…」とだけ書いて、あとは点線で「続く」と
+#   示すだけ。○印（18とびの答え）も問題の図には無い（生徒が自分で書きこむもの）。
+#   数字を全部書いたり○印を先に描いたりするのは実物と違う＝解答を見せてしまう
+CX421, CY421, R421 = 200, 145, 110
+_dashring = []
+NSEG = 60
+for i in range(NSEG):
+    a0 = math.radians(i * 360.0 / NSEG)
+    a1 = a0 + math.radians(360.0 / NSEG * 0.55)
+    x0, y0 = CX421 + R421 * math.cos(a0), CY421 + R421 * math.sin(a0)
+    x1, y1 = CX421 + R421 * math.cos(a1), CY421 + R421 * math.sin(a1)
+    _dashring.append(ln(x0, y0, x1, y1, LINE, 1.8))
+_labs421 = [("60", -112), ("①", -96), ("2", -80), ("3", -64), ("4", -46), ("5", -26), ("6", -6)]
+_nums421 = []
+for lab, deg in _labs421:
+    a = math.radians(deg)
+    x = CX421 + R421 * math.cos(a)
+    y = CY421 + R421 * math.sin(a)
+    _nums421.append(t(round(x, 1), round(y, 1) - 10, lab, HI if lab == "①" else TX, 13))
+FIGS["HG-0421"] = svg("0 0 440 300", "".join(_dashring + _nums421 + [
+    t(CX421 + R421 * math.cos(math.radians(20)), CY421 + R421 * math.sin(math.radians(20)) - 6, "…", TX, 16),
+    t(CX421 + R421 * math.cos(math.radians(-135)), CY421 + R421 * math.sin(math.radians(-135)) - 6, "…", TX, 16),
+    t(200, 270, "大きな円のまわりに1〜60が右回りに順に書かれている", GRAY, 11),
+    t(200, 288, "（①から18番目ごとの数に○をつけていく問題）", GRAY, 11),
 ]))
 
 # ══ No.16 大問6（HG-0422）輪をつないだくさり（8mm太さ・4cm1個分） ═══════
