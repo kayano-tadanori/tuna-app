@@ -227,30 +227,41 @@ for r, nm in enumerate(_names):
 FIGS["HG-1973"] = svg("0 0 560 320", "".join(_p3))
 
 # ══ 第9回 大問4（HG-1974）立方体のかどを切り取った立体（立方八面体） ══════
-# ★8つの頂点それぞれで、そこに集まる3本の辺の中点を結んだ小さな三角形（＝切り口）を
-#   独立に描く。全部をつなげようとすると線が交差して読めなくなるため、コーナーごとに
-#   完結させる簡略化（2026-08-11・遠近感のある図は正確な多面体作図が難しいため）
-_cube_d = [(90, 55), (230, 55), (265, 90), (125, 90)]   # 上面(奥から手前)
-_cube_f = [(90, 195), (230, 195), (265, 160), (125, 160)]  # 下面
-_dashed = []
-for i in range(4):
-    _dashed.append(ln(*_cube_d[i], *_cube_d[(i + 1) % 4], GRAY, 1.4, "4 3"))
-    _dashed.append(ln(*_cube_f[i], *_cube_f[(i + 1) % 4], GRAY, 1.4, "4 3"))
-    _dashed.append(ln(*_cube_d[i], *_cube_f[i], GRAY, 1.4, "4 3"))
+# ★本人指摘（2026-08-11）で発覚：8コーナー全部に切り口の三角形を描くと、本当は
+#   立体のうしろに隠れて見えないはずの線まで見えてしまっていた。
+#   ちゃんとした3D座標（斜方投影）で頂点を置き、**うしろに完全に隠れる1つの頂点
+#   （x=0,y=0,z=1）だけ切り口を描かない**ようにして直した。
+CUBS, CUOX, CUOY = 95, 70, 195
+
+
+def cu(x, y, z):
+    return (CUOX + x * CUBS + z * CUBS * 0.55, CUOY - y * CUBS - z * CUBS * 0.55)
+
+
+_V = {(x, y, z): cu(x, y, z) for x in (0, 1) for y in (0, 1) for z in (0, 1)}
+_edges = []
+for x in (0, 1):
+    for y in (0, 1):
+        _edges.append(((x, y, 0), (x, y, 1)))
+    for z in (0, 1):
+        _edges.append(((x, 0, z), (x, 1, z)))
+for y in (0, 1):
+    for z in (0, 1):
+        _edges.append(((0, y, z), (1, y, z)))
+_dashed = [ln(*_V[a], *_V[b], GRAY, 1.4, "4 3") for a, b in _edges]
+
+HIDDEN = (0, 0, 1)  # 立体のうしろに完全に隠れる頂点（切り口を描かない）
 mid = lambda a, b: ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
 _solid = []
-for i in range(4):
-    a = _cube_d[i]
-    m1 = mid(a, _cube_d[(i + 1) % 4])
-    m2 = mid(a, _cube_d[(i - 1) % 4])
-    m3 = mid(a, _cube_f[i])
-    _solid.append(poly([m1, m2, m3], LINE, 1.8))
-for i in range(4):
-    a = _cube_f[i]
-    m1 = mid(a, _cube_f[(i + 1) % 4])
-    m2 = mid(a, _cube_f[(i - 1) % 4])
-    m3 = mid(a, _cube_d[i])
-    _solid.append(poly([m1, m2, m3], LINE, 1.8))
+for x in (0, 1):
+    for y in (0, 1):
+        for z in (0, 1):
+            v = (x, y, z)
+            if v == HIDDEN:
+                continue
+            neigh = [(1 - x, y, z), (x, 1 - y, z), (x, y, 1 - z)]
+            mids = [mid(_V[v], _V[n]) for n in neigh]
+            _solid.append(poly(mids, LINE, 1.8))
 FIGS["HG-1974"] = svg("0 0 360 240", "".join(_dashed + _solid + [
     t(180, 226, "立方体（点線）のかどを、各辺の中点まで切り取った立体", GRAY, 11),
 ]))
