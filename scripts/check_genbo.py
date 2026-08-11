@@ -31,6 +31,7 @@ COURSE_PAT = [
     ("rika",   re.compile(r"^小(\d)\s*理科")),
     ("sairei", re.compile(r"^小(\d)\s*(?:最レ|最高レベル)")),
     ("nd2",    re.compile(r"^小(\d)\s*2nd")),
+    ("nadago", re.compile(r"^小(\d)\s*灘合")),
     ("master", re.compile(r"^小(\d)\s*(?:マスター|復習|本科|実力|No\.)")),
 ]
 gen = collections.defaultdict(set)
@@ -63,6 +64,7 @@ SAME = {
 }
 
 CANNOT = {
+    "HG-2202": "小5灘合第6回算数大問2(ふたのない容器の展開図)。図が判読不能で答えも原簿で未確定。要現物照合",
     "HG-2548": "小5最レ国語No.5・現代詩(石垣りん「行く」)の読解。詩は著作物のため原文をアプリに載せられない。型だけ借りて自作の詩で作り直すなら別問として可",
     "HG-2549": "小5最レ国語No.6・短歌5首の鑑賞。著作権が切れているのは木下利玄(没1925)のみで他4首は存続中のため原文を載せられない。著作権切れの歌で作り直すなら別問として可",
     "HG-2551": "小5最レ国語No.7解答用紙・活用形の空所補充。選択肢群が未読で原簿でも答えが未確定",
@@ -108,20 +110,28 @@ for (grade, course) in sorted(gen):
         ng += len(gen[(grade, course)])
         continue
     node = d["grades"].get(grade, {}).get(course, {})
+    # ★灘合は原簿では算数・理科が同じ「小N灘合」見出しに混ざっているが、
+    #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
+    #   nadago 側をチェックするときは nadago_rika も合わせて見る
+    #   （2026-08-11・kokugoと同型の見落としを発見して追加）
+    extra_nodes = []
+    if course == "nadago":
+        extra_nodes.append(d["grades"].get(grade, {}).get("nadago_rika", {}))
     inapp = set()
     n = q = 0
-    for kind in ("fukushu", "kokai", "units", "kouza1", "kouza2"):
-        for v in node.get(kind, {}).values():
-            for x in v:
-                n += 1
-                q += len(x.get("steps", []))
-                h = hgof(x)
-                if h:
-                    inapp.update(h)
-                else:
-                    nohg.append((grade, course, x.get("id")))
+    for nd in [node] + extra_nodes:
+        for kind in ("fukushu", "kokai", "units", "kouza1", "kouza2"):
+            for v in nd.get(kind, {}).values():
+                for x in v:
+                    n += 1
+                    q += len(x.get("steps", []))
+                    h = hgof(x)
+                    if h:
+                        inapp.update(h)
+                    else:
+                        nohg.append((grade, course, x.get("id")))
     miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME) - KOKUGO_DONE)
-    nm = "小%s%s" % (grade, {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科"}[course])
+    nm = "小%s%s" % (grade, {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科", "nadago": "灘合"}[course])
     print("%-12s %5d本 %5d本 %5d問   %s" % (
         nm, len(gen[(grade, course)]), n, q,
         ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
