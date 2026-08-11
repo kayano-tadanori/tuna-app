@@ -3,7 +3,7 @@
    浜学園のデータを触ったら必ず実行すること。
    使い方：  python scripts/check_genbo.py
 """
-import json, io, os, re, sys, collections
+import json, io, os, re, sys, collections, glob
 import sys, io as _io
 # Windowsのcp932コンソールでも絵文字・矢印が出せるようにする
 sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -42,6 +42,14 @@ for k, v in heads.items():
             break
 
 d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
+
+# ★国語は hama_daimon.json ではなく kokugo_*.json 側に入っている
+#   （COURSE_PATは見出しの「最レ」だけで拾うので、算数と国語が同じ course
+#   バケツに混ざる。ここで kokugo_*.json 内の「原簿 HG-XXXX」タグを全部拾い、
+#   既に収録ずみとして扱う。2026-08-11・小5最レ国語の調査で発覚）
+KOKUGO_DONE = set()
+for fn in glob.glob(os.path.join(BASE, "data", "kokugo_*.json")):
+    KOKUGO_DONE.update(re.findall(r"原簿\s*(HG-\d+)", io.open(fn, encoding="utf-8").read()))
 
 # ★作れないと分かっているレコード（原簿側に理由が書いてある）
 # ★同じ問題が2つの番号で原簿に載っているもの（片方を作れば足りる）
@@ -109,7 +117,7 @@ for (grade, course) in sorted(gen):
                     inapp.update(h)
                 else:
                     nohg.append((grade, course, x.get("id")))
-    miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME))
+    miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME) - KOKUGO_DONE)
     nm = "小%s%s" % (grade, {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科"}[course])
     print("%-12s %5d本 %5d本 %5d問   %s" % (
         nm, len(gen[(grade, course)]), n, q,
