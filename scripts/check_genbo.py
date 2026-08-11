@@ -194,16 +194,18 @@ def hgof(x):
     return [m.group(0)] if m else None
 
 
+# ★"nd2"（原簿の見出しコース名）は、アプリ側では"master2nd"というキー名で
+#   存在している（2026-08-01に本人が実装ずみ）。「アプリにコースが無い」と
+#   決め打ちして集計だけ出し、88本まるごと突き合わせをスキップしていたのは誤り
+#   （本人指摘 2026-08-12「算数2ndは実装してますよ」）。他のコース名一致（見出し
+#   語=アプリのキー名）という前提が、ここだけ崩れていたのが原因。
+APP_COURSE_KEY = {"nd2": "master2nd"}
+
 print("=== 原簿 ⇄ 大問 の 突き合わせ ===")
 print("%-12s %6s %6s %6s   %s" % ("コース", "原簿", "大問", "問数", "未収録"))
 ng = 0
 nohg = []
 for (grade, course) in sorted(gen):
-    if course in ("nd2",):                   # アプリにコースが無い。集計だけ出す
-        print("%-12s %5d本 %5s %5s   %s" % (
-            "小%s2nd演習" % grade, len(gen[(grade, course)]), "—", "—", "**アプリにコースが無い**"))
-        ng += len(gen[(grade, course)])
-        continue
     if course == "kokugo":
         # ★国語は hama_daimon.json に専用ノードが無く、kokugo_*.json 側に
         #   別ファイルとして存在する。KOKUGO_DONE（ファイル横断で拾った
@@ -215,7 +217,7 @@ for (grade, course) in sorted(gen):
             ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
         ng += len(miss)
         continue
-    node = d["grades"].get(grade, {}).get(course, {})
+    node = d["grades"].get(grade, {}).get(APP_COURSE_KEY.get(course, course), {})
     # ★灘合は原簿では算数・理科が同じ「小N灘合」見出しに混ざっているが、
     #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
     #   nadago 側をチェックするときは nadago_rika も合わせて見る
