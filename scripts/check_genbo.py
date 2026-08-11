@@ -42,6 +42,22 @@ for k, v in heads.items():
             gen[(m.group(1), course)].add(k)
             break
 
+# ★灘合は、1回ぶんをまとめて追加した回だと個々の見出しが「第N回 大問M」のように
+#   「小4灘合」「小5灘合」の学年プレフィクスを省略していることがある
+#   （2026-08-01の大量追加ぶん・小4灘合2321〜2430、小5灘合2201〜2278の大半が該当）。
+#   COURSE_PATの見出し一致だけでは本当に見落とす（本人指摘 2026-08-12・110本+66本を見落としていた）。
+#   HG番号の帯で「実在するIDすべて」を機械的に拾って底上げする。
+NADAGO_ID_RANGES = {
+    "3": range(1901, 2011),
+    "4": range(2301, 2431),
+    "5": range(2201, 2279),
+}
+for grade, rng in NADAGO_ID_RANGES.items():
+    for n in rng:
+        k = "HG-%04d" % n
+        if k in heads:
+            gen[(grade, "nadago")].add(k)
+
 d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
 
 # ★国語は hama_daimon.json ではなく kokugo_*.json 側に入っている
