@@ -316,16 +316,25 @@ _uverts = [(150, 20), (240, 20), (240, 110), (210, 110), (210, 50), (180, 50), (
 _b10 += [poly(_uverts, LINE, 1.8),
          t(158, 34, "×", HI, 13), t(232, 34, "A", TX, 12), t(158, 104, "B", TX, 12), t(232, 104, "C", TX, 12),
          t(195, 130, "②", GRAY, 12)]
-EX0, EY0, EYB = 280, 20, 110  # 縦の背骨（左）＝EX0。EY0=上端、EYB=下端
-_b10 += [ln(EX0, EY0, EX0, EYB, LINE, 1.8),          # 背骨（縦棒）
-         ln(EX0, EY0, EX0 + 100, EY0, LINE, 1.8),     # 上の腕（いちばん長い→C）
-         ln(EX0, (EY0 + EYB) / 2, EX0 + 55, (EY0 + EYB) / 2, LINE, 1.8),  # 中の腕（短い→B）
-         ln(EX0, EYB, EX0 + 100, EYB, LINE, 1.8)]     # 下の腕（いちばん長い→×）
-_b10 += [t(EX0 + 100 + 4, EY0 + 4, "C", TX, 12, "start"),
-         t(EX0 + 55 + 4, (EY0 + EYB) / 2 + 4, "B", TX, 12, "start"),
-         t(EX0 - 6, EYB + 4, "A", TX, 12, "end"),
-         t(EX0 + 100 + 4, EYB + 4, "×", HI, 13, "start"),
-         t(EX0 + 50, 130, "③", GRAY, 12)]
+EX0, EY0 = 280, 20  # Eの外わく左上
+EW, EH = 100, 90  # 全体の幅・高さ
+ARM_H = 20          # 腕（横棒）1本の太さ
+SPINE_W = 30         # 背骨（縦棒）の太さ
+MID_LEN = 65         # 中の腕（B）は短い。上下の腕（C・×）は右はしまで届く
+GAP = (EH - 3 * ARM_H) / 2
+_everts = [
+    (EX0, EY0), (EX0 + EW, EY0), (EX0 + EW, EY0 + ARM_H), (EX0 + SPINE_W, EY0 + ARM_H),
+    (EX0 + SPINE_W, EY0 + ARM_H + GAP), (EX0 + MID_LEN, EY0 + ARM_H + GAP),
+    (EX0 + MID_LEN, EY0 + ARM_H + GAP + ARM_H), (EX0 + SPINE_W, EY0 + ARM_H + GAP + ARM_H),
+    (EX0 + SPINE_W, EY0 + ARM_H + GAP + ARM_H + GAP), (EX0 + EW, EY0 + ARM_H + GAP + ARM_H + GAP),
+    (EX0 + EW, EY0 + EH), (EX0, EY0 + EH),
+]
+_b10 += [poly(_everts, LINE, 1.8)]
+_b10 += [t(EX0 + EW - 14, EY0 + ARM_H / 2 + 4, "C", TX, 12),
+         t(EX0 + MID_LEN - 14, EY0 + ARM_H + GAP + ARM_H / 2 + 4, "B", TX, 12),
+         t(EX0 + 14, EY0 + EH - 6, "A", TX, 12),
+         t(EX0 + EW - 14, EY0 + EH - 6, "×", HI, 13),
+         t(EX0 + EW / 2, EY0 + EH + 20, "③", GRAY, 12)]
 _b10 += [t(200, 12, "示温シールをはった金ぞく板（×を熱する）", GRAY, 11)]
 # (2) 試験管P・Q
 for i, (lab, hot) in enumerate([("P（底を熱する）", "底"), ("Q（水面付近を熱する）", "水面付近")]):
