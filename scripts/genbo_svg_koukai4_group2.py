@@ -103,6 +103,30 @@ def battery(cx, cy, w=26, h=16, vertical=False, label=None):
     return out
 
 
+def battery2(x1, y1, x2, y2, plus_end=2, body=22, thick=14, bump=6):
+    """(x1,y1)-(x2,y2) の間に、＋側にでっぱりのある電池を置く（plus_end=1なら1側が＋）。
+    本人指摘：でっぱりが無いと＋−がどちらか分からない／配線が電池を貫通してはいけない。"""
+    L = math.hypot(x2 - x1, y2 - y1) or 1
+    ux, uy = (x2 - x1) / L, (y2 - y1) / L
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+    ang = math.degrees(math.atan2(y2 - y1, x2 - x1))
+    out = [ln(x1, y1, mx - ux * body / 2, my - uy * body / 2, LINE, 1.8),
+           ln(mx + ux * body / 2, my + uy * body / 2, x2, y2, LINE, 1.8)]
+    bump_x = -body / 2 - bump if plus_end == 1 else body / 2
+    out.append('<g transform="translate(%s,%s) rotate(%s)">%s%s</g>' % (
+        r1(mx), r1(my), r1(ang),
+        rect(-body / 2, -thick / 2, body, thick, LINE, 1.8),
+        rect(bump_x, -thick * 0.3, bump, thick * 0.6, LINE, 1.8, LINE)))
+    return out
+
+
+def bulb(cx, cy, r=9):
+    """豆電球（円+フィラメントの×）"""
+    return [circ(cx, cy, r, LINE, 1.6),
+            ln(cx - r * 0.55, cy - r * 0.55, cx + r * 0.55, cy + r * 0.55, LINE, 1.3),
+            ln(cx - r * 0.55, cy + r * 0.55, cx + r * 0.55, cy - r * 0.55, LINE, 1.3)]
+
+
 def magnet(x, y, w, h, n_left=True, label_gap=0):
     """棒磁石（N=濃色・S=白抜き）"""
     half = w / 2
@@ -160,13 +184,9 @@ FIGS["HG-2802"] = svg("0 0 420 250", "".join(_b02 + [
 # ══ 第566回 大問4(2)（HG-2803）6たん子A〜F。A-電池-B／C-どう線-F-どう線-E／D-電池-E ══
 P3 = {"A": (230, 40), "B": (110, 70), "C": (60, 190), "F": (250, 110), "E": (250, 210), "D": (250, 260)}
 _b03 = [rect(30, 20, 280, 260, LINE, 1.6, "none")]
-_b03 += battery((P3["A"][0] + P3["B"][0]) / 2, (P3["A"][1] + P3["B"][1]) / 2 - 4, 30, 16)
-_b03 += [ln(P3["A"][0], P3["A"][1], P3["A"][0] - 15, P3["A"][1] + 8, LINE, 1.8),
-         ln(P3["B"][0] + 15, P3["B"][1] - 8, P3["B"][0], P3["B"][1], LINE, 1.8)]
+_b03 += battery2(*P3["A"], *P3["B"], plus_end=1)  # 極の向きは原簿に記載なし（答えに無関係）
 _b03 += [ln(*P3["C"], *P3["F"], LINE, 1.8), ln(*P3["F"], *P3["E"], LINE, 1.8)]
-_b03 += battery((P3["D"][0] + P3["E"][0]) / 2, (P3["D"][1] + P3["E"][1]) / 2, 16, 30, vertical=True)
-_b03 += [ln(P3["D"][0], P3["D"][1], P3["D"][0], P3["D"][1] - 15, LINE, 1.8),
-         ln(P3["E"][0], P3["E"][1], P3["E"][0], P3["E"][1] + 15, LINE, 1.8)]
+_b03 += battery2(*P3["D"], *P3["E"], plus_end=1)
 _lab_off3 = {"A": (14, -6, "start"), "B": (-14, -6, "end"), "C": (-14, -6, "end"),
              "F": (14, -6, "start"), "E": (14, 4, "start"), "D": (14, 4, "start")}
 for k, (x, y) in P3.items():
@@ -246,24 +266,10 @@ FIGS["HG-2806"] = svg("0 0 400 240", "".join(_b06 + [
 P7 = {"A": (75, 50), "B": (250, 50), "C": (75, 150), "D": (195, 150),
       "E": (75, 270), "F": (170, 270), "G": (250, 270)}
 _b07 = [rect(30, 20, 260, 275, LINE, 1.4)]
-
-
-def link(a, b, vertical=False, bw=30, bh=16):
-    ax, ay = P7[a]
-    bx, by = P7[b]
-    mx, my = (ax + bx) / 2, (ay + by) / 2
-    out = list(battery(mx, my, bw, bh, vertical=True)) if vertical else list(battery(mx, my, bw, bh))
-    if vertical:
-        out += [ln(ax, ay, ax, my - bw / 2, LINE, 1.8), ln(bx, by, bx, my + bw / 2, LINE, 1.8)]
-    else:
-        out += [ln(ax, ay, mx - bw / 2, ay, LINE, 1.8), ln(mx + bw / 2, by, bx, by, LINE, 1.8)]
-    return out
-
-
-_b07 += link("A", "B")
-_b07 += link("C", "D")
-_b07 += link("C", "E", vertical=True)
-_b07 += link("F", "G")
+_b07 += battery2(*P7["A"], *P7["B"], plus_end=1)  # 電池①：＋がA側
+_b07 += battery2(*P7["C"], *P7["D"], plus_end=2)  # 電池②：＋がD側
+_b07 += battery2(*P7["C"], *P7["E"], plus_end=2)  # 電池③：＋がE側
+_b07 += battery2(*P7["F"], *P7["G"], plus_end=2)  # 電池④：＋がG側
 _b07 += [ln(P7["B"][0], P7["B"][1], P7["B"][0], P7["G"][1], GRAY, 1.8),
          ln(P7["B"][0], P7["G"][1], P7["G"][0], P7["G"][1], GRAY, 1.8)]
 _b07 += [t((P7["B"][0] + P7["G"][0]) / 2 + 10, (P7["B"][1] + P7["G"][1]) / 2, "どう線", GRAY, 11, "start")]
@@ -302,17 +308,16 @@ FIGS["HG-2808"] = svg("0 0 400 280", "".join(_b08 + [
 BUSX, BUS_TOP, BUS_BOT = 150, 30, 250
 _b09 = [ln(BUSX, BUS_TOP, BUSX, BUS_BOT, LINE, 2.2)]
 JY9 = 60
-_b09 += [ln(BUSX, JY9, 40, JY9 - 20, LINE, 1.6), ln(BUSX, JY9, 40, JY9 + 20, LINE, 1.6)]
-_b09 += battery(75, JY9 - 20, 26, 14)
-_b09 += battery(75, JY9 + 20, 26, 14)
-_b09 += [dot(40, JY9 - 20), t(28, JY9 - 20, "A", HI, 12, "end"), dot(40, JY9 + 20), t(28, JY9 + 20, "B", HI, 12, "end")]
+AX9, AY9, BX9, BY9 = 40, 40, 40, 80
+_b09 += battery2(AX9, AY9, BUSX, JY9, plus_end=1)  # 電池：＋がA側
+_b09 += battery2(BX9, BY9, BUSX, JY9, plus_end=1)  # 電池：＋がB側
+_b09 += [dot(AX9, AY9), t(AX9 - 12, AY9, "A", HI, 12, "end"), dot(BX9, BY9), t(BX9 - 12, BY9, "B", HI, 12, "end")]
 CY9 = 130
 _b09 += [dot(BUSX, CY9), ln(BUSX, CY9, 60, CY9, LINE, 1.6), dot(60, CY9), t(46, CY9, "C", HI, 12, "end")]
-for lab, y in (("D", 70), ("E", 140), ("F", 210)):
+for lab, y, plus in (("D", 70, 2), ("E", 140, 1), ("F", 210, 2)):
     _b09 += [dot(BUSX, y)]
-    _b09 += battery(BUSX + 55, y, 30, 16)
-    _b09 += [ln(BUSX + 15, y, BUSX + 40, y, LINE, 1.6), ln(BUSX + 70, y, BUSX + 95, y, LINE, 1.6),
-              dot(BUSX + 95, y), t(BUSX + 108, y + 4, lab, HI, 13, "start")]
+    _b09 += battery2(BUSX, y, BUSX + 95, y, plus_end=plus)
+    _b09 += [dot(BUSX + 95, y), t(BUSX + 108, y + 4, lab, HI, 13, "start")]
 FIGS["HG-2809"] = svg("0 0 420 280", '<g transform="translate(40,0)">' + "".join(_b09) + "</g>" + t(
     210, 270, "中央のバス線。A・Bは電池2個が並列で合流。CはBusに直結。D・E・Fは電池つきの枝", GRAY, 11))
 
