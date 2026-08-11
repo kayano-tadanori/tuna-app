@@ -104,6 +104,23 @@ def battery(cx, cy, w=26, h=16, vertical=False, label=None):
     return out
 
 
+def battery2(x1, y1, x2, y2, plus_end=2, body=22, thick=14, bump=6):
+    """(x1,y1)-(x2,y2) の間に、＋側にでっぱりのある電池を置く（plus_end=1なら1側が＋）。
+    本人指摘：でっぱりが無いと＋−がどちらか分からない／配線が電池を貫通してはいけない。"""
+    L = math.hypot(x2 - x1, y2 - y1) or 1
+    ux, uy = (x2 - x1) / L, (y2 - y1) / L
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+    ang = math.degrees(math.atan2(y2 - y1, x2 - x1))
+    out = [ln(x1, y1, mx - ux * body / 2, my - uy * body / 2, LINE, 1.8),
+           ln(mx + ux * body / 2, my + uy * body / 2, x2, y2, LINE, 1.8)]
+    bump_x = -body / 2 - bump if plus_end == 1 else body / 2
+    out.append('<g transform="translate(%s,%s) rotate(%s)">%s%s</g>' % (
+        r1(mx), r1(my), r1(ang),
+        rect(-body / 2, -thick / 2, body, thick, LINE, 1.8),
+        rect(bump_x, -thick * 0.3, bump, thick * 0.6, LINE, 1.8, LINE)))
+    return out
+
+
 def magnet(x, y, w, h, n_left=True):
     half = w / 2
     nx, sx = (x, x + half) if n_left else (x + half, x)
@@ -166,10 +183,7 @@ FIGS["HG-2813"] = svg("0 0 400 250", "".join(_b13 + [
 
 # ══ 第577回 大問4(2)（HG-2814）そうちP：4すみA・B・C・D＋中央にかん電池 ═══
 _b14 = [rect(30, 20, 220, 180, LINE, 1.6)]
-CX14, CY14 = 140, 110
-_b14 += [rect(CX14 - 15, CY14 - 26, 30, 52, LINE, 1.8),
-         t(CX14, CY14 - 32, "＋", HI, 12), t(CX14, CY14 + 40, "−", HI, 12)]
-_b14 += [ln(60, 50, CX14, CY14 - 26, LINE, 1.8), ln(CX14, CY14 + 26, 210, 170, LINE, 1.8)]
+_b14 += battery2(60, 50, 210, 170, plus_end=1)  # かん電池の＋極とA、−極とD
 for lab, (x, y) in {"A": (60, 50), "B": (210, 50), "C": (60, 170), "D": (210, 170)}.items():
     _b14 += [dot(x, y), t(x, y - 10 if y < 100 else y + 20, lab, HI, 14)]
 FIGS["HG-2814"] = svg("0 0 340 220", "".join(_b14 + [
@@ -262,23 +276,23 @@ FIGS["HG-2818"] = svg("0 0 400 230", "".join(_b18 + [
 
 # ══ 第582回 大問4（HG-2819）バス線。A直結+B電池／C・D電池／E直結／F電池／G(電池,右はし) ═
 BX19 = 200
-A_Y, J1_Y, BR_Y, E_Y, F_Y, G_Y = 20, 65, 130, 185, 220, 260
-_b19 = [ln(BX19, A_Y, BX19, G_Y, LINE, 2.2)]
+A_Y, J1_Y, J2_Y, E_Y, J3_Y, G_Y = 20, 60, 110, 150, 190, 250
+BXR, CXL, DXR, FXR = BX19 + 80, BX19 - 80, BX19 + 80, BX19 + 80
+_b19 = [ln(BX19, A_Y, BX19, E_Y, LINE, 2.2), ln(BX19, E_Y, BX19, J3_Y, LINE, 2.2)]
 _b19 += [dot(BX19, A_Y), t(BX19 - 14, A_Y + 4, "A", HI, 13, "end")]
-_b19 += battery(BX19, (A_Y + J1_Y) / 2, 16, 30, vertical=True)
-_b19 += [t(BX19 + 14, (A_Y + J1_Y) / 2, "B", HI, 13, "start")]
 _b19 += [dot(BX19, J1_Y)]
-for dx, lab in ((-70, "C"), (70, "D")):
-    bx = BX19 + dx
-    _b19 += [ln(BX19, J1_Y, bx, BR_Y - 25, LINE, 1.6)]
-    _b19 += battery(bx, BR_Y, 28, 16)
-    _b19 += [ln(bx, BR_Y + 14, bx, BR_Y + 28, LINE, 1.6), dot(bx, BR_Y + 28), t(bx, BR_Y + 42, lab, HI, 13)]
+_b19 += battery2(BX19, J1_Y, BXR, J1_Y, plus_end=2)  # ＋がB側
+_b19 += [dot(BXR, J1_Y), t(BXR + 14, J1_Y + 4, "B", HI, 13, "start")]
+_b19 += [dot(BX19, J2_Y)]
+_b19 += battery2(BX19, J2_Y, CXL, J2_Y, plus_end=2)  # ＋がC側
+_b19 += [dot(CXL, J2_Y), t(CXL - 14, J2_Y + 4, "C", HI, 13, "end")]
+_b19 += battery2(BX19, J2_Y, DXR, J2_Y, plus_end=1)  # ＋がバス側（逆向き）
+_b19 += [dot(DXR, J2_Y), t(DXR + 14, J2_Y + 4, "D", HI, 13, "start")]
 _b19 += [dot(BX19, E_Y), t(BX19 - 14, E_Y + 4, "E", HI, 13, "end")]
-_b19 += [dot(BX19, F_Y)]
-_b19 += battery(BX19 + 45, F_Y, 28, 16)
-_b19 += [ln(BX19, F_Y, BX19 + 31, F_Y, LINE, 1.6), ln(BX19 + 59, F_Y, BX19 + 85, F_Y, LINE, 1.6),
-          dot(BX19 + 85, F_Y), t(BX19 + 99, F_Y + 4, "F", HI, 13, "start")]
-_b19 += battery(BX19, (F_Y + G_Y) / 2, 16, 30, vertical=True)
+_b19 += [dot(BX19, J3_Y)]
+_b19 += battery2(BX19, J3_Y, FXR, J3_Y, plus_end=2)  # ＋がF側
+_b19 += [dot(FXR, J3_Y), t(FXR + 14, J3_Y + 4, "F", HI, 13, "start")]
+_b19 += battery2(BX19, J3_Y, BX19, G_Y, plus_end=2)  # ＋がG側
 _b19 += [dot(BX19, G_Y), t(BX19 + 14, G_Y + 4, "G", HI, 13, "start")]
 FIGS["HG-2819"] = svg("0 0 420 290", "".join(_b19) + t(
     210, 282, "中央のバス線。A・Eは直結、B・C・D・F・Gは電池つき", GRAY, 11))
@@ -316,20 +330,13 @@ FIGS["HG-2820"] = svg("0 0 500 220", "".join(_b20))
 # ══ 第584回 大問4（HG-2821）A-電池-B／A-電池-C／D孤立／E-電池-F／E-電池(宙ぶらりん) ══
 P21 = {"A": (70, 40), "B": (220, 40), "C": (70, 130), "D": (40, 200), "E": (150, 220), "F": (260, 190)}
 _b21 = [rect(20, 15, 270, 235, LINE, 1.4)]
-_b21 += battery((P21["A"][0] + P21["B"][0]) / 2, P21["A"][1], 30, 16)
-_b21 += [ln(P21["A"][0] + 15, P21["A"][1], P21["A"][0] + 25, P21["A"][1], LINE, 1.8),
-          ln(P21["B"][0] - 25, P21["B"][1], P21["B"][0] - 15, P21["B"][1], LINE, 1.8)]
-_b21 += battery(P21["A"][0], (P21["A"][1] + P21["C"][1]) / 2, 16, 30, vertical=True)
-_b21 += [ln(P21["A"][0], P21["A"][1] + 15, P21["A"][0], P21["A"][1] + 30, LINE, 1.8),
-          ln(P21["C"][0], P21["C"][1] - 30, P21["C"][0], P21["C"][1] - 15, LINE, 1.8)]
+_b21 += battery2(*P21["A"], *P21["B"], plus_end=2)  # 電池1：＋がB側
+_b21 += battery2(*P21["A"], *P21["C"], plus_end=2)  # 電池2：＋がC側
 _b21 += [dot(*P21["D"]), t(P21["D"][0] - 12, P21["D"][1], "D", HI, 13, "end"), t(P21["D"][0] + 10, P21["D"][1] + 4, "(孤立)", GRAY, 9, "start")]
-ang21 = math.atan2(P21["F"][1] - P21["E"][1], P21["F"][0] - P21["E"][0])
-_b21 += battery((P21["E"][0] + P21["F"][0]) / 2, (P21["E"][1] + P21["F"][1]) / 2, 30, 16)
-_b21 += [ln(P21["E"][0], P21["E"][1], P21["E"][0] + 22 * math.cos(ang21), P21["E"][1] + 22 * math.sin(ang21), LINE, 1.8),
-          ln(P21["F"][0] - 22 * math.cos(ang21), P21["F"][1] - 22 * math.sin(ang21), P21["F"][0], P21["F"][1], LINE, 1.8)]
-_b21 += battery(P21["E"][0] - 40, P21["E"][1] - 55, 16, 30, vertical=True)
-_b21 += [ln(P21["E"][0], P21["E"][1], P21["E"][0] - 40, P21["E"][1] - 40, LINE, 1.8, "3 2")]
-_b21 += [t(P21["E"][0] - 40, P21["E"][1] - 95, "(反対側は宙ぶらりん)", GRAY, 9)]
+_b21 += battery2(*P21["E"], *P21["F"], plus_end=2)  # 電池4：＋がF側
+DANX, DANY = P21["E"][0] - 40, P21["E"][1] - 55
+_b21 += battery2(P21["E"][0], P21["E"][1], DANX, DANY, plus_end=1)  # 電池3：反対側は宙ぶらりん（極は不明）
+_b21 += [t(DANX, DANY - 20, "(反対側は宙ぶらりん)", GRAY, 9)]
 for k in ("A", "B", "C", "E", "F"):
     x, y = P21[k]
     _b21 += [dot(x, y, 4.5, TX), t(x, y - 12, k, HI, 13)]
