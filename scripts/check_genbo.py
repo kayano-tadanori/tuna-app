@@ -58,6 +58,20 @@ for grade, rng in NADAGO_ID_RANGES.items():
         if k in heads:
             gen[(grade, "nadago")].add(k)
 
+# ★公開学力テストの見出しは「2023 5年公開 第609回…」のように西暦で始まり、
+#   COURSE_PATの「小N…」パターンに一つも一致しない＝丸ごとgenから漏れていた
+#   （本人指摘 2026-08-12・333本が検査対象にすら入っていなかった）。
+#   アプリ側では公開テストは算数=master・理科=rikaの"kokai"種別に入っているので、
+#   既存のmaster/rika集計にそのまま合流させれば、あとの突き合わせロジックは
+#   （kokai種別も見ているので）そのまま使える。
+KOKAI_PAT = re.compile(r"^(\d{4})年?度?\s*(\d)年公開")
+for k, v in heads.items():
+    m = KOKAI_PAT.match(v)
+    if m:
+        grade = m.group(2)
+        subj = "rika" if "理科" in v[:20] else "master"
+        gen[(grade, subj)].add(k)
+
 d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
 
 # ★国語は hama_daimon.json ではなく kokugo_*.json 側に入っている
