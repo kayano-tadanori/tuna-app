@@ -67,10 +67,23 @@ CANNOT = {
 
 
 def hgof(x):
+    # ★"hg"欄が "HG-0793+0794" のように複数番号を+でつないでいることがある
+    #   （1レコードで2つの原簿番号をまとめて解消した場合）。全部ばらして返す。
+    #   "+0794" は "HG-"が省略された2番目の番号なので、桁数をそろえて補う。
     if x.get("hg"):
-        return x["hg"]
+        parts = re.split(r"\s*\+\s*", x["hg"])
+        out = []
+        for p in parts:
+            m = re.search(r"HG-(\d+)", p)
+            if m:
+                out.append(m.group(0))
+            else:
+                m2 = re.search(r"(\d+)", p)
+                if m2:
+                    out.append("HG-" + m2.group(1))
+        return out if out else None
     m = re.search(r"HG-\d+", x.get("src", "") or "")
-    return m.group(0) if m else None
+    return [m.group(0)] if m else None
 
 
 print("=== 原簿 ⇄ 大問 の 突き合わせ ===")
@@ -93,7 +106,7 @@ for (grade, course) in sorted(gen):
                 q += len(x.get("steps", []))
                 h = hgof(x)
                 if h:
-                    inapp.add(h)
+                    inapp.update(h)
                 else:
                     nohg.append((grade, course, x.get("id")))
     miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME))
