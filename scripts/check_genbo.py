@@ -92,16 +92,24 @@ for k, v in heads.items():
 
 d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
 
-# ★国語は hama_daimon.json ではなく kokugo_*.json 側に入っている
+# ★国語は hama_daimon.json ではなく kokugo_*.json / hama_kokugo.json 側に入っている
 #   （COURSE_PATは見出しの「最レ」だけで拾うので、算数と国語が同じ course
-#   バケツに混ざる。ここで kokugo_*.json 内の出典タグを全部拾い、既に収録ずみ
+#   バケツに混ざる。ここで国語系ファイル内の出典タグを全部拾い、既に収録ずみ
 #   として扱う。タグの付け方がファイルによって2通りある：
 #   ① meaning文に埋め込む「〔…原簿 HG-XXXX〕」形式（kokugo_sairei5.jsonなど）
-#   ② 構造化された "src": "HG-XXXX" フィールド（kokugo_bun.jsonなど）
+#   ② 構造化された "src": "HG-XXXX" フィールド（kokugo_bun.json / hama_kokugo.jsonなど）
 #   ★①だけしか見ていなかったため、kokugo_bun.jsonの227問(20本)ぶんが
 #   「未収録」に誤って出続けていた（2026-08-12・国語86本の調査で発覚）。
+#   ★さらにglobパターンが「kokugo_*.json」で、小3/4のじゅくナビ本体データである
+#   「hama_kokugo.json」（先頭がkokugo_でない）に一度もマッチしていなかった。
+#   HG-2431〜2473(小4)・HG-2501〜2547(小3)は実際にはこのファイルに97本ぶん
+#   すでに入っていたのに、丸ごと「未収録」に出続けていた（2026-08-12発覚）。
 KOKUGO_DONE = set()
-for fn in glob.glob(os.path.join(BASE, "data", "kokugo_*.json")):
+KOKUGO_FILES = glob.glob(os.path.join(BASE, "data", "kokugo_*.json")) + \
+    [os.path.join(BASE, "data", "hama_kokugo.json")]
+for fn in KOKUGO_FILES:
+    if not os.path.exists(fn):
+        continue
     txt = io.open(fn, encoding="utf-8").read()
     KOKUGO_DONE.update(re.findall(r"原簿\s*(HG-\d+)", txt))
     KOKUGO_DONE.update(re.findall(r'"src"\s*:\s*"(HG-\d+)"', txt))
