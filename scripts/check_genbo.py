@@ -3,7 +3,7 @@
    浜学園のデータを触ったら必ず実行すること。
    使い方：  python scripts/check_genbo.py
 """
-import json, io, os, re, sys, collections, glob
+import json, io, os, re, sys, collections, glob, datetime
 import sys, io as _io
 # Windowsのcp932コンソールでも絵文字・矢印が出せるようにする
 sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -12,6 +12,36 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from genbo_path import find_genbo
 GENBO = find_genbo()
+
+# ★「未実装はすぐ引き出せるようにしておく」（本人指示 2026-08-12）ための恒久的な置き場。
+#   このスクリプトを実行するたびに docs/genbo_status.md を丸ごと上書きする。
+#   数字が古くなる心配のあるメモ書き（memory側の経緯メモ）とは別に、
+#   「今すぐ実行した本当の数字」を1ファイルに固定する。手で編集しない。
+class _Tee:
+    def __init__(self, *streams):
+        self.streams = streams
+    def write(self, data):
+        for s in self.streams:
+            s.write(data)
+    def flush(self):
+        for s in self.streams:
+            s.flush()
+
+STATUS_FILE = os.path.join(BASE, "docs", "genbo_status.md")
+os.makedirs(os.path.dirname(STATUS_FILE), exist_ok=True)
+_status_fh = io.open(STATUS_FILE, "w", encoding="utf-8")
+_status_fh.write("# 原簿⇄大問 突き合わせ状況（自動生成・手で編集しない）\n\n")
+_status_fh.write("`python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。\n")
+_status_fh.write("最終更新: %s\n\n```\n" % datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+_real_stdout = sys.stdout
+sys.stdout = _Tee(_real_stdout, _status_fh)
+
+
+def _finish_status_file():
+    _status_fh.write("```\n")
+    _status_fh.flush()
+    _status_fh.close()
+    sys.stdout = _real_stdout   # 閉じたファイルへflushし続けるのを防ぐ
 
 g = io.open(GENBO, encoding="utf-8").read()
 recs = [r for r in re.split(r"(?=^### 【HG-)", g, flags=re.M) if re.match(r"### 【HG-\d+】", r)]
@@ -295,6 +325,7 @@ if "--update-baseline" in sys.argv:
         {"fill": sorted(set(bad_fill)), "style": sorted(set(bad_style)),
          "dark": sorted(set(bad_dark))}, ensure_ascii=False, indent=1))
     print("基準線を今の状態で作り直した:", BASELINE)
+    _finish_status_file()
     sys.exit(0)
 
 fig_ng = 0
@@ -344,5 +375,6 @@ if miss_svg:
 else:
     print("✅ 図がある大問には、原簿に図SVGが入っている")
 
+_finish_status_file()
 if fail:
     sys.exit(1)
