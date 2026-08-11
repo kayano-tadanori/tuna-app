@@ -1193,18 +1193,38 @@ function initClassBandUI() {
   });
 }
 
+// ★1つの大問（sets中の1件）が、全問（steps全部）1度でも正解ずみかどうか。
+//   記録キーは expandChain の id生成（`${chain.id}_s${i+1}`）と
+//   recordResult の呼び出し（`${subject}_${cat}:${id}`、js/sansu.js:2133）に合わせる。
+//   「クリア」の定義はアプリ全体で統一されている「一度でも正解（correct > 0）」に合わせる
+//   （js/gamify.js の buildClearedSets と同じ考え方。正答率や最終回答では判定しない）。
+function isDaimonSolved(s, hamaSubj, prog) {
+  const n = (s.steps || []).length;
+  if (!n) return false;
+  for (let i = 1; i <= n; i++) {
+    const p = prog[`${hamaSubj}_${s.category}:${s.id}_s${i}`];
+    if (!p || !p.correct) return false;
+  }
+  return true;
+}
+
 // ★宿題（大問）の「大問をえらぶ」モーダル（2026-08-11）。
 //   星順のおまかせで出すのではなく、大問番号を一覧で見て、やりたいものだけをその場で始められるようにする。
+//   全問正解ずみの大問には✅を付けて、解き終わったものがひと目でわかるようにする（本人指示 2026-08-11）。
 function openDaimonPicker(sets, grade, hamaSubj, label) {
   const modal = document.getElementById('daimon-pick-modal');
   const listEl = document.getElementById('daimon-pick-list');
-  document.getElementById('daimon-pick-title').textContent = `${label}の宿題・大問をえらぶ`;
-  listEl.innerHTML = sets.map((s, i) => `
-    <button class="update-item daimon-pick-item" type="button" data-idx="${i}">
-      <div class="update-item-date">大問${i + 1}${s.star ? '　' + '★'.repeat(s.star) : ''}</div>
+  document.getElementById('daimon-pick-title').textContent = `${label}・大問をえらぶ`;
+  const prog = getProgress();
+  listEl.innerHTML = sets.map((s, i) => {
+    const solved = isDaimonSolved(s, hamaSubj, prog);
+    return `
+    <button class="update-item daimon-pick-item${solved ? ' daimon-pick-solved' : ''}" type="button" data-idx="${i}">
+      <div class="update-item-date">大問${i + 1}${s.star ? '　' + '★'.repeat(s.star) : ''}${solved ? '　✅' : ''}</div>
       <div class="update-item-title">${s.title || s.unit || ''}</div>
     </button>
-  `).join('');
+  `;
+  }).join('');
   listEl.querySelectorAll('.daimon-pick-item').forEach(btn => {
     btn.onclick = () => {
       modal.classList.add('hidden');
@@ -1281,39 +1301,36 @@ async function startHamaSession(kind) {
       const sets = await hamaDaimonKouza(grade, course, kind === 'kouza1q' ? 1 : 2, dno);
       hideLoading();
       if (!sets.length) { showToast('ここの大問はまだ用意していません'); return; }
-      // ボタン名（例：📚 第1講座（数の性質(3)））をそのままモーダルの見出しにも使う
+      // ボタン名（例：📚 第1講座の宿題（大問））から絵文字と「（大問）」を除いてモーダルの見出しにも使う
       const btnName = document.querySelector(`.hama-act-btn[data-hama-act="${kind}"] .hama-act-name`);
-      const kouzaLabel = (btnName && btnName.textContent.replace(/^📚\s*/, '')) || (kind === 'kouza1q' ? '第1講座' : '第2講座');
+      const kouzaLabel = (btnName && btnName.textContent.replace(/^📚\s*/, '').replace(/（大問）\s*$/, '')) ||
+        (kind === 'kouza1q' ? '第1講座の宿題' : '第2講座の宿題');
       openDaimonPicker(sets, grade, hamaSubj, `No.${dno}・${kouzaLabel}`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }
 
-  // 大問モード：原簿どおりの3問1組をそのまま出す。
+  // 大問モード：講座の宿題（kouza1q/kouza2q）と同じく、星順のおまかせで出さず、
+  // 大問番号を見てえらべるようにする（本人要望 2026-08-11「全ての大問系を最レの宿題のように」）。
   // シャッフルしない（①②③は順番に意味がある）。1本ぶんは途中で切らない＝fillChains にまかせる。
   if (kind === 'weekq' || kind === 'kokaiq') {
     showLoading();
     try {
       const dno = hamaCurrent(grade, course);
       const byUnit = (sansuState.hamaMode === 'unit' && sansuState.hamaUnit);
-      let sets = kind === 'weekq'
+      const sets = kind === 'weekq'
         ? (byUnit ? await hamaDaimonUnit(grade, course, sansuState.hamaUnit)
                   : await hamaDaimonWeek(grade, course, dno))
         : await hamaDaimonKokai(grade, course, dno);
-      if (!sets.length) { showToast('ここの大問はまだ用意していません'); hideLoading(); return; }
-      // ★良問から先に出す（本人指示 2026-07-28）。原簿の★が高い順。同じ★の中だけまぜる。
-      // 公開は1ヶ月に3本置くので、直近3ヶ月＝9本たまる。そこから良い順に出題数ぶんだけ出す。
-      sets = shuffle(sets.slice()).sort((a, b) => (b.star || 0) - (a.star || 0));
-      const want = Number(document.getElementById('sansu-q-count').value) || 10;
-      const qs = fillChains(sets, grade, want === 0 ? 'all' : want);
-      if (!qs.length) { showToast('ここの大問はまだ用意していません'); hideLoading(); return; }
-      sansuState.subject = hamaSubj;
-      sansuState.cat = 'hama';
-      sansuState.questions = qs;
-      sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
-      coinSessionEarned = 0;
       hideLoading();
-      startSansuQuiz();
+      if (!sets.length) { showToast('ここの大問はまだ用意していません'); return; }
+      const btnName = document.querySelector(`.hama-act-btn[data-hama-act="${kind}"] .hama-act-name`);
+      // ★絵文字は文字クラス[]にまとめるとサロゲートペアが分解されて誤マッチする（2026-08-11 発覚）。
+      //   交替(|)で1つずつリテラルマッチさせること。
+      const actLabel = (btnName && btnName.textContent.replace(/^(?:🧩|🎯)\s*/, '').replace(/（大問）\s*$/, '')) ||
+        (kind === 'weekq' ? '今週の復習テスト' : '公開テストのはんい');
+      const rangeLabel = byUnit ? sansuState.hamaUnit : `No.${dno}`;
+      openDaimonPicker(sets, grade, hamaSubj, `${rangeLabel}・${actLabel}`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }

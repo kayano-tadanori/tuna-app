@@ -739,6 +739,8 @@ button { cursor: pointer; font-family: inherit; }
 /* じゅくナビ：宿題の大問をえらぶ一覧（.update-item を流用したボタン版） */
 .daimon-pick-item { width: 100%; font: inherit; cursor: pointer; -webkit-appearance: none; appearance: none; }
 .daimon-pick-item:active { background: var(--card2); }
+/* 全問正解ずみの大問は枠を緑にして、解き終わったものをひと目でわかるようにする */
+.daimon-pick-solved { border-color: rgba(40,200,138,0.5); background: rgba(40,200,138,0.08); }
 #daimon-pick-all { width: 100%; margin-bottom: 4px; }
 /* 管理ツール（デバッグ） */
 .debug-main { padding: 16px; max-width: 600px; margin: 0 auto; }
