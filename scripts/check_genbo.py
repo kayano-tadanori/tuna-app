@@ -94,11 +94,17 @@ d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="
 
 # ★国語は hama_daimon.json ではなく kokugo_*.json 側に入っている
 #   （COURSE_PATは見出しの「最レ」だけで拾うので、算数と国語が同じ course
-#   バケツに混ざる。ここで kokugo_*.json 内の「原簿 HG-XXXX」タグを全部拾い、
-#   既に収録ずみとして扱う。2026-08-11・小5最レ国語の調査で発覚）
+#   バケツに混ざる。ここで kokugo_*.json 内の出典タグを全部拾い、既に収録ずみ
+#   として扱う。タグの付け方がファイルによって2通りある：
+#   ① meaning文に埋め込む「〔…原簿 HG-XXXX〕」形式（kokugo_sairei5.jsonなど）
+#   ② 構造化された "src": "HG-XXXX" フィールド（kokugo_bun.jsonなど）
+#   ★①だけしか見ていなかったため、kokugo_bun.jsonの227問(20本)ぶんが
+#   「未収録」に誤って出続けていた（2026-08-12・国語86本の調査で発覚）。
 KOKUGO_DONE = set()
 for fn in glob.glob(os.path.join(BASE, "data", "kokugo_*.json")):
-    KOKUGO_DONE.update(re.findall(r"原簿\s*(HG-\d+)", io.open(fn, encoding="utf-8").read()))
+    txt = io.open(fn, encoding="utf-8").read()
+    KOKUGO_DONE.update(re.findall(r"原簿\s*(HG-\d+)", txt))
+    KOKUGO_DONE.update(re.findall(r'"src"\s*:\s*"(HG-\d+)"', txt))
 
 # ★作れないと分かっているレコード（原簿側に理由が書いてある）
 # ★同じ問題が2つの番号で原簿に載っているもの（片方を作れば足りる）
