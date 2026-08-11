@@ -32,6 +32,7 @@ COURSE_PAT = [
     ("sairei", re.compile(r"^小(\d)\s*(?:最レ|最高レベル)")),
     ("nd2",    re.compile(r"^小(\d)\s*2nd")),
     ("nadago", re.compile(r"^小(\d)\s*灘合")),
+    ("kokugo", re.compile(r"^小(\d)\s*国語")),
     ("master", re.compile(r"^小(\d)\s*(?:マスター|復習|本科|実力|No\.)")),
 ]
 gen = collections.defaultdict(set)
@@ -58,19 +59,36 @@ for grade, rng in NADAGO_ID_RANGES.items():
         if k in heads:
             gen[(grade, "nadago")].add(k)
 
-# ★公開学力テストの見出しは「2023 5年公開 第609回…」のように西暦で始まり、
-#   COURSE_PATの「小N…」パターンに一つも一致しない＝丸ごとgenから漏れていた
-#   （本人指摘 2026-08-12・333本が検査対象にすら入っていなかった）。
+# ★公開学力テストの見出しは「2023 5年公開 第609回…」や「2020年度 小4公開 第565回…」
+#   のように西暦で始まり、COURSE_PATの「小N…」パターンに一つも一致しない
+#   ＝丸ごとgenから漏れていた（本人指摘 2026-08-12・333本が検査対象にすら
+#   入っていなかった）。学年の書き方が「N年」と「小N」の2通りあるので両方拾う。
 #   アプリ側では公開テストは算数=master・理科=rikaの"kokai"種別に入っているので、
 #   既存のmaster/rika集計にそのまま合流させれば、あとの突き合わせロジックは
 #   （kokai種別も見ているので）そのまま使える。
-KOKAI_PAT = re.compile(r"^(\d{4})年?度?\s*(\d)年公開")
+KOKAI_PAT = re.compile(r"^(\d{4})年?度?\s*(?:小(\d)|(\d)年)公開")
 for k, v in heads.items():
     m = KOKAI_PAT.match(v)
     if m:
-        grade = m.group(2)
+        grade = m.group(2) or m.group(3)
         subj = "rika" if "理科" in v[:20] else "master"
         gen[(grade, subj)].add(k)
+
+# ★灘中日本一模試／灘中チャレンジ／西暦始まりの実力テストも同じ理由で漏れていた
+#   （2026-08-12・公開学力テストの穴を全数監査していて発見）。
+#   専用の保管場所がまだ無いので、とりあえずmasterの集計に合流させて
+#   「未収録」として見えるようにする（実装先が決まったら移す）。
+NADAGO_MOSHI_PAT = re.compile(r"^\d{4}年?度?\s*小?(\d)年?\s*灘中(?:日本一模試|日本一模擬入試|チャレンジ)")
+for k, v in heads.items():
+    m = NADAGO_MOSHI_PAT.match(v)
+    if m:
+        gen[(m.group(1), "master")].add(k)
+
+JITSURYOKU_PAT = re.compile(r"^\d{4}\s*(\d)年\s*実力")
+for k, v in heads.items():
+    m = JITSURYOKU_PAT.match(v)
+    if m:
+        gen[(m.group(1), "master")].add(k)
 
 d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
 
@@ -108,6 +126,7 @@ CANNOT = {
     "HG-3769": "展開図の頂点に記号を書きこむ作図問題。答えが図そのもの",
     "HG-3770": "立方体のテープの線を展開図にかき入れる作図問題。答えが図そのもの",
     "HG-3771": "展開図に「さんすう」の文字を並べて書く作図問題。答えが図そのもの",
+    "HG-1489": "渦巻きの表。原簿自身が「第611〜613回には存在しない」と結論した幻のレコード（6枚全読して確認済み）",
 }
 
 
@@ -141,6 +160,17 @@ for (grade, course) in sorted(gen):
             "小%s2nd演習" % grade, len(gen[(grade, course)]), "—", "—", "**アプリにコースが無い**"))
         ng += len(gen[(grade, course)])
         continue
+    if course == "kokugo":
+        # ★国語は hama_daimon.json に専用ノードが無く、kokugo_*.json 側に
+        #   別ファイルとして存在する。KOKUGO_DONE（ファイル横断で拾った
+        #   「原簿 HG-XXXX」タグ）とだけ突き合わせる。
+        miss = sorted(gen[(grade, course)] - KOKUGO_DONE - set(CANNOT) - set(SAME))
+        nm = "小%s国語" % grade
+        print("%-12s %5d本 %5s %5s   %s" % (
+            nm, len(gen[(grade, course)]), "—", "—",
+            ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
+        ng += len(miss)
+        continue
     node = d["grades"].get(grade, {}).get(course, {})
     # ★灘合は原簿では算数・理科が同じ「小N灘合」見出しに混ざっているが、
     #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
@@ -168,6 +198,25 @@ for (grade, course) in sorted(gen):
         nm, len(gen[(grade, course)]), n, q,
         ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
     ng += len(miss)
+
+# ★安全弁：どのパターンにも一致しなかった見出しが無いか毎回チェックする。
+#   灘合(2026-08-12)・公開学力テスト(2026-08-12)は、どちらも「新しいコースが
+#   COURSE_PAT/KOKAI_PAT等のどれにも一致しない」せいで、gen（原簿側の分母）
+#   に一度も入らず、未収録としてすら検出されずに丸ごと見落とされていた。
+#   このチェックは「0本」が正常。1本でも出たら、その見出しの書式に対応する
+#   パターンをこのファイルの上のほうに追加すること。
+CLASSIFIED = set()
+for hs in gen.values():
+    CLASSIFIED.update(hs)
+UNCLASSIFIED = sorted(set(heads) - CLASSIFIED - set(CANNOT))
+print()
+if UNCLASSIFIED:
+    print("🚨🚨 見出しがどのパターンにも一致しないレコード %d本（検査の分母にすら入っていない！）" % len(UNCLASSIFIED))
+    for h in UNCLASSIFIED[:20]:
+        print("   %s %s" % (h, heads[h][:60]))
+    print("   → COURSE_PAT/KOKAI_PAT/NADAGO_MOSHI_PAT/JITSURYOKU_PATのどれかに見出しの書式を追加すること")
+else:
+    print("✅ 原簿の全%d本が、いずれかの検査パターンの対象に入っている（分母の見落としなし）" % len(heads))
 
 print()
 print("※ 同じ問題の重複（除外）: %s" % ", ".join(
