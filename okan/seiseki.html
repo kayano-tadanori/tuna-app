@@ -560,17 +560,52 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
 
 const $ = id => document.getElementById(id);
-// お子さん（兄弟）ごとの成績管理。いちばん左の子＝既存データ（okan_seiseki_v1）の持ち主。
-// 2人目以降は okan_seiseki_v1__<名前> に分けて保存する。
-const CHILDREN = (() => { try { return JSON.parse(localStorage.getItem('okan_children')) || []; } catch (e) { return []; } })();
+// お子さん（兄弟）ごとの成績管理。名前や並び順ではなく、お子さんに振った固定のIDに紐づける
+// （index.html の設定画面と同じ規則。削除・並び替えで持ち主がズレないようにするため）。
+function childrenV2() {
+  let v; try { v = JSON.parse(localStorage.getItem('okan_children_v2')); } catch (e) { }
+  if (Array.isArray(v)) return v;
+  // v2未保存の古いデータからの移行（index.html の readChildrenV2 と同じ規則）
+  let names = []; try { names = JSON.parse(localStorage.getItem('okan_children')) || []; } catch (e) { }
+  let meta = {}; try { meta = JSON.parse(localStorage.getItem('okan_child_meta')) || {}; } catch (e) { }
+  let courses = null; try { courses = JSON.parse(localStorage.getItem('okan_courses')); } catch (e) { }
+  const gS = localStorage.getItem('okan_goal_school') || '', gD = localStorage.getItem('okan_goal_dev') || '';
+  return names.map((n, i) => ({
+    name: n, grade: (meta[n] && meta[n].grade) || '', cls: (meta[n] && meta[n].cls) || '', curr: (meta[n] && meta[n].curr) || '',
+    goalSchool: i === 0 ? gS : '', goalDev: i === 0 ? gD : '', courses: (i === 0 && courses) ? courses : {}
+  }));
+}
+function writeChildrenV2raw(arr) { localStorage.setItem('okan_children_v2', JSON.stringify(arr)); }
+function ensureChildIds() {
+  const arr = childrenV2();
+  let changed = false;
+  arr.forEach(c => { if (!c.id) { c.id = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); changed = true; } });
+  if (changed) writeChildrenV2raw(arr);
+  return arr;
+}
+(function migrateSeisekiToIds() {
+  if (localStorage.getItem('okan_seiseki_id_migrated_v1')) return;
+  const arr = ensureChildIds();
+  arr.forEach((c, i) => {
+    const idKey = 'okan_seiseki_id__' + c.id;
+    if (localStorage.getItem(idKey) != null) return;
+    let src = localStorage.getItem('okan_seiseki_v1__' + c.name);
+    if (src == null && i === 0) src = localStorage.getItem('okan_seiseki_v1');   // 旧仕様：一番上の子だけが無印キー
+    if (src != null) localStorage.setItem(idKey, src);
+  });
+  localStorage.setItem('okan_seiseki_id_migrated_v1', '1');
+})();
+const CHILDREN = ensureChildIds().map(c => c.name);
 let activeChild = localStorage.getItem('okan_active_child') || '';
 if (CHILDREN.length) { if (!CHILDREN.includes(activeChild)) activeChild = CHILDREN[0]; } else activeChild = '';
-const seikey = c => (c && CHILDREN.length && c !== CHILDREN[0]) ? `okan_seiseki_v1__${c}` : 'okan_seiseki_v1';
+function seikey(c) {
+  const rec = ensureChildIds().find(x => x.name === c);
+  return rec ? ('okan_seiseki_id__' + rec.id) : 'okan_seiseki_v1';
+}
 let KEY = seikey(activeChild);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const DARK = document.documentElement.classList.contains('otonDark');
 // お子さんプロフィール（⚙️設定の個別モーダルで登録。志望校・講座・学年クラスは子ごと）
-function childrenV2() { try { return JSON.parse(localStorage.getItem('okan_children_v2')) || []; } catch (e) { return []; } }
 const activeProfile = (() => { const arr = childrenV2(); return arr.find(c => c.name === activeChild) || arr[0] || null; })();
 // 成績に表示する受講講座（子ごと→無ければ旧グローバル。未設定は全部表示・社会だけ既定OFF）
 let courseCfg;

@@ -266,7 +266,7 @@
       <p class="setLabel">👦 お子さん（兄弟）の管理</p>
       <div id="childList" style="margin:4px 0 6px"></div>
       <button class="setSave" id="addChildBtn" style="background:#0ea5e9">＋ お子さんを追加</button>
-      <p style="font-size:11px;color:#94a3b8;margin:6px 0 14px">お子さんをタップすると、学年・クラス・志望校・目標偏差値・表示する講座を個別に設定できます。<br><b>いちばん上のお子さんが、今入っている成績データの持ち主です。</b>成績ページ上部の名前で切り替えます。</p>
+      <p style="font-size:11px;color:#94a3b8;margin:6px 0 14px">お子さんをタップすると、学年・クラス・志望校・目標偏差値・表示する講座を個別に設定できます。成績ページ上部の名前で、お子さんを切り替えられます。</p>
       <p class="setLabel">つかう人</p>
       <div style="display:flex;gap:8px;margin:6px 0 4px">
         <button type="button" class="genderBtn" data-g="女" id="gFemale">👩 おかん（女性）</button>
@@ -274,6 +274,11 @@
       </div>
       <p style="font-size:11px;color:#94a3b8;margin:2px 0 12px">男性を選ぶと、全ページがダークなスタイルになります</p>
       <button class="setSave" id="setSave">保存する</button>
+
+      <p class="setLabel" style="margin-top:20px;border-top:1px solid #f1f5f9;padding-top:16px">🗂 バックアップ</p>
+      <p style="font-size:11px;color:#94a3b8;margin:4px 0 8px;line-height:1.7">スケジュール・成績（お子さん全員分）・プリントは、すべてこの端末だけに保存されています。機種変更やアプリの再インストールに備えて、ときどきバックアップを取っておくと安心です。</p>
+      <button class="setSave" id="backupBtn" style="background:#0d9488">💾 バックアップを取る</button>
+      <p style="font-size:11px;color:#94a3b8;margin:8px 0 0;line-height:1.7">元に戻すときは、下の「📥 取り込む」でバックアップファイルを選んでください。</p>
 
       <p class="setLabel" style="margin-top:20px;border-top:1px solid #f1f5f9;padding-top:16px">👫 夫婦でデータを共有</p>
       <p style="font-size:11px;color:#94a3b8;margin:4px 0 8px;line-height:1.7">書き出したファイルをLINEなどで送り、相手のアプリで取り込むと、スケジュールやプリントが合体します（同じものは新しい方で上書き）</p>
@@ -286,6 +291,11 @@
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:6px 0 12px">
         <input type="checkbox" id="expPrints" style="width:19px;height:19px;accent-color:#db2777"> 保管したプリント（画像・ファイルが大きくなります）
       </label>
+      <div id="expChildWrap" style="display:none;margin:4px 0 8px">
+        <p class="setLabel" style="margin:0 0 4px">👦 書き出す成績のお子さん</p>
+        <select class="setInput" id="expChild" style="margin:0"></select>
+        <p style="font-size:11px;color:#94a3b8;margin:4px 0 0">ここで選んだお子さんの成績だけが書き出されます</p>
+      </div>
       <div id="impChildWrap" style="display:none;margin:4px 0 8px">
         <p class="setLabel" style="margin:0 0 4px">👦 成績データの取り込み先（どのお子さん？）</p>
         <select class="setInput" id="impChild" style="margin:0"></select>
@@ -515,8 +525,8 @@ document.getElementById('cropOk').onclick = () => {
 };
 
 // ---------- お子さん（兄弟）プロフィール v2 ----------
-// 1件＝{name, grade, cls, curr, goalSchool, goalDev, courses:{fukushu,saire,saikoku,nadago,shakai}}
-// 先頭(index0)が成績データ okan_seiseki_v1 の持ち主。
+// 1件＝{id, name, grade, cls, curr, goalSchool, goalDev, courses:{fukushu,saire,saikoku,nadago,shakai}}
+// 成績データは name や並び順ではなく id に紐づく（下の ensureChildIds/seikeyFor 参照）。
 function readChildrenV2() {
   let v; try { v = JSON.parse(localStorage.getItem('okan_children_v2')); } catch (e) { }
   if (Array.isArray(v)) return v;
@@ -537,6 +547,37 @@ function writeChildrenV2(arr) {
   arr.forEach(c => { if (c.name) meta[c.name] = { grade: +c.grade || undefined, cls: c.cls || '', curr: c.curr || '' }; });
   localStorage.setItem('okan_child_meta', JSON.stringify(meta));
 }
+
+// ---------- お子さんの成績データキー（お子さんごとに固定のIDで紐づける） ----------
+// 名前や並び順（一番上＝旧仕様の okan_seiseki_v1）に頼ると、削除や並び替えで
+// 成績データの持ち主がズレてしまうため、お子さんに一意なIDを振って固定する。
+function ensureChildIds() {
+  const arr = readChildrenV2();
+  let changed = false;
+  arr.forEach(c => { if (!c.id) { c.id = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); changed = true; } });
+  if (changed) writeChildrenV2(arr);
+  return arr;
+}
+function idForChildName(name) { const c = ensureChildIds().find(x => x.name === name); return c ? c.id : null; }
+const SEISEKI_MIGRATED_KEY = 'okan_seiseki_id_migrated_v1';
+function migrateSeisekiToIds() {
+  if (localStorage.getItem(SEISEKI_MIGRATED_KEY)) return;
+  const arr = ensureChildIds();
+  arr.forEach((c, i) => {
+    const idKey = 'okan_seiseki_id__' + c.id;
+    if (localStorage.getItem(idKey) != null) return;
+    let src = localStorage.getItem('okan_seiseki_v1__' + c.name);
+    if (src == null && i === 0) src = localStorage.getItem('okan_seiseki_v1');   // 旧仕様：一番上の子だけが無印キー
+    if (src != null) localStorage.setItem(idKey, src);
+  });
+  localStorage.setItem(SEISEKI_MIGRATED_KEY, '1');
+}
+migrateSeisekiToIds();
+// 誤って登録した名前を削除したときの一覧（データ共有で相手の端末から復活しないように）
+const DELETED_NAMES_KEY = 'okan_children_deleted_names';
+function deletedNames() { try { return new Set(JSON.parse(localStorage.getItem(DELETED_NAMES_KEY)) || []); } catch (e) { return new Set(); } }
+function addDeletedName(n) { const s = deletedNames(); s.add(n); localStorage.setItem(DELETED_NAMES_KEY, JSON.stringify([...s])); }
+function removeDeletedName(n) { const s = deletedNames(); s.delete(n); localStorage.setItem(DELETED_NAMES_KEY, JSON.stringify([...s])); }
 function renderChildList() {
   const arr = readChildrenV2();
   const wrap = document.getElementById('childList');
@@ -587,11 +628,11 @@ document.getElementById('cmSaveBtn').onclick = () => {
   if (g < 4 && cls === 'V') cls = 'S';
   const courses = {};
   document.querySelectorAll('#cmCourses [data-course]').forEach(ch => { courses[ch.dataset.course] = ch.checked; });
-  const prevName = editingChildIdx >= 0 ? arr[editingChildIdx].name : null;
-  const rec = { name, grade: g, cls, curr: g <= 3 ? document.getElementById('cmCurr2').value : '', goalSchool: document.getElementById('cmGoalSchool').value.trim(), goalDev: document.getElementById('cmGoalDev').value.trim(), courses };
+  const existing = editingChildIdx >= 0 ? arr[editingChildIdx] : null;
+  const rec = { id: (existing && existing.id) || ('c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8)), name, grade: g, cls, curr: g <= 3 ? document.getElementById('cmCurr2').value : '', goalSchool: document.getElementById('cmGoalSchool').value.trim(), goalDev: document.getElementById('cmGoalDev').value.trim(), courses };
   if (editingChildIdx >= 0) arr[editingChildIdx] = rec; else arr.push(rec);
   writeChildrenV2(arr);
-  if (prevName && prevName !== name) migrateChildKey(arr, prevName, name);
+  removeDeletedName(name);   // 一度削除した名前でも、あらためて登録したら復活を許す
   document.getElementById('childModal').classList.remove('open');
   renderChildList(); syncImpChild();
 };
@@ -599,42 +640,44 @@ document.getElementById('cmDeleteBtn').onclick = () => {
   const arr = readChildrenV2();
   if (editingChildIdx < 0 || !arr[editingChildIdx]) return;
   const c = arr[editingChildIdx];
-  if (!confirm(`「${c.name}」を一覧から削除します。\n（成績データ自体は残ります。同じ名前で追加すれば元に戻せます）\nよろしいですか？`)) return;
+  if (!confirm(`「${c.name}」を一覧から削除します。この子の成績データも完全に削除されます（元に戻せません）。\nよろしいですか？`)) return;
   arr.splice(editingChildIdx, 1);
   writeChildrenV2(arr);
+  if (c.id) localStorage.removeItem('okan_seiseki_id__' + c.id);
+  addDeletedName(c.name);   // 夫婦間のデータ共有で相手の端末から名前が復活しないように
   if (localStorage.getItem('okan_active_child') === c.name) localStorage.removeItem('okan_active_child');
   document.getElementById('childModal').classList.remove('open');
   renderChildList(); syncImpChild();
 };
-// 名前変更時に成績キーを引き継ぐ（先頭=okan_seiseki_v1 は位置キーなので中身は動かさない）
-function migrateChildKey(arr, oldName, newName) {
-  const first = arr[0] && arr[0].name;
-  const oldKey = (oldName === first) ? 'okan_seiseki_v1' : 'okan_seiseki_v1__' + oldName;
-  const newKey = (newName === first) ? 'okan_seiseki_v1' : 'okan_seiseki_v1__' + newName;
-  if (oldKey === newKey) return;
-  const data = localStorage.getItem(oldKey);
-  if (data != null && localStorage.getItem(newKey) == null) {
-    localStorage.setItem(newKey, data);
-    if (oldKey !== 'okan_seiseki_v1') localStorage.removeItem(oldKey);
-  }
-}
 
-// 成績JSONの取り込み先（お子さん）
+// 成績JSONの取り込み先／書き出し元（お子さん）
 function syncImpChild() {
   const cs = childrenList();
+  const act = localStorage.getItem('okan_active_child');
   const wrap = document.getElementById('impChildWrap');
   const sel = document.getElementById('impChild');
+  const expWrap = document.getElementById('expChildWrap');
+  const expSel = document.getElementById('expChild');
   if (cs.length >= 2) {
     sel.innerHTML = cs.map(c => `<option>${c}</option>`).join('');
-    const act = localStorage.getItem('okan_active_child');
     if (act && cs.includes(act)) sel.value = act;
     wrap.style.display = '';
-  } else { wrap.style.display = 'none'; }
+    expSel.innerHTML = cs.map(c => `<option>${c}</option>`).join('');
+    if (act && cs.includes(act)) expSel.value = act;
+    expWrap.style.display = '';
+  } else { wrap.style.display = 'none'; expWrap.style.display = 'none'; }
 }
 function importChild() {
   const w = document.getElementById('impChildWrap');
   const s = document.getElementById('impChild');
   return (w.style.display !== 'none' && s.value) ? s.value : undefined;
+}
+// 書き出す成績の対象（複数お子さんがいれば expChild で明示的に選んだ子。1人ならその子）
+function exportChild() {
+  const w = document.getElementById('expChildWrap');
+  const s = document.getElementById('expChild');
+  if (w.style.display !== 'none' && s.value) return s.value;
+  return childrenList()[0] || '';
 }
 // 兄弟がいるとき、成績を別の子に誤って上書きしないよう取り込み先を確認する
 function confirmSeisekiTarget(obj) {
@@ -703,34 +746,80 @@ function b64ToBlob(b64, type) {
   return new Blob([u], { type: type || 'image/png' });
 }
 
-async function buildExportObj(withSched, withPrints, withSeiseki) {
+async function buildPrintsExport() {
+  const list = [];
+  for (const r of await idbAllPrints()) {
+    list.push({
+      id: r.id, grade: r.grade || '', month: r.month || '',
+      subject: r.subject, no: r.no, type: r.type, date: r.date,
+      blob: await blobToB64(r.blob), blobType: r.blob.type,
+      thumb: r.thumb ? await blobToB64(r.thumb) : null, thumbType: r.thumb ? r.thumb.type : null
+    });
+  }
+  return list;
+}
+async function buildExportObj(withSched, withPrints, withSeiseki, seisekiTarget) {
   const obj = { app: 'chuju-mama-banso', ver: 1, date: new Date().toISOString().slice(0, 10) };
   if (withSched) {
     try { obj.sched = JSON.parse(localStorage.getItem('okan_sched_v1')) || null; } catch (e) { obj.sched = null; }
     try { obj.children = JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { obj.children = []; }
   }
   if (withSeiseki) {
-    const active = localStorage.getItem('okan_active_child') || (childrenList()[0] || '');
+    const active = seisekiTarget || (childrenList()[0] || '');
     try { obj.seiseki = JSON.parse(localStorage.getItem(seikeyFor(active))) || null; } catch (e) { obj.seiseki = null; }
     if (obj.seiseki && active) obj.seisekiChild = active;   // どの子の成績かを記録（取り込み時の誤り防止）
   }
-  if (withPrints) {
-    obj.prints = [];
-    for (const r of await idbAllPrints()) {
-      obj.prints.push({
-        id: r.id, grade: r.grade || '', month: r.month || '',
-        subject: r.subject, no: r.no, type: r.type, date: r.date,
-        blob: await blobToB64(r.blob), blobType: r.blob.type,
-        thumb: r.thumb ? await blobToB64(r.thumb) : null, thumbType: r.thumb ? r.thumb.type : null
-      });
-    }
-  }
+  if (withPrints) obj.prints = await buildPrintsExport();
+  return obj;
+}
+// バックアップ：夫婦間共有とちがい、お子さん全員分の成績をIDごとまとめて1ファイルに。復元は「取り込む」から。
+async function buildBackupObj() {
+  const obj = { app: 'chuju-mama-banso', ver: 1, date: new Date().toISOString().slice(0, 10), kind: 'backup' };
+  try { obj.sched = JSON.parse(localStorage.getItem('okan_sched_v1')) || null; } catch (e) { obj.sched = null; }
+  obj.childrenV2 = ensureChildIds();
+  obj.seisekiAll = {};
+  obj.childrenV2.forEach(c => {
+    try { obj.seisekiAll[c.id] = JSON.parse(localStorage.getItem('okan_seiseki_id__' + c.id)) || null; } catch (e) { obj.seisekiAll[c.id] = null; }
+  });
+  obj.prints = await buildPrintsExport();
+  obj.name = localStorage.getItem(NAME_KEY) || '';
   return obj;
 }
 
-// お子さんごとの成績キー（seiseki.html と同じ規則：いちばん左の子＝okan_seiseki_v1）
+// お子さんごとの成績キー（名前や並び順ではなく、固定のIDに紐づける。seiseki.html と同じ規則）
 function childrenList() { try { return JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { return []; } }
-function seikeyFor(child) { const cs = childrenList(); return (child && cs.length && child !== cs[0]) ? `okan_seiseki_v1__${child}` : 'okan_seiseki_v1'; }
+function seikeyFor(child) {
+  const id = idForChildName(child);
+  return id ? ('okan_seiseki_id__' + id) : 'okan_seiseki_v1';
+}
+// 同じテストの判定：公開=同じ月／その他=同じid、またはidが違っても
+// 「同じ日付＋同じ内容（科目・回）」なら同一とみなす（手入力とJSON取り込みの二重登録防止）
+function mergeSeisekiInto(skey, incoming) {
+  let cur;
+  try { cur = JSON.parse(localStorage.getItem(skey)) || null; } catch (e) { cur = null; }
+  if (!cur) cur = {};
+  const sameRec = (k, a, b) => {
+    if (k === 'kokai') return a.ym === b.ym;
+    if (k === 'atotal') return a.ym === b.ym && (a.course || 'マスター') === (b.course || 'マスター');
+    if (a.id === b.id) return true;
+    if (a.date !== b.date) return false;
+    if (k === 'fukushu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
+    if (k === 'mosi') return (a.name || '') === (b.name || '');   // 模試：同じ日・同じテスト名
+    if (k === 'koushuu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
+    return (a.no ?? null) === (b.no ?? null);   // saire/nadago：同じ日・同じ回
+  };
+  let n = 0;
+  for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi', 'koushuu']) {
+    if (!Array.isArray(cur[k])) cur[k] = [];
+    for (const it of (incoming[k] || [])) {
+      const i = cur[k].findIndex(x => sameRec(k, x, it));
+      if (i >= 0) cur[k][i] = it; else cur[k].push(it);
+      n++;
+    }
+  }
+  localStorage.setItem(skey, JSON.stringify(cur));
+  return n;
+}
 async function importDataObj(obj, targetChild) {
   if (!obj || obj.app !== 'chuju-mama-banso') throw new Error('このアプリのファイルではありません');
   const result = { sched: 0, todos: 0, events: 0, prints: 0, children: 0 };
@@ -754,39 +843,34 @@ async function importDataObj(obj, targetChild) {
     if (obj.sched.adjust) cur.adjust = [...new Set([...(cur.adjust || []), ...obj.sched.adjust])];   // 調整日は合体
     localStorage.setItem('okan_sched_v1', JSON.stringify(cur));
   }
-  if (obj.children && obj.children.length) {
+  if (obj.childrenV2 && obj.childrenV2.length) {
+    // バックアップからの復元：IDでお子さんのプロフィールを合体する（既存の内容は上書きしない）
+    const arr = readChildrenV2();
+    const gone = deletedNames();
+    let changed = false;
+    for (const bc of obj.childrenV2) {
+      if (!bc.id || !bc.name || gone.has(bc.name)) continue;
+      if (!arr.some(x => x.id === bc.id || x.name === bc.name)) { arr.push(bc); changed = true; }
+    }
+    if (changed) writeChildrenV2(arr);
+    result.children = arr.length;
+  } else if (obj.children && obj.children.length) {
     let kids;
     try { kids = JSON.parse(localStorage.getItem(CHILDREN_KEY)) || []; } catch (e) { kids = []; }
-    const merged = [...new Set([...kids, ...obj.children])];
+    const gone = deletedNames();   // この端末でいったん削除した名前は、相手のデータを取り込んでも復活させない
+    const merged = [...new Set([...kids, ...obj.children.filter(n => !gone.has(n))])];
     localStorage.setItem(CHILDREN_KEY, JSON.stringify(merged));
     result.children = merged.length;
   }
-  if (obj.seiseki) {
-    const skey = seikeyFor(targetChild);
-    let cur;
-    try { cur = JSON.parse(localStorage.getItem(skey)) || null; } catch (e) { cur = null; }
-    if (!cur) cur = {};
-    // 同じテストの判定：公開=同じ月／その他=同じid、またはidが違っても
-    // 「同じ日付＋同じ内容（科目・回）」なら同一とみなす（手入力とJSON取り込みの二重登録防止）
-    const sameRec = (k, a, b) => {
-      if (k === 'kokai') return a.ym === b.ym;
-      if (k === 'atotal') return a.ym === b.ym && (a.course || 'マスター') === (b.course || 'マスター');
-      if (a.id === b.id) return true;
-      if (a.date !== b.date) return false;
-      if (k === 'fukushu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
-      if (k === 'mosi') return (a.name || '') === (b.name || '');   // 模試：同じ日・同じテスト名
-      if (k === 'koushuu') return (a.subject || '') === (b.subject || '') && (a.no ?? null) === (b.no ?? null);
-      return (a.no ?? null) === (b.no ?? null);   // saire/nadago：同じ日・同じ回
-    };
-    for (const k of ['kokai', 'fukushu', 'saire', 'saikoku', 'nadago', 'atotal', 'mosi', 'koushuu']) {
-      if (!Array.isArray(cur[k])) cur[k] = [];
-      for (const it of (obj.seiseki[k] || [])) {
-        const i = cur[k].findIndex(x => sameRec(k, x, it));
-        if (i >= 0) cur[k][i] = it; else cur[k].push(it);
-        result.seiseki = (result.seiseki || 0) + 1;
-      }
+  if (obj.seisekiAll) {
+    // バックアップからの復元：お子さん全員分をIDごとに合体
+    for (const [id, data] of Object.entries(obj.seisekiAll)) {
+      if (!data) continue;
+      result.seiseki = (result.seiseki || 0) + mergeSeisekiInto('okan_seiseki_id__' + id, data);
     }
-    localStorage.setItem(skey, JSON.stringify(cur));
+  } else if (obj.seiseki) {
+    const skey = seikeyFor(targetChild);
+    result.seiseki = (result.seiseki || 0) + mergeSeisekiInto(skey, obj.seiseki);
     result.seisekiChild = targetChild || (childrenList()[0] || '');
   }
   if (obj.prints) {
@@ -803,6 +887,19 @@ async function importDataObj(obj, targetChild) {
   return result;
 }
 
+async function downloadOrShareJson(obj, name) {
+  const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
+  const file = new File([blob], name, { type: 'application/json' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    await navigator.share({ files: [file] }).catch(() => {});
+  } else {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }
+}
 document.getElementById('expBtn').onclick = async () => {
   const withSched = document.getElementById('expSched').checked;
   const withPrints = document.getElementById('expPrints').checked;
@@ -811,24 +908,27 @@ document.getElementById('expBtn').onclick = async () => {
   const btn = document.getElementById('expBtn');
   btn.textContent = '⏳ 書き出し中…';
   try {
-    const obj = await buildExportObj(withSched, withPrints, withSeiseki);
-    const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
-    const name = `中受伴走データ_${obj.date.replace(/-/g, '')}.json`;
-    const file = new File([blob], name, { type: 'application/json' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file] }).catch(() => {});
-    } else {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = name;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-    }
+    const obj = await buildExportObj(withSched, withPrints, withSeiseki, withSeiseki ? exportChild() : undefined);
+    await downloadOrShareJson(obj, `中受伴走データ_${obj.date.replace(/-/g, '')}.json`);
   } catch (e) {
     console.error(e);
     alert('書き出しに失敗しました');
   } finally {
     btn.textContent = '📤 書き出す';
+  }
+};
+
+document.getElementById('backupBtn').onclick = async () => {
+  const btn = document.getElementById('backupBtn');
+  btn.textContent = '⏳ バックアップ中…';
+  try {
+    const obj = await buildBackupObj();
+    await downloadOrShareJson(obj, `中受伴走バックアップ_${obj.date.replace(/-/g, '')}.json`);
+  } catch (e) {
+    console.error(e);
+    alert('バックアップに失敗しました');
+  } finally {
+    btn.textContent = '💾 バックアップを取る';
   }
 };
 
