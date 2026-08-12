@@ -363,7 +363,7 @@
     <div class="fRow">
       <div><p class="fLabel">月度</p><input class="fInput" type="month" id="aYm"></div>
       <div><p class="fLabel">講座</p>
-        <select class="fInput" id="aCourse"><option>マスター</option><option>最レ算数</option><option>最レ国語</option><option>灘合</option></select>
+        <select class="fInput" id="aCourse"><option>マスター</option><option>最レ算数</option><option>最レ国語</option><option>灘合</option><option>春期講習</option><option>夏期講習</option><option>冬期講習</option></select>
       </div>
     </div>
     <div class="fRow">
@@ -662,7 +662,8 @@ function renderGraph(list) {
 }
 
 // ---------- A表：総合点（自動計算）とクラス内順位（手入力）のグラフ ----------
-const COURSE_COLOR = { 'マスター': DARK ? '#f9e2af' : '#9333ea', '最レ算数': '#3b82f6', '最レ国語': '#f43f5e', '灘合': '#0d9488' };
+const COURSE_COLOR = { 'マスター': DARK ? '#f9e2af' : '#9333ea', '最レ算数': '#3b82f6', '最レ国語': '#f43f5e', '灘合': '#0d9488', '講習': '#f59e0b' };
+const SUBJ_COLOR = { '国語': '#f43f5e', '算数': '#3b82f6', '理科': '#10b981', '社会': '#f97316' };
 function rankFor(course, ym) {
   const r = db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym);
   return r && r.rank != null ? r.rank : null;
@@ -773,6 +774,62 @@ function nadagoCharts() {
   h += lineGraph(data, d => d.total, { id: 'nada_total', title: '📈 灘合 総合点の推移', color: COURSE_COLOR['灘合'] });
   const chips = data.filter(d => d.rank != null).map(d => `<button class="rankChip" data-rankym="${d.ym}">${+d.ym.slice(5)}月度 ${d.rank}位</button>`).join('');
   h += `<div class="rankRow"><span>全体順位：</span>${chips}<button class="rankChip add" data-rankadd="1">＋記録</button></div>`;
+  return h;
+}
+// 講習：(講習の種類×年)ごとにグループ化。ym は atotal のキーと合わせて最初のテスト日の年月にする
+function kouGroups() {
+  const map = new Map();
+  for (const t of db.koushuu) {
+    const term = t.term || '講習';
+    const key = term + '/' + t.date.slice(0, 4);
+    if (!map.has(key)) map.set(key, { term, items: [] });
+    map.get(key).items.push(t);
+  }
+  return [...map.values()].map(g => {
+    const first = g.items.map(x => x.date).sort()[0];
+    const avg = g.items.reduce((s, x) => s + (+x.score || 0), 0) / g.items.length;
+    return { term: g.term, ym: first.slice(0, 7), avg };
+  }).sort((a, b) => a.ym.localeCompare(b.ym));
+}
+// 講習：クラス内順位＋平均点の推移（春期・夏期・冬期をまとめて時系列で）＋順位チップ
+function kouGraphs() {
+  const groups = kouGroups();
+  let h = '';
+  if (groups.length >= 2) {
+    const xlabels = groups.map(g => g.ym.slice(0, 4) + '年' + g.term.slice(0, 1));
+    const atOf = g => db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym);
+    const ranks = groups.map(g => { const at = atOf(g); return at && at.rank != null ? at.rank : null; });
+    if (ranks.some(v => v != null)) {
+      h += regChart({ id: 'kou_rank', title: '📉 講習会 クラス内順位の推移（1位が上）', xlabels, series: [{ key: 'r', label: '順位', color: COURSE_COLOR['講習'], bold: true, vals: ranks }], invert: true, ySuffix: '位', legend: false });
+    }
+    const totals = groups.map(g => { const at = atOf(g); return Math.round((at && at.total != null ? +at.total : g.avg) * 10) / 10; });
+    h += regChart({ id: 'kou_total', title: '📈 講習会 平均点の推移', xlabels, series: [{ key: 't', label: '平均点', color: COURSE_COLOR['講習'], bold: true, vals: totals }], ystep: 10, legend: false });
+  }
+  const chips = groups.map(g => ({ g, at: db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym) }))
+    .filter(x => x.at && x.at.rank != null)
+    .map(x => `<button class="rankChip" data-rankym="${x.g.ym}" data-rankcourse="${x.g.term}">${+x.g.ym.slice(5)}月度 ${x.g.term} ${x.at.rank}位</button>`).join('');
+  const lastTerm = groups.length ? groups[groups.length - 1].term : '夏期講習';
+  h += `<div class="rankRow"><span>クラス内順位：</span>${chips}<button class="rankChip add" data-rankaddkou="${lastTerm}">＋記録</button></div>`;
+  return h;
+}
+function bindKouRankChips(v) {
+  v.querySelectorAll('[data-rankym]').forEach(el => el.onclick = () => openRank(el.dataset.rankcourse, el.dataset.rankym));
+  const a = v.querySelector('[data-rankaddkou]');
+  if (a) a.onclick = () => openRank(a.dataset.rankaddkou, null);
+}
+// 講習：科目ごとに「得点」と「クラス平均」を並べて比べる折れ線
+function kouSubjectCharts() {
+  let h = '';
+  for (const subj of ['国語', '算数', '理科', '社会']) {
+    const list = db.koushuu.filter(x => x.subject === subj).sort((a, b) => a.date.localeCompare(b.date));
+    if (list.length < 2) continue;
+    const xlabels = list.map(t => mdLabel(t.date));
+    const series = [
+      { key: 'score', label: '得点', color: SUBJ_COLOR[subj], bold: true, vals: list.map(t => t.score != null && t.score !== '' ? +t.score : null) },
+      { key: 'avg', label: 'クラス平均', color: DARK ? '#93a7cd' : '#94a3b8', vals: list.map(t => t.avg != null && t.avg !== '' ? +t.avg : null) },
+    ];
+    h += regChart({ id: 'kou_subj_' + subj, title: `📊 講習「${subj}」得点とクラス平均`, xlabels, series, ystep: 10 });
+  }
   return h;
 }
 function bindRankChips(v, course) {
@@ -1342,7 +1399,7 @@ function render() {
     bindRankChips(v, '最レ国語');
   } else if (tab === 'koushuu') {
     const list = [...db.koushuu].sort((a, b) => b.date.localeCompare(a.date));
-    let h = '';
+    let h = kouGraphs() + kouSubjectCharts();
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>講習会の成績個人票を貼り付けると入ります。<br>＋ボタンで手入力もできます。</p>';
     let cur = '';
     for (const t of list) {
@@ -1365,6 +1422,7 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-kou]').forEach(el => el.onclick = () => openKoushuu(db.koushuu.find(x => x.id === el.dataset.kou)));
+    bindKouRankChips(v);
   } else if (tab === 'mosi') {
     const list = [...db.mosi].sort((a, b) => b.date.localeCompare(a.date));
     let h = '';
