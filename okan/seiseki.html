@@ -832,6 +832,84 @@ function kouSubjectCharts() {
   }
   return h;
 }
+// 復習テスト：月度ごとの「全体の平均点」（科目を問わず、その月に記録した全テストの単純平均）
+function fukushuAvgChart() {
+  const yms = [...new Set(db.fukushu.filter(x => x.date).map(x => x.date.slice(0, 7)))].sort();
+  if (yms.length < 2) return '';
+  const xlabels = yms.map(ym => +ym.slice(5) + '月');
+  const vals = yms.map(ym => {
+    const m = db.fukushu.filter(x => x.date && x.date.slice(0, 7) === ym);
+    return Math.round((m.reduce((s, x) => s + (+x.score || 0), 0) / m.length) * 10) / 10;
+  });
+  return regChart({ id: 'fuku_all_avg', title: '📈 復習テスト 全体の平均点の推移（科目まぜて）', xlabels, series: [{ key: 'v', label: '平均点', color: COURSE_COLOR['マスター'], bold: true, vals }], ystep: 10, legend: false });
+}
+// 復習テスト：科目ごとに「得点」と「クラス平均」を並べて比べる折れ線（日付が確定してる回だけ）
+function fukushuSubjectCharts() {
+  let h = '';
+  for (const subj of ['国語', '算数', '理科', '社会']) {
+    const list = db.fukushu.filter(x => x.subject === subj && x.date).sort((a, b) => a.date.localeCompare(b.date));
+    if (list.length < 2) continue;
+    const xlabels = list.map(t => mdLabel(t.date));
+    const series = [
+      { key: 'score', label: '得点', color: SUBJ_COLOR[subj], bold: true, vals: list.map(t => t.score != null && t.score !== '' ? +t.score : null) },
+      { key: 'avg', label: 'クラス平均', color: DARK ? '#93a7cd' : '#94a3b8', vals: list.map(t => t.avg != null && t.avg !== '' ? +t.avg : null) },
+    ];
+    h += regChart({ id: 'fuku_subj_' + subj, title: `📊 復習テスト「${subj}」得点とクラス平均`, xlabels, series, ystep: 10 });
+  }
+  return h;
+}
+// 最レ算数：月度ごとの「全体の平均点」（計算＋復習の合計・単純平均）
+function saireAvgChart() {
+  const yms = [...new Set(db.saire.map(t => saiYm(t)).filter(Boolean))].sort();
+  if (yms.length < 2) return '';
+  const xlabels = yms.map(ym => +ym.slice(5) + '月');
+  const vals = yms.map(ym => {
+    const m = db.saire.filter(t => saiYm(t) === ym);
+    return Math.round((m.reduce((s, x) => s + (+x.keisan || 0) + (+x.fukushu || 0), 0) / m.length) * 10) / 10;
+  });
+  return regChart({ id: 'saire_all_avg', title: '📈 最レ算数 全体の平均点の推移（計算＋復習・200点満点）', xlabels, series: [{ key: 'v', label: '平均点', color: COURSE_COLOR['最レ算数'], bold: true, vals }], ystep: 20, legend: false });
+}
+// 最レ算数：計算・復習それぞれの「得点」と「クラス平均」を並べて比べる折れ線（日付が確定してる回だけ）
+function saireCharts() {
+  let h = '';
+  const list = db.saire.filter(x => x.date).sort((a, b) => a.date.localeCompare(b.date));
+  if (list.length < 2) return h;
+  const xlabels = list.map(t => mdLabel(t.date));
+  const parts = [
+    { key: 'keisan', avgKey: 'keisanAvg', label: '計算', color: '#3b82f6' },
+    { key: 'fukushu', avgKey: 'fukushuAvg', label: '復習', color: '#0d9488' },
+  ];
+  for (const p of parts) {
+    const series = [
+      { key: 'score', label: '得点', color: p.color, bold: true, vals: list.map(t => t[p.key] != null && t[p.key] !== '' ? +t[p.key] : null) },
+      { key: 'avg', label: 'クラス平均', color: DARK ? '#93a7cd' : '#94a3b8', vals: list.map(t => t[p.avgKey] != null && t[p.avgKey] !== '' ? +t[p.avgKey] : null) },
+    ];
+    h += regChart({ id: 'saire_' + p.key, title: `📊 最レ算数「${p.label}」得点とクラス平均`, xlabels, series, ystep: 10 });
+  }
+  return h;
+}
+// 最レ国語：月度ごとの「全体の平均点」（単純平均）
+function saikokuAvgChart() {
+  const yms = [...new Set(db.saikoku.map(t => sakYm(t)).filter(Boolean))].sort();
+  if (yms.length < 2) return '';
+  const xlabels = yms.map(ym => +ym.slice(5) + '月');
+  const vals = yms.map(ym => {
+    const m = db.saikoku.filter(t => sakYm(t) === ym);
+    return Math.round((m.reduce((s, x) => s + (+x.score || 0), 0) / m.length) * 10) / 10;
+  });
+  return regChart({ id: 'saikoku_all_avg', title: '📈 最レ国語 全体の平均点の推移', xlabels, series: [{ key: 'v', label: '平均点', color: COURSE_COLOR['最レ国語'], bold: true, vals }], ystep: 10, legend: false });
+}
+// 最レ国語：「得点」と「クラス平均」を並べて比べる折れ線（日付が確定してる回だけ）
+function saikokuChart() {
+  const list = db.saikoku.filter(x => x.date).sort((a, b) => a.date.localeCompare(b.date));
+  if (list.length < 2) return '';
+  const xlabels = list.map(t => mdLabel(t.date));
+  const series = [
+    { key: 'score', label: '得点', color: SUBJ_COLOR['国語'], bold: true, vals: list.map(t => t.score != null && t.score !== '' ? +t.score : null) },
+    { key: 'avg', label: 'クラス平均', color: DARK ? '#93a7cd' : '#94a3b8', vals: list.map(t => t.avg != null && t.avg !== '' ? +t.avg : null) },
+  ];
+  return regChart({ id: 'saikoku_score', title: '📊 最レ国語 得点とクラス平均', xlabels, series, ystep: 10 });
+}
 function bindRankChips(v, course) {
   v.querySelectorAll('[data-rankym]').forEach(el => el.onclick = () => openRank(course, el.dataset.rankym));
   const a = v.querySelector('[data-rankadd]');
@@ -1317,7 +1395,7 @@ function render() {
     // 速報（日付がまだ分からない分）はいちばん新しいので先頭にまとめる
     const skey = t => t.date ? t.date : '9999-' + (t.ym || '');
     const list = [...db.fukushu].sort((a, b) => skey(b).localeCompare(skey(a)));
-    let h = courseGraphs('マスター');
+    let h = courseGraphs('マスター') + fukushuAvgChart() + fukushuSubjectCharts();
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで復習テストの点数を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
@@ -1345,7 +1423,7 @@ function render() {
   } else if (tab === 'saire') {
     const skey = t => t.date ? t.date : '9999-' + (t.ym || '');
     const list = [...db.saire].sort((a, b) => skey(b).localeCompare(skey(a)));
-    let h = courseGraphs('最レ算数');
+    let h = courseGraphs('最レ算数') + saireAvgChart() + saireCharts();
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓算数（計算80点＋復習120点）を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
@@ -1374,7 +1452,7 @@ function render() {
   } else if (tab === 'saikoku') {
     const skey2 = t => t.date ? t.date : '9999-' + (t.ym || '');
     const list = [...db.saikoku].sort((a, b) => skey2(b).localeCompare(skey2(a)));
-    let h = courseGraphs('最レ国語');
+    let h = courseGraphs('最レ国語') + saikokuAvgChart() + saikokuChart();
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>＋ボタンで最高レベル特訓国語（復習テスト・100点満点）を記録できます。</p>';
     let curYm = '';
     for (const t of list) {
