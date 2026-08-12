@@ -79,6 +79,8 @@
   .rankChip.add { background: #f1f5f9; color: #64748b; }
 
   .secLabel { font-size: 12px; font-weight: 800; color: #94a3b8; margin: 14px 2px 8px; }
+  .secLabel.withDel { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .secDel { border: none; background: #fee2e2; color: #dc2626; font-size: 10.5px; font-weight: 800; padding: 4px 9px; border-radius: 999px; cursor: pointer; flex-shrink: 0; }
   .rowCard {
     display: flex; align-items: center; gap: 10px;
     background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px;
@@ -501,6 +503,7 @@
         </div>
         <div id="pvYearWrap"><p class="fLabel">年</p><input class="fInput" type="number" id="pvYear"></div>
       </div>
+      <p class="pNote ng" id="pvYearWarn" style="display:none">⚠️ この個人票には年が印字されておらず、学年からも判断できなかったため、正確な年度が分かりません。まちがっていないか確認してください。</p>
 
       <!-- マスター個人票（A）のとき -->
       <div id="pvKojin">
@@ -776,27 +779,33 @@ function nadagoCharts() {
   h += `<div class="rankRow"><span>全体順位：</span>${chips}<button class="rankChip add" data-rankadd="1">＋記録</button></div>`;
   return h;
 }
-// 講習：(講習の種類×年)ごとにグループ化。ym は atotal のキーと合わせて最初のテスト日の年月にする
-function kouGroups() {
+// 浜学園の年度は2月はじまり（1月のテストは前年度ぶん）。講習は年度でまとめる（暦年だと年をまたぐ冬期講習が割れてしまう）
+function koushuuNendo(dateStr) {
+  const [y, m] = dateStr.slice(0, 7).split('-').map(Number);
+  return m >= 2 ? y : y - 1;
+}
+// 講習：(講習の種類×年度)ごとにグループ化。ym は atotal のキーと合わせて最初のテスト日の年月にする
+function kouGroups(list) {
   const map = new Map();
-  for (const t of db.koushuu) {
+  for (const t of (list || db.koushuu)) {
     const term = t.term || '講習';
-    const key = term + '/' + t.date.slice(0, 4);
-    if (!map.has(key)) map.set(key, { term, items: [] });
+    const nendo = koushuuNendo(t.date);
+    const key = term + '/' + nendo;
+    if (!map.has(key)) map.set(key, { term, nendo, items: [] });
     map.get(key).items.push(t);
   }
   return [...map.values()].map(g => {
     const first = g.items.map(x => x.date).sort()[0];
     const avg = g.items.reduce((s, x) => s + (+x.score || 0), 0) / g.items.length;
-    return { term: g.term, ym: first.slice(0, 7), avg };
+    return { term: g.term, nendo: g.nendo, ym: first.slice(0, 7), avg };
   }).sort((a, b) => a.ym.localeCompare(b.ym));
 }
 // 講習：クラス内順位＋平均点の推移（春期・夏期・冬期をまとめて時系列で）＋順位チップ
-function kouGraphs() {
-  const groups = kouGroups();
+function kouGraphs(list) {
+  const groups = kouGroups(list);
   let h = '';
   if (groups.length >= 2) {
-    const xlabels = groups.map(g => g.ym.slice(0, 4) + '年' + g.term.slice(0, 1));
+    const xlabels = groups.map(g => g.nendo + '年度' + g.term.slice(0, 1));
     const atOf = g => db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym);
     const ranks = groups.map(g => { const at = atOf(g); return at && at.rank != null ? at.rank : null; });
     if (ranks.some(v => v != null)) {
@@ -807,7 +816,7 @@ function kouGraphs() {
   }
   const chips = groups.map(g => ({ g, at: db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym) }))
     .filter(x => x.at && x.at.rank != null)
-    .map(x => `<button class="rankChip" data-rankym="${x.g.ym}" data-rankcourse="${x.g.term}">${+x.g.ym.slice(5)}月度 ${x.g.term} ${x.at.rank}位</button>`).join('');
+    .map(x => `<button class="rankChip" data-rankym="${x.g.ym}" data-rankcourse="${x.g.term}">${x.g.nendo}年度 ${x.g.term} ${x.at.rank}位</button>`).join('');
   const lastTerm = groups.length ? groups[groups.length - 1].term : '夏期講習';
   h += `<div class="rankRow"><span>クラス内順位：</span>${chips}<button class="rankChip add" data-rankaddkou="${lastTerm}">＋記録</button></div>`;
   return h;
@@ -818,15 +827,15 @@ function bindKouRankChips(v) {
   if (a) a.onclick = () => openRank(a.dataset.rankaddkou, null);
 }
 // 講習：科目ごとに「得点」と「クラス平均」を並べて比べる折れ線
-function kouSubjectCharts() {
+function kouSubjectCharts(list) {
   let h = '';
   for (const subj of ['国語', '算数', '理科', '社会']) {
-    const list = db.koushuu.filter(x => x.subject === subj).sort((a, b) => a.date.localeCompare(b.date));
-    if (list.length < 2) continue;
-    const xlabels = list.map(t => mdLabel(t.date));
+    const l = (list || db.koushuu).filter(x => x.subject === subj).sort((a, b) => a.date.localeCompare(b.date));
+    if (l.length < 2) continue;
+    const xlabels = l.map(t => mdLabel(t.date));
     const series = [
-      { key: 'score', label: '得点', color: SUBJ_COLOR[subj], bold: true, vals: list.map(t => t.score != null && t.score !== '' ? +t.score : null) },
-      { key: 'avg', label: 'クラス平均', color: DARK ? '#93a7cd' : '#94a3b8', vals: list.map(t => t.avg != null && t.avg !== '' ? +t.avg : null) },
+      { key: 'score', label: '得点', color: SUBJ_COLOR[subj], bold: true, vals: l.map(t => t.score != null && t.score !== '' ? +t.score : null) },
+      { key: 'avg', label: 'クラス平均', color: DARK ? '#93a7cd' : '#94a3b8', vals: l.map(t => t.avg != null && t.avg !== '' ? +t.avg : null) },
     ];
     h += regChart({ id: 'kou_subj_' + subj, title: `📊 講習「${subj}」得点とクラス平均`, xlabels, series, ystep: 10 });
   }
@@ -1476,21 +1485,33 @@ function render() {
     v.querySelectorAll('[data-saikoku]').forEach(el => el.onclick = () => openSaikoku(db.saikoku.find(x => x.id === el.dataset.saikoku)));
     bindRankChips(v, '最レ国語');
   } else if (tab === 'koushuu') {
-    const list = [...db.koushuu].sort((a, b) => b.date.localeCompare(a.date));
-    let h = kouGraphs() + kouSubjectCharts();
+    const allNendo = [...new Set(db.koushuu.map(t => koushuuNendo(t.date)))].sort((a, b) => b - a);
+    let yf = localStorage.getItem('okan_kou_year') || 'all';
+    if (yf !== 'all' && !allNendo.includes(+yf)) yf = 'all';
+    const src = yf === 'all' ? db.koushuu : db.koushuu.filter(t => koushuuNendo(t.date) === +yf);
+    const list = [...src].sort((a, b) => b.date.localeCompare(a.date));
+    let h = '';
+    if (allNendo.length >= 2) {
+      h += '<div class="gToggle">' +
+        `<button class="gBtn${yf === 'all' ? ' on' : ''}" data-kouyear="all">すべて</button>` +
+        allNendo.map(y => `<button class="gBtn${yf === '' + y ? ' on' : ''}" data-kouyear="${y}">${y}年度</button>`).join('') +
+        '</div>';
+    }
+    h += kouGraphs(src) + kouSubjectCharts(src);
     if (!list.length) h += '<p class="emptyMsg">まだ記録がありません。<br>講習会の成績個人票を貼り付けると入ります。<br>＋ボタンで手入力もできます。</p>';
     let cur = '';
     for (const t of list) {
-      const key = (t.term || '講習') + '/' + t.date.slice(0, 4);
+      const nendo = koushuuNendo(t.date);
+      const key = (t.term || '講習') + '/' + nendo;
       if (key !== cur) {
         cur = key;
-        const m = db.koushuu.filter(x => ((x.term || '講習') + '/' + x.date.slice(0, 4)) === key);
+        const m = db.koushuu.filter(x => ((x.term || '講習') + '/' + koushuuNendo(x.date)) === key);
         const avg = (m.reduce((s, x) => s + (+x.score || 0), 0) / m.length).toFixed(1);
         // まとめ（平均・順位）は講習のいちばん早い月に入れてある
         const first = m.map(x => x.date).sort()[0];
         const at = db.atotal.find(x => (x.course || '') === (t.term || '講習') && x.ym === first.slice(0, 7));
         const rk = at && at.rank != null ? '・' + at.rank + '位' : '';
-        h += `<p class="secLabel">${t.date.slice(0, 4)}年 ${t.term || '講習'}（${m.length}枚・平均 ${at && at.fuku != null ? at.fuku : avg}点${rk}）</p>`;
+        h += `<p class="secLabel withDel"><span>${nendo}年度 ${t.term || '講習'}（${m.length}枚・平均 ${at && at.fuku != null ? at.fuku : avg}点${rk}）</span><button class="secDel" data-koudelgroup="${key}">🗑 削除</button></p>`;
       }
       const av = (t.avg != null && t.avg !== '')
         ? `<span class="av ${(+t.score || 0) >= +t.avg ? 'up' : 'dn'}">平均<b>${t.avg}</b></span>` : '';
@@ -1500,6 +1521,18 @@ function render() {
     }
     v.innerHTML = h;
     v.querySelectorAll('[data-kou]').forEach(el => el.onclick = () => openKoushuu(db.koushuu.find(x => x.id === el.dataset.kou)));
+    v.querySelectorAll('[data-kouyear]').forEach(el => el.onclick = () => { localStorage.setItem('okan_kou_year', el.dataset.kouyear); render(); });
+    v.querySelectorAll('[data-koudelgroup]').forEach(el => el.onclick = () => {
+      const key = el.dataset.koudelgroup;
+      const term = key.slice(0, key.lastIndexOf('/')), nendoStr = key.slice(key.lastIndexOf('/') + 1);
+      const m = db.koushuu.filter(x => ((x.term || '講習') + '/' + koushuuNendo(x.date)) === key);
+      if (!confirm(`「${nendoStr}年度 ${term}」の記録（${m.length}枚）をまとめて削除します。\nクラス内順位の記録も一緒に消えます。元に戻せません。よろしいですか？`)) return;
+      const ids = new Set(m.map(x => x.id));
+      db.koushuu = db.koushuu.filter(x => !ids.has(x.id));
+      const first = m.map(x => x.date).sort()[0];
+      if (first) db.atotal = db.atotal.filter(x => !((x.course || '') === term && x.ym === first.slice(0, 7)));
+      save(); render();
+    });
     bindKouRankChips(v);
   } else if (tab === 'mosi') {
     const list = [...db.mosi].sort((a, b) => b.date.localeCompare(a.date));
@@ -2342,13 +2375,20 @@ function parseKojinhyoA(raw, kind) {
   return r;
 }
 
-// 個人票には年が印字されないので、今日を基準に推定（その月度が未来なら前年）
-function guessYear(month, kind) {
+// 個人票には年が印字されないので推定する。
+// 印字されている学年が、いま登録してるお子さんの学年とちがう（＝昔の記録をあとから取り込んでいる）ときは、
+// 「今日」を基準にすると大きくズレるので、学年の差から年度を逆算する方を優先する。
+function guessYear(month, kind, sheetGrade) {
   const today = new Date().toISOString().slice(0, 10);
   // 「今がどの月度か」で比べる。8月度は7/6から始まるので、
   // 7月中に8月度の個人票が出ることがある（暦月で比べると前年にしてしまう）
   const cur = (KOJIN_KIND[kind] && KOJIN_KIND[kind].cal) ? today.slice(0, 7) : ymOfDate(today);
   const y = +cur.slice(0, 4), m = +cur.slice(5, 7);
+  const myGrade = activeProfile && +activeProfile.grade;
+  if (sheetGrade && myGrade && sheetGrade !== myGrade) {
+    const curNendo = m >= 2 ? y : y - 1;   // 浜学園の今の年度（2月はじまり）
+    return curNendo - (myGrade - sheetGrade);
+  }
   if (!month) return y;
   return month > m ? y - 1 : y;
 }
@@ -2436,10 +2476,12 @@ function renderPastePreview(d) {
   $('pvKokaiWrap').style.display = kojin ? 'none' : '';
   $('pvSokWrap').style.display = 'none';
   $('pvYearWrap').style.display = kojin ? '' : 'none';   // 公開は月ごとに年が入っている
+  $('pvYearWarn').style.display = 'none';
   // 公開は月数が多いので一覧で確認だけ。直したい月は取り込んだ後に一覧からタップして編集できる
   $('pvTitle').textContent = kojin ? '読み取った内容（直せます）' : '読み取った内容';
   if (!kojin) { renderKokaiPreview(d); $('pastePrev').style.display = ''; return; }
-  $('pvYear').value = guessYear(d.month, d.type);
+  $('pvYear').value = guessYear(d.month, d.type, d.grade);
+  $('pvYearWarn').style.display = d.grade ? 'none' : '';   // 学年も印字されていない個人票は年度の確証が無い
   $('pvYm').value = d.month || '';
   $('pvCourse').value = d.course || 'マスター';
   const isK = d.type === 'koushuu';
