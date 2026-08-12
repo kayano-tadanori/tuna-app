@@ -32,6 +32,8 @@ os.makedirs(os.path.dirname(STATUS_FILE), exist_ok=True)
 _status_fh = io.open(STATUS_FILE, "w", encoding="utf-8")
 _status_fh.write("# 原簿⇄大問 突き合わせ状況（自動生成・手で編集しない）\n\n")
 _status_fh.write("`python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。\n")
+_status_fh.write("★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが"
+                  "`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。\n")
 _status_fh.write("最終更新: %s\n\n```\n" % datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 _real_stdout = sys.stdout
 sys.stdout = _Tee(_real_stdout, _status_fh)
