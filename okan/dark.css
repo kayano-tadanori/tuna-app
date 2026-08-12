@@ -65,7 +65,7 @@ html.otonDark .sheetHead { border-color: #22335c !important; }
 html.otonDark .closeBtn { background: #24406e; color: #b9c9ea; }
 html.otonDark .emptyMsg { color: #7285b3; }
 html.otonDark .fLabel, html.otonDark .setLabel { color: #93a7cd; }
-html.otonDark .overlay, html.otonDark #updModal, html.otonDark #setModal { background: rgba(3,7,18,.6); }
+html.otonDark .overlay, html.otonDark #updModal, html.otonDark #setModal, html.otonDark #helpModal { background: rgba(3,7,18,.6); }
 
 /* ── 入力・選択 ── */
 html.otonDark input:not([type=checkbox]):not([type=radio]):not([type=range]),
@@ -196,3 +196,15 @@ html.otonDark .row label { color: #93a7cd; }
 html.otonDark .rangeEnd { color: #93a7cd; }
 html.otonDark #loading { background: rgba(3,7,18,.7); }
 html.otonDark #loading p { color: #dbe4f5; }
+
+/* ── 使い方ガイド ── */
+html.otonDark .helpHero { background: #1a2a4f; border-color: #33477a; }
+html.otonDark .helpHero p { color: #dbe4f5; }
+html.otonDark .helpChip { background: #1a2a4f; color: #c6d6f7; }
+html.otonDark .helpSec { border-color: #2b3b63; }
+html.otonDark .helpSec summary { color: #e6eeff; }
+html.otonDark .helpSec .helpSecBody { color: #c6d6f7; }
+html.otonDark .helpNote { background: #141f3c; color: #93a7cd; }
+html.otonDark .helpTip { background: #1a2a4f; border-color: #33477a; }
+html.otonDark .helpWarn { background: #3a1420; border-color: #6b2733; color: #fca5a5; }
+html.otonDark .helpTable th, html.otonDark .helpTable td { border-color: #22335c; }
