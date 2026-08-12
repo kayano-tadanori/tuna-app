@@ -784,6 +784,17 @@ function koushuuNendo(dateStr) {
   const [y, m] = dateStr.slice(0, 7).split('-').map(Number);
   return m >= 2 ? y : y - 1;
 }
+// 講習のクラス内順位（atotal）は、テストの日付から逆算した月度ではなく、年度そのもの（kouNendo）で直接ひもづける。
+// 「いちばん早いテストの日」を探して月度に変換する仕組みは、テストの記録の有無や順番でズレやすかったため。
+const KOU_TERMS = ['春期講習', '夏期講習', '冬期講習'];
+function atotalMatch(x, course, ym) {
+  if (KOU_TERMS.includes(course)) {
+    const nendo = koushuuNendo(ym);
+    const xNendo = x.kouNendo != null ? x.kouNendo : (x.ym ? koushuuNendo(x.ym) : null);
+    return (x.course || '') === course && xNendo === nendo;
+  }
+  return (x.course || 'マスター') === course && x.ym === ym;
+}
 // 講習：(講習の種類×年度)ごとにグループ化。ym は atotal のキーと合わせて最初のテスト日の年月にする
 function kouGroups(list) {
   const map = new Map();
@@ -806,7 +817,7 @@ function kouGraphs(list) {
   let h = '';
   if (groups.length >= 2) {
     const xlabels = groups.map(g => g.nendo + '年度' + g.term.slice(0, 1));
-    const atOf = g => db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym);
+    const atOf = g => db.atotal.find(x => atotalMatch(x, g.term, g.ym));
     const ranks = groups.map(g => { const at = atOf(g); return at && at.rank != null ? at.rank : null; });
     if (ranks.some(v => v != null)) {
       h += regChart({ id: 'kou_rank', title: '📉 講習会 クラス内順位の推移（1位が上）', xlabels, series: [{ key: 'r', label: '順位', color: COURSE_COLOR['講習'], bold: true, vals: ranks }], invert: true, ySuffix: '位', legend: false });
@@ -814,7 +825,7 @@ function kouGraphs(list) {
     const totals = groups.map(g => { const at = atOf(g); return Math.round((at && at.total != null ? +at.total : g.avg) * 10) / 10; });
     h += regChart({ id: 'kou_total', title: '📈 講習会 平均点の推移', xlabels, series: [{ key: 't', label: '平均点', color: COURSE_COLOR['講習'], bold: true, vals: totals }], ystep: 10, legend: false });
   }
-  const withAt = groups.map(g => ({ g, at: db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym) }));
+  const withAt = groups.map(g => ({ g, at: db.atotal.find(x => atotalMatch(x, g.term, g.ym)) }));
   const chips = withAt.filter(x => x.at && x.at.rank != null)
     .map(x => `<button class="rankChip" data-rankym="${x.g.ym}" data-rankcourse="${x.g.term}">${x.g.nendo}年度 ${x.g.term} ${x.at.rank}位</button>`).join('');
   // ＋記録は、まだ順位が無いいちばん新しい回を狙って月度を自動で合わせる（講習の月度はテスト日から決まる内部の値で、
@@ -1510,9 +1521,7 @@ function render() {
         cur = key;
         const m = db.koushuu.filter(x => ((x.term || '講習') + '/' + koushuuNendo(x.date)) === key);
         const avg = (m.reduce((s, x) => s + (+x.score || 0), 0) / m.length).toFixed(1);
-        // まとめ（平均・順位）は講習のいちばん早い月に入れてある
-        const first = m.map(x => x.date).sort()[0];
-        const at = db.atotal.find(x => (x.course || '') === (t.term || '講習') && x.ym === first.slice(0, 7));
+        const at = db.atotal.find(x => (x.course || '') === (t.term || '講習') && (x.kouNendo != null ? x.kouNendo : (x.ym ? koushuuNendo(x.ym) : null)) === nendo);
         const rk = at && at.rank != null ? '・' + at.rank + '位' : '';
         h += `<p class="secLabel withDel"><span>${nendo}年度 ${t.term || '講習'}（${m.length}枚・平均 ${at && at.fuku != null ? at.fuku : avg}点${rk}）</span><button class="secDel" data-koudelgroup="${key}">🗑 削除</button></p>`;
       }
@@ -1532,8 +1541,8 @@ function render() {
       if (!confirm(`「${nendoStr}年度 ${term}」の記録（${m.length}枚）をまとめて削除します。\nクラス内順位の記録も一緒に消えます。元に戻せません。よろしいですか？`)) return;
       const ids = new Set(m.map(x => x.id));
       db.koushuu = db.koushuu.filter(x => !ids.has(x.id));
-      const first = m.map(x => x.date).sort()[0];
-      if (first) db.atotal = db.atotal.filter(x => !((x.course || '') === term && x.ym === first.slice(0, 7)));
+      const nendo = +nendoStr;
+      db.atotal = db.atotal.filter(x => !((x.course || '') === term && (x.kouNendo != null ? x.kouNendo : (x.ym ? koushuuNendo(x.ym) : null)) === nendo));
       save(); render();
     });
     bindKouRankChips(v);
@@ -1882,7 +1891,7 @@ $('nadaDelete').onclick = () => {
 
 // ---------- クラス内順位（A表・講座別） ----------
 function openRank(course, ym) {
-  const rec = ym ? db.atotal.find(x => (x.course || 'マスター') === course && x.ym === ym) : null;
+  const rec = ym ? db.atotal.find(x => atotalMatch(x, course, ym)) : null;
   $('aYm').value = ym || new Date().toISOString().slice(0, 7);
   $('aCourse').value = course || 'マスター';
   $('aRank').value = rec && rec.rank != null ? rec.rank : '';
@@ -1893,14 +1902,14 @@ $('atotalSave').onclick = () => {
   const ym = $('aYm').value;
   if (!ym) { alert('月度を入れてください'); return; }
   const course = $('aCourse').value;
-  const i = db.atotal.findIndex(x => (x.course || 'マスター') === course && x.ym === ym);
-  if (i >= 0) db.atotal[i].rank = num($('aRank').value);
-  else db.atotal.push({ id: uid(), ym, course, rank: num($('aRank').value) });
+  const i = db.atotal.findIndex(x => atotalMatch(x, course, ym));
+  if (i >= 0) { db.atotal[i].rank = num($('aRank').value); if (KOU_TERMS.includes(course)) db.atotal[i].kouNendo = koushuuNendo(ym); }
+  else db.atotal.push(Object.assign({ id: uid(), ym, course, rank: num($('aRank').value) }, KOU_TERMS.includes(course) ? { kouNendo: koushuuNendo(ym) } : {}));
   save(); closeAll(); render();
 };
 $('atotalDelete').onclick = () => {
   const ym = $('aYm').value, course = $('aCourse').value;
-  const i = db.atotal.findIndex(x => (x.course || 'マスター') === course && x.ym === ym);
+  const i = db.atotal.findIndex(x => atotalMatch(x, course, ym));
   if (i >= 0) {
     const r = db.atotal[i];
     // A表個人票の実物値（総計など）が入っている記録は順位だけ消す
@@ -2721,15 +2730,12 @@ function importKoushuu() {
   });
   db.koushuu.sort((a, b) => a.date.localeCompare(b.date));
 
-  // まとめ（平均と順位）は講習ごとにひとつ。いちばん早い日の月で持っておく。
-  // 同じ「夏期講習」でも学年が上がって何年も後にまた受けることがあるので、年度もそろえて絞り込む
-  // （そろえないと、いちばん古い年の回に結びついてしまい、今回入れた順位が別の回に付いてしまう）。
+  // まとめ（平均と順位）は講習ごとにひとつ。年度（入力してもらった年）に直接ひもづける
+  // （テストの日付から逆算する持ち方だと、記録の有無や順番でズレやすいため）。
   const fuku = num($('pvFuku').value), rank = num($('pvRank').value);
-  const first = db.koushuu.filter(x => x.term === term && koushuuNendo(x.date) === nendo).map(x => x.date).sort()[0];
-  if (first && (fuku != null || rank != null)) {
-    const ym = first.slice(0, 7);
-    const k = db.atotal.findIndex(x => (x.course || 'マスター') === term && x.ym === ym);
-    const rec = k >= 0 ? db.atotal[k] : { id: uid(), ym, course: term };
+  if (fuku != null || rank != null) {
+    const k = db.atotal.findIndex(x => x.kouNendo === nendo && (x.course || '') === term);
+    const rec = k >= 0 ? db.atotal[k] : { id: uid(), ym: `${nendo}-07`, course: term, kouNendo: nendo };
     if (fuku != null) rec.fuku = fuku;
     if (rank != null) rec.rank = rank;
     if (k < 0) db.atotal.push(rec);
