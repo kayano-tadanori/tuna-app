@@ -814,17 +814,20 @@ function kouGraphs(list) {
     const totals = groups.map(g => { const at = atOf(g); return Math.round((at && at.total != null ? +at.total : g.avg) * 10) / 10; });
     h += regChart({ id: 'kou_total', title: '📈 講習会 平均点の推移', xlabels, series: [{ key: 't', label: '平均点', color: COURSE_COLOR['講習'], bold: true, vals: totals }], ystep: 10, legend: false });
   }
-  const chips = groups.map(g => ({ g, at: db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym) }))
-    .filter(x => x.at && x.at.rank != null)
+  const withAt = groups.map(g => ({ g, at: db.atotal.find(x => (x.course || '') === g.term && x.ym === g.ym) }));
+  const chips = withAt.filter(x => x.at && x.at.rank != null)
     .map(x => `<button class="rankChip" data-rankym="${x.g.ym}" data-rankcourse="${x.g.term}">${x.g.nendo}年度 ${x.g.term} ${x.at.rank}位</button>`).join('');
-  const lastTerm = groups.length ? groups[groups.length - 1].term : '夏期講習';
-  h += `<div class="rankRow"><span>クラス内順位：</span>${chips}<button class="rankChip add" data-rankaddkou="${lastTerm}">＋記録</button></div>`;
+  // ＋記録は、まだ順位が無いいちばん新しい回を狙って月度を自動で合わせる（講習の月度はテスト日から決まる内部の値で、
+  // 今日の月とは関係ないため、素の今日づけのままだと記録した順位がテストと結びつかなくなる）
+  const target = [...withAt].reverse().find(x => !(x.at && x.at.rank != null)) || withAt[withAt.length - 1];
+  const addTerm = target ? target.g.term : '夏期講習', addYm = target ? target.g.ym : '';
+  h += `<div class="rankRow"><span>クラス内順位：</span>${chips}<button class="rankChip add" data-rankaddkou="${addTerm}" data-rankaddym="${addYm}">＋記録</button></div>`;
   return h;
 }
 function bindKouRankChips(v) {
   v.querySelectorAll('[data-rankym]').forEach(el => el.onclick = () => openRank(el.dataset.rankcourse, el.dataset.rankym));
   const a = v.querySelector('[data-rankaddkou]');
-  if (a) a.onclick = () => openRank(a.dataset.rankaddkou, null);
+  if (a) a.onclick = () => openRank(a.dataset.rankaddkou, a.dataset.rankaddym || null);
 }
 // 講習：科目ごとに「得点」と「クラス平均」を並べて比べる折れ線
 function kouSubjectCharts(list) {
@@ -2718,9 +2721,11 @@ function importKoushuu() {
   });
   db.koushuu.sort((a, b) => a.date.localeCompare(b.date));
 
-  // まとめ（平均と順位）は講習ごとにひとつ。いちばん早い日の月で持っておく
+  // まとめ（平均と順位）は講習ごとにひとつ。いちばん早い日の月で持っておく。
+  // 同じ「夏期講習」でも学年が上がって何年も後にまた受けることがあるので、年度もそろえて絞り込む
+  // （そろえないと、いちばん古い年の回に結びついてしまい、今回入れた順位が別の回に付いてしまう）。
   const fuku = num($('pvFuku').value), rank = num($('pvRank').value);
-  const first = db.koushuu.filter(x => x.term === term).map(x => x.date).sort()[0];
+  const first = db.koushuu.filter(x => x.term === term && koushuuNendo(x.date) === nendo).map(x => x.date).sort()[0];
   if (first && (fuku != null || rank != null)) {
     const ym = first.slice(0, 7);
     const k = db.atotal.findIndex(x => (x.course || 'マスター') === term && x.ym === ym);
