@@ -1264,9 +1264,12 @@ async function startHamaSession(kind) {
   //   実物の大問4がそのまま1セットなので、シャッフルも出題数のしぼりもしない。
   if (hamaSubj === 'kokugo') {
     // ことば＝四択の画面、漢字＝手書きの画面。同じ回でも出す画面がちがう
-    // かんたん解説だけは算数・理科と共通の画面（下のkaisetsu分岐）に流す（2026-08-03）
+    // かんたん解説と公開テストのはんい（大問・kokaiq）は算数・理科と共通の画面（下の分岐）に流す。
+    // ★以前は kind!=='kaisetsu' で全部ここに落としていたため、小3国語に「公開テストのはんい」
+    //   を追加したあとも kokaiq クリックがここで横取りされ、大問ピッカーに一生たどりつけなかった
+    //   （本人指摘 2026-08-15「そうはなってないよ」）。'week' のときだけ手書き画面へ流すように直した。
     if (kind === 'kotoba') { await startKokugoKotobaSession(grade, course); return; }
-    if (kind !== 'kaisetsu') { await startKokugoHamaSession(grade, course); return; }
+    if (kind === 'week') { await startKokugoHamaSession(grade, course); return; }
   }
 
   // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
