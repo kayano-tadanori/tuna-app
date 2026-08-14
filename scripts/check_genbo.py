@@ -95,15 +95,18 @@ for grade, rng in NADAGO_ID_RANGES.items():
 #   のように西暦で始まり、COURSE_PATの「小N…」パターンに一つも一致しない
 #   ＝丸ごとgenから漏れていた（本人指摘 2026-08-12・333本が検査対象にすら
 #   入っていなかった）。学年の書き方が「N年」と「小N」の2通りあるので両方拾う。
-#   アプリ側では公開テストは算数=master・理科=rikaの"kokai"種別に入っているので、
-#   既存のmaster/rika集計にそのまま合流させれば、あとの突き合わせロジックは
+#   アプリ側では公開テストは算数=master・理科=rika・国語=kokugoの"kokai"種別に入っているので、
+#   既存のmaster/rika/kokugo集計にそのまま合流させれば、あとの突き合わせロジックは
 #   （kokai種別も見ているので）そのまま使える。
+#   ★国語の公開（小3/4）は2026-08-15にdata/hama_daimon.jsonのgrades.N.kokugo.kokaiへ
+#   実装先ができた（それまではmasterに落ちて紛れていた＝算数として二重に数えられも
+#   されもしないまま38本の未収録に埋もれていた）。
 KOKAI_PAT = re.compile(r"^(\d{4})年?度?\s*(?:小(\d)|(\d)年)公開")
 for k, v in heads.items():
     m = KOKAI_PAT.match(v)
     if m:
         grade = m.group(2) or m.group(3)
-        subj = "rika" if "理科" in v[:20] else "master"
+        subj = "rika" if "理科" in v[:20] else "kokugo" if "国語" in v[:20] else "master"
         gen[(grade, subj)].add(k)
 
 # ★灘中日本一模試／灘中チャレンジ／西暦始まりの実力テストも同じ理由で漏れていた
@@ -211,17 +214,6 @@ print("%-12s %6s %6s %6s   %s" % ("コース", "原簿", "大問", "問数", "�
 ng = 0
 nohg = []
 for (grade, course) in sorted(gen):
-    if course == "kokugo":
-        # ★国語は hama_daimon.json に専用ノードが無く、kokugo_*.json 側に
-        #   別ファイルとして存在する。KOKUGO_DONE（ファイル横断で拾った
-        #   「原簿 HG-XXXX」タグ）とだけ突き合わせる。
-        miss = sorted(gen[(grade, course)] - KOKUGO_DONE - set(CANNOT) - set(SAME))
-        nm = "小%s国語" % grade
-        print("%-12s %5d本 %5s %5s   %s" % (
-            nm, len(gen[(grade, course)]), "—", "—",
-            ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
-        ng += len(miss)
-        continue
     node = d["grades"].get(grade, {}).get(APP_COURSE_KEY.get(course, course), {})
     # ★灘合は原簿では算数・理科が同じ「小N灘合」見出しに混ざっているが、
     #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
@@ -244,7 +236,7 @@ for (grade, course) in sorted(gen):
                     else:
                         nohg.append((grade, course, x.get("id")))
     miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME) - KOKUGO_DONE)
-    nm = "小%s%s" % (grade, {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科", "nadago": "灘合"}[course])
+    nm = "小%s%s" % (grade, {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科", "nadago": "灘合", "kokugo": "国語"}[course])
     print("%-12s %5d本 %5d本 %5d問   %s" % (
         nm, len(gen[(grade, course)]), n, q,
         ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
