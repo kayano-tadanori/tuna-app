@@ -2,7 +2,7 @@
 
 `python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。
 ★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。
-最終更新: 2026-08-15 08:23
+最終更新: 2026-08-15 08:27
 
 ```
 === 原簿 ⇄ 大問 の 突き合わせ ===
