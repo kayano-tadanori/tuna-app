@@ -1130,9 +1130,29 @@ function refreshSubjectCounts() {
   });
 }
 
+// ★国語のSTEP3カテゴリボタン（ことわざ・慣用句…）だけ、算数/理科/社会と違って
+//   ボタンをJSで動的生成しておらずHTMLに数字を直書きしていたため、ここも同じズレの
+//   温床だった（本人指摘 2026-08-15）。QUESTION_COUNTSを単一の参照元にして、
+//   「◯◯問」の先頭の数字だけを実数に置きかえる（「・手書き」「・小5」等の
+//   末尾の説明はテキストをそのまま残す）。
+function refreshCategoryCardCounts() {
+  const flat = {};
+  for (const cats of Object.values(QUESTION_COUNTS)) {
+    for (const [cat, n] of Object.entries(cats)) flat[cat] = n;
+  }
+  document.querySelectorAll('[data-cat]').forEach(card => {
+    const n = flat[card.dataset.cat];
+    const el = card.querySelector('.cat-count');
+    if (el && typeof n === 'number') {
+      el.textContent = el.textContent.replace(/^[\d,]+/, n.toLocaleString());
+    }
+  });
+}
+
 function initSubject() {
   document.getElementById('subject-nickname').textContent = state.nickname;
   refreshSubjectCounts();
+  refreshCategoryCardCounts();
 
   // 称号バッジ・がんばりの記録カード
   const ach = getAchievement();
@@ -1316,6 +1336,28 @@ function initHelpScreen() {
   const el = document.getElementById('credits-ver');
   if (!el) return;
   el.textContent = latestAppVer ? `オトン学園 ${latestAppVer}` : 'オトン学園';
+  refreshHelpGuideCounts();
+}
+
+// ★使い方ガイドの問題数は、以前は本文に数字を直書きしていたため、
+//   問題を追加するたびに手で直す必要があり、直し忘れて実際の件数と大きくズレていた
+//   （本人指摘 2026-08-15「設定の使い方ガイドに表記してある問題数とかズレが出てきてる」）。
+//   科目カード（refreshSubjectCounts）と同じ QUESTION_COUNTS を単一の参照元にして、
+//   ここが二度とズレないようにする。要素が無い（HTML未対応）IDは黙って無視する。
+function refreshHelpGuideCounts() {
+  const setTxt = (id, n) => {
+    const el = document.getElementById(id);
+    if (el && typeof n === 'number') el.textContent = n.toLocaleString();
+  };
+  for (const subj of Object.keys(QUESTION_COUNTS)) {
+    const total = Object.values(QUESTION_COUNTS[subj]).reduce((a, b) => a + b, 0);
+    setTxt('hg-cnt-' + subj, total);
+  }
+  for (const [subj, cats] of Object.entries(QUESTION_COUNTS)) {
+    for (const [cat, n] of Object.entries(cats)) {
+      setTxt('hg-cnt-' + cat, n);
+    }
+  }
 }
 
 // クイズ中のヘッダー右上の音トグル（効果音🔔/🔕・音楽🎵）
