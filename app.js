@@ -253,6 +253,7 @@ function initHome() {
   state.selectedDiff = null;
   state.grade        = null;
   state.weakOnly     = false;
+  document.getElementById('btn-weak').classList.remove('active-weak');
   document.getElementById('start-zone').classList.add('hidden');
   document.getElementById('home-nickname').textContent = state.nickname;
 
@@ -376,6 +377,7 @@ function initHome() {
       btn.classList.add('selected');
       state.selectedCat = btn.dataset.cat;
       state.weakOnly = false;
+      document.getElementById('btn-weak').classList.remove('active-weak');
       // 漢字：モードは固定。言葉系：四択クイズで固定。どちらもそのまま難易度へ
       state.selectedMode = state.selectedCat === 'kanji_kaki' ? 'kaki'
         : state.selectedCat === 'kanji_yomi' ? 'yomi' : 'quiz';
@@ -401,6 +403,7 @@ function initHome() {
     const weaks = getWeakItems(state.selectedCat);
     if (!weaks.length) { showToast('まだ苦手問題がありません'); return; }
     state.weakOnly = true;
+    document.getElementById('btn-weak').classList.add('active-weak');
     showToast('苦手問題のみ出題します');
     maybeShowStart();
   };

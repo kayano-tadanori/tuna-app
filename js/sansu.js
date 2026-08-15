@@ -1630,7 +1630,8 @@ function initSansuHome() {
   document.getElementById('sansu-btn-start').onclick = () => startSansuSession();
 
   // 苦手問題のみ／詳細な進捗
-  document.getElementById('sansu-btn-weak').onclick = () => startSansuWeakSession();
+  document.getElementById('sansu-btn-weak').classList.remove('active-weak');
+  document.getElementById('sansu-btn-weak').onclick = (e) => startSansuWeakSession(e.currentTarget);
   document.getElementById('sansu-btn-progress').onclick = () => openProgressScreenFrom('sansu-home', 'sansu');
 
   // 全ステップを初期状態（STEP1のみ表示）に
@@ -1785,7 +1786,8 @@ function initRikaHome() {
 
   document.getElementById('rika-btn-start').onclick = () => startRikaSession();
 
-  document.getElementById('rika-btn-weak').onclick = () => startSansuWeakSession();
+  document.getElementById('rika-btn-weak').classList.remove('active-weak');
+  document.getElementById('rika-btn-weak').onclick = (e) => startSansuWeakSession(e.currentTarget);
   document.getElementById('rika-btn-progress').onclick = () => openProgressScreenFrom('rika-home', 'rika');
 
   hideSansuSteps('rika-step-topmode', 'rika-step-cat', 'rika-step-diff');
@@ -1902,7 +1904,8 @@ function initShakaiHome() {
 
   document.getElementById('shakai-btn-start').onclick = () => startShakaiSession();
 
-  document.getElementById('shakai-btn-weak').onclick = () => startSansuWeakSession();
+  document.getElementById('shakai-btn-weak').classList.remove('active-weak');
+  document.getElementById('shakai-btn-weak').onclick = (e) => startSansuWeakSession(e.currentTarget);
   document.getElementById('shakai-btn-progress').onclick = () => openProgressScreenFrom('shakai-home', 'shakai');
 
   hideSansuSteps('shakai-step-topmode', 'shakai-step-cat', 'shakai-step-diff');
@@ -1998,18 +2001,28 @@ async function getWeakItemsForCat(subject, cat) {
 }
 
 // 算数・理科・社会共通：選択中カテゴリの苦手問題だけで即スタート
-async function startSansuWeakSession() {
+async function startSansuWeakSession(btn) {
   if (!sansuState.cat || sansuState.cat === 'mix') { showToast('カテゴリを選んでください'); return; }
+  if (btn) btn.classList.add('active-weak');
   showLoading();
   try {
     const weaks = await getWeakItemsForCat(sansuState.subject, sansuState.cat);
-    if (!weaks.length) { showToast('まだ苦手問題がありません'); hideLoading(); return; }
+    if (!weaks.length) {
+      showToast('まだ苦手問題がありません');
+      hideLoading();
+      if (btn) btn.classList.remove('active-weak');
+      return;
+    }
     sansuState.questions = shuffle(weaks);
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
     coinSessionEarned = 0;
     hideLoading();
     startSansuQuiz();
-  } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+  } catch (e) {
+    showToast('問題の読み込みに失敗しました');
+    hideLoading();
+    if (btn) btn.classList.remove('active-weak');
+  }
 }
 
 // 算数・理科・社会共通：進捗画面を開く（戻るボタンは呼び出し元の画面に戻す）
