@@ -24039,6 +24039,45 @@
        ]
       }
      ],
+     "27": [
+      {
+       "id": "hd_4r_f27_1",
+       "src": "HG-1845",
+       "title": "とつレンズと焦点をはさんだ対称の位置",
+       "category": "hikari_oto",
+       "unit": "光（とつレンズ）",
+       "grade": 4,
+       "star": 2,
+       "intro": "とつレンズに日光をあてると、光がレンズをはさんだ反対側の1点（焦点）に集まります。レンズから、ア5cm・イ10cm・ウ15cm・エ20cm・オ25cm・カ30cm・キ35cmの位置に印をつけました。焦点は、レンズからちょうど真ん中の17.5cmの位置にあります（キの35cmは、レンズから焦点までのきょり17.5cmの、ちょうど2倍の位置です）。焦点をはさんで同じきょりの位置には、同じ大きさの光の円ができます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "アの位置（レンズから5cm）と同じ大きさの光の円ができる位置を、ウ〜キの中から選びなさい。",
+         "answer": "カ",
+         "choices": [
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ"
+         ],
+         "meaning": "焦点（17.5cm）からアまでのきょりは17.5−5＝12.5cm。焦点をはさんで反対側で同じ12.5cmはなれた位置は17.5+12.5＝30cm＝カです。"
+        },
+        {
+         "question": "イの位置（レンズから10cm）と同じ大きさの光の円ができる位置を、ウ〜キの中から選びなさい。",
+         "answer": "オ",
+         "choices": [
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ"
+         ],
+         "meaning": "焦点（17.5cm）からイまでのきょりは17.5−10＝7.5cm。焦点をはさんで反対側で同じ7.5cmはなれた位置は17.5+7.5＝25cm＝オです。"
+        }
+       ]
+      }
+     ],
      "38": [
       {
        "id": "hd_4r_f38_1",
@@ -24070,6 +24109,39 @@
          "question": "おもりDの重さは何gですか。",
          "answer": "20",
          "meaning": "D＝C−20＝40−20＝**20g**。検算：A+D＝50、B+C＝50 で①②とも成り立つ。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_f38_2",
+       "src": "HG-1848",
+       "title": "分銅は何個のせるか",
+       "category": "kazu",
+       "unit": "上皿てんびん（分銅）",
+       "grade": 4,
+       "star": 1,
+       "intro": "上皿てんびんと、100g用の分銅セット（50g・20g・20g・10g・5g・2g・2g・1g・0.5g・0.2g・0.2g・0.1gの合計12個）を使って、ものの重さをはかります。分銅は、できるだけ少ない個数でつり合わせるものとします。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "65.0gをはかったとき、皿にのっている分銅は何個ですか。",
+         "answer": "3",
+         "meaning": "50g＋10g＋5g＝65g。使う分銅は3個です。"
+        },
+        {
+         "question": "12.3gをはかったとき、皿にのっている分銅は何個ですか。",
+         "answer": "4",
+         "meaning": "10g＋2g＋0.2g＋0.1g＝12.3g。使う分銅は4個です。"
+        },
+        {
+         "question": "45.6gをはかったとき、皿にのっている分銅は何個ですか。",
+         "answer": "5",
+         "meaning": "20g＋20g＋5g＋0.5g＋0.1g＝45.6g。使う分銅は5個です。"
+        },
+        {
+         "question": "78.9gをはかったとき、皿にのっている分銅は何個ですか。",
+         "answer": "8",
+         "meaning": "50g＋20g＋5g＋2g＋1g＋0.5g＋0.2g＋0.2g＝78.9g。0.9gを作るのに0.5g・0.2g・0.2gの3個が必要になるため、使う分銅は8個です。"
         }
        ]
       }
@@ -24290,6 +24362,148 @@
           "×（つかない）"
          ],
          "meaning": "★BとCをつないでも、うかんだ島が2つつながるだけ。かん電池のある島とつながらないので豆電球には流れない。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k04_589_4",
+       "src": "HG-2826",
+       "title": "589回 つるした棒磁石とつくえの上の磁石",
+       "category": "denki",
+       "unit": "じしゃく",
+       "grade": 4,
+       "star": 2,
+       "intro": "じしゃくについて考えます。",
+       "svg": "<svg viewBox=\"-5.3 -4.6 350.7 185.5\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"70.0\" y1=\"20.0\" x2=\"55.0\" y2=\"55.0\" stroke=\"#9aa3c0\" stroke-width=\"1.4\"/><text x=\"75.0\" y=\"20.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">糸</text><rect x=\"20.0\" y=\"55.0\" width=\"50.0\" height=\"20.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"70.0\" y=\"55.0\" width=\"50.0\" height=\"20.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"45.0\" y=\"70.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"95.0\" y=\"70.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"10.0\" y=\"65.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">A</text><text x=\"128.0\" y=\"65.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">B</text><text x=\"70.0\" y=\"95.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図1]N極がAを向く</text><rect x=\"230.0\" y=\"20.0\" width=\"26.0\" height=\"40.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"230.0\" y=\"60.0\" width=\"26.0\" height=\"40.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"243.0\" y=\"44.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"243.0\" y=\"84.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><circle cx=\"180.0\" cy=\"45.0\" r=\"15.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"180.0\" y=\"30.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">P</text><circle cx=\"230.0\" cy=\"130.0\" r=\"15.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"230.0\" y=\"150.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">Q</text><text x=\"230.0\" y=\"10.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図2]縦置き</text><text x=\"170.0\" y=\"172.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">糸でつるした棒磁石と、つくえに縦置きした棒磁石+方位じしんP・Q</text></svg>",
+       "steps": [
+        {
+         "question": "じしゃくにつくものを選びなさい。",
+         "answer": "スチールかん",
+         "choices": [
+          "スチールかん",
+          "アルミニウムかん",
+          "木のじょうぎ",
+          "紙コップ",
+          "ガラスのコップ"
+         ],
+         "meaning": "スチールかん＝鉄でできているので、じしゃくにつきます。ほかはじしゃくにつきません。"
+        },
+        {
+         "question": "じしゃくにつくものをもう一つ選びなさい。",
+         "answer": "鉄のゼムクリップ",
+         "choices": [
+          "1円玉",
+          "10円玉",
+          "鉄のゼムクリップ"
+         ],
+         "meaning": "鉄のゼムクリップ＝鉄でできているので、じしゃくにつきます。1円玉はアルミニウム、10円玉は銅なので、どちらもつきません。"
+        },
+        {
+         "question": "[図1]のように、ぼうじしゃくを糸でつるすと、N極をAに向けて止まりました。Aの方位はどこですか。",
+         "answer": "北",
+         "choices": [
+          "東",
+          "西",
+          "南",
+          "北"
+         ],
+         "meaning": "糸でつるした磁石のN極は、つねに北を向いて止まります。"
+        },
+        {
+         "question": "同じく、Bの方位はどこですか。",
+         "answer": "南",
+         "choices": [
+          "東",
+          "西",
+          "南",
+          "北"
+         ],
+         "meaning": "N極が北（A）を向くので、反対のS極があるB側は南です。"
+        },
+        {
+         "question": "[図2]のように、ぼうじしゃくをつくえの上に縦向き（上がN極・下がS極）に置き、そのまわりのP（N極の横どなり）に方位じしんを置きました。方位じしんのようすを選びなさい。",
+         "answer": "Nが左・Sが右",
+         "choices": [
+          "Nが上・Sが下",
+          "Nが左・Sが右",
+          "Sが左・Nが右",
+          "Sが上・Nが下"
+         ],
+         "meaning": "N極の横では、磁力線はN極から外へ出ていく向き＝磁石から遠ざかる向きなので、はりのN極は磁石から遠ざかる向き（左）を指します。"
+        },
+        {
+         "question": "同じく、Q（S極の真下）に置いた方位じしんのようすを選びなさい。",
+         "answer": "Nが上・Sが下",
+         "choices": [
+          "Nが上・Sが下",
+          "Nが左・Sが右",
+          "Sが左・Nが右",
+          "Sが上・Nが下"
+         ],
+         "meaning": "S極の真下では、磁力線はS極へ入っていく向き＝下から上（磁石のほう）へ向かうので、はりのN極は上（磁石のほう）を指します。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k04_601_4",
+       "src": "HG-2838",
+       "title": "601回 虫めがねのスクリーンと明るさくらべ",
+       "category": "hikari_oto",
+       "unit": "光（とつレンズ）",
+       "grade": 4,
+       "star": 2,
+       "intro": "[図]は、日光の進む向きに対して直角になるように虫めがねを置いたときの、日光の進み方です。A・B・Cのいずれかの位置にスクリーンを置き、明るい円とかげのようすを観察しました（Aがレンズに近く、Cがしょう点に近い）。かげの輪の外側の大きさはレンズの大きさのまま変わらず、中の明るい円だけが変わります。",
+       "svg": "<svg viewBox=\"0 -2.6 420 202.6\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"60.0\" y1=\"30.0\" x2=\"90.0\" y2=\"30.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"90.0\" y1=\"30.0\" x2=\"300.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"60.0\" x2=\"90.0\" y2=\"60.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"90.0\" y1=\"60.0\" x2=\"300.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"90.0\" x2=\"90.0\" y2=\"90.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"90.0\" y1=\"90.0\" x2=\"300.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"120.0\" x2=\"90.0\" y2=\"120.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"90.0\" y1=\"120.0\" x2=\"300.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"150.0\" x2=\"90.0\" y2=\"150.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"90.0\" y1=\"150.0\" x2=\"300.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><ellipse cx=\"90.0\" cy=\"90.0\" rx=\"8\" ry=\"60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"90.0,30.0 300.0,90.0 90.0,150.0\" fill=\"rgba(154,163,192,0.3)\" stroke=\"none\" stroke-width=\"0\"/><circle cx=\"300.0\" cy=\"90.0\" r=\"3.0\" fill=\"#c9d4f0\"/><line x1=\"30.0\" y1=\"30.0\" x2=\"30.0\" y2=\"150.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"30.0\" y1=\"30.0\" x2=\"30.0\" y2=\"15.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"330.0\" y1=\"30.0\" x2=\"330.0\" y2=\"150.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"30.0\" x2=\"30.0\" y2=\"30.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"330.0\" y1=\"30.0\" x2=\"350.0\" y2=\"30.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"60.0\" x2=\"30.0\" y2=\"60.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"330.0\" y1=\"60.0\" x2=\"350.0\" y2=\"60.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"90.0\" x2=\"30.0\" y2=\"90.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"330.0\" y1=\"90.0\" x2=\"350.0\" y2=\"90.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"120.0\" x2=\"30.0\" y2=\"120.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"330.0\" y1=\"120.0\" x2=\"350.0\" y2=\"120.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"150.0\" x2=\"30.0\" y2=\"150.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><line x1=\"330.0\" y1=\"150.0\" x2=\"350.0\" y2=\"150.0\" stroke=\"#c9d4f0\" stroke-width=\"1.4\"/><text x=\"15.0\" y=\"12.0\" font-size=\"8\" text-anchor=\"start\" fill=\"#9aa3c0\">虫めがねを</text><text x=\"15.0\" y=\"22.0\" font-size=\"8\" text-anchor=\"start\" fill=\"#9aa3c0\">通らなかった光</text><line x1=\"150.0\" y1=\"20.0\" x2=\"150.0\" y2=\"160.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"150.0\" y=\"14.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#ffd166\">A</text><line x1=\"190.0\" y1=\"20.0\" x2=\"190.0\" y2=\"160.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"190.0\" y=\"14.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#ffd166\">B</text><line x1=\"230.0\" y1=\"20.0\" x2=\"230.0\" y2=\"160.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"230.0\" y=\"14.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#ffd166\">C</text><text x=\"210.0\" y=\"190.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">とつレンズを通った日光がしょう点に集まる。A〜Cの位置にスクリーンを置く</text></svg>",
+       "steps": [
+        {
+         "question": "虫めがねのレンズのはたらきを選びなさい。",
+         "answer": "日光の進む向きを折り曲げて、日光を1つの点に集める",
+         "choices": [
+          "日光の進む向きを折り曲げて、日光を1つの点に集める",
+          "折り曲げて広げるように進ませる",
+          "すべてはね返す",
+          "すべてきゅうしゅうする"
+         ],
+         "meaning": "とつレンズは、日光の進む向きを折り曲げて、1つの点（しょう点）に集めるはたらきをします。"
+        },
+        {
+         "question": "Aの位置（レンズに近い）にできる明るい円の大きさを選びなさい。",
+         "answer": "大きい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "レンズに近いほど、明るい円は大きくなります。"
+        },
+        {
+         "question": "Bの位置（中間）にできる明るい円の大きさを選びなさい。",
+         "answer": "中くらい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "中間の位置では、明るい円も中くらいの大きさになります。"
+        },
+        {
+         "question": "Cの位置（しょう点に近い）にできる明るい円の大きさを選びなさい。",
+         "answer": "小さい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "しょう点に近いほど、明るい円は小さくなります。"
+        },
+        {
+         "question": "AとCの明るい円の明るさをくらべると、どちらが明るいですか。",
+         "answer": "C",
+         "choices": [
+          "A",
+          "C"
+         ],
+         "meaning": "同じ量の光が、明るい円が小さいほどせまい面積に集まるので、円が小さいCのほうが明るくなります。"
         }
        ]
       }
@@ -24515,6 +24729,85 @@
           "う"
          ],
          "meaning": "午前10時の太陽は南東。かげはその反対の北西を向く。Eが北・Dが東なので、下が西。北と西の間＝左ななめ下の「う」。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k05_590_4",
+       "src": "HG-2827",
+       "title": "590回 かがみ3まいの重なりと虫めがねの表",
+       "category": "hikari_oto",
+       "unit": "光（かがみ・とつレンズ）",
+       "grade": 4,
+       "star": 2,
+       "intro": "[図1]のように、同じ大きさの3まいの長方形のかがみで日光をはね返し、日かげのかべに当てました。かべには、ア〜キの7つの部分ができました。ア＝左上のかがみだけ、イ＝左上と右上の重なり、ウ＝左上と下の重なり、エ＝3まいの重なり、オ＝右上のかがみだけ、カ＝右上と下の重なり、キ＝下のかがみだけ、です。",
+       "svg": "<svg viewBox=\"0 -3.6 400 148.6\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20.0\" y=\"30.0\" width=\"90.0\" height=\"80.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"70.0\" y=\"10.0\" width=\"90.0\" height=\"60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"50.0\" y=\"50.0\" width=\"90.0\" height=\"60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"35.0\" y=\"70.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">ア</text><text x=\"100.0\" y=\"35.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">イ</text><text x=\"140.0\" y=\"30.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">ウ</text><text x=\"100.0\" y=\"58.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">エ</text><text x=\"140.0\" y=\"30.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">オ</text><text x=\"65.0\" y=\"92.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">ウ</text><text x=\"128.0\" y=\"64.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">カ</text><text x=\"125.0\" y=\"95.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">キ</text><text x=\"90.0\" y=\"130.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図1]</text><line x1=\"200.0\" y1=\"20.0\" x2=\"230.0\" y2=\"20.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"230.0\" y1=\"20.0\" x2=\"340.0\" y2=\"65.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"200.0\" y1=\"65.0\" x2=\"230.0\" y2=\"65.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"230.0\" y1=\"65.0\" x2=\"340.0\" y2=\"65.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"200.0\" y1=\"110.0\" x2=\"230.0\" y2=\"110.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"230.0\" y1=\"110.0\" x2=\"340.0\" y2=\"65.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><ellipse cx=\"230.0\" cy=\"65.0\" rx=\"8\" ry=\"45.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"230.0,20.0 340.0,65.0 230.0,110.0\" fill=\"rgba(154,163,192,0.3)\" stroke=\"none\" stroke-width=\"0\"/><circle cx=\"340.0\" cy=\"65.0\" r=\"3.0\" fill=\"#c9d4f0\"/><line x1=\"260.0\" y1=\"15.0\" x2=\"260.0\" y2=\"105.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"260.0\" y=\"12.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">あ</text><line x1=\"285.0\" y1=\"15.0\" x2=\"285.0\" y2=\"105.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"285.0\" y=\"12.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">い</text><line x1=\"310.0\" y1=\"15.0\" x2=\"310.0\" y2=\"105.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"310.0\" y=\"12.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">う</text><text x=\"280.0\" y=\"130.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図2]</text></svg>",
+       "steps": [
+        {
+         "question": "カ（2まいの重なり）とほぼ同じ明るさの部分を選びなさい。",
+         "answer": "イ",
+         "choices": [
+          "ア",
+          "イ",
+          "オ",
+          "キ"
+         ],
+         "meaning": "カは右上と下の2まいの重なりです。同じ2まいの重なりになっているのは「イ」（左上と右上）と「ウ」（左上と下）です。ここでは「イ」を選びます。"
+        },
+        {
+         "question": "カと同じ明るさになる、もう一つの部分を選びなさい。",
+         "answer": "ウ",
+         "choices": [
+          "ア",
+          "ウ",
+          "オ",
+          "キ"
+         ],
+         "meaning": "2まいの重なりになっているのは「イ」「ウ」「カ」の3か所です。「イ」に続けて「ウ」も同じ明るさです。"
+        },
+        {
+         "question": "ア〜キのうち、もっとも明るい部分はどこですか。",
+         "answer": "エ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ"
+         ],
+         "meaning": "「エ」は3まいのかがみの光が重なっている部分なので、いちばん明るくなります。"
+        },
+        {
+         "question": "[図2]は虫めがねのレンズを通った日光がF点に集められるようすです。あ・い・うの位置にスクリーンを置きました（あがレンズに近く、うがF点に近い）。あの位置にできる明るい円の大きさを選びなさい。",
+         "answer": "大きい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "レンズに近いほど、明るい円は大きくなります。"
+        },
+        {
+         "question": "いの位置にできる明るい円の大きさを選びなさい。",
+         "answer": "中くらい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "中間の位置では、明るい円も中くらいの大きさになります。"
+        },
+        {
+         "question": "うの位置にできる明るい円の大きさを選びなさい。",
+         "answer": "小さい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "F点に近いほど、明るい円は小さくなります。"
         }
        ]
       }
@@ -24797,6 +25090,71 @@
          "meaning": "じしゃくCの上はN極、近づけたのもN極。同じ極どうしでしりぞけ合うので、Cは下に押されて台ばかりは重く出る。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k06_567_4",
+       "src": "HG-2804",
+       "title": "567回 虫めがねで日光を集める",
+       "category": "hikari_oto",
+       "unit": "光（とつレンズ）",
+       "grade": 4,
+       "star": 2,
+       "intro": "[図]は、虫めがねのレンズを通った日光がF点（焦点）に集められるようすです。あ・い・うのいずれかの位置に紙を置き、そのとき紙にできる明るい円とそのまわりのかげのようすを調べました（あ＝レンズにいちばん近い、い＝中間、う＝F点にいちばん近い）。",
+       "svg": "<svg viewBox=\"-27.5 0 395.1 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"70.0\" y1=\"105.0\" x2=\"260.0\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><line x1=\"10.0\" y1=\"40.0\" x2=\"70.0\" y2=\"40.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"70.0\" y1=\"40.0\" x2=\"260.0\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"72.5\" x2=\"70.0\" y2=\"72.5\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"70.0\" y1=\"72.5\" x2=\"260.0\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"105.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"70.0\" y1=\"105.0\" x2=\"260.0\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"137.5\" x2=\"70.0\" y2=\"137.5\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"70.0\" y1=\"137.5\" x2=\"260.0\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"170.0\" x2=\"70.0\" y2=\"170.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"70.0\" y1=\"170.0\" x2=\"260.0\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><ellipse cx=\"70.0\" cy=\"105.0\" rx=\"10\" ry=\"65.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"140.0\" y1=\"30.0\" x2=\"140.0\" y2=\"180.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"140.0\" y=\"25.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">あ</text><line x1=\"200.0\" y1=\"30.0\" x2=\"200.0\" y2=\"180.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"200.0\" y=\"25.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">い</text><line x1=\"250.0\" y1=\"30.0\" x2=\"250.0\" y2=\"180.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"250.0\" y=\"25.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">う</text><circle cx=\"260.0\" cy=\"105.0\" r=\"3.5\" fill=\"#c9d4f0\"/><text x=\"260.0\" y=\"125.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">F点</text><text x=\"40.0\" y=\"20.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">日光</text><text x=\"170.0\" y=\"205.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">とつレンズを通った日光がF点に集まる。あ・い・うはレンズに近い順の3位置</text></svg>",
+       "steps": [
+        {
+         "question": "虫めがねに使われるレンズを何レンズといいますか。",
+         "answer": "とつレンズ",
+         "choices": [
+          "せつがんレンズ",
+          "とつレンズ",
+          "おうレンズ",
+          "たいぶつレンズ"
+         ],
+         "meaning": "虫めがねのレンズは、真ん中がふくらんだ「とつレンズ」です。"
+        },
+        {
+         "question": "F点の名前を選びなさい。",
+         "answer": "しょう点",
+         "choices": [
+          "し点",
+          "しょう点",
+          "ふっ点",
+          "ゆう点"
+         ],
+         "meaning": "レンズを通った光が1点に集まる点を「しょう点（焦点）」といいます。"
+        },
+        {
+         "question": "紙をあ（レンズにいちばん近い）の位置に置いたときのようすとしてもっともよいものを選びなさい。",
+         "answer": "かげのリング（レンズの大きさ）の中に、大きい明るい円ができる",
+         "choices": [
+          "かげのリング（レンズの大きさ）の中に、大きい明るい円ができる",
+          "かげのリング（レンズの大きさ）の中に、中くらいの明るい円ができる",
+          "かげのリング（レンズの大きさ）の中に、ごく小さい明るい円ができる"
+         ],
+         "meaning": "レンズに近いほど、まだ光は大きく広がったままなので、かげの輪（レンズと同じ大きさ）の中に大きい明るい円ができます。"
+        },
+        {
+         "question": "紙をい（中間）の位置に置いたときのようすとしてもっともよいものを選びなさい。",
+         "answer": "かげのリング（レンズの大きさ）の中に、中くらいの明るい円ができる",
+         "choices": [
+          "かげのリング（レンズの大きさ）の中に、大きい明るい円ができる",
+          "かげのリング（レンズの大きさ）の中に、中くらいの明るい円ができる",
+          "かげのリング（レンズの大きさ）の中に、ごく小さい明るい円ができる"
+         ],
+         "meaning": "F点に近づくほど、明るい円は小さくなっていきます。中間の位置では、明るい円も中くらいの大きさになります。"
+        },
+        {
+         "question": "紙をう（F点にいちばん近い）の位置に置いたときのようすとしてもっともよいものを選びなさい。",
+         "answer": "かげのリング（レンズの大きさ）の中に、ごく小さい明るい円ができる",
+         "choices": [
+          "かげのリング（レンズの大きさ）の中に、大きい明るい円ができる",
+          "かげのリング（レンズの大きさ）の中に、中くらいの明るい円ができる",
+          "かげのリング（レンズの大きさ）の中に、ごく小さい明るい円ができる"
+         ],
+         "meaning": "F点に近いほど光が集まっていくので、明るい円はごく小さくなります。かげの輪の大きさ（レンズの大きさ）自体は、あ・い・うのどの位置でも変わりません。"
+        }
+       ]
       }
      ],
      "8": [
@@ -24970,6 +25328,59 @@
           "い＝×／う＝×／か＝S"
          ],
          "meaning": "実験1からPはじしゃくで あ＝N、だから い＝S。実験5からRはじしゃくで か＝S、だから お＝N。\n実験3（い＝S と え が引き合う）から、えはN極か鉄。実験4（え と お＝N が引き合う）から、えはS極か鉄。\n★NでもありSでもある極は無いので、Qはじしゃくではない鉄のぼう。だから う も え も×。\n実験2は、決まった内容と矛盾しないことの確認にしかならない捨て情報。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k08_569_4",
+       "src": "HG-2806",
+       "title": "569回 じしゃくの極を逆にたどる",
+       "category": "denki",
+       "unit": "じしゃく",
+       "grade": 4,
+       "star": 2,
+       "intro": "じしゃくについて考えます。",
+       "svg": "<svg viewBox=\"-8 -6.7 408 156.7\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20.0\" y=\"20.0\" width=\"35.0\" height=\"22.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"55.0\" y=\"20.0\" width=\"35.0\" height=\"22.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"37.5\" y=\"36.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"72.5\" y=\"36.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><line x1=\"60.0\" y1=\"42.0\" x2=\"60.0\" y2=\"55.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><polygon points=\"60.0,55.0 95.0,55.0 100.0,68.0 55.0,68.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"55.0\" y=\"78.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#ffd166\">あ</text><text x=\"102.0\" y=\"78.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#ffd166\">い</text><text x=\"55.0\" y=\"8.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図1]物体A</text><rect x=\"150.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"185.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"202.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"167.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"150.0\" y=\"8.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図2]P側</text><text x=\"150.0\" y=\"46.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">P</text><polygon points=\"150.0,42.0 156.0,56.0 144.0,56.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"150.0,58.0 156.0,72.0 144.0,72.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"150.0,74.0 156.0,88.0 144.0,88.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"150.0\" y=\"100.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">Q</text><rect x=\"255.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"290.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"307.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"272.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"255.0\" y=\"8.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図3]S極でこする</text><line x1=\"230.0\" y1=\"60.0\" x2=\"330.0\" y2=\"60.0\" stroke=\"#c9d4f0\" stroke-width=\"1.8\"/><text x=\"226.0\" y=\"64.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">P</text><text x=\"334.0\" y=\"64.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">R</text><defs><marker id=\"ar06\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6.5\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#ffd166\"/></marker></defs><path d=\"M320,50 L240,50\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\" marker-end=\"url(#ar06)\"/><text x=\"200.0\" y=\"140.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">欠けた磁石（物体A）／鉄くぎ3本／S極でこするぬいばり</text></svg>",
+       "steps": [
+        {
+         "question": "じしゃくにつくものを選びなさい。",
+         "answer": "スチールウール",
+         "choices": [
+          "木",
+          "10円玉",
+          "1円玉",
+          "スチールウール",
+          "アルミニウムはく"
+         ],
+         "meaning": "じしゃくにつくのは鉄などの一部の金属だけです。スチールウール（鉄）はつきますが、10円玉（銅）・1円玉やアルミニウムはく（アルミニウム）・木はつきません。"
+        },
+        {
+         "question": "[図1]のように、ぼうじしゃくの一部が欠けてできた物体Aがあります（あ側はもとの磁石の左＝N極側にあった部分です）。物体Aのあ側は何極ですか。",
+         "answer": "N極である",
+         "choices": [
+          "N極である",
+          "S極である",
+          "物体Aは鉄のぼうなので、物体Aに極はない"
+         ],
+         "meaning": "磁石が欠けても、それぞれの破片はもとの並び（左がN・右がS）を受けつぎます。あ側はもとの左側（N極側）にあった部分なので、N極になります。"
+        },
+        {
+         "question": "[図2]のように、ぼうじしゃくのP側に鉄くぎを3本くっつけました。いちばん下の鉄くぎの先（Q）に方位じしんを近づけると、方位じしんのN極がQのほうを向いて止まりました。ぼうじしゃくのP側は何極ですか。",
+         "answer": "S",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "方位じしんのN極はS極に引かれるので、QはS極です。鉄くぎは磁石にくっつくと、くっついた側とは反対の極が下端に現れ、それが何本つながってもくり返されます。くぎ3本目の下端Qが S なら上端はN、2本目も1本目も同じ並びなので、いちばん上のくぎにくっついている磁石のP側は S 極です。"
+        },
+        {
+         "question": "[図3]のように、ぼうじしゃくのS極でぬいばりを、R側から反対のはし（P側）へ向かう向きに数回こすると、ぬいばりはじしゃくになりました。ぬいばりのR側は何極ですか。",
+         "answer": "S",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "磁石でこすると、こすり終わった側（この場合はP側）が、こすった極と反対の極になります。S極でこすったので、P側はSと反対のN極になります。もう一方のはし（こすり始めのR側）は、その反対のS極になります。"
         }
        ]
       }
@@ -25165,6 +25576,75 @@
          "question": "レンズからF点までのきょりは何cmですか。",
          "answer": "24",
          "meaning": "直径が0になるところがF点。12cm小さくするには 12÷0.5＝24cm。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k10_583_4",
+       "src": "HG-2820",
+       "title": "583回 3まいのかがみの重なりと虫めがねの表",
+       "category": "hikari_oto",
+       "unit": "光（かがみ・とつレンズ）",
+       "grade": 4,
+       "star": 3,
+       "intro": "[図1]のように、3まいの同じ大きさの長方形のかがみで日光をはね返し、日かげのかべに当てました。かべには、あ〜きの7つの部分ができました。あ＝左のかがみだけ、い＝左と右の重なり、う＝右のかがみだけ、え＝3まいすべての重なり（中央）、お＝右と下の重なり、か＝左と下の重なり、き＝下のかがみだけ、です。",
+       "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20.0\" y=\"30.0\" width=\"90.0\" height=\"80.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"70.0\" y=\"20.0\" width=\"90.0\" height=\"60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"50.0\" y=\"60.0\" width=\"90.0\" height=\"60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"35.0\" y=\"70.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">あ</text><text x=\"100.0\" y=\"45.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">い</text><text x=\"140.0\" y=\"40.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">う</text><text x=\"100.0\" y=\"68.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">え</text><text x=\"128.0\" y=\"70.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">お</text><text x=\"65.0\" y=\"92.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">か</text><text x=\"90.0\" y=\"115.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">き</text><text x=\"90.0\" y=\"130.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図1]</text><line x1=\"210.0\" y1=\"20.0\" x2=\"240.0\" y2=\"20.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"240.0\" y1=\"20.0\" x2=\"380.0\" y2=\"65.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"210.0\" y1=\"65.0\" x2=\"240.0\" y2=\"65.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"240.0\" y1=\"65.0\" x2=\"380.0\" y2=\"65.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"210.0\" y1=\"110.0\" x2=\"240.0\" y2=\"110.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"240.0\" y1=\"110.0\" x2=\"380.0\" y2=\"65.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><ellipse cx=\"240.0\" cy=\"65.0\" rx=\"8\" ry=\"45.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"240.0,20.0 380.0,65.0 240.0,110.0\" fill=\"rgba(154,163,192,0.35)\" stroke=\"none\" stroke-width=\"0\"/><circle cx=\"380.0\" cy=\"65.0\" r=\"3.5\" fill=\"#c9d4f0\"/><text x=\"380.0\" y=\"81.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">しょう点</text><text x=\"300.0\" y=\"130.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図2]</text><circle cx=\"450.0\" cy=\"65.0\" r=\"34.0\" fill=\"rgba(154,163,192,0.4)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><circle cx=\"450.0\" cy=\"65.0\" r=\"13.6\" fill=\"#0f1420\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"450.0\" y=\"130.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図3]</text><rect x=\"20.0\" y=\"165.0\" width=\"90.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"65.0\" y=\"181.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">きょり(cm)</text><rect x=\"110.0\" y=\"165.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"132.0\" y=\"181.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">3</text><rect x=\"154.0\" y=\"165.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"176.0\" y=\"181.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">4</text><rect x=\"198.0\" y=\"165.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"220.0\" y=\"181.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">8</text><rect x=\"242.0\" y=\"165.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"264.0\" y=\"181.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">11</text><rect x=\"286.0\" y=\"165.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"308.0\" y=\"181.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><rect x=\"20.0\" y=\"189.0\" width=\"90.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><text x=\"65.0\" y=\"205.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">直径(cm)</text><rect x=\"110.0\" y=\"189.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"132.0\" y=\"205.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><rect x=\"154.0\" y=\"189.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"176.0\" y=\"205.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">6</text><rect x=\"198.0\" y=\"189.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"220.0\" y=\"205.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">4</text><rect x=\"242.0\" y=\"189.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"264.0\" y=\"205.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">2.5</text><rect x=\"286.0\" y=\"189.0\" width=\"44.0\" height=\"24.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.1\"/><text x=\"308.0\" y=\"205.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">2</text></svg>",
+       "steps": [
+        {
+         "question": "あ〜きのうち、もっとも明るい部分はどこですか。",
+         "answer": "え",
+         "choices": [
+          "あ",
+          "い",
+          "う",
+          "え",
+          "お",
+          "か",
+          "き"
+         ],
+         "meaning": "「え」は3まいのかがみの光が重なっている部分なので、いちばん明るくなります。"
+        },
+        {
+         "question": "「い」（かがみ2まいの重なり）と同じ明るさになる部分を選びなさい。",
+         "answer": "お",
+         "choices": [
+          "あ",
+          "う",
+          "お",
+          "き"
+         ],
+         "meaning": "「い」は2まいの重なりです。同じく2まいの重なりになっているのは「お」（右と下）と「か」（左と下）です。ここでは「お」を選びます。"
+        },
+        {
+         "question": "同じく、「い」と同じ明るさになる、もう一つの部分を選びなさい。",
+         "answer": "か",
+         "choices": [
+          "あ",
+          "う",
+          "か",
+          "き"
+         ],
+         "meaning": "2まいの重なりになっているのは「い」「お」「か」の3か所です。「お」に続けて「か」も同じ明るさです。"
+        },
+        {
+         "question": "[図2]は虫めがねのレンズを通った日光がしょう点に集められるようすです。[表]は、レンズから紙までのきょりと、紙にできる明るい円の直径の関係です。\nきょり(cm)：3／4／8／11\n直径(cm)：A／6／4／2.5\nこの表のAにあてはまる数を答えなさい。",
+         "answer": "6.5",
+         "meaning": "4cmで6cm、8cmで4cm、11cmで2.5cmと並んでいます。差を見ると、きょりが1cm増えるごとに直径は0.5cmずつ減っています（4→8で6→4は4cmで2cm減＝1cmあたり0.5cm、8→11で4→2.5も3cmで1.5cm減＝1cmあたり0.5cm）。きょり3cmは4cmより1cm短いので、直径は6cmより0.5cm大きい6.5cmになります。"
+        },
+        {
+         "question": "同じ表で、明るい円の直径が2cmになるのは、レンズから紙までのきょりが何cmのときですか。",
+         "answer": "12",
+         "meaning": "直径は1cmあたり0.5cmずつ減っていくので、2.5cmから2cmへ0.5cm減るには、きょりが11cmから1cm増えて12cmになったときです。"
+        },
+        {
+         "question": "虫めがねのレンズの直径は何cmですか。",
+         "answer": "8",
+         "meaning": "きょりが0cm（レンズの位置そのもの）のとき、明るい円の直径はレンズの直径と同じになります。きょりが1cm増えるごとに直径が0.5cm減るので、きょり0のときの直径は、きょり4cm・直径6cmから逆算して 6＋4×0.5＝8cmです。"
+        },
+        {
+         "question": "レンズからしょう点までのきょりは何cmですか。",
+         "answer": "16",
+         "meaning": "明るい円の直径が0cmになる（＝しょう点に達する）のは、直径8cmから0.5cmずつ0になるまで進んだときなので、8÷0.5＝16cmです。"
         }
        ]
       }
@@ -25717,6 +26197,143 @@
          "meaning": "同じ重さで体積が1.1倍になるので、1cm³あたりの重さは 1÷1.1＝0.9倍。だから氷は水にうく。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k12_573_4",
+       "src": "HG-2810",
+       "title": "573回 熱の伝わる順番",
+       "category": "mono",
+       "unit": "もののあたたまり方",
+       "grade": 4,
+       "star": 2,
+       "intro": "温度が低いと青色、高くなるとピンク色に変わる「示温シール」を、①正方形・②U字型・③E字型の金ぞく板にはり、それぞれの×印の部分を熱しました。①正方形は、A＝左上、B＝右上、×＝左下、C＝下辺で×のすぐ右です。②U字型（左の縦棒・下の横棒・右の縦棒）は、×＝左上、B＝左下、C＝右下、A＝右上です。③E字型（左の縦棒＋右へ3本の横棒）は、C＝上の横棒の右はし、B＝中の横棒の右はし、A＝下の横棒の左はし、×＝下の横棒の右はしです。熱は金ぞくの形にそって伝わります（まっすぐな直線きょりではなく、金ぞくの上を通っていく道のりの長さで、伝わる早さが決まります）。",
+       "svg": "<svg viewBox=\"0 -3.7 420 264.4\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20.0\" y=\"20.0\" width=\"90.0\" height=\"90.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"28.0\" y=\"34.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"102.0\" y=\"34.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"28.0\" y=\"104.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">×</text><text x=\"50.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"65.0\" y=\"130.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">①</text><polygon points=\"150.0,20.0 180.0,20.0 180.0,80.0 210.0,80.0 210.0,20.0 240.0,20.0 240.0,110.0 150.0,110.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"158.0\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">×</text><text x=\"232.0\" y=\"34.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"158.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"232.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"195.0\" y=\"130.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">②</text><polygon points=\"280.0,20.0 380.0,20.0 380.0,40.0 310.0,40.0 310.0,55.0 345.0,55.0 345.0,75.0 310.0,75.0 310.0,90.0 380.0,90.0 380.0,110.0 280.0,110.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"366.0\" y=\"34.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"331.0\" y=\"69.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"294.0\" y=\"104.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"366.0\" y=\"104.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">×</text><text x=\"330.0\" y=\"130.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">③</text><text x=\"200.0\" y=\"12.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">示温シールをはった金ぞく板（×を熱する）</text><line x1=\"40.0\" y1=\"190.0\" x2=\"130.0\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><line x1=\"46.0\" y1=\"184.0\" x2=\"136.0\" y2=\"234.0\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"85.0\" y=\"175.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">P（底を熱する）</text><line x1=\"260.0\" y1=\"190.0\" x2=\"350.0\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><line x1=\"266.0\" y1=\"184.0\" x2=\"356.0\" y2=\"234.0\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"305.0\" y=\"175.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">Q（水面付近を熱する）</text><text x=\"210.0\" y=\"252.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">示温シール①②③の板（上）と、底／水面付近を熱する試験管P・Q（下）</text></svg>",
+       "steps": [
+        {
+         "question": "①正方形の板で、A・B・Cがピンク色に変化する順番を選びなさい。",
+         "answer": "C→A→B",
+         "choices": [
+          "A→B→C",
+          "A→C→B",
+          "B→A→C",
+          "B→C→A",
+          "C→A→B",
+          "C→B→A"
+         ],
+         "meaning": "×からの道のりは、C（すぐ右）がいちばん短く、次にA（左辺を1本ぶん通る）、いちばん遠いのが対角にあるBです。よってC→A→Bの順になります。"
+        },
+        {
+         "question": "②U字型の板で、A・B・Cがピンク色に変化する順番を選びなさい。",
+         "answer": "B→C→A",
+         "choices": [
+          "A→B→C",
+          "A→C→B",
+          "B→A→C",
+          "B→C→A",
+          "C→A→B",
+          "C→B→A"
+         ],
+         "meaning": "×は左上にあるので、U字を左上→左下（B）→右下（C）→右上（A）とたどるしかありません。よってB→C→Aの順になります。"
+        },
+        {
+         "question": "③E字型の板で、A・B・Cがピンク色に変化する順番を選びなさい。",
+         "answer": "A→B→C",
+         "choices": [
+          "A→B→C",
+          "A→C→B",
+          "B→A→C",
+          "B→C→A",
+          "C→A→B",
+          "C→B→A"
+         ],
+         "meaning": "×は下の横棒の右はしにあります。Aは同じ下の横棒の左はしなので最短。次に近いのが中の横棒のB、いちばん遠いのが上の横棒のCです。よってA→B→Cの順になります。"
+        },
+        {
+         "question": "水を試験管に入れ、示温インク（温度が低いと青色、高くなるとピンク色）を加えると全体が青色になりました。この試験管の底を熱すると、対流によって水が動きます。同じものをもう1本用意し、今度は水面付近を熱しました。水面付近を熱したとき、水は対流を起こしますか、起こしませんか。",
+         "answer": "起こさない",
+         "choices": [
+          "起こす",
+          "起こさない"
+         ],
+         "meaning": "あたたまった水は上へ動きますが、水面付近をあたためても、そのあたたかい水はすでにいちばん上にあるので下に動く水の流れが生まれず、対流は起こりません（熱した場所より上だけがあたたまります）。底を熱したときだけ対流が起こり、全体が均一にあたたまっていきます。"
+        },
+        {
+         "question": "試験管の底を熱したとき、対流によって最初にピンク色に変わる（あたたまる）のは、水面近く・真ん中・底のどこですか。",
+         "answer": "水面近く",
+         "choices": [
+          "水面近く",
+          "真ん中",
+          "底"
+         ],
+         "meaning": "底で熱せられた水は軽くなって上に動き、水面近くにたまってから全体に広がっていきます。そのため対流が起きると、水面近くから先にあたたまります。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k12_609_4",
+       "src": "HG-2846",
+       "title": "609回 熱の伝わり方3種類",
+       "category": "mono",
+       "unit": "もののあたたまり方",
+       "grade": 4,
+       "star": 2,
+       "intro": "①正方形の金ぞく板の表面に示温インク（40℃をこえるとピンク色になる）をぬり、×印の部分を熱しました。①正方形は、A＝左上、×＝上辺の中央より右、B＝下辺の中央より左、C＝下辺の右寄り、です。熱は金ぞくの形にそって伝わるので、×からの道のりが短いところほど早くピンク色に変わります。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "①正方形の板で、A・B・Cがピンク色に変化する順番を選びなさい。",
+         "answer": "A→C→B",
+         "choices": [
+          "A→B→C",
+          "A→C→B",
+          "B→A→C",
+          "B→C→A",
+          "C→A→B",
+          "C→B→A"
+         ],
+         "meaning": "×は上辺の中央より右にあります。Aは同じ上辺にあるのでいちばん近く、次に近いのは下辺の右寄りのC、いちばん遠いのが下辺の中央より左のBです。よってA→C→Bの順になります。"
+        },
+        {
+         "question": "③蛇行型の板（上段・中段・下段の3本の帯が交互につながった形）は、A＝上段の左、B＝上段の右、C＝中段の左、×＝下段の左です。下段と中段は右はしで、中段と上段は左はしでつながっています。A・B・Cがピンク色に変化する順番を選びなさい。",
+         "answer": "C→A→B",
+         "choices": [
+          "A→B→C",
+          "A→C→B",
+          "B→A→C",
+          "B→C→A",
+          "C→A→B",
+          "C→B→A"
+         ],
+         "meaning": "×（下段の左）からたどると、まず中段の左のC、次に中段を右へ進んで上段の左のA、最後に上段を右へ進んでBに届きます。よってC→A→Bの順になります。"
+        },
+        {
+         "question": "フライパンの取っ手は、木やプラスチックでできている。これは、金ぞくが熱を伝えやすい性質（伝導）と関係がありますか。",
+         "answer": "ある",
+         "choices": [
+          "ある",
+          "ない"
+         ],
+         "meaning": "金属は熱を伝えやすいので、フライパンの取っ手を木やプラスチックにすることで、熱が持ち手まで伝わりにくくしています。これは伝導と関係があります。"
+        },
+        {
+         "question": "コップに熱いお湯を入れると、コップが熱くて持てなくなる。これは伝導と関係がありますか。",
+         "answer": "ある",
+         "choices": [
+          "ある",
+          "ない"
+         ],
+         "meaning": "お湯の熱がコップ（固体）を伝わって外側まで届くのは伝導です。"
+        },
+        {
+         "question": "厚手のセーターを着ると、体があたたかく感じる。これは、水や空気が動いて熱が伝わる「対流」と関係がありますか。",
+         "answer": "ない",
+         "choices": [
+          "ある",
+          "ない"
+         ],
+         "meaning": "セーターは、空気の流れ（対流）を止めて、体の熱がにげにくくしているだけです。熱そのものが動いて伝わる現象ではないので、対流とは関係ありません。"
+        }
+       ]
       }
      ],
      "1": [
@@ -26215,6 +26832,87 @@
          "meaning": "②も④も磁石の上下（外の帰り道）にあたる。N（左）からS（右）へ帰る向きなので右向き。★2本ならべても、間の場所は1本のときと同じ向きになる。磁石を2本にして難しく見せているだけ。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k07_580_4",
+       "src": "HG-2817",
+       "title": "580回 虫めがねの使い方と明るい円",
+       "category": "hikari_oto",
+       "unit": "光（とつレンズ）",
+       "grade": 4,
+       "star": 2,
+       "intro": "[図]は、虫めがねのレンズを通った日光がF（しょう点）に集められるようすです。A・B・Cの位置にスクリーンを置き、スクリーン上にできる明るい円とそのまわりのかげを調べました（Aがレンズにいちばん近く、CがいちばんFに近い）。かげの輪の外側の大きさは、レンズの大きさのまま、どの位置でも変わりません。かわるのは中の明るい円の大きさだけです。",
+       "svg": "<svg viewBox=\"-9.5 -3 359.1 203\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"10.0\" y1=\"30.0\" x2=\"60.0\" y2=\"30.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"30.0\" x2=\"280.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"62.5\" x2=\"60.0\" y2=\"62.5\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"62.5\" x2=\"280.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"95.0\" x2=\"60.0\" y2=\"95.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"95.0\" x2=\"280.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"127.5\" x2=\"60.0\" y2=\"127.5\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"127.5\" x2=\"280.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"10.0\" y1=\"160.0\" x2=\"60.0\" y2=\"160.0\" stroke=\"#c9d4f0\" stroke-width=\"1.6\"/><line x1=\"60.0\" y1=\"160.0\" x2=\"280.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><ellipse cx=\"60.0\" cy=\"95.0\" rx=\"10\" ry=\"65.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"20.0\" x2=\"150.0\" y2=\"160.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"150.0\" y=\"15.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">A</text><line x1=\"205.0\" y1=\"20.0\" x2=\"205.0\" y2=\"160.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"205.0\" y=\"15.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">B</text><line x1=\"260.0\" y1=\"20.0\" x2=\"260.0\" y2=\"160.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><text x=\"260.0\" y=\"15.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">C</text><circle cx=\"280.0\" cy=\"100.0\" r=\"3.5\" fill=\"#c9d4f0\"/><text x=\"280.0\" y=\"118.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">F</text><text x=\"170.0\" y=\"190.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">とつレンズを通った日光がFに集まる。A〜Cの位置にスクリーンを置く</text></svg>",
+       "steps": [
+        {
+         "question": "太陽をよく観察するために、虫めがねを通して太陽を直せつ見た。これは正しい使い方ですか。",
+         "answer": "まちがっている",
+         "choices": [
+          "正しい",
+          "まちがっている"
+         ],
+         "meaning": "虫めがねで太陽を直接見ると、目に強い光が集まり目をいためます。絶対にしてはいけません。"
+        },
+        {
+         "question": "手が冷たかったので、手をあたためるために虫めがねを通ってしょう点に集められた日光を手に当てた。これは正しい使い方ですか。",
+         "answer": "まちがっている",
+         "choices": [
+          "正しい",
+          "まちがっている"
+         ],
+         "meaning": "しょう点に集めた日光はとても熱くなり、やけどのきけんがあります。正しい使い方ではありません。"
+        },
+        {
+         "question": "小さい紙を虫めがねから遠ざけたり近づけたりして、紙の上にいちばん小さくはっきりした明るい点ができる位置（しょう点）をさがした。これは正しい使い方ですか。",
+         "answer": "正しい",
+         "choices": [
+          "正しい",
+          "まちがっている"
+         ],
+         "meaning": "しょう点をさがすこと自体は、虫めがねのしくみを調べる正しい使い方です（ただし、紙が焦げたり燃えたりしないよう注意が必要です）。"
+        },
+        {
+         "question": "Aの位置（レンズにいちばん近い）にスクリーンを置いたときの明るい円の大きさを選びなさい。",
+         "answer": "大きい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "レンズに近いほど、光はまだ大きく広がったままなので、明るい円は大きくなります。"
+        },
+        {
+         "question": "Bの位置（中間）にスクリーンを置いたときの明るい円の大きさを選びなさい。",
+         "answer": "中くらい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "中間の位置では、明るい円も中くらいの大きさになります。"
+        },
+        {
+         "question": "Cの位置（いちばんFに近い）にスクリーンを置いたときの明るい円の大きさを選びなさい。",
+         "answer": "小さい",
+         "choices": [
+          "大きい",
+          "中くらい",
+          "小さい"
+         ],
+         "meaning": "F点に近いほど光が集まっていくので、明るい円は小さくなります。"
+        },
+        {
+         "question": "A・B・Cのうち、スクリーン上にできる明るい円の明るさがもっとも暗いのはどこですか。",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "どの位置でも同じ明るさ"
+         ],
+         "meaning": "同じ量の光が、明るい円が大きいほど広い面積に広がるので、円が大きいAがいちばん暗くなります。"
+        }
+       ]
       }
      ],
      "2": [
@@ -26402,6 +27100,64 @@
           "午前10時＝え／正午＝か／午後2時＝お"
          ],
          "meaning": "午前10時のかげは北西（左ななめ上）、正午は北（真上）、午後2時は北東（右ななめ上）。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k02_623_3",
+       "src": "HG-1651",
+       "title": "623回 電気を通すもの",
+       "category": "denki",
+       "unit": "電気（電気を通すもの）",
+       "grade": 4,
+       "star": 1,
+       "intro": "次のものが電気を通すかどうかを、1つずつ考えましょう。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "「アルミニウムはく」は電気を通しますか。",
+         "answer": "通す",
+         "choices": [
+          "通す",
+          "通さない"
+         ],
+         "meaning": "アルミニウムはく＝金ぞく（アルミニウム）なので電気を通します。"
+        },
+        {
+         "question": "「わりばし（木）」は電気を通しますか。",
+         "answer": "通さない",
+         "choices": [
+          "通す",
+          "通さない"
+         ],
+         "meaning": "木は金ぞくではないので電気を通しません。"
+        },
+        {
+         "question": "「1円玉」は電気を通しますか。",
+         "answer": "通す",
+         "choices": [
+          "通す",
+          "通さない"
+         ],
+         "meaning": "1円玉＝金ぞく（アルミニウム）なので電気を通します。"
+        },
+        {
+         "question": "「ガラスのコップ」は電気を通しますか。",
+         "answer": "通さない",
+         "choices": [
+          "通す",
+          "通さない"
+         ],
+         "meaning": "ガラスは金ぞくではないので電気を通しません。"
+        },
+        {
+         "question": "「鉄でできたゼムクリップ」は電気を通しますか。",
+         "answer": "通す",
+         "choices": [
+          "通す",
+          "通さない"
+         ],
+         "meaning": "ゼムクリップ＝金ぞく（鉄）なので電気を通します。まとめると、電気を通すのは「アルミニウムはく・1円玉・鉄でできたゼムクリップ」の3つです（金ぞくだけが電気を通します）。"
         }
        ]
       }
@@ -26704,6 +27460,52 @@
          "meaning": "A＝E、D＝Hになる。豆電球D−Eには ①かん電池2 ②かん電池1（D−A＝E）③かん電池4（D＝H−E）の3本の道＝3個の並列。それでも1個ぶん。"
         }
        ]
+      },
+      {
+       "id": "hd_4r_k09_630_3",
+       "src": "HG-1677",
+       "title": "630回 月の形と南中時こく",
+       "category": "sora",
+       "unit": "月の動き",
+       "grade": 4,
+       "star": 1,
+       "intro": "月には満ち欠けがあります。右半分が光って見える半月を「上げんの月」、左半分が光って見える半月を「下げんの月」といいます。",
+       "svg": "",
+       "steps": [
+        {
+         "question": "上げんの月（右半分が光る半月）が南中する時こくにもっとも近いものを選びなさい。",
+         "answer": "18時",
+         "choices": [
+          "0時",
+          "6時",
+          "12時",
+          "18時"
+         ],
+         "meaning": "上げんの月は、太陽が沈むころ（18時ごろ）に南の空高くに見えます。"
+        },
+        {
+         "question": "下げんの月（左半分が光る半月）が南中する時こくにもっとも近いものを選びなさい。",
+         "answer": "6時",
+         "choices": [
+          "0時",
+          "6時",
+          "12時",
+          "18時"
+         ],
+         "meaning": "下げんの月は、太陽が昇るころ（6時ごろ）に南の空高くに見えます（上げんの月とはちょうど12時間ずれます）。"
+        },
+        {
+         "question": "上げんの月（右半分が光る半月）の月の出の時こくにもっとも近いものを選びなさい。",
+         "answer": "12時",
+         "choices": [
+          "0時",
+          "6時",
+          "12時",
+          "18時"
+         ],
+         "meaning": "上げんの月は正午（12時）ごろに東の空からのぼります（南中の18時から6時間前）。"
+        }
+       ]
       }
      ],
      "3": [
@@ -26913,6 +27715,220 @@
           "S極が上・N極が下"
          ],
          "meaning": "2本の磁石の間では、磁力線はN（左）からS（右）へ帰る向きになる。だからはりのN極は右を向く。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k03_576_3",
+       "src": "HG-2813",
+       "title": "576回 じしゃくと4個の方位じしん",
+       "category": "denki",
+       "unit": "じしゃく",
+       "grade": 4,
+       "star": 2,
+       "intro": "じしゃくについて考えます。",
+       "svg": "<svg viewBox=\"-9.2 -6.7 409.2 259.7\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20.0\" y=\"20.0\" width=\"45.0\" height=\"22.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"65.0\" y=\"20.0\" width=\"45.0\" height=\"22.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"42.5\" y=\"36.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"87.5\" y=\"36.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><line x1=\"65.0\" y1=\"42.0\" x2=\"65.0\" y2=\"55.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><polygon points=\"65.0,55.0 105.0,55.0 110.0,68.0 60.0,68.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"60.0\" y=\"78.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#ffd166\">あ</text><text x=\"112.0\" y=\"78.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#ffd166\">い</text><text x=\"65.0\" y=\"8.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図1]</text><rect x=\"160.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"195.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"177.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"212.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"160.0\" y=\"8.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図2]</text><text x=\"160.0\" y=\"46.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">N</text><polygon points=\"160.0,42.0 166.0,56.0 154.0,56.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"160.0,58.0 166.0,72.0 154.0,72.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><polygon points=\"160.0,74.0 166.0,88.0 154.0,88.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"178.0\" y=\"58.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">A</text><text x=\"178.0\" y=\"90.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">B</text><rect x=\"265.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"300.0\" y=\"20.0\" width=\"35.0\" height=\"18.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"282.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"317.5\" y=\"34.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"265.0\" y=\"8.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図3]N極でこする</text><line x1=\"240.0\" y1=\"60.0\" x2=\"340.0\" y2=\"60.0\" stroke=\"#c9d4f0\" stroke-width=\"1.8\"/><text x=\"236.0\" y=\"64.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">P</text><text x=\"344.0\" y=\"64.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">Q</text><defs><marker id=\"ar13\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6.5\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#ffd166\"/></marker></defs><path d=\"M250,50 L330,50\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\" marker-end=\"url(#ar13)\"/><rect x=\"35.0\" y=\"150.0\" width=\"45.0\" height=\"22.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"80.0\" y=\"150.0\" width=\"45.0\" height=\"22.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"102.5\" y=\"166.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"57.5\" y=\"166.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><circle cx=\"80.0\" cy=\"130.0\" r=\"13.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"80.0\" y=\"112.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">1</text><circle cx=\"15.0\" cy=\"175.0\" r=\"13.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"1.0\" y=\"179.0\" font-size=\"10\" text-anchor=\"end\" fill=\"#c9d4f0\">2</text><circle cx=\"145.0\" cy=\"175.0\" r=\"13.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"159.0\" y=\"179.0\" font-size=\"10\" text-anchor=\"start\" fill=\"#c9d4f0\">3</text><circle cx=\"80.0\" cy=\"220.0\" r=\"13.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"80.0\" y=\"242.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">4</text><text x=\"80.0\" y=\"100.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図4]</text><text x=\"200.0\" y=\"244.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">欠けた磁石／鉄くぎ3本／N極でこするぬいばり／方位じしん1〜4</text></svg>",
+       "steps": [
+        {
+         "question": "「スチールかん」はじしゃくにつきますか。",
+         "answer": "つく",
+         "choices": [
+          "つく",
+          "つかない"
+         ],
+         "meaning": "スチールかん＝鉄でできているので、じしゃくにつきます。"
+        },
+        {
+         "question": "「1円玉」はじしゃくにつきますか。",
+         "answer": "つかない",
+         "choices": [
+          "つく",
+          "つかない"
+         ],
+         "meaning": "1円玉はアルミニウムでできているので、じしゃくにつきません。"
+        },
+        {
+         "question": "「鉄でできたクリップ」はじしゃくにつきますか。",
+         "answer": "つく",
+         "choices": [
+          "つく",
+          "つかない"
+         ],
+         "meaning": "鉄でできているので、じしゃくにつきます。"
+        },
+        {
+         "question": "[図1]のように、ぼうじしゃく（左がN・右がS）の一部が欠けました。欠けた部分（あ側＝欠けた破片の左側）は何極ですか。",
+         "answer": "N",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "磁石が欠けても、それぞれの破片はもとの並び（左がN・右がS）を受けつぎます。あ側はもとの左側にあった部分なのでN極です。"
+        },
+        {
+         "question": "[図2]のように、3本の鉄くぎをぼうじしゃくのN極の下につけました。1本目の鉄くぎの下端あたり（A）は何極ですか。",
+         "answer": "N",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "鉄くぎがN極にくっつくと、くっついた側（上端）はS極、反対側（下端）はN極になります。1本目の下端Aは N極です。"
+        },
+        {
+         "question": "いちばん下（3本目）の鉄くぎの下端（B）は何極ですか。",
+         "answer": "N",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "鉄くぎは「上端S・下端N」という並びを、何本つないでもそのままくり返します。3本目の下端Bも、1本目と同じN極になります。"
+        },
+        {
+         "question": "[図3]のように、ぼうじしゃくのN極でぬいばりを、P側からQ側へ（右向きに）数回こすると、ぬいばりはじしゃくになりました。P側は何極ですか。",
+         "answer": "N",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "磁石でこすると、こすり終わった側が、こすった極と反対の極になります。N極でこすったので、こすり終わりのQ側はSになり、その反対のP側はN極になります。"
+        },
+        {
+         "question": "同じく、Q側は何極ですか。",
+         "answer": "S",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "こすり終わった側（Q）は、こすった極（N）と反対のS極になります。"
+        },
+        {
+         "question": "[図4]のように、ぼうじしゃく（横向き・左がS、右がN）のまわりの4か所に方位じしんを置きました。方位じしん1（磁石の真上）のはりのようすを選びなさい。",
+         "answer": "Nが左・Sが右",
+         "choices": [
+          "Nが上・Sが下",
+          "Sが左・Nが右",
+          "Nが左・Sが右",
+          "Sが上・Nが下"
+         ],
+         "meaning": "磁力線は「N極から出てS極へ帰る」流れです。磁石の真上（中心の真上）では、この流れは右（N側）から左（S側）へ向かって上を回りこむので、はりのN極は左を向きます。"
+        },
+        {
+         "question": "方位じしん2（磁石の左どなり＝S極の外側）のはりのようすを選びなさい。",
+         "answer": "Sが左・Nが右",
+         "choices": [
+          "Nが上・Sが下",
+          "Sが左・Nが右",
+          "Nが左・Sが右",
+          "Sが上・Nが下"
+         ],
+         "meaning": "S極の外側（磁石の軸の延長線上）では、磁力線はそのままS極に向かって入っていく向き＝左から右（S極）へ向かうので、はりのN極は右を向きます。"
+        },
+        {
+         "question": "方位じしん3（磁石の右どなり＝N極の外側）のはりのようすを選びなさい。",
+         "answer": "Sが左・Nが右",
+         "choices": [
+          "Nが上・Sが下",
+          "Sが左・Nが右",
+          "Nが左・Sが右",
+          "Sが上・Nが下"
+         ],
+         "meaning": "N極の外側（磁石の軸の延長線上）でも、磁力線はN極から外へ出ていく向き＝左から右へ向かうので、はりのN極は右を向きます（2と3は場所がちがうのに同じ向きになるのがこの問題のポイントです）。"
+        },
+        {
+         "question": "方位じしん4（磁石の真下）のはりのようすを選びなさい。",
+         "answer": "Nが左・Sが右",
+         "choices": [
+          "Nが上・Sが下",
+          "Sが左・Nが右",
+          "Nが左・Sが右",
+          "Sが上・Nが下"
+         ],
+         "meaning": "真下の位置でも、磁力線は右（N側）から左（S側）へ向かって下を回りこむので、はりのN極は左を向きます（真上・真下は同じ向きになります）。"
+        }
+       ]
+      },
+      {
+       "id": "hd_4r_k03_624_3",
+       "src": "HG-2866",
+       "title": "624回 じしゃくの総合問題",
+       "category": "denki",
+       "unit": "じしゃく",
+       "grade": 4,
+       "star": 2,
+       "intro": "じしゃくについて考えます。",
+       "svg": "<svg viewBox=\"-14.6 0 434.6 210.8\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20.0\" y=\"60.0\" width=\"35.0\" height=\"18.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"55.0\" y=\"60.0\" width=\"35.0\" height=\"18.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"72.5\" y=\"74.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"37.5\" y=\"74.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><line x1=\"0.0\" y1=\"100.0\" x2=\"100.0\" y2=\"100.0\" stroke=\"#c9d4f0\" stroke-width=\"1.8\"/><text x=\"-4.0\" y=\"104.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">P</text><text x=\"104.0\" y=\"104.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">Q</text><defs><marker id=\"ar66a\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6.5\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#ffd166\"/></marker></defs><path d=\"M10,90 L90,90\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\" marker-end=\"url(#ar66a)\"/><text x=\"50.0\" y=\"15.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図1]</text><rect x=\"185.0\" y=\"91.0\" width=\"35.0\" height=\"18.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"220.0\" y=\"91.0\" width=\"35.0\" height=\"18.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"202.5\" y=\"105.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"237.5\" y=\"105.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><line x1=\"220.0\" y1=\"40.0\" x2=\"220.0\" y2=\"160.0\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><line x1=\"150.0\" y1=\"100.0\" x2=\"290.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"220.0\" y=\"30.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"136.0\" y=\"104.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">B</text><text x=\"220.0\" y=\"182.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"304.0\" y=\"104.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">D</text><text x=\"220.0\" y=\"15.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">[図2]</text><rect x=\"350.0\" y=\"40.0\" width=\"26.0\" height=\"20.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"350.0\" y=\"60.0\" width=\"26.0\" height=\"20.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"363.0\" y=\"54.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"363.0\" y=\"74.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"363.0\" y=\"15.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">あ(200g)</text><defs><marker id=\"ar66b\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6.5\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#ffd166\"/></marker></defs><path d=\"M363,155 L363,125\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\" marker-end=\"url(#ar66b)\"/><rect x=\"350.0\" y=\"155.0\" width=\"26.0\" height=\"20.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><rect x=\"350.0\" y=\"175.0\" width=\"26.0\" height=\"20.0\" fill=\"#2a3560\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"363.0\" y=\"169.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">S</text><text x=\"363.0\" y=\"189.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#ffd166\">N</text><text x=\"390.0\" y=\"175.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">い</text><text x=\"210.0\" y=\"202.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">ぬいばり（S極でこする）／棒磁石+方位磁針A〜D／磁石あ・いが近づく</text></svg>",
+       "steps": [
+        {
+         "question": "じしゃくに引きよせられるものを選びなさい。",
+         "answer": "鉄でできたフライパン",
+         "choices": [
+          "1円玉",
+          "10円玉",
+          "アルミニウムはく",
+          "鉄でできたフライパン",
+          "ペットボトル"
+         ],
+         "meaning": "鉄でできたフライパンは、じしゃくに引きよせられます。"
+        },
+        {
+         "question": "じしゃくに引きよせられるものをもう一つ選びなさい。",
+         "answer": "スチールかん",
+         "choices": [
+          "わりばし",
+          "ガラスのコップ",
+          "スチールかん"
+         ],
+         "meaning": "スチールかん＝鉄でできているので、じしゃくに引きよせられます。"
+        },
+        {
+         "question": "[図1]のように、ぼうじしゃくのS極でぬいばりを、P側からQ側へ（右向きに）数回こすると、ぬいばりはじしゃくになりました。P側は何極ですか。",
+         "answer": "S",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "磁石でこすると、こすり終わった側が、こすった極と反対の極になります。S極でこすったので、こすり終わりのQ側はN極になり、その反対のP側はS極になります。"
+        },
+        {
+         "question": "同じく、Q側は何極ですか。",
+         "answer": "N",
+         "choices": [
+          "N",
+          "S"
+         ],
+         "meaning": "こすり終わった側（Q）は、こすった極（S）と反対のN極になります。"
+        },
+        {
+         "question": "[図2]のように、ぼうじしゃく（横向き・左がN、右がS）のまわりのAとBの位置に方位磁針を置きました。A（磁石の真上）に置いた方位磁針のようすを選びなさい。",
+         "answer": "Sが左・Nが右",
+         "choices": [
+          "Nが左・Sが右",
+          "Sが左・Nが右",
+          "Nが上・Sが下",
+          "Sが上・Nが下"
+         ],
+         "meaning": "磁力線は「N極から出てS極へ帰る」流れです。磁石の真上では、この流れは左（N側）から右（S側）へ向かって上を回りこむので、はりのN極は右を向きます。"
+        },
+        {
+         "question": "B（N極の左どなり）に置いた方位磁針のようすを選びなさい。",
+         "answer": "Nが左・Sが右",
+         "choices": [
+          "Nが左・Sが右",
+          "Sが左・Nが右",
+          "Nが上・Sが下",
+          "Sが上・Nが下"
+         ],
+         "meaning": "N極の外側（磁石の軸の延長線上）では、磁力線はN極から外へ出ていく向き＝磁石から遠ざかる向き（左）なので、はりのN極は左を向きます。"
+        },
+        {
+         "question": "ぼうじしゃくあ（重さ200g・上がS極・下がN極）をばねばかりにつるし、[図3]のように、あのN極に、ぼうじしゃくいのS極を下から近づけました。ばねばかりのしめす重さはどうなりますか。",
+         "answer": "大きくなる",
+         "choices": [
+          "200gより小さくなる",
+          "大きくなる",
+          "200gになる"
+         ],
+         "meaning": "あのN極といのS極は、ちがう極どうしなので引き合います。あは下（いのほう）に引っぱられるので、ばねばかりのしめす重さは200gより大きくなります。"
         }
        ]
       }
