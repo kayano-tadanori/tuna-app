@@ -54786,6 +54786,126 @@
         }
        ],
        "grade": 5
+      },
+     {
+       "id": "hd5n_06_13",
+       "src": "HG-2270",
+       "star": 3,
+       "title": "材木から切り出す5枚の板",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "厚さ1cm、幅2cmの十分に長い直方体の材木があります。これを切ってはり合わせて、下の図のような5つの正方形の板（1段目2×2cm、2段目4×4cm、3段目6×6cmで中央に2×2cmの穴、4段目8×8cmで中央に4×4cmの穴、5段目10×10cmで中央に6×6cmの穴、どれも厚さ1cm）を作ります。",
+       "svg": "<svg viewBox=\"-28.5 -115.0 338.5 142.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"140.8\" y=\"-103.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">材木から切り出す5枚の板</text><path d=\"M0.0 0.0 L16.0 0.0 L16.0 -16.0 L0.0 -16.0 Z\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"8.0\" y=\"13.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">1段目</text><text x=\"8.0\" y=\"-21.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">2×2×1</text><path d=\"M30.0 0.0 L62.0 0.0 L62.0 -32.0 L30.0 -32.0 Z\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"46.0\" y=\"13.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">2段目</text><text x=\"46.0\" y=\"-37.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">4×4×1</text><path d=\"M76.0 0.0 L124.0 0.0 L124.0 -48.0 L76.0 -48.0 Z\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><path d=\"M92.0 -32.0 L108.0 -32.0 L108.0 -16.0 L92.0 -16.0 Z\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"100.0\" y=\"-21.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#9aa3c0\">穴2×2</text><text x=\"100.0\" y=\"13.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">3段目</text><text x=\"100.0\" y=\"-53.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">6×6×1</text><path d=\"M138.0 0.0 L202.0 0.0 L202.0 -64.0 L138.0 -64.0 Z\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><path d=\"M154.0 -48.0 L186.0 -48.0 L186.0 -16.0 L154.0 -16.0 Z\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"170.0\" y=\"-29.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#9aa3c0\">穴4×4</text><text x=\"170.0\" y=\"13.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">4段目</text><text x=\"170.0\" y=\"-69.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">8×8×1</text><path d=\"M216.0 0.0 L296.0 0.0 L296.0 -80.0 L216.0 -80.0 Z\" fill=\"rgba(79,158,255,0.12)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><path d=\"M232.0 -64.0 L280.0 -64.0 L280.0 -16.0 L232.0 -16.0 Z\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><text x=\"256.0\" y=\"-37.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#9aa3c0\">穴6×6</text><text x=\"256.0\" y=\"13.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">5段目</text><text x=\"256.0\" y=\"-85.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">10×10×1</text></svg>",
+       "steps": [
+        {
+         "question": "5つの板を作るのに、材木の長さは最も短くて何cm必要ですか。",
+         "answer": "82",
+         "meaning": "板はすべて厚さ1cmで、材木を切ってはり合わせて作るので、板の体積の合計と同じ体積の材木を用意すればよいことになります。5枚の板の体積は、1段目2×2×1＝4cm³、2段目4×4×1＝16cm³、3段目は穴があるので(6×6－2×2)×1＝32cm³、4段目は(8×8－4×4)×1＝48cm³、5段目は(10×10－6×6)×1＝64cm³です。合計すると4＋16＋32＋48＋64＝**164cm³**です。材木は幅2cm・厚さ1cmの帯なので、切り口の面積は2×1＝2cm²で、この帯をむだなくつなげて切り分ければ、必要な長さは体積を切り口の面積で割った164÷2＝**82cm**で足ります。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_14",
+       "src": "HG-2272",
+       "star": 3,
+       "title": "円柱の容器に円すいのおもりを入れる",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "底面の半径が4cmの円柱形の容器Aと、底面の半径が4cmの円すいのおもりBがあります。Aに水面の高さが8cmになるまで水を入れ、Bの底面がAの底面と一致するようにおもりBをAの中に入れると、水面はおもりBの頂点にちょうど一致しました。",
+       "svg": "<svg viewBox=\"-91.5 -30.0 324.0 191.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"70.5\" y=\"-18.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">図1：容器Aと円すいのおもりB（水面はBの先端に一致）</text><path d=\"M-36.0 117.0 L36.0 117.0 L36.0 45.0 L-36.0 45.0 Z\" fill=\"rgba(79,158,255,0.16)\" stroke=\"none\" stroke-width=\"1.6\"/><path d=\"M-36.0 0.0 L36.0 0.0 L36.0 117.0 L-36.0 117.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.6\"/><line x1=\"-44.0\" y1=\"45.0\" x2=\"-44.0\" y2=\"117.0\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"-48.0\" y=\"84.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#4f9eff\">8cm</text><line x1=\"44.0\" y1=\"0.0\" x2=\"44.0\" y2=\"117.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"48.0\" y=\"61.5\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">13cm</text><text x=\"0.0\" y=\"131.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">はじめ：水だけ</text><path d=\"M96.0 117.0 L168.0 117.0 L168.0 27.0 L96.0 27.0 Z\" fill=\"rgba(79,158,255,0.16)\" stroke=\"none\" stroke-width=\"1.6\"/><path d=\"M96.0 0.0 L168.0 0.0 L168.0 117.0 L96.0 117.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.6\"/><path d=\"M96.0 117.0 L168.0 117.0 L132.0 27.0 Z\" fill=\"rgba(255,209,102,0.18)\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><text x=\"132.0\" y=\"21.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><line x1=\"88.0\" y1=\"27.0\" x2=\"88.0\" y2=\"117.0\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"84.0\" y=\"75.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#4f9eff\">h cm</text><line x1=\"176.0\" y1=\"0.0\" x2=\"176.0\" y2=\"117.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"180.0\" y=\"61.5\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">13cm</text><text x=\"132.0\" y=\"131.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">Bを入れた後</text><text x=\"132.0\" y=\"9.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">水面＝Bの先端</text><text x=\"66.0\" y=\"147.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">底面の半径はどちらも4cm</text></svg>",
+       "steps": [
+        {
+         "question": "おもりBの高さは何cmですか。",
+         "answer": "12",
+         "meaning": "はじめに入れた水の体積は、半径4cm・高さ8cmの円柱の体積と同じなので、4×4×3.14×8＝128×3.14cm³です。おもりBの高さをhとすると、Bを入れたときの水面はBの頂点（高さhの位置）にちょうど合うので、そのときの水面までの空間は「円柱（半径4cm・高さh）」から「円すいB（体積はその円柱の1/3）」を引いた分、つまり円柱の2/3にあたります。この2/3が、はじめに入れた水の体積128×3.14cm³と同じなので、円柱（半径4cm・高さh）の体積は128×3.14×3/2＝192×3.14cm³です。4×4×3.14×h＝192×3.14より、h＝192÷16＝**12cm**です。"
+        },
+        {
+         "question": "図2のように水面の高さが9cmになるようにするには、はじめ容器Aに何cmの高さまで水を入れるとよいですか。",
+         "answer": "5.0625",
+         "svg": "<svg viewBox=\"-122.0 -30.0 244.0 164.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"0.0\" y=\"-18.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">図2：水面の高さを9cmにする</text><path d=\"M-40.0 120.0 L40.0 120.0 L40.0 30.0 L-40.0 30.0 Z\" fill=\"rgba(79,158,255,0.16)\" stroke=\"none\" stroke-width=\"1.6\"/><path d=\"M-40.0 0.0 L40.0 0.0 L40.0 120.0 L-40.0 120.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.6\"/><path d=\"M-40.0 120.0 L40.0 120.0 L0.0 0.0 Z\" fill=\"rgba(255,209,102,0.18)\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"-10.0\" y1=\"30.0\" x2=\"10.0\" y2=\"30.0\" stroke=\"#ffd166\" stroke-width=\"1.4\" stroke-dasharray=\"3 2\"/><line x1=\"-48.0\" y1=\"30.0\" x2=\"-48.0\" y2=\"120.0\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"-52.0\" y=\"78.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#4f9eff\">9cm</text><line x1=\"48.0\" y1=\"0.0\" x2=\"48.0\" y2=\"120.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"52.0\" y=\"63.0\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">12cm</text><text x=\"0.0\" y=\"22.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">水面より上は半径1cm・高さ3cmの小さい円すい</text></svg>",
+         "meaning": "Bの高さは12cmなので、水面が9cmのとき、水面より上に出ているのは高さ3cmの小さい円すいの部分です。この小さい円すいは、Bの円すい全体（半径4cm・高さ12cm）と相似で、高さの比が3:12＝1:4なので、半径も4×1/4＝1cmです。まず、水面9cmまでの円柱の体積は4×4×3.14×9＝144×3.14cm³です。ここから、水にしずんでいるBの部分の体積を引けば、水だけの体積が求まります。Bの円すい全体の体積は4×4×3.14×12÷3＝64×3.14cm³、水面より上の小さい円すいの体積は1×1×3.14×3÷3＝1×3.14cm³なので、しずんでいる部分の体積は64×3.14－1×3.14＝63×3.14cm³です。よって水だけの体積は144×3.14－63×3.14＝81×3.14cm³です。この体積の水を、おもりを入れる前の空の容器Aに入れたときの高さを求めると、81×3.14÷(4×4×3.14)＝81÷16＝**5.0625cm**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_15",
+       "src": "HG-2273",
+       "star": 3,
+       "title": "2つの円すい容器の容積の比",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "円すいの容器A、Bがあります。Aの上の面の半径は12cm、深さは9cm、側面の母線の長さは15cmで、Bの上の面の半径は8cm、深さは15cm、側面の母線の長さは17cmです。",
+       "svg": "<svg viewBox=\"-207.0 -38.0 389.0 158.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"-12.5\" y=\"-26.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">容器A・Bの容積の比</text><path d=\"M-142.0 0.0 L2.0 0.0 L-70.0 54.0 Z\" fill=\"rgba(255,209,102,0.16)\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"-70.0\" y1=\"0.0\" x2=\"-70.0\" y2=\"54.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"-70.0\" y=\"70.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">容器A</text><text x=\"-70.0\" y=\"-8.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">半径12cm</text><text x=\"-148.0\" y=\"27.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">深さ9cm</text><text x=\"-28.0\" y=\"23.0\" font-size=\"8\" text-anchor=\"start\" fill=\"#9aa3c0\">母線15cm</text><path d=\"M42.0 0.0 L138.0 0.0 L90.0 90.0 Z\" fill=\"rgba(255,209,102,0.16)\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><line x1=\"90.0\" y1=\"0.0\" x2=\"90.0\" y2=\"90.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"90.0\" y=\"106.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">容器B</text><text x=\"90.0\" y=\"-8.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">半径8cm</text><text x=\"36.0\" y=\"45.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">深さ15cm</text><text x=\"120.0\" y=\"41.0\" font-size=\"8\" text-anchor=\"start\" fill=\"#9aa3c0\">母線17cm</text></svg>",
+       "steps": [
+        {
+         "question": "容器A、Bの容積の比を、もっとも簡単な整数の比で表しなさい。",
+         "answer": "27:20",
+         "choices": [
+          "27:20",
+          "20:27",
+          "9:5",
+          "3:5"
+         ],
+         "meaning": "円すいの体積は「底面積×深さ÷3」で求められます。容器Aの体積は12×12×3.14×9÷3＝432×3.14cm³、容器Bの体積は8×8×3.14×15÷3＝320×3.14cm³です。3.14の部分は同じなので比べなくてよく、432：320を計算すると、どちらも16で割れて**27：20**になります。母線の長さ（15cmや17cm）は、深さと半径をあわせた直角三角形の3辺（9-12-15、8-15-17）がきれいな整数の比になっていることを確認するための数字で、体積の計算そのものには使いません。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_16",
+       "src": "HG-2274",
+       "star": 3,
+       "title": "正方形から三角形4つを切って作る四角すい",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "下の図の斜線部分は、1辺が8cmの正方形から、底辺が8cmで高さが2cmの二等辺三角形4つを切り取ってできたものです。これを組み立てると四角すいができます。角すいの体積は（底面積）×（高さ）×1/3で求められます。",
+       "svg": "<svg viewBox=\"-76.5 -38.0 276.0 212.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"61.5\" y=\"-26.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">正方形から三角形4つを切り取ってできた斜線部分</text><path d=\"M0.0 0.0 L160.0 0.0 L160.0 160.0 L0.0 160.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 3\"/><path d=\"M0.0 0.0 L80.0 40.0 L160.0 0.0 L120.0 80.0 L160.0 160.0 L80.0 120.0 L0.0 160.0 L40.0 80.0 Z\" fill=\"rgba(255,209,102,0.20)\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><path d=\"M80.0 40.0 L120.0 80.0 L80.0 120.0 L40.0 80.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\" stroke-dasharray=\"4 2\"/><text x=\"80.0\" y=\"-8.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">8cm</text><text x=\"-10.0\" y=\"80.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">8cm</text><line x1=\"94.0\" y1=\"0.0\" x2=\"94.0\" y2=\"40.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"100.0\" y=\"23.0\" font-size=\"8\" text-anchor=\"start\" fill=\"#9aa3c0\">2cm</text><text x=\"80.0\" y=\"84.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#c9d4f0\">底面</text></svg>",
+       "steps": [
+        {
+         "question": "組み立ててできる四角すいの体積は何cm³ですか。",
+         "answer": "32/3",
+         "meaning": "四角すいの底面になるのは、図の中央の四角形（対角線がどちらも8－2×2＝4cmのひし形）で、面積は4×4÷2＝**8cm²**です。斜線部分全体の面積は、正方形64cm²から切り取った三角形4つ分（8×2÷2×4＝32cm²）を引いて64－32＝**32cm²**、このうち底面の8cm²を除いた残り32－8＝**24cm²**が、四角すいの4つの側面（三角形）の面積の合計です。側面の三角形1つ分は24÷4＝**6cm²**です。ここから先は「長さ」ではなく「長さを2乗した数」で考えます。底面のひし形の1辺を2乗した数は、対角線の半分どうし（2cmと2cm）を直角にはさむ直角三角形の性質から2×2＋2×2＝**8**です。側面の三角形（面積6cm²・底辺がその1辺）の、頂点から底辺のまん中までの長さを2乗した数は、面積の関係から(6×2)×(6×2)÷8＝**18**になります。正方形は、中心から1辺のまん中までの長さが、ちょうどその1辺の半分になる図形なので、底面の中心から底辺のまん中までの長さを2乗した数は、1辺を2乗した数のさらに4分の1になり、8÷4＝**2**です。四角すいの高さを2乗した数は、直角三角形の性質からこの2つの差になるので18－2＝**16**、よって高さは4cmです。体積は、底面積8cm²×高さ4cm×1/3＝**32/3cm³**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_17",
+       "src": "HG-2276",
+       "star": 2,
+       "title": "立方体の各面の中心を結ぶ正八面体",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "下の図のような、1辺が12cmの立方体の各面の中心を結んでできる正八面体があります。",
+       "svg": "<svg viewBox=\"-139.5 -48.0 240.0 84.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"-19.5\" y=\"-36.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">立方体の各面の中心を結んでできる正八面体</text><line x1=\"0.0\" y1=\"0.0\" x2=\"19.1\" y2=\"11.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"19.1\" y1=\"11.0\" x2=\"0.0\" y2=\"22.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"22.0\" x2=\"-19.1\" y2=\"11.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"-19.1\" y1=\"11.0\" x2=\"0.0\" y2=\"0.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"-18.0\" x2=\"19.1\" y2=\"-7.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"19.1\" y1=\"-7.0\" x2=\"0.0\" y2=\"4.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"4.0\" x2=\"-19.1\" y2=\"-7.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"-19.1\" y1=\"-7.0\" x2=\"0.0\" y2=\"-18.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"0.0\" y2=\"-18.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"19.1\" y1=\"11.0\" x2=\"19.1\" y2=\"-7.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"22.0\" x2=\"0.0\" y2=\"4.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"-19.1\" y1=\"11.0\" x2=\"-19.1\" y2=\"-7.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"-7.0\" x2=\"9.5\" y2=\"-3.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"-7.0\" x2=\"9.5\" y2=\"7.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"-7.0\" x2=\"-9.5\" y2=\"7.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"-7.0\" x2=\"-9.5\" y2=\"-3.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"9.5\" y1=\"-3.5\" x2=\"9.5\" y2=\"7.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"9.5\" y1=\"7.5\" x2=\"-9.5\" y2=\"7.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"-9.5\" y1=\"7.5\" x2=\"-9.5\" y2=\"-3.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"-9.5\" y1=\"-3.5\" x2=\"9.5\" y2=\"-3.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"11.0\" x2=\"9.5\" y2=\"-3.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"11.0\" x2=\"9.5\" y2=\"7.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"11.0\" x2=\"-9.5\" y2=\"7.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"11.0\" x2=\"-9.5\" y2=\"-3.5\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><circle cx=\"0.0\" cy=\"11.0\" r=\"2.6\" fill=\"#ffd166\" stroke=\"none\" stroke-width=\"1.2\"/><circle cx=\"0.0\" cy=\"-7.0\" r=\"2.6\" fill=\"#ffd166\" stroke=\"none\" stroke-width=\"1.2\"/><circle cx=\"9.5\" cy=\"-3.5\" r=\"2.6\" fill=\"#ffd166\" stroke=\"none\" stroke-width=\"1.2\"/><circle cx=\"-9.5\" cy=\"7.5\" r=\"2.6\" fill=\"#ffd166\" stroke=\"none\" stroke-width=\"1.2\"/><circle cx=\"-9.5\" cy=\"-3.5\" r=\"2.6\" fill=\"#ffd166\" stroke=\"none\" stroke-width=\"1.2\"/><circle cx=\"9.5\" cy=\"7.5\" r=\"2.6\" fill=\"#ffd166\" stroke=\"none\" stroke-width=\"1.2\"/><text x=\"-4.0\" y=\"12.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">1辺12cm</text></svg>",
+       "steps": [
+        {
+         "question": "この正八面体の体積は何cm³ですか。",
+         "answer": "288",
+         "meaning": "正八面体を、まん中の面（上下・前後・左右の6個の面の中心のうち、まわりの4個を結んでできる正方形）で上下に分けると、同じ形の四角すい2つになります。この正方形は、対角線がどちらも立方体の1辺と同じ12cmなので、面積は12×12÷2＝**72cm²**です。四角すいの高さは、立方体の中心から面の中心までの距離で、1辺の半分の6cmです。四角すい1つの体積は72×6÷3＝144cm³なので、2つ合わせて144×2＝**288cm³**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_06_18",
+       "src": "HG-2277",
+       "star": 2,
+       "title": "立方体の4頂点を結ぶ正四面体",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "intro": "下の図のような、1辺が6cmの立方体があります。頂点A、C、F、Hを結ぶと正四面体ができます。",
+       "svg": "<svg viewBox=\"-149.4 -65.3 288.0 119.3\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"-5.4\" y=\"-53.3\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">立方体の頂点A,C,F,Hを結んでできる正四面体</text><line x1=\"0.0\" y1=\"0.0\" x2=\"22.5\" y2=\"13.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"22.5\" y1=\"13.0\" x2=\"0.0\" y2=\"26.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"26.0\" x2=\"-22.5\" y2=\"13.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"-22.5\" y1=\"13.0\" x2=\"0.0\" y2=\"0.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"-21.3\" x2=\"22.5\" y2=\"-8.3\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"22.5\" y1=\"-8.3\" x2=\"0.0\" y2=\"4.7\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"4.7\" x2=\"-22.5\" y2=\"-8.3\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"-22.5\" y1=\"-8.3\" x2=\"0.0\" y2=\"-21.3\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"0.0\" y2=\"-21.3\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"22.5\" y1=\"13.0\" x2=\"22.5\" y2=\"-8.3\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"26.0\" x2=\"0.0\" y2=\"4.7\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"-22.5\" y1=\"13.0\" x2=\"-22.5\" y2=\"-8.3\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><line x1=\"0.0\" y1=\"26.0\" x2=\"22.5\" y2=\"-8.3\" stroke=\"#ffd166\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"26.0\" x2=\"-22.5\" y2=\"-8.3\" stroke=\"#ffd166\" stroke-width=\"2\"/><line x1=\"22.5\" y1=\"-8.3\" x2=\"-22.5\" y2=\"-8.3\" stroke=\"#ffd166\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"0.0\" y2=\"26.0\" stroke=\"#ffd166\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"22.5\" y2=\"-8.3\" stroke=\"#ffd166\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"-22.5\" y2=\"-8.3\" stroke=\"#ffd166\" stroke-width=\"2\"/><text x=\"0.0\" y=\"-14.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">A</text><text x=\"35.2\" y=\"19.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">B</text><text x=\"0.0\" y=\"40.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">C</text><text x=\"-35.2\" y=\"19.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">D</text><text x=\"0.0\" y=\"-35.3\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">E</text><text x=\"35.2\" y=\"-14.3\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">F</text><text x=\"0.0\" y=\"18.7\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">G</text><text x=\"-35.2\" y=\"-14.3\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">H</text><text x=\"-6.0\" y=\"26.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">1辺6cm</text></svg>",
+       "steps": [
+        {
+         "question": "この正四面体の体積は何cm³ですか。",
+         "answer": "72",
+         "meaning": "立方体からこの正四面体を切り出すと、立方体の4つの角に、直角をはさむ2辺が6cmの直角二等辺三角形を底面とする三角すいが4つ余ります。この三角すい1つの体積は、底面積(6×6÷2＝18cm²)×高さ6cm×1/3＝36cm³です。立方体全体の体積は6×6×6＝216cm³なので、正四面体の体積は、216から三角すい4つ分（36×4＝144cm³）を引いて216－144＝**72cm³**です。"
+        }
+       ],
+       "grade": 5
       }
      ],
      "2": [
