@@ -31147,6 +31147,134 @@
         }
        ],
        "grade": 4
+      },
+      {
+       "id": "hd4n_09_2",
+       "src": "HG-2384",
+       "star": 3,
+       "title": "道をつけて12個の長方形を残す",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "たての長さが横の長さの2倍ある長方形の土地に、下の図のように幅2mの道をつけて、形と大きさの等しい長方形12個が残るようにしました。道の面積の合計は242㎡です。",
+       "svg": "<svg viewBox=\"27.0 -8.0 221.0 414.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"137.5\" y=\"8.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">道をつけて12個の長方形を残す</text><rect x=\"80.0\" y=\"40.0\" width=\"150.0\" height=\"300.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><rect x=\"80.0\" y=\"40.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"80.0\" y=\"118.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"80.0\" y=\"196.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"80.0\" y=\"274.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"134.0\" y=\"40.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"134.0\" y=\"118.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"134.0\" y=\"196.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"134.0\" y=\"274.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"188.0\" y=\"40.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"188.0\" y=\"118.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"188.0\" y=\"196.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><rect x=\"188.0\" y=\"274.0\" width=\"42.0\" height=\"66.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.5\"/><line x1=\"122.0\" y1=\"356.0\" x2=\"134.0\" y2=\"356.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"122.0\" y1=\"352.0\" x2=\"122.0\" y2=\"360.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"134.0\" y1=\"352.0\" x2=\"134.0\" y2=\"360.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"128.0\" y=\"371.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">道はば2m</text><text x=\"70.0\" y=\"190.0\" font-size=\"12\" text-anchor=\"end\" fill=\"#c9d4f0\">たて</text><text x=\"155.0\" y=\"30.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">横</text><text x=\"155.0\" y=\"382.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">たての長さは横の長さの2倍</text></svg>",
+       "steps": [
+        {
+         "question": "もとの長方形の面積は何㎡ですか。",
+         "answer": "722",
+         "meaning": "横の長さを1とすると、たての長さは2になります。たてに走る道（はば2m）は2本で、道の長さはたての長さぶんあるので、面積は2×(2×たて)。横に走る道（はば2m）は3本で、道の長さは横の長さぶんあるので、面積は3×(2×横)。交差点（2本×3本＝6か所）は2×2で二重に数えているので引きます。横の長さを□とすると、たては2□なので、道の面積は 2×(2×2□)＋3×(2×□)－6×(2×2)＝8□＋6□－24＝242。よって14□＝266、□＝19（横19m）、たては38mです。もとの面積は19×38＝**722㎡**です。"
+        },
+        {
+         "question": "残った長方形1つの「たて」の長さは何mですか。",
+         "answer": "8",
+         "meaning": "たての向き（たて38m）は、横に走る道3本（はば2m）で4段に分かれるので、(38－2×3)÷4＝32÷4＝**8m**です。"
+        },
+        {
+         "question": "残った長方形1つの「横」の長さは何mですか。",
+         "answer": "5",
+         "meaning": "横の向き（横19m）は、たてに走る道2本（はば2m）で3列に分かれるので、(19－2×2)÷3＝15÷3＝**5m**です。検算：12個×8×5＝480、480＋242＝722で、もとの面積と一致します。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_09_3",
+       "src": "HG-2385",
+       "star": 3,
+       "title": "中心角30度の2つのおうぎ形と三角形",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図は中心角が30度の2つのおうぎ形と三角形からできています。円周率は3.14として計算しなさい。",
+       "svg": "<svg viewBox=\"14.8 16.0 319.5 100.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"174.6\" y=\"32.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">30度のおうぎ形2つと三角形（図全体が斜線部分）</text><path d=\"M150.0 70.0 L97.8 56.0 A54 54 0 0 0 97.8 84.0 L254.3 98.0 A108 108 0 0 0 254.3 42.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\" fill-rule=\"evenodd\"/><line x1=\"150.0\" y1=\"70.0\" x2=\"97.8\" y2=\"84.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/><line x1=\"150.0\" y1=\"70.0\" x2=\"254.3\" y2=\"98.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/><text x=\"109.9\" y=\"63.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">6cm</text><text x=\"218.2\" y=\"56.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">12cm</text><circle cx=\"150.0\" cy=\"70.0\" r=\"2.6\" fill=\"#ffd166\"/><text x=\"114.0\" y=\"70.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">30°</text><text x=\"231.0\" y=\"70.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">30°</text><text x=\"150.0\" y=\"92.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#9aa3c0\">150°</text></svg>",
+       "steps": [
+        {
+         "question": "斜線部分の面積は何cm²ですか。",
+         "answer": "65.1",
+         "meaning": "半径6cm・中心角30度のおうぎ形＝6×6×3.14×30/360＝**9.42cm²**。半径12cm・中心角30度のおうぎ形＝12×12×3.14×30/360＝**37.68cm²**。まん中の三角形は、2辺が6cmと12cmで、はさむ角が150度です。150度の角からとなりの角（180－150＝30度）を考えると、高さは6cmの半分の3cmになるので、面積＝12×3÷2＝**18cm²**。合計すると9.42＋37.68＋18＝**65.1cm²**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_09_4",
+       "src": "HG-2386",
+       "star": 2,
+       "title": "円の中にぴったり入った正方形",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図は円の中に正方形がぴったり入っている図です。正方形の1辺は10cmです。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"31.3 3.3 183.0 185.4\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"122.8\" y=\"19.3\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">円に内接する正方形</text><path d=\"M120.0 29.3 A70.7 70.7 0 1 1 120.0 170.7 A70.7 70.7 0 1 1 120.0 29.3 Z M120.0 29.3 L190.7 100.0 L120.0 170.7 L49.3 100.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\" fill-rule=\"evenodd\"/><circle cx=\"120.0\" cy=\"100.0\" r=\"70.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"120.0\" y1=\"29.3\" x2=\"190.7\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"190.7\" y1=\"100.0\" x2=\"120.0\" y2=\"170.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"120.0\" y1=\"170.7\" x2=\"49.3\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"49.3\" y1=\"100.0\" x2=\"120.0\" y2=\"29.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"171.4\" y=\"58.6\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">10cm</text></svg>",
+       "steps": [
+        {
+         "question": "色のついている部分の面積は何cm²ですか。",
+         "answer": "57",
+         "meaning": "正方形の対角線は、円の中心を通って円周から円周までとどく線、つまり円の直径です。正方形は対角線2本で4つの三角形に分かれ、その1つの面積は「半径×半径÷2」（対角線の半分＝半径を底辺・高さとする三角形）です。4つ集めると、正方形の面積100＝半径×半径×4÷2＝半径×半径×2なので、半径×半径＝100÷2＝**50**です。円の面積＝50×3.14＝**157cm²**。色のついた部分＝157－100＝**57cm²**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_09_5",
+       "src": "HG-2387",
+       "star": 4,
+       "title": "3つの円のまわりを円がころがる",
+       "category": "zu",
+       "unit": "平面図形（長さ）",
+       "intro": "下の図は半径6cmの円が3つぴったりくっついている図です。この図形のまわりを半径6cmの円Aがはなれることなく1周まわります。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"27.5 26.4 232.2 178.4\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"143.6\" y=\"42.4\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">接する3つの円のまわりを円Aが1周</text><circle cx=\"150.0\" cy=\"88.4\" r=\"36.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"114.0\" cy=\"150.8\" r=\"36.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"186.0\" cy=\"150.8\" r=\"36.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"150.0\" cy=\"88.4\" r=\"2.4\" fill=\"#9aa3c0\"/><circle cx=\"114.0\" cy=\"150.8\" r=\"2.4\" fill=\"#9aa3c0\"/><circle cx=\"186.0\" cy=\"150.8\" r=\"2.4\" fill=\"#9aa3c0\"/><line x1=\"150.0\" y1=\"88.4\" x2=\"114.0\" y2=\"150.8\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"150.0\" y1=\"88.4\" x2=\"186.0\" y2=\"150.8\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"114.0\" y1=\"150.8\" x2=\"186.0\" y2=\"150.8\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"112.0\" y=\"117.6\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">中心の間は12cm</text><line x1=\"150.0\" y1=\"88.4\" x2=\"150.0\" y2=\"52.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"158.0\" y=\"70.4\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">半径6cm</text></svg>",
+       "steps": [
+        {
+         "question": "円Aの中心が通った長さは何cmですか。",
+         "answer": "113.04",
+         "meaning": "円Aが転がりながらまわると、円Aの中心はいつも「相手の円の中心から半径の和（6＋6＝12cm）」だけはなれた点を通ります。3つの円は半径がどれも同じ6cmなので、中心を結ぶと1辺12cmの正三角形になります。円Aが1つの円のまわりを通ってからとなりの円に乗りかえる点をPとすると、Pは今の円の中心からも次の円の中心からも12cmはなれています。この「12cm」は中心どうしの間の長さ（正三角形の1辺）とちょうど同じなので、円の中心とPのならび方が正三角形の性質できれいに決まり、1つの円のまわりで乗りかえ点から乗りかえ点までの角度は**180度**になります。3つの円ぶんで180×3＝540度、これは1.5周ぶんです。よって12×2×3.14×540/360＝**113.04cm**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_09_6",
+       "src": "HG-2388",
+       "star": 3,
+       "title": "直角三角形を3つの頂点それぞれで1回転",
+       "category": "zu",
+       "unit": "図形の移動・対称",
+       "intro": "下の図の直角三角形ABC（角C＝90度、AC＝12cm、CB＝16cm、AB＝20cm）を、3つの頂点を中心にそれぞれ1回転まわします。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"-6.9 59.0 263.7 190.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"124.9\" y=\"75.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">直角三角形を3頂点それぞれで1回転</text><path d=\"M90.0 94.0 L218.0 190.0 L90.0 190.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"76.0\" y=\"98.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"232.0\" y=\"194.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"76.0\" y=\"206.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><rect x=\"90.0\" y=\"180.0\" width=\"10.0\" height=\"10.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><line x1=\"70.0\" y1=\"94.0\" x2=\"70.0\" y2=\"190.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"66.0\" y1=\"94.0\" x2=\"74.0\" y2=\"94.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"66.0\" y1=\"190.0\" x2=\"74.0\" y2=\"190.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"61.0\" y=\"146.0\" font-size=\"12\" text-anchor=\"end\" fill=\"#c9d4f0\">12cm</text><line x1=\"90.0\" y1=\"210.0\" x2=\"218.0\" y2=\"210.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"90.0\" y1=\"206.0\" x2=\"90.0\" y2=\"214.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"218.0\" y1=\"206.0\" x2=\"218.0\" y2=\"214.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"154.0\" y=\"225.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">16cm</text><text x=\"170.0\" y=\"136.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">20cm</text></svg>",
+       "steps": [
+        {
+         "question": "Aを中心にまわしたとき、辺BCの通った部分の面積は何cm²ですか。",
+         "answer": "803.84",
+         "meaning": "辺BCが通った部分は、外側の半径がAB＝20cm、内側の半径がAC＝12cmのドーナツ形（円環）です。(20×20－12×12)×3.14＝(400－144)×3.14＝256×3.14＝**803.84cm²**です。"
+        },
+        {
+         "question": "Bを中心にまわしたとき、辺ACの通った部分の面積は何cm²ですか。",
+         "answer": "452.16",
+         "meaning": "辺ACが通った部分は、外側の半径がBA＝20cm、内側の半径がBC＝16cmのドーナツ形です。(20×20－16×16)×3.14＝(400－256)×3.14＝144×3.14＝**452.16cm²**です。"
+        },
+        {
+         "question": "Cを中心にまわしたとき、辺ABの通った部分の面積は何cm²ですか。",
+         "answer": "514.4576",
+         "meaning": "辺ABが通った部分は、外側の半径がCB＝16cm、内側の半径がCから辺ABへの垂線の長さのドーナツ形です。三角形ABCの面積は12×16÷2＝96cm²で、これはAB×（Cから垂線）÷2とも表せるので、垂線の長さ＝96×2÷20＝**9.6cm**です。(16×16－9.6×9.6)×3.14＝(256－92.16)×3.14＝163.84×3.14＝**514.4576cm²**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_09_7",
+       "src": "HG-2389",
+       "star": 4,
+       "title": "直角二等辺三角形を180度回転",
+       "category": "zu",
+       "unit": "図形の移動・対称",
+       "intro": "下の図のような直角二等辺三角形ABC（角C＝90度、AC＝BC＝12cm）を、Cを中心に180度回転させます。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"7.2 20.0 285.6 240.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"150.0\" y=\"36.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">直角二等辺三角形を180度回転</text><path d=\"M66.0 130.0 L150.0 214.0 L150.0 130.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M234.0 130.0 L150.0 46.0 L150.0 130.0 Z\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\" stroke-dasharray=\"5 4\"/><path d=\"M66.0 130.0 A84 84 0 0 1 234.0 130.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3 3\"/><text x=\"52.0\" y=\"134.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"150.0\" y=\"232.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"164.0\" y=\"124.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><rect x=\"140.0\" y=\"130.0\" width=\"10.0\" height=\"10.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"108.0\" y=\"122.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">12cm</text><text x=\"168.0\" y=\"172.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">12cm</text><text x=\"150.0\" y=\"236.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">実線＝もとの三角形　点線＝180度回転後の三角形</text></svg>",
+       "steps": [
+        {
+         "question": "このとき、直線ABが通った部分の面積は何cm²ですか。",
+         "answer": "154.08",
+         "meaning": "CからABへの垂線の足をHとすると、三角形CHBも直角二等辺三角形になり、その面積は三角形ABCの半分の36cm²です。CH×CH÷2＝36なので、CH×CH＝**72**（内側の半径×半径にあたる数）。外側の半径×半径はAC×AC＝**144**です。180度ぶんの半円環の面積＝(144－72)×3.14÷2＝72×3.14÷2＝**113.04cm²**。さらに、回転のはじめと終わりにできる2つのはみ出し部分（弓形）を合わせると、半径12cm・中心角90度のおうぎ形から三角形ABCの面積を引いたものと同じ大きさになり、144×3.14÷4－72＝113.04－72＝**41.04cm²**です。合計すると113.04＋41.04＝**154.08cm²**です。"
+        }
+       ],
+       "grade": 4
       }
      ]
     }
