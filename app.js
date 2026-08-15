@@ -397,13 +397,21 @@ function initHome() {
     };
   });
 
-  // 苦手のみ
+  // 苦手のみ（もう一度押すとオフ）
   document.getElementById('btn-weak').onclick = () => {
     if (!state.selectedCat) { showToast('カテゴリを選んでください'); return; }
+    const btn = document.getElementById('btn-weak');
+    if (state.weakOnly) {
+      state.weakOnly = false;
+      btn.classList.remove('active-weak');
+      showToast('通常の出題にもどします');
+      maybeShowStart();
+      return;
+    }
     const weaks = getWeakItems(state.selectedCat);
     if (!weaks.length) { showToast('まだ苦手問題がありません'); return; }
     state.weakOnly = true;
-    document.getElementById('btn-weak').classList.add('active-weak');
+    btn.classList.add('active-weak');
     showToast('苦手問題のみ出題します');
     maybeShowStart();
   };
