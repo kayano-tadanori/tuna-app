@@ -2040,7 +2040,10 @@ function startSansuQuiz() {
 function sqEm(t, cls) {
   return String(t == null ? '' : t)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/\*\*(.+?)\*\*/g, '<em class="' + (cls || 'rei-em') + '">$1</em>');
+    .replace(/\*\*(.+?)\*\*/g, '<em class="' + (cls || 'rei-em') + '">$1</em>')
+    // ★紙のテストの「——線部」を再現する下線。__ことば__ と書くと <u> になる
+    //   （本人指摘2026-08-15「線が引けるならそのほうがいい」。「」で囲むだけより実物に近い）
+    .replace(/__(.+?)__/g, '<u>$1</u>');
 }
 
 function renderSansuQuiz() {
