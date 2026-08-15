@@ -2284,6 +2284,51 @@
        ]
       },
       {
+      "id": "hd_3m_k02_611_2",
+      "src": "HG-0922",
+      "title": "611回 一行問題6問（三角形の数え上げまで）",
+      "category": "bun",
+      "unit": "一行問題",
+      "grade": 3,
+      "star": 2,
+      "intro": "次の問いに答えなさい。",
+      "svg": "",
+      "steps": [
+       {
+        "question": "けいさんのクラスの男の子は17人で、女の子は男の子より3人少ないそうです。けいさんのクラスはみんなで何人ですか。",
+        "answer": "31",
+        "meaning": "女の子は17−3＝14人。17＋14＝**31人**です。"
+       },
+       {
+        "question": "1本□円のえんぴつを2本買って70円をはらうと、おつりは6円です。えんぴつ1本は何円ですか。",
+        "answer": "32",
+        "meaning": "2本分の代金は70−6＝64円。64÷2＝**32円**です。"
+       },
+       {
+        "question": "はじめ公園には何人かの男の子と何人かの女の子の合わせて26人が遊んでいました。そのあと新しく5人の女の子が公園に来たので、女の子は合わせて14人になりました。はじめ公園にいた男の子は何人ですか。",
+        "answer": "17",
+        "meaning": "はじめの女の子は14−5＝9人。男の子は26−9＝**17人**です。"
+       },
+       {
+        "question": "1階から6階まで、とちゅうの階で止まらずに上がると30秒かかるエレベーターがあります。このエレベーターが2階から10階まで、とちゅうの階で止まらずに上がると、何秒かかりますか。",
+        "answer": "48",
+        "meaning": "1階から6階は5階分で30秒なので、1階分は6秒（植木算）。2階から10階は8階分なので、6×8＝**48秒**です。"
+       },
+       {
+        "question": "長さが7cmと5cmのテープを、のりしろを2cmにして、図のように7cm→5cm→7cm→5cmの順に4本つなげました。全体の長さ（☆）は何cmですか。",
+        "answer": "18",
+        "meaning": "テープの長さの合計は 7＋5＋7＋5＝24cm。のりしろは3か所あるので 24−2×3＝**18cm**です。",
+        "svg": "<svg viewBox=\"0 0 220 90\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"20\" width=\"70\" height=\"24\" fill=\"#4f7cff\" fill-opacity=\"0.35\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/><text x=\"45\" y=\"36\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">7cm</text><rect x=\"60\" y=\"20\" width=\"50\" height=\"24\" fill=\"#06d6a0\" fill-opacity=\"0.35\" stroke=\"#06d6a0\" stroke-width=\"1.6\"/><text x=\"85\" y=\"36\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">5cm</text><rect x=\"90\" y=\"20\" width=\"70\" height=\"24\" fill=\"#4f7cff\" fill-opacity=\"0.35\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/><text x=\"125\" y=\"36\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">7cm</text><rect x=\"140\" y=\"20\" width=\"50\" height=\"24\" fill=\"#06d6a0\" fill-opacity=\"0.35\" stroke=\"#06d6a0\" stroke-width=\"1.6\"/><text x=\"165\" y=\"36\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">5cm</text><line x1=\"10\" y1=\"60\" x2=\"190\" y2=\"60\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"10\" y1=\"55\" x2=\"10\" y2=\"65\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><line x1=\"190\" y1=\"55\" x2=\"190\" y2=\"65\" stroke=\"#ffd166\" stroke-width=\"1.2\"/><text x=\"100\" y=\"78\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ffd166\">☆（のりしろ2cmずつ・3か所）</text></svg>"
+       },
+       {
+        "question": "図のように、大きな三角形の中に、各頂点から向かい合う辺へ1本ずつ、計3本の線が引かれています（3本は1点では交わりません）。この図の中に三角形は全部で何こありますか。",
+        "answer": "17",
+        "meaning": "直線は全部で6本。この中から3本を選ぶと三角形が1つ決まるので、選び方は全部で20通り。ただし、大きな三角形の3つの頂点ではそれぞれ2辺＋線1本の3本が同じ点で交わってしまい三角形にならないので、その3組を除いて 20−3＝**17こ**です。",
+        "svg": "<svg viewBox=\"0 0 300 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"150,20 20,220 280,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"150\" y1=\"20\" x2=\"100\" y2=\"220\" stroke=\"#ef476f\" stroke-width=\"1.6\"/><line x1=\"20\" y1=\"220\" x2=\"221\" y2=\"130\" stroke=\"#06d6a0\" stroke-width=\"1.6\"/><line x1=\"280\" y1=\"220\" x2=\"85\" y2=\"120\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"150\" cy=\"20\" r=\"3\" fill=\"#f8fafc\"/><circle cx=\"20\" cy=\"220\" r=\"3\" fill=\"#f8fafc\"/><circle cx=\"280\" cy=\"220\" r=\"3\" fill=\"#f8fafc\"/><text x=\"150\" y=\"12\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">頂点</text><text x=\"150\" y=\"235\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#c9d4f0\">直線は全部で6本。3本は1点で交わらない</text></svg>"
+       }
+      ]
+     },
+      {
        "id": "hd_3m_k02_611_4",
        "src": "HG-0924",
        "title": "4しゅるいのボールの重さ",
@@ -3667,7 +3712,89 @@
          "meaning": "十の位の和をT、一の位の和をUとすると 10T＋U＝55。T＝5,U＝5 と T＝4,U＝15 の2通りしかありません。T＝5,U＝5は{1,4}{2,3}の組み合わせで 12+43／13+42／21+34／24+31 の4通り。T＝4,U＝15は十の位{1,3}・一の位{6,9}{7,8}で 16+39／19+36／17+38／18+37 の4通り。あわせて**8通り**です。"
         }
        ]
-      }
+      },
+      {
+      "id": "hd_3m_k01_622_6",
+      "src": "HG-2610",
+      "title": "622回 ぼうをならべて三角形",
+      "category": "kisoku",
+      "unit": "規則性・数列",
+      "grade": 3,
+      "star": 1,
+      "intro": "同じ長さのぼうを横一列にならべて、三角形を作っていきます。[図1]はぼう11本で三角形5こを作った様子です。",
+      "svg": "<svg viewBox=\"0 0 190 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"20,60 50,60 35.0,33.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"50,33.9 80,33.9 65.0,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"80,60 110,60 95.0,33.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"110,33.9 140,33.9 125.0,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"140,60 170,60 155.0,33.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"95.0\" y=\"102\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#c9d4f0\">[図1] ぼう11本で三角形5こ</text></svg>",
+      "steps": [
+       {
+        "question": "三角形が6こできるとき、ぼうは何本ならんでいますか。",
+        "answer": "13",
+        "meaning": "はじめの三角形に3本、あとは1こ増えるごとに2本ずつふえます。6こなら 3＋2×5＝**13本**です。"
+       },
+       {
+        "question": "ぼうを31本ならべると、三角形は何こできますか。",
+        "answer": "15",
+        "meaning": "ぼうの本数＝2×三角形の数＋1 なので、31＝2×□＋1 より □＝(31－1)÷2＝**15こ**です。"
+       }
+      ]
+     },
+      {
+      "id": "hd_3m_k01_622_7",
+      "src": "HG-2611",
+      "title": "622回 重なりを引いて直径をたどる",
+      "category": "zu",
+      "unit": "平面図形（長さ）",
+      "grade": 3,
+      "star": 3,
+      "intro": "太線でかかれた大きな円の中に、大・中・小の3つの円をかきました。4つの円の中心はすべて同じ直線（大きな円の直径）の上にあります。小と中の円は2cm、中と大の円は3cmだけ重なっています。大の円の中心から大きな円の右はしまでは6cmです。",
+      "svg": "<svg viewBox=\"0 0 280 160\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"140\" cy=\"80\" r=\"120\" fill=\"none\" stroke=\"#f8fafc\" stroke-width=\"2.4\"/><circle cx=\"55\" cy=\"80\" r=\"35\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><circle cx=\"120\" cy=\"80\" r=\"50\" fill=\"none\" stroke=\"#06d6a0\" stroke-width=\"1.8\"/><circle cx=\"200\" cy=\"80\" r=\"60\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"20\" y1=\"80\" x2=\"260\" y2=\"80\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"3,3\"/><circle cx=\"55\" cy=\"80\" r=\"2.4\" fill=\"#f8fafc\"/><circle cx=\"120\" cy=\"80\" r=\"2.4\" fill=\"#f8fafc\"/><circle cx=\"200\" cy=\"80\" r=\"2.4\" fill=\"#f8fafc\"/><circle cx=\"140\" cy=\"80\" r=\"2.4\" fill=\"#f8fafc\"/><text x=\"55\" y=\"50\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f9eff\">小</text><text x=\"115\" y=\"38\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#06d6a0\">中</text><text x=\"200\" y=\"28\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ffd166\">大</text><text x=\"80\" y=\"118\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#c9d4f0\">重なり2cm</text><text x=\"155\" y=\"118\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#c9d4f0\">重なり3cm</text><text x=\"230\" y=\"70\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#c9d4f0\">6cm</text></svg>",
+      "steps": [
+       {
+        "question": "大の円の直径は何cmですか。",
+        "answer": "12",
+        "meaning": "大の円は右がわで大きな円にぴったりついている（内接している）ので、大の中心から大きな円の右はしまでの6cmが、そのまま大の円の半径です。直径は6×2＝**12cm**です。"
+       },
+       {
+        "question": "大きな円の直径は何cmですか。",
+        "answer": "24",
+        "meaning": "大の円の中心と大きな円の中心の間も6cm（大の半径ぶん）です。大きな円の半径は、大の中心から大きな円の中心までの6cmに、大の半径6cmを足した12cm。直径は**24cm**です。"
+       },
+       {
+        "question": "小と中の円の直径をあわせると何cmですか。",
+        "answer": "17",
+        "meaning": "大きな円の直径24cmは、小の直径＋中の直径＋大の直径(12cm)から、2つの重なり(2cmと3cm)を引いたものに等しくなります。小＋中＋12－2－3＝24 なので、小＋中＝24－12＋2＋3＝**17cm**です。"
+       }
+      ]
+     },
+      {
+      "id": "hd_3m_k01_622_8",
+      "src": "HG-2613",
+      "title": "622回 2cmずつちがう正方形3つ",
+      "category": "bun",
+      "unit": "和差算・分配算",
+      "grade": 3,
+      "star": 3,
+      "intro": "1つの辺の長さが2cmずつちがう正方形ア・イ・ウがあります（ア＜イ＜ウ）。ア・イ・ウをすき間なく下ぞろえでならべると、となり合う正方形の間に段差ができます。",
+      "svg": "<svg viewBox=\"0 0 130 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20\" y=\"72\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"29.0\" y=\"85.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ア</text><rect x=\"38\" y=\"60\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"53.0\" y=\"79.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">イ</text><rect x=\"68\" y=\"48\" width=\"42\" height=\"42\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"89.0\" y=\"73.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ウ</text><line x1=\"20\" y1=\"98\" x2=\"110\" y2=\"98\" stroke=\"#ffd166\" stroke-width=\"1.4\"/></svg>",
+      "steps": [
+       {
+        "question": "アの1辺が3cmのとき、アイウを下ぞろえでならべた図で、下の辺の全長（▲）は何cmですか。",
+        "answer": "15",
+        "meaning": "イの1辺は3＋2＝5cm、ウの1辺は3＋4＝7cmです。下の辺の全長はア＋イ＋ウの辺の和なので、3＋5＋7＝**15cm**です。",
+        "svg": "<svg viewBox=\"0 0 130 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20\" y=\"72\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"29.0\" y=\"85.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ア</text><rect x=\"38\" y=\"60\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"53.0\" y=\"79.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">イ</text><rect x=\"68\" y=\"48\" width=\"42\" height=\"42\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"89.0\" y=\"73.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ウ</text><line x1=\"20\" y1=\"98\" x2=\"110\" y2=\"98\" stroke=\"#ffd166\" stroke-width=\"1.4\"/></svg>"
+       },
+       {
+        "question": "アイウを下ぞろえでならべたとき、下の辺の全長が21cmでした。ウの1辺は何cmですか。",
+        "answer": "9",
+        "meaning": "アの1辺をaとすると、下の辺の全長は a＋(a+2)＋(a+4)＝3a+6。3a+6＝21 より a＝5。ウの1辺は5＋4＝**9cm**です。",
+        "svg": "<svg viewBox=\"0 0 166 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20\" y=\"60\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"35.0\" y=\"79.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ア</text><rect x=\"50\" y=\"48\" width=\"42\" height=\"42\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"71.0\" y=\"73.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">イ</text><rect x=\"92\" y=\"36\" width=\"54\" height=\"54\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"119.0\" y=\"67.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ウ</text><line x1=\"20\" y1=\"98\" x2=\"146\" y2=\"98\" stroke=\"#ffd166\" stroke-width=\"1.4\"/></svg>"
+       },
+       {
+        "question": "こんどはイ・ア・ウの順（アが2つにはさまれる）に下ぞろえでならべました。このでこぼこした図形のまわりの長さ（内側の仕切り線は数えません）が88cmのとき、アの1辺は何cmですか。",
+        "answer": "8",
+        "meaning": "アの1辺をaとすると、イ＝a+2、ウ＝a+4。まわりの長さは、下の辺(3a+6)＋段差やたて・上の辺をすべて合わせると 8a+24 という式になります（段差の合計はつねに2+4＝6で一定）。8a+24＝88 より a＝**8cm**です。",
+        "svg": "<svg viewBox=\"0 0 148 110\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20\" y=\"54\" width=\"36\" height=\"36\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"38.0\" y=\"76.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">イ</text><rect x=\"56\" y=\"66\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"68.0\" y=\"82.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ア</text><rect x=\"80\" y=\"42\" width=\"48\" height=\"48\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"104.0\" y=\"70.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#f8fafc\">ウ</text><line x1=\"20\" y1=\"98\" x2=\"128\" y2=\"98\" stroke=\"#ffd166\" stroke-width=\"1.4\"/></svg>"
+       }
+      ]
+     }
      ]
     }
    },
