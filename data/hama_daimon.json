@@ -55529,6 +55529,126 @@
         }
        ],
        "grade": 5
+      },
+     {
+       "id": "hd5n_04_3",
+       "src": "HG-2246",
+       "star": 2,
+       "title": "二等辺三角形に内接する大小2つの正方形",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図のように、底辺の長さが120cm、高さが40cmの二等辺三角形の内部に、底辺に乗った大きい正方形と、その左に接する小さい正方形をかきます。",
+       "svg": "<svg viewBox=\"-77.8 -114.0 359.8 152.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"102.1\" y=\"-98.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">二等辺三角形に内接する大小2つの正方形</text><path d=\"M0.0 0.0 L264.0 0.0 L132.0 -88.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M99.0 0.0 L165.0 0.0 L165.0 -66.0 L99.0 -66.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><path d=\"M59.4 0.0 L99.0 0.0 L99.0 -39.6 L59.4 -39.6 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><path d=\"M0.0 0.0 L59.4 0.0 L59.4 -39.6 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\"/><text x=\"132.0\" y=\"14.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">120cm</text><text x=\"-14.0\" y=\"-44.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">40cm</text></svg>",
+       "steps": [
+        {
+         "question": "斜線部分の面積は何cm²ですか。",
+         "answer": "243",
+         "meaning": "三角形は底辺120・高さ40なので、底辺からの高さがsの位置での三角形の横はば（左斜辺から右斜辺まで）は 120×(40－s)÷40＝3×(40－s) です。大きい正方形は、1辺の長さがその高さでの横はばと等しくなるところにできるので、s＝3×(40－s) を解いて **s＝30cm**（大きい正方形は中央、底辺の45cmから75cmの位置）。小さい正方形は大きい正方形の左に接し、左上の頂点が三角形の左斜辺（傾き2:3の直線）の上にのっているので、1辺をtとすると t＝(2/3)×(45－t) を解いて **t＝18cm**（27cmから45cmの位置）。斜線部分は、底辺0cmから27cmまでの、左斜辺と小さい正方形の左辺にはさまれた直角三角形で、底辺27cm・高さ18cmなので、面積＝27×18÷2＝**243cm²**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_04_4",
+       "src": "HG-2250",
+       "star": 3,
+       "title": "三角形の中の2本の線分の交点で分かれる面積比",
+       "category": "zu",
+       "unit": "平面図形（相似・比）",
+       "intro": "下の図で、三角形ABCの面積は44cm²です。辺AB上の点DはADとDBの長さの比が1:2、辺AC上の点EはAEとECの長さの比が1:3です。BEとCDの交点をFとすると、三角形CEFの面積は9cm²でした。",
+       "svg": "<svg viewBox=\"-48.4 -34.0 257.1 242.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"80.2\" y=\"-18.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">三角形ABCに2本の線分をひいた交点F</text><path d=\"M0.0 0.0 L138.0 0.0 L0.0 184.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"138.0\" y1=\"0.0\" x2=\"0.0\" y2=\"46.0\" stroke=\"#9aa3c0\" stroke-width=\"1.4\"/><line x1=\"0.0\" y1=\"184.0\" x2=\"46.0\" y2=\"0.0\" stroke=\"#9aa3c0\" stroke-width=\"1.4\"/><path d=\"M0.0 0.0 L46.0 0.0 L37.6 33.5 L0.0 46.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\"/><path d=\"M37.6 33.5 L138.0 0.0 L0.0 184.0 Z\" fill=\"rgba(120,220,180,0.16)\" stroke=\"#78dcb4\" stroke-width=\"1.6\"/><text x=\"-14.0\" y=\"4.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"146.0\" y=\"16.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"-14.0\" y=\"184.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"46.0\" y=\"16.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">D</text><text x=\"-14.0\" y=\"46.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">E</text><text x=\"43.6\" y=\"25.5\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">F</text><text x=\"16.9\" y=\"33.9\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">ADFE</text><text x=\"58.5\" y=\"72.5\" font-size=\"10\" text-anchor=\"middle\" fill=\"#78dcb4\">FBC</text><text x=\"108.0\" y=\"27.6\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">AD:DB=1:2</text><text x=\"70.0\" y=\"128.8\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">AE:EC=1:3</text><text x=\"30.0\" y=\"105.0\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">三角形ABC=44cm²</text><text x=\"77.6\" y=\"53.5\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">三角形CEF=9cm²</text></svg>",
+       "steps": [
+        {
+         "question": "（四角形ADFEの面積）:（三角形FBCの面積）を、もっとも簡単な整数の比で求めなさい。",
+         "answer": "17:72",
+         "choices": [
+          "17:72",
+          "11:24",
+          "17:132",
+          "1:4"
+         ],
+         "meaning": "三角形BECの面積は、三角形ABCと底辺EC・ACを比べて、EC:AC＝3:4なので44×3/4＝**33cm²**です。ここから三角形CEFの9cm²を引くと、三角形BFCの面積は33－9＝**24cm²**です。次に三角形BDCの面積は、三角形ABCと底辺DB・ABを比べて、DB:AB＝2:3なので44×2/3＝88/3cm²です。ここから三角形BFC(24cm²)を引くと、三角形BDFの面積は88/3－24＝16/3cm²です。最後に四角形ADFEは、三角形ABCから三角形BDF・三角形BFC・三角形CEFの3つを引いた残りなので、44－16/3－24－9＝17/3cm²です。分数のままADFE:FBCの比を作ると、17/3：24＝17：72となり、これがもっとも簡単な整数の比です。よって四角形ADFE:三角形FBC＝**17:72**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_04_5",
+       "src": "HG-2251",
+       "star": 3,
+       "title": "正六角形の3辺上の点で作る三角形",
+       "category": "zu",
+       "unit": "平面図形（相似・比）",
+       "intro": "下の図のような1辺4cmの正六角形ABCDEFがあります。辺AB上に点P（AP＝1cm）、辺CD上に点Q（CQ＝1cm）、辺EF上に点R（ER＝2cm）をとります。",
+       "svg": "<svg viewBox=\"-179.2 -155.8 358.4 327.6\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"0.0\" y=\"-139.8\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">正六角形の3辺上の点P,Q,Rで作る三角形</text><path d=\"M-68.0 -117.8 L-136.0 0.0 L-68.0 117.8 L68.0 117.8 L136.0 0.0 L68.0 -117.8 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M-85.0 -88.3 L-34.0 117.8 L102.0 -58.9 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\"/><text x=\"-82.0\" y=\"-117.8\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">A</text><text x=\"-152.0\" y=\"4.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"-82.0\" y=\"131.8\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"82.0\" y=\"131.8\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">D</text><text x=\"152.0\" y=\"4.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">E</text><text x=\"82.0\" y=\"-117.8\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">F</text><text x=\"-89.0\" y=\"-98.3\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">P</text><text x=\"-38.0\" y=\"133.8\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">Q</text><text x=\"116.0\" y=\"-62.9\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">R</text><text x=\"0.0\" y=\"147.8\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">1辺4cmの正六角形。AP=1cm・CQ=1cm・ER=2cm</text></svg>",
+       "steps": [
+        {
+         "question": "三角形PQRの面積は、正六角形ABCDEFの面積の何倍ですか。",
+         "answer": "37/96",
+         "meaning": "正六角形の1辺は4cmなので、1辺1cmの小さな正三角形で全体をしきつめると、6×4×4＝**96個**に分けられます（1辺4cmの正三角形が16個の小三角形に分かれ、それが6個で正六角形になります）。この小三角形96個を基準にすると、三角形PQRを取りのぞいた残りの3つの角（P・B・C・Qで囲まれた形、Q・D・E・Rで囲まれた形、R・F・A・Pで囲まれた形）の面積の合計が、小三角形59個ぶんになることが、辺の比（底辺の比×まわりの三角形の面積）から計算できます。96－59＝**37**なので、三角形PQRは小三角形37個ぶん、つまり正六角形全体の**37/96倍**です。37はこれ以上約分できない数なので、きれいな比にはなりません。AP・CQ・ERの長さをわざと1cm・1cm・2cmとそろえずに変えてあるのが、答えが単純な比にならない理由です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_04_6",
+       "src": "HG-2253",
+       "star": 2,
+       "title": "長方形を4つに分けて対角線を引く",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図は、長方形ABCDを4つの長方形に分けて、AとF、CとEを結んだ図です。AE＝EB＝12cm、AH＝20cm、HD＝10cmです。",
+       "svg": "<svg viewBox=\"-194.8 -49.0 397.5 245.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"4.0\" y=\"-33.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">長方形を4つに分け、AとF、CとEを結ぶ</text><path d=\"M0.0 0.0 L165.0 0.0 L165.0 132.0 L0.0 132.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"66.0\" x2=\"165.0\" y2=\"66.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"110.0\" y1=\"0.0\" x2=\"110.0\" y2=\"132.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"110.0\" y2=\"132.0\" stroke=\"#9aa3c0\" stroke-width=\"1.4\"/><line x1=\"165.0\" y1=\"132.0\" x2=\"0.0\" y2=\"66.0\" stroke=\"#9aa3c0\" stroke-width=\"1.4\"/><path d=\"M0.0 66.0 L0.0 132.0 L110.0 132.0 L82.5 99.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\"/><text x=\"-4.0\" y=\"-10.0\" font-size=\"12\" text-anchor=\"start\" fill=\"#c9d4f0\">A</text><text x=\"-4.0\" y=\"150.0\" font-size=\"12\" text-anchor=\"start\" fill=\"#c9d4f0\">B</text><text x=\"171.0\" y=\"150.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"171.0\" y=\"-10.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">D</text><text x=\"-14.0\" y=\"70.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">E</text><text x=\"110.0\" y=\"-12.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">H</text><text x=\"110.0\" y=\"150.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">F</text><text x=\"179.0\" y=\"70.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">G</text><text x=\"0.0\" y=\"172.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">長方形ABCD。AE=EB=12cm、AH=20cm、HD=10cm</text></svg>",
+       "steps": [
+        {
+         "question": "斜線部分の面積は何cm²ですか。",
+         "answer": "150",
+         "meaning": "長方形は、たて24cm（AE＋EB）・よこ30cm（AH＋HD）です。AとFを結ぶ直線AFの上で、Aから測った高さがEと同じ12cmになる点をMとすると、Aの高さ24cmからFの高さ0cmまでのちょうど真ん中が12cmなので、MはAFのまん中の点です。EからMまでの横の長さは10cm、FからCまでの横の長さも10cmで、どちらも同じ向き（横向き）の線なので、EMとFCは長さが等しく平行です。すると、EMとFCの両はしを結ぶ2本の線分EC・MF（MFはAFの一部）がつくる形は、上下がぴったり相似な「砂時計」の形になり、その比はEM:FC＝1:1です。だから2本の線の交わる点J（これが求める交点）は、ECのちょうどまん中の点になり、Jの高さ（BCからの距離）は、Eの高さ12cmとCの高さ0cmのまん中の**6cm**です。ここまでわかれば、斜線部分（四角形EBFJ）は、三角形EBC（たて12cm×よこ30cm÷2＝180cm²）から、三角形JFC（よこ10cm×高さ6cm÷2＝30cm²）を引けば求められます。180－30＝**150cm²**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_04_7",
+       "src": "HG-2254",
+       "star": 3,
+       "title": "直角三角形を中線で折り返す",
+       "category": "zu",
+       "unit": "図形の移動・対称",
+       "intro": "下の図のような直角三角形ABC（角B＝90°）があります。BCの真ん中の点をDとして、ADを折り目として三角形ABDを折り曲げると、Bの位置がB'に移りました。AD、BCの長さはどちらも20cmです。DB'を延長した直線と辺ACが交わる点をEとします。",
+       "svg": "<svg viewBox=\"-113.4 -196.0 400.0 238.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"86.6\" y=\"-180.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">直角三角形をADで折り返す</text><path d=\"M0.0 -150.0 L0.0 0.0 L173.2 0.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M0.0 -150.0 L129.9 -75.0 L86.6 0.0 Z\" fill=\"none\" stroke=\"#ffd166\" stroke-width=\"1.6\" stroke-dasharray=\"5 4\"/><path d=\"M0.0 -150.0 L86.6 0.0 L115.5 -50.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"2\"/><text x=\"-4.0\" y=\"-158.0\" font-size=\"12\" text-anchor=\"start\" fill=\"#c9d4f0\">A</text><text x=\"-14.0\" y=\"4.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"187.2\" y=\"4.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#c9d4f0\">C</text><text x=\"86.6\" y=\"18.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">D</text><text x=\"133.9\" y=\"-81.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">B'</text><text x=\"125.5\" y=\"-54.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">E</text><text x=\"86.6\" y=\"-145.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">直角三角形ABC（角B=90°）。DはBCの中点。AD=BC=20cm</text></svg>",
+       "steps": [
+        {
+         "question": "折り返して重なった部分（三角形ADE）と、直角三角形ABCの面積の比を、もっとも簡単な整数の比で求めなさい。",
+         "answer": "1:3",
+         "choices": [
+          "1:3",
+          "1:2",
+          "2:3",
+          "1:4"
+         ],
+         "meaning": "DはBCの真ん中の点なので、BD＝DC＝10cmです。三角形ABDは角B＝90°の直角三角形で、斜辺AD＝20cm、もう1つの辺BD＝10cmです。斜辺がBDのちょうど2倍になっているのは、三角定規でおなじみの30°・60°・90°の直角三角形の特ちょうです。だから**角ADB＝60°**、角DAB＝30°です。すると角ADC＝180－60＝120°です。折り返しても角の大きさは変わらないので角ADB'も60°のままで、角ADCの120°のうち、角ADB'（60°）と角B'DC（120－60＝60°）はちょうど半分ずつです。つまりDB'（の延長）は角ADCをきっちり半分に分けています。角ADCを半分に分ける線がACと交わる点がEなので、Eから辺AD・辺DCまでのそれぞれの距離（垂線の長さ）は等しくなります。この距離をhとすると、三角形ADEの面積＝AD×h÷2、三角形CDEの面積＝DC×h÷2なので、面積の比はAD:DC＝20:10＝2:1です。一方、三角形ADEと三角形CDEは、どちらも頂点Dから見て底辺AE・ECが同じ直線AC上にあるので、面積の比はAE:ECにも等しくなります。よってAE:EC＝2:1です。重なった部分（三角形ADE）は、三角形ADC（三角形ABCの半分）のうち、AE:EC=2:1のAE側の部分（2/3）にあたるので、三角形ABCの1/2×2/3＝1/3です。よって重なった部分：三角形ABC＝**1:3**です。"
+        }
+       ],
+       "grade": 5
+      },
+      {
+       "id": "hd5n_04_8",
+       "src": "HG-2256",
+       "star": 3,
+       "title": "おうぎ形のまわりを円が1周する",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図のような、半径12cm・中心角30°のおうぎ形があります。このおうぎ形のまわりを、半径3cmの円がはなれることなく1周します。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"-153.2 -137.6 306.4 192.8\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"0.0\" y=\"-121.6\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">おうぎ形のまわりを円が1周する</text><path d=\"M0.0 0.0 L-19.3 -71.9 L-17.7 -72.3 L-16.1 -72.6 L-14.5 -73.0 L-12.9 -73.3 L-11.3 -73.5 L-9.7 -73.8 L-8.1 -74.0 L-6.5 -74.1 L-4.9 -74.2 L-3.2 -74.3 L-1.6 -74.4 L0.0 -74.4 L1.6 -74.4 L3.2 -74.3 L4.9 -74.2 L6.5 -74.1 L8.1 -74.0 L9.7 -73.8 L11.3 -73.5 L12.9 -73.3 L14.5 -73.0 L16.1 -72.6 L17.7 -72.3 L19.3 -71.9 L0.0 0.0 Z\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M-35.9 9.6 L-55.2 -62.2 L-55.7 -64.6 L-56.1 -67.0 L-56.4 -69.4 L-56.5 -71.9 L-56.4 -74.3 L-56.1 -76.7 L-55.7 -79.1 L-55.2 -81.5 L-54.5 -83.8 L-53.6 -86.1 L-52.6 -88.3 L-51.5 -90.5 L-50.2 -92.5 L-48.8 -94.5 L-47.2 -96.4 L-45.6 -98.2 L-43.8 -99.8 L-41.9 -101.4 L-39.9 -102.8 L-37.9 -104.1 L-35.7 -105.2 L-33.5 -106.2 L-31.2 -107.1 L-28.9 -107.8 L-26.5 -108.4 L-24.2 -109.0 L-21.8 -109.5 L-19.4 -109.9 L-17.0 -110.3 L-14.6 -110.6 L-12.1 -110.9 L-9.7 -111.2 L-7.3 -111.4 L-4.9 -111.5 L-2.4 -111.6 L0.0 -111.6 L2.4 -111.6 L4.9 -111.5 L7.3 -111.4 L9.7 -111.2 L12.1 -110.9 L14.6 -110.6 L17.0 -110.3 L19.4 -109.9 L21.8 -109.5 L24.2 -109.0 L26.5 -108.4 L28.9 -107.8 L31.2 -107.1 L33.5 -106.2 L35.7 -105.2 L37.9 -104.1 L39.9 -102.8 L41.9 -101.4 L43.8 -99.8 L45.6 -98.2 L47.2 -96.4 L48.8 -94.5 L50.2 -92.5 L51.5 -90.5 L52.6 -88.3 L53.6 -86.1 L54.5 -83.8 L55.2 -81.5 L55.7 -79.1 L56.1 -76.7 L56.4 -74.3 L56.5 -71.9 L56.4 -69.4 L56.1 -67.0 L55.7 -64.6 L55.2 -62.2 L55.2 -62.2 L35.9 9.6 L34.7 13.5 L33.0 17.2 L30.9 20.7 L28.5 23.9 L25.7 26.9 L22.6 29.5 L19.3 31.8 L15.7 33.7 L12.0 35.2 L8.1 36.3 L4.0 37.0 L0.0 37.2 L-4.0 37.0 L-8.1 36.3 L-12.0 35.2 L-15.7 33.7 L-19.3 31.8 L-22.6 29.5 L-25.7 26.9 L-28.5 23.9 L-30.9 20.7 L-33.0 17.2 L-34.7 13.5 L-35.9 9.6 Z M0.0 0.0 L-19.3 -71.9 L-17.7 -72.3 L-16.1 -72.6 L-14.5 -73.0 L-12.9 -73.3 L-11.3 -73.5 L-9.7 -73.8 L-8.1 -74.0 L-6.5 -74.1 L-4.9 -74.2 L-3.2 -74.3 L-1.6 -74.4 L0.0 -74.4 L1.6 -74.4 L3.2 -74.3 L4.9 -74.2 L6.5 -74.1 L8.1 -74.0 L9.7 -73.8 L11.3 -73.5 L12.9 -73.3 L14.5 -73.0 L16.1 -72.6 L17.7 -72.3 L19.3 -71.9 L0.0 0.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.6\" fill-rule=\"evenodd\"/><path d=\"M0.0 0.0 L-19.3 -71.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M0.0 0.0 L19.3 -71.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M-19.3 -71.9 L-17.7 -72.3 L-16.1 -72.6 L-14.5 -73.0 L-12.9 -73.3 L-11.3 -73.5 L-9.7 -73.8 L-8.1 -74.0 L-6.5 -74.1 L-4.9 -74.2 L-3.2 -74.3 L-1.6 -74.4 L0.0 -74.4 L1.6 -74.4 L3.2 -74.3 L4.9 -74.2 L6.5 -74.1 L8.1 -74.0 L9.7 -73.8 L11.3 -73.5 L12.9 -73.3 L14.5 -73.0 L16.1 -72.6 L17.7 -72.3 L19.3 -71.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"0.0\" y=\"-90.4\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">半径12cm・中心角30°のおうぎ形</text><text x=\"0.0\" y=\"-77.8\" font-size=\"10\" text-anchor=\"middle\" fill=\"#9aa3c0\">外側を半径3cmの円が1周した、通った部分（色つき）</text></svg>",
+       "steps": [
+        {
+         "question": "円の通った部分の面積は何cm²ですか。",
+         "answer": "294.72",
+         "meaning": "円が通った部分を3つに分けて考えます。①2本の直線部分にそった帯：まっすぐな半径にそって円（直径6cm）が転がると、はば6cm・長さ12cmの長方形の帯が2つできるので、6×12×2＝**144cm²**。②弧にそった帯：弧の外側を円がなぞると、内側の半径12cmと外側の半径12＋6＝18cmの間のおうぎ形（中心角30°）ぶんの面積になるので、(18×18－12×12)×3.14×30/360＝180×3.14÷12＝**47.1cm²**。③かどで円が向きを変える部分：円は3か所のかどで向きを変えながら回転します。おうぎ形の中心では、まわりの外側を回るので180－30＝150°ぶん、直線と弧のつなぎ目2か所ではそれぞれ90°ぶん向きを変えるので、合計150＋90＋90＝330°。この330°ぶんを半径6cm（円の直径）のおうぎ形として計算すると、6×6×3.14×330/360＝**103.62cm²**。①＋②＋③＝144＋47.1＋103.62＝**294.72cm²**です。"
+        }
+       ],
+       "grade": 5
       }
      ]
     }
