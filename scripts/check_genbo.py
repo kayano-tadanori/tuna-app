@@ -65,6 +65,10 @@ COURSE_PAT = [
     ("nd2",    re.compile(r"^小(\d)\s*2nd")),
     ("nadago", re.compile(r"^小(\d)\s*灘合")),
     ("kokugo", re.compile(r"^小(\d)\s*国語")),
+    # ★「マスター算数 第N分冊」＝復習テストとは別の宿題テキスト（アプリのキー名 master_bunsatsu）。
+    #   見出しが「小3マスター…」で始まる点は復習テストと同じなので、下の"master"より先に置いて
+    #   「分冊」を含む見出しだけ先取りする（2026-08-16・小3マスター第1分冊159本を追加したときに追加）
+    ("master_bunsatsu", re.compile(r"^小(\d)\s*マスター.*分冊")),
     ("master", re.compile(r"^小(\d)\s*(?:マスター|復習|本科|実力|No\.)")),
 ]
 gen = collections.defaultdict(set)
@@ -332,7 +336,7 @@ for (grade, course) in sorted(gen):
                     else:
                         nohg.append((grade, course, x.get("id")))
     miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME) - KOKUGO_DONE)
-    nm = "小%s%s" % (grade, {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科", "nadago": "灘合", "kokugo": "国語"}[course])
+    nm = "小%s%s" % (grade, {"master": "マスター", "master_bunsatsu": "マスター宿題", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科", "nadago": "灘合", "kokugo": "国語"}[course])
     print("%-12s %5d本 %5d本 %5d問   %s" % (
         nm, len(gen[(grade, course)]), n, q,
         ("**%d本** %s" % (len(miss), miss[:8])) if miss else "なし"))
