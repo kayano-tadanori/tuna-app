@@ -553,8 +553,11 @@ const LAB_FORMULAS = {
   },
   buoyancy(v) {
     const density = Math.round((v.weight / v.volume) * 100) / 100;
-    const floats = density < 1;
-    const finalY = floats ? 50 : 90;
+    // ★密度がちょうど1.0のときは浮きも沈みもせず水中で止まる。
+    //   density < 1 の2分岐だと、この状態が「しずんだ」と表示されていた（400通りのうち20通り）。
+    const state = density < 1 ? 'float' : (density > 1 ? 'sink' : 'balance');
+    const floats = state === 'float';
+    const finalY = state === 'float' ? 50 : (state === 'sink' ? 90 : 70);
     const svg = `<svg viewBox="0 0 200 160" style="display:block;margin:0 auto;max-width:220px">
       <rect width="200" height="160" fill="#dff3ff"/>
       <rect y="70" width="200" height="90" fill="#7fc7ff"/>
@@ -566,8 +569,13 @@ const LAB_FORMULAS = {
     </svg>`;
     return {
       svg,
-      title: floats ? '🎈 浮いた！' : '⬇️ しずんだ…',
-      text: `密度（1cm³あたりの重さ）は ${v.weight}g ÷ ${v.volume}cm³ ＝ ${density}g/cm³ です。水の密度（1g/cm³）より${floats ? '小さい' : '大きい'}ので、この物体は${floats ? '浮きます' : 'しずみます'}。`
+      title: state === 'float' ? '🎈 浮いた！' : (state === 'sink' ? '⬇️ しずんだ…' : '⚖️ 水中で止まった！'),
+      text: `密度（1cm³あたりの重さ）は ${v.weight}g ÷ ${v.volume}cm³ ＝ ${density}g/cm³ です。`
+        + (state === 'balance'
+            ? `水の密度（1g/cm³）と<b>ちょうど同じ</b>なので、浮きも沈みもせず水の中で止まります。`
+            : `水の密度（1g/cm³）より${floats ? '小さい' : '大きい'}ので、この物体は${floats ? '浮きます' : 'しずみます'}。`)
+        + `<br>このとき物体が押しのける水は ${v.volume}cm³ ＝ <b>${v.volume}g</b> で、これがそのまま<b>浮力</b>の大きさです。`
+        + `物体の重さ${v.weight}gと浮力${v.volume}gをくらべて、${state === 'float' ? '浮力のほうが大きいから浮く' : (state === 'sink' ? '重さのほうが大きいから沈む' : '同じだからつり合って止まる')}——と考えても同じ答えになります。`
     };
   }
 };
