@@ -18,6 +18,10 @@ rules_version = '2';
 //   ただし上書きされても“ありえない値”は弾かれ、削除もできません。
 //   完全に防ぐには各自にパスワード/PINを持たせる改修が必要です。
 //
+//   いけんばこ・通報も同じで、受験番号を変えながら送り続ける荒らしは止められません
+//   （1日6件の上限は「受験番号ごと」なので）。根本対策は App Check ですが、
+//   既存の書き込み全部に一律で効くため今回は入れていません。
+//
 // 【管理ツールからの削除について（2026-08-01）】
 //   受験番号の削除は「管理者としてログインしているとき」だけ通ります（下の isAdmin）。
 //   管理ツールに管理者ログインを付けたので、消したいときはそこから。
@@ -169,6 +173,64 @@ service cloud.firestore {
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email in ['kayano.tadanori@gmail.com'];
+    }
+
+    // ---------- フィードバック feedback/{ID} ----------
+    // 【なにが入るか】
+    //   ・クイズ中の「この問題おかしい」通報（kind='question'）
+    //   ・いけんばこからの要望・不具合（kind='idea'）
+    //
+    // 【読めるのは管理者だけ】
+    //   子どもが書いた自由文なので、achievement のように誰でも読める形にはしない。
+    //   アプリ側の「おくったもの」一覧は localStorage から出しているので読み取り不要。
+    //
+    // 【1日6件までの作り】
+    //   ドキュメントIDを 20260816_たろう_0 の形に固定し、末尾の連番を 0〜5 に縛る。
+    //   create しか許さない＝同じIDには2度書けないので、受験番号ごとに1日6件が上限になる。
+    //   （カウンタを持つ仕組みがルールには無いので、IDの形で数えている）
+    function fbIdOk(id) {
+      return id.matches('^20[0-9]{6}_.{1,20}_[0-5]$');
+    }
+    // 任意フィールド用。「無いならOK、あるなら長さを見る」
+    function fbStr(field, maxLen) {
+      return !(field in request.resource.data) || strOk(request.resource.data[field], maxLen);
+    }
+
+    match /feedback/{fid} {
+      allow read: if isAdmin();
+      allow create: if fbIdOk(fid)
+        && nickOk(request.resource.data.nickname)
+        && request.resource.data.keys().hasAll(['kind', 'reason', 'nickname', 'status', 'createdAt'])
+        && request.resource.data.keys().hasOnly([
+             'kind', 'reason', 'comment', 'nickname', 'status', 'createdAt',
+             'qid', 'subject', 'cat', 'unit', 'grade', 'difficulty',
+             'question', 'answer', 'screen', 'ver', 'ua'
+           ])
+        && request.resource.data.kind in ['question', 'idea']
+        && request.resource.data.reason in
+             ['answer', 'text', 'kaisetsu', 'level', 'request', 'bug', 'other']
+        && request.resource.data.status == 'new'
+        && request.resource.data.createdAt == request.time
+        && fbStr('comment', 500)
+        && fbStr('qid', 60)
+        && fbStr('subject', 12)
+        && fbStr('cat', 24)
+        && fbStr('unit', 40)
+        && fbStr('difficulty', 12)
+        && fbStr('question', 200)
+        && fbStr('answer', 60)
+        && fbStr('screen', 24)
+        && fbStr('ver', 24)
+        && fbStr('ua', 160)
+        && (!('grade' in request.resource.data) || intIn(request.resource.data.grade, 0, 6));
+      // 未読／対応済みの切替と管理メモは管理ツールから（管理者ログイン中だけ）。
+      // affectedKeys で縛ってあるので、管理ツールのバグで本文を壊すことはない。
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['status', 'adminNote', 'handledAt'])
+        && request.resource.data.status in ['new', 'doing', 'done']
+        && fbStr('adminNote', 500);
+      allow delete: if isAdmin();
     }
 
     // ---------- 上記以外はすべて拒否 ----------

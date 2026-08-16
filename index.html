@@ -210,6 +210,14 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+    <button id="btn-settings-feedback" class="subject-card">
+      <span class="subject-icon-wrap"><span class="subject-icon">📮</span></span>
+      <span class="game-text">
+        <span class="subject-name">いけんばこ</span>
+        <span class="subject-detail">ようぼう・こまったことを オトンに おくる</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
   </div>
 </div>
 
@@ -784,6 +792,9 @@
     <div class="question-box">
       <p id="quiz-question" class="quiz-question"></p>
     </div>
+    <div class="quiz-toolbar">
+      <button class="tool-btn btn-report">🚩 この もんだい へんかも</button>
+    </div>
     <div id="quiz-choices" class="choices-grid"></div>
     <div id="quiz-feedback" class="feedback hidden">
       <p id="feedback-text"></p>
@@ -809,6 +820,9 @@
     </div>
     <div class="question-box">
       <p id="fill-question" class="quiz-question"></p>
+    </div>
+    <div class="quiz-toolbar">
+      <button class="tool-btn btn-report">🚩 この もんだい へんかも</button>
     </div>
     <div class="fill-input-wrap">
       <input type="text" id="fill-input" placeholder="答えを入力" autocomplete="off" autocorrect="off" autocapitalize="off">
@@ -873,6 +887,9 @@
     </div>
     <div class="question-box">
       <p id="kanji-question" class="kanji-question"></p>
+    </div>
+    <div class="quiz-toolbar">
+      <button class="tool-btn btn-report">🚩 この もんだい へんかも</button>
     </div>
 
     <!-- 手書きキャンバス -->
@@ -1019,6 +1036,54 @@
     <div class="custom-list-wrap">
       <h3>追加済みの問題</h3>
       <div id="custom-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============== いけんばこ =============== -->
+<!-- 送ったものの一覧は localStorage から出す。
+     クラウドの feedback は管理者しか読めないルールにしてあるので読み戻さない。 -->
+<div id="screen-feedback" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="settings">‹ 戻る</button>
+    <h2 class="top-title">📮 いけんばこ</h2>
+  </header>
+  <div class="custom-main">
+
+    <div class="help-hero">
+      <img src="images/otton.png" alt="オットン" class="help-hero-img" onerror="this.style.display='none'">
+      <div class="help-hero-bubble">アプリの「こうなったら ええな」や「うまく うごかへん」を おしえてな！<br>ぜんぶ オトンが よんでるで。</div>
+    </div>
+
+    <div class="custom-form">
+      <label>どんな はなし？</label>
+      <div id="fb-reason-row" class="fb-reason-row">
+        <button type="button" class="fb-reason-btn" data-reason="request">🙋 こうして ほしい</button>
+        <button type="button" class="fb-reason-btn" data-reason="bug">🐛 うまく うごかない</button>
+        <button type="button" class="fb-reason-btn" data-reason="other">💬 そのほか</button>
+      </div>
+      <label>どこの こと？（えらばなくても いいよ）
+        <select id="fb-subject">
+          <option value="app">ぜんぶ・わからない</option>
+          <option value="kokugo">国語</option>
+          <option value="sansu">算数</option>
+          <option value="rika">理科</option>
+          <option value="shakai">社会</option>
+          <option value="game">ゲーム</option>
+          <option value="gacha">ガチャ・図鑑</option>
+        </select>
+      </label>
+      <label>じゆうに かいてね
+        <textarea id="fb-comment" rows="5" maxlength="500" placeholder="れい：ことわざの もんだいを もっと ふやしてほしい"></textarea>
+      </label>
+      <button id="btn-fb-send" class="btn-primary">📮 おくる</button>
+      <p id="fb-quota" class="snd-note"></p>
+    </div>
+
+    <div class="custom-list-wrap">
+      <h3>おくったもの</h3>
+      <div id="fb-sent-list"></div>
+      <p class="snd-note">おなまえ（受験番号）と ひづけも いっしょに おくられます。わるぐちは かかないでね。</p>
     </div>
   </div>
 </div>
@@ -1499,6 +1564,7 @@
       <button id="sq-btn-write" class="tool-btn">✏️ 書き込み</button>
       <button id="sq-btn-erase" class="tool-btn hidden">🧹 消す</button>
       <button id="sq-btn-scratch" class="tool-btn">📝 計算用紙</button>
+      <button class="tool-btn btn-report">🚩 へんかも</button>
     </div>
 
     <div id="sq-slider" class="quiz-slider">
@@ -2126,6 +2192,35 @@
     <button id="daimon-pick-all" class="btn-primary">🔁 全部まとめて（大問1から順に）</button>
     <div id="daimon-pick-list" class="update-list"></div>
     <button id="daimon-pick-close" class="btn-secondary">とじる</button>
+  </div>
+</div>
+
+<!-- =============== もんだいの通報モーダル =============== -->
+<!-- どの画面から開いても中身は reportCtx（いま出ている問題）から描く。
+     答え合わせの前でも押せる位置にボタンを置いてある（問題文が読めなくて解けない、も報告できるように）。 -->
+<div id="report-modal" class="gami-modal hidden">
+  <div class="gami-card">
+    <p class="gami-emoji">🚩</p>
+    <p class="gami-title">この もんだい、へんかも？</p>
+    <div class="report-q-box">
+      <p class="report-q-label">いま といてる もんだい</p>
+      <p id="report-q-preview" class="report-q-preview"></p>
+      <p id="report-q-meta" class="report-q-meta"></p>
+    </div>
+    <p class="report-section-label">どこが へん？（えらんでね）</p>
+    <div id="report-reason-row" class="fb-reason-row">
+      <button type="button" class="fb-reason-btn" data-reason="answer">❌ こたえが ちがうと おもう</button>
+      <button type="button" class="fb-reason-btn" data-reason="text">❓ もんだいの ぶんが わからない</button>
+      <button type="button" class="fb-reason-btn" data-reason="kaisetsu">💡 かんたんな せつめいを つけてほしい</button>
+      <button type="button" class="fb-reason-btn" data-reason="level">😵 むずかしすぎる／かんたんすぎる</button>
+      <button type="button" class="fb-reason-btn" data-reason="other">✏️ そのほか</button>
+    </div>
+    <p class="report-section-label">もっと おしえて（かかなくても いいよ）</p>
+    <textarea id="report-comment" rows="3" maxlength="300" placeholder="れい：こたえは 3 やと おもう"></textarea>
+    <div class="restore-btn-row">
+      <button id="report-send" class="btn-primary">おくる</button>
+      <button id="report-close" class="btn-secondary">やめる</button>
+    </div>
   </div>
 </div>
 

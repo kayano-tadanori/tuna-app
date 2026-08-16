@@ -2063,6 +2063,14 @@ function renderSansuQuiz() {
   const total = sansuState.questions.length;
   if (sansuState.current >= total) { endSansuSession(); return; }
   const q = sansuState.questions[sansuState.current];
+  // 🚩 通報ボタン用に「いま出ている問題」を控える。
+  //    qid は showSqFeedback の recordResult と同じキーにそろえる（管理ツールで突き合わせるため）
+  setReportCtx({
+    qid: `${sansuState.subject}_${q._cat || sansuState.cat}:${q.id}`,
+    subject: sansuState.subject, cat: q._cat || sansuState.cat, unit: q.unit,
+    grade: sansuState.grade, difficulty: String(sansuState.diff ?? ''),
+    question: reportPlainQ(q.question), answer: q.answer, screen: 'sansu-quiz',
+  });
   // ★大問の(2)(3)＝同じ設定の続きでは、計算用紙を消さない（本人指示 2026-07-29）。
   //   紙のテストなら①で書いた筆算や数え上げは最後まで手元に残っている。
   resetQuizExtras('sq', !!(q.prevSteps && q.prevSteps.length));

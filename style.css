@@ -489,6 +489,32 @@ button { cursor: pointer; font-family: inherit; }
 .btn-del { background: none; border: none; color: var(--red2); font-size: 1.25rem; padding: 6px; min-width: 44px; min-height: 44px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; transition: background 0.15s,transform 0.1s; }
 .btn-del:active { background: rgba(255,68,102,0.12); transform: scale(0.90); }
 
+/* ===== フィードバック（もんだいの通報・いけんばこ） ===== */
+/* 理由ボタンは .choice-btn と同じ 56px のタップ領域。小さい子が押しやすいように。 */
+.fb-reason-row { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.fb-reason-btn { width: 100%; min-height: 56px; padding: 13px 16px; background: var(--card); border: 1.5px solid var(--glass-border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.92rem; font-weight: 700; font-family: inherit; text-align: left; line-height: 1.4; -webkit-tap-highlight-color: transparent; transition: transform 0.12s,border-color 0.18s,background 0.18s,box-shadow 0.18s; }
+.fb-reason-btn:active { transform: scale(0.98); }
+.fb-reason-btn.on { border-color: var(--accent); background: var(--grad-brand); color: #fff; box-shadow: var(--glow-brand); }
+
+/* 通報モーダル：中身が縦に長いのでカードごとスクロールさせる */
+#report-modal .gami-card { max-height: 88vh; overflow-y: auto; align-items: stretch; }
+#report-modal .gami-emoji,
+#report-modal .gami-title { align-self: center; }
+#report-modal textarea { width: 100%; min-height: 70px; padding: 12px 14px; background: var(--dark2); border: 1.5px solid var(--glass-border); border-radius: var(--radius-xs); color: var(--text); font-size: 0.95rem; font-family: inherit; font-weight: 600; outline: none; resize: vertical; }
+#report-modal textarea::placeholder { color: var(--sub); }
+#report-modal textarea:focus { border-color: var(--accent2); box-shadow: var(--glow-cyan); }
+.report-section-label { font-size: 0.78rem; font-weight: 800; color: var(--sub2); letter-spacing: 0.04em; margin-top: 4px; }
+.report-q-box { width: 100%; background: var(--card); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 11px 13px; }
+.report-q-label { font-size: 0.66rem; font-weight: 800; color: var(--accent2); margin-bottom: 4px; letter-spacing: 0.08em; }
+.report-q-preview { font-size: 0.86rem; font-weight: 700; color: var(--text); line-height: 1.55; }
+.report-q-meta { font-size: 0.72rem; color: var(--sub2); font-weight: 700; margin-top: 5px; }
+
+/* いけんばこ：おくったもの一覧（localStorage から描く） */
+.fb-sent-item { background: var(--card); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 11px 14px; margin-bottom: 10px; }
+.fb-sent-head { font-size: 0.68rem; font-weight: 800; color: var(--accent2); margin-bottom: 4px; letter-spacing: 0.04em; }
+.fb-sent-body { font-size: 0.84rem; color: var(--text); font-weight: 600; line-height: 1.55; }
+.fb-sent-empty { font-size: 0.8rem; color: var(--sub); padding: 4px 2px; }
+
 /* ===== ローディング・トースト ===== */
 .loading-overlay { position: fixed; inset: 0; background: rgba(8,14,32,0.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 100; }
 .spinner { width: 46px; height: 46px; border: 4px solid rgba(79,124,255,0.18); border-top-color: var(--accent2); border-right-color: var(--accent); border-radius: 50%; animation: spin 0.85s linear infinite; box-shadow: var(--glow-brand); }

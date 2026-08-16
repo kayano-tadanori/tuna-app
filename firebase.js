@@ -254,5 +254,43 @@ async function clearPendingGrants(nickname) {
   }
 }
 
+// ============================================================
+// フィードバック（もんだいの通報・いけんばこ）
+// ============================================================
+
+// ドキュメントIDは 20260816_たろう_0 の形（YYYYMMDD_受験番号_連番0〜5）。
+// ルールが末尾の連番を 0〜5 に縛り、create しか許さないので、
+// 「同じIDには2度書けない＝受験番号ごとに1日6件」が上限になる。
+// なので .add() ではなく必ず .doc(id).set() で書くこと。
+//
+// 戻り値は文字列コード（呼び出し側でメッセージを出し分けるため）：
+//   'ok' 送れた / 'no-firebase' オフライン設定 / 'no-nickname' 受験番号なし
+//   'duplicate' そのIDは埋まっている（呼び出し側で連番+1して再試行）
+//   'save-failed' それ以外の失敗
+window.lastFeedbackInfo = null;
+
+async function saveFeedback(nickname, docId, payload) {
+  if (!firebaseReady) return 'no-firebase';
+  if (!nickname)     return 'no-nickname';
+  try {
+    await db.collection('feedback').doc(docId).set({
+      ...payload,
+      nickname,
+      status: 'new',                                       // ルールで 'new' 以外は弾かれる
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    window.lastFeedbackInfo = { ok: true, at: new Date().toISOString(), docId };
+    return 'ok';
+  } catch (e) {
+    window.lastFeedbackInfo = { ok: false, at: new Date().toISOString(), docId,
+                                code: e.code || '', message: e.message || '' };
+    console.warn('フィードバック保存失敗:', e.code, e.message);
+    // 既に使われているIDへの書き込みは「更新」扱いになり permission-denied で返る。
+    // 端末のキャッシュを消して連番がズレたときにここへ来るので、呼び出し側で +1 して1回だけ再試行する。
+    if (e.code === 'permission-denied') return 'duplicate';
+    return 'save-failed';
+  }
+}
+
 // DOM読み込み完了後に初期化
 document.addEventListener('DOMContentLoaded', initFirebase);

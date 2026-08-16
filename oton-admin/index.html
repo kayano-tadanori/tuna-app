@@ -63,6 +63,35 @@
   .grant-pending-title { color: #8b98c9; font-weight: 700; }
   .grant-none { color: #6f7ec2; font-size: 0.8rem; }
 
+  /* ── タブ（受験番号 / いけん・通報）── */
+  .tab-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .tab-btn { flex: 1; background: #171c3d; border: 1px solid #2a3466; color: #8b98c9; border-radius: 10px;
+             padding: 11px 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+  .tab-btn.on { background: #23306a; border-color: #4f7cff; color: #eef2ff; }
+  .fb-badge { display: inline-block; min-width: 20px; padding: 1px 6px; margin-left: 6px; border-radius: 999px;
+              background: #ff4466; color: #fff; font-size: 0.72rem; font-weight: 800; }
+  .fb-badge.hidden { display: none; }
+  .hidden { display: none; }
+
+  /* ── フィードバック一覧 ── */
+  .fb-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .fb-chip { background: #23306a; border: 1px solid #38499a; color: #c4cdef; border-radius: 999px;
+             padding: 6px 13px; font-size: 0.8rem; cursor: pointer; font-weight: 700; }
+  .fb-chip.on { background: #4f7cff; border-color: #4f7cff; color: #fff; }
+  .fb-comment-cell { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fb-full { background: #10142a; border: 1px solid #2a3466; border-radius: 9px; padding: 12px 14px;
+             font-size: 0.92rem; line-height: 1.7; white-space: pre-wrap; word-break: break-word; margin-bottom: 4px; }
+  .fb-qbox { background: #1a2247; border: 1px solid #2f3d7d; border-radius: 9px; padding: 11px 13px;
+             font-size: 0.88rem; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }
+  .fb-status-row { display: flex; gap: 8px; margin: 10px 0 4px; }
+  .fb-status-btn { flex: 1; background: #23306a; border: 1px solid #38499a; color: #c4cdef; border-radius: 9px;
+                   padding: 10px 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+  .fb-status-btn.on { background: #4f7cff; border-color: #4f7cff; color: #fff; }
+  .fb-note-input { width: 100%; min-height: 70px; padding: 10px 12px; border-radius: 8px; border: 1px solid #2a3466;
+                   background: #10142a; color: #eef2ff; font-size: 0.9rem; font-family: inherit; resize: vertical; }
+  .fb-copy-btn { background: #23306a; border: 1px solid #38499a; color: #dfe6ff; border-radius: 8px;
+                 padding: 7px 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; margin-top: 6px; }
+
   /* ── のびの記録（グラフ）── */
   .chart-wrap { position: relative; margin-bottom: 20px; }
   .chart-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -137,15 +166,46 @@
   <button id="admin-btn" class="btn-sub" onclick="toggleAdmin()">管理者ログイン</button>
   <span id="hist-msg" class="sub" style="margin:0"></span>
 </div>
-<input id="search" type="text" placeholder="受験番号で絞り込み…" oninput="renderList()">
+<div class="tab-row">
+  <button id="tab-btn-users" class="tab-btn on" onclick="switchTab('users')">👦 受験番号</button>
+  <button id="tab-btn-feedback" class="tab-btn" onclick="switchTab('feedback')">📮 いけん・通報<span id="fb-unread-badge" class="fb-badge hidden">0</span></button>
+</div>
 
-<table>
-  <thead>
-    <tr><th>受験番号</th><th>称号</th><th>達成率</th><th>最終更新</th><th></th></tr>
-  </thead>
-  <tbody id="list-body"></tbody>
-</table>
-<div id="empty-msg" class="empty" style="display:none;">まだデータがありません</div>
+<div id="tab-users">
+  <input id="search" type="text" placeholder="受験番号で絞り込み…" oninput="renderList()">
+
+  <table>
+    <thead>
+      <tr><th>受験番号</th><th>称号</th><th>達成率</th><th>最終更新</th><th></th></tr>
+    </thead>
+    <tbody id="list-body"></tbody>
+  </table>
+  <div id="empty-msg" class="empty" style="display:none;">まだデータがありません</div>
+</div>
+
+<!-- 子どもから届いた「もんだいの通報」と「いけんばこ」。
+     firestore.rules で read を管理者だけに絞ってあるので、ログインしないと中身は出ない。 -->
+<div id="tab-feedback" class="hidden">
+  <div id="fb-login-note" class="empty">🔒 中身を読むには「管理者ログイン」が必要です。<br>子どもが書いた文なので、ルールで管理者以外は読めないようにしています。</div>
+  <div id="fb-tools" class="hidden">
+    <button class="btn-refresh" onclick="loadFeedback()">🔄 更新</button>
+    <div class="fb-chip-row" id="fb-chip-row">
+      <button class="fb-chip on" data-filter="all">すべて</button>
+      <button class="fb-chip" data-filter="new">🔴 未読</button>
+      <button class="fb-chip" data-filter="doing">🟡 対応中</button>
+      <button class="fb-chip" data-filter="done">✅ 対応済み</button>
+      <button class="fb-chip" data-filter="question">🚩 もんだいの通報</button>
+      <button class="fb-chip" data-filter="idea">📮 いけんばこ</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>種類</th><th>状態</th><th>受験番号</th><th>教科・単元</th><th>理由</th><th>コメント</th><th>日時</th><th></th></tr>
+      </thead>
+      <tbody id="fb-body"></tbody>
+    </table>
+    <div id="fb-empty" class="empty" style="display:none;">まだ届いていません</div>
+  </div>
+</div>
 
 <!-- 詳細モーダル -->
 <div id="detail-overlay" class="overlay hidden">
@@ -157,6 +217,29 @@
     <div class="danger-zone">
       <button id="btn-delete" class="btn btn-del" onclick="deleteCurrentNickname()" disabled>🗑 この受験番号を削除する</button>
       <p id="delete-note" class="sub" style="margin:8px 0 0; font-size:0.78rem"></p>
+    </div>
+  </div>
+</div>
+
+<!-- フィードバック詳細 -->
+<div id="fb-overlay" class="overlay hidden">
+  <div class="panel">
+    <button class="close" onclick="closeFbDetail()">×</button>
+    <h2 id="fb-detail-title"></h2>
+    <p class="sub" id="fb-detail-sub"></p>
+    <div id="fb-detail-body"></div>
+    <div class="section-title">状態</div>
+    <div class="fb-status-row">
+      <button class="fb-status-btn" data-status="new"   onclick="setFbStatus('new')">🔴 未読</button>
+      <button class="fb-status-btn" data-status="doing" onclick="setFbStatus('doing')">🟡 対応中</button>
+      <button class="fb-status-btn" data-status="done"  onclick="setFbStatus('done')">✅ 対応済み</button>
+    </div>
+    <div class="section-title">オトンのメモ</div>
+    <textarea id="fb-note" class="fb-note-input" maxlength="500" placeholder="例：kotowaza.json の k012 の答えを修正した"></textarea>
+    <button class="btn-refresh" style="width:100%;margin:8px 0 0" onclick="saveFbNote()">メモを保存</button>
+    <p id="fb-detail-msg" class="sub" style="margin:8px 0 0"></p>
+    <div class="danger-zone">
+      <button id="fb-btn-delete" class="btn btn-del" onclick="deleteFeedback()">🗑 このフィードバックを削除する</button>
     </div>
   </div>
 </div>
@@ -213,6 +296,9 @@ auth.onAuthStateChanged(user => {
     btn.textContent = '管理者ログイン';
   }
   updateDeleteButton();
+  // フィードバックは read も管理者だけ（firestore.rules）。ログインしたらここで読みにいく。
+  updateFeedbackAuth();
+  if (user) loadFeedback();
 });
 
 function updateDeleteButton() {
@@ -1044,6 +1130,207 @@ async function deleteCurrentNickname() {
     : `削除に失敗しました（${failed.length}/${tasks.length}件）：${failed[0].label} — ${(failed[0].r.reason && failed[0].r.reason.message) || code || '不明'}`;
   console.error('削除失敗:', failed.map(f => [f.label, f.r.reason]));
   loadList();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  📮 フィードバック（もんだいの通報・いけんばこ）
+//  アプリ本体の 🚩 ボタンと いけんばこ から feedback コレクションに届く。
+//  read は firestore.rules で管理者だけに絞ってあるので、ログイン中しか出せない。
+//  絞り込みは JS 側でやる（orderBy を createdAt 1本にして複合インデックスを不要にするため）。
+// ════════════════════════════════════════════════════════════════
+let allFeedback  = [];
+let fbFilter     = 'all';
+let currentFb    = null;   // 開いているフィードバック
+
+const FB_STATUS_LABEL  = { new: '🔴 未読', doing: '🟡 対応中', done: '✅ 対応済み' };
+const FB_KIND_LABEL    = { question: '🚩 もんだい', idea: '📮 いけん' };
+const FB_REASON_LABEL  = {
+  answer: 'こたえが ちがう', text: 'もんだい文が わからない', kaisetsu: 'かんたん解説がほしい',
+  level: 'むずかしさが あわない', request: 'こうしてほしい', bug: 'うまく うごかない', other: 'そのほか',
+};
+const FB_SUBJECT_LABEL = {
+  kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会',
+  app: 'アプリ全体', game: 'ゲーム', gacha: 'ガチャ・図鑑',
+};
+
+function switchTab(name) {
+  document.getElementById('tab-btn-users').classList.toggle('on', name === 'users');
+  document.getElementById('tab-btn-feedback').classList.toggle('on', name === 'feedback');
+  document.getElementById('tab-users').classList.toggle('hidden', name !== 'users');
+  document.getElementById('tab-feedback').classList.toggle('hidden', name !== 'feedback');
+  // ログイン後にタブを開いた場合など、まだ読んでいなければここで読む
+  if (name === 'feedback' && adminUser && !allFeedback.length) loadFeedback();
+}
+
+// ログイン状態でフィードバックタブの見た目を切り替える
+function updateFeedbackAuth() {
+  const note  = document.getElementById('fb-login-note');
+  const tools = document.getElementById('fb-tools');
+  if (!note || !tools) return;
+  note.classList.toggle('hidden', !!adminUser);
+  tools.classList.toggle('hidden', !adminUser);
+  if (!adminUser) {
+    allFeedback = [];
+    document.getElementById('fb-unread-badge').classList.add('hidden');
+  }
+}
+
+async function loadFeedback() {
+  if (!adminUser) { updateFeedbackAuth(); return; }
+  const status = document.getElementById('status');
+  try {
+    const snap = await db.collection('feedback').orderBy('createdAt', 'desc').limit(300).get();
+    allFeedback = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderFeedback();
+    const unread = allFeedback.filter(f => (f.status || 'new') === 'new').length;
+    const badge = document.getElementById('fb-unread-badge');
+    badge.textContent = unread;
+    badge.classList.toggle('hidden', unread === 0);
+  } catch (e) {
+    console.error('フィードバック読み込みエラー:', e);
+    status.className = 'status err';
+    status.textContent = e.code === 'permission-denied'
+      ? 'フィードバックを読めませんでした。Firestoreルールの管理者リストに、いまログイン中の ' + adminUser.email + ' が入っているか確認してください。'
+      : 'フィードバックの読み込みに失敗しました：' + (e.message || e.code);
+  }
+}
+
+function renderFeedback() {
+  const body = document.getElementById('fb-body');
+  const list = allFeedback.filter(f => {
+    if (fbFilter === 'all') return true;
+    if (fbFilter === 'question' || fbFilter === 'idea') return f.kind === fbFilter;
+    return (f.status || 'new') === fbFilter;
+  });
+  document.getElementById('fb-empty').style.display = list.length ? 'none' : 'block';
+  body.innerHTML = '';
+  list.forEach(f => {
+    const where = [FB_SUBJECT_LABEL[f.subject] || f.subject || '', f.unit || f.cat || '']
+      .filter(Boolean).join('・');
+    const tr = document.createElement('tr');
+    // ★子どもが書いた自由文は必ず esc() を通す。innerHTML に生で入れない。
+    tr.innerHTML = `
+      <td data-label="種類">${FB_KIND_LABEL[f.kind] || esc(f.kind || '')}</td>
+      <td data-label="状態">${FB_STATUS_LABEL[f.status || 'new']}</td>
+      <td data-label="受験番号">${esc(f.nickname || '')}</td>
+      <td data-label="教科・単元">${esc(where) || '—'}</td>
+      <td data-label="理由">${FB_REASON_LABEL[f.reason] || esc(f.reason || '')}</td>
+      <td data-label="コメント" class="fb-comment-cell">${esc((f.comment || '').slice(0, 40)) || '—'}</td>
+      <td data-label="日時">${fmtDate(f.createdAt)}</td>
+      <td data-label=""><button class="btn btn-view">詳細</button></td>
+    `;
+    tr.querySelector('.btn-view').onclick = () => showFbDetail(f.id);
+    body.appendChild(tr);
+  });
+}
+
+document.querySelectorAll('#fb-chip-row .fb-chip').forEach(chip => {
+  chip.onclick = () => {
+    fbFilter = chip.dataset.filter;
+    document.querySelectorAll('#fb-chip-row .fb-chip').forEach(c => c.classList.toggle('on', c === chip));
+    renderFeedback();
+  };
+});
+
+function showFbDetail(id) {
+  const f = allFeedback.find(x => x.id === id);
+  if (!f) return;
+  currentFb = f;
+
+  document.getElementById('fb-detail-title').textContent =
+    (FB_KIND_LABEL[f.kind] || '') + '　' + (FB_REASON_LABEL[f.reason] || f.reason || '');
+  document.getElementById('fb-detail-sub').textContent =
+    `${f.nickname || ''}　/　${fmtDate(f.createdAt)}`;
+  document.getElementById('fb-detail-msg').textContent = '';
+  document.getElementById('fb-note').value = f.adminNote || '';
+
+  const rows = [];
+  const row = (k, v) => `<div class="row"><span>${k}</span><span>${esc(v)}</span></div>`;
+  if (f.comment) {
+    rows.push('<div class="section-title">書いてくれたこと</div>');
+    rows.push(`<div class="fb-full">${esc(f.comment)}</div>`);
+  }
+  if (f.kind === 'question') {
+    rows.push('<div class="section-title">通報された問題</div>');
+    rows.push(`<div class="fb-qbox">${esc(f.question || '（問題文なし）')}</div>`);
+    if (f.qid) {
+      rows.push(`<button class="fb-copy-btn" onclick="copyQid()">📋 問題ID（${esc(f.qid)}）をコピー</button>`);
+    }
+    if (f.answer)  rows.push(row('正解', f.answer));
+  }
+  rows.push('<div class="section-title">くわしい情報</div>');
+  if (f.subject)    rows.push(row('教科', FB_SUBJECT_LABEL[f.subject] || f.subject));
+  if (f.cat)        rows.push(row('カテゴリ', f.cat));
+  if (f.unit)       rows.push(row('単元', f.unit));
+  if (f.grade)      rows.push(row('学年', '小' + f.grade));
+  if (f.difficulty) rows.push(row('難易度', f.difficulty));
+  if (f.screen)     rows.push(row('画面', f.screen));
+  if (f.ver)        rows.push(row('アプリ版', f.ver));
+  if (f.handledAt)  rows.push(row('対応した日時', fmtDate(f.handledAt)));
+  if (f.ua)         rows.push(row('端末', f.ua));
+  document.getElementById('fb-detail-body').innerHTML = rows.join('');
+
+  const cur = f.status || 'new';
+  document.querySelectorAll('.fb-status-btn').forEach(b => b.classList.toggle('on', b.dataset.status === cur));
+  document.getElementById('fb-overlay').classList.remove('hidden');
+}
+
+function closeFbDetail() {
+  document.getElementById('fb-overlay').classList.add('hidden');
+  currentFb = null;
+}
+
+function copyQid() {
+  if (!currentFb || !currentFb.qid) return;
+  navigator.clipboard.writeText(currentFb.qid)
+    .then(() => { document.getElementById('fb-detail-msg').textContent = '📋 問題IDをコピーしました'; })
+    .catch(() => { document.getElementById('fb-detail-msg').textContent = 'コピーできませんでした：' + currentFb.qid; });
+}
+
+async function setFbStatus(status) {
+  if (!currentFb) return;
+  const msg = document.getElementById('fb-detail-msg');
+  try {
+    await db.collection('feedback').doc(currentFb.id)
+      .update({ status, handledAt: firebase.firestore.FieldValue.serverTimestamp() });
+    currentFb.status = status;
+    document.querySelectorAll('.fb-status-btn').forEach(b => b.classList.toggle('on', b.dataset.status === status));
+    msg.textContent = FB_STATUS_LABEL[status] + ' にしました';
+    renderFeedback();
+    const unread = allFeedback.filter(f => (f.status || 'new') === 'new').length;
+    const badge = document.getElementById('fb-unread-badge');
+    badge.textContent = unread;
+    badge.classList.toggle('hidden', unread === 0);
+  } catch (e) {
+    msg.textContent = '変更できませんでした：' + (e.message || e.code);
+  }
+}
+
+async function saveFbNote() {
+  if (!currentFb) return;
+  const msg  = document.getElementById('fb-detail-msg');
+  const note = document.getElementById('fb-note').value.slice(0, 500);
+  try {
+    await db.collection('feedback').doc(currentFb.id).update({ adminNote: note });
+    currentFb.adminNote = note;
+    msg.textContent = 'メモを保存しました';
+  } catch (e) {
+    msg.textContent = 'メモを保存できませんでした：' + (e.message || e.code);
+  }
+}
+
+async function deleteFeedback() {
+  if (!currentFb) return;
+  if (!confirm('このフィードバックを削除します。よろしいですか？')) return;
+  const msg = document.getElementById('fb-detail-msg');
+  try {
+    await db.collection('feedback').doc(currentFb.id).delete();
+    allFeedback = allFeedback.filter(f => f.id !== currentFb.id);
+    closeFbDetail();
+    renderFeedback();
+  } catch (e) {
+    msg.textContent = '削除できませんでした：' + (e.message || e.code);
+  }
 }
 
 loadList();

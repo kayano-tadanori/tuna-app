@@ -159,6 +159,30 @@ function saveCustomQuestions(category, list) {
 }
 
 // ============================================================
+// フィードバック：いま出ている問題（🚩 通報ボタン用）
+// ============================================================
+// 出題している画面は quiz / fill / kanji / sansu-quiz の4つだけ。
+// それぞれの描画関数の頭で setReportCtx() を1行呼び、通報モーダルはここだけを見る。
+// （sansu-quiz の1枚が算数・理科・社会・じゅくナビを全部さばいているので4か所で足りる）
+
+let reportCtx = null;
+const REPORT_SCREENS = ['quiz', 'fill', 'kanji', 'sansu-quiz'];
+
+function setReportCtx(ctx) { reportCtx = ctx; }
+
+// 問題文はそのまま送らない。連鎖問題は <div class="tantei-passage"> を含み、
+// 算数は **強調** __下線__ の記法が生で入っているので、剥がしてから200字で切る。
+// （問題IDが変わっても、この文で data/*.json を grep して元問題を探せるようにするための保険）
+function reportPlainQ(html) {
+  return String(html || '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/\*\*|__/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 200);
+}
+
+// ============================================================
 // 回答チェック（ひらがな・カタカナ正規化）
 // ============================================================
 
@@ -207,6 +231,9 @@ function shuffle(arr) {
 // ============================================================
 
 function showScreen(id) {
+  // 出題画面から出たら「いま出ている問題」を捨てる。
+  // 残したままだと、ホームに戻ってから通報したときに前の問題が送られてしまう。
+  if (!REPORT_SCREENS.includes(id)) reportCtx = null;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const screen = document.getElementById('screen-' + id);
   if (screen) { screen.classList.add('active'); screen.scrollTop = 0; }
@@ -505,6 +532,10 @@ function renderQuiz() {
   const q = state.sessionQs[state.current];
   if (!q) { endSession(); return; }
 
+  setReportCtx({ qid: q.id, subject: 'kokugo', cat: state.selectedCat, grade: q.grade,
+                 difficulty: String(q.difficulty ?? state.selectedDiff ?? ''),
+                 question: reportPlainQ(q.question), answer: q.answer, screen: 'quiz' });
+
   const total = state.sessionQs.length;
   document.getElementById('quiz-counter').textContent = (state.current + 1) + ' / ' + total;
   document.getElementById('quiz-question').innerHTML = q.question;
@@ -571,6 +602,10 @@ function startFill() {
 function renderFill() {
   const q = state.sessionQs[state.current];
   if (!q) { endSession(); return; }
+
+  setReportCtx({ qid: q.id, subject: 'kokugo', cat: state.selectedCat, grade: q.grade,
+                 difficulty: String(q.difficulty ?? state.selectedDiff ?? ''),
+                 question: reportPlainQ(q.question), answer: q.answer, screen: 'fill' });
 
   const total = state.sessionQs.length;
   document.getElementById('fill-counter').textContent = (state.current + 1) + ' / ' + total;
@@ -723,6 +758,10 @@ function startKanji(qs, title) {
 function renderKanji() {
   const q = state.sessionQs[state.current];
   if (!q) { endSession(); return; }
+
+  setReportCtx({ qid: q.id, subject: 'kokugo', cat: state.selectedCat, grade: q.grade,
+                 difficulty: String(q.difficulty ?? state.selectedDiff ?? ''),
+                 question: reportPlainQ(q.question), answer: q.answer, screen: 'kanji' });
 
   document.getElementById('kanji-counter').textContent = `${state.current + 1} / ${state.sessionQs.length}`;
   document.getElementById('kanji-question').textContent = q.question;
@@ -1322,6 +1361,7 @@ document.getElementById('snd-music-test').onclick = () => {
 };
 document.getElementById('btn-settings-back').onclick = () => showScreen('subject');
 document.getElementById('btn-settings-char').onclick = () => showScreen('character');
+document.getElementById('btn-settings-feedback').onclick = () => { initFeedbackScreen(); showScreen('feedback'); };
 document.getElementById('btn-char-back').onclick = () => showScreen('settings');
 
 // ── 使い方ガイド ──
@@ -1845,6 +1885,260 @@ if ('serviceWorker' in navigator) {
     location.reload();
   });
 }
+
+// ============================================================
+// 📮 フィードバック（もんだいの通報・いけんばこ）
+// ============================================================
+// 送り先は Firestore の feedback コレクション。読めるのは管理ツール（オトン）だけ。
+// ドキュメントIDが 20260816_たろう_0 の形で、末尾の連番をルールが 0〜5 に縛っているので、
+// サーバー側でも「受験番号ごとに1日6件」が上限になっている。
+// ここのローカル制御は、その上限に当たる前に やさしく止めるためのもの。
+
+const FB_DAILY_LIMIT = 6;      // ルール側の連番 [0-5] と必ず揃えること
+const FB_COOLDOWN_MS = 60000;  // 連投の間隔
+const FB_LOG_MAX     = 20;     // 「おくったもの」に残す件数
+
+const FB_REASON_LABEL = {
+  answer:  '❌ こたえが ちがう',
+  text:    '❓ もんだいの ぶんが わからない',
+  kaisetsu:'💡 かんたんな せつめいが ほしい',
+  level:   '😵 むずかしさが あわない',
+  request: '🙋 こうして ほしい',
+  bug:     '🐛 うまく うごかない',
+  other:   '💬 そのほか',
+};
+
+function fbTodayKey()  { return todayStr().replace(/-/g, ''); }        // 2026-08-16 → 20260816
+function fbSeqKey()    { return 'fbSeq_' + todayStr(); }
+function fbSeq()       { return Number(localStorage.getItem(fbSeqKey()) || 0); }
+function fbQuotaLeft() { return Math.max(0, FB_DAILY_LIMIT - fbSeq()); }
+
+// ドキュメントIDに使えない文字（/ . # [ ] *）を潰し、20字で切る。
+// ここを忘れるとFirestoreがIDを受け付けず、原因の分かりにくい失敗になる。
+function fbDocId(nickname, seq) {
+  const nick = String(nickname).replace(/[\/\.\#\[\]\*]/g, '_').slice(0, 20);
+  return `${fbTodayKey()}_${nick}_${seq}`;
+}
+
+function fbGetLog() {
+  try { return JSON.parse(localStorage.getItem('fbSentLog') || '[]'); } catch (e) { return []; }
+}
+function fbPushLog(entry) {
+  const log = fbGetLog();
+  log.unshift(entry);
+  localStorage.setItem('fbSentLog', JSON.stringify(log.slice(0, FB_LOG_MAX)));
+}
+
+// 送ってよいか。だめなら理由の文言を返す（子どもを責めない言い方にする）
+function fbBlockReason(kind, qid, reason) {
+  if (!state.nickname) return '受験番号が わかりません';
+  if (fbQuotaLeft() <= 0) return 'きょうは たくさん おしえて くれたね！つづきは あした きかせてな😊';
+  const last = Number(localStorage.getItem('fbLastSentAt') || 0);
+  if (Date.now() - last < FB_COOLDOWN_MS) return 'ちょっと まってね（1分あけて おくれるよ）';
+  if (kind === 'question' && fbGetLog().some(e => e.qid === qid && e.reason === reason)) {
+    return 'もう おしえて くれてるよ！ありがとう🙏';
+  }
+  return null;
+}
+
+// 実際に送る。ローカルの連番がズレていたら1回だけ +1 して やり直す。
+// （端末のキャッシュを消すと連番が0に戻り、すでに埋まっているIDを叩いてしまうため）
+async function fbSend(payload, kind) {
+  let seq = fbSeq();
+  let code = await saveFeedback(state.nickname, fbDocId(state.nickname, seq), payload);
+  if (code === 'duplicate' && seq + 1 < FB_DAILY_LIMIT) {
+    seq += 1;
+    code = await saveFeedback(state.nickname, fbDocId(state.nickname, seq), payload);
+  }
+  if (code === 'ok') {
+    localStorage.setItem(fbSeqKey(), String(seq + 1));
+    localStorage.setItem('fbLastSentAt', String(Date.now()));
+    fbPushLog({ ts: Date.now(), kind, qid: payload.qid || '', reason: payload.reason,
+                comment: String(payload.comment || '').slice(0, 30) });
+  }
+  return code;
+}
+
+// オフラインのとき、compat SDK は書き込みをローカルに溜めて await が返ってこない。
+// 待ち続けると画面が固まって見えるので、8秒で切り上げて「あとで とどく」と伝える。
+function fbWithTimeout(promise) {
+  return Promise.race([
+    promise,
+    new Promise(resolve => setTimeout(() => resolve('queued'), 8000)),
+  ]);
+}
+
+const FB_RESULT_MSG = {
+  'queued':      '📶 いま ネットが ないみたい。つながったら とどくよ',
+  'no-firebase': '📶 ネットに つながっていません',
+  'no-nickname': '受験番号が わかりません',
+  'duplicate':   'きょうは たくさん おしえて くれたね！つづきは あした😊',
+  'save-failed': '❌ おくれませんでした。もう一度おしてね',
+};
+
+// 送信ボタンの共通処理（押しっぱなしの二重送信を止める）
+async function fbSubmit(btn, payload, kind, okMsg) {
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = '⏳';
+  showToast('📮 おくっています…', 8000);
+  let code;
+  try {
+    code = await fbWithTimeout(fbSend(payload, kind));
+  } catch (e) {
+    code = 'save-failed';
+  }
+  btn.disabled = false; btn.textContent = label;
+  if (code === 'ok') {
+    showToast(okMsg, 2600);
+    if (window.Snd) Snd.correct();
+  } else {
+    showToast(FB_RESULT_MSG[code] || 'おくれませんでした', 3000);
+  }
+  return code;
+}
+
+// 端末・版数を付ける（どの版で起きたかが分からないと不具合を追えない）
+function fbEnv() {
+  return { ver: String(latestAppVer || '').slice(0, 24),
+           ua:  String(navigator.userAgent || '').slice(0, 160) };
+}
+
+// 理由ボタン（1つだけ選べる）。選択中は .on。
+function fbWireReasonRow(rowId) {
+  const row = document.getElementById(rowId);
+  if (!row) return;
+  row.querySelectorAll('.fb-reason-btn').forEach(btn => {
+    btn.onclick = () => {
+      row.querySelectorAll('.fb-reason-btn').forEach(b => b.classList.toggle('on', b === btn));
+      if (window.Snd) Snd.tap();
+    };
+  });
+}
+function fbPickedReason(rowId) {
+  const el = document.querySelector('#' + rowId + ' .fb-reason-btn.on');
+  return el ? el.dataset.reason : null;
+}
+function fbClearReason(rowId) {
+  document.querySelectorAll('#' + rowId + ' .fb-reason-btn').forEach(b => b.classList.remove('on'));
+}
+
+// ── 🚩 もんだいの通報 ──────────────────────────────
+
+function openReportModal() {
+  if (!reportCtx) { showToast('いま といてる もんだいが ないよ'); return; }
+  const meta = [
+    reportCtx.grade ? '小' + reportCtx.grade : '',
+    { kokugo:'国語', sansu:'算数', rika:'理科', shakai:'社会' }[reportCtx.subject] || reportCtx.subject,
+    reportCtx.unit || reportCtx.cat || '',
+  ].filter(Boolean).join('・');
+  document.getElementById('report-q-preview').textContent =
+    reportCtx.question ? reportCtx.question.slice(0, 60) + (reportCtx.question.length > 60 ? '…' : '')
+                       : '（もんだい文が とれませんでした）';
+  document.getElementById('report-q-meta').textContent = meta;
+  document.getElementById('report-comment').value = '';
+  fbClearReason('report-reason-row');
+  document.getElementById('report-modal').classList.remove('hidden');
+  if (window.Snd) Snd.tap();
+}
+
+function closeReportModal() {
+  document.getElementById('report-modal').classList.add('hidden');
+}
+
+async function sendReport(btn) {
+  const reason = fbPickedReason('report-reason-row');
+  if (!reason)    { showToast('どこが へんか えらんでね'); return; }
+  if (!reportCtx) { showToast('いま といてる もんだいが ないよ'); closeReportModal(); return; }
+
+  const blocked = fbBlockReason('question', reportCtx.qid, reason);
+  if (blocked) { showToast(blocked, 3000); return; }
+
+  // 空文字のフィールドは送らない。ルールは長さしか見ていないが、
+  // 管理ツールで「値が無い」と「空文字」が混ざると読みにくいため。
+  const payload = { kind: 'question', reason, ...fbEnv() };
+  const comment = document.getElementById('report-comment').value.trim();
+  if (comment) payload.comment = comment.slice(0, 500);
+  for (const k of ['qid','subject','cat','unit','difficulty','question','answer','screen']) {
+    if (reportCtx[k]) payload[k] = String(reportCtx[k]);
+  }
+  if (typeof reportCtx.grade === 'number') payload.grade = reportCtx.grade;
+
+  const code = await fbSubmit(btn, payload, 'question', '🚩 おしえてくれて ありがとう！');
+  if (code === 'ok' || code === 'queued') closeReportModal();
+}
+
+// ── 📮 いけんばこ ────────────────────────────────
+
+function initFeedbackScreen() {
+  fbClearReason('fb-reason-row');
+  document.getElementById('fb-comment').value = '';
+  document.getElementById('fb-subject').value = 'app';
+  document.getElementById('fb-quota').textContent =
+    `きょうは あと ${fbQuotaLeft()}かい おくれるよ`;
+  renderFbSentList();
+}
+
+// クラウドの feedback は管理者しか読めないので、一覧はローカルの控えから描く
+function renderFbSentList() {
+  const box = document.getElementById('fb-sent-list');
+  const log = fbGetLog();
+  box.innerHTML = '';
+  if (log.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'fb-sent-empty';
+    p.textContent = 'まだ なにも おくっていません。';
+    box.appendChild(p);
+    return;
+  }
+  log.forEach(e => {
+    const d = new Date(e.ts);
+    const item = document.createElement('div');
+    item.className = 'fb-sent-item';
+    const head = document.createElement('p');
+    head.className = 'fb-sent-head';
+    head.textContent = `${d.getMonth() + 1}/${d.getDate()} ${e.kind === 'question' ? '🚩 もんだい' : '📮 いけん'}`
+                     + '　' + (FB_REASON_LABEL[e.reason] || '');
+    const body = document.createElement('p');
+    body.className = 'fb-sent-body';
+    body.textContent = e.comment || e.qid || '';
+    item.appendChild(head);
+    if (body.textContent) item.appendChild(body);
+    box.appendChild(item);
+  });
+}
+
+async function sendIdea(btn) {
+  const reason = fbPickedReason('fb-reason-row');
+  if (!reason) { showToast('どんな はなしか えらんでね'); return; }
+  const comment = document.getElementById('fb-comment').value.trim();
+  if (!comment) { showToast('なにか かいてね'); return; }
+
+  const blocked = fbBlockReason('idea', '', reason);
+  if (blocked) { showToast(blocked, 3000); return; }
+
+  const payload = {
+    kind: 'idea', reason,
+    comment: comment.slice(0, 500),
+    subject: document.getElementById('fb-subject').value,
+    screen: 'feedback',
+    ...fbEnv(),
+  };
+  const code = await fbSubmit(btn, payload, 'idea', '📮 おくったで！ありがとう');
+  if (code === 'ok') {
+    document.getElementById('fb-comment').value = '';
+    fbClearReason('fb-reason-row');
+    initFeedbackScreen();
+  }
+}
+
+// ── 配線 ───────────────────────────────────────
+// 通報ボタンは4画面に置いてあるので、まとめて1回だけつなぐ（.back-btn と同じ流儀）
+document.querySelectorAll('.btn-report').forEach(btn => { btn.onclick = openReportModal; });
+fbWireReasonRow('report-reason-row');
+fbWireReasonRow('fb-reason-row');
+document.getElementById('report-close').onclick = closeReportModal;
+document.getElementById('report-send').onclick  = function () { sendReport(this); };
+document.getElementById('btn-fb-send').onclick  = function () { sendIdea(this); };
 
 // 科目選択画面の「🔄 最新版に更新」ボタン：新しいバージョンがないかチェックし、
 // あればservice workerの更新→自動リロード（上のcontrollerchangeリスナー）で反映する
