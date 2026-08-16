@@ -29922,6 +29922,31 @@
        ]
       }
      ],
+     "5": [
+     {
+       "id": "hd4n_05_1",
+       "src": "HG-2352",
+       "star": 3,
+       "title": "9個のサイコロを3×3に並べる",
+       "category": "kisoku",
+       "unit": "規則性・論理",
+       "intro": "各面に1から6までの整数が1つずつ書いてあるサイコロが9個あります。向かい合った面に書いてある数の和はどれも7です。この9個のサイコロを、たて・よこすき間なく3×3に並べて直方体を作ります。",
+       "svg": "<svg viewBox=\"-105.2 -40.0 396.0 144.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"92.8\" y=\"-28.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">サイコロを3×3に並べる（左：上から見た図　右：サイコロの展開図）</text><path d=\"M0.0 0.0 L30.0 0.0 L30.0 30.0 L0.0 30.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M0.0 30.0 L30.0 30.0 L30.0 60.0 L0.0 60.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M0.0 60.0 L30.0 60.0 L30.0 90.0 L0.0 90.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M30.0 0.0 L60.0 0.0 L60.0 30.0 L30.0 30.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M30.0 30.0 L60.0 30.0 L60.0 60.0 L30.0 60.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M30.0 60.0 L60.0 60.0 L60.0 90.0 L30.0 90.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M60.0 0.0 L90.0 0.0 L90.0 30.0 L60.0 30.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M60.0 30.0 L90.0 30.0 L90.0 60.0 L60.0 60.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><path d=\"M60.0 60.0 L90.0 60.0 L90.0 90.0 L60.0 90.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/><text x=\"45.0\" y=\"-10.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">3×3に並べたサイコロ（上から見た図）</text><path d=\"M166.0 0.0 L182.0 0.0 L182.0 16.0 L166.0 16.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"174.0\" y=\"12.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">1</text><path d=\"M150.0 16.0 L166.0 16.0 L166.0 32.0 L150.0 32.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"158.0\" y=\"28.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">2</text><path d=\"M166.0 16.0 L182.0 16.0 L182.0 32.0 L166.0 32.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"174.0\" y=\"28.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">3</text><path d=\"M182.0 16.0 L198.0 16.0 L198.0 32.0 L182.0 32.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"190.0\" y=\"28.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">5</text><path d=\"M198.0 16.0 L214.0 16.0 L214.0 32.0 L198.0 32.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"206.0\" y=\"28.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">4</text><path d=\"M166.0 32.0 L182.0 32.0 L182.0 48.0 L166.0 48.0 Z\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><text x=\"174.0\" y=\"44.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#c9d4f0\">6</text><text x=\"174.0\" y=\"62.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#9aa3c0\">向かい合う面の和は7</text><text x=\"174.0\" y=\"74.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#9aa3c0\">（1-6、2-5、3-4）</text></svg>",
+       "steps": [
+        {
+         "question": "上の面にあらわれる9個の数の和が12のとき、下の面にあらわれる数の和はいくつですか。",
+         "answer": "51",
+         "meaning": "どのサイコロも、上の面と下の面は向かい合っているので、1個のサイコロの上＋下＝7です。サイコロは9個あるので、9個ぜんぶの「上の面の数の和」と「下の面の数の和」を合わせると、7×9＝**63**になります。上の面の和が12なので、下の面の和は63－12＝**51**です。"
+        },
+        {
+         "question": "サイコロをならべるとき、必ず同じ数がかかれた面どうしをくっつけるとします。このとき、外側にあらわれる30個の数の和はいくつですか。",
+         "answer": "105",
+         "meaning": "上と下の面はどのサイコロも外側に出るので、その和は9個ぶんで7×9＝63です。のこりは、横にならんだ3個組（3行）と、たてにならんだ3個組（3列）の、それぞれの「はしの2面」です。1行（3個）のまん中のサイコロを考えます。まん中のサイコロの左面は、左どなりのサイコロの右面とくっついていて、「同じ数どうしをくっつける」ルールから、この2つの面は同じ数です（これをaとします）。まん中のサイコロの中では左面と右面が向かい合っているので、まん中の右面は7－aです。右どなりのサイコロの左面は、まん中の右面(7－a)とくっついているので同じ数7－aで、右どなりのサイコロの中では左面と右面が向かい合っているので、右どなりの右面（＝行のいちばん右はしにある、外側に出る面）は7－(7－a)＝aです。一方、行のいちばん左はしにある、外側に出る面（左どなりの左面）は、左どなりの右面(a)の向かい側なので7－aです。この2つの外側の面を足すと、(7－a)＋a＝**7**になり、aがどんな数でも必ず7です。これが1行につき1回、3行で3×7＝21、同じことがたての3列でも成り立つので3×7＝21、合計すると63＋21＋21＝**105**です。"
+        }
+       ],
+       "grade": 4
+      }
+     ],
      "6": [
       {
        "id": "hd4n_06_1",
@@ -30314,6 +30339,34 @@
          "meaning": "3と7の間にある**7枚**のカードの分だけ差になります。"
         }
        ]
+      },
+     {
+       "id": "hd4n_07_9",
+       "src": "HG-2371",
+       "star": 4,
+       "title": "3つの円が交わってできる7つの部分",
+       "category": "kisoku",
+       "unit": "規則性・論理",
+       "intro": "3つの円A、B、Cが交わって、下の図のように7つの部分に分かれています。この7つの部分に、1から7までの整数を1つずつ、1度だけ使って書き込んで、円A・円B・円Cのそれぞれの中にある4つの数の和が、すべて等しくなるようにします。",
+       "svg": "<svg viewBox=\"-107.0 -114.0 214.0 221.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"0.0\" y=\"-102.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">3つの円が交わってできる7つの部分</text><circle cx=\"-33.0\" cy=\"-24.0\" r=\"60.0\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><circle cx=\"33.0\" cy=\"-24.0\" r=\"60.0\" fill=\"rgba(255,209,102,0.10)\" stroke=\"#ffd166\" stroke-width=\"1.6\"/><circle cx=\"0.0\" cy=\"33.0\" r=\"60.0\" fill=\"rgba(154,163,192,0.10)\" stroke=\"#9aa3c0\" stroke-width=\"1.6\"/><text x=\"-78.0\" y=\"-57.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#4f9eff\">A</text><text x=\"78.0\" y=\"-57.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#ffd166\">B</text><text x=\"0.0\" y=\"84.0\" font-size=\"13\" text-anchor=\"middle\" fill=\"#9aa3c0\">C</text><text x=\"-66.0\" y=\"-27.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">Aだけ</text><text x=\"66.0\" y=\"-27.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">Bだけ</text><text x=\"0.0\" y=\"69.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">Cだけ</text><text x=\"0.0\" y=\"-33.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">AB</text><text x=\"25.5\" y=\"10.5\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">BC</text><text x=\"-25.5\" y=\"10.5\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">AC</text><text x=\"0.0\" y=\"-5.0\" font-size=\"8\" text-anchor=\"middle\" fill=\"#c9d4f0\">中央</text></svg>",
+       "steps": [
+        {
+         "question": "1つの円の中の4つの数の和として考えられるもののうち、最も大きい数はいくつですか。",
+         "answer": "19",
+         "meaning": "まん中の部分（3つの円すべてに共通する部分）の数は、円A・円B・円Cのどの和にも入るので、まん中の数を大きくすると、和を大きくしやすくなります。ためしに、まん中を7にして、2つの円が重なる3つの部分に4・5・6を、1つの円だけの3つの部分に1・2・3を当てはめてみます。円A＝2＋4＋6＋7＝19、円B＝3＋4＋5＋7＝19、円C＝1＋5＋6＋7＝19となり、3つとも和が19になる組み合わせが実際に作れます。いろいろな入れ方を試しても、これより大きい和は作れないので、**19**が最大です。"
+        },
+        {
+         "question": "1つの円の中の4つの数の和として考えられるもののうち、最も小さい数はいくつですか。",
+         "answer": "13",
+         "meaning": "最も大きい和のときとは反対に、まん中の数を小さくすると、和は小さくしやすくなります。ためしに、まん中を1にして、2つの円が重なる3つの部分に2・3・4を、1つの円だけの3つの部分に5・6・7を当てはめてみます。円A＝6＋2＋4＋1＝13、円B＝7＋2＋3＋1＝13、円C＝5＋3＋4＋1＝13となり、3つとも和が13になる組み合わせが実際に作れます。いろいろな入れ方を試しても、これより小さい和は作れないので、**13**が最小です。"
+        },
+        {
+         "question": "1つの円の中の4つの数の和として考えられる数は、全部で何通りありますか。",
+         "answer": "7",
+         "meaning": "1つの円の中の4つの数の和は、最も小さい13から最も大きい19までの間のどれかになります。実際に1〜7の数字をいろいろな組み合わせで当てはめて調べていくと、13・14・15・16・17・18・19のどの数も、実際に作ることができます。よって、考えられる和は全部で**7通り**です。"
+        }
+       ],
+       "grade": 4
       }
      ],
      "8": [
@@ -31109,6 +31162,78 @@
          "question": "正十二角形全体の面積は何cm²ですか。",
          "answer": "108",
          "meaning": "9cm²の三角形が12個集まっているので、9×12＝**108cm²**です。「半径×半径×3」（6×6×3）でも同じ答えが出せます。円周率を使わずに求められるのが、正多角形の面積のおもしろいところです。"
+        }
+       ],
+       "grade": 4
+      },
+     {
+       "id": "hd4n_03_2",
+       "src": "HG-2323",
+       "star": 3,
+       "title": "AB＝CD＝ADの四角形の角",
+       "category": "zu",
+       "unit": "平面図形（角度）",
+       "intro": "下の図のように、ABとCDとADの長さが等しい四角形ABCDがあります。角DAB＝150°、角ADC＝90°です。",
+       "svg": "<svg viewBox=\"-48.0 -152.0 145.0 182.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"24.5\" y=\"-140.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">AB＝CD＝ADの四角形</text><path d=\"M0.0 -60.0 L30.0 -112.0 L60.0 -0.0 L0.0 0.0 Z\" fill=\"rgba(79,158,255,0.10)\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><text x=\"-14.0\" y=\"-56.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">A</text><text x=\"30.0\" y=\"-122.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#c9d4f0\">B</text><text x=\"72.0\" y=\"-0.0\" font-size=\"11\" text-anchor=\"start\" fill=\"#c9d4f0\">C</text><text x=\"-10.0\" y=\"16.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#c9d4f0\">D</text><text x=\"-16.0\" y=\"-30.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#ffd166\">150°</text><text x=\"14.0\" y=\"-6.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#ffd166\">90°</text><text x=\"30.0\" y=\"-94.0\" font-size=\"11\" text-anchor=\"middle\" fill=\"#ffd166\">x</text><line x1=\"11.5\" y1=\"-88.0\" x2=\"18.5\" y2=\"-84.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"30.0\" y1=\"4.0\" x2=\"30.0\" y2=\"-4.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><line x1=\"4.0\" y1=\"-30.0\" x2=\"-4.0\" y2=\"-30.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/></svg>",
+       "steps": [
+        {
+         "question": "角x（角ABC）の大きさは何度ですか。",
+         "answer": "45",
+         "meaning": "四角形の内側に、正三角形ADEができるように点Eをとります（AD＝DE＝AE、角DAE＝角ADE＝角AED＝60°）。まず三角形ABEを見ます。AD＝AB（もとから）とAD＝AE（正三角形）から、AE＝ABです。角EAB＝角DAB－角DAE＝150－60＝**90°**なので、三角形ABEは、AE＝ABの直角二等辺三角形になり、角ABE＝角AEB＝(180－90)÷2＝**45°**です。次に三角形DECを見ます。AD＝DC（もとから）とAD＝DE（正三角形）から、DE＝DCです。角EDC＝角ADC－角ADE＝90－60＝**30°**なので、三角形DECは、DE＝DCの二等辺三角形になり、角DEC＝(180－30)÷2＝**75°**です。ここで、角AEB＋角AED＋角DEC＝45＋60＋75＝**180°**になっていることから、点B・E・Cは一直線上に並んでいる（EはBCの上にある）ことが分かります。よって角ABC＝角ABE＝**45°**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_03_3",
+       "src": "HG-2328",
+       "star": 3,
+       "title": "3-4-5の直角三角形の内接円",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図のような直角三角形ABC（角B＝90°、AB＝4cm、BC＝3cm、CA＝5cm）に、円がぴったり内接しています。斜線部分は、頂点Aと、円が辺AB・辺CAに接する2つの点でできる三角形です。",
+       "svg": "<svg viewBox=\"-32.0 -38.0 187.0 134.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"61.5\" y=\"-26.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">3-4-5の直角三角形と内接円</text><path d=\"M0.0 0.0 L104.0 0.0 L104.0 78.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><circle cx=\"78.0\" cy=\"26.0\" r=\"26.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><path d=\"M0.0 0.0 L78.0 0.0 L62.4 46.8 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><text x=\"-8.0\" y=\"4.0\" font-size=\"10\" text-anchor=\"end\" fill=\"#c9d4f0\">A</text><text x=\"114.0\" y=\"4.0\" font-size=\"10\" text-anchor=\"start\" fill=\"#c9d4f0\">B</text><text x=\"114.0\" y=\"82.0\" font-size=\"10\" text-anchor=\"start\" fill=\"#c9d4f0\">C</text><text x=\"52.0\" y=\"14.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">4cm</text><text x=\"114.0\" y=\"39.0\" font-size=\"9\" text-anchor=\"start\" fill=\"#9aa3c0\">3cm</text><text x=\"38.0\" y=\"35.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">5cm</text><text x=\"94.0\" y=\"-8.0\" font-size=\"8\" text-anchor=\"end\" fill=\"#9aa3c0\">直角</text></svg>",
+       "steps": [
+        {
+         "question": "斜線部分の面積は何cm²ですか。",
+         "answer": "2.7",
+         "meaning": "直角三角形に内接する円の半径は、(直角をはさむ2辺の和－斜辺)÷2＝(4＋3－5)÷2＝**1cm**です。直角の頂点Bから、円が辺AB・辺BCに接する点までの長さは、どちらも半径と同じ1cmです。すると、頂点Aから辺AB上の接点までの長さは、AB(4cm)からBがわの1cm分を引いた4－1＝**3cm**です。ここで、同じ頂点から引いた2本の接線の長さはいつも等しいという性質を使うと、頂点Aから辺CA(斜辺)上の接点までの長さも、辺AB上と同じ**3cm**になります。辺ABを底辺と考えると、頂点Cは辺ABから3cm（＝BC）はなれた高さにあります。斜辺CAは、Aから5cm（Cまで全部）進むと3cm（BCの長さぶん）はなれた高さに達する、一定の割合で高さが変わるまっすぐな線なので、Aから3cm進んだ位置（＝斜辺上の接点）では、同じ割合で3×3/5＝**1.8cm**はなれた高さにあります。斜線部分の三角形は、Aから辺AB上の接点までの3cmを底辺、斜辺上の接点の高さ1.8cmを高さとする三角形なので、面積は3×1.8÷2＝**2.7cm²**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_03_4",
+       "src": "HG-2329",
+       "star": 3,
+       "title": "60°のおうぎ形に内接する円",
+       "category": "zu",
+       "unit": "平面図形（面積）",
+       "intro": "下の図は、半径12cm・中心角60°のおうぎ形の中に、円がぴったり内接している図です。円周率は3.14とします。",
+       "svg": "<svg viewBox=\"-106.0 -78.0 288.0 140.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"38.0\" y=\"-66.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">中心角60°・半径12cmのおうぎ形に内接する円</text><path d=\"M0.0 0.0 L83.1 -48.0 L85.2 -44.3 L87.0 -40.6 L88.7 -36.7 L90.2 -32.8 L91.6 -28.9 L92.7 -24.8 L93.7 -20.8 L94.5 -16.7 L95.2 -12.5 L95.6 -8.4 L95.9 -4.2 L96.0 0.0 L95.9 4.2 L95.6 8.4 L95.2 12.5 L94.5 16.7 L93.7 20.8 L92.7 24.8 L91.6 28.9 L90.2 32.8 L88.7 36.7 L87.0 40.6 L85.2 44.3 L83.1 48.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><circle cx=\"64.0\" cy=\"0.0\" r=\"32.0\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"64.0\" y2=\"0.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"2 2\"/><text x=\"-10.0\" y=\"4.0\" font-size=\"10\" text-anchor=\"end\" fill=\"#c9d4f0\">O</text><text x=\"16.0\" y=\"-16.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">60°</text><text x=\"29.6\" y=\"38.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">12cm</text></svg>",
+       "steps": [
+        {
+         "question": "円の面積は何cm²ですか。",
+         "answer": "50.24",
+         "meaning": "円の中心Pは、おうぎ形の中心角60°をちょうど半分に分ける線（30°の線）の上にあります。おうぎ形の中心をO、円が半径に接する点をQとすると、三角形OPQは、角O＝30°、角Q＝90°の直角三角形です。この形は三角定規（30°・60°・90°）と同じで、**いちばん長い辺（OP）が、いちばん短い辺（PQ、これが円の半径）のちょうど2倍**になります。円はおうぎ形の弧にも接していて、その接点は中心Oから中心Pを通ってまっすぐのびた先にあります。O→P→弧の接点、と一直線に並んでいるので、この直線の長さ（＝おうぎ形の半径12cm）は、OP（円の半径の2倍）と、Pから弧の接点までの長さ（これも円の半径と同じ）を合わせたものです。円の半径をrとすると、2r＋r＝3r＝12cmより、r＝**4cm**です。円の面積は4×4×3.14＝**50.24cm²**です。"
+        }
+       ],
+       "grade": 4
+      },
+      {
+       "id": "hd4n_03_5",
+       "src": "HG-2330",
+       "star": 2,
+       "title": "台形の対角線でできる三角形",
+       "category": "zu",
+       "unit": "平面図形（面積・相似）",
+       "intro": "下の図は、台形ABCD（Aが左上、Bが右上、Cが右下、Dが左下）で、上底AB＝2cm・下底DC＝4cm・高さ6cmです。対角線AC・BDを引き、その交点をIとします。斜線部分は三角形BICです。",
+       "svg": "<svg viewBox=\"-94.5 -36.0 240.0 174.0\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"25.5\" y=\"-24.0\" font-size=\"12\" text-anchor=\"middle\" fill=\"#9aa3c0\">上底2cm・下底4cm・高さ6cmの台形</text><path d=\"M0.0 0.0 L36.0 0.0 L72.0 108.0 L0.0 108.0 Z\" fill=\"rgba(79,158,255,0.08)\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"72.0\" y2=\"108.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><line x1=\"36.0\" y1=\"0.0\" x2=\"0.0\" y2=\"108.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/><path d=\"M36.0 0.0 L24.0 36.0 L72.0 108.0 Z\" fill=\"rgba(255,209,102,0.22)\" stroke=\"#ffd166\" stroke-width=\"1.8\"/><text x=\"18.0\" y=\"-6.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">2cm</text><text x=\"36.0\" y=\"124.0\" font-size=\"9\" text-anchor=\"middle\" fill=\"#9aa3c0\">4cm</text><text x=\"-14.0\" y=\"54.0\" font-size=\"9\" text-anchor=\"end\" fill=\"#9aa3c0\">6cm</text><text x=\"-10.0\" y=\"-2.0\" font-size=\"10\" text-anchor=\"end\" fill=\"#c9d4f0\">A</text><text x=\"46.0\" y=\"-2.0\" font-size=\"10\" text-anchor=\"start\" fill=\"#c9d4f0\">B</text><text x=\"82.0\" y=\"112.0\" font-size=\"10\" text-anchor=\"start\" fill=\"#c9d4f0\">C</text><text x=\"-10.0\" y=\"112.0\" font-size=\"10\" text-anchor=\"end\" fill=\"#c9d4f0\">D</text><text x=\"28.0\" y=\"30.0\" font-size=\"10\" text-anchor=\"middle\" fill=\"#ffd166\">I</text></svg>",
+       "steps": [
+        {
+         "question": "斜線部分（三角形BIC）の面積は何cm²ですか。",
+         "answer": "4",
+         "meaning": "ABとDCは平行なので、三角形ABIと三角形CDIは相似です（「ちょうちょ型」とよばれる、対角線が作る向かい合った相似形です）。相似比は上底：下底＝AB：DC＝2：4＝1：2です。よって対角線BD上で、点IはBI：ID＝1：2の位置にあります。次に、対角線BDと頂点Cでできる三角形BDCを考えます。この三角形は、底辺DC＝4cm・高さ6cm（台形の高さそのもの）なので、面積は4×6÷2＝**12cm²**です。三角形BDCの中で、点Iは辺BD上にBI：ID＝1：2の位置にあるので、同じ頂点Cを持つ三角形BICと三角形IDCは、底辺（BIとID）の比がそのまま面積の比になり、BIC：IDC＝1：2です。三角形BDC（12cm²）をこの比で分けると、斜線部分の三角形BIC＝12×1/(1＋2)＝**4cm²**です。"
         }
        ],
        "grade": 4
