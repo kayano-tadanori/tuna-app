@@ -472,6 +472,13 @@ async function hamaDaimonWeek(grade, course, no) {
   const node = hamaDaimonNode(await loadHamaDaimon(), grade, course);
   return (node && node.fukushu && node.fukushu[String(no)]) || [];
 }
+// ★マスターの宿題テキスト（大問）＝復習テストとは別物（3年マスター算数 第1分冊で追加・2026-08-17）。
+//   「master」コースの兄弟コース「master_bunsatsu」に同じ回番号で入っている。
+//   データが無い学年・回では自動で空になり、ボタンごと隠れる（学年の決め打ちなし）
+async function hamaDaimonBunsatsu(grade, no) {
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, 'master_bunsatsu');
+  return (node && node.fukushu && node.fukushu[String(no)]) || [];
+}
 // ★講座の宿題（大問）＝復習テストとは別物の、授業テキストそのもの（小5最レ第3分冊で追加・2026-08-11）。
 //   kouza は 1 か 2（第1講座／第2講座）。データがあるコースだけボタンが自動で出る（コース名の決め打ちなし）。
 async function hamaDaimonKouza(grade, course, kouza, no) {
@@ -1086,11 +1093,18 @@ async function renderHamaPanel() {
   const hasKouza2 = !byUnitMode && !isKokugo && hamaHasKouza(daimonNode, 2);
   const kouza1Sets = hasKouza1 ? await hamaDaimonKouza(grade, course, 1, no) : [];
   const kouza2Sets = hasKouza2 ? await hamaDaimonKouza(grade, course, 2, no) : [];
+  // ★マスターの宿題（大問）＝兄弟コース「master_bunsatsu」の同じ回番号から取る。
+  //   復習テストより先にやるもの（本人指示 2026-08-17）なので weekq より前に置く。
+  //   マスター以外のコースでは出さない／データが無い回は自動で空になりボタンが隠れる
+  const isMaster = (course === 'master');
+  const bunsatsuSets = (isMaster && !byUnitMode) ? await hamaDaimonBunsatsu(grade, no) : [];
+  const hasBunsatsu = bunsatsuSets.length > 0;
   const dq = [
     // 宿題は復習テストより先にやるもの（本人指示 2026-08-11）。国語には大問データが無い（読解の本文は
     // 著作物なので入れない）。ボタンごと出さない
     { k: 'kouza1q', show: hasKouza1, sets: kouza1Sets, span: `No.${no}` },
     { k: 'kouza2q', show: hasKouza2, sets: kouza2Sets, span: `No.${no}` },
+    { k: 'bunsatsuq', show: hasBunsatsu, sets: bunsatsuSets, span: `No.${no}` },
     { k: 'weekq', show: !isKokugo, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
     { k: 'kokaiq', show: showKokai, sets: kokaiSets, span: `${mFrom}〜${mNow}月` },
   ];
@@ -1309,6 +1323,20 @@ async function startHamaSession(kind) {
       const kouzaLabel = (btnName && btnName.textContent.replace(/^📚\s*/, '').replace(/（大問）\s*$/, '')) ||
         (kind === 'kouza1q' ? '第1講座の宿題' : '第2講座の宿題');
       openDaimonPicker(sets, grade, hamaSubj, `No.${dno}・${kouzaLabel}`);
+    } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
+    return;
+  }
+
+  // ★マスターの宿題（大問）＝兄弟コース「master_bunsatsu」から。kouza1q/kouza2qと同じ理由で
+  //   大問番号を見てえらべるようにする（本人指示 2026-08-17）
+  if (kind === 'bunsatsuq') {
+    showLoading();
+    try {
+      const dno = hamaCurrent(grade, course);
+      const sets = await hamaDaimonBunsatsu(grade, dno);
+      hideLoading();
+      if (!sets.length) { showToast('ここの宿題はまだ用意していません'); return; }
+      openDaimonPicker(sets, grade, hamaSubj, `No.${dno}・今週の宿題`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }
