@@ -3,12 +3,13 @@
    大問（steps）を追加・編集したら必ず実行すること。
    使い方：  python scripts/check_answerable.py
 """
-import json, io, re, sys
+import json, io, re, sys, os
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-BASE = r"C:\Users\茅野　忠徳\Desktop\Claude\tuna app"
-d = json.load(io.open(BASE + r"\data\hama_daimon.json", encoding="utf-8"))
+# ★パスは決め打ちにしない（家PCと実家PCでユーザー名がちがうため／2026-08-18）
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
 
 
 def is_numpad(a):
