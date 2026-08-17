@@ -475,13 +475,21 @@ for hg, r in heads.items():
 
 miss_svg = sorted(h for h in zu_ari if h not in zu_svg)
 if miss_svg:
-    print("・原簿が「図: あり」なのに 図SVG 欄が無い: %d本" % len(miss_svg))
+    # ★2026-08-18 本人指示で「警告」から「落とす」に変えた。
+    #   理由：小3マスター第2分冊で、私が「読み取りを先に全部やって、図はあとでまとめて描く」と
+    #   勝手に順序を入れかえ、あとで描く工程がそのまま消えた（95本すべて図SVGが空のまま実装した）。
+    #   ルールを文章で置いても、読んだうえで自分の判断で上書きしてしまう。
+    #   出力を読み飛ばしても止まるように、ここで終了コード1にする。
+    print("❌ 原簿が「図: あり」なのに 図SVG 欄が無い: %d本  ← ここで落とします" % len(miss_svg))
     print("  （PDFを見て描き、原簿に入れる。読み取れないなら『- 図SVG: 判読不能』と書く）")
-    for h in miss_svg[:6]:
+    print("  ★1レコードは『設問・答え・図SVG』までそろって完成。回ごとに閉じてから次の回へ進むこと")
+    for h in miss_svg[:12]:
         print("   %s" % h)
+    if len(miss_svg) > 12:
+        print("   …ほか %d本" % (len(miss_svg) - 12))
 else:
     print("✅ 図がある大問には、原簿に図SVGが入っている")
 
 _finish_status_file()
-if fail:
+if fail or miss_svg:
     sys.exit(1)
