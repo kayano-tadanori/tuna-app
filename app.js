@@ -842,6 +842,11 @@ function endSession() {
   maybeAwardPerfect(rate, total);
   awardSessionCoins(rate, total);
   awardSessionTicket(total);
+  // ★大問モードの「えらびなおす」ボタンは算数/理科の大問セッション専用。
+  //   このendSession（国語など）を通ったときは前回ぶんが残らないよう必ず隠す（2026-08-17）
+  const daimonBtn = document.getElementById('btn-result-daimon');
+  if (daimonBtn) daimonBtn.classList.add('hidden');
+  sansuState.daimonPickerCtx = null;
   showScreen('result');
   Snd.result(rate);
   checkTitlePromotion();

@@ -1242,18 +1242,20 @@ function openDaimonPicker(sets, grade, hamaSubj, label) {
   listEl.querySelectorAll('.daimon-pick-item').forEach(btn => {
     btn.onclick = () => {
       modal.classList.add('hidden');
-      startDaimonSets([sets[Number(btn.dataset.idx)]], grade, hamaSubj);
+      startDaimonSets([sets[Number(btn.dataset.idx)]], grade, hamaSubj, label, sets);
     };
   });
   document.getElementById('daimon-pick-all').onclick = () => {
     modal.classList.add('hidden');
-    startDaimonSets(sets, grade, hamaSubj); // ★保存されている順（大問1→…）のまま。星順にしない
+    startDaimonSets(sets, grade, hamaSubj, label, sets); // ★保存されている順（大問1→…）のまま。星順にしない
   };
   document.getElementById('daimon-pick-close').onclick = () => modal.classList.add('hidden');
   modal.classList.remove('hidden');
 }
 // 大問（1本 or 複数）をそのままクイズにして始める。fillChains で①②③の順に展開するだけ＝並べかえない。
-function startDaimonSets(sets, grade, hamaSubj) {
+// ★pickerSets・label があれば「解き終わったあと同じ大問えらびに戻る」ボタンを結果画面に出せるよう
+//   sansuState に憶えておく（本人要望 2026-08-17）。openDaimonPicker 経由でないふつうの出題では渡さない
+function startDaimonSets(sets, grade, hamaSubj, label, pickerSets) {
   const qs = fillChains(sets, grade, 'all');
   if (!qs.length) { showToast('この大問はまだ用意していません'); return; }
   sansuState.subject = hamaSubj;
@@ -1262,6 +1264,7 @@ function startDaimonSets(sets, grade, hamaSubj) {
   sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
   coinSessionEarned = 0;
   startSansuQuiz();
+  sansuState.daimonPickerCtx = pickerSets ? { sets: pickerSets, grade, hamaSubj, label } : null;
 }
 
 // じゅくナビから出題を開始する
@@ -2061,6 +2064,9 @@ function openProgressScreenFrom(screenId, subject) {
 }
 
 function startSansuQuiz() {
+  // ★大問モードの「えらびなおす」ボタン用の憶え書き。既定では毎回クリアし、
+  //   startDaimonSets がこの直後に（必要なときだけ）上書きする（本人要望 2026-08-17）
+  sansuState.daimonPickerCtx = null;
   const catLabel = subjectCatLabels()[sansuState.cat] || '問題';
   document.getElementById('sansu-quiz-title').textContent = catLabel;
   const homeScreen = subjectHomeScreen();
@@ -2280,13 +2286,29 @@ function endSansuSession() {
     else { initSansuHome(); showScreen('sansu-home'); }
   };
   document.getElementById('btn-result-retry').onclick = () => {
+    const keepDaimonCtx = sansuState.daimonPickerCtx; // startSansuQuizが毎回クリアするので退避して戻す
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
     coinSessionEarned = 0;
     sansuState.questions = shuffle([...sansuState.questions]);
     document.getElementById('sq-correct').textContent = '0';
     document.getElementById('sq-wrong').textContent = '0';
     startSansuQuiz();
+    sansuState.daimonPickerCtx = keepDaimonCtx;
   };
+
+  // ★大問（じゅくナビの宿題・復習テスト（大問）など）を解き終えたときだけ、
+  //   同じ大問えらびの一覧に戻れるボタンを出す（本人要望 2026-08-17）
+  const daimonBtn = document.getElementById('btn-result-daimon');
+  if (daimonBtn) {
+    const ctx = sansuState.daimonPickerCtx;
+    daimonBtn.classList.toggle('hidden', !ctx);
+    if (ctx) {
+      daimonBtn.onclick = () => {
+        showScreen(subjectHomeScreen());
+        openDaimonPicker(ctx.sets, ctx.grade, ctx.hamaSubj, ctx.label);
+      };
+    }
+  }
 
   showScreen('result');
   Snd.result(score);
