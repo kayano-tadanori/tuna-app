@@ -61,9 +61,12 @@ body {
 .back-btn { background: none; border: none; color: var(--accent2); font-size: 1rem; font-weight: 700; padding: 8px 10px; cursor: pointer; min-width: 64px; min-height: 44px; border-radius: var(--radius-xs); transition: background 0.15s,transform 0.1s; }
 .back-btn:active { background: rgba(56,200,240,0.12); transform: scale(0.94); }
 .counter { font-size: 0.82rem; color: var(--sub); font-weight: 700; min-width: 56px; text-align: right; letter-spacing: 0.02em; }
-.user-info { display: flex; align-items: center; gap: 4px; font-size: 0.82rem; color: var(--sub2); font-weight: 700; flex-shrink: 0; white-space: nowrap; max-width: 34vw; }
-/* 受験番号（ニックネーム）が長いと最上段の幅が崩れるので、はみ出す分は「…」で省略する（本人指摘 2026-08-17） */
-.nick-tag { display: inline-block; max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+.user-info { display: flex; align-items: center; gap: 4px; font-size: 0.82rem; color: var(--sub2); font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+/* 受験番号（ニックネーム）が長いと最上段の幅が崩れるので、はみ出す分は「…」で省略する（本人指摘 2026-08-17）。
+   ★.user-infoにmax-widthを付けてnick-tagをflexで縮ませる方式にしたら、iPadで名前が消える事故が起きた
+   （overflow:hiddenでmin-width保護が外れ、アイコンボタンに場所を取られて0幅までつぶれた）。
+   nick-tag自身にflex-shrink:0を付けて「自分の最大幅(9ch)までは絶対に縮まない」形に直した（本人指摘 2026-08-17）。 */
+.nick-tag { display: inline-block; flex-shrink: 0; max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
 .icon-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; min-width: 44px; min-height: 44px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; transition: background 0.15s,transform 0.1s; }
 .icon-btn:active { background: var(--card2); transform: scale(0.9); }
 
