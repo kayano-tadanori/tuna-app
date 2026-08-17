@@ -1200,7 +1200,10 @@ function refreshCategoryCardCounts() {
 }
 
 function initSubject() {
-  document.getElementById('subject-nickname').textContent = state.nickname;
+  // ★最上段(.user-info)はアイコンボタン4つと場所を奪い合うので、長い受験番号だと
+  //   名前が0幅までつぶれて消える事故が起きた（本人指摘 2026-08-17）。
+  //   横に余裕があるオットンのふきだし側（#otton-nickname）に出す
+  document.getElementById('otton-nickname').textContent = `🎫 ${state.nickname}`;
   refreshSubjectCounts();
   refreshCategoryCardCounts();
 

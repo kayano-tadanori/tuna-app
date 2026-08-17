@@ -44,7 +44,6 @@
     <img src="images/logo.png" alt="オトン学園" class="top-logo-img">
     <div class="user-info">
       <span id="subject-title-badge" class="title-badge"></span>
-      <span id="subject-nickname" class="nick-tag"></span>
       <button id="btn-subject-save" class="icon-btn" title="きろくをセーブ">💾</button>
       <button id="btn-subject-refresh" class="icon-btn" title="最新版に更新">🔄</button>
       <button id="btn-subject-settings" class="icon-btn" title="設定">⚙️</button>
@@ -56,6 +55,9 @@
       <img src="images/otton.png" alt="オットン" class="otton-small" onerror="this.style.display='none'">
       <div class="otton-msg-block">
         <p id="otton-date" class="otton-date"></p>
+        <!-- 最上段は幅がせまく、長い受験番号を入れると名前が消える事故が起きた（本人指摘 2026-08-17）。
+             ここは横に余裕があるので、名前はこちらに出す -->
+        <p id="otton-nickname" class="otton-nickname"></p>
         <p id="otton-msg" class="otton-msg">「科目を選んで、<br>今日も一緒に頑張ろうや！」</p>
       </div>
       <a href="okan/" class="okan-switch" id="okan-link"><span class="okan-switch-icon">→</span>中受伴走<br>アプリ</a>

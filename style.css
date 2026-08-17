@@ -120,6 +120,9 @@ button { cursor: pointer; font-family: inherit; }
 .otton-small { width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 4px 12px rgba(79,124,255,0.35)); animation: float 3.2s ease-in-out infinite; }
 .otton-msg-block { flex: 1; min-width: 0; }
 .otton-date { font-size: 0.68rem; font-weight: 800; color: var(--accent2); letter-spacing: 0.08em; margin-bottom: 3px; }
+/* 受験番号（ニックネーム）はここに出す。最上段はアイコンボタンと場所を奪い合って
+   名前が消える事故が起きた（本人指摘 2026-08-17）。ここは横幅に余裕があるので安全 */
+.otton-nickname { font-size: 0.74rem; font-weight: 800; color: var(--sub2); margin-bottom: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .otton-msg { font-size: 0.92rem; font-weight: 700; color: var(--text); line-height: 1.65; }
 .okan-switch { flex-shrink: 0; align-self: center; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 11px; border-radius: 12px; background: linear-gradient(135deg,rgba(219,39,119,0.38),rgba(236,72,153,0.16)); border: 1px solid rgba(244,114,182,0.45); color: #f9a8d4; font-size: 0.62rem; font-weight: 800; text-decoration: none; letter-spacing: 0.04em; line-height: 1.35; text-align: center; position: relative; z-index: 1; }
 .okan-switch .okan-switch-icon { font-size: 0.95rem; line-height: 1; }
