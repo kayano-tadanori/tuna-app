@@ -648,6 +648,22 @@ button { cursor: pointer; font-family: inherit; }
 .badge-diff[data-level="5"] { background: linear-gradient(135deg,#ffd166,#ff6b6b,#8a5cff); color: #080e20; }
 .badge-diff[data-level="gachi"] { background: linear-gradient(135deg,#8a5cff,#ff6b6b 50%,#080e20); color: #fff; }
 .badge-type { background: var(--grad-purple); color: #fff; border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; }
+
+/* 単元でさがす（検索画面） */
+.search-main { padding: 12px 16px calc(40px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; }
+.search-box-row { display: flex; }
+.search-input { width: 100%; min-height: 48px; padding: 10px 14px; background: var(--card2); border: 1.5px solid var(--glass-border); color: var(--text); border-radius: var(--radius-xs); font-size: 1rem; font-weight: 700; }
+.search-input:focus { outline: none; border-color: var(--accent2); }
+.search-grade-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.search-grade-grid .grade-btn { min-height: 40px; padding: 8px 4px; font-size: 0.85rem; }
+.muted { color: var(--text-dim, #9aa3c0); font-size: 0.8rem; margin: 2px 2px; }
+.search-result-list { display: flex; flex-direction: column; gap: 8px; }
+.search-result-group-label { font-size: 0.78rem; font-weight: 800; color: var(--accent2); margin: 10px 2px 0; }
+.search-result-item { flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; width: 100%; }
+.search-result-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge-subject { border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 800; color: #fff; }
+.badge-subject[data-subject="sansu"] { background: var(--grad-accent); }
+.badge-subject[data-subject="rika"] { background: var(--grad-green); }
 .sansu-question { font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; line-height: 1.6; text-align: center; }
 .sq-figure { text-align: center; margin: 6px 0 4px; line-height: 0; }
 .sq-figure svg { width: 100%; max-width: 340px; max-height: 260px; height: auto; }

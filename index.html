@@ -873,6 +873,8 @@
       <button id="btn-result-retry" class="btn-secondary">もう一度</button>
       <!-- 大問（じゅくナビの宿題・復習テスト（大問）など）を解いたときだけ出る（本人要望 2026-08-17） -->
       <button id="btn-result-daimon" class="btn-secondary hidden">🧩 大問をえらびなおす</button>
+      <!-- 単元検索から出題したときだけ出る（本人要望 2026-08-17） -->
+      <button id="btn-result-search" class="btn-secondary hidden">🔍 検索結果にもどる</button>
     </div>
   </div>
 </div>
@@ -1314,6 +1316,7 @@
     <div class="action-row">
       <button id="sansu-btn-weak" class="btn-secondary">📉 苦手問題のみ</button>
       <button id="sansu-btn-progress" class="btn-secondary">📊 進捗を見る</button>
+      <button id="sansu-btn-search" class="btn-secondary">🔍 単元でさがす</button>
     </div>
 
     <!-- スタートゾーン -->
@@ -1437,6 +1440,7 @@
     <div class="action-row">
       <button id="rika-btn-weak" class="btn-secondary">📉 苦手問題のみ</button>
       <button id="rika-btn-progress" class="btn-secondary">📊 進捗を見る</button>
+      <button id="rika-btn-search" class="btn-secondary">🔍 単元でさがす</button>
     </div>
 
     <!-- スタートゾーン -->
@@ -1550,6 +1554,32 @@
     </div>
 
   </main>
+</div>
+
+<!-- =============== 単元でさがす（算数・理科の検索） =============== -->
+<div id="screen-search" class="screen">
+  <header class="top-bar">
+    <button class="back-btn" data-back="sansu-home">‹ 戻る</button>
+    <h2 class="top-title">単元でさがす</h2>
+  </header>
+  <div class="search-main">
+    <div class="search-box-row">
+      <input type="text" id="search-input" class="search-input"
+             placeholder="単元名・ことばで検索（例：つるかめ）"
+             inputmode="search" autocomplete="off">
+    </div>
+    <div class="grade-grid search-grade-grid">
+      <button class="grade-btn selected" data-search-grade="all">すべて</button>
+      <button class="grade-btn" data-search-grade="1">小1</button>
+      <button class="grade-btn" data-search-grade="2">小2</button>
+      <button class="grade-btn" data-search-grade="3">小3</button>
+      <button class="grade-btn" data-search-grade="4">小4</button>
+      <button class="grade-btn" data-search-grade="5">小5</button>
+      <button class="grade-btn" data-search-grade="6">小6</button>
+    </div>
+    <p id="search-status" class="muted"></p>
+    <div id="search-result-list" class="search-result-list"></div>
+  </div>
 </div>
 
 <!-- =============== 算数クイズ（テンキー入力） =============== -->
@@ -2301,5 +2331,6 @@
 <script src="js/gamify.js"></script>
 <script src="js/sweeper.js"></script>
 <script src="js/jump.js"></script>
+<script src="js/search.js"></script>  <!-- 単元でさがす。sansu.js/gamify.jsのsansuState・ensureSansuFileに依存（関数呼び出しは後なので読み込み順は問わない） -->
 </body>
 </html>

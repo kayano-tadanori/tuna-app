@@ -265,6 +265,9 @@ const sansuState = {
   // テンキー
   inputVal: '', inputRemain: '', inputWhole: '', inputPhase: 'main', // 'main'|'remain'
   isRemainMode: false,
+  // ★単元でさがす、から出題したセッションかどうか。daimonPickerCtxと同じ扱い＝
+  //   startSansuQuizが毎回falseにリセットし、「もう一度」だけ明示的に退避・復元する（本人要望2026-08-17）
+  searchReturnCtx: false,
 };
 
 async function loadSansuQuestions(cat, grade, diff) {
@@ -1664,6 +1667,7 @@ function initSansuHome() {
   document.getElementById('sansu-btn-weak').classList.remove('active-weak');
   document.getElementById('sansu-btn-weak').onclick = (e) => startSansuWeakSession(e.currentTarget);
   document.getElementById('sansu-btn-progress').onclick = () => openProgressScreenFrom('sansu-home', 'sansu');
+  document.getElementById('sansu-btn-search').onclick = () => openSearchScreen('sansu');
 
   // 全ステップを初期状態（STEP1のみ表示）に
   hideSansuSteps('sansu-step-mode', 'sansu-step-cat', 'sansu-step-diff', 'sansu-step-dtype', 'sansu-step-time');
@@ -1820,6 +1824,7 @@ function initRikaHome() {
   document.getElementById('rika-btn-weak').classList.remove('active-weak');
   document.getElementById('rika-btn-weak').onclick = (e) => startSansuWeakSession(e.currentTarget);
   document.getElementById('rika-btn-progress').onclick = () => openProgressScreenFrom('rika-home', 'rika');
+  document.getElementById('rika-btn-search').onclick = () => openSearchScreen('rika');
 
   hideSansuSteps('rika-step-topmode', 'rika-step-cat', 'rika-step-diff');
   document.querySelectorAll('.rika-topmode-btn').forEach(b => b.classList.remove('selected'));
@@ -2067,6 +2072,7 @@ function startSansuQuiz() {
   // ★大問モードの「えらびなおす」ボタン用の憶え書き。既定では毎回クリアし、
   //   startDaimonSets がこの直後に（必要なときだけ）上書きする（本人要望 2026-08-17）
   sansuState.daimonPickerCtx = null;
+  sansuState.searchReturnCtx = false;
   const catLabel = subjectCatLabels()[sansuState.cat] || '問題';
   document.getElementById('sansu-quiz-title').textContent = catLabel;
   const homeScreen = subjectHomeScreen();
@@ -2287,6 +2293,7 @@ function endSansuSession() {
   };
   document.getElementById('btn-result-retry').onclick = () => {
     const keepDaimonCtx = sansuState.daimonPickerCtx; // startSansuQuizが毎回クリアするので退避して戻す
+    const keepSearchCtx = sansuState.searchReturnCtx; // 同上（本人要望 2026-08-17）
     sansuState.current = 0; sansuState.correct = 0; sansuState.wrong = 0;
     coinSessionEarned = 0;
     sansuState.questions = shuffle([...sansuState.questions]);
@@ -2294,6 +2301,7 @@ function endSansuSession() {
     document.getElementById('sq-wrong').textContent = '0';
     startSansuQuiz();
     sansuState.daimonPickerCtx = keepDaimonCtx;
+    sansuState.searchReturnCtx = keepSearchCtx;
   };
 
   // ★大問（じゅくナビの宿題・復習テスト（大問）など）を解き終えたときだけ、
@@ -2308,6 +2316,13 @@ function endSansuSession() {
         openDaimonPicker(ctx.sets, ctx.grade, ctx.hamaSubj, ctx.label);
       };
     }
+  }
+
+  // ★「単元でさがす」から出題したときだけ、検索結果の一覧に戻れるボタンを出す（本人要望 2026-08-17）
+  const searchBtn = document.getElementById('btn-result-search');
+  if (searchBtn) {
+    searchBtn.classList.toggle('hidden', !sansuState.searchReturnCtx);
+    if (sansuState.searchReturnCtx) searchBtn.onclick = () => showScreen('search');
   }
 
   showScreen('result');
