@@ -80,8 +80,11 @@ def build():
                 atext = str(q.get("answer", ""))
                 mtext = strip_tags(q.get("meaning", ""))
                 unit = q.get("unit", "") or ""
+                tags = q.get("tags") or []
                 t = normalize(qtext + " " + atext + " " + mtext)
-                ut = normalize(unit)
+                # unit と tags（例：「文字と式」）は同格であつかい、両方を単元一致の対象にする。
+                # tags は数値クローンの元問題を横断でタグ付けした後づけの分類（本人要望2026-08-17）
+                ut = normalize(" ".join([unit] + tags))
                 records.append({
                     "id": q["id"],
                     "subject": subject,
@@ -89,6 +92,7 @@ def build():
                     "grade": q.get("grade"),
                     "difficulty": q.get("difficulty"),
                     "unit": unit,
+                    "tags": tags,
                     "q": qtext[:80],
                     "a": atext,
                     "t": t,

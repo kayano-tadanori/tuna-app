@@ -50,11 +50,13 @@ async function doSearch(query) {
   const index = await loadSearchIndex();
   const gradeNum = searchGrade === 'all' ? null : Number(searchGrade);
   const matchGrade = (item) => gradeNum === null || item.grade === gradeNum;
+  // ★算数ホームから開いたら算数だけ、理科ホームから開いたら理科だけを出す（本人要望2026-08-17）
+  const matchSubject = (item) => item.subject === searchFromSubject;
 
   const unitHits = [];
   const textHits = [];
   for (const item of index) {
-    if (!matchGrade(item)) continue;
+    if (!matchSubject(item) || !matchGrade(item)) continue;
     if (item.ut && item.ut.includes(norm)) { unitHits.push(item); continue; }
     if (item.t.includes(norm)) textHits.push(item);
   }
@@ -65,7 +67,7 @@ async function doSearch(query) {
     return;
   }
   status.textContent = `${unitHits.length + textHits.length}件みつかりました`;
-  renderSearchResults(unitHits, textHits);
+  renderSearchResults(unitHits, textHits, query);
 }
 
 const SUBJECT_LABEL = { sansu: '算数', rika: '理科' };
@@ -83,13 +85,14 @@ function searchResultItemHtml(item, idx) {
   </button>`;
 }
 
-function renderSearchResults(unitHits, textHits) {
+function renderSearchResults(unitHits, textHits, query) {
   const list = document.getElementById('search-result-list');
   const flat = unitHits.concat(textHits);
   let html = '';
   if (unitHits.length) {
-    const unitName = unitHits[0].unit || '';
-    html += `<div class="search-result-group-label">${unitName}（${unitHits.length}問）</div>`;
+    // ★unitHitsは「文字と式」のようなtagsで複数の異なるunitをまたぐことがあるので、
+    //   1件目のunit名ではなく、入力された検索語そのものを見出しにする（本人要望2026-08-17で追加したtags対応）
+    html += `<div class="search-result-group-label">「${query}」に近い単元（${unitHits.length}問）</div>`;
     html += unitHits.map((item, i) => searchResultItemHtml(item, i)).join('');
   }
   if (textHits.length) {
