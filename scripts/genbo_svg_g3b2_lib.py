@@ -226,3 +226,29 @@ def write_genbo(figs, do_write, genbo_path):
     else:
         print("（--write を付けると実際に書き込みます）")
     return n
+
+
+def net(cells, s, ox, oy, stroke=LINE, foldstroke=GRAY, sw=2, fsw=1.4):
+    """展開図（グリッドの単位マスの集合）を描く。cells＝{(col,row), ...}。
+    セル同士が接する辺は「折り目」として薄い点線、外周は実線にする。
+    (col,row) は左上が(0,0)、rowは下向きが正。
+    """
+    cellset = set(cells)
+    out = []
+    seen = set()
+    for (c, r) in cells:
+        x0, y0 = ox + c * s, oy + r * s
+        edges = [((x0, y0), (x0 + s, y0), (c, r - 1)),
+                 ((x0 + s, y0), (x0 + s, y0 + s), (c + 1, r)),
+                 ((x0, y0 + s), (x0 + s, y0 + s), (c, r + 1)),
+                 ((x0, y0), (x0, y0 + s), (c - 1, r))]
+        for (p1, p2, nb) in edges:
+            key = tuple(sorted([p1, p2]))
+            if key in seen:
+                continue
+            seen.add(key)
+            if nb in cellset:
+                out.append(ln(*p1, *p2, foldstroke, fsw, "5 4"))
+            else:
+                out.append(ln(*p1, *p2, stroke, sw))
+    return out

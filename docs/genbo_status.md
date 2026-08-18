@@ -2,14 +2,14 @@
 
 `python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。
 ★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。
-最終更新: 2026-08-18 20:02
+最終更新: 2026-08-18 20:40
 
 ```
 === 原簿 ⇄ 大問 の 突き合わせ ===
 コース              原簿     大問     問数   未収録
 小3国語            76本    20本    53問   **1本** ['HG-2988']
 小3マスター         128本   129本   371問   **5本** ['HG-2680', 'HG-2681', 'HG-2682', 'HG-2683', 'HG-2684']
-小3マスター宿題       363本   303本  1234問   **60本** ['HG-4170', 'HG-4171', 'HG-4172', 'HG-4173', 'HG-4174', 'HG-4175', 'HG-4176', 'HG-4177']
+小3マスター宿題       363本   356本  1432問   **7本** ['HG-4206', 'HG-4232', 'HG-4233', 'HG-4244', 'HG-4248', 'HG-4249', 'HG-4282']
 小3灘合           108本   108本   411問   なし
 小3最レ           102本   109本   323問   なし
 小4国語            75本    19本    23問   なし
@@ -42,20 +42,20 @@
    小3 sairei hd3s_n12_6
    小3 sairei hd3s_n12_7
    小3 sairei hd3s_n12_8
-❌ 原簿にあるのに 大問になっていない レコードが 77本 ある
+❌ 原簿にあるのに 大問になっていない レコードが 24本 ある
 
 ❌ 文字に色が付いていない図（暗い背景で読めない） **新規1枚** … すべての <text> に fill を書く
    3/master/kokai/hd_3m_k07_616_5
-❌ ルートに max-width が無い図（枠からはみ出す） **新規259枚** … style="display:block;margin:0 auto;max-width:100%" を付ける
+❌ ルートに max-width が無い図（枠からはみ出す） **新規183枚** … style="display:block;margin:0 auto;max-width:100%" を付ける
    3/master/fukushu/hd_3m_f02_5
    3/master/fukushu/hd_3m_f05_3
-   3/master/fukushu/hd_3m_f07_5
    3/master/fukushu/hd_3m_f16_4
    3/master/fukushu/hd_3m_f18_3
    3/master/fukushu/hd_3m_f18_5
    3/master/fukushu/hd_3m_f19_3
    3/master/fukushu/hd_3m_f20_3
-❌ 暗すぎる色を使っている図（背景に沈む） **新規229枚** … #4f9eff / #ffd166 / #9aa3c0 に置きかえる
+   3/master/fukushu/hd_3m_f21_6
+❌ 暗すぎる色を使っている図（背景に沈む） **新規226枚** … #4f9eff / #ffd166 / #9aa3c0 に置きかえる
    3/master/fukushu/hd3m_00_1
    3/master/fukushu/hd3m_00_2
    3/master/fukushu/hd3m_05_1
