@@ -346,13 +346,19 @@ async function doLogin() {
   }
 }
 
-// ── オトン学園本体（app.js）と同じ達成率ロジック ──────────────
+// ── オトン学園本体（tuna app/js/gamify.js）と同じ達成率ロジック ──────────────
+// ★ QUESTION_COUNTS / ID_PREFIX_MAP / TITLES / GACHA_TOTAL は本体との二重管理。
+//   本体を直したら、ここも必ず同じ値にする（ズレると達成率・称号が実際と食いちがう）。
+//   最終同期：2026-08-18（本体 js/gamify.js・js/gacha.js より）
 const QUESTION_COUNTS = {
-  kokugo: { kotowaza: 654, kanyoku: 651, yojijukugo: 582, gairaigo: 587, kanji_kaki: 480, kanji_yomi: 480,
+  kokugo: { kotowaza: 506, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 538, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
-            kokugo_bun: 201, kokugo_wago: 156, kokugo_sairei5: 14, hama_kokugo: 1017 },
-  sansu:  { bakuhatsu: 160, keisan: 1286, bun: 780, zu: 1044, kisoku: 993, tokusan: 562, baai: 562, kazu: 662,
-            wariai: 420, hayasa: 172, rittai: 419 },
+            kokugo_bun: 227, kokugo_wago: 156, kokugo_sairei5: 150, hama_kokugo: 1022,
+            // こころの探偵・要約記者。★ここに登録が無いと、IDの頭2文字が同じ kanji_yomi(ky…)・
+            //   rika:kitai(kt…) に誤って積み上がる（本体で2026-08-02に直したのと同じ話）
+            tantei: 123, youyaku: 128 },
+  sansu:  { bakuhatsu: 160, keisan: 1283, bun: 777, zu: 1037, kisoku: 988, tokusan: 557, baai: 556, kazu: 596,
+            wariai: 418, hayasa: 168, rittai: 374 },
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
             daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },
@@ -365,6 +371,13 @@ const ID_PREFIX_MAP = {
   gi: ['kokugo:kokugo_goi'], bs: ['kokugo:kokugo_bushu'], bg: ['kokugo:kokugo_bungaku'],
   kb: ['kokugo:kokugo_bun'], wg: ['kokugo:kokugo_wago'],
   ks: ['kokugo:kokugo_sairei5'], hk: ['kokugo:hama_kokugo'],
+  // ★こころの探偵(kt1_01_1…)・要約記者(ky1_01_1…)は、素の頭文字だけ見ると
+  //   rika:kitai(kt001…)・kanji_yomi(ky001…)と同じ "kt"/"ky" になってしまう。
+  //   「英字＋数字のすぐ後に _ が続く」形だけを別ものとして拾う（extractIdPrefix）
+  kt1_: ['kokugo:tantei'], kt2_: ['kokugo:tantei'], kt3_: ['kokugo:tantei'],
+  kt4_: ['kokugo:tantei'], kt5_: ['kokugo:tantei'], kt6_: ['kokugo:tantei'],
+  ky1_: ['kokugo:youyaku'], ky2_: ['kokugo:youyaku'], ky3_: ['kokugo:youyaku'],
+  ky4_: ['kokugo:youyaku'], ky5_: ['kokugo:youyaku'], ky6_: ['kokugo:youyaku'],
   sk: ['sansu:keisan', 'shakai:kokudo'],
   sr: ['sansu:kisoku', 'sansu:rittai', 'shakai:rekishi'],
   rd: ['rika:doubutsu', 'rika:denki'],
@@ -387,8 +400,8 @@ const TITLES = [
   { name: 'VSVクラス',    pct: 15, icon: '🔖' },
   { name: '最レ受講生',   pct: 18, icon: '📙' },
   { name: 'V2クラス',     pct: 23, icon: '📕' },
-  { name: 'V1クラス',     pct: 28, icon: '🏵️' },
   { name: '100傑',        pct: 35, icon: '🥉' },
+  { name: 'V1クラス',     pct: 40, icon: '🏵️' },
   { name: '灘合2組',      pct: 45, icon: '🥈' },
   { name: '灘合1組',      pct: 55, icon: '🏆' },
   { name: '10傑',         pct: 72, icon: '🥇' },
@@ -405,6 +418,15 @@ const GACHA_TOTAL = 157; // シークレット4体を含む総数（2026-08-01�
 // 削除は「国語だけ」ではダメ。progress / leaderboard は4教科ぶん全部消す（2026-08-01）
 const ALL_CATEGORIES = Object.values(QUESTION_COUNTS).flatMap(o => Object.keys(o));
 const GAME_IDS = ['tetris', 'mine_easy', 'mine_normal', 'mine_hard', 'jump'];
+
+// IDから、旧素ID→カテゴリの振り分けに使う頭文字を取り出す（本体 js/gamify.js と同じ）。
+// 「英字＋数字のすぐ後に _ が続く」形（kt1_01_1 など）を先に見て、無ければ英字だけに落とす。
+function extractIdPrefix(id) {
+  const withUnderscore = id.match(/^[a-zA-Z]+[0-9]+_/);
+  if (withUnderscore && ID_PREFIX_MAP[withUnderscore[0]]) return withUnderscore[0];
+  const lettersOnly = id.match(/^[a-zA-Z]+/);
+  return lettersOnly ? lettersOnly[0] : null;
+}
 
 function buildClearedSets(prog) {
   const sets = {};
@@ -424,15 +446,15 @@ function buildClearedSets(prog) {
       // ★カテゴリが取れていない記録（sansu_null: / sansu_hama: など）をIDの頭文字から救う。
       //   2026-07-26以前は「単元でえらぶ」「じゅくナビ」で解いた分がここで捨てられていた（アプリ側と同じ修正）
       const id2 = key.slice(ci + 1);
-      const pm = id2.match(/^[a-zA-Z]+/);
+      const pm = extractIdPrefix(id2);
       if (!pm) continue;
-      (ID_PREFIX_MAP[pm[0]] || [])
+      (ID_PREFIX_MAP[pm] || [])
         .filter(b => b.startsWith(subj + ':'))
         .forEach(b => { if (sets[b]) sets[b].add(id2); });
     } else {
-      const m = key.match(/^[a-zA-Z]+/);
+      const m = extractIdPrefix(key);
       if (!m) continue;
-      const targets = ID_PREFIX_MAP[m[0]];
+      const targets = ID_PREFIX_MAP[m];
       if (targets) targets.forEach(b => { if (sets[b]) sets[b].add(key); });
     }
   }
