@@ -49,8 +49,12 @@ def main():
             for kind in ("fukushu", "kokai", "units", "kouza1", "kouza2"):
                 for _, v in (node.get(kind) or {}).items():
                     for x in v:
-                        hg = x.get("hg")
-                        if not hg or hg not in src:
+                        hg = x.get("hg") or x.get("src")
+                        if not hg:
+                            continue
+                        m_hg = re.search(r"HG-\d+", hg)
+                        hg = m_hg.group(0) if m_hg else hg
+                        if hg not in src:
                             continue
                         want = src[hg]
                         if want == "判読不能":
