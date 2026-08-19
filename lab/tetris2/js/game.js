@@ -89,10 +89,17 @@ window.addEventListener('message', e => {
     const t = document.getElementById('cost-note');
     if (t) { t.textContent = d.msg || '遊び券がたりないで'; t.classList.remove('hidden'); }
     Snd.sfx('over');
-  } else if (d.type === 't2-name' && d.name) {
-    localStorage.setItem('tetris2Name', String(d.name).slice(0, 8));
-    const i = document.getElementById('name-input');
-    if (i) i.value = String(d.name).slice(0, 8);
+  } else if (d.type === 't2-name') {
+    if (d.name) {
+      localStorage.setItem('tetris2Name', String(d.name).slice(0, 8));
+      const i = document.getElementById('name-input');
+      if (i) i.value = String(d.name).slice(0, 8);
+    }
+    // 遊び券の枚数は 親から教えてもらう（子に固定で書くと二重管理になる）
+    if (d.cost) {
+      const t = document.getElementById('cost-note');
+      if (t) t.textContent = `遊び券を${d.cost}まい つかいます`;
+    }
   }
 });
 

@@ -1712,6 +1712,7 @@ const BACKUP_KEYS = [
   'mapquizBest', 'timelineBest',
   'drillBest',   // 計算ドリルの自己ベスト（組み合わせごとのJSON・2026-07-28）
   'progress',
+  'gameTickets', // 息抜きゲームの遊び券（2026-08-20・端末を変えても引き継げるように）
 ];
 
 async function backupLocalData() {

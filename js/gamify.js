@@ -328,7 +328,7 @@ function hasGameTicket() {
 // 1プレイ開始ごとに1枚消費する（リスタート・難易度変更での再スタートも1プレイ）
 function spendGameTicket() { return spendGameTickets(1); }
 
-// n枚まとめて消費する（おとんテトリス2は1プレイ3枚）
+// n枚まとめて消費する（息抜きゲームは基本 1プレイ1枚。2026-08-20にテトリス2も3→1にそろえた）
 function spendGameTickets(n) {
   const have = getGameTickets();
   if (have < n) {
