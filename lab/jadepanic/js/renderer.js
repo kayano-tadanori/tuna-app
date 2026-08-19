@@ -50,7 +50,7 @@ const R = {
     this.cornerBuf = makeBuffer(gl, new Float32Array([0,-1, 1,-1, 0,1, 1,1]));
 
     // インスタンス: p0(2) p1(2) col(3) w(1) glow(1) = 9 floats
-    this.inst = new InstanceBuffer(gl, 9, 22000);
+    this.inst = new InstanceBuffer(gl, 9, 28000);
     const a = this.progs.line.a;
     this.lineVAO = gl.createVertexArray();
     gl.bindVertexArray(this.lineVAO);

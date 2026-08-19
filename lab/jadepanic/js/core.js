@@ -33,11 +33,11 @@ const BIT_COL = hex2rgb('#63ffb0');
 // 上手い人がまったく死なない＝ハラハラしないゲームになる（2026-08-19 計測）
 const DIFF = {
   easy:   { label: 'やさしい', lives: 5, bombs: 3, maxEnemies: 50, rate0: 1.45, rateK: 0.020, accel: 0.30, rateMax: 8.0,
-            unlockScale: 1.5, speed: 0.82, fireRate: 0.070, multKeep: 1.0, magnet: 140 },
+            unlockScale: 1.5, speed: 0.82, fireRate: 0.070, multKeep: 1.0, magnet: 230 },
   normal: { label: 'ふつう',   lives: 3, bombs: 3, maxEnemies: 105, rate0: 2.20, rateK: 0.030, accel: 0.75, rateMax: 18.0,
-            unlockScale: 1.0, speed: 1.00, fireRate: 0.080, multKeep: 1.0, magnet: 95 },
+            unlockScale: 1.0, speed: 1.00, fireRate: 0.080, multKeep: 1.0, magnet: 165 },
   hard:   { label: 'むずかしい', lives: 3, bombs: 2, maxEnemies: 150, rate0: 3.00, rateK: 0.045, accel: 1.30, rateMax: 26.0,
-            unlockScale: 0.70, speed: 1.16, fireRate: 0.085, multKeep: 1.0, magnet: 55 },
+            unlockScale: 0.70, speed: 1.16, fireRate: 0.085, multKeep: 1.0, magnet: 100 },
 };
 const LIVES_MAX = 5;   // ふえすぎると 緊張感がなくなる
 
@@ -169,7 +169,8 @@ const G = {
   updatePlayer(dt, inp) {
     const p = this.p;
     const D = this.D;
-    const MAXV = 520 * (this.diff === 'easy' ? 0.92 : 1.0);
+    // 自機を小さくした分、同じ速度でも遅く見える（実測で指摘）。最高速と追従の両方を上げる
+    const MAXV = 640 * (this.diff === 'easy' ? 0.92 : 1.0);
 
     const ml = Math.hypot(inp.mx, inp.my);
     let tx = 0, ty = 0;
@@ -182,7 +183,7 @@ const G = {
       p.thrust = Math.max(0, p.thrust - dt * 4);
     }
     // 追従の速さ。9だと258msかかって「もっさり」する（2026-08-19 計測）
-    const k = 1 - Math.exp(-14 * dt);
+    const k = 1 - Math.exp(-19 * dt);
     p.vx = lerp(p.vx, tx, k);
     p.vy = lerp(p.vy, ty, k);
     p.x += p.vx * dt;
@@ -401,7 +402,7 @@ const G = {
           e.rot += dt * (0.8 + e.grow * 0.25);
           e.spit -= dt;
           // 育つほど 引力が強くなる
-          e.r = BUG.hole.r + e.grow * 1.9;
+          e.r = BUG.hole.r + e.grow * 2.3;
           if (e.spit <= 0 && e.grow > 3) {
             e.spit = 4.5;
             const a = rnd(0, TAU);
@@ -429,11 +430,11 @@ const G = {
         if (H2 === e) continue;
         const ddx = H2.x - e.x, ddy = H2.y - e.y;
         const dd = Math.hypot(ddx, ddy) || 1;
-        if (dd < 460) {
-          const f = (1 - dd / 460) * 420 * dt;
+        if (dd < 620) {
+          const f = (1 - dd / 620) * 720 * dt;
           e.vx += ddx / dd * f;
           e.vy += ddy / dd * f;
-          if (dd < H2.r + e.r * 0.6) {  // のみこまれる
+          if (dd < H2.r + e.r * 0.85) {  // のみこまれる
             H2.grow += 0.6;
             this.ev('absorb', { x: e.x, y: e.y, col: e.col });
             E.splice(i, 1);
@@ -496,8 +497,8 @@ const G = {
         const H2 = holes[h];
         const ddx = H2.x - p.x, ddy = H2.y - p.y;
         const dd = Math.hypot(ddx, ddy) || 1;
-        if (dd < 480) {
-          const f = (1 - dd / 480) * 300 * dt;
+        if (dd < 620) {
+          const f = (1 - dd / 620) * 480 * dt;
           p.vx += ddx / dd * f;
           p.vy += ddy / dd * f;
         }

@@ -676,19 +676,18 @@ const Game = {
           break;
         }
         case 'kill': {
-          // 破片・リング・白い芯の3層。ここが弱いと「倒した手ごたえ」が出ない
+          // 破片・リング二重・白い芯・キラキラの4層。撃破の手ごたえは、この演出量で決まる
           const big = e.big;
-          const n = big ? 64 : 30;
-          Part.burst(e.x, e.y, n, e.col, big ? 1150 : 760, big ? 4.4 : 3.6, big ? 1.6 : 1.05, 2.1, 0.8);
-          Part.ring(e.x, e.y, big ? 26 : 14, e.col, big ? 900 : 620, big ? 3.6 : 3.0, big ? 0.55 : 0.34, 2.4);
-          Part.burst(e.x, e.y, big ? 16 : 7, WHITE, big ? 620 : 380, 2.8, big ? 0.3 : 0.18, 2.6);
-          Grid.impulse(e.x, e.y, big ? 340 : 190, big ? 560 : 250);
-          this.addShake(big ? 0.34 : 0.07);
-          this.flashUp((big ? 0.16 : 0.045) * fx, e.col);
-          if (big) {
-            R.addShock(e.x, e.y, 0.9 * fx, 0.5);
-            this.hitstop = Math.max(this.hitstop, 0.045);
-          }
+          const n = big ? 100 : 52;
+          Part.burst(e.x, e.y, n, e.col, big ? 1450 : 980, big ? 5.2 : 4.2, big ? 2.0 : 1.35, 2.3, 0.68);
+          Part.ring(e.x, e.y, big ? 34 : 18, e.col, big ? 1150 : 780, big ? 4.2 : 3.4, big ? 0.7 : 0.42, 2.6);
+          Part.ring(e.x, e.y, big ? 20 : 10, BIT_COL, big ? 780 : 520, 2.8, big ? 0.45 : 0.28, 2.0);
+          Part.burst(e.x, e.y, big ? 26 : 11, WHITE, big ? 800 : 480, 3.2, big ? 0.4 : 0.24, 2.8);
+          Grid.impulse(e.x, e.y, big ? 400 : 230, big ? 720 : 340);
+          this.addShake(big ? 0.42 : 0.10);
+          this.flashUp((big ? 0.20 : 0.06) * fx, e.col);
+          R.addShock(e.x, e.y, (big ? 0.9 : 0.32) * fx, big ? 0.5 : 0.32);
+          if (big) this.hitstop = Math.max(this.hitstop, 0.045);
           Snd.sfx('kill', { frame: this.frameNo, pitch: big ? 0.55 : (e.type === 'chaser' ? 1.25 : 1) });
           if (big) this.popScore(e.x, e.y, '+' + e.pts.toLocaleString(), true);
           break;
@@ -878,16 +877,26 @@ const Game = {
 
     // バグホールは グリッドも吸う
     for (const e of G.enemies) {
-      if (e.type === 'hole' && e.age > e.born) Grid.attract(e.x, e.y, 430 + e.grow * 10, 900 + e.grow * 40, vdt);
+      if (e.type === 'hole' && e.age > e.born) Grid.attract(e.x, e.y, 560 + e.grow * 14, 1400 + e.grow * 70, vdt);
     }
     // ジェイドの通ったあとが すこし へこむ
     if (this.state === 'play' && G.p.alive) {
       Grid.impulse(G.p.x, G.p.y, 95, 17 * (0.4 + G.p.thrust));
-      if (G.p.thrust > 0.3 && Math.random() < 0.5) {
-        const a = G.p.face + Math.PI + rnd(-0.5, 0.5);
-        Part.spawn(G.p.x + Math.cos(a) * 16, G.p.y + Math.sin(a) * 16,
-                   Math.cos(a) * rnd(60, 180) + G.p.vx * 0.2, Math.sin(a) * rnd(60, 180) + G.p.vy * 0.2,
-                   rnd(0.2, 0.45), JADE_COL.wing, 2.6, 1.3, 2.2);
+      if (G.p.thrust > 0.15) {
+        // 進んでいる間、いつも尾を引く。速いほど 長く・明るく
+        const spd = Math.hypot(G.p.vx, G.p.vy);
+        const back = Math.atan2(-G.p.vy, -G.p.vx);
+        const n = Math.round(1 + G.p.thrust * 2.2);
+        for (let k = 0; k < n; k++) {
+          const a = back + rnd(-0.5, 0.5);
+          const col = Math.random() < 0.5 ? JADE_COL.wing : JADE_COL.body;
+          Part.spawn(G.p.x + Math.cos(a) * 14 - G.p.vx * 0.01, G.p.y + Math.sin(a) * 14 - G.p.vy * 0.01,
+                     Math.cos(a) * rnd(80, 220) + G.p.vx * 0.3, Math.sin(a) * rnd(80, 220) + G.p.vy * 0.3,
+                     rnd(0.28, 0.6), col, rnd(2.4, 3.4), 1.9 * G.p.thrust, 2.0);
+        }
+        if (spd > 400 && Math.random() < 0.6) {
+          Part.spawn(G.p.x, G.p.y, -G.p.vx * 0.15, -G.p.vy * 0.15, 0.22, WHITE, 2.0, 2.4, 3.2);
+        }
       }
     }
     Grid.update(Math.min(vdt, 1 / 50));
