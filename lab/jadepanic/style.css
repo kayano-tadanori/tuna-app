@@ -1,0 +1,617 @@
+/* ============================================================
+   ジェイドパニック — 見た目
+   横持ちの iPhone を第一に。上下のセーフエリアを避ける。
+   ============================================================ */
+
+:root {
+  --jade:   #ffd23b;
+  --orange: #ff9d2e;
+  --green:  #5cb03a;
+  --bit:    #63ffb0;
+  --cyan:   #4fd8ff;
+  --danger: #ff4d6d;
+  --ink:    #e8f4ff;
+  --panel:  rgba(6, 12, 26, 0.86);
+  --safeT: env(safe-area-inset-top, 0px);
+  --safeB: env(safe-area-inset-bottom, 0px);
+  --safeL: env(safe-area-inset-left, 0px);
+  --safeR: env(safe-area-inset-right, 0px);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  overflow: hidden; background: #04060f;
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  -webkit-user-select: none; user-select: none;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+#stage { position: fixed; inset: 0; overflow: hidden; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.hidden { display: none !important; }
+
+/* ============================================================
+   HUD
+   ============================================================ */
+#hud {
+  position: absolute;
+  top: calc(var(--safeT) + 6px);
+  left: calc(var(--safeL) + 10px);
+  right: calc(var(--safeR) + 10px);
+  display: flex; align-items: flex-start; justify-content: space-between;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+  z-index: 5;
+}
+
+.hud-left { display: flex; flex-direction: column; gap: 1px; }
+.stat i {
+  display: block; font-style: normal; font-size: 9px; letter-spacing: 2px;
+  color: rgba(160, 205, 255, 0.75); font-weight: 700;
+}
+.stat b {
+  display: block; font-size: 26px; line-height: 1;
+  color: #fff; font-weight: 800; letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(90, 200, 255, 0.85), 0 0 30px rgba(60, 140, 255, 0.5);
+}
+.stat.small b { font-size: 13px; color: rgba(200, 230, 255, 0.75); text-shadow: none; }
+
+.hud-center { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 1px; }
+.mult {
+  font-size: 24px; font-weight: 900; line-height: 1;
+  color: var(--bit);
+  text-shadow: 0 0 14px rgba(99, 255, 176, 0.9), 0 0 34px rgba(99, 255, 176, 0.45);
+  transition: transform 0.1s;
+}
+.mult.bump { animation: multBump 0.28s ease-out; }
+@keyframes multBump {
+  0% { transform: scale(1.55); filter: brightness(2); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+.mult-bar {
+  width: 92px; height: 4px; border-radius: 3px;
+  background: rgba(99, 255, 176, 0.16);
+  overflow: hidden;
+}
+.mult-bar span {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, #2fd68a, var(--bit));
+  box-shadow: 0 0 8px rgba(99, 255, 176, 0.9);
+  transition: width 0.12s linear;
+}
+.timer {
+  display: none; font-size: 22px; font-weight: 800; letter-spacing: 1px;
+  color: #fff; text-shadow: 0 0 12px rgba(90, 200, 255, 0.8);
+}
+body.ta .timer { display: block; }
+.timer.hot { color: var(--danger); text-shadow: 0 0 16px rgba(255, 77, 109, 0.9); animation: hotBlink 0.5s infinite; }
+@keyframes hotBlink { 50% { opacity: 0.55; } }
+
+.hud-right { display: flex; align-items: center; gap: 8px; }
+.lives { display: flex; gap: 1px; font-size: 17px; line-height: 1; }
+.lives .ic { filter: drop-shadow(0 0 6px rgba(255, 210, 59, 0.9)); }
+body.ta .lives { display: none; }
+
+.corner-btn {
+  pointer-events: auto;
+  width: 34px; height: 34px; border-radius: 10px;
+  border: 1px solid rgba(120, 200, 255, 0.35);
+  background: rgba(8, 18, 38, 0.6);
+  color: rgba(200, 230, 255, 0.9);
+  font-size: 12px; letter-spacing: 1px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.corner-btn:active { background: rgba(40, 90, 160, 0.6); }
+
+/* ============================================================
+   画面まん中の文字
+   ============================================================ */
+#fx-layer {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  pointer-events: none; z-index: 4;
+  /* まん中はジェイドの居場所。文字は少し上に逃がす */
+  padding-bottom: 22vh;
+}
+#big-text {
+  font-size: clamp(26px, 5.6vw, 50px); font-weight: 900; letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 0 18px rgba(120, 220, 255, 0.9), 0 0 50px rgba(80, 160, 255, 0.7);
+}
+#sub-text {
+  font-size: clamp(12px, 2.2vw, 18px); font-weight: 700; letter-spacing: 2px;
+  color: rgba(190, 230, 255, 0.9); margin-top: 4px;
+}
+#big-text.pop, #sub-text.pop { animation: popIn 0.42s cubic-bezier(.2,1.5,.4,1); }
+@keyframes popIn {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* あたらしいバグの紹介カード */
+#newbug {
+  position: absolute;
+  left: 50%; top: calc(var(--safeT) + 54px);
+  transform: translate(-50%, -14px);
+  background: var(--panel);
+  border: 1px solid rgba(120, 200, 255, 0.35);
+  border-left: 3px solid var(--danger);
+  border-radius: 10px;
+  padding: 6px 14px 7px;
+  min-width: 190px; text-align: center;
+  opacity: 0; pointer-events: none; z-index: 6;
+  backdrop-filter: blur(6px);
+}
+#newbug.show { animation: nbIn 3.2s ease-out forwards; }
+@keyframes nbIn {
+  0% { opacity: 0; transform: translate(-50%, -22px) scale(0.9); }
+  8% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  85% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -8px) scale(0.98); }
+}
+.nb-tag {
+  display: block; font-size: 8px; letter-spacing: 3px; font-weight: 800;
+  color: var(--danger);
+}
+#newbug b { display: block; font-size: 17px; font-weight: 900; letter-spacing: 1px; }
+#newbug i { display: block; font-style: normal; font-size: 11px; color: rgba(200, 230, 255, 0.8); margin-top: 1px; }
+
+#toast {
+  position: absolute; left: 50%; bottom: calc(var(--safeB) + 74px);
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 1px solid rgba(120, 200, 255, 0.4);
+  border-radius: 999px; padding: 7px 18px;
+  font-size: 13px; font-weight: 700;
+  opacity: 0; pointer-events: none; z-index: 20;
+}
+#toast.show { animation: toastIn 2.4s ease-out forwards; }
+@keyframes toastIn {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ============================================================
+   タッチ操作
+   ============================================================ */
+#touch-ui { position: absolute; inset: 0; z-index: 3; }
+.zone { position: absolute; top: 0; bottom: 0; width: 50%; }
+#zone-l { left: 0; }
+#zone-r { right: 0; }
+body.auto-aim #zone-r { width: 50%; }
+
+.stick {
+  position: absolute; width: 0; height: 0;
+  pointer-events: none;
+  transition: opacity 0.16s;
+}
+.stick.off { opacity: 0; }
+.stick .ring {
+  position: absolute; left: -60px; top: -60px; width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 2px solid rgba(120, 210, 255, 0.28);
+  background: radial-gradient(circle, rgba(60, 150, 255, 0.10), transparent 70%);
+}
+.stick .knob {
+  position: absolute; left: -26px; top: -26px; width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(160, 230, 255, 0.7);
+  background: rgba(60, 160, 255, 0.22);
+  box-shadow: 0 0 18px rgba(80, 190, 255, 0.55);
+}
+.stick em {
+  /* 指が画面の下ぎりぎりでも 文字が切れないよう リングの上に置く */
+  position: absolute; left: -40px; top: -84px; width: 80px; text-align: center;
+  font-style: normal; font-size: 10px; letter-spacing: 2px;
+  color: rgba(160, 210, 255, 0.6);
+}
+#stick-l .knob { border-color: rgba(255, 210, 59, 0.75); background: rgba(255, 180, 40, 0.18); box-shadow: 0 0 18px rgba(255, 200, 60, 0.5); }
+#stick-r .knob { border-color: rgba(255, 120, 160, 0.75); background: rgba(255, 90, 140, 0.18); box-shadow: 0 0 18px rgba(255, 110, 150, 0.5); }
+
+.bomb-btn {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--safeB) + 8px);
+  width: 68px; height: 40px; border-radius: 13px;
+  border: 1px solid rgba(255, 210, 59, 0.5);
+  background: rgba(20, 16, 6, 0.55);
+  color: var(--jade);
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+  cursor: pointer; z-index: 6;
+}
+.bomb-btn .ic { font-size: 18px; filter: drop-shadow(0 0 6px rgba(255, 210, 59, 0.8)); }
+.bomb-btn b { font-size: 18px; font-weight: 900; }
+.bomb-btn i {
+  position: absolute; top: -14px; left: 0; right: 0; text-align: center;
+  font-style: normal; font-size: 9px; letter-spacing: 1px; color: rgba(255, 220, 120, 0.7);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+}
+.bomb-btn:active { background: rgba(255, 200, 60, 0.28); }
+.bomb-btn.empty { opacity: 0.32; }
+
+/* ============================================================
+   かぶせる画面
+   ============================================================ */
+.screen-ov {
+  position: absolute; inset: 0; z-index: 30;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 9px;
+  padding: calc(var(--safeT) + 8px) calc(var(--safeR) + 14px) calc(var(--safeB) + 8px) calc(var(--safeL) + 14px);
+  background: radial-gradient(ellipse at center, rgba(4, 8, 20, 0.72), rgba(2, 4, 12, 0.94));
+  backdrop-filter: blur(3px);
+  animation: ovIn 0.25s ease-out;
+}
+@keyframes ovIn { from { opacity: 0; } to { opacity: 1; } }
+.scroll-ov { justify-content: flex-start; overflow-y: auto; touch-action: pan-y; }
+/* ランキングとあそび方は 結果画面より上に出す */
+#rank-screen, #help-screen { z-index: 40; background: radial-gradient(ellipse at center, rgba(3,6,16,0.93), rgba(1,3,10,0.98)); }
+/* タイトルは 後ろで飛んでいるジェイドが見えるくらい うすく */
+#title-screen { background: radial-gradient(ellipse at center, rgba(4,8,20,0.55), rgba(2,4,12,0.88)); backdrop-filter: none; }
+
+.ov-title {
+  margin: 0; font-size: clamp(20px, 4.4vw, 34px); font-weight: 900; letter-spacing: 4px;
+  color: #fff; text-shadow: 0 0 20px rgba(120, 200, 255, 0.9);
+}
+.rank-title { color: var(--jade); text-shadow: 0 0 20px rgba(255, 210, 59, 0.8); }
+
+/* ---- ロゴ（ネオン管） ----------------------------------------
+   本家GWのように「ガラス管に光が通っている」感じを出す。
+   白い芯 → 色のにじみ → 遠くのぼんやり、の3層を text-shadow で重ねる。
+------------------------------------------------------------- */
+.logo-wrap { text-align: center; position: relative; }
+.logo-sub {
+  font-size: 9px; letter-spacing: 6px; color: rgba(150, 200, 255, 0.55); font-weight: 700;
+  text-shadow: 0 0 10px rgba(80, 170, 255, 0.6);
+}
+.logo {
+  margin: 2px 0 0; font-size: clamp(34px, 9vw, 74px); font-weight: 900;
+  letter-spacing: 3px; line-height: 1.05;
+  transform: skewX(-5deg);
+  animation: neonFlicker 7s infinite;
+}
+.logo span, .logo em { font-style: normal; color: #fff; }
+/* ジェイド＝黄～橙のネオン */
+.logo span {
+  text-shadow:
+    0 0 4px #fff,
+    0 0 10px #ffe98a,
+    0 0 22px var(--jade),
+    0 0 42px #ff9d2e,
+    0 0 78px rgba(255, 140, 20, 0.75),
+    0 0 120px rgba(255, 110, 0, 0.45);
+}
+/* パニック＝赤～桃のネオン */
+.logo em {
+  text-shadow:
+    0 0 4px #fff,
+    0 0 10px #ffc2d0,
+    0 0 22px var(--danger),
+    0 0 44px #ff2e6a,
+    0 0 80px rgba(255, 30, 100, 0.7),
+    0 0 124px rgba(255, 0, 80, 0.42);
+}
+/* ガラス管が ときどき ちらつく（2Hz以下・弱め。子どもがいるので控えめに） */
+@keyframes neonFlicker {
+  0%, 41%, 43%, 46%, 100% { opacity: 1; }
+  42% { opacity: 0.84; }
+  44.5% { opacity: 0.72; }
+}
+.logo-line {
+  position: relative;
+  height: 2px; margin: 10px auto 4px; width: 78%;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  box-shadow: 0 0 10px rgba(79, 216, 255, 0.9), 0 0 26px rgba(79, 216, 255, 0.55);
+}
+/* 光が線の上を 走り抜ける */
+.logo-line::after {
+  content: ''; position: absolute; top: -1px; left: 0; width: 22%; height: 4px;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  filter: blur(1px);
+  animation: sweep 3.4s cubic-bezier(.5,0,.5,1) infinite;
+}
+@keyframes sweep {
+  0% { left: -22%; opacity: 0; }
+  12% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.logo-tag {
+  font-size: 9px; letter-spacing: 6px; color: rgba(160, 220, 255, 0.8); font-weight: 700;
+  text-shadow: 0 0 12px rgba(79, 216, 255, 0.8);
+}
+.title-best { margin: 5px 0 0; font-size: 12px; color: rgba(255, 220, 130, 0.85); font-weight: 700; }
+
+/* ---- 選ぶボタン ---- */
+.pickers { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.pick-row { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+.pick {
+  border: 1px solid rgba(120, 200, 255, 0.3);
+  background: rgba(8, 16, 34, 0.65);
+  color: rgba(200, 230, 255, 0.8);
+  border-radius: 11px; padding: 6px 13px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: all 0.14s;
+}
+.mode-pick .pick { display: flex; flex-direction: column; align-items: center; min-width: 118px; }
+.mode-pick .pick b { font-size: 14px; font-weight: 800; }
+.mode-pick .pick i { font-style: normal; font-size: 9px; opacity: 0.7; margin-top: 1px; }
+.pick.on {
+  border-color: var(--cyan);
+  background: rgba(30, 100, 190, 0.42);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(79, 216, 255, 0.45), inset 0 0 14px rgba(79, 216, 255, 0.15);
+}
+
+/* ---- 大きいボタン ---- */
+.neon-btn {
+  border: 2px solid var(--jade);
+  background: linear-gradient(180deg, rgba(255, 210, 59, 0.20), rgba(255, 160, 30, 0.10));
+  color: #fff;
+  border-radius: 13px; padding: 10px 34px;
+  font-size: 17px; font-weight: 900; letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(255, 200, 60, 0.4), inset 0 0 18px rgba(255, 200, 60, 0.12);
+  text-shadow: 0 0 12px rgba(255, 220, 120, 0.8);
+}
+.neon-btn:active { transform: scale(0.96); }
+.neon-btn.ghost {
+  border-color: rgba(120, 200, 255, 0.45);
+  background: rgba(8, 18, 38, 0.6);
+  box-shadow: none; text-shadow: none;
+  font-size: 13px; padding: 8px 18px; letter-spacing: 1px;
+}
+.cost-note { margin: 0; font-size: 11px; color: rgba(255, 210, 130, 0.8); }
+
+.title-toggles, .name-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.tgl {
+  border: 1px solid rgba(120, 200, 255, 0.28);
+  background: rgba(8, 16, 34, 0.6);
+  color: rgba(180, 215, 255, 0.7);
+  border-radius: 999px; padding: 5px 12px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+}
+.tgl.on { border-color: rgba(99, 255, 176, 0.6); color: #cfffe8; box-shadow: 0 0 12px rgba(99, 255, 176, 0.28); }
+.name-row label { font-size: 11px; color: rgba(180, 215, 255, 0.7); }
+#name-input {
+  width: 92px; padding: 5px 9px; border-radius: 9px;
+  border: 1px solid rgba(120, 200, 255, 0.35);
+  background: rgba(4, 10, 24, 0.8); color: #fff;
+  font-size: 13px; font-family: inherit;
+  -webkit-user-select: text; user-select: text;
+}
+.hint { margin: 2px 0 0; font-size: 10px; color: rgba(150, 195, 240, 0.6); text-align: center; }
+
+.exit-btn {
+  position: absolute; left: calc(var(--safeL) + 10px); top: calc(var(--safeT) + 10px);
+  border: 1px solid rgba(120, 200, 255, 0.3);
+  background: rgba(8, 18, 38, 0.7); color: rgba(200, 230, 255, 0.85);
+  border-radius: 10px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer;
+}
+
+/* ---- あそび方 ---- */
+.help-body { max-width: 720px; width: 100%; }
+.story { font-size: 13px; line-height: 1.75; text-align: center; color: rgba(215, 235, 255, 0.9); margin: 4px 0 10px; }
+.story b.jade { color: var(--jade); }
+.story b.bit { color: var(--bit); }
+.help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 8px; }
+.help-card {
+  border: 1px solid rgba(120, 200, 255, 0.22);
+  background: rgba(6, 14, 30, 0.6);
+  border-radius: 11px; padding: 9px 12px;
+}
+.help-card h3 { margin: 0 0 4px; font-size: 13px; color: var(--cyan); letter-spacing: 1px; }
+.help-card p { margin: 0; font-size: 11.5px; line-height: 1.65; color: rgba(205, 230, 255, 0.85); }
+.help-card b { color: #fff; }
+.help-h { margin: 14px 0 6px; font-size: 13px; letter-spacing: 2px; color: var(--cyan); text-align: center; }
+.bug-book { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 6px; margin-bottom: 8px; }
+.bug-row {
+  display: flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(120, 200, 255, 0.16);
+  background: rgba(6, 14, 30, 0.5);
+  border-radius: 9px; padding: 6px 9px;
+}
+.bug-row .sw { width: 12px; height: 12px; border-radius: 3px; flex: 0 0 auto; }
+.bug-row b { font-size: 12px; }
+.bug-row i { font-style: normal; font-size: 10px; color: rgba(200, 230, 255, 0.7); }
+
+/* ---- ランキング ---- */
+.rank-head { margin: 0; font-size: 11px; letter-spacing: 2px; color: rgba(180, 215, 255, 0.75); }
+.rank-list { width: min(430px, 92%); display: flex; flex-direction: column; gap: 3px; }
+.rank-list.cloud h3 { margin: 10px 0 4px; font-size: 11px; letter-spacing: 2px; color: rgba(160, 220, 255, 0.8); text-align: center; }
+.rank-row {
+  display: grid; grid-template-columns: 26px 1fr auto 40px; align-items: center; gap: 8px;
+  border: 1px solid rgba(120, 200, 255, 0.16);
+  background: rgba(6, 14, 30, 0.6);
+  border-radius: 9px; padding: 5px 10px;
+  font-size: 13px;
+}
+.rank-row i { font-style: normal; font-weight: 900; color: rgba(160, 210, 255, 0.75); }
+.rank-row b { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-row s { text-decoration: none; font-weight: 900; font-variant-numeric: tabular-nums; }
+.rank-row u { text-decoration: none; font-size: 10px; color: rgba(170, 205, 245, 0.55); text-align: right; }
+.rank-row.top { border-color: rgba(255, 210, 59, 0.5); box-shadow: 0 0 14px rgba(255, 200, 60, 0.2); }
+.rank-row.top i, .rank-row.top s { color: var(--jade); }
+.rank-empty { font-size: 12px; color: rgba(180, 215, 255, 0.6); text-align: center; }
+
+/* ---- 結果 ---- */
+.result { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.res-row { display: flex; flex-direction: column; align-items: center; }
+.res-row i { font-style: normal; font-size: 9px; letter-spacing: 2px; color: rgba(160, 205, 255, 0.7); font-weight: 700; }
+.res-row b { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.res-row.big b { font-size: clamp(30px, 6vw, 46px); color: var(--jade); text-shadow: 0 0 20px rgba(255, 200, 60, 0.7); }
+.res-cols { display: flex; gap: 20px; }
+.rankmsg { margin: 0; font-size: 12px; font-weight: 700; color: rgba(255, 225, 140, 0.9); }
+.over-sub { display: flex; gap: 8px; }
+
+/* ---- よこ向きにしてね ---- */
+#rotate {
+  position: absolute; inset: 0; z-index: 90;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  background: #04060f;
+}
+.rot-icon { font-size: 56px; animation: rot 2s ease-in-out infinite; }
+@keyframes rot { 0%, 40% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+#rotate p { font-size: 15px; letter-spacing: 3px; font-weight: 700; }
+
+/* ---- せまい画面（横持ちiPhone）むけの詰め ---- */
+@media (max-height: 440px) {
+  .screen-ov { gap: 4px; overflow-y: auto; }
+  .logo { font-size: clamp(26px, 6.2vw, 46px); letter-spacing: 2px; }
+  .logo-sub, .logo-tag { font-size: 8px; letter-spacing: 4px; }
+  .logo-line { margin: 5px auto 2px; }
+  .title-story { font-size: 10px; margin-top: 3px; }
+  .title-best { font-size: 11px; margin-top: 2px; }
+  .pickers { gap: 4px; }
+  .pick { padding: 4px 11px; font-size: 12px; }
+  .mode-pick .pick { min-width: 104px; }
+  .mode-pick .pick b { font-size: 13px; }
+  .neon-btn { padding: 7px 26px; font-size: 15px; }
+  .tgl { padding: 4px 10px; font-size: 10px; }
+  #name-input { padding: 4px 8px; font-size: 12px; }
+  .hint { font-size: 9px; }
+  .stat b { font-size: 22px; }
+  .mult { font-size: 24px; }
+  .story-line { font-size: 11.5px; margin: 2px 0; line-height: 1.6; }
+  .story-tag { margin-bottom: 4px; }
+  .story-line.mission { margin-top: 8px; padding-top: 6px; }
+  .story-go { margin-top: 8px; }
+  .story-line.big { font-size: 19px; margin: 7px 0; }
+  .story-line.voice { font-size: 17px; }
+  .rank-badge { font-size: clamp(30px, 6vw, 44px); }
+}
+
+/* ============================================================
+   オープニング（シナリオ）
+   ============================================================ */
+#story-screen {
+  z-index: 45;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(3, 7, 18, 0.72), rgba(1, 3, 10, 0.95));
+}
+.story-wrap { max-width: 640px; text-align: center; }
+.story-tag {
+  font-size: 9px; letter-spacing: 5px; font-weight: 800;
+  color: rgba(120, 200, 255, 0.7); margin-bottom: 10px;
+  opacity: 0; animation: lineIn 0.6s ease-out 0.15s forwards;
+}
+.story-line {
+  margin: 7px 0; font-size: 14px; line-height: 1.85; font-weight: 600;
+  color: rgba(220, 238, 255, 0.94);
+  opacity: 0; transform: translateY(10px);
+  animation: lineIn 0.75s cubic-bezier(.2,.9,.3,1) forwards;
+  text-shadow: 0 0 14px rgba(20, 60, 120, 0.9);
+}
+.story-line:nth-of-type(1) { animation-delay: 0.5s; }
+.story-line:nth-of-type(2) { animation-delay: 1.5s; }
+.story-line:nth-of-type(3) { animation-delay: 2.6s; }
+.story-line:nth-of-type(4) { animation-delay: 3.9s; }
+.story-line:nth-of-type(5) { animation-delay: 5.1s; }
+.story-line:nth-of-type(6) { animation-delay: 5.9s; }
+@keyframes lineIn { to { opacity: 1; transform: translateY(0); } }
+
+.story-line.big { font-size: 22px; font-weight: 900; letter-spacing: 1px; margin: 12px 0; }
+.story-line.big .glitch {
+  color: var(--danger);
+  text-shadow: 0 0 16px rgba(255, 77, 109, 0.95), 0 0 44px rgba(255, 40, 90, 0.6);
+  animation: glitch 2.4s steps(1) 1.9s infinite;
+}
+@keyframes glitch {
+  0%, 84%, 100% { transform: translate(0, 0); filter: none; }
+  86% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+  88% { transform: translate(3px, -1px); }
+  90% { transform: translate(-1px, 0); filter: hue-rotate(-60deg); }
+}
+.story-line .jade { color: var(--jade); text-shadow: 0 0 14px rgba(255, 210, 59, 0.8); }
+.story-line.voice {
+  font-size: 20px; font-weight: 900; color: var(--jade); letter-spacing: 2px;
+  text-shadow: 0 0 18px rgba(255, 210, 59, 0.9);
+}
+.story-line.mission {
+  margin-top: 14px; font-size: 13px; letter-spacing: 3px;
+  color: rgba(160, 220, 255, 0.9);
+  border-top: 1px solid rgba(120, 200, 255, 0.25);
+  padding-top: 10px;
+}
+.story-line.mission b { color: #fff; font-size: 15px; }
+.story-go { margin-top: 14px; opacity: 0; animation: lineIn 0.6s ease-out 6.6s forwards; }
+.skip-btn {
+  position: absolute; right: calc(var(--safeR) + 14px); bottom: calc(var(--safeB) + 12px);
+  border: 1px solid rgba(120, 200, 255, 0.25);
+  background: rgba(8, 18, 38, 0.6); color: rgba(180, 215, 255, 0.7);
+  border-radius: 999px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer;
+}
+.title-story {
+  margin: 6px 0 0; font-size: 11px; line-height: 1.6;
+  color: rgba(190, 220, 255, 0.75);
+}
+.title-story b { color: var(--jade); }
+
+/* ============================================================
+   ランク評価（結果画面）と スコアのポップ
+   ============================================================ */
+.rank-badge {
+  font-size: clamp(38px, 8vw, 62px); font-weight: 900; line-height: 1;
+  letter-spacing: 2px; margin-bottom: -4px;
+  animation: rankIn 0.55s cubic-bezier(.2,1.6,.4,1);
+}
+@keyframes rankIn {
+  0% { transform: scale(2.4) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(0.92) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.rank-badge.s { color: #ffd23b; text-shadow: 0 0 24px rgba(255, 210, 59, 0.95), 0 0 60px rgba(255, 160, 30, 0.6); }
+.rank-badge.a { color: #63ffb0; text-shadow: 0 0 20px rgba(99, 255, 176, 0.9); }
+.rank-badge.b { color: #4fd8ff; text-shadow: 0 0 18px rgba(79, 216, 255, 0.85); }
+.rank-badge.c { color: #9fb4d8; text-shadow: 0 0 12px rgba(120, 160, 220, 0.6); }
+
+#pops { position: absolute; inset: 0; pointer-events: none; z-index: 6; overflow: hidden; }
+.pop-score {
+  position: absolute; transform: translate(-50%, -50%);
+  font-size: 17px; font-weight: 900; letter-spacing: 1px;
+  color: #fff; text-shadow: 0 0 12px rgba(255, 210, 59, 0.95), 0 0 30px rgba(255, 160, 30, 0.6);
+  animation: popUp 0.95s ease-out forwards;
+  white-space: nowrap;
+}
+.pop-score.big { font-size: 24px; color: var(--jade); }
+@keyframes popUp {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  18% { opacity: 1; transform: translate(-50%, -60%) scale(1.15); }
+  35% { transform: translate(-50%, -66%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -130%) scale(0.95); }
+}
+
+/* ばいりつの表示を もう少し大きく（ここが点の源だと伝わるように） */
+.mult { font-size: 30px; letter-spacing: -0.5px; }
+.mult-bar { width: 118px; height: 5px; }
+.mult-bar.tick span { box-shadow: 0 0 14px rgba(99, 255, 176, 1); }
+
+/* ライバル表示（自分のすぐ上にいる人） */
+.rival {
+  display: flex; align-items: baseline; gap: 5px;
+  margin-top: 3px; padding: 2px 7px 2px 5px;
+  border-left: 2px solid rgba(255, 210, 59, 0.7);
+  background: rgba(255, 200, 60, 0.10);
+  border-radius: 0 7px 7px 0;
+  max-width: 168px;
+  animation: rivalIn 0.3s ease-out;
+}
+@keyframes rivalIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+.rival .arrow { font-style: normal; font-size: 8px; color: rgba(255, 210, 59, 0.9); }
+.rival b {
+  font-size: 11px; font-weight: 700; color: rgba(255, 235, 190, 0.95);
+  max-width: 74px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.rival s {
+  text-decoration: none; font-size: 12px; font-weight: 900;
+  color: var(--jade); font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 8px rgba(255, 200, 60, 0.6);
+}

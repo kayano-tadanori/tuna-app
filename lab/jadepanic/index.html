@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,maximum-scale=1">
+<meta name="theme-color" content="#04060f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ジェイドパニック</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="titling">
+
+<div id="stage">
+  <canvas id="gl"></canvas>
+
+  <!-- ================= HUD ================= -->
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <div class="stat score"><i>SCORE</i><b id="v-score">0</b></div>
+      <div class="stat small"><i>BEST</i><b id="v-best">0</b></div>
+      <div id="rival" class="rival hidden">
+        <i class="arrow">▲</i><b id="rival-name">—</b><s id="rival-score">0</s>
+      </div>
+    </div>
+
+    <div class="hud-center">
+      <div id="v-mult" class="mult">×1</div>
+      <div id="v-time" class="timer">60.0</div>
+    </div>
+
+    <div class="hud-right">
+      <div id="v-lives" class="lives"></div>
+      <button id="btn-pause" class="corner-btn" aria-label="ポーズ">❙❙</button>
+    </div>
+  </div>
+
+  <div id="fx-layer">
+    <div id="big-text"></div>
+    <div id="sub-text"></div>
+  </div>
+
+  <!-- あたらしいバグの図鑑カード -->
+  <div id="newbug">
+    <span class="nb-tag">NEW BUG</span>
+    <b id="nb-name">ノイズ</b>
+    <i id="nb-desc"></i>
+  </div>
+
+  <div id="toast"></div>
+  <div id="pops"></div>
+
+  <!-- ================= 操作 ================= -->
+  <div id="touch-ui" class="hidden">
+    <div id="zone-l" class="zone"></div>
+    <div id="zone-r" class="zone"></div>
+    <div id="stick-l" class="stick off"><span class="ring"></span><span class="knob"></span><em>うごく</em></div>
+    <div id="stick-r" class="stick off"><span class="ring"></span><span class="knob"></span><em>ねらう</em></div>
+    <button id="btn-bomb" class="bomb-btn">
+      <span class="ic">💨</span>
+      <b id="v-bombs">3</b>
+      <i>大はばたき</i>
+    </button>
+  </div>
+
+  <!-- ================= タイトル ================= -->
+  <div id="title-screen" class="screen-ov">
+    <button id="btn-exit-title" class="exit-btn hidden">‹ もどる</button>
+
+    <div class="logo-wrap">
+      <div class="logo-sub">OTON GAKUEN presents</div>
+      <h1 class="logo"><span>ジェイド</span><em>パニック</em></h1>
+      <div class="logo-line"></div>
+      <div class="logo-tag">NEON VECTOR SHOOTER</div>
+      <p class="title-story">学園のデータに バグがわいた。<b>飛べるのは ジェイドだけ。</b></p>
+      <p id="title-best" class="title-best"></p>
+    </div>
+
+    <div class="pickers">
+      <div class="pick-row mode-pick">
+        <button class="pick on" data-mode="survival"><b>サバイバル</b><i>のこり機がなくなるまで</i></button>
+        <button class="pick" data-mode="timeattack"><b>60びょう</b><i>ミスは −5びょう</i></button>
+      </div>
+      <div class="pick-row diff-pick">
+        <button class="pick" data-diff="easy">やさしい</button>
+        <button class="pick on" data-diff="normal">ふつう</button>
+        <button class="pick" data-diff="hard">むずかしい</button>
+      </div>
+    </div>
+
+    <button id="btn-start" class="neon-btn">▶ スタート</button>
+    <p id="cost-note" class="cost-note hidden">遊び券を つかいます</p>
+
+    <div class="title-toggles">
+      <button id="btn-control" class="tgl">🕹 ツインスティック</button>
+      <button id="btn-calm" class="tgl on">✨ 演出ハデめ</button>
+      <button id="btn-bgm" class="tgl on">🎵 BGM</button>
+      <button id="btn-sfx" class="tgl on">🔊 SE</button>
+    </div>
+
+    <div class="name-row">
+      <label for="name-input">なまえ</label>
+      <input id="name-input" type="text" maxlength="8" placeholder="ななし" autocomplete="off">
+      <button id="btn-rank" class="tgl">🏆 ランキング</button>
+      <button id="btn-help" class="tgl">？ あそび方</button>
+      <button id="btn-story" class="tgl">📖 ストーリー</button>
+    </div>
+
+    <p id="hint-ctrl" class="hint"></p>
+  </div>
+
+  <!-- ================= オープニング ================= -->
+  <div id="story-screen" class="screen-ov hidden">
+    <div class="story-wrap">
+      <div class="story-tag">MISSION 01 ／ オトン学園 データ空間</div>
+      <p class="story-line">ある夜、オトン学園の データの中に</p>
+      <p class="story-line big">——「<b class="glitch">バグ</b>」が わいた。</p>
+      <p class="story-line">図鑑の 何万という 文字と 数字が、<br>かたっぱしから こわされていく。</p>
+      <p class="story-line">データの空を 飛べるのは、<br><b class="jade">コガネメキシコインコの ジェイド</b> ただ一羽。</p>
+      <p class="story-line voice">「ワン！」</p>
+      <p class="story-line mission">MISSION ／ <b>光の格子を まもれ。</b></p>
+    </div>
+    <button id="btn-story-go" class="neon-btn story-go">▶ つぎへ</button>
+    <button id="btn-story-skip" class="skip-btn">スキップ ›</button>
+  </div>
+
+  <!-- ================= あそび方 ================= -->
+  <div id="help-screen" class="screen-ov hidden scroll-ov">
+    <h2 class="ov-title">あそび方</h2>
+    <div class="help-body">
+      <p class="story">
+        オトン学園の データの中に、<b>バグ</b>が わいた。<br>
+        図鑑のなかまで データの空を 飛べるのは、コガネメキシコインコの
+        <b class="jade">ジェイド</b>だけ。<br>
+        こわれていく 光の格子を、ジェイドが 飛びまわって そうじする。
+      </p>
+      <div class="help-grid">
+        <div class="help-card">
+          <h3>うごかす</h3>
+          <p><b>左</b>の親指で 動く。<b>右</b>の親指で ねらって うつ（うちっぱなし）。<br>
+             むずかしければ タイトルで <b>かんたん（自動ねらい）</b>に できる。<br>
+             PCは <b>WASD</b>で動いて <b>マウス</b>でねらう。</p>
+        </div>
+        <div class="help-card">
+          <h3>ビットを ついばむ</h3>
+          <p>バグをこわすと <b class="bit">みどりのビット</b>が こぼれる。<br>
+             <b>ビット1つで ばいりつ ＋1。上限なし。</b>100ばい 200ばいも いける。<br>
+             ビットは ほとんど 寄ってこない。<b>にげてばかりでは 点は のびない。</b><br>
+             撃った方へ <b>すすみながら</b> ひろうのが いちばん のびる。</p>
+        </div>
+        <div class="help-card">
+          <h3>大はばたき</h3>
+          <p>画面じゅうの バグを ふきとばし、<b>ビットを ぜんぶ 引きよせる</b>。<br>
+             バグが 集まっている ときに 使うと <b>ばいりつが 一気に はねる</b>。<br>
+             もったいぶらずに 早めに 使うほうが 点は のびる。</p>
+        </div>
+        <div class="help-card">
+          <h3>ミスしても</h3>
+          <p><b>ばいりつは 減らない。</b>やられても そのまま。<br>
+             1回のミスで あきらめなくていい。<br>
+             まわりの バグも いっしょに 消える。</p>
+        </div>
+      </div>
+      <h3 class="help-h">バグ図鑑</h3>
+      <div id="bug-book" class="bug-book"></div>
+    </div>
+    <button id="btn-help-close" class="neon-btn">とじる</button>
+  </div>
+
+  <!-- ================= ポーズ ================= -->
+  <div id="pause-screen" class="screen-ov hidden">
+    <h2 class="ov-title">PAUSE</h2>
+    <button id="btn-resume" class="neon-btn">つづける</button>
+    <button id="btn-quit" class="neon-btn ghost">やめる</button>
+    <button id="btn-exit-pause" class="neon-btn ghost hidden">‹ 学園へ もどる</button>
+  </div>
+
+  <!-- ================= ランキング ================= -->
+  <div id="rank-screen" class="screen-ov hidden scroll-ov">
+    <h2 class="ov-title rank-title">🏆 RANKING</h2>
+    <p id="rank-head" class="rank-head"></p>
+    <div id="rank-list" class="rank-list"></div>
+    <div id="cloud-rank" class="rank-list cloud"></div>
+    <button id="btn-rank-close" class="neon-btn">とじる</button>
+  </div>
+
+  <!-- ================= 結果 ================= -->
+  <div id="over-screen" class="screen-ov hidden">
+    <h2 class="ov-title" id="over-title">GAME OVER</h2>
+    <div class="result">
+      <div id="r-rank" class="rank-badge">C</div>
+      <div class="res-row big"><i>SCORE</i><b id="r-score">0</b></div>
+      <div class="res-cols">
+        <div class="res-row"><i>たおした</i><b id="r-kill">0</b></div>
+        <div class="res-row"><i>さいだい倍率</i><b id="r-mult">×1</b></div>
+        <div class="res-row"><i>ビット</i><b id="r-bit">0</b></div>
+        <div class="res-row"><i>時間</i><b id="r-time">0:00</b></div>
+      </div>
+    </div>
+    <p id="r-msg" class="rankmsg"></p>
+    <button id="btn-retry" class="neon-btn">もう一回！</button>
+    <div class="over-sub">
+      <button id="btn-rank2" class="neon-btn ghost">🏆 ランキング</button>
+      <button id="btn-title" class="neon-btn ghost">タイトルへ</button>
+    </div>
+  </div>
+
+  <!-- ================= よこ向きに ================= -->
+  <div id="rotate" class="hidden">
+    <div class="rot-icon">📱</div>
+    <p>よこ向きに してね</p>
+  </div>
+
+  <div id="nogl" class="screen-ov hidden">
+    <h2 class="ov-title">ごめん！</h2>
+    <p class="hint">この端末では ジェイドパニックを うごかせません（WebGL2が つかえない）</p>
+  </div>
+</div>
+
+<script src="js/gl.js"></script>
+<script src="js/shaders.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/core.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

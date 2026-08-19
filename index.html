@@ -120,6 +120,14 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+    <button class="subject-card subject-card-game subject-card-jp" data-subject="jadepanic">
+      <span class="jp-icon">🦜</span>
+      <span class="game-text">
+        <span class="subject-name jp-name"><b>ジェイド</b><i>パニック</i><span class="jp-new">NEW</span></span>
+        <span class="subject-detail">データのバグを 撃ちまくれ！遊び券1まい</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
     <button class="subject-card subject-card-game subject-card-t2" data-subject="tetris2">
       <span class="game-icon">🧊</span>
       <span class="game-text">
@@ -489,6 +497,7 @@
         </ul>
         <p class="help-sub">🎮 息抜きゲーム（遊び券が1まい必要）</p>
         <ul class="help-list">
+          <li><b>🦜 ジェイドパニック</b>　ジェイドで データのバグを撃ちまくる（横向きで遊ぶで）</li>
           <li><b>🎮 オトンテトリス</b>　ブロックを積んで消す定番</li>
           <li><b>🪳 おかんスイーパー</b>　ゴキブリをよけて ぜんぶ開ける</li>
           <li><b>🐣 チッチジャンプ2</b>　月をこえて火星まで！どこまで高く跳べるか</li>
@@ -2017,6 +2026,13 @@
   <iframe id="t2-frame" title="おとんテトリス2" allow="autoplay; fullscreen"></iframe>
 </div>
 
+<!-- =============== ジェイドパニック ===============
+     グローバル名やCSSが本体とぶつからないよう、iframeで隔離している。
+     中身は lab/jadepanic/ が原本。やりとりは js/jadepanic-embed.js の postMessage。 -->
+<div id="screen-jadepanic" class="screen">
+  <iframe id="jp-frame" title="ジェイドパニック" allow="autoplay; fullscreen"></iframe>
+</div>
+
 <!-- =============== おかんスイーパー =============== -->
 <div id="screen-mine" class="screen">
   <header class="top-bar">
@@ -2343,6 +2359,7 @@
 <script src="js/shakai-go.js"></script>
 <script src="js/tetris.js"></script>
 <script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
+<script src="js/jadepanic-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
 <script src="js/gacha.js"></script>
 <script src="js/gamify.js"></script>
 <script src="js/sweeper.js"></script>
