@@ -120,6 +120,14 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
+    <button class="subject-card subject-card-game subject-card-t2" data-subject="tetris2">
+      <span class="game-icon">🧊</span>
+      <span class="game-text">
+        <span class="subject-name">おとんテトリス2 <span class="t2-new">3D</span></span>
+        <span class="subject-detail">フル3Dのハデなやつ！1プレイ 遊び券3まい</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
     <button class="subject-card subject-card-game subject-card-mine" data-subject="mine">
       <span class="game-icon">🪳</span>
       <span class="game-text">
@@ -2002,6 +2010,13 @@
   </div>
 </div>
 
+<!-- =============== おとんテトリス2（3D） ===============
+     グローバル名やCSSが本体とぶつからないよう、iframeで隔離している。
+     中身は lab/tetris2/ が原本。やりとりは js/tetris2-embed.js の postMessage。 -->
+<div id="screen-tetris2" class="screen">
+  <iframe id="t2-frame" title="おとんテトリス2" allow="autoplay; fullscreen"></iframe>
+</div>
+
 <!-- =============== おかんスイーパー =============== -->
 <div id="screen-mine" class="screen">
   <header class="top-bar">
@@ -2327,6 +2342,7 @@
 <script src="js/books.js"></script>
 <script src="js/shakai-go.js"></script>
 <script src="js/tetris.js"></script>
+<script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
 <script src="js/gacha.js"></script>
 <script src="js/gamify.js"></script>
 <script src="js/sweeper.js"></script>

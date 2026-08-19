@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v580';
+const CACHE_NAME = 'oton-gakuen-v581';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -14,6 +14,17 @@ const ASSETS = [
   './js/books.js',
   './js/shakai-go.js',
   './js/tetris.js',
+  './js/tetris2-embed.js',
+  // おとんテトリス2（iframeの中身。オフラインでも遊べるように全部並べる）
+  './lab/tetris2/index.html',
+  './lab/tetris2/style.css',
+  './lab/tetris2/js/gl.js',
+  './lab/tetris2/js/shaders.js',
+  './lab/tetris2/js/renderer.js',
+  './lab/tetris2/js/audio.js',
+  './lab/tetris2/js/core.js',
+  './lab/tetris2/js/chars.js',
+  './lab/tetris2/js/game.js',
   './js/gacha.js',
   './js/gamify.js',
   './js/sweeper.js',

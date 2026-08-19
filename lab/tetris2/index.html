@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,maximum-scale=1">
+<meta name="theme-color" content="#05060f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>おとんテトリス2</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="stage" class="title-mode">
+  <canvas id="gl"></canvas>
+
+  <!-- ============ HUD ============ -->
+  <div id="ui">
+    <div id="hud-top">
+      <div class="hud-box">
+        <span class="hud-label">HOLD</span>
+        <div class="slot" data-slot="hold"></div>
+      </div>
+
+      <div id="hud-stats">
+        <button id="btn-pause" class="corner-btn" title="ポーズ">❙❙</button>
+        <div class="stat big"><i>SCORE</i><b id="v-score">0</b></div>
+        <div class="stat-row">
+          <div class="stat"><i>LV</i><b id="v-level">1</b></div>
+          <div class="stat"><i>LINES</i><b id="v-lines">0</b></div>
+          <div class="stat"><i>BEST</i><b id="v-best">0</b></div>
+        </div>
+      </div>
+
+      <div class="hud-box">
+        <span class="hud-label">NEXT</span>
+        <div class="slot" data-slot="next0"></div>
+        <div class="slot mini" data-slot="next1"></div>
+        <div class="slot mini" data-slot="next2"></div>
+      </div>
+    </div>
+
+    <div id="fx-layer">
+      <div id="big-text"></div>
+      <div id="sub-text"></div>
+      <div id="combo-text"></div>
+    </div>
+
+    <!-- 応援団は3Dで描くので、ここはふきだしの位置決めだけ -->
+    <div id="chars"><div id="char-bubble"></div></div>
+
+    <div id="items">
+      <button class="item-btn" data-item="bomb">
+        <span class="ic">💣</span><b id="it-bomb">2</b><i>下2行</i>
+        <svg class="cool" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"></circle></svg>
+      </button>
+      <button class="item-btn" data-item="slow">
+        <span class="ic">🐢</span><b id="it-slow">2</b><i>スロー</i>
+        <svg class="cool" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"></circle></svg>
+      </button>
+    </div>
+
+    <div id="pad">
+      <div class="pad-row pad-top">
+        <button class="pkey rot" data-k="rotL">⟲</button>
+        <button class="pkey drop" data-k="drop"><span>⤓</span>おとす</button>
+        <button class="pkey rot" data-k="rotR">⟳</button>
+      </div>
+      <div class="pad-row">
+        <button class="pkey" data-k="left">◀</button>
+        <button class="pkey" data-k="down">▼</button>
+        <button class="pkey" data-k="right">▶</button>
+        <button class="pkey hold" data-k="hold">HOLD</button>
+      </div>
+    </div>
+
+    <div id="fps"></div>
+  </div>
+
+  <!-- ============ タイトル ============ -->
+  <div id="title-screen" class="screen-ov">
+    <button id="btn-exit2" class="exit-btn hidden">‹ もどる</button>
+    <div class="logo-wrap">
+      <div class="logo-sub">OTON GAKUEN presents</div>
+      <h1 class="logo">おとん<span>テトリス</span><em>2</em></h1>
+      <div class="logo-line"></div>
+      <div class="logo-tag">3D ／ ULTRA NEON EDITION</div>
+    </div>
+    <div class="diff-pick">
+      <button class="diff on" data-diff="easy">やさしい</button>
+      <button class="diff" data-diff="normal">ふつう</button>
+      <button class="diff" data-diff="hard">むずかしい</button>
+    </div>
+    <button id="btn-start" class="neon-btn">▶ ゲームスタート</button>
+    <p id="cost-note" class="cost-note hidden">遊び券を3まいつかいます</p>
+    <div class="title-toggles">
+      <button id="btn-calm2" class="tgl on">✨ 演出ハデめ</button>
+      <button id="btn-track2" class="tgl">♪ BGM：オトン</button>
+    </div>
+    <div class="name-row">
+      <label for="name-input">なまえ</label>
+      <input id="name-input" type="text" maxlength="8" placeholder="ななし" autocomplete="off">
+      <button id="btn-rank" class="tgl">🏆 ランキング</button>
+    </div>
+    <p class="hint">スマホ：下のボタン／画面スワイプ　　PC：←→↓・Z/X回転・SPACE落とす・C ホールド</p>
+  </div>
+
+  <!-- ============ ポーズ ============ -->
+  <div id="pause-screen" class="screen-ov hidden">
+    <h2 class="ov-title">PAUSE</h2>
+    <button id="btn-resume" class="neon-btn">つづける</button>
+    <button id="btn-quit" class="neon-btn ghost">やめる</button>
+    <button id="btn-exit" class="neon-btn ghost hidden">‹ 学園へもどる</button>
+    <div class="sound-toggles">
+      <button id="btn-bgm" class="tgl on">🎵 BGM</button>
+      <button id="btn-sfx" class="tgl on">🔊 SE</button>
+      <button id="btn-calm" class="tgl on">✨ 演出</button>
+      <button id="btn-track" class="tgl">♪ 曲</button>
+    </div>
+  </div>
+
+  <!-- ============ ランキング ============ -->
+  <div id="rank-screen" class="screen-ov hidden">
+    <h2 class="ov-title rank-title">🏆 RANKING</h2>
+    <div id="rank-list" class="rank-list"></div>
+    <button id="btn-rank-close" class="neon-btn">とじる</button>
+  </div>
+
+  <!-- ============ ゲームオーバー ============ -->
+  <div id="over-screen" class="screen-ov hidden">
+    <h2 class="ov-title" id="over-title">GAME OVER</h2>
+    <div class="result">
+      <div class="res-row"><i>SCORE</i><b id="r-score">0</b></div>
+      <div class="res-row"><i>LINES</i><b id="r-lines">0</b></div>
+      <div class="res-row"><i>LEVEL</i><b id="r-level">1</b></div>
+      <div class="res-row best"><i>BEST</i><b id="r-best">0</b></div>
+    </div>
+    <p id="r-rankmsg" class="rankmsg"></p>
+    <button id="btn-retry" class="neon-btn">もう一回！</button>
+    <div class="over-sub">
+      <button id="btn-rank2" class="neon-btn ghost">🏆 ランキング</button>
+      <button id="btn-title" class="neon-btn ghost">タイトルへ</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/gl.js"></script>
+<script src="js/shaders.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/core.js"></script>
+<script src="js/chars.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

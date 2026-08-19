@@ -1260,6 +1260,10 @@ function initSubject() {
         if (!hasGameTicket()) return;
         initTetris();
         showScreen('tetris');
+      } else if (subj === 'tetris2') {
+        if (!hasGameTickets(TETRIS2_COST)) return;
+        initTetris2();
+        showScreen('tetris2');
       } else if (subj === 'mine') {
         if (!hasGameTicket()) return;
         initMine();

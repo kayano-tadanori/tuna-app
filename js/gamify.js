@@ -326,10 +326,26 @@ function hasGameTicket() {
 }
 
 // 1プレイ開始ごとに1枚消費する（リスタート・難易度変更での再スタートも1プレイ）
-function spendGameTicket() {
-  if (!hasGameTicket()) return false;
-  addGameTickets(-1);
-  showToast(`🎟 遊び券を1まい使ったよ（のこり${getGameTickets()}まい）`, 1800);
+function spendGameTicket() { return spendGameTickets(1); }
+
+// n枚まとめて消費する（おとんテトリス2は1プレイ3枚）
+function spendGameTickets(n) {
+  const have = getGameTickets();
+  if (have < n) {
+    showToast(`🎟 遊び券が${n}まい要るよ（のこり${have}まい）！問題を解いてゲットしよう！`, 2500);
+    return false;
+  }
+  addGameTickets(-n);
+  showToast(`🎟 遊び券を${n}まい使ったよ（のこり${getGameTickets()}まい）`, 1800);
+  return true;
+}
+
+// n枚持っているか確認だけする（消費しない）
+function hasGameTickets(n) {
+  if (getGameTickets() < n) {
+    showToast(`🎟 遊び券が${n}まい要るよ（のこり${getGameTickets()}まい）！問題を解いてゲットしよう！`, 2500);
+    return false;
+  }
   return true;
 }
 
