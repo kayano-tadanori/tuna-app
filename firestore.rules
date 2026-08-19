@@ -151,10 +151,19 @@ service cloud.firestore {
     function drillGameOk(game) {
       return game.matches('^drill_g[1-6]_(add|sub|mul|div|divrem|decimal|fraction|mix)_d[1-4]_t(60|90|120)$');
     }
+    // ★息抜きゲームを追加したら ここにも足すこと。2026-08-20発覚：
+    //   tetris2・jadepanic_* をこの一覧に足し忘れていたため、両方とも
+    //   saveGameScore() が黙って失敗し（try/catchで握りつぶされる）、
+    //   クラウドに一度もスコアが保存されていなかった（管理ツールで見えない根本原因）。
+    function gameIdOk(game) {
+      return game in ['tetris', 'tetris2', 'jump', 'mine_easy', 'mine_normal', 'mine_hard']
+        || game.matches('^jadepanic_(surv|time)_(easy|normal|hard)$')
+        || drillGameOk(game);
+    }
     match /game_scores/{game}/scores/{nick} {
       allow read: if true;
       allow create, update: if nickOk(nick)
-        && (game in ['tetris', 'jump', 'mine_easy', 'mine_normal', 'mine_hard'] || drillGameOk(game))
+        && gameIdOk(game)
         && request.resource.data.keys().hasOnly(['value', 'lastUpdated'])
         && intIn(request.resource.data.value, 0, 10000000)
         && serverTime();
