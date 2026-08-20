@@ -462,6 +462,11 @@ async function pushAchievementToRanking() {
     const skipped = await backupLocalData();
     if (skipped) {
       console.warn('達成率の保存も見送り（クラウドを守るため）:', skipped);
+      // ★見送っても「最後にひらいた時刻」だけは残す（2026-08-20）。
+      //   記録が空の端末（no-local-data）や、別の端末で入り直したとき（fewer-records）は
+      //   ここで必ず止まるので、そのままだと管理ツールの一覧がいつまでも古いままになる。
+      //   touchAchievementTime は達成率にさわらないので、クラウドを壊す心配はない。
+      if (typeof touchAchievementTime === 'function') await touchAchievementTime(state.nickname);
       return;
     }
     const a = getAchievement();

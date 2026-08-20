@@ -128,6 +128,27 @@ async function saveAchievement(nickname, pct, cleared, titleIdx) {
   }
 }
 
+// ログインしただけ（＝問題を解いていない／記録が空の端末／別端末で入り直した）でも
+// 「最後にひらいた時刻」を残す。管理ツールの一覧に出る時刻はこの lastUpdated（2026-08-20）。
+// ★pct・cleared・titleIdx には一切さわらない。merge で lastUpdated だけ上書きする。
+//   達成率まで送ると、記録が空の端末の 0% でクラウドを塗りつぶす事故になる
+//   （2026-08-04に実際に起きた上書き事故と同じ形）。
+// ★ドキュメントが無いときは作らない。ルールが pct を必須にしているので弾かれるし、
+//   まだ1問も解いていない受験番号を一覧に出す意味もない。
+async function touchAchievementTime(nickname) {
+  if (!firebaseReady || !nickname) return false;
+  try {
+    const ref = db.collection('achievement').doc(nickname);
+    const snap = await ref.get();
+    if (!snap.exists) return false;
+    await ref.set({ lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    return true;
+  } catch (e) {
+    console.warn('最終ログイン時刻の保存に失敗:', e.message);
+    return false;
+  }
+}
+
 async function getAchievementDoc(nickname) {
   if (!firebaseReady || !nickname) return null;
   try {

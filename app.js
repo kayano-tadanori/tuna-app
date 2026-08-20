@@ -1335,7 +1335,7 @@ function initSubject() {
   //   ＝親から見て「今日アプリを開いたのか」が分からない（本人指示 2026-08-20）。
   //   中身は解き終わりと同じ処理（バックアップ→達成率の順）なので、
   //   クラウドを守る安全装置（fewer-records・lower-achievement）はそのまま効く。
-  pushAchievementToRanking();
+  pingPresence();
   initUpdateBanner();
   updateGameTicketBadge();
   initDebugTool();
@@ -1893,6 +1893,26 @@ function showRestoreConfirm(backup, solved) {
     document.getElementById('restore-modal').classList.add('hidden');
   };
 }
+
+// ============================================================
+// 「最後にひらいた時刻」をクラウドに残す
+// ============================================================
+// ★iPhoneのホーム画面から開いたアプリ（PWA）は、ほかのアプリに切り替えて戻っただけでは
+//   ページが読み直されない＝boot も initSubject も走らない。それだと何度ひらいても
+//   管理ツールの「最終更新」が古いままになる（本人報告 2026-08-20）。
+//   画面にもどってきたときにも送る。送りすぎないよう10分に1回まで。
+let lastPresencePing = 0;
+function pingPresence() {
+  if (!state.nickname) return;
+  const now = Date.now();
+  if (now - lastPresencePing < 10 * 60 * 1000) return;
+  lastPresencePing = now;
+  pushAchievementToRanking();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') pingPresence();
+});
+window.addEventListener('pageshow', pingPresence);
 
 document.addEventListener('DOMContentLoaded', boot);
 

@@ -68,7 +68,8 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly([
              'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
              'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
-             'mapquizBest', 'timelineBest', 'drillBest', 'progress', 'lastUpdated'
+             'mapquizBest', 'timelineBest', 'drillBest', 'progress',
+             'gameTickets', 'lastUpdated'
            ])
         && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
         && (!('gacha' in request.resource.data)     || strOk(request.resource.data.gacha, 60000))
@@ -90,6 +91,12 @@ service cloud.firestore {
         // drillBest は {"drill_g5_mul_d3_t60":24, …} の1本。
         // 全部埋めても 6学年×8種×4難×3タイム＝576件・約1.7万字なので余裕をみて 30,000。
         && (!('drillBest' in request.resource.data)       || strOk(request.resource.data.drillBest, 30000))
+        // gameTickets は遊び券のまい数の文字列（"3" など）。
+        // ★2026-08-20：本体の BACKUP_KEYS に足したのに、この許可リストに足し忘れていた。
+        //   hasOnly は1つでも知らないキーがあると丸ごと拒否するので、
+        //   遊び券を持っている端末は バックアップが permission-denied で全部失敗し、
+        //   達成率（管理ツールの「最終更新」）も送られなくなっていた。
+        && (!('gameTickets' in request.resource.data)     || strOk(request.resource.data.gameTickets, 200))
         && serverTime();
       allow delete: if isAdmin();
     }
