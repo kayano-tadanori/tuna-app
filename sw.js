@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v587';
+const CACHE_NAME = 'oton-gakuen-v588';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -19,6 +19,7 @@ const ASSETS = [
   './js/jadepanic-embed.js',
   // おとんテトリス2（iframeの中身。オフラインでも遊べるように全部並べる）
   './images/jadepanic-banner.png',
+  './images/tetris2-banner.png',
   './lab/jadepanic/index.html',
   './lab/jadepanic/style.css',
   './lab/jadepanic/js/gl.js',
