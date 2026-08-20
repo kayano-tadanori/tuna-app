@@ -144,17 +144,9 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
-    <!-- 🚧 チッチジャンプ3D：まだ作りかけ。できあがるまで出さない。
-         中身（lab/chicchi-jump-3d/）と #screen-jump3d はそのまま残してあるので、
-         完成したら style="display:none" を外すだけで戻る。 -->
-    <button class="subject-card subject-card-game subject-card-cj3d" data-subject="jump3d" style="display:none">
-      <span class="game-icon">🐦</span>
-      <span class="game-text">
-        <span class="subject-name">チッチジャンプ3D <span class="t2-new">3D</span></span>
-        <span class="subject-detail">タワーをぐるぐる登って宇宙へ！遊び券1まい</span>
-      </span>
-      <span class="game-arrow">›</span>
-    </button>
+    <!-- 🚧 チッチジャンプ3D は作りかけ。できあがるまでリポジトリに入れない（本人指示 2026-08-20）。
+         原本は lab/chicchi-jump-3d/（.gitignore で除外中）。完成したら
+         ここにカード・#screen-jump3d・js/jump3d-embed.js の読み込みを戻す。 -->
     <button class="subject-card subject-card-game subject-card-jump" data-subject="jump">
       <span class="game-icon">🐣</span>
       <span class="game-text">
@@ -2038,14 +2030,6 @@
   <iframe id="t2-frame" title="おとんテトリス2" allow="autoplay; fullscreen"></iframe>
 </div>
 
-<!-- =============== チッチジャンプ3D ===============
-     グローバル名やCSSが本体とぶつからないよう、iframeで隔離している。
-     中身は lab/chicchi-jump-3d/ が原本。やりとりは js/jump3d-embed.js の postMessage。
-     2D版（#screen-jump / js/jump.js）はそのまま残してある。別ゲーム扱い。 -->
-<div id="screen-jump3d" class="screen">
-  <iframe id="cj-frame" title="チッチジャンプ3D" allow="autoplay; fullscreen"></iframe>
-</div>
-
 <!-- =============== ジェイドパニック ===============
      グローバル名やCSSが本体とぶつからないよう、iframeで隔離している。
      中身は lab/jadepanic/ が原本。やりとりは js/jadepanic-embed.js の postMessage。 -->
@@ -2379,7 +2363,6 @@
 <script src="js/shakai-go.js"></script>
 <script src="js/tetris.js"></script>
 <script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
-<script src="js/jump3d-embed.js"></script>   <!-- チッチジャンプ3D（iframeの橋渡し） -->
 <script src="js/jadepanic-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
 <script src="js/gacha.js"></script>
 <script src="js/gamify.js"></script>
