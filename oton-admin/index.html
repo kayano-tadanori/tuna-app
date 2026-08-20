@@ -154,7 +154,7 @@
 
 <h1>🎒 オトン学園 管理ツール</h1>
 <p class="sub">受験番号（ニックネーム）ごとの利用状況を確認・削除できます。保護者用の管理画面で、オトン学園本体アプリからはリンクされていません。<br>
-削除は<b>管理者ログイン中だけ</b>できます（Firestoreのルールでも管理者以外の削除を拒否しています）。</p>
+削除は<b>管理者ログイン中だけ</b>できます（Firestoreのルールでも管理者以外の削除を拒否しています）。<br>「📚 学習の中身」の対応表は、問題を足したら <b>node scripts/gen_admin_qindex.js --write</b> で作り直してください。</p>
 
 <div id="status" class="status loading">Firebaseに接続中…</div>
 <div class="head-btns">
@@ -417,7 +417,12 @@ const ITEM_DEFS = {
 const GACHA_TOTAL = 157; // シークレット4体を含む総数（2026-08-01時点。排出対象は153体）
 // 削除は「国語だけ」ではダメ。progress / leaderboard は4教科ぶん全部消す（2026-08-01）
 const ALL_CATEGORIES = Object.values(QUESTION_COUNTS).flatMap(o => Object.keys(o));
-const GAME_IDS = ['tetris', 'mine_easy', 'mine_normal', 'mine_hard', 'jump'];
+// ⚠ 本体にゲームを足したら ここも足す（この一覧は本体と二重管理になっている）。
+//    tetris2 と jadepanic は 2026-08-19 に追加。抜けていると、その子を消しても
+//    そのゲームの記録だけ Firestore に残りつづける。
+const GAME_IDS = ['tetris', 'tetris2', 'mine_easy', 'mine_normal', 'mine_hard', 'jump',
+  'jadepanic_surv_easy', 'jadepanic_surv_normal', 'jadepanic_surv_hard',
+  'jadepanic_time_easy', 'jadepanic_time_normal', 'jadepanic_time_hard'];
 
 // IDから、旧素ID→カテゴリの振り分けに使う頭文字を取り出す（本体 js/gamify.js と同じ）。
 // 「英字＋数字のすぐ後に _ が続く」形（kt1_01_1 など）を先に見て、無ければ英字だけに落とす。
@@ -507,6 +512,29 @@ function getTitleInfo(titlePct) {
   for (let i = TITLES.length - 1; i >= 0; i--) { if (titlePct >= TITLES[i].pct) { idx = i; break; } }
   return { idx, name: TITLES[idx].name, icon: TITLES[idx].icon };
 }
+// game_scores/{game}/scores/{nickname} を まとめて取りに行く（テトリス2・ジェイドパニック用）。
+// GAME_IDSと違って「削除」ではなく「表示」に使うので、ラベル付きの一覧をここで持つ。
+const CLOUD_SCORE_GAMES = [
+  { id: 'tetris2', label: '🧊 おとんテトリス2ベスト', unit: '点' },
+  { id: 'jadepanic_surv_easy',   label: '🦜 ジェイドパニック（サバイバル・やさしい）',   unit: '点' },
+  { id: 'jadepanic_surv_normal', label: '🦜 ジェイドパニック（サバイバル・ふつう）',     unit: '点' },
+  { id: 'jadepanic_surv_hard',   label: '🦜 ジェイドパニック（サバイバル・むずかしい）', unit: '点' },
+  { id: 'jadepanic_time_easy',   label: '🦜 ジェイドパニック（60びょう・やさしい）',     unit: '点' },
+  { id: 'jadepanic_time_normal', label: '🦜 ジェイドパニック（60びょう・ふつう）',       unit: '点' },
+  { id: 'jadepanic_time_hard',   label: '🦜 ジェイドパニック（60びょう・むずかしい）',   unit: '点' },
+];
+async function fetchGameScores(nickname) {
+  const results = await Promise.all(CLOUD_SCORE_GAMES.map(async g => {
+    try {
+      const snap = await db.collection('game_scores').doc(g.id).collection('scores').doc(nickname).get();
+      return { ...g, value: snap.exists ? snap.data().value : null };
+    } catch (e) {
+      return { ...g, value: null, error: true };
+    }
+  }));
+  return results;
+}
+
 function fmtDate(ts) {
   if (!ts) return '—';
   const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -859,6 +887,12 @@ async function showDetail(nickname) {
     document.getElementById('detail-updated').textContent = backup && backup.lastUpdated
       ? '最終バックアップ: ' + fmtDate(backup.lastUpdated) : 'クラウドバックアップなし（この端末のデータのみ集計）';
 
+    // ★ おとんテトリス2・ジェイドパニックは backup.tetrisBest のような
+    //   端末セーブ形式ではなく、saveGameScore() で game_scores/{game}/scores/{nickname}
+    //   に直接クラウド保存される。ここを取りに行かないと「テトリス2やジェイドパニックの
+    //   最高点が管理ツールで見れない」（本人指摘・2026-08-20）。
+    const gameScoreRows = await fetchGameScores(nickname);
+
     let html = '';
     if (backup && backup.progress) {
       const prog = JSON.parse(backup.progress);
@@ -887,6 +921,7 @@ async function showDetail(nickname) {
       html += `<p class="sub">進捗の詳細データ（backup.progress）が見つかりません。</p>`;
     }
 
+    html += `<div id="unit-section"></div>`;
     html += `<div id="growth-section"></div>`;
 
     if (backup) {
@@ -927,7 +962,20 @@ async function showDetail(nickname) {
       html += `<div class="row"><span>💣 スイーパー(むずかしい)</span><span>${backup.mineBest_hard ? backup.mineBest_hard + '秒' : '—'}</span></div>`;
     }
 
+    // 🧊🦜 おとんテトリス2・ジェイドパニックは backup.* を経由しないクラウド直接保存なので、
+    // backupドキュメントが無い（勉強の記録をまだセーブしていない）子でも ここだけは出す。
+    html += `<div class="section-title">🎮 その他のゲーム（クラウド保存）</div>`;
+    const anyGameScore = gameScoreRows.some(g => g.value != null);
+    if (!anyGameScore) {
+      html += `<p class="sub">まだ おとんテトリス2・ジェイドパニックの記録がありません。</p>`;
+    }
+    gameScoreRows.forEach(g => {
+      const v = g.value != null ? Number(g.value).toLocaleString() + g.unit : (g.error ? '取得エラー' : '—');
+      html += `<div class="row"><span>${g.label}</span><span>${v}</span></div>`;
+    });
+
     document.getElementById('detail-body').innerHTML = html;
+    renderUnitSection(nickname);
     renderGrowth(nickname);
     renderPendingGrants(nickname);
   } catch (e) {
@@ -935,6 +983,224 @@ async function showDetail(nickname) {
     document.getElementById('detail-body').innerHTML =
       `<p class="sub">読み込みに失敗しました<br>種類: ${e.code || '不明'}<br>内容: ${e.message}</p>`;
   }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  📚 学習の中身（教科 × 学年 × 単元べつ）2026-08-20
+//  クラウドの progress に入っているのは「問題ID → 正解数・のべ回数」だけで、
+//  学年も単元も入っていない。そこで ID→学年・単元 の対応表（qindex.js・約540KB）を
+//  使って引き直す。ふだんは要らない大きさなので、この画面で
+//  「くわしく見る」を押したときだけ読み込む（本人指示：見たいときだけでいい）。
+//  ★fetch ではなく <script src> で読む。PC版は file:// で直接ひらくので fetch が使えない。
+//  ★問題を足したら  node scripts/gen_admin_qindex.js --write  を流し直すこと。
+//    索引に無いIDは「対応表になし」の行にまとまる（合計は合ったまま）。
+// ════════════════════════════════════════════════════════════════
+let qindexPromise = null;
+let qidLookup = null;
+let unitStatsCache = null;   // いま開いている受験番号ぶん（CSV出力で使う）
+
+function loadQIndex() {
+  if (window.OTON_QINDEX) return Promise.resolve(window.OTON_QINDEX);
+  if (qindexPromise) return qindexPromise;
+  qindexPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'qindex.js';
+    s.onload = () => window.OTON_QINDEX
+      ? resolve(window.OTON_QINDEX) : reject(new Error('qindex.js の中身が空です'));
+    s.onerror = () => reject(new Error('qindex.js が読めません（index.html と同じフォルダに置いてください）'));
+    document.head.appendChild(s);
+  });
+  return qindexPromise;
+}
+
+// IDだけで引く逆引き表。記録キーが sansu_null: / sansu_hama: のように
+// カテゴリを持たない形で残っていることがあるため（buildClearedSets と同じ事情）。
+function buildQidLookup(idx) {
+  if (qidLookup) return qidLookup;
+  qidLookup = new Map();
+  for (const [bucket, ids] of Object.entries(idx.q)) {
+    for (const id of Object.keys(ids)) {
+      const cur = qidLookup.get(id);
+      if (cur) cur.push(bucket); else qidLookup.set(id, [bucket]);
+    }
+  }
+  return qidLookup;
+}
+
+const Q_SUBJECTS = ['kokugo', 'sansu', 'rika', 'shakai'];
+
+// 記録キーの頭（sansu_kisoku）から教科を読む。
+// ★じゅくナビ・灘合は sansuState.subject に 'nadago' / 'nadago_rika' が入るので
+//   （js/sansu.js）、頭を切り出すだけでは教科が取れない。4教科の名前が混ざっていれば
+//   それを使い、どれでもなければ「教科は分からない」＝IDだけで引く。
+function qSubjectOf(bucket) {
+  return Q_SUBJECTS.find(x => bucket === x || bucket.startsWith(x + '_') ||
+    bucket.indexOf('_' + x + '_') >= 0 || bucket.endsWith('_' + x)) || '';
+}
+
+// 索引で引けない記録のうけ皿。中身は主に2つ：
+//   ・差しかえ／削除した昔の問題（y277・sh138 など。もうデータに無いので単元を引けない）
+//   ・かんたん解説（IDが kx_5_0_r0 の形で、そもそも単元名を持たない）
+// 数が合わなくなると「解いたのに出ていない」と読めてしまうので、
+// 教科・カテゴリだけは記録キーから読んで、1行にまとめて出す。
+function fallbackQInfo(idx, key) {
+  const ci = key.indexOf(':');
+  if (ci <= 0) {
+    // 国語の古い記録はカテゴリを持たずIDだけ（k206・y277 など）。
+    // 教科カテゴリは本体と同じ振り分け表（ID_PREFIX_MAP）から引く。
+    const pm = extractIdPrefix(key);
+    const target = pm && (ID_PREFIX_MAP[pm] || [])[0];
+    if (!target) return null;
+    const pair = target.split(':');
+    return { subject: pair[0], cat: pair[1],
+             catLabel: idx.labels[pair[0] + '_' + pair[1]] || pair[1],
+             grade: 0, unit: 'いまのデータに無い問題' };
+  }
+  const bucket = key.slice(0, ci);
+  const subject = qSubjectOf(bucket);
+  if (!subject) return null;
+  const at = bucket.indexOf(subject);
+  const cat = bucket.slice(at + subject.length + 1) || 'その他';
+  return {
+    subject, cat,
+    catLabel: (idx.labels[subject + '_' + cat] || cat),
+    grade: 0,
+    unit: cat === 'kaisetsu' ? 'かんたん解説（単元は記録に残らない）' : 'いまのデータに無い問題',
+  };
+}
+
+// 記録キー（例 sansu_kisoku:sr001／hd3m_00_1_s1／k001）から教科・カテゴリ・学年・単元を引く
+function lookupQInfo(idx, key) {
+  const lookup = buildQidLookup(idx);
+  const ci = key.indexOf(':');
+  const bucket = ci > 0 ? key.slice(0, ci) : '';
+  const id = ci > 0 ? key.slice(ci + 1) : key;
+  let hit = (idx.q[bucket] && idx.q[bucket][id]) ? bucket : null;
+  if (!hit) {
+    const cands = lookup.get(id);
+    if (!cands) return null;
+    // 同じIDが教科ちがいで存在する（rd001＝動物と電気）ので、記録キーの教科で絞る。
+    // ★教科が読めるのに その教科に無いIDは「不明」にする。ここで cands[0] に落とすと、
+    //   消した問題・振り直したIDの記録が、たまたま同じIDを持つ別教科に化けて混ざる。
+    const subj = qSubjectOf(bucket);
+    hit = subj ? cands.find(b => b.startsWith(subj + '_')) : cands[0];
+    if (!hit) return null;
+  }
+  const parts = String(idx.q[hit][id]).split(',');
+  const ui = hit.indexOf('_');
+  return {
+    subject: hit.slice(0, ui), cat: hit.slice(ui + 1),
+    catLabel: idx.labels[hit] || hit.slice(ui + 1),
+    grade: Number(parts[0]) || 0,
+    unit: idx.units[Number(parts[1])] || 'その他',
+  };
+}
+
+// progress を「教科×学年×単元」でまとめ、解いた回数の多い順に返す
+function buildUnitStats(prog, idx) {
+  const rows = new Map();
+  const unknown = { items: 0, total: 0, correct: 0 };
+  for (const [key, p] of Object.entries(prog)) {
+    if (!p) continue;
+    const t = p.total || 0, c = p.correct || 0;
+    const info = lookupQInfo(idx, key) || fallbackQInfo(idx, key);
+    if (!info) { unknown.items++; unknown.total += t; unknown.correct += c; continue; }
+    const rk = `${info.subject}|${info.cat}|${info.grade}|${info.unit}`;
+    let r = rows.get(rk);
+    if (!r) { r = { subject: info.subject, catLabel: info.catLabel, grade: info.grade, unit: info.unit,
+                    items: 0, cleared: 0, total: 0, correct: 0 }; rows.set(rk, r); }
+    r.items++; r.total += t; r.correct += c;
+    if (c > 0) r.cleared++;    // 一度でも正解した＝クリア（アプリ全体と同じ定義）
+  }
+  return { list: [...rows.values()].sort((a, b) => b.total - a.total), unknown };
+}
+
+function unitGradeLabel(g) { return g ? `小${g}` : '—'; }
+
+// 詳細をひらいた時点では「ボタンだけ」置く（大きな対応表を毎回は読まない）
+function renderUnitSection(nickname) {
+  const host = document.getElementById('unit-section');
+  if (!host) return;
+  unitStatsCache = null;
+  if (!currentBackup || !currentBackup.progress) { host.innerHTML = ''; return; }
+  host.innerHTML = `<div class="section-title">📚 学習の中身</div>
+    <p class="sub">どの学年・どの単元をよく解いているかを出します。表はCSVでダウンロードできます。</p>
+    <button class="btn-refresh" onclick="showUnitStats()">📚 学習の中身をくわしく見る</button>`;
+}
+
+async function showUnitStats() {
+  const host = document.getElementById('unit-section');
+  if (!host || !currentBackup || !currentBackup.progress) return;
+  const head = `<div class="section-title">📚 学習の中身</div>`;
+  host.innerHTML = head + `<p class="sub">対応表を読み込み中…</p>`;
+  let idx;
+  try {
+    idx = await loadQIndex();
+  } catch (e) {
+    host.innerHTML = head + `<p class="sub">${e.message}<br>
+      対応表は <b>node scripts/gen_admin_qindex.js --write</b> で作れます。</p>`;
+    return;
+  }
+  let prog;
+  try { prog = JSON.parse(currentBackup.progress); }
+  catch (e) { host.innerHTML = head + `<p class="sub">記録を読めませんでした。</p>`; return; }
+
+  const stats = buildUnitStats(prog, idx);
+  unitStatsCache = stats;
+
+  // 教科ごとの小計（どの教科に時間を使っているか）
+  const bySubj = {};
+  stats.list.forEach(r => {
+    const b = bySubj[r.subject] = bySubj[r.subject] || { total: 0, correct: 0, units: 0 };
+    b.total += r.total; b.correct += r.correct; b.units++;
+  });
+
+  let html = head;
+  html += `<p class="sub">解いた回数（のべ）の多い順。上位20だけ出しています。全${stats.list.length}単元はCSVに入っています。</p>`;
+  for (const [s, b] of Object.entries(bySubj)) {
+    html += `<div class="row"><span>${SUBJECT_LABELS[s] || s}</span><span>のべ${b.total}回・正答率${b.total ? Math.round(b.correct / b.total * 100) : 0}%・${b.units}単元</span></div>`;
+  }
+  html += `<div style="overflow-x:auto"><table class="growth-table"><thead><tr>
+    <th style="text-align:left">教科</th><th>学年</th><th style="text-align:left">単元</th>
+    <th>のべ</th><th>正答率</th><th>問題数</th></tr></thead><tbody>`;
+  stats.list.slice(0, 20).forEach(r => {
+    const rate = r.total ? Math.round(r.correct / r.total * 100) : 0;
+    html += `<tr><td style="text-align:left">${SUBJECT_LABELS[r.subject] || r.subject}</td>
+      <td>${unitGradeLabel(r.grade)}</td><td style="text-align:left">${r.unit}</td>
+      <td>${r.total}</td><td>${rate}%</td><td>${r.items}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  if (stats.unknown.items) {
+    html += `<p class="sub">※教科も読めない記録が ${stats.unknown.items}問（のべ${stats.unknown.total}回）あります。
+      問題を足した直後なら <b>node scripts/gen_admin_qindex.js --write</b> を流すと減ります。</p>`;
+  }
+  html += `<button class="btn-refresh" onclick="downloadUnitCSV()">📥 CSVでダウンロード（全${stats.list.length}単元）</button>`;
+  host.innerHTML = html;
+}
+
+// Excelで開けるように UTF-8 BOM 付き・改行はCRLF
+function downloadUnitCSV() {
+  if (!unitStatsCache || !currentNickname) return;
+  const esc = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+  const lines = [['教科', 'カテゴリ', '学年', '単元', '手をつけた問題数', '正解した問題数',
+                  'のべ解答', '正解', '正答率(%)'].map(esc).join(',')];
+  unitStatsCache.list.forEach(r => {
+    lines.push([esc(SUBJECT_LABELS[r.subject] || r.subject), esc(r.catLabel), esc(unitGradeLabel(r.grade)),
+                esc(r.unit), r.items, r.cleared, r.total, r.correct,
+                r.total ? Math.round(r.correct / r.total * 100) : 0].join(','));
+  });
+  const u = unitStatsCache.unknown;
+  if (u.items) {
+    lines.push([esc('不明'), esc('対応表になし'), esc('—'), esc('—'), u.items, '', u.total, u.correct,
+                u.total ? Math.round(u.correct / u.total * 100) : 0].join(','));
+  }
+  const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `オトン学園-学習の中身-${currentNickname}-${dayStr()}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 // ── のびの記録セクションを描く ──────────────────────────────

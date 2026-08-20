@@ -38,8 +38,11 @@ self.addEventListener('fetch', event => {
   if (url.origin !== location.origin) return;
 
   // 画面本体（HTML）はネットワーク優先。オフラインのときだけキャッシュから返す。
+  // ★qindex.js（学習の中身の対応表）も同じ扱いにする。問題を足すたびに作り直すファイルなので、
+  //   キャッシュ優先だと古い対応表が居すわり「対応表になし」が増える（2026-08-20）。
   if (event.request.mode === 'navigate' ||
-      url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {
+      url.pathname.endsWith('.html') || url.pathname.endsWith('qindex.js') ||
+      url.pathname.endsWith('/')) {
     event.respondWith(
       fetch(event.request).then(res => {
         if (res.ok) {

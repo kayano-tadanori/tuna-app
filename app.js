@@ -1268,6 +1268,10 @@ function initSubject() {
         if (!hasGameTickets(TETRIS2_COST)) return;
         initTetris2();
         showScreen('tetris2');
+      } else if (subj === 'jump3d') {
+        if (!hasGameTickets(JUMP3D_COST)) return;
+        initChicchiJump3D();
+        showScreen('jump3d');
       } else if (subj === 'mine') {
         if (!hasGameTicket()) return;
         initMine();
@@ -1325,7 +1329,13 @@ function initSubject() {
 
   checkCloudRestore();
   applyPendingGrants();
-  backupLocalData();
+  // ★ログイン（受験番号を入れて入った時・起動時）だけでも、クラウドの時刻を進める。
+  //   前は backupLocalData() だけを呼んでいたので users/{番号}/backup/data の時刻しか進まず、
+  //   管理ツールの一覧に出る achievement の「最終更新」は、問題を解くまで古いままだった。
+  //   ＝親から見て「今日アプリを開いたのか」が分からない（本人指示 2026-08-20）。
+  //   中身は解き終わりと同じ処理（バックアップ→達成率の順）なので、
+  //   クラウドを守る安全装置（fewer-records・lower-achievement）はそのまま効く。
+  pushAchievementToRanking();
   initUpdateBanner();
   updateGameTicketBadge();
   initDebugTool();
