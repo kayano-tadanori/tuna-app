@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>チッチジャンプ3D</title>
+<link rel="stylesheet" href="style.css?v=20260821e">
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="hud"></div>
+
+<!-- 通ってきた天体の帯（唯一の常設UI。プラン §3.7）。
+     下から順に、通った場所が灯っていく。 -->
+<div id="strip"><div id="strip-me"></div></div>
+<div id="unitup"></div>
+<div id="voyline"></div>
+<div id="letter"></div>
+<!-- 👻 自己ベストのゴースト（プラン §3.7）。前のいちばん良かった回の
+     「そのときの高さ」が線になって並走する。抜くと金色に光る。
+     ★2匹目のチッチ（§5.6）と見わけがつかなくなるので、鳥にはしない。 -->
+<div id="ghost"><span>きのうの チッチ</span></div>
+<div id="nav"><b>›</b></div>
+<div id="skylab"><span id="lab-earth">地球</span><span id="lab-moon">月</span></div>
+
+<div id="topbar">
+  <button id="btn-back" type="button" title="もどる">‹</button>
+  <button id="btn-rank" type="button" title="ランキング">🏆</button>
+  <button id="btn-sound" type="button" title="音">🔊</button>
+</div>
+
+<div id="items">
+  <button class="item" data-item="wing" type="button">🪽</button>
+  <button class="item" data-item="rocket" type="button">🚀</button>
+</div>
+
+<div id="overlay" class="show title">
+  <!-- キーアート（本人が描いたもの）。タイトルの主役はこの1枚。 -->
+  <div id="title-art"></div>
+  <!-- タイトル（ジェイドパニック／おとんテトリス2 と同じ格）。
+       うしろでは公園の3Dがそのまま動いていて、チッチがバネの上で待っている。 -->
+  <div class="logo-wrap">
+    <div class="logo-sub">OTON GAKUEN presents</div>
+    <h1 class="logo">チッチ<span>ジャンプ</span><em>3D</em></h1>
+    <div class="logo-line"></div>
+    <div class="logo-tag">CYLINDER TOWER ／ ENDLESS DEEP SPACE</div>
+    <p class="title-story">ラジオから、ボイジャー1号（ごう）の声。<b>その声は、23時間まえの声。</b></p>
+    <p id="ov-best" class="title-best"></p>
+  </div>
+
+  <!-- 結果・到着のときだけ出る -->
+  <div class="panel" id="ov-panel">
+    <div class="sub" id="ov-sub"></div>
+    <div class="score" id="ov-score"></div>
+  </div>
+
+  <div class="weather" id="ov-weather"></div>
+  <button id="ov-go" type="button">はじめる</button>
+  <button id="ov-more" type="button" hidden>もっと先へ 🚀</button>
+  <div class="starts" id="ov-starts"></div>
+  <div class="title-toggles">
+    <button id="tg-fx" type="button" class="tg on">✨ えんしゅつ</button>
+  </div>
+  <div class="hint" id="ov-hint">画面を指でなぞる／← → で うごく</div>
+</div>
+
+<div id="err"></div>
+
+<script src="js/gl.js?v=20260821e"></script>
+<script src="js/shaders.js?v=20260821e"></script>
+<script src="js/chicchi.js?v=20260821e"></script>
+<script src="js/props.js?v=20260821e"></script>
+<script src="js/scenery.js?v=20260821e"></script>
+<script src="js/park.js?v=20260821e"></script>
+<script src="js/audio.js?v=20260821e"></script>
+<script src="js/biome.js?v=20260821e"></script>
+<script src="js/core.js?v=20260821e"></script>
+<script src="js/renderer.js?v=20260821e"></script>
+<script src="js/game.js?v=20260821e"></script>
+</body>
+</html>

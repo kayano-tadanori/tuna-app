@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v588';
+const CACHE_NAME = 'oton-gakuen-v589';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -29,6 +29,24 @@ const ASSETS = [
   './lab/jadepanic/js/grid.js',
   './lab/jadepanic/js/fx.js',
   './lab/jadepanic/js/game.js',
+  // 🚀 チッチジャンプ3D（本体からは iframe で開く）
+  './js/jump3d-embed.js',
+  './images/jump3d-banner.png',
+  './lab/chicchi-jump-3d/index.html',
+  './lab/chicchi-jump-3d/style.css',
+  './lab/chicchi-jump-3d/title.jpg',
+  './lab/chicchi-jump-3d/title-portrait.jpg',
+  './lab/chicchi-jump-3d/js/audio.js',
+  './lab/chicchi-jump-3d/js/biome.js',
+  './lab/chicchi-jump-3d/js/chicchi.js',
+  './lab/chicchi-jump-3d/js/core.js',
+  './lab/chicchi-jump-3d/js/game.js',
+  './lab/chicchi-jump-3d/js/gl.js',
+  './lab/chicchi-jump-3d/js/park.js',
+  './lab/chicchi-jump-3d/js/props.js',
+  './lab/chicchi-jump-3d/js/renderer.js',
+  './lab/chicchi-jump-3d/js/scenery.js',
+  './lab/chicchi-jump-3d/js/shaders.js',
   './lab/tetris2/index.html',
   './lab/tetris2/style.css',
   './lab/tetris2/js/gl.js',

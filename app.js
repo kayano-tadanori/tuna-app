@@ -1720,6 +1720,11 @@ const BACKUP_KEYS = [
   'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
   'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
   'mapquizBest', 'timelineBest',
+  // 🚨 iframe のゲームの自己ベストも、ここに入れないと**端末を変えた瞬間に消える**。
+  //    tetris2Best は 2026-08-20 の組込みから ずっと抜けていた（2026-08-21 に発見）。
+  //    ★足すときは firestore.rules の hasOnly にも同時に足すこと。
+  //      片方だけだと、hasOnly が丸ごと拒否して 記録が全部 無言で保存されなくなる。
+  'tetris2Best', 'jump3dBest',
   'drillBest',   // 計算ドリルの自己ベスト（組み合わせごとのJSON・2026-07-28）
   'progress',
   'gameTickets', // 息抜きゲームの遊び券（2026-08-20・端末を変えても引き継げるように）

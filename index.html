@@ -111,15 +111,9 @@
     </div>
 
     <p class="section-label">息抜きタイム<span id="game-ticket-badge" class="ticket-badge">🎟 0枚</span></p>
-    <button class="subject-card subject-card-game" data-subject="game">
-      <span class="game-blocks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      <span class="game-icon">🎮</span>
-      <span class="game-text">
-        <span class="subject-name">オトンテトリス</span>
-        <span class="subject-detail">勉強のあいまにハイスコアに挑戦！</span>
-      </span>
-      <span class="game-arrow">›</span>
-    </button>
+    <!-- 🗄 オトンテトリスは 一覧から外した（本人の指示 2026-08-21）。
+         ★コードもデータも消していない（js/tetris.js・#screen-game・tetrisBest は そのまま）。
+           戻したくなったら、このカードを書きもどすだけでよい。 -->
     <button class="subject-card subject-card-game subject-card-jp" data-subject="jadepanic">
       <span class="jp-icon">🦜</span>
       <span class="game-text">
@@ -136,17 +130,16 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
-    <button class="subject-card subject-card-game subject-card-mine" data-subject="mine">
-      <span class="game-icon">🪳</span>
+    <!-- 🗄 おかんスイーパーは 一覧から外した（本人の指示 2026-08-21）。
+         ★コードもデータも消していない（js/sweeper.js・#screen-mine・mineBest_* は そのまま）。 -->
+    <button class="subject-card subject-card-game subject-card-cj" data-subject="jump3d">
+      <span class="cj-icon">🚀</span>
       <span class="game-text">
-        <span class="subject-name">おかんスイーパー</span>
-        <span class="subject-detail">ゴキブリをよけて ぜんぶ開けよう！</span>
+        <span class="subject-name cj-name"><b>チッチ</b><i>ジャンプ3D</i><span class="cj-new">NEW</span></span>
+        <span class="subject-detail">宇宙のはてまで！ボイジャーに会いにいく</span>
       </span>
       <span class="game-arrow">›</span>
     </button>
-    <!-- 🚧 チッチジャンプ3D は作りかけ。できあがるまでリポジトリに入れない（本人指示 2026-08-20）。
-         原本は lab/chicchi-jump-3d/（.gitignore で除外中）。完成したら
-         ここにカード・#screen-jump3d・js/jump3d-embed.js の読み込みを戻す。 -->
     <button class="subject-card subject-card-game subject-card-jump" data-subject="jump">
       <span class="game-icon">🐣</span>
       <span class="game-text">
@@ -2030,6 +2023,12 @@
   <iframe id="t2-frame" title="おとんテトリス2" allow="autoplay; fullscreen"></iframe>
 </div>
 
+<!-- =============== チッチジャンプ3D ===============
+     中身は lab/chicchi-jump-3d/ が原本。やりとりは js/jump3d-embed.js の postMessage。 -->
+<div id="screen-jump3d" class="screen">
+  <iframe id="cj-frame" title="チッチジャンプ3D" allow="autoplay; fullscreen"></iframe>
+</div>
+
 <!-- =============== ジェイドパニック ===============
      グローバル名やCSSが本体とぶつからないよう、iframeで隔離している。
      中身は lab/jadepanic/ が原本。やりとりは js/jadepanic-embed.js の postMessage。 -->
@@ -2364,6 +2363,7 @@
 <script src="js/tetris.js"></script>
 <script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
 <script src="js/jadepanic-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
+<script src="js/jump3d-embed.js"></script>  <!-- チッチジャンプ3D（iframeの橋渡し） -->
 <script src="js/gacha.js"></script>
 <script src="js/gamify.js"></script>
 <script src="js/sweeper.js"></script>

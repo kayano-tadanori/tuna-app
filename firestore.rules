@@ -69,6 +69,10 @@ service cloud.firestore {
              'coins', 'items', 'gacha', 'loginBonus', 'playTime', 'titleRank',
              'tetrisBest', 'jumpBest', 'mineBest_easy', 'mineBest_normal', 'mineBest_hard',
              'mapquizBest', 'timelineBest', 'drillBest', 'progress',
+             // ★息抜きゲームの自己ベストを足したら、app.js の BACKUP_KEYS にも足すこと。
+             //   ここに無いキーが1つでも来ると hasOnly が**丸ごと拒否**して、
+             //   その子の記録が すべて 無言で保存されなくなる（2026-08-21 追加）
+             'tetris2Best', 'jump3dBest',
              'gameTickets', 'lastUpdated'
            ])
         && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
@@ -165,6 +169,10 @@ service cloud.firestore {
     function gameIdOk(game) {
       return game in ['tetris', 'tetris2', 'jump', 'mine_easy', 'mine_normal', 'mine_hard']
         || game.matches('^jadepanic_(surv|time)_(easy|normal|hard)$')
+        // チッチジャンプ3D は**3軸**なので、ゲームIDを分けて持つ（プラン §3.9）。
+        //   jump3d … 生スコア／ jump3d_w<週番号> … 今週のシード
+        //   jump3d_gain … 自己ベストの更新幅／ jump3d_coop … 協力メーター
+        || game.matches('^jump3d(_gain|_coop|_w[0-9]{1,6})?$')
         || drillGameOk(game);
     }
     match /game_scores/{game}/scores/{nick} {
