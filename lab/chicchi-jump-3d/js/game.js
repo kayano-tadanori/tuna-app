@@ -151,8 +151,20 @@ const ICEFIELD_COL = {
 // ★宇宙ゾーンは厚くする。
 //   雲はふわっとしていて薄くても「雲」に見えるが、岩が薄いと板に見える。
 //   厚みがあるぶん陰影も出るので、暗い宇宙でも形が読めるようになる。
-const PLAT_THICK = 3.3;         // 雲
-const PLAT_THICK_ROCK = 4.8;    // 小惑星
+let PLAT_THICK = 3.3;           // 雲（地上のあたり）
+let PLAT_THICK_HIGH = 4.42;     // 雲（宇宙のすぐ手前）★岩とは切りはなして持つ
+let PLAT_THICK_ROCK = 5.6;      // 小惑星
+// 🪨 岩の奥ゆき（2026-08-21）。
+//   本人「宇宙の足場（岩）が薄い」。厚み(y)だけ上げてもここは直らなかった。
+//   **実測で分かった本当の原因は 奥ゆき(z) だった。**
+//     いままでの岩の実寸 … はば0.93 × 高さ1.05 × **奥ゆき0.37**（world）
+//     ＝ 立てた板。筒を回りこんだ足場は横から見ることになるので、そのとき
+//        目に入るのは はば(x) ではなく奥ゆき(z)。z がうすいと紙きれになる。
+//   y だけ 4.8→7.6 に上げた絵も撮ったが、**塔のように背が高くなるだけ**で
+//   「うすい」は直らなかった（tools/rock_ab.py の d/e）。
+//   ★チッチは足場より 0.24 手前に立つ。岩の前面は 0.371×(はば×奥ゆき) なので、
+//     ここを上げすぎるとチッチの足もとに岩が かぶる。1.10 で前面 0.28（実測で確認ずみ）。
+let PLAT_DEPTH_ROCK = 1.10;
 // 足場の明るさの床。太陽から遠くても、ここより暗くしない（可読性の保険）。
 // ★1つの色で「黒い空」と「明るい地球」の両方に3.0以上のコントラストは出せない。
 //   カートゥーンの答えは2枚構え：**明るい本体**（暗い背景で抜ける）＋
@@ -180,10 +192,13 @@ function zoneProps(m) {
 //   理由：登るほど空が暗くなり、雲の白と背景の差が小さくなる。そこで同じ厚みだと
 //   「白い板」になって、上のめん（＝乗るところ）がどこか読めなくなる。
 //   厚みがあれば横の面に影が出るので、**立体として**見える＝乗る場所が分かる。
+// ★岩の厚みと雲の厚みは**別々に持つ**こと。前は雲の行き先を
+//   「岩の 0.92倍」と書いていたので、岩をいじると雲まで動いた。
+//   宇宙に入る所では形（雲→岩）ごと入れかわるので、数字が段でも見えない。
 function zoneThick(m) {
   if (m >= CJ_SPACE_M) return PLAT_THICK_ROCK;
-  // 街のあいだ（薄くてよい）→ 宇宙の手前（岩とほぼ同じ厚み）へ、なだらかに
-  return lerp(PLAT_THICK, PLAT_THICK_ROCK * 0.92, smoothstep(300, CJ_SPACE_M, m));
+  // 街のあいだ（薄くてよい）→ 宇宙の手前（しっかり厚い）へ、なだらかに
+  return lerp(PLAT_THICK, PLAT_THICK_HIGH, smoothstep(300, CJ_SPACE_M, m));
 }
 
 // ---------------- 入力 ----------------
@@ -2622,7 +2637,7 @@ function buildDrawLists() {
     const meshTop = zp0[pl.type].top;
     platLists[pl.type].push({
       ang: cjAngle(pl.px), y: pl.y + CJ_PLAT_H - meshTop * sy, radius: CJ_RADIUS,
-      sx: pl.w, sy, sz: pl.w * 0.72,
+      sx: pl.w, sy, sz: pl.w * (core.meters >= CJ_SPACE_M ? PLAT_DEPTH_ROCK : 0.72),
       rot: (pl.seed - 0.5) * 0.5,
       col: c, fade, _far: far,
     });
@@ -3089,6 +3104,14 @@ requestAnimationFrame(loop);
 // テスト用の口
 window.__cj = {
     setFloor: v => { PLAT_FLOOR = v; },
+  // 🪨 厚み・奥ゆきを走らせたまま変える（見くらべ用。tools/rock.py が使う）
+  setThick(cloud, rock, depth) {
+    if (cloud) PLAT_THICK = cloud;
+    if (rock) PLAT_THICK_ROCK = rock;
+    if (depth) PLAT_DEPTH_ROCK = depth;
+  },
+  thickInfo() { return { cloud: PLAT_THICK, high: PLAT_THICK_HIGH,
+                         rock: PLAT_THICK_ROCK, depth: PLAT_DEPTH_ROCK }; },
   core, R,
   get rig() { return rig; },
   setRunning(v) { running = v; if (v) ov.classList.remove('show'); },
@@ -3179,6 +3202,52 @@ window.__cj = {
       }
     }
     return out;
+  },
+  // 🪨 足場が画面で何pxに見えているか（幅・高さ）を数える。
+  //    ★「厚くした」を見た目の印象で言わないための物差し。tools/rock.py が使う。
+  //      高さ÷幅 が小さいほど「板」に見える。雲と岩を同じ物差しで比べられる。
+  //    メッシュの実寸は**その場で作りなおして頂点から数える**（決まった形なので毎回同じ）。
+  //    本番の描画には一切かかわらないので、重さの心配は要らない。
+  platBoxes() {
+    buildDrawLists();
+    const B = (core.meters >= CJ_SPACE_M)
+      ? { normal: buildRockMesh, spring: buildRockSpringMesh, ice: buildRockIceMesh, break: buildRockBreakMesh }
+      : { normal: buildCloudMesh, spring: buildSpringMesh, ice: buildIceMesh, break: buildBreakMesh };
+    const box = m => {
+      const v = m.vertices;
+      let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      for (let i = 0; i < v.length; i += P_STRIDE) {
+        if (v[i] < x0) x0 = v[i];
+        if (v[i] > x1) x1 = v[i];
+        if (v[i + 1] < y0) y0 = v[i + 1];
+        if (v[i + 1] > y1) y1 = v[i + 1];
+      }
+      return { x0, x1, y0, y1 };
+    };
+    const cache = {}, out = [];
+    const W = cv.width, H = cv.height;
+    for (const k in platLists) {
+      const bx = cache[k] || (cache[k] = box(B[k]()));
+      for (const o of platLists[k]) {
+        if (o.fade < 0.85) continue;          // 裏がわのうすいものは対象外
+        const ca = Math.cos(o.ang), sa = Math.sin(o.ang);
+        // 筒の接線ぞいに lx、たてに ly ずらした所を画面に落とす
+        const at = (lx, ly) => screenOf([
+          sa * o.radius + ca * lx * o.sx, o.y + ly * o.sy, ca * o.radius - sa * lx * o.sx]);
+        const t = at(0, bx.y1), b2 = at(0, bx.y0), l = at(bx.x0, 0), r = at(bx.x1, 0);
+        if (!t || !b2 || !l || !r || t.behind || b2.behind || l.behind || r.behind) continue;
+        // 🚨 筒の横がわに回りこんだ足場は**斜めから見ている**ので、
+        //    横はばが遠近でつぶれる（実測で 6px になった）。厚みの物差しにならない。
+        //    こちらを向いている足場だけ数える。
+        if (Math.abs(t.x) > 0.15) continue;
+        const hPx = Math.abs(b2.y - t.y) * H * 0.5;
+        const wPx = Math.abs(r.x - l.x) * W * 0.5;
+        if (wPx < 1) continue;
+        out.push({ type: k, wPx: +wPx.toFixed(1), hPx: +hPx.toFixed(1),
+                   ratio: +(hPx / wPx).toFixed(3) });
+      }
+    }
+    return { thick: +zoneThick(core.meters).toFixed(2), m: Math.round(core.meters), plats: out };
   },
   // 4種類の足場を並べて見る（モデルの確認用）
   gallery() {
