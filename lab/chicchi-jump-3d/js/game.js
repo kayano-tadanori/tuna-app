@@ -308,6 +308,19 @@ window.addEventListener('keydown', e => {
   const k = e.code;
   // 🩺 F2 で診断表示（チカチカの原因さがし用）
   if (k === 'F2') { e.preventDefault(); DIAG = !DIAG; return; }
+  // 🔬 F3 で「重ねてある字」をぜんぶ消す。消してチカチカが止まるなら、
+  //    犯人は3Dの絵ではなく、字と絵の重ねかた（合成）のほう。
+  if (k === 'F3') { e.preventDefault(); setDomOff(!DOMOFF); return; }
+  // 🔁 F4 で「前の作り（desynchronized）」に入れかえて開きなおす。
+  //    こちらでチカチカして、ふつうの方でしないなら、犯人はそれで確定。
+  if (k === 'F4') {
+    e.preventDefault();
+    const u = new URL(location.href);
+    if (u.searchParams.get('desync') === '1') u.searchParams.delete('desync');
+    else u.searchParams.set('desync', '1');
+    location.replace(u.toString());
+    return;
+  }
   if (['ArrowLeft','ArrowRight','ArrowDown','ArrowUp','Space','ShiftLeft','ShiftRight',
        'KeyA','KeyD','KeyS','KeyW','Digit1','Digit2','Enter'].includes(k)) e.preventDefault();
   keyHeld.add(k);
@@ -1928,6 +1941,7 @@ const stripEl = document.getElementById('strip');
 const stripMe = document.getElementById('strip-me');
 const STRIP_ANCHORS = CJ_ANCHORS.filter(a => a[0] > 0);
 const stripDots = [];
+let stripIdx = -2, stripBot = null;      // 変わったときだけ触るための控え
 if (stripEl) {
   STRIP_ANCHORS.forEach((a, i) => {
     const d = document.createElement('i');
@@ -1941,7 +1955,11 @@ function updateStrip() {
   if (!stripEl) return;
   let idx = -1;
   for (let i = 0; i < STRIP_ANCHORS.length; i++) if (core.progress >= STRIP_ANCHORS[i][0]) idx = i;
-  for (let i = 0; i < stripDots.length; i++) stripDots[i].classList.toggle('on', i <= idx);
+  // ★点の on/off は、変わった時だけ触る（毎フレーム全部の点を触らない）
+  if (idx !== stripIdx) {
+    for (let i = 0; i < stripDots.length; i++) stripDots[i].classList.toggle('on', i <= idx);
+    stripIdx = idx;
+  }
   // いまの位置（点と点のあいだを ゆるく 補間する）
   const n = STRIP_ANCHORS.length - 1;
   let f;
@@ -1951,7 +1969,11 @@ function updateStrip() {
     const a0 = STRIP_ANCHORS[idx][0], a1 = STRIP_ANCHORS[idx + 1][0];
     f = (idx + (core.progress - a0) / (a1 - a0)) / n;
   }
-  stripMe.style.bottom = `${4 + clamp(f, 0, 1) * 92}%`;
+  // ★`#strip-me` には `transition: bottom .25s linear` がかかっている。
+  //   毎フレーム別の値を入れると、そのたびに補間がやり直しになる。
+  //   0.1% きざみにまるめて、変わったときだけ書く。
+  const bot = (4 + clamp(f, 0, 1) * 92).toFixed(1) + '%';
+  if (bot !== stripBot) { stripBot = bot; stripMe.style.bottom = bot; }
 }
 
 // ============================================================
@@ -2761,21 +2783,48 @@ function shadowTarget() {
 //   （本人が「そんなの出てない」＝?diag=1 を付けずに開いていた）。
 let DIAG = CJ_QS.has('diag');
 let diagEl = null, diagN = 0, diagLastW = 0, diagLastH = 0, diagT = 0, diagFps = 0, diagFrames = 0;
+// コマの間かくを見る（明滅の正体が「コマ落ち」なのかを切り分ける）
+let diagMin = 999, diagMax = 0, diagLong = 0, diagVsync = 16.7, diagShowT = 0;
+// 🔬 F3 … 画面に重ねている**字と絵（DOM）をぜんぶ消す**。
+//   これで直るなら、犯人は3Dの絵ではなく「重ねかた（合成）」のほう。
+let DOMOFF = false;
+const DIAG_OVERLAYS = ['hud', 'strip', 'nav', 'skylab', 'voyline', 'ghost', 'topbar', 'items', 'unitup'];
+function setDomOff(v) {
+  DOMOFF = v;
+  for (const id of DIAG_OVERLAYS) {
+    const el = document.getElementById(id);
+    if (el) el.style.visibility = v ? 'hidden' : '';
+  }
+}
 function updateDiag(realMs) {
   if (!DIAG) { if (diagEl) diagEl.style.display = 'none'; return; }
-  if (diagEl) diagEl.style.display = '';
   if (!diagEl) {
     diagEl = document.createElement('div');
     diagEl.style.cssText = 'position:fixed;left:6px;top:6px;z-index:99;font:11px/1.5 monospace;' +
       'color:#9fe;background:rgba(0,0,0,.72);padding:6px 8px;border-radius:6px;white-space:pre;pointer-events:none';
     document.body.appendChild(diagEl);
   }
+  diagEl.style.display = '';
   if (cv.width !== diagLastW || cv.height !== diagLastH) {
     diagN++; diagLastW = cv.width; diagLastH = cv.height;
   }
+  // モニタの1コマぶん（＝いちばん短かった間かく）を目安にして、
+  // その1.7倍より長いコマを「落ちコマ」と数える。165Hzなら6.1ms が目安。
+  if (realMs > 0.5) {
+    if (realMs < diagVsync) diagVsync = diagVsync * 0.9 + realMs * 0.1;
+    if (realMs > diagVsync * 1.7) diagLong++;
+    if (realMs < diagMin) diagMin = realMs;
+    if (realMs > diagMax) diagMax = realMs;
+  }
   diagFrames++; diagT += realMs;
   if (diagT > 500) { diagFps = Math.round(diagFrames * 1000 / diagT); diagT = 0; diagFrames = 0; }
+  // ★診断そのものが毎フレームDOMを書きかえたら、犯人さがしのじゃまになる。
+  //   表示は0.25秒に1回だけ。
+  diagShowT += realMs;
+  if (diagShowT < 250) return;
+  diagShowT = 0;
   const r = cv.getBoundingClientRect();
+  const gl = R.gl;
   diagEl.textContent =
     `size ${cv.width}x${cv.height}  作りなおし ${diagN}回
 ` +
@@ -2785,12 +2834,21 @@ function updateDiag(realMs) {
 ` +
     `fps ${diagFps}  frame ${frameMs.toFixed(1)}ms
 ` +
+    `コマ ${diagMin.toFixed(1)}〜${diagMax.toFixed(1)}ms  落ちコマ ${diagLong}回
+` +
+    `desync ${gl && gl.desync ? 'ON(前の作り)' : 'OFF(いまの作り)'}  F4で入れかえ
+` +
+    `F3で字を消す:${DOMOFF ? 'いま消えてる' : 'ふつう'}
+` +
     `body ${document.body.scrollWidth}x${document.body.scrollHeight}`;
+  diagMin = 999; diagMax = 0;
 }
 
 // ---------------- ループ ----------------
 let prev = performance.now();
 let frameMs = 16;
+// HUD は中身が変わったときだけ書きかえる（上の loop() を見ること）
+let hudHtml = null, voyShownText = null;
 // 画質の段。行ったり来たりしないよう、決まった値だけを使う。
 //
 // 🚨 **遊んでいるあいだは、下げることしかしない。**（2026-08-21・本人「画面チカチカ」）
@@ -3051,7 +3109,13 @@ function loop(now) {
 
   const nowMs = core.time * 1000;
   const d = core.dist;
-  hud.innerHTML =
+  // 🚨 **中身が変わったときだけ書きかえる**（2026-08-21）。
+  //   前は毎フレーム innerHTML を作り直していた。165Hz のモニタでは
+  //   **1秒に165回、HUDのDOMを丸ごと捨てて作り直していた**ことになる。
+  //   ・作り直すたびに `.pop` の popin アニメが0にもどる＝出るはずの字が出ない
+  //   ・字の下に置いた3Dの絵と、字の出るタイミングがそろわない＝チカチカに見える
+  //   文字列を作るのは安いので、くらべてから書く。
+  const html =
     `<div class="row"><span>スコア</span><b>${core.score.toLocaleString()}</b></div>` +
     `<div class="row"><span>きょり</span><b>` +
       `${performance.now() < rouletteUntil ? rouletteValue(d.value) : d.value}` +
@@ -3061,11 +3125,13 @@ function loop(now) {
     (core.relics.length ? `<div class="relics">${core.relics.map(r => r.icon).join('')}</div>` : '') +
     (core.assisting ? `<div class="assist">🚀 どうぐ中は 点が入らない</div>` : '') +
     (nowMs < popUntil ? `<div class="pop">${popText}</div>` : '');
+  if (html !== hudHtml) { hudHtml = html; hud.innerHTML = html; }
 
   // ボイジャーのことば（画面の下のほう、大きめに）
   const vl = document.getElementById('voyline');
   const showing = performance.now() < voyLineUntil;
-  vl.textContent = showing ? voyLineText : '';
+  const vtext = showing ? voyLineText : '';
+  if (vtext !== voyShownText) { voyShownText = vtext; vl.textContent = vtext; }
   vl.classList.toggle('show', showing);
 
   // 重かったら解像度を落とす。

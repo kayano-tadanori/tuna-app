@@ -110,13 +110,28 @@ const M4 = {
 };
 
 // ---------------- コンテキスト ----------------
+// 🚨 **desynchronized（低遅延キャンバス）は使わない**（2026-08-21）。
+//   本人「画面チカチカでテストプレイできない」の、2つめの原因。
+//   これを true にすると、キャンバスがブラウザの**画面合成をとびこして**
+//   直に表示される道に乗る。速い代わりに、
+//     ・描きおわる前の絵がそのまま出る（＝ちぎれる・チカチカする）
+//     ・上に重ねてある HUD の文字と、絵の出るタイミングがそろわない
+//   Windows のPC＋高いリフレッシュのモニタ（120/144/165Hz）でとくに出る。
+//   ★**ヘッドレスの swiftshader はこの道を通らない**ので、
+//     こちらの環境では何回撮っても絶対に再現しない（実測 tools/flicker.py で
+//     となり合うコマの差＝ふつう。明滅なし）。だから「作りで潰す」しかない。
+//   このゲームは指1本のなぞり操作で、1フレームの遅れが効くたぐいではないので、
+//   低遅延を捨ててもうしなうものが無い。
+//   ★見くらべ用に `?desync=1` を付けたときだけ、前の作りで開ける。
 function createGL(canvas) {
+  const desync = /[?&]desync=1/.test(location.search);
   const gl = canvas.getContext('webgl2', {
     alpha: false, antialias: false, depth: true, stencil: false,
     premultipliedAlpha: false, preserveDrawingBuffer: false,
-    powerPreference: 'high-performance', desynchronized: true,
+    powerPreference: 'high-performance', desynchronized: desync,
   });
   if (!gl) return null;
+  gl.desync = desync;
   gl.hdr = !!gl.getExtension('EXT_color_buffer_half_float') || !!gl.getExtension('EXT_color_buffer_float');
   gl.getExtension('OES_texture_float_linear');
   return gl;
