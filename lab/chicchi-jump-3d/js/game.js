@@ -600,8 +600,13 @@ function escapeHtml(s) {
 //  ★実際のコードに合わせて書くこと。ここが本当とちがうと、
 //    子どもは「書いてあるのに できない」で自分のせいにする。
 function helpHTML() {
-  const row = (icon, t, d) => `<div class="hrow"><u>${icon}</u><div><b>${t}</b><span>${d}</span></div></div>`;
+  const row = (icon, t, d, cls) =>
+    `<div class="hrow${cls ? ' ' + cls : ''}"><u>${icon}</u><div><b>${t}</b><span>${d}</span></div></div>`;
   const key = k => `<span class="hkey">${k}</span>`;
+  // ☀️ タイトルに出ているカードの正体。**「これは何？」に答えるだけ**にする
+  //    （本人「今日の天気の説明だけでいい」2026-08-22）。10種ぜんぶ並べない。
+  //    ★えらべないので、遊びかたの手前に置かない。ゆびの操作のすぐ後。
+  const w = core.weather;
   return (
     `<div class="hsec"><h4>ゆびで うごかす</h4>` +
       row('🫳', '画面を なぞる', 'チッチは、ゆびのところへ 行く。おしっぱなしで ずっと動く。') +
@@ -609,6 +614,11 @@ function helpHTML() {
       row('👀', 'ゆびを 止める', 'カメラが 上へ動いて、先が 見える。そのあいだ 横には 動けない。') +
       row('⚡', '速く 逆へ はらう', 'いきおいを 消して、逆へ ぐっと寄る。<b>着地するまでに 1回だけ。</b>') +
       row('✨', 'ジャストジャンプ', '着地の 前後 0.13びょうに ゆびを 置きなおすと、いつもより 高く とぶ。') +
+    `</div>` +
+    `<div class="hsec"><h4>きょうの宇宙天気（うちゅうてんき）</h4>` +
+      row(w.icon, `きょうは「${escapeHtml(w.name)}」`, escapeHtml(w.desc), 'now') +
+      row('📅', '日がわりで かわる',
+          'えらべない。<b>きょうだいは 同じ天気</b>なので、同じ日なら 同じ じょうけんで くらべられる。') +
     `</div>` +
     `<div class="hsec"><h4>足場（あしば）</h4>` +
       row('☁️', 'ふつうの雲', 'そのまま はねる。') +

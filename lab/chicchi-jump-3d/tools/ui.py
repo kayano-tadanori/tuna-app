@@ -80,6 +80,17 @@ with sync_playwright() as p:
         ".hrow > div > span b, .hkey",
         "els => els.every(e => getComputedStyle(e).display !== 'block')")
     check(inline, "説明の中の強調とキーが inline のまま（行が割れていない）")
+    # ☀️ タイトルに出ている「今日の宇宙天気」カードの説明が入っているか
+    wx = pg.evaluate("""() => { const e = document.querySelector('.hrow.now');
+        return e ? { b: e.querySelector('b').textContent,
+                     s: e.querySelector('span').textContent,
+                     name: window.__cj.core.weather.name,
+                     desc: window.__cj.core.weather.desc } : null; }""")
+    check(wx is not None, "きょうの宇宙天気が出ている")
+    if wx:
+        print("     ", json.dumps(wx, ensure_ascii=False))
+        check(wx["name"] in wx["b"], f"その日の天気の名まえが合っている（{wx['b']}）")
+        check(wx["desc"] == wx["s"], f"効きめの説明が合っている（{wx['s']}）")
     # 下まで見る
     pg.eval_on_selector("#sheet-body", "el => el.scrollTop = el.scrollHeight")
     pg.wait_for_timeout(250)

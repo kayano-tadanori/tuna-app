@@ -679,3 +679,11 @@ html, body {
 /* 3回めから いちだんと大きく（のってきた、が見た目に出る） */
 #just.hot b { font-size: clamp(30px, 9.8vw, 54px); }
 #just.hot i { font-size: clamp(26px, 8.4vw, 48px); }
+
+/* ☀️ きょうの宇宙天気。ここだけ「今のこと」なので、金の枠で1行だけ立たせる。 */
+.hrow.now {
+  margin: 2px 0 4px; padding: 9px 11px; border-radius: 12px; border-bottom: 0;
+  background: radial-gradient(120% 100% at 0% 0%, rgba(255,200,90,.16), rgba(255,255,255,.03) 72%);
+  border: 1px solid rgba(255, 206, 106, .42);
+}
+.hrow.now > div > b { color: #ffe9a8; }
