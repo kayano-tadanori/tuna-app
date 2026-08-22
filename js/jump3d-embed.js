@@ -17,6 +17,16 @@ function initChicchiJump3D() {
   f.src = JUMP3D_SRC + '&t=' + Date.now();
 }
 
+// 🎒 いま持っている道具の数を iframe へ知らせる
+function sendJump3DItems(f) {
+  if (!f || !f.contentWindow || typeof getItems !== 'function') return;
+  const it = getItems();
+  f.contentWindow.postMessage({
+    type: 'cj-items',
+    items: { wing: it.wing || 0, rocket: it.rocket || 0 },
+  }, '*');
+}
+
 function stopChicchiJump3D() {
   const f = document.getElementById('cj-frame');
   if (!f) return;
@@ -33,11 +43,28 @@ window.addEventListener('message', e => {
     // ニックネームを渡してランキングの名前をそろえる
     const nick = (typeof state === 'object' && state && state.nickname) ? state.nickname : '';
     f.contentWindow.postMessage({ type: 'cj-name', name: nick, cost: JUMP3D_COST }, '*');
+    sendJump3DItems(f);
+
+  } else if (d.type === 'cj-use-item') {
+    // 🎒 道具（🪽つばさ / 🚀ロケット）の持ち主は本体。
+    //   ★iframe の中では数を減らせない（減らしたつもりでも、本体の財布は減らない）。
+    //     前はゲーム側が core.useItem を直に呼んでいて、**何回でも使えた**。
+    //   財布は テトリス・おかんスイーパー・チッチジャンプ2 と共通で、
+    //   勉強のごほうび（ガチャ）でしか増えない。ここだけ無限だと土台が崩れる。
+    if (typeof addItem === 'function' && (d.kind === 'wing' || d.kind === 'rocket')) {
+      const items = getItems();
+      if ((items[d.kind] || 0) > 0) addItem(d.kind, -1);
+      if (typeof updateItemButtons === 'function') updateItemButtons();
+    }
+    // ★減らしたあとの本当の数を返す。ゲーム側はこれで上書きする
+    //   （押した手ごたえのために先に1つ減らして見せているので、必ず答え合わせをする）。
+    sendJump3DItems(f);
 
   } else if (d.type === 'cj-start-request') {
     // プレイ開始のたびに遊び券を1まい
     if (spendGameTickets(JUMP3D_COST)) {
       f.contentWindow.postMessage({ type: 'cj-start-ok' }, '*');
+      sendJump3DItems(f);      // 遊んでいる間にガチャで増えていることがある
     } else {
       f.contentWindow.postMessage({
         type: 'cj-start-deny',

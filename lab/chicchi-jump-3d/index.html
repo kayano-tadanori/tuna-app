@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>チッチジャンプ3D</title>
-<link rel="stylesheet" href="style.css?v=20260821f">
+<link rel="stylesheet" href="style.css?v=20260822a">
 </head>
 <body>
 <canvas id="c"></canvas>
@@ -30,9 +30,11 @@
   <button id="btn-sound" type="button" title="音">🔊</button>
 </div>
 
+<!-- 道具。<b> は のこりの数（本体の localStorage['items'] が出どころ）。
+     はじめは 0＝押せない状態にしておく。数が届いたら開く。 -->
 <div id="items">
-  <button class="item" data-item="wing" type="button">🪽</button>
-  <button class="item" data-item="rocket" type="button">🚀</button>
+  <button class="item" data-item="wing" type="button" disabled>🪽<b>0</b></button>
+  <button class="item" data-item="rocket" type="button" disabled>🚀<b>0</b></button>
 </div>
 
 <div id="overlay" class="show title">
@@ -67,16 +69,16 @@
 
 <div id="err"></div>
 
-<script src="js/gl.js?v=20260821f"></script>
-<script src="js/shaders.js?v=20260821f"></script>
-<script src="js/chicchi.js?v=20260821f"></script>
-<script src="js/props.js?v=20260821f"></script>
-<script src="js/scenery.js?v=20260821f"></script>
-<script src="js/park.js?v=20260821f"></script>
-<script src="js/audio.js?v=20260821f"></script>
-<script src="js/biome.js?v=20260821f"></script>
-<script src="js/core.js?v=20260821f"></script>
-<script src="js/renderer.js?v=20260821f"></script>
-<script src="js/game.js?v=20260821f"></script>
+<script src="js/gl.js?v=20260822a"></script>
+<script src="js/shaders.js?v=20260822a"></script>
+<script src="js/chicchi.js?v=20260822a"></script>
+<script src="js/props.js?v=20260822a"></script>
+<script src="js/scenery.js?v=20260822a"></script>
+<script src="js/park.js?v=20260822a"></script>
+<script src="js/audio.js?v=20260822a"></script>
+<script src="js/biome.js?v=20260822a"></script>
+<script src="js/core.js?v=20260822a"></script>
+<script src="js/renderer.js?v=20260822a"></script>
+<script src="js/game.js?v=20260822a"></script>
 </body>
 </html>

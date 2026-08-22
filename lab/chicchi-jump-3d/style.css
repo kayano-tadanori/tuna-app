@@ -72,9 +72,17 @@ html, body {
 #voyline.show { opacity: 1; }
 
 /* ---------------- 上のボタン ---------------- */
+/* 🚨 #overlay（z-index 20）より上に置く（本人の指摘 2026-08-22
+   「落ちた後の戻るボタンが効きません」）。
+   タイトルと結果の画面では #overlay が画面ぜんぶを覆うので、
+   「‹ もどる」の上に透明な板がかぶさっていた＝**遊んでいる間しか押せない**。
+   いちばん押したいのは 落ちたあと なのに、そこだけ死んでいた。
+   ★手紙のあいだは letterChrome() が .hide を付けて消す（pointer-events も切れる）ので、
+     ここを上げても、手紙の上にボタンが浮くことはない。 */
 #topbar {
   position: fixed; left: calc(var(--pad-x) + 8px); right: calc(var(--pad-x) + 8px); top: calc(env(safe-area-inset-top, 0px) + 8px);
   display: flex; gap: 8px; align-items: center;
+  z-index: 24;
 }
 #topbar button {
   width: 38px; height: 38px; border-radius: 12px; font-size: 17px; line-height: 1;
@@ -85,16 +93,35 @@ html, body {
 #topbar button:active { transform: scale(.92); }
 
 /* ---------------- アイテム ---------------- */
+/* 🚨 道具は**左**に置く（本人の指摘 2026-08-22
+   「右手の指でチッチを操作するので 左に置いてた方が遊びやすいです」）。
+   右にあると、動かしている手と道具ボタンが同じがわで ぶつかる。
+   ★左のはしには帯（#strip・left+9px・はば12px）がある。重ならないよう
+     その外がわ（+26px）から置く。ここを +10px にすると、画面が低いときに
+     帯の下のほうの点をボタンが隠す。 */
 #items {
-  position: fixed; right: calc(var(--pad-x) + 10px); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  position: fixed; left: calc(var(--pad-x) + 26px); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
   display: flex; flex-direction: column; gap: 10px;
 }
 .item {
+  position: relative;
   width: 54px; height: 54px; border-radius: 16px; font-size: 24px;
   border: 1px solid rgba(255,255,255,.22); background: rgba(18,22,40,.62);
   color: #fff; backdrop-filter: blur(6px);
 }
 .item:active { transform: scale(.92); }
+/* のこりの数。★これが無いと「無限に使える」ように見える（本人の指摘 2026-08-22）。 */
+.item b {
+  position: absolute; right: -5px; bottom: -5px;
+  min-width: 21px; height: 21px; padding: 0 5px;
+  border-radius: 11px; background: #ffd23f; color: #2a1c00;
+  font-size: 12px; font-weight: 900; line-height: 21px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.55);
+}
+/* 0まいのときは、押せないことが ひと目で分かるようにする */
+.item:disabled { opacity: .34; }
+.item:disabled b { background: rgba(255,255,255,.42); color: rgba(0,0,0,.65); }
+.item:disabled:active { transform: none; }
 
 /* ---------------- かぶせ画面 ---------------- */
 /* ============================================================

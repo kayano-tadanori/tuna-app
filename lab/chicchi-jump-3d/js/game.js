@@ -348,9 +348,9 @@ window.addEventListener('keydown', e => {
   } else if (k === 'Space') {
     core.tap();                        // 置きなおす
   } else if (k === 'Digit1') {
-    core.useItem('wing');
+    tryUseItem('wing');           // ★ボタンと同じ道を通す（数を見ずに使わせない）
   } else if (k === 'Digit2') {
-    core.useItem('rocket');
+    tryUseItem('rocket');
   }
 });
 
@@ -366,10 +366,67 @@ window.addEventListener('keyup', e => {
 // 画面をさわったら、指のほうを優先に戻す
 cv.addEventListener('pointerdown', () => { keyUsed = false; });
 
+// ============================================================
+//  🎒 道具ののこり（🪽つばさ / 🚀ロケット）
+//
+//  🚨 前は `core.useItem()` を直に呼んでいたので、**何回でも使えた**
+//     （本人の指摘 2026-08-22「無限に使えるようになってる」）。
+//     2D版（js/jump.js の jumpUseItem）は getItems() で数を見て addItem(kind,-1)
+//     している。同じ財布（本体の localStorage['items']）を使う。
+//     ★この財布は テトリス・おかんスイーパー・チッチジャンプ2 と共通で、
+//       勉強のごほうび（ガチャ）でしか増えない。だからここだけ無限だと、
+//       「勉強すると道具がもらえる」という土台がまるごと効かなくなる。
+//
+//  持ち主は**本体**。iframe の中からは、親に頼んで減らしてもらう。
+//  単体で開いたときは、同じ鍵をそのまま読み書きする（置き場が同じなのでズレない）。
+// ============================================================
+let itemStock = { wing: 0, rocket: 0 };
+
+function stockDirectRead() {
+  try {
+    const o = JSON.parse(localStorage.getItem('items') || '{}');
+    return { wing: Math.max(0, o.wing | 0), rocket: Math.max(0, o.rocket | 0) };
+  } catch (e) { return { wing: 0, rocket: 0 }; }
+}
+function stockDirectWrite(s) {
+  try {
+    const o = JSON.parse(localStorage.getItem('items') || '{}');
+    o.wing = s.wing; o.rocket = s.rocket;
+    localStorage.setItem('items', JSON.stringify(o));
+  } catch (e) {}
+}
+function setStock(s) {
+  itemStock = { wing: Math.max(0, (s && s.wing) | 0), rocket: Math.max(0, (s && s.rocket) | 0) };
+  drawItemButtons();
+}
+function drawItemButtons() {
+  document.querySelectorAll('[data-item]').forEach(btn => {
+    const n = itemStock[btn.dataset.item] || 0;
+    const b = btn.querySelector('b');
+    if (b) b.textContent = n;
+    btn.disabled = n <= 0;
+  });
+}
+// ★効いているあいだは、もう1つ使わない（連打で数だけ減るのを防ぐ）。
+//   2D版と同じ決まり。
+function tryUseItem(kind) {
+  if (!running || core.over || core.ending || letter) return;
+  if ((itemStock[kind] || 0) <= 0) return;
+  const now = core.time * 1000;
+  if (kind === 'wing'   && now < core.wingUntil)   return;
+  if (kind === 'rocket' && now < core.rocketUntil) return;
+  core.useItem(kind);
+  // 先に減らして見せ、あとで持ち主の数で上書きする（押した手ごたえを遅らせない）
+  itemStock[kind] = Math.max(0, itemStock[kind] - 1);
+  drawItemButtons();
+  if (EMBED) post('cj-use-item', { kind });
+  else stockDirectWrite(itemStock);
+}
+
 document.querySelectorAll('[data-item]').forEach(btn => {
   btn.onpointerdown = e => {
     e.preventDefault(); e.stopPropagation();
-    if (running) core.useItem(btn.dataset.item);
+    tryUseItem(btn.dataset.item);
   };
 });
 
@@ -666,6 +723,9 @@ window.addEventListener('message', e => {
     nickname = d.name || '';
     // ★名前が分かった時点で、その子の記録に読みかえる
     loadProfile();
+  } else if (d.type === 'cj-items') {
+    // 🎒 道具ののこり。持ち主は本体なので、来た数がいつでも正しい。
+    setStock(d.items);
   } else if (d.type === 'cj-start-ok') {
     waitingTicket = false;
     beginPlay();
@@ -677,6 +737,8 @@ window.addEventListener('message', e => {
 });
 
 post('cj-ready');
+// 単体で開いたときは、本体からの返事が来ないので自分で読む
+if (!EMBED) setStock(stockDirectRead());
 showOverlay('start');
 
 // ---------------- 演出の状態 ----------------
