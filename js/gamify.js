@@ -4,7 +4,7 @@
 
 // 教科→カテゴリ→問題数（データは静的なのでハードコード。問題追加時はここを更新）
 const QUESTION_COUNTS = {
-  kokugo: { kotowaza: 506, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 538, kanji_yomi: 480,
+  kokugo: { kotowaza: 506, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 1076, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
             // 文のしくみ＝浜学園 小3国語 本科教材（原簿 HG-2515/2521/2523/2525）。data/kokugo_bun.json
             kokugo_bun: 227,
@@ -24,7 +24,7 @@ const QUESTION_COUNTS = {
             // こころの探偵・要約記者。★以前はここに登録が無く、IDの先頭2文字が偶然
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
-            tantei: 123, youyaku: 128 },                                                     // 6,409
+            tantei: 123, youyaku: 128 },                                                     // 6,947
   sansu:  { bakuhatsu: 160, keisan: 1283, bun: 777, zu: 1037, kisoku: 988, tokusan: 557, baai: 556, kazu: 596,
             wariai: 418, hayasa: 168, rittai: 374 },                                         // 6,914（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
