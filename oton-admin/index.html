@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -349,7 +349,7 @@ async function doLogin() {
 // ── オトン学園本体（tuna app/js/gamify.js）と同じ達成率ロジック ──────────────
 // ★ QUESTION_COUNTS / ID_PREFIX_MAP / TITLES / GACHA_TOTAL は本体との二重管理。
 //   本体を直したら、ここも必ず同じ値にする（ズレると達成率・称号が実際と食いちがう）。
-//   最終同期：2026-08-18（本体 js/gamify.js・js/gacha.js より）
+//   最終同期：2026-08-22（本体 js/gamify.js・js/gacha.js より。達成率のものさし ACH_BASE を追加）
 const QUESTION_COUNTS = {
   kokugo: { kotowaza: 506, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 538, kanji_yomi: 480,
             kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389, kokugo_bungaku: 359,
@@ -364,7 +364,27 @@ const QUESTION_COUNTS = {
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
-const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika'];
+const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika', 'shakai'];   // 達成率は4教科ぜんぶ（2026-08-22）
+// ── 達成率のものさし（2026-08-22 の問題数で固定）★本体 js/gamify.js の ACH_BASE と同じ値にする ──
+//   1問あたり ＝ 110 ÷ 20,441 ＝ 0.00538%。問題を足してもここは増やさない
+//   （増やすと、解いた数が同じなのに達成率が下がる）
+const ACH_BASE = {
+  kokugo: { kotowaza: 506, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 538,
+            kanji_yomi: 480, kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389,
+            kokugo_bungaku: 359, kokugo_bun: 227, kokugo_wago: 156, kokugo_sairei5: 150,
+            hama_kokugo: 1022, tantei: 123, youyaku: 128 },
+  sansu:  { bakuhatsu: 160, keisan: 1283, bun: 777, zu: 1037, kisoku: 988, tokusan: 557, baai: 556,
+            kazu: 596, wariai: 418, hayasa: 168, rittai: 374 },
+  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
+            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },
+  shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },
+};
+const ACH_FULL_PCT = 110;
+const ACH_BASE_TOTAL = 20441;
+const ACH_PER_Q = ACH_FULL_PCT / ACH_BASE_TOTAL;
+function achBase(s, c) {
+  return (ACH_BASE[s] && ACH_BASE[s][c]) || (QUESTION_COUNTS[s] && QUESTION_COUNTS[s][c]) || 0;
+}
 const ID_PREFIX_MAP = {
   k: ['kokugo:kotowaza'], y: ['kokugo:kanyoku'], j: ['kokugo:yojijukugo'], g: ['kokugo:gairaigo'],
   kk: ['kokugo:kanji_kaki'], ky: ['kokugo:kanji_yomi'], kg: ['kokugo:kokugo_keigo'],
@@ -496,15 +516,15 @@ function computeAchievement(prog) {
   const subjects = {};
   let titleCleared = 0, titleCount = 0;
   for (const [s, cats] of Object.entries(QUESTION_COUNTS)) {
-    let sc = 0, st = 0;
+    let sc = 0, st = 0, sb = 0;
     for (const [c, n] of Object.entries(cats)) {
       const cleared = Math.min(sets[`${s}:${c}`].size, n);
-      sc += cleared; st += n;
+      sc += cleared; st += n; sb += achBase(s, c);
     }
-    subjects[s] = { cleared: sc, count: st, pct: st ? Math.floor((sc / st) * 100) : 0 };
-    if (TITLE_SUBJECTS.includes(s)) { titleCleared += sc; titleCount += st; }
+    subjects[s] = { cleared: sc, count: st, pct: sb ? Math.floor((sc / sb) * ACH_FULL_PCT) : 0 };
+    titleCleared += sc; titleCount += st;   // 4教科ぜんぶ足す
   }
-  const titlePct = titleCount ? (titleCleared / titleCount) * 100 : 0;
+  const titlePct = titleCleared * ACH_PER_Q;   // 分母は持たない＝問題が増えても下がらない
   return { titlePct, subjects };
 }
 function getTitleInfo(titlePct) {

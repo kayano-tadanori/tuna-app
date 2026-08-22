@@ -32,8 +32,37 @@ const QUESTION_COUNTS = {
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
-// 称号判定は灘中3教科（社会は表示のみ）
-const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika'];
+// 達成率は4教科ぜんぶ（社会をやったぶんも のびる）
+const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika', 'shakai'];
+
+// ── 達成率のものさし（2026-08-22 の問題数で固定）──────────────────
+// ★ここは問題を足しても絶対に増やさない。増やすと「解いた数は同じなのに達成率が下がる」ことになり、
+//   最初から遊んでくれている子ほど損をする（実際にそれでクレームが出た・2026-08-22）。
+//   1問あたりの のび ＝ ACH_FULL_PCT ÷ ACH_BASE_TOTAL ＝ 110 ÷ 20,441 ＝ 0.00538%（1% ≒ 186問）。
+//   この日にあった国算理 20,441問をクリアするとちょうど 110%。以降に足した問題も、社会の問題も、
+//   ぜんぶ同じ1問あたりの値で足されていく（分母は動かないので、達成率は下がらない）。
+// ⚠ scripts/sync_question_counts.js が直すのは QUESTION_COUNTS だけ。ここは対象外（触らせない）。
+// ⚠ oton-admin/index.html と Desktop\オトン学園管理ツール\index.html にも同じ表がある。直すなら3か所とも。
+const ACH_BASE = {
+  kokugo: { kotowaza: 506, kanyoku: 536, yojijukugo: 529, gairaigo: 587, kanji_kaki: 538,
+            kanji_yomi: 480, kokugo_keigo: 232, kokugo_goi: 447, kokugo_bushu: 389,
+            kokugo_bungaku: 359, kokugo_bun: 227, kokugo_wago: 156, kokugo_sairei5: 150,
+            hama_kokugo: 1022, tantei: 123, youyaku: 128 },
+  sansu:  { bakuhatsu: 160, keisan: 1283, bun: 777, zu: 1037, kisoku: 988, tokusan: 557, baai: 556,
+            kazu: 596, wariai: 418, hayasa: 168, rittai: 374 },
+  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
+            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },
+  shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },
+};
+const ACH_FULL_PCT = 110;        // 基準日の国算理をぜんぶクリアしたときの達成率
+const ACH_BASE_TOTAL = 20441;    // 基準日の国語+算数+理科の問題数（★動かさない）
+const ACH_PER_Q = ACH_FULL_PCT / ACH_BASE_TOTAL;   // 1問あたりの達成率（固定）
+
+// その単元の「達成率のものさし」。基準日より後に増やした単元は今の問題数を使う
+// （全体の達成率は1問あたりが固定なので、新しい単元を解いたぶんもそのまま のびる）
+function achBase(s, c) {
+  return (ACH_BASE[s] && ACH_BASE[s][c]) || (QUESTION_COUNTS[s] && QUESTION_COUNTS[s][c]) || 0;
+}
 
 // 旧形式の素ID→カテゴリ振り分け表（衝突プレフィックスは複数カテゴリに寛大加算）
 const ID_PREFIX_MAP = {
@@ -146,17 +175,21 @@ function getAchievement() {
   const subjects = {};
   let titleCleared = 0, titleCount = 0;
   for (const [s, cats] of Object.entries(QUESTION_COUNTS)) {
-    let sc = 0, st = 0;
+    let sc = 0, st = 0, sb = 0;
     const catInfo = {};
     for (const [c, n] of Object.entries(cats)) {
       const cleared = Math.min(sets[`${s}:${c}`].size, n);
-      catInfo[c] = { cleared, count: n, pct: n ? Math.floor((cleared / n) * 100) : 0 };
-      sc += cleared; st += n;
+      const base = achBase(s, c);
+      catInfo[c] = { cleared, count: n, pct: base ? Math.floor((cleared / base) * ACH_FULL_PCT) : 0 };
+      sc += cleared; st += n; sb += base;
     }
-    subjects[s] = { cleared: sc, count: st, pct: st ? Math.floor((sc / st) * 100) : 0, cats: catInfo };
-    if (TITLE_SUBJECTS.includes(s)) { titleCleared += sc; titleCount += st; }
+    subjects[s] = { cleared: sc, count: st,
+                    pct: sb ? Math.floor((sc / sb) * ACH_FULL_PCT) : 0, cats: catInfo };
+    // 全体の達成率は「クリアした数 × 1問あたりの固定値」。分母を持たないので、
+    // 問題が増えても下がらない（[[feedback_achievement_never_drops]]）
+    titleCleared += sc; titleCount += st;
   }
-  const titlePct = titleCount ? (titleCleared / titleCount) * 100 : 0;
+  const titlePct = titleCleared * ACH_PER_Q;
   return { titlePct, titleCleared, titleCount, subjects };
 }
 
@@ -756,7 +789,8 @@ function initRecord() {
     `クリアした問題：${a.titleCleared.toLocaleString()} / ${a.titleCount.toLocaleString()}問（一度でも正解した問題）`;
   const nextEl = document.getElementById('record-next');
   if (info.next) {
-    const remain = Math.max(1, Math.ceil((info.nextPct / 100) * a.titleCount) - a.titleCleared);
+    // 1問あたりの達成率は固定なので、あと何問かは わり算で出る
+    const remain = Math.max(1, Math.ceil(info.nextPct / ACH_PER_Q) - a.titleCleared);
     nextEl.textContent = `次の称号『${info.next}』まで あと${remain.toLocaleString()}問！`;
   } else {
     nextEl.textContent = '最高称号を制覇！でんせつの小学生や！';
@@ -772,7 +806,7 @@ function initRecord() {
     const head = document.createElement('div');
     head.className = 'record-subj-head';
     const nameSpan = document.createElement('span');
-    nameSpan.textContent = `${SUBJECT_LABELS[s]}${TITLE_SUBJECTS.includes(s) ? '' : '（称号判定外）'}`;
+    nameSpan.textContent = SUBJECT_LABELS[s];   // 4教科とも達成率に入る（社会も）
     const numSpan = document.createElement('span');
     numSpan.className = 'rs-num';
     numSpan.textContent = `${data.cleared.toLocaleString()}/${data.count.toLocaleString()}（${data.pct}%）▾`;
@@ -782,7 +816,7 @@ function initRecord() {
     track.className = 'bar-track';
     const fill = document.createElement('div');
     fill.className = 'bar-fill';
-    fill.style.width = data.pct + '%';
+    fill.style.width = Math.min(100, data.pct) + '%';   // バーは100%で満タン
     track.appendChild(fill);
 
     const catsDiv = document.createElement('div');
@@ -792,7 +826,7 @@ function initRecord() {
       row.className = 'record-cat-row';
       row.innerHTML = `<span class="rc-name"></span><div class="bar-track"><div class="bar-fill"></div></div><span class="rc-num"></span>`;
       row.querySelector('.rc-name').textContent = gamiCatLabel(s, c);
-      row.querySelector('.bar-fill').style.width = ci.pct + '%';
+      row.querySelector('.bar-fill').style.width = Math.min(100, ci.pct) + '%';
       row.querySelector('.rc-num').textContent = `${ci.cleared}/${ci.count}${ci.cleared >= ci.count ? ' ✅' : ''}`;
       catsDiv.appendChild(row);
     }

@@ -923,7 +923,7 @@ async function showProgressScreen(subject) {
       div.className = 'progress-cat';
       div.innerHTML = `
         <div class="progress-cat-name">${gamiCatLabel(s, c)}${done ? ' ✅' : ''}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${ci.pct}%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, ci.pct)}%"></div></div>
         <div class="bar-label">${ci.cleared.toLocaleString()} / ${ci.count.toLocaleString()}問（${ci.pct}%）</div>
       `;
       subjWrap.appendChild(div);

@@ -147,7 +147,12 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['pct', 'cleared', 'titleIdx', 'lastUpdated'])
         && request.resource.data.pct is number
         && request.resource.data.pct >= 0
-        && request.resource.data.pct <= 100
+        // 2026-08-22：達成率は「1問あたり固定」に変えたので 100 を超えることがある
+        //   （基準日の国算理をぜんぶで110%、社会も足すと約124%。問題が増えればもっと伸びる）。
+        //   ★ここを 100 のままにすると、100%を超えた子の記録が“無言で”保存できなくなる
+        //   （hasOnly と同じ落とし穴 [[feedback_firestore_rules_hasonly]]）。
+        //   荒らし対策として上限自体は残す。cleared の上限10万問 × 1問0.0054% ≒ 538% なので 300 で足りる
+        && request.resource.data.pct <= 300
         && intIn(request.resource.data.cleared, 0, 100000)
         && intIn(request.resource.data.titleIdx, 0, 20)
         && serverTime();
