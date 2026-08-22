@@ -134,6 +134,23 @@ service cloud.firestore {
            ));
     }
 
+    // ---------- オトンからのおへんじ users/{ニックネーム}/backup/reply ----------
+    // いけんばこ・通報に対する返事。管理ツールが書き、その子の端末が読んで
+    // 「おくったもの」に 🟡みてくれてる／✅なおしたで！ として出す（2026-08-22）。
+    //   ・feedback 本体は管理者しか読めないので、子どもに見せる分だけをここへ写す。
+    //   ・中身は JSON文字列1本（[{fid, s, msg, at}, …] の新しい順・最大20件）。
+    //     backup/data と同じ流儀で、キーではなく文字列長で縛る。
+    //   ★書けるのは管理者だけ。子どもの端末からは読むことしかできない
+    //     （自分で「なおしたで！」を書いて喜ぶ、ということが起きないように）。
+    match /users/{nick}/backup/reply {
+      allow read: if nickOk(nick);
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly(['replies', 'lastUpdated'])
+        && strOk(request.resource.data.replies, 20000)
+        && serverTime();
+      allow delete: if isAdmin();
+    }
+
     // ---------- 単元別ランキング leaderboard/{単元}/scores/{ニックネーム} ----------
     match /leaderboard/{category}/scores/{nick} {
       allow read: if true;                 // ランキング表示のため誰でも読める

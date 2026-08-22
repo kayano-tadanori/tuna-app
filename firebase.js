@@ -275,6 +275,24 @@ async function clearPendingGrants(nickname) {
   }
 }
 
+// オトンからのおへんじ（いけんばこ・通報の返事）を取る。
+// 書くのは管理ツールだけ（firestore.rules の users/{nick}/backup/reply は isAdmin のみ書き込み可）。
+// 中身は { replies: '<JSON文字列>' }。JSONは [{fid, s, msg, at}, …] の新しい順。
+async function getFeedbackReplies(nickname) {
+  if (!firebaseReady || !nickname) return null;
+  try {
+    const snap = await db.collection('users').doc(nickname).collection('backup').doc('reply').get();
+    if (!snap.exists) return null;
+    const raw = snap.data().replies;
+    if (typeof raw !== 'string' || !raw) return null;
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list : null;
+  } catch (e) {
+    console.warn('おへんじの取得失敗:', e.message);
+    return null;
+  }
+}
+
 // ============================================================
 // フィードバック（もんだいの通報・いけんばこ）
 // ============================================================

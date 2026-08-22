@@ -1329,6 +1329,7 @@ function initSubject() {
 
   checkCloudRestore();
   applyPendingGrants();
+  refreshFbReplies(false);   // オトンからのおへんじ（あれば設定に赤丸を出す。ここでは既読にしない）
   // ★ログイン（受験番号を入れて入った時・起動時）だけでも、クラウドの時刻を進める。
   //   前は backupLocalData() だけを呼んでいたので users/{番号}/backup/data の時刻しか進まず、
   //   管理ツールの一覧に出る achievement の「最終更新」は、問題を解くまで古いままだった。
@@ -2008,7 +2009,10 @@ async function fbSend(payload, kind) {
   if (code === 'ok') {
     localStorage.setItem(fbSeqKey(), String(seq + 1));
     localStorage.setItem('fbLastSentAt', String(Date.now()));
-    fbPushLog({ ts: Date.now(), kind, qid: payload.qid || '', reason: payload.reason,
+    // fid（クラウド側のドキュメントID）も控える。オトンからのおへんじを
+    // 「どの通報への返事か」で結びつけるのに使う
+    fbPushLog({ ts: Date.now(), fid: fbDocId(state.nickname, seq), kind,
+                qid: payload.qid || '', reason: payload.reason,
                 comment: String(payload.comment || '').slice(0, 30) });
   }
   return code;
@@ -2130,19 +2134,88 @@ function initFeedbackScreen() {
   document.getElementById('fb-subject').value = 'app';
   document.getElementById('fb-quota').textContent =
     `きょうは あと ${fbQuotaLeft()}かい おくれるよ`;
-  renderFbSentList();
+  renderFbSentList();                  // まず控えから描いて、
+  refreshFbReplies(true);              // おへんじが取れたら描き直す（オフラインなら何もしない）
 }
 
-// クラウドの feedback は管理者しか読めないので、一覧はローカルの控えから描く
+// ── 📬 オトンからのおへんじ ──────────────────────────
+// クラウド（users/{受験番号}/backup/reply）を読んで端末にためる。
+// 書けるのは管理ツールだけなので、ここは読むだけ。
+function fbGetReplies() {
+  try { return JSON.parse(localStorage.getItem('fbReplies') || '[]'); } catch (e) { return []; }
+}
+// markSeen=true は「いけんばこを開いたとき」だけ。起動時の取り込みで既読にすると
+// 赤丸が出た次の瞬間に消えて、子どもがおへんじに気づけない
+async function refreshFbReplies(markSeen) {
+  if (!state.nickname || typeof getFeedbackReplies !== 'function') return;
+  const list = await getFeedbackReplies(state.nickname);
+  if (!Array.isArray(list)) return;
+  localStorage.setItem('fbReplies', JSON.stringify(list.slice(0, 20)));
+  if (markSeen) {
+    const newest = list.reduce((m, r) => Math.max(m, Number(r.at) || 0), 0);
+    localStorage.setItem('fbReplySeen', String(newest));
+  }
+  updateFbBadge();
+  const scr = document.getElementById('screen-feedback');
+  if (scr && scr.classList.contains('active')) renderFbSentList();
+}
+// まだ見ていないおへんじの数（設定の「いけんばこ」に赤丸を出す）
+function fbUnseenCount() {
+  const seen = Number(localStorage.getItem('fbReplySeen') || 0);
+  return fbGetReplies().filter(r => (Number(r.at) || 0) > seen).length;
+}
+function updateFbBadge() {
+  const el = document.getElementById('fb-unseen-badge');
+  if (!el) return;
+  const n = fbUnseenCount();
+  el.textContent = n;
+  el.classList.toggle('hidden', n === 0);
+}
+
+const FB_REPLY_LABEL = {
+  doing: '🟡 オトンが みてくれてるで！',
+  done:  '✅ オトンが なおしたで！',
+};
+
+// おへんじ1本ぶんの吹き出し
+function fbReplyBox(rep, withDate) {
+  const p = document.createElement('div');
+  p.className = 'fb-reply' + (rep.s === 'done' ? ' done' : '');
+  const t = document.createElement('p');
+  t.className = 'fb-reply-head';
+  t.textContent = (FB_REPLY_LABEL[rep.s] || '📬 オトンから')
+                + (withDate && rep.at ? `（${new Date(Number(rep.at)).getMonth() + 1}/${new Date(Number(rep.at)).getDate()}）` : '');
+  p.appendChild(t);
+  if (rep.msg) {
+    const m = document.createElement('p');
+    m.className = 'fb-reply-msg';
+    m.textContent = rep.msg;
+    p.appendChild(m);
+  }
+  return p;
+}
+
+// クラウドの feedback は管理者しか読めないので、送ったものの一覧はローカルの控えから描く。
+// オトンからのおへんじ（users/{受験番号}/backup/reply）だけは読めるので、控えに重ねて出す
 function renderFbSentList() {
   const box = document.getElementById('fb-sent-list');
   const log = fbGetLog();
+  const replies = fbGetReplies();
+  const byFid = {};
+  replies.forEach(r => { if (r && r.fid) byFid[r.fid] = r; });
   box.innerHTML = '';
+
+  // 控えに残っていないおへんじ（端末を変えた・控えの20件からあふれた）は、ひとことがあれば上に出す
+  const orphans = replies.filter(r => r && r.msg && !log.some(e => e.fid && e.fid === r.fid));
+  orphans.forEach(r => box.appendChild(fbReplyBox(r, true)));
+
   if (log.length === 0) {
-    const p = document.createElement('p');
-    p.className = 'fb-sent-empty';
-    p.textContent = 'まだ なにも おくっていません。';
-    box.appendChild(p);
+    if (orphans.length === 0) {
+      const p = document.createElement('p');
+      p.className = 'fb-sent-empty';
+      p.textContent = 'まだ なにも おくっていません。';
+      box.appendChild(p);
+    }
     return;
   }
   log.forEach(e => {
@@ -2158,6 +2231,8 @@ function renderFbSentList() {
     body.textContent = e.comment || e.qid || '';
     item.appendChild(head);
     if (body.textContent) item.appendChild(body);
+    const rep = e.fid && byFid[e.fid];
+    if (rep) item.appendChild(fbReplyBox(rep, false));
     box.appendChild(item);
   });
 }

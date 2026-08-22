@@ -256,6 +256,13 @@
       <button class="fb-status-btn" data-status="doing" onclick="setFbStatus('doing')">🟡 対応中</button>
       <button class="fb-status-btn" data-status="done"  onclick="setFbStatus('done')">✅ 対応済み</button>
     </div>
+    <div class="section-title">この子に見せる「おへんじ」</div>
+    <p class="sub" style="margin:0 0 6px; font-size:0.76rem">
+      送ると、その子のアプリの「いけんばこ → おくったもの」に出ます（下の状態も一緒に表示されます）。<br>
+      オトンのメモは子どもには見えません。</p>
+    <textarea id="fb-reply" class="fb-note-input" maxlength="200" placeholder="例：なおしたで！おしえてくれて ありがとう"></textarea>
+    <button class="btn-refresh" style="width:100%;margin:8px 0 0" onclick="sendFbReply()">📮 おへんじを送る</button>
+
     <div class="section-title">オトンのメモ</div>
     <textarea id="fb-note" class="fb-note-input" maxlength="500" placeholder="例：kotowaza.json の k012 の答えを修正した"></textarea>
     <button class="btn-refresh" style="width:100%;margin:8px 0 0" onclick="saveFbNote()">メモを保存</button>
@@ -1623,6 +1630,7 @@ function showFbDetail(id) {
     `${f.nickname || ''}　/　${fmtDate(f.createdAt)}`;
   document.getElementById('fb-detail-msg').textContent = '';
   document.getElementById('fb-note').value = f.adminNote || '';
+  document.getElementById('fb-reply').value = '';   // 前の子のおへんじが残らないように
 
   const rows = [];
   const row = (k, v) => `<div class="row"><span>${k}</span><span>${esc(v)}</span></div>`;
@@ -1696,6 +1704,36 @@ async function saveFbNote() {
     msg.textContent = 'メモを保存しました';
   } catch (e) {
     msg.textContent = 'メモを保存できませんでした：' + (e.message || e.code);
+  }
+}
+
+// 📮 子どもの端末に見せる「おへんじ」を users/{受験番号}/backup/reply に書く。
+//   feedback 本体は管理者しか読めない（allow read: isAdmin）ので、
+//   見せてよいぶんだけをここへ写す。子どもの端末からは読むだけ（書き込みは isAdmin のみ）。
+//   中身は JSON文字列1本： [{fid, s, msg, at}, …] の新しい順・最大20件。
+async function sendFbReply() {
+  if (!currentFb) return;
+  const msg  = document.getElementById('fb-detail-msg');
+  const text = document.getElementById('fb-reply').value.trim().slice(0, 200);
+  const nick = currentFb.nickname;
+  if (!nick) { msg.textContent = '受験番号が分からないので送れません'; return; }
+  try {
+    const ref  = db.collection('users').doc(nick).collection('backup').doc('reply');
+    const snap = await ref.get();
+    let list = [];
+    if (snap.exists) {
+      try { list = JSON.parse(snap.data().replies || '[]'); } catch (e) { list = []; }
+    }
+    if (!Array.isArray(list)) list = [];
+    list = list.filter(r => r && r.fid !== currentFb.id);      // 同じ通報への返事は1本だけ
+    list.unshift({ fid: currentFb.id, s: currentFb.status || 'doing', msg: text, at: Date.now() });
+    await ref.set({
+      replies: JSON.stringify(list.slice(0, 20)),
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    msg.textContent = `📮 おへんじを送りました（${nick} さんが つぎにアプリを開いたときに出ます）`;
+  } catch (e) {
+    msg.textContent = 'おへんじを送れませんでした：' + (e.message || e.code);
   }
 }
 
