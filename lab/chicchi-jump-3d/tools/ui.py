@@ -188,6 +188,103 @@ with sync_playwright() as p:
     far = [f for f in after_i if f["name"] == "たー"][0]
     check(not far["shown"], "ずっと先の旗は、そこへ行くまで見えない")
 
+    # ======================================================
+    #  👆 タップではチッチを動かさない（本人の指摘 2026-08-22）
+    # ======================================================
+    print("--- 👆 タップ ---")
+    pg.evaluate(WARP, 4000)
+    pg.wait_for_timeout(300)
+    box = pg.eval_on_selector("#c", "el => { const r = el.getBoundingClientRect();"
+                                    " return {x: r.x, y: r.y, w: r.width, h: r.height}; }")
+    cx, cy = box["x"] + box["w"] * 0.5, box["y"] + box["h"] * 0.6
+    px = lambda: pg.evaluate("window.__cj.core.player.px")
+
+    # ① 指を置くだけ → 動かないこと（ここが本題）
+    before = px()
+    pg.mouse.move(cx, cy)
+    pg.mouse.down()
+    pg.wait_for_timeout(80)
+    check(abs(px() - before) < 1e-9, f"指を置いただけでは動かない（{before:.3f} → {px():.3f}）")
+
+    # ② 6px のブレでも動かないこと
+    pg.mouse.move(cx + 6, cy + 3)
+    pg.wait_for_timeout(80)
+    check(abs(px() - before) < 1e-9, f"6px のブレでは動かない（{px():.3f}）")
+
+    # ③ しっかりなぞれば、今までどおり指の位置へ合うこと
+    # ★横の速さ（vx）を止めてから測る。止めないと、測るまでの数コマで
+    #   その速さのぶん流れて、合っているのに「ずれている」と出る（実測 0.035）。
+    pg.mouse.move(cx + 70, cy, steps=6)
+    pg.wait_for_timeout(40)
+    after = px()
+    want = pg.evaluate("f => cjWrap(window.__cj.core.camPx + (f - 0.5) * CJ_VIEW_W)",
+                       (cx + 70 - box["x"]) / box["w"])
+    check(abs(after - before) > 1e-6, f"なぞれば動く（{before:.3f} → {after:.3f}）")
+    # ★ぴったり同じにはならない。指を動かしてから読むまでの1〜数コマで
+    #   カメラ（camPx）が回りこむぶん、世界の座標が少しずれる（実測 0.03 前後）。
+    #   ここで見たいのは「なぞれば指の位置へ合う」こと。画面はば 390px に対して
+    #   0.06 は およそ4px。壊れたら 桁で外れるので、これで十分ひっかかる。
+    check(abs(after - want) < 0.06, f"なぞった先は指の位置（ずれ {abs(after - want):.4f}）")
+    pg.mouse.up()
+
+    # ④ 置いた瞬間に ⚡逆フリックが暴発しないこと
+    pg.evaluate("() => { window.__cj.core.player.vx = 3.0; window.__cj.setFlick(false); }")
+    pg.mouse.move(cx - 130, cy)
+    pg.mouse.down()
+    pg.wait_for_timeout(80)
+    check(not pg.evaluate("window.__cj.flickUsed()"), "置いただけで ⚡が暴発しない")
+    pg.mouse.up()
+
+    # ======================================================
+    #  ✨ ジャストジャンプの合図（本人「決まったら派手に」）
+    # ======================================================
+    print("--- ✨ ジャスト ---")
+    for n, tag in ((1, "1回め"), (4, "4れんぞく")):
+        pg.evaluate("n => window.__cj.fireJust(n)", n)
+        pg.wait_for_timeout(140)
+        # 🚨 **撮るのと 測るのを 同じ回でやらない。**
+        #   ・撮ってから測る → screenshot に 1秒近くかかり、測るころには
+        #     0.62秒のアニメが終わっている（実測：anim=finished／つぶ0こ）
+        #   ・測ってから撮る → 測っているあいだにアニメが終わり、消えた絵が残る
+        #   → **測る回と 撮る回を分ける**（もう一度 出しなおして撮る）。
+        st = pg.evaluate("""() => { const e = document.getElementById('just');
+            return { show: e.classList.contains('show'), hot: e.classList.contains('hot'),
+                     b: e.querySelector('b').textContent, i: e.querySelector('i').textContent,
+                     anim: e.getAnimations().map(a => a.playState),
+                     box: (r => r.width > 60 && r.height > 20)(e.getBoundingClientRect()),
+                     flash: window.__cj.justFlash(), parts: window.__cj.partCount() }; }""")
+        print("     ", tag, json.dumps(st, ensure_ascii=False))
+        # ★opacity は見ない。合成（コンポジタ）で動くので getComputedStyle には 0 と出る。
+        #   「アニメが走っているか」と「場所を取っているか」で見る。
+        check(st["show"] and st["anim"] == ["running"] and st["box"],
+              f"{tag}：まんなかに出る（アニメ {st['anim']} ／ 場所 {st['box']}）")
+        check(st["flash"] > 0.3, f"{tag}：チッチが光る（{st['flash']:.2f}）")
+        check(st["parts"] >= 40, f"{tag}：つぶが出る（{st['parts']}こ）")
+        check((st["i"] == "×%d" % n) if n >= 2 else (st["i"] == ""),
+              f"{tag}：×の出しかた（{st['i']!r}）")
+        check(st["hot"] == (n >= 3), f"{tag}：3れんぞくから大きく（hot={st['hot']}）")
+        # 絵は出しなおして撮る（上の 🚨 を見ること）
+        pg.wait_for_timeout(700)
+        pg.evaluate("n => window.__cj.fireJust(n)", n)
+        pg.wait_for_timeout(150)
+        pg.screenshot(path=os.path.join(OUT, "08_just_%d.png" % n))
+        pg.wait_for_timeout(700)
+    check(pg.eval_on_selector("#just", "e => e.getAnimations().every(a => a.playState === 'finished')"),
+          "0.7秒あとには終わっている（次の足場を読むじゃまをしない）")
+
+    # ======================================================
+    #  🌀 バネの宙返りは ゆっくり・でも着地までに回りきる
+    # ======================================================
+    print("--- 🌀 バネ ---")
+    for vy, tag in ((None, "ふつうのバネ"), (9.0, "弱いバネ")):
+        sp = pg.evaluate("v => window.__cj.springFlipInfo(v)", vy)
+        print("     ", tag, json.dumps(sp, ensure_ascii=False))
+        check(sp["dur"] < sp["airT"], f"{tag}：着地までに回りきる"
+                                      f"（回転 {sp['dur']:.2f}秒 ／ 滞空 {sp['airT']:.2f}秒）")
+    sp = pg.evaluate("() => window.__cj.springFlipInfo()")
+    check(sp["dur"] > 0.85, f"前（0.5秒）よりゆっくり回る（{sp['dur']:.2f}秒）")
+
+
     print("\n--- コンソール ---")
     if logs:
         for l in logs[:20]:

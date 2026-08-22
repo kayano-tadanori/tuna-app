@@ -583,10 +583,12 @@ class ChicchiRig {
   }
   hurt() { this.state = CJ_ANIM.HURT; this.hurtT = 0.45; this.gazeTarget = [0, 0]; }
   // 宙返り。着地までの残り時間から回転の速さを決め、必ず着地までに終わらせる。
+  //  ★上限を 0.85 → 1.25 に広げた（本人「バネはもっとゆっくり回したほうが
+  //    ボヨーンって感じがする」2026-08-22）。呼ぶ側が滞空時間から決める。
   flip(duration) {
     if (this.spinning) return;
     this.spinning = true; this.spinT = 0;
-    this.spinDur = clamp(duration || 0.45, 0.30, 0.85);
+    this.spinDur = clamp(duration || 0.45, 0.30, 1.25);
   }
 
   update(dt, ctx) {

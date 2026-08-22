@@ -203,7 +203,20 @@ function zoneThick(m) {
 
 // ---------------- 入力 ----------------
 // 元の操作は「指の位置に鳥が来る」（相対ドラッグではない）。そこは変えない。
+//
+// 🚨 **ただし「置いただけ」では動かさない**（本人の指摘 2026-08-22）
+//   ジャストジャンプは「着地の前後 0.13秒に **指を置きなおす**」操作。
+//   置きなおす場所は、前に置いていた場所と ぴったり同じにはならない。
+//   絶対位置の操作なので、そのズレのぶん **チッチが指の下へ瞬間移動する**。
+//   ＝いちばん正確さが要る瞬間に、いちばん大きく横へ飛んでいた。
+//   → 指を置いただけでは動かさない。TAP_SLOP を超えて動かして
+//     「なぞる気だ」と分かってから、いままでどおり指の位置へ合わせる。
+//   ★スワイプの感度・向き・当たりかたは何も変えていない。
+//     変えたのは「置いた瞬間に合わせるかどうか」だけ。
+const TAP_SLOP = 10;              // px。これ以内は「タップ」＝チッチを動かさない
 let dragId = null;
+let downX = 0, downY = 0, dragging = false;
+let lastMoveAt = 0, lastMoveX = 0, flickUsed = false;
 const setFromEvent = e => {
   const r = cv.getBoundingClientRect();
   core.setTargetFromScreen((e.clientX - r.left) / r.width);
@@ -231,16 +244,30 @@ cv.addEventListener('pointerdown', e => {
     }
   }
   dragId = e.pointerId;
+  downX = e.clientX; downY = e.clientY; dragging = false;
   core.tap();                   // ジャストジャンプの判定
-  setFromEvent(e);
+  // ★ここで setFromEvent(e) を呼ばない（上の TAP_SLOP の説明を見ること）。
+  //   逆フリックの物差しだけ、置いたところで引きなおしておく。
+  //   引きなおさないと、前に指を離した場所との差が「速いはらい」に見えて
+  //   置いた瞬間に⚡が暴発する。
+  {
+    const r0 = cv.getBoundingClientRect();
+    lastMoveAt = performance.now();
+    lastMoveX = (e.clientX - r0.left) / r0.width;
+  }
   cv.setPointerCapture(e.pointerId);
 });
 // 👀 指を止めると、カメラが上へパンして先が見える（プラン §3.1）。
 //    ★そのあいだ横には動けない。情報と時間のトレード。
 //    ⚡ 速く逆へはらうと、慣性を消して逆向きに ぐっと寄れる（着地まで1回だけ）。
-let lastMoveAt = 0, lastMoveX = 0, flickUsed = false;
 cv.addEventListener('pointermove', e => {
   if (dragId !== e.pointerId) return;
+  // ★指のブレでは動かさない。TAP_SLOP を超えたら「なぞっている」と決める。
+  //   ここを超えるまでは、逆フリックの判定にも入れない。
+  if (!dragging) {
+    if (Math.hypot(e.clientX - downX, e.clientY - downY) < TAP_SLOP) return;
+    dragging = true;
+  }
   const r = cv.getBoundingClientRect();
   const x = (e.clientX - r.left) / r.width;
   const dt2 = (performance.now() - lastMoveAt) / 1000;
@@ -729,7 +756,7 @@ function showOverlay(mode) {
 function beginPlay() {
   core.reset();
   rig = new ChicchiRig();
-  popText = ''; hitStop = 0; hurtFlash = 0;
+  popText = ''; hitStop = 0; hurtFlash = 0; justFlash = 0;
   helmetOn = false; helmetT = 0;
   newStamps = []; stamps = loadStamps();
   resetQuality();              // 🖥 画質は毎回いちばん上から。段は遊んでいる間は下げるだけ
@@ -895,11 +922,31 @@ showOverlay('start');
 
 // ---------------- 演出の状態 ----------------
 let popText = '', popUntil = 0, hurtFlash = 0;
+// ✨ ジャストジャンプが決まった合図。チッチ自身が一瞬光る。
+//   ★点滅させない（1回きり・0.25秒で消える）。子ども向けの「明滅は2Hz以下」を守る。
+let justFlash = 0;
 // 🪖 宇宙服のヘルメット。宇宙ステーション（2000m）でつける。
 let helmetOn = false, helmetT = 0;
 // ヒットストップ（秒）。当たった瞬間だけ時間を止めると、打撃が「効いた」感じになる。
 let hitStop = 0;
 const Snd = new CJAudio();
+
+// ---------------- ✨ ジャストジャンプの合図 ----------------
+//  ★HUDの小さい pop（左上）では「決まった」が伝わらない。まんなかに大きく出す。
+//    ただし **0.6秒で消える**。次の足場を読む目のじゃまをしない。
+const justEl = document.getElementById('just');
+function showJust(n) {
+  if (!justEl) return;
+  justEl.querySelector('b').textContent = n >= 2 ? 'ジャスト' : '✨ ジャスト！';
+  // つづけて決めたときだけ ×N を出す（1回めから出すと ただの飾りになる）
+  justEl.querySelector('i').textContent = n >= 2 ? `×${n}` : '';
+  // ★アニメを掛けなおすには、いちど class を外して レイアウトを踏ませる。
+  //   外すだけでは 同じアニメが再生されない（連続で決めたとき2回めが出ない）。
+  justEl.classList.remove('show');
+  void justEl.offsetWidth;
+  justEl.classList.toggle('hot', n >= 3);
+  justEl.classList.add('show');
+}
 
 // ---------------- 単位が上がる演出 ----------------
 // 数字は背景ではなく主人公。桁が変わる瞬間だけ、しっかり見せる。
@@ -2622,7 +2669,15 @@ function handleEvents() {
           const P = worldAt(ev.px, ev.y + CJ_PLAT_H, CHICCHI_FRONT * 0.6);
           const n = Math.round(4 + ev.impact * 10);
           if (ev.kind === 'spring') {
-            rig.spring(); R.addTrauma(0.30); rig.flip(0.5); Snd.play('spring');
+            // 🌀 バネの宙返りは **ゆっくり**（本人「もっとゆっくり回したほうが
+            //    ボヨーンって感じがする」2026-08-22）。
+            //    ★秒数を決め打ちにしない。バネの威力は落ちてきた速さで変わるので、
+            //      決め打ちだと 弱いバネのときに 回りきる前に着地する。
+            //      いまの上向きの速さから 滞空時間（2v/g）を出し、その6割で回る。
+            {
+              const airT = 2 * Math.max(core.player.vy, 1) / CJ_GRAVITY;
+              rig.spring(); R.addTrauma(0.30); rig.flip(airT * 0.60); Snd.play('spring');
+            }
             R.burst(P[0], P[1], P[2], [0.62, 1.0, 0.72], 12,
                     { speed: 3.4, up: 1.6, size: 0.13, life: 0.5, kind: 1, drag: 1.2 });
           } else if (ev.kind === 'break') {
@@ -2838,14 +2893,45 @@ function handleEvents() {
       case 'rocket': rig.launch(1); rig.flip(0.6); Snd.play('rocket'); break;
       case 'wing': Snd.play('wing'); break;
       case 'just': {
-        // ジャストジャンプ。決まったことが分かるように、光と音でしっかり返す。
-        popText = ev.n >= 3 ? `✨ ジャスト×${ev.n}！` : '✨ ジャスト！';
-        popUntil = now + 700;
-        Snd.play('just');
-        R.addTrauma(0.14);
+        // ✨ ジャストジャンプ。**決まったことが ひと目で分かる**ようにする
+        //    （本人「決まったら派手なエフェクト出したほうがわかりやすい」2026-08-22）。
+        //    前は 小さい文字と つぶ10個だけで、決まったのか分からなかった。
+        //  ★派手にするのは「決まった一瞬」だけ。ここを長く引っぱると、
+        //    次の足場を読む目のじゃまになる。ぜんぶ 0.6秒以内に消える。
+        const n = ev.n || 1;
+        showJust(n);
+        Snd.play('just', n);
+        R.addTrauma(0.26);
+        justFlash = 1;                    // チッチ自身が一瞬光る
         const P = worldAt(core.player.px, core.player.y, CHICCHI_FRONT);
-        R.burst(P[0], P[1], P[2], [1.0, 0.95, 0.65], 10,
-                { speed: 3.0, up: 0.4, size: 0.11, life: 0.4, kind: 3, drag: 2.0 });
+        // ① 衝撃波のリング。**画面に正面を向く面**に、ぐるり等間隔で置く。
+        //    円周の接線（T）と 上（Y）が作る面がそれ。
+        //    ★burst はばらばらに散らすので、リングにはならない。ここは spawn を直に使う。
+        //  🚨 **小さく作らない。** はじめ 粒0.115・速さ4.6・drag5.2 で作ったら、
+        //     実測の絵では チッチの足もとの こまかい きらきら にしかならず、
+        //     「派手」になっていなかった。チッチの背たけが約0.6なので、
+        //     リングの半径（速さ÷drag）は **その3倍** を目安にする。
+        const ang = cjAngle(core.player.px);
+        const T = [Math.cos(ang), 0, -Math.sin(ang)];
+        const RING = 26, rs = 7.0 + Math.min(n, 5) * 0.5;   // 半径 ≒ rs/drag ≒ 2.2
+        for (let i = 0; i < RING; i++) {
+          const th = (i / RING) * Math.PI * 2, c = Math.cos(th), s2 = Math.sin(th);
+          R.spawn({
+            x: P[0], y: P[1], z: P[2],
+            vx: T[0] * c * rs, vy: s2 * rs, vz: T[2] * c * rs,
+            life: 0.40, size: 0.22, kind: 1, drag: 3.2, g: 0,
+            col: [1.0, 0.94, 0.62], add: true,
+          });
+        }
+        // ② 内がわの ふくらみ（リングだけだと まんなかが すかすかに見える）
+        R.burst(P[0], P[1], P[2], [1.0, 1.0, 0.90], 10,
+                { speed: 2.0, up: 0.8, size: 0.30, life: 0.26, kind: 0, drag: 4.0, add: true });
+        // ③ 上へ抜ける光の筋（「上へ行くぞ」という向きを絵で出す）
+        R.burst(P[0], P[1], P[2], [1.0, 0.98, 0.80], 16,
+                { speed: 2.6, up: 3.4, size: 0.21, life: 0.62, kind: 3, drag: 1.4, add: true });
+        // ④ 足もとに散る火花
+        R.burst(P[0], P[1], P[2], [1.0, 0.82, 0.32], 14,
+                { speed: 4.2, up: 0.3, size: 0.15, life: 0.48, kind: 3, drag: 2.2, add: true });
         break;
       }
       case 'gameover': {
@@ -3102,7 +3188,7 @@ let diagMin = 999, diagMax = 0, diagLong = 0, diagVsync = 16.7, diagShowT = 0;
 // 🔬 F3 … 画面に重ねている**字と絵（DOM）をぜんぶ消す**。
 //   これで直るなら、犯人は3Dの絵ではなく「重ねかた（合成）」のほう。
 let DOMOFF = false;
-const DIAG_OVERLAYS = ['hud', 'strip', 'nav', 'skylab', 'voyline', 'ghost', 'flags', 'topbar', 'items', 'unitup'];
+const DIAG_OVERLAYS = ['hud', 'strip', 'nav', 'skylab', 'voyline', 'ghost', 'flags', 'topbar', 'items', 'unitup', 'just'];
 function setDomOff(v) {
   DOMOFF = v;
   for (const id of DIAG_OVERLAYS) {
@@ -3227,6 +3313,7 @@ function loop(now) {
     lookX: 0, lookY: intro ? 0.75 : (p.vy > 0 ? 0.45 : -0.35),
   });
   hurtFlash = Math.max(0, hurtFlash - dt * 3.2);
+  justFlash = Math.max(0, justFlash - dt * 3.0);   // 0.33秒で消える（1回きり・点滅させない）
 
   R.resize();
   // 👀 指を止めているあいだ、カメラが少し上を向く（先が見える）
@@ -3320,7 +3407,8 @@ function loop(now) {
     const m = M4.mul(cModel, back);
     for (let i = 0; i < 16; i++) cModel[i] = m[i];
   }
-  R.drawChicchi(chicchiSkin, rig, faceTex, cModel, hurtFlash * 0.6);
+  R.drawChicchi(chicchiSkin, rig, faceTex, cModel,
+                Math.max(hurtFlash * 0.6, justFlash * 0.85));
   drawBuddy(cModel);          // 🐦 2匹目（説明はしない）
 
   // 🪖 宇宙服のヘルメット。宇宙ステーションでつける。
@@ -3567,6 +3655,26 @@ window.__cj = {
   //     縦の位置（top）を、絵といっしょに数字でも見る。
   setFlags(rows) { setFlagData(rows); },
   flagY(p) { return cjFlagY(p); },
+  // 👆 タップ・⚡逆フリックの実測用（tools/ui.py）
+  flickUsed() { return flickUsed; },
+  setFlick(v) { flickUsed = !!v; },
+  dragging() { return dragging; },
+  // ✨ ジャストの合図を、実際のイベントと同じ道すじで出す
+  // ★handleEvents は行列を空にしない（空にするのは core.step の頭）。
+  //   ここで消しておかないと、次のコマでもう一度 鳴る。
+  fireJust(n) {
+    core.events.push({ type: 'just', n: n || 1 });
+    handleEvents();
+    core.events.length = 0;
+  },
+  justFlash() { return justFlash; },
+  partCount() { return R.parts.filter(p => p.life > 0).length; },
+  // 🌀 バネの宙返り：いまの上向きの速さから、回る秒数と滞空時間を出す
+  springFlipInfo(vy) {
+    const v = vy || CJ_SPRING_V;
+    const airT = 2 * Math.max(v, 1) / CJ_GRAVITY;
+    return { vy: v, airT, dur: clamp(airT * 0.60, 0.30, 1.25) };
+  },
   flagInfo() {
     return flags.map(f => ({
       name: f.name, p: f.p, mine: f.mine, passed: f.passed,

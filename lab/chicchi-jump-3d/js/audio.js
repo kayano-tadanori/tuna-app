@@ -145,11 +145,19 @@ class CJAudio {
         this.tone(784, 0.26, { type: 'sine', gain: 0.16, delay: 0.08 });
         this.tone(1046, 0.34, { type: 'sine', gain: 0.12, delay: 0.16 });
         break;
-      case 'just':
-        // 決まった感じの、短くて気持ちのいい合いの手
-        this.tone(1320, 0.07, { type: 'triangle', gain: 0.17 });
-        this.tone(1980, 0.12, { type: 'sine', gain: 0.13, delay: 0.04 });
+      case 'just': {
+        // 決まった感じの、短くて気持ちのいい合いの手。
+        // ★つづけて決めるほど 音を上げる（arg＝何回めか）。
+        //   同じ音を繰り返すより、上がっていくほうが「のってきた」が伝わる。
+        //   上げすぎると耳に痛いので 5回めで頭打ち。
+        const st = Math.min(Math.max((arg || 1) - 1, 0), 4);
+        const k = Math.pow(1.0595, st * 2);        // 全音ずつ上げる
+        this.tone(1320 * k, 0.07, { type: 'triangle', gain: 0.17 });
+        this.tone(1980 * k, 0.12, { type: 'sine', gain: 0.13, delay: 0.04 });
+        // 決まった手ごたえを足す（下から すくい上げる短い音）
+        this.tone(660 * k, 0.10, { type: 'square', gain: 0.05 });
         break;
+      }
       case 'unit':
         // 単位が1段あがった。上へ抜ける感じの和音。
         [0, 7, 12, 16].forEach((s, i) =>

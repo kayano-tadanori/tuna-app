@@ -641,3 +641,41 @@ html, body {
 .flag.me > span { color: #e8f1ff; }
 .flag.passed { border-top-style: solid; border-top-color: rgba(255, 206, 84, .85); }
 .flag.passed > span { color: #ffd873; }
+
+/* ============================================================
+   ✨ ジャストジャンプが決まった合図（2026-08-22・本人の指示）
+   ★決まったのが ひと目で分かるように、まんなかに大きく出す。
+     ただし **0.62秒で消える**。次の足場を読む目のじゃまをしない。
+   ★点滅させない。1回きりで消える（子ども向け「明滅は2Hz以下」）。
+   ============================================================ */
+#just {
+  position: fixed; left: var(--pad-x); right: var(--pad-x); top: 30%;
+  z-index: 9; pointer-events: none; opacity: 0;
+  display: flex; align-items: baseline; justify-content: center; gap: 8px;
+  will-change: transform, opacity;
+}
+#just.show { animation: justIn .62s cubic-bezier(.18, 1.5, .4, 1) forwards; }
+@keyframes justIn {
+  0%   { transform: scale(.55); opacity: 0 }
+  20%  { transform: scale(1.16); opacity: 1 }
+  42%  { transform: scale(1.00); opacity: 1 }
+  100% { transform: scale(1.06); opacity: 0 }
+}
+#just b {
+  font-size: clamp(26px, 8.4vw, 46px); font-weight: 900; letter-spacing: .02em;
+  background: linear-gradient(180deg, #fff 16%, #ffe27a 52%, #ff9d20 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(120, 60, 0, .5))
+          drop-shadow(0 0 26px rgba(255, 200, 90, .9));
+}
+#just i {
+  font-style: normal; font-size: clamp(22px, 7vw, 40px); font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #fff 16%, #b6f0ff 52%, #2ea8ff 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 22px rgba(110, 210, 255, .95));
+}
+#just i:empty { display: none; }
+/* 3回めから いちだんと大きく（のってきた、が見た目に出る） */
+#just.hot b { font-size: clamp(30px, 9.8vw, 54px); }
+#just.hot i { font-size: clamp(26px, 8.4vw, 48px); }
