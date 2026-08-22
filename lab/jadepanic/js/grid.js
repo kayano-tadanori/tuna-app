@@ -97,30 +97,46 @@ const Grid = {
   },
 
   // 描画（横線と縦線）。ズレの大きいところほど明るく光る
-  draw(baseCol, hotCol, pulse, calm) {
+  // fw/fh = かべの内側の半分の大きさ。ここから外はだんだん消す＝「盤外」がはっきりする
+  draw(baseCol, hotCol, pulse, calm, fw, fh) {
     const C = this.cols, Rw = this.rows;
     const ox = this.ox, oy = this.oy;
-    const w = this.sp * 0.048;
-    const g0 = 0.26 + pulse * 0.14;
+    const w = this.sp * 0.030;
+    const g0 = 0.155 + pulse * 0.075;
     const px = this.px, py = this.py;
     for (let i = 0; i < C * Rw; i++) {
       px[i] = this.restX(i) + ox[i];
       py[i] = this.restY(i) + oy[i];
     }
     const col = [0, 0, 0];
+    const FW = fw || 1e9, FH = fh || 1e9;
+    const fade = (x, y) => {
+      const m = Math.max(Math.abs(x) / FW, Math.abs(y) / FH);
+      return m <= 1 ? 1 : Math.max(0.0, 1 - (m - 1) * 3.4);
+    };
+    const fd = this.fd || (this.fd = new Float32Array(C * Rw));
+    for (let i = 0; i < C * Rw; i++) fd[i] = fade(px[i], py[i]);
     for (let r = 0; r < Rw; r++) {
       for (let c = 0; c < C; c++) {
         const i = r * C + c;
-        const disp = Math.min(1, (Math.abs(ox[i]) + Math.abs(oy[i])) / (this.sp * 1.1));
+        const disp = Math.min(1, (Math.abs(ox[i]) + Math.abs(oy[i])) / (this.sp * 0.78));
         const t = disp * disp;
         col[0] = baseCol[0] + (hotCol[0] - baseCol[0]) * t;
         col[1] = baseCol[1] + (hotCol[1] - baseCol[1]) * t;
         col[2] = baseCol[2] + (hotCol[2] - baseCol[2]) * t;
         // ゆがみで少しだけ明るくする。ここを強くすると 画面が真っ白になって
         // 主役（ジェイドとバグ）が 見えなくなる（2026-08-19 実測で確認）
-        const glow = g0 + t * (calm ? 0.32 : 0.52);
-        if (c < C - 1) R.line(px[i], py[i], px[i+1], py[i+1], col, w + t * w * 0.9, glow);
-        if (r < Rw - 1) R.line(px[i], py[i], px[i+C], py[i+C], col, w + t * w * 0.9, glow);
+        // 引きちぎられた所ほど明るく＝本家は「歪みを光で見せる」。
+        // ただし地の明るさは上げない（上げると 背景が主役を食う）
+        const glow = g0 + t * (calm ? 0.34 : 0.58);
+        if (c < C - 1) {
+          const f = (fd[i] + fd[i+1]) * 0.5;
+          if (f > 0.01) R.line(px[i], py[i], px[i+1], py[i+1], col, w + t * w * 0.9, glow * f);
+        }
+        if (r < Rw - 1) {
+          const f = (fd[i] + fd[i+C]) * 0.5;
+          if (f > 0.01) R.line(px[i], py[i], px[i+C], py[i+C], col, w + t * w * 0.9, glow * f);
+        }
       }
     }
   },

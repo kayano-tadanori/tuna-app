@@ -247,9 +247,13 @@ const Input = {
     }
 
     this.mx = mx; this.my = my;
+    this.autoAim = Cfg.control === 'auto';
+    // かんたん（自動ねらい）のときは、マウスやスティックの向きを入れない。
+    //   PCでは マウスが動いたとたん ax/ay が入って、自動ねらいの分岐に
+    //   一度も入らなくなっていた（＝「自動照準が効かない」の正体）
+    if (this.autoAim) { ax = 0; ay = 0; }
     this.ax = ax; this.ay = ay;
     this.fire = fire;
-    this.autoAim = Cfg.control === 'auto';
     return this;
   },
 };
@@ -264,6 +268,8 @@ const Game = {
   camY: 26,                       // 上のHUDを避けるため 少しだけ上を広く見せる
   cam: { x: 0, y: 0, w: 1600, h: 900 },
   shake: 0, shakeX: 0, shakeY: 0,
+  trail: [],            // 自機のあしあと（{x,y}）
+  rings: [],            // 広がる衝撃波の輪
   zoom: 1, zoomV: 0,
   flash: 0, flashCol: [1, 1, 1],
   ca: 0, hitstop: 0,
@@ -471,6 +477,7 @@ const Game = {
     this.state = 'play';
     this.dispScore = 0;
     this.shake = 0; this.flash = 0; this.ca = 0; this.hitstop = 0;
+    this.rings.length = 0; this.trail.length = 0;
     this.zoom = 1.10; this.zoomV = 0;
     Input.bombWanted = false;
     document.body.className = 'playing' + (Cfg.mode === 'timeattack' ? ' ta' : '') + (Cfg.control === 'auto' ? ' auto-aim' : '');
@@ -683,7 +690,11 @@ const Game = {
           Part.ring(e.x, e.y, big ? 34 : 18, e.col, big ? 1150 : 780, big ? 4.2 : 3.4, big ? 0.7 : 0.42, 2.6);
           Part.ring(e.x, e.y, big ? 20 : 10, BIT_COL, big ? 780 : 520, 2.8, big ? 0.45 : 0.28, 2.0);
           Part.burst(e.x, e.y, big ? 26 : 11, WHITE, big ? 800 : 480, 3.2, big ? 0.4 : 0.24, 2.8);
+          // 撃破の瞬間だけ、小さくて とても熱い芯（「倒した手ごたえ」はこれが出す）
+          Part.burst(e.x, e.y, big ? 7 : 4, WHITE, big ? 95 : 60,
+                     big ? 3.0 : 2.2, big ? 0.085 : 0.06, 3.0, 5.0);
           Grid.impulse(e.x, e.y, big ? 400 : 230, big ? 720 : 340);
+          if (big) this.addRing(e.x, e.y, e.r * 0.6, e.r * 4.6, 0.34, e.col, 2.4, 3.0);
           this.addShake(big ? 0.42 : 0.10);
           this.flashUp((big ? 0.20 : 0.06) * fx, e.col);
           R.addShock(e.x, e.y, (big ? 0.9 : 0.32) * fx, big ? 0.5 : 0.32);
@@ -732,6 +743,11 @@ const Game = {
           }
           break;
         }
+        case 'camp': {
+          this.toast('すみっこは あぶない！');
+          Snd.sfx('warn');
+          break;
+        }
         case 'bombgather': {
           if (e.n >= 5) this.toast(`ビット ${e.n}こ 回収`);
           break;
@@ -742,7 +758,10 @@ const Game = {
           Grid.impulse(e.x, e.y, 1100, 1050);
           R.addShock(e.x, e.y, 1.6 * fx, 0.75);
           this.addShake(1.0);
-          this.flashUp(0.42 * fx, [1, 0.92, 0.6]);
+          // 一度ほぼ真っ白に飛ばして、すぐ戻す（本家のボムはこれで「効いた」と分かる）
+          this.flashUp(0.90 * fx, [1, 0.97, 0.86]);
+          this.addRing(e.x, e.y, 40, Math.max(this.view.w, this.view.h) * 0.78, 0.60, [1, 1, 1], 3.2, 4.4);
+          this.addRing(e.x, e.y, 20, this.view.w * 0.46, 0.44, JADE_COL.body, 5.0, 3.0);
           this.hitstop = Math.max(this.hitstop, 0.075);
           this.zoomV -= 0.22 * fx;
           Snd.sfx('bomb');
@@ -753,6 +772,7 @@ const Game = {
           Part.burst(e.x, e.y, 60, JADE_COL.body, 640, 4, 0.9, 2.2);
           Part.ring(e.x, e.y, 34, JADE_COL.head, 480, 3.4, 0.8, 2.0);
           Grid.impulse(e.x, e.y, 820, 850);
+          this.addRing(e.x, e.y, 30, 620, 0.5, [1, 0.35, 0.35], 3.0, 3.4);
           R.addShock(e.x, e.y, 1.3 * fx, 0.65);
           this.addShake(1.0);
           this.flashUp(0.5 * fx, [1, 0.5, 0.5]);
@@ -802,6 +822,12 @@ const Game = {
       }
     }
     evs.length = 0;
+  },
+
+  // 広がる光の輪。「今ここで何かが起きた」を1つの形で伝える
+  addRing(x, y, r0, r1, life, col, w, glow) {
+    if (this.rings.length > 10) this.rings.shift();
+    this.rings.push({ x, y, r0, r1, t: 0, life, col, w, glow });
   },
 
   addShake(v) {
@@ -875,6 +901,25 @@ const Game = {
     const vdt = (this.state === 'play' || this.state === 'ending') ? simDt : dt * 0.4;
     Part.update(vdt);
 
+    // 広がる輪
+    for (let i = this.rings.length - 1; i >= 0; i--) {
+      this.rings[i].t += vdt;
+      if (this.rings[i].t >= this.rings[i].life) this.rings.splice(i, 1);
+    }
+    Part.boundW = this.field.w / 2 + 40;
+    Part.boundH = this.field.h / 2 + 40;
+
+    // 自機のあしあとを ためる（20点＝約1/3秒ぶん）
+    if (G.p && G.p.alive) {
+      const n = this.trail.length;
+      // 前の点から離れすぎていたら 引き直す（復活のワープで画面を横切る線が出るのを防ぐ）
+      if (n >= 2 && Math.hypot(G.p.x - this.trail[n-2], G.p.y - this.trail[n-1]) > 90) this.trail.length = 0;
+      this.trail.push(G.p.x, G.p.y);
+      while (this.trail.length > 40) this.trail.splice(0, 2);
+    } else if (this.trail.length) {
+      this.trail.length = 0;
+    }
+
     // バグホールは グリッドも吸う
     for (const e of G.enemies) {
       if (e.type === 'hole' && e.age > e.born) Grid.attract(e.x, e.y, 560 + e.grow * 14, 1400 + e.grow * 70, vdt);
@@ -914,7 +959,7 @@ const Game = {
     this.zoom += this.zoomV * dt * 6;
     this.zoom = clamp(this.zoom, 0.94, 1.18);
 
-    this.flash = Math.max(0, this.flash - dt * 2.6);
+    this.flash = Math.max(0, this.flash - dt * (2.2 + this.flash * 7.5));
     const dangerCa = G.danger() * 0.5;
     this.ca = lerp(this.ca, (this.shake * 0.9 + dangerCa * 0.5) * (Cfg.calm ? 0.25 : 1), 1 - Math.exp(-10 * dt));
 
@@ -938,20 +983,83 @@ const Game = {
     const beat = Snd.beatPulse();
     const danger = G.danger();
 
-    // --- グリッド ---
-    const gBase = [0.07, 0.22, 0.52];
-    const gHot = [0.30, 0.80, 1.00];
-    Grid.draw(gBase, gHot, beat, Cfg.calm);
+    // --- グリッド（背景。芯を持たせない＝ここが白く焼けると 主役が消える）---
+    const gBase = [0.05, 0.17, 0.46];
+    const gHot = [0.26, 0.76, 1.00];
+    R.glowMul = 1.0; R.coreMul = 0.06;
+    Grid.draw(gBase, gHot, beat, Cfg.calm, this.field.w / 2 + 30, this.field.h / 2 + 30);
 
-    // --- フィールドのふち ---
+    // --- 盤の中を ゆっくり流れる データのかけら ---
+    //     敵がいない時間帯に画面が「死んだ面」になるのを防ぐ層。
+    //     主役より うんと暗くして、視線を奪わないこと
+    {
+      const fw = this.field.w / 2, fh = this.field.h / 2;
+      const dim = [0.20, 0.48, 0.92];
+      R.glowMul = 1.0; R.coreMul = 0.0;
+      for (let i = 0; i < 22; i++) {
+        const sx = ((i * 137.508) % 100) / 100;
+        const sy = ((i * 71.317) % 100) / 100;
+        const speed = 18 + (i % 5) * 11;
+        const dx = ((sx * fw * 2 + t * speed) % (fw * 2)) - fw;
+        const dy = (sy * 2 - 1) * fh * 0.96;
+        const ln = 9 + (i % 4) * 8;
+        const fade = 0.16 + 0.12 * Math.sin(t * 1.1 + i * 1.7);
+        R.line(dx, dy, dx + ln, dy, dim, 1.0, fade);
+      }
+    }
+
+    // --- フィールドのふち（細い線＋四隅だけ強く。太い白枠は主役より目立ってしまう）---
     const hw = this.field.w / 2, hh = this.field.h / 2;
-    const bc = [0.40, 0.80, 1.0];
-    const bg = 1.7 + beat * 0.8 + danger * 1.5;
-    const bw = 4.2;
+    // すみっこに居すわると かべが赤く焼ける＝「押し出されている」理由が目で分かる
+    const cpush = (G.cornerPush || 0);
+    const bc = [0.24 + cpush * 0.85, 0.66 - cpush * 0.52, 1.0 - cpush * 0.78];
+    const bg = 1.05 + beat * 0.4 + danger * 1.1 + cpush * 1.9;
+    const bw = 2.6;
+    R.glowMul = 1.0; R.coreMul = 0.34;
     R.line(-hw, -hh, hw, -hh, bc, bw, bg);
     R.line(-hw, hh, hw, hh, bc, bw, bg);
     R.line(-hw, -hh, -hw, hh, bc, bw, bg);
     R.line(hw, -hh, hw, hh, bc, bw, bg);
+    // 内側にもう1本、うっすら（かべに厚みを出す）
+    {
+      const o = 4.5, ig = bg * 0.16;
+      R.coreMul = 0.03;
+      R.line(-hw + o, -hh + o, hw - o, -hh + o, bc, 7.0, ig);
+      R.line(-hw + o, hh - o, hw - o, hh - o, bc, 7.0, ig);
+      R.line(-hw + o, -hh + o, -hw + o, hh - o, bc, 7.0, ig);
+      R.line(hw - o, -hh + o, hw - o, hh - o, bc, 7.0, ig);
+    }
+    // 四隅のブラケット（ここが「かべ」だと ひと目で分かる）
+    {
+      const L = Math.min(hw, hh) * 0.16;
+      const cg = 1.5 + beat * 0.6 + danger * 1.4;
+      R.coreMul = 0.55;
+      for (let sx = -1; sx <= 1; sx += 2) {
+        for (let sy = -1; sy <= 1; sy += 2) {
+          R.line(sx * hw, sy * hh, sx * (hw - L), sy * hh, bc, 3.0, cg);
+          R.line(sx * hw, sy * hh, sx * hw, sy * (hh - L), bc, 3.0, cg);
+        }
+      }
+    }
+
+    // 押し出されている向きを 内側へ流れる筋で見せる
+    if (cpush > 0.02 && this.state === 'play') {
+      const px = G.p.x, py = G.p.y;
+      const nl = Math.hypot(px, py) || 1;
+      const nx = -px / nl, ny = -py / nl;
+      R.coreMul = 0.2;
+      for (let i = 0; i < 7; i++) {
+        const sp = (i / 7 + (t * 0.9 % 1)) % 1;
+        const off = (i - 3) * 26;
+        const bx = px - ny * off, by = py + nx * off;
+        const s0 = 34 + sp * 96;
+        R.line(bx + nx * s0, by + ny * s0, bx + nx * (s0 + 30), by + ny * (s0 + 30),
+               [1, 0.42, 0.28], 2.2, 2.4 * cpush * (1 - sp));
+      }
+    }
+
+    // ここから先は 主役。芯まで白く焼けるほど熱くする
+    R.glowMul = 1.62; R.coreMul = 1.0;
 
     if (this.state === 'title') {
       this.renderTitleScene(t);
@@ -964,10 +1072,24 @@ const Game = {
       for (const e of G.enemies) drawEnemy(e, t);
       // --- 弾 ---
       for (const b of G.bullets) drawBullet(b);
+      // --- 広がる輪 ---
+      for (const g of this.rings) {
+        const k = g.t / g.life;
+        const rr = g.r0 + (g.r1 - g.r0) * easeOut(k);
+        const a2 = (1 - k) * (1 - k);
+        R.circle(g.x, g.y, rr, 56, g.col, g.w * (0.30 + 0.70 * (1 - k)), g.glow * a2);
+      }
       // --- 粒子 ---
       Part.draw();
       // --- ジェイド ---
       if (G.p.alive) {
+        // あしあと（うしろほど細く・暗く）。これがあるだけで 混戦でも自分を見失わない
+        const tr = this.trail, tn = tr.length >> 1;
+        for (let i = 1; i < tn; i++) {
+          const f = i / tn;
+          R.line(tr[(i-1)*2], tr[(i-1)*2+1], tr[i*2], tr[i*2+1],
+                 JADE_COL.body, 0.9 + f * 2.6, f * f * 1.25);
+        }
         const blink = G.invul > 0 && Math.floor(t * 14) % 2 === 0;
         drawJade(G.p.x, G.p.y, G.p.face, G.p.flap, G.p.thrust, blink, 0.85, 1);
         if (G.invul > 0) {
@@ -983,12 +1105,15 @@ const Game = {
       }
     }
 
+    R.glowMul = 1.0; R.coreMul = 1.0;
+
     R.endFrame({
       time: t,
       danger: danger * (Cfg.calm ? 0.5 : 1),
       beat,
-      threshold: 0.88,
-      bloom: (Cfg.calm ? 0.62 : 0.95) + beat * 0.10,
+      threshold: 0.86,
+      knee: 0.50,
+      bloom: (Cfg.calm ? 0.72 : 1.08) + beat * 0.10,
       ca: this.ca,
       flash: this.flash,
       flashCol: this.flashCol,
@@ -1001,6 +1126,33 @@ const Game = {
   // タイトル画面でも ジェイドが飛んでいる
   renderTitleScene(t) {
     const V = this.field;
+
+    // --- 奥の層：ゆっくり流れる遠くのかけらと、遠巻きに漂うバグの影 ---
+    //     ここが無いと 下半分が空いて「作りかけの画面」に見える
+    {
+      const keep = R.coreMul, kg = R.glowMul;
+      R.coreMul = 0.0; R.glowMul = 1.0;
+      const dim = [0.16, 0.42, 0.78];
+      for (let i = 0; i < 26; i++) {
+        const sx = ((i * 137.5) % 100) / 100 - 0.5;
+        const sy = ((i * 71.3) % 100) / 100 - 0.5;
+        const dx = ((sx * V.w * 1.25) + t * (10 + (i % 5) * 6)) % (V.w * 1.25) - V.w * 0.62;
+        const dy = sy * V.h * 1.15;
+        const ln = 10 + (i % 4) * 7;
+        R.line(dx, dy, dx + ln, dy, dim, 1.0, 0.30 + 0.18 * Math.sin(t * 1.3 + i));
+      }
+      // 遠くを漂うバグの影（色は出さない＝主役を食わない）
+      const shade = [0.30, 0.30, 0.62];
+      for (let i = 0; i < 5; i++) {
+        const a = t * (0.10 + i * 0.035) + i * 1.9;
+        const rx = V.w * (0.30 + i * 0.055), ry = V.h * (0.30 + i * 0.04);
+        const ex = Math.cos(a) * rx, ey = Math.sin(a * 1.3) * ry;
+        const rr = 13 + i * 2.5;
+        R.poly([rr, 0, 0, rr, -rr, 0, 0, -rr], ex, ey, a * 1.7, 1, shade, 1.5, 0.60, true);
+      }
+      R.coreMul = keep; R.glowMul = kg;
+    }
+
     const rx = V.w * 0.32, ry = V.h * 0.30;
     const a = t * 0.45;
     const x = Math.cos(a) * rx, y = Math.sin(a * 1.6) * ry;

@@ -9,22 +9,114 @@
 'use strict';
 
 const A_MINOR = [0, 2, 3, 5, 7, 8, 10];         // ナチュラルマイナー
-const CHORDS = [                                 // 2小節ずつ Am - F - C - G
-  { root: 57, tri: [0, 3, 7] },   // Am (A3)
-  { root: 53, tri: [0, 4, 7] },   // F
-  { root: 48, tri: [0, 4, 7] },   // C
-  { root: 55, tri: [0, 4, 7] },   // G
+
+// ------------------------------------------------------------
+// 曲の作り（2026-08-22 に作り直し）
+//   前は 8小節＝13.7秒で全部一周していた（実測）。それが「短くて単調」の正体。
+//   → 8小節×4セクション＝32小節（約55秒）に伸ばし、
+//     セクションごとに コード進行・リード・アルペジオ・ドラムを 別物にする。
+//     さらに 8小節ごとに フィル、セクションの変わり目に ブレイクを入れる。
+// ------------------------------------------------------------
+const BARS = 32;                 // 1周の小節数
+const LOOP_STEPS = BARS * 16;    // 16分音符の数 = 512
+
+const CH = {
+  Am: { root: 57, tri: [0, 3, 7] },
+  F:  { root: 53, tri: [0, 4, 7] },
+  C:  { root: 48, tri: [0, 4, 7] },
+  G:  { root: 55, tri: [0, 4, 7] },
+  Dm: { root: 50, tri: [0, 3, 7] },
+  E:  { root: 52, tri: [0, 4, 7] },
+  Em: { root: 52, tri: [0, 3, 7] },
+};
+// 2小節ずつ4つ＝8小節ぶん
+// 和音は 4セクションとも Am-F-C-G のまま。
+//   ここを変えると「中毒性」が消える（2026-08-22 本人の耳で判定）。
+//   長さと展開は 上物とドラムだけで作る。最後の1つだけ E にして 頭へ戻る力を出す。
+const PROG = [
+  [CH.Am, CH.F,  CH.C,  CH.G],   // A: 主題
+  [CH.Am, CH.F,  CH.C,  CH.G],   // B: 同じ土台のまま リードが上へ
+  [CH.Am, CH.F,  CH.C,  CH.G],   // C: 同じ土台のまま 別のメロディ
+  [CH.Am, CH.F,  CH.C,  CH.E],   // D: 最後だけ E（Amへ帰りたくなる）
 ];
 
-// リード（16分×32ステップ。null=休み。数字はAマイナー音階の度数）
-const LEAD = [
+// --- リード：2小節の動機を 4回くり返しながら 毎回変える（＝8小節で1フレーズ）---
+const MOTIF_A = [
   7, null, 6, null, 4, null, null, 3,
   4, null, 6, null, 7, null, null, null,
   9, null, 7, null, 6, null, null, 4,
   6, null, 4, null, 3, null, 2, null,
 ];
-// アルペジオ（コードトーンを刻む）
-const ARP = [0, 1, 2, 1, 0, 2, 1, 2];
+const MOTIF_B = [
+  11, null, null, 9, 10, null, 9, null,
+  7, null, 9, null, 11, null, null, null,
+  12, null, 11, null, 9, null, 7, null,
+  9, null, 7, null, 6, null, null, null,
+];
+const MOTIF_C = [
+  null, null, null, null, 4, null, 3, null,
+  2, null, null, null, null, null, null, null,
+  null, null, null, null, 5, null, 4, null,
+  3, null, null, null, 2, null, null, null,
+];
+
+// 動機を 8小節（128ステップ）に育てる。plan は くり返しごとの変化
+function grow(motif, plan) {
+  const out = [];
+  for (let r = 0; r < 4; r++) {
+    const p = plan[r] || {};
+    const base = out.length;
+    for (let i = 0; i < 32; i++) {
+      const v = motif[i];
+      out.push(v === null || v === undefined ? null : v + (p.shift || 0) + (p.oct || 0) * 7);
+    }
+    if (p.thin) for (let i = 0; i < 32; i++) if (i % 4 !== 0) out[base + i] = null;
+    if (p.tail) for (let i = 0; i < p.tail.length; i++) out[base + 32 - p.tail.length + i] = p.tail[i];
+  }
+  return out;
+}
+
+const LEAD = [
+  // A: 主題そのまま。最後だけ 落としてBへ渡す
+  grow(MOTIF_A, [{}, {}, {}, { tail: [4, null, 3, null, 2, null, 1, null] }]),
+  // B: 主題のオクターブ上（同じ形なので 耳は覚えたまま、景色だけ変わる）
+  grow(MOTIF_A, [{ oct: 1 }, { oct: 1 }, { oct: 1 }, { oct: 1, tail: [9, null, 7, null, 6, null, 4, null] }]),
+  // C: 別のメロディ。でも休まない（休ませると ノリが死ぬ）
+  grow(MOTIF_B, [{}, {}, {}, { tail: [7, null, 6, null, 4, null, 3, null] }]),
+  // D: 主題にもどる＝いちばん気持ちいい所
+  grow(MOTIF_A, [{}, {}, { oct: 1 }, { oct: 1, tail: [11, null, 9, null, 7, null, null, null] }]),
+];
+
+// --- アルペジオ：セクションごとに 形と向きを変える ---
+const ARPS = [
+  [0, 1, 2, 1, 0, 2, 1, 2],
+  [0, 2, 1, 2, 0, 1, 2, 1],
+  [2, 1, 0, 1, 2, 0, 1, 0],
+  [0, 1, 2, 3, 2, 1, 0, 1],
+];
+// アルペジオを鳴らすか（小節の後半で 間引いて息をつがせる）
+// 16分の刻みは 止めない。ここを間引くと ノリが死ぬ（本人の耳で判定）
+const ARP_GATE = [
+  [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1],
+  [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1],
+  [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1],
+  [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1],
+];
+
+// --- ベース：小節16ステップぶんの型（半音のずれ。null＝休み）---
+const BASSES = [
+  [0, null, 0, null, 0, null, 7, null, 0, null, 0, null, 12, null, 7, null],
+  [0, null, 0, 12, 0, null, 7, null, 0, null, 3, null, 5, null, 7, null],
+  [0, null, 0, null, 0, null, 7, null, 0, null, 12, null, 7, null, 5, null],
+  [0, 0, null, 0, 12, null, 0, null, 0, null, 7, 7, null, 5, null, 3],
+];
+// --- ハイハット：16分の強さ（0=鳴らさない）---
+const HATS = [
+  [0, .35, 0, .55, 0, .35, 0, .75, 0, .35, 0, .55, 0, .40, 0, .85],
+  [.25, .40, .30, .60, .25, .40, .30, .80, .25, .40, .30, .60, .25, .45, .35, .90],
+  [0, 0, 0, .45, 0, 0, 0, .65, 0, 0, 0, .45, 0, 0, .30, .70],
+  [.30, .45, .35, .65, .30, .50, .35, .85, .30, .45, .35, .65, .35, .55, .45, 1.0],
+];
 
 const Snd = {
   ctx: null, ready: false,
@@ -33,6 +125,7 @@ const Snd = {
   playing: false,
   step: 0, nextTime: 0, timer: null,
   bpm: 140, tempoScale: 1,
+  LOOP: LOOP_STEPS,
   level: 0, levelTarget: 0,
   lastKick: -10,
   _shootAt: 0, _warnAt: 0, _killCount: 0, _killFrame: -1,
@@ -357,73 +450,135 @@ const Snd = {
     const t = this.now();
     while (this.nextTime < t + 0.12) {
       this._playStep(this.step, this.nextTime);
-      this.step = (this.step + 1) % 128;                 // 8小節ループ
+      this.step = (this.step + 1) % LOOP_STEPS;          // 32小節ループ（約55秒）
       this.nextTime += spb;
     }
   },
 
   _playStep(s, t) {
     const L = this.layerGain;
-    const bar = Math.floor(s / 16);
-    const ch = CHORDS[Math.floor(bar / 2) % 4];
-    const beat = s % 4;
+    const bar = Math.floor(s / 16) % BARS;   // 0..31
+    const sec = Math.floor(bar / 8);         // 0..3  A / B / C / D
+    const bs = bar % 8;                      // セクション内の小節
     const inBar = s % 16;
+    const ch = PROG[sec][Math.floor(bs / 2) % 4];
+
+    const isFill = (bs === 7);                       // 8小節目＝フィル
+    const isHalfFill = (bs === 3);                   // 4小節目に 小さいフィル
+    // 一度ぬく所を3つに増やす（目印が1つだと 2周目には効かない）
+    const isBreak = (bar === 31);   // 抜くのは ループのつなぎ目だけ
+    const isSeam = (bar === 31);                     // ループのつなぎ目
+    const half = inBar >= 8;                         // 小節の後半
 
     // --- サブベース（コードの根音を伸ばす）---
-    if (inBar === 0) {
+    if (inBar === 0 && !isBreak) {
       this.tone(t, { type: 'sine', f: this._mf(ch.root - 24), a: 0.02, d: 0.10, v: 0.5,
                      s: 0.7, hold: 0.55, r: 0.25, dest: L.sub });
     }
 
-    // --- キック（4つ打ち）---
-    if (inBar % 4 === 0) {
-      this.lastKick = t;
-      this.tone(t, { type: 'sine', f: 150, f2: 44, sweep: 0.09, a: 0.001, d: 0.20, v: 0.9, dest: L.kick });
-      this.noise(t, { filter: 'lowpass', f: 900, len: 0.05, a: 0.001, d: 0.04, v: 0.25, dest: L.kick });
+    // --- キック ---
+    {
+      let hit = (inBar % 4 === 0);
+      if (sec === 3 && (inBar === 7 || inBar === 13)) hit = true;  // Dは裏キックを足す
+      if (isFill && half) hit = (inBar === 8 || inBar === 14); // フィルは間を空ける
+      if (isBreak && !half) hit = (inBar === 0);              // ブレイク中は頭だけ
+      if (isSeam && half) hit = false;                        // つなぎ目は 後半まるごと落とす
+      if (hit) {
+        this.lastKick = t;
+        this.tone(t, { type: 'sine', f: 150, f2: 44, sweep: 0.09, a: 0.001, d: 0.20, v: 0.9, dest: L.kick });
+        this.noise(t, { filter: 'lowpass', f: 900, len: 0.05, a: 0.001, d: 0.04, v: 0.25, dest: L.kick });
+      }
     }
 
-    // --- ハイハット ---
-    if (s % 2 === 1) {
-      this.noise(t, { filter: 'highpass', f: 7200, len: 0.045, a: 0.001,
-                      d: (s % 8 === 3 ? 0.07 : 0.032), v: (s % 4 === 3 ? 0.22 : 0.13), dest: L.hat });
+    // --- ハイハット（セクションごとに刻みが変わる）---
+    {
+      let v = HATS[sec][inBar];
+      if (isFill && half) v = Math.max(v, 0.55);   // フィルは細かく
+      if (isBreak && !half) v = 0;
+      if (isSeam && half) v = 0;
+      // 高いところの「空気」。BとDだけ 16分のシェイカーを薄く重ねる
+      if ((sec === 1 || sec === 3) && !isBreak && inBar % 2 === 0) {
+        this.noise(t, { filter: 'highpass', f: 9800, len: 0.03, a: 0.001, d: 0.022,
+                        v: 0.055 * (sec === 3 ? 1.3 : 1), dest: L.hat });
+      }
+      // セクションの頭でクラッシュ（ここで景色が変わったと分かる）
+      if (bs === 0 && inBar === 0) {
+        this.noise(t, { filter: 'highpass', f: 3800, len: 0.9, a: 0.002, d: 0.75,
+                        v: 0.26, dest: L.hat, rev: 0.45 });
+      }
+      if (v > 0) {
+        const open = (inBar === 15) || (isFill && inBar === 14);
+        this.noise(t, { filter: 'highpass', f: 7200, len: open ? 0.10 : 0.045, a: 0.001,
+                        d: open ? 0.085 : 0.032, v: 0.20 * v, dest: L.hat });
+      }
     }
 
-    // --- スネア（2・4拍）---
-    if (inBar === 4 || inBar === 12) {
-      this.noise(t, { filter: 'bandpass', f: 1900, q: 0.8, len: 0.16, a: 0.001, d: 0.14, v: 0.5,
-                      dest: L.snare, rev: 0.15 });
-      this.tone(t, { type: 'triangle', f: 220, f2: 150, sweep: 0.08, a: 0.001, d: 0.09, v: 0.25, dest: L.snare });
+    // --- スネア（2・4拍＋フィルのロール）---
+    {
+      let v = (inBar === 4 || inBar === 12) ? 0.5 : 0;
+      // ゴーストは小節ごとに位置をずらす（毎小節おなじだと 1小節ループに聞こえる）
+      const gpos = [11, 7, 14, 10][bs % 4];
+      if (inBar === gpos) v = Math.max(v, 0.13);
+      if (sec === 3 && inBar === 10) v = Math.max(v, 0.18);
+      if (isHalfFill && (inBar === 14 || inBar === 15)) v = Math.max(v, 0.26);
+      if (isFill && inBar >= 12) v = 0.30 + (inBar - 12) * 0.13;   // ロール（へこませない）
+      if (isSeam && half) v = (inBar >= 13) ? 0.28 + (inBar - 13) * 0.16 : 0;
+      if (v > 0) {
+        this.noise(t, { filter: 'bandpass', f: 1900, q: 0.8, len: 0.16, a: 0.001, d: 0.14, v,
+                        dest: L.snare, rev: 0.15 });
+        this.tone(t, { type: 'triangle', f: 220, f2: 150, sweep: 0.08, a: 0.001, d: 0.09,
+                       v: v * 0.5, dest: L.snare });
+      }
     }
 
-    // --- ベース（8分の裏でうねる）---
-    if (s % 2 === 0) {
-      const oct = (inBar === 6 || inBar === 14) ? 12 : 0;
-      this.tone(t, { type: 'sawtooth', f: this._mf(ch.root - 12 + oct), a: 0.004, d: 0.13, v: 0.35,
-                     filter: 'lowpass', cut: 420 + (this.level >= 5 ? 320 : 0), q: 6, cut2: 220,
-                     sweep: 0.13, dest: L.bass });
+    // --- ベース（セクションごとに 型が変わる）---
+    {
+      let iv = isBreak ? null : BASSES[sec][inBar];
+      // 後半4小節は 裏拍をひとつ足して 型が動く
+      if (iv === null && !isBreak && bs >= 4 && (inBar === 3 || inBar === 11)) iv = 0;
+      if (isFill && inBar === 15) iv = 12;
+      if (iv !== null && iv !== undefined) {
+        // 8小節かけて フィルタが開いていく（＝もり上がって聞こえる）
+        const open = 380 + bs * 55 + (this.level >= 5 ? 300 : 0);
+        this.tone(t, { type: 'sawtooth', f: this._mf(ch.root - 12 + iv), a: 0.004, d: 0.13, v: 0.35,
+                       filter: 'lowpass', cut: open, q: 6, cut2: 220,
+                       sweep: 0.13, dest: L.bass });
+      }
     }
 
-    // --- パッド（小節あたま。三和音を薄く）---
+    // --- パッド（AとCは毎小節、BとDは2小節に1回。Cだけ厚く）---
     if (inBar === 0) {
+      const wide = (sec === 2) ? 0.16 : 0.10;
       ch.tri.forEach((iv, i) => {
         this.tone(t + i * 0.01, { type: 'sawtooth', f: this._mf(ch.root + iv), detune: i * 6 - 6,
-                                  a: 0.25, d: 0.2, v: 0.10, s: 0.6, hold: 0.7, r: 0.6,
+                                  a: 0.25, d: 0.2, v: wide, s: 0.6, hold: 0.7, r: 0.6,
                                   filter: 'lowpass', cut: 1500, dest: L.pad, rev: 0.35 });
       });
+      if (sec === 2) {
+        this.tone(t + 0.03, { type: 'sawtooth', f: this._mf(ch.root + 12), detune: 9,
+                              a: 0.35, d: 0.3, v: 0.07, s: 0.6, hold: 0.7, r: 0.8,
+                              filter: 'lowpass', cut: 1200, dest: L.pad, rev: 0.45 });
+      }
     }
 
-    // --- アルペジオ（16分）---
-    {
-      const iv = ch.tri[ARP[s % 8] % ch.tri.length];
-      this.tone(t, { type: 'square', f: this._mf(ch.root + 12 + iv), a: 0.002, d: 0.08, v: 0.16,
-                     filter: 'lowpass', cut: 2600, q: 2, dest: L.arp, rev: 0.18 });
+    // --- アルペジオ（Cでは休ませて 空きを作る）---
+    if (!isBreak && ARP_GATE[sec][inBar]) {
+      const pat = ARPS[sec];
+      const dir = (bs % 2 === 0) ? 1 : -1;              // 小節ごとに 上行／下行
+      const k = dir > 0 ? (s % 8) : (7 - (s % 8));
+      const step = pat[k];
+      const iv = ch.tri[step % ch.tri.length] + (step >= 3 ? 12 : 0);
+      this.tone(t, { type: 'square', f: this._mf(ch.root + 12 + iv), a: 0.002, d: 0.08,
+                     v: 0.16 * (sec === 3 ? 1.15 : 1), filter: 'lowpass',
+                     cut: 2000 + bs * 180, q: 2, dest: L.arp, rev: 0.18 });
     }
 
-    // --- リード（32ステップのメロディ）---
+    // --- リード（セクションごとに 別のフレーズ）---
     {
-      const deg = LEAD[s % 32];
+      const line = LEAD[sec];
+      const deg = line[(bar % 8) * 16 + inBar];
       if (deg !== null && deg !== undefined) {
-        const semi = A_MINOR[deg % 7] + 12 * Math.floor(deg / 7);
+        const semi = A_MINOR[((deg % 7) + 7) % 7] + 12 * Math.floor(deg / 7);
         const f = this._mf(57 + semi);
         this.tone(t, { type: 'sawtooth', f, a: 0.006, d: 0.10, v: 0.22, s: 0.5, hold: 0.05, r: 0.14,
                        filter: 'lowpass', cut: 3200, cut2: 1600, sweep: 0.2, q: 3,

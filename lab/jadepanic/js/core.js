@@ -14,7 +14,7 @@ const BUG = {
              desc: 'まっすぐ おいかけてくる。はやい' },
   spinner: { name: 'スピナー',   col: '#ff5ce0', r: 24, pts: 20,  bits: 2, hp: 1,
              desc: 'かべで はねまわる。こっちを 見ていない' },
-  dodger:  { name: 'ドッジャー', col: '#c6ff3d', r: 23, pts: 30,  bits: 2, hp: 1,
+  dodger:  { name: 'ドッジャー', col: '#e8ff2e', r: 23, pts: 30,  bits: 2, hp: 1,
              desc: '弾を よけて 横に にげる' },
   worm:    { name: 'ワーム',     col: '#4f7bff', r: 21, pts: 120, bits: 8, hp: 4,
              desc: 'あたま だけが 弱点。しっぽは こわせない' },
@@ -26,7 +26,9 @@ const BUG = {
 for (const k in BUG) BUG[k].rgb = hex2rgb(BUG[k].col);
 
 const JADE_COL = { body: hex2rgb('#ffd23b'), head: hex2rgb('#ff9d2e'), wing: hex2rgb('#5cb03a') };
-const BIT_COL = hex2rgb('#63ffb0');
+// うすいミントは 水色の敵と、ライムは 黄緑のドッジャーと かぶった（どちらも実測で指摘）。
+// 純粋な緑にすると 黄緑（75度）とも 水色（190度）とも いちばん離れる（124度）。
+const BIT_COL = hex2rgb('#4dff5c');
 
 // ---------------- 難易度 ----------------
 // 湧きの勢い（rate）は 実測で決めた。ここが低いと画面がスカスカで、
@@ -103,6 +105,8 @@ const G = {
     this.killTotal = 0; this.bitTotal = 0; this.maxMult = 1;
     this.deadTimer = 0; this.invul = 2.0;
     this.unlocked = {};
+    this.cornerT = 0; this.flushCd = 0; this.spawnDebt = 0;
+    if (this.p) this.p.aimTgt = null;
     this.spawnAcc = 0;
     this.opening = false;
     this.slow = 1; this.slowTimer = 0;
@@ -156,6 +160,36 @@ const G = {
       return;
     }
 
+    // --- すみっこ待ちの検知 ---
+    //   かべぎわに居つづけると、湧きが自機のまわりに寄り（spawnGroup）、
+    //   さらに一定を超えたら「追い出しの群れ」が すぐ横に湧く。
+    {
+      const cx = Math.abs(this.p.x) / (this.W / 2);
+      const cy = Math.abs(this.p.y) / (this.H / 2);
+      const inCorner = (cx > 0.60 && cy > 0.52) || cx > 0.80 || cy > 0.76;
+      if (inCorner) this.cornerT = Math.min(16, (this.cornerT || 0) + sdt);
+      else this.cornerT = Math.max(0, (this.cornerT || 0) - sdt * 2.2);
+      this.flushCd = Math.max(0, (this.flushCd || 0) - sdt);
+      if (this.cornerT > 3.4 && this.flushCd <= 0 && this.enemies.length + this.spawns.length < this.D.maxEnemies) {
+        this.flushCd = 5.0;
+        if (this.cornerT < 4.4) this.ev('camp', {});
+        this.flushSpawn();
+      }
+      // かべが押し返す。すみっこは「そのうち居られなくなる場所」にする。
+      //   速度に足しても追従で消されるので 位置を直接ずらす。
+      //   3秒で効きはじめ、7秒で最大（毎秒200＝最高速の1/3）。
+      if (this.cornerT > 3.0) {
+        // 押し出す力は 自機の最高速(640)を こえる所まで上げる。
+        // 520では スティックを倒しっぱなしで張りつけてしまった（実測：滞在99%のまま）。
+        // 900にして はじめて「かべに押し出される」ようになる。
+        const k = Math.min(1, (this.cornerT - 3.0) / 3.5);
+        const nx = -this.p.x / (this.W / 2), ny = -this.p.y / (this.H / 2);
+        this.p.x += nx * 900 * k * k * sdt;
+        this.p.y += ny * 900 * k * k * sdt;
+      }
+      this.cornerPush = this.cornerT > 3.0 ? Math.min(1, (this.cornerT - 3.0) / 3.5) : 0;
+    }
+
     this.updatePlayer(sdt, input);
     this.updateBullets(sdt);
     this.updateEnemies(sdt);
@@ -207,12 +241,15 @@ const G = {
       p.aim += angDiff(Math.atan2(inp.ay, inp.ax), p.aim) * (1 - Math.exp(-24 * dt));
       aiming = true;
     } else if (inp.autoAim) {
-      const tgt = this.nearestEnemy(p.x, p.y, 1e9);
+      const tgt = this.pickAutoTarget();
       if (tgt) {
-        // すこし先を読んで撃つ
-        const lead = Math.hypot(tgt.x - p.x, tgt.y - p.y) / 1500;
+        // 弾が届くまでの時間ぶん 先を読む
+        const d = Math.hypot(tgt.x - p.x, tgt.y - p.y);
+        const lead = d / 1450;
         const a = Math.atan2(tgt.y + tgt.vy * lead - p.y, tgt.x + tgt.vx * lead - p.x);
-        p.aim += angDiff(a, p.aim) * (1 - Math.exp(-16 * dt));
+        // 近い相手ほど 速く向く（遠くの相手にゆっくり向いていると 手前で殺される）
+        const k = 26 + Math.max(0, 380 - d) * 0.05;
+        p.aim += angDiff(a, p.aim) * (1 - Math.exp(-k * dt));
         aiming = true;
       } else if (ml > 0.08) {
         p.aim += angDiff(p.face, p.aim) * (1 - Math.exp(-8 * dt));
@@ -233,17 +270,24 @@ const G = {
     const SPD = 1450;
     const nx = -Math.sin(ang), ny = Math.cos(ang);
     const cx = Math.cos(ang), cy = Math.sin(ang);
-    const spread = [-0.055, 0.0, 0.055];
-    const offs = [-7, 0, 7];
+    // 3発を きれいに横並びにすると「≡」の記号に見えてしまう（実測で3人に指摘された）。
+    //   ・角度を広げて はっきり開かせる
+    //   ・外側の2発は 少し後ろから出す（前後にずらす）
+    //   ・外側は 細く短く、まん中を主役にする
+    const spread = [-0.068, 0.0, 0.068];
+    const offs = [-6, 0, 6];
+    const back = [-11, 0, -11];
+    const kk = [0.68, 1.0, 0.68];
+    const spd = [0.94, 1.0, 0.94];
     for (let i = 0; i < 3; i++) {
       const a = ang + spread[i] + rnd(-0.012, 0.012);
-      const bx = p.x + cx * 16 + nx * offs[i];
-      const by = p.y + cy * 16 + ny * offs[i];
+      const bx = p.x + cx * (16 + back[i]) + nx * offs[i];
+      const by = p.y + cy * (16 + back[i]) + ny * offs[i];
       this.bullets.push({
         x: bx, y: by, px: bx, py: by,
-        vx: Math.cos(a) * SPD + p.vx * 0.25,
-        vy: Math.sin(a) * SPD + p.vy * 0.25,
-        life: 1.05, r: 8, ang: a,
+        vx: Math.cos(a) * SPD * spd[i] + p.vx * 0.25,
+        vy: Math.sin(a) * SPD * spd[i] + p.vy * 0.25,
+        life: 1.05, r: 8, ang: a, k: kk[i],
       });
     }
     this.ev('shoot', { x: p.x + cx * 18, y: p.y + cy * 18, a: ang });
@@ -341,35 +385,57 @@ const G = {
 
       switch (e.type) {
         case 'noise': {
-          // ときどき ふらっと向きを変える
+          // ゆっくり漂うだけ。こちらを見ていない＝「こわくない敵」だと 動きで分かる
           e.wob += dt;
-          if (e.wob > 1.4) {
+          if (e.wob > 1.15) {
             e.wob = rnd(-0.4, 0);
-            const a = Math.atan2(e.vy, e.vx) + rnd(-1.1, 1.1);
-            const s = Math.hypot(e.vx, e.vy);
-            e.vx = Math.cos(a) * s; e.vy = Math.sin(a) * s;
+            const a = Math.atan2(e.vy, e.vx) + rnd(-1.3, 1.3);
+            const sp0 = Math.hypot(e.vx, e.vy);
+            const want = 118 * spdK;
+            const sp1 = lerp(sp0, want, 0.5);
+            e.vx = Math.cos(a) * sp1; e.vy = Math.sin(a) * sp1;
           }
-          e.rot += e.spin * dt;
+          // かべぎわに たまらないよう ゆるく中央へ寄る
+          e.vx -= e.x * 0.045 * dt;
+          e.vy -= e.y * 0.045 * dt;
+          e.rot += e.spin * dt * 0.7;
+          e.bob = (e.bob || 0) + dt * 3.1;
           break;
         }
         case 'chaser': {
-          const acc = 900 * spdK;
+          // 脈を打って跳ねる。ためて → 一気に踏みこむ。
+          // 一定速度でにじり寄るより ずっと「追われている」と感じる（本家グラントの型）
+          e.pulse = (e.pulse || 0) + dt * 3.05;
+          const ph = e.pulse % 1;
+          const kick = ph < 0.22 ? (1 - ph / 0.22) : 0;   // 前半だけ 強く蹴る
+          const acc = (140 + 2600 * kick) * spdK;
           e.vx += dx / dist * acc * dt;
           e.vy += dy / dist * acc * dt;
-          const sp = Math.hypot(e.vx, e.vy), mx = 330 * spdK;
+          const drag = Math.exp(-2.3 * dt);
+          e.vx *= drag; e.vy *= drag;
+          const sp = Math.hypot(e.vx, e.vy), mx = 430 * spdK;
           if (sp > mx) { e.vx *= mx / sp; e.vy *= mx / sp; }
-          e.rot = Math.atan2(e.vy, e.vx);
+          e.squash = kick;                                 // 見た目でも 踏みこみが分かる
+          e.rot = Math.atan2(dy, dx);
           break;
         }
         case 'spinner': {
-          e.rot += e.spin * dt;
+          // 速さを落とさず かべで硬く跳ね続ける。こちらを一切見ない＝動く地形
+          const want = 300 * spdK;
+          let sp = Math.hypot(e.vx, e.vy);
+          if (sp < 1) { const a = rnd(0, TAU); e.vx = Math.cos(a) * want; e.vy = Math.sin(a) * want; sp = want; }
+          else { const k = want / sp; e.vx = lerp(e.vx, e.vx * k, 0.12); e.vy = lerp(e.vy, e.vy * k, 0.12); }
+          e.rot += e.spin * dt * 1.9;
           break;
         }
         case 'dodger': {
-          // ふだんは ゆっくり寄ってくる
+          // 正面から来ない。まわりを回りながら じりじり詰める＝先を読んで撃つ必要がある
           const acc = 250 * spdK;
-          e.vx += dx / dist * acc * dt;
-          e.vy += dy / dist * acc * dt;
+          const orbit = dist > 240 ? 1 : -0.35;            // 近すぎたら 離れる
+          const tx = -dy / dist, ty = dx / dist;           // 接線方向
+          const side = (e.spin >= 0) ? 1 : -1;
+          e.vx += (dx / dist * orbit + tx * side * 0.85) * acc * dt;
+          e.vy += (dy / dist * orbit + ty * side * 0.85) * acc * dt;
           // 弾が近いと 横っ飛び
           if (e.dash > 0) e.dash -= dt;
           else {
@@ -390,9 +456,10 @@ const G = {
           break;
         }
         case 'worm': {
-          e.wob += dt * 4.5;
-          const a = Math.atan2(dy, dx) + Math.sin(e.wob) * 0.75;
-          const s = 205 * spdK;
+          // 盤を横切るように 大きくうねって走る。頭が鞭のように振れる
+          e.wob += dt * 3.4;
+          const a = Math.atan2(dy, dx) + Math.sin(e.wob) * 1.15 + Math.sin(e.wob * 0.37) * 0.5;
+          const s = 232 * spdK;
           e.vx = lerp(e.vx, Math.cos(a) * s, 1 - Math.exp(-4 * dt));
           e.vy = lerp(e.vy, Math.sin(a) * s, 1 - Math.exp(-4 * dt));
           e.rot = Math.atan2(e.vy, e.vx);
@@ -400,6 +467,16 @@ const G = {
         }
         case 'hole': {
           e.rot += dt * (0.8 + e.grow * 0.25);
+          // 自機も引っぱる。これがあると すみっこに張りつけない
+          {
+            const pdx = e.x - p.x, pdy = e.y - p.y;
+            const pd = Math.hypot(pdx, pdy) || 1;
+            const reach = 470 + e.grow * 16;
+            if (pd < reach) {
+              const f = (1 - pd / reach) * (52 + e.grow * 5) * dt;
+              p.vx += pdx / pd * f; p.vy += pdy / pd * f;
+            }
+          }
           e.spit -= dt;
           // 育つほど 引力が強くなる
           e.r = BUG.hole.r + e.grow * 2.3;
@@ -414,9 +491,15 @@ const G = {
           break;
         }
         case 'split': {
-          const acc = (e.gen === 0 ? 190 : e.gen === 1 ? 260 : 330) * spdK;
-          e.vx += dx / dist * acc * dt;
-          e.vy += dy / dist * acc * dt;
+          // 短く突っこんでは 向きを変える。まっすぐ来ないので 読みにくい
+          e.dart = (e.dart || 0) - dt;
+          if (e.dart <= 0) {
+            e.dart = rnd(0.45, 0.95);
+            e.dartA = Math.atan2(dy, dx) + rnd(-0.95, 0.95);
+          }
+          const acc = (e.gen === 0 ? 190 : e.gen === 1 ? 260 : 330) * spdK * 1.35;
+          e.vx += Math.cos(e.dartA) * acc * dt;
+          e.vy += Math.sin(e.dartA) * acc * dt;
           const sp = Math.hypot(e.vx, e.vy), mx = (e.gen === 0 ? 160 : e.gen === 1 ? 230 : 300) * spdK;
           if (sp > mx) { e.vx *= mx / sp; e.vy *= mx / sp; }
           e.rot += dt * (1.5 + e.gen);
@@ -613,7 +696,14 @@ const G = {
       }
     }
 
-    this.spawnAcc += dt * rate;
+    // 追い出しで先に出したぶんを ここで返す（総量を増やさない）
+    if (this.spawnDebt > 0) {
+      const pay = Math.min(this.spawnDebt, dt * rate);
+      this.spawnDebt -= pay;
+      this.spawnAcc += dt * rate - pay;
+    } else {
+      this.spawnAcc += dt * rate;
+    }
     let guard = 0;
     while (this.spawnAcc >= 1 && guard++ < 5) {
       this.spawnAcc -= this.queueSpawn();
@@ -659,10 +749,26 @@ const G = {
     // ジェイドから離れたところに
     const hw = this.W / 2 - 70, hh = this.H / 2 - 70;
     let x = 0, y = 0, ok = false;
-    for (let i = 0; i < 14; i++) {
-      x = rnd(-hw, hw); y = rnd(-hh, hh);
-      const d = Math.hypot(x - this.p.x, y - this.p.y);
-      if (d > 260) { ok = true; break; }
+
+    // すみっこに居つづけているほど、湧きを自機のまわりに寄せる。
+    // かべぎわだと「開けている側」にぐるりと回りこまれるので、すみっこが安全でなくなる。
+    const camp = this.cornerT || 0;
+    const nearRatio = 0.40 + Math.min(0.55, camp * 0.16);
+    if (Math.random() < nearRatio) {
+      const minD = Math.max(230, 340 - camp * 20);
+      for (let i = 0; i < 14; i++) {
+        const a = rnd(0, TAU), d = rnd(minD, minD + 330);
+        x = clamp(this.p.x + Math.cos(a) * d, -hw, hw);
+        y = clamp(this.p.y + Math.sin(a) * d, -hh, hh);
+        if (Math.hypot(x - this.p.x, y - this.p.y) > 190) { ok = true; break; }
+      }
+    }
+    if (!ok) {
+      for (let i = 0; i < 14; i++) {
+        x = rnd(-hw, hw); y = rnd(-hh, hh);
+        const d = Math.hypot(x - this.p.x, y - this.p.y);
+        if (d > 260) { ok = true; break; }
+      }
     }
     if (!ok) {
       const a = rnd(0, TAU);
@@ -698,6 +804,32 @@ const G = {
                      (this.mode === 'timeattack' ? 0.5 : 0.7) + i * 0.035);
     }
     return n;
+  },
+
+  // すみっこに居すわった人を 外へ出すための湧き。
+  //   自機からかべの反対＝開けている方向を中心に、扇状に取り囲む。
+  //   予告リングは出すので 理不裁な即死にはならない。
+  flushSpawn() {
+    // ここで出すぶん、ふだんの湧きを先に食っておく＝総量は変えない
+    const hw = this.W / 2 - 28, hh = this.H / 2 - 28;
+    const types = ['chaser', 'spinner', 'chaser', 'dodger', 'noise']
+      .filter(t => this.unlocked[t] || t === 'noise');
+    const base = rnd(0, TAU);
+    const n = 7;
+    let placed = 0;
+    for (let i = 0; i < n; i++) {
+      const a = base + i / n * TAU + rnd(-0.12, 0.12);
+      const d = rnd(195, 300);
+      const x = clamp(this.p.x + Math.cos(a) * d, -hw, hw);
+      const y = clamp(this.p.y + Math.sin(a) * d, -hh, hh);
+      // 予告リングが0.75秒出るうえ、生まれた瞬間に重なっていたら外へ押し出すので
+      // この距離でも 理不尽な即死にはならない
+      if (Math.hypot(x - this.p.x, y - this.p.y) < 150) continue;
+      this.pushSpawn(x, y, types[placed % types.length], 0.75 + placed * 0.03);
+      placed++;
+    }
+    this.spawnAcc = Math.max(0, (this.spawnAcc || 0) - placed);
+    this.spawnDebt = (this.spawnDebt || 0) + placed;
   },
 
   pushSpawn(x, y, type, dur) {
@@ -913,6 +1045,34 @@ const G = {
   },
 
   // ---------------- 検索 ----------------
+  // 自動照準の相手えらび。
+  //   いちばん近い相手を毎フレーム選び直すと、狙いがコロコロ振れて ほとんど当たらない。
+  //   「近い」「いま向いている方に近い」「さっきと同じ相手」を点数にして選ぶ。
+  pickAutoTarget() {
+    const p = this.p;
+    let cur = null;
+    if (p.aimTgt) {
+      const i = this.enemies.indexOf(p.aimTgt);
+      if (i >= 0 && p.aimTgt.age >= p.aimTgt.born) cur = p.aimTgt;
+      else p.aimTgt = null;
+    }
+    let best = null, bs = -1e9;
+    for (const e of this.enemies) {
+      if (e.age < e.born) continue;
+      const dx = e.x - p.x, dy = e.y - p.y;
+      const d = Math.hypot(dx, dy) || 1;
+      if (d > 980) continue;
+      let sc = -d;
+      sc -= Math.abs(angDiff(Math.atan2(dy, dx), p.aim)) * 165;   // 大きく振り向かせない
+      if (e === cur) sc += 300;                                    // 決めた相手は 倒しきる
+      if (e.type === 'hole') sc -= 260;                            // 硬いので後まわし
+      if (e.type === 'worm') sc -= 90;
+      if (sc > bs) { bs = sc; best = e; }
+    }
+    p.aimTgt = best;
+    return best;
+  },
+
   nearestEnemy(x, y, maxD) {
     let best = null, bd = maxD * maxD;
     for (const e of this.enemies) {

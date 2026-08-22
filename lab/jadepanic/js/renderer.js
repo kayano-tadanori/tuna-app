@@ -17,6 +17,14 @@ const R = {
   quality: 1.0,          // 0.55〜1.0
   dprCap: 2.0,
   fbo: {},
+  mips: [],
+  MIPS: 6,
+  bloomRadius: 1.0,
+  // 描くグループごとに切りかえる「明るさの予算」
+  //   グリッドは暗く芯なし／主役は熱く芯あり。ここが本家GW2との いちばんの差だった
+  glowMul: 1.0,
+  coreMul: 1.0,
+  bloomGain: 0.26,
   progs: {},
   inst: null,
   cam: { x: 0, y: 0, w: 1600, h: 900 },
@@ -34,8 +42,8 @@ const R = {
 
     this.progs.line = makeProgram(gl, SH.lineVS, SH.lineFS, 'line');
     this.progs.bg = makeProgram(gl, SH.quadVS, SH.bgFS, 'bg');
-    this.progs.bright = makeProgram(gl, SH.quadVS, SH.brightFS, 'bright');
-    this.progs.blur = makeProgram(gl, SH.quadVS, SH.blurFS, 'blur');
+    this.progs.down = makeProgram(gl, SH.quadVS, SH.downFS, 'down');
+    this.progs.up = makeProgram(gl, SH.quadVS, SH.upFS, 'up');
     this.progs.comp = makeProgram(gl, SH.quadVS, SH.compFS, 'comp');
 
     // 画面いっぱいの三角形2枚
@@ -49,18 +57,19 @@ const R = {
     // x: 0..1 進行方向 / y: -1..1 横
     this.cornerBuf = makeBuffer(gl, new Float32Array([0,-1, 1,-1, 0,1, 1,1]));
 
-    // インスタンス: p0(2) p1(2) col(3) w(1) glow(1) = 9 floats
-    this.inst = new InstanceBuffer(gl, 9, 28000);
+    // インスタンス: p0(2) p1(2) col(3) w(1) glow(1) core(1) = 10 floats
+    this.inst = new InstanceBuffer(gl, 10, 28000);
     const a = this.progs.line.a;
     this.lineVAO = gl.createVertexArray();
     gl.bindVertexArray(this.lineVAO);
     attrib(gl, 0, this.cornerBuf, 2);
-    const S = 9 * 4;
+    const S = 10 * 4;
     attrib(gl, a.i_p0,   this.inst.buf, 2, 1, S, 0);
     attrib(gl, a.i_p1,   this.inst.buf, 2, 1, S, 8);
     attrib(gl, a.i_col,  this.inst.buf, 3, 1, S, 16);
     attrib(gl, a.i_w,    this.inst.buf, 1, 1, S, 28);
     attrib(gl, a.i_glow, this.inst.buf, 1, 1, S, 32);
+    attrib(gl, a.i_core, this.inst.buf, 1, 1, S, 36);
     gl.bindVertexArray(null);
 
     this.resize();
@@ -82,13 +91,18 @@ const R = {
     this.canvas.height = H;
 
     for (const k in this.fbo) disposeFBO(gl, this.fbo[k]);
+    for (const m of this.mips) disposeFBO(gl, m);
     this.fbo = {};
-    const h2 = (v) => Math.max(2, v >> 1), h4 = (v) => Math.max(2, v >> 2);
     this.fbo.scene = makeFBO(gl, W, H, { hdr: true });
-    this.fbo.b1a = makeFBO(gl, h2(W), h2(H), { hdr: true });
-    this.fbo.b1b = makeFBO(gl, h2(W), h2(H), { hdr: true });
-    this.fbo.b2a = makeFBO(gl, h4(W), h4(H), { hdr: true });
-    this.fbo.b2b = makeFBO(gl, h4(W), h4(H), { hdr: true });
+
+    // 光のにじみ用のミップ列（1/2 → 1/64）。段数は画面の小さいほうで決める
+    this.mips = [];
+    let mw = W, mh = H;
+    for (let i = 0; i < this.MIPS; i++) {
+      mw = Math.max(4, mw >> 1); mh = Math.max(4, mh >> 1);
+      this.mips.push(makeFBO(gl, mw, mh, { hdr: true }));
+      if (mw <= 8 || mh <= 8) break;
+    }
   },
 
   setQuality(q) {
@@ -114,7 +128,7 @@ const R = {
     const d = this.inst.data;
     d[i] = x0; d[i+1] = y0; d[i+2] = x1; d[i+3] = y1;
     d[i+4] = col[0]; d[i+5] = col[1]; d[i+6] = col[2];
-    d[i+7] = w; d[i+8] = glow;
+    d[i+7] = w; d[i+8] = glow * this.glowMul; d[i+9] = this.coreMul;
   },
 
   dot(x, y, col, w, glow) { this.line(x, y, x, y, col, w, glow); },
@@ -207,26 +221,42 @@ const R = {
     gl.disable(gl.BLEND);
     gl.bindVertexArray(this.quadVAO);
 
-    // ---- 明部抽出 ----
-    const brp = this.progs.bright;
-    gl.useProgram(brp.p);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, F.b1a.fb);
-    gl.viewport(0, 0, F.b1a.w, F.b1a.h);
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, F.scene.tex);
-    gl.uniform1i(brp.u.u_tex, 0);
-    gl.uniform1f(brp.u.u_thresh, post.threshold);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // ---- 光のにじみ：ミップを落としながら しきい値をかける ----
+    const dp = this.progs.down;
+    gl.useProgram(dp.p);
+    gl.uniform1f(dp.u.u_thresh, post.threshold);
+    gl.uniform1f(dp.u.u_knee, post.knee === undefined ? 0.55 : post.knee);
+    for (let i = 0; i < this.mips.length; i++) {
+      const src = i === 0 ? F.scene : this.mips[i - 1];
+      const dst = this.mips[i];
+      gl.bindFramebuffer(gl.FRAMEBUFFER, dst.fb);
+      gl.viewport(0, 0, dst.w, dst.h);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, src.tex);
+      gl.uniform1i(dp.u.u_tex, 0);
+      gl.uniform2f(dp.u.u_texel, 1 / src.w, 1 / src.h);
+      gl.uniform1f(dp.u.u_first, i === 0 ? 1 : 0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
 
-    // ---- ぼかし1段目 ----
-    const blp = this.progs.blur;
-    gl.useProgram(blp.p);
-    this._blur(F.b1a, F.b1b, 1 / F.b1a.w, 0);
-    this._blur(F.b1b, F.b1a, 0, 1 / F.b1a.h);
-    // ---- ぼかし2段目（1/4解像度でさらに広く）----
-    this._blur(F.b1a, F.b2a, 1 / F.b2a.w, 0);
-    this._blur(F.b2a, F.b2b, 0, 1 / F.b2a.h);
-    this._blur(F.b2b, F.b2a, 1.6 / F.b2a.w, 0);
+    // ---- 小さいほうから 足しながら戻す（広い光の裾ができる）----
+    const up = this.progs.up;
+    gl.useProgram(up.p);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.uniform1f(up.u.u_radius, this.bloomRadius);
+    for (let i = this.mips.length - 1; i > 0; i--) {
+      const src = this.mips[i], dst = this.mips[i - 1];
+      gl.bindFramebuffer(gl.FRAMEBUFFER, dst.fb);
+      gl.viewport(0, 0, dst.w, dst.h);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, src.tex);
+      gl.uniform1i(up.u.u_tex, 0);
+      gl.uniform2f(up.u.u_texel, 1 / src.w, 1 / src.h);
+      gl.uniform1f(up.u.u_scale, 1.0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    gl.disable(gl.BLEND);
 
     // ---- 合成 ----
     const cp = this.progs.comp;
@@ -234,14 +264,12 @@ const R = {
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.viewport(0, 0, W, H);
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, F.scene.tex);
-    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, F.b1a.tex);
-    gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, F.b2a.tex);
+    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, this.mips[0].tex);
     gl.uniform1i(cp.u.u_scene, 0);
-    gl.uniform1i(cp.u.u_bloom1, 1);
-    gl.uniform1i(cp.u.u_bloom2, 2);
+    gl.uniform1i(cp.u.u_bloomTex, 1);
     gl.uniform1f(cp.u.u_time, post.time);
     gl.uniform1f(cp.u.u_ca, post.ca);
-    gl.uniform1f(cp.u.u_bloom, post.bloom);
+    gl.uniform1f(cp.u.u_bloom, post.bloom * this.bloomGain);
     gl.uniform1f(cp.u.u_flash, post.flash);
     gl.uniform3f(cp.u.u_flashCol, post.flashCol[0], post.flashCol[1], post.flashCol[2]);
     gl.uniform1f(cp.u.u_vig, post.vig);
@@ -266,14 +294,4 @@ const R = {
     gl.bindVertexArray(null);
   },
 
-  _blur(src, dst, dx, dy) {
-    const gl = this.gl, blp = this.progs.blur;
-    gl.bindFramebuffer(gl.FRAMEBUFFER, dst.fb);
-    gl.viewport(0, 0, dst.w, dst.h);
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, src.tex);
-    gl.uniform1i(blp.u.u_tex, 0);
-    gl.uniform2f(blp.u.u_dir, dx, dy);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-  },
 };
