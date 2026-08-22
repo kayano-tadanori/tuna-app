@@ -30,6 +30,15 @@ const JADE_COL = { body: hex2rgb('#ffd23b'), head: hex2rgb('#ff9d2e'), wing: hex
 // 純粋な緑にすると 黄緑（75度）とも 水色（190度）とも いちばん離れる（124度）。
 const BIT_COL = hex2rgb('#4dff5c');
 
+// かんたん（自動ねらい）の効きぐあい。
+//   ねらいは「右スティックの負担をなくす」ためのもので、代わりに撃ってくれる機能ではない。
+//   強くしすぎると 遊ぶところが無くなる（2026-08-22 本人が遊んで指摘）。
+const AUTO_AIM = {
+  turn: 11,        // 振り向く速さ（1/11秒 ≒ 90ms かけて向く）
+  turnNear: 0.018, // 近い相手には すこしだけ速く
+  range: 620,      // これより遠い相手は 狙わない
+};
+
 // ---------------- 難易度 ----------------
 // 湧きの勢い（rate）は 実測で決めた。ここが低いと画面がスカスカで、
 // 上手い人がまったく死なない＝ハラハラしないゲームになる（2026-08-19 計測）
@@ -243,16 +252,20 @@ const G = {
     } else if (inp.autoAim) {
       const tgt = this.pickAutoTarget();
       if (tgt) {
-        // 弾が届くまでの時間ぶん 先を読む
+        // 先読みは 半分だけ。完全に読むと 動きの速い相手にも百発百中になってしまう
         const d = Math.hypot(tgt.x - p.x, tgt.y - p.y);
-        const lead = d / 1450;
+        const lead = d / 1450 * 0.55;
         const a = Math.atan2(tgt.y + tgt.vy * lead - p.y, tgt.x + tgt.vx * lead - p.x);
-        // 近い相手ほど 速く向く（遠くの相手にゆっくり向いていると 手前で殺される）
-        const k = 26 + Math.max(0, 380 - d) * 0.05;
+        // 振り向く速さ。ここが速すぎると「照準ボット」になる（本人指摘 2026-08-22）。
+        // 近い相手にはすこし速く向く程度にとどめる
+        const k = AUTO_AIM.turn + Math.max(0, 300 - d) * AUTO_AIM.turnNear;
         p.aim += angDiff(a, p.aim) * (1 - Math.exp(-k * dt));
         aiming = true;
-      } else if (ml > 0.08) {
-        p.aim += angDiff(p.face, p.aim) * (1 - Math.exp(-8 * dt));
+      } else {
+        // 近くに相手がいないときは 進んでいる方へ撃つ。
+        // ここで弾が止まると「銃がこわれた」と思われる（狙ってくれるのは近くの相手だけ）
+        p.aim += angDiff(p.face, p.aim) * (1 - Math.exp(-6 * dt));
+        aiming = true;
       }
     }
 
@@ -1061,7 +1074,7 @@ const G = {
       if (e.age < e.born) continue;
       const dx = e.x - p.x, dy = e.y - p.y;
       const d = Math.hypot(dx, dy) || 1;
-      if (d > 980) continue;
+      if (d > AUTO_AIM.range) continue;   // 画面の端まで狙撃させない＝自分から近づく必要が残る
       let sc = -d;
       sc -= Math.abs(angDiff(Math.atan2(dy, dx), p.aim)) * 165;   // 大きく振り向かせない
       if (e === cur) sc += 300;                                    // 決めた相手は 倒しきる

@@ -33,6 +33,8 @@ function run(seed, mode) {
   G.reset('survival', DIFF, W, H);
   const inp = { mx: 0, my: 0, ax: 0, ay: 0, fire: true, autoAim: mode === 'auto' };
   let fired = 0, kills = 0, deaths = 0, t = 0;
+  // 「どれくらい狙いが吸いついているか」＝人が強すぎると感じる正体
+  let errSum = 0, errN = 0, onTgt = 0, engaged = 0;
   const steps = Math.round(SECS / FIXED);
   for (let i = 0; i < steps; i++) {
     const p = G.p;
@@ -59,6 +61,23 @@ function run(seed, mode) {
       inp.ax = tx; inp.ay = ty;
     }
 
+    if (i % 10 === 0) {
+      let best = 1e9, ba = 0;
+      for (const e of G.enemies) {
+        if (e.age < e.born) continue;
+        const dx = e.x - p.x, dy = e.y - p.y, d = Math.hypot(dx, dy) || 1;
+        if (d < best) { best = d; ba = Math.atan2(dy, dx); }
+      }
+      if (best < 1e9) {
+        let da = (p.aim - ba) % (Math.PI * 2);
+        if (da > Math.PI) da -= Math.PI * 2;
+        if (da < -Math.PI) da += Math.PI * 2;
+        const deg = Math.abs(da) * 180 / Math.PI;
+        errSum += deg; errN++;
+        if (deg < 8) onTgt++;
+        if (best < 620) engaged++;
+      }
+    }
     const b0 = G.bullets.length, k0 = G.killTotal, l0 = G.lives;
     G.update(FIXED, inp);
     G.events.length = 0;
@@ -69,7 +88,9 @@ function run(seed, mode) {
     if (G.phase === 'over') break;
   }
   return { t, fired, kills, deaths, score: G.score, mult: G.mult,
-           hit: fired ? kills / fired : 0 };
+           hit: fired ? kills / fired : 0,
+           err: errN ? errSum / errN : 0,
+           lock: errN ? onTgt / errN : 0 };
 }
 
 for (const seed of [11, 22, 33]) {
@@ -77,7 +98,7 @@ for (const seed of [11, 22, 33]) {
   const m = run(seed, 'manual');
   const pct = m.kills ? (a.kills / m.kills * 100) : 0;
   console.log(
-    `seed=${seed}  自動: 撃破${String(a.kills).padStart(4)} 命中率${(a.hit*100).toFixed(1)}% 死${a.deaths} score=${(a.score/1e6).toFixed(2)}M` +
-    `  ／ 手動(完璧): 撃破${String(m.kills).padStart(4)} 命中率${(m.hit*100).toFixed(1)}% 死${m.deaths} score=${(m.score/1e6).toFixed(2)}M` +
-    `  → 自動は手動の ${pct.toFixed(0)}%`);
+    `seed=${seed}  自動: 命中率${(a.hit*100).toFixed(1)}%  ` +
+    `狙いのズレ 平均${a.err.toFixed(1)}度  吸いつき(8度以内)${(a.lock*100).toFixed(0)}%  撃破${a.kills}` +
+    `   ／ 手動(完璧): 命中率${(m.hit*100).toFixed(1)}% 撃破${m.kills}  → 自動は手動の ${pct.toFixed(0)}%`);
 }
