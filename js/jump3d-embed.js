@@ -93,7 +93,20 @@ window.addEventListener('message', e => {
       if (d.weekNo) saveGameScore('jump3d_w' + d.weekNo, nick, d.score, 'max');
       if (d.gain > 0) saveGameScore('jump3d_gain', nick, d.gain, 'max');
       if (d.coop > 0) saveGameScore('jump3d_coop', nick, d.coop, 'max');
+      // 🚩 旗を立てる高さ。**score ではなく progress（到達点）**。
+      //   点は⭐やボーナスで増えるので、点の順に旗を立てると
+      //   「点は高いのに、そこまで登っていない」旗が道に立ってしまう。
+      if (d.reach > 0) saveGameScore('jump3d_reach', nick, d.reach, 'max');
     }
+
+  } else if (d.type === 'cj-flags-request') {
+    // 🚩 みんなの到達点を子に返す（プレイ中に道ばたへ旗を立てる）。
+    //   ★jadepanic の jp-rank-request と同じ形にそろえてある。
+    if (typeof getGameRanking !== 'function') return;
+    getGameRanking('jump3d_reach', 'max').then(list => {
+      if (!list || !f.contentWindow) return;
+      f.contentWindow.postMessage({ type: 'cj-flags-data', list }, '*');
+    }).catch(() => {});
 
   } else if (d.type === 'cj-rank') {
     if (typeof showGameRanking === 'function') showGameRanking('jump3d', 'チッチジャンプ3D', 'max');

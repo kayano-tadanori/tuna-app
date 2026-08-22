@@ -321,6 +321,12 @@ window.addEventListener('keydown', e => {
     location.replace(u.toString());
     return;
   }
+  // 📖 あそびかた／スタンプ帳を ひらいているあいだは、キーはとじるだけ。
+  //    ★ここで返さないと Enter が ov-go を押して、読んでいる途中で始まってしまう。
+  if (sheetOpen()) {
+    if (k === 'Escape' || k === 'Enter' || k === 'Space') { e.preventDefault(); closeSheet(); }
+    return;
+  }
   if (['ArrowLeft','ArrowRight','ArrowDown','ArrowUp','Space','ShiftLeft','ShiftRight',
        'KeyA','KeyD','KeyS','KeyW','Digit1','Digit2','Enter'].includes(k)) e.preventDefault();
   keyHeld.add(k);
@@ -508,6 +514,144 @@ function buildStartButtons() {
   });
 }
 
+// ============================================================
+//  📖 あそびかた ／ 🏅 スタンプ帳（タイトルからひらく）
+//
+//   ★スタンプは前から溜まっていたのに、**見るところが無かった**。
+//     押される28か所のうち画面に出ていたのは
+//     「そのプレイで新しく押した1個」と「始める場所の3つ」だけで、
+//     残りは押されたまま、どこにも出てこなかった（2026-08-22 に気づいた）。
+//   ★まだ着いていない場所は **名前を伏せて枠だけ** 見せる（????）。
+//     空いた枠が見えているほうが、次に行く理由になる。
+//     ただし「あと何個」とは言わない。せかす言葉は置かない。
+// ============================================================
+const CJ_STAMP_ICON = {
+  'ビルの上': '🏙', '雲の上': '☁️', '富士山より高く': '🗻', 'カーマンライン': '🚀',
+  '宇宙ステーション': '🧑‍🚀', '月': '🌙', '火星': '🔴', '小惑星帯': '☄️',
+  '木星': '🪐', '土星': '💍', '天王星': '🔵', '海王星': '🌊', '冥王星': '❄️',
+  'ヘリオポーズ': '🛑', 'ボイジャー1号': '🛰', 'オールトの雲': '🌫',
+  'プロキシマ・ケンタウリ': '✨', 'ご近所の恒星': '⭐', 'オリオン大星雲': '🌸',
+  '天の川の中心': '🌟', '天の川を出る': '🌌', 'アンドロメダ銀河': '🌀',
+  '局部銀河群': '👥', 'おとめ座銀河団': '♍', 'ラニアケア超銀河団': '🌐',
+  '宇宙の大きなあみ目': '🕸', 'いちばん遠い銀河': '🔭', '観測できる宇宙のはて': '🌠',
+};
+// スタンプの対象＝名まえのある到達点（地上はのぞく）
+const CJ_STAMP_LIST = CJ_ANCHORS.filter(a => a[0] > 0).map(a => ({ p: a[0], name: a[2] }));
+
+const sheetEl   = document.getElementById('sheet');
+const sheetBody = document.getElementById('sheet-body');
+const sheetTtl  = document.getElementById('sheet-title');
+const sheetSub  = document.getElementById('sheet-sub');
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+// ---- あそびかた ----
+//  ★実際のコードに合わせて書くこと。ここが本当とちがうと、
+//    子どもは「書いてあるのに できない」で自分のせいにする。
+function helpHTML() {
+  const row = (icon, t, d) => `<div class="hrow"><u>${icon}</u><div><b>${t}</b><span>${d}</span></div></div>`;
+  const key = k => `<span class="hkey">${k}</span>`;
+  return (
+    `<div class="hsec"><h4>ゆびで うごかす</h4>` +
+      row('🫳', '画面を なぞる', 'チッチは、ゆびのところへ 行く。おしっぱなしで ずっと動く。') +
+      row('✋', 'ゆびを はなす', 'つばさを たたんで 急降下（きゅうこうか）。<b>速く落ちるほど、バネが強くはねる。</b>') +
+      row('👀', 'ゆびを 止める', 'カメラが 上へ動いて、先が 見える。そのあいだ 横には 動けない。') +
+      row('⚡', '速く 逆へ はらう', 'いきおいを 消して、逆へ ぐっと寄る。<b>着地するまでに 1回だけ。</b>') +
+      row('✨', 'ジャストジャンプ', '着地の 前後 0.13びょうに ゆびを 置きなおすと、いつもより 高く とぶ。') +
+    `</div>` +
+    `<div class="hsec"><h4>足場（あしば）</h4>` +
+      row('☁️', 'ふつうの雲', 'そのまま はねる。') +
+      row('🌀', 'バネ', 'ぐんと 高く とぶ。落ちてきた 速さが 強いほど よく のびる。') +
+      row('🧊', '氷の雲', 'つるつる すべる。乗ったあと 横に ながされる。') +
+      row('💥', 'こわれる雲', '一度 乗ると 落ちていく。すぐ 次へ。') +
+      row('🪨', '宇宙の岩', '空気の ないところの 足場。ここから先は 雲が ない。') +
+    `</div>` +
+    `<div class="hsec"><h4>出てくるもの</h4>` +
+      row('⭐', 'ほし', '点になる。つづけて とると どんどん 増える。') +
+      row('🍙', 'おにぎり', '1回だけ バリア。じゃま役を はね返す。') +
+      row('🌈', '光の柱', '2本 立つので、寄ったほうの 力が 手に入る。<b>そのプレイのあいだ だけ・3つまで。</b>') +
+      row('🦅', 'じゃま役', '低いところは タカ、上は 🎈気球 → 🛰人工衛星 → 👽宇宙人。ぶつかると 落ちる。') +
+    `</div>` +
+    `<div class="hsec"><h4>どうぐ（本体のガチャでもらう）</h4>` +
+      row('🪽', 'つばさ', 'しばらく 落ちない。') +
+      row('🚀', 'ロケット', 'ひとっとびで 上へ。') +
+      `<div class="stamp-note">★どうぐを つかっている あいだは、<b>点が 入らない</b>。<br>だから「使っても ずるく ならない」。</div>` +
+    `</div>` +
+    `<div class="hsec"><h4>キーボード（パソコンのとき）</h4>` +
+      `<div class="hrow"><u>⌨️</u><div><b>${key('←')}${key('→')} うごく　${key('↓')}${key('Shift')} たたむ</b>` +
+      `<span>${key('Space')} 置きなおす　${key('1')} つばさ　${key('2')} ロケット　${key('Enter')} はじめる</span></div></div>` +
+    `</div>`
+  );
+}
+
+// ---- スタンプ帳 ----
+function stampHTML() {
+  const got = Object.keys(stamps).length;
+  const all = CJ_STAMP_LIST.length;
+  // 最前線＝押してあるスタンプのうち いちばん遠いもの
+  let tip = '';
+  for (const s of CJ_STAMP_LIST) if (stamps[s.name]) tip = s.name;
+  const pct = Math.round((got / all) * 100);
+  const cells = CJ_STAMP_LIST.map(s => {
+    const day = stamps[s.name];
+    const cls = 'stamp' + (day ? ' got' : '') + (s.name === tip ? ' tip' : '');
+    if (!day) return `<div class="${cls}"><u>❔</u><b>？？？？</b><i>—</i></div>`;
+    const md = day.slice(5).replace('-', '/').replace(/^0/, '');
+    return `<div class="${cls}"><u>${CJ_STAMP_ICON[s.name] || '⭐'}</u>` +
+           `<b>${escapeHtml(s.name)}</b><i>${md}</i></div>`;
+  }).join('');
+  return (
+    `<div class="stamp-bar"><i>${got} / ${all}</i><u><b style="width:${pct}%"></b></u></div>` +
+    `<div class="stamp-grid">${cells}</div>` +
+    `<div class="stamp-note">はじめて 着いた 日が のこる。<br>` +
+    (got ? 'いちど 着いた ところは、消えない。' : 'まだ ひとつも ない。ここからや。') + `</div>`
+  );
+}
+
+function openSheet(kind) {
+  if (!sheetEl) return;
+  stamps = loadStamps();                 // ★ひらく直前に読み直す（別の子に切りかわっていることがある）
+  if (kind === 'stamp') {
+    sheetTtl.textContent = '🏅 スタンプ帳';
+    sheetSub.textContent = 'TRAVEL LOG';
+    sheetBody.innerHTML = stampHTML();
+  } else {
+    sheetTtl.textContent = '🎮 あそびかた';
+    sheetSub.textContent = 'HOW TO PLAY';
+    sheetBody.innerHTML = helpHTML();
+  }
+  sheetEl.classList.add('show');
+  // 🚨 **見せてから いちばん上へ戻すこと。**
+  //   display:none のあいだに scrollTop を書いても効かない。
+  //   前に開いたシートの位置が residual で残り、スタンプ帳が
+  //   「いきなり ？？？？ の途中から」開いた（実測で見つけた）。
+  sheetBody.scrollTop = 0;
+  Snd.ensure();
+}
+function closeSheet() { if (sheetEl) sheetEl.classList.remove('show'); }
+const sheetOpen = () => !!(sheetEl && sheetEl.classList.contains('show'));
+
+{
+  const bh = document.getElementById('tg-help');
+  const bs = document.getElementById('tg-stamp');
+  const bx = document.getElementById('sheet-close');
+  if (bh) bh.onclick = () => openSheet('help');
+  if (bs) bs.onclick = () => openSheet('stamp');
+  if (bx) bx.onclick = closeSheet;
+  // 幕を さわっても とじる（中の箱を さわったときは とじない）
+  if (sheetEl) sheetEl.addEventListener('pointerdown', e => { if (e.target === sheetEl) closeSheet(); });
+}
+
+// タイトルのボタンに「いくつ集まったか」を出す
+function updateStampBadge() {
+  const n = document.getElementById('tg-stamp-n');
+  if (!n) return;
+  const got = Object.keys(loadStamps()).length;
+  n.textContent = got ? `${got}/${CJ_STAMP_LIST.length}` : '';
+}
+
 function showOverlay(mode) {
   // ★画面ごとに見せるものを切りかえる（CSS の側で出し分ける）
   // 'start' はタイトル画面のこと（CSS は .title で出し分けている）
@@ -565,6 +709,7 @@ function showOverlay(mode) {
     if (hint) hint.textContent = '画面を指でなぞる／← → で うごく';
   } else {
     buildStartButtons();
+    updateStampBadge();
     const bestEl = document.getElementById('ov-best');
     if (bestEl) bestEl.textContent = best ? `BEST  ${best.toLocaleString()}` : '';
     ovGo.textContent = 'はじめる';
@@ -592,6 +737,7 @@ function beginPlay() {
   if (startFromP > 0) core.startFrom(startFromP);
   bestMark = loadBestMark(); bestMarkPassed = false;
   resetGhost();
+  rebuildFlags();          // 🚩 標を立て直す（bestMark が変わっているので）
   ov.className = '';
   if (startFromP > 0) {
     // 途中から始めるときは、公園の演出をしない（もう飛び立ったあとなので）
@@ -723,6 +869,12 @@ window.addEventListener('message', e => {
     nickname = d.name || '';
     // ★名前が分かった時点で、その子の記録に読みかえる
     loadProfile();
+    updateStampBadge();
+    // 🚩 みんなの到達点をもらう。★自分の名前が分かってからでないと、
+    //    自分の旗を自分の道に立ててしまう。
+    post('cj-flags-request');
+  } else if (d.type === 'cj-flags-data') {
+    setFlagData(d.list);
   } else if (d.type === 'cj-items') {
     // 🎒 道具ののこり。持ち主は本体なので、来た数がいつでも正しい。
     setStock(d.items);
@@ -2122,7 +2274,12 @@ function updateGhost(dt) {
   if (gp == null) { ghostEl.classList.remove('show'); return; }
 
   // 画面のどこに出るか。世界の高さ → 画面の縦位置。
-  const gy = cjYAtProgress(gp);
+  // 🚨 cjYAtProgress ではなく cjFlagY を使うこと。前者は「カメラの基準の高さ」で、
+  //    そのまま引くと **画面の46%ぶん下**に線が出る（実測 4.50／9.69）。
+  //    ゴーストは「同じ時刻に 過去の自分が **居た高さ**」の線なので、
+  //    チッチの高さでそろえないと、こえた瞬間と絵が合わない。
+  //    （🚩の標を入れたとき、同じ式のズレとして見つけた。2026-08-22）
+  const gy = cjFlagY(gp);
   const sc = screenOf(worldAt(core.camPx, gy, 0));
   // ★出したり消したりの境目を分ける。ひとつの値で切ると、画面のはしで
   //   毎フレーム点滅する（チカチカのもとを、あらかじめ潰しておく）。
@@ -2166,15 +2323,110 @@ function addCoop(p) {
 //   「月でやめた回だけ記録に残らない」という穴があく（実際そうなっていた）。
 //   ★何度呼ばれてもよいように書くこと。月→続行→落下、で2回通る。
 // ============================================================
+// ============================================================
+//  🚩 標（しるべ）— 自分のいちばん遠く と、ほかの子の旗
+//
+//   兄弟ランキングの表は、子どもは見ない。**道の途中に立っている旗**なら、
+//   見ないほうが無理。抜いた瞬間に、その1回が語りぐさになる。
+//
+//   ★見せかたの決めごと（プラン §3.9「絶望的な差を正面から見せない」）
+//     ・旗は**画面に映る高さに来たときだけ**出す。ずっと先の旗は、
+//       そこまで自分で登るまで、一度も見えない。
+//     ・抜けなくても何も言わない。ゴーストと同じで、責める言葉は置かない。
+//     ・自分の旗は白、ほかの子は水色。こえたら金。ゴースト（金の線・右寄せ）
+//       と見わけがつくよう、旗は左寄せにしてある。
+//   ★出どころは本体の Firestore（jump3d_reach）。単体で開いたときは
+//     自分の標だけが立つ。
+// ============================================================
+const FLAG_MAX = 8;            // 立てる旗の数（多いと道が線だらけになる）
+let flagRows = [];             // 本体から届いた [{nickname, value}]
+let flags = [];                // 画面に立てたもの [{name, p, mine, passed, el}]
+let flagsEl = null;
+
+function setFlagData(rows) {
+  flagRows = Array.isArray(rows) ? rows : [];
+  rebuildFlags();
+}
+
+function rebuildFlags() {
+  if (!flagsEl) flagsEl = document.getElementById('flags');
+  if (!flagsEl) return;
+  flagsEl.innerHTML = '';
+  flags = [];
+
+  const add = (label, p, mine) => {
+    if (!(p > 0)) return;
+    const el = document.createElement('div');
+    el.className = 'flag' + (mine ? ' me' : '');
+    el.innerHTML = `<span>${mine ? '🏳' : '🚩'} ${escapeHtml(label)}</span>`;
+    flagsEl.appendChild(el);
+    // ★始める場所を選んで途中から出たときは、その下の旗は**もう こえたこと**に
+    //   しておく（通っていないのに「こえた！」と出るのは うそになる）。
+    flags.push({ name: label, p, mine, passed: core.progress >= p, el });
+  };
+
+  if (bestMark && bestMark.p > 0) add(`${bestMark.date} の じぶん`, bestMark.p, true);
+  flagRows
+    .filter(r => r && r.nickname && r.nickname !== nickname && Number(r.value) > 0)
+    .sort((a, b) => a.value - b.value)
+    .slice(0, FLAG_MAX)
+    .forEach(r => add(r.nickname, Math.round(Number(r.value)), false));
+}
+
+// 旗を引く高さ。
+//  🚨 **cjYAtProgress をそのまま使ってはいけない。**
+//    あれが返すのは「カメラの基準の高さ」で、CJ_SCROLL_OFF に
+//    公園ぶんのズレ（CJ_PARK_CAMY）が入っている。そのまま線を引くと
+//    **画面のおよそ4割ぶん下**に出て、
+//    「線をこえたのに『ぬいた』が出ない → しばらくして急に出る」になる。
+//    （実測：progress がちょうど旗の数と同じとき、線 83% ／ チッチ 43%）
+//  ★ここで要るのは「progress がその数になったとき、チッチが居る高さ」。
+function cjFlagY(p) {
+  return cjRawFromProgress(Math.max(0, p)) / CJ_M_PER_WORLD + CJ_VIEW_H * (1 - CJ_SCROLL_FRAC);
+}
+
+function updateFlags() {
+  if (!flags.length) return;
+  const hide = !running || core.ending || core.over || !!letter;
+  for (const f of flags) {
+    if (hide) { f.el.classList.remove('show'); continue; }
+    const sc = screenOf(worldAt(core.camPx, cjFlagY(f.p), 0));
+    // ★出す／消すの境目を分ける。ひとつの値で切ると画面のはしで毎フレーム
+    //   点滅する（ゴーストで踏んだのと同じチカチカ）。
+    const on = f.el.classList.contains('show');
+    const lim = on ? 1.16 : 1.02;
+    if (!sc || sc.behind || Math.abs(sc.y) > lim) { f.el.classList.remove('show'); continue; }
+    f.el.style.top = `${(0.5 - sc.y * 0.5) * 100}%`;
+    f.el.classList.add('show');
+  }
+  // こえた瞬間。1本につき1回だけ。
+  for (const f of flags) {
+    if (f.passed || hide || core.progress < f.p) continue;
+    f.passed = true;
+    f.el.classList.add('passed');
+    f.el.querySelector('span').textContent = `${f.mine ? '🏳' : '🚩'} ${f.name} を こえた`;
+    popText = f.mine ? `🏳 ${f.name}を こえた` : `🚩 ${f.name}を ぬいた！`;
+    popUntil = core.time * 1000 + 2400;
+    Snd.play('milestone');
+    R.addTrauma(0.26);
+    const P = worldAt(core.player.px, core.player.y, CHICCHI_FRONT);
+    R.burst(P[0], P[1], P[2], f.mine ? [1.0, 1.0, 0.95] : [0.55, 0.85, 1.0], 26,
+            { speed: 3.2, up: 1.0, size: 0.14, life: 0.8, kind: 3, drag: 1.5 });
+  }
+}
+
 function finishRun() {
   if (core.score > best) { best = core.score; lsSet('best', String(best)); }
   lastGain = bestMark ? Math.max(0, Math.round(core.progress - bestMark.p))
                       : Math.round(core.progress);
   const coop = addCoop(core.progress);
-  post('cj-score', { score: core.score, meters: core.meters,
+  // 🚩 reach＝**どこまで登ったか（progress）**。score とは別もの。
+  //    旗は「点」ではなく「到達点」に立てるので、この数字が要る。
+  post('cj-score', { score: core.score, meters: core.meters, reach: Math.round(core.progress),
                      week: cjWeekSeed(), weekNo: cjWeekNo(), gain: lastGain, coop });
   saveBestMark();
   saveGhost();
+  post('cj-flags-request');    // 次のプレイに向けて、みんなの旗を取り直す
 }
 
 function saveBestMark() {
@@ -2850,7 +3102,7 @@ let diagMin = 999, diagMax = 0, diagLong = 0, diagVsync = 16.7, diagShowT = 0;
 // 🔬 F3 … 画面に重ねている**字と絵（DOM）をぜんぶ消す**。
 //   これで直るなら、犯人は3Dの絵ではなく「重ねかた（合成）」のほう。
 let DOMOFF = false;
-const DIAG_OVERLAYS = ['hud', 'strip', 'nav', 'skylab', 'voyline', 'ghost', 'topbar', 'items', 'unitup'];
+const DIAG_OVERLAYS = ['hud', 'strip', 'nav', 'skylab', 'voyline', 'ghost', 'flags', 'topbar', 'items', 'unitup'];
 function setDomOff(v) {
   DOMOFF = v;
   for (const id of DIAG_OVERLAYS) {
@@ -3158,6 +3410,7 @@ function loop(now) {
   updateStrip();
   updateBestMark();
   updateGhost(dt);
+  updateFlags();
   // 🚨 **読ませる／見せるための時計は、実時間で進めること。**
   //   dt は 1/20秒で頭打ちにしてあるので、重い端末では
   //   「2.6秒で次の行」が 15秒かかる（実測。swiftshaderで手紙まで進まなかった）。
@@ -3309,6 +3562,18 @@ window.__cj = {
              running, ending: !!core.ending, over: core.over,
              y: gp == null ? null : cjYAtProgress(gp), py: core.player.y };
   },
+  // 🚩 標の実測用（tools/ui.py が使う）。
+  //   ★「立てたつもり」で終わらせない。画面に本当に出ているか（shown）と
+  //     縦の位置（top）を、絵といっしょに数字でも見る。
+  setFlags(rows) { setFlagData(rows); },
+  flagY(p) { return cjFlagY(p); },
+  flagInfo() {
+    return flags.map(f => ({
+      name: f.name, p: f.p, mine: f.mine, passed: f.passed,
+      shown: f.el.classList.contains('show'), top: f.el.style.top,
+    }));
+  },
+  stampInfo() { return { got: Object.keys(loadStamps()).length, all: CJ_STAMP_LIST.length }; },
   chicchiScreen() {
     return screenOf(worldAt(core.player.px, core.player.y, 0)) || { x: 99, y: 99 };
   },

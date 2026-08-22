@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>チッチジャンプ3D</title>
-<link rel="stylesheet" href="style.css?v=20260822a">
+<link rel="stylesheet" href="style.css?v=20260822b">
 </head>
 <body>
 <canvas id="c"></canvas>
@@ -21,6 +21,10 @@
      「そのときの高さ」が線になって並走する。抜くと金色に光る。
      ★2匹目のチッチ（§5.6）と見わけがつかなくなるので、鳥にはしない。 -->
 <div id="ghost"><span>きのうの チッチ</span></div>
+<!-- 🚩 標（しるべ）。自分のいちばん遠く（白）と、ほかの子の旗（水色）。
+     ★画面に映る高さに来たときだけ出す。遠い旗は、そこへ行くまで見えない
+       （プラン §3.9「絶望的な差を正面から見せない」）。 -->
+<div id="flags"></div>
 <div id="nav"><b>›</b></div>
 <div id="skylab"><span id="lab-earth">地球</span><span id="lab-moon">月</span></div>
 
@@ -61,24 +65,40 @@
   <button id="ov-go" type="button">はじめる</button>
   <button id="ov-more" type="button" hidden>もっと先へ 🚀</button>
   <div class="starts" id="ov-starts"></div>
+  <div class="title-menu">
+    <button id="tg-help" type="button" class="tg2">🎮 あそびかた</button>
+    <button id="tg-stamp" type="button" class="tg2">🏅 スタンプ帳<i id="tg-stamp-n"></i></button>
+  </div>
   <div class="title-toggles">
     <button id="tg-fx" type="button" class="tg on">✨ えんしゅつ</button>
   </div>
   <div class="hint" id="ov-hint">画面を指でなぞる／← → で うごく</div>
 </div>
 
+<!-- 📖 あそびかた／スタンプ帳。
+     ★中身は game.js が作る（スタンプは その子の記録で毎回ちがう）。 -->
+<div id="sheet">
+  <div class="sheet-box">
+    <div class="sheet-head">
+      <div class="sheet-title"><b id="sheet-title"></b><i id="sheet-sub"></i></div>
+      <button id="sheet-close" type="button" class="sheet-x" title="とじる">✕</button>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
 <div id="err"></div>
 
-<script src="js/gl.js?v=20260822a"></script>
-<script src="js/shaders.js?v=20260822a"></script>
-<script src="js/chicchi.js?v=20260822a"></script>
-<script src="js/props.js?v=20260822a"></script>
-<script src="js/scenery.js?v=20260822a"></script>
-<script src="js/park.js?v=20260822a"></script>
-<script src="js/audio.js?v=20260822a"></script>
-<script src="js/biome.js?v=20260822a"></script>
-<script src="js/core.js?v=20260822a"></script>
-<script src="js/renderer.js?v=20260822a"></script>
-<script src="js/game.js?v=20260822a"></script>
+<script src="js/gl.js?v=20260822b"></script>
+<script src="js/shaders.js?v=20260822b"></script>
+<script src="js/chicchi.js?v=20260822b"></script>
+<script src="js/props.js?v=20260822b"></script>
+<script src="js/scenery.js?v=20260822b"></script>
+<script src="js/park.js?v=20260822b"></script>
+<script src="js/audio.js?v=20260822b"></script>
+<script src="js/biome.js?v=20260822b"></script>
+<script src="js/core.js?v=20260822b"></script>
+<script src="js/renderer.js?v=20260822b"></script>
+<script src="js/game.js?v=20260822b"></script>
 </body>
 </html>

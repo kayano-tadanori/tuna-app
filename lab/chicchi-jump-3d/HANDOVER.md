@@ -793,3 +793,73 @@ rules 側は `^jump3d(_gain|_coop|_w[0-9]{1,6})?$` を1行足した。
 ★ファイルを直したら `lab/chicchi-jump-3d/index.html` の `?v=` を上げる（いま `20260821f`）。
   上げないとキャッシュで古いのが出て、直したのに直らないように見える。
 ★あわせて `sw.js` の CACHE_NAME も上げる（上げないと古いのがキャッシュから出る）。
+
+## 📖🏅🚩 タイトルの2枚と、ほかの子の旗（2026-08-22・本人の指示）
+
+指示は3つ。「タイトル画面に**操作説明**と**スタンプ帳**」「ゲームの雰囲気にあった恰好いいデザイン」
+「**ほかのプレーヤーの旗**が表示されるのもやろう」。
+
+### 足したもの
+| どこ | 何 |
+|---|---|
+| `index.html` | タイトルに `.title-menu`（🎮あそびかた／🏅スタンプ帳＋`9/28`のバッジ）・`#sheet`・`#flags` |
+| `style.css` | シート一式（角のブラケット／金の罫／`.stamp-grid`）と `.flag` |
+| `js/game.js` | `helpHTML()` `stampHTML()` `openSheet()` ／ `CJ_STAMP_ICON` `CJ_STAMP_LIST` ／ 🚩 `setFlagData` `rebuildFlags` `updateFlags` `cjFlagY` |
+| `js/jump3d-embed.js` | `jump3d_reach` の保存と `cj-flags-request` → `cj-flags-data` |
+| `firestore.rules` | `^jump3d(_gain|_coop|_reach|_w[0-9]{1,6})?$`（**_reach を足した**） |
+| `sw.js` | CACHE_NAME v591→v592 ／ `index.html` の `?v=` を 20260822b へ |
+| `tools/ui.py` | 🆕 実測スクリプト（20項目。絵も7枚撮る） |
+
+### スタンプ帳
+- **溜まる仕組みは前からあった。見るところが無かっただけ。**
+  押されるのは `CJ_ANCHORS` の名前つき28か所。出ていたのは
+  「そのプレイで新しく押した1個」と「始める場所の3つ」だけで、残り**25個は死蔵**だった。
+- まだのところは **`？？？？` で枠だけ**見せる（空き枠が次の理由になる）。
+  いちばん遠くまで押せているものに `.tip`（水色の輪）を付けて最前線を出す。
+- 保存先は前と同じ `cj:<名前>:stamps`。**作った瞬間に、今まで遊んだぶんが埋まった状態で出る。**
+
+### 🚩 ほかの子の旗
+- 出どころは Firestore の **`jump3d_reach`**（＝ progress。**score ではない**）。
+  点は⭐やボーナスで増えるので、点の順に旗を立てると
+  「点は高いのに、そこまで登っていない」旗が道に立つ。
+- 自分＝白の実線 🏳／ほかの子＝水色の破線 🚩／こえたら金。
+  ゴースト（金の線・右寄せ）と見わけるため、旗は**左寄せ**。
+- **画面に映る高さに来たときだけ出す。** ずっと先の旗は、そこへ自分で登るまで一度も見えない
+  （プラン §3.9「絶望的な差を正面から見せない」）。抜けなくても何も言わない。
+- 途中から始めたときは、その下の旗を**最初から「こえたこと」に**しておく（通っていないのに祝わない）。
+
+### 🚨 ここで見つけた不具合（2件とも実測でしか出ない）
+1. **`cjYAtProgress` をそのまま線に使うと、画面の46%ぶん下に出る。**
+   あれが返すのは「カメラの基準の高さ」で `CJ_SCROLL_OFF`（＝公園ぶんのズレ `CJ_PARK_CAMY` 込み）が入っている。
+   実測：progress がちょうど旗の数のとき **線 83% ／ チッチ 43%**＝**ずれ 4.50／画面9.69**。
+   → `cjFlagY(p)` を作って `climb + CJ_VIEW_H*(1-CJ_SCROLL_FRAC)` にそろえた（ずれ 0.000）。
+   ★**同じズレが「きのうのチッチ」の線にもあった**ので、そちらも `cjFlagY` に直した。
+2. **`display:none` のあいだに `scrollTop = 0` を書いても効かない。**
+   前に開いたシートの位置が残り、スタンプ帳が「いきなり ？？？？ の途中から」開いた。
+   → `classList.add('show')` の**あと**で戻す。
+
+### 実測の落とし穴（tools/ui.py を書きながら踏んだ）
+- **飛ばす前に到着演出を解く。** `c.over=false; c.ending=null` を付けずに `warpP` すると
+  月・火星のイベントで `running=false` になり、「旗が出ない・こえない」が**ゲームのせいに見える**。
+- **`step()` を手で回しながら `wait_for_timeout(16)` を挟むと rAF が飢える。** ふつうに待つ。
+- **線とチッチの位置は「画面の%」でくらべない。** チッチは足場のあいだで大きく上下するので、
+  直っていても 8% ずれて NG になる。**世界の高さ**でくらべる（`flagY(p)` と `player.y`）。
+- `document.querySelector('.flag')` は**自分の標**を拾う（先に足しているため）。`:not(.me)` を付ける。
+
+### 確かめかた
+```
+cd "C:\Users\User\Desktop\Claude\tuna app"
+python -m http.server 8899
+python lab/chicchi-jump-3d/tools/ui.py     # 20項目ぜんぶ OK ／ コンソール0件
+python lab/chicchi-jump-3d/tools/play.py   # 既存の回帰も errors 0
+node scripts/check_game_rules.js           # jump3d_reach が許可されているか
+node scripts/check_sw_assets.js
+```
+
+### 🚨 まだ人の手が要る
+- **`firebase deploy --only firestore:rules`**（このPCにCLIが無い）。
+  忘れると `jump3d_reach` が**無言で保存されず、旗が永久に立たない**。
+- **スタンプはクラウドに載っていない。** `cj:<名前>:stamps` は端末の中だけで、
+  `BACKUP_KEYS` は固定キーしか載せられない（`app.js` 1719行）。
+  端末を変えると**帳がまるごと空になる**。直すなら「iframe → 本体へ渡して `jump3dStamps` として保存」。
+  ★`BACKUP_KEYS` と `firestore.rules` の `hasOnly` は**同時に**足すこと（片方だけだと丸ごと拒否）。

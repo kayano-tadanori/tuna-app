@@ -461,3 +461,183 @@ html, body {
   margin-top:10px; font-size:12px; letter-spacing:.03em;
   color:rgba(220,228,245,.62); text-align:center;
 }
+
+/* ============================================================
+   📖 あそびかた ／ 🏅 スタンプ帳
+   ★タイトルの世界観（深い紺＋金＋水色のグロー）をそのまま持ちこむ。
+     まっ白な箱を置くと、うしろで動いている3Dが一気に「別のアプリ」になる。
+   ★観測記録（ログ）に見せる：うすい見出し・細い金の罫・角のブラケット。
+   ============================================================ */
+.title-menu { display: none; gap: 8px; }
+#overlay.title .title-menu { display: flex; }
+.tg2 {
+  position: relative;
+  min-width: 0 !important; padding: 9px 15px !important; border-radius: 12px !important;
+  font-size: 12.5px !important; font-weight: 800 !important; letter-spacing: .03em;
+  color: #dfe9ff !important;
+  background: linear-gradient(180deg, rgba(24,38,80,.92), rgba(10,16,40,.92)) !important;
+  border: 1px solid rgba(140,190,255,.38) !important;
+  box-shadow: 0 0 14px rgba(70,140,255,.18) inset, 0 4px 14px rgba(0,0,0,.45) !important;
+}
+.tg2 i {
+  font-style: normal; margin-left: 7px; padding: 1px 6px; border-radius: 8px;
+  font-size: 10.5px; font-weight: 900; color: #08121f;
+  background: linear-gradient(180deg, #ffe9a0, #ffbe3d);
+  font-variant-numeric: tabular-nums;
+}
+.tg2 i:empty { display: none; }
+
+/* ---- シート本体 ---- */
+#sheet {
+  position: fixed; inset: 0; z-index: 30; display: none;
+  align-items: center; justify-content: center; padding: 18px 14px;
+  background: rgba(2, 4, 12, .78);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+#sheet.show { display: flex; animation: sheetFade .18s ease; }
+@keyframes sheetFade { from { opacity: 0 } to { opacity: 1 } }
+
+.sheet-box {
+  position: relative; width: min(100%, 470px); max-height: min(84vh, 720px);
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: 18px; text-align: left;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(60,110,220,.22), transparent 62%),
+    linear-gradient(180deg, rgba(11,18,42,.98), rgba(5,8,20,.99));
+  border: 1px solid rgba(130,180,255,.28);
+  box-shadow: 0 22px 60px rgba(0,0,0,.7), 0 0 40px rgba(60,120,255,.12) inset;
+  animation: sheetIn .22s cubic-bezier(.2,1.2,.4,1);
+}
+@keyframes sheetIn { from { transform: translateY(14px) scale(.97); opacity: 0 } to { transform: none; opacity: 1 } }
+/* 角のブラケット（観測機器っぽさ。線1本ぶんの飾り） */
+.sheet-box::before, .sheet-box::after {
+  content: ''; position: absolute; width: 20px; height: 20px; pointer-events: none;
+  border: 2px solid rgba(255, 208, 106, .55);
+}
+.sheet-box::before { left: 8px; top: 8px; border-right: 0; border-bottom: 0; border-radius: 8px 0 0 0; }
+.sheet-box::after { right: 8px; bottom: 8px; border-left: 0; border-top: 0; border-radius: 0 0 8px 0; }
+
+.sheet-head {
+  display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
+  padding: 15px 15px 12px 20px;
+  border-bottom: 1px solid rgba(255, 208, 106, .28);
+  background: linear-gradient(180deg, rgba(255,200,90,.07), transparent);
+}
+.sheet-title { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.sheet-title b {
+  font-size: 16px; font-weight: 900; letter-spacing: .06em; color: #ffe9a8;
+  text-shadow: 0 0 14px rgba(255, 190, 70, .45);
+}
+.sheet-title i {
+  font-style: normal; font-size: 10px; letter-spacing: .26em; color: #7f97c8;
+}
+.sheet-x {
+  margin-left: auto; flex: 0 0 auto;
+  min-width: 0 !important; width: 34px; height: 34px; padding: 0 !important;
+  border-radius: 50% !important; font-size: 15px !important; font-weight: 700 !important;
+  color: #cfe0ff !important; background: rgba(255,255,255,.08) !important;
+  border: 1px solid rgba(160,200,255,.28) !important; box-shadow: none !important;
+}
+.sheet-body {
+  flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 14px 18px calc(18px + env(safe-area-inset-bottom, 0px));
+}
+.sheet-body::-webkit-scrollbar { width: 5px; }
+.sheet-body::-webkit-scrollbar-thumb { background: rgba(140,190,255,.3); border-radius: 3px; }
+
+/* ---- あそびかた ---- */
+.hsec { margin: 4px 0 16px; }
+.hsec > h4 {
+  margin: 0 0 9px; font-size: 11px; font-weight: 900; letter-spacing: .2em;
+  color: #8fd0ff; display: flex; align-items: center; gap: 9px;
+}
+.hsec > h4::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(120,200,255,.4), transparent);
+}
+.hrow {
+  display: flex; align-items: flex-start; gap: 11px; padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,.055);
+}
+.hrow:last-child { border-bottom: 0; }
+.hrow > u {
+  flex: 0 0 34px; text-align: center; font-size: 20px; line-height: 1.25;
+  text-decoration: none;
+}
+.hrow > div { min-width: 0; }
+/* ★見出しの <b> だけを block にする。> を付けないと、説明文の中の
+     強調 <b> まで改行して、1行が3行に割れる。 */
+/* ★見出しの <b> と 説明の <span> は **直接の子だけ** に効かせる。
+     `>` を外すと、説明文の中の強調 <b> や キーの <span class=hkey> まで
+     block になって、1行が何行にも割れる。 */
+.hrow > div > b { display: block; font-size: 13px; font-weight: 800; color: #eaf2ff; }
+.hrow > div > span { display: block; margin-top: 2px; font-size: 11.5px; line-height: 1.6; color: #9db2dd; }
+.hrow > div > span b { color: #ffd873; font-weight: 800; }
+/* キーボードのキー */
+.hkey {
+  display: inline-block; margin: 0 3px 3px 0; padding: 2px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 800; color: #dfe9ff;
+  background: rgba(255,255,255,.09); border: 1px solid rgba(160,200,255,.28);
+  box-shadow: 0 2px 0 rgba(0,0,0,.4);
+}
+
+/* ---- スタンプ帳 ---- */
+.stamp-bar { display: flex; align-items: center; gap: 10px; margin: 2px 0 14px; }
+.stamp-bar u {
+  flex: 1; height: 6px; border-radius: 3px; text-decoration: none;
+  background: rgba(255,255,255,.10); overflow: hidden; position: relative;
+}
+.stamp-bar u b {
+  position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px;
+  background: linear-gradient(90deg, #7fd0ff, #ffd23f);
+  box-shadow: 0 0 12px rgba(255, 205, 70, .7);
+}
+.stamp-bar i {
+  font-style: normal; font-size: 12px; font-weight: 900; color: #ffd85f;
+  font-variant-numeric: tabular-nums; letter-spacing: .04em;
+}
+.stamp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; }
+.stamp {
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 3px; padding: 10px 5px 8px; border-radius: 13px; text-align: center;
+  background: rgba(255,255,255,.028);
+  border: 1px dashed rgba(150,185,240,.20);
+}
+.stamp > u { font-size: 23px; line-height: 1; text-decoration: none; opacity: .22; filter: grayscale(1); }
+.stamp > b { font-size: 10.5px; font-weight: 800; color: #5f74a0; letter-spacing: .04em; line-height: 1.35; }
+.stamp > i { font-style: normal; font-size: 9px; color: #45577d; letter-spacing: .05em; }
+/* 押してあるもの */
+.stamp.got {
+  background: radial-gradient(120% 100% at 50% 0%, rgba(255,200,90,.16), rgba(255,255,255,.03) 70%);
+  border: 1px solid rgba(255, 206, 106, .45);
+  box-shadow: 0 0 16px rgba(255, 180, 60, .13) inset;
+}
+.stamp.got > u { opacity: 1; filter: none; text-shadow: 0 0 12px rgba(255, 210, 110, .55); }
+.stamp.got > b { color: #ffe9a8; }
+.stamp.got > i { color: #98a9cc; }
+/* いま届いている いちばん遠く＝最前線 */
+.stamp.tip { border-color: #7fd0ff; box-shadow: 0 0 18px rgba(110, 200, 255, .35); }
+.stamp-note { margin: 14px 0 2px; font-size: 11px; line-height: 1.75; color: #7f93bb; text-align: center; }
+.stamp-note b { color: #ffd873; font-weight: 800; }
+
+/* ============================================================
+   🚩 標（しるべ）— 自分のいちばん遠く と ほかの子の旗
+   ★ゴースト（金の線・右寄せ）と見わけがつくよう、こちらは左寄せ。
+     ほかの子＝水色の破線／自分＝白の実線／こえたあと＝金。
+   ============================================================ */
+#flags { position: fixed; inset: 0; z-index: 6; pointer-events: none; }
+.flag {
+  position: absolute; left: var(--pad-x); right: var(--pad-x); height: 0;
+  opacity: 0; transition: opacity .3s ease, border-color .5s ease;
+  border-top: 2px dashed rgba(127, 208, 255, .60);
+}
+.flag.show { opacity: 1; }
+.flag > span {
+  position: absolute; left: 12px; top: -19px; white-space: nowrap;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; color: #a8dcff;
+  text-shadow: 0 1px 4px rgba(0,0,0,.9);
+}
+.flag.me { border-top-style: solid; border-top-color: rgba(255,255,255,.52); }
+.flag.me > span { color: #e8f1ff; }
+.flag.passed { border-top-style: solid; border-top-color: rgba(255, 206, 84, .85); }
+.flag.passed > span { color: #ffd873; }

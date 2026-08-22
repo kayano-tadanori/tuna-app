@@ -172,7 +172,8 @@ service cloud.firestore {
         // チッチジャンプ3D は**3軸**なので、ゲームIDを分けて持つ（プラン §3.9）。
         //   jump3d … 生スコア／ jump3d_w<週番号> … 今週のシード
         //   jump3d_gain … 自己ベストの更新幅／ jump3d_coop … 協力メーター
-        || game.matches('^jump3d(_gain|_coop|_w[0-9]{1,6})?$')
+        //   jump3d_reach … どこまで登ったか（progress）。道ばたに立てる🚩の高さ
+        || game.matches('^jump3d(_gain|_coop|_reach|_w[0-9]{1,6})?$')
         || drillGameOk(game);
     }
     match /game_scores/{game}/scores/{nick} {
