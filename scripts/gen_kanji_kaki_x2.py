@@ -142,6 +142,15 @@ def main():
         print("  小%d:" % g, " ".join("難%d=%d" % (d, cnt[(g, d)]) for d in range(1, 5)),
               " 計", sum(cnt[(g, d)] for d in range(1, 5)))
 
+    # ★このスクリプトは「1回きり」。すでに書きこんだあとにもう一度流すと、
+    #   全問が「同じ問題文がすでにある」で止まる。それは正常なので、そう言って終わる
+    old_q = {q["question"] for q in old}
+    if new and all(q["question"] in old_q for q in new):
+        print("")
+        print("✓ この538問はもう data/kanji_kaki.json に入っている（追加ずみ）。")
+        print("  語を足すときは kanji_kaki_x2_words.py に足して、ここを流し直す")
+        return 0
+
     ng, warn = check(old, new)
     for tag, why, ctx in warn:
         print("  △", tag, why, "|", ctx)

@@ -139,7 +139,10 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
     }
 
     // ④ 解説の結び
-    const mean = String(q.meaning ?? '');
+    // ★ふりがな（<ruby>答<rt>こた</rt></ruby>え…）が入っていると素の文字列では
+    //   「よって、答えは○○です」に当たらず、検査が無言で素通りする。タグを外してから見る
+    //   （2026-08-22、小1・小2の漢字書き取りの解説に総ルビを入れたときに気づいた）
+    const mean = String(q.meaning ?? '').replace(/<rt>.*?<\/rt>/g, '').replace(/<[^>]+>/g, '');
     if (mean) {
       const m = mean.match(/よって、?答えは(.+?)です。/);
       if (m) {
