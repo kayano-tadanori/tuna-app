@@ -73,6 +73,10 @@ service cloud.firestore {
              //   ここに無いキーが1つでも来ると hasOnly が**丸ごと拒否**して、
              //   その子の記録が すべて 無言で保存されなくなる（2026-08-21 追加）
              'tetris2Best', 'jump3dBest',
+             // 🏅 チッチジャンプ3D のスタンプ帳（はじめて着いた日の記録・2026-08-22）。
+             //   ゲームがわは cj:<名前>:stamps に持っているが、そこは端末のみ＝
+             //   機種を変えると帳がまるごと空になる。本体の固定キーに写して載せる。
+             'jump3dStamps',
              'gameTickets', 'lastUpdated'
            ])
         && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
@@ -101,6 +105,9 @@ service cloud.firestore {
         //   遊び券を持っている端末は バックアップが permission-denied で全部失敗し、
         //   達成率（管理ツールの「最終更新」）も送られなくなっていた。
         && (!('gameTickets' in request.resource.data)     || strOk(request.resource.data.gameTickets, 200))
+        // jump3dStamps は {"月":"2026-08-20", …} の1本。名前つきの到達点は28か所しか
+        // 無いので 2,000字あれば足りるが、場所を足すことがあるので 20,000 にしておく。
+        && (!('jump3dStamps' in request.resource.data)    || strOk(request.resource.data.jump3dStamps, 20000))
         && serverTime();
       allow delete: if isAdmin();
     }

@@ -123,6 +123,14 @@
   body { padding-left: max(24px, env(safe-area-inset-left));
          padding-right: max(24px, env(safe-area-inset-right));
          padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  /* 並べかえの操作。検索といっしょに1行に置く（狭いときは折り返す）。 */
+  .list-tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .list-tools #search { flex: 1 1 200px; }
+  .sort-label { font-size: 13px; opacity: .85; display: flex; align-items: center; gap: 6px; }
+  .sort-label select { padding: 7px 9px; border-radius: 8px; font-size: 13px; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { text-decoration: underline; }
+
   @media (max-width: 600px) {
     body { padding: 16px 14px calc(16px + env(safe-area-inset-bottom)); }
     h1 { font-size: 1.15rem; }
@@ -172,11 +180,25 @@
 </div>
 
 <div id="tab-users">
-  <input id="search" type="text" placeholder="受験番号で絞り込み…" oninput="renderList()">
+  <div class="list-tools">
+    <input id="search" type="text" placeholder="受験番号で絞り込み…" oninput="renderList()">
+    <label class="sort-label">並べかえ
+      <select id="sort-by" onchange="renderList()">
+        <option value="pct">達成率が高い順</option>
+        <option value="updated">最終更新が新しい順</option>
+        <option value="updated-asc">最終更新が古い順</option>
+        <option value="nickname">受験番号順</option>
+      </select>
+    </label>
+  </div>
 
   <table>
     <thead>
-      <tr><th>受験番号</th><th>称号</th><th>達成率</th><th>最終更新</th><th></th></tr>
+      <!-- ★スマホ（600px以下）では thead を隠しているので、見出しを押す方法だけだと
+           スマホで並べかえられない。上の「並べかえ」が本体で、見出しはその近道。 -->
+      <tr><th class="sortable" onclick="setSort('nickname')">受験番号</th><th>称号</th>
+          <th class="sortable" onclick="setSort('pct')">達成率</th>
+          <th class="sortable" onclick="setSort('updated')">最終更新</th><th></th></tr>
     </thead>
     <tbody id="list-body"></tbody>
   </table>
@@ -442,7 +464,11 @@ const ALL_CATEGORIES = Object.values(QUESTION_COUNTS).flatMap(o => Object.keys(o
 //    そのゲームの記録だけ Firestore に残りつづける。
 const GAME_IDS = ['tetris', 'tetris2', 'mine_easy', 'mine_normal', 'mine_hard', 'jump',
   'jadepanic_surv_easy', 'jadepanic_surv_normal', 'jadepanic_surv_hard',
-  'jadepanic_time_easy', 'jadepanic_time_normal', 'jadepanic_time_hard'];
+  'jadepanic_time_easy', 'jadepanic_time_normal', 'jadepanic_time_hard',
+  // 🐦 チッチジャンプ3D は3軸＋週がわりなので、ゲームIDが分かれている（2026-08-22 追加）。
+  //    週がわりの jump3d_w<週番号> は名前が可変で一覧できないので、
+  //    下の jump3dWeekGames() で機械的に並べて消す。
+  'jump3d', 'jump3d_gain', 'jump3d_coop', 'jump3d_reach'];
 
 // IDから、旧素ID→カテゴリの振り分けに使う頭文字を取り出す（本体 js/gamify.js と同じ）。
 // 「英字＋数字のすぐ後に _ が続く」形（kt1_01_1 など）を先に見て、無ければ英字だけに落とす。
@@ -542,9 +568,21 @@ const CLOUD_SCORE_GAMES = [
   { id: 'jadepanic_time_easy',   label: '🦜 ジェイドパニック（60びょう・やさしい）',     unit: '点' },
   { id: 'jadepanic_time_normal', label: '🦜 ジェイドパニック（60びょう・ふつう）',       unit: '点' },
   { id: 'jadepanic_time_hard',   label: '🦜 ジェイドパニック（60びょう・むずかしい）',   unit: '点' },
+  // 🐦 チッチジャンプ3D（2026-08-22 追加）。**1本の表ではなく3軸**（プラン §3.9）。
+  //   ★reach は「点」ではなく「どこまで登ったか」。点は⭐やボーナスで増えるので別もの。
+  { id: 'jump3d',       label: '🐦 チッチジャンプ3D ベスト',             unit: '点' },
+  { id: 'jump3d_reach', label: '🚩 チッチジャンプ3D いちばん遠く',       unit: '' },
+  { id: 'jump3d_gain',  label: '📈 チッチジャンプ3D じこベストののびしろ', unit: '' },
+  { id: 'jump3d_coop',  label: '🤝 チッチジャンプ3D きょうりょく（合計）', unit: '' },
 ];
+// 今週のシードチャレンジは週ごとに別の表になるので、開いた時点の週番号で作る。
+function cloudScoreGames() {
+  const w = Math.floor((Math.floor(Date.now() / 86400000) + 3) / 7);
+  return CLOUD_SCORE_GAMES.concat(
+    [{ id: 'jump3d_w' + w, label: '🗓 チッチジャンプ3D 今週のシード', unit: '点' }]);
+}
 async function fetchGameScores(nickname) {
-  const results = await Promise.all(CLOUD_SCORE_GAMES.map(async g => {
+  const results = await Promise.all(cloudScoreGames().map(async g => {
     try {
       const snap = await db.collection('game_scores').doc(g.id).collection('scores').doc(nickname).get();
       return { ...g, value: snap.exists ? snap.data().value : null };
@@ -868,13 +906,36 @@ async function loadList() {
   }
 }
 
+// 見出しを押したときの近道。同じ列をもう一度押すと 逆順になる。
+function setSort(key) {
+  const sel = document.getElementById('sort-by');
+  if (!sel) return;
+  if (key === 'updated') sel.value = (sel.value === 'updated') ? 'updated-asc' : 'updated';
+  else sel.value = key;
+  renderList();
+}
+
+// 並べかえ用に、日時を数（ミリ秒）にする。
+// ★Firestore の Timestamp・文字列・未設定 が混ざるので、ここで1本にそろえる。
+//   未設定を 0 にしておくと「新しい順」で最後にまわる（＝一度も上げていない子が下）。
+function tsMs(ts) {
+  if (!ts) return 0;
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const n = d.getTime();
+  return isNaN(n) ? 0 : n;
+}
+
 function renderList() {
   const q = document.getElementById('search').value.trim();
   const body = document.getElementById('list-body');
   const filtered = allEntries.filter(e => !q || e.nickname.includes(q));
   document.getElementById('empty-msg').style.display = filtered.length ? 'none' : 'block';
   body.innerHTML = '';
-  filtered.sort((a, b) => (b.pct || 0) - (a.pct || 0));
+  const how = (document.getElementById('sort-by') || {}).value || 'pct';
+  if (how === 'nickname') filtered.sort((a, b) => a.nickname.localeCompare(b.nickname, 'ja'));
+  else if (how === 'updated') filtered.sort((a, b) => tsMs(b.lastUpdated) - tsMs(a.lastUpdated));
+  else if (how === 'updated-asc') filtered.sort((a, b) => tsMs(a.lastUpdated) - tsMs(b.lastUpdated));
+  else filtered.sort((a, b) => (b.pct || 0) - (a.pct || 0));
   filtered.forEach(e => {
     const title = getTitleInfo(e.pct || 0);
     const tr = document.createElement('tr');
@@ -1381,6 +1442,17 @@ document.addEventListener('click', async (ev) => {
 
 // 計算ドリルのランキングは game_scores/drill_g5_mul_d3_t60/... のように名前が可変で、
 // クライアントからは一覧できない。その子の drillBest（backup/data）に残っている名前だけ消す。
+// 🐦 チッチジャンプ3D の「今週のシード」は game_scores/jump3d_w<週番号> で名前が可変。
+//   計算ドリルとちがって backup にも名前が残らないので、
+//   **今週からさかのぼって週番号を並べて**消す（存在しないぶんの delete は成功扱い）。
+//   ★週番号の出しかたは本体（lab/chicchi-jump-3d/js/game.js の cjWeekNo）と同じにすること。
+function jump3dWeekGames(weeks) {
+  const now = Math.floor((Math.floor(Date.now() / 86400000) + 3) / 7);
+  const out = [];
+  for (let i = 0; i < (weeks || 60); i++) out.push('jump3d_w' + (now - i));
+  return out;
+}
+
 function drillGamesOf(backup) {
   try {
     return Object.keys(JSON.parse((backup && backup.drillBest) || '{}'))
@@ -1412,7 +1484,7 @@ async function deleteCurrentNickname() {
     tasks.push({ label: `進捗:${cat}`,   p: userRef.collection('progress').doc(cat).delete() });
     tasks.push({ label: `ランキング:${cat}`, p: db.collection('leaderboard').doc(cat).collection('scores').doc(nickname).delete() });
   });
-  GAME_IDS.concat(drillGamesOf(currentBackup)).forEach(game => {
+  GAME_IDS.concat(drillGamesOf(currentBackup)).concat(jump3dWeekGames()).forEach(game => {
     tasks.push({ label: `ゲーム:${game}`, p: db.collection('game_scores').doc(game).collection('scores').doc(nickname).delete() });
   });
 

@@ -131,14 +131,39 @@ with sync_playwright() as p:
     # ★飛ばすときは 到着演出（月・火星）の状態を解いてから。
     #   解かずに飛ぶと running=false / ending='mars' のままで、
     #   「旗が出ない・こえない」が**ゲームのせいに見える**（実際そう見えた）。
+    # ★落ちたあとの「引き」も打ち切る。引きの最中は画面をさわると
+    #   **演出スキップに吸われて** dragId が立たず、なぞっても動かない。
+    #   これを入れないと、テストが たまに落ちる（実際 3回に1回ほど落ちた）。
     WARP = """a => { const c = window.__cj.core;
+        window.__cj.clearOutro();
         c.over = false; c.ending = null;
         window.__cj.setRunning(true); window.__cj.warpP(a); c.ending = null; }"""
 
+    # 🚨 飛ばした直後にチッチが落ちて死ぬことがある。死んでいると
+    #   updateFlags は旗を隠すので、直っているのに「旗が出ない」と出る
+    #   （実測：3回に1回ほど落ちた）。**生きている状態で測る**。
+    def warp_alive(target, wait=380):
+        for _ in range(4):
+            pg.evaluate(WARP, target)
+            pg.wait_for_timeout(wait)
+            if not pg.evaluate("window.__cj.core.over"):
+                return True
+        return False
+
+    # 旗が画面に出るまで待つ。飛ばした直後はカメラ（view行列）がまだ前のコマのままで、
+    # 1回だけ見て決めると「出ていない」と誤って判定する（swiftshader は1コマ100msくらい）。
+    def wait_flag_shown(tries=10, gap=200):
+        info = []
+        for _ in range(tries):
+            info = pg.evaluate("window.__cj.flagInfo()")
+            if any(f["shown"] for f in info):
+                return info
+            pg.wait_for_timeout(gap)
+        return info
+
     # おにいちゃん（9,200）の少し手前へ飛ぶ
-    pg.evaluate(WARP, 9150)
-    pg.wait_for_timeout(500)
-    info = pg.evaluate("window.__cj.flagInfo()")
+    check(warp_alive(9150), "9,150 まで飛んで、生きている（死んでいると旗は隠れる）")
+    info = wait_flag_shown()
     shown = [f for f in info if f["shown"]]
     print("     ", json.dumps(pg.evaluate("window.__cj.ghostInfo()"), ensure_ascii=False))
     print("     ", json.dumps(info, ensure_ascii=False))
@@ -147,8 +172,7 @@ with sync_playwright() as p:
     pg.screenshot(path=os.path.join(OUT, "06_flag_ahead.png"))
 
     # こえる
-    pg.evaluate(WARP, 9260)
-    pg.wait_for_timeout(500)
+    check(warp_alive(9260), "9,260 まで飛んで、生きている")
     info = pg.evaluate("window.__cj.flagInfo()")
     ani = [f for f in info if f["name"] == "おにいちゃん"][0]
     check(ani["passed"], "こえたら passed になる")
@@ -192,8 +216,7 @@ with sync_playwright() as p:
     #  👆 タップではチッチを動かさない（本人の指摘 2026-08-22）
     # ======================================================
     print("--- 👆 タップ ---")
-    pg.evaluate(WARP, 4000)
-    pg.wait_for_timeout(300)
+    check(warp_alive(4000), "4,000 まで飛んで、生きている")
     box = pg.eval_on_selector("#c", "el => { const r = el.getBoundingClientRect();"
                                     " return {x: r.x, y: r.y, w: r.width, h: r.height}; }")
     cx, cy = box["x"] + box["w"] * 0.5, box["y"] + box["h"] * 0.6
@@ -219,7 +242,11 @@ with sync_playwright() as p:
     after = px()
     want = pg.evaluate("f => cjWrap(window.__cj.core.camPx + (f - 0.5) * CJ_VIEW_W)",
                        (cx + 70 - box["x"]) / box["w"])
-    check(abs(after - before) > 1e-6, f"なぞれば動く（{before:.3f} → {after:.3f}）")
+    dg = pg.evaluate("() => ({ dragging: window.__cj.dragging(), "
+                     " ending: window.__cj.core.ending, over: window.__cj.core.over, "
+                     " ov: document.getElementById('overlay').className, "
+                     " stun: window.__cj.core.stunUntil - window.__cj.core.time * 1000 })")
+    check(abs(after - before) > 1e-6, f"なぞれば動く（{before:.3f} → {after:.3f}）{json.dumps(dg, ensure_ascii=False)}")
     # ★ぴったり同じにはならない。指を動かしてから読むまでの1〜数コマで
     #   カメラ（camPx）が回りこむぶん、世界の座標が少しずれる（実測 0.03 前後）。
     #   ここで見たいのは「なぞれば指の位置へ合う」こと。画面はば 390px に対して

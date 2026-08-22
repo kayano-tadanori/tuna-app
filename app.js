@@ -1725,6 +1725,9 @@ const BACKUP_KEYS = [
   //    ★足すときは firestore.rules の hasOnly にも同時に足すこと。
   //      片方だけだと、hasOnly が丸ごと拒否して 記録が全部 無言で保存されなくなる。
   'tetris2Best', 'jump3dBest',
+  // 🏅 チッチジャンプ3D のスタンプ帳（2026-08-22）。iframe の中の
+  //    cj:<名前>:stamps を、js/jump3d-embed.js がここへ写している。
+  'jump3dStamps',
   'drillBest',   // 計算ドリルの自己ベスト（組み合わせごとのJSON・2026-07-28）
   'progress',
   'gameTickets', // 息抜きゲームの遊び券（2026-08-20・端末を変えても引き継げるように）

@@ -44,6 +44,15 @@ window.addEventListener('message', e => {
     const nick = (typeof state === 'object' && state && state.nickname) ? state.nickname : '';
     f.contentWindow.postMessage({ type: 'cj-name', name: nick, cost: JUMP3D_COST }, '*');
     sendJump3DItems(f);
+    // 🏅 クラウドから戻ってきているスタンプを、ゲームがわへ返す。
+    //   ★端末を変えたときは、ゲームがわの cj:<名前>:stamps が空。ここで返さないと
+    //     帳がまるごと空のまま（バックアップに載っているのに見えない）。
+    try {
+      f.contentWindow.postMessage({
+        type: 'cj-stamps-restore',
+        stamps: JSON.parse(localStorage.getItem('jump3dStamps') || '{}'),
+      }, '*');
+    } catch (e) {}
 
   } else if (d.type === 'cj-use-item') {
     // 🎒 道具（🪽つばさ / 🚀ロケット）の持ち主は本体。
@@ -98,6 +107,17 @@ window.addEventListener('message', e => {
       //   「点は高いのに、そこまで登っていない」旗が道に立ってしまう。
       if (d.reach > 0) saveGameScore('jump3d_reach', nick, d.reach, 'max');
     }
+
+  } else if (d.type === 'cj-stamps') {
+    // 🏅 スタンプ帳を本体の固定キーへ写して、既存のバックアップに載せる。
+    //   ★可変キー（cj:<名前>:stamps）のままでは載せられない。
+    //     BACKUP_KEYS も firestore.rules の hasOnly も固定の名前しか書けないため。
+    //   ★本体のバックアップは state.nickname ごとなので、受験番号を切りかえると
+    //     この固定キーも一緒に入れかわる（app.js が BACKUP_KEYS を消して入れ直す）。
+    try {
+      localStorage.setItem('jump3dStamps', JSON.stringify(d.stamps || {}));
+      if (typeof backupLocalData === 'function') backupLocalData();
+    } catch (e) {}
 
   } else if (d.type === 'cj-flags-request') {
     // 🚩 みんなの到達点を子に返す（プレイ中に道ばたへ旗を立てる）。

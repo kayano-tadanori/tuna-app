@@ -507,7 +507,29 @@ function addStamp(name) {
   stamps[name] = new Date().toISOString().slice(0, 10);
   newStamps.push(name);
   lsSet('stamps', JSON.stringify(stamps));
+  post('cj-stamps', { stamps });      // ☁ 本体へ預ける（端末を変えても消えないように）
   return true;
+}
+
+// ☁ 本体（クラウド）から返ってきたスタンプを、この端末のものと合わせる。
+//   🚨 **消さない・上書きしない。両方の合併にする。**
+//     ・片方だけを正にすると、オフラインで押したぶんか、別の端末で押したぶんかの
+//       どちらかが必ず消える
+//     ・日付は **早いほう** を残す。「はじめて着いた日」なので、
+//       あとから来た日付で上書きしてはいけない
+function mergeStamps(cloud) {
+  if (!cloud || typeof cloud !== 'object') return;
+  stamps = loadStamps();
+  let changed = false;
+  for (const k of Object.keys(cloud)) {
+    const d = cloud[k];
+    if (typeof d !== 'string' || !d) continue;
+    if (!stamps[k] || d < stamps[k]) { stamps[k] = d; changed = true; }
+  }
+  if (changed) lsSet('stamps', JSON.stringify(stamps));
+  updateStampBadge();
+  // 合併した結果を預けなおす（本体がわにも合わせたものを持たせる）
+  post('cj-stamps', { stamps });
 }
 
 // 🎁 このプレイの「持ち帰るもの」を1つだけ選ぶ（プラン §3.6）
@@ -902,6 +924,8 @@ window.addEventListener('message', e => {
     post('cj-flags-request');
   } else if (d.type === 'cj-flags-data') {
     setFlagData(d.list);
+  } else if (d.type === 'cj-stamps-restore') {
+    mergeStamps(d.stamps);
   } else if (d.type === 'cj-items') {
     // 🎒 道具ののこり。持ち主は本体なので、来た数がいつでも正しい。
     setStock(d.items);
@@ -3656,6 +3680,9 @@ window.__cj = {
   setFlags(rows) { setFlagData(rows); },
   flagY(p) { return cjFlagY(p); },
   // 👆 タップ・⚡逆フリックの実測用（tools/ui.py）
+  //  ★落ちたあとの「引き」の最中は、画面をさわると**演出スキップに吸われて**
+  //    dragId が立たない（＝なぞっても動かない）。実測の前にここで打ち切る。
+  clearOutro() { if (outro) endOutro(); ov.className = ''; },
   flickUsed() { return flickUsed; },
   setFlick(v) { flickUsed = !!v; },
   dragging() { return dragging; },
