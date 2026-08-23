@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>オットン3D 動作チェック</title>
+<!--
+  iPhoneで「問題が繰り返し起きました」が出た原因をしぼるための検査ページ。
+  本体アプリからは切りはなしてあるので、ここが落ちてもアプリには影響しない。
+
+  ★1手ごとに、やる前に画面へ書いてから実行する。
+    落ちたら「最後に出ている行」が犯人。
+
+  切りかえ（URLのうしろに付ける）:
+    ?aa=1        アンチエイリアスを入れる（既定は切）
+    ?img=bitmap  テクスチャを createImageBitmap で渡す（既定は img要素）
+    ?tex=0       テクスチャを貼らない（白いまま）
+    ?dpr=1       画面の細かさを1倍にする（既定は最大1.5倍）
+    ?skin=0      骨を使わない（Tポーズのまま出す）
+-->
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 12px; font-family: -apple-system, sans-serif; background: #0d1836; color: #eaf0ff; }
+  h1 { font-size: 17px; margin: 0 0 8px; }
+  #log { font-size: 13px; line-height: 1.75; }
+  .row { padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .ok::before { content: '✅ '; }
+  .ng::before { content: '❌ '; }
+  .go::before { content: '⏳ '; }
+  .ng { color: #ff9aa2; }
+  .note { color: #9fb3e8; font-size: 12px; }
+  canvas { display: block; width: 100%; max-width: 320px; height: 320px; margin: 10px auto; background: rgba(255,255,255,.05); border-radius: 12px; }
+  #done { font-size: 20px; font-weight: 900; text-align: center; padding: 14px; }
+</style>
+</head>
+<body>
+<h1>オットン3D 動作チェック</h1>
+<div id="log"></div>
+<canvas id="c"></canvas>
+<div id="done"></div>
+
+<script>
+'use strict';
+const Q = new URLSearchParams(location.search);
+const AA = Q.get('aa') === '1';
+const IMG_MODE = Q.get('img') || 'element';
+const USE_TEX = Q.get('tex') !== '0';
+const DPR_CAP = parseFloat(Q.get('dpr') || '1.5');
+const USE_SKIN = Q.get('skin') !== '0';
+
+const logEl = document.getElementById('log');
+let last = null;
+// やる前に書く。落ちたら最後の行が犯人になる
+function go(msg) {
+  if (last) last.className = 'row ok';
+  last = document.createElement('div');
+  last.className = 'row go';
+  last.textContent = msg;
+  logEl.appendChild(last);
+  return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 90))));
+}
+function note(msg) {
+  const d = document.createElement('div');
+  d.className = 'row note';
+  d.textContent = '　' + msg;
+  logEl.appendChild(d);
+}
+function fail(msg) {
+  if (last) last.className = 'row ng';
+  const d = document.createElement('div');
+  d.className = 'row ng';
+  d.textContent = msg;
+  logEl.appendChild(d);
+}
+
+const canvas = document.getElementById('c');
+let gl = null, prog = null, mesh = null, tex = null, skel = null, data = null;
+
+// ---- シェーダー（本体 js/otton3d.js と同じ形） ----
+const VS = `#version 300 es
+in vec3 aPos; in vec3 aNrm; in vec2 aUv; in vec4 aJnt; in vec4 aWgt;
+uniform mat4 uMVP, uModel;
+uniform mat4 uBones[42];
+uniform bool uSkin;
+out vec3 vNrm; out vec2 vUv;
+void main(){
+  vec4 p = vec4(aPos, 1.0);
+  vec3 n = aNrm;
+  if (uSkin) {
+    mat4 sk = uBones[int(aJnt.x)] * aWgt.x + uBones[int(aJnt.y)] * aWgt.y
+            + uBones[int(aJnt.z)] * aWgt.z + uBones[int(aJnt.w)] * aWgt.w;
+    p = sk * p; n = mat3(sk) * n;
+  }
+  vNrm = mat3(uModel) * n; vUv = aUv;
+  gl_Position = uMVP * p;
+}`;
+const FS = `#version 300 es
+precision highp float;
+in vec3 vNrm; in vec2 vUv;
+uniform sampler2D uTex;
+uniform bool uUseTex;
+out vec4 outColor;
+void main(){
+  vec3 base = uUseTex ? texture(uTex, vUv).rgb : vec3(0.8);
+  vec3 n = normalize(vNrm);
+  float kd = dot(n, normalize(vec3(0.45,0.75,0.85))) * 0.5 + 0.5;
+  outColor = vec4(base * (0.62 + 0.55 * kd * kd), 1.0);
+}`;
+
+function compile(src, type) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src); gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error('shader: ' + gl.getShaderInfoLog(s));
+  return s;
+}
+
+async function main() {
+  await go('1. 端末の情報');
+  note(navigator.userAgent);
+  note('devicePixelRatio = ' + (window.devicePixelRatio || 1) + ' / 使う倍率 = ' + Math.min(window.devicePixelRatio || 1, DPR_CAP));
+  note('設定: aa=' + AA + ' img=' + IMG_MODE + ' tex=' + USE_TEX + ' skin=' + USE_SKIN);
+
+  await go('2. WebGL2 のコンテキストを作る');
+  const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+  canvas.width = Math.round(canvas.clientWidth * dpr);
+  canvas.height = Math.round(canvas.clientHeight * dpr);
+  gl = canvas.getContext('webgl2', { alpha: true, antialias: AA, premultipliedAlpha: true, powerPreference: 'low-power' });
+  if (!gl) { fail('WebGL2 が使えない端末です（→ 静止画のままにするのが正解）'); return; }
+  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); fail('★WebGLコンテキストが落ちた（ここが原因）'); });
+
+  await go('3. GPUの上限を読む');
+  const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+  if (dbg) note('GPU: ' + gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL));
+  note('最大テクスチャ ' + gl.getParameter(gl.MAX_TEXTURE_SIZE)
+     + ' / 頂点uniform ' + gl.getParameter(gl.MAX_VERTEX_UNIFORM_VECTORS) + 'vec4（骨42本には168いる）');
+
+  await go('4. シェーダーをコンパイル・リンク');
+  prog = gl.createProgram();
+  gl.attachShader(prog, compile(VS, gl.VERTEX_SHADER));
+  gl.attachShader(prog, compile(FS, gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { fail('リンク失敗: ' + gl.getProgramInfoLog(prog)); return; }
+
+  await go('5. models/otton.glb をダウンロード');
+  const res = await fetch('models/otton.glb');
+  if (!res.ok) { fail('取得できない HTTP ' + res.status); return; }
+  const buf = await res.arrayBuffer();
+  note((buf.byteLength / 1024).toFixed(0) + ' KB');
+
+  await go('6. GLBを解析する');
+  const dv = new DataView(buf);
+  const total = dv.getUint32(8, true);
+  let off = 12, json = null, binOff = 0;
+  while (off < total) {
+    const len = dv.getUint32(off, true), type = dv.getUint32(off + 4, true);
+    if (type === 0x4e4f534a) json = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, off + 8, len)));
+    else if (type === 0x004e4942) binOff = off + 8;
+    off += 8 + len;
+  }
+  const view = i => { const bv = json.bufferViews[i]; return { start: binOff + (bv.byteOffset || 0), len: bv.byteLength }; };
+  const TAs = { 5126: Float32Array, 5125: Uint32Array, 5123: Uint16Array, 5121: Uint8Array };
+  const read = i => {
+    const a = json.accessors[i], v = view(a.bufferView);
+    const nc = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4 }[a.type];
+    return new TAs[a.componentType](buf, v.start + (a.byteOffset || 0), a.count * nc);
+  };
+  const pr = json.meshes[0].primitives[0];
+  data = {
+    pos: read(pr.attributes.POSITION), nrm: read(pr.attributes.NORMAL), uv: read(pr.attributes.TEXCOORD_0),
+    jnt: read(pr.attributes.JOINTS_0), wgt: read(pr.attributes.WEIGHTS_0),
+    idx: read(pr.indices), idxType: json.accessors[pr.indices].componentType === 5123 ? 0x1403 : 0x1405,
+  };
+  skel = json.extras && json.extras.skeleton;
+  note('頂点 ' + (data.pos.length / 3) + ' / 三角形 ' + (data.idx.length / 3) + ' / 骨 ' + (skel ? skel.joints.length : 0));
+
+  if (USE_TEX) {
+    await go('7. テクスチャの画像を作る（' + IMG_MODE + '）');
+    const img = view(json.images[0].bufferView);
+    const blob = new Blob([new Uint8Array(buf, img.start, img.len)], { type: json.images[0].mimeType });
+    let src;
+    if (IMG_MODE === 'bitmap') {
+      src = await createImageBitmap(blob);
+      note('ImageBitmap ' + src.width + 'x' + src.height);
+    } else {
+      const url = URL.createObjectURL(blob);
+      src = await new Promise((ok, ng) => {
+        const im = new Image();
+        im.onload = () => ok(im);
+        im.onerror = () => ng(new Error('画像が読めない'));
+        im.src = url;
+      });
+      note('img要素 ' + src.naturalWidth + 'x' + src.naturalHeight);
+    }
+
+    await go('8. テクスチャをGPUへ転送する');
+    tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB8, gl.RGB, gl.UNSIGNED_BYTE, src);
+
+    await go('9. ミップマップを作る');
+    gl.generateMipmap(gl.TEXTURE_2D);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    if (src.close) src.close();
+    const e = gl.getError();
+    if (e) note('GLエラー番号 ' + e);
+  }
+
+  await go('10. 頂点データをGPUへ送る');
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+  const bind = (arr, name, size, type, norm) => {
+    const loc = gl.getAttribLocation(prog, name);
+    if (loc < 0) return;
+    const b = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, b);
+    gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, size, type, !!norm, 0, 0);
+  };
+  bind(data.pos, 'aPos', 3, gl.FLOAT);
+  bind(data.nrm, 'aNrm', 3, gl.FLOAT);
+  bind(data.uv, 'aUv', 2, gl.FLOAT);
+  bind(data.jnt, 'aJnt', 4, gl.UNSIGNED_BYTE, false);
+  bind(data.wgt, 'aWgt', 4, gl.UNSIGNED_BYTE, true);
+  const ib = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, data.idx, gl.STATIC_DRAW);
+  gl.bindVertexArray(null);
+  mesh = { vao, count: data.idx.length, idxType: data.idxType };
+
+  await go('11. 骨の行列をつくる（' + (USE_SKIN && skel ? '使う' : '使わない') + '）');
+  const palette = new Float32Array(42 * 16);
+  for (let j = 0; j < 42; j++) { palette[j * 16] = palette[j * 16 + 5] = palette[j * 16 + 10] = palette[j * 16 + 15] = 1; }
+
+  await go('12. 1フレームだけ描く');
+  const U = {
+    mvp: gl.getUniformLocation(prog, 'uMVP'), model: gl.getUniformLocation(prog, 'uModel'),
+    tex: gl.getUniformLocation(prog, 'uTex'), useTex: gl.getUniformLocation(prog, 'uUseTex'),
+    skin: gl.getUniformLocation(prog, 'uSkin'), bones: gl.getUniformLocation(prog, 'uBones'),
+  };
+  gl.enable(gl.DEPTH_TEST);
+  const draw = () => {
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    const f = 1 / Math.tan(0.28), d = 2.4;
+    const mvp = [f, 0, 0, 0, 0, f, 0, 0, 0, 0, -1.008, -1, 0, -0.52 * f, d - 0.1, d];
+    gl.useProgram(prog);
+    gl.uniformMatrix4fv(U.mvp, false, new Float32Array(mvp));
+    gl.uniformMatrix4fv(U.model, false, new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]));
+    gl.uniform1i(U.skin, USE_SKIN && skel ? 1 : 0);
+    gl.uniform1i(U.useTex, USE_TEX ? 1 : 0);
+    if (USE_SKIN && skel) gl.uniformMatrix4fv(U.bones, false, palette);
+    if (USE_TEX) { gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex); gl.uniform1i(U.tex, 0); }
+    gl.bindVertexArray(mesh.vao);
+    gl.drawElements(gl.TRIANGLES, mesh.count, mesh.idxType, 0);
+    gl.bindVertexArray(null);
+  };
+  draw();
+
+  await go('13. 300フレーム続けて描く（ここで落ちるならメモリか熱）');
+  let n = 0;
+  await new Promise(ok => {
+    const loop = () => {
+      draw();
+      if (++n % 60 === 0) last.textContent = '13. 連続描画 ' + n + ' / 300 フレーム';
+      if (n < 300) requestAnimationFrame(loop); else ok();
+    };
+    requestAnimationFrame(loop);
+  });
+
+  if (last) last.className = 'row ok';
+  document.getElementById('done').textContent = '🎉 ぜんぶ通りました';
+}
+
+main().catch(e => fail('ここで止まった: ' + (e && e.message ? e.message : e)));
+window.addEventListener('error', e => fail('エラー: ' + e.message));
+</script>
+</body>
+</html>
