@@ -17,11 +17,24 @@
   const MODEL_URL = 'models/otton.glb';
 
   // どの画面のどこに置くか。showScreen() から onScreen() で呼ばれる
-  const SLOTS = {
+  //
+  // ★トップ画面(subject)は既定で入れない。置き場所の .otton-small-wrap に
+  //   backdrop-filter: blur(14px) が掛かっていて、そのすりガラスの箱の中で
+  //   毎フレーム描くWebGLキャンバスを回すと、iOS Safari がページごと落ちる。
+  //   （2026-08-24。受験番号を保存ずみだと起動直後がトップ画面なので、
+  //     アプリが毎回そこで落ちて「問題が繰り返し起きました」になった）
+  //   どうしてもトップにも出したいときは、先に .otton-small-wrap の
+  //   backdrop-filter を外すこと。URLに ?otton3d=all で試せる。
+  const ALL_SLOTS = {
     nickname:  { sel: '#otton-3d-hero',  focus: 'body', sway: 0.40, shadow: true },
     subject:   { sel: '#otton-3d-small', focus: 'head', sway: 0.55, shadow: false },
     character: { sel: '#otton-3d-char',  focus: 'body', sway: 0.40, shadow: true },
   };
+  const SLOTS = {};
+  for (const k in ALL_SLOTS) {
+    if (k === 'subject' && window.OTTON3D_MODE !== 'all') continue;
+    SLOTS[k] = ALL_SLOTS[k];
+  }
 
   // ---- しぐさ（POSEの角度を置きかえる。時間をかけて混ぜる）----
   //  腕の骨は「0＝真横（Tポーズ）」。左腕はマイナスで下がりプラスで上がる。右腕は逆。
@@ -431,6 +444,14 @@
         alpha: true, antialias: true, premultipliedAlpha: true, powerPreference: 'low-power',
       });
       if (!gl) throw new Error('no webgl2');
+      // GPUがつらくなって落ちたら、あきらめて静止画に戻す（落ちたまま回し続けない）
+      canvas.addEventListener('webglcontextlost', e => {
+        e.preventDefault();
+        failed = true;
+        ready = false;
+        console.warn('[otton3d] WebGLコンテキストが落ちた。静止画に戻す');
+        detach();
+      });
       prog = link(VS, FS);
       shadowProg = link(SHADOW_VS, SHADOW_FS);
       const data = await loadGLB(MODEL_URL);
@@ -486,7 +507,7 @@
   // ---------- 描画 ----------
   function resize() {
     const r = host.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const w = Math.max(1, Math.round(r.width * dpr));
     const h = Math.max(1, Math.round(r.height * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }

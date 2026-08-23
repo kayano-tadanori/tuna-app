@@ -2381,6 +2381,25 @@
 <script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
 <script src="js/jadepanic-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
 <script src="js/jump3d-embed.js"></script>  <!-- チッチジャンプ3D（iframeの橋渡し） -->
+<script>
+  // 3Dのオットン（js/otton3d.js）。★既定は「切」。
+  //   2026-08-24にiPhoneでアプリごと落ちたので、安全が確かめられるまで
+  //   URLに ?otton3d=1 を付けたときだけ読む。付けない=これまでどおり静止画。
+  //     ?otton3d=1    … ログイン画面とキャラクター紹介で3D
+  //     ?otton3d=all  … トップ画面の小さい枠でも3D（ぼかしの箱＝落ちる疑いあり）
+  (function () {
+    var m = new URLSearchParams(location.search).get('otton3d');
+    if (!m || m === '0' || m === 'off') return;
+    window.OTTON3D_MODE = m;
+    var el = document.createElement('script');
+    el.src = 'js/otton3d.js';
+    el.onload = function () {
+      // 先に画面が出ていることがあるので、いまの画面に置き直す
+      try { if (window.Otton3D && currentScreenId) Otton3D.onScreen(currentScreenId); } catch (e) {}
+    };
+    document.head.appendChild(el);
+  })();
+</script>
 <script src="js/gacha.js"></script>
 <script src="js/gamify.js"></script>
 <script src="js/sweeper.js"></script>
