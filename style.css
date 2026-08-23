@@ -141,7 +141,13 @@ canvas.otton3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%;
 
 /* ===== 科目選択 (screen-subject) ===== */
 .subject-main { padding: 16px 16px 32px; }
-.otton-small-wrap { display: flex; align-items: center; gap: 14px; background: linear-gradient(135deg,rgba(15,45,110,0.62),rgba(26,93,216,0.30)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(79,124,255,0.28); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 4px; box-shadow: 0 6px 24px rgba(79,124,255,0.14); position: relative; overflow: hidden; }
+/* ★backdrop-filter（すりガラス）は入れないこと。
+   この箱の中には3Dのオットン（毎フレーム描き替わるWebGLキャンバス）が入る。
+   すりガラスの中でそれを回すと、iOS Safari が合成をやり直し続けてページごと落ちる。
+   2026-08-24に実際にアプリが起動できなくなった。
+   背景が暗いなめらかなグラデーションなので、外しても見た目はほぼ変わらない
+   （画素の平均差 0.18/255 を実測ずみ）。 */
+.otton-small-wrap { display: flex; align-items: center; gap: 14px; background: linear-gradient(135deg,rgba(15,45,110,0.62),rgba(26,93,216,0.30)); border: 1px solid rgba(79,124,255,0.28); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 4px; box-shadow: 0 6px 24px rgba(79,124,255,0.14); position: relative; overflow: hidden; }
 .otton-small-wrap::after { content: ""; position: absolute; top: -40px; right: -30px; width: 130px; height: 130px; background: radial-gradient(circle,rgba(79,124,255,0.22),transparent 65%); pointer-events: none; }
 .otton-small { width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 4px 12px rgba(79,124,255,0.35)); animation: float 3.2s ease-in-out infinite; }
 .otton-msg-block { flex: 1; min-width: 0; }

@@ -23,8 +23,9 @@
   //   毎フレーム描くWebGLキャンバスを回すと、iOS Safari がページごと落ちる。
   //   （2026-08-24。受験番号を保存ずみだと起動直後がトップ画面なので、
   //     アプリが毎回そこで落ちて「問題が繰り返し起きました」になった）
-  //   どうしてもトップにも出したいときは、先に .otton-small-wrap の
-  //   backdrop-filter を外すこと。URLに ?otton3d=all で試せる。
+  //   → style.css の .otton-small-wrap から backdrop-filter を外して直した。
+  //     ★あそこに すりガラスを戻すなら、この枠も同時に外すこと。
+  //   調べたいときは URLに ?otton3d=nosmall で、トップ画面だけ静止画に戻せる。
   const ALL_SLOTS = {
     nickname:  { sel: '#otton-3d-hero',  focus: 'body', sway: 0.40, shadow: true },
     subject:   { sel: '#otton-3d-small', focus: 'head', sway: 0.55, shadow: false },
@@ -32,7 +33,7 @@
   };
   const SLOTS = {};
   for (const k in ALL_SLOTS) {
-    if (k === 'subject' && window.OTTON3D_MODE !== 'all') continue;
+    if (k === 'subject' && window.OTTON3D_MODE === 'nosmall') continue;
     SLOTS[k] = ALL_SLOTS[k];
   }
 
