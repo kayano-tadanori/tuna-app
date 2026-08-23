@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- オットン3Dの見た目を確かめる開発用ページ（アプリ本体からはリンクしていない）。
+     姿勢を直すときはここで見比べる。
+       ?freeze=1                       … 呼吸などを止めて同じ絵で比較する
+       ?pose={"Spine02":[-0.25,0,0]}   … 骨の角度を差し替えて試す
+       ?slot=small                     … 顔アップの枠で見る
+     気に入った値を js/otton3d.js の POSE に書き写す。 -->
+<meta charset="utf-8">
+<title>オットン3D 確認</title>
+<style>
+  body { margin:0; background:#0a1533; color:#fff; font-family:sans-serif; display:flex; gap:20px; padding:20px; }
+  .box { background:linear-gradient(160deg,#12245c,#0a1533); border:1px solid #4f7cff44; border-radius:16px; }
+  #otton-3d-hero { width:380px; height:460px; position:relative; }
+  #otton-3d-small { width:120px; height:120px; position:relative; }
+  canvas.otton3d-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+</style>
+<div class="box" id="otton-3d-hero"></div>
+<div class="box" id="otton-3d-small"></div>
+<script src="js/otton3d.js"></script>
+<script>
+  // ?pose={"L_Upperarm":[0,0,1.2]} で姿勢を差し替えて見比べられる
+  // ?freeze=1 で呼吸などを止めて、同じ絵で比較できる
+  const q = new URLSearchParams(location.search);
+  if (q.get('pose')) Otton3D.tune(JSON.parse(q.get('pose')));
+  if (q.get('freeze')) {
+    const raf = window.requestAnimationFrame;
+    let n = 0;
+    window.requestAnimationFrame = cb => raf(() => cb(1000));  // 時刻を固定
+  }
+  window.addEventListener('load', () => {
+    Otton3D.onScreen(q.get('slot') === 'small' ? 'subject' : 'nickname');
+  });
+</script>

@@ -29,6 +29,13 @@ const CATEGORIES = {
 // 漢字カテゴリ（学年選択あり・専用UI）
 const KANJI_CATS = ['kanji_kaki', 'kanji_yomi'];
 
+// プレイ時間の計測に使う。中身を触るのは js/gamify.js だが、
+// showScreen() がこの app.js にあるので★宣言はいちばん先に読まれるここに置く
+// （後ろのファイルで let すると、先に showScreen() が走ったとき参照エラーで落ちる）
+const PLAY_SCREENS = ['quiz', 'fill', 'kanji', 'sansu-quiz', 'drill'];
+let playStart = null;
+let currentScreenId = '';
+
 const MODES = {
   quiz: '四択クイズ'
 };
@@ -246,6 +253,7 @@ function showScreen(id) {
   }
   updateScratchDock();
   if (window.Snd) Snd.onScreen(id);
+  if (window.Otton3D) Otton3D.onScreen(id);   // 3Dのオットンを、出ている画面へ引っ越しさせる
 }
 
 // ============================================================

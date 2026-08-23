@@ -233,9 +233,9 @@ function formatMinutes(sec) {
 }
 
 // プレイ時間の計測（勉強画面に入ったら開始、出たら加算。テトリスは含めない）
-const PLAY_SCREENS = ['quiz', 'fill', 'kanji', 'sansu-quiz', 'drill'];
-let playStart = null;
-let currentScreenId = '';
+// ★PLAY_SCREENS / playStart / currentScreenId は app.js の冒頭で宣言している。
+//   ここ（app.jsより後に読まれるファイル）で let すると、app.js の showScreen() が
+//   先に走ったときに「currentScreenId is not defined」で画面切りかえごと落ちる。
 function flushPlayTime() {
   if (playStart) { addPlayTime((Date.now() - playStart) / 1000); playStart = null; }
 }
