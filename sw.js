@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v600';
+const CACHE_NAME = 'oton-gakuen-v602';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -10,8 +10,6 @@ const ASSETS = [
   './app.js',
   // app.js を分けたぶん（2026-08-08）。オフラインで動くようにここにも並べる
   './js/game-core.js',
-  './js/otton3d.js',
-  './models/otton.glb',   // 3Dのオットン（約900KB）
   './js/sansu.js',
   './js/books.js',
   './js/shakai-go.js',
