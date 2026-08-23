@@ -81,7 +81,10 @@ const EXTRA_FILES = [
   ['kokugo', 'kokugo_chain.json'],
 ];
 // じゅくナビの大問（設定＋設問の束）。中身は grades→コース→回→[大問] の入れ子。
-const DAIMON_FILES = ['hama_daimon.json', 'hama_kokugo.json'];
+// ★hama_kokugo.json はここに入れない。じゅくナビ国語は大問（steps）ではなく1問ずつなので、
+//   walkDaimon の「steps を持つものだけ」という条件に落ちて1件も索引に載らなかった
+//   （2026-08-23 発覚。1,022問まるごと「いまのデータに無い問題」になっていた）。下の④で読む。
+const DAIMON_FILES = ['hama_daimon.json'];
 
 // ── ここから組み立て ──
 const units = [];
@@ -164,7 +167,28 @@ function walkDaimon(node, subjectHint) {
 }
 for (const file of DAIMON_FILES) {
   const j = readJSON(file);
-  if (j) walkDaimon(j.grades || j, file === 'hama_kokugo.json' ? 'kokugo' : 'sansu');
+  if (j) walkDaimon(j.grades || j, 'sansu');
+}
+
+// ④ じゅくナビ国語（hama_kokugo.json）。形は grades[学年][コース].lessons[回] = { title, kanji:[…] }で、
+//    1問ずつ並んでいる（steps を持たない）ので walkDaimon では拾えない。ここで直接読む。
+//    ・バケツは kokugo_hama_kokugo。js/gamify.js の ID_PREFIX_MAP（hk → kokugo:hama_kokugo）と同じ名前にする
+//    ・単元は回ごとに刻まず、ほかの国語カテゴリ（ことわざ・外来語…）と同じ「学年 × 1行」の粗さにそろえる。
+//      回ごとにすると97行に散って、管理ツールの上位20から消えてしまう
+//    ・★最レ（sairei_kokugo）は年度で回の中身が入れかわるので、回番号にひもづけない
+{
+  const j = readJSON('hama_kokugo.json');
+  for (const [grade, courses] of Object.entries((j && j.grades) || {})) {
+    for (const [course, cv] of Object.entries(courses)) {
+      if (course.startsWith('_')) continue;
+      const unit = course === 'sairei_kokugo' ? '最レ国語' : 'じゅくナビ漢字';
+      for (const lesson of Object.values((cv && cv.lessons) || {})) {
+        (lesson.kanji || []).forEach(q => {
+          if (q && q.id) put('kokugo', 'hama_kokugo', q.id, q.grade || grade, unit);
+        });
+      }
+    }
+  }
 }
 
 // ── 出力 ──
@@ -178,6 +202,7 @@ for (const [subject, cats] of Object.entries(CATS)) {
 Object.assign(labels, {
   sansu_kaisetsu: 'かんたん解説', rika_kaisetsu: 'かんたん解説', kokugo_kaisetsu: 'かんたん解説',
   sansu_hama: 'じゅくナビ', rika_hama: 'じゅくナビ', kokugo_hama: 'じゅくナビ',
+  kokugo_hama_kokugo: 'じゅくナビ国語',   // 小3・小4本科の漢字＋小5最レのことば（data/hama_kokugo.json）
   sansu_null: 'カテゴリ不明', rika_null: 'カテゴリ不明', kokugo_null: 'カテゴリ不明',
 });
 const stamp = process.env.QINDEX_DATE || new Date().toISOString().slice(0, 10);
