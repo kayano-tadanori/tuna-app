@@ -35,6 +35,7 @@
 </head>
 <body>
 <h1>オットン3D 動作チェック</h1>
+<div id="state"></div>
 <div id="log"></div>
 <canvas id="c"></canvas>
 <div id="done"></div>
@@ -47,6 +48,18 @@ const IMG_MODE = Q.get('img') || 'element';
 const USE_TEX = Q.get('tex') !== '0';
 const DPR_CAP = parseFloat(Q.get('dpr') || '1.5');
 const USE_SKIN = Q.get('skin') !== '0';
+
+// 本体アプリ側の状態を見せる（同じサイトなので localStorage は共通）
+(function () {
+  var g = k => { try { return localStorage.getItem(k); } catch (e) { return '(読めない)'; } };
+  var n = g('otton3d_fail_v2');
+  var note = g('otton3d_note');
+  document.getElementById('state').innerHTML =
+    '<div class="row note">アプリ側の状態： 落ちた印 = ' + (n === null ? '（なし）' : n)
+    + (n >= 3 ? '　→ 3Dは止まっています（?otton3d=1 で復活）' : '')
+    + '</div>'
+    + (note ? '<div class="row note">記録： ' + note + '</div>' : '');
+})();
 
 const logEl = document.getElementById('log');
 let last = null;

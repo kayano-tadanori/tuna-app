@@ -451,6 +451,8 @@
         failed = true;
         ready = false;
         console.warn('[otton3d] WebGLコンテキストが落ちた。静止画に戻す');
+        // あとで原因を見分けられるように残す（otton3d-check.html で読める）
+        try { localStorage.setItem('otton3d_note', 'contextlost ' + new Date().toLocaleString('ja-JP')); } catch (err) {}
         detach();
       });
       prog = link(VS, FS);

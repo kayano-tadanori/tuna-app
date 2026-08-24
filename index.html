@@ -2384,23 +2384,36 @@
 <script>
   // 3Dのオットン（js/otton3d.js）を読む。
   //
-  // ★安全装置：出す前に「いま出そうとしている」と印を付け、6秒 無事に動いたら消す。
-  //   iPhoneがページごと落ちると印が残るので、2回続けて落ちたらもう出さない。
-  //   ＝3Dのせいでアプリが二度と開かなくなる、という事態にはならない。
-  //   （2026-08-24に実際にそれをやってしまったので入れた）
+  // ★安全装置：出す前に印を付け、無事だったら消す。iPhoneがページごと落ちると
+  //   印が残るので、3回続けて落ちたらもう出さない。
+  //   ＝3Dのせいでアプリが二度と開かなくなることはない。
+  //
+  //   ☆ふつうにアプリを閉じたときも印を消す（pagehide / 画面を隠したとき）。
+  //     これが無いと「すぐ閉じただけ」を落ちたと数えてしまい、
+  //     3Dが出なくなる（2026-08-24に実際にやった。時間だけで見ていたのが間違い）。
   //
   //   ?otton3d=0       … 出さない
-  //   ?otton3d=1       … 印を消してやり直す（もう出なくなったときの復活用）
+  //   ?otton3d=1       … 印を消してやり直す
   //   ?otton3d=nosmall … トップ画面だけ静止画に戻す（調べる用）
   (function () {
     var q = new URLSearchParams(location.search).get('otton3d');
     if (q === '0' || q === 'off') return;
-    var K = 'otton3d_fail_v1', n = 0;
+    var K = 'otton3d_fail_v2', n = 0;
     try { n = parseInt(localStorage.getItem(K) || '0', 10) || 0; } catch (e) {}
     if (q === '1' || q === 'on') n = 0;
-    if (n >= 2) return;                       // 2回続けて落ちた＝この端末では出さない
+    if (n >= 3) return;                       // 3回続けて落ちた＝この端末では出さない
     try { localStorage.setItem(K, String(n + 1)); } catch (e) {}
-    setTimeout(function () { try { localStorage.setItem(K, '0'); } catch (e) {} }, 6000);
+
+    var cleared = false;
+    function ok() {
+      if (cleared) return;
+      cleared = true;
+      try { localStorage.setItem(K, '0'); } catch (e) {}
+    }
+    window.addEventListener('pagehide', ok);                                  // 閉じた・アプリを切りかえた
+    document.addEventListener('visibilitychange', function () { if (document.hidden) ok(); });
+    setTimeout(ok, 8000);                                                     // 念のための時間切れ
+
     window.OTTON3D_MODE = q || 'on';
     var el = document.createElement('script');
     el.src = 'js/otton3d.js';
