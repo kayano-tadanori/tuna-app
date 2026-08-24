@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '_chars')
 URL = 'http://127.0.0.1:8899/lab/okatazuke/index.html'
-CHARS = ['okan2', 'otton', 'taitsu', 'g3', 'g5']
+CHARS = ['okan2', 'otton', 'taitsu', 'g3', 'g3b', 'g5', 'g5b']
 
 
 def main():
@@ -59,7 +59,7 @@ def main():
     print('コンソール:', bad[:5] if bad else 'エラーなし')
     ims = [Image.open(f) for f in shots]
     w, h = ims[0].size
-    sheet = Image.new('RGB', (w * 5, h * 2), (255, 255, 255))
+    sheet = Image.new('RGB', (w * len(CHARS), h * 2), (255, 255, 255))
     for i, im in enumerate(ims):
         sheet.paste(im, ((i // 2) * w, (i % 2) * h))
     out = os.path.join(OUT, '_play_sheet_%s.png' % pet)

@@ -49,10 +49,10 @@ def main():
             ng.append('えらぶ画面が 開かない')
         n = pg.locator('#char-list .cc').count()
         m = pg.locator('#pet-list .cc').count()
-        if n != 5:
-            ng.append('キャラの数が %d（5のはず）' % n)
-        if m != 3:
-            ng.append('ペットの数が %d（3のはず）' % m)
+        if n != 7:
+            ng.append('キャラの数が %d（7のはず）' % n)
+        if m != 4:
+            ng.append('ペットの数が %d（4のはず）' % m)
 
         # 5人 ぜんぶ 押してみる
         for i in range(n):

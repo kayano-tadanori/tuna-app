@@ -1,5 +1,5 @@
 // ============================================================
-// chars.js — あそぶ人（5人）と ペット（2羽）の きりかえ
+// chars.js — あそぶ人（7人）と ペット（3羽）の きりかえ
 //   モデルは tools/import_char_glb.py / import_pet_glb.py が作る
 //   js/char_*.js と js/pet_*.js。★1人ぶんで 500〜700KB あるので、
 //   えらばれたものだけ あとから読む（最初に全部読むと 3MB になる）。
@@ -11,12 +11,15 @@ const OK_CHARS = [
   { id: 'otton', name: 'オットン', tag: 'おとん' },
   { id: 'taitsu', name: 'タイツマン', tag: 'ヒーロー' },
   { id: 'g3', name: '小3男子', tag: 'おとうと' },
+  { id: 'g3b', name: '小3男子②', tag: 'おとうと' },
   { id: 'g5', name: '小5男子', tag: 'おにいちゃん' },
+  { id: 'g5b', name: '小5男子②', tag: 'おにいちゃん' },
 ];
 const OK_PETS = [
   { id: 'none', name: 'なし', tag: '' },
   { id: 'chicchi', name: 'チッチ', tag: '小鳥' },
   { id: 'jade', name: 'ジェイド', tag: 'あいぼう' },
+  { id: 'mei', name: 'メイ', tag: 'なかよし' },
 ];
 
 const OK_CHAR_KEY = 'okatazukeChar';

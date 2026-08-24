@@ -7,12 +7,15 @@ SRC = r'C:\Users\User\Desktop\Claude\tuna app\素材\3Dmodel'
 OUT = os.path.join(HERE, '_chars')
 TAG = {'オカーン':('okan2',6000), 'オットン':('otton',6000), 'タイツマン':('taitsu',6000),
        '小3男子':('g3',6000), '小5男子':('g5',6000),
+       '小3男子2':('g3b',6000), '小5男子2':('g5b',6000), 'メイ(ペット)':('mei',1800),
        'チッチ(ペット)':('chicchi',1800), 'ジェイド(ペット)':('jade',1800)}
 for path in sorted(glob.glob(os.path.join(SRC, '*.glb'))):
     nm = os.path.splitext(os.path.basename(path))[0]
     if nm not in TAG: continue
     tag, target = TAG[nm]
     out = os.path.join(OUT, tag + '.glb')
+    if os.path.exists(out):
+        print('すみ', tag); continue
     g, bin_ = G.read_glb(path)
     tris = sum(g['accessors'][pr['indices']]['count']//3 for m in g.get('meshes',[]) for pr in m['primitives'])
     ratio = max(1e-6, target/tris)

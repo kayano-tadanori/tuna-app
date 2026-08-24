@@ -17,8 +17,8 @@ from playwright.sync_api import sync_playwright
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '_chars')
 URL = 'http://127.0.0.1:8899/lab/okatazuke/index.html'
-CHARS = ['okan2', 'otton', 'taitsu', 'g3', 'g5']
-PETS = ['chicchi', 'jade']
+CHARS = ['okan2', 'otton', 'taitsu', 'g3', 'g3b', 'g5', 'g5b']
+PETS = ['chicchi', 'jade', 'mei']
 
 # 立ち姿・歩く・おす・よろこぶ
 POSES = {
