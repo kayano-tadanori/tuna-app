@@ -226,3 +226,7 @@ html, body {
 
 /* もどり先が 分かるように 文字も入れる丸ボタン */
 .ico-btn.wide { width: auto; padding: 0 14px; font-size: 14px; font-weight: 700; }
+
+/* タイトルの「やめる」＝オトン学園へ もどる。組みこみのときだけ 出す */
+.mid-btn.quit { background: rgba(255,255,255,.22); color: #ffe6ef; box-shadow: none; }
+.mid-btn.quit:active { transform: translateY(2px); background: rgba(255,255,255,.34); }

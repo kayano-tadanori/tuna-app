@@ -141,6 +141,32 @@ with sync_playwright() as p:
         if t3 != t2:
             ng.append(f'面を変えたら 券が減った（{t2}→{t3}）')
         pg.screenshot(timeout=90000, animations="disabled", path=os.path.join(OUT, "03_play.png"))
+        # ★タイトルの「やめる」でも 出られるか（組みこみのときだけ 出るボタン）
+        fr.evaluate("() => okShow('title')")
+        pg.wait_for_timeout(700)
+        if not fr.evaluate("() => { const b = document.getElementById('btn-quit');"
+                           " return b && b.style.display !== 'none'; }"):
+            ng.append('組みこみなのに タイトルの「やめる」が 出ていない')
+        else:
+            tap_in_frame(pg, fr, "#btn-quit")
+            pg.wait_for_timeout(900)
+            if pg.evaluate("() => document.getElementById('oz-frame').src") != 'about:blank':
+                ng.append('タイトルの「やめる」で もどれない')
+            else:
+                print('タイトルの やめる … もどれた')
+                # もう一度あけて、✕ のほうも たしかめる
+                pg.evaluate("() => document.querySelector('[data-subject=okatazuke]').click()")
+                pg.wait_for_timeout(2500)
+                fr = None
+                for f in pg.frames:
+                    if 'okatazuke' in f.url:
+                        fr = f
+                fr.wait_for_function("window.__okReady === true", timeout=20000)
+                tap_in_frame(pg, fr, "#btn-start")
+                pg.wait_for_timeout(900)
+                fr.evaluate("() => okStartLevel(1)")   # ✕ は あそび画面にある
+                pg.wait_for_timeout(700)
+
         # ✕ でもどる
         tap_in_frame(pg, fr, "#btn-exit")
         pg.wait_for_timeout(900)

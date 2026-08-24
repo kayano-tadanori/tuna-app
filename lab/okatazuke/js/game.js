@@ -1108,6 +1108,16 @@ function okBindUI() {
     if (OKG.embed) parent.postMessage({ type: 'okz-exit' }, '*');
     else okShow('title');
   };
+  // ★タイトルからも やめられる（組みこんで遊んでいるときだけ出す。
+  //   単体で開いているときは 出ていく先が無いので 出さない）
+  const bq = document.getElementById('btn-quit');
+  if (bq) {
+    bq.style.display = OKG.embed ? '' : 'none';
+    bq.onclick = () => {
+      if (window.OKBgm) OKBgm.play(null);
+      parent.postMessage({ type: 'okz-exit' }, '*');
+    };
+  }
 }
 
 // まだ ★の付いていない いちばん前の面へ
