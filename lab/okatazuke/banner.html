@@ -10,11 +10,13 @@
 </head>
 <body>
 <canvas id="cv"></canvas>
+<script src="../_lib/motion.js"></script>
 <script src="js/gl.js"></script>
 <script src="js/shaders.js"></script>
 <script src="js/parts.js"></script>
 <script src="js/scene.js"></script>
 <script src="js/okan.js"></script>
+<script src="js/pet.js"></script>
 <script src="js/chars.js"></script>
 <script src="js/char_okan2.js"></script>
 <script src="js/pet_chicchi.js"></script>
@@ -55,7 +57,7 @@ const GOALS = [[0.10, 0.85], [-1.00, 0.85], [0.10, -0.25]];
 
 // ★カードの絵は オカーン＋チッチ で固定（えらんだキャラでは撮らない）。
 //   カードは 全員ぶん 1枚しかないので、看板は いつも同じ顔にする。
-let pet = null, petM = null;
+let pet = null, petM = null, petRig = null;
 function build(done) {
   const M = window.CHAR_MODELS.okan2;
   const geo = buildOkanFromModel(M);
@@ -70,7 +72,12 @@ function build(done) {
   };
   load(M.tex, im => {
     okan = R.makeMesh(geo, im);
-    load(petM.tex, im2 => { pet = R.makeMesh(buildPetFromModel(petM), im2); done(); });
+    load(petM.tex, im2 => {
+      pet = R.makeMesh(buildPetFromModel(petM), im2);
+      petRig = new PetRig(petM);
+      petRig.freeze(0.95);      // 羽は たたんだ形で 撮る
+      done();
+    });
   });
 }
 
@@ -119,10 +126,10 @@ function draw(t) {
   })), { outlineWidth: 0.0020, outlineCol: [0.40, 0.24, 0.14] });
   // オカン
   R.drawMesh(okan, rig.bones, { outlineWidth: 0.0024 });
-  if (pet) {
-    const m = rig.bones[OK_BONE.CHI];
+  if (pet && petRig) {
+    const base = rig.bones[OK_BONE.CHI];
     const B = [];
-    for (let i = 0; i < OK_NBONE; i++) B.push(m);
+    for (let i = 0; i < PET_NBONE; i++) B.push(M4.mul(base, petRig.bones[i]));
     R.drawMesh(pet, B, { outlineWidth: 0.0022 });
   }
 }

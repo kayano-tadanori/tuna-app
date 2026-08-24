@@ -550,6 +550,7 @@ function okFrame(now) {
   R.time = OKG.time;
   if (OKG.board && R.aspect !== OKG.lastAspect) { OKG.lastAspect = R.aspect; okFitCamera(); }
 
+  OKG.__dt = dt;
   if (OKG.screen === 'play' || OKG.screen === 'clear') {
     okStep(dt);
     okDraw();
@@ -748,7 +749,7 @@ function okDraw() {
 
   // あそぶ人と ペット
   R.drawMesh(OKG.okan, OKG.rig.bones, { outlineWidth: 0.0034 });
-  okDrawPet(R, OKG.rig);
+  okDrawPet(R, OKG.rig, OKG.__dt);
   R.drawParticles(OKG.fx.map(p => ({
     x: p.x, y: p.y, z: p.z, size: p.size,
     col: p.col, alpha: Math.max(0, 1 - p.age / p.life),
@@ -858,7 +859,9 @@ function okDrawTitle(dt) {
   // ★見えるはばは 半分で 0.82 しかない。ここを外れると オカンが画面の外に立つ（実測）。
   //   演目の px は ぜんぶ ±0.98 におさめてある。
   const cx = Math.sin(t * 0.16) * 0.10;
-  R.camera([cx, 2.20 + Math.sin(t * 0.21) * 0.05, 5.4], [cx * 0.3, 1.30, 0], 40);
+  // ★tools/pose_shot.py から カメラを 差しかえて 肩まわりを 大きく撮る
+  if (OKG.__cam) R.camera(OKG.__cam[0], OKG.__cam[1], 40);
+  else R.camera([cx, 2.20 + Math.sin(t * 0.21) * 0.05, 5.4], [cx * 0.3, 1.30, 0], 40);
   R.bg([0.36, 0.30, 0.46], [0.86, 0.72, 0.72], rig.cheer * 0.5);
 
   // 足もとの床（うっすら）
@@ -877,7 +880,7 @@ function okDrawTitle(dt) {
     }], { outlineWidth: 0.0028, outlineCol: [0.40, 0.24, 0.14] });
   }
   R.drawMesh(OKG.okan, rig.bones, { outlineWidth: 0.0034 });
-  okDrawPet(R, rig);
+  okDrawPet(R, rig, dt);
 }
 
 // ---- 画面のきりかえ ------------------------------------------------------

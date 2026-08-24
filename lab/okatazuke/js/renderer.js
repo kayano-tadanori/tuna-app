@@ -245,6 +245,8 @@ class Renderer {
       onrm: makeBuffer(gl, data.onrm), uv: makeBuffer(gl, data.uv),
       col: makeBuffer(gl, data.col), param: makeBuffer(gl, data.param),
       bone: makeBuffer(gl, data.bone),
+      // ★3本目・4本目の骨。無いモデル（手組みオカン）は 重み0で埋める
+      bone2: makeBuffer(gl, data.bone2 || new Float32Array(data.bone.length)),
       idx: makeBuffer(gl, data.idx, gl.ELEMENT_ARRAY_BUFFER),
     };
     const mk = (prog, full) => {
@@ -253,6 +255,7 @@ class Renderer {
       attrib(gl, prog.a.aPos, bufs.pos, 3);
       attrib(gl, prog.a.aONrm, bufs.onrm, 3);
       attrib(gl, prog.a.aBone, bufs.bone, 4);
+      attrib(gl, prog.a.aBone2, bufs.bone2, 4);
       if (full) {
         attrib(gl, prog.a.aNrm, bufs.nrm, 3);
         attrib(gl, prog.a.aUV, bufs.uv, 2);

@@ -10,7 +10,7 @@
 class PartBuilder {
   constructor() {
     this.pos = []; this.nrm = []; this.onrm = []; this.uv = [];
-    this.col = []; this.param = []; this.bone = []; this.idx = [];
+    this.col = []; this.param = []; this.bone = []; this.bone2 = []; this.idx = [];
     this.base = 0;
   }
 
@@ -63,6 +63,7 @@ class PartBuilder {
       this.col.push(col[0], col[1], col[2]);
       this.param.push(o.faceMask || 0, o.shine || 0, o.tex || 0, 0);
       this.bone.push(bone, wgt, bone2, 1 - wgt);
+      this.bone2.push(0, 0, 0, 0);      // 手組みは 2本で足りる
     }
 
     const flip = det < 0;   // 鏡うつしは裏返るので巻き順を入れかえる
@@ -80,7 +81,8 @@ class PartBuilder {
       pos: new Float32Array(this.pos), nrm: new Float32Array(this.nrm),
       onrm: new Float32Array(this.onrm), uv: new Float32Array(this.uv),
       col: new Float32Array(this.col), param: new Float32Array(this.param),
-      bone: new Float32Array(this.bone), idx, count: this.idx.length,
+      bone: new Float32Array(this.bone), bone2: new Float32Array(this.bone2),
+      idx, count: this.idx.length,
     };
   }
 }

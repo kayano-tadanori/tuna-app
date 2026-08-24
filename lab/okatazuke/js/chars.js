@@ -68,6 +68,8 @@ function buildPetFromModel(M) {
     col: okanB64(M.col, Float32Array),
     param: okanB64(M.param, Float32Array),
     bone: okanB64(M.bone, Float32Array),
+    bone2: M.bone2 ? okanB64(M.bone2, Float32Array)
+      : new Float32Array(M.n * 4),
     idx: okanB64(M.idx, M.idx32 ? Uint32Array : Uint16Array),
     count: M.count,
   };
@@ -102,20 +104,29 @@ function okApplyChar(R, id, done) {
 // ---- ペットを 差しかえる（どっちを選んでも 頭にとまる）------------------
 function okApplyPet(R, id, done) {
   OKG.petId = id;
-  if (id === 'none') { OKG.pet = null; return done(true); }
+  if (id === 'none') { OKG.pet = null; OKG.petRig = null; return done(true); }
   okLoadScript('js/pet_' + id + '.js', ok => {
     const M = ok && window.PET_MODELS && window.PET_MODELS[id];
-    if (!M) { OKG.pet = null; return done(false); }
+    if (!M) { OKG.pet = null; OKG.petRig = null; return done(false); }
     const geo = buildPetFromModel(M);
-    okMeshWithTex(R, geo, M.tex, mesh => { OKG.pet = mesh; done(true); });
+    okMeshWithTex(R, geo, M.tex, mesh => {
+      OKG.pet = mesh;
+      OKG.petRig = new PetRig(M);
+      done(true);
+    });
   });
 }
 
 // ---- ペットを描く（頭のてっぺんの骨に そのまま乗せる）-------------------
-function okDrawPet(R, rig) {
-  if (!OKG.pet || !rig) return;
-  const m = rig.bones[OK_BONE.CHI];
+function okDrawPet(R, rig, dt) {
+  if (!OKG.pet || !rig || !OKG.petRig) return;
+  // ★ペットの骨は「ペットの中の座標」で作ってある。
+  //   頭のてっぺんの行列（OK_BONE.CHI）を かければ 頭に乗る。
+  const base = rig.bones[OK_BONE.CHI];
+  const local = OKG.petRig.update(dt === undefined ? 0.016 : dt, {
+    walk: rig.walk, cheer: rig.cheer, push: rig.push, phase: rig.walkPhase,
+  });
   const B = [];
-  for (let i = 0; i < OK_NBONE; i++) B.push(m);
+  for (let i = 0; i < PET_NBONE; i++) B.push(M4.mul(base, local[i]));
   R.drawMesh(OKG.pet, B, { outlineWidth: 0.0030 });
 }

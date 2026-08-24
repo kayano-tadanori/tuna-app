@@ -38,7 +38,8 @@ sys.path.insert(0, HERE)
 import import_okan_glb as G  # noqa: E402
 
 # okan.js の OK_BONE と同じ番号。★変えるときは向こうも直す
-BONE = dict(ROOT=0, TORSO=1, HEAD=2, ALU=3, ALF=4, ARU=5, ARF=6, LL=7, LR=8, CHI=9)
+BONE = dict(ROOT=0, TORSO=1, HEAD=2, ALU=3, ALF=4, ARU=5, ARF=6, LL=7, LR=8, CHI=9,
+            CHEST=10, ALS=11, ARS=12, LLK=13, LRK=14, LLF=15, LRF=16)
 BONE_NAME = {v: k for k, v in BONE.items()}
 OLD_HEIGHT = 1.255          # 盤の上での背の高さ（手組みオカンに合わせる）
 TEX_SIZE = 1024
@@ -160,19 +161,26 @@ def map_bones(names, jpos):
         n = nm.lower().replace('tripo::', '')
         x = jpos[i][0]
         side = 'L' if x > 0.004 else ('R' if x < -0.004 else '')
-        if any(k in n for k in ('thigh', 'calf', 'foot', 'toe', 'knee')):
-            out.append(BONE['LR'] if side == 'R' else BONE['LL'])
+        R = side == 'R'
+        if any(k in n for k in ('foot', 'toe')):
+            out.append(BONE['LRF'] if R else BONE['LLF'])
+        elif any(k in n for k in ('calf', 'knee')):
+            out.append(BONE['LRK'] if R else BONE['LLK'])
+        elif 'thigh' in n:
+            out.append(BONE['LR'] if R else BONE['LL'])
         elif 'clavicle' in n:
-            out.append(BONE['TORSO'])
+            out.append(BONE['ARS'] if R else BONE['ALS'])
         elif 'upperarm' in n:
-            out.append(BONE['ARU'] if side == 'R' else BONE['ALU'])
+            out.append(BONE['ARU'] if R else BONE['ALU'])
         elif any(k in n for k in ('forearm', 'hand', 'finger', 'thumb')):
-            out.append(BONE['ARF'] if side == 'R' else BONE['ALF'])
+            out.append(BONE['ARF'] if R else BONE['ALF'])
         elif 'necktwist02' in n or n == 'head' or n.startswith('head'):
             out.append(BONE['HEAD'])
         elif 'neck' in n:
-            out.append(BONE['TORSO'])
-        elif any(k in n for k in ('spine', 'waist', 'chest')):
+            out.append(BONE['CHEST'])
+        elif 'spine02' in n or 'chest' in n:
+            out.append(BONE['CHEST'])
+        elif any(k in n for k in ('spine', 'waist')):
             out.append(BONE['TORSO'])
         else:                                        # Root / Hip / Pelvis / neutral
             out.append(BONE['ROOT'])
@@ -272,16 +280,19 @@ def main():
 
     # ---- 頂点の重み → ゲームの10本（上位2本）-----------------------------
     gm = map_bones(names, jpos)
-    acc = np.zeros((len(P), 10))
+    acc = np.zeros((len(P), len(BONE)))
     for k in range(4):
         np.add.at(acc, (np.arange(len(P)), gm[JJ[:, k]]), WW[:, k])
+    # ★上位4本のこす。2本に切ると ひじ・ひざ・肩の折れ目が かたくなって
+    #   レゴのような動きになる（シェーダも 4本混ぜられるようにした）
     order = np.argsort(-acc, axis=1)
-    b0, b1 = order[:, 0], order[:, 1]
-    w0 = acc[np.arange(len(P)), b0]
-    w1 = acc[np.arange(len(P)), b1]
-    w1 = np.where(w1 < 0.02, 0.0, w1)                # ごく薄いのは捨てる
-    tot = np.maximum(1e-9, w0 + w1)
-    bone = np.stack([b0, w0 / tot, b1, w1 / tot], 1)
+    idxs = [order[:, i] for i in range(4)]
+    ws = [acc[np.arange(len(P)), b] for b in idxs]
+    ws = [np.where(w < 0.008, 0.0, w) for w in ws]   # ごく薄いのだけ捨てる
+    tot = np.maximum(1e-9, sum(ws))
+    ws = [w / tot for w in ws]
+    bone = np.stack([idxs[0], ws[0], idxs[1], ws[1]], 1)
+    bone2 = np.stack([idxs[2], ws[2], idxs[3], ws[3]], 1)
 
     # ---- 高さを そろえる --------------------------------------------------
     y0 = P[:, 1].min()
@@ -292,6 +303,11 @@ def main():
     def jat(key, side=None):
         i = find(names, key, side, jpos)
         return None if i is None else jp[i]
+
+    def pv(key, side=None):
+        v = jat(key, side)
+        return None if v is None else [round(float(v[0]), 5), round(float(v[1]), 5),
+                                       round(float(v[2]), 5)]
 
     waistp = jat('waist')
     if waistp is None:
@@ -307,27 +323,65 @@ def main():
     armF = float(np.linalg.norm(faL - haL))
     head_top = float(P[np.round(bone[:, 0]) == BONE['HEAD']][:, 1].max())
 
+    # ---- 支点そのものを 書き出す（親からの差で FK を組むため）-------------
+    chestp = None
+    for key in ('spine02', 'chest', 'spine'):
+        v = jat(key)
+        if v is not None:
+            chestp = v
+            break
+    def pair(key, fb=None):
+        a, b = pv(key, 'L'), pv(key, 'R')
+        if a is None or b is None:
+            raise SystemExit('骨が見つからない: %s（左右そろっていない）' % key)
+        return [a, b]
+
+    piv = dict(
+        waist=[0.0, round(waist, 5), 0.0],
+        chest=[0.0, round(float(chestp[1]), 5), 0.0],
+        head=[0.0, round(neck, 5), 0.0],
+        headTop=round(head_top, 5),
+        clav=pair('clavicle'),
+        arm=pair('upperarm'),
+        elbow=pair('forearm'),
+        hand=pair('hand'),
+        hip=pair('thigh'),
+        knee=pair('calf'),
+        foot=pair('foot'),
+        chiZ=-0.012,
+        armSwingMax=2.4,
+    )
+
+    # 古い形の寸法も のこす（手組みオカンと同じ読み方をする道具のため）。
+    # ★ゲームの骨は piv（支点そのもの）を使う。こちらは 予備。
     dims = dict(
         hip=float(thL[1]), waist=waist,
         torsoH=neck - waist + 0.02,
         shoulder=shoulder_y - waist - 0.008,
         headY=0.0,
-        headR=(head_top - neck) / 2.02,              # ペットを のせる高さに使う
+        headR=(head_top - neck) / 2.02,
         legLen=float(thL[1]),
         armU=armU, armF=armF,
         shoulderX=float(abs(uaL[0])),
         legX=float((abs(thL[0]) + abs(thR[0])) / 2),
         armZ=float((uaL[2] + uaR[2]) / 2),
         chiZ=-0.012,
-        armSwingMax=2.4,                             # 脇が開いた姿なので 大きくふれる
+        armSwingMax=2.4,
+        p=piv,                                       # ★これが本番（支点そのもの）
     )
-    print('  こし %.3f ／ 首 %.3f ／ 肩 %.3f(x%.3f) ／ 腕 %.3f+%.3f ／ 脚x %.3f'
-          % (waist, neck, shoulder_y, dims['shoulderX'], armU, armF, dims['legX']))
+
+    print('  こし %.3f ／ 胸 %.3f ／ 首 %.3f ／ 肩 %.3f ／ 腕 %.3f+%.3f'
+          % (waist, piv['chest'][1], neck, shoulder_y, armU, armF))
+    print('  ひざ %.3f ／ 足 %.3f ／ 鎖骨x %.3f'
+          % (piv['knee'][0][1], piv['foot'][0][1], piv['clav'][0][0]))
     print('  頭のてっぺん %.3f（頭の支点から %.3f）' % (head_top, head_top - neck))
 
-    st = {BONE_NAME[b]: int((np.round(bone[:, 0]) == b).sum()) for b in range(10)}
+    st = {BONE_NAME[b]: int((np.round(bone[:, 0]) == b).sum()) for b in range(len(BONE))}
     print('  骨ごとの頂点: ' + ' / '.join('%s:%d' % (a, b) for a, b in st.items() if b))
-    print('  2本で混ぜている頂点: %d' % int((bone[:, 3] > 0.001).sum()))
+    nb = ((bone[:, 1] > 0.001).astype(int) + (bone[:, 3] > 0.001)
+          + (bone2[:, 1] > 0.001) + (bone2[:, 3] > 0.001))
+    print('  混ぜている骨の本数: 1本%d / 2本%d / 3本%d / 4本%d'
+          % ((nb == 1).sum(), (nb == 2).sum(), (nb == 3).sum(), (nb == 4).sum()))
 
     # ---- 輪郭を押しだす向き＝なめらかにした法線 ---------------------------
     _, inv = np.unique(np.round(P, 4), axis=0, return_inverse=True)
@@ -363,10 +417,11 @@ def main():
     i32 = n > 65535
     payload = dict(
         n=n, count=int(len(idx)), idx32=bool(i32), tex=tex_name,
-        dims={a: round(float(b), 5) for a, b in dims.items()},
+        dims={a: (b if a == 'p' else round(float(b), 5)) for a, b in dims.items()},
         pos=b64(P, '<f4'), nrm=b64(NR, '<f4'), onrm=b64(onrm, '<f4'),
         uv=b64(uv, '<f4'), col=b64(col, '<f4'), param=b64(param, '<f4'),
-        bone=b64(bone, '<f4'), idx=b64(idx, '<u4' if i32 else '<u2'))
+        bone=b64(bone, '<f4'), bone2=b64(bone2, '<f4'),
+        idx=b64(idx, '<u4' if i32 else '<u2'))
     out = os.path.join(ROOT, 'js', 'char_%s.js' % tag)
     io.open(out, 'w', encoding='utf-8').write(
         '// 自動生成（tools/import_char_glb.py）。手で直さない。\n'

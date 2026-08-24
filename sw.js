@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v610';
+const CACHE_NAME = 'oton-gakuen-v611';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -41,6 +41,9 @@ const ASSETS = [
   './lab/okatazuke/js/shaders.js',
   './lab/okatazuke/js/parts.js',
   './lab/okatazuke/js/scene.js',
+  // 動きの共通エンジン（lab のゲームで 使いまわす）
+  './lab/_lib/motion.js',
+  './lab/okatazuke/js/pet.js',
   './lab/okatazuke/js/chars.js',
   // ★あそぶ人は 1人 500〜700KB ある。5人ぶん先に配ると 入れかえのたびに 5MB 落ちる。
   //   最初の1人（オカーン）と ペットだけ 先に置いて、

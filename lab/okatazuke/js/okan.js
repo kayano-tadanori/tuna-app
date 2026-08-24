@@ -15,8 +15,16 @@
 // ============================================================
 'use strict';
 
-const OK_BONE = { ROOT: 0, TORSO: 1, HEAD: 2, ALU: 3, ALF: 4, ARU: 5, ARF: 6, LL: 7, LR: 8, CHI: 9 };
-const OK_NBONE = 10;
+// ★骨の番号。0〜9 は 手組みオカンのころからの並び（変えると 古い部品がズレる）。
+//   10〜16 は 2026-08-24 に足した「関節」。
+//   CHEST … 胸。ここから 腕がぶら下がる（腰と胸を分けると 上体をひねれる）
+//   ALS/ARS … 鎖骨。**腕を上げたとき 肩も いっしょに動く**ので 肩が裂けない
+//   LLK/LRK … ひざ ／ LLF/LRF … 足くび
+const OK_BONE = {
+  ROOT: 0, TORSO: 1, HEAD: 2, ALU: 3, ALF: 4, ARU: 5, ARF: 6, LL: 7, LR: 8, CHI: 9,
+  CHEST: 10, ALS: 11, ARS: 12, LLK: 13, LRK: 14, LLF: 15, LRF: 16,
+};
+const OK_NBONE = 17;   // シェーダの上限は SH.BONES(24)
 
 const OKCOL = {
   skin:   '#ffe0c0',
@@ -296,6 +304,41 @@ function buildOkan() {
   return B;
 }
 
+// 歩きの関節角の曲線と バネ・IK は lab/_lib/motion.js（共通の動きエンジン）にある。
+// ★ここに書き写さない。ほかのゲームでも 同じ動きを使いまわすため。
+const OK_GAIT = MOTION.GAIT;
+const OK_D2R = MOTION.D2R;
+const okCurve = MOTION.curve;
+
+// ---- 骨の支点（ピボット）------------------------------------------------
+// 取りこんだモデルは dims.p に「立ち姿での支点の位置」をそのまま持っている。
+// 手組みオカン（OKD）は 昔の寸法の形なので、ここで同じ形に変換する。
+// ★親からの差だけで組むので、+0.008 のような つじつま合わせが要らない。
+function okPivots(D) {
+  if (D.p) return D.p;
+  const y = D.waist;
+  const sh = y + D.shoulder + 0.008;
+  const mir = a => [a, [-a[0], a[1], a[2]]];
+  return {
+    waist: [0, y, 0],
+    chest: [0, y + D.torsoH * 0.45, 0],
+    head: [0, y + D.torsoH - 0.02, 0],
+    headTop: y + D.torsoH - 0.02 + D.headR * 2.02,
+    clav: mir([D.shoulderX * 0.45, sh, D.armZ]),
+    arm: mir([D.shoulderX, sh, D.armZ]),
+    elbow: mir([D.shoulderX, sh - D.armU, D.armZ]),
+    hand: mir([D.shoulderX, sh - D.armU - D.armF, D.armZ]),
+    hip: mir([D.legX, D.hip, 0]),
+    knee: mir([D.legX, D.hip - D.legLen * 0.5, 0]),
+    foot: mir([D.legX, D.hip - D.legLen, 0]),
+    chiZ: D.chiZ,
+    armSwingMax: D.armSwingMax,
+  };
+}
+
+// a から b への 平行移動
+function TD(a, b) { return T(b[0] - a[0], b[1] - a[1], b[2] - a[2]); }
+
 // ---- 骨のポーズを組み立てる ---------------------------------------------
 // 返り値：mat4 × OK_NBONE（ワールド行列）
 class OkanRig {
@@ -303,6 +346,7 @@ class OkanRig {
   //        動きの式（ふり幅・タイミング）は共通。支点だけ差しかえる。
   constructor(dims) {
     this.D = dims || OKD;
+    this.P = okPivots(this.D);
     this.bones = [];
     for (let i = 0; i < OK_NBONE; i++) this.bones.push(M4.ident());
     this.t = 0;
@@ -311,70 +355,121 @@ class OkanRig {
     this.push = 0;        // 0..1 おしている強さ
     this.cheer = 0;       // 0..1 よろこび
     this.sad = 0;         // 0..1 がっくり（詰み）
-    this.wave = 0;        // 0..1 手をふる（★上腕は上げず、ひじから先だけ振る。
-                          //      このモデルは脇が閉じていて 上腕を上げると布が裂けるため）
+    this.wave = 0;        // 0..1 手をふる
     this.bow = 0;         // 0..1 おじぎ
     this.yaw = 0;
     this.pos = [0, 0, 0];
+    this._ph = new MOTION.Phase(0.5);   // 歩調（進んだ距離から出す）
     this.scale = 1;   // 盤の上では すこし大きく見せる
   }
 
   update(dt) {
     this.t += dt;
-    const D = this.D;
+    const P = this.P;
     const w = this.walk, p = this.push, c = this.cheer, s = this.sad;
     const wv = this.wave, bw = this.bow;
-    this.walkPhase += dt * (7.2 + 2.4 * p) * w;
+
+    // ★歩調は「進んだ距離」で決める（motion.js の Phase）。
+    //   時間で回すと 足が地面をすべる。1歩＝こしの高さの0.8倍。
+    this._ph.stride = Math.max(0.05, P.hip[0][1] * this.scale * 0.80);
+    if (w > 0) this.walkPhase = this._ph.step(this.pos, dt, 7.2 + 1.6 * p);
+    else { this._ph.have = false; this._ph.v = this.walkPhase; }
     const ph = this.walkPhase;
     const idle = Math.sin(this.t * 2.1) * 0.012;
+    const breathe = Math.sin(this.t * 1.6) * 0.006;
 
-    // よろこびのジャンプ
+    // よろこびのジャンプ／おすときは 腰を落として ふんばる
     const hop = c > 0 ? Math.abs(Math.sin(this.t * 8.0)) * 0.10 * c : 0;
-    const bob = Math.abs(Math.sin(ph)) * 0.028 * w + idle + hop;
-    const lean = p * 0.30 + w * 0.10 - s * 0.10 + bw * 0.55;
+    const bob = Math.abs(Math.sin(ph)) * 0.024 * w + idle + hop - p * 0.055 - s * 0.03;
+    const lean = p * 0.20 + w * 0.08 - s * 0.10 + bw * 0.55;
 
-    const root = mul(T(this.pos[0], this.pos[1] + bob, this.pos[2]), Ry(this.yaw), Rx(lean), S(this.scale));
+    const root = mul(T(this.pos[0], this.pos[1] + bob, this.pos[2]),
+                     Ry(this.yaw), Rx(lean), S(this.scale));
     this.bones[OK_BONE.ROOT] = root;
 
-    const torso = mul(root, T(0, D.waist, 0),
-                      Rz(Math.sin(ph) * 0.05 * w),
-                      Rx(p * 0.10 + s * 0.22 + bw * 0.35));
+    // 腰：歩くと左右にゆれ、上体は 進む向きへ すこしひねる
+    const twist = Math.sin(ph) * 0.14 * w;
+    const torso = mul(root, T(P.waist[0], P.waist[1], P.waist[2]),
+                      Rz(Math.sin(ph) * 0.045 * w),
+                      Ry(-twist * 0.5),
+                      Rx(p * 0.16 + s * 0.22 + bw * 0.35 + breathe));
     this.bones[OK_BONE.TORSO] = torso;
 
-    const nod = -p * 0.12 + Math.sin(this.t * 1.7) * 0.02 - s * 0.30 + c * 0.18 + bw * 0.30;
-    const head = mul(torso, T(0, D.torsoH - 0.02, 0), Rx(nod), Ry(Math.sin(this.t * 0.9) * 0.05 * (1 - w)));
+    // 胸：腰と逆にひねる（人は そうやって歩く）。おすときは さらに前へかぶせる
+    const chest = mul(torso, TD(P.waist, P.chest),
+                      Ry(twist * 0.9),
+                      Rz(-Math.sin(ph) * 0.035 * w),
+                      Rx(p * 0.20 - c * 0.14 + bw * 0.18 + s * 0.06));
+    this.bones[OK_BONE.CHEST] = chest;
+
+    const nod = -p * 0.16 + Math.sin(this.t * 1.7) * 0.02 - s * 0.30 + c * 0.20 + bw * 0.30;
+    const head = mul(chest, TD(P.chest, P.head), Rx(nod),
+                     Ry(Math.sin(this.t * 0.9) * 0.05 * (1 - w) - twist * 0.4));
     this.bones[OK_BONE.HEAD] = head;
 
-    this.bones[OK_BONE.CHI] = mul(head, T(0, D.headR * 2.02, D.chiZ),
+    this.bones[OK_BONE.CHI] = mul(head, T(0, P.headTop - P.head[1], P.chiZ),
                                   Rz(Math.sin(this.t * 3.3) * 0.10),
                                   Ry(Math.sin(this.t * 1.3) * 0.3));
 
-    // 腕：歩くと前後にふる。おすときは前へ出す。よろこぶと上げる
-    for (const [bu, bf, sx] of [[OK_BONE.ALU, OK_BONE.ALF, 1], [OK_BONE.ARU, OK_BONE.ARF, -1]]) {
-      const swing = Math.sin(ph + (sx > 0 ? Math.PI : 0)) * 0.55 * w;
-      const fwd = -p * 1.28;
-      const up = -c * 2.35 - (sx < 0 ? wv * 1.6 : 0);   // 手をふるのは 右手だけ
-      // ★取りこんだモデルは腕が体に密着していて 脇に すきま が無い。大きくふると
-      //   肩まわりの布が引き裂かれて黒い板になる（実測。よろこぶ134°・おす73°で出た）。
-      //   手組みオカンは腕が独立した部品なので何度でも回せる。モデルごとに上限を持たせる。
-      const lim = D.armSwingMax === undefined ? 99 : D.armSwingMax;
+    // ---- 腕 --------------------------------------------------------------
+    // ★肩が裂けないように、鎖骨（ALS/ARS）が 腕の上げに ついていく。
+    //   むかしは 上腕だけを回していたので、脇の布が 引きちぎられて 板になった。
+    const lim = P.armSwingMax === undefined ? 99 : P.armSwingMax;
+    const sides = [[OK_BONE.ALS, OK_BONE.ALU, OK_BONE.ALF, 1, 0],
+                   [OK_BONE.ARS, OK_BONE.ARU, OK_BONE.ARF, -1, 1]];
+    for (const [bs, bu, bf, sx, k] of sides) {
+      // 腕は 反対がわの足と 同じ位相（人はそう歩く）
+      const swing = Math.sin(ph + (sx > 0 ? Math.PI : 0)) * 0.48 * w * (1 - p * 0.55);
+      // おす … 両腕を 前下がりに出して にもつに手をあてる
+      const fwd = -p * 1.06;
+      const up = -c * 1.95 - (sx < 0 ? wv * 1.5 : 0);
       const ax = Math.max(-lim, Math.min(lim, swing + fwd + up));
-      const rot = mul(
-        T(sx * D.shoulderX, D.shoulder + 0.008, D.armZ),
-        Rz(sx * (-0.06 - p * 0.10 - c * 0.30 + s * 0.05)),
-        Rx(ax),
-      );
-      this.bones[bu] = mul(torso, rot);
-      let elbow = -0.18 - p * 0.30 + Math.max(0, Math.sin(ph + (sx > 0 ? Math.PI : 0))) * 0.25 * w - c * 0.5;
-      // ★手をふる … ひじから先だけを 左右に。上腕を上げないので 布が裂けない
-      if (wv > 0 && sx < 0) elbow -= wv * (1.15 + Math.sin(this.t * 11.0) * 0.45);
-      this.bones[bf] = mul(this.bones[bu], T(0, -D.armU, 0), Rx(elbow));
+      // 鎖骨は 腕の上げ下げの 3割ほど ついていく（＝肩がついてくる）
+      const shoulder = mul(chest, TD(P.chest, P.clav[k]),
+                           Rx(ax * 0.30),
+                           Rz(sx * (-c * 0.16 - p * 0.05)));
+      this.bones[bs] = shoulder;
+
+      // 横への開き：よろこぶと V の字、おすと すこし内向き
+      const open = sx * (-0.06 - p * 0.02 - c * 0.42 + s * 0.05 - wv * 0.10);
+      const arm = mul(shoulder, TD(P.clav[k], P.arm[k]),
+                      Rz(open),
+                      Rx(ax * 0.70),
+                      Ry(sx * (p * 0.10 - c * 0.08)));
+      this.bones[bu] = arm;
+
+      // ひじ：おすときは 曲げて ふんばる。歩くときは 前へ出るとき すこし曲がる
+      let elbow = -0.16 - p * 0.42 - c * 0.35
+        + Math.max(0, Math.sin(ph + (sx > 0 ? Math.PI : 0))) * 0.22 * w * (1 - p);
+      if (wv > 0 && sx < 0) elbow -= wv * (1.05 + Math.sin(this.t * 11.0) * 0.42);
+      this.bones[bf] = mul(arm, TD(P.arm[k], P.elbow[k]), Rx(elbow),
+                           Rz(sx * p * 0.10));
     }
 
-    // 足
-    for (const [bl, sx] of [[OK_BONE.LL, 1], [OK_BONE.LR, -1]]) {
-      const swing = Math.sin(ph + (sx > 0 ? 0 : Math.PI)) * 0.62 * w;
-      this.bones[bl] = mul(root, T(sx * D.legX, D.hip, 0), Rx(swing - p * 0.16));
+    // ---- 足 --------------------------------------------------------------
+    // ★ひざと足くびを 足した。棒のまま前後にふると 竹馬に見える。
+    //   ひざは 前へ振り出すとき いちばん曲がる（地面に つま先を ぶつけないため）。
+    const legs = [[OK_BONE.LL, OK_BONE.LLK, OK_BONE.LLF, 1, 0],
+                  [OK_BONE.LR, OK_BONE.LRK, OK_BONE.LRF, -1, 1]];
+    for (const [bl, bk, bfo, sx, k] of legs) {
+      // 左右で 半周期ずらす。u は 0..1 の 歩行周期の位置
+      const u = ph / (Math.PI * 2) + (sx > 0 ? 0 : 0.5);
+      const hipA = okCurve(OK_GAIT.hip, u) * OK_D2R * w
+        + (-p * 0.34 + s * 0.05);              // おす … 足をうしろに残して 体をあずける
+      const thigh = mul(root, T(P.hip[k][0], P.hip[k][1], P.hip[k][2]),
+                        Rz(sx * (p * 0.03)), Rx(hipA));
+      this.bones[bl] = thigh;
+
+      // ひざ（後ろにしか曲がらない＝いつも マイナス）
+      const kneeA = -okCurve(OK_GAIT.knee, u) * OK_D2R * w
+        - 0.06 - p * 0.40 - c * 0.10 - s * 0.12;
+      const knee = mul(thigh, TD(P.hip[k], P.knee[k]), Rx(kneeA));
+      this.bones[bk] = knee;
+
+      // 足くび：曲線ぶん＋残った傾きを 打ち消して 足の裏を 地面に近づける
+      const ankleA = Math.max(-0.75, Math.min(0.75,
+        okCurve(OK_GAIT.ankle, u) * OK_D2R * w - (hipA + kneeA) * 0.42 + p * 0.16));
+      this.bones[bfo] = mul(knee, TD(P.knee[k], P.foot[k]), Rx(ankleA));
     }
     return this.bones;
   }
@@ -402,6 +497,8 @@ function buildOkanFromModel(M) {
   const nrm = okanB64(M.nrm, Float32Array);
   const onrm = okanB64(M.onrm, Float32Array);
   const bone = okanB64(M.bone, Float32Array);
+  // 3・4本目（古いモデルには無いので 重み0で埋める）
+  const bone2 = M.bone2 ? okanB64(M.bone2, Float32Array) : new Float32Array(bone.length);
 
   const rig = new OkanRig(M.dims);
   const B = rig.update(0);                       // ← 立ち止まっている姿＝bind
@@ -417,12 +514,14 @@ function buildOkanFromModel(M) {
   for (let i = 0; i < n; i++) {
     const b0 = bone[i * 4] | 0, w0 = bone[i * 4 + 1];
     const b1 = bone[i * 4 + 2] | 0, w1 = bone[i * 4 + 3];
+    const b2 = bone2[i * 4] | 0, w2 = bone2[i * 4 + 1];
+    const b3 = bone2[i * 4 + 2] | 0, w3 = bone2[i * 4 + 3];
     // 同じ組み合わせが続くことが多いので、変わったときだけ逆行列を作り直す
-    const key = b0 + '|' + w0 + '|' + b1;
+    const key = b0 + '|' + w0 + '|' + b1 + '|' + w1 + '|' + b2 + '|' + w2 + '|' + b3;
     if (key !== lastKey) {
       for (let k = 0; k < 16; k++) {
-        mix[k] = B[b0][k] * w0 + B[b1][k] * w1;
-        mixN[k] = BN[b0][k] * w0 + BN[b1][k] * w1;
+        mix[k] = B[b0][k] * w0 + B[b1][k] * w1 + B[b2][k] * w2 + B[b3][k] * w3;
+        mixN[k] = BN[b0][k] * w0 + BN[b1][k] * w1 + BN[b2][k] * w2 + BN[b3][k] * w3;
       }
       M4.invert(mix, inv);
       M4.invert(mixN, invN);
@@ -447,7 +546,7 @@ function buildOkanFromModel(M) {
     uv: okanB64(M.uv, Float32Array),
     col: okanB64(M.col, Float32Array),
     param: okanB64(M.param, Float32Array),
-    bone,
+    bone, bone2,
     idx: okanB64(M.idx, M.idx32 ? Uint32Array : Uint16Array),
     count: M.count,
   };

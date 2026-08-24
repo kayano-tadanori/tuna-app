@@ -11,14 +11,20 @@
 const SH = {};
 SH.BONES = 24;   // オカンの部品数の上限
 
-// 部品ごとの剛体スキニング。
-// チッチ（なめらかな生きもの）は2骨ブレンドだったが、オカンは服を着た人形なので
-// 1頂点＝1部品でよい。aBone.x に部品番号、aBone.y は継ぎ目をなじませる重み。
+// スキニング。**1頂点あたり4本の骨を混ぜる。**
+// ★2本までにすると、ひじ・ひざ・肩の折れ目が かたくなって レゴのような動きになる。
+//   モデルは もともと4本ぶんの重みを持っているので、捨てずに そのまま使う。
+//   aBone  … (骨0, 重み0, 骨1, 重み1)
+//   aBone2 … (骨2, 重み2, 骨3, 重み3)   ※余っていれば 重み0
 const BONE_CHUNK = `
   int b0 = int(aBone.x);
   int b1 = int(aBone.z);
-  mat4 sk  = uBones[b0]  * aBone.y + uBones[b1]  * aBone.w;
-  mat4 skN = uBonesN[b0] * aBone.y + uBonesN[b1] * aBone.w;
+  int b2 = int(aBone2.x);
+  int b3 = int(aBone2.z);
+  mat4 sk  = uBones[b0]  * aBone.y  + uBones[b1]  * aBone.w
+           + uBones[b2]  * aBone2.y + uBones[b3]  * aBone2.w;
+  mat4 skN = uBonesN[b0] * aBone.y  + uBonesN[b1] * aBone.w
+           + uBonesN[b2] * aBone2.y + uBonesN[b3] * aBone2.w;
 `;
 
 SH.meshVS = `#version 300 es
@@ -30,6 +36,7 @@ in vec2 aUV;
 in vec3 aCol;
 in vec4 aParam;  // x=顔マスク(影を落とさない) y=つや z=テクスチャ混ぜ量 w=予備
 in vec4 aBone;
+in vec4 aBone2;
 
 uniform mat4 uProj, uView, uModel, uModelN;
 uniform mat4 uBones[${SH.BONES}];
@@ -99,6 +106,7 @@ precision highp float;
 in vec3 aPos;
 in vec3 aONrm;
 in vec4 aBone;
+in vec4 aBone2;
 uniform mat4 uProj, uView, uModel, uModelN;
 uniform mat4 uBones[${SH.BONES}];
 uniform mat4 uBonesN[${SH.BONES}];
