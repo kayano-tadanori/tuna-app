@@ -73,6 +73,75 @@
       in: 0.22, hold: 0.30, out: 0.30, head: true,
       bones: { Head: [0.42, 0, 0], NeckTwist01: [0.30, 0, 0], Spine02: [-0.06, 0, 0] },
     },
+    // 万歳（オーッ！）
+    banzai: {
+      in: 0.20, hold: 0.70, out: 0.40,
+      bones: {
+        L_Upperarm: [0, 0, 1.40], R_Upperarm: [0, 0, -1.40],
+        L_Forearm: [0, 0, 0.02], R_Forearm: [0, 0, -0.02],
+        Spine01: [-0.16, 0, 0], Spine02: [-0.24, 0, 0], Head: [-0.10, 0, 0],
+      },
+      root: () => ({ y: 0.02 }),
+    },
+    // 背のび（ぐーっと伸びる）
+    stretch: {
+      in: 0.65, hold: 0.80, out: 0.70,
+      bones: {
+        L_Upperarm: [0, 0, 1.30], R_Upperarm: [0, 0, -1.30],
+        L_Forearm: [0, 0, -0.20], R_Forearm: [0, 0, 0.20],
+        Spine01: [-0.22, 0, 0], Spine02: [-0.30, 0, 0], Head: [-0.18, 0, 0],
+      },
+      root: () => ({ y: 0.03, sy: 1.04 }),
+    },
+    // お辞儀
+    bow: {
+      in: 0.35, hold: 0.40, out: 0.45,
+      bones: {
+        Spine01: [0.26, 0, 0], Spine02: [0.20, 0, 0], Head: [0.24, 0, 0], NeckTwist01: [0.16, 0, 0],
+        L_Upperarm: [0.14, 0, -1.30], R_Upperarm: [-0.14, 0, 1.30],
+      },
+    },
+    // 首をかしげる
+    tilt: {
+      in: 0.30, hold: 0.55, out: 0.40, head: true,
+      bones: { Head: [0.04, 0.12, 0.30], NeckTwist01: [0, 0.06, 0.16] },
+    },
+    // あごに手（考える）
+    think: {
+      in: 0.40, hold: 0.90, out: 0.45, head: true,
+      bones: {
+        R_Upperarm: [0, 0, 0.42], R_Forearm: [0, 0, -2.25],
+        Head: [0.06, -0.10, 0.10], Spine02: [-0.10, 0, 0],
+      },
+    },
+    // その場でジャンプ（しゃがむ→跳ぶ→着地でぷにっとつぶれる）
+    jump: {
+      in: 0.18, hold: 0.55, out: 0.22,
+      bones: {
+        L_Upperarm: [0, 0, 0.55], R_Upperarm: [0, 0, -0.55],
+        L_Forearm: [0, 0, 0.35], R_Forearm: [0, 0, -0.35],
+        Spine02: [-0.10, 0, 0],
+      },
+      root: u => {
+        // 0〜.22 しゃがむ / .22〜.78 跳ぶ / .78〜1 着地
+        if (u < 0.22) { const k = u / 0.22; return { y: -0.03 * k, sy: 1 - 0.07 * k, sx: 1 + 0.05 * k }; }
+        if (u < 0.78) {
+          const k = (u - 0.22) / 0.56, h = Math.sin(k * Math.PI);
+          return { y: -0.03 + 0.20 * h, sy: 1 + 0.06 * h, sx: 1 - 0.04 * h };
+        }
+        const k = (u - 0.78) / 0.22, d = Math.sin(k * Math.PI);
+        return { y: -0.035 * d, sy: 1 - 0.09 * d, sx: 1 + 0.07 * d };
+      },
+    },
+    // くるっと一回転
+    spin: {
+      in: 0.15, hold: 0.85, out: 0.15,
+      bones: {
+        L_Upperarm: [0, 0, -0.85], R_Upperarm: [0, 0, 0.85],
+        L_Forearm: [0, 0, 0.55], R_Forearm: [0, 0, -0.55],
+      },
+      root: u => ({ y: 0.012 * Math.sin(u * Math.PI), yaw: u * u * (3 - 2 * u) * Math.PI * 2 }),
+    },
   };
   const GESTURE_KEYS = Object.keys(GESTURES);
   const GESTURE_KEYS_HEAD = GESTURE_KEYS.filter(k => GESTURES[k].head);   // 顔アップで見えるもの
@@ -124,10 +193,12 @@
     }
     return out;
   }
-  // Y軸まわりに回して平行移動と一様スケールをかけるだけの行列
-  function trs(tx, ty, tz, yaw, s) {
+  // Y軸まわりに回して平行移動とスケールをかける行列。
+  // sy を別に渡せるのは、ジャンプの「つぶれ／のび」を作るため
+  function trs(tx, ty, tz, yaw, s, sy) {
+    if (sy == null) sy = s;
     const c = Math.cos(yaw), n = Math.sin(yaw);
-    return [c * s, 0, -n * s, 0, 0, s, 0, 0, n * s, 0, c * s, 0, tx, ty, tz, 1];
+    return [c * s, 0, -n * s, 0, 0, sy, 0, 0, n * s, 0, c * s, 0, tx, ty, tz, 1];
   }
   // カメラはZ軸の正面に固定。高さと距離だけ変える
   function viewMat(eyeY, dist) {
@@ -319,6 +390,8 @@
   // ---- しぐさの進行 ----
   let gesture = null;      // { key, start }
   let nextGestureAt = 0;
+  // しぐさが体ごと動かすぶん（updatePose が入れて frame が使う）
+  const rootFx = { y: 0, yaw: 0, sx: 1, sy: 1 };
 
   function playGesture(key) {
     const list = (opts && opts.focus === 'head') ? GESTURE_KEYS_HEAD : GESTURE_KEYS;
@@ -341,6 +414,7 @@
   function updatePose(t) {
     const e = skel.extra;
     for (const k in POSE) e[k] = POSE[k].slice();
+    rootFx.y = 0; rootFx.yaw = 0; rootFx.sx = 1; rootFx.sy = 1;
 
     // 待機の動き（止まって見えないよう、はっきりめに）
     const breathe = Math.sin(t * 1.15);
@@ -366,7 +440,7 @@
     const w = gestureWeight(g, t - gesture.start);
     if (w < 0) {
       gesture = null;
-      nextGestureAt = t + 4.5 + Math.random() * 5;
+      nextGestureAt = t + 3.2 + Math.random() * 4.5;   // しぐさが11種あるので少し詰める
       return;
     }
     for (const b in g.bones) {
@@ -378,6 +452,15 @@
     if (g.swing) {
       const arr = e[g.swing.bone];
       if (arr) arr[g.swing.axis] += Math.sin((t - gesture.start) * g.swing.hz * 6.283) * g.swing.amp * w;
+    }
+    if (g.root) {
+      // 進み具合を 0→1 で渡す（跳ぶ・回る・つぶれる はここで作る）
+      const dur = g.in + g.hold + g.out;
+      const r = g.root(Math.min(1, (t - gesture.start) / dur), w);
+      rootFx.y = (r.y || 0) * w;
+      rootFx.yaw = (r.yaw || 0) * w;
+      rootFx.sx = 1 + ((r.sx || 1) - 1) * w;
+      rootFx.sy = 1 + ((r.sy || 1) - 1) * w;
     }
   }
 
@@ -532,8 +615,9 @@
       spin *= 0.94;
       if (Math.abs(spin) < 0.0002) spin = 0;
     }
-    const yaw = Math.sin(t * 0.55) * opts.sway + dragYaw;
-    const bob = Math.sin(t * 1.15) * 0.006;
+    if (skel) updatePose(t);          // 体ごとの動き(rootFx)も ここで決まる
+    const yaw = Math.sin(t * 0.55) * opts.sway + dragYaw + rootFx.yaw;
+    const bob = Math.sin(t * 1.15) * 0.006 + rootFx.y;
 
     // 画づくり：全身は少し引き、顔アップは頭の高さに寄せる
     const head = opts.focus === 'head';
@@ -545,7 +629,7 @@
 
     const proj = perspective(fov, aspect, 0.05, 12);
     const view = viewMat(eyeY, dist);
-    const model = trs(0, bob, 0, yaw, 1);
+    const model = trs(0, bob, 0, yaw, rootFx.sx, rootFx.sy);
     const mvp = mul(proj, mul(view, model));
 
     if (opts.shadow) {
@@ -571,7 +655,6 @@
     gl.uniformMatrix4fv(uLoc.model, false, new Float32Array(model));
     gl.uniform1i(uLoc.skin, skel ? 1 : 0);
     if (skel) {
-      updatePose(t);
       poseSkeleton(t);
       gl.uniformMatrix4fv(uLoc.bones, false, skel.palette);
     }
