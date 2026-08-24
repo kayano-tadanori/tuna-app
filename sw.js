@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v606';
+const CACHE_NAME = 'oton-gakuen-v607';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -41,8 +41,18 @@ const ASSETS = [
   './lab/okatazuke/js/shaders.js',
   './lab/okatazuke/js/parts.js',
   './lab/okatazuke/js/scene.js',
-  './lab/okatazuke/js/okan_model.js',
-  './lab/okatazuke/okan_tex.jpg',
+  './lab/okatazuke/js/chars.js',
+  // ★あそぶ人は 1人 500〜700KB ある。5人ぶん先に配ると 入れかえのたびに 5MB 落ちる。
+  //   最初の1人（オカーン）と ペットだけ 先に置いて、
+  //   ほかは えらんだときに 取りにいく（fetch のところで キャッシュに入る）。
+  './lab/okatazuke/js/char_okan2.js',
+  './lab/okatazuke/okan2_tex.jpg',
+  './lab/okatazuke/js/pet_chicchi.js',
+  './lab/okatazuke/chicchi_tex.jpg',
+  './lab/okatazuke/js/prop_kibako.js',
+  './lab/okatazuke/js/prop_renga.js',
+  // ※ kibako_tex / renga_tex は 見くらべ用（?box=scan / ?wall=scan）のときだけ
+  //    取りにいくので、先に配らない。ふだんの かべ・にもつは 自分で描いている。
   './lab/okatazuke/js/okan.js',
   './lab/okatazuke/js/renderer.js',
   './lab/okatazuke/js/core.js',

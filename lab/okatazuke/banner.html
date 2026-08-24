@@ -14,9 +14,10 @@
 <script src="js/shaders.js"></script>
 <script src="js/parts.js"></script>
 <script src="js/scene.js"></script>
-<script src="js/okan_model.js"></script>
-<script src="js/okan_faces.js"></script>
 <script src="js/okan.js"></script>
+<script src="js/chars.js"></script>
+<script src="js/char_okan2.js"></script>
+<script src="js/pet_chicchi.js"></script>
 <script src="js/renderer.js"></script>
 <script>
 /* ============================================================
@@ -36,8 +37,9 @@ R.initParticles(64);
 
 const mesh = {
   tile: R.makeInstanced(SCN.tile(), 400),
-  wall: R.makeInstanced(SCN.wall(), 200),
-  box:  R.makeInstanced(SCN.box(), 40),
+  // ★かべ・にもつは ゲームと同じ「自分で描いたレンガ／木箱」
+  wall: R.makeInstanced(SCN.cubeSideTop(1.0, 0.66, 1.0), 200, SCN.brickTexture()),
+  box:  R.makeInstanced(SCN.cubeSideTop(0.84, 0.80, 0.84), 40, SCN.crateTexture()),
   goal: R.makeInstanced(SCN.goal(), 40),
 };
 let okan = null, rig = null;
@@ -48,20 +50,28 @@ for (let z = -5; z <= 2; z++) for (let x = -8; x <= 8; x++) FLOOR.push([x, z]);
 const WALLS = [];
 for (let x = -8; x <= 8; x++) { WALLS.push([x, -6]); }
 for (let z = -6; z <= 2; z++) { WALLS.push([-9, z]); WALLS.push([9, z]); }
-const BOXES = [[1.18, 0.95], [-2.9, -1.4], [3.5, -0.9], [-4.6, 0.2], [0.6, -2.5]];
+const BOXES = [[1.05, 0.62], [-2.9, -1.4], [3.5, -0.9], [-4.6, 0.2], [0.6, -2.5]];
 const GOALS = [[0.10, 0.85], [-1.00, 0.85], [0.10, -0.25]];
 
+// ★カードの絵は オカーン＋チッチ で固定（えらんだキャラでは撮らない）。
+//   カードは 全員ぶん 1枚しかないので、看板は いつも同じ顔にする。
+let pet = null, petM = null;
 function build(done) {
-  const geo = buildOkanFromModel(window.OKAN_MODEL);
-  rig = new OkanRig(window.OKAN_MODEL.dims);
+  const M = window.CHAR_MODELS.okan2;
+  const geo = buildOkanFromModel(M);
+  rig = new OkanRig(M.dims);
   rig.scale = 1.42;
-  const img = okanModelTexture();
-  const go = () => {
-    okan = R.makeMesh(geo, img);
-    if (window.OkanFace) OkanFace.load(() => { OkanFace.set('effort'); done(); });
-    else done();
+  petM = window.PET_MODELS.chicchi;
+  const load = (src, cb) => {
+    const im = new Image();
+    im.onload = () => cb(im);
+    im.onerror = () => cb(null);
+    im.src = src;
   };
-  if (img.complete && img.naturalWidth) go(); else { img.onload = go; img.onerror = go; }
+  load(M.tex, im => {
+    okan = R.makeMesh(geo, im);
+    load(petM.tex, im2 => { pet = R.makeMesh(buildPetFromModel(petM), im2); done(); });
+  });
 }
 
 function draw(t) {
@@ -74,15 +84,14 @@ function draw(t) {
   // ★カメラは オカンの左まえに ある。右へ押すと ちょうど真横＝顔が見えない。
   //   左へ押させると 顔がこちらを向く（実測で 何度も撮って決めた）
   rig.yaw = -0.95;
-  rig.pos = [2.05, 0, 0.22];
+  rig.pos = [1.98, 0, -0.10];
   rig.update(0);
-  if (window.OkanFace && okan) OkanFace.tick(R, okan, 0.016, 'effort');
 
   // ★寄って撮る。引くと オカンが豆つぶになり、床だけの絵になる（実測）
   // ★カードは 左に文字が乗る。オカンは 右3分の1 に来るよう、
   //   カメラの的を 左へ ずらしてある（オカンは x=2.2、的は x=0.2）
-  const eye = [0.80, 2.40, 4.05];
-  const tgt = [0.35, 0.70, 0.05];
+  const eye = [1.05, 2.05, 3.35];
+  const tgt = [0.70, 0.82, 0.10];
   R.camera(eye, tgt, 36);
   R.bg([0.34, 0.27, 0.42], [0.90, 0.74, 0.72], 0);
 
@@ -110,6 +119,12 @@ function draw(t) {
   })), { outlineWidth: 0.0020, outlineCol: [0.40, 0.24, 0.14] });
   // オカン
   R.drawMesh(okan, rig.bones, { outlineWidth: 0.0024 });
+  if (pet) {
+    const m = rig.bones[OK_BONE.CHI];
+    const B = [];
+    for (let i = 0; i < OK_NBONE; i++) B.push(m);
+    R.drawMesh(pet, B, { outlineWidth: 0.0022 });
+  }
 }
 
 build(() => { draw(1.2); window.__bannerReady = true; });

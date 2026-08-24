@@ -18,9 +18,27 @@
     <p class="sub">にもつを おして、ピンクの わくに ぜんぶ おさめよう</p>
     <button id="btn-start" class="big-btn">はじめる</button>
     <button id="btn-continue" class="mid-btn" style="display:none">つづきから</button>
+    <button id="btn-chars" class="mid-btn">だれで あそぶ？</button>
     <div id="title-msg" class="title-msg"></div>
     <p class="tiny">にもつは <b>おす</b> だけ。<b>ひっぱれません</b>。<br>
       こまったら「もどす」で 何回でも やりなおせるで。</p>
+  </div>
+</div>
+
+<!-- ===== だれで あそぶ？ ===== -->
+<!-- ★画面の上半分は あけておく。うしろで 本物のモデルが動いていて、
+     えらんだ とたんに その場で 入れかわるのが 見えるようにするため。 -->
+<div id="scr-chars" class="screen">
+  <div class="sel-head">
+    <button id="btn-back-chars" class="ico-btn">◀</button>
+    <span class="sel-title">だれで あそぶ？</span>
+  </div>
+  <div class="chooser">
+    <div class="cc-lab">あそぶ人</div>
+    <div id="char-list" class="cc-row"></div>
+    <div class="cc-lab">あたまに とまる ペット</div>
+    <div id="pet-list" class="cc-row"></div>
+    <button id="btn-char-ok" class="big-btn">これで あそぶ</button>
   </div>
 </div>
 
@@ -87,9 +105,10 @@
 <script src="js/shaders.js"></script>
 <script src="js/parts.js"></script>
 <script src="js/scene.js"></script>
-<script src="js/okan_model.js"></script>
-<script src="js/okan_faces.js"></script>
+<script src="js/prop_kibako.js"></script>
+<script src="js/prop_renga.js"></script>
 <script src="js/okan.js"></script>
+<script src="js/chars.js"></script>
 <script src="js/renderer.js"></script>
 <script src="js/core.js"></script>
 <script src="js/levels.js"></script>

@@ -373,6 +373,41 @@ python scripts/make_okatazuke_banner.py     # → images/okatazuke-banner.png（
 - 足したファイル：`images/okatazuke-banner.png`／`scripts/make_okatazuke_banner.py`／
   `lab/okatazuke/banner.html`。`sw.js` の ASSETS にも バナーを足した
 
+### 🧱 かべ と にもつ の見た目（2026-08-24・本人から3Dモデルを受領）
+
+本人の Google ドライブ `3Dmodel/` に 木箱・レンガの GLB（各55MB）。ローカルは `G:/マイドライブ/3Dmodel/`。
+
+| | いま使っているもの | 三角 |
+|---|---|---|
+| にもつ | **木箱のGLBを丸ごと減らしたもの**（`js/prop_kibako.js` ＋ `kibako_tex.jpg` 1024px） | 1,213 |
+| かべ | **自分で描いたレンガ**（`SCN.brickTexture()`＋`SCN.cubeBrick()`。画像ファイル無し） | 12 |
+
+```bash
+# 3Dモデルを取りこむ（三角を減らして 1マスに合わせる）
+PROP_TEX=1024 python tools/import_prop_glb.py kibako "G:/マイドライブ/3Dmodel/木箱 3dモデル.glb" 1200 0.86 0.84
+PROP_TEX=1024 python tools/import_prop_glb.py renga  "G:/…/3dモデル レンガキューブ.glb" 700 1.0 0.66 --fill
+```
+`?props=old` で手描き、`?wall=scan` で かべを 実写スキャンに切りかえて見くらべできる。
+
+**ここでの学び（順に つまずいた）**
+
+1. **渡された GLB は 1面あたり 180万三角・4096pxの実写スキャン。** そのままは載らない
+2. **6方向から色を焼いて立方体に貼る方式は だめ**（一度やった）。本人いわく
+   「渡したオブジェクト一つで初めて意味があるんだから、テクスチャの一部を貼ってもダメ」。
+   そのとおりで、何のオブジェクトか分からない のっぺりした茶色になった
+3. **gltfpack の `-si` だけでは 42,000三角から下がらない。** 実写スキャンは UVの継ぎ目が
+   数千本あって そこが削れない。**`-sa`（継ぎ目を無視）**を足して はじめて千の位まで落ちる
+4. **テクスチャを512に縮めると レンガの目地が完全に潰れる。** 1024にしたら出た
+5. **それでも「レンガ積み」には見えなかった。** 渡されたモデルは*不規則な石の塊*で、
+   1マス（画面で約50px）に丸ごと入ると 石ひとつが3〜5px。整った目地に見せるには
+   「1マスに3〜4段」の粗さが要る＝**モデル側の性質**。本人の判断で **かべだけ 描くことにした**
+6. **かべ と にもつ が どちらも茶色だと 押せる/押せないが分からない。**
+   いまは 赤いレンガ と 木の箱 で はっきり分かれている
+
+⚠ **ヘッドレスの撮影で オカンが黒いシルエットに写ることがある。**
+`gl.readPixels` で1フレームずつ確かめたところ **描画は常に正常**だった（撮影が描画の途中を拾う）。
+**撮る直前に `okDraw()` を呼んでから screenshot する**と出なくなる。
+
 ### ★共有ファイルへの変更（コミット前に必ず見る）
 
 - **`tuna app/sw.js` に2行足した**（`./lab/okatazuke/js/okan_model.js` と `./lab/okatazuke/okan_tex.jpg`）。
@@ -383,6 +418,67 @@ python scripts/make_okatazuke_banner.py     # → images/okatazuke-banner.png（
 - ほかに触ったのは `lab/okatazuke/` の中だけ（`js/okan.js` `js/game.js` `index.html` `preview.html`
   `tools/shot.py` ＋ `tools/import_okan_glb.py` `tools/preview_okan.py` などの新規）。
   `lab/okatazuke/` は git 管理外のまま
+
+
+---
+
+## 👥 あそぶ人を えらべるようにした（2026-08-24）
+
+### できること
+タイトルの「だれで あそぶ？」から **5人＋ペット3択**。えらんだ とたんに その場で入れかわる。
+`localStorage.okatazukeChar` / `okatazukePet` に のこる。`?char=g5&pet=jade` でも切りかえられる。
+
+| id | 名前 | もと |
+|---|---|---|
+| `okan2` | オカーン | `素材/3Dmodel/オカーン.glb` |
+| `otton` | オットン | 同 `オットン.glb` |
+| `taitsu` | タイツマン | 同 `タイツマン.glb` |
+| `g3` | 小3男子 | 同 `小3男子.glb` |
+| `g5` | 小5男子 | 同 `小5男子.glb` |
+| `chicchi` | チッチ（体長10cm→0.135） | 同 `チッチ(ペット).glb` |
+| `jade` | ジェイド（体長25cm→0.338＝チッチの2.5倍） | 同 `ジェイド(ペット).glb` |
+
+**ペットは どちらを選んでも 頭にとまる**（本人指示）。骨は `OK_BONE.CHI` を そのまま使う。
+**表情の貼りかえ（OkanFace）は 使うのをやめた**（本人指示「全員 表情は変わらなくていい」）。
+`js/okan_faces.js` `js/okan_model.js` `okan_tex.jpg` は **もう読みこんでいない**（消してはいない）。
+
+### 取りこみ方（前の okan とは 別のやり方）
+**新しいモデルは リギング済み**（41本の人型スケルトン・Mixamo系の名前）。
+だから `import_okan_glb.py` の「塊のかたちから当てずっぽうで骨を割りふる」やり方は使わない。
+
+    python tools/_dec.py                                  # gltfpack で 6000三角へ（★-sa は付けない）
+    python tools/import_char_glb.py g5 tools/_chars/g5.glb --write
+    python tools/import_pet_glb.py jade tools/_chars/jade.glb 0.3375 --write
+
+`import_char_glb.py` がやること
+1. glTFの骨41本 → ゲームの10本に つめかえ（左右は **名前でなく 実際のX位置** で決める）
+2. 頂点の重み4本 → 10本に足しあわせて **上位2本**（シェーダの上限）
+3. **Tポーズ → 立ち姿に焼きなおす**（肩の支点まわりに 腕を約80度 下ろす）
+4. 骨の支点から `dims` を計算（こし・首・肩・腕の長さ・脚のひらき）
+
+### 踏んだ落とし穴
+1. **`gltfpack -sa` を付けてはいけない。** UVの継ぎ目を無視して縮めるので **顔と服がまざった迷彩**になる。
+   見くらべ＝`tools/_chars/_uvtest.png`。`-sa` なしでも 97万→6千まで落ちた
+   （42,000で止まったのは 実写スキャンのレンガのときだけ。モデルによる）
+2. **Tポーズのまま入れると 腕を水平にしたまま歩く。** 骨があるので 焼きなおしてから入れる
+3. **`makeMesh`/`makeInstanced` は バッファを作る前に `gl.bindVertexArray(null)` が要る。**
+   `ELEMENT_ARRAY_BUFFER` の bind は「いま結ばれているVAO」に記録されるので、
+   前のフレームのVAOが残ったまま新しいメッシュを作ると **そのVAOのインデックスがすりかわる**。
+   → キャラを途中で入れかえると **ペットが緑と紫の破片になった**。
+   起動時は まだ1回も描いていないので出ない＝**「起動では出ないが 切りかえで出る」不具合**
+4. UVのVは **そのまま行番号**（`1-v` にすると迷彩に見える）。取りこみ時に一度だけ反転して渡す
+5. えらぶボタンは **横スクロールにしない**（5人目が画面の外に出る）。おりかえして全員見せる
+6. `OKSnd.tap()` は無い（`step()`）。無い関数を呼ぶと **onclick が丸ごと死ぬ**
+
+### 配りかた（sw.js）
+1人 500〜700KB あるので **5人ぶん先に配らない**。
+先に置くのは `chars.js` ＋ `char_okan2.js` ＋ `okan2_tex.jpg` ＋ `pet_chicchi.js` ＋ `chicchi_tex.jpg` だけ。
+ほかは えらんだときに 取りにいく（sw.js の fetch がそのままキャッシュに入れる）。
+
+### たしかめ方
+    python tools/shot_chars.py        # 5人＋ペットを 本物のゲームで撮る
+    python tools/check_chars.py jade  # 盤の上で おす／よろこぶ 姿勢
+    python tools/check_chooser.py     # えらぶ画面を 本物の指タップで ひと通り
 
 ---
 

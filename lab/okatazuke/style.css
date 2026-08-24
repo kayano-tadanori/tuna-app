@@ -191,3 +191,35 @@ html, body {
   .pu { left: 46px; top: 0; } .pl { left: 0; top: 46px; }
   .pr { left: 92px; top: 46px; } .pd { left: 46px; top: 92px; }
 }
+
+/* ---------- だれで あそぶ？ ---------- */
+/* ★上半分は あけたまま。うしろの 3Dモデルが 見えている必要がある。 */
+.chooser {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 14px 14px calc(env(safe-area-inset-bottom, 0) + 18px);
+  background: linear-gradient(rgba(40,18,34,0), rgba(40,18,34,.72) 22%, rgba(40,18,34,.86));
+  text-align: center;
+}
+.cc-lab {
+  color: #ffdfe9; font-size: 12.5px; margin: 6px 0 6px; letter-spacing: .5px;
+  text-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
+.cc-row {
+  /* ★横スクロールにすると 5人目が 画面の外に出る。おりかえして 全員 見えるようにする */
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 7px; padding: 2px 2px 6px;
+}
+.cc {
+  appearance: none; border: 0; cursor: pointer; flex: 0 0 auto;
+  padding: 8px 12px; border-radius: 14px; line-height: 1.25;
+  background: linear-gradient(#fff, #ffe9f2); color: #8a2560;
+  box-shadow: 0 3px 0 #e8a3c0; font-weight: 700; font-size: 14px;
+}
+.cc .cc-sub { display: block; font-size: 10.5px; color: #c4749b; font-weight: 500; }
+.cc.on {
+  background: linear-gradient(#ff7aa8, #e8447c); color: #fff;
+  box-shadow: 0 3px 0 #b12a58;
+}
+.cc.on .cc-sub { color: #ffe0ec; }
+.cc:active { transform: translateY(2px); box-shadow: none; }
+.chooser .big-btn { margin-top: 10px; padding: 13px 38px; }

@@ -173,18 +173,22 @@ uniform float uRimAmt;
 uniform vec2 uToonEdge;
 uniform vec3 uTint;
 uniform float uTime;
+uniform float uUseTex;      // 1 なら 写真のテクスチャを貼る（木箱・レンガ）
+uniform sampler2D uTex;
 out vec4 o;
 
 void main(){
   vec3 N = normalize(vN);
   vec3 V = normalize(uCamPos - vW);
+  vec3 base = vCol;
+  if (uUseTex > 0.5) base = texture(uTex, vUV).rgb * vCol;
   float h = dot(N, uLightDir) * 0.5 + 0.5;
   float s = smoothstep(uToonEdge.x, uToonEdge.y, h);
-  vec3 c = mix(vCol * uShadowTint, vCol, s);
+  vec3 c = mix(base * uShadowTint, base, s);
   float rim = pow(1.0 - max(dot(N, V), 0.0), 3.0);
   c += uRimCol * rim * uRimAmt;
   // おきばに入った にもつ は、じんわり光らせる（入った実感）
-  c += vCol * vParam * (0.30 + 0.10 * sin(uTime * 3.0));
+  c += base * vParam * (0.30 + 0.10 * sin(uTime * 3.0));
   c *= uTint;
   o = vec4(c, 1.0);
 }`;

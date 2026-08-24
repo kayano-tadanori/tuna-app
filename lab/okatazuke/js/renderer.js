@@ -119,9 +119,15 @@ class Renderer {
   }
 
   // ---- インスタンス（かべ・にもつ・おきば） ----
-  makeInstanced(geo, max) {
+  makeInstanced(geo, max, texImg) {
     const gl = this.gl;
     withOutward(geo);
+    // ★バッファを作る前に VAO を はずす。
+    //   ELEMENT_ARRAY_BUFFER の bind は「いま結ばれている VAO」に記録されるので、
+    //   前のフレームの VAO が残ったまま作ると、そのVAOのインデックスが
+    //   この新しいものに すりかわって、別のメッシュが ばらばらに散る。
+    //   （キャラを途中で入れかえたとき ペットが 緑と紫の破片になった。実測）
+    gl.bindVertexArray(null);
     const bufs = {
       pos: makeBuffer(gl, geo.pos), nrm: makeBuffer(gl, geo.nrm),
       onrm: makeBuffer(gl, geo.onrm), col: makeBuffer(gl, geo.col),
@@ -151,12 +157,24 @@ class Renderer {
       gl.bindVertexArray(null);
       return vao;
     };
+    let tex = null;
+    if (texImg) {
+      tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      // ★オカンの顔と違い、こちらは 上下ひっくり返さない（UVをこちらで作っているため）
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texImg);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    }
     return {
       count: geo.idx.length,
       type: geo.idx.BYTES_PER_ELEMENT === 4 ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT,
       vao: mk(this.progInst, true),
       vaoOut: mk(this.progInstOut, false),
-      ibuf, data, max, n: 0,
+      ibuf, data, max, n: 0, tex,
     };
   }
 
@@ -204,12 +222,24 @@ class Renderer {
     gl.uniform2f(p.u.uToonEdge, 0.36, 0.62);
     gl.uniform3fv(p.u.uTint, this.tint);
     gl.uniform1f(p.u.uTime, this.time);
+    gl.uniform1f(p.u.uUseTex, m.tex ? 1 : 0);
+    if (m.tex) {
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, m.tex);
+      gl.uniform1i(p.u.uTex, 0);
+    }
     gl.drawElementsInstanced(gl.TRIANGLES, m.count, m.type, 0, n);
   }
 
   // ---- 骨つきメッシュ（オカン） ----
   makeMesh(data, tex) {
     const gl = this.gl;
+    // ★バッファを作る前に VAO を はずす。
+    //   ELEMENT_ARRAY_BUFFER の bind は「いま結ばれている VAO」に記録されるので、
+    //   前のフレームの VAO が残ったまま作ると、そのVAOのインデックスが
+    //   この新しいものに すりかわって、別のメッシュが ばらばらに散る。
+    //   （キャラを途中で入れかえたとき ペットが 緑と紫の破片になった。実測）
+    gl.bindVertexArray(null);
     const bufs = {
       pos: makeBuffer(gl, data.pos), nrm: makeBuffer(gl, data.nrm),
       onrm: makeBuffer(gl, data.onrm), uv: makeBuffer(gl, data.uv),

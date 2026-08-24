@@ -6,7 +6,8 @@
 'use strict';
 
 const OKG = {
-  R: null, rig: null, mesh: {}, okan: null,
+  R: null, rig: null, mesh: {}, okan: null, pet: null,
+  charId: '', petId: '',
   game: null, level: 0, tier: 0,
   screen: 'title',
   time: 0, last: 0,
@@ -80,15 +81,19 @@ function okBoot() {
   R.initShadows(200);
   R.initParticles(600);
   OKG.mesh.tile = R.makeInstanced(SCN.tile(), 900);
+  OKG.mesh.goal = R.makeInstanced(SCN.goal(), 140);
+  // にもつ／かべ は 実写スキャンを 6面に焼いたテクスチャを貼る。
+  // 絵が来る前でも 遊べるように、まず 手描きのほうで作っておいて あとで差しかえる。
   OKG.mesh.wall = R.makeInstanced(SCN.wall(), 900);
   OKG.mesh.box = R.makeInstanced(SCN.box(), 140);
-  OKG.mesh.goal = R.makeInstanced(SCN.goal(), 140);
+  okLoadProps(R);
   okMakeOkan(R, gl, () => {
     try {
       const p = parseFloat(localStorage.getItem('okatazukePitch'));
       if (p > 0.3 && p < 1.6) OKG.cam.pitch = p;
     } catch (e) {}
     okBuildLevelList();
+    okBuildCharList();
     okBindUI();
     okSetPitch(OKG.cam.pitch, false);
     OKG.last = performance.now();
@@ -97,31 +102,126 @@ function okBoot() {
   });
 }
 
+// ---- 木箱・レンガの絵を あとから読んで 差しかえる --------------------------
+//   ?props=old を付けると 手描きのまま（見くらべ用）
+function okLoadProps(R) {
+  try {
+    if (new URLSearchParams(location.search).get('props') === 'old') return;
+  } catch (e) {}
+  // ★テクスチャを切り貼りして立方体に貼るのは やめた。
+  //   渡された3Dモデルは「その形とテクスチャがセットで意味を持つ」ので、
+  //   丸ごと（三角を減らしただけ・UVはそのまま）取りこんだものを使う。
+  const put = (M, key, max) => {
+    if (!M) return;
+    const geo = propGeometry(M);
+    const im = new Image();
+    im.onload = () => { OKG.mesh[key] = R.makeInstanced(geo, max, im); };
+    im.src = M.tex;
+  };
+  // にもつ＝自分で描いた木箱（板・角材・ななめの筋かい）。
+  //   ?box=scan で 渡された実写スキャンに切りかえて見くらべできる
+  let boxScan = false;
+  try { boxScan = new URLSearchParams(location.search).get('box') === 'scan'; } catch (e) {}
+  if (boxScan && window.PROP_KIBAKO) {
+    put(window.PROP_KIBAKO, 'box', 140);
+  } else {
+    OKG.mesh.box = R.makeInstanced(SCN.cubeSideTop(0.84, 0.80, 0.84), 140, SCN.crateTexture());
+  }
+  // かべ＝自分で描いたレンガ（実写スキャンは 1マスに石が細かすぎて
+  //   「レンガ積み」に見えなかった。3〜4段だけ見えるように描く）
+  //   ?wall=scan を付けると 渡された実写スキャンに切りかえて見くらべできる
+  let scan = false;
+  try { scan = new URLSearchParams(location.search).get('wall') === 'scan'; } catch (e) {}
+  if (scan && window.PROP_RENGA) {
+    put(window.PROP_RENGA, 'wall', 900);
+  } else {
+    OKG.mesh.wall = R.makeInstanced(SCN.cubeSideTop(1.0, 0.66, 1.0), 900, SCN.brickTexture());
+  }
+}
+
+// 取りこんだモデル（base64のFloat32）を 描ける形にほどく
+function propGeometry(M) {
+  const f32 = b => {
+    const raw = atob(b), n = raw.length / 4, a = new Float32Array(n);
+    const dv = new DataView(new ArrayBuffer(raw.length));
+    for (let i = 0; i < raw.length; i++) dv.setUint8(i, raw.charCodeAt(i));
+    for (let i = 0; i < n; i++) a[i] = dv.getFloat32(i * 4, true);
+    return a;
+  };
+  const ints = (b, big) => {
+    const raw = atob(b), sz = big ? 4 : 2, n = raw.length / sz;
+    const dv = new DataView(new ArrayBuffer(raw.length));
+    for (let i = 0; i < raw.length; i++) dv.setUint8(i, raw.charCodeAt(i));
+    const a = big ? new Uint32Array(n) : new Uint16Array(n);
+    for (let i = 0; i < n; i++) a[i] = big ? dv.getUint32(i * 4, true) : dv.getUint16(i * 2, true);
+    return a;
+  };
+  const pos = f32(M.pos), nrm = f32(M.nrm), uv = f32(M.uv);
+  const col = new Float32Array(M.n * 3).fill(1);
+  return { pos, nrm, uv, col, idx: ints(M.idx, M.idx32) };
+}
+
 // ---- オカンの見た目を作る ------------------------------------------------
 // 手組み（buildOkan）と、Tripoから取りこんだモデル（buildOkanFromModel）を切り替える。
 // ★取りこんだほうは絵をファイルから読むので、そろってから残りを始める。
 //   先に __okReady を立てると、絵の無いオカンを撮ってしまう。
 function okMakeOkan(R, gl, done) {
-  const useNew = okanUseImported() && window.OKAN_MODEL;
-  if (!useNew) {
+  // ★手組みオカン（buildOkan）は ?okan=old のときだけ。ふだんは取りこんだモデル。
+  if (okQuery('okan') === 'old') {
     OKG.okan = R.makeMesh(buildOkan().build(gl), okanFaceTexture());
     OKG.rig = new OkanRig();
-    OKG.rig.scale = 1.42;   // マスに対して小さすぎたので大きくした（実測）
+    OKG.rig.scale = 1.42;
+    OKG.pet = null;
     return done();
   }
-  const geo = buildOkanFromModel(window.OKAN_MODEL);
-  OKG.rig = new OkanRig(window.OKAN_MODEL.dims);
-  OKG.rig.scale = 1.42;
-  const img = okanModelTexture();
-  const go = () => {
-    OKG.okan = R.makeMesh(geo, img);
-    OKG.faceOn = true;                       // 表情を貼りかえてよいモデル
-    if (window.OkanFace) OkanFace.load(done); else done();
+  okApplyChar(R, okCharId(), ok => {
+    if (!ok) {                      // 読めなかったら 手組みに落とす（遊べなくならないように）
+      OKG.okan = R.makeMesh(buildOkan().build(gl), okanFaceTexture());
+      OKG.rig = new OkanRig();
+      OKG.rig.scale = 1.42;
+      return done();
+    }
+    okApplyPet(R, okPetId(), () => done());
+  });
+}
+
+// ---- えらび直したときに 作り直す ------------------------------------------
+function okChooseChar(id) {
+  if (id === OKG.charId) return;
+  okSetCharId(id);
+  okApplyChar(OKG.R, id, ok => { if (ok) okMarkChosen(); });
+}
+function okChoosePet(id) {
+  if (id === OKG.petId) return;
+  okSetPetId(id);
+  okApplyPet(OKG.R, id, () => okMarkChosen());
+}
+// ---- 「だれで あそぶ？」の中身を作る ------------------------------------
+function okBuildCharList() {
+  const mk = (list, host, pick) => {
+    const el = document.getElementById(host);
+    if (!el) return;
+    el.innerHTML = '';
+    for (const c of list) {
+      const b = document.createElement('button');
+      b.className = 'cc';
+      b.dataset.id = c.id;
+      b.innerHTML = c.name + (c.tag ? '<span class="cc-sub">' + c.tag + '</span>' : '');
+      b.onclick = () => { if (window.OKSnd) OKSnd.step(); pick(c.id); };
+      el.appendChild(b);
+    }
   };
-  if (img.complete && img.naturalWidth) go();
-  else {
-    img.onload = go;
-    img.onerror = () => { OKG.okan = R.makeMesh(geo, null); done(); };
+  mk(OK_CHARS, 'char-list', okChooseChar);
+  mk(OK_PETS, 'pet-list', okChoosePet);
+  okMarkChosen();
+}
+
+function okMarkChosen() {
+  for (const b of document.querySelectorAll('#char-list .cc')) {
+    b.classList.toggle('on', b.dataset.id === OKG.charId);
+  }
+  for (const b of document.querySelectorAll('#pet-list .cc')) {
+    b.classList.toggle('on', b.dataset.id === OKG.petId);
   }
 }
 
@@ -438,16 +538,6 @@ function okDust(x, y, z) {
   }
 }
 
-// いまの表情を 場面から決める
-function okFaceState() {
-  if (OKG.screen === 'clear') return 'happy';
-  if (OKG.screen === 'title') return OKG.titleFace || 'smile';
-  if (OKG.stuckMsgShown) return 'sad';
-  if (OKG.anim && OKG.anim.kind === 'push') return 'effort';
-  if (OKG.rig && OKG.rig.walk > 0.45) return 'smile';
-  return 'normal';
-}
-
 // ---- 毎フレーム ----------------------------------------------------------
 function okFrame(now) {
   const raw = Math.min(0.05, (now - OKG.last) / 1000);
@@ -466,7 +556,6 @@ function okFrame(now) {
   } else {
     okDrawTitle(dt);
   }
-  if (OKG.faceOn && window.OkanFace) OkanFace.tick(R, OKG.okan, raw, okFaceState());
   requestAnimationFrame(okFrame);
 }
 
@@ -619,7 +708,9 @@ function okDraw() {
   const walls = b.walls.map(p => ({
     x: okWX(p.x), y: 0, z: okWZ(p.y),
     sy: p.y >= b.y1 ? 0.38 : 1,
-    col: p.y >= b.y1 ? [0.94, 0.92, 0.94] : [1, 1, 1],
+    // ★かべ と にもつ が どちらも茶色だと 子どもが見分けられない。
+    //   写真の質感はそのままに、かべは 暗く赤むらさき側へ振る
+    col: p.y >= b.y1 ? [0.80, 0.72, 0.78] : [0.86, 0.74, 0.76],
   }));
   R.drawInstanced(OKG.mesh.wall, walls, { outlineWidth: 0.0026, outlineCol: [0.26, 0.15, 0.09] });
 
@@ -648,14 +739,16 @@ function okDraw() {
     const isStuck = stuck.includes(i);
     boxes.push({
       x, y, z, sx, sy, sz: sx,
-      col: isStuck ? [1.00, 0.50, 0.50] : on ? [1.00, 0.72, 0.84] : [1, 1, 1],
+      // にもつは 明るく黄色側へ（かべと 見分けるため）
+      col: isStuck ? [1.30, 0.62, 0.55] : on ? [1.25, 0.86, 0.92] : [1.22, 1.06, 0.86],
       glow: on ? 0.10 : 0,
     });
   }
   R.drawInstanced(OKG.mesh.box, boxes, { outlineWidth: 0.0028, outlineCol: [0.40, 0.24, 0.14] });
 
-  // オカン
+  // あそぶ人と ペット
   R.drawMesh(OKG.okan, OKG.rig.bones, { outlineWidth: 0.0034 });
+  okDrawPet(R, OKG.rig);
   R.drawParticles(OKG.fx.map(p => ({
     x: p.x, y: p.y, z: p.z, size: p.size,
     col: p.col, alpha: Math.max(0, 1 - p.age / p.life),
@@ -690,6 +783,14 @@ function okDrawTitle(dt) {
   OKG.tTitle += dt;
   OKG.tT += dt;
   let act = OK_TITLE_ACTS[OKG.tAct];
+  // ★えらんでいる あいだは 歩きまわらせない。
+  //   えらんだ人が まん中で 手をふっていてくれないと 見くらべられない。
+  if (OKG.screen === 'chars') {
+    if (act.n !== 'wave') { OKG.tAct = OK_TITLE_ACTS.findIndex(a => a.n === 'wave'); OKG.tT = 0; }
+    act = OK_TITLE_ACTS[OKG.tAct];
+    OKG.tT = Math.min(OKG.tT, act.d * 0.5);
+    OKG.tBox = null;
+  }
   if (OKG.tT > act.d) {
     OKG.tT = 0;
     OKG.tAct = (OKG.tAct + 1) % OK_TITLE_ACTS.length;
@@ -776,6 +877,7 @@ function okDrawTitle(dt) {
     }], { outlineWidth: 0.0028, outlineCol: [0.40, 0.24, 0.14] });
   }
   R.drawMesh(OKG.okan, rig.bones, { outlineWidth: 0.0034 });
+  okDrawPet(R, rig);
 }
 
 // ---- 画面のきりかえ ------------------------------------------------------
@@ -795,7 +897,7 @@ function okShow(name) {
       bc.textContent = now ? `とちゅうから（第${now.i + 1}面）` : `つづきから（${done}／${OK_LEVELS.length}面）`;
     }
   }
-  for (const id of ['scr-title', 'scr-select', 'scr-play']) {
+  for (const id of ['scr-title', 'scr-select', 'scr-play', 'scr-chars']) {
     document.getElementById(id).classList.toggle('show', id === 'scr-' + (name === 'clear' ? 'play' : name));
   }
   if (name !== 'clear') document.getElementById('clear-panel').classList.remove('show');
@@ -981,6 +1083,12 @@ function okBindUI() {
     okShow('select');
   };
   document.getElementById('btn-back-title').onclick = () => okShow('title');
+  const bc2 = document.getElementById('btn-chars');
+  if (bc2) bc2.onclick = () => { okBuildCharList(); okShow('chars'); };
+  for (const id of ['btn-back-chars', 'btn-char-ok']) {
+    const b = document.getElementById(id);
+    if (b) b.onclick = () => okShow('title');
+  }
   const bs = document.getElementById('btn-sound');
   if (bs) bs.onclick = () => {
     const on = window.OKSnd ? OKSnd.toggle() : false;
