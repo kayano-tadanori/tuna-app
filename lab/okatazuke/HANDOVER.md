@@ -475,6 +475,23 @@ PROP_TEX=1024 python tools/import_prop_glb.py renga  "G:/…/3dモデル レン�
 先に置くのは `chars.js` ＋ `char_okan2.js` ＋ `okan2_tex.jpg` ＋ `pet_chicchi.js` ＋ `chicchi_tex.jpg` だけ。
 ほかは えらんだときに 取りにいく（sw.js の fetch がそのままキャッシュに入れる）。
 
+
+### 消したもの（2026-08-24・本人の許可あり）
+古いオカン専用の 5つ。**gitの履歴には のこっているので 戻せる。**
+
+- `js/okan_model.js`（旧オカンのモデル）／`okan_tex.jpg`／`okan_tex_src.jpg`（その直し用の元絵）
+- `js/okan_faces.js`（表情の切れはし）／`js/okan_face.js`（顔のUV位置）
+
+`js/okan.js` からも `okanModelTexture` / `okanUseImported` / `OkanFace` を消した。
+`preview.html` は `char_okan2.js` を見るようになっている。
+**`tools/fix_tex.py` `face_map.py` `face_expr.py` `uvmap.py` は 消していない**が、
+相手のファイルが 無くなったので **そのままでは動かない**（やり方の記録として のこしてある）。
+
+### 🏠 タイトルへ（2026-08-24）
+あそび中の 右の道具に 🏠 を足した。押すと `okSaveNow()` してから タイトルへ。
+**とちゅうの手は のこる**ので「とちゅうから」で 同じところに もどれる
+（キャラを かえたいときの道）。たしかめ方は `python tools/check_home.py`。
+
 ### たしかめ方
     python tools/shot_chars.py        # 5人＋ペットを 本物のゲームで撮る
     python tools/check_chars.py jade  # 盤の上で おす／よろこぶ 姿勢

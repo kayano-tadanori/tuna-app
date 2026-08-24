@@ -1094,6 +1094,14 @@ function okBindUI() {
     const on = window.OKSnd ? OKSnd.toggle() : false;
     bs.textContent = on ? '🔊' : '🔈';
   };
+  // ★あそんでいる とちゅうでも タイトルへ もどれる（キャラを かえたいとき用）。
+  //   途中の手は okSaveNow が のこしているので、「つづきから」で 同じところに もどれる。
+  const bh = document.getElementById('btn-home');
+  if (bh) bh.onclick = () => {
+    okSaveNow();
+    if (window.OKSnd) OKSnd.undo();
+    okShow('title');
+  };
   const bx = document.getElementById('btn-exit');
   if (bx) bx.onclick = () => {
     if (window.OKBgm) OKBgm.play(null);

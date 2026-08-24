@@ -46,7 +46,7 @@ const OKD = {
   armU: 0.162,
   armF: 0.135,
   // ↓ もとは update() に直書きしていた支点。取りこんだモデルは体つきが違うので、
-  //   寸法表から引けるようにした（js/okan_model.js の dims がこの形で入っている）
+  //   寸法表から引けるようにした（js/char_*.js の dims がこの形で入っている）
   shoulderX: 0.196,   // 肩の支点の左右
   legX: 0.078,        // 脚のつけ根の左右
   armZ: 0.004,        // 肩の支点の前後
@@ -299,7 +299,7 @@ function buildOkan() {
 // ---- 骨のポーズを組み立てる ---------------------------------------------
 // 返り値：mat4 × OK_NBONE（ワールド行列）
 class OkanRig {
-  // dims … 骨の支点。手組みオカンは OKD、取りこんだモデルは OKAN_MODEL.dims を渡す。
+  // dims … 骨の支点。手組みオカンは OKD、取りこんだモデルは CHAR_MODELS.<id>.dims を渡す。
   //        動きの式（ふり幅・タイミング）は共通。支点だけ差しかえる。
   constructor(dims) {
     this.D = dims || OKD;
@@ -381,22 +381,13 @@ class OkanRig {
 }
 
 // ---- Tripo から取りこんだモデルを、いまの骨の作りに合わせて組み立てる ----
-// js/okan_model.js の OKAN_MODEL は「立ち姿のワールド座標」で入っている。
+// js/char_*.js の CHAR_MODELS.<id> は「立ち姿のワールド座標」で入っている。
 // シェーダは sk * aPos で描くので、ここで bind 姿勢の逆行列をかけて骨ローカルへ移す。
 //
 // ★bind 姿勢は同じ OkanRig で作る。取りこみスクリプト（Python）側に骨の式を
 //   書き写すと、こちらの式を直したときに黙ってズレて、体がねじれる。
 // ★逆行列は「骨ごと」ではなく「頂点ごとに混ぜた行列」に対してかける。
 //   シェーダの計算が sk = ΣwB なので、bind でも Σw B_rest を作って逆にしないと戻らない。
-let OKAN_TEX_IMG = null;
-function okanModelTexture() {
-  if (!OKAN_TEX_IMG) {
-    OKAN_TEX_IMG = new Image();
-    OKAN_TEX_IMG.src = (window.OKAN_MODEL && window.OKAN_MODEL.tex) || 'okan_tex.jpg';
-  }
-  return OKAN_TEX_IMG;
-}
-
 function okanB64(s, Type) {
   const b = atob(s);
   const u = new Uint8Array(b.length);
@@ -462,86 +453,3 @@ function buildOkanFromModel(M) {
   };
 }
 
-// 取りこんだオカンを使うか。実機で見比べられるように切り替え式にしてある。
-//   ?okan=new / ?okan=old  … その場かぎり
-//   localStorage.okatazukeOkan … 次からも覚えておく
-function okanUseImported() {
-  try {
-    const q = new URLSearchParams(location.search).get('okan');
-    if (q === 'new' || q === 'old') {
-      localStorage.setItem('okatazukeOkan', q);
-      return q === 'new';
-    }
-    // ★2026-08-24：取りこんだモデルを 既定にした。
-    //   実寸で見くらべて、どの大きさでも こちらのほうが読みやすかった
-    //   （髪が顔を縁どるぶん 頭が頭に見える）。三角も 26,764→5,074 で 5分の1。
-    //   手組みに戻すときは ?okan=old。
-    return localStorage.getItem('okatazukeOkan') !== 'old';
-  } catch (e) {
-    return false;
-  }
-}
-
-
-// ============================================================
-// 表情（js/okan_faces.js の小さな絵を テクスチャに貼りかえる）
-//   ★顔は UV の継ぎ目をまたいでいるので、テクスチャに直接は描けない。
-//     tools/face_expr.py が「正面の絵に描いて→画素ごとにUVへ戻した」ものを
-//     四角の切れはしとして持っている。ここでは貼るだけ。
-// ============================================================
-const OkanFace = (function () {
-  let ready = false, imgs = {}, cur = null, want = 'normal';
-
-  function load(done) {
-    if (!window.OKAN_FACES) { done && done(); return; }
-    const names = Object.keys(OKAN_FACES.expr);
-    let left = 0;
-    names.forEach(nm => {
-      imgs[nm] = OKAN_FACES.expr[nm].map(p => {
-        const im = new Image();
-        left++;
-        im.onload = im.onerror = () => { if (--left === 0) { ready = true; done && done(); } };
-        im.src = 'data:image/png;base64,' + p.png;
-        im.__x = p.x; im.__y = p.y;
-        return im;
-      });
-    });
-    if (left === 0) { ready = true; done && done(); }
-  }
-
-  function apply(R, mesh, nm) {
-    if (!ready || !imgs[nm] || nm === cur) return;
-    for (const im of imgs[nm]) {
-      if (im.complete && im.naturalWidth) {
-        R.updateTexRect(mesh, im, im.__x, im.__y, OKAN_FACES.h);
-      }
-    }
-    cur = nm;
-  }
-
-  return {
-    load,
-    isReady() { return ready; },
-    // いま出したい表情（まばたきは ここで割りこませる）
-    set(nm) { want = nm || 'normal'; },
-    get() { return want; },
-    tick(R, mesh, dt, state) {
-      if (!ready || !mesh) return;
-      // まばたき：3〜6秒に1回、0.12秒だけ
-      this._t = (this._t || 0) + dt;
-      this._next = this._next || 2.5;
-      let nm = state;
-      if (this._blink > 0) {
-        this._blink -= dt;
-        if (state === 'normal' || state === 'smile') nm = 'blink';
-      } else if (this._t > this._next) {
-        this._t = 0;
-        this._next = 3 + Math.random() * 3;
-        this._blink = 0.12;
-      }
-      apply(R, mesh, nm);
-    },
-    reset() { cur = null; },
-  };
-})();
-window.OkanFace = OkanFace;

@@ -16,25 +16,27 @@
 <script src="js/gl.js"></script>
 <script src="js/shaders.js"></script>
 <script src="js/parts.js"></script>
-<script src="js/okan_model.js"></script>
-<script src="js/okan_faces.js"></script>
 <script src="js/okan.js"></script>
+<script src="js/chars.js"></script>
+<script src="js/char_okan2.js"></script>
 <script src="js/renderer.js"></script>
 <script>
 'use strict';
 const R = new Renderer(document.getElementById('cv'));
 R.initShadows(8);
-// 手組みオカン（既定）と、Tripoから取りこんだオカン（?okan=new）を切り替える
+// 取りこんだキャラ（既定＝オカーン）と、手組みオカン（?okan=old）を切り替える
+// ★ほかの人を見たいときは ?char=g5 のように。そのぶんの js/char_*.js を足す
 let mesh = null;
 let rig = null;
 function okanBoot(cb) {
-  if (okanUseImported() && window.OKAN_MODEL) {
-    const geo = buildOkanFromModel(window.OKAN_MODEL);
-    rig = new OkanRig(window.OKAN_MODEL.dims);
-    const img = okanModelTexture();
-    const go = () => { mesh = R.makeMesh(geo, img); cb(); };
-    if (img.complete && img.naturalWidth) go();
-    else { img.onload = go; img.onerror = () => { mesh = R.makeMesh(geo, null); cb(); }; }
+  const M = window.CHAR_MODELS && window.CHAR_MODELS.okan2;
+  if (M && new URLSearchParams(location.search).get('okan') !== 'old') {
+    const geo = buildOkanFromModel(M);
+    rig = new OkanRig(M.dims);
+    const img = new Image();
+    img.onload = () => { mesh = R.makeMesh(geo, img); cb(); };
+    img.onerror = () => { mesh = R.makeMesh(geo, null); cb(); };
+    img.src = M.tex;
   } else {
     mesh = R.makeMesh(buildOkan().build(R.gl), okanFaceTexture());
     rig = new OkanRig();
