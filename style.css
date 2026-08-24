@@ -62,6 +62,11 @@ body {
 /* チッチジャンプ3D（iframeで隔離） */
 #screen-jump3d { padding: 0; overflow: hidden; background: #05060f; }
 #screen-jump3d iframe { display: block; width: 100%; height: 100%; border: 0; background: #05060f; }
+/* 🧹 オカンの おかたづけ（iframeで隔離）
+   ★これを 書きわすれると iframe が 既定の300×150 のまま出る（2026-08-23に踏んだ）。
+     見た目が こわれるだけでなく、中のボタンの当たり判定も ずれる。 */
+#screen-okatazuke { padding: 0; overflow: hidden; background: #2a1c26; }
+#screen-okatazuke iframe { display: block; width: 100%; height: 100%; border: 0; background: #2a1c26; }
 .subject-card-cj3d { background: linear-gradient(135deg, #0f3d63, #1b2a6b); border-color: rgba(150,220,255,.45); }
 .t2-new { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 8px;
   font-size: 10px; font-weight: 900; letter-spacing: .06em; color: #05121f;
@@ -1135,6 +1140,30 @@ canvas.otton3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%;
   box-shadow: 0 0 10px rgba(255,140,80,.6);
 }
 .subject-card-cj .subject-detail { color: rgba(255,246,232,.94); text-shadow: 0 1px 6px rgba(0,0,0,.95); }
+
+/* 🧹 オカンの おかたづけ のカード
+   ★ここ（テトリス2・チッチ3D のとなり）に置くこと。ファイルの前のほうに書くと
+     あとの .subject-card-game に上書きされて 背景が出ない（2026-08-21 に実測ずみ）。
+   画像は使わず、オカンの ピンク＋白＋木の色だけで作る。 */
+.subject-card-oz {
+  --sc-accent: linear-gradient(90deg,#ffd0e2,#ff7aa8,#ffb27a); --sc-glow: rgba(255,140,180,0.28);
+  border-color: rgba(255,170,200,.55);
+  background:
+    linear-gradient(90deg, rgba(46,18,32,0.93) 0%, rgba(46,18,32,0.80) 48%, rgba(46,18,32,0.34) 76%, rgba(46,18,32,0.04) 100%),
+    url('images/okatazuke-banner.png') center / cover no-repeat;
+  min-height: 92px;
+}
+.oz-icon { font-size: 2.1rem; line-height: 1; flex-shrink: 0; z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(255,170,200,.95)) drop-shadow(0 0 22px rgba(255,120,170,.55)); }
+.oz-name { letter-spacing: .02em; font-weight: 900; }
+.oz-name b { color: #ffd9e6; text-shadow: 0 0 10px rgba(255,180,210,.85), 0 2px 8px rgba(0,0,0,.95); }
+.oz-name i { font-style: normal; color: #ffe9c9; text-shadow: 0 0 10px rgba(255,200,140,.85), 0 2px 8px rgba(0,0,0,.95); }
+.oz-new {
+  margin-left: 6px; padding: 1px 6px; border-radius: 6px; font-size: .62em; font-weight: 900;
+  background: linear-gradient(180deg,#ff8fb4,#e8447c); color: #fff; letter-spacing: .06em;
+  box-shadow: 0 0 10px rgba(255,120,170,.6);
+}
+.subject-card-oz .subject-detail { color: rgba(255,240,246,.94); text-shadow: 0 1px 6px rgba(0,0,0,.95); }
 
 .subject-card-jump .game-icon { filter: drop-shadow(0 0 12px rgba(120,180,255,0.75)); }
 .jump-area { padding: 8px 16px calc(24px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; align-items: center; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; }

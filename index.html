@@ -117,6 +117,14 @@
     </div>
 
     <p class="section-label">息抜きタイム<span id="game-ticket-badge" class="ticket-badge">🎟 0枚</span></p>
+    <button class="subject-card subject-card-game subject-card-oz" data-subject="okatazuke">
+      <span class="oz-icon">🧹</span>
+      <span class="game-text">
+        <span class="subject-name oz-name"><b>オカンの</b><i>おかたづけ</i><span class="oz-new">NEW</span></span>
+        <span class="subject-detail">にもつを おして ぜんぶ おさめる 3Dパズル・遊び券1まい</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
     <button class="subject-card subject-card-game subject-card-jp" data-subject="jadepanic">
       <span class="jp-icon">🦜</span>
       <span class="game-text">
@@ -2046,6 +2054,13 @@
   <iframe id="cj-frame" title="チッチジャンプ3D" allow="autoplay; fullscreen"></iframe>
 </div>
 
+<!-- =============== オカンの おかたづけ（にもつを おす 3Dパズル） ===============
+     中身は lab/okatazuke/ が原本。やりとりは js/okatazuke-embed.js の postMessage。
+     ★遊び券は「入場で1まい」。中では 何面でも やりなおしても ただ。 -->
+<div id="screen-okatazuke" class="screen">
+  <iframe id="oz-frame" title="オカンの おかたづけ" allow="autoplay; fullscreen"></iframe>
+</div>
+
 <!-- =============== ジェイドパニック ===============
      グローバル名やCSSが本体とぶつからないよう、iframeで隔離している。
      中身は lab/jadepanic/ が原本。やりとりは js/jadepanic-embed.js の postMessage。 -->
@@ -2379,7 +2394,8 @@
 <script src="js/shakai-go.js"></script>
 <script src="js/tetris.js"></script>
 <script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
-<script src="js/jadepanic-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
+<script src="js/jadepanic-embed.js"></script>
+<script src="js/okatazuke-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
 <script src="js/jump3d-embed.js"></script>  <!-- チッチジャンプ3D（iframeの橋渡し） -->
 <script>
   // 3Dのオットン（js/otton3d.js）を読む。

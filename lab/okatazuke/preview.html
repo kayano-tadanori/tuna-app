@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>オカン モデル確認</title>
+<style>
+  html,body{margin:0;height:100%;background:#20141c;overflow:hidden;}
+  canvas{display:block;width:100vw;height:100vh;}
+  #hud{position:fixed;left:8px;top:8px;color:#fff;font:12px/1.5 system-ui;opacity:.75;}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div id="hud">ドラッグで回す／数字キー 1=たち 2=あるく 3=おす 4=よろこぶ 5=がっくり</div>
+<script src="js/gl.js"></script>
+<script src="js/shaders.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/okan_model.js"></script>
+<script src="js/okan_faces.js"></script>
+<script src="js/okan.js"></script>
+<script src="js/renderer.js"></script>
+<script>
+'use strict';
+const R = new Renderer(document.getElementById('cv'));
+R.initShadows(8);
+// 手組みオカン（既定）と、Tripoから取りこんだオカン（?okan=new）を切り替える
+let mesh = null;
+let rig = null;
+function okanBoot(cb) {
+  if (okanUseImported() && window.OKAN_MODEL) {
+    const geo = buildOkanFromModel(window.OKAN_MODEL);
+    rig = new OkanRig(window.OKAN_MODEL.dims);
+    const img = okanModelTexture();
+    const go = () => { mesh = R.makeMesh(geo, img); cb(); };
+    if (img.complete && img.naturalWidth) go();
+    else { img.onload = go; img.onerror = () => { mesh = R.makeMesh(geo, null); cb(); }; }
+  } else {
+    mesh = R.makeMesh(buildOkan().build(R.gl), okanFaceTexture());
+    rig = new OkanRig();
+    cb();
+  }
+}
+let yaw = 0.5, pitch = 0.22, dist = 2.1, mode = 1, drag = null;
+const q = new URLSearchParams(location.search);
+if (q.get('yaw')) yaw = parseFloat(q.get('yaw'));
+if (q.get('mode')) mode = parseInt(q.get('mode'));
+
+addEventListener('pointerdown', e => drag = { x: e.clientX, y: e.clientY, yaw, pitch });
+addEventListener('pointermove', e => {
+  if (!drag) return;
+  yaw = drag.yaw - (e.clientX - drag.x) * 0.008;
+  pitch = Math.max(-0.4, Math.min(1.2, drag.pitch + (e.clientY - drag.y) * 0.005));
+});
+addEventListener('pointerup', () => drag = null);
+addEventListener('wheel', e => dist = Math.max(0.9, Math.min(6, dist + e.deltaY * 0.002)));
+addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '5') mode = +e.key; });
+
+const gl = R.gl;
+gl.enable(gl.CULL_FACE);
+gl.enable(gl.DEPTH_TEST);
+
+let auto = true;
+
+function step(dt) {
+  R.time += dt;
+  rig.walk  = mode === 2 ? 1 : 0;
+  rig.push  = mode === 3 ? 1 : 0;
+  rig.cheer = mode === 4 ? 1 : 0;
+  rig.sad   = mode === 5 ? 1 : 0;
+  rig.yaw = 0;
+  rig.update(dt);
+}
+
+function draw() {
+  if (!mesh) return;                 // 絵がそろうまでは描かない
+  R.resize();
+  const cy = 0.62;
+  const eye = [Math.sin(yaw) * Math.cos(pitch) * dist, cy + Math.sin(pitch) * dist, Math.cos(yaw) * Math.cos(pitch) * dist];
+  R.camera(eye, [0, cy, 0], 40);
+  R.bg([0.30, 0.20, 0.30], [0.70, 0.55, 0.62]);
+  R.drawShadows([{ x: 0, y: 0.002, z: 0, r: 0.55 }], 0.35);
+  R.drawMesh(mesh, rig.bones);
+}
+
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (auto) { step(dt); draw(); }
+  requestAnimationFrame(frame);
+}
+okanBoot(() => {
+  last = performance.now();
+  requestAnimationFrame(frame);
+  window.__ready = true;            // ★絵がそろってから立てる（無地のオカンを撮らないため）
+});
+
+// 撮影用（rAFを止めてから決まったコマ数だけ進める）
+window.__ok = {
+  stats: () => ({ verts: mesh ? mesh.count / 3 : 0 }),
+  setAuto: v => { auto = v; },
+  setView: (y, p, d) => { yaw = y; pitch = p; if (d) dist = d; },
+  setMode: m => { mode = m; },
+  step: (n, dt) => { for (let i = 0; i < n; i++) step(dt || 1 / 60); draw(); },
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>おかたづけ バナー撮影用</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;}
+  canvas{display:block;width:100vw;height:100vh;}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<script src="js/gl.js"></script>
+<script src="js/shaders.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/okan_model.js"></script>
+<script src="js/okan_faces.js"></script>
+<script src="js/okan.js"></script>
+<script src="js/renderer.js"></script>
+<script>
+/* ============================================================
+   カードのバナーを撮るためだけの画面。ゲームには読みこまれない。
+   ★ゲームと同じ renderer/scene/okan を使う＝カードの絵と中身がズレない。
+   カードは左半分に文字が乗る（style.css のグラデ）ので、
+   オカンと おきばは 右がわに置いてある。
+   ============================================================ */
+'use strict';
+const R = new Renderer(document.getElementById('cv'));
+const gl = R.gl;
+gl.enable(gl.CULL_FACE);
+gl.enable(gl.DEPTH_TEST);
+gl.depthFunc(gl.LEQUAL);
+R.initShadows(64);
+R.initParticles(64);
+
+const mesh = {
+  tile: R.makeInstanced(SCN.tile(), 400),
+  wall: R.makeInstanced(SCN.wall(), 200),
+  box:  R.makeInstanced(SCN.box(), 40),
+  goal: R.makeInstanced(SCN.goal(), 40),
+};
+let okan = null, rig = null;
+
+// 盤の配置（マス単位・x は右、z は手前）
+const FLOOR = [];
+for (let z = -5; z <= 2; z++) for (let x = -8; x <= 8; x++) FLOOR.push([x, z]);
+const WALLS = [];
+for (let x = -8; x <= 8; x++) { WALLS.push([x, -6]); }
+for (let z = -6; z <= 2; z++) { WALLS.push([-9, z]); WALLS.push([9, z]); }
+const BOXES = [[1.18, 0.95], [-2.9, -1.4], [3.5, -0.9], [-4.6, 0.2], [0.6, -2.5]];
+const GOALS = [[0.10, 0.85], [-1.00, 0.85], [0.10, -0.25]];
+
+function build(done) {
+  const geo = buildOkanFromModel(window.OKAN_MODEL);
+  rig = new OkanRig(window.OKAN_MODEL.dims);
+  rig.scale = 1.42;
+  const img = okanModelTexture();
+  const go = () => {
+    okan = R.makeMesh(geo, img);
+    if (window.OkanFace) OkanFace.load(() => { OkanFace.set('effort'); done(); });
+    else done();
+  };
+  if (img.complete && img.naturalWidth) go(); else { img.onload = go; img.onerror = go; }
+}
+
+function draw(t) {
+  R.resize();
+  R.time = t;
+  // オカン：にもつを おしている ポーズ
+  rig.walk = 1; rig.push = 1; rig.cheer = 0; rig.sad = 0; rig.wave = 0; rig.bow = 0;
+  rig.walkPhase = 1.15;                 // 足が いちばん開くところで 止める
+  rig.t = t;
+  // ★カメラは オカンの左まえに ある。右へ押すと ちょうど真横＝顔が見えない。
+  //   左へ押させると 顔がこちらを向く（実測で 何度も撮って決めた）
+  rig.yaw = -0.95;
+  rig.pos = [2.05, 0, 0.22];
+  rig.update(0);
+  if (window.OkanFace && okan) OkanFace.tick(R, okan, 0.016, 'effort');
+
+  // ★寄って撮る。引くと オカンが豆つぶになり、床だけの絵になる（実測）
+  // ★カードは 左に文字が乗る。オカンは 右3分の1 に来るよう、
+  //   カメラの的を 左へ ずらしてある（オカンは x=2.2、的は x=0.2）
+  const eye = [0.80, 2.40, 4.05];
+  const tgt = [0.35, 0.70, 0.05];
+  R.camera(eye, tgt, 36);
+  R.bg([0.34, 0.27, 0.42], [0.90, 0.74, 0.72], 0);
+
+  // 外の地面
+  R.drawInstanced(mesh.tile, [{ x: 0, y: -0.62, z: 0, sx: 90, sy: 5, sz: 90,
+                                col: [0.44, 0.31, 0.34] }], { outline: false, rim: 0.02 });
+  // ゆか
+  R.drawInstanced(mesh.tile, FLOOR.map(([x, z]) => ({
+    x, y: -0.05, z,
+    col: (Math.abs(x + z) % 2) ? [0.95, 0.87, 0.77] : [0.99, 0.91, 0.81],
+  })), { outlineWidth: 0.0016, outlineCol: [0.42, 0.30, 0.24] });
+  // おきば
+  R.drawInstanced(mesh.goal, GOALS.map(([x, z]) => ({ x, y: 0.048, z, col: [1, 1, 1], glow: 0.12 })),
+                  { outlineWidth: 0.0013, outlineCol: [0.60, 0.24, 0.36] });
+  // かべ
+  R.drawInstanced(mesh.wall, WALLS.map(([x, z]) => ({ x, y: 0, z, col: [1, 1, 1] })),
+                  { outlineWidth: 0.0018, outlineCol: [0.26, 0.15, 0.09] });
+  // 影
+  const sh = BOXES.map(([x, z]) => ({ x, y: 0.06, z, r: 0.86 }));
+  sh.push({ x: rig.pos[0], y: 0.06, z: rig.pos[2], r: 0.66 });
+  R.drawShadows(sh, 0.26);
+  // にもつ
+  R.drawInstanced(mesh.box, BOXES.map(([x, z], i) => ({
+    x, y: 0.02, z, col: i === 3 ? [1.00, 0.72, 0.84] : [1, 1, 1], glow: i === 3 ? 0.10 : 0,
+  })), { outlineWidth: 0.0020, outlineCol: [0.40, 0.24, 0.14] });
+  // オカン
+  R.drawMesh(okan, rig.bones, { outlineWidth: 0.0024 });
+}
+
+build(() => { draw(1.2); window.__bannerReady = true; });
+window.__ok = { draw };
+</script>
+</body>
+</html>

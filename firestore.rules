@@ -77,6 +77,8 @@ service cloud.firestore {
              //   ゲームがわは cj:<名前>:stamps に持っているが、そこは端末のみ＝
              //   機種を変えると帳がまるごと空になる。本体の固定キーに写して載せる。
              'jump3dStamps',
+             // 🧹 オカンの おかたづけ の記録（クリアした面・最少手数・2026-08-23）
+             'okatazukeSave',
              'gameTickets', 'lastUpdated'
            ])
         && (!('progress' in request.resource.data)  || strOk(request.resource.data.progress, 900000))
@@ -108,6 +110,9 @@ service cloud.firestore {
         // jump3dStamps は {"月":"2026-08-20", …} の1本。名前つきの到達点は28か所しか
         // 無いので 2,000字あれば足りるが、場所を足すことがあるので 20,000 にしておく。
         && (!('jump3dStamps' in request.resource.data)    || strOk(request.resource.data.jump3dStamps, 20000))
+        // okatazukeSave は {"L0":{"m":2,"p":2},"S0":3, …} の1本。
+        // 36面ぜんぶ埋めても 2,000字ほど。面を足すことがあるので 20,000 にしておく。
+        && (!('okatazukeSave' in request.resource.data)   || strOk(request.resource.data.okatazukeSave, 20000))
         && serverTime();
       allow delete: if isAdmin();
     }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>オカンの おかたづけ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div id="vignette"></div>
+
+<!-- ===== タイトル ===== -->
+<div id="scr-title" class="screen show">
+  <div class="title-wrap">
+    <h1>オカンの<br><span class="big">おかたづけ</span></h1>
+    <p class="sub">にもつを おして、ピンクの わくに ぜんぶ おさめよう</p>
+    <button id="btn-start" class="big-btn">はじめる</button>
+    <button id="btn-continue" class="mid-btn" style="display:none">つづきから</button>
+    <div id="title-msg" class="title-msg"></div>
+    <p class="tiny">にもつは <b>おす</b> だけ。<b>ひっぱれません</b>。<br>
+      こまったら「もどす」で 何回でも やりなおせるで。</p>
+  </div>
+</div>
+
+<!-- ===== 面えらび ===== -->
+<div id="scr-select" class="screen">
+  <div class="sel-head">
+    <button id="btn-back-title" class="ico-btn">◀</button>
+    <span class="sel-title">どの おかたづけ する？</span>
+    <span id="progress" class="progress"></span>
+  </div>
+  <div id="level-list" class="level-list"></div>
+</div>
+
+<!-- ===== あそぶ ===== -->
+<div id="scr-play" class="screen">
+  <div class="top-bar">
+    <button id="btn-list" class="ico-btn">≡</button>
+    <div class="top-mid">
+      <div id="hud-name" class="hud-name"></div>
+      <div id="hud-count" class="hud-count"></div>
+    </div>
+    <button id="btn-sound" class="ico-btn">🔊</button>
+    <button id="btn-exit" class="ico-btn">✕</button>
+  </div>
+
+  <!-- カメラの道具は 右がわに たてに並べる（上のバーが せまくなるため） -->
+  <div class="side-tools">
+    <button id="btn-zoomin" class="ico-btn" title="大きく">＋</button>
+    <button id="btn-zoomout" class="ico-btn" title="小さく">−</button>
+    <button id="btn-view" class="ico-btn" title="見る角度">◱</button>
+    <button id="btn-whole" class="ico-btn" title="ぜんたい" style="display:none">🔍</button>
+  </div>
+
+  <div id="say" class="say"></div>
+
+  <div class="bottom">
+    <div class="pad">
+      <button id="pad-U" class="pad-btn pu">▲</button>
+      <button id="pad-L" class="pad-btn pl">◀</button>
+      <button id="pad-R" class="pad-btn pr">▶</button>
+      <button id="pad-D" class="pad-btn pd">▼</button>
+    </div>
+    <div class="acts">
+      <button id="btn-undo" class="act-btn undo">もどす</button>
+      <button id="btn-reset" class="act-btn">やりなおし</button>
+    </div>
+  </div>
+
+  <div id="clear-panel" class="clear-panel">
+    <div class="clear-box">
+      <div id="clear-stars" class="clear-stars"></div>
+      <h2 id="clear-title"></h2>
+      <p id="clear-detail"></p>
+      <div class="clear-btns">
+        <button id="btn-retry" class="act-btn">もういちど</button>
+        <button id="btn-tolist" class="act-btn">いちらん</button>
+        <button id="btn-next" class="act-btn go">つぎへ ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/gl.js"></script>
+<script src="js/shaders.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/okan_model.js"></script>
+<script src="js/okan_faces.js"></script>
+<script src="js/okan.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/core.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/bgm.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

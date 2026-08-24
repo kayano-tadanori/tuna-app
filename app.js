@@ -1280,6 +1280,10 @@ function initSubject() {
         if (!hasGameTickets(JUMP3D_COST)) return;
         initChicchiJump3D();
         showScreen('jump3d');
+      } else if (subj === 'okatazuke') {
+        if (!hasGameTickets(OKATAZUKE_COST)) return;
+        initOkatazuke();
+        showScreen('okatazuke');
       } else if (subj === 'mine') {
         if (!hasGameTicket()) return;
         initMine();
@@ -1737,6 +1741,14 @@ const BACKUP_KEYS = [
   // 🏅 チッチジャンプ3D のスタンプ帳（2026-08-22）。iframe の中の
   //    cj:<名前>:stamps を、js/jump3d-embed.js がここへ写している。
   'jump3dStamps',
+  // 🧹 オカンの おかたづけ（クリアした面と 最少手数）。iframe と同じオリジンなので
+  //    localStorage は そのまま共通。
+  // 🚧 2026-08-24：**まだ足さない。** firestore.rules 側には書いてあるが、
+  //    ルールがデプロイされる前にこの行を出すと hasOnly が丸ごと拒否して、
+  //    その子の記録が すべて 無言で保存されなくなる（2026-08-20に実際に起きた）。
+  //    → `firebase deploy --only firestore:rules` を流したあとに、
+  //      下の行のコメントを外して push する。それまで記録は端末のみ。
+  // 'okatazukeSave',
   'drillBest',   // 計算ドリルの自己ベスト（組み合わせごとのJSON・2026-07-28）
   'progress',
   'gameTickets', // 息抜きゲームの遊び券（2026-08-20・端末を変えても引き継げるように）
