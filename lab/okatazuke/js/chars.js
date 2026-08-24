@@ -95,6 +95,7 @@ function okApplyChar(R, id, done) {
       OKG.okan = mesh;
       OKG.rig = new OkanRig(M.dims);
       OKG.rig.scale = 1.42;      // マスに対して小さすぎたので大きくした（実測）
+      OKG.rig.stride = 1.0;      // ★盤は 1マス＝1歩。ここを合わせないと 足がすべる
       OKG.charId = id;
       done(true);
     });

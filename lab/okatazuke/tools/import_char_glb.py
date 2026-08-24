@@ -242,7 +242,8 @@ def main():
             continue
         S = jpos[ua]
         cur = jpos[hd] - S
-        tgt = np.array([sx * 0.15, -1.0, 0.0])       # ★すこし外へ開いて まっすぐ下
+        # ★脇を開ける。0.15（8度）だと 腕が体にはりついて 不自然だった
+        tgt = np.array([sx * 0.32, -1.0, 0.06])
         R = rot_between(cur, tgt)
         A = np.eye(4)
         A[:3, 3] = S

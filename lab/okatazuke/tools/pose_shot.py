@@ -34,14 +34,17 @@ CAMS = {
     'near': ([0.0, 1.45, 1.55], [0.0, 1.30, 0]),
     'side': ([2.15, 1.35, 0.55], [0.0, 0.95, 0.25]),
     'full': ([0.0, 1.20, 3.4], [0.0, 0.95, 0]),
+    'front': ([0.0, 1.25, 2.3], [0.0, 1.05, 0]),
 }
 
 FREEZE = """a => {
   document.querySelectorAll('.screen').forEach(e => e.classList.remove('show'));
   const r = OKG.rig;
   r.yaw = 0; r.pos = [0, 0, 0]; r.t = 1.2;
+  r._ph.have = true; r._ph.px = 0; r._ph.pz = 0;
   r.walk = 0; r.push = 0; r.cheer = 0; r.wave = 0; r.bow = 0; r.sad = 0;
   eval(a.pose);
+  r._ph.v = r.walkPhase;
   r.update(0);
   const held = r.bones.map(m => new Float32Array(m));
   OkanRig.prototype.update = function () { this.bones = held; return held; };
@@ -71,9 +74,13 @@ def main():
     args = sys.argv[1:]
     if args and args[0] == 'sheet':
         chars = ['okan2', 'g5', 'otton']
-        poses = ['stand', 'walk', 'walk2', 'push', 'push2', 'cheer']
-        cams = ['side']
-        jobs = [(c, p, cm) for c in chars for p in poses for cm in cams]
+        jobs = []
+        for c in chars:
+            jobs.append((c, 'stand', 'front'))
+            jobs.append((c, 'walk', 'side'))
+            jobs.append((c, 'walk2', 'side'))
+            jobs.append((c, 'push', 'side'))
+            jobs.append((c, 'cheer', 'front'))
     else:
         c = args[0] if args else 'okan2'
         p = args[1] if len(args) > 1 else 'push'
@@ -99,7 +106,7 @@ def main():
     if len(files) > 1:
         ims = [Image.open(f) for f in files]
         w, h = ims[0].size
-        cols = 6
+        cols = 5
         rows = (len(ims) + cols - 1) // cols
         sheet = Image.new('RGB', (w * cols, h * rows), (255, 255, 255))
         for i, im in enumerate(ims):

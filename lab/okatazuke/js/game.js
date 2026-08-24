@@ -179,6 +179,7 @@ function okMakeOkan(R, gl, done) {
       OKG.okan = R.makeMesh(buildOkan().build(gl), okanFaceTexture());
       OKG.rig = new OkanRig();
       OKG.rig.scale = 1.42;
+      OKG.rig.stride = 1.0;
       return done();
     }
     okApplyPet(R, okPetId(), () => done());

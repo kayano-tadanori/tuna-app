@@ -360,6 +360,9 @@ class OkanRig {
     this.yaw = 0;
     this.pos = [0, 0, 0];
     this._ph = new MOTION.Phase(0.5);   // 歩調（進んだ距離から出す）
+    // ★1歩で どれだけ進むか。盤の上は 1マス＝1歩なので game.js が 1.0 を入れる。
+    //   0 のままだと 体の大きさから 見つもる（タイトルの演目むけ）。
+    this.stride = 0;
     this.scale = 1;   // 盤の上では すこし大きく見せる
   }
 
@@ -371,7 +374,8 @@ class OkanRig {
 
     // ★歩調は「進んだ距離」で決める（motion.js の Phase）。
     //   時間で回すと 足が地面をすべる。1歩＝こしの高さの0.8倍。
-    this._ph.stride = Math.max(0.05, P.hip[0][1] * this.scale * 0.80);
+    this._ph.stride = this.stride > 0
+      ? this.stride : Math.max(0.05, P.hip[0][1] * this.scale * 0.80);
     if (w > 0) this.walkPhase = this._ph.step(this.pos, dt, 7.2 + 1.6 * p);
     else { this._ph.have = false; this._ph.v = this.walkPhase; }
     const ph = this.walkPhase;
@@ -381,7 +385,9 @@ class OkanRig {
     // よろこびのジャンプ／おすときは 腰を落として ふんばる
     const hop = c > 0 ? Math.abs(Math.sin(this.t * 8.0)) * 0.10 * c : 0;
     const bob = Math.abs(Math.sin(ph)) * 0.024 * w + idle + hop - p * 0.055 - s * 0.03;
-    const lean = p * 0.20 + w * 0.08 - s * 0.10 + bw * 0.55;
+    // ★おすときの前かがみは 弱めに。頭の大きい子たちは 深く曲げると
+    //   頭が にもつに うずもれて 顔が見えなくなる（実測）。
+    const lean = p * 0.11 + w * 0.08 - s * 0.10 + bw * 0.55;
 
     const root = mul(T(this.pos[0], this.pos[1] + bob, this.pos[2]),
                      Ry(this.yaw), Rx(lean), S(this.scale));
@@ -392,17 +398,17 @@ class OkanRig {
     const torso = mul(root, T(P.waist[0], P.waist[1], P.waist[2]),
                       Rz(Math.sin(ph) * 0.045 * w),
                       Ry(-twist * 0.5),
-                      Rx(p * 0.16 + s * 0.22 + bw * 0.35 + breathe));
+                      Rx(p * 0.10 + s * 0.22 + bw * 0.35 + breathe));
     this.bones[OK_BONE.TORSO] = torso;
 
     // 胸：腰と逆にひねる（人は そうやって歩く）。おすときは さらに前へかぶせる
     const chest = mul(torso, TD(P.waist, P.chest),
                       Ry(twist * 0.9),
                       Rz(-Math.sin(ph) * 0.035 * w),
-                      Rx(p * 0.20 - c * 0.14 + bw * 0.18 + s * 0.06));
+                      Rx(p * 0.12 - c * 0.14 + bw * 0.18 + s * 0.06));
     this.bones[OK_BONE.CHEST] = chest;
 
-    const nod = -p * 0.16 + Math.sin(this.t * 1.7) * 0.02 - s * 0.30 + c * 0.20 + bw * 0.30;
+    const nod = -p * 0.04 + Math.sin(this.t * 1.7) * 0.02 - s * 0.30 + c * 0.20 + bw * 0.30;
     const head = mul(chest, TD(P.chest, P.head), Rx(nod),
                      Ry(Math.sin(this.t * 0.9) * 0.05 * (1 - w) - twist * 0.4));
     this.bones[OK_BONE.HEAD] = head;
@@ -421,17 +427,18 @@ class OkanRig {
       // 腕は 反対がわの足と 同じ位相（人はそう歩く）
       const swing = Math.sin(ph + (sx > 0 ? Math.PI : 0)) * 0.48 * w * (1 - p * 0.55);
       // おす … 両腕を 前下がりに出して にもつに手をあてる
-      const fwd = -p * 1.06;
+      const fwd = -p * 1.20;
       const up = -c * 1.95 - (sx < 0 ? wv * 1.5 : 0);
       const ax = Math.max(-lim, Math.min(lim, swing + fwd + up));
       // 鎖骨は 腕の上げ下げの 3割ほど ついていく（＝肩がついてくる）
       const shoulder = mul(chest, TD(P.chest, P.clav[k]),
                            Rx(ax * 0.30),
-                           Rz(sx * (-c * 0.16 - p * 0.05)));
+                           Rz(sx * (0.05 - c * 0.16 - p * 0.05)));
       this.bones[bs] = shoulder;
 
       // 横への開き：よろこぶと V の字、おすと すこし内向き
-      const open = sx * (-0.06 - p * 0.02 - c * 0.42 + s * 0.05 - wv * 0.10);
+      // ★+ が 外。前は -0.06（内向き）で 脇が閉じて見えた
+      const open = sx * (0.13 - p * 0.05 - c * 0.42 + s * 0.05 - wv * 0.10);
       const arm = mul(shoulder, TD(P.clav[k], P.arm[k]),
                       Rz(open),
                       Rx(ax * 0.70),
@@ -439,7 +446,7 @@ class OkanRig {
       this.bones[bu] = arm;
 
       // ひじ：おすときは 曲げて ふんばる。歩くときは 前へ出るとき すこし曲がる
-      let elbow = -0.16 - p * 0.42 - c * 0.35
+      let elbow = -0.16 - p * 0.26 - c * 0.35
         + Math.max(0, Math.sin(ph + (sx > 0 ? Math.PI : 0))) * 0.22 * w * (1 - p);
       if (wv > 0 && sx < 0) elbow -= wv * (1.05 + Math.sin(this.t * 11.0) * 0.42);
       this.bones[bf] = mul(arm, TD(P.arm[k], P.elbow[k]), Rx(elbow),
@@ -454,8 +461,11 @@ class OkanRig {
     for (const [bl, bk, bfo, sx, k] of legs) {
       // 左右で 半周期ずらす。u は 0..1 の 歩行周期の位置
       const u = ph / (Math.PI * 2) + (sx > 0 ? 0 : 0.5);
-      const hipA = okCurve(OK_GAIT.hip, u) * OK_D2R * w
-        + (-p * 0.34 + s * 0.05);              // おす … 足をうしろに残して 体をあずける
+      // ★Rx(+) は 足を うしろへ回す（上は前へ、下は後ろへ 回るため）。
+      //   歩行曲線の「前へ振り出す」は + なので、符号を 反転して渡す。
+      //   ここを まちがえて 1周期ずっと 足が うしろにあった（実測で発覚）。
+      const hipA = -okCurve(OK_GAIT.hip, u) * OK_D2R * w
+        + (p * 0.30 + s * 0.05);               // おす … 足をうしろに残して 体をあずける
       const thigh = mul(root, T(P.hip[k][0], P.hip[k][1], P.hip[k][2]),
                         Rz(sx * (p * 0.03)), Rx(hipA));
       this.bones[bl] = thigh;
@@ -467,8 +477,12 @@ class OkanRig {
       this.bones[bk] = knee;
 
       // 足くび：曲線ぶん＋残った傾きを 打ち消して 足の裏を 地面に近づける
-      const ankleA = Math.max(-0.75, Math.min(0.75,
-        okCurve(OK_GAIT.ankle, u) * OK_D2R * w - (hipA + kneeA) * 0.42 + p * 0.16));
+      // ★足くびは 歩行曲線を そのまま出す。前は 打ち消しを強くかけすぎて
+      //   ほとんど動かず「足首が稼働していない」と言われた。
+      //   打ち消しは 立っているとき（w が小さいとき）だけ 効かせる。
+      const flat = -(hipA + kneeA) * (0.55 - 0.42 * w);
+      const ankleA = Math.max(-0.9, Math.min(0.9,
+        -okCurve(OK_GAIT.ankle, u) * OK_D2R * w * 1.8 + flat + p * 0.16));
       this.bones[bfo] = mul(knee, TD(P.knee[k], P.foot[k]), Rx(ankleA));
     }
     return this.bones;
