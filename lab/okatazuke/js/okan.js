@@ -464,15 +464,21 @@ class OkanRig {
       // ★Rx(+) は 足を うしろへ回す（上は前へ、下は後ろへ 回るため）。
       //   歩行曲線の「前へ振り出す」は + なので、符号を 反転して渡す。
       //   ここを まちがえて 1周期ずっと 足が うしろにあった（実測で発覚）。
-      const hipA = -okCurve(OK_GAIT.hip, u) * OK_D2R * w
-        + (p * 0.30 + s * 0.05);               // おす … 足をうしろに残して 体をあずける
+      // ★盤の上では 小さく映るので 実測どおりだと「腿が上がっていない」と見える。
+      //   1.35倍に 誇張する（アニメの定石）。
+      const hipA = -okCurve(OK_GAIT.hip, u) * OK_D2R * w * 1.35
+        // ★おすとき 足を うしろへ ずらしすぎると、まっすぐな脚が 弧をえがいて
+        //   **かかとが 地面から 浮く**（実測で 両足が 浮いた）。ひかえめに。
+        + (p * 0.14 + s * 0.05);
       const thigh = mul(root, T(P.hip[k][0], P.hip[k][1], P.hip[k][2]),
                         Rz(sx * (p * 0.03)), Rx(hipA));
       this.bones[bl] = thigh;
 
-      // ひざ（後ろにしか曲がらない＝いつも マイナス）
-      const kneeA = -okCurve(OK_GAIT.knee, u) * OK_D2R * w
-        - 0.06 - p * 0.40 - c * 0.10 - s * 0.12;
+      // ★ひざは **プラス** が正しい向き。
+      //   Rx(+) は 骨の下がわを うしろへ回す＝かかとが おしりへ寄る（人のひざ）。
+      //   マイナスにすると **鳥のように 逆に折れる**（実機で指摘された）。
+      const kneeA = okCurve(OK_GAIT.knee, u) * OK_D2R * w
+        + 0.06 + p * 0.20 + c * 0.10 + s * 0.12;
       const knee = mul(thigh, TD(P.hip[k], P.knee[k]), Rx(kneeA));
       this.bones[bk] = knee;
 
