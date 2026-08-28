@@ -176,6 +176,16 @@ def join_mean(bone, kaihou):
     return kaihou or bone
 
 
+# 「右の◯◯」を「下の◯◯」に直す組。第1分冊はこれまでどおり「右の」全部。
+# 第2分冊は「右の辺」「右の2つの曲線」のように図の中の位置を指す言い方が多いので、
+# g4b2_conf が「右の図／右図」だけに絞りこむ（塾講師の監査で出た指摘）。
+MIGI_REPL = [("右の", "下の")]
+
+# 分冊ごとの「レコード1本まるごとを別の作り方で組む」差しこみ口。
+# 既定は None＝差しこみ無し（第1分冊はここを使わない）。第2分冊は g4b2_conf が入れる。
+PRE_HOOK = None
+
+
 def build_specs():
     """原簿の全レコードを (hg, no, spec) に組み立てて返す。unresolved も返す。"""
     recs = load_records()
@@ -195,7 +205,14 @@ def build_specs():
             continue
         p = parse_record(hg, title, rec)
 
-        if hg in MANUAL:
+        pre = PRE_HOOK(hg, title, p, bone_map) if (PRE_HOOK and hg not in MANUAL) else None
+        if pre:
+            spec = dict(pre)
+            spec.setdefault("intro", p["intro"])
+            spec["star"] = star_of(title)
+            spec.setdefault("title", short_title(title))
+            spec.setdefault("kind", "自動（差しこみ）")
+        elif hg in MANUAL:
             spec = dict(MANUAL[hg])
             spec.setdefault("intro", p["intro"])
             spec["star"] = star_of(title)
@@ -264,10 +281,11 @@ def build_specs():
         if p["svg"]:
             txts = [spec.get("intro", "")] + [st["question"] for st in spec["steps"]]
             if not any(w in t for t in txts for w in ("左下", "左上", "右下")):
-                if spec.get("intro"):
-                    spec["intro"] = spec["intro"].replace("右の", "下の")
-                for st in spec["steps"]:
-                    st["question"] = st["question"].replace("右の", "下の")
+                for a, b in MIGI_REPL:
+                    if spec.get("intro"):
+                        spec["intro"] = spec["intro"].replace(a, b)
+                    for st in spec["steps"]:
+                        st["question"] = st["question"].replace(a, b)
         spec.setdefault("unit", ROUND_UNIT[no])
         spec.setdefault("category", ROUND_CAT[no])
         spec["svg"] = p["svg"]

@@ -27,6 +27,11 @@ def load_records():
         n = int(m.group(2))
         if not (HG_LO <= n <= HG_HI):
             continue
+        # 原簿の途中に「全レコード一覧（APPENDIX）」がはさまっている（No.26とNo.27の間）。
+        # そこを取りこむと、直前のレコードに関係のない表がぶら下がってしまう
+        cut = c.find("\n<!-- APPENDIX")
+        if cut > 0:
+            c = c[:cut]
         out.append((m.group(1), m.group(3).strip(), c.strip()))
     return out
 
@@ -56,7 +61,7 @@ def split_marked(s, marks):
         if num in out:      # 同じ番号が2回出たら以降は本文中の言及
             break
         end = idxs[k + 1][0] if k + 1 < len(idxs) else len(s)
-        out[num] = s[pos + 1:end].strip(" 　、")
+        out[num] = s[pos + 1:end].strip(" 　、，,／/・")
         seen.append(num)
     if seen != list(range(1, len(seen) + 1)):
         return {0: s.strip()}
@@ -90,8 +95,10 @@ def parse_record(hg, title, rec):
     zu_text, ans_text = "", ""
     if zu_line:
         raw = zu_line.group(1)
-        if "／答え: " in raw:
-            zu_text, ans_text = raw.split("／答え: ", 1)
+        # 「／答え: 」と「／答: 」の両方の書き方が原簿にある（第2分冊のNo.19〜23は「答:」）
+        m2 = re.search(r"／答え?[:：]\s*", raw)
+        if m2:
+            zu_text, ans_text = raw[:m2.start()], raw[m2.end():]
         else:
             zu_text = raw
     if not ans_text:
