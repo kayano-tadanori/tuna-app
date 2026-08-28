@@ -201,7 +201,11 @@ service cloud.firestore {
     //   saveGameScore() が黙って失敗し（try/catchで握りつぶされる）、
     //   クラウドに一度もスコアが保存されていなかった（管理ツールで見えない根本原因）。
     function gameIdOk(game) {
-      return game in ['tetris', 'tetris2', 'jump', 'mine_easy', 'mine_normal', 'mine_hard']
+      // 🧹 okatazuke … オカンの おかたづけ（クリアした面の数）。
+      //    ★2026-08-28：本体は 8/23 の組込みから okz-progress で送っていたのに、
+      //      ここに無かったので **一度もクラウドに保存されていなかった**（無言で拒否）。
+      //      tetris2・jadepanic とまったく同じ型の抜け。ゲームを足したら必ずここも足す。
+      return game in ['tetris', 'tetris2', 'jump', 'mine_easy', 'mine_normal', 'mine_hard', 'okatazuke']
         || game.matches('^jadepanic_(surv|time)_(easy|normal|hard)$')
         // チッチジャンプ3D は**3軸**なので、ゲームIDを分けて持つ（プラン §3.9）。
         //   jump3d … 生スコア／ jump3d_w<週番号> … 今週のシード
