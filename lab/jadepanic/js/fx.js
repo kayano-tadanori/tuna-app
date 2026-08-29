@@ -318,19 +318,30 @@ function drawEnemy(e, t) {
       break;
     }
     case 'hole': {
+      // 段（合体した回数）が上がるほど 輪をふやし、渦を増やし、芯を白く焼く。
+      // 色だけで段を分けると 他の敵と かぶるので、太さと数で見せる（README「落とし穴4」）
+      const tier = e.tier || 0;
       const pulse = 1 + Math.sin(t * 4 + e.wob) * 0.06;
-      R.circle(e.x, e.y, r * pulse, 20, c, w * 1.1, 2.6 * glow, e.rot);
-      R.circle(e.x, e.y, r * 0.78 * pulse, 16, c, w * 0.8, 2.0 * glow, -e.rot * 1.5);
-      R.circle(e.x, e.y, r * 0.55 * pulse, 12, [1, 0.85, 0.95], w * 0.7, 1.6 * glow, -e.rot * 2);
-      R.dot(e.x, e.y, WHITE, r * 0.30, 2.8 * glow);   // 白熱した芯
+      const tk = 1 + tier * 0.22;
+      R.circle(e.x, e.y, r * pulse, 20, c, w * 1.1 * tk, 2.6 * glow, e.rot);
+      R.circle(e.x, e.y, r * 0.78 * pulse, 16, c, w * 0.8 * tk, 2.0 * glow, -e.rot * 1.5);
+      R.circle(e.x, e.y, r * 0.55 * pulse, 12, [1, 0.85, 0.95], w * 0.7 * tk, 1.6 * glow, -e.rot * 2);
+      // 合体した ホールだけの しるし＝外側で 逆に回る とげの輪
+      for (let s = 0; s < tier; s++) {
+        const rr = r * (1.18 + s * 0.20) * pulse;
+        R.circle(e.x, e.y, rr, 6 + s * 2, c, w * (0.62 + s * 0.14), (1.5 + s * 0.5) * glow,
+                 (s % 2 ? e.rot : -e.rot) * (1.2 + s * 0.6));
+      }
+      R.dot(e.x, e.y, WHITE, r * (0.30 + tier * 0.05), (2.8 + tier * 0.7) * glow);   // 白熱した芯
       // 吸い込みの渦
-      for (let k = 0; k < 6; k++) {
-        const a = e.rot * 2.2 + k / 6 * TAU;
+      const arms = 6 + tier * 3;
+      for (let k = 0; k < arms; k++) {
+        const a = e.rot * 2.2 + k / arms * TAU;
         const r1 = r * 1.5 + Math.sin(t * 3 + k) * 8;
-        const r2 = r * 2.4 + Math.sin(t * 3 + k) * 8;
+        const r2 = r * (2.4 + tier * 0.3) + Math.sin(t * 3 + k) * 8;
         R.line(e.x + Math.cos(a) * r1, e.y + Math.sin(a) * r1,
-               e.x + Math.cos(a + 0.5) * r2, e.y + Math.sin(a + 0.5) * r2,
-               c, w * 0.7, 1.1 * glow);
+               e.x + Math.cos(a + 0.5 + tier * 0.12) * r2, e.y + Math.sin(a + 0.5 + tier * 0.12) * r2,
+               c, w * 0.7 * tk, 1.1 * glow);
       }
       break;
     }

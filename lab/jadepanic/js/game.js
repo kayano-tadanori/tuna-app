@@ -715,6 +715,22 @@ const Game = {
           Part.burst(e.x, e.y, 8, e.col, 200, 2.4, 0.3, 1.4);
           break;
         }
+        // ホールどうしの合体＝「消えた」ではなく「もっと強いのが出た」と分かるように大きく出す
+        case 'merge': {
+          Part.ring(e.x, e.y, 30, e.col, 900, 4.0, 0.62, 2.6);
+          Part.ring(e.x, e.y, 16, WHITE, 520, 3.0, 0.34, 2.2);
+          Part.burst(e.x, e.y, 20, e.col, 700, 3.4, 0.5, 2.4);
+          this.addRing(e.x, e.y, e.r * 3.4, e.r * 0.7, 0.42, e.col, 2.6, 3.0);
+          Grid.impulse(e.x, e.y, 520, -700);   // 外へでなく 内へ引きこむ
+          this.addShake(0.34);
+          this.flashUp(0.16 * fx, e.col);
+          R.addShock(e.x, e.y, 0.8 * fx, 0.55);
+          this.hitstop = Math.max(this.hitstop, 0.05);
+          Snd.sfx('kill', { frame: this.frameNo, pitch: 0.42 });
+          Snd.sfx('alert');
+          if (e.up) this.bigText(e.name, 'ホールが 合体した！', 1.1);
+          break;
+        }
         case 'spit': {
           Grid.impulse(e.x, e.y, 190, 200);
           this.addShake(0.06);
@@ -922,7 +938,10 @@ const Game = {
 
     // バグホールは グリッドも吸う
     for (const e of G.enemies) {
-      if (e.type === 'hole' && e.age > e.born) Grid.attract(e.x, e.y, 560 + e.grow * 14, 1400 + e.grow * 70, vdt);
+      if (e.type === 'hole' && e.age > e.born) {
+        const hk = 1 + (e.tier || 0) * 0.45;
+        Grid.attract(e.x, e.y, (560 + e.grow * 14) * hk, (1400 + e.grow * 70) * hk, vdt);
+      }
     }
     // ジェイドの通ったあとが すこし へこむ
     if (this.state === 'play' && G.p.alive) {

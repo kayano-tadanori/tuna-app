@@ -18,12 +18,24 @@ const BUG = {
              desc: '弾を よけて 横に にげる' },
   worm:    { name: 'ワーム',     col: '#4f7bff', r: 21, pts: 120, bits: 8, hp: 4,
              desc: 'あたま だけが 弱点。しっぽは こわせない' },
-  hole:    { name: 'バグホール', col: '#ff4d6d', r: 34, pts: 200, bits: 14, hp: 12,
-             desc: 'なんでも すいこむ。こわすと ビットが どっさり' },
+  hole:    { name: 'バグホール', col: '#ff4d6d', r: 34, pts: 200, bits: 14, hp: 22,
+             desc: 'なんでも すいこむ。かたい。ホールどうしが ぶつかると 合体して 強くなる' },
   split:   { name: 'ぶんれつバグ', col: '#ff9d2e', r: 31, pts: 25, bits: 1, hp: 1,
              desc: 'こわすと 2つに わかれる。3だんかい' },
 };
 for (const k in BUG) BUG[k].rgb = hex2rgb(BUG[k].col);
+
+// ---------------- バグホールの段 ----------------
+// ホールどうしがぶつかったとき、前は「両方 消えていた」（2026-08-29 本人指摘）。
+// 消さずに 合体させて 上の段へ育てる。育つほど 大きく・固く・引力も強く、
+// そのぶん 点も ビットも どっさり出る＝「倒しにいく理由」になる。
+const HOLE_TIER = [
+  { name: 'バグホール', col: '#ff4d6d', hp: 1.0, rk: 1.00, pull: 1.00, pts: 1, bits: 1.0, spit: 1 },
+  { name: 'メガホール', col: '#ff2a2a', hp: 2.2, rk: 1.30, pull: 1.45, pts: 3, bits: 2.0, spit: 2 },
+  { name: 'ギガホール', col: '#ff0018', hp: 4.2, rk: 1.62, pull: 1.90, pts: 8, bits: 3.5, spit: 3 },
+];
+for (const h of HOLE_TIER) h.rgb = hex2rgb(h.col);
+const HOLE_TOP = HOLE_TIER.length - 1;
 
 const JADE_COL = { body: hex2rgb('#ffd23b'), head: hex2rgb('#ff9d2e'), wing: hex2rgb('#5cb03a') };
 // うすいミントは 水色の敵と、ライムは 黄緑のドッジャーと かぶった（どちらも実測で指摘）。
@@ -351,7 +363,7 @@ const G = {
       e.vx = Math.cos(a) * s; e.vy = Math.sin(a) * s;
       e.spin = rnd(-2.5, 2.5);
     }
-    if (type === 'hole') { e.r = d.r; e.grow = 0; e.spit = 3.5; }
+    if (type === 'hole') { e.tier = 0; e.r = d.r; e.grow = 0; e.spit = 3.5; }
     this.enemies.push(e);
     return e;
   },
@@ -479,26 +491,29 @@ const G = {
           break;
         }
         case 'hole': {
-          e.rot += dt * (0.8 + e.grow * 0.25);
+          const ht = HOLE_TIER[e.tier || 0];
+          e.rot += dt * (0.8 + e.grow * 0.25 + e.tier * 0.5);
           // 自機も引っぱる。これがあると すみっこに張りつけない
           {
             const pdx = e.x - p.x, pdy = e.y - p.y;
             const pd = Math.hypot(pdx, pdy) || 1;
-            const reach = 470 + e.grow * 16;
+            const reach = (470 + e.grow * 16) * ht.rk;
             if (pd < reach) {
-              const f = (1 - pd / reach) * (52 + e.grow * 5) * dt;
+              const f = (1 - pd / reach) * (52 + e.grow * 5) * ht.pull * dt;
               p.vx += pdx / pd * f; p.vy += pdy / pd * f;
             }
           }
           e.spit -= dt;
           // 育つほど 引力が強くなる
-          e.r = BUG.hole.r + e.grow * 2.3;
+          e.r = (BUG.hole.r + e.grow * 2.3) * ht.rk;
           if (e.spit <= 0 && e.grow > 3) {
-            e.spit = 4.5;
-            const a = rnd(0, TAU);
-            const ne = this.spawnEnemy('chaser', e.x + Math.cos(a) * (e.r + 24), e.y + Math.sin(a) * (e.r + 24));
-            ne.born = 0.12;
-            ne.vx = Math.cos(a) * 260; ne.vy = Math.sin(a) * 260;
+            e.spit = 4.5 - e.tier * 1.1;
+            for (let k = 0; k < ht.spit; k++) {
+              const a = rnd(0, TAU);
+              const ne = this.spawnEnemy('chaser', e.x + Math.cos(a) * (e.r + 24), e.y + Math.sin(a) * (e.r + 24));
+              ne.born = 0.12;
+              ne.vx = Math.cos(a) * 260; ne.vy = Math.sin(a) * 260;
+            }
             this.ev('spit', { x: e.x, y: e.y });
           }
           break;
@@ -524,15 +539,23 @@ const G = {
       for (let h = 0; h < holes.length; h++) {
         const H2 = holes[h];
         if (H2 === e) continue;
+        const ht = HOLE_TIER[H2.tier || 0];
+        const reach = 620 * ht.rk;
         const ddx = H2.x - e.x, ddy = H2.y - e.y;
         const dd = Math.hypot(ddx, ddy) || 1;
-        if (dd < 620) {
-          const f = (1 - dd / 620) * 720 * dt;
+        if (dd < reach) {
+          const f = (1 - dd / reach) * 720 * ht.pull * dt;
           e.vx += ddx / dd * f;
           e.vy += ddy / dd * f;
-          if (dd < H2.r + e.r * 0.85) {  // のみこまれる
-            H2.grow += 0.6;
-            this.ev('absorb', { x: e.x, y: e.y, col: e.col });
+          if (dd < H2.r + e.r * 0.85) {
+            if (e.type === 'hole') {       // ホールどうし＝消えずに 合体して 強くなる
+              this.mergeHoles(H2, e);
+              const ei = holes.indexOf(e);  // 消えるのは e。引力の表からも 外す
+              if (ei >= 0) holes.splice(ei, 1);
+            } else {                        // ふつうのバグは のみこまれる
+              H2.grow += 0.6;
+              this.ev('absorb', { x: e.x, y: e.y, col: e.col });
+            }
             E.splice(i, 1);
             break;
           }
@@ -600,6 +623,40 @@ const G = {
         }
       }
     }
+  },
+
+  // ホールどうしの合体。keep が残り、gone は keep に取りこまれる。
+  // gone を場から消すのは 呼んだ側（配列の番号を壊さないため）。
+  mergeHoles(keep, gone) {
+    const nt = Math.min(HOLE_TOP, Math.max(keep.tier || 0, gone.tier || 0) + 1);
+    const up = nt > (keep.tier || 0);
+    keep.tier = nt;
+    const ht = HOLE_TIER[nt];
+    keep.grow += gone.grow * 0.6 + (up ? 3.0 : 5.0);
+    // 段が上がったら その段の体力で 出なおす（合体＝ひとまわり強い別の敵）
+    keep.hp = Math.max(keep.hp, Math.round(BUG.hole.hp * ht.hp));
+    keep.col = ht.rgb;
+    keep.x = (keep.x + gone.x) / 2;
+    keep.y = (keep.y + gone.y) / 2;
+    keep.vx = (keep.vx + gone.vx) * 0.5;
+    keep.vy = (keep.vy + gone.vy) * 0.5;
+    keep.r = (BUG.hole.r + keep.grow * 2.3) * ht.rk;
+    keep.spit = Math.min(keep.spit, 1.2);
+    // 合体した先が 自機に重なっていたら 外へ押しやる（大きくなるので 理不尽な即死になりうる）
+    {
+      const p = this.p;
+      const dx = keep.x - p.x, dy = keep.y - p.y;
+      const d = Math.hypot(dx, dy);
+      const need = keep.r + p.r + 40;
+      if (d < need) {
+        const a = d < 1 ? rnd(0, TAU) : Math.atan2(dy, dx);
+        const hw = this.W / 2 - keep.r, hh = this.H / 2 - keep.r;
+        keep.x = clamp(p.x + Math.cos(a) * need, -hw, hw);
+        keep.y = clamp(p.y + Math.sin(a) * need, -hh, hh);
+      }
+    }
+    this.ev('merge', { x: keep.x, y: keep.y, col: keep.col, r: keep.r, tier: nt, name: ht.name, up });
+    return keep;
   },
 
   // ---------------- ビット ----------------
@@ -908,7 +965,11 @@ const G = {
       pts = e.gen === 0 ? 25 : e.gen === 1 ? 15 : 10;
       bits = 1;
     }
-    if (e.type === 'hole') bits = d.bits + Math.floor(e.grow);
+    if (e.type === 'hole') {
+      const ht = HOLE_TIER[e.tier || 0];
+      pts = Math.round(d.pts * ht.pts);
+      bits = Math.round((d.bits + Math.floor(e.grow)) * ht.bits);
+    }
 
     this.score += pts * this.mult;
     this.killTotal++;
