@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     キャラクター紹介ページの「見た目だけ」を確かめるページ。
+       ・アプリ本体からはリンクしていない（開発用）
+       ・**Firebase を読みこまないので、クラウドには何も書きこまれない**
+         （受験番号を入れずに見られる＝本番のランキングを汚さない
+           [[feedback_local_test_writes_cloud]]）
+       ・中身は index.html の #screen-character をそのまま写したもの。
+         ★本体のキャラ紹介を直したら、このページも作り直すこと：
+           python scripts/gen_char_preview.py
+     ============================================================ -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>キャラクター紹介（見た目の確認）</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* この1画面だけを出すので、いつも表示にしておく。
+     ★position などは本体のまま（.screen が fixed＋overflow-y:auto の
+       スクロールする箱）。ここを static にすると スクロールの主が
+       ページ側に移って、3Dの入れかえが効かなくなる。 */
+  #screen-character { display: block !important; }
+  body { background: #0a1533; }
+  .note { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+          background: rgba(10,21,51,.92); color: #9fb6ff; font: 11px/1.5 sans-serif;
+          padding: 6px 10px calc(6px + env(safe-area-inset-bottom)); text-align: center; }
+</style>
+<div id="screen-character" class="screen">
+  <header class="top-bar">
+    
+    <h2 class="top-title">キャラクター紹介</h2>
+  </header>
+  <div class="char-main">
+    <div id="otton-3d-char" class="otton-3d-slot" data-char3d="otton">
+      <img src="images/otton.png" alt="オットン" class="otton-large" onerror="this.style.display='none'">
+    </div>
+    <div class="char-name-box">
+      <p class="char-school">オトン学園</p>
+      <h2 class="char-name">オットン</h2>
+    </div>
+    <p class="char-desc">頼れるオトンのように、どっしり構えて、<br>子どもたちの可能性を信じ、支える存在。</p>
+    <p class="char-voice">「いつでも味方やで！」</p>
+    <div class="char-cards">
+      <div class="char-card"><span class="char-card-icon">💪</span><span class="char-card-title">どっしり支える</span><span class="char-card-sub">ブレない信頼感</span></div>
+      <div class="char-card"><span class="char-card-icon">🔥</span><span class="char-card-title">やる気を引き出す</span><span class="char-card-sub">一人ひとりの可能性を信じて</span></div>
+      <div class="char-card"><span class="char-card-icon">🤝</span><span class="char-card-title">ともに歩む</span><span class="char-card-sub">親身で熱いサポート</span></div>
+      <div class="char-card"><span class="char-card-icon">📈</span><span class="char-card-title">成績アップへ導く</span><span class="char-card-sub">目標達成まで伴走</span></div>
+    </div>
+
+    <div class="char-divider"></div>
+
+    <div class="otton-3d-slot" data-char3d="okan">
+      <img src="images/okan-fight.png" alt="オカーン" class="otton-large okan-img" onerror="this.style.display='none'">
+    </div>
+    <div class="char-name-box">
+      <p class="char-school">オカン学園</p>
+      <h2 class="char-name char-name-pink">オカーン</h2>
+    </div>
+    <p class="char-desc">子どもたちをやさしく包み込み、<br>毎日のがんばりを一番近くで支える存在。<br>復習を大切にし、できた！を一緒に喜ぶ<br>頼れるおかあさん。</p>
+    <p class="char-voice char-voice-pink">「いつでも応援してるで！」</p>
+    <div class="char-cards">
+      <div class="char-card"><span class="char-card-icon">🍙</span><span class="char-card-title">元気をチャージ</span><span class="char-card-sub">がんばる子をやさしくサポート</span></div>
+      <div class="char-card"><span class="char-card-icon">✍️</span><span class="char-card-title">復習チェック</span><span class="char-card-sub">できるまで寄り添い、力に変える</span></div>
+      <div class="char-card"><span class="char-card-icon">🌸</span><span class="char-card-title">ほめて伸ばす</span><span class="char-card-sub">小さな成長も見逃さず、自信につなげる</span></div>
+      <div class="char-card"><span class="char-card-icon">📈</span><span class="char-card-title">自信を育てる</span><span class="char-card-sub">「できた！」を積み重ねて、目標まで一緒に伴走</span></div>
+    </div>
+
+    <div class="char-divider"></div>
+
+    <div class="otton-3d-slot" data-char3d="chicchi">
+      <img src="images/chicchi-cheer.png" alt="チッチ" class="otton-large chicchi-img" onerror="this.style.display='none'">
+    </div>
+    <div class="char-name-box">
+      <p class="char-school">ボタンインコ</p>
+      <h2 class="char-name char-name-yellow">チッチ</h2>
+      <p class="char-realname">本当の名前は…ナッツ</p>
+    </div>
+    <p class="char-desc">オカーンの頭に乗って、<br>いつもみんなを見守っている黄色のボタンインコ。<br>小さな体で、大きな応援を届けるよ！<br>性格は好奇心旺盛で甘えんぼう。</p>
+    <p class="char-voice char-voice-yellow">「がんばってるやん！」</p>
+    <div class="char-cards">
+      <div class="char-card"><span class="char-card-icon">🔔</span><span class="char-card-title">おしらせ係</span><span class="char-card-sub">連続学習日数や大事なお知らせを教えるよ</span></div>
+      <div class="char-card"><span class="char-card-icon">⭐</span><span class="char-card-title">やる気チャージ係</span><span class="char-card-sub">「えらいえらい！」ってやる気をチャージ</span></div>
+      <div class="char-card"><span class="char-card-icon">💗</span><span class="char-card-title">見守り係</span><span class="char-card-sub">いつもそっと見守って、みんなの味方だよ</span></div>
+      <div class="char-card"><span class="char-card-icon">🎁</span><span class="char-card-title">なかよくなると…？</span><span class="char-card-sub">ごほうびスタンプがもらえるかも！</span></div>
+    </div>
+
+    <div class="char-divider"></div>
+
+    <div class="otton-3d-slot" data-char3d="jade">
+      <img src="images/jade.png" alt="ジェイド" class="otton-large jade-img" onerror="this.style.display='none'">
+    </div>
+    <div class="char-name-box">
+      <p class="char-school">コガネメキシコインコ</p>
+      <h2 class="char-name char-name-green">ジェイド</h2>
+      <p class="char-realname">チッチの弟分</p>
+    </div>
+    <p class="char-desc">のんびり屋さんで、落ち着いた性格。<br>そばでお昼寝するのが大好き。<br>鳴くときは「ワン！」といいます。<br>ウンチすると、すっと体をずらします。</p>
+    <p class="char-voice char-voice-green">「ワン！」</p>
+    <div class="char-cards">
+      <div class="char-card"><span class="char-card-icon">🌿</span><span class="char-card-title">おっとり癒し系</span><span class="char-card-sub">落ち着いていて、みんなを癒します</span></div>
+      <div class="char-card"><span class="char-card-icon">💤</span><span class="char-card-title">お昼寝が大好き</span><span class="char-card-sub">そばで寝ている姿にほっこり</span></div>
+      <div class="char-card"><span class="char-card-icon">🐶</span><span class="char-card-title">鳴くときは「ワン！」</span><span class="char-card-sub">元気いっぱいのかわいい声♪</span></div>
+      <div class="char-card"><span class="char-card-icon">✨</span><span class="char-card-title">きれい好き</span><span class="char-card-sub">ウンチすると、すっと体をずらす</span></div>
+    </div>
+  </div>
+</div>
+<div class="note">確認用ページ（記録はどこにも保存されません）／キャラをさわると動きます</div>
+<script src="js/otton3d.js"></script>
+<script>
+  // 本体では showScreen() が呼ぶところを、このページでは自分で呼ぶ
+  window.addEventListener('load', () => {
+    if (window.Otton3D) Otton3D.onScreen('character');
+  });
+</script>

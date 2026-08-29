@@ -1,33 +1,63 @@
 <!DOCTYPE html>
-<!-- オットン3Dの見た目を確かめる開発用ページ（アプリ本体からはリンクしていない）。
-     姿勢を直すときはここで見比べる。
+<!-- キャラ3Dの見た目を確かめる開発用ページ（アプリ本体からはリンクしていない）。
+       ?char=okan                      … 出すキャラ（otton|okan|chicchi|jade）
        ?freeze=1                       … 呼吸などを止めて同じ絵で比較する
-       ?pose={"Spine02":[-0.25,0,0]}   … 骨の角度を差し替えて試す
+       ?pose={"Spine02":[-0.25,0,0]}   … 立ち姿の角度を差し替えて試す
+       ?probe={"bone_4":[0,0,-0.8]}    … 骨を1本だけ回して確かめる（実測用）
+       ?gesture=wave                   … しぐさを1つ出す
        ?slot=small                     … 顔アップの枠で見る
-     気に入った値を js/otton3d.js の POSE に書き写す。 -->
+     気に入った値を js/otton3d.js の POSE_* / GESTURES_* に書き写す。 -->
 <meta charset="utf-8">
-<title>オットン3D 確認</title>
+<title>キャラ3D 確認</title>
 <style>
-  body { margin:0; background:#0a1533; color:#fff; font-family:sans-serif; display:flex; gap:20px; padding:20px; }
-  .box { background:linear-gradient(160deg,#12245c,#0a1533); border:1px solid #4f7cff44; border-radius:16px; }
+  body { margin:0; background:#0a1533; color:#fff; font-family:sans-serif; display:flex; gap:20px; padding:20px; align-items:flex-start; }
+  .box { background:linear-gradient(160deg,#12245c,#0a1533); border:1px solid #4f7cff44; border-radius:16px; flex:none; }
   #otton-3d-hero { width:380px; height:460px; position:relative; }
   #otton-3d-small { width:120px; height:120px; position:relative; }
   canvas.otton3d-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  #info { font:12px/1.7 monospace; color:#9fb6ff; }
 </style>
 <div class="box" id="otton-3d-hero"></div>
 <div class="box" id="otton-3d-small"></div>
+<div id="info"></div>
 <script src="js/otton3d.js"></script>
 <script>
-  // ?pose={"L_Upperarm":[0,0,1.2]} で姿勢を差し替えて見比べられる
-  // ?freeze=1 で呼吸などを止めて、同じ絵で比較できる
   const q = new URLSearchParams(location.search);
-  if (q.get('pose')) Otton3D.tune(JSON.parse(q.get('pose')));
   if (q.get('freeze')) {
     const raf = window.requestAnimationFrame;
-    let n = 0;
-    window.requestAnimationFrame = cb => raf(() => cb(1000));  // 時刻を固定
+    // 時刻を固定して、同じ絵で見比べられるようにする
+    window.requestAnimationFrame = cb => raf(() => cb(parseFloat(q.get('t') || '1000')));
+  } else if (q.get('gt')) {
+    // ★しぐさの「途中の1コマ」をきっちり撮るための仕掛け。
+    //   はじめの何コマかは時刻を止めておき（そのあいだに play する）、
+    //   そのあと gt 秒だけ進めた時刻で止める。こうすると
+    //   「しぐさを始めて gt 秒後」の姿が いつ撮っても同じになる。
+    // ★しぐさを play するまでは時刻を止めておく。先に進めてしまうと
+    //   gesture.start がその時刻になり、経過0のまま＝しぐさが出ない絵になる。
+    const raf = window.requestAnimationFrame;
+    const T0 = 1000, gt = parseFloat(q.get('gt')) * 1000;
+    window.__gstart = false;
+    window.requestAnimationFrame = cb => raf(() => cb(window.__gstart ? T0 + gt : T0));
   }
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    const char = q.get('char') || 'otton';
     Otton3D.onScreen(q.get('slot') === 'small' ? 'subject' : 'nickname');
+    // ★onScreen は「その画面のキャラ（オットン）」に戻してしまうので、
+    //   キャラの指定と向きは そのあとで入れる。先に呼ぶと上書きされる。
+    setTimeout(async () => {
+      await Otton3D.use(char);
+      if (q.get('pose')) Otton3D.tune(JSON.parse(q.get('pose')));
+      if (q.get('probe')) Otton3D.setProbe(JSON.parse(q.get('probe')));
+      if (q.get('yaw')) Otton3D.setYaw(parseFloat(q.get('yaw')));
+    }, 350);
+    if (q.get('gesture')) setTimeout(() => {
+      Otton3D.play(q.get('gesture'));
+      // play した「次の描画」から時刻を進める（gesture.start が入ってから）
+      requestAnimationFrame(() => requestAnimationFrame(() => { window.__gstart = true; }));
+    }, 700);
+    window.__ready = true;
+    const b = Otton3D.BIRD[char];
+    document.getElementById('info').textContent =
+      char + '\n' + (b ? JSON.stringify(b, null, 1) : Object.keys(Otton3D.GESTURES).join('\n'));
   });
 </script>

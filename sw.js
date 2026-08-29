@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v617';
+const CACHE_NAME = 'oton-gakuen-v618';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -35,6 +35,10 @@ const ASSETS = [
   './js/jump3d-embed.js',
   './js/okatazuke-embed.js',
   // 🧹 オカンの おかたづけ（にもつを おす 3Dパズル）
+  // 🗿 キャラ紹介ページの3Dモデル（オットン以外の3体。2026-08-29）
+  './models/okan.glb',
+  './models/chicchi.glb',
+  './models/jade.glb',
   './lab/okatazuke/index.html',
   './lab/okatazuke/style.css',
   './lab/okatazuke/js/gl.js',
