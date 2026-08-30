@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>キャッシュ消去</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #2a1c26; color: #ffe6ef; text-align: center; padding: 60px 20px; }
+  h1 { font-size: 20px; }
+  a { color: #ffb6d0; }
+</style>
+</head>
+<body>
+<h1 id="msg">キャッシュを 消しています…</h1>
+<p id="sub"></p>
+<script>
+(async () => {
+  try {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    for (const r of regs) await r.unregister();
+    const keys = await caches.keys();
+    for (const k of keys) await caches.delete(k);
+    document.getElementById('msg').textContent = 'キャッシュを 消しました！';
+    document.getElementById('sub').innerHTML = '3びょう後に オトン学園を ひらきなおします。<br>ホーム画面の アイコンから もう一度 ひらいてください。';
+    setTimeout(() => { location.href = './index.html'; }, 3000);
+  } catch (e) {
+    document.getElementById('msg').textContent = 'うまく いきませんでした';
+    document.getElementById('sub').textContent = String(e);
+  }
+})();
+</script>
+</body>
+</html>
