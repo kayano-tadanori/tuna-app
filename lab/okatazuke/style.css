@@ -9,9 +9,10 @@ html, body {
   background: #2a1c26; color: #4a2c3a;
   font-family: "Hiragino Maru Gothic ProN", "ヒラギノ丸ゴ ProN", system-ui, -apple-system, sans-serif;
   user-select: none; -webkit-user-select: none;
-  touch-action: none;
 }
-#cv { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+/* ★盤面の指ドラッグ操作だけ タッチのスクロール/バウンスを止める。
+   body 全体にかけると 面えらび画面のスクロールまで死ぬ（実機で発覚） */
+#cv { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
 /* まわりを すこし暗く落として、盤に目が行くようにする */
 #vignette {
   position: fixed; inset: 0; pointer-events: none; z-index: 1;
@@ -62,7 +63,7 @@ html, body {
 .title-msg.show { display: block; }
 
 /* ---------- 面えらび ---------- */
-#scr-select { background: linear-gradient(#4a3350, #2a1c26); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+#scr-select { background: linear-gradient(#4a3350, #2a1c26); overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
 #scr-select.show { display: block; }
 .sel-head {
   position: sticky; top: 0; z-index: 3; display: flex; align-items: center; gap: 10px;
