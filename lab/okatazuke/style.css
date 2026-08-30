@@ -63,7 +63,11 @@ html, body {
 .title-msg.show { display: block; }
 
 /* ---------- 面えらび ---------- */
-#scr-select { background: linear-gradient(#4a3350, #2a1c26); overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+/* ★touch-action:pan-yに任せると、ブラウザがネイティブスクロールと
+   判定した瞬間にpointercancelが飛び、JS制御(okBindUIのselWrap)の
+   スクロールが動く前に止まってしまうことがあった。
+   touch-action:noneにしてJSのpointermoveだけでscrollTopを動かす。 */
+#scr-select { background: linear-gradient(#4a3350, #2a1c26); overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: none; }
 #scr-select.show { display: block; }
 .sel-head {
   position: sticky; top: 0; z-index: 3; display: flex; align-items: center; gap: 10px;

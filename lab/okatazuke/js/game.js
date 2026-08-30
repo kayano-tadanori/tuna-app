@@ -1122,6 +1122,32 @@ function okBindUI() {
       parent.postMessage({ type: 'okz-exit' }, '*');
     };
   }
+
+  // ★面えらび画面のスクロールは touch-action任せだと実機（iOS）で動かないことがあった。
+  //   pointerイベントで指の移動量を読み、scrollTopを直接動かして確実にスクロールさせる。
+  //   ★ただscrollTopを動かすだけだと、指を離した位置の面ボタンが「タップされた」
+  //     ことになり、スクロールしたつもりが面が始まってしまう不具合を実機確認で発見。
+  //     10px以上ドラッグしていたら、そのぶんのclickを丸ごと無効化する。
+  const selWrap = document.getElementById('scr-select');
+  if (selWrap) {
+    let dragY = null, dragged = 0;
+    selWrap.addEventListener('pointerdown', e => { dragY = e.clientY; dragged = 0; });
+    selWrap.addEventListener('pointermove', e => {
+      if (dragY === null) return;
+      const dy = e.clientY - dragY;
+      selWrap.scrollTop -= dy;
+      dragged += Math.abs(dy);
+      dragY = e.clientY;
+    });
+    const stopDrag = () => { dragY = null; };
+    selWrap.addEventListener('pointerup', stopDrag);
+    selWrap.addEventListener('pointercancel', stopDrag);
+    selWrap.addEventListener('pointerleave', stopDrag);
+    selWrap.addEventListener('click', e => {
+      if (dragged > 10) { e.stopPropagation(); e.preventDefault(); }
+      dragged = 0;
+    }, true);
+  }
 }
 
 // まだ ★の付いていない いちばん前の面へ
