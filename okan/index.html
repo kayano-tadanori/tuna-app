@@ -336,7 +336,7 @@
         <p id="pasteStatus" style="font-size:12px;font-weight:700;color:#64748b;margin:6px 2px;line-height:1.7">枠を長押し→「ペースト」。貼り付けると自動で取り込みます</p>
         <button class="setSave" id="pasteGo" style="background:#7c3aed;margin-top:2px">この内容を取り込む</button>
       </div>
-      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v85</p>
+      <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:14px">バージョン v101</p>
     </div>
   </div>
 </div>
@@ -1043,7 +1043,10 @@ async function importDataObj(obj, targetChild) {
 async function downloadOrShareJson(obj, name) {
   const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
   const file = new File([blob], name, { type: 'application/json' });
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  // PC(マウス操作)はnavigator.share対応でもOSの共有パネルが出て保存されないことがあるため、
+  // タッチ操作の端末（スマホ・タブレット）のときだけ共有シートを使う
+  const isTouchDevice = matchMedia('(pointer: coarse)').matches;
+  if (isTouchDevice && navigator.canShare && navigator.canShare({ files: [file] })) {
     await navigator.share({ files: [file] }).catch(() => {});
   } else {
     const a = document.createElement('a');
