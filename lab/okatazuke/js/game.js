@@ -1128,21 +1128,53 @@ function okBindUI() {
   //   ★ただscrollTopを動かすだけだと、指を離した位置の面ボタンが「タップされた」
   //     ことになり、スクロールしたつもりが面が始まってしまう不具合を実機確認で発見。
   //     10px以上ドラッグしていたら、そのぶんのclickを丸ごと無効化する。
+  //   ★指を離した後も勢いで すーっと減速しながら 止まる「ヌルヌル」感（慣性）を追加。
+  //     直近の移動速度をpx/msで測っておき、離した瞬間にrequestAnimationFrameで
+  //     減衰させながらscrollTopを動かし続ける。
   const selWrap = document.getElementById('scr-select');
   if (selWrap) {
     let dragY = null, dragged = 0;
-    selWrap.addEventListener('pointerdown', e => { dragY = e.clientY; dragged = 0; });
+    let lastY = 0, lastT = 0, velocity = 0, momentumId = null;
+
+    const stopMomentum = () => {
+      if (momentumId !== null) { cancelAnimationFrame(momentumId); momentumId = null; }
+    };
+
+    selWrap.addEventListener('pointerdown', e => {
+      stopMomentum();
+      dragY = e.clientY; dragged = 0;
+      lastY = e.clientY; lastT = performance.now(); velocity = 0;
+    });
     selWrap.addEventListener('pointermove', e => {
       if (dragY === null) return;
       const dy = e.clientY - dragY;
       selWrap.scrollTop -= dy;
       dragged += Math.abs(dy);
       dragY = e.clientY;
+      const now = performance.now(), dt = now - lastT;
+      if (dt > 0) velocity = (e.clientY - lastY) / dt;   // px/ms（符号は指の向き）
+      lastY = e.clientY; lastT = now;
     });
-    const stopDrag = () => { dragY = null; };
-    selWrap.addEventListener('pointerup', stopDrag);
-    selWrap.addEventListener('pointercancel', stopDrag);
-    selWrap.addEventListener('pointerleave', stopDrag);
+    const endDrag = () => {
+      if (dragY === null) return;
+      dragY = null;
+      let v = velocity * 16;   // 60fps基準の1フレームぶんに換算
+      const max = selWrap.scrollHeight - selWrap.clientHeight;
+      const step = () => {
+        selWrap.scrollTop -= v;
+        v *= 0.94;
+        const top = selWrap.scrollTop;
+        if (Math.abs(v) > 0.4 && top > 0 && top < max) {
+          momentumId = requestAnimationFrame(step);
+        } else {
+          momentumId = null;
+        }
+      };
+      if (Math.abs(v) > 0.4) momentumId = requestAnimationFrame(step);
+    };
+    selWrap.addEventListener('pointerup', endDrag);
+    selWrap.addEventListener('pointercancel', () => { dragY = null; });
+    selWrap.addEventListener('pointerleave', () => { dragY = null; });
     selWrap.addEventListener('click', e => {
       if (dragged > 10) { e.stopPropagation(); e.preventDefault(); }
       dragged = 0;
