@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v621';
+const CACHE_NAME = 'oton-gakuen-v622';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -188,14 +188,16 @@ self.addEventListener('activate', event => {
 });
 
 // フェッチ戦略：
-//  ・アプリ本体（HTML/JS/JSONデータ）はネット優先＝更新を即反映。失敗時のみキャッシュ。
+//  ・アプリ本体（HTML/CSS/JS/JSONデータ）はネット優先＝更新を即反映。失敗時のみキャッシュ。
 //  ・画像などの静的ファイルはキャッシュ優先＝速さ重視。
 // これで「古いキャッシュが残って更新が見えない」問題を防ぐ。
+// ★CSSがここに入っていなかったため、CACHE_NAMEを上げてもCSSだけ
+//   古いキャッシュのまま返り続けるバグがあった（2026-08-30発覚）
 self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  const isCore = req.mode === 'navigate' || /\.(html|js|json)$/.test(url.pathname);
+  const isCore = req.mode === 'navigate' || /\.(html|css|js|json)$/.test(url.pathname);
 
   if (isCore) {
     // ネット優先。取れたら最新をキャッシュへ更新。オフラインならキャッシュ→最後にindex.html
