@@ -15,6 +15,14 @@ const ORIGAMI_SRC = 'lab/origami/index.html?embed=1';
 function initOrigami() {
   const f = document.getElementById('ori-frame');
   if (!f) return;
+  // ★本体の演出モーダル(.gami-modal)は position:fixed・inset:0・z-index:300 で
+  //   画面全体を覆う。開いたまま折ONに入ると、iframeの中のボタンが
+  //   「もどる」も含めて一切タップできなくなる（2026-09-01、本人報告
+  //   「オトン学園に戻るボタンがきかない」を実機で再現・elementFromPointが
+  //   gami-modalを返すことを確認）。折ONの背景も暗い紺なので、モーダルの
+  //   暗幕が重なっていても気づきにくい。折ONへ入るときは必ず閉じておく。
+  document.querySelectorAll('.gami-modal:not(.hidden)')
+    .forEach(m => m.classList.add('hidden'));
   f.src = ORIGAMI_SRC + '&t=' + Date.now();
 }
 

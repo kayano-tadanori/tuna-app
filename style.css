@@ -67,8 +67,14 @@ body {
      見た目が こわれるだけでなく、中のボタンの当たり判定も ずれる。 */
 #screen-okatazuke { padding: 0; overflow: hidden; background: #2a1c26; }
 #screen-okatazuke iframe { display: block; width: 100%; height: 100%; border: 0; background: #2a1c26; }
-/* 折り紙アプリ（iframeで隔離） */
-#screen-origami { padding: 0; overflow: hidden; background: #060a16; }
+/* 折り紙アプリ（iframeで隔離）
+   ★padding:0 で画面の最上部まで広げると、iPhoneをホーム画面のアイコンから起動したとき
+     （PWA standalone）に、折ON側の「‹ オトン学園にもどる」(top:12px・高さ37px)が
+     ステータスバー(約47px)の下に完全に潜り、タップがOSに吸われて「何も起きない」状態に
+     なる（2026-09-01、本人報告で判明）。**iframeの中では env(safe-area-inset-*) が
+     0になる**ので折ON側のCSSでは直せない。ここで safe-area のぶんだけ内側に寄せる。
+     背景色はiframeと同じなので、隙間ができても見た目は変わらない。 */
+#screen-origami { padding: var(--safe-t) 0 var(--safe-b); overflow: hidden; background: #060a16; }
 #screen-origami iframe { display: block; width: 100%; height: 100%; border: 0; background: #060a16; }
 .subject-card-cj3d { background: linear-gradient(135deg, #0f3d63, #1b2a6b); border-color: rgba(150,220,255,.45); }
 .t2-new { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 8px;
