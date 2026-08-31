@@ -67,6 +67,9 @@ body {
      見た目が こわれるだけでなく、中のボタンの当たり判定も ずれる。 */
 #screen-okatazuke { padding: 0; overflow: hidden; background: #2a1c26; }
 #screen-okatazuke iframe { display: block; width: 100%; height: 100%; border: 0; background: #2a1c26; }
+/* 折り紙アプリ（iframeで隔離） */
+#screen-origami { padding: 0; overflow: hidden; background: #060a16; }
+#screen-origami iframe { display: block; width: 100%; height: 100%; border: 0; background: #060a16; }
 .subject-card-cj3d { background: linear-gradient(135deg, #0f3d63, #1b2a6b); border-color: rgba(150,220,255,.45); }
 .t2-new { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 8px;
   font-size: 10px; font-weight: 900; letter-spacing: .06em; color: #05121f;
@@ -1168,6 +1171,30 @@ canvas.otton3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%;
   box-shadow: 0 0 10px rgba(255,120,170,.6);
 }
 .subject-card-oz .subject-detail { color: rgba(255,240,246,.94); text-shadow: 0 1px 6px rgba(0,0,0,.95); }
+
+/* 折り紙アプリ：科目グリッドと息抜きタイムの間の専用バナー。他のカードと別格に見せる
+   （灘中入試の折り紙対策が真の目的のため。2026-08-29本人指示） */
+.origami-banner {
+  display: flex; flex-direction: row; align-items: center; gap: 12px; width: 100%;
+  padding: 14px 16px; margin: 4px 0 14px; box-sizing: border-box; border: none; cursor: pointer;
+  border-radius: var(--radius);
+  /* 黒地に金の縁（本人指示2026-08-31）。他のカードと別格に見せる */
+  background: linear-gradient(90deg, #07080c 0%, #101218 55%, #191c25 100%);
+  border: 1.5px solid rgba(214,178,92,0.85);
+  box-shadow: 0 0 0 1px rgba(214,178,92,0.22), 0 6px 20px rgba(0,0,0,0.55),
+              inset 0 1px 0 rgba(255,225,160,0.18);
+}
+.origami-banner-icon { font-size: 2.3rem; line-height: 1; flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(230,195,110,.85)) drop-shadow(0 0 22px rgba(190,150,60,.45)); }
+.origami-banner-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex: 1; min-width: 0; }
+.origami-banner-title { font-size: 1rem; font-weight: 900; color: #f4e3b6; letter-spacing: .02em;
+  text-shadow: 0 0 12px rgba(214,178,92,.35); }
+.origami-banner-new {
+  margin-left: 8px; padding: 1px 7px; border-radius: 6px; font-size: .62em; font-weight: 900;
+  background: linear-gradient(180deg,#ffe08a,#d6b25c); color: #2a1e00; letter-spacing: .04em;
+  box-shadow: 0 0 10px rgba(214,178,92,.55);
+}
+.origami-banner-sub { font-size: 0.74rem; color: rgba(226,208,168,0.82); }
 
 .subject-card-jump .game-icon { filter: drop-shadow(0 0 12px rgba(120,180,255,0.75)); }
 .jump-area { padding: 8px 16px calc(24px + var(--safe-b)); display: flex; flex-direction: column; gap: 10px; align-items: center; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; }

@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v624';
+const CACHE_NAME = 'oton-gakuen-v625';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -83,6 +83,43 @@ const ASSETS = [
   './lab/chicchi-jump-3d/js/renderer.js',
   './lab/chicchi-jump-3d/js/scenery.js',
   './lab/chicchi-jump-3d/js/shaders.js',
+  // 🎏 おりがみアプリ（みんなで作ろう・灘中対策コーナー）。本体からは iframe で開く。
+  //    ★読み込み順は lab/origami/index.html と同じにしてある（順番を変えない）。
+  './js/origami-embed.js',
+  './lab/origami/index.html',
+  './lab/origami/style.css',
+  './lab/origami/assets/orion.png',
+  './lab/origami/js/gl.js',
+  './lab/origami/js/fold.js',
+  './lab/origami/js/cloth.js',
+  './lab/origami/js/renderer.js',
+  './lab/origami/js/scratchpad.js',
+  './lab/origami/js/ui.js',
+  './lab/origami/js/progress.js',
+  './lab/origami/js/works/damashibune.js',
+  './lab/origami/js/works/yakko.js',
+  './lab/origami/js/works/fusen.js',
+  './lab/origami/js/works/kabuto.js',
+  './lab/origami/js/works/tsuru.js',
+  './lab/origami/js/works/tsuru_precise.js',
+  './lab/origami/js/works/_test_cross.js',
+  './lab/origami/js/works/_test_half.js',
+  './lab/origami/js/problems/rect_fold_2003.js',
+  './lab/origami/js/problems/nada2026_day1_q10.js',
+  './lab/origami/js/problems/no7_diagonal_fold.js',
+  './lab/origami/js/problems/no8_diagonal_fold.js',
+  './lab/origami/js/problems/no14_double_fold.js',
+  './lab/origami/js/problems/shiba_triangle_fold.js',
+  './lab/origami/js/problems/seikyo_square_fold.js',
+  './lab/origami/js/problems/asano_rect_fold.js',
+  './lab/origami/js/problems/jg_double_fold.js',
+  './lab/origami/js/problems/no16_eg_fold.js',
+  './lab/origami/js/problems/no15_band_fold.js',
+  './lab/origami/js/problems/wayo_triangle_fold.js',
+  './lab/origami/js/problems/no1_square_center_overlap.js',
+  './lab/origami/js/problems/no2_square_center_overlap2.js',
+  './lab/origami/js/problems/no3_square_rotate30.js',
+  './lab/origami/js/core.js',
   './lab/tetris2/index.html',
   './lab/tetris2/style.css',
   './lab/tetris2/js/gl.js',

@@ -116,6 +116,18 @@
       </button>
     </div>
 
+    <!-- 折り紙アプリ：科目グリッドと息抜きタイムの間に、他と別格に見える専用バナーとして配置。
+         灘中入試には毎年折り紙がらみの図形問題が出る＝このアプリの最大の目的（2026-08-29本人指示）。
+         遊び券は消費しない。中身は lab/origami/ が原本、やりとりは js/origami-embed.js の postMessage。 -->
+    <button id="btn-origami" class="origami-banner" data-subject="origami">
+      <span class="origami-banner-icon">🎏</span>
+      <span class="origami-banner-text">
+        <span class="origami-banner-title">折ON<span class="origami-banner-new">NEW</span></span>
+        <span class="origami-banner-sub">みんなで作ろう・灘中対策コーナーつき</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
+
     <p class="section-label">息抜きタイム<span id="game-ticket-badge" class="ticket-badge">🎟 0枚</span></p>
     <button class="subject-card subject-card-game subject-card-oz" data-subject="okatazuke">
       <span class="oz-icon">🧹</span>
@@ -2060,6 +2072,13 @@
   <iframe id="cj-frame" title="チッチジャンプ3D" allow="autoplay; fullscreen"></iframe>
 </div>
 
+<!-- =============== 折り紙アプリ(みんなで作ろう) ===============
+     中身は lab/origami/ が原本。やりとりは js/origami-embed.js の postMessage。
+     遊び券は消費しない（灘中対策コーナーが真の目的のため、誰でも何度でも使える）。 -->
+<div id="screen-origami" class="screen">
+  <iframe id="ori-frame" title="折り紙アプリ" allow="autoplay; fullscreen"></iframe>
+</div>
+
 <!-- =============== オカンの おかたづけ（にもつを おす 3Dパズル） ===============
      中身は lab/okatazuke/ が原本。やりとりは js/okatazuke-embed.js の postMessage。
      ★遊び券は「入場で1まい」。中では 何面でも やりなおしても ただ。 -->
@@ -2402,6 +2421,7 @@
 <script src="js/tetris2-embed.js"></script>  <!-- おとんテトリス2（iframeの橋渡し） -->
 <script src="js/jadepanic-embed.js"></script>
 <script src="js/okatazuke-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
+<script src="js/origami-embed.js"></script>  <!-- 折り紙アプリ（iframeの橋渡し） -->
 <script src="js/jump3d-embed.js"></script>  <!-- チッチジャンプ3D（iframeの橋渡し） -->
 <script>
   // 3Dのオットン（js/otton3d.js）を読む。

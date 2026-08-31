@@ -1247,6 +1247,9 @@ function initSubject() {
   else                        msg = '「遅うまでえらいなあ。<br>無理せんとな！」';
   document.getElementById('otton-msg').innerHTML = msg;
 
+  // 折り紙アプリは専用バナー（.subject-cardではない見た目）なので個別に配線
+  document.getElementById('btn-origami').onclick = () => { initOrigami(); showScreen('origami'); };
+
   document.querySelectorAll('#screen-subject .subject-card').forEach(btn => {
     if (btn.id === 'btn-record') return; // 記録カードは専用ハンドラ
     btn.onclick = () => {
@@ -1280,6 +1283,10 @@ function initSubject() {
         if (!hasGameTickets(JUMP3D_COST)) return;
         initChicchiJump3D();
         showScreen('jump3d');
+      } else if (subj === 'origami') {
+        // 遊び券は消費しない（灘中対策コーナーが真の目的のため）
+        initOrigami();
+        showScreen('origami');
       } else if (subj === 'okatazuke') {
         if (!hasGameTickets(OKATAZUKE_COST)) return;
         initOkatazuke();

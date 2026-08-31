@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>折ON</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="ori-screen-home" class="ori-screen">
+    <button class="ori-back-btn" id="ori-home-exit" hidden>‹ オトン学園にもどる</button>
+    <div class="ori-home-brand">
+      <img src="assets/orion.png" alt="折ON" class="ori-home-logo">
+      <p class="ori-home-tagline">灘中対策・図形の折り紙クラブ</p>
+    </div>
+    <div class="ori-home-menu">
+      <button id="ori-home-nada" class="ori-home-btn ori-home-btn-nada">
+        <span class="ori-home-btn-icon">🏫</span>
+        <span class="ori-home-btn-text">灘中対策コーナー<span class="ori-badge">NEW</span></span>
+      </button>
+      <button id="ori-home-fold" class="ori-home-btn ori-home-btn-soon" disabled>
+        <span class="ori-home-btn-icon">🕊️</span>
+        <span class="ori-home-btn-text">おりがみで遊ぶ<span class="ori-badge ori-badge-soon">準備中</span></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="ori-screen-picker" class="ori-screen" hidden>
+    <button class="ori-back-btn" id="ori-picker-back">‹ もどる</button>
+    <h2 id="ori-picker-title" class="ori-picker-title"></h2>
+    <div id="ori-picker-list" class="ori-picker-list"></div>
+  </div>
+
+  <div id="ori-screen-fold" class="ori-screen" hidden>
+    <button class="ori-back-btn" id="ori-fold-back">‹ もどる</button>
+    <div id="ori-hint" class="ori-hint">ひかっている点を、ドラッグして折ろう</div>
+    <button id="ori-step-back" class="ori-step-back-btn" hidden>⟲ 1つ前の折りにもどす</button>
+    <button id="ori-free-toggle" class="ori-step-back-btn" hidden>✋ 自由に折ってみる</button>
+    <canvas id="ori-canvas"></canvas>
+    <!-- 求める面積の斜線（下）→ 折り線 → 角の弧 の順に重ねる -->
+    <svg id="ori-area-layer" class="ori-area-layer">
+      <defs>
+        <pattern id="ori-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#ffd166" stroke-width="2.2" stroke-opacity="0.9"/>
+        </pattern>
+      </defs>
+    </svg>
+    <svg id="ori-crease-layer" class="ori-crease-layer"></svg>
+    <svg id="ori-angle-layer" class="ori-angle-layer"></svg>
+    <div id="ori-angle-label-layer" class="ori-angle-label-layer"></div>
+    <div id="ori-label-layer" class="ori-label-layer"></div>
+    <div id="ori-dimension-layer" class="ori-dimension-layer"></div>
+    <svg id="ori-helper-line-layer" class="ori-helper-line-layer"></svg>
+    <div id="ori-live-distance-layer" class="ori-dimension-layer"></div>
+    <div id="ori-handle-layer" class="ori-handle-layer"></div>
+    <div id="ori-inflate-row" class="ori-inflate-row" hidden>
+      <span class="ori-inflate-icon">💨</span>
+      <input type="range" id="ori-inflate-slider" min="0" max="100" value="0">
+    </div>
+    <div id="ori-problem-panel" class="ori-problem-panel" hidden></div>
+  </div>
+
+  <div id="ori-scratch-fullscreen" class="ori-scratch-fullscreen" hidden>
+    <div class="ori-scratch-header">
+      <span class="ori-scratch-label">📝 計算用紙</span>
+      <button id="ori-scratch-fit" class="ori-scratch-btn">🔍 元にもどす</button>
+      <button id="ori-scratch-undo" class="ori-scratch-btn">↩️ 1つ戻す</button>
+      <button id="ori-scratch-clear" class="ori-scratch-btn">🧹 全部消す</button>
+      <button id="ori-scratch-close" class="ori-scratch-btn ori-scratch-close">✕ とじる</button>
+    </div>
+    <p class="ori-scratch-hint">紙は画面の4倍の広さがあります。2本指でスクロールして移動、2本指を広げたりつまんだりして拡大・縮小できます。</p>
+    <div id="ori-scratch-viewport" class="ori-scratch-viewport">
+      <canvas id="ori-scratch-canvas" class="ori-scratch-canvas"></canvas>
+    </div>
+  </div>
+
+  <script src="../_lib/motion.js"></script>
+  <script src="js/gl.js"></script>
+  <script src="js/fold.js"></script>
+  <script src="js/cloth.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/scratchpad.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/works/damashibune.js"></script>
+  <script src="js/works/yakko.js"></script>
+  <script src="js/works/fusen.js"></script>
+  <script src="js/works/kabuto.js"></script>
+  <script src="js/works/tsuru.js"></script>
+  <script src="js/works/tsuru_precise.js"></script>
+  <script src="js/works/_test_cross.js"></script>
+  <script src="js/works/_test_half.js"></script>
+  <script src="js/problems/rect_fold_2003.js"></script>
+  <script src="js/problems/nada2026_day1_q10.js"></script>
+  <script src="js/problems/no7_diagonal_fold.js"></script>
+  <script src="js/problems/no8_diagonal_fold.js"></script>
+  <script src="js/problems/no14_double_fold.js"></script>
+  <script src="js/problems/shiba_triangle_fold.js"></script>
+  <script src="js/problems/seikyo_square_fold.js"></script>
+  <script src="js/problems/asano_rect_fold.js"></script>
+  <script src="js/problems/jg_double_fold.js"></script>
+  <script src="js/problems/no16_eg_fold.js"></script>
+  <script src="js/problems/no15_band_fold.js"></script>
+  <script src="js/problems/wayo_triangle_fold.js"></script>
+  <script src="js/problems/no1_square_center_overlap.js"></script>
+  <script src="js/problems/no2_square_center_overlap2.js"></script>
+  <script src="js/problems/no3_square_rotate30.js"></script>
+  <script src="js/core.js"></script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>折り紙エディタ(2D)</title>
+<style>
+  html,body{margin:0;height:100%;background:#222;color:#eee;font-family:sans-serif;overflow:hidden}
+  #wrap{display:flex;height:100%}
+  #canvasArea{flex:1;position:relative}
+  canvas{background:#333;display:block}
+  #panel{width:280px;padding:12px;background:#1a1a1a;overflow-y:auto}
+  button{display:block;width:100%;margin:4px 0;padding:10px;font-size:15px;border-radius:6px;border:none;cursor:pointer}
+  .primary{background:#4a90d9;color:#fff}
+  .valley{background:#e74c3c;color:#fff}
+  .mountain{background:#3498db;color:#fff}
+  .undo{background:#888;color:#fff}
+  .export{background:#2ecc71;color:#fff}
+  h3{margin:6px 0}
+  #status{font-size:13px;line-height:1.5;background:#000;padding:8px;border-radius:6px;white-space:pre-wrap;margin-top:8px}
+  #log{font-size:12px;color:#aaa;max-height:200px;overflow-y:auto;margin-top:8px}
+  .hint{font-size:12px;color:#999;margin:6px 0}
+  textarea{width:100%;height:150px;font-size:11px;background:#000;color:#0f0;border:1px solid #444}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="canvasArea"><canvas id="c"></canvas></div>
+  <div id="panel">
+    <h3>折り紙エディタ</h3>
+    <p class="hint">1つ目の点(動かしたい角)→2つ目の点(合わせたい先)の順にクリック。頂点に自動スナップします。</p>
+    <div id="status">1つ目の点を選んでください</div>
+    <h3>折り方向</h3>
+    <button class="valley" onclick="doFold('V')">谷折りで確定</button>
+    <button class="mountain" onclick="doFold('M')">山折りで確定</button>
+    <h3>操作</h3>
+    <button class="undo" onclick="undo()">ひとつ戻す</button>
+    <button class="undo" onclick="reset()">最初からやり直す</button>
+    <h3>紙のサイズ</h3>
+    <button onclick="newRect(1,1)">正方形</button>
+    <button onclick="newRect(1,1.5)">縦長長方形(飛行機用)</button>
+    <h3>書き出し</h3>
+    <button class="export" onclick="exportData()">crease pattern を書き出す</button>
+    <textarea id="exportBox" readonly></textarea>
+    <div id="log"></div>
+  </div>
+</div>
+<script>
+'use strict';
+
+// ---------- fold2d のロジック(Python版から移植) ----------
+function segLineIntersect(p1,p2,a,b){
+  const [x1,y1]=p1,[x2,y2]=p2,[x3,y3]=a,[x4,y4]=b;
+  const dx1=x2-x1, dy1=y2-y1, dx2=x4-x3, dy2=y4-y3;
+  const denom = dx1*dy2 - dy1*dx2;
+  if (Math.abs(denom) < 1e-12) return null;
+  const t = ((x3-x1)*dy2 - (y3-y1)*dx2) / denom;
+  if (t < -1e-9 || t > 1+1e-9) return null;
+  return [x1+t*dx1, y1+t*dy1];
+}
+function sideOfLine(p,a,b){
+  return (b[0]-a[0])*(p[1]-a[1]) - (b[1]-a[1])*(p[0]-a[0]);
+}
+function reflectPoint(p,a,b){
+  const [ax,ay]=a,[bx,by]=b,[px,py]=p;
+  const dx=bx-ax, dy=by-ay;
+  const L2 = dx*dx+dy*dy;
+  const t = ((px-ax)*dx + (py-ay)*dy) / L2;
+  const projx = ax+t*dx, projy = ay+t*dy;
+  return [2*projx-px, 2*projy-py];
+}
+function pointInPolygon(pt, poly, tol=1e-6){
+  const [x,y] = pt;
+  const n = poly.length;
+  for (let i=0;i<n;i++){
+    const [x1,y1]=poly[i], [x2,y2]=poly[(i+1)%n];
+    const cross = (x2-x1)*(y-y1) - (y2-y1)*(x-x1);
+    if (Math.abs(cross) < tol*Math.max(1,Math.hypot(x2-x1,y2-y1))){
+      const dot = (x-x1)*(x2-x1) + (y-y1)*(y2-y1);
+      const len2 = (x2-x1)**2 + (y2-y1)**2;
+      if (dot >= -tol && dot <= len2+tol) return true;
+    }
+  }
+  let inside = false;
+  for (let i=0;i<n;i++){
+    const [x1,y1]=poly[i], [x2,y2]=poly[(i+1)%n];
+    if ((y1>y) !== (y2>y)){
+      const xin = x1 + (y-y1)*(x2-x1)/(y2-y1);
+      if (x < xin) inside = !inside;
+    }
+  }
+  return inside;
+}
+function splitPolygon(poly, a, b){
+  const n = poly.length;
+  const sides = poly.map(p => sideOfLine(p,a,b));
+  if (sides.every(s => s >= -1e-9)) return [poly, null];
+  if (sides.every(s => s <= 1e-9)) return [null, poly];
+  const keep=[], cut=[];
+  for (let i=0;i<n;i++){
+    const p0=poly[i], p1=poly[(i+1)%n];
+    const s0=sides[i], s1=sides[(i+1)%n];
+    if (s0 >= -1e-9) keep.push(p0);
+    if (s0 <= 1e-9) cut.push(p0);
+    if ((s0>1e-9 && s1<-1e-9) || (s0<-1e-9 && s1>1e-9)){
+      const ip = segLineIntersect(p0,p1,a,b);
+      if (ip){ keep.push(ip); cut.push(ip); }
+    }
+  }
+  return [keep.length>=3?keep:null, cut.length>=3?cut:null];
+}
+
+class FoldState {
+  constructor(halfW, halfH){
+    this.panels = [{poly: [[-halfW,-halfH],[halfW,-halfH],[halfW,halfH],[-halfW,halfH]], layer:0}];
+    this.creases = [];
+    this.history = [];
+  }
+  snapshot(){ return JSON.stringify({panels:this.panels, creases:this.creases}); }
+  restore(s){ const o=JSON.parse(s); this.panels=o.panels; this.creases=o.creases; }
+  pushHistory(){ this.history.push(this.snapshot()); }
+  undo(){ if (this.history.length){ this.restore(this.history.pop()); return true;} return false; }
+
+  fold(a, b, kind, onlyContaining=null, panelFilter=null){
+    const newPanels = [];
+    let touched = false;
+    for (const p of this.panels){
+      if (panelFilter && !panelFilter(p)){ newPanels.push(p); continue; }
+      if (onlyContaining && !pointInPolygon(onlyContaining, p.poly)){ newPanels.push(p); continue; }
+      const [keep, cut] = splitPolygon(p.poly, a, b);
+      if (keep) newPanels.push({poly:keep, layer:p.layer});
+      if (cut){
+        touched = true;
+        const reflected = cut.map(pt => reflectPoint(pt,a,b));
+        newPanels.push({poly:reflected, layer:-p.layer-1});
+        this.creases.push({a,b,kind});
+      }
+    }
+    this.panels = newPanels;
+    return touched;
+  }
+
+  foldByPoints(pFrom, pTo, kind, onlyContaining='auto', panelFilter=null){
+    const [ax,ay]=pFrom, [bx,by]=pTo;
+    const mx=(ax+bx)/2, my=(ay+by)/2;
+    const dx=bx-ax, dy=by-ay;
+    let lineA=[mx,my], lineB=[mx-dy, my+dx];
+    if (sideOfLine(pFrom, lineA, lineB) > 0) { const t=lineA; lineA=lineB; lineB=t; }
+    const target = onlyContaining === 'auto' ? pFrom : onlyContaining;
+    this.pushHistory();
+    const ok = this.fold(lineA, lineB, kind, target, panelFilter);
+    if (!ok) { this.history.pop(); }
+    return ok;
+  }
+
+  allVertices(){
+    const seen = new Map();
+    for (const p of this.panels) for (const v of p.poly){
+      const k = v[0].toFixed(4)+','+v[1].toFixed(4);
+      if (!seen.has(k)) seen.set(k, v);
+    }
+    return Array.from(seen.values());
+  }
+}
+
+// ---------- UI ----------
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let fs = new FoldState(1,1);
+let selected = [];
+let viewScale = 150, viewCx = 0, viewCy = 0;
+
+function resize(){
+  const area = document.getElementById('canvasArea');
+  canvas.width = area.clientWidth;
+  canvas.height = area.clientHeight;
+  draw();
+}
+window.addEventListener('resize', resize);
+
+function toScreen(p){
+  return [canvas.width/2 + (p[0]-viewCx)*viewScale, canvas.height/2 - (p[1]-viewCy)*viewScale];
+}
+function toWorld(sx, sy){
+  return [(sx - canvas.width/2)/viewScale + viewCx, -(sy - canvas.height/2)/viewScale + viewCy];
+}
+
+const palette = ['#4a90d9','#e67e22','#9b59b6','#1abc9c','#f1c40f','#e74c3c','#2ecc71','#34495e'];
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for (const p of fs.panels){
+    ctx.beginPath();
+    p.poly.forEach((v,i) => {
+      const [sx,sy] = toScreen(v);
+      if (i===0) ctx.moveTo(sx,sy); else ctx.lineTo(sx,sy);
+    });
+    ctx.closePath();
+    ctx.fillStyle = palette[Math.abs(p.layer) % palette.length] + '99';
+    ctx.fill();
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+  for (const c of fs.creases){
+    const [sx1,sy1] = toScreen(c.a), [sx2,sy2] = toScreen(c.b);
+    ctx.beginPath();
+    ctx.moveTo(sx1,sy1); ctx.lineTo(sx2,sy2);
+    ctx.strokeStyle = c.kind === 'V' ? '#ff5555' : '#5599ff';
+    ctx.setLineDash([6,4]);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  // vertices
+  for (const v of fs.allVertices()){
+    const [sx,sy] = toScreen(v);
+    ctx.beginPath();
+    ctx.arc(sx,sy,4,0,7);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.strokeStyle='#000'; ctx.stroke();
+  }
+  // selected highlight
+  selected.forEach((v,i) => {
+    const [sx,sy] = toScreen(v);
+    ctx.beginPath();
+    ctx.arc(sx,sy,7,0,7);
+    ctx.strokeStyle = i===0 ? '#0f0' : '#ff0';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  });
+}
+
+// クリック位置に対応する点を決める。優先順位：①既存の頂点(20px以内)
+// ②パネルの辺の上の最近点(15px以内、辺の中点なども拾える) ③それ以外は
+// クリックしたワールド座標そのもの(グリッドに軽くスナップ)。
+// ★「合わせたい先」は必ずしも既存の頂点とは限らない(例:紙飛行機の屋根折りで
+// 合わせる先は、まだ紙の頂点になっていない中心線上の新しい点)ため、
+// 既存頂点だけにスナップすると選べない点が出てくる(2026-08-30、たー本人が
+// 実際に使ってみて必要になった)。
+function nearestVertex(sx, sy){
+  const w = toWorld(sx, sy);
+  let best = null, bestD = Infinity;
+  for (const v of fs.allVertices()){
+    const d = Math.hypot(v[0]-w[0], v[1]-w[1]);
+    if (d < bestD){ bestD = d; best = v; }
+  }
+  if (best){
+    const [bsx,bsy] = toScreen(best);
+    if (Math.hypot(bsx-sx, bsy-sy) < 20) return best;
+  }
+  // 辺の上への垂線の足を試す
+  let bestEdge = null, bestEdgeD = Infinity;
+  for (const p of fs.panels){
+    const n = p.poly.length;
+    for (let i=0;i<n;i++){
+      const a = p.poly[i], b = p.poly[(i+1)%n];
+      const dx=b[0]-a[0], dy=b[1]-a[1];
+      const L2 = dx*dx+dy*dy;
+      if (L2 < 1e-12) continue;
+      let t = ((w[0]-a[0])*dx + (w[1]-a[1])*dy) / L2;
+      t = Math.max(0, Math.min(1, t));
+      const foot = [a[0]+t*dx, a[1]+t*dy];
+      const [fsx,fsy] = toScreen(foot);
+      const d = Math.hypot(fsx-sx, fsy-sy);
+      if (d < bestEdgeD){ bestEdgeD = d; bestEdge = foot; }
+    }
+  }
+  if (bestEdge && bestEdgeD < 15) return bestEdge;
+  // フォールバック：クリックしたワールド座標そのもの(0.02刻みで軽くスナップ)
+  const grid = 0.02;
+  return [Math.round(w[0]/grid)*grid, Math.round(w[1]/grid)*grid];
+}
+
+canvas.addEventListener('click', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const v = nearestVertex(e.clientX-rect.left, e.clientY-rect.top);
+  if (!v) return;
+  if (selected.length >= 2) selected = [];
+  selected.push(v);
+  updateStatus();
+  draw();
+});
+
+function updateStatus(){
+  const el = document.getElementById('status');
+  if (selected.length === 0) el.textContent = '1つ目の点(動かしたい角)を選んでください';
+  else if (selected.length === 1) el.textContent = `1つ目: (${selected[0][0].toFixed(2)}, ${selected[0][1].toFixed(2)})\n2つ目(合わせたい先)を選んでください`;
+  else el.textContent = `1つ目: (${selected[0][0].toFixed(2)}, ${selected[0][1].toFixed(2)})\n2つ目: (${selected[1][0].toFixed(2)}, ${selected[1][1].toFixed(2)})\n谷折り/山折りボタンで確定`;
+}
+
+function log(msg){
+  const el = document.getElementById('log');
+  const line = document.createElement('div');
+  line.textContent = msg;
+  el.prepend(line);
+}
+
+function doFold(kind){
+  if (selected.length !== 2){ log('2点選んでから押してください'); return; }
+  const ok = fs.foldByPoints(selected[0], selected[1], kind);
+  if (!ok) log('警告: この折り線はどのパネルにも当たりませんでした');
+  else log((kind==='V'?'谷折り':'山折り')+': OK');
+  selected = [];
+  updateStatus();
+  draw();
+}
+
+function undo(){
+  if (fs.undo()){ selected=[]; updateStatus(); draw(); log('ひとつ戻しました'); }
+  else log('これ以上戻せません');
+}
+function reset(){
+  fs = new FoldState(fs.panels[0] ? 1 : 1, 1);
+  newRect(1,1);
+}
+function newRect(hw, hh){
+  fs = new FoldState(hw, hh);
+  selected = [];
+  updateStatus();
+  draw();
+  log(`新しい紙: ${hw*2} x ${hh*2}`);
+}
+function exportData(){
+  const data = { panels: fs.panels, creases: fs.creases };
+  document.getElementById('exportBox').value = JSON.stringify(data, null, 1);
+}
+
+resize();
+newRect(1,1);
+</script>
+</body>
+</html>
