@@ -102,7 +102,8 @@ def parse_record(hg, title, rec):
         else:
             zu_text = raw
     if not ans_text:
-        m = re.search(r"^- 答え: (.+)$", rec, re.M)
+        # 「- 答え:」と「- 答:」の両方の書き方が原簿にある（HG-6551）
+        m = re.search(r"^- 答え?: (.+)$", rec, re.M)
         if m:
             ans_text = m.group(1)
     ans_text = norm(ans_text.strip().strip("*").strip())

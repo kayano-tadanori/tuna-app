@@ -2729,7 +2729,10 @@ function handleNumpadKey(prefix, key) {
   }
   // 数字・小数点
   if (sansuState.inputPhase === 'remain') {
-    if (key === '.') return; // 余りに小数点不要
+    // ★あまりにも小数点が要る。小数のわり算では「5.6余り0.02」のように
+    //   あまりが小数になる（小4マスター No.6・No.33）。ここで '.' を捨てていたため、
+    //   その形の答えは物理的に入力できず、必ず不正解になっていた（2026-09-01に実測で発覚）
+    if (key === '.' && sansuState.inputRemain.includes('.')) return;
     sansuState.inputRemain += key;
   } else {
     if (key === '.' && (sansuState.inputVal.includes('.') || sansuState.inputVal.includes('/'))) return;
