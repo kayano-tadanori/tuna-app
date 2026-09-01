@@ -11,8 +11,20 @@
   const homeExitBtn = document.getElementById('ori-home-exit');
   if (embed) {
     homeExitBtn.hidden = false;
-    homeExitBtn.onclick = () => parent.postMessage({ type: 'ori-exit' }, '*');
-    addEventListener('load', () => parent.postMessage({ type: 'ori-ready' }, '*'));
+    // ★2026-09-01：iPhoneのPWAでこのボタンだけ反応しなかった（本人報告）。
+    //   iOSはiframe内＋スクロール層の中の要素でclickを落とすことがあるので、
+    //   touchendでも拾う。touchendでpreventDefaultすればclickは続けて発火しないので
+    //   二重に送られることはない（送っても本体側は同じ画面へ戻すだけで無害）。
+    const exitToApp = (ev) => {
+      if (ev && ev.cancelable) ev.preventDefault();
+      parent.postMessage({ type: 'ori-exit' }, '*');
+    };
+    homeExitBtn.addEventListener('click', exitToApp);
+    homeExitBtn.addEventListener('touchend', exitToApp, { passive: false });
+    // loadが既に済んでいるとaddEventListenerでは二度と発火しない（ready未達で本体が待ち続ける）
+    const sendReady = () => parent.postMessage({ type: 'ori-ready' }, '*');
+    if (document.readyState === 'complete') sendReady();
+    else addEventListener('load', sendReady);
   }
 
   const screens = {

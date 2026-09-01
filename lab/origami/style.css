@@ -14,6 +14,8 @@ html, body {
 html, body { background: #05070f; }
 #ori-screen-home {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
+  /* ホームは画面に収まるのでスクロール不要。iOSのスクロール層を作らせない（上のコメント参照） */
+  overflow: hidden;
   gap: 40px; padding: 24px; box-sizing: border-box;
   background:
     radial-gradient(circle at 50% 15%, rgba(79,158,255,0.16) 0%, transparent 55%),
@@ -66,10 +68,19 @@ html, body { background: #05070f; }
 }
 
 /* ---- もどるボタン（共通） ---- */
+/* ★2026-09-01：iPhoneをホーム画面のアイコンから起動(PWA)したとき、この「もどる」だけ
+   タップに反応しなかった（本人報告）。同じ画面でも中央の.ori-home-btnは効いていた＝
+   違いは「-webkit-overflow-scrolling:touch のスクロール層の中の position:absolute」。
+   iOSはこの組み合わせで子要素のタップ判定を落とすことがある。
+   ・position:fixed にしてスクロール層の外へ出す（iframe内ではiframeの表示領域が基準）
+   ・タップ領域をiOSの推奨44px以上に広げる（旧: 高さ約37px）
+   ・touch-action:manipulation でダブルタップ判定の待ちを消す */
 .ori-back-btn {
-  position: absolute; top: 12px; left: 12px; z-index: 3;
-  border: none; background: rgba(255,255,255,0.12); color: #fff; padding: 8px 14px;
+  position: fixed; top: 12px; left: 12px; z-index: 30;
+  border: none; background: rgba(255,255,255,0.12); color: #fff;
+  padding: 12px 18px; min-height: 44px; display: inline-flex; align-items: center;
   border-radius: 999px; font-size: 14px; font-weight: 700;
+  -webkit-appearance: none; appearance: none; touch-action: manipulation;
 }
 
 /* ---- 折る画面 ---- */
