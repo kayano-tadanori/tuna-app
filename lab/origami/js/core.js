@@ -258,6 +258,7 @@
     pts.forEach((p, i) => {
       const el = dimensionLayer.children[i];
       el.textContent = p.label;
+      el.dataset.bx = p.x; el.dataset.by = p.y;   // 押しのけの起点（spreadMovableLabels）
       el.style.transform = `translate(${p.x}px, ${p.y}px) translate(-50%, -50%)`;
     });
   }
@@ -355,7 +356,54 @@
     labels.forEach((m, i) => {
       const el = angleLabelLayer.children[i];
       el.textContent = m.label;
+      el.dataset.bx = m.labelPos.x; el.dataset.by = m.labelPos.y;
       el.style.transform = `translate(${m.labelPos.x}px, ${m.labelPos.y}px) translate(-50%, -50%)`;
+    });
+  }
+
+  // ---- ラベルの重なりを画面の上で自動的にほどく（2026-09-01） ----
+  // 点の記号（A・B・F…）は位置そのものに意味があるので動かさない。
+  // 寸法（BF=5cm）と角度（ア=32°）のラベルだけを、ぶつかったぶんだけ押しのける。
+  // ★本人指摘「Fの記号にBF=5cmがかぶさってFが見えない」への恒久対策。
+  //   問題ファイルの座標を手で調整しても、カメラの見え方が変わるとまた重なるので、
+  //   毎フレーム最後にここでほどく（作問ルール§11）。
+  function spreadMovableLabels() {
+    const movers = [];
+    for (const layer of [dimensionLayer, angleLabelLayer]) {
+      for (const el of layer.children) if (el.dataset.bx !== undefined) movers.push(el);
+    }
+    if (!movers.length) return;
+    // ① まとめて読む（読み書きを交互にするとレイアウト計算が何度も走る）
+    const pins = [];
+    for (const el of labelLayer.children) pins.push(el.getBoundingClientRect());
+    const boxes = movers.map(el => el.getBoundingClientRect());
+    // ② 重なりの浅いほうの向きへ、1回に1つずつずらす（同時に動かすと振動する）
+    const off = movers.map(() => ({ x: 0, y: 0 }));
+    const sh = (b, o) => ({ left: b.left + o.x, right: b.right + o.x, top: b.top + o.y, bottom: b.bottom + o.y });
+    for (let it = 0; it < 10; it++) {
+      let moved = false;
+      for (let i = 0; i < boxes.length; i++) {
+        const a = sh(boxes[i], off[i]);
+        const others = pins.slice();
+        for (let j = 0; j < boxes.length; j++) if (j !== i) others.push(sh(boxes[j], off[j]));
+        for (const b of others) {
+          const ox = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+          const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+          if (ox <= 0 || oy <= 0) continue;
+          if (oy <= ox) off[i].y += ((a.top + a.bottom) <= (b.top + b.bottom) ? -1 : 1) * (oy + 1);
+          else          off[i].x += ((a.left + a.right) <= (b.left + b.right) ? -1 : 1) * (ox + 1);
+          moved = true;
+          break;
+        }
+      }
+      if (!moved) break;
+    }
+    // ③ まとめて書く。離しすぎると「どの辺の長さか」が読めなくなるので上限を置く
+    const LIM = 44;
+    movers.forEach((el, i) => {
+      const dx = Math.max(-LIM, Math.min(LIM, Math.round(off[i].x)));
+      const dy = Math.max(-LIM, Math.min(LIM, Math.round(off[i].y)));
+      el.style.transform = `translate(${Number(el.dataset.bx) + dx}px, ${Number(el.dataset.by) + dy}px) translate(-50%, -50%)`;
     });
   }
 
@@ -401,6 +449,7 @@
       updateCrease();
       updateHelperLines();
       updateLiveDistances();
+      spreadMovableLabels();
       updateHandles();
     }
     requestAnimationFrame(updateHint);

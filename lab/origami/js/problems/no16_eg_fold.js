@@ -106,8 +106,8 @@ ORIGAMI_PROBLEMS.no16_eg_fold = {
     // 実測しながら内側・右寄りへ寄せてある（2026-09-01）
     { boneId: 0, local: [9, 0, 13.9], label: 'BC=36cm' },
     { boneId: 0, local: [14.5, 0, 0], label: 'CD=24cm' },
-    { boneId: 0, local: [-15.5, 0, 9.5], label: 'BE=5cm' },
-    { boneId: 0, local: [-12, 0, 10.4], label: 'BF=12cm' },
+    { boneId: 0, local: [-11.5, 0, 9.5], label: 'BE=5cm' },
+    { boneId: 0, local: [-12, 0, 16], label: 'BF=12cm' },
     // A'F は折ってはじめて現れる長さなので、折ってから出す
     { boneId: 0, local: [-6.5, 0, 15.4], label: 'AF=6cm', afterFold: 1 },
   ],
