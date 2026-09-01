@@ -59,6 +59,11 @@ const OrigamiUI = (function () {
           <button id="ori-scratch-open" class="ori-scratch-open-btn">📝 計算用紙</button>
           <button id="ori-answer-submit" class="ori-answer-submit">こたえる</button>
         </div>
+        <div class="ori-answer-keys">
+          <button type="button" class="ori-key-btn" data-ins="/">/</button>
+          <button type="button" class="ori-key-btn" data-ins="と">と</button>
+          <span class="ori-key-note">分数で答えるときに使う（例：1と5/6）</span>
+        </div>
         <div id="ori-answer-result" class="ori-answer-result" hidden></div>
         <button id="ori-expl-toggle" class="ori-expl-toggle-btn" hidden>📖 解説を見る</button>
         <button id="ori-giveup-btn" class="ori-giveup-btn">🏳️ ギブアップして解説を見る</button>
@@ -76,6 +81,25 @@ const OrigamiUI = (function () {
     const explToggleBtn = panelEl.querySelector('#ori-expl-toggle');
     const giveupBtn = panelEl.querySelector('#ori-giveup-btn');
     const scratchBtn = panelEl.querySelector('#ori-scratch-open');
+    // ★分数キー（2026-09-01）。入力欄は inputmode="decimal" なので、iPhoneでは
+    //   数字と小数点しか出ないキーボードになる＝「/」も「と」も打てない。
+    //   答えが 1/3 や 1と5/6 の問題（No.9・No.13(2)など）が打ちこめないので、
+    //   その2文字だけボタンで入れられるようにした
+    //   （[[feedback_nyuuryokusou_wa_betsu]]「形が正しい」と「実際に打てる」は別）。
+    panelEl.querySelectorAll('.ori-key-btn').forEach(kb => {
+      const insert = (ev) => {
+        if (ev && ev.cancelable) ev.preventDefault();
+        const ch = kb.dataset.ins;
+        const s = input.selectionStart === null ? input.value.length : input.selectionStart;
+        const e = input.selectionEnd === null ? s : input.selectionEnd;
+        input.value = input.value.slice(0, s) + ch + input.value.slice(e);
+        const pos = s + ch.length;
+        input.focus();
+        try { input.setSelectionRange(pos, pos); } catch (_) { /* 一部ブラウザで不可 */ }
+      };
+      kb.addEventListener('click', insert);
+      kb.addEventListener('touchend', insert, { passive: false });
+    });
     // 🚩「この もんだい へんかも」（本人要望2026-09-01「折り紙問題も『へんかも』ボタンいるよね」）。
     // 折ONはiframeの中なので、本体(オトン学園)の通報モーダルを開いてもらうために
     // 問題の中身をpostMessageで親へ渡す。単体で開いているときは親がいないので隠したまま。

@@ -203,6 +203,14 @@ html, body { background: #05070f; }
   border: none; background: #ffd166; color: #3a2a00; font-weight: 800; padding: 10px 18px;
   border-radius: 12px; font-size: 14px;
 }
+/* 分数キー：iPhoneのテンキーには「/」も「と」も無いので、この2文字だけボタンで入れる */
+.ori-answer-keys { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.ori-key-btn {
+  border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); color: #fff;
+  font-weight: 800; font-size: 15px; min-width: 44px; height: 36px; border-radius: 10px;
+  touch-action: manipulation;
+}
+.ori-key-note { font-size: 11px; color: rgba(255,255,255,0.5); }
 .ori-answer-result { margin-top: 10px; font-size: 14px; font-weight: 700; padding: 8px 12px; border-radius: 10px; }
 .ori-answer-ok { background: rgba(6, 214, 160, 0.2); color: #06d6a0; }
 .ori-answer-ng { background: rgba(239, 71, 111, 0.2); color: #ff8fa3; }

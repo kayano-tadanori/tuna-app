@@ -48,6 +48,9 @@
       if (m.tris) m.tris = m.tris.map(t => [t[0], t[2], t[1]]);
       if (m.hinge) m.hinge = m.hinge.map(h => {
         if (!h) return h;
+        // 平行移動ヒンジ（No.4・No.5）。向きは「本物のベクトル」なので、鏡映では
+        // zだけ符号が変わる（回転軸＝擬ベクトルの[-x,-y,z]とは規則が違う）
+        if (h.slide) return Object.assign({}, h, { origin: flipZ(h.origin), slide: flipZ(h.slide) });
         // 軸は「x,yを反転してzはそのまま」。こうすると鏡映で入れかわった
         // 回転の向き（山折り/谷折り）がもとに戻る（作問ルール§12の判定式で確認ずみ）
         return Object.assign({}, h, {
@@ -90,6 +93,11 @@
   let inst = null;
   let currentKind = null; // 'work' | 'problem'
   let currentEntry = null;
+
+  // 検証用の窓口（読むだけ）。Playwrightから「いま何度折れているか」「つまむ点が
+  // 折り終わりにどこへ来るか」を実物のエンジンで計算して、本物の指の動きで
+  // 折れるところまで確かめるために置いている（本番の動きには影響しない）。
+  window.__oriDebug = { get inst() { return inst; }, get entry() { return currentEntry; } };
 
   function ensureRenderer(entry) {
     const canvas = document.getElementById('ori-canvas');

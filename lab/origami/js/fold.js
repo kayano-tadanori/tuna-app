@@ -25,6 +25,16 @@ const FOLD = (function () {
       const Mp = parent === -1 ? G.mat4Identity() : out[parent];
       const hinge = work.mesh.hinge[i];
       if (!hinge) { out[i] = Mp; continue; }
+      // ★平行移動ヒンジ（2026-09-01追加）。{ slide:[x,y,z] } を持つヒンジは
+      //   回転ではなく「その向きへ angles[i] だけ平行移動」を表す（angles[i]の単位はcm）。
+      //   合同な図形をスライドさせて重ねる問題（折ったり重ねたり No.4・No.5）用。
+      //   回転ヒンジには一切影響しない（slideを持つボーンだけ別扱い）。
+      if (hinge.slide) {
+        const dirW = G.vecNorm(G.vecApplyDir(Mp, hinge.slide));
+        const tr = G.mat4Translate(G.vecScale(dirW, angles[i] || 0));
+        out[i] = G.mat4Multiply(tr, Mp);
+        continue;
+      }
       const originW = G.vecApply(Mp, hinge.origin);
       const axisW = G.vecNorm(G.vecApplyDir(Mp, hinge.axis));
       const rot = G.mat4HingeRotate(originW, axisW, angles[i] || 0);
@@ -159,6 +169,23 @@ const FOLD = (function () {
     const mats = currentBoneMatrices(state);
     const Mp = parent === -1 ? G.mat4Identity() : mats[parent];
     const hinge = state.work.mesh.hinge[boneId];
+    // ★平行移動ヒンジ：回転の代わりに「紙の面の上で、決まった向きへどれだけ動かしたか」を
+    //   持つ。指の位置は紙の面（親の面＝法線はローカルのY軸）に投影して測る。
+    //   回転と同じく「前フレームからの増分の積算」にする（絶対位置だと指の初期ずれが
+    //   そのまま飛びになるため）。
+    if (hinge.slide) {
+      const normalW = G.vecNorm(G.vecApplyDir(Mp, [0, 1, 0]));
+      const dirW = G.vecNorm(G.vecApplyDir(Mp, hinge.slide));
+      const handleW0 = G.vecApply(mats[boneId], step.handle.local);
+      const p0s = rayHingePlane(ray, handleW0, normalW);
+      if (!p0s) return false;
+      state.mode = 'dragging';
+      state.grab = {
+        boneId, slideDir: dirW, planeP: handleW0, planeN: normalW, lastP: p0s,
+        angle: state.liveAngle[boneId], step, stepIndex: idx,
+      };
+      return true;
+    }
     const originW = G.vecApply(Mp, hinge.origin);
     const axisW = G.vecNorm(G.vecApplyDir(Mp, hinge.axis));
     // つまみ点(handle)は一般にヒンジの端点(originW)を通る垂直面の上には無い
@@ -186,6 +213,19 @@ const FOLD = (function () {
   function updateDrag(state, ray) {
     if (state.mode !== 'dragging' || !state.grab) return;
     const g = state.grab;
+    // ★平行移動ヒンジ：指を紙の面へ投影し、決まった向きへの成分だけを足していく
+    if (g.slideDir) {
+      const ps = rayHingePlane(ray, g.planeP, g.planeN);
+      if (!ps) return;
+      g.angle += G.vecDot(G.vecSub(ps, g.lastP), g.slideDir);
+      g.lastP = ps;
+      const target = g.step.targetAngle;
+      const slack = Math.abs(target) * 0.15;
+      const clampedS = Math.max(Math.min(0, target) - slack, Math.min(Math.max(0, target), g.angle));
+      state.liveAngle[g.boneId] = clampedS;
+      syncLinkedAngle(state, g.boneId, clampedS, g.step);
+      return;
+    }
     const p = rayHingePlane(ray, g.hingeOrigin, g.hingeAxis);
     if (!p) return;
     const v = G.vecSub(p, g.hingeOrigin);
@@ -217,7 +257,13 @@ const FOLD = (function () {
     state.springSt[boneId] = { v: state.liveAngle[boneId], d: 0 };
     state.settleStep = step;
     state.settleStepIndex = state.grab.stepIndex;
-    if (diff < (step.snapDeg || 0.35)) {
+    // 平行移動ヒンジのしきい値は角度(rad)ではなく距離(cm)。step.snapDistで指定でき、
+    // 省略時は動かす距離の12%（最低0.4cm）を「そこまで来たら吸いつく」範囲にする
+    const hg = state.work.mesh.hinge[boneId];
+    const snapThr = (hg && hg.slide)
+      ? (step.snapDist !== undefined ? step.snapDist : Math.max(0.4, Math.abs(step.targetAngle) * 0.12))
+      : (step.snapDeg || 0.35);
+    if (diff < snapThr) {
       state.mode = 'settling';
       state.settleTarget = step.targetAngle;
       state.settleBone = boneId;

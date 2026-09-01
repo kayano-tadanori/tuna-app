@@ -403,7 +403,9 @@ const OrigamiRenderer = (function () {
       flatView = !!(w.mesh && w.mesh.flatStack) && (w.steps || []).every(st => {
         const h = w.mesh.hinge[st.handle.boneId];
         const spin = h && h.axis && Math.abs(h.axis[1]) > 0.9;   // 紙面に垂直な軸
-        return spin || Math.abs(Math.abs(st.targetAngle) - Math.PI) < 0.05;
+        // 紙の面の上での平行移動（No.4・No.5の「ずらして重ねる」）もぺたんこのまま
+        const slide = h && h.slide && Math.abs(h.slide[1]) < 0.01;
+        return spin || slide || Math.abs(Math.abs(st.targetAngle) - Math.PI) < 0.05;
       });
       dragYaw = flatView ? 0 : 0.5;
       dragPitch = flatView ? 1.34 : 0.55;
@@ -664,6 +666,17 @@ const OrigamiRenderer = (function () {
     }
     raf = requestAnimationFrame(frame);
 
+    // ★`atTarget: <boneId>` … そのボーンが「折り終わり（目標角度）」に達したときだけ出す印。
+    //   `afterFold`（折り始めてから出す）との違いは、途中の状態では出さないこと。
+    //   2枚の図形が交わってできる点（三角定規の重なり・折り目と辺の交点）に付ける角は、
+    //   途中の位置では交点そのものが別の場所にあるので、動かしている間は出してはいけない
+    //   （2026-09-01追加。関西創価中・05.pdf「5」で必要になった）。
+    function reachedTargetBone(b) {
+      const step = (state.work.steps || []).find(st => st.handle.boneId === b);
+      if (!step) return false;
+      return Math.abs((state.liveAngle[b] || 0) - step.targetAngle) < 0.02;
+    }
+
     return {
       state,
       setWork(newWork) {
@@ -682,6 +695,8 @@ const OrigamiRenderer = (function () {
         Object.assign(state, FOLD.createState(state.work, { freeMode: !!v }));
       },
       setInflate(v) { inflateTarget = Math.max(0, Math.min(1, v)); },
+      // ワールド座標→画面座標。検証（Playwrightで実際に指で折れるか確かめる）に使う
+      worldToScreen(p) { return worldToScreen(p, canvas.getBoundingClientRect()); },
       getInflate() { return inflateSt.v; },
       destroy() { cancelAnimationFrame(raf); },
       getPhysSim() { return physSim; },
@@ -705,6 +720,10 @@ const OrigamiRenderer = (function () {
         return w.labelPoints
           // ★kind:'helper'(P・Q等の補助点)は「解説を見る」を押すまで隠す
           .filter(lp => lp.kind !== 'helper' || state.explanationRevealed)
+          // ★`atTarget: <boneId>`＝重ね終わってからだけ出す記号。2枚の合同な図形を
+          //   回して重ねる問題では、回す前は2枚がぴったり同じ位置にあるので、
+          //   両方の頂点に記号を置くと3組とも完全に重なって読めない（No.13）
+          .filter(lp => lp.atTarget === undefined || reachedTargetBone(lp.atTarget))
           .map(lp => {
             const p = G.vecApply(mats[lp.boneId], lp.local);
             const s = worldToScreen(p, rect);
@@ -729,6 +748,8 @@ const OrigamiRenderer = (function () {
           // 折ったあとにできる角（例：清教学園のFはAの折り返し先）は
           // afterFold を付けて、折り始めてからだけ出す。
           if (am.afterFold !== undefined && !started(am.afterFold)) return null;
+          // 交点にできる角は、折り（回し）終わってからだけ出す
+          if (am.atTarget !== undefined && !reachedTargetBone(am.atTarget)) return null;
           const M = mats[am.boneId];
           // 辺の向きを別のパネルの点で指定できる（折って動く頂点を指すため）
           const Mf = mats[am.fromBone !== undefined ? am.fromBone : am.boneId];
@@ -770,6 +791,9 @@ const OrigamiRenderer = (function () {
         const started = (b) => Math.abs(state.liveAngle[b] || 0) > 0.05;
         for (const am of (w.areaMarks || [])) {
           if (am.afterFold !== undefined && !started(am.afterFold)) continue;
+          // 動かしている途中は領域の形が変わってしまう斜線（No.4のように、
+          // 重ね終わった配置ではじめて意味を持つ領域）は、終わってからだけ出す
+          if (am.atTarget !== undefined && !reachedTargetBone(am.atTarget)) continue;
           const pts = am.points
             .map(p => worldToScreen(G.vecApply(mats[p.boneId], p.local), rect))
             .filter(Boolean);
@@ -852,6 +876,7 @@ const OrigamiRenderer = (function () {
         const started = (b) => Math.abs(state.liveAngle[b] || 0) > 0.05;
         return w.dimensionLabels
           .filter(dl => dl.afterFold === undefined || started(dl.afterFold))
+          .filter(dl => dl.atTarget === undefined || reachedTargetBone(dl.atTarget))
           .map(dl => {
             const p = G.vecApply(mats[dl.boneId], dl.local);
             const s = worldToScreen(p, rect);
@@ -879,7 +904,8 @@ const OrigamiRenderer = (function () {
         //   見えるようにする（算数の図で隠れた辺を点線で描く作法と同じ）。
         const started = (boneId) => Math.abs(state.liveAngle[boneId] || 0) > 0.05;
         const list = [...(state.work.previewCreases || []), ...activeList]
-          .filter(cl => cl.afterFold === undefined || started(cl.afterFold));
+          .filter(cl => cl.afterFold === undefined || started(cl.afterFold))
+          .filter(cl => cl.atTarget === undefined || reachedTargetBone(cl.atTarget));
         if (!list.length) return [];
         const mats = FOLD.currentBoneMatrices(state);
         const rect = canvas.getBoundingClientRect();
