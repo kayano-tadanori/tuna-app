@@ -218,6 +218,15 @@ html, body { background: #05070f; }
 }
 .ori-giveup-btn { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.6); border-style: dashed; }
 
+/* 🚩「この もんだい へんかも」。誤って押されないよう、ギブアップより控えめにする */
+.ori-report-btn {
+  display: block; width: 100%; margin-top: 8px; padding: 9px 12px; border-radius: 12px;
+  border: 1px dashed rgba(255,255,255,0.14); background: rgba(255,255,255,0.02);
+  color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 700;
+  touch-action: manipulation;
+}
+.ori-report-btn[hidden] { display: none !important; }
+
 .ori-scratch-open-btn {
   border: none; background: rgba(255,255,255,0.1); color: #fff; font-weight: 700;
   padding: 10px 14px; border-radius: 12px; font-size: 14px; white-space: nowrap;

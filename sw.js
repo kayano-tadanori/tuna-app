@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v625';
+const CACHE_NAME = 'oton-gakuen-v626';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -119,6 +119,10 @@ const ASSETS = [
   './lab/origami/js/problems/no1_square_center_overlap.js',
   './lab/origami/js/problems/no2_square_center_overlap2.js',
   './lab/origami/js/problems/no3_square_rotate30.js',
+  './lab/origami/js/problems/no6_two_rect_overlap.js',
+  './lab/origami/js/problems/no10_fold_trapezoid.js',
+  './lab/origami/js/problems/no11_fold_trapezoid50.js',
+  './lab/origami/js/problems/no12_fold_trapezoid60.js',
   './lab/origami/js/core.js',
   './lab/tetris2/index.html',
   './lab/tetris2/style.css',

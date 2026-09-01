@@ -91,7 +91,7 @@ ORIGAMI_PROBLEMS.no1_square_center_overlap = {
   ],
   dimensionLabels: [
     // 角の外に置くと長い文字が画面の左に切れる。上辺の中央の外へ（2026-09-01の精査）
-    { boneId: 0, local: [0, 0, -6], label: '正方形1：一辺10cm' },
+    { boneId: 0, local: [0, 0, -7.6], label: '正方形1：一辺10cm' },
   ],
   answer: { value: 25, display: '25', unit: 'cm²', tolerance: 0.5 },
   explanation: [

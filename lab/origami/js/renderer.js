@@ -327,7 +327,15 @@ const OrigamiRenderer = (function () {
         minz = Math.min(minz, z); maxz = Math.max(maxz, z);
       };
       for (const v of w.mesh.verts) acc(v[0], v[2]);
-      // ★折り終わった形も入れて測る。対角線で折り返す問題（2003年灘中・No.7など）は、
+      // ★注視点は「折る前（静止時）の紙の中心」に置く。
+      //   以前は折り終わりの形も混ぜて中心を出していたが、折り返し先が紙の外へ
+      //   大きくはみ出す問題（No.15の帯など）では中心が片側へ寄り、
+      //   **折る前の図が下の問題文パネルに潜って読めなくなっていた**（2026-09-01実測）。
+      //   折り終わりの形は、下で「収める大きさ」にだけ効かせる。
+      fitCX = (minx + maxx) / 2; fitCZ = (minz + maxz) / 2;
+      let halfW = Math.max((maxx - minx) / 2, 0.2);
+      let halfD = Math.max((maxz - minz) / 2, 0.2);
+      // ★折り終わった形も入れて「大きさ」を測る。対角線で折り返す問題（2003年灘中・No.7など）は、
       //   折り返した紙がもとの紙の外へ大きくはみ出すので、折る前の大きさだけで
       //   カメラを合わせると折ったとたん画面からはみ出す（2026-09-01実測で発覚）。
       try {
@@ -343,12 +351,13 @@ const OrigamiRenderer = (function () {
         const mats = FOLD.computeBoneMatrices(w, angles);
         for (let i = 0; i < w.mesh.verts.length; i++) {
           const p = G.vecApply(mats[w.mesh.panel[i]] || mats[0], w.mesh.verts[i]);
-          if (isFinite(p[0]) && isFinite(p[2])) acc(p[0], p[2]);
+          // 注視点(fitCX,fitCZ)からの距離として測る＝中心はずらさず、はみ出すぶんだけ引く
+          if (isFinite(p[0])) halfW = Math.max(halfW, Math.abs(p[0] - fitCX));
+          if (isFinite(p[2])) halfD = Math.max(halfD, Math.abs(p[2] - fitCZ));
         }
       } catch (e) { /* 折り終わりが計算できない作品はそのまま静止時の大きさで合わせる */ }
-      fitCX = (minx + maxx) / 2; fitCZ = (minz + maxz) / 2;
-      fitHalfW = Math.max((maxx - minx) / 2, 0.2);
-      fitHalfD = Math.max((maxz - minz) / 2, 0.2);
+      fitHalfW = halfW;
+      fitHalfD = halfD;
     }
     updateFit(work);
     let inflateSignFlat = new Float32Array(64);
@@ -528,10 +537,14 @@ const OrigamiRenderer = (function () {
         const y = b.bottom - rect.top;
         if (b.height > 0 && y > 0 && y < rect.height) top = y;
       }
-      if (bottom - top < rect.height * 0.4) { top = 0; bottom = rect.height; } // 安全弁
+      // ★以前はここで「帯が狭すぎたら画面全体を使う」としていたが、それだと
+      //   shift=0＝図が画面のまん中＝**下半分の問題文パネルに潜って読めなくなる**
+      //   （2026-09-01実測。No.15はヒントの吹き出しが4行で帯が画面の39%しかなく、
+      //    この安全弁が働いて図がパネルの下に隠れていた）。
+      //   寄せること自体はやめず、「収める大きさ」の計算にだけ下限を置く。
       return {
         shift: ((rect.height / 2) - (top + bottom) / 2) * 2 / rect.height,
-        ratio: (bottom - top) / rect.height,
+        ratio: Math.max((bottom - top) / rect.height, 0.4),
       };
     }
 
@@ -564,6 +577,11 @@ const OrigamiRenderer = (function () {
       // 横方向はaspectで視野角が縮む点まで考慮、縦(奥行き)方向はpitchで見下ろすぶん
       // 実際は余裕があるがここでは安全側にそのまま使う。マージン1.35倍。
       const band = visibleBand(rect);
+      // ★カメラの引き具合は折っているあいだも変えない。
+      //   「折る前は静止時の大きさ、折るにつれて引く」を試したが、
+      //   **ドラッグ中に紙が動いてしまい、折る操作そのものが難しくなった**
+      //   （2026-09-01実測。4問が最後まで折れなくなった）。
+      //   折り終わりまで入る大きさで固定し、注視点だけ折る前の紙の中心に置く。
       const distForWidth = fitHalfW / (tanHalf * Math.max(rect.aspect, 0.3));
       const distForDepth = fitHalfD / (tanHalf * band.ratio); // 見えている帯にだけ収める
       const dist = (Math.max(distForWidth, distForDepth) * (flatView ? 1.3 : 1.7)) / zoom;

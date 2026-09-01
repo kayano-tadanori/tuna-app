@@ -27,6 +27,57 @@
     else addEventListener('load', sendReady);
   }
 
+  // ── 図の上下をそろえる（2026-09-01・本人指示「全問まとめて直す」） ─────────
+  // このエンジンのカメラは「zが大きいほど画面の下」に描く（viewMatのpitch回転の向き）。
+  // ところが灘中対策コーナーの問題データは、歴代ずっと「zが大きいほど図の上」のつもりで
+  // 書かれてきた。そのため図が原本と上下さかさまに出ていた（数学的には同じ問題で
+  // 設問文とも矛盾しないが、原本の本と見比べにくい）。
+  // 19問ぶんの座標を1つずつ書き直すとラベル位置まで全部作り直しになるので、
+  // 読み込んだ直後にここでzを反転する。以後、問題ファイルは今までどおり
+  // 「zが大きいほど図の上」のつもりで書けばよい（＝作問ルール§1の考え方のまま）。
+  // 伝承折り紙(ORIGAMI_WORKS)は作品なので上下の決まりが無く、対象にしない。
+  function flipZ(p) { return [p[0], p[1], -p[2]]; }
+  function flipPointRef(o) { if (o && o.local) o.local = flipZ(o.local); }
+  function flipProblemZ(e) {
+    if (!e || e.__zFlipped) return;
+    e.__zFlipped = true;
+    const m = e.mesh;
+    if (m) {
+      if (m.verts) m.verts = m.verts.map(flipZ);
+      // zの反転は鏡映なので三角形の向き（＝紙の表裏）が裏返る。巻き順を入れかえて戻す
+      if (m.tris) m.tris = m.tris.map(t => [t[0], t[2], t[1]]);
+      if (m.hinge) m.hinge = m.hinge.map(h => {
+        if (!h) return h;
+        // 軸は「x,yを反転してzはそのまま」。こうすると鏡映で入れかわった
+        // 回転の向き（山折り/谷折り）がもとに戻る（作問ルール§12の判定式で確認ずみ）
+        return Object.assign({}, h, {
+          origin: flipZ(h.origin),
+          axis: [-h.axis[0], -h.axis[1], h.axis[2]],
+        });
+      });
+    }
+    (e.previewCreases || []).forEach(c => { c.a = flipZ(c.a); c.b = flipZ(c.b); });
+    (e.areaMarks || []).forEach(am => (am.points || []).forEach(flipPointRef));
+    if (e.overlapMark) {
+      if (e.overlapMark.panelA) e.overlapMark.panelA = e.overlapMark.panelA.map(flipZ);
+      if (e.overlapMark.panelB) e.overlapMark.panelB = e.overlapMark.panelB.map(flipZ);
+    }
+    (e.steps || []).forEach(st => {
+      flipPointRef(st.handle);
+      if (st.creaseLine) { st.creaseLine.a = flipZ(st.creaseLine.a); st.creaseLine.b = flipZ(st.creaseLine.b); }
+    });
+    (e.labelPoints || []).forEach(flipPointRef);
+    (e.dimensionLabels || []).forEach(flipPointRef);
+    (e.angleMarks || []).forEach(a => {
+      if (a.vertex) a.vertex = flipZ(a.vertex);
+      if (a.from) a.from = flipZ(a.from);
+      if (a.to) a.to = flipZ(a.to);
+    });
+    (e.helperLines || []).forEach(h => { flipPointRef(h.from); flipPointRef(h.to); });
+    (e.liveDistanceLabels || []).forEach(h => { flipPointRef(h.from); flipPointRef(h.to); });
+  }
+  Object.values(window.ORIGAMI_PROBLEMS || {}).forEach(flipProblemZ);
+
   const screens = {
     home: document.getElementById('ori-screen-home'),
     picker: document.getElementById('ori-screen-picker'),

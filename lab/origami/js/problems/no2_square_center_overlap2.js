@@ -86,8 +86,8 @@ ORIGAMI_PROBLEMS.no2_square_center_overlap2 = {
   ],
   dimensionLabels: [
     // 角の外に置くと長い文字が画面の左に切れる。上辺の中央の外へ（2026-09-01の精査）
-    { boneId: 0, local: [0, 0, -4.2], label: '正方形1：一辺6cm（固定）' },
-    { boneId: 1, local: [0, 0, 5], label: '正方形2：一辺8cm（回転）' },
+    { boneId: 0, local: [0, 0, -5.6], label: '正方形1：一辺6cm（固定）' },
+    { boneId: 1, local: [0, 0, 6.6], label: '正方形2：一辺8cm（回転）' },
   ],
   answer: { value: 9, display: '9', unit: 'cm²', tolerance: 0.5 },
   explanation: [

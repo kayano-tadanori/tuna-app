@@ -41,6 +41,25 @@ window.addEventListener('message', e => {
     const nick = (typeof state === 'object' && state && state.nickname) ? state.nickname : '';
     f.contentWindow.postMessage({ type: 'ori-name', name: nick }, '*');
 
+  } else if (d.type === 'ori-report') {
+    // 🚩 折ONの「この もんだい へんかも」。本体の通報モーダル(report-modal)をそのまま使う。
+    // 折ONの問題はクイズと形が違うので、reportCtxの決まった欄に読みかえて入れる
+    // （qidは他の問題とぶつからないよう origami: を頭に付ける）。
+    const p = d.problem || {};
+    if (typeof setReportCtx === 'function') {
+      setReportCtx({
+        qid: 'origami:' + (p.id || ''),
+        subject: 'sansu',
+        cat: '折ON・灘中対策コーナー',
+        unit: [p.school, p.name].filter(Boolean).join(' '),
+        difficulty: p.difficulty,
+        question: p.promptText,
+        answer: p.answer,
+        screen: 'origami',
+      });
+    }
+    if (typeof openReportModal === 'function') openReportModal();
+
   } else if (d.type === 'ori-exit') {
     stopOrigami();
     showScreen('subject');

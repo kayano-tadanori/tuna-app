@@ -62,6 +62,7 @@ const OrigamiUI = (function () {
         <div id="ori-answer-result" class="ori-answer-result" hidden></div>
         <button id="ori-expl-toggle" class="ori-expl-toggle-btn" hidden>📖 解説を見る</button>
         <button id="ori-giveup-btn" class="ori-giveup-btn">🏳️ ギブアップして解説を見る</button>
+        <button id="ori-report-btn" class="ori-report-btn" hidden>🚩 この もんだい へんかも</button>
         <div id="ori-explanation" class="ori-explanation" hidden></div>
       </div>
     `;
@@ -75,6 +76,27 @@ const OrigamiUI = (function () {
     const explToggleBtn = panelEl.querySelector('#ori-expl-toggle');
     const giveupBtn = panelEl.querySelector('#ori-giveup-btn');
     const scratchBtn = panelEl.querySelector('#ori-scratch-open');
+    // 🚩「この もんだい へんかも」（本人要望2026-09-01「折り紙問題も『へんかも』ボタンいるよね」）。
+    // 折ONはiframeの中なので、本体(オトン学園)の通報モーダルを開いてもらうために
+    // 問題の中身をpostMessageで親へ渡す。単体で開いているときは親がいないので隠したまま。
+    // touchendも拾うのは、iOSのiframe内でclickが落ちることがあるため（もどるボタンと同じ理由）。
+    const reportBtn = panelEl.querySelector('#ori-report-btn');
+    if (reportBtn && /[?&]embed=1/.test(location.search)) {
+      reportBtn.hidden = false;
+      const fireReport = (ev) => {
+        if (ev && ev.cancelable) ev.preventDefault();
+        parent.postMessage({
+          type: 'ori-report',
+          problem: {
+            id: problem.id, name: problem.name, school: problem.school,
+            difficulty: problem.difficulty, promptText: problem.promptText,
+            answer: problem.answer ? problem.answer.display + (problem.answer.unit || '') : '',
+          },
+        }, '*');
+      };
+      reportBtn.addEventListener('click', fireReport);
+      reportBtn.addEventListener('touchend', fireReport, { passive: false });
+    }
     // 問題を開くたびに前の問題の書き込みを持ち越さない
     if (window.OrigamiScratch) OrigamiScratch.reset();
     scratchBtn.onclick = () => { if (window.OrigamiScratch) OrigamiScratch.open(); };
