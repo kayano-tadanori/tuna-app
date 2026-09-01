@@ -1038,15 +1038,6 @@ async function renderHamaPanel() {
   const lessonTitle = hamaLessonTitle(grade, course, no) || '';
   title.textContent = lessonTitle || '—';
 
-  // ★講座の宿題ボタンは「第1講座の宿題（大問）」より「第1講座（単元名）」の方がわかりやすい
-  //   （本人指摘 2026-08-11）。回のタイトルを「講座1単元・講座2単元」の形で書いてあるので、
-  //   ・で割って講座ごとの単元名をボタン名に出す。無ければ既定の文言のまま
-  const titleParts = lessonTitle.split('・');
-  const k1NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza1q"] .hama-act-name');
-  const k2NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza2q"] .hama-act-name');
-  if (k1NameEl) k1NameEl.textContent = titleParts[0] ? `📚 第1講座（${titleParts[0]}）` : '📚 第1講座の宿題（大問）';
-  if (k2NameEl) k2NameEl.textContent = titleParts[1] ? `📚 第2講座（${titleParts[1]}）` : '📚 第2講座の宿題（大問）';
-
   // ★回がきまったので、マス目に何を書く回なのかで名前をつけ直す（本人指摘 2026-08-08）
   if (isKokugo) {
     document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
@@ -1096,6 +1087,32 @@ async function renderHamaPanel() {
   const hasKouza2 = !byUnitMode && !isKokugo && hamaHasKouza(daimonNode, 2);
   const kouza1Sets = hasKouza1 ? await hamaDaimonKouza(grade, course, 1, no) : [];
   const kouza2Sets = hasKouza2 ? await hamaDaimonKouza(grade, course, 2, no) : [];
+
+  // ★講座の宿題ボタンは「第1講座の宿題（大問）」より「第1講座（単元名）」の方がわかりやすい
+  //   （本人指摘 2026-08-11）。単元名は大問データ自身の unit から取る。
+  //   ⚠ 以前は回タイトルを「・」で割っていたが、No.1〜20 のタイトルは復習テスト（去年の
+  //   カリキュラム）の単元名なので、割ると講座の中身と食いちがう。最レは回番号でなく
+  //   単元名でひもづける（feedback_jukunavi_rule ③）ため、データ側を正とする。
+  const kouzaUnitName = (sets) => {
+    const u = (sets || []).map((s) => s && s.unit).filter(Boolean);
+    return u.length && u.every((x) => x === u[0]) ? u[0] : (u[0] || '');
+  };
+  // 回タイトルが「講座1単元・講座2単元」の形（No.21〜30）なら、そちらの方が
+  // 単元名がくわしい（「数の性質(3)」）ので優先する。見分け方は
+  // 「データの単元名が、そのタイトル部分の頭と一致するか」。
+  // 一致しなければ復習テスト側のタイトル（No.1〜20）なので使わない。
+  const titleParts = lessonTitle.split('・');
+  const pick = (sets, part) => {
+    const u = kouzaUnitName(sets);
+    if (!u) return '';                       // データが無ければ既定の文言のまま
+    return (part && part.indexOf(u) === 0) ? part : u;
+  };
+  const k1Name = pick(kouza1Sets, titleParts[0]);
+  const k2Name = pick(kouza2Sets, titleParts[1]);
+  const k1NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza1q"] .hama-act-name');
+  const k2NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza2q"] .hama-act-name');
+  if (k1NameEl) k1NameEl.textContent = k1Name ? `📚 第1講座（${k1Name}）` : '📚 第1講座の宿題（大問）';
+  if (k2NameEl) k2NameEl.textContent = k2Name ? `📚 第2講座（${k2Name}）` : '📚 第2講座の宿題（大問）';
   // ★マスターの宿題（大問）＝兄弟コース「master_bunsatsu」の同じ回番号から取る。
   //   復習テストより先にやるもの（本人指示 2026-08-17）なので weekq より前に置く。
   //   マスター以外のコースでは出さない／データが無い回は自動で空になりボタンが隠れる
