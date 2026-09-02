@@ -182,7 +182,11 @@ def parse(hg, tm, rec):
         km = re.search(r"\((\d+)\)", head)      # 見出しの (1)(2)… ＝小問番号
         key = int(km.group(1)) if km else 0     # 0 ＝ 大問ぜんぶで図が1枚
         if rest:
-            v = rest.strip("`")
+            # ★`…` の“中だけ”を取る。閉じバッククォートの後ろに注記が続く書き方があり、
+            #   strip("`") だとその注記まで図に混ざる（2026-09-02 に HG-2679 で発覚。
+            #   「₃C₁通り」という制作側のメモが子どもに見える図に出ていた）
+            bq = re.match(r"`(.*?)`", rest, re.S)
+            v = (bq.group(1) if bq else rest.strip("`")).strip()
             body = "" if v == "判読不能" else v
         else:
             bm = re.match(r"\n```(?:html)?\n(.*?)\n```", rec[m.end():], re.S)

@@ -1382,7 +1382,7 @@ async function startHamaSession(kind) {
       // ★絵文字は文字クラス[]にまとめるとサロゲートペアが分解されて誤マッチする（2026-08-11 発覚）。
       //   交替(|)で1つずつリテラルマッチさせること。
       const actLabel = (btnName && btnName.textContent.replace(/^(?:🧩|🎯)\s*/, '').replace(/（大問）\s*$/, '')) ||
-        (kind === 'weekq' ? '今週の復習テスト' : '公開テストのはんい');
+        (kind === 'weekq' ? '今週の復習テスト' : '公開テストの過去問');
       const rangeLabel = byUnit ? sansuState.hamaUnit : `No.${dno}`;
       openDaimonPicker(sets, grade, hamaSubj, `${rangeLabel}・${actLabel}`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
