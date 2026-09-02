@@ -124,5 +124,25 @@ chk('折り返した下の辺ともとの下の辺のなす角', ang(P, BL, BRf)
 chk('ア（折り目と上の辺）', ang(Q, P, (Q[0]+5, Q[1])), 110)
 chk('折り目の傾き', math.degrees(math.atan2(Q[1]-P[1], Q[0]-P[0])), 70)
 
+
+print('=== 塾技27(3) おうぎ形の折り返し（ア=30°／イ=18°）===')
+for pid, who in [('juku27_3_sector_fold_a', 'ア'), ('juku27_3_sector_fold_i', 'イ')]:
+    v = V(pid)
+    Af, Of, Df = v[-3], v[-2], v[-1]       # 折り返す三角形A・O・D（最後に積んだ3点）
+    Cexp = (-1.54508, 3.66025)             # Oの行き先（弧の上）
+    Bpt = (6.54508, 4.51057)
+    chk('%s: 中心Oの折り返し先＝C（弧の上）' % who, math.dist(Of, Cexp), 0, 2e-4)
+    chk('%s: |AC|＝|AO|＝半径' % who, math.dist(Af, Of), 10, 2e-4)
+    chk('%s: ア＝∠CAD' % who, ang(Af, Of, Df), 30, 2e-3)
+    chk('%s: イ＝∠DCB' % who, ang(Of, Df, Bpt), 18, 2e-3)
+
+print('=== 塾技29(2) 円を3回折る（ア=114°）===')
+v = V('juku29_2_circle_fold')
+Amoved = v[-31]                            # 折り返す弓形のまん中＝点A
+chk('点Aの折り返し先＝中心O', math.hypot(*Amoved), 0, 2e-4)
+Apos = (10.0, 0.0)
+Cpos = (10 * math.cos(math.radians(246)), 10 * math.sin(math.radians(246)))
+chk('ア＝∠AOC', ang((0.0, 0.0), Apos, Cpos), 114, 2e-3)
+
 print('')
 print('総合:', '全部一致' if ok else '★不一致あり')

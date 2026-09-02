@@ -107,7 +107,8 @@ with sync_playwright() as pw:
         page.wait_for_timeout(200)
         page.click('.ori-picker-item:has-text("%s")' % GROUP_LABEL[p['group']])
         page.wait_for_timeout(200)
-        page.locator('.ori-picker-item:has-text("%s")' % p['name'].split('：')[0]).first.click()
+        # 見出しの前半だけだと同じ図で2問ある問題（塾技27(3)の角ア・角イ）が区別できない
+        page.locator('.ori-picker-item:has-text("%s")' % p['name']).first.click()
         page.wait_for_timeout(1200)
         row['labels_before'] = audit(page.evaluate(JS_LABELS))
         page.screenshot(path='_out/shots/all_%s_before.png' % p['id'])
