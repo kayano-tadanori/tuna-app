@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from genbo_path import find_genbo
 
-HG_LO, HG_HI = 6563, 7183
+HG_LO, HG_HI = 6563, 7250   # 7184〜は2026-09-02に見つかった抜け（原簿化されていなかった大問）
 CIRC = "".join(chr(0x2460 + i) for i in range(20))          # ①〜⑳
 TITLE = re.compile(
     r"小5最レ\s*第(\d)分冊\s*第(\d)講座\s*No\.(\d+)\s*大問\s*([0-9０-９]+|[%s])\s*[（(](.+)[）)]\s*(.*)$" % CIRC)
@@ -73,13 +73,19 @@ def split_paren(s):
     hits = [h for h in hits if h[2] <= 20]
     if not hits or hits[0][2] != 1:
         return {0: s}
-    out, order = {}, []
+    out, order, prev_b = {}, [], 0
     for k, (a, b, num) in enumerate(hits):
-        if num in out:          # 同じ番号が2回目＝本文中の言及。そこで打ち切る
+        if num in out:          # 同じ番号が2回目＝本文中の言及。そこから先は割らない
+            # ★直前の小問はここで切らず、文字列の最後までのばす。
+            #   切ってしまうと「(1)の場合よりは…」のような言及の手前で設問が消える
+            #   （2026-09-02 監査で HG-7192(2) が途中で切れていて発覚）
+            if order:
+                out[order[-1]] = s[prev_b:].strip(" 　、，,／/・")
             break
         end = hits[k + 1][0] if k + 1 < len(hits) else len(s)
         out[num] = s[b:end].strip(" 　、，,／/・")
         order.append(num)
+        prev_b = b
     if order != list(range(1, len(order) + 1)) or len(order) < 2:
         return {0: s}
     head = s[:hits[0][0]].strip()

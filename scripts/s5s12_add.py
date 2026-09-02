@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import s5s12_parse as P      # noqa: E402
 import s5s12_build as S      # noqa: E402
 import s5s12_kaisetsu as K   # noqa: E402
-from s5s12_manual import MANUAL, INTRO, MEANING, QFIX    # noqa: E402
+from s5s12_manual import MANUAL, INTRO, MEANING, MEANING_N, QFIX    # noqa: E402
 from s5s12_skip import SKIP, SKIP_PART, SKIP_STEP    # noqa: E402
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -255,6 +255,8 @@ _TITLE_FIX = {          # 機械の掃除だけでは文がおかしくなるも
     "HG-7037": "3つのわり切れる条件を組み合わせて数える",
     "HG-7039": "カードを順に拾う・倍数を重ならないように数える",
     "HG-6883": "相似な三角形の面積比・DE∥BCから距離の比を2回かけて求める2問",
+    "HG-6712": "1・2・3の置きかえを続けてする・もとにもどす記号をさがす",
+    "HG-6806": "正方形を中心のまわりに30度回した重なりの面積",
 }
 
 
@@ -276,6 +278,16 @@ def tidy_title(t, hg=None):
     s = s.strip(" 　・／/＝=")          # ★先頭の ＋ − は意味のある字なので消さない
     s = re.sub(r"^(?:発展|反復|続き|逆算|逆|逆問題|考え方|ちがう場面)・", "", s)
     return s.strip(" 　・／/")
+
+
+def _put_meaning(r, key, steps, n0):
+    """1つの小問から2つ以上のstepができるとき（「xは？」「yは？」のように答えを割ったとき）、
+       stepごとに解説を差しかえる。差しかえないと、先のstepの解説があとのstepの答えを配ってしまう。
+       キーは (HG番号, 小問キー, その小問の中で何番目のstepか)。"""
+    for i, st in enumerate(steps[n0:]):
+        t = MEANING_N.get((r["hg"], key, i))
+        if t:
+            st["meaning"] = t
 
 
 def _put_svg(r, key, steps, n0):
@@ -355,6 +367,7 @@ def build_one(r):
                     st["choices"] = m["choices"]
                 steps.append(st)
             _put_svg(r, key, steps, n0)
+            _put_meaning(r, key, steps, n0)
             continue
         mn = meaning_for(r, key)
         # ★解法が小問ごとに割れていない計算ドリル型は、その小問の数値から解説を組み立てる
@@ -368,6 +381,7 @@ def build_one(r):
             return None, "答え方を作れない（%s）" % a[:40]
         steps.extend(got)
         _put_svg(r, key, steps, n0)
+        _put_meaning(r, key, steps, n0)
 
     for st in steps:
         st["question"] = tidy_question(st["question"])
