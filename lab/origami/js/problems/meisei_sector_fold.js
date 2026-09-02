@@ -115,6 +115,17 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
   ];
   const ANGLE_73 = { boneId: 0, vertex: aC, from: bC, to: eC, label: '73°', radius: 3.0 };
 
+  // 原本の図は角ア・角イの両方に印がついている。答えるのは片方でも図は原本どおり両方出す
+  // （2026-09-02の自己監査＝check_symbols_in_figure.py の指摘で直した）
+  const ANGLE_A = {
+    boneId: 0, vertex: bC, from: aC, fromBone: 1, to: cC,
+    label: 'ア', radius: 3.2, atTarget: 1,
+  };
+  const ANGLE_I = {
+    boneId: 0, vertex: cC, from: eC, to: aC, toBone: 1,
+    label: 'イ', radius: 2.4, atTarget: 1,
+  };
+
   const clone = x => JSON.parse(JSON.stringify(x));   // 2問でデータを共有しない（zの反転が二重にかかる）
 
   function base(id, name, extraAngles, difficulty, answer, explanation, ask) {
@@ -141,11 +152,7 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
   ORIGAMI_PROBLEMS.meisei_sector_fold_a = base(
     'meisei_sector_fold_a',
     '明星中：おうぎ形をBCで折る（角ア）',
-    [{
-      // ア＝∠DBC。Dは折ってできる点なのでボーン1を指す
-      boneId: 0, vertex: bC, from: aC, fromBone: 1, to: cC,
-      label: 'ア', radius: 3.2, atTarget: 1,
-    }],
+    [ANGLE_A, ANGLE_I],
     3,
     { value: 30, display: '30', unit: '度', tolerance: 0.5 },
     [
@@ -161,11 +168,7 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
   ORIGAMI_PROBLEMS.meisei_sector_fold_i = base(
     'meisei_sector_fold_i',
     '明星中：おうぎ形をBCで折る（角イ）',
-    [{
-      // イ＝弧のはしへ向かう半径と、折り返してできた辺CDのなす角
-      boneId: 0, vertex: cC, from: eC, to: aC, toBone: 1,
-      label: 'イ', radius: 2.4, atTarget: 1,
-    }],
+    [ANGLE_A, ANGLE_I],
     4,
     { value: 26, display: '26', unit: '度', tolerance: 0.5 },
     [

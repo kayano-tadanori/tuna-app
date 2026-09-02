@@ -129,6 +129,20 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
   //   同じ配列を2つの問題が指していると2回反転されて元に戻ってしまう。必ず複製を渡す。
   const clone = x => JSON.parse(JSON.stringify(x));
 
+  // 原本の図は角ア・角イの両方に印がついている。答えるのは片方でも、**図は原本どおり両方出す**
+  // （「角アと角イを求めなさい」と書いてあるのに片方しか図に無いと、子どもが探してしまう。
+  //   2026-09-02の自己監査＝check_symbols_in_figure.py の指摘で直した）
+  const ANGLE_A = {
+    boneId: 0, vertex: aC, from: oC, fromBone: 1, to: dC,
+    label: 'ア', radius: 3.4, atTarget: 1,
+  };
+  const ANGLE_I = {
+    boneId: 1, vertex: oC, from: dC, fromBone: 0, to: bC, toBone: 0,
+    label: 'イ', radius: 2.6, atTarget: 1,
+  };
+  // 角イの2辺のうちCBは紙のふちでも折り目でもないので破線で引く（作問ルール§10-2）
+  const CREASE_CB = { boneId: 0, a: oC, aBone: 1, b: bC, kind: 'outline', atTarget: 1 };
+
   function base(id, name, extraAngles, answer, explanation, ask, extraCreases) {
     return {
       id, name,
@@ -153,11 +167,7 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
   ORIGAMI_PROBLEMS.juku27_3_sector_fold_a = base(
     'juku27_3_sector_fold_a',
     '塾技27(3)：おうぎ形の折り返し（角ア）',
-    [{
-      // ア＝∠CAD。Cは折ってできる点なのでボーン1を指し、折り終わってから出す
-      boneId: 0, vertex: aC, from: oC, fromBone: 1, to: dC,
-      label: 'ア', radius: 3.4, atTarget: 1,
-    }],
+    [ANGLE_A, ANGLE_I],
     { value: 30, display: '30', unit: '度', tolerance: 0.5 },
     [
       '紙を折り返しても長さは変わらないので、AC＝AO＝おうぎ形の半径。',
@@ -166,17 +176,14 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
       '折り目ADで折ると、辺AOが辺ACの上にぴったり重なる。ということは、折り目ADは角OACをちょうど半分に分ける線（二等分線）。',
       'ア＝60°÷2＝30°。',
     ],
-    'ここでは角アを答えてください'
+    'ここでは角アを答えてください',
+    [CREASE_CB]
   );
 
   ORIGAMI_PROBLEMS.juku27_3_sector_fold_i = base(
     'juku27_3_sector_fold_i',
     '塾技27(3)：おうぎ形の折り返し（角イ）',
-    [{
-      // イ＝∠DCB。頂点Cは折ってできる点（ボーン1）、2辺の先は動かない側
-      boneId: 1, vertex: oC, from: dC, fromBone: 0, to: bC, toBone: 0,
-      label: 'イ', radius: 2.6, atTarget: 1,
-    }],
+    [ANGLE_A, ANGLE_I],
     { value: 18, display: '18', unit: '度', tolerance: 0.5 },
     [
       '三角形AOCは3辺とも半径なので正三角形（角アの問題で使った考え方）。だから角AOC＝60°。',
@@ -187,10 +194,6 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
       'イ＝角DCB＝角OCB－角OCD＝66°-48°＝18°。',
     ],
     'ここでは角イを答えてください',
-    // ★角イ＝∠DCBの2辺のうち、CBは紙のふちでも折り目でもない（弧はふちだが、
-    //   角をつくるのはまっすぐな弦のほう）。線が無いと角が読めないので破線で引く
-    //   （作問ルール§10-2。2026-09-02の自己監査で追加）。
-    //   端点Cは折ってできる点なのでaBoneでボーン1を指す
-    [{ boneId: 0, a: oC, aBone: 1, b: bC, kind: 'outline', atTarget: 1 }]
+    [CREASE_CB]
   );
 })();
