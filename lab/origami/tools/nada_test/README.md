@@ -14,13 +14,16 @@ python -m http.server 8769
 # 1) 与件だけから座標を組み立てて、原本の印刷解答と一致するか（アプリを使わない）
 python verify_from_givens.py
 
-# 2) 全26問を、本物のUI操作＋本物の指のドラッグで通す（折る→答えを打つ→せいかい）
+# 2) 全問を、本物のUI操作＋本物の指のドラッグで通す（折る→答えを打つ→せいかい）
 python test_all_problems.py
 
 # 3) 2 が持ち帰った「折り終わりの頂点」から、面積・長さ・角度を別ルートで計算し直す
 python check_engine_geometry.py
 
-# 4) push のあと、本番(GitHub Pages)をiPhoneと同じWebKitで確かめる
+# 4) 折る途中の向き（山折り／谷折り）を機械で確かめる
+python check_fold_direction.py
+
+# 5) push のあと、本番(GitHub Pages)をiPhoneと同じWebKitで確かめる
 python check_production.py
 ```
 
@@ -34,6 +37,7 @@ python check_production.py
 | `test_all_problems.py` | 全問について ①折る前/折った後のスクショ ②全ステップが指で折れるか ③印刷の答えを打って「せいかい」が出るか ④ラベルのはみ出し・重なり・パネルに隠れていないか ⑤コンソールエラー0件 |
 | `check_engine_geometry.py` | ②が持ち帰った実物のエンジンの頂点座標から、面積・長さ・角度を**別の道すじで**計算（例：No.4の斜線67.5cm²、No.9の1/3、関西創価中のア=82°） |
 | `check_production.py` | 本番のGitHub Pagesを **WebKit＋`service_workers='block'`** で開く。Firestoreへの通信は落とす |
+| `check_fold_direction.py` | 折り**途中**の向き。180°の折り返しは最終形が軸の符号に依らないので、スクショでは気づけない。基準＝マイナスは`wayo_triangle_fold`の1件だけ |
 | `pdf_crop.py` | 原本PDFを600dpi以上で切り出して読む。**問題ページだけでなく解答ページの図と丸数字まで**見る |
 | `render_genbo_svg.py` | 原簿（memory）に書いたSVGを実際に描いて目で見る（弧の向きが逆でも数字では気づけない） |
 

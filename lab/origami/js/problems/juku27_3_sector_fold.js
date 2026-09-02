@@ -129,7 +129,7 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
   //   同じ配列を2つの問題が指していると2回反転されて元に戻ってしまう。必ず複製を渡す。
   const clone = x => JSON.parse(JSON.stringify(x));
 
-  function base(id, name, extraAngles, answer, explanation, ask) {
+  function base(id, name, extraAngles, answer, explanation, ask, extraCreases) {
     return {
       id, name,
       year: null, school: '塾技ワークブック',
@@ -142,7 +142,7 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
         + '角アと角イの大きさを求めなさい。'
         + '（' + ask + '。中心Oをつまんで折ってみましょう）',
       mesh: clone(MESH),
-      previewCreases: clone(PREVIEW),
+      previewCreases: clone(PREVIEW.concat(extraCreases || [])),
       steps: clone(STEPS),
       labelPoints: clone(LABELS),
       angleMarks: clone([ANGLE_108].concat(extraAngles)),
@@ -163,7 +163,7 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
       '紙を折り返しても長さは変わらないので、AC＝AO＝おうぎ形の半径。',
       '図を見ると、折り返した点Cはおうぎ形の弧の上にのっている。ということはOC も半径。',
       'つまり三角形AOCは、AO・OC・CAの3辺がぜんぶ半径で長さが同じ＝正三角形。だから角AOC＝60°。',
-      '折り目ADは「点Oが点Cにぴったり重なる」折り方だから、角OACをちょうど半分に分けている（折り目は、重なる2つの辺のまん中を通る）。',
+      '折り目ADで折ると、辺AOが辺ACの上にぴったり重なる。ということは、折り目ADは角OACをちょうど半分に分ける線（二等分線）。',
       'ア＝60°÷2＝30°。',
     ],
     'ここでは角アを答えてください'
@@ -186,6 +186,11 @@ window.ORIGAMI_PROBLEMS = window.ORIGAMI_PROBLEMS || {};
       'DはOBの上にあるので、角DOC＝角BOC＝48°。二等辺だから角DCO も48°。',
       'イ＝角DCB＝角OCB－角OCD＝66°-48°＝18°。',
     ],
-    'ここでは角イを答えてください'
+    'ここでは角イを答えてください',
+    // ★角イ＝∠DCBの2辺のうち、CBは紙のふちでも折り目でもない（弧はふちだが、
+    //   角をつくるのはまっすぐな弦のほう）。線が無いと角が読めないので破線で引く
+    //   （作問ルール§10-2。2026-09-02の自己監査で追加）。
+    //   端点Cは折ってできる点なのでaBoneでボーン1を指す
+    [{ boneId: 0, a: oC, aBone: 1, b: bC, kind: 'outline', atTarget: 1 }]
   );
 })();
