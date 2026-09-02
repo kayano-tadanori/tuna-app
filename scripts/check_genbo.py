@@ -461,7 +461,11 @@ for label, arr, key, hint in (
     ("文字に色が付いていない図（暗い背景で読めない）", bad_fill, "fill", 'すべての <text> に fill を書く'),
     ("ルートに max-width が無い図（枠からはみ出す）", bad_style, "style",
      'style="display:block;margin:0 auto;max-width:100%" を付ける'),
-    ("暗すぎる色を使っている図（背景に沈む）", bad_dark, "dark", "#4f9eff / #ffd166 / #9aa3c0 に置きかえる"),
+    # ★「暗い色を使っている」だけでは不具合とは言えない。明るいカードの上の濃い文字は正しい使い方。
+    #   読めるかどうかは python scripts/check_text_contrast.py で1文字ずつ実測する（2026-09-03）。
+    #   ここは「新しく暗い色が増えた」ことに気づくための目印にとどめる。
+    ("暗い色を使っている図（読めるかは check_text_contrast.py で実測する）", bad_dark, "dark",
+     "python scripts/check_text_contrast.py で読めるか測る。読めなければ fix_text_contrast.py で直す"),
 ):
     new = sorted(set(arr) - set(base.get(key, [])))
     if new:
@@ -478,6 +482,7 @@ if fig_ng:
     fail += 1
 else:
     print("✅ 図の作法（文字色・max-width・暗い色）も問題なし")
+print("→ 文字が実際に読めるかは python scripts/check_text_contrast.py（1文字ずつ画素で実測）")
 
 # ── 原簿の「図SVG」欄との突き合わせ（2026-08-11・本人指示）──────────────
 # ★図の源は原簿の「- 図SVG:」欄。アプリはそれを写すだけにする＝二度手間をなくす。

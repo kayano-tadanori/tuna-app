@@ -2,7 +2,7 @@
 
 `python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。
 ★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。
-最終更新: 2026-09-03 00:25
+最終更新: 2026-09-03 01:15
 
 ```
 === 原簿 ⇄ 大問 の 突き合わせ ===
@@ -44,36 +44,9 @@
    小3 sairei hd3s_n12_7
    小3 sairei hd3s_n12_8
 
-❌ 文字に色が付いていない図（暗い背景で読めない） **新規37枚** … すべての <text> に fill を書く
-   3/master/kokai/hd_3m_k07_616_5
-   4/master_bunsatsu/fukushu/hd4mb_09_18
-   4/master_bunsatsu/fukushu/hd4mb_12_11
-   4/master_bunsatsu/fukushu/hd4mb_12_15
-   4/master_bunsatsu/fukushu/hd4mb_12_18
-   4/master_bunsatsu/fukushu/hd4mb_12_19
-   4/master_bunsatsu/fukushu/hd4mb_12_22
-   4/master_bunsatsu/fukushu/hd4mb_12_23
-❌ ルートに max-width が無い図（枠からはみ出す） **新規268枚** … style="display:block;margin:0 auto;max-width:100%" を付ける
-   3/master/fukushu/hd_3m_f02_5
-   3/master/fukushu/hd_3m_f05_3
-   3/master/fukushu/hd_3m_f16_4
-   3/master/fukushu/hd_3m_f18_3
-   3/master/fukushu/hd_3m_f18_5
-   3/master/fukushu/hd_3m_f19_3
-   3/master/fukushu/hd_3m_f20_3
-   3/master/fukushu/hd_3m_f21_6
-❌ 暗すぎる色を使っている図（背景に沈む） **新規226枚** … #4f9eff / #ffd166 / #9aa3c0 に置きかえる
-   3/master/fukushu/hd3m_00_1
-   3/master/fukushu/hd3m_00_2
-   3/master/fukushu/hd3m_05_1
-   3/master/fukushu/hd3m_30_1
-   3/master/fukushu/hd3m_38_1
-   3/master/fukushu/hd3m_38_4
-   3/master/fukushu/hd3m_38_5
-   3/master/fukushu/hd3m_38_6
-
-→ 図は原簿に無い。PDFの実物を見てから描くこと（feedback_zu_wa_genbo_ni_nai）
-→ 形の検査は python scripts/check_daimon3_svg.py（枠はみ出し・文字の重なり・箱はみ出し）
+・暗い色を使っている図（読めるかは check_text_contrast.py で実測する） 191枚（既存ぶん＝基準線。新規なし）
+✅ 図の作法（文字色・max-width・暗い色）も問題なし
+→ 文字が実際に読めるかは python scripts/check_text_contrast.py（1文字ずつ画素で実測）
 
 ❌ 原簿が「図: あり」なのに 図SVG 欄が無い: 14本  ← ここで落とします
   （PDFを見て描き、原簿に入れる。読み取れないなら『- 図SVG: 判読不能』と書く）
