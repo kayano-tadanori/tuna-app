@@ -3,125 +3,25 @@
    ＝すぐ着手できる候補だけを抜き出す。
    使い方：  python scripts/find_no_diagram.py
    結果は docs/genbo_no_diagram.md に自動保存される（手で編集しない）。
+
+★コースの見分け方・SAME・CANNOT・「未収録」の出し方は scripts/genbo_common.py にある。
+  このファイルが持つのは「そこからどう絞りこむか」だけ。
+  2026-09-03まで、ここに check_genbo.py の分類ロジックを手で写したコピーがあり、
+  それだけが古くなって、実装ずみの大問まで候補に並べていた（経緯は genbo_common.py の冒頭）。
+  ★分類を直したくなったら genbo_common.py を直すこと。ここに写し直さない。
 """
-import json, io, os, re, sys, collections, glob, datetime
-import sys, io as _io
-sys.stdout = _io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+import io, os, re, sys, datetime
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from genbo_path import find_genbo
-GENBO = find_genbo()
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-g = io.open(GENBO, encoding="utf-8").read()
-recs = [r for r in re.split(r"(?=^### 【HG-)", g, flags=re.M) if re.match(r"### 【HG-\d+】", r)]
-hid = lambda r: re.match(r"### 【(HG-\d+)】", r).group(1)
-heads = {hid(r): r.split("\n")[0].split("】", 1)[1] for r in recs}
-recs_body = {hid(r): r for r in recs}
+from genbo_common import (
+    BASE, heads, recs_body, gen, COURSE_LABEL, load_daimon, scan_courses,
+)
 
-# ── ここから下は check_genbo.py と同じ分類ロジック（原簿の分母づくり）。
-#    2つのファイルで判定がズレないよう、コースの数字が食いちがったら
-#    まず check_genbo.py 側を直してから、こちらにも同じ修正を反映すること。
-COURSE_PAT = [
-    ("rika",   re.compile(r"^小(\d)\s*理科")),
-    ("sairei", re.compile(r"^小(\d)\s*(?:最レ|最高レベル)")),
-    ("nd2",    re.compile(r"^小(\d)\s*2nd")),
-    ("nadago", re.compile(r"^小(\d)\s*灘合")),
-    ("kokugo", re.compile(r"^小(\d)\s*国語")),
-    ("master", re.compile(r"^小(\d)\s*(?:マスター|復習|本科|実力|No\.)")),
-]
-gen = collections.defaultdict(set)
-for k, v in heads.items():
-    for course, pat in COURSE_PAT:
-        m = pat.match(v)
-        if m:
-            gen[(m.group(1), course)].add(k)
-            break
-
-NADAGO_ID_RANGES = {"3": range(1901, 2011), "4": range(2301, 2431), "5": range(2201, 2279)}
-for grade, rng in NADAGO_ID_RANGES.items():
-    for n in rng:
-        k = "HG-%04d" % n
-        if k in heads:
-            gen[(grade, "nadago")].add(k)
-
-KOKAI_PAT = re.compile(r"^(\d{4})年?度?\s*(?:小(\d)|(\d)年)公開")
-for k, v in heads.items():
-    m = KOKAI_PAT.match(v)
-    if m:
-        grade = m.group(2) or m.group(3)
-        subj = "rika" if "理科" in v[:20] else "master"
-        gen[(grade, subj)].add(k)
-
-NADAGO_MOSHI_PAT = re.compile(r"^\d{4}年?度?\s*小?(\d)年?\s*灘中(?:日本一模試|日本一模擬入試|チャレンジ)")
-for k, v in heads.items():
-    m = NADAGO_MOSHI_PAT.match(v)
-    if m:
-        gen[(m.group(1), "master")].add(k)
-
-JITSURYOKU_PAT = re.compile(r"^\d{4}\s*(\d)年\s*実力")
-for k, v in heads.items():
-    m = JITSURYOKU_PAT.match(v)
-    if m:
-        gen[(m.group(1), "master")].add(k)
-
-d = json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
-
-KOKUGO_DONE = set()
-KOKUGO_FILES = glob.glob(os.path.join(BASE, "data", "kokugo_*.json")) + \
-    [os.path.join(BASE, "data", "hama_kokugo.json")]
-for fn in KOKUGO_FILES:
-    if not os.path.exists(fn):
-        continue
-    txt = io.open(fn, encoding="utf-8").read()
-    KOKUGO_DONE.update(re.findall(r"原簿\s*(HG-\d+)", txt))
-    KOKUGO_DONE.update(re.findall(r'"src"\s*:\s*"(HG-\d+)"', txt))
-
-SAME = set(["HG-1520", "HG-1567", "HG-1564", "HG-1565", "HG-0751", "HG-0772", "HG-2362", "HG-2239"])
-CANNOT = set(["HG-2202", "HG-2548", "HG-2549", "HG-2551", "HG-1278", "HG-1107", "HG-1121", "HG-1126",
-              "HG-3769", "HG-3770", "HG-3771", "HG-1489"])
-
-
-def hgof(x):
-    if x.get("hg"):
-        parts = re.split(r"\s*\+\s*", x["hg"])
-        out = []
-        for p in parts:
-            m = re.search(r"HG-(\d+)", p)
-            if m:
-                out.append(m.group(0))
-            else:
-                m2 = re.search(r"(\d+)", p)
-                if m2:
-                    out.append("HG-" + m2.group(1))
-        return out if out else None
-    m = re.search(r"HG-\d+", x.get("src", "") or "")
-    return [m.group(0)] if m else None
-
-
-APP_COURSE_KEY = {"nd2": "master2nd"}
-COURSE_LABEL = {"master": "マスター", "sairei": "最レ", "nd2": "2nd演習", "rika": "理科", "nadago": "灘合"}
-
-all_missing = {}
-for (grade, course) in sorted(gen):
-    if course == "kokugo":
-        miss = sorted(gen[(grade, course)] - KOKUGO_DONE - CANNOT - SAME)
-        all_missing[(grade, "kokugo")] = miss
-        continue
-    node = d["grades"].get(grade, {}).get(APP_COURSE_KEY.get(course, course), {})
-    extra_nodes = []
-    if course == "nadago":
-        extra_nodes.append(d["grades"].get(grade, {}).get("nadago_rika", {}))
-    inapp = set()
-    for nd in [node] + extra_nodes:
-        for kind in ("fukushu", "kokai", "units", "kouza1", "kouza2"):
-            for v in nd.get(kind, {}).values():
-                for x in v:
-                    h = hgof(x)
-                    if h:
-                        inapp.update(h)
-    miss = sorted(gen[(grade, course)] - inapp - CANNOT - SAME - KOKUGO_DONE)
-    all_missing[(grade, course)] = miss
+# ★未収録の判定は check_genbo.py とまったく同じ関数を通す（もうズレようがない）
+rows, _nohg = scan_courses(load_daimon())
+all_missing = {(r["grade"], r["course"]): r["miss"] for r in rows}
 
 # ── ここから「図なし判定」。原簿の「図:」欄は書式が3通り混在しているので注意
 #   （2026-08-12発覚）：①行頭の独立欄「- 図: あり」②図の中身を直接書いた行
@@ -175,6 +75,21 @@ for (grade, course), miss in sorted(all_missing.items()):
         else:
             buckets["clean"].append(tag)
 
+# ── 安全弁：候補に「もう実装ずみの大問」が混じっていないか、アプリのデータで直接確かめる。
+#   ★2026-09-03の事故そのものを鳴らすための検査。分類ロジックがどこかでズレて
+#     実装ずみを「未着手」と言い出したら、ここで必ず気づける
+#     （当時は HG-4001・HG-2680・HG-2931 など1,046件が並んでいた）。
+#   ★わざと壊して鳴るかは確認ずみ：clean に実装ずみのHGを1本混ぜると落ちる。
+APP_HG = set(re.findall(r"HG-\d+", io.open(
+    os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8").read()))
+already = [(nm, h, hl) for nm, h, hl in buckets["clean"] if h in APP_HG]
+if already:
+    print("🚨 候補に『すでに大問になっているもの』が %d本 混じっている（分類がズレている）" % len(already))
+    for nm, h, hl in already[:20]:
+        print("   %s %s %s" % (nm, h, hl))
+    print("   → scripts/genbo_common.py の COURSE_PAT / SAME / CANNOT を見直すこと")
+    sys.exit(1)
+
 # ── docs/genbo_no_diagram.md に自動保存（check_genbo.pyのdocs/genbo_status.mdと同じ方式）
 STATUS_FILE = os.path.join(BASE, "docs", "genbo_no_diagram.md")
 os.makedirs(os.path.dirname(STATUS_FILE), exist_ok=True)
@@ -196,6 +111,10 @@ w("最終更新: %s" % datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 w()
 w("```")
 w("件数: %d" % len(buckets["clean"]))
+if not buckets["clean"]:
+    w("★すぐ着手できる候補はゼロ＝原簿が揃っているものは全部大問になっている。")
+    w("  残っているのは docs/genbo_status.md の『作れないと分かっているレコード（除外）』だけ。")
+    w("  そちらは現物のPDF・写真が手に入れば動かせるものが多い。")
 cur = None
 for nm, h, hl in buckets["clean"]:
     if nm != cur:
