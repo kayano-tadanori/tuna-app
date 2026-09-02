@@ -18,17 +18,43 @@ from genbo_path import find_genbo
 
 DAIMON = os.path.join(BASE, "data", "hama_daimon.json")
 
+# ★原簿に図はあるが、アプリの大問には付けないもの（理由つき）。
+#   原簿の図は「その大問ぜんぶ」のもので、アプリが一部の小問だけを実装しているときに起きる。
+NO_FIG = {
+    # 623回大問3の図は(2)のスイッチ回路。アプリが実装しているのは(1)の
+    # 「次のものは電気を通すか」5問だけで、回路の図は要らない。
+    # しかも原簿自身が「電池の向きと枝の接続は要現物照合」としていてスイッチ1も描けておらず、
+    # 図の中に「はしご状の回路。スイッチ4の枝は…（行き止まり）」という制作メモが入っている。
+    "HG-1651": "アプリは(1)の5問だけを実装。(2)のスイッチ回路の図は不要（原簿の図は要現物照合のまま）",
+}
+
 
 def genbo_svgs():
     g = io.open(find_genbo(), encoding="utf-8").read()
     out = {}
+    skipped = []
     for r in re.split(r"(?=^### 【HG-)", g, flags=re.M):
         m = re.match(r"### 【(HG-\d+)】", r)
         if not m:
             continue
+        # ★1つのレコードに「- 図SVG:」以外の欄（「- 図SVG（選択肢ア〜エ）:」など）もあるときは、
+        #   このスクリプトでは扱えない（アプリ側は複数の図を1つにまとめて持っている）。
+        #   黙って上書きすると図が半分になるので、まるごと見送る。
+        #   2026-09-03に HG-5065 で発覚：810×254の「四角形のベン図＋選択肢」を、
+        #   220×122の「三角形のベン図」だけで上書きしてしまった
+        if len(re.findall(r"^- 図SVG[^\n:]*:", r, re.M)) > 1:
+            skipped.append(m.group(1))
+            continue
         m2 = re.search(r"^- 図SVG: (.+)$", r, re.M)
         if m2:
-            out[m.group(1)] = m2.group(1).strip().strip("`")
+            # ★`…` の"中だけ"を取る。閉じバッククォートの後ろに注記が続く書き方があり、
+            #   strip("`") だとその注記まで図に混ざる（2026-09-02 に HG-2679 で発覚）
+            v = m2.group(1).strip()
+            bq = re.match(r"`(.*?)`", v, re.S)
+            out[m.group(1)] = (bq.group(1) if bq else v.strip("`")).strip()
+    if skipped:
+        print("⚠ 図SVGの欄が2つ以上あるので見送った大問: %d本 … %s"
+              % (len(skipped), " ".join(skipped[:12]) + (" ほか" if len(skipped) > 12 else "")))
     return out
 
 
@@ -57,6 +83,10 @@ def main():
                         if hg not in src:
                             continue
                         want = src[hg]
+                        if hg in NO_FIG:
+                            if x.pop("svg", None) is not None:
+                                drop_n += 1
+                            continue
                         if want == "判読不能":
                             if x.pop("svg", None) is not None:
                                 drop_n += 1

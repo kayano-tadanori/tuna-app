@@ -2,7 +2,7 @@
 
 `python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。
 ★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。
-最終更新: 2026-09-02 23:26
+最終更新: 2026-09-03 00:25
 
 ```
 === 原簿 ⇄ 大問 の 突き合わせ ===
@@ -53,7 +53,7 @@
    4/master_bunsatsu/fukushu/hd4mb_12_19
    4/master_bunsatsu/fukushu/hd4mb_12_22
    4/master_bunsatsu/fukushu/hd4mb_12_23
-❌ ルートに max-width が無い図（枠からはみ出す） **新規269枚** … style="display:block;margin:0 auto;max-width:100%" を付ける
+❌ ルートに max-width が無い図（枠からはみ出す） **新規268枚** … style="display:block;margin:0 auto;max-width:100%" を付ける
    3/master/fukushu/hd_3m_f02_5
    3/master/fukushu/hd_3m_f05_3
    3/master/fukushu/hd_3m_f16_4
