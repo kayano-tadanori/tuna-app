@@ -144,5 +144,25 @@ Apos = (10.0, 0.0)
 Cpos = (10 * math.cos(math.radians(246)), 10 * math.sin(math.radians(246)))
 chk('ア＝∠AOC', ang((0.0, 0.0), Apos, Cpos), 114, 2e-3)
 
+print('=== 鎌倉学園中 長方形を2回折る（ア=27°）===')
+v = V('kamakura_double_fold')
+BL = v[0]                                  # 紙の左下（下の辺の上、Cより左）
+C  = v[1]                                  # 下の辺の上の点C（動かない）
+A  = v[2]                                  # 上の辺の上の点A（動かない）
+B  = v[6]                                  # 1回目で移った「上の辺」が下の辺と交わる点
+T  = v[8]                                  # もとの右下の角。2回折られてCの左上へ
+L  = v[9]                                  # もとの右上の角
+chk('Bは下の辺の上（Cと高さが同じ）', B[1], C[1])
+chk('|CT|＝Cから紙の右端までの長さ', math.dist(C, T), 12.196816, 2e-4)
+chk('|LT|＝紙の高さ（もとの右の辺）', math.dist(T, L), 6, 2e-4)
+chk('|AB|＝Aから紙の右上までの上の辺', math.dist(A, B), 8.966859, 2e-4)
+chk('●＝角ACB（下の辺とAC）', ang(C, A, BL), 69, 2e-3)
+chk('角TCB（下の辺と2回折られた辺）＝180−2●', ang(C, T, BL), 42, 2e-3)
+chk('角BAC＝●（上の辺の折り返し＋錯角）', ang(A, B, C), 69, 2e-3)
+X = inter(A, B, C, T)                      # 84°の角の頂点
+chk('与件84°（ABと2回折られた辺の交点）', ang(X, T, B), 84, 2e-3)
+chk('ア＝角ACT（答え）', ang(C, A, T), 27, 2e-3)
+chk('三角形AXCの内角の和', ang(A, X, C) + ang(X, A, C) + ang(C, A, X), 180, 2e-3)
+
 print('')
 print('総合:', '全部一致' if ok else '★不一致あり')

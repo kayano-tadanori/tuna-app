@@ -429,6 +429,9 @@
       el.setAttribute('class',
         c.kind === 'mountain' ? 'ori-crease-mountain'
         : c.kind === 'outline' ? 'ori-crease-outline'
+        // 'edge' … 実線。折り返した紙が「下と同じ色（表）」で重なったとき、
+        //          その紙の辺が色の境目として出ないので描く（鎌倉学園中の辺CT）
+        : c.kind === 'edge' ? 'ori-crease-edge'
         : 'ori-crease-valley');
     });
   }

@@ -99,6 +99,7 @@ html, body { background: #05070f; }
 /* 「重ね合わせ」問題で、動かすほうの紙の輪郭を示す破線（折り線ではないので別の色）。
    実物の教材でも重ねた2枚目は破線で描かれている（本人指示2026-08-31）。 */
 .ori-crease-outline { stroke: #e8eaf0; stroke-width: 2; stroke-dasharray: 7 5; opacity: 0.9; }
+.ori-crease-edge { stroke: #3a2530; stroke-width: 2; opacity: 0.8; }   /* 紙の上に重なった紙の辺＝実線 */
 
 /* ---- 対応する頂点ラベル（灘中対策の「同じ印をつける」定石の可視化） ---- */
 .ori-label-layer { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
