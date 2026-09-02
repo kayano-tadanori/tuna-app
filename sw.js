@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v636';
+const CACHE_NAME = 'oton-gakuen-v640';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -96,14 +96,16 @@ const ASSETS = [
   './lab/origami/js/scratchpad.js',
   './lab/origami/js/ui.js',
   './lab/origami/js/progress.js',
-  './lab/origami/js/works/damashibune.js',
-  './lab/origami/js/works/yakko.js',
-  './lab/origami/js/works/fusen.js',
+  './lab/origami/js/works/ie.js',
+  './lab/origami/js/works/neko.js',
+  './lab/origami/js/works/tulip.js',
+  './lab/origami/js/works/lion.js',
+  './lab/origami/js/works/inu.js',
+  './lab/origami/js/works/kitsune.js',
+  './lab/origami/js/works/usagi.js',
+  './lab/origami/js/works/koppu.js',
   './lab/origami/js/works/kabuto.js',
-  './lab/origami/js/works/tsuru.js',
-  './lab/origami/js/works/tsuru_precise.js',
-  './lab/origami/js/works/_test_cross.js',
-  './lab/origami/js/works/_test_half.js',
+  './lab/origami/js/works/yakko.js',
   './lab/origami/js/problems/rect_fold_2003.js',
   './lab/origami/js/problems/nada2026_day1_q10.js',
   './lab/origami/js/problems/no7_diagonal_fold.js',

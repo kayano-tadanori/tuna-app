@@ -124,21 +124,91 @@ const FOLD = (function () {
   //   {boneId,target}(主ボーンがcommittedAngle→step.targetAngleへ進む割合ぶんだけ、
   //   このボーンはcommittedAngle→targetへ進む＝比例だが別角度。tsuru.jsの
   //   「羽を開く」で、backboneの開き角と首の補正ひねり角が別値になるため追加)。
+  // 🚨★連動するボーンの「回る向き」は、作品データを信用せずエンジンが自分で決める。
+  //   重なった何枚かを一度に折るとき、折り筋は世界の中で1本しかない。
+  //   ところが各ボーンのヒンジ軸は「親のローカル座標」で書かれているので、
+  //   裏返った層では向きが逆に書かれていることがある。そのまま同じ角度を
+  //   コピーすると、層ごとに逆回りして**紙が両側にひらいて見える**
+  //   （本人指摘 2026-09-02「チューリップの2手目 紙が両方にひらく」）。
+  //   ヒンジは親子構造なので外れることは無いが、向きの食いちがいは事故になる。
+  //   → 折る直前の姿勢で世界での軸の向きを実測し、主ボーンと逆を向いていたら
+  //     角度の符号を반転して渡す。データが間違っていても破綻しない。
+  //   （180°折りでは符号を変えても折り上がりは同じ場所になる）
+  function linkedSigns(state, step) {
+    const linked = step.handle.linkedBoneIds || [];
+    const key = step.id !== undefined ? 'st' + step.id : 'st?';
+    state._linkSign = state._linkSign || {};
+    if (state._noLinkSign) return {};   // 検査用：安全網を切る（本番では立たない）
+    if (state._linkSign[key]) return state._linkSign[key];
+    // この手のボーンを角度0に戻した姿勢＝「折る直前」で世界の軸を測る
+    const angles = state.liveAngle.slice();
+    const ids = [step.handle.boneId].concat(
+      linked.map(lb => (typeof lb === 'number') ? lb : lb.boneId));
+    for (const b of ids) angles[b] = 0;
+    const mats = computeBoneMatrices(state.work, angles);
+    const worldAxis = (b) => {
+      const h = state.work.mesh.hinge[b];
+      if (!h || !h.axis) return null;
+      const par = state.work.mesh.boneParent[b];
+      const Mp = par === -1 ? G.mat4Identity() : mats[par];
+      return G.vecNorm(G.vecApplyDir(Mp, h.axis));
+    };
+    const main = worldAxis(step.handle.boneId);
+    const signs = {};
+    for (const lb of linked) {
+      const b = (typeof lb === 'number') ? lb : lb.boneId;
+      const a = worldAxis(b);
+      signs[b] = (main && a && G.vecDot(main, a) < 0) ? -1 : 1;
+    }
+    state._linkSign[key] = signs;
+    return signs;
+  }
+
   function syncLinkedAngle(state, boneId, angle, step) {
     const linked = step && step.handle.boneId === boneId && step.handle.linkedBoneIds;
     if (!linked) return;
     const start = state.committedAngle[boneId] || 0;
     const span = step.targetAngle - start;
     const t = Math.abs(span) < 1e-9 ? 0 : (angle - start) / span;
+    const signs = linkedSigns(state, step);
     for (const lb of linked) {
-      if (typeof lb === 'number') { state.liveAngle[lb] = angle; continue; }
+      if (typeof lb === 'number') { state.liveAngle[lb] = angle * (signs[lb] || 1); continue; }
       const lbStart = state.committedAngle[lb.boneId] || 0;
-      state.liveAngle[lb.boneId] = lbStart + t * (lb.target - lbStart);
+      const sg = signs[lb.boneId] || 1;
+      state.liveAngle[lb.boneId] = sg * (lbStart + t * (lb.target - lbStart));
     }
   }
 
   function currentBoneMatrices(state) {
     return computeBoneMatrices(state.work, state.liveAngle);
+  }
+
+  // ★完成した作品を「ふくらませる」＝ある手の折り目を、少しだけ開きもどす。
+  //   実物でコップに水を入れるとき・かぶとをかぶるときにやっていることそのもの
+  //   （本人 2026-09-03「コップは水が入れれるようにするし、かぶとはかぶれる
+  //     ようにするのよ」）。
+  //   ⚠ liveAngle は折り進みの記録なので書きかえない。**描画用の角度だけ**作る。
+  //   骨の番号は決め打ちにしない——「何手目の折りか」から mesh.boneFoldStep で引く
+  //   （手順を1つ足しても番号がずれない）。
+  function openedBoneMatrices(state, stepIndex, rad) {
+    const w = state.work;
+    const angles = state.liveAngle.slice();
+    const st = (w.steps || [])[stepIndex];
+    if (!st || !st.handle) return computeBoneMatrices(w, angles);
+    // ★「その手で動く骨」は、手順そのものが持っている（handle.boneId と、
+    //   いっしょに動く linkedBoneIds）。骨の番号を作品ごとに手で書かない。
+    //   ⚠ mesh.boneFoldStep から引くのは間違いだった——あれは根っこの骨(土台)まで
+    //   拾ってしまい、根っこには折り角が無いので何も起きなかった（2026-09-03）。
+    const ids = [st.handle.boneId];
+    for (const lb of (st.handle.linkedBoneIds || [])) {
+      ids.push((typeof lb === 'object') ? lb.boneId : lb);
+    }
+    for (const b of ids) {
+      const a = angles[b] || 0;
+      const sg = a < 0 ? -1 : 1;
+      angles[b] = sg * Math.max(0, Math.abs(a) - rad);   // 開きすぎて裏返らない
+    }
+    return computeBoneMatrices(w, angles);
   }
 
   // ヒンジ平面（原点=hingeOrigin, 法線=hingeAxis）とレイの交点。無ければnull。
@@ -239,9 +309,12 @@ const FOLD = (function () {
     //   「行き過ぎても離せばスナップする」遊びを持たせていたが、行き過ぎた
     //   角度のままdrawされる一瞬(離すまでの間)に他レイヤーを突き抜けて見える
     //   原因になる（本人指摘・2026-08-30、精密58ステップ版で顕在化）。
-    //   targetAngle側は超えさせず、開始側(0)だけ少し戻れる余地を残す
-    //   （こちらは折り始め前の状態に近いだけで、貫通は起きない）。
-    const lo = Math.min(0, step.targetAngle) - 0.35;
+    //   ★2026-09-02：開始側に残していた0.35の余地も無くした。
+    //   本人指示「紙が折れない方向に折れようとする挙動だけなくして」。
+    //   実物の紙は、折り目のついていない向きへは曲がらない。逆向きに少しでも
+    //   動くと、下にある紙を突き抜けて見える（＝一枚の紙としてありえない動き）。
+    //   折れる範囲は 0 から targetAngle までのちょうどその間だけ。
+    const lo = Math.min(0, step.targetAngle);
     const hi = Math.max(0, step.targetAngle);
     const clamped = Math.max(lo, Math.min(hi, g.angle));
     state.liveAngle[g.boneId] = clamped;
@@ -296,9 +369,15 @@ const FOLD = (function () {
         //   これを忘れると、そのボーンが別ステップで再登場したときに
         //   進捗の起点(committedAngle)が0のまま＝古いバグ(2026-08-30に発見・修正)。
         if (step.handle.linkedBoneIds) {
+          // ★向きの符号(linkedSigns)は確定角度にも掛ける。掛け忘れると、
+          //   折り終わった瞬間だけ紙が跳ねる（liveとcommittedが食いちがうため）。
+          const sg = linkedSigns(state, step);
           for (const lb of step.handle.linkedBoneIds) {
-            if (typeof lb === 'number') state.committedAngle[lb] = state.settleTarget;
-            else state.committedAngle[lb.boneId] = lb.target;
+            if (typeof lb === 'number') {
+              state.committedAngle[lb] = state.settleTarget * (sg[lb] || 1);
+            } else {
+              state.committedAngle[lb.boneId] = lb.target * (sg[lb.boneId] || 1);
+            }
           }
         }
         if (state.freeMode) state.doneSteps.add(state.settleStepIndex);
@@ -335,8 +414,11 @@ const FOLD = (function () {
   }
 
   return {
-    computeBoneMatrices, currentBoneMatrices, handleWorldPos, computeLayerDepths,
+    computeBoneMatrices, currentBoneMatrices, openedBoneMatrices,
+    handleWorldPos, computeLayerDepths,
     createState, activeStep, pendingSteps, beginDrag, updateDrag, endDrag, tick, isFinished, stepBack,
+    // 検査用（tools/check_axis_safety.py が、わざと軸を逆にして安全網の効きを測る）
+    syncLinkedAngle, linkedSigns,
   };
 })();
 

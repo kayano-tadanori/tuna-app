@@ -85,6 +85,7 @@
     home: document.getElementById('ori-screen-home'),
     picker: document.getElementById('ori-screen-picker'),
     fold: document.getElementById('ori-screen-fold'),
+    settings: document.getElementById('ori-screen-settings'),
   };
   function showScreen(name) {
     for (const k in screens) screens[k].hidden = (k !== name);
@@ -99,10 +100,88 @@
   // 折れるところまで確かめるために置いている（本番の動きには影響しない）。
   window.__oriDebug = { get inst() { return inst; }, get entry() { return currentEntry; } };
 
-  function ensureRenderer(entry) {
+  // ---------- せってい（紙の色と厚み。本人指示2026-09-02） ----------
+  // ★「紙の厚みがないから、折ったのが視覚的にわかりにくい」への対応。
+  //   えらんだ内容はこの端末のlocalStorageに覚えておく（クラウドには送らない）。
+  const SETTINGS_KEY = 'ori-settings-v1';
+  const PAPER_COLORS = [
+    ['あか',     '#ef5f5a'], ['だいだい', '#f39c4a'], ['きいろ',   '#f2c94c'],
+    ['みどり',   '#4fb974'], ['みずいろ', '#4ec3d9'], ['あお',     '#4a8fe8'],
+    ['むらさき', '#9b6ce8'], ['ピンク',   '#ef85b5'], ['しろ',     '#ffffff'],
+    ['クリーム', '#f5eedc'], ['はいいろ', '#9aa3ad'], ['くろ',     '#3b4250'],
+  ];
+  const SETTINGS_DEFAULT = { front: '#ef5f5a', back: '#ffffff', thick: 1 };
+  let settings = Object.assign({}, SETTINGS_DEFAULT);
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (raw) settings = Object.assign(settings, JSON.parse(raw));
+  } catch (e) { /* 見られない端末でも既定で動く */ }
+
+  function hexToRgb(h) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(String(h || ''));
+    if (!m) return [1, 1, 1];
+    const n = parseInt(m[1], 16);
+    return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+  }
+  function saveSettings() {
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
+  }
+  function applySettings(kind) {
+    if (!inst) return;
+    inst.setColor(hexToRgb(settings.front), hexToRgb(settings.back));
+    // ★灘中対策の問題には、紙の厚みを付けない。
+    //   問題は「図のかたちがそのまま答え」なので、厚みで辺が太ると
+    //   重なりの形が読めなくなる（本人 2026-09-03
+    //   「折り紙問題の方の 重ね合わせの問題がバグるようになった」）。
+    //   厚みは伝承折り紙のための表現（折ったのが見て分かるように）。
+    const isProblem = (kind || currentKind) === 'problem';
+    inst.setThickness(isProblem ? 0 : settings.thick);
+  }
+
+  function buildSwatches(el, which) {
+    el.innerHTML = '';
+    PAPER_COLORS.forEach(([name, hex]) => {
+      const b = document.createElement('button');
+      b.className = 'ori-swatch' + (settings[which] === hex ? ' on' : '');
+      b.style.background = hex;
+      b.title = name;
+      b.setAttribute('aria-label', name);
+      b.onclick = () => {
+        settings[which] = hex;
+        saveSettings(); applySettings(); refreshSettingsUI();
+      };
+      el.appendChild(b);
+    });
+  }
+  function refreshSettingsUI() {
+    document.getElementById('ori-set-front').style.background = settings.front;
+    document.getElementById('ori-set-back').style.background = settings.back;
+    document.getElementById('ori-thick').value = settings.thick;
+    document.getElementById('ori-thick-val').textContent =
+      settings.thick === 0 ? '（なし）' : `${settings.thick}`;
+    buildSwatches(document.getElementById('ori-sw-front'), 'front');
+    buildSwatches(document.getElementById('ori-sw-back'), 'back');
+  }
+  document.getElementById('ori-home-settings').onclick = () => {
+    refreshSettingsUI(); showScreen('settings');
+  };
+  document.getElementById('ori-settings-back').onclick = () => showScreen('home');
+  document.getElementById('ori-thick').oninput = (e) => {
+    settings.thick = Number(e.target.value);
+    saveSettings(); applySettings(); refreshSettingsUI();
+  };
+  document.getElementById('ori-set-reset').onclick = () => {
+    settings = Object.assign({}, SETTINGS_DEFAULT);
+    saveSettings(); applySettings(); refreshSettingsUI();
+  };
+
+  function ensureRenderer(entry, kind) {
     const canvas = document.getElementById('ori-canvas');
     if (!inst) inst = OrigamiRenderer.create(canvas, entry);
     else inst.setWork(entry);
+    applySettings(kind);   // 作品を開くたびに、えらんだ紙の色と厚みを反映する
+    // 上下の回転を自由にするのは伝承折り紙だけ（問題は裏返せると混乱するので制限）
+    if (inst.setFreeCamera) inst.setFreeCamera(kind === 'work');
     return inst;
   }
 
@@ -112,7 +191,7 @@
 
   function openFold(kind, entry) {
     currentKind = kind; currentEntry = entry;
-    ensureRenderer(entry);
+    ensureRenderer(entry, kind);
     const panel = document.getElementById('ori-problem-panel');
     if (kind === 'problem') {
       panel.hidden = false;
@@ -146,8 +225,16 @@
       const btn = document.createElement('button');
       btn.className = 'ori-picker-item';
       if (kind === 'work') {
+        // 伝承折り紙にも難易度の星と手数を出す（本人指示2026-09-02）。
+        // 星は問題側と同じ5段階の見た目にそろえる。
+        const wd = Math.max(1, Math.min(5, entry.difficulty || 1));
+        const wStars = `<span class="ori-picker-stars">${'★'.repeat(wd)}`
+          + `<span class="ori-star-off">${'★'.repeat(5 - wd)}</span></span>`;
+        const nSteps = (entry.steps || []).length;
         btn.innerHTML = `<span class="ori-picker-emoji">${entry.emoji || '📄'}</span>`
-          + `<span class="ori-picker-name">${entry.name}</span>`;
+          + `<span class="ori-picker-name">${entry.name}</span>`
+          + wStars
+          + `<span class="ori-picker-steps">${nSteps}手</span>`;
       } else {
         const yearLabel = entry.year ? ` ${entry.year}年` : '';
         const done = window.OrigamiProgress && OrigamiProgress.isCorrect(entry.id);

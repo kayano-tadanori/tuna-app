@@ -188,6 +188,86 @@ const CLOTH = (function () {
       p.z += (dz / len) * strength;
     }
   }
+  // ★「なかに見えないボールを入れる感じ」（本人 2026-09-03）。
+  //   中心から一様に押す圧力(applyPressure)だと、袋になっていない所——
+  //   かぶとのツノ・はちまき、コップの折り込んだ角——まで押し出されて
+  //   ばらけてしまう（本人「ふくろ構造以外の部分がばらけないようにしないと」）。
+  //   球なら**球に触れた紙だけ**が外へよけるので、
+  //   「かぶとのかたちのまま、頭の入る空間だけができる」。
+  function applyBall(sim, center, radius) {
+    if (!(radius > 0)) return;
+    for (const p of sim.points) {
+      if (p.invMass === 0) continue;
+      const dx = p.x - center[0], dy = p.y - center[1], dz = p.z - center[2];
+      const len = Math.hypot(dx, dy, dz) || 1e-9;
+      if (len >= radius) continue;          // 球の外にいる紙はさわらない
+      const k = radius / len;
+      p.x = center[0] + dx * k;
+      p.y = center[1] + dy * k;
+      p.z = center[2] + dz * k;
+    }
+  }
+
+  // ★折り重なって貼りついている紙どうしを結ぶ。
+  //   実物の紙は、折り重なった所は一体になって動く。これが無いと、袋の壁が
+  //   ふくらんだときに、その上に乗っている紙（ツノなど）だけが取り残されて
+  //   ばらける（本人 2026-09-03）。
+  //   ⚠**折り目で直接つながっている2枚は結ばない**——そこが開いて袋になる所。
+  function buildStickConstraints(sim, boneMatrices, tol) {
+    const mesh = sim.work.mesh;
+    const parent = mesh.boneParent || [];
+    const w = [];
+    for (let i = 0; i < mesh.verts.length; i++) {
+      const M = boneMatrices[mesh.panel[i]], p = mesh.verts[i];
+      w.push([M[0]*p[0]+M[4]*p[1]+M[8]*p[2]+M[12],
+              M[1]*p[0]+M[5]*p[1]+M[9]*p[2]+M[13],
+              M[2]*p[0]+M[6]*p[1]+M[10]*p[2]+M[14]]);
+    }
+    const cons = [];
+    for (let i = 0; i < w.length; i++) {
+      for (let j = i + 1; j < w.length; j++) {
+        const pa = mesh.panel[i], pb = mesh.panel[j];
+        if (pa === pb) continue;
+        if (parent[pa] === pb || parent[pb] === pa) continue;   // 折り目＝開いてよい
+        const d = Math.hypot(w[i][0]-w[j][0], w[i][1]-w[j][1], w[i][2]-w[j][2]);
+        if (d > tol) continue;
+        cons.push({ a: i, b: j, rest: d });
+      }
+    }
+    return cons;
+  }
+
+  // ★「かぶとのかたちのまま、かぶれる形にする」（本人 2026-09-03）。
+  //   球にさわっていない紙まで自由にすると、ツノやはちまきが崩れて山になる。
+  //   **球から遠い紙は、折り上がりの形にピン留めして一切動かさない。**
+  //   動くのは球にさわっている（＝頭が当たる）紙だけ。
+  function pinOutsideBall(sim, boneMatrices, center, radius, hold) {
+    // hold は数ひとつでも、紙切れごとの配列でもよい（枚数でかたさを変えるため）
+    const holdOf = Array.isArray(hold) ? ((pnl) => hold[pnl] !== undefined ? hold[pnl] : 1)
+                                       : ((_) => (hold === undefined ? 1 : hold));
+    const mesh = sim.work.mesh;
+    const r2 = (radius * 1.15) * (radius * 1.15);
+    for (let i = 0; i < mesh.verts.length; i++) {
+      const M = boneMatrices[mesh.panel[i]], p = mesh.verts[i];
+      const tx = M[0]*p[0]+M[4]*p[1]+M[8]*p[2]+M[12];
+      const ty = M[1]*p[0]+M[5]*p[1]+M[9]*p[2]+M[13];
+      const tz = M[2]*p[0]+M[6]*p[1]+M[10]*p[2]+M[14];
+      const dx = tx-center[0], dy = ty-center[1], dz = tz-center[2];
+      if (dx*dx + dy*dy + dz*dz <= r2) continue;   // 球の近く＝動いてよい
+      const pt = sim.points[i];
+      const h = holdOf(mesh.panel[i]);
+      if (h >= 1) {                 // かちっと固定（板のように硬い）
+        pt.x = tx; pt.y = ty; pt.z = tz;
+        pt.px = tx; pt.py = ty; pt.pz = tz;
+        pt.invMass = 0;
+      } else {                          // ★紙らしく：形を覚えているが、やわらかい
+        pt.x += (tx - pt.x) * h;
+        pt.y += (ty - pt.y) * h;
+        pt.z += (tz - pt.z) * h;
+      }
+    }
+  }
+
   function step(sim, dt, iterations, pressure) {
     const pts = sim.points;
     for (const p of pts) {
@@ -196,15 +276,21 @@ const CLOTH = (function () {
       p.x += vx; p.y += vy; p.z += vz;
     }
     if (pressure && pressure.strength) applyPressure(sim, pressure.center, pressure.strength);
+    if (pressure && pressure.ball) applyBall(sim, pressure.ball.center, pressure.ball.radius);
     for (let it = 0; it < iterations; it++) {
       for (const c of sim.edgeCons) solveDistance(pts, c.a, c.b, c.rest, 0.9);
       for (let s = 0; s < SEAM_PASSES; s++) {
         for (const c of sim.seamCons) solveDistance(pts, c.a, c.b, c.rest, 1.0);
       }
+      // 貼りついている紙は一緒に動く（ばらけない）
+      if (sim.stickCons) {
+        for (const c of sim.stickCons) solveDistance(pts, c.a, c.b, c.rest, 1.0);
+      }
     }
   }
 
-  return { createSim, buildPoints, buildEdgeConstraints, buildSeamConstraints, applyAttachment, step, solveDistance };
+  return { createSim, buildPoints, buildEdgeConstraints, buildSeamConstraints, pinOutsideBall,
+           buildStickConstraints, applyBall, applyAttachment, step, solveDistance };
 })();
 
 if (typeof window !== 'undefined') window.CLOTH = CLOTH;

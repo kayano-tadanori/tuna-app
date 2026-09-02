@@ -2,332 +2,953 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>折り紙エディタ(2D)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>折り線ラボ — 折順と展開図を調べる</title>
 <style>
-  html,body{margin:0;height:100%;background:#222;color:#eee;font-family:sans-serif;overflow:hidden}
-  #wrap{display:flex;height:100%}
-  #canvasArea{flex:1;position:relative}
-  canvas{background:#333;display:block}
-  #panel{width:280px;padding:12px;background:#1a1a1a;overflow-y:auto}
-  button{display:block;width:100%;margin:4px 0;padding:10px;font-size:15px;border-radius:6px;border:none;cursor:pointer}
-  .primary{background:#4a90d9;color:#fff}
-  .valley{background:#e74c3c;color:#fff}
-  .mountain{background:#3498db;color:#fff}
-  .undo{background:#888;color:#fff}
-  .export{background:#2ecc71;color:#fff}
-  h3{margin:6px 0}
-  #status{font-size:13px;line-height:1.5;background:#000;padding:8px;border-radius:6px;white-space:pre-wrap;margin-top:8px}
-  #log{font-size:12px;color:#aaa;max-height:200px;overflow-y:auto;margin-top:8px}
-  .hint{font-size:12px;color:#999;margin:6px 0}
-  textarea{width:100%;height:150px;font-size:11px;background:#000;color:#0f0;border:1px solid #444}
+  :root{
+    --bg:#181a1d; --panel:#22252a; --line:#343a42; --fg:#e8eaed; --dim:#9aa3ad;
+    --mountain:#e8524a; --valley:#4a8fe8; --accent:#f2c14e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+    font-family:"Yu Gothic UI","Meiryo",system-ui,sans-serif;overflow:hidden}
+  #app{display:flex;flex-direction:column;height:100%}
+  #bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;
+    background:var(--panel);border-bottom:1px solid var(--line)}
+  #bar .grp{display:flex;gap:4px;align-items:center;padding-right:10px;
+    margin-right:4px;border-right:1px solid var(--line)}
+  #bar .grp:last-child{border-right:none}
+  label.lbl{font-size:12px;color:var(--dim);margin-right:2px}
+  button{padding:7px 11px;font-size:13px;border-radius:6px;border:1px solid var(--line);
+    background:#2c3138;color:var(--fg);cursor:pointer;white-space:nowrap}
+  button:hover{background:#39404a}
+  button:disabled{opacity:.4;cursor:default}
+  button.on{background:#3d63a8;border-color:#5a86d8}
+  button.valley{background:#2f4c78;border-color:#4a8fe8}
+  button.mountain{background:#6d2f2c;border-color:#e8524a}
+  button.crease{background:#4a4433;border-color:#8a7a4a}
+  button.flip{background:#2f5a4a;border-color:#3f9a78}
+  select,input[type=number]{background:#2c3138;color:var(--fg);border:1px solid var(--line);
+    border-radius:5px;padding:5px 6px;font-size:13px}
+  #main{flex:1;display:flex;min-height:0}
+  .view{flex:1;position:relative;border-right:1px solid var(--line);min-width:0}
+  .view canvas{display:block;width:100%;height:100%}
+  .cap{position:absolute;top:8px;left:10px;font-size:12px;color:var(--dim);
+    background:rgba(0,0,0,.45);padding:3px 8px;border-radius:5px;pointer-events:none}
+  .legend{position:absolute;bottom:8px;left:10px;font-size:11px;color:var(--dim);
+    background:rgba(0,0,0,.45);padding:4px 8px;border-radius:5px;pointer-events:none;line-height:1.6}
+  #side{width:330px;flex:none;overflow-y:auto;background:var(--panel);padding:10px}
+  #side h3{margin:12px 0 6px;font-size:13px;color:var(--accent);
+    border-bottom:1px solid var(--line);padding-bottom:4px}
+  #side h3:first-child{margin-top:0}
+  #status{font-size:12px;line-height:1.7;background:#14161a;padding:8px;border-radius:6px;
+    white-space:pre-wrap;min-height:56px}
+  #steps{font-size:12px;max-height:190px;overflow-y:auto;background:#14161a;border-radius:6px}
+  #steps div{padding:5px 8px;cursor:pointer;border-bottom:1px solid #1e2126;
+    display:flex;justify-content:space-between;gap:6px}
+  #steps div:hover{background:#20242a}
+  #steps div.cur{background:#3d63a8}
+  #steps .k{color:var(--dim);font-size:11px}
+  #measure,#audit{font-size:12px;line-height:1.7;background:#14161a;padding:8px;
+    border-radius:6px;white-space:pre-wrap}
+  #audit.bad{color:#ffb0aa}
+  #audit.good{color:#9fe0a8}
+  textarea{width:100%;height:110px;font-size:10px;background:#0e1013;color:#7fdc8a;
+    border:1px solid var(--line);border-radius:6px;padding:6px;font-family:ui-monospace,monospace}
+  .row{display:flex;gap:5px;margin:5px 0}
+  .row button{flex:1}
+  .hint{font-size:11px;color:var(--dim);line-height:1.6;margin:4px 0}
 </style>
 </head>
 <body>
-<div id="wrap">
-  <div id="canvasArea"><canvas id="c"></canvas></div>
-  <div id="panel">
-    <h3>折り紙エディタ</h3>
-    <p class="hint">1つ目の点(動かしたい角)→2つ目の点(合わせたい先)の順にクリック。頂点に自動スナップします。</p>
-    <div id="status">1つ目の点を選んでください</div>
-    <h3>折り方向</h3>
-    <button class="valley" onclick="doFold('V')">谷折りで確定</button>
-    <button class="mountain" onclick="doFold('M')">山折りで確定</button>
-    <h3>操作</h3>
-    <button class="undo" onclick="undo()">ひとつ戻す</button>
-    <button class="undo" onclick="reset()">最初からやり直す</button>
-    <h3>紙のサイズ</h3>
-    <button onclick="newRect(1,1)">正方形</button>
-    <button onclick="newRect(1,1.5)">縦長長方形(飛行機用)</button>
-    <h3>書き出し</h3>
-    <button class="export" onclick="exportData()">crease pattern を書き出す</button>
-    <textarea id="exportBox" readonly></textarea>
-    <div id="log"></div>
+<div id="app">
+  <div id="bar">
+    <div class="grp">
+      <label class="lbl">紙</label>
+      <select id="paperSel">
+        <option value="1,1">正方形</option>
+        <option value="1,1.5">長方形 2:3</option>
+        <option value="1,1.4142135623730951">長方形 A判 1:√2</option>
+        <option value="1,0.75">長方形 4:3(横長)</option>
+      </select>
+      <button onclick="newPaper()">新しい紙</button>
+    </div>
+    <div class="grp">
+      <label class="lbl">折り方</label>
+      <button id="mPt" class="on" onclick="setMode('pt2pt')">点を点に</button>
+      <button id="mLine" onclick="setMode('line')">2点を通る線で</button>
+    </div>
+    <div class="grp">
+      <button class="valley" onclick="doFold('V',true)">谷折り</button>
+      <button class="mountain" onclick="doFold('M',true)">山折り</button>
+      <button class="crease" onclick="doFold('V',false)">折り目だけ(谷)</button>
+      <button class="crease" onclick="doFold('M',false)">折り目だけ(山)</button>
+    </div>
+    <div class="grp">
+      <button class="flip" onclick="doFlip('v')">左右に裏返す</button>
+      <button class="flip" onclick="doFlip('h')">上下に裏返す</button>
+    </div>
+    <div class="grp">
+      <label class="lbl">スナップ</label>
+      <select id="snapSel">
+        <option value="2">1/2（中点）</option>
+        <option value="3">1/3</option>
+        <option value="4">1/4</option>
+        <option value="5">1/5</option>
+        <option value="8">1/8</option>
+        <option value="0">頂点だけ</option>
+      </select>
+    </div>
+    <div class="grp">
+      <button onclick="undo()">← 戻す</button>
+      <button onclick="redo()">進む →</button>
+      <button onclick="resetAll()">最初から</button>
+    </div>
+    <div class="grp">
+      <label class="lbl"><input type="checkbox" id="allLayers"> 全部の層を一度に折る</label>
+    </div>
+  </div>
+
+  <div id="main">
+    <div class="view" id="viewA">
+      <canvas id="cA"></canvas>
+      <div class="cap">折った状態（今の紙）</div>
+      <div class="legend">赤系＝紙の表　／　うすい色＝裏<br>
+        左クリック＝点をえらぶ　／　ホイール＝拡大　／　右ドラッグ＝動かす</div>
+    </div>
+    <div class="view" id="viewB">
+      <canvas id="cB"></canvas>
+      <div class="cap">展開図（もとの紙に付いた折り線）</div>
+      <div class="legend">山折り＝赤の一点鎖線　／　谷折り＝青の破線</div>
+    </div>
+    <div id="side">
+      <h3>いまの操作</h3>
+      <div id="status"></div>
+
+      <h3>計測</h3>
+      <div id="measure">2点を選ぶと出ます</div>
+
+      <h3>折順（クリックでその手まで戻る）</h3>
+      <div id="steps"></div>
+
+      <h3>折れるかの検査</h3>
+      <div id="audit"></div>
+      <div class="hint">Kawasakiの定理（ひとつおきの角の和が180°）と
+        Maekawaの定理（山−谷＝±2）。これは<b>必要条件</b>でしかない——
+        両方通っても実際の紙で折れるとは限らない。</div>
+
+      <h3>書き出し</h3>
+      <div class="row">
+        <button onclick="dlFold()">FOLD形式</button>
+        <button onclick="dlSvg()">SVG（印刷用）</button>
+      </div>
+      <div class="row">
+        <button onclick="dlSteps()">折順を保存</button>
+        <button onclick="document.getElementById('fileIn').click()">折順を読み込む</button>
+      </div>
+      <input type="file" id="fileIn" accept=".json" style="display:none" onchange="loadSteps(event)">
+      <div class="hint">FOLD形式は折り紙の標準フォーマット。書き出したファイルを
+        <b>origamisimulator.org</b> に放り込むと、3Dで折り上がりが見られる。</div>
+      <textarea id="out" readonly placeholder="ここに書き出した中身が出ます"></textarea>
+    </div>
   </div>
 </div>
+
 <script>
 'use strict';
+/* =====================================================================
+   折り線ラボ（fold2d editor）
+   ★中身は tools/fold2d.py と同じ考え方。パネルごとに
+     「原紙(まだ折っていない平らな紙)座標 → 今の座標」の変換 xf を持たせ、
+     折り線をその逆写像で原紙に戻すことで、展開図(CP)を出す。
+   ★FOLD形式は https://github.com/edemaine/fold の公開仕様に沿って自分で書いた。
+   ===================================================================== */
 
-// ---------- fold2d のロジック(Python版から移植) ----------
-function segLineIntersect(p1,p2,a,b){
-  const [x1,y1]=p1,[x2,y2]=p2,[x3,y3]=a,[x4,y4]=b;
-  const dx1=x2-x1, dy1=y2-y1, dx2=x4-x3, dy2=y4-y3;
-  const denom = dx1*dy2 - dy1*dx2;
-  if (Math.abs(denom) < 1e-12) return null;
-  const t = ((x3-x1)*dy2 - (y3-y1)*dx2) / denom;
-  if (t < -1e-9 || t > 1+1e-9) return null;
-  return [x1+t*dx1, y1+t*dy1];
-}
-function sideOfLine(p,a,b){
-  return (b[0]-a[0])*(p[1]-a[1]) - (b[1]-a[1])*(p[0]-a[0]);
-}
+// ---------------------------------------------------------------- 幾何
+const EPS = 1e-9;
+function sideOfLine(p,a,b){ return (b[0]-a[0])*(p[1]-a[1]) - (b[1]-a[1])*(p[0]-a[0]); }
 function reflectPoint(p,a,b){
-  const [ax,ay]=a,[bx,by]=b,[px,py]=p;
-  const dx=bx-ax, dy=by-ay;
-  const L2 = dx*dx+dy*dy;
-  const t = ((px-ax)*dx + (py-ay)*dy) / L2;
-  const projx = ax+t*dx, projy = ay+t*dy;
-  return [2*projx-px, 2*projy-py];
+  const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy;
+  const t=((p[0]-a[0])*dx + (p[1]-a[1])*dy)/L2;
+  const px=a[0]+t*dx, py=a[1]+t*dy;
+  return [2*px-p[0], 2*py-p[1]];
+}
+function segLineIntersect(p1,p2,a,b){
+  const dx1=p2[0]-p1[0], dy1=p2[1]-p1[1], dx2=b[0]-a[0], dy2=b[1]-a[1];
+  const den=dx1*dy2-dy1*dx2;
+  if (Math.abs(den)<1e-12) return null;
+  const t=((a[0]-p1[0])*dy2-(a[1]-p1[1])*dx2)/den;
+  if (t<-1e-9||t>1+1e-9) return null;
+  return [p1[0]+t*dx1, p1[1]+t*dy1];
 }
 function pointInPolygon(pt, poly, tol=1e-6){
-  const [x,y] = pt;
-  const n = poly.length;
+  const n=poly.length;
   for (let i=0;i<n;i++){
-    const [x1,y1]=poly[i], [x2,y2]=poly[(i+1)%n];
-    const cross = (x2-x1)*(y-y1) - (y2-y1)*(x-x1);
+    const [x1,y1]=poly[i],[x2,y2]=poly[(i+1)%n];
+    const cross=(x2-x1)*(pt[1]-y1)-(y2-y1)*(pt[0]-x1);
     if (Math.abs(cross) < tol*Math.max(1,Math.hypot(x2-x1,y2-y1))){
-      const dot = (x-x1)*(x2-x1) + (y-y1)*(y2-y1);
-      const len2 = (x2-x1)**2 + (y2-y1)**2;
-      if (dot >= -tol && dot <= len2+tol) return true;
+      const dot=(pt[0]-x1)*(x2-x1)+(pt[1]-y1)*(y2-y1);
+      const l2=(x2-x1)**2+(y2-y1)**2;
+      if (dot>=-tol && dot<=l2+tol) return true;
     }
   }
-  let inside = false;
+  let inside=false;
   for (let i=0;i<n;i++){
-    const [x1,y1]=poly[i], [x2,y2]=poly[(i+1)%n];
-    if ((y1>y) !== (y2>y)){
-      const xin = x1 + (y-y1)*(x2-x1)/(y2-y1);
-      if (x < xin) inside = !inside;
+    const [x1,y1]=poly[i],[x2,y2]=poly[(i+1)%n];
+    if ((y1>pt[1])!==(y2>pt[1])){
+      const xin=x1+(pt[1]-y1)*(x2-x1)/(y2-y1);
+      if (pt[0]<xin) inside=!inside;
     }
   }
   return inside;
 }
-function splitPolygon(poly, a, b){
-  const n = poly.length;
-  const sides = poly.map(p => sideOfLine(p,a,b));
-  if (sides.every(s => s >= -1e-9)) return [poly, null];
-  if (sides.every(s => s <= 1e-9)) return [null, poly];
-  const keep=[], cut=[];
+function splitPolygon(poly,a,b){
+  const n=poly.length, sides=poly.map(p=>sideOfLine(p,a,b));
+  if (sides.every(s=>s>=-1e-9)) return [poly,null];
+  if (sides.every(s=>s<=1e-9)) return [null,poly];
+  const keep=[],cut=[];
   for (let i=0;i<n;i++){
-    const p0=poly[i], p1=poly[(i+1)%n];
-    const s0=sides[i], s1=sides[(i+1)%n];
-    if (s0 >= -1e-9) keep.push(p0);
-    if (s0 <= 1e-9) cut.push(p0);
-    if ((s0>1e-9 && s1<-1e-9) || (s0<-1e-9 && s1>1e-9)){
-      const ip = segLineIntersect(p0,p1,a,b);
+    const p0=poly[i],p1=poly[(i+1)%n],s0=sides[i],s1=sides[(i+1)%n];
+    if (s0>=-1e-9) keep.push(p0);
+    if (s0<=1e-9) cut.push(p0);
+    if ((s0>1e-9&&s1<-1e-9)||(s0<-1e-9&&s1>1e-9)){
+      const ip=segLineIntersect(p0,p1,a,b);
       if (ip){ keep.push(ip); cut.push(ip); }
     }
   }
   return [keep.length>=3?keep:null, cut.length>=3?cut:null];
 }
-
-class FoldState {
-  constructor(halfW, halfH){
-    this.panels = [{poly: [[-halfW,-halfH],[halfW,-halfH],[halfW,halfH],[-halfW,halfH]], layer:0}];
-    this.creases = [];
-    this.history = [];
+function polyArea(poly){
+  let s=0;
+  for (let i=0;i<poly.length;i++){
+    const [x1,y1]=poly[i],[x2,y2]=poly[(i+1)%poly.length];
+    s+=x1*y2-x2*y1;
   }
-  snapshot(){ return JSON.stringify({panels:this.panels, creases:this.creases}); }
-  restore(s){ const o=JSON.parse(s); this.panels=o.panels; this.creases=o.creases; }
-  pushHistory(){ this.history.push(this.snapshot()); }
-  undo(){ if (this.history.length){ this.restore(this.history.pop()); return true;} return false; }
-
-  fold(a, b, kind, onlyContaining=null, panelFilter=null){
-    const newPanels = [];
-    let touched = false;
-    for (const p of this.panels){
-      if (panelFilter && !panelFilter(p)){ newPanels.push(p); continue; }
-      if (onlyContaining && !pointInPolygon(onlyContaining, p.poly)){ newPanels.push(p); continue; }
-      const [keep, cut] = splitPolygon(p.poly, a, b);
-      if (keep) newPanels.push({poly:keep, layer:p.layer});
-      if (cut){
-        touched = true;
-        const reflected = cut.map(pt => reflectPoint(pt,a,b));
-        newPanels.push({poly:reflected, layer:-p.layer-1});
-        this.creases.push({a,b,kind});
-      }
-    }
-    this.panels = newPanels;
-    return touched;
-  }
-
-  foldByPoints(pFrom, pTo, kind, onlyContaining='auto', panelFilter=null){
-    const [ax,ay]=pFrom, [bx,by]=pTo;
-    const mx=(ax+bx)/2, my=(ay+by)/2;
-    const dx=bx-ax, dy=by-ay;
-    let lineA=[mx,my], lineB=[mx-dy, my+dx];
-    if (sideOfLine(pFrom, lineA, lineB) > 0) { const t=lineA; lineA=lineB; lineB=t; }
-    const target = onlyContaining === 'auto' ? pFrom : onlyContaining;
-    this.pushHistory();
-    const ok = this.fold(lineA, lineB, kind, target, panelFilter);
-    if (!ok) { this.history.pop(); }
-    return ok;
-  }
-
-  allVertices(){
-    const seen = new Map();
-    for (const p of this.panels) for (const v of p.poly){
-      const k = v[0].toFixed(4)+','+v[1].toFixed(4);
-      if (!seen.has(k)) seen.set(k, v);
-    }
-    return Array.from(seen.values());
-  }
+  return s/2;
 }
 
-// ---------- UI ----------
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
-let fs = new FoldState(1,1);
-let selected = [];
-let viewScale = 150, viewCx = 0, viewCy = 0;
+// ---- アフィン変換（原紙座標 → 今の座標）。等長変換なので M^-1 = M^T ----
+const ID_XF=[1,0,0,1,0,0];
+function reflectAffine(a,b){
+  const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy);
+  const nx=-dy/L, ny=dx/L, k=2*(a[0]*nx+a[1]*ny);
+  return [1-2*nx*nx, -2*nx*ny, -2*nx*ny, 1-2*ny*ny, k*nx, k*ny];
+}
+function xfApply(x,p){ return [x[0]*p[0]+x[1]*p[1]+x[4], x[2]*p[0]+x[3]*p[1]+x[5]]; }
+function xfInv(x,p){
+  const u=p[0]-x[4], v=p[1]-x[5];
+  return [x[0]*u+x[2]*v, x[1]*u+x[3]*v];
+}
+function xfCompose(o,i){
+  return [o[0]*i[0]+o[1]*i[2], o[0]*i[1]+o[1]*i[3],
+          o[2]*i[0]+o[3]*i[2], o[2]*i[1]+o[3]*i[3],
+          o[0]*i[4]+o[1]*i[5]+o[4], o[2]*i[4]+o[3]*i[5]+o[5]];
+}
+function xfFlipped(x){ return (x[0]*x[3]-x[1]*x[2]) < 0; }
+
+function clipLineToPolygon(a,b,poly){
+  const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy;
+  if (L2<1e-18) return [];
+  const ts=[];
+  for (let i=0;i<poly.length;i++){
+    const p0=poly[i], p1=poly[(i+1)%poly.length];
+    const s0=sideOfLine(p0,a,b), s1=sideOfLine(p1,a,b);
+    if (Math.abs(s0)<=1e-9) ts.push(((p0[0]-a[0])*dx+(p0[1]-a[1])*dy)/L2);
+    if ((s0>1e-9&&s1<-1e-9)||(s0<-1e-9&&s1>1e-9)){
+      const ip=segLineIntersect(p0,p1,a,b);
+      if (ip) ts.push(((ip[0]-a[0])*dx+(ip[1]-a[1])*dy)/L2);
+    }
+  }
+  if (ts.length<2) return [];
+  ts.sort((x,y)=>x-y);
+  const uq=[ts[0]];
+  for (const t of ts) if (t-uq[uq.length-1]>1e-9) uq.push(t);
+  const out=[];
+  for (let i=0;i<uq.length-1;i++){
+    const tm=(uq[i]+uq[i+1])/2;
+    if (pointInPolygon([a[0]+tm*dx, a[1]+tm*dy], poly)){
+      out.push([[a[0]+uq[i]*dx, a[1]+uq[i]*dy],
+                [a[0]+uq[i+1]*dx, a[1]+uq[i+1]*dy]]);
+    }
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------- 紙の状態
+class FoldState{
+  constructor(hw,hh){
+    this.paper={hw,hh};
+    this.panels=[{poly:[[-hw,-hh],[hw,-hh],[hw,hh],[-hw,hh]], layer:0, xf:ID_XF.slice()}];
+    this.cp=[];      // 原紙座標の折り筋 {a,b,kind,step}
+    this.steps=[];   // 折順
+  }
+  static from(o){
+    const s=new FoldState(o.paper.hw,o.paper.hh);
+    s.panels=o.panels; s.cp=o.cp; s.steps=o.steps;
+    return s;
+  }
+  clone(){ return JSON.parse(JSON.stringify(
+    {paper:this.paper, panels:this.panels, cp:this.cp, steps:this.steps})); }
+
+  border(){ const {hw,hh}=this.paper;
+    return [[-hw,-hh],[hw,-hh],[hw,hh],[-hw,hh]]; }
+
+  _reassignAlong(sa,sb,kind,srcPoly,step){
+    const onBoundary=(pt)=>{
+      for (let i=0;i<srcPoly.length;i++){
+        const q0=srcPoly[i], q1=srcPoly[(i+1)%srcPoly.length];
+        const dx=q1[0]-q0[0], dy=q1[1]-q0[1], L2=dx*dx+dy*dy;
+        if (L2<1e-18) continue;
+        let t=((pt[0]-q0[0])*dx+(pt[1]-q0[1])*dy)/L2;
+        if (t<-1e-7||t>1+1e-7) continue;
+        if (Math.hypot(pt[0]-(q0[0]+t*dx), pt[1]-(q0[1]+t*dy))<1e-7) return true;
+      }
+      return false;
+    };
+    for (const c of this.cp){
+      if (Math.abs(sideOfLine(c.a,sa,sb))>1e-7) continue;
+      if (Math.abs(sideOfLine(c.b,sa,sb))>1e-7) continue;
+      if (!onBoundary([(c.a[0]+c.b[0])/2,(c.a[1]+c.b[1])/2])) continue;
+      c.kind=kind; c.step=step;
+    }
+  }
+
+  fold(a,b,kind,onlyContaining,move,name){
+    const step=this.steps.length;
+    const R=reflectAffine(a,b);
+    const next=[]; let touched=false;
+    for (const p of this.panels){
+      const xf=p.xf||ID_XF.slice();
+      if (onlyContaining && !pointInPolygon(onlyContaining,p.poly)){ next.push(p); continue; }
+      const [keep,cut]=splitPolygon(p.poly,a,b);
+      const srcPoly=p.poly.map(q=>xfInv(xf,q));
+      const sa=xfInv(xf,a), sb=xfInv(xf,b);
+      let cpKind=kind;
+      if (xfFlipped(xf)) cpKind = (kind==='V'?'M':(kind==='M'?'V':kind));
+      if (keep && cut){
+        for (const [s0,s1] of clipLineToPolygon(sa,sb,srcPoly))
+          this.cp.push({a:s0,b:s1,kind:cpKind,step});
+      } else if (cut && !keep && move){
+        this._reassignAlong(sa,sb,cpKind,srcPoly,step);
+      }
+      if (keep) next.push({poly:keep, layer:p.layer, xf:xf});
+      if (cut){
+        touched=true;
+        if (move) next.push({poly:cut.map(q=>reflectPoint(q,a,b)), layer:p.layer,
+                             xf:xfCompose(R,xf), _mv:true});
+        else      next.push({poly:cut, layer:p.layer, xf:xf});
+      }
+    }
+    if (!touched) return false;
+    if (move){
+      const ls=next.map(q=>q.layer);
+      const pivot = kind==='V' ? Math.max(...ls) : Math.min(...ls);
+      const sign  = kind==='V' ? 1 : -1;
+      for (const q of next) if (q._mv){ q.layer = 2*pivot + sign - q.layer; delete q._mv; }
+    }
+    for (const q of next) delete q._mv;
+    this.panels=next;
+    this.steps.push({name:name||'', kind, a, b, op: move?'fold':'crease',
+                     only: onlyContaining||null});
+    return true;
+  }
+
+  foldByPoints(pFrom,pTo,kind,move,allLayers){
+    const mx=(pFrom[0]+pTo[0])/2, my=(pFrom[1]+pTo[1])/2;
+    const dx=pTo[0]-pFrom[0], dy=pTo[1]-pFrom[1];
+    let A=[mx,my], B=[mx-dy,my+dx];
+    if (sideOfLine(pFrom,A,B)>0){ const t=A; A=B; B=t; }
+    return this.fold(A,B,kind, allLayers?null:pFrom, move,
+      `${pt(pFrom)} を ${pt(pTo)} へ`);
+  }
+
+  foldByLine(p1,p2,sidePt,kind,move,allLayers){
+    let A=p1.slice(), B=p2.slice();
+    if (sideOfLine(sidePt,A,B)>0){ const t=A; A=B; B=t; }
+    return this.fold(A,B,kind, allLayers?null:sidePt, move,
+      `${pt(p1)}-${pt(p2)} の線で折る`);
+  }
+
+  flip(axis){
+    const F = axis==='v' ? [-1,0,0,1,0,0] : [1,0,0,-1,0,0];
+    for (const p of this.panels){
+      p.poly=p.poly.map(q=>xfApply(F,q));
+      p.xf=xfCompose(F,p.xf||ID_XF.slice());
+      p.layer=-p.layer;
+    }
+    this.steps.push({name: axis==='v'?'左右に裏返す':'上下に裏返す',
+                     kind:null,a:null,b:null,op:'flip',axis});
+    return true;
+  }
+
+  creasePattern(){
+    const out=[], seen=new Map(), tol=1e-7;
+    for (const c of this.cp){
+      let a=c.a,b=c.b;
+      if (b[0]<a[0]-tol || (Math.abs(b[0]-a[0])<tol && b[1]<a[1])){ a=c.b; b=c.a; }
+      const k=[Math.round(a[0]/tol),Math.round(a[1]/tol),
+               Math.round(b[0]/tol),Math.round(b[1]/tol)].join(',');
+      if (seen.has(k)){
+        const prev=out[seen.get(k)];
+        if (prev.kind!==c.kind) prev.kind='U';
+        prev.layers++;
+        continue;
+      }
+      seen.set(k,out.length);
+      out.push({a,b,kind:c.kind,step:c.step,layers:1});
+    }
+    return out;
+  }
+}
+function pt(p){ return `(${fmt(p[0])}, ${fmt(p[1])})`; }
+
+// ---------------------------------------------------------------- 平面グラフ / FOLD
+const GTOL=1e-7;
+function gkey(p){ return Math.round(p[0]/GTOL)+','+Math.round(p[1]/GTOL); }
+function segInter(a1,a2,b1,b2){
+  const d1x=a2[0]-a1[0], d1y=a2[1]-a1[1], d2x=b2[0]-b1[0], d2y=b2[1]-b1[1];
+  const den=d1x*d2y-d1y*d2x;
+  if (Math.abs(den)<1e-12) return null;
+  const t=((b1[0]-a1[0])*d2y-(b1[1]-a1[1])*d2x)/den;
+  const u=((b1[0]-a1[0])*d1y-(b1[1]-a1[1])*d1x)/den;
+  if (t<-1e-9||t>1+1e-9||u<-1e-9||u>1+1e-9) return null;
+  return [a1[0]+t*d1x, a1[1]+t*d1y];
+}
+function onSeg(p,a,b,tol=1e-7){
+  const abx=b[0]-a[0], aby=b[1]-a[1], apx=p[0]-a[0], apy=p[1]-a[1];
+  const L2=abx*abx+aby*aby;
+  if (L2<1e-18) return Math.hypot(apx,apy)<tol;
+  if (Math.abs(abx*apy-aby*apx)/Math.sqrt(L2)>tol) return false;
+  const t=(apx*abx+apy*aby)/L2;
+  return t>=-1e-9 && t<=1+1e-9;
+}
+const RANK={B:3,M:2,V:2,U:1,F:0};
+function buildPlanarGraph(segs){
+  segs=segs.filter(s=>Math.hypot(s[1][0]-s[0][0], s[1][1]-s[0][1])>GTOL);
+  const bp=segs.map(s=>[s[0],s[1]]);
+  for (let i=0;i<segs.length;i++) for (let j=i+1;j<segs.length;j++){
+    const ip=segInter(segs[i][0],segs[i][1],segs[j][0],segs[j][1]);
+    if (ip){ bp[i].push(ip); bp[j].push(ip); }
+    else {
+      for (const p of [segs[j][0],segs[j][1]]) if (onSeg(p,segs[i][0],segs[i][1])) bp[i].push(p);
+      for (const p of [segs[i][0],segs[i][1]]) if (onSeg(p,segs[j][0],segs[j][1])) bp[j].push(p);
+    }
+  }
+  const verts=[], vidx=new Map();
+  const vid=p=>{ const k=gkey(p);
+    if (!vidx.has(k)){ vidx.set(k,verts.length); verts.push([p[0],p[1]]); }
+    return vidx.get(k); };
+  const emap=new Map(), conflicts=new Set();
+  segs.forEach((s,si)=>{
+    const [a,b,kind]=s;
+    const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy;
+    let ts=bp[si].map(p=>Math.min(1,Math.max(0,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/L2)));
+    ts.sort((x,y)=>x-y);
+    const uq=[]; for (const t of ts) if (!uq.length || t-uq[uq.length-1]>GTOL) uq.push(t);
+    for (let m=0;m<uq.length-1;m++){
+      const i=vid([a[0]+uq[m]*dx, a[1]+uq[m]*dy]);
+      const j=vid([a[0]+uq[m+1]*dx, a[1]+uq[m+1]*dy]);
+      if (i===j) continue;
+      const e=Math.min(i,j)+'_'+Math.max(i,j);
+      if (emap.has(e)){
+        const old=emap.get(e);
+        if (old!==kind){
+          if (RANK[kind]>RANK[old]) emap.set(e,kind);
+          else if ((old==='M'&&kind==='V')||(old==='V'&&kind==='M')){
+            emap.set(e,'U'); conflicts.add(e);
+          }
+        }
+      } else emap.set(e,kind);
+    }
+  });
+  const keys=[...emap.keys()].sort();
+  return {vertices:verts,
+          edges:keys.map(k=>k.split('_').map(Number)),
+          assignment:keys.map(k=>emap.get(k)),
+          conflicts:keys.map((k,i)=>conflicts.has(k)?i:-1).filter(i=>i>=0)};
+}
+function extractFaces(g){
+  const V=g.vertices, adj=new Map(), ord=new Map();
+  for (const [i,j] of g.edges){
+    if(!adj.has(i))adj.set(i,[]); if(!adj.has(j))adj.set(j,[]);
+    adj.get(i).push(j); adj.get(j).push(i);
+  }
+  for (const [v,nb] of adj){
+    nb.sort((p,q)=>Math.atan2(V[p][1]-V[v][1],V[p][0]-V[v][0])
+                  -Math.atan2(V[q][1]-V[v][1],V[q][0]-V[v][0]));
+    const m=new Map(); nb.forEach((u,k)=>m.set(u,k)); ord.set(v,m);
+  }
+  const seen=new Set(), faces=[];
+  const cap=4*g.edges.length+8;
+  for (const [i,j] of g.edges) for (const he of [[i,j],[j,i]]){
+    let key=he[0]+'>'+he[1];
+    if (seen.has(key)) continue;
+    const loop=[]; let cur=he;
+    while (!seen.has(cur[0]+'>'+cur[1])){
+      seen.add(cur[0]+'>'+cur[1]);
+      loop.push(cur[0]);
+      const nb=adj.get(cur[1]), k=ord.get(cur[1]).get(cur[0]);
+      cur=[cur[1], nb[(k-1+nb.length)%nb.length]];
+      if (loop.length>cap) throw new Error('面のたどりが終わらない');
+    }
+    if (loop.length>=3 && polyArea(loop.map(v=>V[v]))>1e-12) faces.push(loop);
+  }
+  return faces;
+}
+function checkFlatFoldability(g){
+  const V=g.vertices, adj=new Map();
+  g.edges.forEach(([i,j],k)=>{
+    const a=g.assignment[k];
+    if(!adj.has(i))adj.set(i,[]); if(!adj.has(j))adj.set(j,[]);
+    adj.get(i).push([j,a]); adj.get(j).push([i,a]);
+  });
+  const bad=[];
+  for (const [v,nb0] of adj){
+    if (nb0.some(([,a])=>a==='B')) continue;      // 紙のふちの上は対象外
+    if (nb0.length<4){
+      bad.push({v,xy:V[v],detail:`折り筋が${nb0.length}本しかない`}); continue;
+    }
+    const nb=[...nb0].sort((p,q)=>Math.atan2(V[p[0]][1]-V[v][1],V[p[0]][0]-V[v][0])
+                                 -Math.atan2(V[q[0]][1]-V[v][1],V[q[0]][0]-V[v][0]));
+    const ang=nb.map(([u])=>Math.atan2(V[u][1]-V[v][1],V[u][0]-V[v][0]));
+    const n=ang.length, gaps=[];
+    for (let k=0;k<n;k++){
+      let d=ang[(k+1)%n]-ang[k]; d=((d%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+      gaps.push(d);
+    }
+    const det=[];
+    if (n%2) det.push(`折り筋が奇数本(${n})`);
+    else{
+      let e=0,o=0;
+      for (let k=0;k<n;k++) (k%2? o+=gaps[k] : e+=gaps[k]);
+      if (Math.abs(e-Math.PI)>1e-6||Math.abs(o-Math.PI)>1e-6)
+        det.push(`ひとつおきの角の和 ${(e*180/Math.PI).toFixed(2)}° / ${(o*180/Math.PI).toFixed(2)}°`);
+    }
+    const M=nb.filter(([,a])=>a==='M').length, Vc=nb.filter(([,a])=>a==='V').length;
+    if (Math.abs(M-Vc)!==2) det.push(`山${M} − 谷${Vc} = ${M-Vc}`);
+    if (det.length) bad.push({v,xy:V[v],detail:det.join(' / ')});
+  }
+  return bad;
+}
+function stateSegments(st){
+  const segs=[], b=st.border();
+  for (let i=0;i<4;i++) segs.push([b[i], b[(i+1)%4], 'B']);
+  for (const c of st.creasePattern()) segs.push([c.a, c.b, c.kind]);
+  return segs;
+}
+function toFold(st,title){
+  const g=buildPlanarGraph(stateSegments(st));
+  return {
+    file_spec:1.1, file_creator:'oton-gakuen fold2d editor',
+    file_classes:['singleModel'], frame_title:title||'',
+    frame_classes:['creasePattern'], frame_attributes:['2D'],
+    vertices_coords:g.vertices.map(v=>[+v[0].toFixed(10), +v[1].toFixed(10)]),
+    edges_vertices:g.edges, edges_assignment:g.assignment,
+    edges_foldAngle:g.assignment.map(a=>a==='V'?180:(a==='M'?-180:0)),
+    faces_vertices:extractFaces(g)
+  };
+}
+
+// ---------------------------------------------------------------- 見た目
+const cA=document.getElementById('cA'), ctxA=cA.getContext('2d');
+const cB=document.getElementById('cB'), ctxB=cB.getContext('2d');
+let st, timeline=[], cursor=0, sel=[], mode='pt2pt', hoverStep=-1, curStep=-1;
+
+function fmt(v){
+  const r=Math.round(v*1e6)/1e6;
+  if (Math.abs(r-Math.round(r))<1e-9) return String(Math.round(r));
+  for (let q=2;q<=24;q++){
+    const p=r*q;
+    if (Math.abs(p-Math.round(p))<1e-7){
+      const s=Math.round(p);
+      return (s<0?'-':'')+Math.abs(s)+'/'+q;
+    }
+  }
+  return r.toFixed(4);
+}
+
+let zoom=1, panX=0, panY=0;   // 折った状態の画面だけ拡大・移動できる
+function viewBox(canvas, st, isCP){
+  const {hw,hh}=st.paper;
+  const pad=28;
+  const s=Math.min((canvas.width-pad*2)/(hw*2.4), (canvas.height-pad*2)/(hh*2.4));
+  if (isCP) return {s, cx:canvas.width/2, cy:canvas.height/2};
+  return {s:s*zoom, cx:canvas.width/2+panX, cy:canvas.height/2+panY};
+}
+function W2S(vb,p){ return [vb.cx+p[0]*vb.s, vb.cy-p[1]*vb.s]; }
+function S2W(vb,x,y){ return [(x-vb.cx)/vb.s, -(y-vb.cy)/vb.s]; }
 
 function resize(){
-  const area = document.getElementById('canvasArea');
-  canvas.width = area.clientWidth;
-  canvas.height = area.clientHeight;
+  for (const [c,v] of [[cA,'viewA'],[cB,'viewB']]){
+    const el=document.getElementById(v);
+    c.width=el.clientWidth; c.height=el.clientHeight;
+  }
   draw();
 }
 window.addEventListener('resize', resize);
 
-function toScreen(p){
-  return [canvas.width/2 + (p[0]-viewCx)*viewScale, canvas.height/2 - (p[1]-viewCy)*viewScale];
-}
-function toWorld(sx, sy){
-  return [(sx - canvas.width/2)/viewScale + viewCx, -(sy - canvas.height/2)/viewScale + viewCy];
-}
-
-const palette = ['#4a90d9','#e67e22','#9b59b6','#1abc9c','#f1c40f','#e74c3c','#2ecc71','#34495e'];
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  for (const p of fs.panels){
+function drawFolded(){
+  const ctx=ctxA, vb=viewBox(cA,st);
+  ctx.clearRect(0,0,cA.width,cA.height);
+  const ps=[...st.panels].sort((p,q)=>p.layer-q.layer);
+  for (const p of ps){
     ctx.beginPath();
-    p.poly.forEach((v,i) => {
-      const [sx,sy] = toScreen(v);
-      if (i===0) ctx.moveTo(sx,sy); else ctx.lineTo(sx,sy);
-    });
+    p.poly.forEach((v,i)=>{ const [x,y]=W2S(vb,v); i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
     ctx.closePath();
-    ctx.fillStyle = palette[Math.abs(p.layer) % palette.length] + '99';
+    // 紙の表と裏で色を変える（[[project_origami_app]]続き19の指摘）
+    ctx.fillStyle = xfFlipped(p.xf||ID_XF) ? 'rgba(245,238,220,0.92)' : 'rgba(214,86,74,0.92)';
     ctx.fill();
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+    ctx.strokeStyle='rgba(0,0,0,.55)'; ctx.lineWidth=1.2; ctx.stroke();
   }
-  for (const c of fs.creases){
-    const [sx1,sy1] = toScreen(c.a), [sx2,sy2] = toScreen(c.b);
-    ctx.beginPath();
-    ctx.moveTo(sx1,sy1); ctx.lineTo(sx2,sy2);
-    ctx.strokeStyle = c.kind === 'V' ? '#ff5555' : '#5599ff';
-    ctx.setLineDash([6,4]);
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.setLineDash([]);
+  for (const v of allVertices()){
+    const [x,y]=W2S(vb,v);
+    ctx.beginPath(); ctx.arc(x,y,3,0,7);
+    ctx.fillStyle='#fff'; ctx.fill();
+    ctx.strokeStyle='#000'; ctx.lineWidth=1; ctx.stroke();
   }
-  // vertices
-  for (const v of fs.allVertices()){
-    const [sx,sy] = toScreen(v);
-    ctx.beginPath();
-    ctx.arc(sx,sy,4,0,7);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.strokeStyle='#000'; ctx.stroke();
+  if (snapN()>0) for (const v of snapPoints()){
+    const [x,y]=W2S(vb,v);
+    ctx.beginPath(); ctx.arc(x,y,1.6,0,7);
+    ctx.fillStyle='rgba(242,193,78,.55)'; ctx.fill();
   }
-  // selected highlight
-  selected.forEach((v,i) => {
-    const [sx,sy] = toScreen(v);
-    ctx.beginPath();
-    ctx.arc(sx,sy,7,0,7);
-    ctx.strokeStyle = i===0 ? '#0f0' : '#ff0';
-    ctx.lineWidth = 3;
-    ctx.stroke();
+  sel.forEach((v,i)=>{
+    const [x,y]=W2S(vb,v);
+    ctx.beginPath(); ctx.arc(x,y,7,0,7);
+    ctx.strokeStyle=['#7fdc8a','#f2c14e','#c98ae8'][i]||'#fff';
+    ctx.lineWidth=3; ctx.stroke();
   });
+  const pv=previewLine();
+  if (pv){
+    const [A,B]=extendLine(pv[0],pv[1],st);
+    const [x1,y1]=W2S(vb,A), [x2,y2]=W2S(vb,B);
+    ctx.save(); ctx.setLineDash([8,5]);
+    ctx.strokeStyle='#f2c14e'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.restore();
+  }
 }
 
-// クリック位置に対応する点を決める。優先順位：①既存の頂点(20px以内)
-// ②パネルの辺の上の最近点(15px以内、辺の中点なども拾える) ③それ以外は
-// クリックしたワールド座標そのもの(グリッドに軽くスナップ)。
-// ★「合わせたい先」は必ずしも既存の頂点とは限らない(例:紙飛行機の屋根折りで
-// 合わせる先は、まだ紙の頂点になっていない中心線上の新しい点)ため、
-// 既存頂点だけにスナップすると選べない点が出てくる(2026-08-30、たー本人が
-// 実際に使ってみて必要になった)。
-function nearestVertex(sx, sy){
-  const w = toWorld(sx, sy);
-  let best = null, bestD = Infinity;
-  for (const v of fs.allVertices()){
-    const d = Math.hypot(v[0]-w[0], v[1]-w[1]);
-    if (d < bestD){ bestD = d; best = v; }
+function drawCP(){
+  const ctx=ctxB, vb=viewBox(cB,st,true);
+  ctx.clearRect(0,0,cB.width,cB.height);
+  const b=st.border();
+  ctx.beginPath();
+  b.forEach((v,i)=>{ const [x,y]=W2S(vb,v); i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
+  ctx.closePath();
+  ctx.fillStyle='rgba(250,247,238,0.96)'; ctx.fill();
+  ctx.strokeStyle='#111'; ctx.lineWidth=2; ctx.stroke();
+
+  const cp=st.creasePattern();
+  const hi = hoverStep>=0 ? hoverStep : curStep;
+  for (const c of cp){
+    const [x1,y1]=W2S(vb,c.a), [x2,y2]=W2S(vb,c.b);
+    ctx.save();
+    if (c.step===hi){ ctx.strokeStyle='#f2c14e'; ctx.lineWidth=5; ctx.globalAlpha=.55;
+      ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      ctx.globalAlpha=1; }
+    if (c.kind==='M'){ ctx.strokeStyle='#d0342c'; ctx.setLineDash([11,4,2,4]); }
+    else if (c.kind==='V'){ ctx.strokeStyle='#2f6fd0'; ctx.setLineDash([7,5]); }
+    else { ctx.strokeStyle='#8a8a8a'; ctx.setLineDash([2,3]); }
+    ctx.lineWidth=1.8;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    ctx.restore();
   }
-  if (best){
-    const [bsx,bsy] = toScreen(best);
-    if (Math.hypot(bsx-sx, bsy-sy) < 20) return best;
-  }
-  // 辺の上への垂線の足を試す
-  let bestEdge = null, bestEdgeD = Infinity;
-  for (const p of fs.panels){
-    const n = p.poly.length;
-    for (let i=0;i<n;i++){
-      const a = p.poly[i], b = p.poly[(i+1)%n];
-      const dx=b[0]-a[0], dy=b[1]-a[1];
-      const L2 = dx*dx+dy*dy;
-      if (L2 < 1e-12) continue;
-      let t = ((w[0]-a[0])*dx + (w[1]-a[1])*dy) / L2;
-      t = Math.max(0, Math.min(1, t));
-      const foot = [a[0]+t*dx, a[1]+t*dy];
-      const [fsx,fsy] = toScreen(foot);
-      const d = Math.hypot(fsx-sx, fsy-sy);
-      if (d < bestEdgeD){ bestEdgeD = d; bestEdge = foot; }
+  // 折れない頂点に印
+  if (cp.length){
+    const g=buildPlanarGraph(stateSegments(st));
+    for (const bd of checkFlatFoldability(g)){
+      const [x,y]=W2S(vb,bd.xy);
+      ctx.beginPath(); ctx.arc(x,y,8,0,7);
+      ctx.strokeStyle='#ff6b6b'; ctx.lineWidth=2.5; ctx.stroke();
     }
   }
-  if (bestEdge && bestEdgeD < 15) return bestEdge;
-  // フォールバック：クリックしたワールド座標そのもの(0.02刻みで軽くスナップ)
-  const grid = 0.02;
-  return [Math.round(w[0]/grid)*grid, Math.round(w[1]/grid)*grid];
+}
+function extendLine(a,b,st){
+  const {hw,hh}=st.paper, R=Math.hypot(hw,hh)*2.2;
+  const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy);
+  return [[a[0]-dx/L*R, a[1]-dy/L*R],[a[0]+dx/L*R, a[1]+dy/L*R]];
+}
+function draw(){ drawFolded(); drawCP(); }
+
+// ---------------------------------------------------------------- スナップ
+function snapN(){ return parseInt(document.getElementById('snapSel').value,10); }
+function allVertices(){
+  const m=new Map();
+  for (const p of st.panels) for (const v of p.poly){
+    const k=v[0].toFixed(6)+','+v[1].toFixed(6);
+    if (!m.has(k)) m.set(k,v);
+  }
+  return [...m.values()];
+}
+function snapPoints(){
+  const n=snapN(), out=allVertices();
+  if (n<=1) return out;
+  const m=new Map(); out.forEach(v=>m.set(v[0].toFixed(6)+','+v[1].toFixed(6),v));
+  for (const p of st.panels){
+    for (let i=0;i<p.poly.length;i++){
+      const a=p.poly[i], b=p.poly[(i+1)%p.poly.length];
+      for (let k=1;k<n;k++){
+        const t=k/n, q=[a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t];
+        const key=q[0].toFixed(6)+','+q[1].toFixed(6);
+        if (!m.has(key)) m.set(key,q);
+      }
+    }
+  }
+  return [...m.values()];
+}
+function pickPoint(sx,sy){
+  const vb=viewBox(cA,st), w=S2W(vb,sx,sy);
+  let best=null,bd=1e9;
+  for (const v of snapPoints()){
+    const [x,y]=W2S(vb,v), d=Math.hypot(x-sx,y-sy);
+    if (d<bd){ bd=d; best=v; }
+  }
+  if (best && bd<18) return best.slice();
+  // 辺の上（垂線の足）
+  let be=null, bed=1e9;
+  for (const p of st.panels) for (let i=0;i<p.poly.length;i++){
+    const a=p.poly[i], b=p.poly[(i+1)%p.poly.length];
+    const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy;
+    if (L2<1e-12) continue;
+    let t=((w[0]-a[0])*dx+(w[1]-a[1])*dy)/L2; t=Math.max(0,Math.min(1,t));
+    const f=[a[0]+t*dx, a[1]+t*dy];
+    const [fx,fy]=W2S(vb,f), d=Math.hypot(fx-sx,fy-sy);
+    if (d<bed){ bed=d; be=f; }
+  }
+  if (be && bed<14) return be;
+  const g=0.01;
+  return [Math.round(w[0]/g)*g, Math.round(w[1]/g)*g];
 }
 
-canvas.addEventListener('click', (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const v = nearestVertex(e.clientX-rect.left, e.clientY-rect.top);
-  if (!v) return;
-  if (selected.length >= 2) selected = [];
-  selected.push(v);
-  updateStatus();
+// ---- 拡大（ホイール）・移動（右ドラッグ／中ドラッグ／スペース+ドラッグ） ----
+let dragging=false, dragX=0, dragY=0, moved=0;
+cA.addEventListener('wheel', e=>{
+  e.preventDefault();
+  const k = e.deltaY<0 ? 1.12 : 1/1.12;
+  zoom = Math.min(20, Math.max(0.3, zoom*k));
   draw();
+}, {passive:false});
+cA.addEventListener('contextmenu', e=>e.preventDefault());
+cA.addEventListener('pointerdown', e=>{
+  if (e.button===0 && !e.shiftKey) return;      // 左クリックは点を選ぶ操作
+  dragging=true; moved=0; dragX=e.clientX; dragY=e.clientY;
+  cA.setPointerCapture(e.pointerId);
+});
+cA.addEventListener('pointermove', e=>{
+  if (!dragging) return;
+  panX += e.clientX-dragX; panY += e.clientY-dragY;
+  moved += Math.abs(e.clientX-dragX)+Math.abs(e.clientY-dragY);
+  dragX=e.clientX; dragY=e.clientY; draw();
+});
+cA.addEventListener('pointerup', e=>{ dragging=false; });
+
+cA.addEventListener('click', e=>{
+  if (moved>3){ moved=0; return; }             // 画面を動かしただけの時は選ばない
+  const r=cA.getBoundingClientRect();
+  const p=pickPoint(e.clientX-r.left, e.clientY-r.top);
+  const need = mode==='pt2pt' ? 2 : 3;
+  if (sel.length>=need) sel=[];
+  sel.push(p);
+  updateSide(); draw();
 });
 
-function updateStatus(){
-  const el = document.getElementById('status');
-  if (selected.length === 0) el.textContent = '1つ目の点(動かしたい角)を選んでください';
-  else if (selected.length === 1) el.textContent = `1つ目: (${selected[0][0].toFixed(2)}, ${selected[0][1].toFixed(2)})\n2つ目(合わせたい先)を選んでください`;
-  else el.textContent = `1つ目: (${selected[0][0].toFixed(2)}, ${selected[0][1].toFixed(2)})\n2つ目: (${selected[1][0].toFixed(2)}, ${selected[1][1].toFixed(2)})\n谷折り/山折りボタンで確定`;
+function previewLine(){
+  if (mode==='pt2pt' && sel.length>=2){
+    const [a,b]=sel;
+    const mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2, dx=b[0]-a[0], dy=b[1]-a[1];
+    return [[mx,my],[mx-dy,my+dx]];
+  }
+  if (mode==='line' && sel.length>=2) return [sel[0], sel[1]];
+  return null;
 }
 
-function log(msg){
-  const el = document.getElementById('log');
-  const line = document.createElement('div');
-  line.textContent = msg;
-  el.prepend(line);
+// ---------------------------------------------------------------- 操作
+function pushTimeline(){
+  timeline = timeline.slice(0, cursor+1);
+  timeline.push(st.clone());
+  cursor = timeline.length-1;
+}
+function restore(i){
+  cursor=i; st=FoldState.from(JSON.parse(JSON.stringify(timeline[i])));
+  sel=[]; curStep=st.steps.length-1; updateSide(); draw();
+}
+function undo(){ if (cursor>0) restore(cursor-1); }
+function redo(){ if (cursor<timeline.length-1) restore(cursor+1); }
+function resetAll(){ newPaper(); }
+function newPaper(){
+  const [hw,hh]=document.getElementById('paperSel').value.split(',').map(Number);
+  st=new FoldState(hw,hh); timeline=[st.clone()]; cursor=0; sel=[]; curStep=-1;
+  zoom=1; panX=0; panY=0;
+  updateSide(); draw();
+}
+function setMode(m){
+  mode=m; sel=[];
+  document.getElementById('mPt').classList.toggle('on', m==='pt2pt');
+  document.getElementById('mLine').classList.toggle('on', m==='line');
+  updateSide(); draw();
+}
+function doFold(kind, move){
+  const all=document.getElementById('allLayers').checked;
+  let ok=false;
+  if (mode==='pt2pt'){
+    if (sel.length<2){ flash('2点を選んでから押してください'); return; }
+    ok=st.foldByPoints(sel[0],sel[1],kind,move,all);
+  } else {
+    if (sel.length<3){ flash('線の2点＋「動かす側」の点、で3点選んでください'); return; }
+    ok=st.foldByLine(sel[0],sel[1],sel[2],kind,move,all);
+  }
+  if (!ok){ flash('この折り線はどの紙にも当たりませんでした'); return; }
+  sel=[]; pushTimeline(); curStep=st.steps.length-1; updateSide(); draw();
+}
+function doFlip(axis){
+  st.flip(axis); sel=[]; pushTimeline(); curStep=st.steps.length-1; updateSide(); draw();
+}
+let flashMsg='';
+function flash(m){ flashMsg=m; updateSide(); setTimeout(()=>{flashMsg='';updateSide();},2600); }
+
+// ---------------------------------------------------------------- 右側の表示
+function updateSide(){
+  const need = mode==='pt2pt' ? 2 : 3;
+  const names = mode==='pt2pt' ? ['動かす角','合わせる先'] : ['線の1点目','線の2点目','動かす側の点'];
+  let s='';
+  if (flashMsg) s += '⚠ '+flashMsg+'\n';
+  s += mode==='pt2pt' ? '「点を点に合わせる」\n' : '「2点を通る線で折る」\n';
+  for (let i=0;i<need;i++)
+    s += `${i+1}. ${names[i]}: ` + (sel[i]?pt(sel[i]):'—') + '\n';
+  if (sel.length>=need) s += '→ 谷折り／山折り／折り目だけ を押す';
+  document.getElementById('status').textContent=s;
+
+  // 計測
+  const md=document.getElementById('measure');
+  if (sel.length>=2){
+    const [a,b]=sel;
+    const dx=b[0]-a[0], dy=b[1]-a[1], d=Math.hypot(dx,dy);
+    const ln=previewLine();
+    let ang=null;
+    if (ln) ang=Math.atan2(ln[1][1]-ln[0][1], ln[1][0]-ln[0][0])*180/Math.PI;
+    if (ang!==null){ ang=((ang%180)+180)%180; }
+    md.textContent =
+      `2点の距離　: ${fmt(d)}  (紙の半分=${fmt(st.paper.hw)})\n`+
+      `横のずれ dx : ${fmt(dx)}\n`+
+      `縦のずれ dy : ${fmt(dy)}\n`+
+      (ang!==null?`折り線の角度: ${ang.toFixed(4)}°\n`:'')+
+      `紙の枚数　 : ${st.panels.length}枚 / 折り筋 ${st.creasePattern().length}本`;
+  } else md.textContent='2点を選ぶと出ます';
+
+  // 折順
+  const el=document.getElementById('steps');
+  el.innerHTML='';
+  const head=document.createElement('div');
+  head.innerHTML='<span>0. 紙をひろげた状態</span><span class="k">—</span>';
+  head.className = cursor===0?'cur':'';
+  head.onclick=()=>restore(0);
+  el.appendChild(head);
+  st.steps.forEach((sp,i)=>{
+    const d=document.createElement('div');
+    const tag = sp.op==='flip' ? '裏返す' : (sp.op==='crease'?'折り目だけ':(sp.kind==='V'?'谷折り':'山折り'));
+    d.innerHTML=`<span>${i+1}. ${sp.name||tag}</span><span class="k">${tag}</span>`;
+    if (i===cursor-1) d.className='cur';
+    d.onmouseenter=()=>{ hoverStep=i; drawCP(); };
+    d.onmouseleave=()=>{ hoverStep=-1; drawCP(); };
+    d.onclick=()=>restore(Math.min(i+1, timeline.length-1));
+    el.appendChild(d);
+  });
+
+  // 検査
+  const au=document.getElementById('audit');
+  const cp=st.creasePattern();
+  if (!cp.length){ au.textContent='まだ折り筋がありません'; au.className=''; }
+  else{
+    const g=buildPlanarGraph(stateSegments(st));
+    let faces=0, err='';
+    try{ faces=extractFaces(g).length; }catch(e){ err=String(e.message); }
+    const bad=checkFlatFoldability(g);
+    let t=`折り筋 ${cp.length}本／頂点 ${g.vertices.length}／辺 ${g.edges.length}／面 ${faces}\n`;
+    t+=`紙の枚数 ${st.panels.length}枚`;
+    t+= (faces===st.panels.length? '（面の数と一致 ✓）':'（面の数と食いちがい）') + '\n';
+    if (g.conflicts.length) t+=`⚠ 同じ位置に山と谷が両方ある辺 ${g.conflicts.length}本\n`;
+    if (err) t+='⚠ '+err+'\n';
+    if (!bad.length) t+='Kawasaki / Maekawa 違反なし';
+    else{
+      t+=`★折れない頂点 ${bad.length}か所\n`;
+      bad.slice(0,6).forEach(b=>{ t+=`  (${fmt(b.xy[0])}, ${fmt(b.xy[1])}) ${b.detail}\n`; });
+      if (bad.length>6) t+=`  …ほか${bad.length-6}か所`;
+    }
+    au.textContent=t;
+    au.className = bad.length? 'bad':'good';
+  }
 }
 
-function doFold(kind){
-  if (selected.length !== 2){ log('2点選んでから押してください'); return; }
-  const ok = fs.foldByPoints(selected[0], selected[1], kind);
-  if (!ok) log('警告: この折り線はどのパネルにも当たりませんでした');
-  else log((kind==='V'?'谷折り':'山折り')+': OK');
-  selected = [];
-  updateStatus();
-  draw();
+// ---------------------------------------------------------------- 書き出し
+function download(name, text, type){
+  const blob=new Blob([text],{type:type||'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+}
+function dlFold(){
+  const f=toFold(st,'fold2d editor');
+  const s=JSON.stringify(f,null,1);
+  document.getElementById('out').value=s;
+  download('crease_pattern.fold', s);
+}
+function dlSvg(){
+  const {hw,hh}=st.paper, SC=400/Math.max(hw,hh);
+  const w=hw*2*SC, h=hh*2*SC;
+  const X=p=>((p[0]+hw)*SC).toFixed(3), Y=p=>((hh-p[1])*SC).toFixed(3);
+  let s=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">\n`;
+  s+=`<rect x="0" y="0" width="${w}" height="${h}" fill="#fff" stroke="#000" stroke-width="2"/>\n`;
+  for (const c of st.creasePattern()){
+    const dash = c.kind==='M' ? '11 4 2 4' : (c.kind==='V' ? '7 5' : '2 3');
+    const col  = c.kind==='M' ? '#d0342c' : (c.kind==='V' ? '#2f6fd0' : '#888');
+    s+=`<line x1="${X(c.a)}" y1="${Y(c.a)}" x2="${X(c.b)}" y2="${Y(c.b)}" `+
+       `stroke="${col}" stroke-width="1.4" stroke-dasharray="${dash}"/>\n`;
+  }
+  s+='</svg>\n';
+  document.getElementById('out').value=s;
+  download('crease_pattern.svg', s, 'image/svg+xml');
+}
+function dlSteps(){
+  const s=JSON.stringify({paper:st.paper, steps:st.steps}, null, 1);
+  document.getElementById('out').value=s;
+  download('fold_steps.json', s);
+}
+function loadSteps(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const o=JSON.parse(r.result);
+      st=new FoldState(o.paper.hw, o.paper.hh);
+      timeline=[st.clone()]; cursor=0;
+      for (const sp of o.steps){
+        if (sp.op==='flip') st.flip(sp.axis);
+        else st.fold(sp.a, sp.b, sp.kind, sp.only, sp.op==='fold', sp.name);
+        pushTimeline();
+      }
+      curStep=st.steps.length-1; sel=[]; updateSide(); draw();
+      flash(`${o.steps.length}手を読み込みました`);
+    }catch(e){ flash('読み込みに失敗: '+e.message); }
+  };
+  r.readAsText(f);
+  ev.target.value='';
 }
 
-function undo(){
-  if (fs.undo()){ selected=[]; updateStatus(); draw(); log('ひとつ戻しました'); }
-  else log('これ以上戻せません');
-}
-function reset(){
-  fs = new FoldState(fs.panels[0] ? 1 : 1, 1);
-  newRect(1,1);
-}
-function newRect(hw, hh){
-  fs = new FoldState(hw, hh);
-  selected = [];
-  updateStatus();
-  draw();
-  log(`新しい紙: ${hw*2} x ${hh*2}`);
-}
-function exportData(){
-  const data = { panels: fs.panels, creases: fs.creases };
-  document.getElementById('exportBox').value = JSON.stringify(data, null, 1);
-}
+document.getElementById('snapSel').addEventListener('change', draw);
+window.addEventListener('keydown', e=>{
+  if (e.key==='z' && (e.ctrlKey||e.metaKey)){ e.preventDefault(); e.shiftKey?redo():undo(); }
+});
 
+// テストから叩けるように外に出しておく
+window.LAB = {get st(){return st;}, FoldState, toFold, buildPlanarGraph, extractFaces,
+              checkFlatFoldability, stateSegments, xfInv, xfApply, polyArea,
+              doFold:(k,m)=>doFold(k,m), doFlip, setMode,
+              select:(p)=>{ sel.push(p.slice()); updateSide(); draw(); },
+              clearSel:()=>{ sel=[]; updateSide(); draw(); }};
+
+newPaper();
 resize();
-newRect(1,1);
 </script>
 </body>
 </html>

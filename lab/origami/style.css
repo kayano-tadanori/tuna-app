@@ -5,9 +5,14 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
 }
 .ori-screen { position: absolute; inset: 0; width: 100%; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-/* #idセレクタのdisplay指定(flex等)がUAデフォルトの[hidden]より詳細度で勝ってしまうため、
-   hidden属性を明示的に!importantで効かせる（picker画面の裏にhome画面が透けて見えるバグとして実測） */
-.ori-screen[hidden] { display: none !important; }
+/* ★hidden を付けた要素は、必ず消える。
+   display(flex等)を指定した要素は、それがUAの[hidden]（display:none）に
+   詳細度で勝ってしまい、hidden にしても出たままになる。
+   要素ごとに書き足していたが、書き忘れるたびに同じ所で転んだ——
+   ①picker画面の裏にhome画面が透ける ②ふきかけバーが全作品と灘中対策の
+   問題にまで出る（2026-09-03、本人「折り紙問題の方も うっすら でてる」）。
+   だから**まとめて1本**にする。新しい要素を足しても、もう転ばない。 */
+[hidden] { display: none !important; }
 #ori-screen-fold { overflow: hidden; }
 
 /* ---- ホーム画面（「折ON」ブランド、2026-08-30リニューアル） ---- */
@@ -38,6 +43,17 @@ html, body { background: #05070f; }
   background: linear-gradient(135deg, rgba(79,158,255,0.95), rgba(43,111,224,0.95));
   border-color: transparent; box-shadow: 0 10px 28px rgba(43, 111, 224, 0.45);
 }
+/* ★3つのボタンを色で見分けられるようにする（本人 2026-09-03
+   「折り紙で遊ぶ と せってい ボタンにも色をつけてね」）。
+   青＝灘中対策／緑＝おりがみで遊ぶ／紫＝せってい。 */
+.ori-home-btn-fold {
+  background: linear-gradient(135deg, rgba(60,196,140,0.95), rgba(28,150,104,0.95));
+  border-color: transparent; box-shadow: 0 10px 28px rgba(28, 150, 104, 0.42);
+}
+.ori-home-btn-set {
+  background: linear-gradient(135deg, rgba(150,124,222,0.95), rgba(108,80,190,0.95));
+  border-color: transparent; box-shadow: 0 10px 28px rgba(108, 80, 190, 0.40);
+}
 .ori-home-btn:not(:disabled):active { transform: scale(0.97); }
 .ori-home-btn-soon { opacity: 0.5; }
 .ori-home-btn-soon:disabled { cursor: default; }
@@ -63,6 +79,7 @@ html, body { background: #05070f; }
 /* 難易度の星（本人指示2026-08-31）。ついていない星は暗く出して5段階が分かるようにする */
 .ori-picker-stars { font-size: 11px; letter-spacing: 1px; color: #ffd166; line-height: 1; }
 .ori-star-off { color: rgba(255,255,255,0.18); }
+.ori-picker-steps { font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 700; }
 .ori-picker-check {
   position: absolute; top: 8px; right: 10px; font-size: 18px; font-weight: 900; color: #6bd98a;
 }
@@ -85,11 +102,24 @@ html, body { background: #05070f; }
 
 /* ---- 折る画面 ---- */
 #ori-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; display: block; }
+/* ★ヒントと補助ボタンは1つの縦積みの箱にまとめる。別々の絶対配置にすると
+   重なって字が読めなくなる（2026-09-02に実際そうなっていた）。
+   せまい画面では「もどる」ボタンの下にずらす。 */
+.ori-topinfo {
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  width: max-content; max-width: calc(100% - 24px); pointer-events: none;
+}
+.ori-topinfo > * { pointer-events: auto; }
+.ori-subbar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .ori-hint {
-  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
   color: #fff; background: rgba(20, 28, 54, 0.72); padding: 8px 18px; border-radius: 999px;
-  font-size: 15px; font-weight: 700; letter-spacing: 0.02em; z-index: 2;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.35); max-width: 78%; text-align: center;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.02em;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35); max-width: 100%; text-align: center;
+}
+@media (max-width: 560px) {
+  .ori-topinfo { top: 64px; }
+  .ori-hint { font-size: 14px; padding: 7px 14px; }
 }
 
 /* ---- 折り図記号（ヨシザワ・ランドールシステム準拠） ---- */
@@ -161,7 +191,6 @@ html, body { background: #05070f; }
   50% { transform: scale(1.15); opacity: 1; }
 }
 .ori-step-back-btn {
-  position: absolute; top: 58px; left: 50%; transform: translateX(-50%); z-index: 2;
   border: none; background: rgba(255,255,255,0.14); color: #fff; padding: 6px 14px;
   border-radius: 999px; font-size: 12px; font-weight: 700;
 }
@@ -234,7 +263,6 @@ html, body { background: #05070f; }
   color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 700;
   touch-action: manipulation;
 }
-.ori-report-btn[hidden] { display: none !important; }
 
 .ori-scratch-open-btn {
   border: none; background: rgba(255,255,255,0.1); color: #fff; font-weight: 700;
@@ -246,7 +274,6 @@ html, body { background: #05070f; }
   position: fixed; inset: 0; z-index: 400; background: #0c1226;
   display: flex; flex-direction: column;
 }
-.ori-scratch-fullscreen[hidden] { display: none !important; }
 .ori-scratch-header {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   padding: calc(12px + env(safe-area-inset-top)) 14px 8px;
@@ -263,4 +290,33 @@ html, body { background: #05070f; }
   display: block; touch-action: none; transform-origin: 0 0; position: absolute; left: 0; top: 0;
   will-change: transform; outline: 3px solid rgba(79,158,255,0.65); outline-offset: -3px;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.35), 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* ---- せってい画面（紙の色・厚み。本人指示 2026-09-02） ---- */
+.ori-settings { padding: 0 18px 40px; max-width: 520px; margin: 0 auto; }
+.ori-set-preview {
+  display: flex; gap: 12px; justify-content: center; margin: 6px 0 18px;
+}
+.ori-set-paper {
+  width: 96px; height: 96px; border-radius: 10px; display: flex;
+  align-items: flex-end; justify-content: center; padding-bottom: 6px;
+  font-size: 11px; font-weight: 800; color: rgba(0,0,0,0.55);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.18);
+}
+.ori-set-label {
+  font-size: 13px; color: rgba(255,255,255,0.75); margin: 16px 0 8px; font-weight: 700;
+}
+.ori-set-val { color: #ffd166; margin-left: 8px; }
+.ori-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.ori-swatch {
+  width: 40px; height: 40px; border-radius: 10px; border: 2px solid transparent;
+  padding: 0; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.ori-swatch.on { border-color: #ffd166; transform: scale(1.08); }
+.ori-set-range { width: 100%; margin-top: 4px; accent-color: #ffd166; height: 32px; }
+.ori-set-note { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6; margin: 4px 0 0; }
+.ori-set-reset {
+  margin-top: 22px; width: 100%; padding: 12px; min-height: 44px; border: none;
+  border-radius: 12px; background: rgba(255,255,255,0.12); color: #fff;
+  font-size: 14px; font-weight: 700; touch-action: manipulation;
 }

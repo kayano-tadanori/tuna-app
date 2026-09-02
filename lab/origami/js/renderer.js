@@ -47,6 +47,10 @@ const OrigamiRenderer = (function () {
   const VS = `#version 300 es
   in vec3 aPos; in vec2 aUv; in float aPanel; in float aPanel2; in float aBlend;
   in vec3 aNormal; // 物理シム(CLOTH)モード専用：CPU側でフラット計算した法線
+  // ★紙に本物の厚みを持たせるための情報（本人指示2026-09-02
+  //   「数値でやるんじゃなくて実際に厚みをもたせて」）。
+  //   x=どちらの面か(+1おもて面/-1うら面)、yzw=その面の法線（横の切り口は横向き）。
+  in vec4 aExt;
   uniform mat4 uVP;
   uniform mat4 uBones[64];
   uniform float uLayer[64];
@@ -56,8 +60,11 @@ const OrigamiRenderer = (function () {
   uniform float uPanelAlpha[64];   // パネルごとの不透明度（既定1.0）。「重ね合わせ」問題で
                                    // 動く方の紙を半透明にし、重なった部分を見せるために使う
   uniform float uFlatStackStep;    // >0なら「平らな紙の重なり」モード：層を世界+Y方向へ
+  uniform float uPaperThickness;   // 紙1枚の厚み（設定で変えられる）
                                    // この厚みぶん積む（0なら従来どおり面法線方向へ微小オフセット）
   out vec2 vUv; out vec3 vWorldNrm; out vec3 vWorldPos; out float vAlpha;
+  out float vSide;   // 1なら紙の「切り口」（横の面）
+  out float vFace;   // +1=紙のおもての面 / -1=うらの面 / 0=物理モード（従来判定）
   void main(){
     int panel = int(aPanel);
     vAlpha = uPanelAlpha[panel];
@@ -68,8 +75,14 @@ const OrigamiRenderer = (function () {
       // (剛体ボーン変換は使わない)。「裂けない」は頂点ブレンドの見た目トリック
       // ではなく、継ぎ目を強いバネで結ぶ本物の力で実現している(本人指摘の
       // 「曲がる仕組みがないと無理」を受けて設計)。
-      wp = aPos;
+      // ★厚みと表裏は剛体モードと同じ決め方にする（2026-09-03）。
+      //   物理側だけカメラ向きで表裏を決めていたので、ふくらませた
+      //   瞬間に紙の色が入れかわって見えた。
+      wp = aPos + aNormal * (aExt.x * uPaperThickness * 0.5);
       n = aNormal;
+      // 切り口（横の面）だけ vSide=1。表・裏の面は法線が上下向き(aExt.z=±1)。
+      vSide = (abs(aExt.z) < 0.5) ? 1.0 : 0.0;
+      vFace = aExt.x;
     } else {
       // ★「裂けない仕組み」旧版(見た目のみの頂点ブレンド)。物理モードを使わない
       // 既存作品(だまし舟・やっこさん・ふうせん・かぶと・tsuru.js)はこちらのまま。
@@ -81,9 +94,15 @@ const OrigamiRenderer = (function () {
           mix(M[2], M2[2], aBlend), mix(M[3], M2[3], aBlend)
         );
       }
-      vec4 wp4 = M * vec4(aPos, 1.0);
+      // ★紙を「厚みのある板」にする。もとの面を上下に半分ずつ押し出し、
+      //   まわりに切り口の面を張る（メッシュはCPU側で作ってある）。
+      vec3 lp = aPos + vec3(0.0, aExt.x * uPaperThickness * 0.5, 0.0);
+      vec4 wp4 = M * vec4(lp, 1.0);
       wp = wp4.xyz;
-      n = normalize(mat3(M) * vec3(0.0, 1.0, 0.0));
+      vec3 ln = (abs(aExt.y) + abs(aExt.z) + abs(aExt.w) > 0.5) ? aExt.yzw : vec3(0.0, 1.0, 0.0);
+      n = normalize(mat3(M) * ln);
+      vSide = (abs(ln.y) < 0.5) ? 1.0 : 0.0;
+      vFace = aExt.x;
       // 紙の厚みゼロのパネル同士が完全に重なるとZファイティングでちらつくので、
       // 折り重なりの層(uLayer)ぶんだけ現在の面法線方向へごくわずかに持ち上げる
       // （実測でジグザグの縞が出たのを2026-08-29に確認して追加）。
@@ -93,9 +112,17 @@ const OrigamiRenderer = (function () {
       //   いないのが原因」2026-08-31。平らな折り返し問題(uFlatStackStep>0)では、
       //   層を必ず世界の上方向へ紙の厚みぶん積み上げる＝実物の紙と同じ重なり方にする。
       if (uFlatStackStep > 0.0) {
+        // 平らに折り重なる作品・問題は、層を紙の厚みぶんきっちり上へ積む
         wp += vec3(0.0, 1.0, 0.0) * uLayer[panel] * uFlatStackStep;
       } else {
-        wp += n * uLayer[panel] * 0.0015;
+        // ★伝承折り紙にも紙の厚みを持たせる（本人指摘 2026-09-02
+        //   「紙の厚みがないから折ったのが視覚的にわかりにくい」）。
+        //   自分の法線そのままだと、180°折り返して裏返ったパネルは法線が下を
+        //   向くので土台の下へ潜ってしまう（続き19と同じ罠）。
+        //   法線の上向き側を選んで積む＝実物の紙と同じ重なり方になる。
+        //   立っているパネル(n.y≒0)では横にずれるが、それも重なりが見えて正しい。
+        float sgn = (n.y >= 0.0) ? 1.0 : -1.0;
+        wp += n * sgn * uLayer[panel] * uPaperThickness;
       }
       // 膨らませ：パネルごとの符号(uInflateSign)ぶん、法線方向にオフセット
       // （鶴・ふうせんの「空気を入れてふくらます」演出。プランの§技術設計より）。
@@ -109,7 +136,7 @@ const OrigamiRenderer = (function () {
 
   const FS = `#version 300 es
   precision highp float;
-  in vec2 vUv; in vec3 vWorldNrm; in vec3 vWorldPos; in float vAlpha;
+  in vec2 vUv; in vec3 vWorldNrm; in vec3 vWorldPos; in float vAlpha; in float vSide; in float vFace;
   uniform vec3 uColorFront; uniform vec3 uColorBack; uniform vec3 uCameraPos;
   out vec4 outColor;
   void main(){
@@ -118,9 +145,17 @@ const OrigamiRenderer = (function () {
     // 実際のカメラ方向との内積で表裏を判定する。
     vec3 nrm = normalize(vWorldNrm);
     vec3 viewDir = normalize(uCameraPos - vWorldPos);
-    bool isFront = dot(nrm, viewDir) > 0.0;
+    // ★紙を「厚みのある板」で描くようになったので、表裏は
+    //   「その面がもともと紙のどちら側の面か」(vFace)で決める。
+    //   カメラ向きで判定する従来の方法は、板の下の面がカメラを向いた瞬間に
+    //   おもての色になってしまい、裏返した紙が表の色で出る（2026-09-02に実際そうなった）。
+    //   物理シム(cloth)モードだけは板にしていないので従来どおりの判定を使う。
+    bool isFront = (vFace > 0.5) ? true
+                 : ((vFace < -0.5) ? false : (dot(nrm, viewDir) > 0.0));
     vec3 base = isFront ? uColorFront : uColorBack;
-    vec3 n = isFront ? nrm : -nrm;
+    // 紙の切り口（横の面）は、表と裏を混ぜて少し暗くする＝重なった枚数が見える
+    if (vSide > 0.5) base = mix(uColorFront, uColorBack, 0.5) * 0.72;
+    vec3 n = (dot(nrm, viewDir) > 0.0) ? nrm : -nrm;
     vec3 key = normalize(vec3(0.4, 0.85, 0.5));
     float kd = max(dot(n, key), 0.0);
     vec3 lit = base * (0.55 + 0.55 * kd);
@@ -133,6 +168,7 @@ const OrigamiRenderer = (function () {
     const prog = G.link(gl, VS, FS);
     const loc = {
       aPos: gl.getAttribLocation(prog, 'aPos'),
+      aExt: gl.getAttribLocation(prog, 'aExt'),
       aUv: gl.getAttribLocation(prog, 'aUv'),
       aPanel: gl.getAttribLocation(prog, 'aPanel'),
       aPanel2: gl.getAttribLocation(prog, 'aPanel2'),
@@ -146,6 +182,7 @@ const OrigamiRenderer = (function () {
       uInflateSign: gl.getUniformLocation(prog, 'uInflateSign'),
       uPanelAlpha: gl.getUniformLocation(prog, 'uPanelAlpha'),
       uFlatStackStep: gl.getUniformLocation(prog, 'uFlatStackStep'),
+      uPaperThickness: gl.getUniformLocation(prog, 'uPaperThickness'),
       uColorFront: gl.getUniformLocation(prog, 'uColorFront'),
       uColorBack: gl.getUniformLocation(prog, 'uColorBack'),
       uCameraPos: gl.getUniformLocation(prog, 'uCameraPos'),
@@ -160,54 +197,152 @@ const OrigamiRenderer = (function () {
     const panelBuf = gl.createBuffer();
     const panel2Buf = gl.createBuffer();
     const blendBuf = gl.createBuffer();
+    const extBuf = gl.createBuffer();
     const idxBuf = gl.createBuffer();
 
-    function uploadMesh(mesh) {
-      const flatPos = new Float32Array(mesh.verts.flat());
-      const flatUv = new Float32Array(mesh.uv.flat());
-      const flatPanel = new Float32Array(mesh.panel);
-      // 「裂けない仕組み」用：無ければ従来通り(panel2=panel, blend=0=ブレンドなし)
-      const flatPanel2 = new Float32Array(mesh.panel2 || mesh.panel);
-      const flatBlend = new Float32Array(mesh.blend || new Array(mesh.panel.length).fill(0));
-      const idx = new Uint16Array(mesh.tris.flat());
+    // ★紙に本物の厚みを持たせるため、平らなメッシュを「板」に作りかえる。
+    //   おもて面・うら面・まわりの切り口の3種類の面を作る。
+    //   （本人指示2026-09-02「数値でやるんじゃなくて実際に厚みをもたせて」）
+    //   物理シム(cloth.js)モードの作品は、頂点をCPUが直接動かす前提なので対象外。
+    let lastThickenStats = null;
+    function thickenMesh(mesh) {
+      const V = mesh.verts, P = mesh.panel;
+      // src = その頂点が元メッシュのどの頂点から来たか。物理シムの結果を
+      //   厚みメッシュに配るのに要る（ふくらませても表裏の色が変わらないように）。
+      const verts = [], uv = [], panel = [], panel2 = [], blend = [], ext = [], tris = [], src = [];
+      const src2 = mesh.panel2 || mesh.panel;
+      const srcB = mesh.blend || new Array(P.length).fill(0);
+      const push = (i, side, nx, ny, nz) => {
+        verts.push(V[i][0], V[i][1], V[i][2]);
+        uv.push(mesh.uv[i][0], mesh.uv[i][1]);
+        panel.push(P[i]); panel2.push(src2[i]); blend.push(srcB[i]);
+        ext.push(side, nx, ny, nz); src.push(i);
+        return verts.length / 3 - 1;
+      };
+      // おもて面・うら面
+      for (const t of mesh.tris) {
+        const a = push(t[0], 1, 0, 1, 0), b = push(t[1], 1, 0, 1, 0), c = push(t[2], 1, 0, 1, 0);
+        tris.push(a, b, c);
+        const d = push(t[0], -1, 0, -1, 0), e = push(t[1], -1, 0, -1, 0), f = push(t[2], -1, 0, -1, 0);
+        tris.push(d, f, e);   // うら面は巻き順を逆に
+      }
+      // まわりの切り口：同じパネルの中で1つの三角形にしか使われていない辺
+      const count = new Map();
+      for (const t of mesh.tris) {
+        for (const [i, j] of [[t[0], t[1]], [t[1], t[2]], [t[2], t[0]]]) {
+          const k = Math.min(i, j) + '_' + Math.max(i, j);
+          count.set(k, (count.get(k) || 0) + 1);
+        }
+      }
+      // パネルごとの重心（切り口の向きを外向きにそろえるため）
+      const cen = new Map();
+      for (let i = 0; i < V.length; i++) {
+        const c = cen.get(P[i]) || { x: 0, z: 0, n: 0 };
+        c.x += V[i][0]; c.z += V[i][2]; c.n++;
+        cen.set(P[i], c);
+      }
+      for (const t of mesh.tris) {
+        for (const [i, j] of [[t[0], t[1]], [t[1], t[2]], [t[2], t[0]]]) {
+          if (count.get(Math.min(i, j) + '_' + Math.max(i, j)) !== 1) continue;
+          const ax = V[i][0], az = V[i][2], bx = V[j][0], bz = V[j][2];
+          let nx = bz - az, nz = -(bx - ax);            // 辺に垂直な向き
+          const L = Math.hypot(nx, nz) || 1e-9; nx /= L; nz /= L;
+          const c = cen.get(P[i]);
+          const mx = (ax + bx) / 2 - c.x / c.n, mz = (az + bz) / 2 - c.z / c.n;
+          if (nx * mx + nz * mz < 0) { nx = -nx; nz = -nz; }   // 外向きにそろえる
+          const a1 = push(i, 1, nx, 0, nz), b1 = push(j, 1, nx, 0, nz);
+          const a0 = push(i, -1, nx, 0, nz), b0 = push(j, -1, nx, 0, nz);
+          tris.push(a1, b1, b0, a1, b0, a0);
+        }
+      }
+      // ★折り目の「巻きこみ」を描く（本人指示2026-09-02
+      //   「厚みがでて距離がでたら、つながってる部分の丸め処理は必要かもね」）。
+      //   紙に厚みを持たせ、層が離れて置かれるようになったので、折り目の所に
+      //   段差の隙間が見える。折り目の辺で、自分の板と親の板をつなぐ帯を張る。
+      //   折り目の上の点は親子で同じローカル座標なので、同じ位置に頂点を置いて
+      //   aPanelだけ変えれば、それぞれの高さに乗って隙間がふさがる。
+      const hinges = mesh.hinge || [];
+      const parents = mesh.boneParent || [];
+      let hemCount = 0;   // 検査用：巻きこみの帯を張った数
+      for (const t of mesh.tris) {
+        for (const [i, j] of [[t[0], t[1]], [t[1], t[2]], [t[2], t[0]]]) {
+          if (count.get(Math.min(i, j) + '_' + Math.max(i, j)) !== 1) continue;
+          const b = P[i], par = parents[b];
+          const h = hinges[b];
+          if (par === undefined || par < 0 || !h || !h.axis) continue;
+          // ★軸が真上を向いている＝紙を「回す」動き（灘中対策の重ね合わせ問題）で、
+          //   折り目ではない。この場合、下の判定式が 0<1e-6 になって
+          //   **紙のふち全部が折り目とみなされ**、土台との間に帯が張られて
+          //   紙が多角形にふくらんで見えた
+          //   （本人 2026-09-03「重ね合わせの問題がバグるようになった」）。
+          const axH = Math.hypot(h.axis[0], h.axis[2]);
+          if (axH < 1e-6) continue;
+          // この辺がヒンジの線の上にあるか（軸の長さでそろえて測る）
+          const on = (v) => {
+            const dx = v[0] - h.origin[0], dz = v[2] - h.origin[2];
+            return Math.abs(h.axis[2]*dx - h.axis[0]*dz) / axH < 1e-6;
+          };
+          if (!on(V[i]) || !on(V[j])) continue;
+          // 自分の板の中面と、親の板の中面をつなぐ帯（2枚の三角形）
+          const mk = (vi, pnl) => {
+            verts.push(V[vi][0], V[vi][1], V[vi][2]);
+            uv.push(mesh.uv[vi][0], mesh.uv[vi][1]);
+            panel.push(pnl); panel2.push(pnl); blend.push(0);
+            ext.push(0, 0, 1, 0); src.push(vi);   // 押し出さない・法線は上
+            return verts.length / 3 - 1;
+          };
+          const c1 = mk(i, b), c2 = mk(j, b);
+          const p1 = mk(i, par), p2 = mk(j, par);
+          tris.push(c1, c2, p2, c1, p2, p1);
+          tris.push(c1, p2, c2, c1, p1, p2);   // 裏からも見えるように
+          hemCount++;
+        }
+      }
+      lastThickenStats = { tris: tris.length / 3, hem: hemCount,
+                           verts: verts.length / 3 };
+      return {
+        pos: new Float32Array(verts), uv: new Float32Array(uv),
+        panel: new Float32Array(panel), panel2: new Float32Array(panel2),
+        blend: new Float32Array(blend), ext: new Float32Array(ext),
+        src: src,
+        idx: new Uint16Array(tris),
+      };
+    }
 
-      // ★posはCLOTH物理モードだと毎フレームCPUが書き換える(DYNAMIC_DRAW)。
-      //   剛体モードの作品はここで設定した値のまま(uBones変換されるので無問題)。
+    // ★厚みのある板メッシュは、物理シム(cloth)モードでも同じものを使う。
+    //   別メッシュにすると、ふくらませた瞬間に**表と裏の色が入れかわる**
+    //   （剛体は「紙のどちらの面か」で、物理はカメラ向きで表裏を決めていたため。
+    //    2026-09-03、コップの赤白が反転して発覚）。
+    let meshSrc = null;   // 厚みメッシュの各頂点が、元メッシュのどの頂点から来たか
+    function uploadMesh(mesh, usePhysics) {
+      const T = thickenMesh(mesh);
+      meshSrc = T.src;
       gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
-      gl.bufferData(gl.ARRAY_BUFFER, flatPos, gl.DYNAMIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, T.pos, gl.DYNAMIC_DRAW);
       gl.enableVertexAttribArray(loc.aPos);
       gl.vertexAttribPointer(loc.aPos, 3, gl.FLOAT, false, 0, 0);
 
       gl.bindBuffer(gl.ARRAY_BUFFER, normalBuf);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh.verts.length * 3), gl.DYNAMIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(T.pos.length), gl.DYNAMIC_DRAW);
       gl.enableVertexAttribArray(loc.aNormal);
       gl.vertexAttribPointer(loc.aNormal, 3, gl.FLOAT, false, 0, 0);
 
-      gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf);
-      gl.bufferData(gl.ARRAY_BUFFER, flatUv, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(loc.aUv);
-      gl.vertexAttribPointer(loc.aUv, 2, gl.FLOAT, false, 0, 0);
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, panel2Buf);
-      gl.bufferData(gl.ARRAY_BUFFER, flatPanel2, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(loc.aPanel2);
-      gl.vertexAttribPointer(loc.aPanel2, 1, gl.FLOAT, false, 0, 0);
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, blendBuf);
-      gl.bufferData(gl.ARRAY_BUFFER, flatBlend, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(loc.aBlend);
-      gl.vertexAttribPointer(loc.aBlend, 1, gl.FLOAT, false, 0, 0);
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, panelBuf);
-      gl.bufferData(gl.ARRAY_BUFFER, flatPanel, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(loc.aPanel);
-      gl.vertexAttribPointer(loc.aPanel, 1, gl.FLOAT, false, 0, 0);
-
+      const bind = (buf, arr, l, n) => {
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(l);
+        gl.vertexAttribPointer(l, n, gl.FLOAT, false, 0, 0);
+      };
+      bind(uvBuf, T.uv, loc.aUv, 2);
+      bind(panel2Buf, T.panel2, loc.aPanel2, 1);
+      bind(blendBuf, T.blend, loc.aBlend, 1);
+      bind(panelBuf, T.panel, loc.aPanel, 1);
+      bind(extBuf, T.ext, loc.aExt, 4);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
-      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, idx, gl.STATIC_DRAW);
-      return idx.length;
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, T.idx, gl.STATIC_DRAW);
+      return T.idx.length;
     }
-    let indexCount = uploadMesh(work.mesh);
+    let indexCount = uploadMesh(work.mesh, work.usePhysics);
 
     const state = FOLD.createState(work);
     // ★物理シム(質点バネ)を使う作品(work.usePhysics)は、剛体ヒンジFKの結果を
@@ -216,10 +351,73 @@ const OrigamiRenderer = (function () {
     //   持たず、辺・継ぎ目の制約に従って自然にたわむ(本人指摘「曲がる仕組みが
     //   ないと無理」への対応、tools/gen_steps.py・test_cloth_tsuru.htmlで検証済み)。
     let physSim = work.usePhysics ? CLOTH.createSim(work) : null;
+    let ballCenter = [0, 0, 0], ballMax = 0;
+    let paperHold = 0.12;  // 紙1枚のときのかたさ（小さいほど柔らかい）
+    let holdCache = null, holdCacheMesh = null;
+    // ★かたさは**重なっている枚数**で決める（本人 2026-09-03「枚数で判定して」）。
+    //   実物の紙も、何枚も重なった所（かぶとのツノ・はちまき）はしっかりして
+    //   形が崩れず、1〜2枚の所（袋の壁）は紙らしくやわらかい。
+    function holdByStack(mesh) {
+      if (holdCacheMesh === mesh && holdCache) return holdCache;
+      const n = mesh.boneParent.length;
+      const sc = mesh.stackCount || [];
+      const arr = new Array(n);
+      for (let i = 0; i < n; i++) {
+        const k = sc[i] || 1;
+        arr[i] = Math.min(1, paperHold + 0.14 * (k - 1));
+      }
+      holdCache = arr; holdCacheMesh = mesh;
+      return arr;
+    }
+
+    // ★ふきかけバー：完成した作品に息を入れると、紙は端どうしがつながった
+    //   袋なので**丸くふくらむ**（本人 2026-09-03「端はつながってるから
+    //   丸くふくらむんじゃないの？」）。折り目をパタンと開くだけでは、
+    //   紙が張って丸くなる動きにならない。
+    //   ⚠折っている間は剛体のまま（折りの正確さが命）。**ふくらませる間だけ**
+    //   質点バネ＋内部圧力（cloth.js）に切りかえる。閉じた袋は辺の長さを
+    //   保ったまま丸くなり、開いた所は押し出されるだけ——区別は物理から自然に出る。
+    function setInflatePhysics(on) {
+      if (on === !!physSim) return;
+      gl.bindVertexArray(vao);
+      if (on) {
+        physSim = CLOTH.createSim(curWork);
+        // いまの折り上がりの形から始める（平らな状態から飛ばないように、
+        //  いったん全部の点を剛体の位置へスナップさせる）
+        const mats0 = FOLD.currentBoneMatrices(state);
+        CLOTH.applyAttachment(physSim, mats0,
+          new Array(curWork.mesh.boneParent.length).fill(1));
+        // 貼りついている紙どうしを結ぶ（袋以外がばらけないように）
+        const tol = Math.max(fitHalfW, fitHalfD) * 0.02;
+        physSim.stickCons = CLOTH.buildStickConstraints(physSim, mats0, tol);
+        // ★「見えないボール」の大きさ＝**横はば×2÷3.14**（本人 2026-09-03）。
+        //   紙のふちの長さは変わらないので、はばWの口がまるくなったときは
+        //   円周=2W → 直径=2W/π。頭（や水）が入る大きさはこれで決まる。
+        let cx = 0, cy = 0, cz = 0;
+        let x0 = Infinity, x1 = -Infinity, y0 = Infinity, z0 = Infinity, z1 = -Infinity;
+        for (const q of physSim.points) {
+          cx += q.x; cy += q.y; cz += q.z;
+          if (q.x < x0) x0 = q.x; if (q.x > x1) x1 = q.x;
+          if (q.z < z0) z0 = q.z; if (q.z > z1) z1 = q.z;
+          if (q.y < y0) y0 = q.y;
+        }
+        const np = physSim.points.length || 1;
+        const wide = Math.max(x1 - x0, z1 - z0);      // できあがりの横はば
+        ballMax = wide / Math.PI;                     // 直径2W/πの半分
+        // 球は紙の底に接するように置く＝下から頭が入る。上（ツノ側）は押さない。
+        // 球は紙と紙のあいだ（重心）に置く＝上下に押しひらいて空間ができる。
+        //   紙の上や下に置くと、かぶとごと持ち上げて山の形になってしまう。
+        ballCenter = [cx / np, cy / np, cz / np];
+      } else {
+        physSim = null;
+      }
+      indexCount = uploadMesh(curWork.mesh, on || curWork.usePhysics);
+    }
     // 64パネル分の余裕を持って確保(既存のuBones上限と同じ)しておき、作品切り替え
     // (setWork)で頂点数が変わっても配列を作り直さずに済むようにする。
-    let physNormalFlat = new Float32Array(4096 * 3);
-    let physPosFlat = new Float32Array(4096 * 3);
+    let physNormalFlat = new Float32Array(16384 * 3);
+    let physSrcNormal = new Float32Array(4096 * 3);   // 元メッシュぶんの法線
+    let physPosFlat = new Float32Array(16384 * 3);
     // ★2026-08-30 続き13、本人の強い指摘で設計を反転：
     //   旧版は「まだ触れていない全パネル」をweight=0(自由)にしていたため、
     //   手順と無関係な、遠く離れた部分まで継ぎ目の力で勝手にたわんで暴れて
@@ -304,12 +502,79 @@ const OrigamiRenderer = (function () {
       }
     }
     let layerFlat = new Float32Array(64);
+    let layerBase = new Float32Array(64);
+    let layerTarget = new Float32Array(64).fill(Math.PI);
     function updateLayers(w) {
-      const depths = FOLD.computeLayerDepths(w);
+      // ★作品データが本当の重なり順(mesh.layerOrder)を持っていればそちらを使う。
+      //   骨の深さの代用だと、山折り（後ろへ折る紙）が上に来てしまう
+      //   （2026-09-02、かぶとの「裏の1枚を後ろへ折り込む」で分かった）。
+      const depths = (w.mesh && w.mesh.layerOrder) || FOLD.computeLayerDepths(w);
+      layerBase = new Float32Array(64);
+      for (let i = 0; i < depths.length; i++) layerBase[i] = depths[i];
+      // ★その骨が「何度まで折れたら最終的な重なりになるか」。
+      //   折る前の平らな紙に段差が出ないよう、折れ具合に比例させるのに使う。
+      layerTarget = new Float32Array(64).fill(Math.PI);
+      (w.steps || []).forEach(st => {
+        const t = Math.abs(st.targetAngle) || Math.PI;
+        const ids = [st.handle.boneId].concat(
+          (st.handle.linkedBoneIds || []).map(lb => (typeof lb === 'object') ? lb.boneId : lb));
+        ids.forEach(b => { layerTarget[b] = t; });
+      });
       layerFlat = new Float32Array(64);
-      for (let i = 0; i < depths.length; i++) layerFlat[i] = depths[i];
     }
-    updateLayers(work);
+    // 折れ具合に応じた層の高さを毎フレーム作る。
+    // ★これが無いと、まだ1回も折っていない平らな1枚の紙にも段差が出る
+    //   （本人指摘 2026-09-02「折るまえから一枚の紙なのに段差ついてるの？」）。
+    //   紙は「重なって初めて持ち上がる」ので、その骨自身の折れ具合を掛ける。
+    function layersNow(state) {
+      const n = curWork.mesh.boneParent.length;
+      if (curWork.mesh.hingeY) {            // 軸の高さで重なりが出るので上げ下げ不要
+        layerFlat.fill(0);
+        return layerFlat;
+      }
+      const lbs = curWork.mesh.layerByStep;
+      if (lbs && lbs.length) {
+        // ★1手ごとの重なりを持っている作品は、それをそのまま使う。
+        //   最終形の重なりを折る途中でも使うと、親につられて動いた紙が
+        //   土台と同じ高さになってちらつき、下半分が消えたように見える
+        //   （本人指摘2026-09-02「一度おってるのに折った紙の下半分が消えてる」）。
+        const k = Math.max(0, Math.min(lbs.length - 1,
+          state.freeMode ? state.doneSteps.size : state.stepIndex));
+        const A = lbs[k], B = lbs[Math.min(k + 1, lbs.length - 1)];
+        let f = 0;
+        const step = state.work.steps[k];
+        if (step) {
+          const t = Math.abs(step.targetAngle) || Math.PI;
+          f = Math.min(1, Math.abs(state.liveAngle[step.handle.boneId] || 0) / t);
+        }
+        for (let i = 0; i < layerFlat.length; i++) {
+          layerFlat[i] = (i < n) ? (A[i] + (B[i] - A[i]) * f) : 0;
+        }
+        return layerFlat;
+      }
+      // 持っていない作品（灘中対策の問題など）は、折れ具合で持ち上げる従来の方法
+      const prog = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        const t = layerTarget[i] || Math.PI;
+        prog[i] = Math.min(1, Math.abs(state.liveAngle[i] || 0) / t);
+      }
+      let run = 0;
+      const order = Array.from({ length: n }, (_, i) => i)
+        .sort((a, b) => layerBase[a] - layerBase[b]);
+      const below = new Float32Array(n);
+      let cur = 0;
+      for (let k = 0; k < n; k++) {
+        const i = order[k];
+        if (k > 0 && layerBase[i] > layerBase[order[k - 1]]) { run = Math.max(run, cur); cur = 0; }
+        below[i] = run;
+        cur = Math.max(cur, prog[i]);
+      }
+      for (let i = 0; i < layerFlat.length; i++) {
+        layerFlat[i] = i < n ? layerBase[i] * Math.max(prog[i], below[i]) : 0;
+      }
+      return layerFlat;
+    }
+
     // 紙のサイズが作品ごとに違う（正方形-1..1／長方形cm単位など）ので、
     // 頂点のバウンディング半幅・半奥行きを見てカメラ距離を自動フィットさせる。
     // ★横長の紙を縦長スマホ画面(aspect<1)で見ると横方向の視野角が特にきびしくなるので、
@@ -320,6 +585,29 @@ const OrigamiRenderer = (function () {
     //   重ね合わせ問題＝2枚目が右上にずれる）で図が画面のすみに寄る。
     //   見下ろし角を立てたとたん、下半分が画面外に出て発覚した（2026-09-01）。
     let fitHalfW = 1.4, fitHalfD = 1.4, fitCX = 0, fitCZ = 0;
+    // ★伝承折り紙は「いまの形の中心」を回転の軸にする（本人指示2026-09-02
+    //   「回転は折紙の中心に合わせる方がいい」）。折るにつれて紙は小さくなるので、
+    //   折る前の紙の中心のままだと、回したときに作品が大きく振り回される。
+    //   ⚠灘中対策の問題は今までどおり「折る前の紙の中心」（そちらは折り返しが
+    //     紙の外へ大きく出ることがあり、中心を動かすと図が問題文の下に潜る）。
+    //   急に動くと折りにくいので、なめらかに寄せる。
+    let liveCX = null, liveCZ = null;
+    function updateLiveCenter(mats) {
+      if (!freeCamera) { liveCX = null; return; }
+      const M = curWork.mesh;
+      let minx = Infinity, maxx = -Infinity, minz = Infinity, maxz = -Infinity;
+      for (let i = 0; i < M.verts.length; i++) {
+        const m = mats[M.panel[i]], v = M.verts[i];
+        const x = m[0]*v[0] + m[4]*v[1] + m[8]*v[2] + m[12];
+        const z = m[2]*v[0] + m[6]*v[1] + m[10]*v[2] + m[14];
+        if (x < minx) minx = x; if (x > maxx) maxx = x;
+        if (z < minz) minz = z; if (z > maxz) maxz = z;
+      }
+      if (!isFinite(minx)) return;
+      const cx = (minx + maxx) / 2, cz = (minz + maxz) / 2;
+      if (liveCX === null) { liveCX = cx; liveCZ = cz; }
+      else { liveCX += (cx - liveCX) * 0.12; liveCZ += (cz - liveCZ) * 0.12; }
+    }
     function updateFit(w) {
       let minx = Infinity, maxx = -Infinity, minz = Infinity, maxz = -Infinity;
       const acc = (x, z) => {
@@ -375,11 +663,41 @@ const OrigamiRenderer = (function () {
       if (w.mesh.panelAlpha) w.mesh.panelAlpha.forEach((a, i) => { panelAlphaFlat[i] = a; });
     }
     updatePanelAlpha(work);
+    // 紙の厚み。1目盛り=0.0015。既定6＝0.009（紙の幅2に対して約0.5%）。
+    // ★紙のあつさ：めもり0〜10、ふだんは1（本人 2026-09-03
+    //   「紙の厚さはデフォルトを1にして　最大10ぐらいまでにしましょう」）。
+    //   めもり1つぶんのあつさは今までと同じ（THICK_SCALE）。
+    const THICK_UNIT = 0.0015, THICK_SCALE = 0.014 / 6;
+    const THICK_DEFAULT = 1, THICK_MAX = 10;
+    let paperThick = THICK_DEFAULT;
+    // ★setWorkは引数のnewWorkだけを見て、外側のworkを更新していなかった。
+    //   厚みを後から変えたときに作り直す対象が要るので、いまの作品を控えておく。
+    let curWork = work;
     // 平らな折り返し問題の「紙の厚み」（1層あたりのワールド単位）。
     // 紙の大きさに比例させるので、-1..1の伝承折り紙でもcm単位の入試問題でも同じ見え方になる。
     let flatStackStep = 0;
+    // 紙の厚み（ワールド単位）。紙の大きさに比例させるので、-1..1の伝承折り紙でも
+    // cm単位の入試問題でも同じ見え方になる。
+    function thicknessWorld() {
+      return Math.max(fitHalfW, fitHalfD) * THICK_SCALE * paperThick;
+    }
+    // ★ヒンジの軸の高さを、いまの厚みに合わせて入れ直す。
+    //   mesh.hingeY は「紙の厚み何枚ぶん」なので、厚みを変えたら計算し直す。
+    function applyHingeY(w) {
+      const hy = w.mesh && w.mesh.hingeY;
+      if (!hy) return;
+      const t = thicknessWorld();
+      w.mesh.hinge.forEach((h, i) => {
+        if (h && hy[i] !== undefined) h.origin[1] = hy[i] * t;
+      });
+    }
     function updateFlatStack(w) {
-      flatStackStep = w.mesh.flatStack ? Math.max(fitHalfW, fitHalfD) * 0.014 : 0;
+      // ★hingeY を持つ作品は、層を数値で浮かせない（ヒンジの軸の高さで重なりが出る）。
+      //   数値で浮かせると、つながっているはずの紙が折り目で引き離される
+      //   ＝「ヒンジがはずれた」ように見える（本人指摘2026-09-02）。
+      flatStackStep = (w.mesh.flatStack && !w.mesh.hingeY)
+        ? Math.max(fitHalfW, fitHalfD) * THICK_SCALE * paperThick : 0;
+      applyHingeY(w);
     }
     updateFlatStack(work);
     // 膨らませの目標値(inflateTarget)へspringでなめらかに追従（ドラッグ折りと同じ考え方）
@@ -414,7 +732,23 @@ const OrigamiRenderer = (function () {
     updateCamera(work);
     let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0, downT = 0;
     let mode = 'idle'; // 'idle' | 'orbit' | 'fold'
-    const clampPitch = v => Math.max(0.12, Math.min(1.45, v));
+    // ★上下の回転に制限をかけない（本人指示2026-09-02
+    //   「横向きには回転するけど、上下に回転の制限かけない方がいい」）。
+    //   以前は 0.12〜1.45ラジアン（7〜83度）に閉じこめていて、真上から見ることも
+    //   下からのぞきこむこともできなかった。viewMatは明示的な回転で組んでいて
+    //   上方向ベクトルの縮退が無いので、どの角度でも破綻しない。
+    //   ぐるぐる回し続けても値が際限なく増えないよう、-π〜πに巻き戻すだけにする。
+    //   ★ただし灘中対策コーナーの問題には適用しない（本人指示2026-09-02
+    //     「あっちが裏まで回転しちゃうと こんがらがるから」）。問題は
+    //     「どの面が手前か」を読み取るのが解答そのものなので、裏返せると混乱する。
+    let freeCamera = false;      // 伝承折り紙のときだけ true
+    const clampPitch = v => {
+      if (!freeCamera) return Math.max(0.12, Math.min(1.45, v));
+      const TAU = Math.PI * 2;
+      let a = (v + Math.PI) % TAU;
+      if (a < 0) a += TAU;
+      return a - Math.PI;
+    };
     const clampZoom = v => Math.max(0.6, Math.min(2.6, v));
 
     let lastVP = G.mat4Identity();
@@ -475,9 +809,15 @@ const OrigamiRenderer = (function () {
       if (mode !== 'orbit' || !dragging) return;
       const dx = pt.clientX - lastX, dy = pt.clientY - lastY;
       lastX = pt.clientX; lastY = pt.clientY;
-      dragYaw += dx * 0.012;
+      // ★裏から見ているとき（上下に回しこんで逆さまになったとき）は、
+      //   横に振る向きが画面上で反転して直観に反する
+      //   （本人指摘2026-09-02「裏から見たとき視点の動かす方向が反転して
+      //     直観的じゃない」）。上下逆さまなら横の向きも反転して打ち消す。
+      const upsideDown = Math.cos(dragPitch) < 0;
+      const yawDir = upsideDown ? -1 : 1;
+      dragYaw += dx * 0.012 * yawDir;
       dragPitch = clampPitch(dragPitch + dy * 0.008);
-      spin = dx * 0.012;
+      spin = dx * 0.012 * yawDir;
       if (e.cancelable) e.preventDefault();
     }
     function up() {
@@ -563,6 +903,10 @@ const OrigamiRenderer = (function () {
       }
       FOLD.tick(state, dt);
       MOTION.spring(inflateSt, inflateTarget, dt, 90, 14);
+      // しぼみ切ったら剛体にもどす（紙の厚みもそこで戻る）
+      if (physSim && !curWork.usePhysics && inflateTarget <= 0 && inflateSt.v < 0.004) {
+        setInflatePhysics(false);
+      }
 
       const rect = resize();
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -590,9 +934,11 @@ const OrigamiRenderer = (function () {
       // 見えている帯の中心に紙が来るよう、ビュー空間で上下にずらす
       const eyeY = -band.shift * dist * tanHalf;
       // 図の中心(fitCX,0,fitCZ)を注視点にする＝先にワールドを中心ぶん平行移動してから見る
+      const cX = (freeCamera && liveCX !== null) ? liveCX : fitCX;
+      const cZ = (freeCamera && liveCZ !== null) ? liveCZ : fitCZ;
       const view = G.mat4Multiply(
         G.viewMat(eyeY, dist, dragPitch, dragYaw),
-        G.mat4Translate([-fitCX, 0, -fitCZ]));
+        G.mat4Translate([-cX, 0, -cZ]));
       // ★near/farは固定値(0.05/160)だったが、紙の座標がcm単位で大きい作品
       //   （例：塾技No.7は96×48cm＝カメラ距離578）では紙全体がfar=160の外に出て
       //   画面が真っ黒になっていた（2026-08-31、本人が浅野中とNo.7で発見）。
@@ -604,9 +950,10 @@ const OrigamiRenderer = (function () {
       const cp = Math.cos(dragPitch), sp = Math.sin(dragPitch);
       const cy = Math.cos(dragYaw), sy = Math.sin(dragYaw);
       // ライティング用のカメラ位置（eyeYはビュー空間の上下シフトなのでここには足さない）
-      const cameraPos = [fitCX - sy * cp * dist, sp * dist, fitCZ + cy * cp * dist];
+      const cameraPos = [cX - sy * cp * dist, sp * dist, cZ + cy * cp * dist];
 
       const mats = FOLD.currentBoneMatrices(state);
+      updateLiveCenter(mats);   // 次のフレームの回転の中心（なめらかに追従）
 
       gl.useProgram(prog);
       gl.bindVertexArray(vao);
@@ -618,6 +965,7 @@ const OrigamiRenderer = (function () {
       gl.uniform1fv(loc.uInflateSign, inflateSignFlat);
       gl.uniform1fv(loc.uPanelAlpha, panelAlphaFlat);
       gl.uniform1f(loc.uFlatStackStep, flatStackStep);
+      gl.uniform1f(loc.uPaperThickness, thicknessWorld());
 
       if (physSim) {
         // 剛体FK(mats)は「今アクティブ/確定したパネルの目標位置」としてのみ使い、
@@ -632,24 +980,36 @@ const OrigamiRenderer = (function () {
         let cx = 0, cy = 0, cz = 0;
         for (const p of physSim.points) { cx += p.x; cy += p.y; cz += p.z; }
         const npt = physSim.points.length || 1;
-        const pressure = { center: [cx / npt, cy / npt, cz / npt], strength: inflateSt.v * 0.08 };
+        // ★ふきかけバー＝「なかに見えないボールを入れる」（本人 2026-09-03）。
+        //   中心から一様に押す圧力だと、袋でない所までばらける。
+        const pressure = { center: [cx / npt, cy / npt, cz / npt],
+                           ball: { center: ballCenter, radius: ballMax * inflateSt.v } };
+        // 球にさわっていない紙は、折り上がりの形のまま動かさない
+        if (pressure.ball && pressure.ball.radius > 0) {
+          // ★かたさのつまみ。1=板のようにかちっと／小さいほど紙らしくやわらかい
+          //   （本人 2026-09-03「紙みたいに柔らかくならんの？　完成後」）
+          CLOTH.pinOutsideBall(physSim, mats, pressure.ball.center,
+                               pressure.ball.radius, holdByStack(w.mesh));
+        }
         CLOTH.step(physSim, Math.min(dt, 1/30), 10, pressure);
         const pts = physSim.points;
-        const posSub = physPosFlat.subarray(0, pts.length * 3);
-        const nrmSub = physNormalFlat.subarray(0, pts.length * 3);
-        for (let i = 0; i < pts.length; i++) {
-          posSub[i*3] = pts[i].x; posSub[i*3+1] = pts[i].y; posSub[i*3+2] = pts[i].z;
-        }
-        computeFlatNormals(w.mesh, pts, nrmSub);
-        // ★厚みゼロの質点は複数の層がほぼ同じ場所に重なりZファイティングで
-        //   ジグザグのノイズになる(剛体モードのuLayerと同じ問題が物理モードにも
-        //   起きる、2026-08-30実測)。法線方向へ層の深さぶんだけ微小オフセット。
-        for (let i = 0; i < pts.length; i++) {
+        // ★物理の結果（元メッシュの頂点）を、厚みメッシュの頂点へ配る。
+        //   同じ板メッシュで描くので、ふくらませても紙の色は変わらない。
+        const nS = meshSrc.length;
+        const posSub = physPosFlat.subarray(0, nS * 3);
+        const nrmSub = physNormalFlat.subarray(0, nS * 3);
+        const srcNrm = physSrcNormal.subarray(0, pts.length * 3);
+        computeFlatNormals(w.mesh, pts, srcNrm);
+        // 層の深さぶんだけ法線方向へずらす（同じ場所に重なるちらつき止め）
+        for (let k = 0; k < nS; k++) {
+          const i = meshSrc[k];
           const d = layerFlat[w.mesh.panel[i]] || 0;
-          if (!d) continue;
-          posSub[i*3]   += nrmSub[i*3]   * d * 0.0015;
-          posSub[i*3+1] += nrmSub[i*3+1] * d * 0.0015;
-          posSub[i*3+2] += nrmSub[i*3+2] * d * 0.0015;
+          posSub[k*3]   = pts[i].x + srcNrm[i*3]   * d * 0.0015;
+          posSub[k*3+1] = pts[i].y + srcNrm[i*3+1] * d * 0.0015;
+          posSub[k*3+2] = pts[i].z + srcNrm[i*3+2] * d * 0.0015;
+          nrmSub[k*3] = srcNrm[i*3];
+          nrmSub[k*3+1] = srcNrm[i*3+1];
+          nrmSub[k*3+2] = srcNrm[i*3+2];
         }
         gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, posSub);
@@ -659,7 +1019,7 @@ const OrigamiRenderer = (function () {
       } else {
         for (let i = 0; i < mats.length && i < 64; i++) boneMatFlat.set(mats[i], i * 16);
         gl.uniformMatrix4fv(loc.uBones, false, boneMatFlat);
-        gl.uniform1fv(loc.uLayer, layerFlat);
+        gl.uniform1fv(loc.uLayer, layersNow(state));
         gl.uniform1f(loc.uPhysicsMode, 0);
       }
       gl.drawElements(gl.TRIANGLES, indexCount, gl.UNSIGNED_SHORT, 0);
@@ -680,21 +1040,57 @@ const OrigamiRenderer = (function () {
     return {
       state,
       setWork(newWork) {
-        indexCount = uploadMesh(newWork.mesh);
+        indexCount = uploadMesh(newWork.mesh, newWork.usePhysics);
         Object.assign(state, FOLD.createState(newWork));
         updateLayers(newWork); updateFit(newWork); updateInflateSign(newWork);
         updatePanelAlpha(newWork); updateFlatStack(newWork); updateCamera(newWork);
+        curWork = newWork;
         inflateTarget = 0; inflateSt.v = 0; inflateSt.d = 0;
         physSim = newWork.usePhysics ? CLOTH.createSim(newWork) : null;
       },
       setColor(front, back) { paperColor = { front, back: back || front }; },
+      // 上下の回転を自由にするか（伝承折り紙のみ。灘中対策の問題は制限したまま）
+      setFreeCamera(v) {
+        freeCamera = !!v;
+        if (!freeCamera) dragPitch = clampPitch(dragPitch);
+      },
+      // 検査用：描画用メッシュの中身（巻きこみの帯を何本張ったか）。
+      //   紙を「回す」問題では折り目が無いので 0 でなければおかしい。
+      debugThickenStats() { return lastThickenStats; },
+      // 検査用：いまの紙の厚み（ワールド単位）
+      setPaperHold(v) { paperHold = Math.max(0, Math.min(1, Number(v))); holdCache = null; },
+      debugThickness() { return thicknessWorld(); },
+      // 検査用：ワールドの点が、いま画面のどこに見えているか。
+      // ★「裏から見ても右へ引けば同じ向きに回る」は、内部の数値(yaw)では測れない——
+      //   裏では yaw の符号が反転するのが正しい（画面で同じ向きに見せるため）。
+      //   見え方そのものを測るために、画面座標(と、カメラからの遠さw)を返す。
+      debugProject(p) {
+        const rect = canvas.getBoundingClientRect();
+        const clip = G.vecApplyW(lastVP, [p[0], p[1], p[2], 1]);
+        if (!clip || clip[3] <= 0.0001) return null;
+        return { x: (clip[0] / clip[3] * 0.5 + 0.5) * rect.width,
+                 y: (1 - (clip[1] / clip[3] * 0.5 + 0.5)) * rect.height,
+                 w: clip[3] };
+      },
+      // 検査用：カメラの向きと、上下の制限がかかっているかを読む
+      debugCamera() { return { pitch: dragPitch, yaw: dragYaw, free: freeCamera }; },
+      // 検査用：いま各骨がどれだけ持ち上がっているか（層の高さ）を読む
+      debugLayers() { return Array.from(layersNow(state)).slice(0, curWork.mesh.boneParent.length); },
+      // 紙の厚み（0〜20目盛り）。0にすると今までどおりの「厚みなし」に戻る。
+      setThickness(v) {
+        paperThick = Math.max(0, Math.min(THICK_MAX, Number(v)));
+        updateFlatStack(curWork);   // 平らな折り返し問題の段差も計算し直す
+      },
       // 覚えた手順を自由な順番で再現するモードに切り替える(またはガイド付きに戻す)。
       // ★途中状態を引きずるとdoneSteps/stepIndexが噛み合わなくなるため、
       //   切り替え時は必ず折りかけの状態をリセットする(setWorkと同じ考え方)。
       setFreeMode(v) {
         Object.assign(state, FOLD.createState(state.work, { freeMode: !!v }));
       },
-      setInflate(v) { inflateTarget = Math.max(0, Math.min(1, v)); },
+      setInflate(v) {
+        inflateTarget = Math.max(0, Math.min(1, v));
+        if (inflateTarget > 0 && curWork.inflate) setInflatePhysics(true);
+      },
       // ワールド座標→画面座標。検証（Playwrightで実際に指で折れるか確かめる）に使う
       worldToScreen(p) { return worldToScreen(p, canvas.getBoundingClientRect()); },
       getInflate() { return inflateSt.v; },

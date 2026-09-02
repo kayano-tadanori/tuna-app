@@ -19,10 +19,38 @@
         <span class="ori-home-btn-icon">🏫</span>
         <span class="ori-home-btn-text">灘中対策コーナー<span class="ori-badge">NEW</span></span>
       </button>
-      <button id="ori-home-fold" class="ori-home-btn ori-home-btn-soon" disabled>
+      <button id="ori-home-fold" class="ori-home-btn ori-home-btn-fold">
         <span class="ori-home-btn-icon">🕊️</span>
-        <span class="ori-home-btn-text">おりがみで遊ぶ<span class="ori-badge ori-badge-soon">準備中</span></span>
+        <span class="ori-home-btn-text">おりがみで遊ぶ<span class="ori-badge">NEW</span></span>
       </button>
+      <button id="ori-home-settings" class="ori-home-btn ori-home-btn-set">
+        <span class="ori-home-btn-icon">⚙️</span>
+        <span class="ori-home-btn-text">せってい</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- せってい画面。紙の色と厚みを変えられる。えらんだ内容はこの端末に覚えておく。 -->
+  <div id="ori-screen-settings" class="ori-screen" hidden>
+    <button class="ori-back-btn" id="ori-settings-back">‹ もどる</button>
+    <h2 class="ori-picker-title">せってい</h2>
+    <div class="ori-settings">
+      <div class="ori-set-preview">
+        <div class="ori-set-paper" id="ori-set-front"><span>おもて</span></div>
+        <div class="ori-set-paper" id="ori-set-back"><span>うら</span></div>
+      </div>
+
+      <h3 class="ori-set-label">かみの おもての いろ</h3>
+      <div class="ori-swatches" id="ori-sw-front"></div>
+
+      <h3 class="ori-set-label">かみの うらの いろ</h3>
+      <div class="ori-swatches" id="ori-sw-back"></div>
+
+      <h3 class="ori-set-label">かみの あつさ<span id="ori-thick-val" class="ori-set-val"></span></h3>
+      <input type="range" id="ori-thick" class="ori-set-range" min="0" max="10" step="1">
+      <p class="ori-set-note">あつくすると、折りかさなった所が はっきり見えます。</p>
+
+      <button id="ori-set-reset" class="ori-set-reset">もとに もどす</button>
     </div>
   </div>
 
@@ -34,9 +62,16 @@
 
   <div id="ori-screen-fold" class="ori-screen" hidden>
     <button class="ori-back-btn" id="ori-fold-back">‹ もどる</button>
-    <div id="ori-hint" class="ori-hint">ひかっている点を、ドラッグして折ろう</div>
-    <button id="ori-step-back" class="ori-step-back-btn" hidden>⟲ 1つ前の折りにもどす</button>
-    <button id="ori-free-toggle" class="ori-step-back-btn" hidden>✋ 自由に折ってみる</button>
+    <!-- ★ヒントと下の2つのボタンは、まとめて縦に積む箱に入れる。
+         以前は #ori-step-back と #ori-free-toggle が同じ絶対位置(top:58px)で
+         重なり、両方出たときに字が読めなくなっていた（本人報告 2026-09-02）。 -->
+    <div class="ori-topinfo">
+      <div id="ori-hint" class="ori-hint">ひかっている点を、ドラッグして折ろう</div>
+      <div class="ori-subbar">
+        <button id="ori-step-back" class="ori-step-back-btn" hidden>⟲ 1つ前の折りにもどす</button>
+        <button id="ori-free-toggle" class="ori-step-back-btn" hidden>✋ 自由に折ってみる</button>
+      </div>
+    </div>
     <canvas id="ori-canvas"></canvas>
     <!-- 求める面積の斜線（下）→ 折り線 → 角の弧 の順に重ねる -->
     <svg id="ori-area-layer" class="ori-area-layer">
@@ -83,14 +118,19 @@
   <script src="js/scratchpad.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/progress.js"></script>
-  <script src="js/works/damashibune.js"></script>
-  <script src="js/works/yakko.js"></script>
-  <script src="js/works/fusen.js"></script>
+  <!-- 伝承折り紙。tools/works_build.py が2Dで順算して自動生成したもの。
+       ならびは手数のやさしい順＝ピッカーに出る順。
+       ★ここを増やしたら sw.js の ASSETS にも同じ順で足すこと。 -->
+  <script src="js/works/ie.js"></script>
+  <script src="js/works/neko.js"></script>
+  <script src="js/works/tulip.js"></script>
+  <script src="js/works/lion.js"></script>
+  <script src="js/works/inu.js"></script>
+  <script src="js/works/kitsune.js"></script>
+  <script src="js/works/usagi.js"></script>
+  <script src="js/works/koppu.js"></script>
   <script src="js/works/kabuto.js"></script>
-  <script src="js/works/tsuru.js"></script>
-  <script src="js/works/tsuru_precise.js"></script>
-  <script src="js/works/_test_cross.js"></script>
-  <script src="js/works/_test_half.js"></script>
+  <script src="js/works/yakko.js"></script>
   <script src="js/problems/rect_fold_2003.js"></script>
   <script src="js/problems/nada2026_day1_q10.js"></script>
   <script src="js/problems/no7_diagonal_fold.js"></script>
