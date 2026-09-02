@@ -164,20 +164,26 @@ def parse(hg, tm, rec):
             ans = m.group(1)
     ans = norm(ans.strip().strip("*").strip())
 
-    # 図SVG は2つの書き方がある。
+    # 図SVG は3つの書き方がある。★書き方の種類を数えてから正規表現を決める
     #  ① 1行  「- 図SVG: <svg …>」
     #  ② コードブロック 「- 図SVG:」の次の行から ```html … ``` まで
+    #  ③ ①②の見出しにかっこ書きが付く 「- 図SVG（(1)長方形）:」＝小問ごとの図
     # ★②を読み落として40本を「図SVGが無い」と切っていた（2026-09-02・塾講師監査で発覚）
-    svg = ""
-    m = re.search(r"^- 図SVG:[ \t]*(\S.*)$", rec, re.M)
-    if m:
-        v = m.group(1).strip().strip("`")
-        svg = "" if v == "判読不能" else v
-    else:
-        m = re.search(r"^- 図SVG:[ \t]*\n```(?:html)?\n(.*?)\n```",
-                      rec, re.M | re.S)
-        if m:
-            svg = m.group(1).strip()
+    # ★③を読み落として さらに25本を切っていた（2026-09-02・図SVG作業の下調べで発覚）
+    svgs = {}
+    for m in re.finditer(r"^- 図SVG([^\n:]*):[ \t]*(.*)$", rec, re.M):
+        head, rest = m.group(1), m.group(2).strip()
+        km = re.search(r"\((\d+)\)", head)      # 見出しの (1)(2)… ＝小問番号
+        key = int(km.group(1)) if km else 0     # 0 ＝ 大問ぜんぶで図が1枚
+        if rest:
+            v = rest.strip("`")
+            body = "" if v == "判読不能" else v
+        else:
+            bm = re.match(r"\n```(?:html)?\n(.*?)\n```", rec[m.end():], re.S)
+            body = bm.group(1).strip() if bm else ""
+        if body and key not in svgs:
+            svgs[key] = body
+    svg = svgs.get(0, "")
 
     has_fig = bool(zu) and not zu.startswith("なし")
     fig_in_answer = bool(re.search(r"（解答", zu))          # 本文に図は無い
@@ -185,7 +191,7 @@ def parse(hg, tm, rec):
     return dict(hg=hg, tail=tail, bunsatsu=bun, kouza=kou, no=no, dai=dai, name=name, star=star,
                 intro=intro, mon=mon, ans=ans, kaihou=norm(field_any(rec, "解法")),
                 hone=norm(field(rec, "骨")), core=norm(field(rec, "コア発見")),
-                zu=zu, svg=svg, has_fig=has_fig, fig_in_answer=fig_in_answer,
+                zu=zu, svg=svg, svgs=svgs, has_fig=has_fig, fig_in_answer=fig_in_answer,
                 qparts=split_paren(mon), aparts=split_paren(ans),
                 kparts=split_paren(norm(field_any(rec, "解法"))),
                 kparts_any=split_paren_any(norm(field_any(rec, "解法"))))
@@ -195,7 +201,7 @@ def ready(r):
     """図SVGが無い「図: あり」は着手しない（図の根拠はPDFだけ）。"""
     if not r["has_fig"]:
         return True
-    return bool(r["svg"]) or r["fig_in_answer"]
+    return bool(r["svgs"]) or r["fig_in_answer"]
 
 
 def all_parsed():
