@@ -23,8 +23,12 @@ python check_engine_geometry.py
 # 4) 折る途中の向き（山折り／谷折り）を機械で確かめる
 python check_fold_direction.py
 
-# 5) push のあと、本番(GitHub Pages)をiPhoneと同じWebKitで確かめる
-python check_production.py
+# 5) 設問・解説に出てくる記号が図の上にあるかを突き合わせる
+python check_symbols_in_figure.py
+
+# 6) push のあと、本番(GitHub Pages)をiPhoneと同じWebKitで確かめる
+python check_production.py     # 折ON単体
+python check_embed.py          # 本体のiframeに入った状態（?embed=1）＋「もどる」まで
 ```
 
 出力（スクショ・レポート）は `_out/` に出る。**`_out/` はgitに入れない**（`.gitignore`済み）。
@@ -37,6 +41,8 @@ python check_production.py
 | `test_all_problems.py` | 全問について ①折る前/折った後のスクショ ②全ステップが指で折れるか ③印刷の答えを打って「せいかい」が出るか ④ラベルのはみ出し・重なり・パネルに隠れていないか ⑤コンソールエラー0件 |
 | `check_engine_geometry.py` | ②が持ち帰った実物のエンジンの頂点座標から、面積・長さ・角度を**別の道すじで**計算（例：No.4の斜線67.5cm²、No.9の1/3、関西創価中のア=82°） |
 | `check_production.py` | 本番のGitHub Pagesを **WebKit＋`service_workers='block'`** で開く。Firestoreへの通信は落とす |
+| `check_embed.py` | 本体のiframeに入った状態（`?embed=1`）で、問題が開けるか・「オトン学園にもどる」が44pxで押せるか・`ori-exit`が親へ飛ぶかまで。🚨**本体にログインはしない**（ダミーの達成率が本番ランキングに載る事故を避ける） |
+| `check_symbols_in_figure.py` | 設問文・解説に出てくる点や角の名前が、図の上（labelPoints・angleMarks）にあるか |
 | `check_fold_direction.py` | 折り**途中**の向き。180°の折り返しは最終形が軸の符号に依らないので、スクショでは気づけない。基準＝マイナスは`wayo_triangle_fold`の1件だけ |
 | `pdf_crop.py` | 原本PDFを600dpi以上で切り出して読む。**問題ページだけでなく解答ページの図と丸数字まで**見る |
 | `render_genbo_svg.py` | 原簿（memory）に書いたSVGを実際に描いて目で見る（弧の向きが逆でも数字では気づけない） |
