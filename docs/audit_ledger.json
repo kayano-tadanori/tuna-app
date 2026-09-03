@@ -1,0 +1,125 @@
+{
+  "_note": [
+    "塾講師監査（中身の監査）の記録。★このファイルは手で足す。docs/audit_ledger.md のほうが自動生成。",
+    "読み書きは scripts/audit_ledger.py。集計は python scripts/audit_ledger.py。",
+    "",
+    "【書き方】監査を1回やったら batches に1つ足す。大問idは書かない——select で範囲を指定し、",
+    "expect_n に『そのとき監査した本数』を書く。あとで範囲を引き直したとき本数が食いちがえば、",
+    "『監査のあとに大問を足した』とわかって止まる（これが安全弁）。",
+    "",
+    "  select の書き方は3つ:",
+    "    {\"grade\":\"4\",\"course\":\"master_bunsatsu\",\"kind\":\"fukushu\",\"no\":[1,13]}  回の範囲",
+    "    {\"id_contains\":\"_641_\"}                                              idの一部",
+    "    {\"ids\":[\"hd_3m_f01_6\", ...]}                                          直に並べる",
+    "",
+    "  1周目・2周目は別の batch にする（目的がちがう監査なので。memory:feedback_content_review_agent）。",
+    "",
+    "【入れていないもの】折ON（lab/origami）は hama_daimon.json の外なので、この台帳では見ていない。",
+    "国語・理科などの一問一答データ（kokugo_*.json / rika_*.json）も対象外＝ここは大問だけ。"
+  ],
+  "_updated": "2026-09-03",
+
+  "batches": {
+    "g4mb1-r1": {
+      "date": "2026-08-27",
+      "by": "塾講師エージェント4体",
+      "scope": "小4マスター宿題 第1分冊 No.1〜13",
+      "select": {"grade": "4", "course": "master_bunsatsu", "kind": "fukushu", "no": [1, 13]},
+      "expect_n": 277,
+      "round": 1,
+      "result": "重大17件を修正（虫食い算2本が不等号問題にすり替わっていた等）",
+      "evidence": "memory:feedback_content_review_agent.md（2026-08-28追記）/ memory:project_g4master_bunsatsu1_genbo.md",
+      "note": "No.1〜3／4〜6／7〜9／10〜13 の4分担。2周目をかけたかは記録に無い（第2・第3分冊は2周の記録あり）"
+    },
+
+    "g4mb2-r1": {
+      "date": "2026-08-28",
+      "by": "塾講師エージェント7体",
+      "scope": "小4マスター宿題 第2分冊 No.14〜28",
+      "select": {"grade": "4", "course": "master_bunsatsu", "kind": "fukushu", "no": [14, 28]},
+      "expect_n": 232,
+      "round": 1,
+      "result": "答えのまちがい0件。指摘はほぼ全部が解説と設問の切り方",
+      "evidence": "memory:project_g4master_bunsatsu1_genbo.md「塾講師エージェントの監査を2周かけた」"
+    },
+    "g4mb2-r2": {
+      "date": "2026-08-28",
+      "by": "塾講師エージェント3体",
+      "scope": "小4マスター宿題 第2分冊 No.14〜28（1周目の直しの再点検）",
+      "select": {"grade": "4", "course": "master_bunsatsu", "kind": "fukushu", "no": [14, 28]},
+      "expect_n": 232,
+      "round": 2,
+      "result": "直した副作用の壊れが20本以上（文が途中で切れる／式まで消える）",
+      "evidence": "memory:project_g4master_bunsatsu1_genbo.md"
+    },
+
+    "g4mb3-r1": {
+      "date": "2026-09-01",
+      "by": "塾講師エージェント8体",
+      "scope": "小4マスター宿題 第3分冊 No.29〜43",
+      "select": {"grade": "4", "course": "master_bunsatsu", "kind": "fukushu", "no": [29, 43]},
+      "expect_n": 280,
+      "round": 1,
+      "result": "答えの数値は811問すべて正しい。すり替え・欠落・勝手な追加0件",
+      "evidence": "memory:project_g4master_bunsatsu1_genbo.md「監査を2周（8体＋4体・のべ280本×2）」/ commit 47896a9"
+    },
+    "g4mb3-r2": {
+      "date": "2026-09-01",
+      "by": "塾講師エージェント4体",
+      "scope": "小4マスター宿題 第3分冊 No.29〜43（1周目の直しの再点検）",
+      "select": {"grade": "4", "course": "master_bunsatsu", "kind": "fukushu", "no": [29, 43]},
+      "expect_n": 280,
+      "round": 2,
+      "result": "根拠のない数字だけが残る等13か所",
+      "evidence": "memory:project_g4master_bunsatsu1_genbo.md"
+    },
+
+    "kokai641-r1": {
+      "date": "2026-09-02",
+      "by": "塾講師エージェント4体",
+      "scope": "第641回（2026年8月）公開テスト 17本",
+      "select": {"id_contains": "_641_"},
+      "expect_n": 17,
+      "round": 1,
+      "result": "答えは93問すべて独立検算と一致。直したのは設問文・解説・図の側だけ",
+      "evidence": "memory:project_kokai641_jissou.md / commit 1437b18"
+    },
+    "kokai641-r2": {
+      "date": "2026-09-02",
+      "by": "塾講師エージェント2体",
+      "scope": "第641回（2026年8月）公開テスト 17本（再点検）",
+      "select": {"id_contains": "_641_"},
+      "expect_n": 17,
+      "round": 2,
+      "result": "原簿側の直し漏れ4件（HG-2677・2678・2988・2987）／設問を割ると前の解説が次の答えを明かす",
+      "evidence": "memory:project_kokai641_jissou.md"
+    }
+  },
+
+  "unresolved_batches": [
+    {
+      "date": "2026-08-15",
+      "by": "塾講師エージェント1体",
+      "scope": "そのセッションで足した31本（灘合7・理科2・小3公開算数8・小3公開国語14）",
+      "result": "重大4件（SVGが問題文と矛盾等）",
+      "why": "31本の内わけは残っているが、大問idの一覧が残っていない。HG-2610だけ名指しで分かる",
+      "evidence": "memory:feedback_content_review_agent.md"
+    },
+    {
+      "date": "2026-08-11〜2026-09-02",
+      "by": "塾講師エージェント のべ13体（5体＋8体）",
+      "scope": "小5最レ 第1・2分冊（いまのNo.1〜20＝640本1617問）",
+      "result": "1周目3体（84本ずつ）→重大24件／2周目2体→重大16件／別セッションで1周目4体169本・2周目4体80本",
+      "why": "監査が複数セッションに分かれ、各回が見た範囲（本数）を足しても640本に届かない。どの回を見たか再構成できない",
+      "evidence": "memory:project_sairei5_daimon12.md"
+    },
+    {
+      "date": "2026-08-16〜2026-08-19",
+      "by": "opusの独立レビュー（3分割・6分割）",
+      "scope": "小3マスター宿題 全43回",
+      "result": "重大17件（HG-4040の虫食い筆算・HG-4002のSVG目もり等）／さらに6分割レビューで6本すべてに問題",
+      "why": "記録の本数（全43回634問）が、いまのデータ（564本1982問）と合わない。当時の範囲を復元できない",
+      "evidence": "memory:project_g3master_bunsatsu_genbo.md"
+    }
+  ]
+}

@@ -434,12 +434,53 @@ COURSE_LABEL = {
     "master": "マスター", "master_bunsatsu": "マスター宿題", "sairei": "最レ",
     "nd2": "2nd演習", "rika": "理科", "nadago": "灘合", "kokugo": "国語",
     "kokugo_bunsatsu": "国語のとも",
+    # ★アプリ側のキー名でも引けるようにしておく（audit_ledger.py はアプリ側の名前で集計する）
+    "master2nd": "2nd演習", "nadago_rika": "灘合理科",
 }
 
 
 def load_daimon():
     """アプリ側の大問データ（data/hama_daimon.json）を読む。"""
     return json.load(io.open(os.path.join(BASE, "data", "hama_daimon.json"), encoding="utf-8"))
+
+
+def iter_daimon(d, grade=None, app_courses=None):
+    """アプリの大問データ（hama_daimon.json）を、大問1本ずつ順に返す。**唯一の走査口。**
+
+    yield する dict:
+      grade / app_course / kind / no / idx / x（大問そのもの）
+
+    grade・app_courses を渡すとその範囲だけ。渡さなければ全部（＝3,900本あまり）。
+
+    ★大問を数える・並べる処理は、必ずこの関数を通すこと。自前で入れ子を歩かない。
+      2026-09-03まで scan_courses が自前で歩いていた。走査を2か所に持つと、
+      片方だけが新しい kind や course を知らないまま古びる。それが実際に起きたのが
+      find_no_diagram.py の分類コピー（このファイルの冒頭に顛末がある）。
+    """
+    for g in ([grade] if grade is not None else list(d.get("grades", {}))):
+        cs = d.get("grades", {}).get(g, {})
+        for c in (app_courses if app_courses is not None else list(cs)):
+            node = cs.get(c, {})
+            if not isinstance(node, dict):
+                continue
+            for kind in KINDS:
+                v = node.get(kind, {})
+                if not isinstance(v, dict):
+                    continue
+                for no, arr in v.items():
+                    for i, x in enumerate(arr):
+                        yield {"grade": g, "app_course": c, "kind": kind,
+                               "no": no, "idx": i, "x": x}
+
+
+def app_courses_of(course):
+    """原簿のコース名 → アプリ側のコース名（複数になることがある）。"""
+    out = [APP_COURSE_KEY.get(course, course)]
+    # ★灘合は原簿では算数・理科が同じ「小N灘合」見出しに混ざっているが、
+    #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
+    if course == "nadago":
+        out.append("nadago_rika")
+    return out
 
 
 def scan_courses(d):
@@ -455,25 +496,17 @@ def scan_courses(d):
     """
     rows, nohg = [], []
     for (grade, course) in sorted(gen):
-        node = d["grades"].get(grade, {}).get(APP_COURSE_KEY.get(course, course), {})
-        # ★灘合は原簿では算数・理科が同じ「小N灘合」見出しに混ざっているが、
-        #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
-        extra_nodes = []
-        if course == "nadago":
-            extra_nodes.append(d["grades"].get(grade, {}).get("nadago_rika", {}))
         inapp = set()
         n = q = 0
-        for nd in [node] + extra_nodes:
-            for kind in KINDS:
-                for v in nd.get(kind, {}).values():
-                    for x in v:
-                        n += 1
-                        q += len(x.get("steps", []))
-                        h = hgof(x)
-                        if h:
-                            inapp.update(h)
-                        else:
-                            nohg.append((grade, course, x.get("id")))
+        for r in iter_daimon(d, grade, app_courses_of(course)):
+            x = r["x"]
+            n += 1
+            q += len(x.get("steps", []))
+            h = hgof(x)
+            if h:
+                inapp.update(h)
+            else:
+                nohg.append((grade, course, x.get("id")))
         miss = sorted(gen[(grade, course)] - inapp - set(CANNOT) - set(SAME) - KOKUGO_DONE)
         rows.append({
             "grade": grade, "course": course,
