@@ -478,8 +478,13 @@ async function hamaDaimonWeek(grade, course, no) {
 // ★マスターの宿題テキスト（大問）＝復習テストとは別物（3年マスター算数 第1分冊で追加・2026-08-17）。
 //   「master」コースの兄弟コース「master_bunsatsu」に同じ回番号で入っている。
 //   データが無い学年・回では自動で空になり、ボタンごと隠れる（学年の決め打ちなし）
-async function hamaDaimonBunsatsu(grade, no) {
-  const node = hamaDaimonNode(await loadHamaDaimon(), grade, 'master_bunsatsu');
+//   ★2026-09-03：国語にも宿題テキスト（小3マスター国語「国語のとも」）ができたので、
+//   コースごとに兄弟コース名を引けるようにした。ここに無いコースでは宿題ボタンは出ない。
+const BUNSATSU_OF = { master: 'master_bunsatsu' };
+async function hamaDaimonBunsatsu(grade, no, course) {
+  const key = BUNSATSU_OF[course || 'master'];
+  if (!key) return [];
+  const node = hamaDaimonNode(await loadHamaDaimon(), grade, key);
   return (node && node.fukushu && node.fukushu[String(no)]) || [];
 }
 // ★講座の宿題（大問）＝復習テストとは別物の、授業テキストそのもの（小5最レ第3分冊で追加・2026-08-11）。
@@ -1075,9 +1080,12 @@ async function renderHamaPanel() {
 
   // ★大問モード（原簿どおりの3問1組）。まだ問題が無いところは暗転して残す（本人指示 2026-07-28）
   const byUnitMode = (sansuState.hamaMode === 'unit' && sansuState.hamaUnit);
-  const weekSets = (byUnitMode && !isKokugo)
+  // ★以前は「国語なら問答無用で空」だった（読解の本文が著作物で大問を作れなかったため）。
+  //   小3マスター国語の宿題テキスト（国語のとも）で国語にも大問ができたので、教科ではなく
+  //   「そのコースが実際にデータを持っているか」で決めるようにした（2026-09-03）
+  const weekSets = byUnitMode
     ? await hamaDaimonUnit(grade, course, sansuState.hamaUnit)
-    : isKokugo ? [] : await hamaDaimonWeek(grade, course, no);
+    : await hamaDaimonWeek(grade, course, no);
   const kokaiSets = showKokai ? await hamaDaimonKokai(grade, course, no) : [];
   const mNow = hamaMonthOf(grade, course, no);
   const mFrom = ((mNow - 1 - 2) % 12 + 12) % 12 + 1;
@@ -1113,11 +1121,15 @@ async function renderHamaPanel() {
   const k2NameEl = document.querySelector('.hama-act-btn[data-hama-act="kouza2q"] .hama-act-name');
   if (k1NameEl) k1NameEl.textContent = k1Name ? `📚 第1講座（${k1Name}）` : '📚 第1講座の宿題（大問）';
   if (k2NameEl) k2NameEl.textContent = k2Name ? `📚 第2講座（${k2Name}）` : '📚 第2講座の宿題（大問）';
+  // ★コース定義に weekLabel があれば「今週の復習テスト（大問）」の名前を差しかえる。
+  //   国語のとも（宿題テキスト）は復習テストではないので「今週の宿題（大問）」と出す（2026-09-03）
+  const wNameEl = document.querySelector('.hama-act-btn[data-hama-act="weekq"] .hama-act-name');
+  if (wNameEl) wNameEl.textContent = (courses[course] && courses[course].weekLabel) || '🧩 今週の復習テスト（大問）';
   // ★マスターの宿題（大問）＝兄弟コース「master_bunsatsu」の同じ回番号から取る。
   //   復習テストより先にやるもの（本人指示 2026-08-17）なので weekq より前に置く。
   //   マスター以外のコースでは出さない／データが無い回は自動で空になりボタンが隠れる
   const isMaster = (course === 'master');
-  const bunsatsuSets = (isMaster && !byUnitMode) ? await hamaDaimonBunsatsu(grade, no) : [];
+  const bunsatsuSets = (BUNSATSU_OF[course] && !byUnitMode) ? await hamaDaimonBunsatsu(grade, no, course) : [];
   const hasBunsatsu = bunsatsuSets.length > 0;
   const dq = [
     // 宿題は復習テストより先にやるもの（本人指示 2026-08-11）。国語には大問データが無い（読解の本文は
@@ -1125,7 +1137,9 @@ async function renderHamaPanel() {
     { k: 'kouza1q', show: hasKouza1, sets: kouza1Sets, span: `No.${no}` },
     { k: 'kouza2q', show: hasKouza2, sets: kouza2Sets, span: `No.${no}` },
     { k: 'bunsatsuq', show: hasBunsatsu, sets: bunsatsuSets, span: `No.${no}` },
-    { k: 'weekq', show: !isKokugo, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
+    // 国語（本科）は復習テストの大問を持たないのでボタンごと隠す。ただし国語でも実際に
+    // データがあるコース（国語のとも＝宿題テキスト）では出す（2026-09-03）
+    { k: 'weekq', show: !isKokugo || weekSets.length > 0, sets: weekSets, span: byUnitMode ? sansuState.hamaUnit : `No.${no}` },
     { k: 'kokaiq', show: showKokai, sets: kokaiSets, span: `${mFrom}〜${mNow}月` },
   ];
   for (const d of dq) {
