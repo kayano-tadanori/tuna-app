@@ -24,6 +24,12 @@
    ・「本物のエンジンで折れるか」だけ落ちた → JSの書き出しか3D側の問題
    ・2Dが通ってエンジンが落ちるときは、まず works_build.py を流し直す
      （js/works/*.js は生成物。手で直さない）
+   ・「ヒントの文と画面が合っているか」が落ちた → **文のほうを直す**。
+     折り図に「うらがえす」がある作品でよく出る（折り図は裏から見た絵になるので
+     左右が逆／手前へ折るはずが後ろへ回りこむ）。すいかが実例。
+   ・「3Dの見た目が2Dの正解と合うか」が落ちた → `to_work_js.py` の**重なりの高さ**
+     （layer_order）を疑う。折線ではない。**この1本だけが「自分の計算どうし」でなく
+     2Dの正解と突き合わせている**＝ここが鳴ったら本当に見た目が違う。
 """
 import os, subprocess, sys, time
 from pathlib import Path
@@ -38,8 +44,10 @@ SUITE = [
     ('check_works_app.py',   '本物のエンジンで最後まで折れるか',            True,  False),
     ('check_fold_motion.py', '折る途中の動き（両側にひらかない・ヒンジ）',  True,  False),
     ('check_stack_height.py','重なりの高さが計算と合うか',                  True,  False),
+    ('check_paper_face.py',  '3Dの見た目が2Dの正解と合うか（紙の表裏）',    True,  False),
     ('check_axis_safety.py', '骨の軸を逆に書いても壊れないか',              True,  False),
     ('check_no_backfold.py', '折れない方向へ動かないか',                    True,  False),
+    ('check_hint_words.py',  'ヒントの文と画面が合っているか（左右・後ろ）',  True,  False),
     ('check_hidden.py',      '隠したものが本当に消えているか・ふきかけバーの出方', True,  False),
     ('check_problems.py',    '灘中対策の問題の図が壊れていないか',          False, False),
     ('check_camera.py',      'カメラの制限（作品は自由・問題は制限）',      False, False),

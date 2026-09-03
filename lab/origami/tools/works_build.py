@@ -9,6 +9,16 @@
 ★使い方
    python works_build.py          … 全部作って preview/ に画像、js/works/ にJS
    python works_build.py inu      … 1つだけ
+
+★紙の表と裏（color_down）
+   アプリは「**最初に上を向いていた面**」を色つきで描く。
+   ところが折り図（おりがみくらぶ）は**白い面を上にして置いて始める**ものが多い
+   （原簿の「紙は おもて＝白／うら＝色」）。そのままだと出来上がりが**真っ白**になる
+   ——ハートの折り図⑦は全面ピンクなのに、アプリでは白いハートが出ていた
+   （本人指摘 2026-09-03）。
+   出来上がりに色を出したい作品は `color_down=True` を付ける。**表と裏の色を
+   入れかえて描くだけ**で、形・重なり・折り線はいっさい変わらない。
+   子どもへの言い方は「色のついた面を**下**にして置いてね」。
 """
 import sys, math
 from pathlib import Path
@@ -90,7 +100,7 @@ def build_inu():
              2: '右の角を下へ折る（たれ耳）',
              3: '下のとがった所を少し上へ折る（鼻）'}
     return st, dict(work_id='inu', name='いぬ', emoji='🐶', difficulty=2,
-                    hints=hints, rotate_deg=-45)
+                    hints=hints, rotate_deg=-45, color_down=True)
 
 
 # ==================================================================== コップ
@@ -161,19 +171,21 @@ def build_kitsune():
     #   離れている。そこから逆算すると、折り線はまん中の折り目から u=0.2
     #   ずれた所を通る（u=0 だと耳がぴったりくっついて、きつねに見えない）。
     u = 0.1
+    # 🚨左右は「回した後の画面」で名づける。rotate_deg=135 で A=(-1,-1) は画面の**右**、
+    #   C=(1,1) は画面の**左**に来る（2026-09-03 check_hint_words.py が検出）。
     st.fold_axiom_line(((0, -1), (u, u)), 'V', only_containing=None, cut_hint=A,
-                       name='左の角を上へ折り上げる（耳）')
-    st.fold_axiom_line(((1, 0), (-u, -u)), 'V', only_containing=None, cut_hint=C,
                        name='右の角を上へ折り上げる（耳）')
+    st.fold_axiom_line(((1, 0), (-u, -u)), 'V', only_containing=None, cut_hint=C,
+                       name='左の角を上へ折り上げる（耳）')
     st.flip('v', name='うらがえす')
     hints = {0: '対角線で半分に折って三角にする',
              1: 'まん中に折り目をつけてもどす',
              2: '上のとがった所を、底辺のまん中へ折り下げる',
-             3: '左の角を、まん中から上へ折り上げる（耳）',
-             4: '右の角を、まん中から上へ折り上げる（耳）',
-             5: 'うらがえして、かおを かいたら できあがり'}
+             3: '右の角を、まん中から上へ折り上げる（耳）',
+             4: '左の角も、まん中から上へ折り上げる（耳）',
+             5: 'かおを かいたら できあがり'}
     return st, dict(work_id='kitsune', name='きつね', emoji='🦊', difficulty=2,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 # ==================================================================== うさぎ
@@ -212,7 +224,7 @@ def build_usagi():
              4: '右の角を、まん中にむけて折り上げる（耳）',
              5: 'うらがえして、かおを かいたら できあがり'}
     return st, dict(work_id='usagi', name='うさぎ', emoji='🐰', difficulty=2,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 def disp(rot, x, y):
@@ -312,26 +324,29 @@ def build_kabuto():
 
 # ==================================================================== やっこさん
 def build_yakko():
-    """やっこさんの土台 12手。座布団折り3回＋裏返し2回。"""
+    """やっこさんの土台 12手。座布団折り3回。
+
+       ★折り図は「座布団折り → うらがえす → 座布団折り → うらがえす → 座布団折り」。
+         このアプリは紙をうらがえさないので、まん中の1回を 'M'（後ろへ折る）で書く。
+         紙の上では同じこと（→[[feedback_origami_uragaeshi_hint]]）。
+    """
     st = FoldState(1.0)
-    def blintz(corners, tag):
+    def blintz(corners, kind, tag):
         for c in corners:
-            st.fold_by_points(c, (0, 0), 'V', only_containing=None,
+            st.fold_by_points(c, (0, 0), kind, only_containing=None,
                               name=f'{tag}：角を中心へ')
-    blintz([(1,1), (-1,1), (-1,-1), (1,-1)], '1回目')
-    st.flip('v')
-    blintz([(1,0), (0,1), (-1,0), (0,-1)], '2回目')
-    st.flip('v')
-    blintz([(0.5,0.5), (-0.5,0.5), (-0.5,-0.5), (0.5,-0.5)], '3回目')
+    blintz([(1,1), (-1,1), (-1,-1), (1,-1)], 'V', '1回目')
+    blintz([(1,0), (0,1), (-1,0), (0,-1)], 'M', '2回目（後ろへ）')
+    blintz([(0.5,0.5), (-0.5,0.5), (-0.5,-0.5), (0.5,-0.5)], 'V', '3回目')
     hints = {}
     for i in range(4):
         hints[i] = f'四すみの角を、まん中に合わせて折る（{i+1}つ目）'
     for i in range(4, 8):
-        hints[i] = f'裏返して、また四すみを中心へ（{i-3}つ目）'
+        hints[i] = f'こんどは四すみを、後ろへ まん中に合わせて折る（{i-3}つ目）'
     for i in range(8, 12):
-        hints[i] = f'もう一度裏返して、四すみを中心へ（{i-7}つ目）'
+        hints[i] = f'もう一度、四すみを まん中に合わせて折る（{i-7}つ目）'
     return st, dict(work_id='yakko', name='やっこさん', emoji='🧑', difficulty=3,
-                    hints=hints, rotate_deg=0)
+                    hints=hints, rotate_deg=0, color_down=True)
 
 
 # ==================================================================== ねこ
@@ -353,7 +368,7 @@ def build_neko():
              1: '左の角を、右ななめ上へ折る',
              2: '右の角を、左ななめ上へ折る（のこった上の2つのとがりが耳）'}
     return st, dict(work_id='neko', name='ねこ', emoji='🐱', difficulty=1,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 # ==================================================================== チューリップ
@@ -372,7 +387,7 @@ def build_tulip():
              1: '右下の角を、ななめ上へ折り上げる（花びら）',
              2: '左下の角も、ななめ上へ折り上げる（花びら）'}
     return st, dict(work_id='tulip', name='チューリップ', emoji='🌷', difficulty=1,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 # ==================================================================== やま（おうち）
@@ -422,10 +437,13 @@ def build_lion():
     #     ことに対応していなかったから。2026-09-03にエンジン側を直して入れた。
     st.fold_axiom_line((disp(R, -1.6, 0), disp(R, 1.6, 0)), 'M', only_containing=None,
                        cut_hint=disp(R, 0, -0.6), name='下を後ろへ折る')
-    hints = {0: '下の角を、少し上へ折り上げる',
-             1: '左の角を、内がわへ折る（たてがみ）',
-             2: '右の角を、内がわへ折る（たてがみ）',
-             3: '下を、後ろへ折ったら できあがり'}
+    # 🚨キーは st.steps の番号＝**crease_only も1手として数える**。
+    #   0始まりで書いていたので、ヒントが2手ぶんずれて別の手に付いていた
+    #   （2026-09-03 check_hint_words.py が検出）。
+    hints = {2: '下の角を、少し上へ折り上げる',
+             3: '左の角を、内がわへ折る（たてがみ）',
+             4: '右の角を、内がわへ折る（たてがみ）',
+             5: '下を、後ろへ折ったら できあがり'}
     return st, dict(work_id='lion', name='ライオン', emoji='🦁', difficulty=2,
                     hints=hints, rotate_deg=R)
 
@@ -487,7 +505,7 @@ def build_buta():
              7: '左上の角を、後ろへ折る',
              8: '右上の角も、後ろへ折って、かおを かいたら できあがり'}
     return st, dict(work_id='buta', name='ぶた', emoji='🐷', difficulty=2,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 
@@ -549,7 +567,7 @@ def build_heart():
              8: '左の山の先を、後ろへ少し折る（まるくなる）',
              9: '右の山の先も、後ろへ少し折ったら できあがり'}
     return st, dict(work_id='heart', name='ハート', emoji='💗', difficulty=2,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 
@@ -602,7 +620,7 @@ def build_onigiri():
              7: '下の左の角を、後ろへ折る',
              8: '下の右の角も、後ろへ折ったら できあがり'}
     return st, dict(work_id='onigiri', name='おむすび', emoji='🍙', difficulty=2,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 
@@ -658,19 +676,23 @@ def build_panda():
              7: '下のとがった所を、上へ折り上げる',
              8: 'その先を、手前の1まいだけ下へ折って、めを かいたら できあがり'}
     return st, dict(work_id='panda', name='パンダ', emoji='🐼', difficulty=2,
-                    hints=hints, rotate_deg=R)
+                    hints=hints, rotate_deg=R, color_down=True)
 
 
 
 # ==================================================================== パトカー
 def build_patocar():
-    """ぱとかー 6手＋うらがえし1回。★おりがみくらぶ easy/vehicle/Patrol の折り図を実測。
+    """ぱとかー 6手。★おりがみくらぶ easy/vehicle/Patrol の折り図を実測。
        ① たてよこ半分に折り目をつけてもどす
-       ② 下のふちを、まん中の線に合わせて折り上げる
-       ③ その帯の左右を、まん中から45度の線で折り下げる → タイヤ
-       ④ うらがえす
-       ⑤ 上のふちを、まん中の線に合わせて折り下げる
-       ⑥ 上の左右の角を、後ろへ折る → 車の屋根の形
+       ② 下のふちを、まん中の線に合わせて**後ろへ**折り上げる
+       ③ その帯の左右を、まん中からの線で**後ろへ**折り下げる → タイヤ
+       ④ 上のふちを、まん中の線に合わせて折り下げる
+       ⑤ 上の左右の角を、後ろへ折る → 車の屋根の形
+
+       ★折り図の②③は「手前へ折る→うらがえす」。このアプリは紙をうらがえさないので、
+         **できあがりを見る側から書きなおして 'M'（後ろへ）**にしてある。
+         こうしないと車の裏側が見えて、屋根も車体もタイヤも同じ色の のっぺりした形になる
+         （→[[feedback_origami_uragaeshi_hint]]）。
 
        ★実測（正方形の半分＝1とした座標。完成の車体は よこ2×たて1）
          ・③の折り線＝帯の**上のまん中(0,0)から、帯の下のかど(±1,-0.5)へ**（実測2:1）
@@ -679,20 +701,25 @@ def build_patocar():
        ★③で「帯だけ」を折る根拠：折り図④で正方形の輪郭がそのまま残っている。
          下の紙もいっしょに折ったら、左下がまるごと斜めに欠ける。
     """
+    #
+    # ★うらがえしは使わない。折り図の④「うらがえす」より前の手を、
+    #   **できあがりを見る側から書きなおす**＝山谷を入れかえて 'M'（後ろへ折る）にする。
+    #   こうしないと、アプリは紙をうらがえさないので**車の裏側**が見えてしまい、
+    #   できあがりが赤一色になる（折り図のできあがりは 屋根が赤／車体とタイヤが白）。
+    #   →[[feedback_origami_uragaeshi_hint]]
     st = FoldState(1.0)
-    st.crease_only((0, -1.2), (0, 1.2), 'V', name='たてに折り目をつける')
-    st.crease_only((-1.2, 0), (1.2, 0), 'V', name='よこに折り目をつける')
+    st.crease_only((0, -1.2), (0, 1.2), 'M', name='たてに折り目をつける')
+    st.crease_only((-1.2, 0), (1.2, 0), 'M', name='よこに折り目をつける')
     s2 = len(st.steps)
-    st.fold_by_points((0, -1), (0, 0), 'V', only_containing=None,
-                      name='下のふちをまん中へ折り上げる')
+    st.fold_by_points((0, -1), (0, 0), 'M', only_containing=None,
+                      name='下のふちをまん中へ後ろに折り上げる')
     # ★折り線は45度ではなく「帯の上のまん中(0,0)から、帯の下のかど(±1,-0.5)へ」。
     #   45度だとタイヤが2つとも まん中に寄ってしまう（2026-09-03、絵を見て気づいた）。
     for tag, sgn in (('左', -1), ('右', 1)):
-        st.fold_axiom_line(((0, 0), (sgn * 1.0, -0.5)), 'V',
+        st.fold_axiom_line(((0, 0), (sgn * 1.0, -0.5)), 'M',
                            panel_filter=lambda p: s2 in p['hist'],
                            cut_hint=(sgn * 0.8, -0.1),
-                           name=f'{tag}のタイヤを折り下げる')
-    st.flip('v', name='うらがえす')
+                           name=f'{tag}のタイヤを後ろへ折り下げる')
     st.fold_by_points((0, 1), (0, 0), 'V', only_containing=None,
                       name='上のふちをまん中へ折り下げる')
     for tag, sgn in (('左', -1), ('右', 1)):
@@ -700,13 +727,12 @@ def build_patocar():
                            cut_hint=(sgn * 0.9, 0.45), name=f'{tag}上の角を後ろへ折る')
     hints = {0: 'たてに半分に折って、もどす',
              1: 'よこにも半分に折って、もどす',
-             2: '下のふちを、まん中の線に合わせて折り上げる',
-             3: '帯の左を、まん中から ななめに折り下げる（タイヤ）',
-             4: '帯の右も、ななめに折り下げる（タイヤ）',
-             5: 'うらがえす',
-             6: '上のふちを、まん中の線に合わせて折り下げる',
-             7: '左上の角を、後ろへ折る（屋根）',
-             8: '右上の角も、後ろへ折って、まどを かいたら できあがり'}
+             2: '下のふちを、まん中の線に合わせて 後ろへ折り上げる',
+             3: '帯の左を、まん中から ななめに 後ろへ折り下げる（タイヤ）',
+             4: '帯の右も、ななめに 後ろへ折り下げる（タイヤ）',
+             5: '上のふちを、まん中の線に合わせて折り下げる',
+             6: '左上の角を、後ろへ折る（屋根）',
+             7: '右上の角も、後ろへ折って、まどを かいたら できあがり'}
     return st, dict(work_id='patocar', name='パトカー', emoji='🚓', difficulty=2,
                     hints=hints, rotate_deg=0)
 
@@ -714,30 +740,33 @@ def build_patocar():
 
 # ==================================================================== すいか
 def build_suika():
-    """すいか 3手＋うらがえし2回。★おりがみくらぶ easy/food/watermelon2 の折り図を実測。
+    """すいか 3手。★おりがみくらぶ easy/food/watermelon2 の折り図を実測。
        ① 下から1/4の所に折り目をつけてもどす（実測 y=-0.49）
        ② 下のふちを、その折り目に合わせて折り上げる（実測 折り線 y=-0.754）→ 皮
-       ③ うらがえす
-       ④ 上のまん中から、下の左右のかどへ引いた線で折る → 三角のすいか
-       ⑤ うらがえして できあがり
+       ③④ 上のまん中から、下の左右のかどへ引いた線で、角を**後ろへ**折る
+          → 三角のすいか
 
        ★①②が「折り目→そこへ合わせる」の関係になっているのが肝。
          実測 -0.49 と -0.754 は、-0.5 と -0.75（下のふちが折り目にちょうど届く）。
+
+       ★折り図は「③うらがえす → 手前へ折る → ⑤うらがえす」だが、
+         このアプリは紙をうらがえさない（to_work_js の「★裏返し(flip)について」）。
+         **見る側は表のまま、角を後ろへ折る**と書けば折り線も出来上がりも同じ。
+         🚨うらがえしを挟んだまま書くと、ヒントの左右が画面と逆になり
+           （2Dの折り図は裏から見ているので）、しかも手前へ折ると書いてあるのに
+           画面では紙が後ろへ回りこむ。本人指摘 2026-09-03「すいかの2手目がおかしい」。
+           これを見張るのが check_hint_words.py。
     """
     st = FoldState(1.0)
     st.crease_only((-1.2, -0.5), (1.2, -0.5), 'V', name='下から1/4に折り目をつける')
     st.fold_by_points((0, -1), (0, -0.5), 'V', only_containing=None,
                       name='下のふちを折り目に合わせて折り上げる（皮）')
-    st.flip('v', name='うらがえす')
     for tag, sgn in (('左', -1), ('右', 1)):
-        st.fold_axiom_line(((0, 1), (sgn * 1.0, -0.75)), 'V', only_containing=None,
-                           cut_hint=(sgn * 0.9, 0.5), name=f'{tag}を内がわへ折る')
-    st.flip('v', name='うらがえす')
+        st.fold_axiom_line(((0, 1), (sgn * 1.0, -0.75)), 'M', only_containing=None,
+                           cut_hint=(sgn * 0.9, 0.5), name=f'{tag}上の角を後ろへ折る')
     hints = {1: '下のふちを、折り目に合わせて折り上げる（皮になる）',
-             2: 'うらがえす',
-             3: '上のまん中から、下の左のかどへ ななめに折る',
-             4: '右も同じように、ななめに折る',
-             5: 'うらがえして、たねを かいたら できあがり'}
+             2: '上のまん中から、下の左のかどへ、ななめに 後ろへ折る',
+             3: '右も同じように 後ろへ折って、たねを かいたら できあがり'}
     return st, dict(work_id='suika', name='すいか', emoji='🍉', difficulty=1,
                     hints=hints, rotate_deg=0)
 
@@ -745,34 +774,43 @@ def build_suika():
 
 # ==================================================================== ピアノ
 def build_piano():
-    """ぴあの 4手＋うらがえし1回。★おりがみくらぶ easy/other/piano の折り図を実測。
+    """ぴあの 4手。★おりがみくらぶ easy/other/piano の折り図を実測。
        ① たてよこ半分に折り目をつけてもどす
-       ② 左右のふちを、内がわへ 1/4 ずつ折る（折り線 x=±0.75）
-       ③ 左のふちのまん中(-0.75,0)から、上のふちのまん中(0,1)へ引いた線で折る
+       ② 左右のふちを、内がわへ 1/4 ずつ**後ろへ**折る（折り線 x=±0.75）
+       ③ 右のふちのまん中(0.75,0)から、上のふちのまん中(0,1)へ引いた線で**後ろへ**折る
           → ピアノのふたの斜め
-       ④ うらがえす
-       ⑤ 下を折り上げる（実測 y=-0.72）→ けんばん
+       ④ 下を折り上げる（実測 y=-0.72）→ けんばん
 
        ★③の折り線は45度ではない。折ったあとの紙が よこ1.5×たて2 だから、
-         「左のふちのまん中」と「上のふちのまん中」を結ぶと 2:1.5 の斜めになる。
+         「ふちのまん中」と「上のふちのまん中」を結ぶと 2:1.5 の斜めになる。
+
+       ★折り図の②③は「手前へ折る→うらがえす」。このアプリは紙をうらがえさないので、
+         **できあがりを見る側から書きなおして 'M'（後ろへ）**にしてある。左右も鏡に
+         なるので、ふたは折り図の左上ではなく**右上**。こうしないとピアノの裏側が見えて、
+         けんばんが本体と同じ色になる（→[[feedback_origami_uragaeshi_hint]]）。
     """
+    #
+    # ★うらがえしは使わない。④「うらがえす」より前の手を、**できあがりを見る側から**
+    #   書きなおす＝山谷を入れかえて 'M'（後ろへ折る）にし、左右を鏡にする。
+    #   こうしないとアプリではピアノの裏側が見えて、**けんばんが白くなる**
+    #   （折り図のできあがりは 本体が白／けんばんが赤）。
+    #   左右が鏡になるので、ふたは折り図の左上ではなく**右上**に来る。
+    #   →[[feedback_origami_uragaeshi_hint]]
     st = FoldState(1.0)
-    st.crease_only((0, -1.2), (0, 1.2), 'V', name='たてに折り目をつける')
-    st.crease_only((-1.2, 0), (1.2, 0), 'V', name='よこに折り目をつける')
-    st.fold_by_points((-1, 0), (-0.5, 0), 'V', only_containing=None,
-                      name='左のふちを内がわへ折る')
-    st.fold_by_points((1, 0), (0.5, 0), 'V', only_containing=None,
-                      name='右のふちを内がわへ折る')
-    st.fold_axiom_line(((-0.75, 0), (0, 1)), 'V', only_containing=None,
-                       cut_hint=(-0.7, 0.9), name='左上の角を、ななめに折る（ふた）')
-    st.flip('v', name='うらがえす')
+    st.crease_only((0, -1.2), (0, 1.2), 'M', name='たてに折り目をつける')
+    st.crease_only((-1.2, 0), (1.2, 0), 'M', name='よこに折り目をつける')
+    st.fold_by_points((-1, 0), (-0.5, 0), 'M', only_containing=None,
+                      name='左のふちを後ろへ折る')
+    st.fold_by_points((1, 0), (0.5, 0), 'M', only_containing=None,
+                      name='右のふちを後ろへ折る')
+    st.fold_axiom_line(((0.75, 0), (0, 1)), 'M', only_containing=None,
+                       cut_hint=(0.7, 0.9), name='右上の角を、後ろへ ななめに折る（ふた）')
     st.fold_axiom_line(((-1.2, -0.72), (1.2, -0.72)), 'V', only_containing=None,
                        cut_hint=(0, -0.95), name='下を折り上げる（けんばん）')
-    hints = {2: '左のふちを、内がわへ 1/4 ほど折る',
-             3: '右のふちも、内がわへ 1/4 ほど折る',
-             4: '左上の角を、ななめに折り下げる（ピアノのふた）',
-             5: 'うらがえす',
-             6: '下を折り上げて、けんばんを かいたら できあがり'}
+    hints = {2: '左のふちを、内がわへ 1/4 ほど 後ろへ折る',
+             3: '右のふちも、内がわへ 1/4 ほど 後ろへ折る',
+             4: '右上の角を、ななめに 後ろへ折る（ピアノのふた）',
+             5: '下を折り上げて、けんばんを かいたら できあがり'}
     return st, dict(work_id='piano', name='ピアノ', emoji='🎹', difficulty=2,
                     hints=hints, rotate_deg=0)
 
@@ -861,7 +899,8 @@ def run(names):
         work = to_work_js.to_work(st, meta['work_id'], meta['name'], meta['emoji'],
                                   meta['difficulty'], hints=meta['hints'],
                                   rotate_deg=meta.get('rotate_deg', 0),
-                                  inflate=meta.get('inflate'))
+                                  inflate=meta.get('inflate'),
+                                  color_down=meta.get('color_down', False))
         head = (BUILDERS[nm].__doc__ or '').strip()
         js = to_work_js.to_js(work, header=head)
         out = WORKS / f"{meta['work_id']}.js"

@@ -17,6 +17,9 @@ window.ORIGAMI_WORKS = window.ORIGAMI_WORKS || {};
 
 ORIGAMI_WORKS.kitsune = {
   id: 'kitsune', name: 'きつね', emoji: '🦊', difficulty: 2,
+  // 色のついた面を**下**にして置いて折り始める作品。
+  //   表と裏の色を入れかえて描くだけ（形も折り線も変わらない）。
+  colorDown: true,
   mesh: {
     verts: [
       [-0.66468, 0, -0.749533],
@@ -231,11 +234,11 @@ ORIGAMI_WORKS.kitsune = {
     panel: [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15],
     boneParent: [-1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 5, 5, 6, 8, 11],
     flatStack: true,   // 折り終わりがぺたんこ＝真上から見せる＋層を上へ積む
-    layerOrder: [0, 1, 3, 5, 9, 2, 4, 8, 4, 12, 8, 5, 13, 9, 11, 10],
+    layerOrder: [0, 1, 3, 7, 15, 2, 6, 14, 4, 12, 8, 5, 13, 9, 11, 10],
     // その紙が何枚重なっている所か（多いほど硬い＝形が崩れない）
     stackCount: [6, 6, 10, 6, 12, 16, 6, 8, 12, 6, 8, 16, 6, 6, 10, 6, 12, 16, 6, 8, 12, 6, 8, 16],
     // ヒンジの軸を紙の厚み何枚ぶん持ち上げるか（重なりはここから幾何で出る）
-    hingeY: [0.0, 0.5, 1.5, 2.5, 4.5, -0.5, -1.5, -3.5, -0.5, -4.5, -1.5, 1.5, 5.5, 2.5, 3.5, -2.5],
+    hingeY: [0.0, 0.5, 1.5, 3.5, 7.5, -0.5, -2.5, -6.5, -0.5, -4.5, -0.5, 1.5, 5.5, 1.5, 3.5, -2.5],
     boneFoldStep: [0, 1, 2, 3, 4, 2, 3, 4, 3, 4, 4, 3, 4, 4, 4, 4],
     // 1手ごとの重なりの高さ（参考値。描画には使わない）
     layerByStep: [
@@ -266,16 +269,16 @@ ORIGAMI_WORKS.kitsune = {
   },
   steps: [
     { id: 1, handle: { boneId: 1, local: [0, 0, 1.414214] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '対角線で半分に折って三角にする',
+      hintLabel: '色のついた面を下にして、対角線で半分に折って三角にする',
       creaseLine: { boneId: 0, a: [-2.828427, 0, 0], b: [0, 0, 0], kind: 'valley' } },
     { id: 2, handle: { boneId: 2, local: [0, 0, -1.414214], linkedBoneIds: [5] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
       hintLabel: '上のとがった所を、底辺のまん中へ折り下げる',
       creaseLine: { boneId: 0, a: [1.329361, 0, -0.749533], b: [0, 0, -0.749533], kind: 'valley' } },
     { id: 3, handle: { boneId: 3, local: [1.414214, 0, 0], linkedBoneIds: [6, 8, 11] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '左の角を、まん中から上へ折り上げる（耳）',
+      hintLabel: '右の角を、まん中から上へ折り上げる（耳）',
       creaseLine: { boneId: 0, a: [-0.141421, 0, 0], b: [0.707107, 0, -0.707107], kind: 'valley' } },
     { id: 4, handle: { boneId: 4, local: [-1.414214, 0, 0], linkedBoneIds: [7, 10, 13, 9, 12, 14, 15] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '右の角を、まん中から上へ折り上げる（耳）',
+      hintLabel: '左の角も、まん中から上へ折り上げる（耳）',
       creaseLine: { boneId: 0, a: [-0.707107, 0, -0.707107], b: [0.141421, 0, 0], kind: 'valley' } },
   ],
 };

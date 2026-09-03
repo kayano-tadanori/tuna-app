@@ -126,9 +126,18 @@
   function saveSettings() {
     try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
   }
-  function applySettings(kind) {
+  function applySettings(kind, entry) {
     if (!inst) return;
-    inst.setColor(hexToRgb(settings.front), hexToRgb(settings.back));
+    // ★colorDown＝「色のついた面を**下**にして置いて折り始める」作品は、
+    //   表と裏の色を入れかえて描く。エンジンは「最初に上を向いていた面」を
+    //   表の色で塗るので、この入れかえが無いと**出来上がりが真っ白になる**
+    //   （ハートの折り図⑦は全面ピンクなのに白いハートが出ていた。
+    //     本人指摘 2026-09-03「それ 気になってたのよ」）。
+    //   紙の形・重なり・折り線はいっさい変えない。色の割りあてだけの話。
+    const e = entry || currentEntry;
+    const f = hexToRgb(settings.front), b = hexToRgb(settings.back);
+    const down = !!(e && e.colorDown);
+    inst.setColor(down ? b : f, down ? f : b);
     // ★灘中対策の問題には、紙の厚みを付けない。
     //   問題は「図のかたちがそのまま答え」なので、厚みで辺が太ると
     //   重なりの形が読めなくなる（本人 2026-09-03
@@ -179,7 +188,7 @@
     const canvas = document.getElementById('ori-canvas');
     if (!inst) inst = OrigamiRenderer.create(canvas, entry);
     else inst.setWork(entry);
-    applySettings(kind);   // 作品を開くたびに、えらんだ紙の色と厚みを反映する
+    applySettings(kind, entry);   // 作品を開くたびに、えらんだ紙の色と厚みを反映する
     // 上下の回転を自由にするのは伝承折り紙だけ（問題は裏返せると混乱するので制限）
     if (inst.setFreeCamera) inst.setFreeCamera(kind === 'work');
     return inst;

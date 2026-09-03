@@ -129,19 +129,19 @@ ORIGAMI_WORKS.lion = {
     panel: [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7],
     boneParent: [-1, 0, 0, 0, 0, 1, 2, 3],
     flatStack: true,   // 折り終わりがぺたんこ＝真上から見せる＋層を上へ積む
-    layerOrder: [2, 2, 3, 3, 1, 0, 0, 0],
+    layerOrder: [2, 3, 3, 3, 1, 0, 0, 0],
     // その紙が何枚重なっている所か（多いほど硬い＝形が崩れない）
     stackCount: [4, 4, 3, 4, 4, 3, 4, 4, 3, 4, 4, 3],
     // ヒンジの軸を紙の厚み何枚ぶん持ち上げるか（重なりはここから幾何で出る）
-    hingeY: [0.0, 0.0, 0.5, 0.5, -0.5, 1.0, 1.5, 1.5],
+    hingeY: [0.0, 0.5, 0.5, 0.5, -0.5, 1.5, 1.5, 1.5],
     boneFoldStep: [0, 1, 2, 3, 4, 4, 4, 4],
     // 1手ごとの重なりの高さ（参考値。描画には使わない）
     layerByStep: [
       [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 1, 0, 0],
-      [0, 0, 1, 0, 0, 1, 1, 0],
-      [0, 0, 1, 1, 0, 1, 1, 1],
-      [2, 2, 3, 3, 1, 0, 0, 0],
+      [0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 1, 1, 0, 0, 1, 1, 0],
+      [0, 1, 1, 1, 0, 1, 1, 1],
+      [2, 0, 3, 3, 1, 0, 0, 0],
     ],
     hinge: [
       null,
@@ -156,16 +156,16 @@ ORIGAMI_WORKS.lion = {
   },
   steps: [
     { id: 1, handle: { boneId: 1, local: [0, 0, 1.414214] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '右の角を、内がわへ折る（たてがみ）',
+      hintLabel: '下の角を、少し上へ折り上げる',
       creaseLine: { boneId: 0, a: [-1.5, 0, 1.07], b: [1.5, 0, 1.07], kind: 'valley' } },
     { id: 2, handle: { boneId: 2, local: [-1.414214, 0, 0] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '下を、後ろへ折ったら できあがり',
+      hintLabel: '左の角を、内がわへ折る（たてがみ）',
       creaseLine: { boneId: 0, a: [-0.86, 0, -0.45], b: [-0.59, 0, 0.970001], kind: 'valley' } },
     { id: 3, handle: { boneId: 3, local: [1.414214, 0, 0] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '右の角を内がわへ折る',
+      hintLabel: '右の角を、内がわへ折る（たてがみ）',
       creaseLine: { boneId: 0, a: [0.59, 0, 0.970001], b: [0.86, 0, -0.45], kind: 'valley' } },
     { id: 4, handle: { boneId: 4, local: [0, 0, 1.07], linkedBoneIds: [6, 7, 5] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '下を後ろへ折る',
+      hintLabel: '下を、後ろへ折ったら できあがり',
       creaseLine: { boneId: 0, a: [-1.6, 0, 0], b: [1.6, 0, 0], kind: 'mountain' } },
   ],
 };

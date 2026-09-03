@@ -13,6 +13,9 @@ window.ORIGAMI_WORKS = window.ORIGAMI_WORKS || {};
 
 ORIGAMI_WORKS.tulip = {
   id: 'tulip', name: 'チューリップ', emoji: '🌷', difficulty: 1,
+  // 色のついた面を**下**にして置いて折り始める作品。
+  //   表と裏の色を入れかえて描くだけ（形も折り線も変わらない）。
+  colorDown: true,
   mesh: {
     verts: [
       [0.881579, 0, -0.532635],
@@ -101,7 +104,7 @@ ORIGAMI_WORKS.tulip = {
   },
   steps: [
     { id: 1, handle: { boneId: 1, local: [0, 0, 1.414214] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
-      hintLabel: '対角線で半分に折って三角にする',
+      hintLabel: '色のついた面を下にして、対角線で半分に折って三角にする',
       creaseLine: { boneId: 0, a: [-2.828427, 0, 0], b: [0, 0, 0], kind: 'valley' } },
     { id: 2, handle: { boneId: 2, local: [1.414214, 0, 0], linkedBoneIds: [4] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
       hintLabel: '右下の角を、ななめ上へ折り上げる（花びら）',

@@ -194,10 +194,15 @@ def stack_counts(st):
 
 
 def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
-            rotate_deg=0, inflate=None):
+            rotate_deg=0, inflate=None, color_down=False):
     """ORIGAMI_WORKS.<id> にそのまま入れられる dict を返す。
        rotate_deg: 画面で見える向きにそろえるための回転。紙の模様(uv)は
-       回す前の座標で決めるので、回しても柄はずれない。"""
+       回す前の座標で決めるので、回しても柄はずれない。
+       color_down: **色のついた面を下にして置いて折り始める**作品。
+       　　アプリは「最初に上を向いていた面」を色つきで描くので、この印が無いと
+       　　出来上がりが真っ白になる（ハートの折り図⑦は全面ピンクなのに真っ白だった。
+       　　本人指摘 2026-09-03「それ 気になってたのよ」）。表と裏の色を入れかえるだけで、
+       　　形・重なり・折り線はいっさい変わらない。"""
     bones, idx = build_bones(st)
     hints = hints or {}
     rr = math.radians(rotate_deg)
@@ -310,10 +315,38 @@ def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
             step['handle']['linkedBoneIds'] = ids[1:]
         steps.append(step)
 
+    # ★色のついた面を下にして始める作品は、1手目のヒントでそれを言う
+    #   （実物の紙で折る子が、アプリと同じ色の出方になるように）。
+    if color_down and steps:
+        steps[0]['hintLabel'] = '色のついた面を下にして、' + steps[0]['hintLabel']
+
     # ★1手ごとの「重なりの高さ」。最終形の重なり順を折る途中でも使うと、
     #   親につられて動いた紙が土台と同じ高さになってちらつく
     #   （本人指摘2026-09-02「一度おってるのに折った紙の下半分が消えてる」）。
     #   各手のあとの紙の様子（snapshots）から、骨ごとの高さを作る。
+    #
+    # 🚨★「形を持たない骨」の高さを、親から借りてはいけない（2026-09-03）。
+    #   あとの手でその紙が丸ごと動かされた骨は、**最後の形では面を1枚も持たない**。
+    #   そこを「親と同じ高さ」で埋めると hingeY が 0 になり、
+    #   **折ったのに土台と同じ高さのまま＝画面が縞模様にちらつく**
+    #   （おにぎりの1手目・ハートの2手目・ライオンの1手目・ぱとかーの1手目で発生）。
+    #   その骨の紙は子孫が持っているので、**子孫の値を採る**のが正しい。
+    #   本人指摘「すいかの2手目がおかしい」を追いかけて check_hint_words.py で判明。
+    kids = {i: [] for i in range(len(bones))}
+    for i, b in enumerate(bones):
+        if b['parent'] >= 0:
+            kids[b['parent']].append(i)
+
+    def _fill_shapeless(rows):
+        """面を持たない骨の値を、その紙をいま持っている子孫から埋める。
+           骨は key の短い順（＝親が先）に並んでいるので、深い方から順に埋める。"""
+        for i in range(len(bones) - 1, -1, -1):
+            if bones[i]['polys'] or bones[i]['parent'] < 0:
+                continue
+            got = [rows[j] for j in kids[i] if bones[j]['polys'] or kids[j]]
+            rows[i] = max(got) if got else rows[bones[i]['parent']]
+        return rows
+
     nsteps = sum(1 for x in st.steps if x['op'] == 'fold')
     layer_by_step = [[0] * len(bones)]          # 0行目＝まだ折っていない平らな紙
     snaps = {}
@@ -352,9 +385,7 @@ def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
                             below += 1
                     best = max(best, below)
             rows.append(best)
-        for i, b in enumerate(bones):           # 形を持たない骨は親の値
-            if not b['polys'] and b['parent'] >= 0:
-                rows[i] = rows[b['parent']]
+        _fill_shapeless(rows)                   # 形を持たない骨は子孫の値
         layer_by_step.append(rows)
 
     # ★何枚めに重なっているか。
@@ -364,25 +395,75 @@ def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
     #     高さが違ってはいけない（そうしないと階段状になる）。
     #   2Dで順算したときの各紙切れの layer（上下の順）と、実際の重なり
     #   （相手の多角形の中に自分の代表点が入っているか）から数える。
+    fold_index = {}          # 骨 -> 何手目で折られるか（折りの手だけ数えた番号）
+    nf = 0
+    for si, x in enumerate(st.steps):
+        if x['op'] != 'fold':
+            continue
+        nf += 1
+        for i, b in enumerate(bones):
+            if b['step'] == si:
+                fold_index[i] = nf
+
+    #
+    #   🚨★「その場所で自分の下に何枚あるか」を骨ごとに数えるだけでは足りない
+    #     （2026-09-03）。土台の骨は紙のあちこちに散らばっていて場所ごとに深さが
+    #     違うので、最大値で代表させると**その骨と関係ない場所の深さ**が混ざる。
+    #     ハートの1手目は本当は土台の上（+1）なのに -1 ＝「後ろへ回りこむ」に、
+    #     2手目は 0 ＝土台と同じ高さでちらついていた。
+    #
+    #     正しい決め方は「数える」ではなく「積む」。上下の順そのものは
+    #     2Dの layer が持っている（全パネルを通した一貫した順序）ので、
+    #        高さ[A] = max( 高さ[B] + 1 )   … B は A より下で、かつ A と重なる骨
+    #     と、下から順に積み上げる。こうすると
+    #       ・重なっている紙どうしは必ず順番どおりになる（ぶたの4手目で、
+    #         上に来るはずの紙が下になっていたのを直した）
+    #       ・重なっていない紙どうしは同じ高さのまま（階段にならない）
     total_flip = sum(1 for x in st.steps if x['op'] == 'flip')
     fsgn = -1 if (total_flip % 2) else 1
+
+    def _span(b):
+        """その骨の紙片が、2Dの重なり順でどこからどこまでを占めるか。"""
+        ls = [pl['layer'] * fsgn for pl in b['polys']]
+        return (min(ls), max(ls)) if ls else None
+
+    def _overlap(b1, b2):
+        """2つの骨の紙が、折り終わりで実際に重なっているか。"""
+        for p1 in b1['polys']:
+            for p2 in b2['polys']:
+                if any(_point_in(s, p2['cur']) for s in _area_samples(p1['cur'])):
+                    return True
+                if any(_point_in(s, p1['cur']) for s in _area_samples(p2['cur'])):
+                    return True
+        return False
+
+    spans = [_span(b) for b in bones]
+    # 下から順に積むので、2Dの順の低いものから決める（形を持たない骨はあとで）
+    stack_order = sorted((i for i in range(len(bones)) if spans[i] is not None),
+                         key=lambda i: spans[i][0])
     layer_order = [0] * len(bones)
-    for bi, b in enumerate(bones):
-        best = 0
-        for pl in b['polys']:
-            for (cx, cy) in _area_samples(pl['cur']):
-                below = 0
-                for ob in bones:
-                    for opl in ob['polys']:
-                        if opl is pl:
-                            continue
-                        if opl['layer']*fsgn < pl['layer']*fsgn and _point_in((cx, cy), opl['cur']):
-                            below += 1
-                best = max(best, below)
-        layer_order[bi] = best
-    for i, b in enumerate(bones):        # 形を持たない骨は親の値を借りる
-        if not b['polys'] and b['parent'] >= 0:
-            layer_order[i] = layer_order[b['parent']]
+    for n, i in enumerate(stack_order):
+        h = 0
+        for j in stack_order[:n]:
+            # j が i より確実に下（順序の帯が重ならない）で、紙が重なっているとき
+            if spans[j][1] < spans[i][0] and _overlap(bones[i], bones[j]):
+                h = max(h, layer_order[j] + 1)
+        layer_order[i] = h
+    # 🚨形を持たない骨（＝その紙をあとの手で丸ごと動かした骨）は、
+    #   **折った当時の「親からの段差」**を使う。親の値をそのまま借りると段差0＝
+    #   折ったのに高さが変わらず、その手だけ画面がちらつく（上の🚨と同じ話）。
+    #   段差は同じ時点（layer_by_step の同じ行）の親との差で取るので、
+    #   あとから下に紙が滑りこんでも狂わない。子孫の最終位置はこの値に影響されない
+    #   （子の hingeY が (L_子 - L_親)/2 なので、L_親 が変わっても L_子 に着地する）。
+    for i, b in enumerate(bones):
+        if b['polys'] or b['parent'] < 0:
+            continue
+        par, k = b['parent'], fold_index.get(i)
+        if k is None or k >= len(layer_by_step):
+            layer_order[i] = layer_order[par]
+            continue
+        row = layer_by_step[k]
+        layer_order[i] = layer_order[par] + (row[i] - row[par])
 
     # ★★紙の厚みは「層を数値で浮かせる」のではなく、
     #   **ヒンジの軸を紙の厚みぶん持ち上げる**ことで出す（本人指示 2026-09-02
@@ -397,15 +478,6 @@ def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
     #   これなら重なりは幾何から自然に出る＝紙を数値で引き離さないので
     #   **折り目でつながったまま**。折る前は全部 y=0 なので段差も出ない。
     hinge_y = [0.0] * len(bones)
-    fold_index = {}          # 骨 -> 何手目で折られるか（折りの手だけ数えた番号）
-    nf = 0
-    for si, x in enumerate(st.steps):
-        if x['op'] != 'fold':
-            continue
-        nf += 1
-        for i, b in enumerate(bones):
-            if b['step'] == si:
-                fold_index[i] = nf
     for i, b in enumerate(bones):
         par = b['parent']
         k = fold_index.get(i)
@@ -450,6 +522,8 @@ def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
             #   None の作品ではバーそのものを出さない——バーがあること自体が
             #   「完成したら形を変えられる」合図になる（本人 2026-09-03）。
             'inflate': inflate,
+            # 色のついた面を下にして置いて始める作品（表と裏の色を入れかえて描く）
+            'colorDown': bool(color_down),
             # flatStack: 折り終わりがぺたんこになる作品＝真上から見せてよい。
             # 3D側がこれを見て、①ほぼ真上のカメラ ②層を上へ積む紙の厚み にする。
             'mesh': {'verts': verts, 'tris': tris, 'uv': uv, 'panel': panel_of_vert,
@@ -494,6 +568,10 @@ def to_js(work, header=''):
         inf = work['inflate']
         lines.append(f"  // ふきかけバー：{inf['step']+1}手目の折り目を最大{inf['deg']}度ひらいて立体にする")
         lines.append(f"  inflate: {{ step: {inf['step']}, deg: {inf['deg']} }},")
+    if work.get('colorDown'):
+        lines.append('  // 色のついた面を**下**にして置いて折り始める作品。')
+        lines.append('  //   表と裏の色を入れかえて描くだけ（形も折り線も変わらない）。')
+        lines.append('  colorDown: true,')
     lines.append('  mesh: {')
     lines.append('    verts: [' + arr(m['verts']) + '],')
     lines.append('    tris: [' + arr(m['tris']) + '],')
