@@ -480,7 +480,9 @@ async function hamaDaimonWeek(grade, course, no) {
 //   データが無い学年・回では自動で空になり、ボタンごと隠れる（学年の決め打ちなし）
 //   ★2026-09-03：国語にも宿題テキスト（小3マスター国語「国語のとも」）ができたので、
 //   コースごとに兄弟コース名を引けるようにした。ここに無いコースでは宿題ボタンは出ない。
-const BUNSATSU_OF = { master: 'master_bunsatsu' };
+// ★国語のとも＝マスター国語（本科）の宿題テキスト。本科の回番号とそのまま対応する
+//   （No.5が本科・分冊とも「文の種類」で一致することを実物で確かめた・2026-09-03）
+const BUNSATSU_OF = { master: 'master_bunsatsu', kokugo: 'kokugo_bunsatsu' };
 async function hamaDaimonBunsatsu(grade, no, course) {
   const key = BUNSATSU_OF[course || 'master'];
   if (!key) return [];
