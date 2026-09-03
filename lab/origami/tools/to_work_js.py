@@ -244,13 +244,29 @@ def to_work(st, work_id, name, emoji, difficulty, hints=None, title_note='',
         ids = [i for i, b in enumerate(bones) if b['step'] == si]
         if not ids:
             continue
+        # ★その骨と、そこにぶら下がっている子孫の紙をぜんぶ集める。
+        #   その手で折った紙が**あとの手で丸ごと動く**と、骨じたいの面が0枚に
+        #   なる（おむすびの②、ライオンの⑤）。子孫の紙はこの手ではまだ折られて
+        #   いない＝同じ平らな面にあるので、つまむ場所に使ってよい。
+        #   （2026-09-03。以前はここで best=None のまま落ちていた）
+        def _with_kids(i):
+            out = list(bones[i]['polys'])
+            for j, b in enumerate(bones):
+                k = b['parent']
+                while k >= 0:
+                    if k == i:
+                        out.extend(b['polys'])
+                        break
+                    k = bones[k]['parent']
+            return out
+        span = {i: _with_kids(i) for i in ids}
         # いちばん大きい骨を主にする（つまむ場所を取りやすい）
-        ids.sort(key=lambda i: -sum(abs(_poly_area(p['src'])) for p in bones[i]['polys']))
+        ids.sort(key=lambda i: -sum(abs(_poly_area(p['src'])) for p in span[i]))
         main = ids[0]
         # つまむ点＝主の骨の中で、ヒンジからいちばん遠い頂点
         hg = bones[main]['hinge']
         best, bd = None, -1
-        for pl in bones[main]['polys']:
+        for pl in span[main]:
             for q in pl['src']:
                 d = abs((hg['b'][0]-hg['a'][0])*(q[1]-hg['a'][1])
                         - (hg['b'][1]-hg['a'][1])*(q[0]-hg['a'][0]))

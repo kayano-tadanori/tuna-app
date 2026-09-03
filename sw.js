@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v640';
+const CACHE_NAME = 'oton-gakuen-v641';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -98,12 +98,19 @@ const ASSETS = [
   './lab/origami/js/progress.js',
   './lab/origami/js/works/ie.js',
   './lab/origami/js/works/neko.js',
+  './lab/origami/js/works/suika.js',
   './lab/origami/js/works/tulip.js',
-  './lab/origami/js/works/lion.js',
   './lab/origami/js/works/inu.js',
   './lab/origami/js/works/kitsune.js',
+  './lab/origami/js/works/lion.js',
+  './lab/origami/js/works/piano.js',
   './lab/origami/js/works/usagi.js',
   './lab/origami/js/works/koppu.js',
+  './lab/origami/js/works/patocar.js',
+  './lab/origami/js/works/buta.js',
+  './lab/origami/js/works/onigiri.js',
+  './lab/origami/js/works/panda.js',
+  './lab/origami/js/works/heart.js',
   './lab/origami/js/works/kabuto.js',
   './lab/origami/js/works/yakko.js',
   './lab/origami/js/problems/rect_fold_2003.js',

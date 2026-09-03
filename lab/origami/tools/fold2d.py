@@ -624,8 +624,10 @@ class FoldState:
     #   いけないよ／エンジンの機能としてそうなるようにしとかないと」）。
     #   ここで場所ごとに重なりを見て決めるので、手で選ぶ必要がなくなる。
     # ------------------------------------------------------------------
-    def _deepest(self, a, b, grid=60):
-        """折り線の「動く側」で、いちばん深く重なっている所の枚数。"""
+    def _deepest(self, a, b, grid=60, only=None):
+        """折り線の「動く側」で、いちばん深く重なっている所の枚数。
+           only(パネル->bool) を渡すと、その紙だけを数える（＝作品の「この部分の」
+           重なりだけを見る）。"""
         hw, hh = self.paper['hw'], self.paper['hh']
         deep = 0
         for gx in range(grid):
@@ -634,11 +636,12 @@ class FoldState:
                 y = -hh + 2*hh*(gy+0.5)/grid
                 if side_of_line((x, y), a, b) >= -1e-9:
                     continue
-                n = sum(1 for p in self.panels if _strictly_inside((x, y), p['poly']))
+                n = sum(1 for p in self.panels if _strictly_inside((x, y), p['poly'])
+                        and (only is None or only(p)))
                 deep = max(deep, n)
         return deep
 
-    def _pick_layers(self, a, b, count, side, grid=60):
+    def _pick_layers(self, a, b, count, side, grid=60, only=None):
         """折り線a-bの「動く側」で、上から(side='top')または下から(side='bottom')
            count枚ぶんの紙切れを選ぶ。場所ごとに重なりを見て union する。"""
         hw, hh = self.paper['hw'], self.paper['hh']
@@ -655,7 +658,8 @@ class FoldState:
                 if side_of_line((x, y), a, b) >= -1e-9:
                     continue                       # 動かない側は見ない
                 here = [p['layer'] for p in self.panels
-                        if _strictly_inside((x, y), p['poly'])]
+                        if _strictly_inside((x, y), p['poly'])
+                        and (only is None or only(p))]
                 if len(here) > deep:
                     deep, best = len(here), sorted(here, reverse=(side == 'top'))
         if not best:
@@ -664,6 +668,8 @@ class FoldState:
         chosen = set()
         for i, p in enumerate(self.panels):
             if p['layer'] not in want:
+                continue
+            if only is not None and not only(p):
                 continue
             if any(side_of_line(q, a, b) < -1e-9 for q in p['poly']):
                 chosen.add(i)
@@ -723,11 +729,16 @@ class FoldState:
         return grow
 
     def fold_layers(self, a, b, kind, count=1, side='top', name=None, move=True,
-                    cut_hint=None, keep_bottom=None, keep_top=None):
+                    cut_hint=None, keep_bottom=None, keep_top=None, panel_filter=None):
         """★重なりの「上からcount枚」(side='top')または「下からcount枚」
            (side='bottom')だけを折る。どの紙が上かはエンジンが場所ごとに判定する。
            cut_hint に「動かしたい側の点」を渡すと、折り線の向きを自動でそろえる
-           （渡し忘れると動く側が逆になって『折る紙が見つからない』になる）。"""
+           （渡し忘れると動く側が逆になって『折る紙が見つからない』になる）。
+           ★panel_filter を渡すと「紙のこの部分の中で、上から何枚」になる。
+             折り線は無限の直線なので、体の上まで巻きこまずに「さっき折り上げた
+             ところの先だけ」を折りたいときに要る（ぶたの鼻。2026-09-03）。
+             どの紙が上かは、そのしぼった中でエンジンが場所ごとに判定する
+             ＝手で層を名指しするのとは別物。"""
         if cut_hint is not None and side_of_line(cut_hint, a, b) > 0:
             a, b = b, a
         # ★枚数を決め打ちしないための言い方。
@@ -737,12 +748,12 @@ class FoldState:
         #   （本人指摘2026-09-02「かぶとの9手目が上の紙だけしか動いてない」＝
         #     帯が2枚になったのに1枚しか折っていなかった）。
         if keep_bottom is not None or keep_top is not None:
-            deep = self._deepest(a, b)
+            deep = self._deepest(a, b, only=panel_filter)
             if keep_bottom is not None:
                 count, side = max(1, deep - keep_bottom), 'top'
             else:
                 count, side = max(1, deep - keep_top), 'bottom'
-        chosen = self._pick_layers(a, b, count, side)
+        chosen = self._pick_layers(a, b, count, side, only=panel_filter)
         chosen = self._connected_closure(chosen, a, b)
         if not chosen:
             print(f'WARNING: fold_layers: 折る紙が見つからない {a}-{b}')
@@ -752,33 +763,74 @@ class FoldState:
                          name=name, move=move)
 
     def _reassign_along(self, sa, sb, kind, src_poly, step_idx, tol=1e-7):
-        """原紙座標の直線sa-sbの上にあり、かつsrc_polyの縁に乗っている既存の
-           折り筋の山谷を、実際に折った向きkindで上書きする。"""
-        def on_boundary(pt):
-            n = len(src_poly)
-            for i in range(n):
-                q0, q1 = src_poly[i], src_poly[(i+1) % n]
-                dx, dy = q1[0]-q0[0], q1[1]-q0[1]
-                L2 = dx*dx + dy*dy
-                if L2 < 1e-18:
-                    continue
-                t = ((pt[0]-q0[0])*dx + (pt[1]-q0[1])*dy) / L2
-                if -1e-7 <= t <= 1+1e-7:
-                    fx, fy = q0[0]+t*dx, q0[1]+t*dy
-                    if math.hypot(pt[0]-fx, pt[1]-fy) < tol:
-                        return True
-            return False
-        n = 0
+        """原紙座標の直線sa-sbの上にある既存の折り筋のうち、**いま動いた紙の縁に
+           重なっている所だけ**を、実際に折った向きkindで上書きする。
+
+           ★重なりが一部だけなら、折り筋を切り分ける。
+             先に「折り目だけ」つけた線の一部だけをあとで本当に折ることがある
+             （ライオンの④＝先に折った耳のぶんだけ紙が無い）。まるごと
+             「折った」ことにすると、紙が無い所にも折り筋があることになり、
+             平坦折りの判定で頂点の折り筋が奇数本になる（2026-09-03）。
+        """
+        d = _sub(sb, sa)
+        L2 = _dot(d, d)
+        if L2 < 1e-18:
+            return 0
+
+        def proj(p):
+            return _dot(_sub(p, sa), d) / L2
+
+        # いま動いた紙の縁のうち、この直線に乗っている区間（線に沿った位置tで）
+        spans = []
+        n = len(src_poly)
+        for i in range(n):
+            q0, q1 = src_poly[i], src_poly[(i + 1) % n]
+            if abs(side_of_line(q0, sa, sb)) > tol or abs(side_of_line(q1, sa, sb)) > tol:
+                continue
+            t0, t1 = proj(q0), proj(q1)
+            spans.append((min(t0, t1), max(t0, t1)))
+        if not spans:
+            return 0
+
+        def covered(t):
+            return any(a - 1e-9 <= t <= b + 1e-9 for a, b in spans)
+
+        out, changed = [], 0
         for c in self.cp:
-            if abs(side_of_line(c['a'], sa, sb)) > tol or abs(side_of_line(c['b'], sa, sb)) > tol:
+            if (abs(side_of_line(c['a'], sa, sb)) > tol
+                    or abs(side_of_line(c['b'], sa, sb)) > tol):
+                out.append(c)
                 continue
-            mid = ((c['a'][0]+c['b'][0])/2, (c['a'][1]+c['b'][1])/2)
-            if not on_boundary(mid):
+            ca, cb = proj(c['a']), proj(c['b'])
+            lo, hi = (ca, cb) if ca <= cb else (cb, ca)
+            pa, pb = (c['a'], c['b']) if ca <= cb else (c['b'], c['a'])
+            # この折り筋を、縁に乗っている所／乗っていない所に切り分ける
+            cuts = {lo, hi}
+            for a, b in spans:
+                for t in (a, b):
+                    if lo + 1e-9 < t < hi - 1e-9:
+                        cuts.add(t)
+            ts = sorted(cuts)
+            if len(ts) == 2 and not covered((lo + hi) / 2):
+                out.append(c)                       # まったく重なっていない
                 continue
-            c['kind'] = kind
-            c['step'] = step_idx
-            n += 1
-        return n
+            changed += 1
+            for k in range(len(ts) - 1):
+                t0, t1 = ts[k], ts[k + 1]
+                if t1 - t0 < 1e-9:
+                    continue
+                def at(t):
+                    r = (t - lo) / (hi - lo) if hi > lo else 0.0
+                    return (pa[0] + (pb[0] - pa[0]) * r, pa[1] + (pb[1] - pa[1]) * r)
+                seg = dict(c, a=at(t0), b=at(t1))
+                if covered((t0 + t1) / 2):
+                    seg['kind'] = kind
+                    seg['step'] = step_idx
+                    # ★ここは本当に折った。もう「折り目だけ」ではない
+                    seg['creaseOnly'] = False
+                out.append(seg)
+        self.cp = out
+        return changed
 
     def crease_only(self, a, b, kind, only_containing=None, panel_filter=None, name=None):
         """★折り目だけつけて開く。fold(move=False)の別名。"""

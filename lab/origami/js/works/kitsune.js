@@ -265,10 +265,10 @@ ORIGAMI_WORKS.kitsune = {
     ],
   },
   steps: [
-    { id: 1, handle: { boneId: 1, local: [-0.66468, 0, 0.749533] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
+    { id: 1, handle: { boneId: 1, local: [0, 0, 1.414214] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
       hintLabel: '対角線で半分に折って三角にする',
       creaseLine: { boneId: 0, a: [-2.828427, 0, 0], b: [0, 0, 0], kind: 'valley' } },
-    { id: 2, handle: { boneId: 2, local: [0, 0, -1.381216], linkedBoneIds: [5] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
+    { id: 2, handle: { boneId: 2, local: [0, 0, -1.414214], linkedBoneIds: [5] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
       hintLabel: '上のとがった所を、底辺のまん中へ折り下げる',
       creaseLine: { boneId: 0, a: [1.329361, 0, -0.749533], b: [0, 0, -0.749533], kind: 'valley' } },
     { id: 3, handle: { boneId: 3, local: [1.414214, 0, 0], linkedBoneIds: [6, 8, 11] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,

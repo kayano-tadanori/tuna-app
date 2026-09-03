@@ -124,7 +124,7 @@ ORIGAMI_WORKS.neko = {
     ],
   },
   steps: [
-    { id: 1, handle: { boneId: 1, local: [0, 0, -0.514335] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
+    { id: 1, handle: { boneId: 1, local: [0, 0, -1.414214] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,
       hintLabel: '対角線で半分に折って三角にする',
       creaseLine: { boneId: 0, a: [2.828427, 0, 0], b: [0, 0, 0], kind: 'valley' } },
     { id: 2, handle: { boneId: 2, local: [-1.414214, 0, 0], linkedBoneIds: [4] }, targetAngle: Math.PI, snapDeg: 0.35, returnAngle: 0,

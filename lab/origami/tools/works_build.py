@@ -415,21 +415,374 @@ def build_lion():
     st.fold_axiom_line((disp(R, 0.86, 0.45), disp(R, 0.59, -0.97)), 'V',
                        only_containing=None, cut_hint=disp(R, 1.2, 0),
                        name='右の角を内がわへ折る')
-    # ⚠折り図⑤の「下を後ろへ折る」は、3Dの骨組みが作れずに落ちる
-    #   （その手で動く紙が、前の手で動いた紙と丸ごと重なるため。2026-09-03）。
-    #   形はほぼ変わらないので、いまは入れていない。直せたら足す。
+    # ④ 下を後ろへ折る。★折り線は「よこの折り目そのもの（y=0）」
+    #   （折り図④の破線を実測：紙の上のとがりから 1.414/2.484 の所＝ y=-0.01）。
+    #   ⚠この手は以前「3Dの骨組みが作れずに落ちる」ので外していた。原因は
+    #     to_work_js が「その手で折った紙が、あとの手で丸ごと動くと面0枚になる」
+    #     ことに対応していなかったから。2026-09-03にエンジン側を直して入れた。
+    st.fold_axiom_line((disp(R, -1.6, 0), disp(R, 1.6, 0)), 'M', only_containing=None,
+                       cut_hint=disp(R, 0, -0.6), name='下を後ろへ折る')
     hints = {0: '下の角を、少し上へ折り上げる',
              1: '左の角を、内がわへ折る（たてがみ）',
-             2: '右の角を、内がわへ折る（たてがみ）'}
+             2: '右の角を、内がわへ折る（たてがみ）',
+             3: '下を、後ろへ折ったら できあがり'}
     return st, dict(work_id='lion', name='ライオン', emoji='🦁', difficulty=2,
                     hints=hints, rotate_deg=R)
+
+
+
+# ==================================================================== ぶた
+def build_buta():
+    """ぶたの顔 8手。★おりがみくらぶ easy/animal-face/pig の折り図を実測して組んだ
+       （zu.gif をおろして、破線の位置と紙の色を画素で測った）。
+       ① たてよこ半分に折り目をつけてもどす
+       ② 左右の角を、まん中へ折る
+       ③ 上から下へ半分に折る
+       ④ 下のとがった所を上へ折る
+       ⑤ その先を、手前の1枚だけ下へ折る → 白いはなが出る
+       ⑥⑦ 上の左右の角を、後ろへ折る → 顔の形になる
+
+       ★実測した数値（紙のはば＝√2 に対する比）
+         ・④の折り線＝上のふちから 0.713
+         ・⑤の折り線＝上のふちから 0.532
+         ・⑥のかど落とし＝はばの 0.21（45度）
+       ★⑤で「手前の1枚だけ」折る根拠：折り図の鼻が**白いひし線形**に見える。
+         上下とも白＝下にもう1枚うら向きの紙がある＝1枚だけ折っている。
+         全部折ると白いのは下半分だけになる（色を画素で測って確かめた）。
+       ★⑥が後ろ折り(山)の根拠：手前に折ると角が白くなるはずだが、
+         完成の絵ではピンクのまま。
+    """
+    R = 45                        # 正方形をひし形の向きに見せる（折り図と同じ）
+    W = math.sqrt(2)              # 半分に折ったあとの紙のはば（見えている向きで）
+    st = FoldState(1.0)
+    st.crease_only(disp(R, 0, -1.6), disp(R, 0, 1.6), 'V', name='たてに折り目をつける')
+    st.crease_only(disp(R, -1.6, 0), disp(R, 1.6, 0), 'V', name='よこに折り目をつける')
+    st.fold_by_points(disp(R, -W, 0), disp(R, 0, 0), 'V', only_containing=None,
+                      name='左の角をまん中へ')
+    st.fold_by_points(disp(R, W, 0), disp(R, 0, 0), 'V', only_containing=None,
+                      name='右の角をまん中へ')
+    st.fold_by_points(disp(R, 0, W), disp(R, 0, -W), 'V', only_containing=None,
+                      name='上から下へ半分に折る')
+    y4 = -0.713 * W
+    s4 = len(st.steps)            # ★この手で動いた紙＝あとで先だけを折る相手
+    st.fold_axiom_line((disp(R, -1.6, y4), disp(R, 1.6, y4)), 'V', only_containing=None,
+                       cut_hint=disp(R, 0, -1.3), name='下のとがった所を上へ折る')
+    y5 = -0.532 * W
+    st.fold_layers(disp(R, -1.6, y5), disp(R, 1.6, y5), 'V', count=1, side='top',
+                   cut_hint=disp(R, 0, -0.65),
+                   panel_filter=lambda p: s4 in p['hist'],
+                   name='先を手前1枚だけ下へ折る（はな）')
+    c = 0.21 * W
+    st.fold_axiom_line((disp(R, -W/2 + c, 0), disp(R, -W/2, -c)), 'M', only_containing=None,
+                       cut_hint=disp(R, -0.66, -0.05), name='左上の角を後ろへ折る')
+    st.fold_axiom_line((disp(R, W/2 - c, 0), disp(R, W/2, -c)), 'M', only_containing=None,
+                       cut_hint=disp(R, 0.66, -0.05), name='右上の角を後ろへ折る')
+    hints = {0: 'たてに半分に折って、もどす',
+             1: 'よこにも半分に折って、もどす',
+             2: '左の角を、まん中に合わせて折る',
+             3: '右の角も、まん中に合わせて折る',
+             4: '上から下へ、半分に折る',
+             5: '下のとがった所を、上へ折り上げる',
+             6: 'その先を、手前の1まいだけ下へ折る（はな）',
+             7: '左上の角を、後ろへ折る',
+             8: '右上の角も、後ろへ折って、かおを かいたら できあがり'}
+    return st, dict(work_id='buta', name='ぶた', emoji='🐷', difficulty=2,
+                    hints=hints, rotate_deg=R)
+
+
+
+# ==================================================================== ハート
+def build_heart():
+    """ハート 8手。★おりがみくらぶ valentine/easyheart の折り図を実測して組んだ。
+       ① たてよこ半分に折り目をつけてもどす
+       ② 上の角を、まん中へ折り下げる
+       ③ 下の角を、②でできた上のふちへ折り上げる
+       ④ 下の左右の角を、上のふちのまん中へ折り上げる → 山が2つできる
+       ⑤ 左右のとがりを、後ろへ折る（まっすぐなよこはばになる）
+       ⑥ 上の2つのとがりを、後ろへ折る（山が丸くなる）
+
+       ★実測（zu.gif のピンク面だけを画素で拾って測った。紙のはば＝2√2）
+         ・③の折り線 y=-0.354（実測 -0.367）＝下の角が上のふちに届く高さ
+         ・④の折り線＝下のふちのまん中を通る45度。**下の左の角が
+           上のふちのまん中にぴったり来る**線（＝fold_by_pointsで書ける）
+         ・できる山の先は (±0.354, 1.06)。実測でも 山の高さ/はば が
+           1.414/1.768、山の横ずれが 0.348 でぴったり合った
+         ・⑤の折り線＝上のふちの左右のかどを通るたての線 x=±0.707
+         ・⑥の折り線＝山の先から 0.13 下（実測）
+    """
+    R = 45
+    S = math.sqrt(2)
+    H = S / 2                      # ②の折り線＝上のふちの高さ
+    st = FoldState(1.0)
+    st.crease_only(disp(R, 0, -1.6), disp(R, 0, 1.6), 'V', name='たてに折り目をつける')
+    st.crease_only(disp(R, -1.6, 0), disp(R, 1.6, 0), 'V', name='よこに折り目をつける')
+    st.fold_by_points(disp(R, 0, S), disp(R, 0, 0), 'V', only_containing=None,
+                      name='上の角をまん中へ折り下げる')
+    st.fold_by_points(disp(R, 0, -S), disp(R, 0, H), 'V', only_containing=None,
+                      name='下の角を上のふちへ折り上げる')
+    BL = (-3 * S / 4, -S / 4)      # 下の左のかど（下のふちの左はし）
+    s4 = len(st.steps)
+    st.fold_by_points(disp(R, *BL), disp(R, 0, H), 'V', only_containing=None,
+                      name='下の左の角を、上のふちのまん中へ')
+    s5 = len(st.steps)
+    st.fold_by_points(disp(R, -BL[0], BL[1]), disp(R, 0, H), 'V', only_containing=None,
+                      name='下の右の角も、上のふちのまん中へ')
+    st.fold_axiom_line((disp(R, -H, -1.0), disp(R, -H, 1.6)), 'M', only_containing=None,
+                       cut_hint=disp(R, -0.95, 0.2), name='左のとがりを後ろへ折る')
+    st.fold_axiom_line((disp(R, H, -1.0), disp(R, H, 1.6)), 'M', only_containing=None,
+                       cut_hint=disp(R, 0.95, 0.2), name='右のとがりを後ろへ折る')
+    ytop = 3 * S / 4 - 0.13        # 山の先(1.06)から実測0.13下
+    st.fold_axiom_line((disp(R, -1.6, ytop), disp(R, 1.6, ytop)), 'M',
+                       panel_filter=lambda p: s4 in p['hist'],
+                       cut_hint=disp(R, -0.35, 1.05), name='左の山の先を後ろへ折る')
+    st.fold_axiom_line((disp(R, -1.6, ytop), disp(R, 1.6, ytop)), 'M',
+                       panel_filter=lambda p: s5 in p['hist'],
+                       cut_hint=disp(R, 0.35, 1.05), name='右の山の先を後ろへ折る')
+    hints = {0: 'たてに半分に折って、もどす',
+             1: 'よこにも半分に折って、もどす',
+             2: '上の角を、まん中に合わせて折り下げる',
+             3: '下の角を、上のふちにとどくまで折り上げる',
+             4: '下の左の角を、上のふちのまん中へ折り上げる',
+             5: '下の右の角も、同じように折り上げる',
+             6: '左のとがりを、後ろへ折る',
+             7: '右のとがりを、後ろへ折る',
+             8: '左の山の先を、後ろへ少し折る（まるくなる）',
+             9: '右の山の先も、後ろへ少し折ったら できあがり'}
+    return st, dict(work_id='heart', name='ハート', emoji='💗', difficulty=2,
+                    hints=hints, rotate_deg=R)
+
+
+
+# ==================================================================== おむすび
+def build_onigiri():
+    """おむすび 7手。★おりがみくらぶ easy/food/riceball の折り図を実測して組んだ。
+       ① たてよこ半分に折り目をつけてもどす
+       ② 下の角を、まん中へ折り上げる（これが のり になる）
+       ③ 下半分を、上へ折り上げる → 三角のおむすび
+       ④ 左右の角を、てっぺんから引いた線で後ろへ折る
+       ⑤ てっぺんと、下の左右の角を後ろへ折って、かどを丸くする
+
+       ★実測（zu.gif。三角の底辺の半分＝1.414 を1とした位置）
+         ・④の折り線＝てっぺん(0,1.414)から 底辺の ±1.06（＝半分の3/4）へ
+           ⇒ 折った角は底辺より下にはみ出す（折り図⑤の下の2つの三角）
+         ・⑤の下のかど＝(±0.62, 0) を通る45度
+         ・⑤のてっぺん＝ y=1.18 の高さで後ろへ
+       ★のりが下半分に来るのは、②で下の角を「まん中」まで折り上げるから。
+         中途はんぱだと、③のあと のりと紙のあいだに白いすきまが出る。
+    """
+    R = 45
+    S = math.sqrt(2)
+    st = FoldState(1.0)
+    st.crease_only(disp(R, 0, -1.6), disp(R, 0, 1.6), 'V', name='たてに折り目をつける')
+    st.crease_only(disp(R, -1.6, 0), disp(R, 1.6, 0), 'V', name='よこに折り目をつける')
+    st.fold_by_points(disp(R, 0, -S), disp(R, 0, 0), 'V', only_containing=None,
+                      name='下の角をまん中へ折り上げる（のり）')
+    st.fold_axiom_line((disp(R, -1.6, 0), disp(R, 1.6, 0)), 'V', only_containing=None,
+                       cut_hint=disp(R, 0, -0.5), name='下半分を上へ折り上げる')
+    P = 0.75 * S                       # 底辺の 3/4 の位置（実測）
+    st.fold_axiom_line((disp(R, 0, S), disp(R, -P, 0)), 'M', only_containing=None,
+                       cut_hint=disp(R, -1.3, 0.05), name='左の角を後ろへ折る')
+    st.fold_axiom_line((disp(R, 0, S), disp(R, P, 0)), 'M', only_containing=None,
+                       cut_hint=disp(R, 1.3, 0.05), name='右の角を後ろへ折る')
+    st.fold_axiom_line((disp(R, -1.6, 1.18), disp(R, 1.6, 1.18)), 'M', only_containing=None,
+                       cut_hint=disp(R, 0, 1.35), name='てっぺんを後ろへ折る')
+    st.fold_axiom_line((disp(R, -0.62 - 0.5, 0.5), disp(R, -0.62 + 0.5, -0.5)), 'M',
+                       only_containing=None, cut_hint=disp(R, -1.0, -0.15),
+                       name='下の左の角を後ろへ折る')
+    st.fold_axiom_line((disp(R, 0.62 + 0.5, 0.5), disp(R, 0.62 - 0.5, -0.5)), 'M',
+                       only_containing=None, cut_hint=disp(R, 1.0, -0.15),
+                       name='下の右の角を後ろへ折る')
+    hints = {0: 'たてに半分に折って、もどす',
+             1: 'よこにも半分に折って、もどす',
+             2: '下の角を、まん中に合わせて折り上げる（のりになる）',
+             3: '下半分を、上へ折り上げる（三角になる）',
+             4: '左の角を、てっぺんから下へ、後ろに折る',
+             5: '右の角も、同じように後ろに折る',
+             6: 'てっぺんを、少し後ろへ折る',
+             7: '下の左の角を、後ろへ折る',
+             8: '下の右の角も、後ろへ折ったら できあがり'}
+    return st, dict(work_id='onigiri', name='おむすび', emoji='🍙', difficulty=2,
+                    hints=hints, rotate_deg=R)
+
+
+
+# ==================================================================== パンダ
+def build_panda():
+    """ぱんだのかお 7手。★おりがみくらぶ easy/animal-face/panda の折り図を実測。
+       ① たてよこ半分に折り目をつけてもどす
+       ② 左右の角を、まん中へ折る
+       ③ 上半分を、**後ろへ**半分に折る（ぶたは手前に折る。ここが違う）
+       ④ 左右のはしを、たての線で後ろへ折る
+       ⑤ 下のとがった所を上へ折る
+       ⑥ その先を、手前の1枚だけ下へ折る → 黒い鼻
+
+       ★実測（紙のはば＝√2 を1とした比）
+         ・④の折り線＝たての線 x=±0.55（はばの0.115ぶんを左右から落とす）
+         ・⑤の折り線＝上のふちから 1.02
+         ・⑥の折り線＝上のふちから 0.825（折り上げた先は 0.626）
+       ★③が「後ろへ」の根拠：折り図④で、②の羽（うら色）が**上の左右のかど**に
+         見えている。手前に折ったなら上半分の裏がぜんぶ見えるので、そうならない。
+    """
+    R = 45
+    S = math.sqrt(2)
+    st = FoldState(1.0)
+    st.crease_only(disp(R, 0, -1.6), disp(R, 0, 1.6), 'V', name='たてに折り目をつける')
+    st.crease_only(disp(R, -1.6, 0), disp(R, 1.6, 0), 'V', name='よこに折り目をつける')
+    st.fold_by_points(disp(R, -S, 0), disp(R, 0, 0), 'V', only_containing=None,
+                      name='左の角をまん中へ')
+    st.fold_by_points(disp(R, S, 0), disp(R, 0, 0), 'V', only_containing=None,
+                      name='右の角をまん中へ')
+    st.fold_by_points(disp(R, 0, S), disp(R, 0, -S), 'M', only_containing=None,
+                      name='上半分を後ろへ折る')
+    C = 0.55
+    st.fold_axiom_line((disp(R, -C, -1.6), disp(R, -C, 1.0)), 'M', only_containing=None,
+                       cut_hint=disp(R, -0.68, -0.1), name='左のはしを後ろへ折る')
+    st.fold_axiom_line((disp(R, C, -1.6), disp(R, C, 1.0)), 'M', only_containing=None,
+                       cut_hint=disp(R, 0.68, -0.1), name='右のはしを後ろへ折る')
+    y5 = -1.02
+    s5 = len(st.steps)
+    st.fold_axiom_line((disp(R, -1.6, y5), disp(R, 1.6, y5)), 'V', only_containing=None,
+                       cut_hint=disp(R, 0, -1.3), name='下のとがった所を上へ折る')
+    y6 = -0.825
+    st.fold_layers(disp(R, -1.6, y6), disp(R, 1.6, y6), 'V', count=1, side='top',
+                   cut_hint=disp(R, 0, -0.7),
+                   panel_filter=lambda p: s5 in p['hist'],
+                   name='先を手前1枚だけ下へ折る（はな）')
+    hints = {0: 'たてに半分に折って、もどす',
+             1: 'よこにも半分に折って、もどす',
+             2: '左の角を、まん中に合わせて折る',
+             3: '右の角も、まん中に合わせて折る',
+             4: '上半分を、後ろへ折る',
+             5: '左のはしを、たてに後ろへ折る（かおの形）',
+             6: '右のはしも、たてに後ろへ折る',
+             7: '下のとがった所を、上へ折り上げる',
+             8: 'その先を、手前の1まいだけ下へ折って、めを かいたら できあがり'}
+    return st, dict(work_id='panda', name='パンダ', emoji='🐼', difficulty=2,
+                    hints=hints, rotate_deg=R)
+
+
+
+# ==================================================================== パトカー
+def build_patocar():
+    """ぱとかー 6手＋うらがえし1回。★おりがみくらぶ easy/vehicle/Patrol の折り図を実測。
+       ① たてよこ半分に折り目をつけてもどす
+       ② 下のふちを、まん中の線に合わせて折り上げる
+       ③ その帯の左右を、まん中から45度の線で折り下げる → タイヤ
+       ④ うらがえす
+       ⑤ 上のふちを、まん中の線に合わせて折り下げる
+       ⑥ 上の左右の角を、後ろへ折る → 車の屋根の形
+
+       ★実測（正方形の半分＝1とした座標。完成の車体は よこ2×たて1）
+         ・③の折り線＝帯の**上のまん中(0,0)から、帯の下のかど(±1,-0.5)へ**（実測2:1）
+         ・⑥の折り線＝**左のふちのまん中(-1,0)から45度**（＝上のふちの x=-0.5 へ）。
+           実測でも屋根の斜めは45度、落とす量は 0.476（≒0.5）だった
+       ★③で「帯だけ」を折る根拠：折り図④で正方形の輪郭がそのまま残っている。
+         下の紙もいっしょに折ったら、左下がまるごと斜めに欠ける。
+    """
+    st = FoldState(1.0)
+    st.crease_only((0, -1.2), (0, 1.2), 'V', name='たてに折り目をつける')
+    st.crease_only((-1.2, 0), (1.2, 0), 'V', name='よこに折り目をつける')
+    s2 = len(st.steps)
+    st.fold_by_points((0, -1), (0, 0), 'V', only_containing=None,
+                      name='下のふちをまん中へ折り上げる')
+    # ★折り線は45度ではなく「帯の上のまん中(0,0)から、帯の下のかど(±1,-0.5)へ」。
+    #   45度だとタイヤが2つとも まん中に寄ってしまう（2026-09-03、絵を見て気づいた）。
+    for tag, sgn in (('左', -1), ('右', 1)):
+        st.fold_axiom_line(((0, 0), (sgn * 1.0, -0.5)), 'V',
+                           panel_filter=lambda p: s2 in p['hist'],
+                           cut_hint=(sgn * 0.8, -0.1),
+                           name=f'{tag}のタイヤを折り下げる')
+    st.flip('v', name='うらがえす')
+    st.fold_by_points((0, 1), (0, 0), 'V', only_containing=None,
+                      name='上のふちをまん中へ折り下げる')
+    for tag, sgn in (('左', -1), ('右', 1)):
+        st.fold_axiom_line(((sgn * 1.0, 0), (sgn * 0.5, 0.5)), 'M', only_containing=None,
+                           cut_hint=(sgn * 0.9, 0.45), name=f'{tag}上の角を後ろへ折る')
+    hints = {0: 'たてに半分に折って、もどす',
+             1: 'よこにも半分に折って、もどす',
+             2: '下のふちを、まん中の線に合わせて折り上げる',
+             3: '帯の左を、まん中から ななめに折り下げる（タイヤ）',
+             4: '帯の右も、ななめに折り下げる（タイヤ）',
+             5: 'うらがえす',
+             6: '上のふちを、まん中の線に合わせて折り下げる',
+             7: '左上の角を、後ろへ折る（屋根）',
+             8: '右上の角も、後ろへ折って、まどを かいたら できあがり'}
+    return st, dict(work_id='patocar', name='パトカー', emoji='🚓', difficulty=2,
+                    hints=hints, rotate_deg=0)
+
+
+
+# ==================================================================== すいか
+def build_suika():
+    """すいか 3手＋うらがえし2回。★おりがみくらぶ easy/food/watermelon2 の折り図を実測。
+       ① 下から1/4の所に折り目をつけてもどす（実測 y=-0.49）
+       ② 下のふちを、その折り目に合わせて折り上げる（実測 折り線 y=-0.754）→ 皮
+       ③ うらがえす
+       ④ 上のまん中から、下の左右のかどへ引いた線で折る → 三角のすいか
+       ⑤ うらがえして できあがり
+
+       ★①②が「折り目→そこへ合わせる」の関係になっているのが肝。
+         実測 -0.49 と -0.754 は、-0.5 と -0.75（下のふちが折り目にちょうど届く）。
+    """
+    st = FoldState(1.0)
+    st.crease_only((-1.2, -0.5), (1.2, -0.5), 'V', name='下から1/4に折り目をつける')
+    st.fold_by_points((0, -1), (0, -0.5), 'V', only_containing=None,
+                      name='下のふちを折り目に合わせて折り上げる（皮）')
+    st.flip('v', name='うらがえす')
+    for tag, sgn in (('左', -1), ('右', 1)):
+        st.fold_axiom_line(((0, 1), (sgn * 1.0, -0.75)), 'V', only_containing=None,
+                           cut_hint=(sgn * 0.9, 0.5), name=f'{tag}を内がわへ折る')
+    st.flip('v', name='うらがえす')
+    hints = {1: '下のふちを、折り目に合わせて折り上げる（皮になる）',
+             2: 'うらがえす',
+             3: '上のまん中から、下の左のかどへ ななめに折る',
+             4: '右も同じように、ななめに折る',
+             5: 'うらがえして、たねを かいたら できあがり'}
+    return st, dict(work_id='suika', name='すいか', emoji='🍉', difficulty=1,
+                    hints=hints, rotate_deg=0)
+
+
+
+# ==================================================================== ピアノ
+def build_piano():
+    """ぴあの 4手＋うらがえし1回。★おりがみくらぶ easy/other/piano の折り図を実測。
+       ① たてよこ半分に折り目をつけてもどす
+       ② 左右のふちを、内がわへ 1/4 ずつ折る（折り線 x=±0.75）
+       ③ 左のふちのまん中(-0.75,0)から、上のふちのまん中(0,1)へ引いた線で折る
+          → ピアノのふたの斜め
+       ④ うらがえす
+       ⑤ 下を折り上げる（実測 y=-0.72）→ けんばん
+
+       ★③の折り線は45度ではない。折ったあとの紙が よこ1.5×たて2 だから、
+         「左のふちのまん中」と「上のふちのまん中」を結ぶと 2:1.5 の斜めになる。
+    """
+    st = FoldState(1.0)
+    st.crease_only((0, -1.2), (0, 1.2), 'V', name='たてに折り目をつける')
+    st.crease_only((-1.2, 0), (1.2, 0), 'V', name='よこに折り目をつける')
+    st.fold_by_points((-1, 0), (-0.5, 0), 'V', only_containing=None,
+                      name='左のふちを内がわへ折る')
+    st.fold_by_points((1, 0), (0.5, 0), 'V', only_containing=None,
+                      name='右のふちを内がわへ折る')
+    st.fold_axiom_line(((-0.75, 0), (0, 1)), 'V', only_containing=None,
+                       cut_hint=(-0.7, 0.9), name='左上の角を、ななめに折る（ふた）')
+    st.flip('v', name='うらがえす')
+    st.fold_axiom_line(((-1.2, -0.72), (1.2, -0.72)), 'V', only_containing=None,
+                       cut_hint=(0, -0.95), name='下を折り上げる（けんばん）')
+    hints = {2: '左のふちを、内がわへ 1/4 ほど折る',
+             3: '右のふちも、内がわへ 1/4 ほど折る',
+             4: '左上の角を、ななめに折り下げる（ピアノのふた）',
+             5: 'うらがえす',
+             6: '下を折り上げて、けんばんを かいたら できあがり'}
+    return st, dict(work_id='piano', name='ピアノ', emoji='🎹', difficulty=2,
+                    hints=hints, rotate_deg=0)
 
 
 BUILDERS = {'inu': build_inu, 'neko': build_neko, 'tulip': build_tulip,
             'ie': build_ie, 'koppu': build_koppu,
             'kabuto': build_kabuto, 'yakko': build_yakko,
             'kitsune': build_kitsune, 'usagi': build_usagi,
-            'lion': build_lion}
+            'lion': build_lion, 'buta': build_buta,
+            'heart': build_heart, 'onigiri': build_onigiri, 'panda': build_panda, 'patocar': build_patocar, 'suika': build_suika, 'piano': build_piano}
 
 
 def _sync_sw_js(keys):
