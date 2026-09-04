@@ -2,7 +2,7 @@
 
 `python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。
 ★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。
-最終更新: 2026-09-04 11:37
+最終更新: 2026-09-04 13:33
 
 ```
 === 原簿 ⇄ 大問 の 突き合わせ ===
@@ -16,7 +16,7 @@
 小4国語            75本    19本    23問   なし
 小4マスター         306本   299本   732問   なし
 小4マスター宿題       801本   789本  2907問   なし
-小4灘合           130本   125本   218問   なし
+小4灘合           130本   126本   225問   なし
 小4理科           106本   107本   482問   なし
 小4最レ           106本   103本   388問   なし
 小5国語            37本    29本    76問   なし
@@ -45,7 +45,8 @@
    小3 sairei hd3s_n12_7
    小3 sairei hd3s_n12_8
 
-❌ 暗い色を使っている図（読めるかは check_text_contrast.py で実測する） **新規3枚** … python scripts/check_text_contrast.py で読めるか測る。読めなければ fix_text_contrast.py で直す
+❌ 暗い色を使っている図（読めるかは check_text_contrast.py で実測する） **新規4枚** … python scripts/check_text_contrast.py で読めるか測る。読めなければ fix_text_contrast.py で直す
+   4/nadago/fukushu/hd4n_11_12
    5/sairei/fukushu/hd5s_15_1
    5/sairei/fukushu/hd5s_15_5
    5/sairei/fukushu/hd5s_18_1
