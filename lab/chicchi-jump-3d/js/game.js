@@ -3091,6 +3091,12 @@ function buildDrawLists() {
     const sy = CJ_PLAT_H * zoneThick(core.meters) * s;
     // ★見た目の上のめんを、当たり判定の上のめんに実測でそろえる
     const meshTop = zp0[pl.type].top;
+    // 🩹 上のめんだけでなく **下のはし・横のはし** も判定にそろえる（2026-09-04）。
+    //    描くたびに実寸を足場そのものへ書きこむ ＝ 形・厚み・ゾーンを変えても
+    //    当たり判定が置いていかれない。読むのは core.js の platHit()。
+    //    （決め打ちの定数にすると、形を変えた日に黙って古くなる）
+    pl.drawHalfW = zp0[pl.type].halfW * pl.w;
+    pl.drawH     = (zp0[pl.type].top - zp0[pl.type].bottom) * sy;
     platLists[pl.type].push({
       ang: cjAngle(pl.px), y: pl.y + CJ_PLAT_H - meshTop * sy, radius: CJ_RADIUS,
       sx: pl.w, sy, sz: pl.w * (core.meters >= CJ_SPACE_M ? PLAT_DEPTH_ROCK : 0.72),
@@ -3197,7 +3203,9 @@ function shadowTarget() {
   for (const pl of core.platforms) {
     if (pl.used) continue;
     if (pl.y > p.y) continue;
-    if (Math.abs(cjWrapDelta(p.px, pl.px)) > (CJ_PLAYER_W + pl.w) / 2) continue;
+    // 🩹 影（着地点の予告）は、当たり判定と同じ物差しで出す。
+    //    ここだけ元の式のままにすると、**乗れるのに影が出ない**が起きる。
+    if (Math.abs(cjWrapDelta(p.px, pl.px)) > CJ_PLAYER_W / 2 + core.platHit(pl).halfW) continue;
     if (!best || pl.y > best.y) best = pl;
   }
   return best;

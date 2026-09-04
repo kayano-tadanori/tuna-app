@@ -753,7 +753,7 @@ class ChicchiCore {
       // 「下がるのを早める」だけの技にして、ズルにならないようにする。
       const dive = (this.diving && p.vy < 0) ? CJ_DIVE_MUL * (this.has('dive') ? 1.25 : 1) : 1;
       p.vy -= CJ_GRAVITY * this.w('gravity') * dive * dt;
-      if (p.vy < 0) this.checkLanding(now);
+      if (p.vy < 0) this.checkLanding(now, dt);
     }
     p.y += p.vy * dt;
 
@@ -890,15 +890,52 @@ class ChicchiCore {
     }
   }
 
-  // 落下中だけ、足場の上面に足がかかったかを見る（元の AABB そのまま）
-  checkLanding(now) {
+  // 🩹 その足場の「絵のとおりの」当たり判定（2026-09-04）
+  //
+  //  本人の指摘：**「見えてる足場の上なのにミスになる」「下の端」「幅も緩めに」**
+  //
+  //  実測してみたら、描いている絵と当たり判定がまるで別物だった。
+  //    ・横 …… 描いた絵は判定より **1.36〜1.52倍 ひろい**（雲は左右に約 0.1 world はみ出す）
+  //    ・厚み … 判定は上のめんから **0.462 world の帯だけ**。ところが宇宙の岩は
+  //             **0.87〜1.44 world** の厚みで描いてある。
+  //             ＝ **岩の下半分〜2/3には当たり判定が無い**。
+  //             横から指でスッと寄せると、絵の中をそのまま素通りして落ちていた。
+  //
+  //  直しかた：**絵は 1mm も変えない。判定のほうを、描いてある形に合わせる。**
+  //  形は game.js が描くときに毎フレーム plat.drawHalfW / plat.drawH へ実寸を入れる
+  //  （決め打ちにすると形を変えたとたんに古くなる。上のめん `top` で一度それをやって
+  //   痛い目を見ている＝props.js の build() のコメント）。
+  //  ★描画が無いとき（physics_check.js など）は、いままでの判定にそのまま戻る。
+  //  ★どちらも Math.max なので、**ゆるくなる方向にしか動かない**。
+  platHit(plat) {
+    return {
+      halfW: Math.max(plat.w / 2, plat.drawHalfW || 0),
+      tol:   Math.max(CJ_LAND_TOL, plat.drawH || 0),
+    };
+  }
+
+  // 落下中だけ、足場の上面に足がかかったかを見る
+  //
+  //  🩹 「点」でなく「このコマで足が通った線」で見る（2026-09-04）。
+  //     いままでは そのコマの足の位置が帯の中にあるかだけを見ていた。
+  //     速く落ちてくると 1コマで帯をまたいでしまい、**位相の運**で
+  //     乗れたり乗れなかったりしていた（実測：落下 60 world/s で 9%、
+  //     70 で 22% がすり抜け。バネ全開＋「たたむ」で実際に届く速さ）。
+  //     線で見れば、どんなに速くても上のめんを通った瞬間に必ず拾える。
+  checkLanding(now, dt) {
     const p = this.player;
     const footY = p.y;                       // 足の高さ（p.y が足元）
+    const footNext = footY + p.vy * (dt || 0);   // このコマの おわりの足の高さ
     for (const plat of this.platforms) {
       if (plat.used) continue;               // こわれ雲は一度きり
+      const box = this.platHit(plat);
       const dx = Math.abs(cjWrapDelta(p.px, plat.px));
-      if (dx > (CJ_PLAYER_W + plat.w) / 2) continue;
-      if (footY <= plat.y + CJ_PLAT_H && footY >= plat.y - CJ_LAND_TOL + CJ_PLAT_H) {
+      if (dx > CJ_PLAYER_W / 2 + box.halfW) continue;
+      const platTop = plat.y + CJ_PLAT_H;
+      if (footNext <= platTop && footY >= platTop - box.tol) {
+        // 🩹 絵の下のほうで拾ったときは、**上のめんへ立たせてから**跳ねる。
+        //    そうしないと「岩の中から跳ぶ」絵になる。
+        p.y = platTop;
         const fall = Math.abs(p.vy);
         const impact = Math.min(fall / CJ_SPRING_V, 1);
         this.landSpeed = fall;

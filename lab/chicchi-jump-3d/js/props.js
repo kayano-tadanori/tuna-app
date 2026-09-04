@@ -96,9 +96,17 @@ class PropBuilder {
     // ★見た目の「上のはし」を実測して持たせる。
     //   これを定数で決め打ちすると、形を変えたとたんにチッチが
     //   足場に めりこんだり 浮いたり する（実際に一度そうなった）。
-    let top = -1e9;
-    for (let i = 1; i < this.v.length; i += P_STRIDE) {
-      if (this.v[i] > top) top = this.v[i];
+    // 🩹 2026-09-04：**下のはし（bottom）と 横のはし（halfW）も同じように測る。**
+    //   上のめんだけそろえていたので、当たり判定が「上の 0.462 world だけの薄い帯」で、
+    //   描いてある形の下半分には何も無かった（宇宙の岩でいちばんひどく、実測 1.44 world 中
+    //   0.98 world が素通り）。横も、描いた絵のほうが 1.36〜1.52 倍ひろかった。
+    //   → 判定を絵に合わせるための実寸。使い道は core.js の platHit()。
+    let top = -1e9, bottom = 1e9, halfW = 0;
+    for (let i = 0; i < this.v.length; i += P_STRIDE) {
+      const x = Math.abs(this.v[i]), y = this.v[i + 1];
+      if (y > top) top = y;
+      if (y < bottom) bottom = y;
+      if (x > halfW) halfW = x;
     }
     return {
       vertices: new Float32Array(this.v),
@@ -106,7 +114,7 @@ class PropBuilder {
       indexCount: this.idx.length,
       vertexCount: this.count,
       u32: this.count > 65535,
-      top,
+      top, bottom, halfW,
     };
   }
 }

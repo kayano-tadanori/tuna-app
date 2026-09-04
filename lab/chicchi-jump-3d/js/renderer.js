@@ -282,6 +282,10 @@ class Renderer {
       count: mesh.indexCount,
       type: mesh.u32 ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT,
       top: mesh.top === undefined ? 0.32 : mesh.top,   // 見た目の上のはし（実測値）
+      // 🩹 下のはし・横のはしも運ぶ。当たり判定を「描いてある形」に合わせるのに使う
+      //    （props.js の build() が頂点から数えた実寸）。
+      bottom: mesh.bottom === undefined ? -0.32 : mesh.bottom,
+      halfW:  mesh.halfW  === undefined ?  0.50 : mesh.halfW,
     };
   }
 
