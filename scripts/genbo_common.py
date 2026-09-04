@@ -709,11 +709,17 @@ def match_step_svgs(fields, steps, daimon_svg=""):
     ★アプリの大問じたいの svg と中身が同じ欄は、小問ではなく大問の図として外す
       （原簿には「（1）＝大問の図・（4）＝小問の図」のように混ざったレコードが実在する）。
     """
-    ds = (daimon_svg or "").strip()
+    # ★原簿はCRLFで持つことが多く、アプリの svg（JSON文字列）は\nだけ。
+    #   素の文字列比較だと中身が同じでも「ちがう」と出る（2026-09-04・書き戻す道具を
+    #   作っているときに実際に踏んだ）。ここだけ正規化して比べる（返す値そのものは
+    #   正規化しない（呼ぶ側が原簿の生の文字列をそのまま使えるように）。
+    def _nl(t):
+        return t.replace(u"\r\n", u"\n").replace(u"\r", u"\n")
+    ds = _nl((daimon_svg or "").strip())
     qs = [f for f in fields if f["qual"] is not None]
     if ds:
-        qs = [f for f in qs if f["value"].strip() != ds]
-        steps = [(n, v) for n, v in steps if v != ds]
+        qs = [f for f in qs if _nl(f["value"].strip()) != ds]
+        steps = [(n, v) for n, v in steps if _nl(v) != ds]
     if not steps:
         return [], [], None
     if not qs:

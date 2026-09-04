@@ -100859,7 +100859,7 @@
        "category": "kazu",
        "unit": "N進法(1)",
        "title": "10円玉を入れるとメーターが進む＝3進カウンター",
-       "intro": "10円玉を1枚入れるとAの目もりが1つ進み，Aが1まわりするとBが1目もり進み，Bが1まわりするとCが1目もり進む機械があります（たとえば 10円玉を4枚入れると C=0，B=1，A=1 になります）。図は(1)のようすです。",
+       "intro": "10円玉を1枚入れるとAの目もりが1つ進み，Aが1まわりするとBが1目もり進み，Bが1まわりするとCが1目もり進む機械があります（たとえば 10円玉を4枚入れると C=0，B=1，A=1 になります）。ただし，この機械には10円玉は26枚までしか入りません。図は(1)のようすです。",
        "star": 2,
        "hg": "HG-6689",
        "steps": [
@@ -100944,13 +100944,13 @@
         {
          "question": "初めて図のようになる（C=3,B=1,A=0）のはAが何目もり進んだときですか。",
          "answer": "20",
-         "meaning": "C3,B1,A0＝3×6+1×2+0×1＝20",
+         "meaning": "Aは2目もりで1まわりしてBが1目もり進むので、Bの1目もり＝Aの2目もり。Bは3目もりで1まわりしてCが1目もり進むので、Cの1目もり＝Aの2×3＝6目もり。だから位の重みはA＝1・B＝2・C＝6。図はC＝3，B＝1，A＝0なので 3×6＋1×2＋0×1＝20目もり。",
          "svg": "<svg viewBox=\"0 0 900 332\" style=\"display:block;margin:0 auto;max-width:100%\">\n<defs><marker id=\"hg6701a\" markerWidth=\"8\" markerHeight=\"8\" refX=\"4\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#e8ecf5\"/></marker></defs>\n<rect x=\"20\" y=\"30\" width=\"860\" height=\"260\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"2\"/>\n<g>\n<text x=\"160\" y=\"55\" font-size=\"26\" fill=\"#e8ecf5\" text-anchor=\"middle\">C</text>\n<circle cx=\"160\" cy=\"170\" r=\"90\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"3\"/>\n<text x=\"160\" y=\"92\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">0</text>\n<text x=\"272\" y=\"176\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">1</text>\n<text x=\"160\" y=\"282\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">2</text>\n<text x=\"48\" y=\"176\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">3</text>\n<line x1=\"160\" y1=\"170\" x2=\"90\" y2=\"170\" stroke=\"#ffd166\" stroke-width=\"4\" marker-end=\"url(#hg6701a)\"/>\n</g>\n<g>\n<text x=\"460\" y=\"55\" font-size=\"26\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n<circle cx=\"460\" cy=\"170\" r=\"90\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"3\"/>\n<text x=\"460\" y=\"92\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">0</text>\n<text x=\"537\" y=\"252\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">1</text>\n<text x=\"383\" y=\"252\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">2</text>\n<line x1=\"460\" y1=\"170\" x2=\"512\" y2=\"219\" stroke=\"#ffd166\" stroke-width=\"4\" marker-end=\"url(#hg6701a)\"/>\n</g>\n<g>\n<text x=\"750\" y=\"55\" font-size=\"26\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n<circle cx=\"750\" cy=\"170\" r=\"90\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"3\"/>\n<text x=\"750\" y=\"92\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">0</text>\n<text x=\"750\" y=\"282\" font-size=\"20\" fill=\"#e8ecf5\" text-anchor=\"middle\">1</text>\n<line x1=\"750\" y1=\"170\" x2=\"750\" y2=\"100\" stroke=\"#ffd166\" stroke-width=\"4\" marker-end=\"url(#hg6701a)\"/>\n</g>\n</svg>"
         },
         {
          "question": "Aが23目もり進んだときCの針はどの目もりをさしていますか。",
          "answer": "3",
-         "meaning": "23をこの位取りで分解：23÷2＝11あまり1(A＝1)、11÷3＝3あまり2(B＝2)、残りC＝3"
+         "meaning": "Aは2目もりでBが1目もり進むので、23÷2＝11あまり1 → Aは1をさし、Bは11目もり進んだことになる。Bは3目もりでCが1目もり進むので、11÷3＝3あまり2 → Bは2をさし、Cは3目もり進んでいる。だからCは3。（たしかめ：3×6＋2×2＋1×1＝23）"
         }
        ],
        "grade": 5,
@@ -100968,12 +100968,12 @@
         {
          "question": "りんごを20個入れると，Cの針はどの目もりをさしていますか。",
          "answer": "2",
-         "meaning": "20÷3＝6あまり2(D=2)、6÷4＝1あまり2(C=2)、Cは2"
+         "meaning": "Dは3目もりでCが1目もり進むので、20÷3＝6あまり2 → Dは2をさし、Cは6目もり進んだ。Cは4目もりでBが1目もり進むので、6÷4＝1あまり2 → Cは2をさしている。"
         },
         {
          "question": "（3102）となったとき，いくつのりんごが入っていますか（360個以上は入らない）。",
          "answer": "194",
-         "meaning": "「3102」をA3,B1,C0,D2と読み3×60+1×12+0×3+2×1＝194"
+         "meaning": "位の重みは、Dの1目もり＝りんご1個、Cの1目もり＝3個（Dが3目もりで1まわり）、Bの1目もり＝3×4＝12個、Aの1目もり＝12×5＝60個。（3102）はA＝3，B＝1，C＝0，D＝2なので 3×60＋1×12＋0×3＋2×1＝194個。360個以上は入らないので、これでただ1通りに決まる。"
         }
        ],
        "grade": 5,
@@ -100992,7 +100992,7 @@
         {
          "question": "1シュヴァルツ4ニルソンは，何トモワと交換できますか。",
          "answer": "136",
-         "meaning": "120+4×4＝136トモワ"
+         "meaning": "1フラグ＝5ニルソン＝5×4＝20トモワ。1シュヴァルツ＝6フラグ＝6×20＝120トモワ。だから1シュヴァルツ4ニルソン＝120＋4×4＝136トモワ。"
         },
         {
          "question": "1シュヴァルツ4ニルソンで5フラグ4ニルソンの買い物をします。おつりの枚数が1番少ない場合でいくらになりますか。",
@@ -101021,22 +101021,22 @@
         {
          "question": "232₍₄₎＋323₍₄₎",
          "answer": "1221",
-         "meaning": "46+59=105→1221₍₄₎"
+         "meaning": "232₍₄₎＝2×16＋3×4＋2＝46、323₍₄₎＝3×16＋2×4＋3＝59。46＋59＝105。105を4進法にもどすと 105÷4＝26あまり1、26÷4＝6あまり2、6÷4＝1あまり2 なので 1221₍₄₎。"
         },
         {
          "question": "543₍₆₎－354₍₆₎",
          "answer": "145",
-         "meaning": "207-142=65→145₍₆₎"
+         "meaning": "543₍₆₎＝5×36＋4×6＋3＝207、354₍₆₎＝3×36＋5×6＋4＝142。207－142＝65。65を6進法にもどすと 65÷6＝10あまり5、10÷6＝1あまり4 なので 145₍₆₎。"
         },
         {
          "question": "78₍₉₎×62₍₉₎",
          "answer": "5407",
-         "meaning": "71×56=3976→5407₍₉₎"
+         "meaning": "78₍₉₎＝7×9＋8＝71、62₍₉₎＝6×9＋2＝56。71×56＝3976。3976を9進法にもどすと 3976÷9＝441あまり7、441÷9＝49あまり0、49÷9＝5あまり4 なので 5407₍₉₎。"
         },
         {
          "question": "23026₍₈₎÷32₍₈₎",
          "answer": "567",
-         "meaning": "9750÷26=375→567₍₈₎"
+         "meaning": "23026₍₈₎＝2×4096＋3×512＋0×64＋2×8＋6＝9750、32₍₈₎＝3×8＋2＝26。9750÷26＝375。375を8進法にもどすと 375÷8＝46あまり7、46÷8＝5あまり6 なので 567₍₈₎。"
         }
        ],
        "grade": 5,
@@ -101054,7 +101054,7 @@
         {
          "question": "Cを465目もり動かした状態を表しなさい。",
          "answer": "（7，2，1）",
-         "meaning": "465÷64＝7あまり17、17÷8＝2あまり1→(7,2,1)",
+         "meaning": "メーターの目もりはどれも0〜7の8こ。Cを83目もり動かした状態が（1，2，3）なので、Cの1目もり＝1、Bの1目もり＝8、Aの1目もり＝64（たしかめ：1×64＋2×8＋3×1＝83）。465÷64＝7あまり17、17÷8＝2あまり1 なので（7，2，1）。",
          "choices": [
           "（7，2，1）",
           "（7，1，2）",
@@ -101068,14 +101068,14 @@
          "meaning": "(3,6,5)＝3×64+6×8+5＝245。1周＝8×8×8＝512なので2度目＝245+512＝757"
         },
         {
-         "question": "Aの針がちょうど4回転した状態にあるのは，Cの目もりを何目もり以上何目もり以下動かした場合ですか。　その範囲の下のはしの数は何目もりですか。（以上）",
+         "question": "Aの針がちょうど4回転した状態にあるのは，Cの目もりを何目もり以上何目もり以下動かした場合ですか。　その範囲の下のはし（「何目もり以上」のほう）は何目もりですか。",
          "answer": "2048",
-         "meaning": "Aが4回転して0に戻った直後（4×512＝2048）から、Aが次に動き出す直前（2048+63＝2111）までがAの目盛りが「4回転した」を保つ範囲"
+         "meaning": "Aの針は64目もりごとに1目もり進み、8目もり＝512目もりで1回転する。ちょうど4回転し終わるのは 512×4＝2048目もり動かしたとき。だから下のはしは2048目もり。"
         },
         {
-         "question": "Aの針がちょうど4回転した状態にあるのは，Cの目もりを何目もり以上何目もり以下動かした場合ですか。　その範囲の上のはしの数は何目もりですか。（以下）",
+         "question": "Aの針がちょうど4回転した状態にあるのは，Cの目もりを何目もり以上何目もり以下動かした場合ですか。　その範囲の上のはし（「何目もり以下」のほう）は何目もりですか。",
          "answer": "2111",
-         "meaning": "Aが4回転して0に戻った直後（4×512＝2048）から、Aが次に動き出す直前（2048+63＝2111）までがAの目盛りが「4回転した」を保つ範囲"
+         "meaning": "Aは2048目もりで4回転し終わり、つぎに目もりが動くのは 2048＋64＝2112目もりのとき。その1つ手前の2111目もりまでが「ちょうど4回転した状態」。だから上のはしは2111目もり。"
         }
        ],
        "grade": 5,
@@ -101094,17 +101094,17 @@
         {
          "question": "ABC₍₄₎はCBA₍₅₎より18大きいことがわかっています。A，B，Cはともに0でない整数とするとき，A，B，Cを求めなさい。　（A＝）",
          "answer": "3",
-         "meaning": "ABC₍₄₎＝16A+4B+C、CBA₍₅₎＝25C+5B+A。差の式(16A+4B+C)－(25C+5B+A)＝18を整理すると15A－B－24C＝18。A,B,Cが1〜3の整数という制約から探るとA＝3,B＝3,C＝1で15×3－3－24×1＝18が成立"
+         "meaning": "ABC₍₄₎は4進法の3けたなので A×16＋B×4＋C。CBA₍₅₎は5進法の3けたなので C×25＋B×5＋A。4進法のけたに使える数字は0〜3で、0でないと決まっているから A・B・C はどれも1・2・3のどれか。まずC。ABC₍₄₎はいちばん大きくても 333₍₄₎＝63 だから、CBA₍₅₎は 63－18＝45 より大きくなれない。C＝2だと CBA₍₅₎ は 25×2＝50 をこえてしまうので、C＝1に決まる。つぎにA。C＝1のとき、A＝1なら差はマイナス、A＝2なら差はいちばん大きくても5で18にならない。A＝3のとき ABC₍₄₎＝49＋B×4、CBA₍₅₎＝28＋B×5 で、差は 21－B。これが18になるのは B＝3。たしかめ：331₍₄₎＝61、133₍₅₎＝43、61－43＝18。だから A＝3，B＝3，C＝1。"
         },
         {
          "question": "ABC₍₄₎はCBA₍₅₎より18大きいことがわかっています。A，B，Cはともに0でない整数とするとき，A，B，Cを求めなさい。　（B＝）",
          "answer": "3",
-         "meaning": "ABC₍₄₎＝16A+4B+C、CBA₍₅₎＝25C+5B+A。差の式(16A+4B+C)－(25C+5B+A)＝18を整理すると15A－B－24C＝18。A,B,Cが1〜3の整数という制約から探るとA＝3,B＝3,C＝1で15×3－3－24×1＝18が成立"
+         "meaning": "ABC₍₄₎は4進法の3けたなので A×16＋B×4＋C。CBA₍₅₎は5進法の3けたなので C×25＋B×5＋A。4進法のけたに使える数字は0〜3で、0でないと決まっているから A・B・C はどれも1・2・3のどれか。まずC。ABC₍₄₎はいちばん大きくても 333₍₄₎＝63 だから、CBA₍₅₎は 63－18＝45 より大きくなれない。C＝2だと CBA₍₅₎ は 25×2＝50 をこえてしまうので、C＝1に決まる。つぎにA。C＝1のとき、A＝1なら差はマイナス、A＝2なら差はいちばん大きくても5で18にならない。A＝3のとき ABC₍₄₎＝49＋B×4、CBA₍₅₎＝28＋B×5 で、差は 21－B。これが18になるのは B＝3。たしかめ：331₍₄₎＝61、133₍₅₎＝43、61－43＝18。だから A＝3，B＝3，C＝1。"
         },
         {
          "question": "ABC₍₄₎はCBA₍₅₎より18大きいことがわかっています。A，B，Cはともに0でない整数とするとき，A，B，Cを求めなさい。　（C＝）",
          "answer": "1",
-         "meaning": "ABC₍₄₎＝16A+4B+C、CBA₍₅₎＝25C+5B+A。差の式(16A+4B+C)－(25C+5B+A)＝18を整理すると15A－B－24C＝18。A,B,Cが1〜3の整数という制約から探るとA＝3,B＝3,C＝1で15×3－3－24×1＝18が成立"
+         "meaning": "ABC₍₄₎は4進法の3けたなので A×16＋B×4＋C。CBA₍₅₎は5進法の3けたなので C×25＋B×5＋A。4進法のけたに使える数字は0〜3で、0でないと決まっているから A・B・C はどれも1・2・3のどれか。まずC。ABC₍₄₎はいちばん大きくても 333₍₄₎＝63 だから、CBA₍₅₎は 63－18＝45 より大きくなれない。C＝2だと CBA₍₅₎ は 25×2＝50 をこえてしまうので、C＝1に決まる。つぎにA。C＝1のとき、A＝1なら差はマイナス、A＝2なら差はいちばん大きくても5で18にならない。A＝3のとき ABC₍₄₎＝49＋B×4、CBA₍₅₎＝28＋B×5 で、差は 21－B。これが18になるのは B＝3。たしかめ：331₍₄₎＝61、133₍₅₎＝43、61－43＝18。だから A＝3，B＝3，C＝1。"
         }
        ],
        "grade": 5,
@@ -101163,7 +101163,7 @@
         {
          "question": "図はどんな数を表しますか。",
          "answer": "69",
-         "meaning": "2×27+1×9+2×3+0×1＝69",
+         "meaning": "1つの位が2マスで、ぬったマスの数がその位の数（0・1・2）を表す3進法。位の重みは左から27・9・3・1。図は左から2まい・1まい・2まい・0まいなので 2×27＋1×9＋2×3＋0×1＝54＋9＋6＝69。",
          "svg": "<svg viewBox=\"0 0 460 189\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%;height:auto\"><defs><pattern id=\"hg6728a\" width=\"10\" height=\"10\" patternTransform=\"rotate(45)\" patternUnits=\"userSpaceOnUse\"><rect width=\"10\" height=\"10\" fill=\"#1a2138\"/><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"3.5\"/></pattern></defs><text x=\"230\" y=\"16\" font-size=\"14\" fill=\"#e8ecf5\" text-anchor=\"middle\">見本（この書き方で数を表します）</text><rect x=\"20\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"20\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"36\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"36\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"52\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"52\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"68\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"68\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"52\" y=\"79\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">1</text><rect x=\"108\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"108\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"124\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"124\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"140\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"140\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"156\" y=\"30\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"156\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"140\" y=\"79\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">2</text><rect x=\"196\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"196\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"212\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"212\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"228\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"228\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"244\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"244\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"228\" y=\"79\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">3</text><rect x=\"284\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"284\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"300\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"300\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"316\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"316\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"332\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"332\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"316\" y=\"79\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">4</text><rect x=\"372\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"372\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"388\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"388\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"404\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"404\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"420\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"420\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"404\" y=\"79\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">10</text><line x1=\"20\" y1=\"89\" x2=\"440\" y2=\"89\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 4\"/><rect x=\"178\" y=\"103\" width=\"26\" height=\"26\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"178\" y=\"129\" width=\"26\" height=\"26\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"204\" y=\"103\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"204\" y=\"129\" width=\"26\" height=\"26\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"230\" y=\"103\" width=\"26\" height=\"26\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"230\" y=\"129\" width=\"26\" height=\"26\" fill=\"url(#hg6728a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"256\" y=\"103\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"256\" y=\"129\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"230\" y=\"177\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">(1)の図</text></svg>"
         }
        ],
@@ -101182,7 +101182,7 @@
         {
          "question": "図はどんな数を表しますか。",
          "answer": "215",
-         "meaning": "3×64+1×16+1×4+3×1＝215",
+         "meaning": "1つの位が3マスで、ぬったマスの数がその位の数（0〜3）を表す4進法。位の重みは左から64・16・4・1。図は左から3まい・1まい・1まい・3まいなので 3×64＋1×16＋1×4＋3×1＝192＋16＋4＋3＝215。",
          "svg": "<svg viewBox=\"0 0 460 231\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%;height:auto\"><defs><pattern id=\"hg6729a\" width=\"10\" height=\"10\" patternTransform=\"rotate(45)\" patternUnits=\"userSpaceOnUse\"><rect width=\"10\" height=\"10\" fill=\"#1a2138\"/><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"3.5\"/></pattern></defs><text x=\"230\" y=\"16\" font-size=\"14\" fill=\"#e8ecf5\" text-anchor=\"middle\">見本（この書き方で数を表します）</text><rect x=\"20\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"20\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"20\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"36\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"36\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"36\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"52\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"52\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"52\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"68\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"68\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"68\" y=\"62\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"52\" y=\"95\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">1</text><rect x=\"108\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"108\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"108\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"124\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"124\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"124\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"140\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"140\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"140\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"156\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"156\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"156\" y=\"62\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"140\" y=\"95\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">2</text><rect x=\"196\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"196\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"196\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"212\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"212\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"212\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"228\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"228\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"228\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"244\" y=\"30\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"244\" y=\"46\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"244\" y=\"62\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"228\" y=\"95\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">3</text><rect x=\"284\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"284\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"284\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"300\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"300\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"300\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"316\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"316\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"316\" y=\"62\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"332\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"332\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"332\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"316\" y=\"95\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">4</text><rect x=\"372\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"372\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"372\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"388\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"388\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"388\" y=\"62\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"404\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"404\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"404\" y=\"62\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"420\" y=\"30\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"420\" y=\"46\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"420\" y=\"62\" width=\"16\" height=\"16\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"404\" y=\"95\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">17</text><line x1=\"20\" y1=\"105\" x2=\"440\" y2=\"105\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 4\"/><rect x=\"178\" y=\"119\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"178\" y=\"145\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"178\" y=\"171\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"204\" y=\"119\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"204\" y=\"145\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"204\" y=\"171\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"230\" y=\"119\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"230\" y=\"145\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"230\" y=\"171\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"256\" y=\"119\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"256\" y=\"145\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><rect x=\"256\" y=\"171\" width=\"26\" height=\"26\" fill=\"url(#hg6729a)\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"230\" y=\"219\" font-size=\"15\" fill=\"#e8ecf5\" text-anchor=\"middle\">(1)の図</text></svg>"
         }
        ],
@@ -101202,7 +101202,7 @@
          "question": "図はどんな数を表しますか。",
          "answer": "162",
          "meaning": "この図は、行が上から「1の位・7の位・49の位・343の位」を表し、その行でぬったマスが右から何番目かが、その位の数を表している。図は 1の位が1・7の位が2・49の位が3・343の位が0なので、1×1＋2×7＋3×49＝1＋14＋147＝162。",
-         "svg": "<svg viewBox=\"0 0 260 180\" style=\"display:block;margin:0 auto;max-width:100%\">\n<defs><pattern id=\"hg6730b\" width=\"10\" height=\"10\" patternTransform=\"rotate(45)\" patternUnits=\"userSpaceOnUse\"><rect width=\"10\" height=\"10\" fill=\"#1a2138\"/><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"3.5\"/></pattern></defs>\n<rect x=\"10\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"10\" width=\"40\" height=\"40\" fill=\"url(#hg6730b)\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"10\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"50\" width=\"40\" height=\"40\" fill=\"url(#hg6730b)\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"10\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"90\" width=\"40\" height=\"40\" fill=\"url(#hg6730b)\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"10\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+         "svg": "<svg viewBox=\"0 0 310 436\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%;height:auto\">\n<defs><pattern id=\"hg6730c\" width=\"6\" height=\"6\" patternTransform=\"rotate(45)\" patternUnits=\"userSpaceOnUse\"><rect width=\"6\" height=\"6\" fill=\"#1a2138\"/><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"6\" stroke=\"#4f9eff\" stroke-width=\"2\"/></pattern></defs><defs><pattern id=\"hg6730b\" width=\"10\" height=\"10\" patternTransform=\"rotate(45)\" patternUnits=\"userSpaceOnUse\"><rect width=\"10\" height=\"10\" fill=\"#1a2138\"/><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"3.5\"/></pattern></defs>\n<text x=\"155\" y=\"16\" font-size=\"14\" fill=\"#e8ecf5\" text-anchor=\"middle\">見本（この書き方で数を表します）</text>\n<g transform=\"translate(0,24)\">\n<rect x=\"8\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"10\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"8\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"8\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"8\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<text x=\"53\" y=\"88\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">1</text>\n<rect x=\"108\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"10\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"108\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"108\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"108\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<text x=\"153\" y=\"88\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">2</text>\n<rect x=\"208\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"10\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"10\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"208\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"25\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"208\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"40\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"208\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"55\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<text x=\"253\" y=\"88\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">5</text>\n<rect x=\"8\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"105\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"8\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"120\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"8\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"8\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"23\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"38\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"53\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"68\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"83\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<text x=\"53\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">8</text>\n<rect x=\"108\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"105\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"108\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"120\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"108\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"108\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"123\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"138\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"153\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"168\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"183\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<text x=\"153\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">15</text>\n<rect x=\"208\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"105\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"208\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"120\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"208\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"135\" width=\"15\" height=\"15\" fill=\"url(#hg6730c)\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"135\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"208\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"223\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"238\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"253\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"268\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<rect x=\"283\" y=\"150\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.4\"/>\n<text x=\"253\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">196</text>\n</g>\n<line x1=\"10\" y1=\"228\" x2=\"300\" y2=\"228\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 4\"/>\n<text x=\"155\" y=\"250\" font-size=\"14\" fill=\"#e8ecf5\" text-anchor=\"middle\">(1)の図</text>\n<g transform=\"translate(25,258)\">\n<rect x=\"10\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"10\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"10\" width=\"40\" height=\"40\" fill=\"url(#hg6730b)\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"10\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"50\" width=\"40\" height=\"40\" fill=\"url(#hg6730b)\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"50\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"10\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"90\" width=\"40\" height=\"40\" fill=\"url(#hg6730b)\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"90\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"10\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"50\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"90\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"130\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"170\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"210\" y=\"130\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</g>\n</svg>"
         }
        ],
        "grade": 5,
@@ -101221,12 +101221,12 @@
         {
          "question": "10番目の数を求めなさい。",
          "answer": "1010",
-         "meaning": "10を2進法で表すと1010→そのまま読んで1010"
+         "meaning": "1，10，11，100，101，…と並ぶこの列は、1，2，3，4，5，…を2進法で書いたものとぴったり同じ順になっている。だから10番目は、10を2進法にした1010をそのまま読んで1010。"
         },
         {
          "question": "11111は何番目ですか。",
          "answer": "31",
-         "meaning": "11111を2進法の数字列とみなして10進法に変換：16+8+4+2+1＝31"
+         "meaning": "ぎゃくに、並んでいる数を2進法の数とみて十進法に直すと、それが「何番目か」になる。11111は 16＋8＋4＋2＋1＝31 なので31番目。"
         }
        ],
        "grade": 5,
@@ -101244,12 +101244,12 @@
         {
          "question": "10番目の数を求めなさい。",
          "answer": "101",
-         "meaning": "10を3進法で表すと101→そのまま読んで101"
+         "meaning": "1，2，10，11，12，20，…と並ぶこの列は、1，2，3，4，5，…を3進法で書いたものとぴったり同じ順になっている。だから10番目は、10を3進法にした101をそのまま読んで101。"
         },
         {
          "question": "1000は何番目ですか。",
          "answer": "27",
-         "meaning": "1000を3進法の数字列とみなして10進法に変換：1×27+0×9+0×3+0×1＝27"
+         "meaning": "ぎゃくに、並んでいる数を3進法の数とみて十進法に直すと、それが「何番目か」になる。1000は 1×27＋0×9＋0×3＋0×1＝27 なので27番目。"
         }
        ],
        "grade": 5,
@@ -101267,7 +101267,7 @@
         {
          "question": "1から1000までの整数の中から2の使われている整数と3の使われている整数をとりのぞくと何個の整数が残りますか。",
          "answer": "512",
-         "meaning": "各位（百・十・一）が{0,1,4,5,6,7,8,9}の8通りから独立に選べるので、000〜999の3桁表現で8×8×8＝512通り。ここから0を除き(-1)、1000を加える(+1)と512個のまま"
+         "meaning": "1〜999を、000・001・…・999のように3けたの形で考える。2と3を使わないので、百の位・十の位・一の位のどれも 0・1・4・5・6・7・8・9 の8通りから選べて 8×8×8＝512通り。この中には000（＝0）が入っているので1つひき、かわりに1000（1・0・0・0で2も3も使っていない）を1つたす。512－1＋1＝512個。"
         }
        ],
        "grade": 5,
@@ -101285,12 +101285,12 @@
         {
          "question": "[11010]のついている部分は，左から数えて何番目ですか。",
          "answer": "27",
-         "meaning": "11010を2進法の数として読むと16+8+0+2+0＝26、0番目起算なので左から27番目"
+         "meaning": "記号の0と1を、そのまま2進法の数字とみる。いちばん左の[00000]が0にあたるので、記号の表す数より1大きいのが「左から何番目か」。[11010]は 16＋8＋0＋2＋0＝26 なので、左から27番目。"
         },
         {
          "question": "第6図において，左から数えて60番目の部分の記号を書きなさい。",
          "answer": "[111011]",
-         "meaning": "60番目＝0番目起算で59、59を6桁の2進法で表すと111011",
+         "meaning": "左から60番目は、いちばん左を0として数えると59。59を6けたの2進法で書くと 111011（32＋16＋8＋0＋2＋1＝59）なので、記号は[111011]。",
          "choices": [
           "[111011]",
           "[111010]",
@@ -101315,12 +101315,12 @@
         {
          "question": "BBBAAのついている部分は，左から数えて何番目ですか。",
          "answer": "29",
-         "meaning": "BBBAA→11100＝16+8+4＝28、左から29番目"
+         "meaning": "A＝0，B＝1として2進法の数とみる。いちばん左のAAAAAが0にあたるので、表す数より1大きいのが「左から何番目か」。BBBAA→11100＝16＋8＋4＝28 なので、左から29番目。"
         },
         {
          "question": "A，Bの記号が5つ並んでいるとき，左から数えて30番目の部分の記号を書きなさい。",
          "answer": "BBBAB",
-         "meaning": "30番目＝0番目起算で29、5桁2進法で11101→A/Bに戻すとBBBAB",
+         "meaning": "左から30番目は、いちばん左を0として数えると29。29を5けたの2進法で書くと 11101（16＋8＋4＋0＋1＝29）。1をB・0をAにもどして BBBAB。",
          "choices": [
           "BBBAB",
           "BBBBA",
@@ -101345,12 +101345,12 @@
         {
          "question": "CABCBのついている部分は，左から数えて何番目ですか。",
          "answer": "179",
-         "meaning": "CABCB→20121＝2×81+0×27+1×9+2×3+1＝178、左から179番目"
+         "meaning": "A＝0，B＝1，C＝2として3進法の数とみる。いちばん左のAAAAAが0にあたるので、表す数より1大きいのが「左から何番目か」。CABCB→20121＝2×81＋0×27＋1×9＋2×3＋1×1＝178 なので、左から179番目。"
         },
         {
          "question": "A，B，Cの記号が5つ並んでいるとき，左から数えて100番目の部分の記号を書きなさい。",
          "answer": "BACAA",
-         "meaning": "100番目＝0番目起算で99、99を5桁3進法で表すと10200→A/B/Cに戻すとBACAA",
+         "meaning": "左から100番目は、いちばん左を0として数えると99。99を5けたの3進法で書くと 10200（1×81＋0×27＋2×9＋0×3＋0×1＝99）。0をA・1をB・2をCにもどして BACAA。",
          "choices": [
           "BACAA",
           "BACAB",
@@ -101403,67 +101403,67 @@
         {
          "question": "この分銅を使って，何通りの重さがはかれますか。",
          "answer": "7775",
-         "meaning": "5個ずつは6進法の各位0〜5を全部作れる枚数なので、1〜7775（＝6×6×6×6×6-1）のすべての整数が作れる"
+         "meaning": "1g・6g・36g・216g・1296gは6倍ずつ大きくなっていて、どれも5個までしか使えないので、6進法の1つの位に0〜5のどれかを入れるのと同じことになる。だから1gから、全部のせた 5×(1＋6＋36＋216＋1296)＝7775g までの重さが、どれもちょうど1通りずつ作れる。何ものせない0gははかった重さに入らないので、7775通り。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから1番目の範囲の、下のはしは何gですか。",
          "answer": "1080",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "216gの分銅が4個しか使えなくなったので、216gを5個ぶん（216×5＝1080g）使わないと作れない重さだけがはかれなくなる。1080gに、36g・6g・1gで作れる0〜215gを足した1080g〜1295gがそのひとまとまり。いちばん小さいまとまりの下のはしは1080g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから1番目の範囲の、上のはしは何gですか。",
          "answer": "1295",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "216gの分銅が4個しか使えなくなったので、216gを5個ぶん（216×5＝1080g）使わないと作れない重さだけがはかれなくなる。1080gに、36g・6g・1gで作れる0〜215gを足した1080g〜1295gがそのひとまとまり。いちばん小さいまとまりの上のはしは 1080＋215＝1295g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから2番目の範囲の、下のはしは何gですか。",
          "answer": "2376",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "つぎのまとまりは1296gを1個使ったとき。まとまりごと1296g大きくなるので 1080＋1296＝2376g から 1295＋1296＝2591g。その下のはしは2376g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから2番目の範囲の、上のはしは何gですか。",
          "answer": "2591",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "つぎのまとまりは1296gを1個使ったとき。まとまりごと1296g大きくなるので 1080＋1296＝2376g から 1295＋1296＝2591g。その上のはしは2591g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから3番目の範囲の、下のはしは何gですか。",
          "answer": "3672",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを2個使うと、まとまりは 1296×2＝2592g 大きくなるので 1080＋2592＝3672g から 1295＋2592＝3887g。その下のはしは3672g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから3番目の範囲の、上のはしは何gですか。",
          "answer": "3887",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを2個使うと、まとまりは 1296×2＝2592g 大きくなるので 1080＋2592＝3672g から 1295＋2592＝3887g。その上のはしは3887g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから4番目の範囲の、下のはしは何gですか。",
          "answer": "4968",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを3個使うと、まとまりは 1296×3＝3888g 大きくなるので 1080＋3888＝4968g から 1295＋3888＝5183g。その下のはしは4968g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから4番目の範囲の、上のはしは何gですか。",
          "answer": "5183",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを3個使うと、まとまりは 1296×3＝3888g 大きくなるので 1080＋3888＝4968g から 1295＋3888＝5183g。その上のはしは5183g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから5番目の範囲の、下のはしは何gですか。",
          "answer": "6264",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを4個使うと、まとまりは 1296×4＝5184g 大きくなるので 1080＋5184＝6264g から 1295＋5184＝6479g。その下のはしは6264g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから5番目の範囲の、上のはしは何gですか。",
          "answer": "6479",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを4個使うと、まとまりは 1296×4＝5184g 大きくなるので 1080＋5184＝6264g から 1295＋5184＝6479g。その上のはしは6479g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから6番目の範囲の、下のはしは何gですか。",
          "answer": "7560",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを5個使うと、まとまりは 1296×5＝6480g 大きくなるので 1080＋6480＝7560g から 1295＋6480＝7775g。これがいちばん大きいまとまりで、下のはしは7560g。"
         },
         {
          "question": "216gの分銅を1個なくしました。そのためある重さの物をはかることができなくなりました。このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから6番目の範囲の、上のはしは何gですか。",
          "answer": "7775",
-         "meaning": "216の位が5（＝216×5＝1080）になる数だけ作れなくなる。1296の位を0〜5で動かすと、1080〜1295、2376〜2591、3672〜3887、4968〜5183、6264〜6479、7560〜7775の6つの範囲（各範囲の幅は36+6+1の3位ぶんの最大215）"
+         "meaning": "1296gを5個使うと、まとまりは 1296×5＝6480g 大きくなるので 1080＋6480＝7560g から 1295＋6480＝7775g。上のはしは、はかれる中でいちばん重い7775g。"
         }
        ],
        "grade": 5,
@@ -101486,42 +101486,42 @@
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから1番目の範囲の、下のはしは何gですか。",
          "answer": "48",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、16gを3個ぶん（16×3＝48g）使わないと作れない重さもはかれません。そのいちばん小さいまとまりは64gを1つも使わないときで、48gに4gと1gで作れる0〜15gを足した48g〜63g。その下のはしは48gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから1番目の範囲の、上のはしは何gですか。",
          "answer": "63",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、16gを3個ぶん（16×3＝48g）使わないと作れない重さもはかれません。そのいちばん小さいまとまりは64gを1つも使わないときで、48gに4gと1gで作れる0〜15gを足した48g〜63g。その上のはしは 48＋15＝63gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから2番目の範囲の、下のはしは何gですか。",
          "answer": "112",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "つぎのまとまりは64gを1個使ったとき。まとまりごと64g大きくなるので 48＋64＝112g から 63＋64＝127g。その下のはしは112gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから2番目の範囲の、上のはしは何gですか。",
          "answer": "127",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "つぎのまとまりは64gを1個使ったとき。まとまりごと64g大きくなるので 48＋64＝112g から 63＋64＝127g。その上のはしは127gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから3番目の範囲の、下のはしは何gですか。",
          "answer": "176",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "64gを2個使うと、まとまりは 64×2＝128g 大きくなるので 48＋128＝176g から 63＋128＝191g。その下のはしは176gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから3番目の範囲の、上のはしは何gですか。",
          "answer": "191",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "64gを2個使うと、まとまりは 64×2＝128g 大きくなるので 48＋128＝176g から 63＋128＝191g。その上のはしは191gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから4番目の範囲の、下のはしは何gですか。",
          "answer": "240",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "64gを3個使うと 48＋192＝240g から 63＋192＝255g。ここは256g以上（これも全部はかれない）とつながるので、240gからひとつづきの範囲になります。その下のはしは240gです。"
         },
         {
          "question": "256gの分銅全部と16gの分銅1つをなくしました。もともとはかれていて，このためにはかれなくなった範囲を以上，以下を用いて表しなさい。　小さいほうから4番目の範囲の、上のはしは何gですか。",
          "answer": "1023",
-         "meaning": "256gが1つも無くなったので、256g以上の重さはまるごとはかれなくなります。16gも2個までしか使えないので、4進法で16の位が3になる重さ、つまり16×3＝48gぶんが必要な数もはかれません。48gぶんを使う数は、64gを0個・1個・2個・3個と変えるごとに、1gと4gで0〜15gを足せるから16通りずつ続き、48〜63g、112〜127g、176〜191g、240〜255gの4つのまとまりになります。最後のまとまりは256g以上とつながるので、はかれなくなるのは48以上63以下、112以上127以下、176以上191以下、240以上1023以下です。"
+         "meaning": "64gを3個使う240g〜255gと、256g以上のはかれない部分がつながるので、この範囲は240gから、もともとはかれた中でいちばん重い1023gまで。その上のはしは1023gです。"
         }
        ],
        "grade": 5,
@@ -101532,7 +101532,7 @@
        "category": "kazu",
        "unit": "N進法(2)",
        "title": "デルタ王国の三角形の色ぬり暗号＝不均等な位取り記数法",
-       "intro": "デルタ王国では数字を表すのに三角形に色をぬって表します（例：1・2・8・20の見本つき）。",
+       "intro": "デルタ王国では数字を表すのに，三角形に色をぬって表します。図の上の4つは，1・2・8・20 の表し方の見本です。",
        "star": 3,
        "hg": "HG-6778",
        "steps": [
@@ -101635,7 +101635,7 @@
         {
          "question": "ポポル君の部屋は1番目の部屋（2号室）から数えて何番目ですか。",
          "answer": "99",
-         "meaning": "ポポル君のホテルは0,2,3,5,6,7,8の7種類で7進法。302の各桁を0,2,3,5,6,7,8→0,1,2,3,4,5,6に置き換えると201(7進法)＝2×49+0×7+1＝99番目 (2) ブー君のホテルは0,1,2,3,5,6,7,8の8種類で8進法"
+         "meaning": "ポポル君のホテルで使える数字は 0，2，3，5，6，7，8 の7種類だけです。7種類しか使わないので、部屋番号のならび方は7進法とそっくりになります。小さいほうから順に 0，2，3，5，6，7，8 を 0，1，2，3，4，5，6 に置きかえると、302は201になります。7進法の201は 2×49＋0×7＋1＝99。だから302号室は99番目です。"
         },
         {
          "question": "ブー君のとまっている部屋番号を求めなさい。",
@@ -101670,7 +101670,7 @@
        ],
        "grade": 5,
        "src": "HG-6974 小5最レ 第2分冊 第1講座 No.18 平行四辺形の中の相似な三角形・面積比1:5から実面積を2段階で求める",
-       "svg": "<svg viewBox=\"0 0 215 155\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <line x1=\"115\" y1=\"20\" x2=\"150\" y2=\"18\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"150\" y1=\"18\" x2=\"195\" y2=\"126\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"160\" y1=\"128\" x2=\"195\" y2=\"126\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"115\" y1=\"20\" x2=\"160\" y2=\"128\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"150\" y1=\"18\" x2=\"20\" y2=\"133\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"20\" y1=\"133\" x2=\"160\" y2=\"128\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"106\" y=\"18\" fill=\"#e8ecf5\" font-size=\"11\">A</text>\n  <text x=\"153\" y=\"16\" fill=\"#e8ecf5\" font-size=\"11\">D</text>\n  <text x=\"106\" y=\"46\" fill=\"#e8ecf5\" font-size=\"11\">F</text>\n  <text x=\"163\" y=\"140\" fill=\"#e8ecf5\" font-size=\"11\">B</text>\n  <text x=\"198\" y=\"126\" fill=\"#e8ecf5\" font-size=\"11\">C</text>\n  <text x=\"8\" y=\"140\" fill=\"#e8ecf5\" font-size=\"11\">E</text>\n</svg>"
+       "svg": "<svg viewBox=\"0 0 285 210\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"150,40 210,180 248,180 188,40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"20\" y1=\"180\" x2=\"248\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"20\" y1=\"180\" x2=\"188\" y2=\"40\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"139\" y=\"33\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n  <text x=\"196\" y=\"33\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">D</text>\n  <text x=\"148\" y=\"67\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">F</text>\n  <text x=\"8\" y=\"186\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">E</text>\n  <text x=\"209\" y=\"197\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n  <text x=\"260\" y=\"185\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">C</text>\n</svg>"
       },
       {
        "id": "hd5s_18k1_2",
@@ -101708,12 +101708,12 @@
         {
          "question": "右図で，四角形ABCDは平行四辺形です。台形ABEDの面積が800cm²のとき，三角形BCEの面積を求めなさい。（EはDC上の点、FはAD延長上でDF=30cm、B・E・Fが一直線、BC=20cm）",
          "answer": "200",
-         "meaning": "A(0,0)D(20,0)B(0,-h)C(20,-h)、F(50,0)とおく。B,E,F一直線でEはx=20上にあるので、直線BFのt=0.4地点、E=(20,-0.6h)。台形ABED=(1/2)(h+0.6h)(20)=16h=800よりh=50。三角形BCE(B(0,-50)C(20,-50)E(20,-30))は直角三角形で面積=(1/2)(20)(20)=200cm²"
+         "meaning": "ADとBCは平行四辺形の向かい合う辺だから平行で、FはADをまっすぐのばした先にあるので、FDとBCも平行です。B・E・Fは一直線だから、三角形FDEと三角形BCEは形が同じ三角形（相似）になります。FD：BC＝30：20＝3：2 なので DE：EC＝3：2。つまり辺DCを5等分すると、DEは3つぶん、ECは2つぶん、ABはDCと同じ長さなので5つぶんです。台形ABEDと三角形BCEは、どちらもABとDCの間にはさまれていて高さが同じだから、台形ABED＝(5＋3)×高さ÷2＝4×高さ、三角形BCE＝2×高さ÷2＝1×高さ。台形ABED：三角形BCE＝4：1なので、三角形BCE＝800÷4＝200cm²です。"
         }
        ],
        "grade": 5,
        "src": "HG-6976 小5最レ 第2分冊 第1講座 No.18 平行四辺形の辺の延長線上の点と対角線状の直線が作る台形・三角形の面積",
-       "svg": "<svg viewBox=\"0 0 290 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <line x1=\"16\" y1=\"30\" x2=\"118\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"118\" y1=\"30\" x2=\"275\" y2=\"15\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"16\" y1=\"30\" x2=\"15\" y2=\"178\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"118\" y1=\"30\" x2=\"118\" y2=\"178\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"15\" y1=\"178\" x2=\"118\" y2=\"178\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"15\" y1=\"178\" x2=\"275\" y2=\"15\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"4\" y=\"24\" fill=\"#e8ecf5\" font-size=\"11\">A</text>\n  <text x=\"122\" y=\"24\" fill=\"#e8ecf5\" font-size=\"11\">D</text>\n  <text x=\"280\" y=\"12\" fill=\"#e8ecf5\" font-size=\"11\">F</text>\n  <text x=\"2\" y=\"192\" fill=\"#e8ecf5\" font-size=\"11\">B</text>\n  <text x=\"122\" y=\"192\" fill=\"#e8ecf5\" font-size=\"11\">C</text>\n  <text x=\"122\" y=\"115\" fill=\"#e8ecf5\" font-size=\"11\">E</text>\n  <text x=\"150\" y=\"18\" fill=\"#e8ecf5\" font-size=\"10\">30cm</text>\n  <text x=\"45\" y=\"192\" fill=\"#e8ecf5\" font-size=\"10\">20cm</text>\n</svg>"
+       "svg": "<svg viewBox=\"0 0 290 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <line x1=\"16\" y1=\"30\" x2=\"118\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"118\" y1=\"30\" x2=\"271\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"16\" y1=\"30\" x2=\"16\" y2=\"178\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"118\" y1=\"30\" x2=\"118\" y2=\"178\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"16\" y1=\"178\" x2=\"118\" y2=\"178\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <line x1=\"16\" y1=\"178\" x2=\"271\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <circle cx=\"118\" cy=\"118.8\" r=\"2.5\" fill=\"#4f9eff\"/>\n  <text x=\"5\" y=\"24\" fill=\"#e8ecf5\" font-size=\"11\">A</text>\n  <text x=\"122\" y=\"24\" fill=\"#e8ecf5\" font-size=\"11\">D</text>\n  <text x=\"275\" y=\"24\" fill=\"#e8ecf5\" font-size=\"11\">F</text>\n  <text x=\"3\" y=\"192\" fill=\"#e8ecf5\" font-size=\"11\">B</text>\n  <text x=\"122\" y=\"192\" fill=\"#e8ecf5\" font-size=\"11\">C</text>\n  <text x=\"124\" y=\"123\" fill=\"#e8ecf5\" font-size=\"11\">E</text>\n  <text x=\"180\" y=\"24\" fill=\"#e8ecf5\" font-size=\"10\">30cm</text>\n  <text x=\"50\" y=\"192\" fill=\"#e8ecf5\" font-size=\"10\">20cm</text>\n</svg>"
       },
       {
        "id": "hd5s_18k1_4",
@@ -101754,24 +101754,24 @@
        "category": "zu",
        "unit": "面積比の複合",
        "title": "平行四辺形・2つの中点を結ぶ線と対角線が作る3つの領域",
-       "intro": "次のそれぞれの図の平行四辺形で，A，Bは辺の中点です（Aは上辺、Bは下辺）。斜線部分の面積は平行四辺形の面積の何倍ですか。",
+       "intro": "次のそれぞれの図の平行四辺形で，A，Bは辺の中点です（Aは上辺、Bは下辺）。",
        "star": 2,
        "hg": "HG-6986",
        "steps": [
         {
-         "question": "対角線と線分ABが作る、隅の小さい三角形が斜線",
+         "question": "斜線をつけた三角形の面積は，平行四辺形の面積の何倍ですか。",
          "answer": "1/8",
          "meaning": "AとBは上の辺と下の辺の真ん中の点なので、線分ABは平行四辺形を面積の等しい2つに分けます。対角線は平行四辺形のまん中を通るので、対角線とABはABのちょうど真ん中で交わります。斜線の三角形は、半分にした平行四辺形と高さが同じで底辺はABの半分、しかも三角形は底辺×高さ÷2だから、その半分の1/4にあたります。だから1/2×1/4＝1/8倍です。",
          "svg": "<svg viewBox=\"0 0 290 205\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"20,175 120,175 143,119.5\" fill=\"#ffd166\" fill-opacity=\"0.85\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <polygon points=\"66,64 266,64 220,175 20,175\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"166\" y1=\"64\" x2=\"120\" y2=\"175\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"20\" y1=\"175\" x2=\"266\" y2=\"64\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"120\" y1=\"175\" x2=\"266\" y2=\"64\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"166\" y=\"56\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n  <text x=\"120\" y=\"192\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n</svg>"
         },
         {
-         "question": "同じ2本の線が作る、隣の四角形部分が斜線",
+         "question": "斜線をつけた四角形の面積は，平行四辺形の面積の何倍ですか。",
          "answer": "3/8",
          "meaning": "AとBは上の辺と下の辺の真ん中の点なので、線分ABは平行四辺形を面積の等しい2つに分け、斜線がある側は全体の1/2です。対角線は平行四辺形のまん中を通るので、ABとはABの真ん中で交わります。斜線の四角形は、この半分から「底辺がABの半分で高さが同じ三角形」をのぞいた形で、その三角形は半分の1/4にあたります。だから1/2×(1－1/4)＝1/2×3/4＝3/8倍です。",
          "svg": "<svg viewBox=\"0 0 290 205\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"66,64 166,64 143,119.5 20,175\" fill=\"#ffd166\" fill-opacity=\"0.85\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <polygon points=\"66,64 266,64 220,175 20,175\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"166\" y1=\"64\" x2=\"120\" y2=\"175\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"20\" y1=\"175\" x2=\"266\" y2=\"64\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"166\" y=\"56\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n  <text x=\"120\" y=\"192\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n</svg>"
         },
         {
-         "question": "Aと対角の頂点を結ぶ線＋対角線が作る、下辺を底辺とする大きい三角形が斜線",
+         "question": "斜線をつけた三角形の面積は，平行四辺形の面積の何倍ですか。",
          "answer": "1/3",
          "meaning": "上の辺と下の辺は平行なので、2本の線が交わる点をはさんだ上下の三角形は形が同じになります。上の三角形の底辺はAから上の辺のはしまでで上の辺の半分、下の三角形の底辺は下の辺まるごとだから、長さの比は1：2です。だから交わる点の高さは、下の辺から数えて平行四辺形の高さの2/3のところになります。斜線の三角形は下の辺を底辺、高さがその2/3なので、2/3÷2＝1/3倍です。",
          "svg": "<svg viewBox=\"0 0 290 205\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"20,175 220,175 184,101\" fill=\"#ffd166\" fill-opacity=\"0.85\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <polygon points=\"66,64 266,64 220,175 20,175\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"20\" y1=\"175\" x2=\"266\" y2=\"64\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"166\" y1=\"64\" x2=\"220\" y2=\"175\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"166\" y=\"56\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n</svg>"
@@ -101785,24 +101785,24 @@
        "category": "zu",
        "unit": "面積比の複合",
        "title": "平行四辺形・AE:ED=BF:FC=3:2の分割点を結ぶ線と対角線が作る3つの小領域",
-       "intro": "次のそれぞれの図の平行四辺形でAE：ED＝BF：FC＝3：2です。斜線部分の面積はもとの平行四辺形の面積の何倍ですか。",
+       "intro": "次のそれぞれの図の平行四辺形で AE：ED＝BF：FC＝3：2です。",
        "star": 2,
        "hg": "HG-6987",
        "steps": [
         {
-         "question": "対角線BDと線分EFが作る、E-D側の小さい三角形",
+         "question": "斜線をつけた三角形の面積は，もとの平行四辺形の面積の何倍ですか。",
          "answer": "2/25",
          "meaning": "AE：ED＝3：2だからEDはADの2/5、BF：FC＝3：2だからBFはBCの3/5です。EDとBFは平行なので、対角線BDと線分EFが交わる点をはさんだ2つの三角形は形が同じになり、ED：BF＝2：3からその点はEFを上から2：3に分けます。つまり交わる点は平行四辺形の高さの2/5だけ下にあり、斜線の三角形は底辺がADの2/5、高さがもとの高さの2/5です。三角形は底辺×高さ÷2だから、2/5×2/5÷2＝2/25倍です。",
          "svg": "<svg viewBox=\"0 0 300 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"145,50 225,50 165,96\" fill=\"#ffd166\" fill-opacity=\"0.85\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <polygon points=\"25,50 225,50 275,165 75,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"75\" y1=\"165\" x2=\"225\" y2=\"50\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"145\" y1=\"50\" x2=\"195\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"18\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n  <text x=\"145\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">E</text>\n  <text x=\"230\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">D</text>\n  <text x=\"70\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n  <text x=\"195\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">F</text>\n  <text x=\"280\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">C</text>\n</svg>"
         },
         {
-         "question": "対角線ACと線分EFが作る、A-B-F側の四角形",
+         "question": "斜線をつけた四角形の面積は，もとの平行四辺形の面積の何倍ですか。",
          "answer": "21/50",
          "meaning": "AEとBFは平行で長さも同じ（どちらももとの辺の3/5）なので四角形ABFEは平行四辺形になり、その面積はもとの3/5倍、EFの長さもABと同じです。ADとBCが平行だから、対角線ACとEFが交わる点はEFをAE：CF＝3：2に分け、Fの側はEFの2/5になります。斜線の四角形は、ABとその2/5の長さの辺を平行な2辺とする台形なので、平行四辺形ABFEの(1＋2/5)÷2＝7/10倍です。だからもとの平行四辺形の3/5×7/10＝21/50倍です。",
          "svg": "<svg viewBox=\"0 0 300 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"25,50 75,165 195,165 175,119\" fill=\"#ffd166\" fill-opacity=\"0.85\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <polygon points=\"25,50 225,50 275,165 75,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"25\" y1=\"50\" x2=\"275\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"145\" y1=\"50\" x2=\"195\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"18\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n  <text x=\"145\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">E</text>\n  <text x=\"230\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">D</text>\n  <text x=\"70\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n  <text x=\"195\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">F</text>\n  <text x=\"280\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">C</text>\n</svg>"
         },
         {
-         "question": "対角線AC・線分EC・線分EFが作る、E-C側の小さい三角形",
+         "question": "斜線をつけた三角形の面積は，もとの平行四辺形の面積の何倍ですか。",
          "answer": "3/25",
          "meaning": "EDとFCは平行で長さも同じ（どちらももとの辺の2/5）なので四角形EDCFは平行四辺形になり、面積はもとの2/5倍、ECで2つに分けた三角形EFCはその半分だからもとの1/5倍です。ADとBCが平行だから、対角線ACとEFが交わる点はEFをAE：CF＝3：2に分け、Eの側はEFの3/5になります。斜線の三角形は三角形EFCとCまでのきょり（高さ）が同じで底辺がEFの3/5だから、1/5×3/5＝3/25倍です。",
          "svg": "<svg viewBox=\"0 0 300 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"145,50 175,119 275,165\" fill=\"#ffd166\" fill-opacity=\"0.85\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <polygon points=\"25,50 225,50 275,165 75,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"25\" y1=\"50\" x2=\"275\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"145\" y1=\"50\" x2=\"275\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"145\" y1=\"50\" x2=\"195\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"18\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">A</text>\n  <text x=\"145\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">E</text>\n  <text x=\"230\" y=\"42\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">D</text>\n  <text x=\"70\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">B</text>\n  <text x=\"195\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">F</text>\n  <text x=\"280\" y=\"183\" font-size=\"13\" fill=\"#e8ecf5\" text-anchor=\"middle\">C</text>\n</svg>"
@@ -101821,9 +101821,9 @@
        "hg": "HG-6997",
        "steps": [
         {
-         "question": "図のように三角形ABCの3辺の4等分点を結んでできる三角形DEFの面積は三角形ABCの面積の何倍ですか。（D:AD:DB=1:3、E:BE:EC=1:3、F:CF:FA=1:3の位置）",
+         "question": "図のように三角形ABCの3辺の4等分点を結んでできる三角形DEFの面積は三角形ABCの面積の何倍ですか。（AD：DB＝1：3、BE：EC＝1：3、CF：FA＝1：3の位置に D・E・F をとります）",
          "answer": "7/16",
-         "meaning": "3頂点付近の小三角形はそれぞれ元の三角形の面積の(1/4)×(3/4)=3/16倍。3つ引いて1-3×3/16=7/16"
+         "meaning": "まず三角形ADCは、底辺ADが辺ABの1/4で高さは三角形ABCと同じだから、面積はABCの1/4倍です。その中の三角形ADFは、底辺AFが辺ACの3/4（CF：FA＝1：3だから）で高さが同じなのでADCの3/4、つまりABCの1/4×3/4＝3/16倍になります。同じように頂点Bのかどの三角形（3/4と1/4）も、頂点Cのかどの三角形（1/4と3/4）も3/16倍です。だから真ん中の三角形DEFは1－3/16×3＝7/16倍です。"
         }
        ],
        "grade": 5,
@@ -101859,9 +101859,9 @@
        "hg": "HG-6999",
        "steps": [
         {
-         "question": "長方形ABCDの辺BCを4等分した点と辺CDを2等分した点と辺ADを3等分した点を図のように結んでできる三角形BEFの面積は、長方形ABCDの面積の何倍ですか。（Eは辺CDの中点、Fは辺ADをA側から2:1に分ける点。辺BCの4等分点は図に描かれているが三角形BEFの頂点としては使われていない）",
+         "question": "長方形ABCDの辺BCを4等分した点と辺CDを2等分した点と辺ADを3等分した点を図のように結んでできる三角形BEFの面積は、長方形ABCDの面積の何倍ですか。（Eは辺CDの真ん中の点、Fは辺ADをA側から2：1に分ける点です。辺BCの4等分点も図にかいてありますが、三角形BEFにはつかいません。）",
          "answer": "1/3",
-         "meaning": "長方形を1とすると、三角形ABF=1/2×AF/AD×1=1/2×2/3=1/3、三角形FDE=1/2×FD/AD×DE/DC=1/2×1/3×1/2=1/12、三角形BCE=1/2×1=1/2×2/3(DC/2÷DC=1/2)…ア=1/3・イ=1/4・ウ=1/12とし、1-(1/3+1/4+1/12)=1/3"
+         "meaning": "長方形ABCDの面積を1とします。三角形BEFのまわりには、かどの直角三角形が3つできています。・三角形ABF … 底辺AFは辺ADの2/3、高さは辺ABまるごとだから 2/3÷2＝1/3。・三角形BCE … 底辺BCは辺ADと同じ長さ、高さCEはEが辺CDの真ん中の点だから辺CDの1/2で 1/2÷2＝1/4。・三角形FDE … 底辺FDは辺ADの1/3、高さDEは辺CDの1/2だから 1/3×1/2÷2＝1/12。のこりが三角形BEFなので 1－(1/3＋1/4＋1/12)＝1－2/3＝1/3倍です。"
         }
        ],
        "grade": 5,

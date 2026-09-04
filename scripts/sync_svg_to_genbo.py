@@ -51,6 +51,35 @@ from genbo_path import find_genbo
 DEFAULT_IDS = os.path.join(BASE, "docs", "_audit", "svg_changed_ids.txt")
 BQ = chr(96)
 NLC = chr(10)
+
+
+def norm_nl(t):
+    u"""比較用に 
+・ を 
+ にそろえる。
+
+    ★原簿はほぼ全体がCRLF、アプリの svg（JSON文字列）は 
+ だけ。
+      rb + decode で原簿を読む（CRLF方式にする理由は下のコメントのとおり）ので、
+      素の文字列比較だと**中身が同じでも「ちがう」と誤判定する**
+      （2026-09-04・小問の図を書き戻す実装中に実際に踏んだ。fence/inline とも
+      複数行のSVGは原簿側がCRLFのまま残っていた）。
+    """
+    return t.replace(chr(13) + chr(10), NLC).replace(chr(13), NLC)
+
+
+def to_file_nl(svg, nl):
+    u"""アプリの svg（
+区切り）を、原簿の改行スタイル（nl。多くはCRLF）に合わせて書く。
+
+    ★変換しないと、書いた欄だけ 
+・まわりはCRLFという混在ファイルになる。
+      sync_genbo_svg.py（原簿→アプリ）は原簿をテキストモード（改行を自動で
+にそろえて
+      読む）で開くので実害は無いが、原簿そのものの見た目・次回の比較を素直にするため
+      ファイルの改行スタイルにそろえておく。
+    """
+    return svg if nl == NLC else svg.replace(NLC, nl)
 ADDED_NOTE = ("- ⚠図SVGは2026-09-04にアプリ側"
               "（原本PDFと照合して描き直したもの）から書き戻した")
 
@@ -78,13 +107,16 @@ def ids_with_step_svgs():
             if genbo_common.step_svgs(r["x"])]
 
 
-def field_replacement(field, svg):
+def field_replacement(field, svg, nl):
     """欄の中身を svg に置きかえる (開始, 終わり, 新しい文字) を返す。
 
     ★改行を含むSVGを「バッククォート無しの生SVG」欄に入れると、次に読むとき
       そこで切れる。そのときだけバッククォートで囲む形に直す
       （find_svg_fields は閉じバッククォートを次のレコードの手前まで探すので読める）。
+    ★svg は to_file_nl() で原簿の改行スタイル（nl）にそろえてから差しこむ
+      （原簿はCRLF・アプリの svg は\\nだけ＝そろえないと欄の中だけ改行が混ざる）。
     """
+    svg = to_file_nl(svg, nl)
     if field["style"] == "fence":
         return field["vs"], field["ve"], svg
     if field["style"] == "bare" and NLC in svg:
@@ -131,7 +163,10 @@ def added_field_text(label, svg, fence, nl):
     ★大問の欄（かっこ書き無し）は原簿でいちばん多い書き方＝バッククォート囲みの1行。
       小問の欄（かっこ書きつき）は実測163欄のうち大半がコードブロックなので
       そちらにそろえる。
+    ★svg の中の改行も nl にそろえる（外側の区切りだけ nl にすると、欄の中だけ
+      \\nが残って混ざる）。
     """
+    svg = to_file_nl(svg, nl)
     if fence:
         return label + nl + (BQ * 3) + "html" + nl + svg + nl + (BQ * 3) + nl
     return label + " " + BQ + svg + BQ + nl
@@ -196,10 +231,12 @@ def main():
             if f["value"].strip() == "判読不能":
                 holds.append((_i, _hg, what, "原簿が「判読不能」と書いている"))
                 return
-            if f["value"].strip() == svg:
+            # ★原簿はCRLF・アプリの svg は\nだけ＝素の文字列比較だと中身が同じでも
+            #   「ちがう」と出る（2026-09-04に実際に踏んだ）。norm_nl でそろえて比べる。
+            if norm_nl(f["value"].strip()) == norm_nl(svg):
                 same.append((_i, _hg, what))
                 return
-            vs, ve, new = field_replacement(f, svg)
+            vs, ve, new = field_replacement(f, svg, NL)
             plans.append({"id": _i, "hg": _hg, "what": what, "kind": "set",
                           "style": f["style"], "abs": (_s + vs, _s + ve), "new": new,
                           "old_len": ve - vs, "svg": svg})
@@ -221,6 +258,11 @@ def main():
                           % len(unq)))
         elif unq:
             plan_set(unq[0], xsvg, "大問")
+        elif xsvg and any(norm_nl(f["value"].strip()) == norm_nl(xsvg) for f in fields):
+            # ★かっこ書きつきの欄（小問用）に、たまたま大問の図と同じ中身が入っていることがある
+            #   （hd_5r_k08_641_4＝「（1）」欄が実は大問の図だった）。この場合は「欄が無い」の
+            #   ではなく「もう入っている」なので、--add-missing でも二重には足さない。
+            same.append((i, hg, "大問（かっこ書きの欄に同じ中身がある）"))
         elif args.add_missing:
             plan_add("- 図SVG:", xsvg, "大問", False)
         else:
@@ -312,14 +354,18 @@ def main():
             print("✗ 自己検査で落ちた: %s（読み直すと小問の対応がつかない: %s）"
                   % (hg, why or ("余り%d枚" % len(extra))))
             continue
-        seen = set(f["value"].strip() for f, v in (pairs or []) if v in want_step)
-        if want_step - seen:
+        # ★書いた欄は原簿の改行（多くはCRLF）にそろえてある。want_step 側はアプリの
+        #   \n のままなので、比べる前に norm_nl でそろえる（さもないと読み直せているのに
+        #   「読み直せない」と誤検出する）。
+        want_step_n = set(norm_nl(v) for v in want_step)
+        seen = set(norm_nl(f["value"].strip()) for f, v in (pairs or []) if v in want_step)
+        if want_step_n - seen:
             ok = False
             print("✗ 自己検査で落ちた: %s（小問の図%d枚が読み直せない）"
-                  % (hg, len(want_step - seen)))
+                  % (hg, len(want_step_n - seen)))
         if want_dai:
             unq = [f for f in fs if f["qual"] is None]
-            if len(unq) != 1 or unq[0]["value"].strip() != want_dai[0]:
+            if len(unq) != 1 or norm_nl(unq[0]["value"].strip()) != norm_nl(want_dai[0]):
                 ok = False
                 print("✗ 自己検査で落ちた: %s（大問の欄%d個・読み直した値が一致しない）"
                       % (hg, len(unq)))
