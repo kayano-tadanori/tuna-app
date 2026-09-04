@@ -581,7 +581,40 @@ const CLOUD_SCORE_GAMES = [
   { id: 'jump3d_reach', label: '🚩 チッチジャンプ3D いちばん遠く',       unit: '' },
   { id: 'jump3d_gain',  label: '📈 チッチジャンプ3D じこベストののびしろ', unit: '' },
   { id: 'jump3d_coop',  label: '🤝 チッチジャンプ3D きょうりょく（合計）', unit: '' },
+  // 🧹 オカンの おかたづけ（2026-08-28 追加）。クリアした面の数を okz-progress で送っている。
+  //   ★firestore.rules の gameIdOk() にも 'okatazuke' が要る（無いと無言で拒否される）。
+  { id: 'okatazuke',    label: '🧹 おかたづけ クリアした面',              unit: '面' },
 ];
+// 🧹 おかたづけの面の構成。lab/okatazuke/js/levels.js の OK_LEVELS を要約したもの。
+//   むずかしさ（t）は 0→3 の順にきれいに並んでいるので、境目の番号だけ持つ。
+//   ★面を足したら `node scripts/okatazuke_tiers.js` を流して、この行を貼りかえる。
+const OKZ_TIER_ENDS  = [13, 40, 89, 141];   // 0..12 / 13..39 / 40..88 / 89..140
+const OKZ_TIER_NAMES = ['やさしい', 'ふつう', 'むずかしい', 'ゲキむず'];
+const OKZ_TOTAL = OKZ_TIER_ENDS[OKZ_TIER_ENDS.length - 1];
+
+// backup.okatazukeSave（{"L0":{"m":歩数,"p":おした数},"S0":★の数, …}）を読んで数える。
+//   L… その面のじぶんの最高記録／S… その面でとった★（1〜3）。S があれば クリアずみ。
+function okzSummary(raw) {
+  // ★「まだ1面も かたづけていない（0面）」と「記録そのものが届いていない」は別もの。
+  //   届いていない＝8/28より前のバックアップか、まだ一度もセーブしていない子。
+  //   ここで 0面 と出すと『遊んだのに0』に見えてしまうので、null を返して説明を出す。
+  if (raw == null || raw === '') return null;
+  let d;
+  try { d = JSON.parse(raw); } catch (e) { return null; }
+  if (!d || typeof d !== 'object') return null;
+  const tiers = OKZ_TIER_NAMES.map(() => ({ cleared: 0, perfect: 0, total: 0 }));
+  let cleared = 0, stars = 0, perfect = 0;
+  for (let i = 0; i < OKZ_TOTAL; i++) {
+    let ti = 0;
+    while (ti < OKZ_TIER_ENDS.length - 1 && i >= OKZ_TIER_ENDS[ti]) ti++;
+    tiers[ti].total++;
+    const st = d['S' + i] || 0;
+    if (!st) continue;
+    cleared++; stars += st; tiers[ti].cleared++;
+    if (st === 3) { perfect++; tiers[ti].perfect++; }
+  }
+  return { cleared, stars, perfect, tiers, total: OKZ_TOTAL, maxStars: OKZ_TOTAL * 3 };
+}
 // 今週のシードチャレンジは週ごとに別の表になるので、開いた時点の週番号で作る。
 function cloudScoreGames() {
   const w = Math.floor((Math.floor(Date.now() / 86400000) + 3) / 7);
@@ -1048,6 +1081,25 @@ async function showDetail(nickname) {
       html += `<div class="row"><span>💣 スイーパー(かんたん)</span><span>${backup.mineBest_easy ? backup.mineBest_easy + '秒' : '—'}</span></div>`;
       html += `<div class="row"><span>💣 スイーパー(ふつう)</span><span>${backup.mineBest_normal ? backup.mineBest_normal + '秒' : '—'}</span></div>`;
       html += `<div class="row"><span>💣 スイーパー(むずかしい)</span><span>${backup.mineBest_hard ? backup.mineBest_hard + '秒' : '—'}</span></div>`;
+
+      // 🧹 オカンの おかたづけ（2026-08-28）。141面ぶんの★とクリア数。
+      //   ★backup.okatazukeSave は 8/28 にようやく BACKUP_KEYS へ入れた（それまで端末のみ）。
+      //     まだ一度もセーブしていない子は出ないので、そのときは説明を出す。
+      const okz = okzSummary(backup.okatazukeSave);
+      html += `<div class="section-title">🧹 オカンの おかたづけ</div>`;
+      if (!okz) {
+        html += `<p class="sub">まだ記録がありません（またはアプリを開いてセーブしていません）。</p>`;
+      } else {
+        html += `<div class="row"><span>かたづけた面</span><span>${okz.cleared} / ${okz.total}面</span></div>`;
+        html += `<div class="row"><span>★の合計</span><span>${okz.stars} / ${okz.maxStars}</span></div>`;
+        html += `<div class="row"><span>かんぺき（★3）</span><span>${okz.perfect}面</span></div>`;
+        okz.tiers.forEach((t, i) => {
+          const pct = t.total ? Math.round(t.cleared / t.total * 100) : 0;
+          html += `<div class="subj-row"><div class="label"><span>　${OKZ_TIER_NAMES[i]}</span>` +
+                  `<span>${t.cleared} / ${t.total}（★3が${t.perfect}）</span></div>` +
+                  `<div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
+        });
+      }
     }
 
     // 🧊🦜 おとんテトリス2・ジェイドパニックは backup.* を経由しないクラウド直接保存なので、
