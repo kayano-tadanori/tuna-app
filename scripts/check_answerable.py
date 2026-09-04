@@ -23,6 +23,8 @@ def is_numpad(a):
 
 
 unanswerable = []   # choicesも無くテンキー形式でもない＝物理的に入力できない
+ctrl = []          # ★本文に混ざったC0制御文字（2026-09-04に追加）
+CTRL = re.compile("[" + "".join(chr(c) for c in list(range(0, 9)) + [11, 12] + list(range(14, 32)) + [127]) + "]")
 mismatched = []      # choicesはあるが answer がそのどれとも一致しない＝必ず不正解になる
 total = 0
 with_choices = 0
@@ -45,6 +47,15 @@ for grade, gv in d["grades"].items():
                                 mismatched.append(loc + (ans, ch))
                         elif not is_numpad(ans):
                             unanswerable.append(loc + (ans,))
+                        # ★C0制御文字（改行・タブ以外）が本文に混ざっていないか。
+                        #   2026-09-04に、置きかえ処理の placeholder（U+0001/U+0002）が
+                        #   解説に生のまま残っている大問が3本見つかった。
+                        #   ブラウザには豆腐か空白で出るうえ、**テキストに書き出すと消えて見える**
+                        #   ので目視の監査では絶対に捕まらない。機械でしか捕まえられない類の不具合。
+                        for fld in ("question", "answer", "meaning"):
+                            v = st.get(fld) or ""
+                            if CTRL.search(v):
+                                ctrl.append(loc + (fld, repr(v[:60])))
 
 print("=== 解答可能性チェック ===")
 print("総step数: %d（うちchoicesあり: %d）" % (total, with_choices))
@@ -63,5 +74,13 @@ if mismatched:
 else:
     print("✅ choicesがあるstepは全部 answer がそのどれかと完全一致")
 
-if unanswerable or mismatched:
+print()
+if ctrl:
+    print("❌ 本文にC0制御文字が混ざっている %d件（画面に豆腐か空白で出る／書き出すと消えて見える）" % len(ctrl))
+    for c in ctrl[:30]:
+        print("   ", c)
+else:
+    print("✅ 本文にC0制御文字の混入なし")
+
+if unanswerable or mismatched or ctrl:
     sys.exit(1)

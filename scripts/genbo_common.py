@@ -515,3 +515,245 @@ def scan_courses(d):
             "miss": miss,
         })
     return rows, nohg
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 原簿の「- 図SVG…:」欄を見つける（★実装はここ1か所だけ。コピーを作らないこと）
+#
+#   2026-09-04に sync_genbo_svg.py から切り出した。逆向き（アプリ→原簿）の
+#   sync_svg_to_genbo.py が同じ欄を探す必要が出たため。同じ正規表現を2つの
+#   ファイルに手で写すと、片方だけが必ず古びる（このファイル冒頭の顛末と同じ事故）。
+#
+#   ★欄の書き方は1つではない。実物にあるのは次の4通り（2026-09-04に全994欄を実測）。
+#     ① inline … 「- 図SVG:」のあとにバッククォートで囲んだSVG … 749欄
+#                 閉じバッククォートの後ろに注記が続く書き方があり、strip でバッククォートを
+#                 落とすとその注記まで図に混ざる（2026-09-02 HG-2679）。中だけを取る。
+#                 ⚠<text>の中に改行が入ると1行に収まらない（2026-09-03 HG-2864で
+#                 6,246字が1,105字しか読まれていなかった）ので、閉じバッククォートは
+#                 行末で打ち切らず、次のレコード見出しの手前まで探す。
+#     ② fence  … 「- 図SVG:」の次の行が ```html で始まり ``` で閉じる … 214欄
+#     ③ bare   … 「- 図SVG: <svg …>」（バッククォート無しの生SVG）… 20欄
+#     ④ text   … 「- 図SVG: 判読不能」のような文字 … 11欄
+#   見出し側も「- 図SVG:」だけでなく「- 図SVG（(1)）:」「- 図SVG(図1):」など
+#   小問名つきの書き方がある（qual に入れて返す）。
+#
+#   ★1つのレコードに欄が2つ以上あることがある（実測で最大6つ）。どれがアプリの図に
+#     当たるかは機械では決められないので、呼ぶ側が len()>1 を見て自分で決めること。
+# ═══════════════════════════════════════════════════════════════════════════
+
+# 見出し行。「- 図SVG」＋（省略できる かっこ書き）＋「:」または「：」
+SVG_FIELD_HDR = re.compile(
+    r"^-[ \t]*図SVG(?P<qual>[（(][^\n]*?[)）])?[ \t]*[:：]", re.M)
+
+
+def find_svg_fields(body):
+    """原簿の1レコード本文から「- 図SVG…:」欄をぜんぶ拾い、出てくる順に返す。
+
+    引数:
+      body … レコード本文（"### 【HG-xxxx】…" から次の見出しの手前まで）
+
+    戻り値: dict のリスト。キーは
+      hdr_start / hdr_end … 見出し「- 図SVG…:」の文字位置（body内）
+      label   … 見出しの文字そのもの（例 "- 図SVG（(1)）:"）
+      qual    … かっこ書き（"（(1)）" など）。無ければ None
+      step_no … かっこ書きから読んだ小問番号（int）。小問を指していなければ None
+      style   … "inline" / "fence" / "bare" / "text" / "empty"
+      value   … 欄の中身（切り出したまま。前後の空白は落としていない）
+      vs / ve … value の文字位置（body内）。**ここを置きかえれば欄を書きかえられる**
+      field_end … 欄まるごとの終わり（fence なら閉じ ``` の行末）
+      tail    … inline で閉じバッククォートの後ろに続く注記（無ければ ""）
+      unterminated … 閉じバッククォート／閉じ ``` が見つからなかったら True
+
+    ★value の前後の空白を落とすのは呼ぶ側の都合なので、ここではやらない
+      （書き戻すときに位置がずれると困る）。
+    """
+    out = []
+    for m in SVG_FIELD_HDR.finditer(body):
+        hs, he = m.start(), m.end()
+        eol = body.find("\n", he)
+        if eol < 0:
+            eol = len(body)
+        rest = body[he:eol]
+        off = he + (len(rest) - len(rest.lstrip()))   # 行のうち中身が始まる位置
+        s = rest.strip()
+        f = {"hdr_start": hs, "hdr_end": he, "label": m.group(0),
+             "qual": m.group("qual"), "step_no": qual_step_no(m.group("qual")),
+             "tail": "", "unterminated": False}
+
+        if s.startswith("`"):
+            f["style"] = "inline"
+            # ⚠行末で打ち切らない（<text>の中の改行で欄が切れるのを防ぐ）。
+            #   ただし次のレコード見出しは絶対に越えない。
+            bound = body.find("\n### ", off)
+            if bound < 0:
+                bound = len(body)
+            close = body.find("`", off + 1)
+            if close < 0 or close > bound:
+                f["unterminated"] = True
+                f["vs"], f["ve"] = off + 1, eol
+                f["field_end"] = eol
+            else:
+                f["vs"], f["ve"] = off + 1, close
+                tail_eol = body.find("\n", close)
+                if tail_eol < 0:
+                    tail_eol = len(body)
+                f["tail"] = body[close + 1:tail_eol]
+                f["field_end"] = tail_eol
+        elif s == "":
+            fs = eol + 1
+            fence_eol = body.find("\n", fs)
+            if fence_eol < 0:
+                fence_eol = len(body)
+            if body[fs:fs + 3] == "```":
+                f["style"] = "fence"
+                f["fence_info"] = body[fs + 3:fence_eol].strip()
+                close = body.find("\n```", fence_eol)
+                if close < 0:
+                    f["unterminated"] = True
+                    f["vs"], f["ve"] = fence_eol + 1, len(body)
+                    f["field_end"] = len(body)
+                else:
+                    f["vs"], f["ve"] = fence_eol + 1, close
+                    ce = body.find("\n", close + 1)
+                    f["field_end"] = len(body) if ce < 0 else ce
+            else:
+                f["style"] = "empty"
+                f["vs"] = f["ve"] = f["field_end"] = eol
+        else:
+            f["style"] = "bare" if s.startswith("<svg") else "text"
+            f["vs"] = off
+            f["ve"] = he + len(rest.rstrip())
+            f["field_end"] = f["ve"]
+        f["value"] = body[f["vs"]:f["ve"]]
+        out.append(f)
+    return out
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 小問（step）の図 ─ 原簿の「- 図SVG（(1)）:」欄 ↔ アプリの steps[].svg
+# ═══════════════════════════════════════════════════════════════════════════
+# ★図は大問だけのものではない。アプリは js/sansu.js の `svg: step.svg || chain.svg` で
+#   **小問側の図を先に出す**。原簿にも「- 図SVG（(1)）:」のようにかっこ書きで小問を指す欄が
+#   実在する（2026-09-04時点で163欄）。この2つを結ぶ規則は、ここ1か所にしか置かない。
+#   ★2026-09-04まで書き戻す道具（sync_svg_to_genbo.py）は大問の svg しか見ておらず、
+#     小問の図220枚が1枚も原簿へ戻せなかった。戻せない図は、次に原簿→アプリを流した
+#     瞬間に消えるか古い誤図で上書きされる。
+
+_MARU = u"①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳"
+_QUAL_NO = re.compile(r"^\s*[(（]?\s*(\d+|[" + _MARU + r"])")
+_STEP_NO_IN_Q = re.compile(r"^\s*[(（]\s*(\d+)\s*[)）]")
+
+
+def qual_step_no(qual):
+    u"""「- 図SVG（…）:」のかっこ書きから小問番号を読む。読めなければ None。
+
+    実測でこう書かれている（38種類）:
+      「（(1)）」「(1)」「（3）」「((2))」「（④）」        → 1 / 1 / 3 / 2 / 4
+      「（(1)の状態：C=2,B=1,A=2）」「（(2)の図）」       → 1 / 2
+      「（(1)長方形）」「（(1)の「あ・い・う・え」4枚）」  → 1 / 1
+    ★数字で始まらないものは小問を指していない＝None。
+      「（図1）」（図の通し番号）や「（選択肢ア〜エ）」をうっかり小問1と読まないため、
+      **先頭に錨をつける**。中の数字を拾い歩くと「図1」が小問1に化ける。
+    """
+    if not qual:
+        return None
+    inner = qual[1:-1]          # 外側のかっこを外す
+    m = _QUAL_NO.match(inner)
+    if not m:
+        return None
+    t = m.group(1)
+    return _MARU.index(t) + 1 if t in _MARU else int(t)
+
+
+def step_svgs(x):
+    u"""アプリの大問 x から、小問側の図を「出てくる順・重複なし」で返す。
+
+    戻り値: [(小問番号, svg), ...]
+
+    ★重複をまとめるのが肝。アプリは1つの小問を複数の step に割ることがある
+      （比を「前の数」「後ろの数」の2問にするなど）ので、同じ図が2〜3回続けて出てくる。
+      **枚数ではなく「別々の図の並び」**で原簿の欄と対応づける
+      （実測: 図つき220問は「別々の図」でいうと152枚）。
+    ★小問番号は step 本文の先頭の「(2)」を優先し、無ければ並び順（1から）。
+      2026-09-04の実測では、本文に番号がある62問すべてが並び順と一致した。
+    """
+    out, seen = [], set()
+    for i, s in enumerate(x.get("steps") or []):
+        v = (s.get("svg") or "").strip()
+        if not v or v in seen:
+            continue
+        seen.add(v)
+        m = _STEP_NO_IN_Q.match(s.get("question") or "")
+        out.append((int(m.group(1)) if m else i + 1, v))
+    return out
+
+
+def match_step_svgs(fields, steps, daimon_svg=""):
+    u"""原簿の「かっこ書きつきの図SVG欄」と、アプリの小問の図を対応づける。
+
+    引数:
+      fields     … find_svg_fields() の戻り（そのレコードの欄ぜんぶ）
+      steps      … step_svgs() の戻り [(小問番号, svg), ...]
+      daimon_svg … アプリの大問じたいの svg（あれば）
+
+    戻り値: (pairs, extra, why)
+      pairs … [(欄, svg), ...] 対応が決まった組
+      extra … 欄が無くて余ったアプリの図 [(小問番号, svg), ...]（新設の候補）
+      why   … 対応を決められなかった理由。決まったときは None
+
+    ★決め方は「出てくる順に1対1」。
+      根拠（2026-09-04の実測）: 小問の図をもつ大問84本のうち71本で欄の数と図の枚数が一致し、
+      その152組のうち134組は**すでに原簿と一字一句同じ**だった。**順番を入れかえたほうが
+      一致する組は0**。＝「原簿の欄の並び＝設問の並び」がデータで裏づけられている。
+    ★数が合わないものは**書かずに保留**する（曖昧なまま書かない＝この道具ぜんたいの方針）。
+    ★アプリの大問じたいの svg と中身が同じ欄は、小問ではなく大問の図として外す
+      （原簿には「（1）＝大問の図・（4）＝小問の図」のように混ざったレコードが実在する）。
+    """
+    ds = (daimon_svg or "").strip()
+    qs = [f for f in fields if f["qual"] is not None]
+    if ds:
+        qs = [f for f in qs if f["value"].strip() != ds]
+        steps = [(n, v) for n, v in steps if v != ds]
+    if not steps:
+        return [], [], None
+    if not qs:
+        return [], list(steps), None
+    if len(qs) != len(steps):
+        return None, None, (u"小問の図SVG欄が%d個・アプリの図が%d枚で数が合わない（%s）"
+                            % (len(qs), len(steps),
+                               u" ".join(f["label"].strip() for f in qs)))
+    nos = [f["step_no"] for f in qs]
+    if all(n is not None for n in nos) and any(a >= b for a, b in zip(nos, nos[1:])):
+        return None, None, u"図SVG欄の小問番号が設問の順に並んでいない（%s）" % nos
+    return list(zip(qs, [v for _, v in steps])), [], None
+
+
+def split_records(text):
+    """原簿ぜんぶの文字列を「### 【HG-xxxx】…」のレコードに切って返す。
+
+    戻り値: [(hg, start, end), ...]  start/end は text 内の文字位置。
+    ★位置を返すのは、書き戻す側が「body内の位置」を「原簿ぜんぶの位置」に
+      足せるようにするため。
+    """
+    ms = list(re.finditer(r"^### 【(HG-\d+)】", text, re.M))
+    out = []
+    for i, m in enumerate(ms):
+        end = ms[i + 1].start() if i + 1 < len(ms) else len(text)
+        out.append((m.group(1), m.start(), end))
+    return out
+
+
+# ════════════════════════════════════════════════════════════════════
+# アプリにはつけない図（理由つき）。sync_genbo_svg.py と check_genbo.py の両方が見る。
+#   ★例外は必ずここに書く。検査の側で黙って除外しない
+#   （2026-09-04に sync_genbo_svg.py からここへ移した）。
+# ════════════════════════════════════════════════════════════════════
+# ★原簿に図はあるが、アプリの大問には付けないもの（理由つき）。
+#   原簿の図は「その大問ぜんぶ」のもので、アプリが一部の小問だけを実装しているときに起きる。
+NO_FIG = {
+    # 623回大問3の図は(2)のスイッチ回路。アプリが実装しているのは(1)の
+    # 「次のものは電気を通すか」5問だけで、回路の図は要らない。
+    # しかも原簿自身が「電池の向きと枝の接続は要現物照合」としていてスイッチ1も描けておらず、
+    # 図の中に「はしご状の回路。スイッチ4の枝は…（行き止まり）」という制作メモが入っている。
+    "HG-1651": "アプリは(1)の5問だけを実装。(2)のスイッチ回路の図は不要（原簿の図は要現物照合のまま）",
+}

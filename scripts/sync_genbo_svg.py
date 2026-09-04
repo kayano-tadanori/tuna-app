@@ -15,43 +15,42 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from genbo_path import find_genbo
+import genbo_common
 
 DAIMON = os.path.join(BASE, "data", "hama_daimon.json")
 
-# ★原簿に図はあるが、アプリの大問には付けないもの（理由つき）。
-#   原簿の図は「その大問ぜんぶ」のもので、アプリが一部の小問だけを実装しているときに起きる。
-NO_FIG = {
-    # 623回大問3の図は(2)のスイッチ回路。アプリが実装しているのは(1)の
-    # 「次のものは電気を通すか」5問だけで、回路の図は要らない。
-    # しかも原簿自身が「電池の向きと枝の接続は要現物照合」としていてスイッチ1も描けておらず、
-    # 図の中に「はしご状の回路。スイッチ4の枝は…（行き止まり）」という制作メモが入っている。
-    "HG-1651": "アプリは(1)の5問だけを実装。(2)のスイッチ回路の図は不要（原簿の図は要現物照合のまま）",
-}
+NO_FIG = genbo_common.NO_FIG   # ★実体は genbo_common.py に1つだけ。ここに写さない
 
 
 def genbo_svgs():
+    """原簿の「- 図SVG:」欄を {HG番号: SVG} で返す。
+
+    ★欄を見つける処理そのものは scripts/genbo_common.py の find_svg_fields() 1か所だけ。
+      同じ正規表現をここに写さない（2026-09-04に切り出し。逆向きの sync_svg_to_genbo.py と
+      共有するため。コピーを持つと片方が古びる＝このリポジトリで実際に起きた事故）。
+
+    ★このスクリプトが配るのは「かっこ書きの無い『- 図SVG:』が1つだけ」のレコードに限る。
+      ・欄が2つ以上 → アプリ側は複数の図を1つにまとめて持っているので機械では選べない。
+        黙って上書きすると図が半分になる（2026-09-03 HG-5065）。まるごと見送る。
+      ・かっこ書きつきの欄（「- 図SVG（(1)）:」など）だけのレコード → 小問ごとの図なので
+        大問1つの svg には当てはめられない。
+      ・```html ブロック形式（fence）→ **今は配っていない**。切り出し前からの動きを
+        1ビットも変えないため、ここでは触らない（2026-09-04時点で78レコードが該当。
+        うち70はすでにアプリ側と一致、7はアプリに svg が無い、1は空文字）。
+        配るかどうかは本人の判断が要る＝勝手に広げない。
+    """
     g = io.open(find_genbo(), encoding="utf-8").read()
     out = {}
     skipped = []
-    for r in re.split(r"(?=^### 【HG-)", g, flags=re.M):
-        m = re.match(r"### 【(HG-\d+)】", r)
-        if not m:
+    for hg, s, e in genbo_common.split_records(g):
+        fields = genbo_common.find_svg_fields(g[s:e])
+        if len(fields) > 1:
+            skipped.append(hg)
             continue
-        # ★1つのレコードに「- 図SVG:」以外の欄（「- 図SVG（選択肢ア〜エ）:」など）もあるときは、
-        #   このスクリプトでは扱えない（アプリ側は複数の図を1つにまとめて持っている）。
-        #   黙って上書きすると図が半分になるので、まるごと見送る。
-        #   2026-09-03に HG-5065 で発覚：810×254の「四角形のベン図＋選択肢」を、
-        #   220×122の「三角形のベン図」だけで上書きしてしまった
-        if len(re.findall(r"^- 図SVG[^\n:]*:", r, re.M)) > 1:
-            skipped.append(m.group(1))
-            continue
-        m2 = re.search(r"^- 図SVG: (.+)$", r, re.M)
-        if m2:
-            # ★`…` の"中だけ"を取る。閉じバッククォートの後ろに注記が続く書き方があり、
-            #   strip("`") だとその注記まで図に混ざる（2026-09-02 に HG-2679 で発覚）
-            v = m2.group(1).strip()
-            bq = re.match(r"`(.*?)`", v, re.S)
-            out[m.group(1)] = (bq.group(1) if bq else v.strip("`")).strip()
+        for f in fields:
+            if f["qual"] is not None or f["style"] in ("fence", "empty"):
+                continue
+            out[hg] = f["value"].strip()
     if skipped:
         print("⚠ 図SVGの欄が2つ以上あるので見送った大問: %d本 … %s"
               % (len(skipped), " ".join(skipped[:12]) + (" ほか" if len(skipped) > 12 else "")))

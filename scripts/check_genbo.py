@@ -54,6 +54,7 @@ def _finish_status_file():
 from genbo_common import (
     heads, recs_body, gen, MOSHI, SAME, CANNOT, KOKUGO_DONE,
     hgof, APP_COURSE_KEY, KINDS, COURSE_LABEL, load_daimon, scan_courses,
+    find_svg_fields, iter_daimon, NO_FIG,
 )
 
 d = load_daimon()
@@ -201,9 +202,10 @@ for hg, r in heads.items():
     m = re.search(r"^- 図: (.+)$", body, re.M)
     if m and ("**あり**" in m.group(1) or "**必須**" in m.group(1)):
         zu_ari[hg] = True
-    m2 = re.search(r"^- 図SVG: (.+)$", body, re.M)
-    if m2:
-        zu_svg[hg] = m2.group(1).strip().strip("`")
+    # ★欄を探すのは genbo_common.find_svg_fields ただ一つ（正規表現をここに写さない）
+    _fs = find_svg_fields(body)
+    if _fs:
+        zu_svg[hg] = _fs[0]["value"].strip()
 
 miss_svg = sorted(h for h in zu_ari if h not in zu_svg)
 if miss_svg:
@@ -222,6 +224,61 @@ if miss_svg:
 else:
     print("✅ 図がある大問には、原簿に図SVGが入っている")
 
+
+# ── 原簿に図SVG欄があるのに、アプリの大問に svg が無い（2026-09-04 新設）──────
+# ★2026-09-04に「原簿には図があるのに、アプリでは図なしで出ていた大問」が8本見つかった。
+#   うち5本は「図はどんな数を表しますか」「図のような三角形の土地」のように
+#   **図そのものが設問の中身**で、必要な数値が本文に1つも無い＝子どもは解きようがなかった。
+#   機械チェックも塾講師監査も、ここを素通りしていた。
+#
+#   取りこぼした原因は、原簿の欄が「- 図SVG（(1)）:」のように**かっこ書き（小問名）つき**で、
+#   配る側の sync_genbo_svg.py がそれを見ていなかったこと。
+#   ★だからこの検査は**かっこ書きつきの欄も必ず数える**。
+#   ★欄を探すのは genbo_common.find_svg_fields ただ1つ。ここに正規表現を写さない
+#     （このリポジトリでは「食いちがったら両方直す」というコメントが守られず、
+#      実装ずみ1,046件を「未着手」と誤報した前例がある）。
+#
+#   わざと出さないもの（原簿の図が大問全体のもので、アプリが一部の小問だけを実装している等）は
+#   genbo_common.NO_FIG に理由つきで書く。ここで例外を作らない。
+print()
+zu_any = set()          # 中身のある図SVG欄を1つ以上持つHG（かっこ書きつきも数える）
+for _hg, _body in recs_body.items():
+    for _f in find_svg_fields(_body):
+        _v = _f["value"].strip()
+        if _v and _v != "判読不能":
+            zu_any.add(_hg)
+            break
+
+noapp = []
+# ★「図がある」の判定は大問の svg だけでは足りない。js/sansu.js は `step.svg || chain.svg` の順で出すので、
+#   **小問（step）側に svg があればそれで図は出ている**。ここを見ないと、正しく出ている大問を
+#   62本も「図が無い」と誤報する（2026-09-04に実際にやった）。
+def _has_fig(_x):
+    if (_x.get("svg") or "").strip():
+        return True
+    return any((_s.get("svg") or "").strip() for _s in _x.get("steps", []))
+
+for _r in iter_daimon(d):
+    _x = _r["x"]
+    if _has_fig(_x):
+        continue
+    for _hg in (hgof(_x) or []):
+        if _hg in zu_any and _hg not in NO_FIG:
+            noapp.append((_hg, _r["grade"], _r["app_course"], _r["kind"], _r["no"], _x.get("id")))
+            break
+
+if noapp:
+    print("❌ 原簿に図SVGがあるのに、アプリの大問に図が入っていない: %d本  ← ここで落とします" % len(noapp))
+    print("  （図が設問そのものだと、この状態の大問は**解答不能**のまま子どもに出る。2026-09-04に8本見つかった）")
+    print("  → 出してよいなら scripts/sync_genbo_svg.py（かっこ書き無しの欄）か、"
+          "小問だけの図なら手で入れる。出さないと決めたなら genbo_common.NO_FIG に理由を書く")
+    for _t in sorted(noapp)[:15]:
+        print("   %-9s 学年%s %s %s No.%-4s %s" % _t)
+    if len(noapp) > 15:
+        print("   …ほか %d本" % (len(noapp) - 15))
+else:
+    print("✅ 原簿に図SVGがある大問は、アプリにも図が入っている（かっこ書きつきの小問図もふくむ）")
+
 _finish_status_file()
-if fail or miss_svg:
+if fail or miss_svg or noapp:
     sys.exit(1)
