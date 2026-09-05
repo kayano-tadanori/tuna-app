@@ -1772,6 +1772,84 @@
       "round": 1,
       "result": "重大0・中1・軽0。時計の角度問題で解説の計算が自己矛盾（3から6まで30×2＝60度、だが実際は4から6の値）。最終答えは正しい。適用ずみ",
       "evidence": "docs/_audit/g3mb_w2/findings_3.md ／ scripts/_fix_g3mb_w2_3.py"
+    },
+    "g3mb-w3a-r1": {
+      "date": "2026-09-05",
+      "by": "塾講師エージェント1体",
+      "scope": "小3マスター宿題 No.18 の11本",
+      "select": {
+        "ids": [
+          "hd3mb_18_3",
+          "hd3mb_18_4",
+          "hd3mb_18_5",
+          "hd3mb_18_6",
+          "hd3mb_18_7",
+          "hd3mb_18_8",
+          "hd3mb_18_9",
+          "hd3mb_18_10",
+          "hd3mb_18_11",
+          "hd3mb_18_12",
+          "hd3mb_19_1"
+        ]
+      },
+      "expect_n": 11,
+      "round": 1,
+      "result": "重大1・中1・軽1。設問文の角度指定が実際の図と入れかわっていた（30°の弧は角ABOに描かれているのに設問は『角OBC＝30°』と記載。設問どおり解くと37.5°だが保存された答えは60）。図・答え・解説(meaning)は正しく、question欄だけが原簿の誤記を転記していた。原本PDFでも同じ配置を確認して修正。適用ずみ",
+      "evidence": "docs/_audit/g3mb_w3/findings_1.md ／ scripts/_fix_g3mb_w3_1.py"
+    },
+    "g3mb-w3b-r1": {
+      "date": "2026-09-05",
+      "by": "塾講師エージェント1体",
+      "scope": "小3マスター宿題 No.19〜20 の16本",
+      "select": {
+        "ids": [
+          "hd3mb_19_2",
+          "hd3mb_19_3",
+          "hd3mb_19_4",
+          "hd3mb_19_5",
+          "hd3mb_19_6",
+          "hd3mb_19_7",
+          "hd3mb_19_8",
+          "hd3mb_19_9",
+          "hd3mb_19_10",
+          "hd3mb_19_12",
+          "hd3mb_19_11",
+          "hd3mb_19_13",
+          "hd3mb_20_1",
+          "hd3mb_20_2",
+          "hd3mb_20_3",
+          "hd3mb_20_4"
+        ]
+      },
+      "expect_n": 16,
+      "round": 1,
+      "result": "重大1・中0・軽0。図の対角線が長方形の中心で止まっていて、答え（台形4個）が図から作れない状態だった（原簿の図SVGをそのまま複製していた）。原本PDFで対角線が角まで貫通していることを確認し修正。適用ずみ",
+      "evidence": "docs/_audit/g3mb_w3/findings_2.md ／ scripts/_fix_g3mb_w3_2.py"
+    },
+    "g3mb-w3c-r1": {
+      "date": "2026-09-05",
+      "by": "塾講師エージェント1体",
+      "scope": "小3マスター宿題 No.20〜21 の12本",
+      "select": {
+        "ids": [
+          "hd3mb_20_5",
+          "hd3mb_20_6",
+          "hd3mb_20_7",
+          "hd3mb_20_8",
+          "hd3mb_20_9",
+          "hd3mb_20_10",
+          "hd3mb_21_1",
+          "hd3mb_21_2",
+          "hd3mb_21_3",
+          "hd3mb_21_4",
+          "hd3mb_21_5",
+          "hd3mb_21_6"
+        ]
+      },
+      "expect_n": 12,
+      "round": 1,
+      "result": "中1・軽1。立方体・直方体の表を埋める設問で、直方体自身の面/頂点/辺を答えさせる小問が欠落していた。選択肢に小3未修の円柱・角柱が混入。適用ずみ",
+      "evidence": "docs/_audit/g3mb_w3/findings_3.md ／ scripts/_fix_g3mb_w3_3.py"
     }
   },
   "unresolved_batches": [
