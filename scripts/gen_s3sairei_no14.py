@@ -447,11 +447,14 @@ def build():
     }
     return [d1, d2, d3]
 
-UNIT = "平面図形(2) 角①"
+# ★2026-09-06：No.14は「最レの宿題」なので、復習テストではなく**宿題の引き出し**に入れる
+#   （本人の指摘「これ 最レの宿題だよ」→ grades.3.sairei_new_bunsatsu.fukushu["14"]）
+COURSE = "sairei_new_bunsatsu"
+NO = "14"
 DAIMON = "data/hama_daimon.json"
 
 def main():
-    recs = build()
+    recs = build() + build_rest()
     # --- 答えの形の見はり（[[feedback_answerable_format]]）---
     for r in recs:
         for st in r["steps"]:
@@ -465,15 +468,12 @@ def main():
 
     # --- 書きこみ。★並行セッションが同じファイルを触るので、読んで→足して→すぐ書く ---
     d = json.load(io.open(DAIMON, encoding="utf-8"))
-    node = d["grades"]["3"]["sairei"]
-    before = json.dumps(d, ensure_ascii=False)
-    node.setdefault("units", {})[UNIT] = recs
-    after = json.dumps(d, ensure_ascii=False, indent=1)
-    io.open(DAIMON, "w", encoding="utf-8").write(after + "\n")
-    print("書きこみ: %s ← 単元「%s」" % (DAIMON, UNIT))
+    g3 = d["grades"]["3"]
+    g3.setdefault(COURSE, {}).setdefault("fukushu", {})[NO] = recs
+    g3["sairei"].pop("units", None)          # 今年ぶんは sairei_new 側へ移してある
+    io.open(DAIMON, "w", encoding="utf-8").write(json.dumps(d, ensure_ascii=False, indent=1) + chr(10))
+    print("書きこみ: %s ← 小3最レ（今年）の宿題 No.%s" % (DAIMON, NO))
 
-if __name__ == "__main__":
-    main()
 
 # ============================================================
 #  原簿（種本）へ書く文章を組み立てる。★アプリと同じ生成元から出す＝ずれない
@@ -567,3 +567,455 @@ def genbo():
     out.append(u"> **未収録：大問4〜7（11小問）**。図がこみいっているので次の波で入れる。"
                u"答えは上の表で確定ずみ、ページ画像も手元にある（p04〜p07／解説 p12〜p18）。\n\n")
     return "".join(out)
+
+# ============================================================
+#  大問6・7（同じしるしのついた角）
+#   ★しるしが同じ角＝同じ大きさ。図は「しるしの関係」が本体なので、
+#     具体の角度は関係を満たす値を選んで**正確に**作図する。
+# ============================================================
+def marks(s, v, p, q, n, r0=26, step=9, col=COL_MARK, filled=True):
+    """頂点 v の p〜q の間を n 等分し、区切りごとに ○ か ● を置く"""
+    a1, a2 = ang_of(v, p), ang_of(v, q)
+    d = (a2 - a1) % 360
+    if d > 180: a1, a2, d = a2, a1, 360 - d
+    for k in range(n):
+        mid = a1 + d * (k + 0.5) / n
+        s.dot(polar(v, mid, r0 + step * 0), filled, 4.2, col)
+        s.b.append('<path d="M %.1f %.1f A %d %d 0 0 0 %.1f %.1f" fill="none" stroke="%s" stroke-width="1.6"/>'
+                   % (*polar(v, a1 + d * k / n, r0 + 12), r0 + 12, r0 + 12,
+                      *polar(v, a1 + d * (k + 1) / n, r0 + 12), col))
+
+# ---- 大問7(1) ○+22=● を2倍する ----
+def fig_7_1():
+    O, KURO = 30.0, 52.0                      # ○=30 → ●=○+22=52
+    L = P(44, 212); M = P(180, 212); right = P(336, 212)
+    # Mでの外角が●（底辺の右向きから●だけ回した先がR、さらに●回した先がT）
+    R = inter(L, polar(L, O, 500), M, polar(M, KURO, 500))
+    T = inter(L, polar(L, 2 * O, 500), M, polar(M, 2 * KURO, 500))
+    s = Svg(350, 245)
+    s.line(L, right); s.line(L, R); s.line(L, T); s.line(M, R); s.line(M, T)
+    s.text(s.arc(R, L, M, 26), "22°")
+    s.text(s.arc(T, L, M, 26, COL_ARC2), "x", COL_ASK, 17, italic=True)
+    marks(s, L, right, T, 2, 24, filled=False)
+    marks(s, M, right, T, 2, 24, filled=True)
+    must("7(1) 22度", angle_at(R, L, M), 22)
+    must("7(1) 左の○が2つとも同じ", angle_at(L, right, R), angle_at(L, R, T))
+    must("7(1) 右の●が2つとも同じ", angle_at(M, right, R), angle_at(M, R, T))
+    must("7(1) 答えのx", angle_at(T, L, M), 44)
+    return s.out()
+
+# ---- 大問7(2) 3重の三角形（○3つ・●3つ）----
+def fig_7_2():
+    O, KURO = 22.0, 18.0                       # 3(○+●)=120 → ア=60
+    L = P(48, 246); R = P(322, 246)
+    ap = [inter(L, polar(L, O * k, 600), R, polar(R, 180 - KURO * k, 600)) for k in (1, 2, 3)]
+    s = Svg(370, 282)
+    s.line(L, R)
+    for a in ap: s.line(L, a); s.line(a, R)
+    for a, nm in zip(reversed(ap), ["ア", "イ", "ウ"]):
+        s.text(s.arc(a, L, R, 24, COL_ARC2), nm, COL_ASK, 16)
+    marks(s, L, R, ap[2], 3, 30, 0, COL_MARK, False)
+    marks(s, R, L, ap[2], 3, 30, 0, COL_MARK, True)
+    must("7(2) ウ", angle_at(ap[0], L, R), 140)
+    must("7(2) イ", angle_at(ap[1], L, R), 100)
+    must("7(2) 答えのア", angle_at(ap[2], L, R), 60)
+    must("7(2) イとウの和が240", angle_at(ap[0], L, R) + angle_at(ap[1], L, R), 240)
+    return s.out()
+
+def side_of(a, b, p):
+    """直線 ab に対して p がどちら側か（符号）"""
+    return (b[0]-a[0])*(p[1]-a[1]) - (b[1]-a[1])*(p[0]-a[0])
+
+def bisect_dir(v, p, q):
+    """頂点 v で ∠pvq を2等分する向き（度）"""
+    a1, a2 = ang_of(v, p), ang_of(v, q)
+    d = (a2 - a1) % 360
+    if d > 180: a1, d = a2, 360 - d
+    return a1 + d / 2
+
+# ---- 大問6(1) 四角形の360度から x を出す（55°）----
+def fig_6_1():
+    # ∠L=55・∠R=70（x）→ ∠T=55。四角形TBCLの残り2つが 2○+2● = 250 になる
+    # ★底辺を広くとると 頂点が上へ出すぎる（実測 y=-38）。180 に縮めた
+    L = P(58, 230); R = P(238, 230)
+    T = inter(L, polar(L, 55, 600), R, polar(R, 110, 600))
+    b = 0.46
+    B = (T[0] + b*(R[0]-T[0]), T[1] + b*(R[1]-T[1]))
+    lo, hi = 0.05, 0.95                      # C を動かして A が 辺TL に乗る所を探す
+    def Aof(c):
+        C = (L[0] + c*(R[0]-L[0]), L[1] + c*(R[1]-L[1]))
+        return C, inter(B, polar(B, bisect_dir(B, T, C), 600),
+                        C, polar(C, bisect_dir(C, B, L), 600))
+    for _ in range(70):
+        mid = (lo+hi)/2
+        C, A = Aof(mid)
+        if side_of(T, L, A) > 0: lo = mid
+        else: hi = mid
+    C, A = Aof((lo+hi)/2)
+    s = Svg(320, 272)
+    s.poly([T, L, R]); s.line(B, C); s.line(A, B); s.line(A, C)
+    s.text(s.arc(A, B, C, 26), "55°")
+    s.text(s.arc(R, T, L, 26, COL_ARC2), "x", COL_ASK, 17, italic=True)
+    marks(s, B, T, C, 2, 22, 0, COL_MARK, False)
+    marks(s, C, B, L, 2, 22, 0, COL_MARK, True)
+    must("6(1) 55度", angle_at(A, B, C), 55)
+    must("6(1) ○が2つとも同じ", angle_at(B, T, A), angle_at(B, A, C))
+    must("6(1) ●が2つとも同じ", angle_at(C, B, A), angle_at(C, A, L))
+    must("6(1) 答えのx", angle_at(R, T, L), 70)
+    return s.out()
+
+# ---- 大問6(2) 上の三角形と下の三角形（50°）----
+def fig_6_2():
+    KURO = 65.0                               # ●＝○＝65（●+○=180-50）
+    Pp = P(104, 148); Q = P(216, 148)
+    S = inter(Pp, polar(Pp, -KURO, 400), Q, polar(Q, 180 + KURO, 400))
+    V = inter(Pp, polar(Pp, 180 - 2*KURO, 400), Q, polar(Q, 2*KURO, 400))
+    dL = polar(Pp, ang_of(V, Pp), 92)         # 左の辺を下へのばす
+    dR = polar(Q, ang_of(V, Q), 92)
+    s = Svg(330, 300)
+    s.line(V, dL); s.line(V, dR); s.line(Pp, Q); s.line(Pp, S); s.line(Q, S)
+    s.text(s.arc(S, Pp, Q, 26), "50°")
+    s.text(s.arc(V, Pp, Q, 26, COL_ARC2), "x", COL_ASK, 17, italic=True)
+    marks(s, Pp, Q, dL, 2, 22, 0, COL_MARK, True)
+    marks(s, Q, Pp, dR, 2, 22, 0, COL_MARK, False)
+    must("6(2) 50度", angle_at(S, Pp, Q), 50)
+    must("6(2) ●が2つとも同じ", angle_at(Pp, Q, S), angle_at(Pp, S, dL))
+    must("6(2) ○が2つとも同じ", angle_at(Q, Pp, S), angle_at(Q, S, dR))
+    must("6(2) 答えのx", angle_at(V, Pp, Q), 80)
+    return s.out()
+
+def three_split(TT, L, R, n):
+    """頂点 TT の角を n 等分する線が 底辺 LR と交わる点（Lに近い順）"""
+    a1, a2 = ang_of(TT, L), ang_of(TT, R)
+    d = (a2 - a1) % 360
+    if d > 180: a1, d = a2, 360 - d
+    out = [inter(TT, polar(TT, a1 + d*k/n, 900), L, R) for k in range(1, n)]
+    out.sort(key=lambda p: p[0])
+    return out
+
+# ---- 大問6(3) ○=33・●=18 → x=129 ----
+def fig_6_3():
+    L = P(38, 226); R = P(336, 226)
+    T = inter(L, polar(L, 36, 900), R, polar(R, 135, 900))      # ∠L=36(=2●) ∠R=45 ∠T=99(=3○)
+    D1, D2 = three_split(T, L, R, 3)
+    E = inter(L, polar(L, 18, 900), T, D1)                       # Lの2等分線と 左のセビアン
+    s = Svg(380, 268)
+    s.poly([T, L, R]); s.line(T, D1); s.line(T, D2); s.line(L, polar(L, 18, 300))
+    s.text(s.arc(D1, L, T, 30), "111°")
+    s.text(s.arc(R, T, L, 28), "45°")
+    s.text(s.arc(E, L, T, 26, COL_ARC2), "x", COL_ASK, 17, italic=True)
+    marks(s, T, L, R, 3, 30, 0, COL_MARK, False)
+    marks(s, L, R, T, 2, 34, 0, COL_MARK, True)
+    must("6(3) 45度", angle_at(R, T, L), 45)
+    must("6(3) 111度", angle_at(D1, L, T), 111)
+    must("6(3) ○は3つとも同じ", angle_at(T, L, D1), angle_at(T, D1, D2))
+    must("6(3) ●は2つとも同じ", angle_at(L, R, E), angle_at(L, E, T))
+    must("6(3) 答えのx", angle_at(E, L, T), 129)
+    return s.out()
+
+# ---- 大問6(4) ○+●=50 → x=100 ----
+def fig_6_4():
+    L = P(38, 232); R = P(340, 232)
+    T = inter(L, polar(L, 40, 900), R, polar(R, 130, 900))      # ∠L=40(=2●) ∠R=50 ∠T=90(=3○)
+    D1, D2 = three_split(T, L, R, 3)
+    E = inter(L, polar(L, 20, 900), T, D1)
+    Eout = polar(L, 20, 320)                  # Lの線を E の先までのばした所
+    s = Svg(384, 276)
+    s.poly([T, L, R]); s.line(T, D1); s.line(T, D2); s.line(L, Eout)
+    s.text(s.arc(E, Eout, T, 28), "50°")      # ★50度は E の「外角」のほう
+    s.text(s.arc(D2, R, T, 26, COL_ARC2), "x", COL_ASK, 17, italic=True)
+    marks(s, T, L, R, 3, 30, 0, COL_MARK, False)
+    marks(s, L, R, T, 2, 34, 0, COL_MARK, True)
+    must("6(4) 50度", angle_at(E, polar(L, 20, 320), T), 50)
+    must("6(4) ○は3つとも同じ", angle_at(T, L, D1), angle_at(T, D1, D2))
+    must("6(4) ●は2つとも同じ", angle_at(L, R, E), angle_at(L, E, T))
+    must("6(4) 答えのx", angle_at(D2, R, T), 100)
+    return s.out()
+
+# ============================================================
+#  大問4・5（しるしのついた角の和）
+#   ★ここは「どの点にしるしが付いているか」が問題の本体。
+#     図は座標で組み立て、**しるしの角を実際に足して**答えと合うか検算する。
+#   ⚠ 実物は手がきで、重なった多角形の形が正確ではない。アプリ側は
+#     **しるしの数と、たがいの重なり方（どの多角形の角か）をそろえて、きれいに引き直した**。
+#     和は図の形によらないので、答えも解き方も変わらない。
+# ============================================================
+def star_path(cx, cy, r, n, skip=2, rot=90, jitter=None, ang=None):
+    """n個の点を skip 個とばしに結んだ **一筆書きの星**（五芒星など）。
+       ★とがりの角の和は 180×(n − 2×まわった回数)。skip=2 なら 2回まわるので
+         n=5 → 180度、n=7 → 540度 になる。**形をゆがめても和は変わらない**（実際に足して検算する）"""
+    base = [polar(P(cx, cy), (ang[k] if ang else rot + 360.0 * k / n),
+                  r * (jitter[k] if jitter else 1)) for k in range(n)]
+    return [base[(k * skip) % n] for k in range(n)]
+
+def sum_marks(s, pts, idx, r=22, col=COL_ARC):
+    """輪郭 pts のうち idx の点にしるしの弧をつけ、その角の合計を返す"""
+    tot = 0.0
+    n = len(pts)
+    for i in idx:
+        a, b, c = pts[(i - 1) % n], pts[i], pts[(i + 1) % n]
+        s.arc(b, a, c, r, col)
+        tot += angle_at(b, a, c)
+    return tot
+
+# ---- 大問4(1) 五芒星（とがり5つ）→ 180 ----
+def fig_4_1():
+    pts = star_path(170, 152, 126, 5, 2, 90, [1.0, 0.94, 1.06, 1.02, 0.96])
+    s = Svg(340, 306)
+    s.poly(pts)
+    tot = sum_marks(s, pts, range(5), 20)
+    must("4(1) しるしの角の和", tot, 180)
+    return s.out()
+
+# ---- 大問4(2) 三角形2つが重なる（とがり6つ）→ 360 ----
+def fig_4_2():
+    A = [polar(P(168, 152), 90 + 120 * k, 118) for k in range(3)]
+    B = [polar(P(168, 152), 30 + 120 * k, 112) for k in range(3)]
+    s = Svg(336, 300)
+    s.poly(A); s.poly(B)
+    tot = 0.0
+    for T in (A, B):
+        for i in range(3):
+            s.arc(T[i], T[(i - 1) % 3], T[(i + 1) % 3], 26)
+            tot += angle_at(T[i], T[(i - 1) % 3], T[(i + 1) % 3])
+    must("4(2) しるしの角の和", tot, 360)
+    return s.out()
+
+# ---- 大問4(3) 大きな3つと 内がわの細い2つ（とがり5つ）→ 180 ----
+def fig_4_3():
+    # 3つは大きなとがり、2つは内がわの細いとがり（実物と同じ見え方）
+    pts = star_path(172, 152, 128, 5, 2, 90, None, [90, 150, 210, 330, 30])
+    s = Svg(346, 306)
+    s.poly(pts)
+    tot = sum_marks(s, pts, range(5), 18)
+    must("4(3) しるしの角の和", tot, 180)
+    return s.out()
+
+# ---- 大問4(4) 四角形2つが重なる（とがり7つ）→ 540 ----
+def fig_4_4():
+    pts = star_path(174, 160, 132, 7, 2, 90, [1.0, 0.95, 1.05, 0.98, 1.03, 0.96, 1.01])
+    s = Svg(352, 322)
+    s.poly(pts)
+    tot = sum_marks(s, pts, range(7), 24)
+    must("4(4) しるしの角の和", tot, 540)
+    return s.out()
+
+# ---- 大問5(1) 三角形と四角形（3+4=7つ）→ 180+360=540 ----
+def fig_5_1():
+    c = P(176, 158)
+    tri = [polar(c, 90 + 120 * k, 128) for k in range(3)]
+    quad = [polar(c, 40 + 90 * k, 118) for k in range(4)]
+    s = Svg(354, 316)
+    s.poly(tri); s.poly(quad)
+    tot = 0.0
+    for T in (tri, quad):
+        n = len(T)
+        for i in range(n):
+            s.arc(T[i], T[(i - 1) % n], T[(i + 1) % n], 26)
+            tot += angle_at(T[i], T[(i - 1) % n], T[(i + 1) % n])
+    must("5(1) しるしの角の和", tot, 540)
+    return s.out()
+
+# ---- 大問5(2) 六角形と三角形（6+3=9つ）→ 720+180=900 ----
+def fig_5_2():
+    c = P(180, 168)
+    hexa = [polar(c, 90 + 60 * k, 132) for k in range(6)]
+    tri = [polar(c, 30 + 120 * k, 152) for k in range(3)]
+    s = Svg(362, 336)
+    s.poly(hexa); s.poly(tri)
+    tot = 0.0
+    for T in (hexa, tri):
+        n = len(T)
+        for i in range(n):
+            s.arc(T[i], T[(i - 1) % n], T[(i + 1) % n], 24)
+            tot += angle_at(T[i], T[(i - 1) % n], T[(i + 1) % n])
+    must("5(2) しるしの角の和", tot, 900)
+    return s.out()
+
+# ---- 大問5(3) 70/45/40/23/12/88/62 と x（8つの角の和＝360）→ x=20 ----
+def poly_from_angles(angles, start_dir=0.0, scale=120.0):
+    """内角を順に指定して、閉じる多角形を作る。
+       ★とがりの角を1つずつ指定できるので、実物の数字（70・88・…）を
+         そのまま持つ図が作れる。辺の長さは「閉じる」ように連立で決める。"""
+    n = len(angles)
+    dirs, d = [], start_dir
+    for a in angles:
+        dirs.append(d)
+        d += 180.0 - a                      # 外角のぶんだけ向きを変える
+    ux = [math.cos(math.radians(t)) for t in dirs]
+    uy = [-math.sin(math.radians(t)) for t in dirs]
+    # Σ L_i u_i = 0（＝閉じる）を、2本の辺の長さを未知数にした連立で **正確に** 解く。
+    # 残りの辺は長めの既定値にしておき、補正しても正のままになるようにする。
+    base = 3.0
+    for a in range(n):
+        for b in range(a + 1, n):
+            L = [base] * n
+            ex = sum(L[i] * ux[i] for i in range(n))
+            ey = sum(L[i] * uy[i] for i in range(n))
+            det = ux[a] * uy[b] - uy[a] * ux[b]
+            if abs(det) < 1e-6: continue
+            da = (-ex * uy[b] + ey * ux[b]) / det
+            db = (-ux[a] * ey + uy[a] * ex) / det
+            L[a] += da; L[b] += db
+            if min(L) > 0.25:
+                ex2 = sum(L[i] * ux[i] for i in range(n))
+                ey2 = sum(L[i] * uy[i] for i in range(n))
+                if abs(ex2) < 1e-7 and abs(ey2) < 1e-7:
+                    break
+        else:
+            continue
+        break
+    else:
+        raise AssertionError("閉じる辺の長さが見つからない")
+    pts, x, y = [], 0.0, 0.0
+    for i in range(n):
+        pts.append((x, y)); x += L[i] * ux[i] * scale; y += L[i] * uy[i] * scale
+    return pts
+
+def fig_5_3():
+    # 実物の7つの数字＋x。和は 360（＝四角形の内角の和）になる並び
+    vals = [70, 40, 45, 23, 62, 20, 12, 88]
+    pts = poly_from_angles([float(v) for v in vals], 8.0, 96.0)
+    xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+    ox, oy = 34 - min(xs), 40 - min(ys)
+    pts = [(p[0] + ox, p[1] + oy) for p in pts]
+    W = int(max(p[0] for p in pts) + 40); H = int(max(p[1] for p in pts) + 40)
+    s = Svg(W, H)
+    s.poly(pts)
+    n = len(pts); tot = 0.0
+    for i, v in enumerate(vals):
+        # ★向きを変えるのは「辺の終わり」なので、角 vals[i] が付くのは pts[i+1]
+        j = (i + 1) % n
+        a, b, c = pts[(j - 1) % n], pts[j], pts[(j + 1) % n]
+        got = angle_at(b, a, c)
+        must("5(3) %d番目の角" % (i + 1), got, float(v))
+        tot += got
+        lp = s.arc(b, a, c, 22, COL_ARC2 if v == 20 else COL_ARC)
+        if v == 20: s.text(lp, "x", COL_ASK, 17, italic=True)
+        else: s.text(lp, "%d°" % v)
+    must("5(3) しるしの角の和", tot, 360)
+    return s.out()
+
+def build_rest():
+    """大問4〜7（11問）"""
+    d4 = {
+        "id": "hd3s_n14_4", "src": "小3最レ【刷新版】No.14 大問4（実物・8月2回目の範囲）",
+        "title": "しるしの角の和（形をつくりかえる）", "category": "zu", "unit": "平面図形",
+        "grade": 3, "star": 3,
+        "intro": "しるしの ついた角を **1つずつ もとめようとしても 出ません**。"
+                 "でも **和（ぜんぶ たしたもの）だけなら 出ます**。"
+                 "**外角定理を つかって 角を となりへ 寄せあつめると、"
+                 "三角形や 四角形の 内角の和に つくりかえられる** からです。",
+        "steps": [
+            {"question": "しるしが ついている角の 大きさの 和は 何度ですか。", "answer": "180", "svg": fig_4_1(),
+             "meaning": "①星の とがりは 5つ。1つずつは 分かりません。"
+                        "②2つの とがり（アとエ）を 見ると、その2つを たしたものが、"
+                        "交わった点の 角に なっています（外角定理）。"
+                        "③そうやって 寄せると、のこりの3つ（イ・ウ・オ）と あわせて **1つの三角形**に なります。"
+                        "④三角形の内角の和は180度。だから 和は **180度**。"},
+            {"question": "しるしが ついている角の 大きさの 和は 何度ですか。", "answer": "360", "svg": fig_4_2(),
+             "meaning": "①とがりは 6つ。**三角形が2つ 重なった形**です。"
+                        "②片方の三角形の3つで180度、もう片方の3つで180度。"
+                        "③だから 和は 180＋180＝**360度**。"
+                        "④四角形の内角の和と 同じ数に なります。"},
+            {"question": "しるしが ついている角の 大きさの 和は 何度ですか。", "answer": "180", "svg": fig_4_3(),
+             "meaning": "①大きな とがりが3つ、内がわに 細い とがりが2つ。ぜんぶで **5つ**。"
+                        "②(1)の星と **同じ 5つのとがり**です。形が ちがっても、"
+                        "**とがりの数が同じなら 和も同じ**。"
+                        "③だから 和は **180度**。"
+                        "④「形がちがうから ちがう答え」と 思わないこと。ここが この問題の ねらいです。"},
+            {"question": "しるしが ついている角の 大きさの 和は 何度ですか。", "answer": "540", "svg": fig_4_4(),
+             "meaning": "①とがりは **7つ**（四角形が2つ 重なった形）。"
+                        "②とがり1つずつに 三角形が1つ ついているので、三角形の内角の和が 7つ分＝180×7＝1260度。"
+                        "③ただし そのなかで、まん中の 七角形の **外角の和を 2つ分** 余分に 数えています。"
+                        "外角の和は いつでも360度なので、360×2＝720度 を ひきます。"
+                        "④1260−720＝**540度**。"},
+        ],
+    }
+    d5 = {
+        "id": "hd3s_n14_5", "src": "小3最レ【刷新版】No.14 大問5（実物・8月2回目の範囲）",
+        "title": "しるしの角の和（もっと大きな形）", "category": "zu", "unit": "平面図形",
+        "grade": 3, "star": 3,
+        "intro": "大問4と 同じ考え方を、もっと大きな形で つかいます。"
+                 "**重なっている形を 見わけて、それぞれの内角の和を たす**のが はやいです。"
+                 "（□角形の内角の和は 180×(□−2)）",
+        "steps": [
+            {"question": "しるしが ついている角の 大きさの 和は 何度ですか。", "answer": "540", "svg": fig_5_1(),
+             "meaning": "①**三角形と四角形が 重なっている**形です。"
+                        "②しるしは 三角形の3つと 四角形の4つ。"
+                        "③三角形は180度、四角形は 180×(4−2)＝360度。"
+                        "④だから 和は 180＋360＝**540度**。"},
+            {"question": "しるしが ついている角の 大きさの 和は 何度ですか。", "answer": "900", "svg": fig_5_2(),
+             "meaning": "①**六角形と三角形が 重なっている**形です。"
+                        "②六角形の内角の和は 180×(6−2)＝720度。"
+                        "③三角形は180度。"
+                        "④だから 和は 720＋180＝**900度**。"},
+            {"question": "角xの 大きさは 何度ですか。", "answer": "20", "svg": fig_5_3(),
+             "meaning": "①しるしの ついた角は ぜんぶで 8つ（xも入れて）。"
+                        "②この形の とがりの和は **360度**（四角形の内角の和と同じ）に なります。"
+                        "③分かっている7つを たすと 70＋40＋45＋23＋62＋12＋88＝340度。"
+                        "④だから x＝360−340＝**20度**。"
+                        "⑤**1つずつ出そうとしない**。和が決まっていることに 気づけば、ひき算1回です。"},
+        ],
+    }
+    d6 = {
+        "id": "hd3s_n14_6", "src": "小3最レ【刷新版】No.14 大問6（実物・8月2回目の範囲）",
+        "title": "同じしるしの角（2つ分・3つ分で持つ）", "category": "zu", "unit": "平面図形",
+        "grade": 3, "star": 3,
+        "intro": "**同じしるしの ついた角は 同じ大きさ**です。"
+                 "○や●が いくつ分 あるかを 数えて、**○1つの大きさが 分からなくても、"
+                 "○2つ分・○3つ分の まま 計算を すすめる**のが コツです。",
+        "steps": [
+            {"question": "角xの 大きさは 何度ですか。", "answer": "70", "svg": fig_6_1(),
+             "meaning": "①55度の 三角形を 見ると、○＋●＝180−55＝**125度**。"
+                        "②図の中の 四角形には、○が2つ分と ●が2つ分 入っています。"
+                        "○○●●＝125×2＝**250度**。"
+                        "③四角形の内角の和は360度だから、のこりの2つ（大きな三角形の 上と 左下の角）は "
+                        "360−250＝**110度**。"
+                        "④大きな三角形の内角の和は180度なので、x＝180−110＝**70度**。"},
+            {"question": "角xの 大きさは 何度ですか。", "answer": "80", "svg": fig_6_2(),
+             "meaning": "①50度の 三角形を 見ると、○＋●＝180−50＝**130度**。"
+                        "②○2つ分と ●2つ分で 130×2＝**260度**。"
+                        "③まわりの角は ぜんぶで360度だから、のこりの2つは 360−260＝**100度**。"
+                        "④三角形の内角の和は180度なので、x＝180−100＝**80度**。"},
+            {"question": "角xの 大きさは 何度ですか。", "answer": "129", "svg": fig_6_3(),
+             "meaning": "①111度は 外角なので、外角定理で ○2つ分＋45度＝111度。"
+                        "だから ○＝(111−45)÷2＝**33度**。"
+                        "②大きな三角形の内角の和から、●2つ分＝180−(○3つ分)−45"
+                        "＝180−99−45＝36度。だから ●＝36÷2＝**18度**。"
+                        "③xは、●と111度を もつ三角形の 外角です。"
+                        "④外角定理より x＝18＋111＝**129度**。"},
+            {"question": "角xの 大きさは 何度ですか。", "answer": "100", "svg": fig_6_4(),
+             "meaning": "①50度は、●1つと ○1つを もつ三角形の 外角です。"
+                        "だから ○＋●＝**50度**。"
+                        "②xは、●2つ分と ○2つ分を もつ三角形の 外角です。"
+                        "③外角定理より x＝○○＋●●＝(○＋●)×2＝50×2＝**100度**。"
+                        "④**○や●の1つ分は 最後まで 分かりません**。それでも答えは 出ます。"},
+        ],
+    }
+    d7 = {
+        "id": "hd3s_n14_7", "src": "小3最レ【刷新版】No.14 大問7（実物・8月2回目の範囲）",
+        "title": "同じしるしの角（まとめ）", "category": "zu", "unit": "平面図形",
+        "grade": 3, "star": 3,
+        "intro": "この回の しあげです。**○や●の 1つ分は 分からないまま**、"
+                 "「何つ分か」だけで 答えまで たどりつきます。",
+        "steps": [
+            {"question": "角xの 大きさは 何度ですか。", "answer": "44", "svg": fig_7_1(),
+             "meaning": "①まず 小さい三角形で 外角定理：○＋22度＝**●**。"
+                        "②つぎに 大きい三角形で 外角定理：○2つ分＋x＝**●2つ分**。"
+                        "③①の式を **まるごと2倍** すると ○2つ分＋44度＝●2つ分。"
+                        "④②と くらべると、x＝22×2＝**44度**。"
+                        "⑤**式をまるごと2倍する**——これが この問題の 手です。"},
+            {"question": "角アの 大きさは 何度ですか。", "answer": "60", "svg": fig_7_2(),
+             "meaning": "①いちばん内がわの三角形で ○＋●＋ウ＝180度。"
+                        "②まん中の三角形で ○2つ分＋●2つ分＋イ＝180度。"
+                        "③この2つを たすと ○3つ分＋●3つ分＋ウ＋イ＝360度。"
+                        "④ウ＋イ＝240度 と 言われているので、○3つ分＋●3つ分＝360−240＝**120度**。"
+                        "⑤いちばん外がわの三角形は ○3つ分＋●3つ分＋ア＝180度。"
+                        "だから ア＝180−120＝**60度**。"},
+        ],
+    }
+    return [d4, d5, d6, d7]
+
+if __name__ == "__main__":
+    main()
