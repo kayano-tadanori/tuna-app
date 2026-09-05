@@ -1290,6 +1290,15 @@ function isDaimonSolved(s, hamaSubj, prog) {
   return true;
 }
 
+// コースの名前（年ちがいがあるコースは「最レ（今年）」のように年も出す）。
+// ★モーダルの見出しに出す。マスターと最レを取りちがえた事故があった（2026-09-06）
+function hamaCourseLabel(grade, course) {
+  const cs = hamaCourses(grade);
+  const c = cs && cs[course];
+  if (!c) return '';
+  return c.yearLabel ? `${c.label}（${c.yearLabel}）` : c.label;
+}
+
 // ★宿題（大問）の「大問をえらぶ」モーダル（2026-08-11）。
 //   星順のおまかせで出すのではなく、大問番号を一覧で見て、やりたいものだけをその場で始められるようにする。
 //   全問正解ずみの大問には✅を付けて、解き終わったものがひと目でわかるようにする（本人指示 2026-08-11）。
@@ -1393,7 +1402,7 @@ async function startHamaSession(kind) {
       const btnName = document.querySelector(`.hama-act-btn[data-hama-act="${kind}"] .hama-act-name`);
       const kouzaLabel = (btnName && btnName.textContent.replace(/^📚\s*/, '').replace(/（大問）\s*$/, '')) ||
         (kind === 'kouza1q' ? '第1講座の宿題' : '第2講座の宿題');
-      openDaimonPicker(sets, grade, hamaSubj, `No.${dno}・${kouzaLabel}`);
+      openDaimonPicker(sets, grade, hamaSubj, `${hamaCourseLabel(grade, course)} No.${dno}・${kouzaLabel}`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }
@@ -1404,10 +1413,15 @@ async function startHamaSession(kind) {
     showLoading();
     try {
       const dno = hamaCurrent(grade, course);
-      const sets = await hamaDaimonBunsatsu(grade, dno);
+      // 🐛 2026-09-06：ここで course を渡し忘れていて、**どのコースでもマスターの宿題が開いていた**。
+      //    マスターにしか宿題が無かったころは表に出なかったが、最レに宿題を足した日に露見した
+      //    （本人の実機スクショ：最レのNo.14を開いたのに「重さ・かさ」が出た）。
+      //    ★ボタンの件数は course つきで数えていたので、**件数は正しく・中身だけ別物**という
+      //      いちばん気づきにくい形になっていた。
+      const sets = await hamaDaimonBunsatsu(grade, dno, course);
       hideLoading();
       if (!sets.length) { showToast('ここの宿題はまだ用意していません'); return; }
-      openDaimonPicker(sets, grade, hamaSubj, `No.${dno}・今週の宿題`);
+      openDaimonPicker(sets, grade, hamaSubj, `${hamaCourseLabel(grade, course)} No.${dno}・今週の宿題`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }
@@ -1432,7 +1446,7 @@ async function startHamaSession(kind) {
       const actLabel = (btnName && btnName.textContent.replace(/^(?:🧩|🎯)\s*/, '').replace(/（大問）\s*$/, '')) ||
         (kind === 'weekq' ? '今週の復習テスト' : '公開テストの過去問');
       const rangeLabel = byUnit ? sansuState.hamaUnit : `No.${dno}`;
-      openDaimonPicker(sets, grade, hamaSubj, `${rangeLabel}・${actLabel}`);
+      openDaimonPicker(sets, grade, hamaSubj, `${hamaCourseLabel(grade, course)} ${rangeLabel}・${actLabel}`);
     } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
     return;
   }
