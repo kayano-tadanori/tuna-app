@@ -55,8 +55,14 @@ function* questionsOf(obj, file, trail = []) {
   }
 }
 
+// <ruby>難読漢字<rt>よみ</rt></ruby> のルビを剥がして、もとの字だけに戻す。
+// ★app.js の stripRuby() と同じやり方（<rt>の中身ごと落としてからタグを外す）。
+//   ただの /<[^>]*>/ 除去だと <rt>の読みの文字だけが本文に残ってしまい
+//   （例：「猿」→「猿さる」）、答え合わせや文字数のチェックが誤爆する
+const stripRuby = (s) => String(s ?? '').replace(/<rt>.*?<\/rt>/g, '').replace(/<[^>]+>/g, '');
+
 // 表記ゆれを吸収して比べる（カタカナ→ひらがな、全角→半角、記号を落とす）
-const norm = (s) => String(s ?? '')
+const norm = (s) => stripRuby(s)
   .replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
   .replace(/[Ａ-Ｚａ-ｚ０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
   .replace(/<[^>]*>/g, '')
@@ -106,8 +112,8 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
     if (Array.isArray(q.choices) && q.choices.length) {
       withChoices++;
       const ch = q.choices.map(String);
-      // ① 答えが選択肢に無い
-      if (!ch.includes(String(ans))) {
+      // ① 答えが選択肢に無い（選択肢に<ruby>が付いていても、字だけ剥がして比べる）
+      if (!ch.some((c) => stripRuby(c) === String(ans))) {
         add('答えが選択肢に無い', f, id, `答え「${ans}」`, ch.join(' / '));
       }
       // ② 選択肢の重複（そのまま同じ）
@@ -124,7 +130,8 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
       //   こわれているのは「小文字の英単語が日本語のとなりに素で入っている」もの
       //   （changes改善／north向きにする／one人で生きる）。ここを分けないと
       //   85件の正当な表記に本物7件が埋もれる（2026-08-08に実測）
-      for (const c of ch) {
+      for (const c0 of ch) {
+        const c = stripRuby(c0);  // <ruby>や<rt>のタグ名自体が「英単語」に誤爆するため先に剥がす
         if (/[ぁ-んァ-ヶ一-鿿]/.test(c)) {
           for (const m of c.matchAll(/(?<![A-Za-z])([a-z]{2,})(?![A-Za-z])/g)) {
             const before = c.slice(0, m.index), after = c.slice(m.index + m[1].length);
@@ -134,7 +141,7 @@ for (const f of fs.readdirSync(DATA).filter((f) => f.endsWith('.json')).sort()) 
             add('選択肢に英単語がまぎれている', f, id, `${m[1]} → ${c}`);
           }
         }
-        if (c.length > 60) add('選択肢が長すぎる', f, id, c.slice(0, 50) + '…');
+        if (stripRuby(c).length > 60) add('選択肢が長すぎる', f, id, stripRuby(c).slice(0, 50) + '…');
       }
     }
 

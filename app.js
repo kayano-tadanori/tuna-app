@@ -199,6 +199,13 @@ function normalize(str) {
     .toLowerCase();
 }
 
+// 選択肢に <ruby>難読漢字<rt>よみ</rt></ruby> が入っていても、答え合わせは
+// もとの字だけで比べる（<rt>の中身ごとtextContentを取ると「蝙蝠こうもり」に
+// なってしまうので、<rt>...</rt>を丸ごと落としてからタグだけ外す）
+function stripRuby(html) {
+  return html.replace(/<rt>.*?<\/rt>/g, '').replace(/<[^>]+>/g, '');
+}
+
 function checkAnswer(input, question) {
   return normalize(input) === normalize(question.answer);
 }
@@ -554,7 +561,14 @@ function renderQuiz() {
   choices.forEach(ch => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
-    btn.textContent = ch;
+    // ★<ruby>が入っている選択肢だけ innerHTML で描く（他の全カテゴリの
+    //   plainな選択肢は今までどおり textContent のまま＝挙動を変えない）
+    if (ch.includes('<ruby')) {
+      btn.innerHTML = ch;
+      btn.dataset.plain = stripRuby(ch);
+    } else {
+      btn.textContent = ch;
+    }
     btn.onclick = () => onQuizChoose(btn, ch, q, grid);
     grid.appendChild(btn);
   });
@@ -563,7 +577,7 @@ function renderQuiz() {
 }
 
 function onQuizChoose(btn, chosen, q, grid) {
-  const correct = normalize(chosen) === normalize(q.answer);
+  const correct = normalize(stripRuby(chosen)) === normalize(q.answer);
   Snd.answer(correct);
   recordResult(q.id, correct);
   if (correct) {
@@ -572,9 +586,10 @@ function onQuizChoose(btn, chosen, q, grid) {
   } else {
     state.wrong++;
     btn.classList.add('wrong');
-    // 正解ボタンをハイライト
+    // 正解ボタンをハイライト（<ruby>入りのボタンは dataset.plain を見る）
     grid.querySelectorAll('.choice-btn').forEach(b => {
-      if (normalize(b.textContent) === normalize(q.answer)) b.classList.add('correct');
+      const plain = b.dataset.plain != null ? b.dataset.plain : b.textContent;
+      if (normalize(plain) === normalize(q.answer)) b.classList.add('correct');
     });
   }
   // ボタン無効化
