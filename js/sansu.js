@@ -482,7 +482,11 @@ async function hamaDaimonWeek(grade, course, no) {
 //   コースごとに兄弟コース名を引けるようにした。ここに無いコースでは宿題ボタンは出ない。
 // ★国語のとも＝マスター国語（本科）の宿題テキスト。本科の回番号とそのまま対応する
 //   （No.5が本科・分冊とも「文の種類」で一致することを実物で確かめた・2026-09-03）
-const BUNSATSU_OF = { master: 'master_bunsatsu', kokugo: 'kokugo_bunsatsu' };
+// ★2026-09-06：最レにも宿題テキストがある（小3最レ 刷新版 No.13・No.14 は『最レ宿題』）。
+//   本人の指摘「これ 最レの宿題だよ」で、復習テストの引き出しに入れていたのを直した。
+//   ⛔宿題と復習テストは別教材。同じ引き出しに混ぜない（→ memory:feedback_hamagakuen_iinkai_rule）
+const BUNSATSU_OF = { master: 'master_bunsatsu', kokugo: 'kokugo_bunsatsu',
+                      sairei_new: 'sairei_new_bunsatsu' };
 async function hamaDaimonBunsatsu(grade, no, course) {
   const key = BUNSATSU_OF[course || 'master'];
   if (!key) return [];
@@ -917,13 +921,19 @@ async function renderHamaPanel() {
     });
     return;
   }
-  const keys = Object.keys(courses);
+  // ★年ちがいの片割れ（sairei_new など）はコース行に出さない。下の年タブで切りかえる
+  const keys = Object.keys(courses).filter(k => !courses[k].hidden);
   if (!sansuState.hamaCourse || !courses[sansuState.hamaCourse]) sansuState.hamaCourse = keys[0];
   row.innerHTML = keys.map(k =>
-    `<button class="hama-course-btn${k === sansuState.hamaCourse ? ' selected' : ''}" data-hama-course="${k}">${courses[k].label}</button>`
+    `<button class="hama-course-btn${(k === sansuState.hamaCourse || courses[k].pairNew === sansuState.hamaCourse) ? ' selected' : ''}" data-hama-course="${k}">${courses[k].label}</button>`
   ).join('');
   row.querySelectorAll('.hama-course-btn').forEach(b => {
-    b.onclick = () => { sansuState.hamaCourse = b.dataset.hamaCourse; renderHamaPanel(); };
+    b.onclick = () => {
+      const k = b.dataset.hamaCourse;
+      // ★年が2つあるコースは「今年」から開く（本人指示 2026-09-05「今年からの分が前に」）
+      sansuState.hamaCourse = (courses[k] && courses[k].pairNew) || k;
+      renderHamaPanel();
+    };
   });
 
   const course = sansuState.hamaCourse;
@@ -941,23 +951,45 @@ async function renderHamaPanel() {
   //   小5最レのように回番号がそのまま今年のカリキュラムなら、単元でえらぶは要らない。
   const curriculum = courses[course].curriculum || '新';
   const isOldCurr = (curriculum === '旧');
-  // ★「単元でえらぶ」は回番号が旧カリキュラムを指すコース用。コース名で決めない
-  //   （前は course === 'sairei' 決め打ちだった。対応表の curriculum を見れば足りる）
-  const kxUnits = isOldCurr ? await hamaKaisetsuUnits(grade, course) : [];
-  const dqUnits = isOldCurr ? await hamaDaimonUnits(grade, course) : [];
-  const newUnits = [...new Set([...kxUnits, ...dqUnits])].sort();
-  // 単元でえらぶ＝今年のカリキュラム用。今年ぶんの単元データがあるときだけ出す。
-  //   回についている単元名は去年までのものなので使わない。
-  const canUnit = isOldCurr && newUnits.length > 0;
-  modeRow.style.display = canUnit ? 'flex' : 'none';
-  modeRow.querySelectorAll('[data-hama-mode="no"]').forEach(b => { b.textContent = '回番号でえらぶ（去年まで）'; });
-  modeRow.querySelectorAll('[data-hama-mode="unit"]').forEach(b => { b.textContent = '単元でえらぶ（今年）'; });
-  if (!canUnit) sansuState.hamaMode = 'no';
-  if (!sansuState.hamaMode) sansuState.hamaMode = 'no';
-  modeRow.querySelectorAll('.hama-course-btn').forEach(b => {
-    b.classList.toggle('selected', b.dataset.hamaMode === sansuState.hamaMode);
-    b.onclick = () => { sansuState.hamaMode = b.dataset.hamaMode; renderHamaPanel(); };
-  });
+
+  // ★★ 年のタブ（本人の方針転換 2026-09-05）
+  //   「今年からの分もNo表示に変えます。タブも今年からの分が前にくるように」
+  //   今年ぶんの回番号がそろってきたので、**今年も去年までも 回番号で引く**。
+  //   コース対応表で pairNew / pairOld がつながっているコースだけ、この2枚のタブを出す。
+  //   ⛔年をまたいで混ぜない。No.14は今年、去年のNo.14は別の中身。
+  const newKey = courses[course].pairNew || (courses[course].pairOld ? course : null);
+  const oldKey = courses[course].pairOld || (courses[course].pairNew ? course : null);
+  const hasYearTabs = !!(newKey && oldKey && courses[newKey] && courses[oldKey]);
+  let canUnit = false, newUnits = [];
+
+  if (hasYearTabs) {
+    // 今年 → 去年まで の順（今年が先頭。index.html の並び順がそのまま出る）
+    modeRow.style.display = 'flex';
+    const nb = modeRow.querySelector('[data-hama-mode="no"]');
+    const ub = modeRow.querySelector('[data-hama-mode="unit"]');
+    nb.textContent = '今年（回番号）';
+    ub.textContent = '去年まで（回番号）';
+    nb.classList.toggle('selected', course === newKey);
+    ub.classList.toggle('selected', course === oldKey);
+    nb.onclick = () => { sansuState.hamaCourse = newKey; sansuState.hamaMode = 'no'; renderHamaPanel(); };
+    ub.onclick = () => { sansuState.hamaCourse = oldKey; sansuState.hamaMode = 'no'; renderHamaPanel(); };
+    sansuState.hamaMode = 'no';
+  } else {
+    // ★「単元でえらぶ」は回番号が旧カリキュラムを指すコース用。コース名で決めない
+    const kxUnits = isOldCurr ? await hamaKaisetsuUnits(grade, course) : [];
+    const dqUnits = isOldCurr ? await hamaDaimonUnits(grade, course) : [];
+    newUnits = [...new Set([...kxUnits, ...dqUnits])].sort();
+    canUnit = isOldCurr && newUnits.length > 0;
+    modeRow.style.display = canUnit ? 'flex' : 'none';
+    modeRow.querySelectorAll('[data-hama-mode="no"]').forEach(b => { b.textContent = '回番号でえらぶ（去年まで）'; });
+    modeRow.querySelectorAll('[data-hama-mode="unit"]').forEach(b => { b.textContent = '単元でえらぶ（今年）'; });
+    if (!canUnit) sansuState.hamaMode = 'no';
+    if (!sansuState.hamaMode) sansuState.hamaMode = 'no';
+    modeRow.querySelectorAll('.hama-course-btn').forEach(b => {
+      b.classList.toggle('selected', b.dataset.hamaMode === sansuState.hamaMode);
+      b.onclick = () => { sansuState.hamaMode = b.dataset.hamaMode; renderHamaPanel(); };
+    });
+  }
 
   if (canUnit && sansuState.hamaMode === 'unit') {
     // 単元でえらぶ：その学年の最レに出てくる単元＋かんたん解説がある単元を一覧にする
