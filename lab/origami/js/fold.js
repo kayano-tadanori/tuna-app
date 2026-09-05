@@ -314,8 +314,16 @@ const FOLD = (function () {
     //   実物の紙は、折り目のついていない向きへは曲がらない。逆向きに少しでも
     //   動くと、下にある紙を突き抜けて見える（＝一枚の紙としてありえない動き）。
     //   折れる範囲は 0 から targetAngle までのちょうどその間だけ。
-    const lo = Math.min(0, step.targetAngle);
-    const hi = Math.max(0, step.targetAngle);
+    //   ★★ ただし潰し折り（袋折り）の背だけは別（step.twoWay・2026-09-05 本人の案）
+    //   「そのライン上にどっちにでも動くヒンジを入れたら、やれるんじゃない？」
+    //   潰し折りではふくろの背の折り目が**反転する**——山だった所が谷になって割れる。
+    //   実物の紙でも、背は「一方向にしか曲がらない普通の折り目」とはちがって、
+    //   開いて反対へ倒れる。だから**その手の、その骨だけ**両方向に動けるようにする。
+    //   ⚠ twoWay を持たない手は、これまでと1ミリも変わらない（上の制限のまま）。
+    //   ⚠ 背がどこかは目分量ではなく計算で出せる——「重なった紙が原紙の同じ所から
+    //     来ている座標」の集まりがちょうど背の線になる（tools/paper_links.at_point）。
+    const lo = step.twoWay ? -Math.abs(step.targetAngle) : Math.min(0, step.targetAngle);
+    const hi = step.twoWay ? Math.abs(step.targetAngle) : Math.max(0, step.targetAngle);
     const clamped = Math.max(lo, Math.min(hi, g.angle));
     state.liveAngle[g.boneId] = clamped;
     syncLinkedAngle(state, g.boneId, clamped, step);

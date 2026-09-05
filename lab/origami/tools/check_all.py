@@ -30,6 +30,10 @@
    ・「3Dの見た目が2Dの正解と合うか」が落ちた → `to_work_js.py` の**重なりの高さ**
      （layer_order）を疑う。折線ではない。**この1本だけが「自分の計算どうし」でなく
      2Dの正解と突き合わせている**＝ここが鳴ったら本当に見た目が違う。
+   ・「輪になったつながりが裂けないか」が落ちた → その手は**折り線が1点に集まる頂点を
+     同時に動かしている**（潰し折りの核）。骨の木では表せない形なので、板（剛体）のままでは
+     直らない。**しきい値を上げてはいけない**——その手だけ紙を柔らかくして折る
+     （[[feedback_tsubushiori_2d_genkai]]）。折り終わりだけ見る検査では絶対に出ない。
 """
 import os, subprocess, sys, time
 from pathlib import Path
@@ -43,6 +47,7 @@ SUITE = [
     ('test_fold2d_cp.py',    '折線ラボ（展開図）そのものの単体テスト',      False, True),
     ('check_works_app.py',   '本物のエンジンで最後まで折れるか',            True,  False),
     ('check_fold_motion.py', '折る途中の動き（両側にひらかない・ヒンジ）',  True,  False),
+    ('check_loop_closure.py','輪になったつながりが折る途中に裂けないか',    True,  False),
     ('check_stack_height.py','重なりの高さが計算と合うか',                  True,  False),
     ('check_paper_face.py',  '3Dの見た目が2Dの正解と合うか（紙の表裏）',    True,  False),
     ('check_axis_safety.py', '骨の軸を逆に書いても壊れないか',              True,  False),

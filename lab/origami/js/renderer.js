@@ -413,6 +413,49 @@ const OrigamiRenderer = (function () {
       }
       indexCount = uploadMesh(curWork.mesh, on || curWork.usePhysics);
     }
+    // ★「この手は紙を柔らかくして折る」＝ step.soft（2026-09-05・本人の案）
+    //
+    //   折り線が1点に集まる頂点（潰し折りの核＝degree-4）では、紙の面のつながりが
+    //   **輪**になる。ところが mesh.boneParent は**木**なので、輪を閉じる最後の1本を
+    //   書く場所が無い＝**板（剛体）のままだと折る途中で裂ける**
+    //   （実測：面の一辺=1に対して最大1.54。0°と180°だけは合うので見た目では気づけない）。
+    //
+    //   本人の案：「潰し折をやる時は板で扱わずに**柔らかくして、最後の座標が合えば
+    //   板に戻せばいい**」。柔らかい間は cloth.js の継ぎ目(seam)制約が、木では
+    //   表せなかった辺をそのまま張る＝裂けない。実測でも すきま0.0000／紙の伸び0.09%／
+    //   板へ戻すときの飛び0.0000 だった。 → [[feedback_tsubushiori_2d_genkai]]
+    //
+    //   ⚠ soft を持たない手は、これまでと**まったく同じ道**を通る（物理を起こさない）。
+    let softOn = false;
+    // 柔らかさ。ふくらませの paperHold と同じ値＝「紙1枚ぶん」の手ざわり。
+    const SOFT_ACTIVE = 0.12;
+    function softStep(st) {
+      const s = st.work.steps[st.stepIndex];
+      if (s && s.soft) return true;
+      // 指を離したあとの寄せ(settling/springback)中も、その手が soft なら続ける。
+      // ここで切ると、いちばん動きが速い所で板に戻って紙が跳ねる。
+      if ((st.mode === 'settling' || st.mode === 'springback')
+          && st.settleStep && st.settleStep.soft) return true;
+      return false;
+    }
+    function setSoftFoldPhysics(on) {
+      if (on === softOn) return;
+      softOn = on;
+      gl.bindVertexArray(vao);
+      if (on) {
+        if (!physSim) {
+          physSim = CLOTH.createSim(curWork);
+          // いまの折り上がりの形から始める（平らな位置から飛ばないよう全部スナップ）
+          const mats0 = FOLD.currentBoneMatrices(state);
+          CLOTH.applyAttachment(physSim, mats0,
+            new Array(curWork.mesh.boneParent.length).fill(1));
+        }
+      } else if (!curWork.usePhysics && inflateTarget <= 0) {
+        physSim = null;         // ★板へ戻す（座標は上の実測どおり一致する）
+      }
+      indexCount = uploadMesh(curWork.mesh, !!physSim);
+    }
+
     // 64パネル分の余裕を持って確保(既存のuBones上限と同じ)しておき、作品切り替え
     // (setWork)で頂点数が変わっても配列を作り直さずに済むようにする。
     let physNormalFlat = new Float32Array(16384 * 3);
@@ -486,7 +529,15 @@ const OrigamiRenderer = (function () {
           }
         }
       }
-      for (const a of active) bw[a] = 1; // アクティブ自身は自分の目標角度へ強く固定
+      // ★ふつうの手：アクティブ自身は自分の目標角度へ強く固定（＝板）。
+      //   ★step.soft の手だけ：動かしている骨も柔らかくする。
+      //   板に固定(1)したままだと、裂け目の**両端がどちらも動けない**ので
+      //   継ぎ目のバネが引き寄せられず、潰し折りは直らない（2026-09-05実測）。
+      //   根っこの骨だけは必ず1のまま＝紙全体が漂わないための錨。
+      const softNow = softStep(st);
+      for (const a of active) {
+        bw[a] = (softNow && w.mesh.boneParent[a] !== -1) ? SOFT_ACTIVE : 1;
+      }
       return bw;
     }
     // 三角形ごとのフラット法線をpos配列から直接計算し、頂点attributeへ複製する。
@@ -911,9 +962,13 @@ const OrigamiRenderer = (function () {
       FOLD.tick(state, dt);
       MOTION.spring(inflateSt, inflateTarget, dt, 90, 14);
       // しぼみ切ったら剛体にもどす（紙の厚みもそこで戻る）
-      if (physSim && !curWork.usePhysics && inflateTarget <= 0 && inflateSt.v < 0.004) {
+      if (physSim && !curWork.usePhysics && !softOn
+          && inflateTarget <= 0 && inflateSt.v < 0.004) {
         setInflatePhysics(false);
       }
+      // ★step.soft の手のあいだだけ紙を柔らかくし、折り終わったら板へ戻す。
+      //   soft を持たない作品では softStep が必ず false ＝ここは何もしない。
+      setSoftFoldPhysics(softStep(state));
 
       const rect = resize();
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -979,7 +1034,10 @@ const OrigamiRenderer = (function () {
         // 実描画位置は質点バネのシミュレーション結果(physSim.points)を使う。
         const w = state.work;
         const bw = physBoneWeights(w, state);
-        CLOTH.applyAttachment(physSim, mats, bw);
+        // ★soft の手のときだけ syncPrev=true。引き寄せたぶんを速度にしない
+        //   （立てないと紙が飛ぶ。2026-09-05実測でずれ1.327）。
+        //   ふくらませの経路は false のまま＝これまでと同じ動き。
+        CLOTH.applyAttachment(physSim, mats, bw, softOn);
         // ★「膨らませ」= 中心から外向きへの本物の内部圧力(本人提案・2026-08-30)。
         //   パネルごとの符号(inflateSign)を人力で割り当てなくても、閉じた袋構造は
         //   辺の長さを保ちながら自然に丸く膨らみ、開いた部分は単に押し出されるだけ
@@ -1067,6 +1125,18 @@ const OrigamiRenderer = (function () {
       // 検査用：いまの紙の厚み（ワールド単位）
       setPaperHold(v) { paperHold = Math.max(0, Math.min(1, Number(v))); holdCache = null; },
       debugThickness() { return thicknessWorld(); },
+      // 検査用：いま**画面に出ている**紙の頂点の位置。
+      //   柔らかい間は物理の結果、板のときは剛体FKの結果——描画が使っているのと
+      //   同じものを返す。step.soft の手が「輪になったつながり」を裂かずに
+      //   折れているかを、本物の描画経路で測るために要る
+      //   （自分の計算どうしの照合にしないため。[[tool_origami_kensa_kit]]）。
+      debugPoints() {
+        if (physSim) return physSim.points.map(p => [p.x, p.y, p.z]);
+        const m = FOLD.currentBoneMatrices(state);
+        return curWork.mesh.verts.map((v, i) => G.vecApply(m[curWork.mesh.panel[i]], v));
+      },
+      // 検査用：いま紙を柔らかくしているか（step.soft が効いているか）
+      debugSoftOn() { return softOn; },
       // 検査用：ワールドの点が、いま画面のどこに見えているか。
       // ★「裏から見ても右へ引けば同じ向きに回る」は、内部の数値(yaw)では測れない——
       //   裏では yaw の符号が反転するのが正しい（画面で同じ向きに見せるため）。

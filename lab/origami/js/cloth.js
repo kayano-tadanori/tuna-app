@@ -121,7 +121,16 @@ const CLOTH = (function () {
   //   スナップしてinvMassを0にし、以後の距離制約の反復で絶対に動かない
   //   「本当の固定点」にする——これで初めて「確定済みは動かず、まだ折って
   //   いない部分だけがその固定点に向かって自然にたわむ」が成立する。
-  function applyAttachment(sim, boneMatrices, boneWeights) {
+  //   ★syncPrev（省略可・既定false＝これまでと完全に同じ動き）
+  //   引き寄せは「力」ではなく位置の付けかえ。ところがPBDは
+  //   「今の位置 − 前フレームの位置」を速度とみなすので、引き寄せたぶんが
+  //   まるごと速度として残り、次のフレームでその方向へ飛ぶ。
+  //   w>=1の枝は px も合わせているので起きないが、**柔らかい枝(0<w<1)では
+  //   起きる**——潰し折りのように動く骨そのものを柔らかくすると顕在化する
+  //   （2026-09-05実測：ずれ 1.327。syncPrevを立てると 0.0000）。
+  //   ふくらませ(既存の使い方)は引きが小さく毎フレーム同じ向きなので露見しなかった。
+  //   ⚠ 既存の呼び出しを変えないため、**opt-in**にしてある。
+  function applyAttachment(sim, boneMatrices, boneWeights, syncPrev) {
     const mesh = sim.work.mesh;
     for (let i = 0; i < mesh.verts.length; i++) {
       const panel = mesh.panel[i];
@@ -146,6 +155,8 @@ const CLOTH = (function () {
           pt.x += (tx - pt.x) * w;
           pt.y += (ty - pt.y) * w;
           pt.z += (tz - pt.z) * w;
+          // 引き寄せたぶんを「速度」にしない（上のコメント参照）
+          if (syncPrev) { pt.px = pt.x; pt.py = pt.y; pt.pz = pt.z; }
         }
       }
     }
