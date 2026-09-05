@@ -78,7 +78,10 @@ def main():
     for i, r in ix.items():
         if i in audited:
             continue
-        if not ("%s/%s" % (r["grade"], r["app_course"])).startswith(want):
+        # ★"3/sairei" は "3/sairei_new" にも前方一致してしまう（"/"を含むwantは
+        #   コース名まで指定＝厳密一致にする。grade だけの "3" はそのまま前方一致でよい）
+        key = "%s/%s" % (r["grade"], r["app_course"])
+        if not (key == want if "/" in want else key.startswith(want)):
             continue
         rows.append(r)
     total = len(rows)

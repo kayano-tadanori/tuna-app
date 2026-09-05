@@ -224,7 +224,9 @@ def cmd_unaudited(argv):
         if i in audited:
             continue
         key = "%s/%s" % (r["grade"], r["app_course"])
-        if want and not key.startswith(want):
+        # ★"3/sairei" は "3/sairei_new" にも前方一致してしまう（"/"を含むwantは
+        #   コース名まで指定＝厳密一致にする。grade だけの "3" はそのまま前方一致でよい）
+        if want and not (key == want if "/" in want else key.startswith(want)):
             continue
         out.append((key, r["kind"], str(r["no"]), i, r["x"].get("src", "")[:24]))
     for o in out:
