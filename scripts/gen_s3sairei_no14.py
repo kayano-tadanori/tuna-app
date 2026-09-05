@@ -118,7 +118,7 @@ def fig_2_1():
     A = P(100, 34); B = P(100, 176)
     # A から下へ35度、B から上へ30度。交わった所が V
     V = inter(A, polar(A, -35, 100), B, polar(B, 30, 100))
-    s.arrow(P(20, 34), P(285, 34)); s.arrow(P(20, 176), P(285, 176))
+    s.arrow(P(20, 34), P(285, 34), sp=0.90); s.arrow(P(20, 176), P(285, 176), sp=0.90)
     s.line(A, V); s.line(B, V)
     s.text(s.arc(A, P(285, 34), V, 26), "35°")
     s.text(s.arc(B, P(285, 176), V, 26), "30°")
@@ -136,7 +136,7 @@ def fig_2_2():
     Q = inter(Pp, polar(Pp, -45, 100), P(R, 0), P(R, 260))
     # Q で「右のたて線の下向き（270度）」から 82度 だけ左へ回した向きに S をとる
     S = inter(Q, polar(Q, 270 - 82, 300), P(L, 0), P(L, 260))
-    s.arrow(P(L, 18), P(L, 228)); s.arrow(P(R, 18), P(R, 228))
+    s.arrow(P(L, 18), P(L, 228), sp=0.90); s.arrow(P(R, 18), P(R, 228), sp=0.90)
     s.line(Pp, Q); s.line(Q, S)
     s.text(s.arc(Pp, P(L, 240), Q, 26), "45°")
     s.text(s.arc(Q, P(R, 240), S, 26), "82°")
