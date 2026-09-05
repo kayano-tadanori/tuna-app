@@ -16,9 +16,16 @@
 
 ★見るもの（問題ぜんぶについて）
    ① 開いてエラーが出ないこと
-   ② 紙に厚みが付いていないこと（厚みで辺が太ると重なりの形が読めない）
+   ② 紙に厚みが付いていること（本人指示2026-09-05で 0→1固定 に変えた）
+      厚み0だと折り返した紙が土台と**同じ高さ**に置かれ、重なった所で土台が
+      描画に勝つ＝裏返した紙が表の色に見えた（本人「裏返った紙の色が表の紙の
+      色と一緒になる」）。ふくらみの再発の見張りは③④が受け持つ。
    ③ 「回すだけ」の問題では、巻きこみの帯が1本も張られていないこと
    ④ 折る問題でも、帯の数が折り目の骨の数を超えないこと
+   ⑤ 折る問題は、折り終わりに紙がちゃんと持ち上がっていること
+      （renderer.js の初期化で updateLayers の呼び出しが抜けていて、
+        **最初に開いた1つ目だけ**層が全部0のままだった。2つ目以降は setWork が
+        呼ぶので直っており、通しで開く検査では気づけなかった＝1つずつ開き直して見る）
 """
 import os, sys, threading, http.server, socketserver, functools
 from pathlib import Path
@@ -42,8 +49,12 @@ JS = r"""
     if (par === undefined || par < 0) continue;
     if (Math.hypot(h.axis[0], h.axis[2]) < 1e-6) vertical++; else horizontal++;
   }
+  // 折り終わりまで折って、層がちゃんと持ち上がるかを見る
+  (w.steps || []).forEach(st => { inst.state.liveAngle[st.handle.boneId] = st.targetAngle; });
+  const layers = inst.debugLayers ? inst.debugLayers() : null;
   return { vertical, horizontal,
            thickness: inst.debugThickness ? inst.debugThickness() : null,
+           layerMax: layers ? Math.max.apply(null, Array.from(layers)) : null,
            stats: inst.debugThickenStats ? inst.debugThickenStats() : null };
 }
 """
@@ -86,7 +97,7 @@ def main():
             r = pg.evaluate(JS, pid)
             pg.wait_for_timeout(120)
             check(f'{pid}: 開いてエラー0件', not errs, str(errs[:1]))
-            check(f'{pid}: 紙に厚みを付けていない', r['thickness'] == 0, str(r['thickness']))
+            check(f'{pid}: 紙に厚みが付いている', r['thickness'] > 0, str(r['thickness']))
             st = r['stats'] or {}
             hem = st.get('hem')
             if r['horizontal'] == 0:
@@ -97,6 +108,10 @@ def main():
                 check(f'{pid}: 帯の数が折り目の骨の数を超えている',
                       hem is not None and hem <= r['horizontal'],
                       f"帯{hem}本 / 折り目の骨{r['horizontal']}本")
+                # ⑤ 折り終わりに紙が持ち上がっていないと、折り返した紙が土台と
+                #    同じ高さになり、重なった所で裏の色が出ない
+                check(f'{pid}: 折り終わりに紙が持ち上がっていない',
+                      (r['layerMax'] or 0) > 0, f"層の最大 {r['layerMax']}")
         print(f'  うち「回すだけ」の問題は {n_rot}問')
         br.close()
     httpd.shutdown()
