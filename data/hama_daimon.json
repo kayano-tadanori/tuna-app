@@ -87635,6 +87635,11 @@
          "question": "この立体を、3点B,P,Dを通る平面で切り分けました。頂点Cをふくむほうの立体の体積は何cm³ですか。",
          "answer": "36",
          "meaning": "三角柱を、底面の1辺BPと反対側の頂点Dを通る平面で切ると、頂点Aをふくむ側は三角すいABPD（体積＝9×6÷3＝18cm³）になります。のこりのCをふくむ側は、54−18＝36cm³。"
+        },
+        {
+         "question": "同じ立方体で、こんどは 辺BF上に点R、辺CG上に点S を、BR＝CS となるようにとります（長さは まだ 分かりません）。この立方体を、3点A,R,Sを通る平面と、3点B,F,Dを通る平面の 2つで 切り分けたとき、頂点Cを ふくむ立体と、頂点Eを ふくむ立体の 体積の比が 6：37 に なりました。BRの 長さは 何cm ですか。",
+         "answer": "1.35",
+         "meaning": "①平面BFDは、立方体をB・Fを通る辺と 頂点Dを通って ちょうど半分に割る面です。②平面ARSは、BR＝CS＝t と おくと、高さが t に比例して ななめに切れる面に なります。③このとき、頂点Cを ふくむ立体の体積は 12×t、頂点Eを ふくむ立体の体積は 108－6×t に なります（①②で持った「柱・すいの体積」の考え方を、こんどは 逆向きに使います）。④12×t：(108－6×t)＝6：37 を解くと、444×t＝648－36×t → 480×t＝648 → **t＝1.35cm**です。この③が この問題の いちばんの見せ場です。"
         }
        ]
       }
@@ -118659,7 +118664,7 @@
         {
          "question": "それは5月何日ですか。",
          "answer": "4",
-         "meaning": "①19日目は**5月4日**です。②19は7の倍数ではないので、曜日は毎回ずれます。③「祝日も当番がある」という一文は**まったく使いません**（使わない条件をわざと置いてあります）。"
+         "meaning": "①**20日目**は**5月4日**です。②19は7の倍数ではないので、曜日は毎回ずれます。③「祝日も当番がある」という一文は**まったく使いません**（使わない条件をわざと置いてあります）。"
         }
        ]
       }
@@ -118767,7 +118772,7 @@
         {
          "question": "あてはまる2けたの整数ABは何通りありますか。",
          "answer": "4",
-         "meaning": "①差が5になる (A,B)は (6,1)(7,2)(8,3)(9,4)。②**BAも2けたなのでBは0にできません。**Bを0にすると50が入って5通りになってしまいます。③答えは4通り（61・72・83・94）です。"
+         "meaning": "①差が5になる (A,B)は (6,1)(7,2)(8,3)(9,4)。②**BAも2けたなのでBは0にできません。**Bを0にすると50が入って5通りになってしまいます。③だから答えは4通りです。"
         },
         {
          "question": "そのうち いちばん大きい整数はいくつですか。",
@@ -118858,7 +118863,7 @@
          "meaning": "①5と5、3と3が**ななめに約分**で消えます。②残るのは 1×3÷(7×9)＝3/63＝1/21です。"
         },
         {
-         "question": "4個目までかけると 1/27 になります。5個目までかけるといくつですか。分数で答えなさい。",
+         "question": "4個目までかけると 1/33 になります。5個目までかけるといくつですか。分数で答えなさい。",
          "answer": "3/143",
          "meaning": "①途中が全部消えて、残るのは**はじめの分子1×3**と**おわりの分母2つ**だけ。②n個かけると 3÷((2n+1)×(2n+3))。n＝5なら 3÷(11×13)＝3/143 です。"
         },
@@ -119101,7 +119106,7 @@
        "grade": 5,
        "star": 2,
        "intro": "1から100までの整数を、[図]のように**横6列**（赤いわくは3×3の例）にならべます（1行目1〜6、2行目7〜12、…）。この表の上に正方形のわくをのせて、中の数を取り出します。たとえば3×3のわくで **8,9,10／14,15,16／20,21,22** を囲むと、9個の和は135です。",
-       "svg": "<svg viewBox='0 0 196 145' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='23.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>A</text><text x='53.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>B</text><text x='83.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>C</text><text x='113.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>D</text><text x='143.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>E</text><text x='173.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>F</text><rect x='8' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1</text><rect x='38' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text><rect x='68' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3</text><rect x='98' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4</text><rect x='128' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>5</text><rect x='158' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='8' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>7</text><rect x='38' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>8</text><rect x='68' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>9</text><rect x='98' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>10</text><rect x='128' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>11</text><rect x='158' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>12</text><rect x='8' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>13</text><rect x='38' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>14</text><rect x='68' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>15</text><rect x='98' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>16</text><rect x='128' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>17</text><rect x='158' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>18</text><rect x='8' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>19</text><rect x='38' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>20</text><rect x='68' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>21</text><rect x='98' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>22</text><rect x='128' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>23</text><rect x='158' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>24</text><rect x='8' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>25</text><rect x='38' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>26</text><rect x='68' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>27</text><rect x='98' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>28</text><rect x='128' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>29</text><rect x='158' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>30</text><rect x='8' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>31</text><rect x='38' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>32</text><rect x='68' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>33</text><rect x='98' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>34</text><rect x='128' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>35</text><rect x='158' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>36</text><rect x='38' y='42' width='90' height='57' fill='none' stroke='#ff6b6b' stroke-width='2'/></svg>",
+       "svg": "<svg viewBox='0 0 196 160' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='23.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>A</text><text x='53.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>B</text><text x='83.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>C</text><text x='113.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>D</text><text x='143.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>E</text><text x='173.0' y='19' fill='#ffd166' font-size='10' text-anchor='middle'>F</text><rect x='8' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>1</text><rect x='38' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>2</text><rect x='68' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>3</text><rect x='98' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>4</text><rect x='128' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>5</text><rect x='158' y='23' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='36.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>6</text><rect x='8' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>7</text><rect x='38' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>8</text><rect x='68' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>9</text><rect x='98' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>10</text><rect x='128' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>11</text><rect x='158' y='42' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='55.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>12</text><rect x='8' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>13</text><rect x='38' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>14</text><rect x='68' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>15</text><rect x='98' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>16</text><rect x='128' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>17</text><rect x='158' y='61' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='74.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>18</text><rect x='8' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>19</text><rect x='38' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>20</text><rect x='68' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>21</text><rect x='98' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>22</text><rect x='128' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>23</text><rect x='158' y='80' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='93.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>24</text><rect x='8' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>25</text><rect x='38' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>26</text><rect x='68' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>27</text><rect x='98' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>28</text><rect x='128' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>29</text><rect x='158' y='99' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='112.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>30</text><rect x='8' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='23.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>31</text><rect x='38' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='53.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>32</text><rect x='68' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='83.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>33</text><rect x='98' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='113.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>34</text><rect x='128' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='143.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>35</text><rect x='158' y='118' width='30' height='19' fill='rgba(59,130,246,0.10)' stroke='#64748b' stroke-width='0.8'/><text x='173.0' y='131.68' fill='#eef2ff' font-size='9.5' text-anchor='middle'>36</text><rect x='38' y='42' width='90' height='57' fill='none' stroke='#ff6b6b' stroke-width='2'/><text x='98.0' y='150' fill='#9aa3c0' font-size='8' text-anchor='middle'>⋮（100まで同じように6列で続く）</text></svg>",
        "steps": [
         {
          "question": "その9個の和135は、まん中の数15の何倍ですか。",
@@ -119206,7 +119211,7 @@
         {
          "question": "第3段目にある数のうち、100以下のものは何個ありますか。",
          "answer": "49",
-         "meaning": "①第3段は 6でわって4・5・0あまる数（6k－2, 6k－1, 6k）。②k＝1〜16で48個、さらに k＝17 の 100 が入って49個です。"
+         "meaning": "①第3段は 6でわって4・5・0あまる数（6□－2, 6□－1, 6□）。②□＝1〜16で48個、さらに □＝17 の 100 が入って49個です。"
         }
        ]
       }
@@ -119379,9 +119384,9 @@
          "meaning": "①1辺48cm。②たて6枚・横4枚で24枚です。"
         },
         {
-         "question": "1辺が 24×k cm の正方形をつくるとき、必要な枚数は 6×(kの2乗) 枚になります。1000枚以内でつくれる kの最大はいくつですか。",
+         "question": "1辺が 24×□ cm の正方形をつくるとき、必要な枚数は 6×(□の2乗) 枚になります。1000枚以内でつくれる □の最大はいくつですか。",
          "answer": "12",
-         "meaning": "①6×k×k≦1000 → k×k≦166。②k＝12 で 6×144＝864枚、k＝13 だと 1014枚で足りません。"
+         "meaning": "①6×□×□≦1000 → □×□≦166。②□＝12 で 6×144＝864枚、□＝13 だと 1014枚で足りません。"
         },
         {
          "question": "1000枚を使ってできるだけ大きな正方形をつくると、1辺は何cmですか。",
@@ -119619,14 +119624,14 @@
          "meaning": "①16＋16－1（のりしろ1cm）＝31cmです。"
         },
         {
-         "question": "たてにm枚つないだときの全長は 15×m＋1 cm になります。横にn枚では 18×n＋1 cm です。正方形になるとき、15×m と 18×n はどうなりますか。等しいなら1、ちがうなら2。",
+         "question": "たてに□枚つないだときの全長は 15×□＋1 cm になります。横に△枚では 18×△＋1 cm です。正方形になるとき、15×□ と 18×△ はどうなりますか。等しいなら1、ちがうなら2。",
          "answer": "1",
-         "meaning": "①どちらも**＋1が共通**なので、残りの 15×m と 18×n が等しくなります。"
+         "meaning": "①どちらも**＋1が共通**なので、残りの 15×□ と 18×△ が等しくなります。"
         },
         {
-         "question": "15×m＝18×n となる いちばん小さい m はいくつですか。",
+         "question": "15×□＝18×△ となる いちばん小さい □ はいくつですか。",
          "answer": "6",
-         "meaning": "①15と18の最小公倍数は90。②15×6＝90、18×5＝90。③m＝6、n＝5です。"
+         "meaning": "①15と18の最小公倍数は90。②15×6＝90、18×5＝90。③□＝6、△＝5です。"
         },
         {
          "question": "いちばん小さな正方形の1辺は何cmですか。",
@@ -119791,9 +119796,9 @@
        "intro": "**BはAの3倍より30大きく**、**AとBの最小公倍数はAの11倍**で、**最大公約数は15**です。",
        "steps": [
         {
-         "question": "最大公約数が15なので、A＝15×a、B＝15×b と書けます（aとbはたがいに素）。最小公倍数を15とaとbで表すと 15×a×b です。これがAの11倍と等しいとき、bはいくつですか。",
+         "question": "最大公約数が15なので、A＝15×□、B＝15×△ と書けます（□と△はたがいに素）。最小公倍数を15と□と△で表すと 15×□×△ です。これがAの11倍と等しいとき、△はいくつですか。",
          "answer": "11",
-         "meaning": "①15×a×b＝11×15×a。②両辺を15×aでわると b＝11です。"
+         "meaning": "①15×□×△＝11×15×□。②両辺を15×□でわると △＝11です。"
         },
         {
          "question": "Bはいくつですか。",
@@ -119808,7 +119813,7 @@
         {
          "question": "最小公倍数はいくつですか。",
          "answer": "495",
-         "meaning": "①A＝45＝15×3、B＝165＝15×11。②a＝3とb＝11はたがいに素 ✓ ③最小公倍数は 15×3×11＝495です。"
+         "meaning": "①A＝45＝15×3、B＝165＝15×11。②□＝3と△＝11はたがいに素 ✓ ③最小公倍数は 15×3×11＝495です。"
         }
        ]
       },
@@ -119829,12 +119834,12 @@
          "meaning": "①126÷14＝9です。"
         },
         {
-         "question": "2数を 14×a と 14×b とすると、a＋b はいくつですか。",
+         "question": "2数を 14×□ と 14×△ とすると、□＋△ はいくつですか。",
          "answer": "9",
-         "meaning": "①14×(a＋b)＝126 なので a＋b＝9です。"
+         "meaning": "①14×(□＋△)＝126 なので □＋△＝9です。"
         },
         {
-         "question": "a＋b＝9 で、aとbがたがいに素になる組は何組ありますか（a＜b）。",
+         "question": "□＋△＝9 で、□と△がたがいに素になる組は何組ありますか（□＜△）。",
          "answer": "3",
          "meaning": "①(1,8)(2,7)(3,6)(4,5)の4組のうち、**(3,6)は3で約分できる**ので使えません。②3組です。"
         },
@@ -119874,7 +119879,7 @@
         {
          "question": "[a, b] －〈a, b〉＝3 となる組（b＞a）は何組ありますか。",
          "answer": "2",
-         "meaning": "①最大公約数をgとして a＝g×x、b＝g×y とおくと、差は g×(x×y－1)。②3は素数なので g×(x×y－1)＝3 は (g,x×y)＝(1,4) か (3,2) だけ。③(1,4)と(3,6)の2組です。"
+         "meaning": "①差が3になる組を、公約数の大きさで場合分けしてためします。②公約数が1のとき、最小公倍数はa×bなので a×b－1＝3 → a×b＝4。1と4は公約数が1なので条件に合い、(a,b)＝(1,4)。③公約数が3のとき、a,bを3×□・3×△（□と△は公約数を持たない2数）とおくと 3×(□×△－1)＝3 → □×△＝2 → (□,△)＝(1,2) → (a,b)＝(3,6)。④1〜399の範囲でためしても、これ以外の組はありません。"
         }
        ]
       },
@@ -120399,19 +120404,19 @@
        "intro": "ある試験の**受験者の男女比は8:9**、**合格者の男女比は4:3**、**不合格者の男女比は4:5**でした。実際の人数は1つも分かっていません。",
        "steps": [
         {
-         "question": "合格者を 4×p 人と 3×p 人、不合格者を 4×q 人と 5×q 人とします。男子の受験者は 4p＋4q 人です。女子は何人ですか。3p＋5q なら1、3p＋4q なら2。",
+         "question": "合格者を 4×甲 人と 3×甲 人、不合格者を 4×乙 人と 5×乙 人とします。男子の受験者は 4甲＋4乙 人です。女子は何人ですか。3甲＋5乙 なら1、3甲＋4乙 なら2。",
          "answer": "1",
-         "meaning": "①女子は合格3p人と不合格5q人。②3p＋5q人です。"
+         "meaning": "①女子は合格3甲人と不合格5乙人。②3甲＋5乙人です。"
         },
         {
-         "question": "(4p＋4q):(3p＋5q)＝8:9 から、qはpの何倍ですか。",
+         "question": "(4甲＋4乙):(3甲＋5乙)＝8:9 から、乙は甲の何倍ですか。",
          "answer": "3",
-         "meaning": "①9×(4p＋4q)＝8×(3p＋5q) → 36p＋36q＝24p＋40q。②12p＝4q → q＝3pです。"
+         "meaning": "①9×(4甲＋4乙)＝8×(3甲＋5乙) → 36甲＋36乙＝24甲＋40乙。②12甲＝4乙 → 乙＝3甲です。"
         },
         {
          "question": "男子の合格者と不合格者の比を もっとも簡単な整数の比にすると 1:□。□はいくつですか。",
          "answer": "3",
-         "meaning": "①男子の合格は4p人、不合格は 4q＝12p人。②4p:12p＝1:3です。③**pの値が分からなくても比は出ます。**"
+         "meaning": "①男子の合格は4甲人、不合格は 4乙＝12甲人。②4甲:12甲＝1:3です。③**甲の値が分からなくても比は出ます。**"
         }
        ]
       },
@@ -120460,9 +120465,9 @@
          "meaning": "①1冊が重いほうが冊数は少なくなります。②**逆比**で 大:小＝2:3です。③3:2としないこと。"
         },
         {
-         "question": "冊数を 2×m 冊と 3×m 冊とします。12冊ずつ取ったあとの重さの比が5:6になるとき、mはいくつですか。",
+         "question": "冊数を 2×△ 冊と 3×△ 冊とします。12冊ずつ取ったあとの重さの比が5:6になるとき、△はいくつですか。",
          "answer": "16",
-         "meaning": "①大の重さは 3×(2m－12)、小の重さは 2×(3m－12)。②(6m－36):(6m－24)＝5:6 → 6×(6m－36)＝5×(6m－24) → 36m－216＝30m－120 → m＝16です。"
+         "meaning": "①大の重さは 3×(2△－12)、小の重さは 2×(3△－12)。②(6△－36):(6△－24)＝5:6 → 6×(6△－36)＝5×(6△－24) → 36△－216＝30△－120 → △＝16です。"
         },
         {
          "question": "大きいノートははじめ何冊ありましたか。",
@@ -120572,7 +120577,7 @@
        "steps": [
         {
          "question": "池の深さを1とすると、棒Aの長さはいくつにあたりますか。分数で答えなさい。",
-         "answer": "2.25",
+         "answer": "9/4",
          "meaning": "①Aの4/9が深さ1なので、A＝1÷(4/9)＝9/4です。"
         },
         {
@@ -120633,7 +120638,7 @@
        "steps": [
         {
          "question": "3/8 と 2/5 をたすといくつですか。分数で答えなさい。",
-         "answer": "0.775",
+         "answer": "31/40",
          "meaning": "①通分して 15/40＋16/40＝31/40です。"
         },
         {
@@ -120950,12 +120955,12 @@
          "meaning": "①のこり2/3の2/5なので 2/3×2/5＝4/15です。②**「のこりの」は最初の基準に直してから足し引きします。**"
         },
         {
-         "question": "本を買ったあとの のこりは、最初のどれだけですか。分数で答えなさい。",
+         "question": "本を買ったあとの のこりは、最初のどれだけですか。小数で答えなさい。",
          "answer": "0.4",
          "meaning": "①2/3－4/15＝10/15－4/15＝6/15＝2/5です。"
         },
         {
-         "question": "1200円は、最初のどれだけにあたりますか。分数で答えなさい。",
+         "question": "1200円は、最初のどれだけにあたりますか。小数で答えなさい。",
          "answer": "0.2",
          "meaning": "①3/5－2/5＝1/5です。"
         },
@@ -121077,12 +121082,12 @@
        "intro": "**A球は落ちた高さの2/5**、**B球は1/2**だけはね返ります。",
        "steps": [
         {
-         "question": "A球をある高さから落とすと、2回目にはね上がる高さは、落とした高さのどれだけですか。分数で答えなさい。",
+         "question": "A球をある高さから落とすと、2回目にはね上がる高さは、落とした高さのどれだけですか。小数で答えなさい。",
          "answer": "0.16",
          "meaning": "①1回目が2/5、その2/5が2回目。②2/5×2/5＝4/25です。"
         },
         {
-         "question": "B球の2回目は、落とした高さのどれだけですか。分数で答えなさい。",
+         "question": "B球の2回目は、落とした高さのどれだけですか。小数で答えなさい。",
          "answer": "0.25",
          "meaning": "①1/2×1/2＝1/4です。"
         },
@@ -121115,7 +121120,7 @@
          "meaning": "①全体の4/9より45個多くとったので、のこりは 全体の5/9より45個少なくなります。"
         },
         {
-         "question": "次にのこりの2/5をとると、そのまた のこりは、直前ののこりのどれだけですか。分数で答えなさい。",
+         "question": "次にのこりの2/5をとると、そのまた のこりは、直前ののこりのどれだけですか。小数で答えなさい。",
          "answer": "0.6",
          "meaning": "①1－2/5＝3/5です。"
         },
@@ -121401,7 +121406,7 @@
        "intro": "3つの容器A・B・Cに水が入っています。\n**①Aの水の1/5をBに移し、②次にそのときのBの1/5をCに移し、③最後にそのときのCの1/5をAに移した**ところ、**A:B:C＝4:5:6**になりました。",
        "steps": [
         {
-         "question": "1/5を移すと、移した側は もとの何倍になりますか。分数で答えなさい。",
+         "question": "1/5を移すと、移した側は もとの何倍になりますか。小数で答えなさい。",
          "answer": "0.8",
          "meaning": "①1－1/5＝4/5倍です。"
         },
@@ -121439,7 +121444,7 @@
        "grade": 5,
        "star": 3,
        "intro": "[図]のグラフ**(ア)**はAとBの関係で、**Bが3のときA＝5、Bが6のときA＝10**の**比例**です。グラフ**(イ)**はBとCの関係で、**Cが3のときB＝8、Cが8のときB＝3**の**反比例**です。",
-       "svg": "<svg viewBox='0 0 300 152' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9'>グラフ(ア) たて A・横 B</text><line x1='32' y1='118' x2='128' y2='118' stroke='#eef2ff' stroke-width='1.1'/><line x1='32' y1='118' x2='32' y2='30' stroke='#eef2ff' stroke-width='1.1'/><line x1='32' y1='118' x2='116' y2='48.0' stroke='#7ee787' stroke-width='2'/><circle cx='68' cy='83' r='2.2' fill='#ffd166'/><text x='71' y='80' fill='#ffd166' font-size='8'>(3,5)</text><circle cx='104' cy='48' r='2.2' fill='#ffd166'/><text x='107' y='45' fill='#ffd166' font-size='8'>(6,10)</text><text x='164' y='12' fill='#ffd166' font-size='9'>グラフ(イ) たて B・横 C</text><line x1='190' y1='118' x2='286' y2='118' stroke='#eef2ff' stroke-width='1.1'/><line x1='190' y1='118' x2='190' y2='30' stroke='#eef2ff' stroke-width='1.1'/><polyline points='210.0,22.0 220.0,54.0 230.0,70.0 240.0,79.6 250.0,86.0 260.0,90.6 270.0,94.0 280.0,96.7 290.0,98.8' fill='none' stroke='#ff6b6b' stroke-width='2'/><circle cx='220' cy='54' r='2.2' fill='#ffd166'/><text x='223' y='51' fill='#ffd166' font-size='8'>(3,8)</text><circle cx='270' cy='94' r='2.2' fill='#ffd166'/><text x='273' y='91' fill='#ffd166' font-size='8'>(8,3)</text></svg>",
+       "svg": "<svg viewBox='0 0 300 152' xmlns='http://www.w3.org/2000/svg' style='display:block;margin:6px auto;max-width:100%'><text x='6' y='12' fill='#ffd166' font-size='9'>グラフ(ア) たて A・横 B</text><line x1='32' y1='118' x2='128' y2='118' stroke='#eef2ff' stroke-width='1.1'/><line x1='32' y1='118' x2='32' y2='30' stroke='#eef2ff' stroke-width='1.1'/><line x1='32' y1='118' x2='116' y2='36.33' stroke='#7ee787' stroke-width='2'/><circle cx='68' cy='83' r='2.2' fill='#ffd166'/><text x='71' y='80' fill='#ffd166' font-size='8'>(3,5)</text><circle cx='104' cy='48' r='2.2' fill='#ffd166'/><text x='107' y='45' fill='#ffd166' font-size='8'>(6,10)</text><text x='164' y='12' fill='#ffd166' font-size='9'>グラフ(イ) たて B・横 C</text><line x1='190' y1='118' x2='286' y2='118' stroke='#eef2ff' stroke-width='1.1'/><line x1='190' y1='118' x2='190' y2='30' stroke='#eef2ff' stroke-width='1.1'/><polyline points='210.0,22.0 220.0,54.0 230.0,70.0 240.0,79.6 250.0,86.0 260.0,90.6 270.0,94.0 280.0,96.7 290.0,98.8' fill='none' stroke='#ff6b6b' stroke-width='2'/><circle cx='220' cy='54' r='2.2' fill='#ffd166'/><text x='223' y='51' fill='#ffd166' font-size='8'>(3,8)</text><circle cx='270' cy='94' r='2.2' fill='#ffd166'/><text x='273' y='91' fill='#ffd166' font-size='8'>(8,3)</text></svg>",
        "steps": [
         {
          "question": "AはBの何倍ですか。分数で答えなさい。",
@@ -121518,7 +121523,7 @@
        "intro": "2つの砂時計**ア・イ**があります。もっとも細い部分を水平に切った切り口は円で、その**面積の比は ア:イ＝2:3**、**砂の量の比は ア:イ＝1:3**です。**イの砂を全部アに加えると、アは8分計**になります。はかれる時間は**砂の量に比例し、もっとも細い部分の面積に反比例**します。",
        "steps": [
         {
-         "question": "アの「量÷面積」はいくつですか。分数で答えなさい。",
+         "question": "アの「量÷面積」はいくつですか。小数で答えなさい。",
          "answer": "0.5",
          "meaning": "①量1、面積2なので 1÷2＝1/2です。"
         },
