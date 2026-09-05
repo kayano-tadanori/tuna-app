@@ -138,6 +138,7 @@ const OrigamiRenderer = (function () {
   precision highp float;
   in vec2 vUv; in vec3 vWorldNrm; in vec3 vWorldPos; in float vAlpha; in float vSide; in float vFace;
   uniform vec3 uColorFront; uniform vec3 uColorBack; uniform vec3 uCameraPos;
+  uniform float uPaperThickness;
   out vec4 outColor;
   void main(){
     // gl_FrontFacingは頂点の巻き順頼みで、剛体折り紙のヒンジ回転では
@@ -145,13 +146,24 @@ const OrigamiRenderer = (function () {
     // 実際のカメラ方向との内積で表裏を判定する。
     vec3 nrm = normalize(vWorldNrm);
     vec3 viewDir = normalize(uCameraPos - vWorldPos);
-    // ★紙を「厚みのある板」で描くようになったので、表裏は
-    //   「その面がもともと紙のどちら側の面か」(vFace)で決める。
-    //   カメラ向きで判定する従来の方法は、板の下の面がカメラを向いた瞬間に
-    //   おもての色になってしまい、裏返した紙が表の色で出る（2026-09-02に実際そうなった）。
-    //   物理シム(cloth)モードだけは板にしていないので従来どおりの判定を使う。
-    bool isFront = (vFace > 0.5) ? true
-                 : ((vFace < -0.5) ? false : (dot(nrm, viewDir) > 0.0));
+    bool isFront;
+    if (uPaperThickness > 0.0001) {
+      // ★紙を「厚みのある板」で描くようになったので、表裏は
+      //   「その面がもともと紙のどちら側の面か」(vFace)で決める。
+      //   カメラ向きで判定する従来の方法は、板の下の面がカメラを向いた瞬間に
+      //   おもての色になってしまい、裏返した紙が表の色で出る（2026-09-02に実際そうなった）。
+      isFront = (vFace > 0.5) ? true
+              : ((vFace < -0.5) ? false : (dot(nrm, viewDir) > 0.0));
+    } else {
+      // ★灘中対策コーナーの問題は厚み0で描く（厚みで辺が太ると重なりの形が
+      //   読めなくなるため）。厚み0だと表・裏の三角形が完全に同じ場所に重なり、
+      //   vFaceの決め打ちのままだと折り返しても常に「表」の三角形が描画で
+      //   勝ってしまい、裏返っても色が変わらなかった（本人指摘2026-09-05
+      //   「表も裏も同じ色で見にくい」）。厚みが無ければ板の下面が見える
+      //   心配も無いので、ここだけ従来のカメラ向き判定に戻す＝実際に
+      //   裏返った瞬間だけ正しく裏の色になる。
+      isFront = dot(nrm, viewDir) > 0.0;
+    }
     vec3 base = isFront ? uColorFront : uColorBack;
     // 紙の切り口（横の面）は、表と裏を混ぜて少し暗くする＝重なった枚数が見える
     if (vSide > 0.5) base = mix(uColorFront, uColorBack, 0.5) * 0.72;
