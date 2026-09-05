@@ -6467,7 +6467,7 @@
         {
          "question": "カにあてはまる数はいくつですか。",
          "answer": "4",
-         "meaning": "〔4〕オ×カ＝イ と〔1〕オ＋キ＝イ を合わせると オ×カ＝オ＋キ。〔2〕ウ＋カ＝9 も使うと、カ＝4・オ＝2 のときだけ全部が別の数になります。"
+         "meaning": "〔4〕オ×カ＝イ と〔1〕オ＋キ＝イ を合わせると オ×カ＝オ＋キ。〔2〕ウ＋カ＝9 も使って、1から9の中で他の数と重ならない組み合わせを探すと、カ＝4 のときだけ成り立ちます。"
         },
         {
          "question": "オにあてはまる数はいくつですか。",
@@ -7720,9 +7720,9 @@
        "svg": "<svg viewBox=\"0 0 272 198\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"24.0\" y1=\"150.0\" x2=\"244.0\" y2=\"150.0\" stroke=\"#1a2340\" stroke-width=\"2\"/>\n<line x1=\"111.1\" y1=\"42.4\" x2=\"24.0\" y2=\"150.0\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"111.1\" y1=\"42.4\" x2=\"134.0\" y2=\"150.0\" stroke=\"#4f7cff\" stroke-width=\"2\"/>\n<line x1=\"120.6\" y1=\"87.1\" x2=\"244.0\" y2=\"150.0\" stroke=\"#ff9a44\" stroke-width=\"2\"/>\n<text x=\"111.1\" y=\"32.4\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">A</text>\n<text x=\"10.0\" y=\"164.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">B</text>\n<text x=\"134.0\" y=\"166.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">C</text>\n<text x=\"258.0\" y=\"164.0\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">D</text>\n<text x=\"134.6\" y=\"93.1\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\" font-weight=\"bold\">E</text>\n<path d=\"M 96.0 61.1 A 24.0 24.0 0 0 0 116.1 65.9\" fill=\"none\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/>\n<text x=\"102.7\" y=\"81.4\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\" font-weight=\"bold\">51°</text>\n<path d=\"M 217.3 136.4 A 30.0 30.0 0 0 0 214.0 150.0\" fill=\"none\" stroke=\"#ff9a44\" stroke-width=\"1.8\"/>\n<text x=\"197.3\" y=\"142.8\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff9a44\" font-weight=\"bold\">27°</text>\n<path d=\"M 40.4 129.8 A 26.0 26.0 0 0 1 50.0 150.0\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/>\n<text x=\"61.9\" y=\"135.9\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#4f7cff\" font-weight=\"bold\">あ</text>\n<text x=\"134\" y=\"186\" font-size=\"10\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">AB＝DE・AC＝CD。B・C・Dは一直線、EはAC上</text>\n</svg>",
        "steps": [
         {
-         "question": "（あ）が51°だとすると、∠ACBは何度になりますか。",
+         "question": "AC＝CD で、点CがBDのちょうど真ん中の点だとすると、∠ACBは何度になりますか。",
          "answer": "78",
-         "meaning": "点EはAC上にあるので ∠BAC＝∠BAE＝51°。三角形ABCの内角の和から 180−51−51＝78°です。"
+         "meaning": "点EはAC上にあるので ∠BAC＝∠BAE＝51°。CがBDの真ん中なら BC＝CD＝AC となるので三角形ABCは二等辺三角形になり、∠ABC＝∠BAC＝51°。三角形ABCの内角の和から 180−51−51＝78°です。"
         },
         {
          "question": "そのとき、三角形ABCはどんな三角形ですか。",
@@ -7905,7 +7905,7 @@
          "meaning": "500÷60＝8あまり20 なので8時間20分です。"
         },
         {
-         "question": "10まい書くのに何分何秒かかりますか。分のところを答えなさい。",
+         "question": "10まい書くのにかかる時間は、何分何秒ですか。時間になおさず、分の数をそのまま答えなさい。",
          "answer": "166",
          "meaning": "10まいは30まいの3分の1なので 500÷3＝166あまり2。166分と、2÷3分＝40秒です。"
         },
