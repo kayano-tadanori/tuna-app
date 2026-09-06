@@ -107,9 +107,11 @@ class Svg:
         if close:
             self.line(pts[-1], pts[0], col, wid)
 
-    def poly(self, pts, col=COL_LINE, wid=2):
+    def poly(self, pts, col=COL_LINE, wid=2, fill_opacity=0):
         s = ' '.join('%.1f,%.1f' % p for p in pts)
-        self.b.append('<polygon points="%s" fill="none" stroke="%s" stroke-width="%s" stroke-linejoin="round"/>' % (s, col, wid))
+        fill = col if fill_opacity else "none"
+        self.b.append('<polygon points="%s" fill="%s" fill-opacity="%s" stroke="%s" stroke-width="%s" stroke-linejoin="round"/>'
+                      % (s, fill, fill_opacity, col, wid))
 
     def carc(self, c, a, b, sweep=1, large=0, col=COL_LINE, wid=2):
         u"""中心 c・始点 a・終点 b の 円弧（半径は |c-a|）。
