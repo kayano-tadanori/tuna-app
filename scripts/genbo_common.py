@@ -521,6 +521,15 @@ def app_courses_of(course):
     #   アプリでは nadago（算数）と nadago_rika（理科）に分かれている。
     if course == "nadago":
         out.append("nadago_rika")
+    # ★最レは原簿では「小N最レ」の1つの見出しだが、アプリ側は
+    #   sairei（去年までの回）／sairei_new（今年の復習テスト）／
+    #   sairei_new_bunsatsu（今年の宿題テキスト）の3つに分かれている。
+    #   ここに sairei_new 系を足していなかったので、実装ずみの
+    #   No.13・No.14（HG-1421〜1427／HG-1431〜1437）が ずっと「未収録」に
+    #   出続けていた（2026-09-06に No.15 を足したとき発覚）。
+    #   → [[feedback_kansa_script_copy]]「リストを出す検査には答え合わせの安全弁」
+    if course == "sairei":
+        out += ["sairei_new", "sairei_new_bunsatsu"]
     return out
 
 

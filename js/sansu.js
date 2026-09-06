@@ -2754,8 +2754,12 @@ function openDiagramViewer(svgEl) {
   diagramViewerController.reset();
   overlay.classList.remove('hidden');
 }
+// ★クイズ画面の図もタップで拡大できるようにした（2026-09-06）。
+//   .sq-figure svg には max-height:260px が かかっているので、たてに長い図
+//   （小3最レNo.15 大問5の「合同な三角形を さがす」＝8つの三角形）は
+//   幅が140pxまで つぶれて 3cm・60°の字が読めなかった。実機で確かめて足した。
 document.addEventListener('click', e => {
-  const svg = e.target.closest('.tora-card-body svg');
+  const svg = e.target.closest('.tora-card-body svg, .sq-figure svg');
   if (svg) openDiagramViewer(svg);
 });
 
