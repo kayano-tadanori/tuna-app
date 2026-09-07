@@ -1677,9 +1677,12 @@
       <div class="quiz-slide">
         <div id="sq-question-box" class="question-box">
           <div id="sq-chain-intro" class="tantei-passage hidden"></div>
-          <div id="sq-figure" class="sq-figure hidden"></div>
           <div id="sq-prev-steps" class="prev-steps hidden"></div>
           <p id="sq-question" class="quiz-question sansu-question"></p>
+          <!-- ★図は設問文の「下」に置く（2026-09-07）。紙の問題集と同じ並びで、
+               実物の「下の図」という言い方がそのまま正しくなる。前は設問文より上にあり、
+               設問文の「下の図」149件が全部 指し先ちがいだった（実測で判明） -->
+          <div id="sq-figure" class="sq-figure hidden"></div>
           <p id="sq-meaning" class="quiz-meaning"></p>
           <canvas id="sq-write-canvas" class="write-canvas" width="320" height="220"></canvas>
         </div>
