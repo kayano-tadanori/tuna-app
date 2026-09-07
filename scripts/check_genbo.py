@@ -125,6 +125,36 @@ print()
 bad_fill = []      # <text> に fill が無い＝暗い背景で黒文字になる
 bad_style = []     # ルートに display/max-width が無い＝はみ出す
 DARK = ("#333", "#888", "#666", "#000", "#111", "#222", "#1a2340")
+
+
+def _has_fill(attrs):
+    return re.search(r"\bfill\s*=", attrs) is not None or "fill:" in attrs
+
+
+def text_without_fill(svg):
+    """色の付いていない <text> があるか。
+
+    ★fill は親から継承する。<g fill="#e8ecf5"> の中の <text> は色が付いている。
+      前はタグ1つだけを見ていて、正しく書けている図を「色なし」と誤検出した
+      （2026-09-07・hd5s_3k1_14 の1件。実測では読めない文字は0個だった）。
+    """
+    stack = []          # 開いている祖先が fill を持つか
+    for m in re.finditer(r"<(/?)([A-Za-z][\w:-]*)([^>]*?)(/?)>", svg):
+        close, name, attrs, selfclose = m.group(1), m.group(2), m.group(3), m.group(4)
+        if close:
+            if stack:
+                stack.pop()
+            continue
+        f = _has_fill(attrs)
+        if name == "text":
+            if not (f or any(stack)):
+                return True
+            if not selfclose:
+                stack.append(f)
+            continue
+        if not selfclose:
+            stack.append(f)
+    return False
 bad_dark = []      # 暗すぎる線・文字
 for grade, gv in d.get("grades", {}).items():
     for course, node in gv.items():
@@ -137,10 +167,8 @@ for grade, gv in d.get("grades", {}).items():
                     if not svg:
                         continue
                     who = "%s/%s/%s/%s" % (grade, course, kind, x.get("id") or x.get("hg"))
-                    for t in re.findall(r"<text[^>]*>", svg):
-                        if "fill=" not in t:
-                            bad_fill.append(who)
-                            break
+                    if text_without_fill(svg):
+                        bad_fill.append(who)
                     head = svg.split(">", 1)[0]
                     if "max-width" not in head:
                         bad_style.append(who)

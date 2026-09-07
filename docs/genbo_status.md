@@ -2,7 +2,7 @@
 
 `python scripts/check_genbo.py` を実行するたびに丸ごと上書きされる。
 ★このうち「図なし・答えが確定・読解でもない＝すぐ着手できる候補」だけを抜き出したものが`docs/genbo_no_diagram.md`（`python scripts/find_no_diagram.py`で再生成）。
-最終更新: 2026-09-07 11:31
+最終更新: 2026-09-07 23:19
 
 ```
 === 原簿 ⇄ 大問 の 突き合わせ ===
@@ -12,7 +12,7 @@
 小3マスター         128本   134本   399問   なし
 小3マスター宿題       571本   564本  1985問   なし
 小3灘合           108本   108本   411問   なし
-小3最レ           217本   224本   654問   なし
+小3最レ           217本   224本   653問   なし
 小4国語            75本    19本    23問   なし
 小4マスター         306本   299本   726問   なし
 小4マスター宿題       801本   789本  2907問   なし
@@ -45,27 +45,13 @@
    小3 sairei hd3s_n12_7
    小3 sairei hd3s_n12_8
 
-❌ 文字に色が付いていない図（暗い背景で読めない） **新規1枚** … すべての <text> に fill を書く
-   5/sairei/kouza1/hd5s_3k1_14
-❌ 暗い色を使っている図（読めるかは check_text_contrast.py で実測する） **新規14枚** … python scripts/check_text_contrast.py で読めるか測る。読めなければ fix_text_contrast.py で直す
-   3/sairei_new/fukushu/hd3s_06_1
-   3/sairei_new/fukushu/hd3s_06_2
-   3/sairei_new/fukushu/hd3s_06_3
-   3/sairei_new/fukushu/hd3s_06_5
-   3/sairei_new/fukushu/hd3s_07_5
-   3/sairei_new/fukushu/hd3s_07_6
-   3/sairei_new/fukushu/hd3s_07_7
-   3/sairei_new/fukushu/hd3s_09_6
-
-→ 図は原簿に無い。PDFの実物を見てから描くこと（feedback_zu_wa_genbo_ni_nai）
-→ 形の検査は python scripts/check_daimon3_svg.py（枠はみ出し・文字の重なり・箱はみ出し）
+・暗い色を使っている図（読めるかは check_text_contrast.py で実測する） 179枚（既存ぶん＝基準線。新規なし）
+✅ 図の作法（文字色・max-width・暗い色）も問題なし
 → 文字が実際に読めるかは python scripts/check_text_contrast.py（1文字ずつ画素で実測）
 
-❌ 原簿が「図: あり」なのに 図SVG 欄が無い: 6本  ← ここで落とします
+❌ 原簿が「図: あり」なのに 図SVG 欄が無い: 4本  ← ここで落とします
   （PDFを見て描き、原簿に入れる。読み取れないなら『- 図SVG: 判読不能』と書く）
   ★1レコードは『設問・答え・図SVG』までそろって完成。回ごとに閉じてから次の回へ進むこと
-   HG-1203
-   HG-1251
    HG-1409
    HG-3769
    HG-3770
