@@ -41,25 +41,45 @@ def load_ledger():
 
 
 def index_daimon(d):
-    """大問id → その大問がどこにあるか。iter_daimon（唯一の走査口）だけを使う。"""
+    """(コース, 大問id) → その大問がどこにあるか。iter_daimon（唯一の走査口）だけを使う。
+
+    ★id単体をキーにしない。同じid文字列が別コースに存在することがある
+      （例: hd3s_n12_1〜5 が sairei_new と sairei_new_bunsatsu の両方にある＝
+      作問スクリプトの命名がコースをまたいで衝突しただけの別の大問）。
+      id単体キーだと後勝ちで片方が消え、そのコースの本数が数え間違う（2026-09-07に発覚）。
+    """
     ix = collections.OrderedDict()
     for r in G.iter_daimon(d):
-        ix[r["x"]["id"]] = r
+        ix[(r["app_course"], r["x"]["id"])] = r
     return ix
 
 
+def _by_bare_id(ix):
+    """裸のid文字列 → それを持つ(コース,id)キーの一覧（複数コースにあれば複数返る）"""
+    m = collections.defaultdict(list)
+    for key in ix:
+        m[key[1]].append(key)
+    return m
+
+
 def resolve(sel, ix):
-    """batch の select を、大問idの並びに直す。
+    """batch の select を、(コース, 大問id) の並びに直す。
 
     select の書き方は3つ:
       {"grade","course","kind","no":[lo,hi]}  … 回の範囲で選ぶ（no は省略可＝全部）
       {"id_contains": "_641_"}                … idの一部で選ぶ
-      {"ids": [...]}                          … 直に並べる
+      {"ids": [...]}                          … 裸のidを直に並べる
+                                                 （そのidが複数コースにあれば、その全部が対象になる）
     """
     if "ids" in sel:
-        return list(sel["ids"])
+        by_bare = _by_bare_id(ix)
+        out = []
+        for bare in sel["ids"]:
+            out.extend(by_bare.get(bare, [bare]))  # 見つからなければ裸のまま渡し、missとして拾わせる
+        return out
     out = []
-    for i, r in ix.items():
+    for key, r in ix.items():
+        i = key[1]
         if "id_contains" in sel and sel["id_contains"] not in i:
             continue
         if "grade" in sel and r["grade"] != sel["grade"]:
@@ -76,14 +96,14 @@ def resolve(sel, ix):
                 continue
             if not (lo <= n <= hi):
                 continue
-        out.append(i)
+        out.append(key)
     return out
 
 
 def build(d=None):
     """台帳を解決して (ix, audited, problems, led) を返す。
 
-    audited  … 大問id → その大問を見た batch id の並び
+    audited  … (コース, 大問id) → その大問を見た batch id の並び
     problems … 安全弁にひっかかったこと（本数の食いちがい／消えた大問）
     """
     led = load_ledger()
@@ -228,7 +248,7 @@ def cmd_unaudited(argv):
         #   コース名まで指定＝厳密一致にする。grade だけの "3" はそのまま前方一致でよい）
         if want and not (key == want if "/" in want else key.startswith(want)):
             continue
-        out.append((key, r["kind"], str(r["no"]), i, r["x"].get("src", "")[:24]))
+        out.append((key, r["kind"], str(r["no"]), r["x"]["id"], r["x"].get("src", "")[:24]))
     for o in out:
         print("%-20s %-8s No.%-4s %-24s %s" % o)
     print("")
