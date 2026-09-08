@@ -246,106 +246,143 @@ def fig_4_2():
 # ============================================================
 #  大問5 合同な三角形をさがす（ア〜クの8つ）
 # ============================================================
-U = 18.0   # 1cm ＝ 18px。★これより小さいと 3cmの三角形に「60°」の文字が入らない（実測）
+#  ★縮尺は 図形ごとに ちがう。原本 p115 を実測して決めた（→ docs/_audit/n15_and_derived_log.md）
+#    原本は手描きで、8つとも だいたい同じ大きさに描いてある＝**1cmあたりのpx数が
+#    図形ごとに ばらばら**（300dpiで 47〜78 px/cm）。
+#    さらに ここでは **合同のペアどうしを わざと ずらして** ある。
+#    そろえてしまうと 合同ペアが「回しただけの まったく同じ形」になり、
+#    **目で重ねるだけで解けてしまう**（＝図が答えを見せている の変種）。
+#    ⚠答え（合同の組み合わせ）は 原本のまま。変えたのは 見た目の大きさだけ。
+#
+#      記号  原本の実測(px/cm@300dpi)  ここの縮尺(px/cm)  辺の最大(px)  ペアの差
+#      ア     77.5                      20.0               60           ア:キ = 1 : 1.30
+#      キ     78.5                      26.0               78
+#      イ     56.5                      15.0              106           イ:ク = 1 : 1.30
+#      ク     58.2                      19.5              138
+#      ウ     76.8                      25.0              100           ウ:カ = 1 : 0.76
+#      カ     71.6                      19.0               76
+#      エ     50.3                      17.0              118           エ:オ = 1 : 0.76
+#      オ     47.1                      13.0               90
+#    ★大小の向きは 原本と同じ（原本でも キ>ア・ク>イ・ウ>カ・エ>オ）。開きだけ広げた
+U = 18.0   # ★もとの基準。文字の大きさは これに合わせてあるので さわらない
+SC = {u"ア": 20.0, u"イ": 15.0, u"ウ": 25.0, u"エ": 17.0,
+      u"オ": 13.0, u"カ": 19.0, u"キ": 26.0, u"ク": 19.5}
+
+
+def _off(u, v):
+    u"""弧の半径・ラベルの はなれ具合を 図形の大きさに ほどよく つれさせる。
+       まるごと比例させると 小さい図で 文字が線に かぶるので、65%だけ つれさせる"""
+    return v * (0.35 + 0.65 * u / U)
 
 
 def _tri_a():
     u"""ア: 2辺3cm・間の角60度（＝1辺3cmの正三角形）。60度は左下"""
-    V = P(0, 0); T = polar(V, 75, 3 * U); R = polar(V, 15, 3 * U)
-    must(u"5 ア 3辺とも3cm(1)", dist(V, T), 3 * U, 0.5)
-    must(u"5 ア 3辺とも3cm(2)", dist(V, R), 3 * U, 0.5)
-    must(u"5 ア 3辺とも3cm(3)", dist(T, R), 3 * U, 0.5)
+    u = SC[u"ア"]
+    V = P(0, 0); T = polar(V, 75, 3 * u); R = polar(V, 15, 3 * u)
+    must(u"5 ア 3辺とも3cm(1)", dist(V, T), 3 * u, 0.5)
+    must(u"5 ア 3辺とも3cm(2)", dist(V, R), 3 * u, 0.5)
+    must(u"5 ア 3辺とも3cm(3)", dist(T, R), 3 * u, 0.5)
     must(u"5 ア 60度", angle_at(V, T, R), 60)
-    return dict(pts=[T, V, R], lab=u"ア", arcs=[(V, T, R, 24)],
-                angtxt=[(polar(V, 45, 68), u"60°")],
-                seg=[(V, T, u"3cm", 20, -1), (V, R, u"3cm", 20, 1)], ra=[])
+    return dict(pts=[T, V, R], lab=u"ア", arcs=[(V, T, R, _off(u, 24))],
+                angtxt=[(polar(V, 45, _off(u, 68)), u"60°")],
+                seg=[(V, T, u"3cm", _off(u, 20), -1), (V, R, u"3cm", _off(u, 20), 1)], ra=[])
 
 
 def _tri_i():
     u"""イ: 直角をはさむ2辺が5cmの直角二等辺三角形。直角は左下"""
-    V = P(0, 0); T = polar(V, 90, 5 * U); R = polar(V, 0, 5 * U)
+    u = SC[u"イ"]
+    V = P(0, 0); T = polar(V, 90, 5 * u); R = polar(V, 0, 5 * u)
     must(u"5 イ 直角", angle_at(V, T, R), 90)
-    must(u"5 イ 5cm(1)", dist(V, T), 5 * U, 0.5)
-    must(u"5 イ 5cm(2)", dist(V, R), 5 * U, 0.5)
-    return dict(pts=[T, V, R], lab=u"イ", arcs=[(V, T, R, 30)],
-                angtxt=[(polar(V, 45, 45), u"90°")],
-                seg=[(V, T, u"5cm", 20, -1), (V, R, u"5cm", 20, 1)], ra=[(V, T, R)])
+    must(u"5 イ 5cm(1)", dist(V, T), 5 * u, 0.5)
+    must(u"5 イ 5cm(2)", dist(V, R), 5 * u, 0.5)
+    return dict(pts=[T, V, R], lab=u"イ", arcs=[(V, T, R, _off(u, 30))],
+                angtxt=[(polar(V, 45, _off(u, 45)), u"90°")],
+                seg=[(V, T, u"5cm", _off(u, 20), -1), (V, R, u"5cm", _off(u, 20), 1)], ra=[(V, T, R)])
 
 
 def _tri_u():
     u"""ウ: 3辺が 3cm・4cm・4cm。左上の頂点Lから 右へ3cm、下へ4cm"""
-    L = P(0, 0); B = polar(L, -81, 4 * U)
+    u = SC[u"ウ"]
+    L = P(0, 0); B = polar(L, -81, 4 * u)
     # R: |LR|=3cm, |BR|=4cm の右がわの交点
-    d = dist(L, B); c = 3 * U; e = 4 * U
+    d = dist(L, B); c = 3 * u; e = 4 * u
     xx = (c * c + d * d - e * e) / (2 * d)
     yy = math.sqrt(max(c * c - xx * xx, 0))
     ex, ey = unit(L, B); nx, ny = -ey, ex
     R = P(L[0] + ex * xx - nx * yy, L[1] + ey * xx - ny * yy)
-    must(u"5 ウ 3cm", dist(L, R), 3 * U, 0.5)
-    must(u"5 ウ 4cm(1)", dist(L, B), 4 * U, 0.5)
-    must(u"5 ウ 4cm(2)", dist(R, B), 4 * U, 0.5)
+    must(u"5 ウ 3cm", dist(L, R), 3 * u, 0.5)
+    must(u"5 ウ 4cm(1)", dist(L, B), 4 * u, 0.5)
+    must(u"5 ウ 4cm(2)", dist(R, B), 4 * u, 0.5)
     return dict(pts=[L, R, B], lab=u"ウ",
-                seg=[(L, R, u"3cm", 19, -1), (L, B, u"4cm", 19, 1), (R, B, u"4cm", 19, -1)],
+                seg=[(L, R, u"3cm", _off(u, 19), -1), (L, B, u"4cm", _off(u, 19), 1),
+                     (R, B, u"4cm", _off(u, 19), -1)],
                 arcs=[], angtxt=[], ra=[])
 
 
 def _tri_e():
     u"""エ: 30度・90度の直角三角形で、その2つの角の間の辺が6cm。上が30度・右下が90度"""
-    T = P(0, 0); R = polar(T, -90, 6 * U)
-    B = polar(R, 180, 6 * U * math.tan(math.radians(30)))
-    must(u"5 エ 6cm", dist(T, R), 6 * U, 0.5)
+    u = SC[u"エ"]
+    T = P(0, 0); R = polar(T, -90, 6 * u)
+    B = polar(R, 180, 6 * u * math.tan(math.radians(30)))
+    must(u"5 エ 6cm", dist(T, R), 6 * u, 0.5)
     must(u"5 エ 30度", angle_at(T, R, B), 30)
     must(u"5 エ 90度", angle_at(R, T, B), 90)
-    return dict(pts=[T, R, B], lab=u"エ", arcs=[(T, R, B, 22)],
-                angtxt=[(polar(T, 165, 45), u"30°"), (polar(R, 135, 37), u"90°")],
-                seg=[(T, R, u"6cm", 32, -1)], ra=[(R, T, B)])
+    return dict(pts=[T, R, B], lab=u"エ", arcs=[(T, R, B, _off(u, 22))],
+                angtxt=[(polar(T, 165, _off(u, 45)), u"30°"), (polar(R, 135, _off(u, 37)), u"90°")],
+                seg=[(T, R, u"6cm", _off(u, 32), -1)], ra=[(R, T, B)])
 
 
 def _tri_o():
     u"""オ: エと同じ 30-60-90。60度が上・90度が左・6cmは90度と30度の間の辺"""
-    Q = P(0, 0); R = polar(Q, -35, 6 * U)
-    Pp = polar(Q, -35 + 90, 6 * U * math.tan(math.radians(30)))
-    must(u"5 オ 6cm", dist(Q, R), 6 * U, 0.5)
+    u = SC[u"オ"]
+    Q = P(0, 0); R = polar(Q, -35, 6 * u)
+    Pp = polar(Q, -35 + 90, 6 * u * math.tan(math.radians(30)))
+    must(u"5 オ 6cm", dist(Q, R), 6 * u, 0.5)
     must(u"5 オ 90度", angle_at(Q, Pp, R), 90)
     must(u"5 オ 60度", angle_at(Pp, Q, R), 60)
     must(u"5 オ 30度", angle_at(R, Q, Pp), 30)
-    return dict(pts=[Pp, Q, R], lab=u"オ", arcs=[(Pp, Q, R, 22)],
-                angtxt=[(polar(Pp, 150, 40), u"60°"), (polar(Q, 10, 37), u"90°")],
-                seg=[(Q, R, u"6cm", 20, 1)], ra=[(Q, Pp, R)])
+    return dict(pts=[Pp, Q, R], lab=u"オ", arcs=[(Pp, Q, R, _off(u, 22))],
+                angtxt=[(polar(Pp, 150, _off(u, 40)), u"60°"), (polar(Q, 8, _off(u, 24)), u"90°")],
+                seg=[(Q, R, u"6cm", _off(u, 20), 1)], ra=[(Q, Pp, R)])
 
 
 def _tri_ka():
     u"""カ: 3辺が 4cm・4cm・3cm。上が頂点で 底辺が3cm"""
-    B1 = P(0, 0); B2 = P(3 * U, 0)
-    T = P(1.5 * U, -math.sqrt((4 * U) ** 2 - (1.5 * U) ** 2))
-    must(u"5 カ 4cm(1)", dist(T, B1), 4 * U, 0.5)
-    must(u"5 カ 4cm(2)", dist(T, B2), 4 * U, 0.5)
-    must(u"5 カ 3cm", dist(B1, B2), 3 * U, 0.5)
+    u = SC[u"カ"]
+    B1 = P(0, 0); B2 = P(3 * u, 0)
+    T = P(1.5 * u, -math.sqrt((4 * u) ** 2 - (1.5 * u) ** 2))
+    must(u"5 カ 4cm(1)", dist(T, B1), 4 * u, 0.5)
+    must(u"5 カ 4cm(2)", dist(T, B2), 4 * u, 0.5)
+    must(u"5 カ 3cm", dist(B1, B2), 3 * u, 0.5)
     return dict(pts=[T, B1, B2], lab=u"カ",
-                seg=[(T, B1, u"4cm", 19, 1), (T, B2, u"4cm", 19, -1), (B1, B2, u"3cm", 19, 1)],
+                seg=[(T, B1, u"4cm", _off(u, 19), 1), (T, B2, u"4cm", _off(u, 19), -1),
+                     (B1, B2, u"3cm", _off(u, 19), 1)],
                 arcs=[], angtxt=[], ra=[])
 
 
 def _tri_ki():
     u"""キ: 3辺とも3cm。左上・右・左下に頂点をおく（アとは向きがちがう）"""
-    L1 = P(0, 0); R = polar(L1, -25, 3 * U); L2 = polar(L1, -85, 3 * U)
-    must(u"5 キ 3cm(1)", dist(L1, R), 3 * U, 0.5)
-    must(u"5 キ 3cm(2)", dist(L1, L2), 3 * U, 0.5)
-    must(u"5 キ 3cm(3)", dist(R, L2), 3 * U, 0.5)
+    u = SC[u"キ"]
+    L1 = P(0, 0); R = polar(L1, -25, 3 * u); L2 = polar(L1, -85, 3 * u)
+    must(u"5 キ 3cm(1)", dist(L1, R), 3 * u, 0.5)
+    must(u"5 キ 3cm(2)", dist(L1, L2), 3 * u, 0.5)
+    must(u"5 キ 3cm(3)", dist(R, L2), 3 * u, 0.5)
     return dict(pts=[L1, R, L2], lab=u"キ",
-                seg=[(L1, R, u"3cm", 19, -1), (L1, L2, u"3cm", 19, 1), (R, L2, u"3cm", 19, -1)],
+                seg=[(L1, R, u"3cm", _off(u, 19), -1), (L1, L2, u"3cm", _off(u, 19), 1),
+                     (R, L2, u"3cm", _off(u, 19), -1)],
                 arcs=[], angtxt=[], ra=[])
 
 
 def _tri_ku():
     u"""ク: 90度が上・45度が左下・5cmは90度と45度の間の辺（右上がわ）"""
-    T = P(0, 0); L = polar(T, -134, 5 * U); R = polar(T, -44, 5 * U)
+    u = SC[u"ク"]
+    T = P(0, 0); L = polar(T, -134, 5 * u); R = polar(T, -44, 5 * u)
     must(u"5 ク 90度", angle_at(T, L, R), 90)
     must(u"5 ク 45度", angle_at(L, T, R), 45)
-    must(u"5 ク 5cm", dist(T, R), 5 * U, 0.5)
-    return dict(pts=[T, L, R], lab=u"ク", arcs=[(L, T, R, 30)],
-                angtxt=[(polar(L, 23.5, 44), u"45°"), (polar(T, 271, 26), u"90°")],
-                seg=[(T, R, u"5cm", 20, -1)], ra=[(T, L, R)])
+    must(u"5 ク 5cm", dist(T, R), 5 * u, 0.5)
+    return dict(pts=[T, L, R], lab=u"ク", arcs=[(L, T, R, _off(u, 30))],
+                angtxt=[(polar(L, 23.5, _off(u, 44)), u"45°"), (polar(T, 271, _off(u, 26)), u"90°")],
+                seg=[(T, R, u"5cm", _off(u, 20), -1)], ra=[(T, L, R)])
 
 
 def fig_5():

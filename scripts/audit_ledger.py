@@ -70,12 +70,33 @@ def resolve(sel, ix):
       {"id_contains": "_641_"}                … idの一部で選ぶ
       {"ids": [...]}                          … 裸のidを直に並べる
                                                  （そのidが複数コースにあれば、その全部が対象になる）
+      {"ids": [...], "grade": "3", "course": "sairei_new_bunsatsu"}
+                                              … 上にコース／学年の絞りこみを足した形。
+                                                ★同じid文字列が別コースにも実在する場合
+                                                （例 hd3s_n12_1〜5 が sairei_new と
+                                                  sairei_new_bunsatsu の両方にある）、
+                                                絞らないと見ていない側まで監査済みに化ける。
+                                                2026-09-08に安全弁が実際にこれを止めた
+                                                （10本のはずが15本に膨らんだ）ので追加した。
     """
     if "ids" in sel:
         by_bare = _by_bare_id(ix)
         out = []
         for bare in sel["ids"]:
             out.extend(by_bare.get(bare, [bare]))  # 見つからなければ裸のまま渡し、missとして拾わせる
+        if "grade" in sel or "course" in sel:
+            keep = []
+            for key in out:
+                r = ix.get(key)
+                if r is None:                      # 見つからなかった裸idはそのまま残す（miss扱い）
+                    keep.append(key)
+                    continue
+                if "grade" in sel and r["grade"] != sel["grade"]:
+                    continue
+                if "course" in sel and r["app_course"] != sel["course"]:
+                    continue
+                keep.append(key)
+            out = keep
         return out
     out = []
     for key, r in ix.items():
