@@ -20,6 +20,7 @@ import genbo_common
 DAIMON = os.path.join(BASE, "data", "hama_daimon.json")
 
 NO_FIG = genbo_common.NO_FIG   # ★実体は genbo_common.py に1つだけ。ここに写さない
+APP_FIG = genbo_common.APP_FIG # ★原簿とアプリの図がどちらも正しい＝写さない（同上）
 
 
 def genbo_svgs():
@@ -66,7 +67,7 @@ def main():
     print("原簿が図SVGを持つ大問:", len(src))
 
     d = json.load(io.open(DAIMON, encoding="utf-8"))
-    set_n = drop_n = same_n = 0
+    set_n = drop_n = same_n = keep_n = 0
     for grade, gv in d.get("grades", {}).items():
         for course, node in gv.items():
             if not isinstance(node, dict):
@@ -82,6 +83,11 @@ def main():
                         if hg not in src:
                             continue
                         want = src[hg]
+                        if hg in APP_FIG:
+                            # 原簿の図は原本まるごと、アプリは一部の小問だけの縮小版。
+                            # 写すとアプリが「対応する設問の無い絵」「答えを先出しする注記」つきに戻る。
+                            keep_n += 1
+                            continue
                         if hg in NO_FIG:
                             if x.pop("svg", None) is not None:
                                 drop_n += 1
@@ -95,7 +101,8 @@ def main():
                         else:
                             x["svg"] = want
                             set_n += 1
-    print("写した: %d ／ 一致ずみ: %d ／ 判読不能で外した: %d" % (set_n, same_n, drop_n))
+    print("写した: %d ／ 一致ずみ: %d ／ 判読不能で外した: %d ／ アプリ側を正として残した: %d"
+      % (set_n, same_n, drop_n, keep_n))
 
     if not args.write:
         print("（--write を付けると実際に書き込みます）")

@@ -55,7 +55,8 @@ NLC = chr(10)
 
 def norm_nl(t):
     u"""比較用に 
-・ を 
+・
+ を 
  にそろえる。
 
     ★原簿はほぼ全体がCRLF、アプリの svg（JSON文字列）は 
@@ -220,6 +221,11 @@ def main():
             continue
         if hg not in recs:
             holds.append((i, hg, "-", "原簿にレコードが無い"))
+            continue
+        if hg in genbo_common.APP_FIG:
+            # 原簿の図は原本の大問まるごと、アプリはその一部だけの縮小版＝どちらも正しい。
+            # 書き戻すと原簿から原本の記録が消えるので触らない（→ genbo_common.APP_FIG）。
+            holds.append((i, hg, "大問", "APP_FIG＝原簿もアプリもどちらも正しい（書き戻さない）"))
             continue
         s, e = recs[hg]
         body = g[s:e]
