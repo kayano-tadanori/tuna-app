@@ -14,7 +14,10 @@
 import json, io, re, os, sys
 from math import comb
 
-BASE = r"C:\Users\茅野　忠徳\Desktop\Claude\tuna app"
+# ★ 2026-09-09：実家PCのユーザー名が直に書いてあったため、
+#   このPCでは data が1つも読めず、静かに空になっていた。
+#   スクリプトの場所から引く（どのPCでも動く）。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = os.path.join(BASE, "data", "sansu_baai.json")
 items = json.loads(io.open(P, encoding="utf-8").read())
 

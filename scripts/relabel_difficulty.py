@@ -20,7 +20,10 @@
 import json, io, os, re, sys
 from collections import Counter, defaultdict
 
-BASE = r"C:\Users\茅野　忠徳\Desktop\Claude\tuna app"
+# ★ 2026-09-09：実家PCのユーザー名が直に書いてあったため、
+#   このPCでは data が1つも読めず、静かに空になっていた。
+#   スクリプトの場所から引く（どのPCでも動く）。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TARGETS = ["rika_daichi.json", "rika_denki.json", "rika_suiyoueki.json",
            "sansu_bakuhatsu.json"]
 

@@ -6,11 +6,15 @@
      python scripts/gen_search_index.py          … ドライラン（件数・サンプル表示のみ）
      python scripts/gen_search_index.py --write  … data/search_index.json に書き込む
 """
+import os
 import json, io, re, sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-BASE = r"C:\Users\茅野　忠徳\Desktop\Claude\tuna app"
+# ★ 2026-09-09：実家PCのユーザー名が直に書いてあったため、
+#   このPCでは data が1つも読めず、静かに空になっていた。
+#   スクリプトの場所から引く（どのPCでも動く）。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # scripts/sync_question_counts.js の MAP（sansu/rika）と同じ対応表
 SANSU_MAP = {

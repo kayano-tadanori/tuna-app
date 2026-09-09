@@ -9,7 +9,10 @@
 import json, io, re, sys, glob, os
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-BASE = r"C:\Users\茅野　忠徳\Desktop\Claude\tuna app"
+# ★ 2026-09-09：実家PCのユーザー名が直に書いてあったため、
+#   このPCでは data が1つも読めず、静かに空になっていた。
+#   スクリプトの場所から引く（どのPCでも動く）。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ひらがな・カタカナ・漢字・長音符に挟まれていない大文字A-Zだけを拾う
 # （「A地点」のような単発ラベルは後段のキーワード条件で弾く）
