@@ -32,7 +32,9 @@
 ## 検査の置き場所（増やすときはここに足す。2本目にコピーしない）
 
 `check_kata.py`（過去の監査で出た欠陥の型）／`check_answerable.py`（形式）／
-`audit_questions.js`（全ファイル横断）／`audit_ledger.py`（監査の台帳）
+`audit_questions.js`（全ファイル横断）／`audit_ledger.py`（監査の台帳）／
+`check_shindo.py`（**通常問題の学年タグ vs 浜の進度**。基準は `hama_map.json` の本科の回。
+⛔ じゅくナビの問題（大問・かんたん解説）は原簿どおりなので**対象外**）
 
 **監査で新しい型を見つけたら、その場で `check_kata.py` に足す。**足せば以後タダ、
 足さなければ毎回エージェントに探させることになる。
