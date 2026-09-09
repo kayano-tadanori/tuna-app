@@ -87,6 +87,30 @@ def packets_without_batch(audited, ix):
     return 忘れ, 作り直し
 
 
+
+def genbo_gap():
+    """原簿はあるのに大問が無いもの（＝作問待ち）と、検算欄が無いものを数える。
+
+    ★これを足した理由（本人の問い 2026-09-09）：
+      「原簿だけやって」「あとから作問して」と分けて頼んだとき、**あとのセッションが
+      ①どれが作問待ちか ②その原簿は原本と突き合わせ（検算）ずみか を知らなかった。**
+      合言葉ひとつで手順が続くようにするには、この2つを実測で出せる必要がある。
+    ★作れないと決めたもの（genbo_common.CANNOT）と、同じ問題の重複（SAME）は数から外す。
+    """
+    import check_kata as K
+    bodies = K._genbo_bodies()
+    d = G.load_daimon()
+    used = set()
+    for r in G.iter_daimon(d):
+        for h in (G.hgof(r["x"]) or []):
+            used.add(h)
+    todo = [h for h in bodies
+            if h not in used and h not in G.CANNOT and h not in G.SAME]
+    nokensan = [h for h in bodies
+                if not re.search(r"^[-*]\s*\*{0,2}検算", bodies[h], re.M)]
+    return todo, nokensan
+
+
 def genbo_todo():
     """原簿の「要現物照合」が何件あるか（＝原本を開き直す予約の残高）。"""
     t = io.open(G.find_genbo(), encoding="utf-8").read()
@@ -145,6 +169,10 @@ def main(argv):
     print("  ・解説が薄い（式だけ・一行）… %d件 ★本人の第一原則は『わかりやすいか』" % mid6)
     n, done = genbo_todo()
     print("  ・要現物照合 … %d件（うち解決 %d件）＝原本を開き直す予約の残高" % (n, done))
+    todo, nokensan = genbo_gap()
+    print("  ・原簿はあるが大問が無い … %d本（＝作問待ち。作れないと決めたものは除いてある）" % len(todo))
+    print("  ・原簿に検算欄が無い … %d本（原本と突き合わせた記録が無い＝G1のやり直しが要るかも）"
+          % len(nokensan))
 
     print()
     print("👉 次の一手")
@@ -153,8 +181,11 @@ def main(argv):
     if unaudited:
         print("  2) python scripts/audit_packet.py <学年/コース> 4 docs/_audit/<波名>  で波を切る")
     if mid6:
-        print("  3) 解説の薄い大問を厚くする（python scripts/check_kata.py K6 --all）")
-    if not (new_heavy or problems or orphan or unaudited or mid6):
+        print("  3) 解説の薄い大問を厚くする（python scripts/kaisetsu_next.py 20）")
+    if todo:
+        print("  4) 作問待ちの原簿 %d本を大問にする（先頭: %s）"
+              % (len(todo), " ".join(sorted(todo)[:5])))
+    if not (new_heavy or problems or orphan or unaudited or mid6 or todo):
         print("  ・宿題なし。新しい教材の原簿化（G1）へ進む")
 
     if mode == "gate":
