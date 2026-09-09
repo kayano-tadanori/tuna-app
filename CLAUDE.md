@@ -18,17 +18,16 @@
    止めるのは**新しく増えた重**だけ＝既知の山は `docs/kata_baseline.json` に登録ずみ。
    `HAMA_SKIP=1` で素通りできるが、**素通りしたら本人に必ず言う**）
 
-## いま進行中：通常問題の解説を厚くする（2026-09-09〜）
+## ✅ 終わった：通常問題の解説を厚くする（2026-09-09）
 
-`python scripts/hama.py` に残数が出る。手順は3つだけ：
+**大問も通常問題も、薄い解説は0件になった**（`hama.py` で実測できる。ここに数を書かない）。
+やり方は残してある。次に薄いものが増えたら同じ3手順でよい：
+`kaisetsu_packet.py --tsujo all 8 <dir>` → 4体ずつの波 → `apply_kaisetsu.py --tsujo <dir> --write`
 
-1. `python scripts/kaisetsu_packet.py --tsujo all 8 docs/_kaisetsu/t_w1` … 資料を切る（切りずみ）
-2. 4体ずつの波でエージェントに書かせる（出力は `docs/_kaisetsu/t_w1/out_N.jsonl`・1行1件・
-   `{"qid": "ファイル名#id", "meaning": "…"}`。qid は資料の「■」行を丸ごと写させる）
-3. `python scripts/apply_kaisetsu.py --tsujo docs/_kaisetsu/t_w1 --write` … 検品して書き戻す
+## いま進行中：作問待ちの原簿を大問にする
 
-**進捗はどこにも記録していない。**厚くした問題は K7 に出てこなくなるので、
-`hama.py` の残数がそのまま進捗。**途中でコンテキストを捨ててよい。**
+`python scripts/hama.py` の「👉 次の一手」がそのまま指示になる。
+**原簿を grep して設定・設問・答えをそのまま使う**（骨の要約から作らない）。
 
 ## 検査の置き場所（増やすときはここに足す。2本目にコピーしない）
 
