@@ -47,7 +47,53 @@ def block(r, nos):
     return "\n".join(L)
 
 
+
+def tsujo_block(r, msg):
+    q = r["q"]
+    L = ["=" * 74,
+         "■ %s ／ %s ／ %s年 難度%s ／ 単元: %s" %
+         (r["qid"], r["file"], q.get("grade", "?"), q.get("difficulty", "?"),
+          q.get("unit", "")), ""]
+    L.append("設問: %s" % str(q.get("question") or "").strip())
+    if q.get("choices"):
+        L.append("選択肢: %s" % " ／ ".join(str(c) for c in q["choices"]))
+    L.append("答え: %s" % q.get("answer"))
+    L.append("いまの解説（これを厚くする）: %s" % str(G.meaning_of(q) or "").strip())
+    L.append("")
+    return "\n".join(L)
+
+
+def main_tsujo():
+    """通常問題（一問一答）の薄い解説を切り出す。
+
+    ★大問と違い、小問のつながりが無いので「後ろの答えを見せない」配慮は要らない。
+      そのぶん資料も軽い（設問・選択肢・答え・いまの解説だけ）。
+    """
+    name, n, outdir = sys.argv[2], int(sys.argv[3]), sys.argv[4]
+    only = None if name == "all" else {name}
+    hits = [h for h in K.k7() if only is None or h[0]["file"] in only]
+    blocks = [(h[0]["qid"], tsujo_block(h[0], h[2])) for h in hits]
+    total = sum(len(b) for _i, b in blocks)
+    os.makedirs(outdir, exist_ok=True)
+    per = total / n if n else total
+    parts, cur, cur_len = [], [], 0
+    for i, b in blocks:
+        if cur and cur_len + len(b) > per and len(parts) < n - 1:
+            parts.append(cur); cur, cur_len = [], 0
+        cur.append((i, b)); cur_len += len(b)
+    parts.append(cur)
+    for k, part in enumerate(parts, 1):
+        p = os.path.join(outdir, "kaisetsu_%d.txt" % k)
+        body = "\n".join(b for _i, b in part)
+        io.open(p, "w", encoding="utf-8", newline="\n").write(body)
+        print("%s … %d問／%d字" % (p, len(part), len(body)))
+    print("合計 %d問／%d字" % (len(blocks), total))
+    return 0
+
+
 def main():
+    if "--tsujo" in sys.argv:
+        return main_tsujo()
     if len(sys.argv) < 4:
         print(__doc__)
         return 1

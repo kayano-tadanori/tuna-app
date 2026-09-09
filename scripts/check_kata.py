@@ -16,7 +16,8 @@
     K3 内輪語・制作メモの漏れ              （第1波12本・「灘度」「衣装」「収録した」）
     K4 本文に無い引用                      （小5国語 hd_5k_k06_603_4）
     K5 原簿と小問数・選択肢数が食いちがう  （小3国語 HG-2946＝選択肢1つ落ち）
-    K6 解説が無い・薄い・式だけ            （★真の目的＝わかりやすいか。解説を読むのは子ども本人）
+    K6 解説が無い・薄い・式だけ（大問）    （★真の目的＝わかりやすいか。解説を読むのは子ども本人）
+    K7 同じことを通常問題（一問一答）で   （通常問題＝浜の骨に別の衣装。数は大問の6倍）
 
   ★判定ロジックはここにしか書かない。2本目にコピーしない（→feedback_kansa_script_copy）。
   ★すでに他が見ているものは書かない：
@@ -244,8 +245,45 @@ def k5(rs):
     return out, uncountable
 
 
+def thin_reason(raw, question=""):
+    """解説1本を見て、薄ければ理由を返す（よければ None）。
+
+    ★K6（大問）とK7（通常問題）とapply_kaisetsuの検品が、**この1つを共有する**。
+      写すと必ず片方が腐る（→feedback_kansa_script_copy）。
+    """
+    m = TAG.sub("", str(raw or "")).strip()
+    if not m:
+        return "重", "解説が無い"
+    if len(m) < 12:
+        return "中", "解説が%d字しかない「%s」" % (len(m), m)
+    if len(KANA.findall(m)) < 4:
+        return "中", "解説が式だけで言葉の説明が無い「%s」" % m[:40]
+    q = TAG.sub("", str(question or "")).strip()
+    if q and len(q) > 10 and m in q:
+        return "中", "解説が設問文の写しになっている"
+    return None
+
+
+def k7(rs=None):
+    """通常問題（一問一答）の解説が無い・薄い・式だけ。
+
+    ★通常問題は**浜学園の骨に別の衣装を着せて作った問題**（本人 2026-09-09）。
+      大問だけ品質を上げても、子どもが解く数は通常問題のほうが6倍多い。
+      走査は genbo_common.iter_tsujo（唯一の走査口）。解説の欄名は meaning と kaisetsu の
+      2つある（数えてから決めた。→genbo_common.MEANING_KEYS）。
+    """
+    out = []
+    for r in G.iter_tsujo():
+        q = r["q"]
+        v = thin_reason(G.meaning_of(q), q.get("question"))
+        if v:
+            lv, msg = v
+            out.append((r, lv, msg))
+    return out
+
+
 def k6(rs):
-    """解説が無い・薄い・式だけ。
+    """解説が無い・薄い・式だけ（大問）。
 
     ★本人の第一原則＝「解説の無い問題は出さない」「評価軸はわかりやすいか」。
       しかも**解説を読むのは子ども本人**で、まちがいを間で止められる人がいない
@@ -255,20 +293,10 @@ def k6(rs):
     for r in rs:
         x = r["x"]
         for i, s in enumerate(x.get("steps") or []):
-            raw = s.get("meaning")
-            m = TAG.sub("", str(raw or "")).strip()
-            if not m:
-                out.append((r, "重", "小問%d に解説が無い" % (i + 1)))
-                continue
-            if len(m) < 12:
-                out.append((r, "中", "小問%d の解説が%d字しかない「%s」" % (i + 1, len(m), m)))
-                continue
-            if len(KANA.findall(m)) < 4:
-                out.append((r, "中", "小問%d の解説が式だけで言葉の説明が無い「%s」" % (i + 1, m[:40])))
-                continue
-            q = TAG.sub("", str(s.get("question") or "")).strip()
-            if q and len(q) > 10 and m in q:
-                out.append((r, "中", "小問%d の解説が設問文の写しになっている" % (i + 1)))
+            v = thin_reason(s.get("meaning"), s.get("question"))
+            if v:
+                lv, msg = v
+                out.append((r, lv, "小問%d の%s" % (i + 1, msg)))
     return out
 
 
@@ -296,6 +324,9 @@ def heavy_keys(rs):
     for r, lv, msg in hits:
         if lv == "重":
             keys.add("K5|%s|%s" % (r["x"]["id"], msg))
+    for r, lv, msg in k7():
+        if lv == "重":
+            keys.add("K7|%s|%s" % (r["qid"], msg))
     return keys
 
 
@@ -323,6 +354,17 @@ def run(rs, want, want_all=False):
         hits, unc = k5(rs)
         heavy += show("K5", "原簿との小問数・選択肢数", hits, want_all,
                       "（数えられなかった大問 %d本）" % unc)
+    if not want or "K7" in want:
+        hits = k7()
+        hi = [h for h in hits if h[1] == "重"]
+        print("=== K7 通常問題の解説（薄い・式だけ）… 重%d件 ／ 中%d件"
+              % (len(hi), len(hits) - len(hi)))
+        for r, lv, msg in (hits if want_all else hi)[:40]:
+            print("   [%s] %-26s %-14s %s" % (lv, r["file"], r["qid"].split("#")[-1], msg))
+        n = len(hits if want_all else hi)
+        if n > 40:
+            print("   …ほか %d件" % (n - 40))
+        heavy += len(hi)
     return heavy
 
 

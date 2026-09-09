@@ -144,5 +144,115 @@ def main():
     return 0
 
 
+def _entry():
+    if "--tsujo" in sys.argv:
+        return main_tsujo()
+    return main()
+
+
+# ── 通常問題（一問一答）版 ──────────────────────────────────
+# ★大問版と判定を共有する（thin は check_kata.thin_reason、内輪語は NAIWA）。写さない。
+# ★大問と違い、小問のつながりが無いので「後ろの答えを先に見せる」検査は要らない。
+
+def main_tsujo():
+    """docs/_kaisetsu/<dir>/out_*.jsonl を通常問題へ書き戻す。
+
+      python scripts/apply_kaisetsu.py --tsujo docs/_kaisetsu/t_w1          （下見）
+      python scripts/apply_kaisetsu.py --tsujo docs/_kaisetsu/t_w1 --write
+
+    ★書式はファイルごとに違う。genbo_common.tsujo_indent() で元の書式を突き止め、
+      **再現できないファイルには書かない**（勝手に書式を変えない）。
+    """
+    outdir = sys.argv[sys.argv.index("--tsujo") + 1]
+    write = "--write" in sys.argv
+
+    rows, notes, dup, seen = [], [], 0, set()
+    for f in sorted(glob.glob(os.path.join(outdir, "out_*.jsonl"))):
+        for ln in io.open(f, encoding="utf-8"):
+            ln = ln.strip()
+            if not ln:
+                continue
+            try:
+                r = json.loads(ln)
+            except ValueError:
+                print("  ⚠ %s: JSONとして読めない行がある" % os.path.basename(f))
+                continue
+            if r.get("note"):
+                notes.append(r)
+                continue
+            q = r.get("qid")
+            if q in seen:
+                dup += 1
+                continue
+            seen.add(q)
+            rows.append(r)
+
+    # いまのデータを引く（qid → 問題）
+    cur = {}
+    for r in G.iter_tsujo():
+        cur[r["qid"]] = r
+
+    ok, ng = [], []
+    for r in rows:
+        t = cur.get(r.get("qid"))
+        if not t:
+            ng.append((r, "その宛名の問題が見つからない"))
+            continue
+        new = r.get("meaning") or ""
+        if not K.thin_reason(G.meaning_of(t["q"]), t["q"].get("question")):
+            ng.append((r, "いまの解説はもう薄くない（上書きしない）"))
+            continue
+        bad = [w for w in K.NAIWA if w in new]
+        if bad:
+            ng.append((r, "内輪語「%s」が入っている" % bad[0]))
+            continue
+        v = K.thin_reason(new, t["q"].get("question"))
+        if v:
+            ng.append((r, "書き直しになっていない（%s）" % v[1]))
+            continue
+        ok.append((t, new))
+
+    print("読んだ %d行（重複 %d／note %d）" % (len(rows) + len(notes) + dup, dup, len(notes)))
+    print("通った %d ／ はねた %d" % (len(ok), len(ng)))
+    for r, why in ng[:30]:
+        print("   ✗ %-46s %s" % (str(r.get("qid"))[:46], why))
+    if len(ng) > 30:
+        print("   …ほか %d件" % (len(ng) - 30))
+    for r in notes[:20]:
+        print("   📝 %-46s %s" % (str(r.get("qid"))[:46], r.get("note")))
+
+    if not write:
+        print("\n（--write を付けると実際に書き込みます）")
+        return 0
+
+    # ファイルごとにまとめて書く（1ファイルを何度も読み書きしない）
+    byfile = {}
+    for t, new in ok:
+        byfile.setdefault(t["file"], []).append((t["qid"], new))
+    done = skipped = 0
+    for name, items in sorted(byfile.items()):
+        fmt = G.tsujo_indent(name)
+        if fmt is None:
+            print("   ⚠ %s は元の書式を再現できないので書かない（%d件見送り）" % (name, len(items)))
+            skipped += len(items)
+            continue
+        data = G.load_tsujo(name)
+        ix = dict(G.walk_tsujo(data, name))
+        n = 0
+        for qid, new in items:
+            q = ix.get(qid)
+            if q is None:
+                skipped += 1
+                continue
+            key = "kaisetsu" if "kaisetsu" in q else "meaning"
+            q[key] = new
+            n += 1
+        G.save_tsujo(name, data, fmt)
+        print("   %-28s %d件" % (name, n))
+        done += n
+    print("\n✅ %d本の解説を入れた（見送り %d）" % (done, skipped))
+    return 0
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(_entry())

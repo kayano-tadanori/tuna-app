@@ -166,7 +166,10 @@ def main(argv):
     print("  ・未監査の大問 … %d本（内わけは python scripts/audit_ledger.py）" % len(unaudited))
     print("  ・既知の「重」… %d件（K2 答え先出し・K5 設問の抜けが主。ベースライン登録ずみ）" % len(base & now))
     mid6 = [r for r in rows if r[0] == "K6"][0][3]
-    print("  ・解説が薄い（式だけ・一行）… %d件 ★本人の第一原則は『わかりやすいか』" % mid6)
+    k7 = K.k7()
+    mid7 = len([h for h in k7 if h[1] != "重"])
+    print("  ・大問の解説が薄い … %d件 ★本人の第一原則は『わかりやすいか』" % mid6)
+    print("  ・通常問題の解説が薄い … %d件（通常問題は25,750問。数は大問の6倍）" % mid7)
     n, done = genbo_todo()
     print("  ・要現物照合 … %d件（うち解決 %d件）＝原本を開き直す予約の残高" % (n, done))
     todo, nokensan = genbo_gap()
@@ -182,10 +185,12 @@ def main(argv):
         print("  2) python scripts/audit_packet.py <学年/コース> 4 docs/_audit/<波名>  で波を切る")
     if mid6:
         print("  3) 解説の薄い大問を厚くする（python scripts/kaisetsu_next.py 20）")
+    if mid7:
+        print("  3b) 解説の薄い通常問題を厚くする（python scripts/kaisetsu_next.py 20 --tsujo）")
     if todo:
         print("  4) 作問待ちの原簿 %d本を大問にする（先頭: %s）"
               % (len(todo), " ".join(sorted(todo)[:5])))
-    if not (new_heavy or problems or orphan or unaudited or mid6 or todo):
+    if not (new_heavy or problems or orphan or unaudited or mid6 or mid7 or todo):
         print("  ・宿題なし。新しい教材の原簿化（G1）へ進む")
 
     if mode == "gate":

@@ -843,3 +843,113 @@ NO_FIG = {
     # 図だけが対応する設問なしに浮いていたため2026-09-06の監査で空欄にした（_fix_g5r_w2_2.py）。
     "HG-1633": "アプリは(1)(2)の2問だけを実装。(3)専用のかげの向き図は不要",
 }
+
+
+# ── 通常問題（一問一答）の走査 ────────────────────────────────
+# ★大問（hama_daimon.json）は iter_daimon、**通常問題はこちら**。
+#   2026-09-09 新設。本人「通常問題は浜学園の骨と衣装を参考にして作った問題」から、
+#   大問と同じ品質検査を通常問題にもかけるために作った。
+#   台帳のメモにあった「一問一答は iter_daimon が使えないので先に走査を作る」がこれ。
+
+# ★解説の欄名は1つではない。**数えてから決めた**（→feedback_genbo_field_writings）：
+#   2026-09-09の実測で meaning 25,458件／kaisetsu 292件（kaisetsu は hama_kaisetsu.json だけ）。
+#   決め打ちで meaning だけ見ると、292件を「解説が無い」と誤って数える（実際に踏んだ）。
+MEANING_KEYS = ("meaning", "kaisetsu")
+
+# 大問はここでは扱わない（iter_daimon の担当）
+NOT_TSUJO = ("hama_daimon.json",)
+
+
+def meaning_of(q):
+    """問題1つから解説を返す。欄名の違いをここだけで吸収する。"""
+    for k in MEANING_KEYS:
+        if k in q:
+            return q[k]
+    return None
+
+
+def iter_tsujo(only=None):
+    """通常問題（data/*.json）を1問ずつ返す。**唯一の走査口。**
+
+    yield する dict:
+      file  … ファイル名（例 "sansu_bun.json"）
+      path  … そのファイルの中での場所（例 "[12]" や "/grades/3/sairei/units/…/items[0]/rei"）
+      qid   … **"ファイル名#id"**（id が無ければ "ファイル名#path"）。書き戻すときの宛名。
+              ★id だけをキーにしない。2026-09-09の実測で**id はファイルをまたいで1,247件
+                重複していた**。大問側でも同じ穴を踏んでいる（→tool_audit_ledger の
+                「id単体をグローバルキーにしていたバグ」）。必ずファイル名と組にする。
+      q     … 問題そのもの（dict）
+
+    ★問題の見分け方は「answer 欄を持つ dict」。ファイルごとに形がちがう
+      （平たい配列のものと、grades/学年/コース/units/… と入れ子のものがある）ので、
+      キーの決め打ちで歩かない。
+    ★数える・並べる処理は必ずここを通す。自前で入れ子を歩かない（iter_daimon と同じ約束）。
+    """
+    import glob as _glob
+    for fp in sorted(_glob.glob(os.path.join(BASE, "data", "*.json"))):
+        name = os.path.basename(fp)
+        if name in NOT_TSUJO:
+            continue
+        if only and name not in only:
+            continue
+        try:
+            data = json.load(io.open(fp, encoding="utf-8"))
+        except ValueError:
+            continue
+        for path, q in _walk_q(data):
+            qid = name + "#" + str(q.get("id") or path)
+            yield {"file": name, "path": path, "qid": qid, "q": q}
+
+
+def _walk_q(o, path=""):
+    if isinstance(o, dict):
+        if "answer" in o:
+            yield path, o
+            return
+        for k, v in o.items():
+            for r in _walk_q(v, path + "/" + str(k)):
+                yield r
+    elif isinstance(o, list):
+        for i, v in enumerate(o):
+            for r in _walk_q(v, path + "[%d]" % i):
+                yield r
+
+
+def tsujo_path(name):
+    return os.path.join(BASE, "data", name)
+
+
+def load_tsujo(name):
+    """通常問題のファイルを1つ読む（書き戻すときに使う）。"""
+    return json.load(io.open(tsujo_path(name), encoding="utf-8"))
+
+
+def tsujo_indent(name):
+    """そのファイルが使っているインデントを、**実際に読み書きして突き合わせて**決める。
+
+    ★書式はファイルごとに違う（2026-09-09の実測：sansu_bun.json は2、kokugo_bun.json は1）。
+      決め打ちで書くと**中身は同じなのに全行が差分になる**（7,095行まるごと動いた）。
+    ★どれとも一致しなければ None を返す＝**書かない**。勝手に書式を変えない。
+    """
+    raw = io.open(tsujo_path(name), encoding="utf-8").read()
+    data = json.loads(raw)
+    for ind in (1, 2, 3, 4):
+        for tail in ("\n", ""):
+            if json.dumps(data, ensure_ascii=False, indent=ind) + tail == raw:
+                return ind, tail
+    return None
+
+
+def save_tsujo(name, data, fmt):
+    """通常問題のファイルを1つ書く。fmt は tsujo_indent() が返した (インデント, 末尾)。
+    ★"w" だと Windows で改行が CRLF に化けて全行が差分になる（→tool_windows_script_gotchas）。"""
+    ind, tail = fmt
+    io.open(tsujo_path(name), "w", encoding="utf-8", newline="\n").write(
+        json.dumps(data, ensure_ascii=False, indent=ind) + tail)
+
+
+def walk_tsujo(data, name):
+    """読みこみずみのデータを歩いて (qid, 問題dict) を返す。**参照なので書きかえられる。**
+    iter_tsujo と同じ歩き方をここで再利用する（コピーしない）。"""
+    for path, q in _walk_q(data):
+        yield name + "#" + str(q.get("id") or path), q

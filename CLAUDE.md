@@ -18,6 +18,18 @@
    止めるのは**新しく増えた重**だけ＝既知の山は `docs/kata_baseline.json` に登録ずみ。
    `HAMA_SKIP=1` で素通りできるが、**素通りしたら本人に必ず言う**）
 
+## いま進行中：通常問題の解説を厚くする（2026-09-09〜）
+
+`python scripts/hama.py` に残数が出る。手順は3つだけ：
+
+1. `python scripts/kaisetsu_packet.py --tsujo all 8 docs/_kaisetsu/t_w1` … 資料を切る（切りずみ）
+2. 4体ずつの波でエージェントに書かせる（出力は `docs/_kaisetsu/t_w1/out_N.jsonl`・1行1件・
+   `{"qid": "ファイル名#id", "meaning": "…"}`。qid は資料の「■」行を丸ごと写させる）
+3. `python scripts/apply_kaisetsu.py --tsujo docs/_kaisetsu/t_w1 --write` … 検品して書き戻す
+
+**進捗はどこにも記録していない。**厚くした問題は K7 に出てこなくなるので、
+`hama.py` の残数がそのまま進捗。**途中でコンテキストを捨ててよい。**
+
 ## 検査の置き場所（増やすときはここに足す。2本目にコピーしない）
 
 `check_kata.py`（過去の監査で出た欠陥の型）／`check_answerable.py`（形式）／

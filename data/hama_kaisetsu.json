@@ -713,7 +713,7 @@
          {
           "question": "1から 300までの整数の中に、5でわりきれる整数は何こありますか。",
           "answer": "60",
-          "meaning": "300÷5＝60こです。",
+          "meaning": "5でわりきれる数は 5,10,15,… と5のかたまりがならんだ数です。だから「300の中に5のかたまりがいくつ入るか」を数えれば個数が出ます。300÷5＝60。ちょうどわりきれるので300そのものも数に入っています。答えは60こです。",
           "svg": ""
          },
          {
@@ -1021,7 +1021,7 @@
          {
           "question": "たて 20cm、よこ 20cm、高さ 40cm の水そうに、水を 20cm の高さまで入れました。水は何 L 入っていますか。",
           "answer": "8",
-          "meaning": "20×20×20＝8000cm³＝8Lです。",
+          "meaning": "水の形も、たて・よこ・高さのそろった箱です。ただし高さは水そうの40cmではなく、水が入っている20cmを使います。ここがまちがえやすい所です。20×20×20＝8000cm³。1L＝1000cm³なので、8000÷1000＝8L。答えは8Lです。",
           "svg": "<svg viewBox=\"0 0 220 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"40\" y=\"16\" width=\"120\" height=\"108\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><rect x=\"40\" y=\"70\" width=\"120\" height=\"54\" fill=\"rgba(56,189,248,0.45)\" stroke=\"#0ea5e9\" stroke-width=\"1.5\"/><text x=\"34\" y=\"74\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">20cm</text><text x=\"166\" y=\"28\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">高さ40cm</text><text x=\"100.0\" y=\"140\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">よこ20cm</text></svg>"
          },
          {
@@ -1033,7 +1033,7 @@
          {
           "question": "たて 20cm、よこ 20cm、高さ 40cm の水そうがいっぱいになるのは 何 L のときですか。",
           "answer": "16",
-          "meaning": "20×20×40＝16000cm³＝16Lです。",
+          "meaning": "「いっぱいになる」というのは、水の高さが水そうの高さ40cmと同じになったときです。だから高さに40cmを入れます。20×20×40＝16000cm³。1L＝1000cm³なので、16000÷1000＝16L。答えは16Lです。",
           "svg": "<svg viewBox=\"0 0 220 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"40\" y=\"16\" width=\"120\" height=\"108\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><rect x=\"40\" y=\"16\" width=\"120\" height=\"108\" fill=\"rgba(56,189,248,0.45)\" stroke=\"#0ea5e9\" stroke-width=\"1.5\"/><text x=\"34\" y=\"20\" font-size=\"11\" text-anchor=\"end\" font-family=\"sans-serif\" fill=\"#6c7086\">40cm</text><text x=\"166\" y=\"28\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#6c7086\">高さ40cm</text><text x=\"100.0\" y=\"140\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">よこ20cm</text></svg>"
          }
         ]
@@ -1061,7 +1061,7 @@
          {
           "question": "真上から見た図のマスの数が、そこにつみ上げたつみ木の数です。つみ木は全部で何こありますか。",
           "answer": "15",
-          "meaning": "1＋2＋1＝4、2＋3＋2＝7、1＋2＋1＝4。4＋7＋4＝15こです。",
+          "meaning": "マスに書かれた数は、そこに何こつみ上げたかを表しています。だから、ぜんぶのマスの数をたせばつみ木の数になります。バラバラにたすと数えもれが出るので、たて1れつずつまとめてたします。1＋2＋1＝4、2＋3＋2＝7、1＋2＋1＝4。4＋7＋4＝15。答えは15こです。",
           "svg": "<svg viewBox=\"0 0 126 132\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"12\" y=\"8\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"29\" y=\"31\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"46\" y=\"8\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"63\" y=\"31\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"80\" y=\"8\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"97\" y=\"31\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"12\" y=\"42\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"29\" y=\"65\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"46\" y=\"42\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"63\" y=\"65\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"80\" y=\"42\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"97\" y=\"65\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"12\" y=\"76\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"29\" y=\"99\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"46\" y=\"76\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"63\" y=\"99\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"80\" y=\"76\" width=\"34\" height=\"34\" fill=\"#eff6ff\" stroke=\"#4f7cff\" stroke-width=\"1.4\"/><text x=\"97\" y=\"99\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><text x=\"63\" y=\"126\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">真上から見た図</text></svg>"
          },
          {
@@ -1209,7 +1209,7 @@
          {
           "question": "たて 7cm、よこ 13cm の長方形の まわりの長さは 何cm ですか。",
           "answer": "40",
-          "meaning": "(7＋13)×2＝40cmです。",
+          "meaning": "まわりの長さは、たて2本とよこ2本をぐるっと1周たした長さです。たて7cmとよこ13cmで半周ぶんになるので、それを2倍します。(7＋13)×2＝40。7×2＋13×2＝14＋26＝40としても同じです。答えは40cmです。",
           "svg": ""
          },
          {
@@ -1590,7 +1590,7 @@
          {
           "question": "34 × □ ＝ 204 のとき、□に入る数はいくつですか。",
           "answer": "6",
-          "meaning": "204÷34＝6です。",
+          "meaning": "34を何こぶん集めたら204になるか、をきかれています。かけ算のわからない数をもとめるときは、答えを わかっている数でわります。204÷34＝6。たしかめると 34×6＝204 でぴったりです。答えは6です。",
           "svg": ""
          }
         ]
@@ -1624,7 +1624,7 @@
          {
           "question": "1 2 3 4 5 6 の間に ＋ か − を入れて 答えを 9 にします。ぜんぶ＋にしたときの答えはいくつですか。",
           "answer": "21",
-          "meaning": "1＋2＋3＋4＋5＋6＝21です。",
+          "meaning": "ここは「ぜんぶ＋にしたとき」だけをきいているので、−は使わず1から6まで順にたします。1＋2＋3＋4＋5＋6＝21。1と6、2と5、3と4がどれも7になるので、7×3＝21 と考えても出せます。答えは21です。",
           "svg": ""
          },
          {
@@ -1692,7 +1692,7 @@
          {
           "question": "A は 5、9、13、… と4ずつふえ、B は 60、57、54、… と3ずつへります。1番目の差はいくつですか。",
           "answer": "55",
-          "meaning": "60−5＝55です。",
+          "meaning": "「1番目」は、ふえたりへったりする前の いちばんはじめの数どうしのことです。Aの1番目は5、Bの1番目は60。差は大きいほうから小さいほうをひきます。60−5＝55。答えは55です。",
           "svg": ""
          },
          {
@@ -1704,7 +1704,7 @@
          {
           "question": "A は 2、5、8、… と3ずつふえ、B は 50、48、46、… と2ずつへります。20番目のとき、Aはいくつですか。",
           "answer": "59",
-          "meaning": "2＋3×19＝59です。",
+          "meaning": "Aは2からスタートして3ずつふえます。2番目までにふえるのは1回、3番目までは2回。だから20番目までにふえる回数は20回ではなく19回です。ここがまちがえやすい所。3×19＝57、2＋57＝59。答えは59です。",
           "svg": ""
          }
         ]
@@ -1979,13 +1979,13 @@
          {
           "question": "0〜3の数字が出る3つのダイヤルの計器で「2 0 1」と出ているとき、はじめから何回すすめたところですか。",
           "answer": "33",
-          "meaning": "2×16＋0×4＋1×1＝32＋0＋1＝33回です。",
+          "meaning": "0〜3の4つの数字でくり上がるので、右のダイヤルが4回すすむと まん中が1すすみます。つまり まん中の1は4回分、左の1は4×4＝16回分にあたります。2×16＋0×4＋1×1＝32＋0＋1＝33。答えは33回です。",
           "svg": ""
          },
          {
           "question": "0〜4の数字が出る3つのダイヤルの計器（5こで1つ上にくり上がる）で「1 0 2」と出ているとき、はじめから何回すすめたところですか。",
           "answer": "27",
-          "meaning": "左は5×5＝25回分。1×25＋0×5＋2＝27回です。",
+          "meaning": "0〜4の5つの数字でくり上がるので、右が5回すすむと まん中が1すすみます。だから まん中の1は5回分、左の1は5×5＝25回分です。1×25＋0×5＋2×1＝25＋0＋2＝27。答えは27回です。",
           "svg": ""
          },
          {
@@ -2013,7 +2013,7 @@
          {
           "question": "左から 8、4、2、1 の重さがついた4つの方眼で、「白・黒・黒・黒」のとき いくつを表しますか。",
           "answer": "7",
-          "meaning": "4＋2＋1＝7です。",
+          "meaning": "黒くぬったところの重さだけをたす決まりです。左から8・4・2・1で、白の8は数えません。黒は4と2と1なので 4＋2＋1＝7。答えは7です。",
           "svg": "<svg viewBox=\"0 0 222 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text></svg>"
          },
          {
@@ -2025,7 +2025,7 @@
          {
           "question": "左から 16、8、4、2、1 の重さがついた5つの方眼で、「黒・白・黒・白・黒」のとき いくつを表しますか。",
           "answer": "21",
-          "meaning": "16＋4＋1＝21です。",
+          "meaning": "黒いところの重さだけをたします。左から16・8・4・2・1のうち、黒は16と4と1、白の8と2は数えません。16＋4＋1＝21。答えは21です。",
           "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">16</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text></svg>"
          }
         ]
@@ -2047,7 +2047,7 @@
          {
           "question": "あめを 3こずつ 小ぶくろに、小ぶくろ 4つで 中ぶくろにします。中ぶくろ1つは あめ何こ分ですか。",
           "answer": "12",
-          "meaning": "3×4＝12こ分です。",
+          "meaning": "中ぶくろ1つの中には小ぶくろが4つ、その小ぶくろ1つの中にはあめが3こ入っています。だから、3こというかたまりが4つぶんです。3×4＝12。答えは12こ分です。",
           "svg": ""
          },
          {
@@ -2093,7 +2093,7 @@
          {
           "question": "3こでくり上がる書き方で「102」と書かれた数は、ふつうの数でいくつですか。",
           "answer": "11",
-          "meaning": "1×9＋0×3＋2＝11です。",
+          "meaning": "3こでくり上がる書き方なので、右のけたに3こたまると まん中が1すすみます。だから まん中の1は3を、左の1は3×3＝9を表します。1×9＋0×3＋2×1＝9＋0＋2＝11。答えは11です。",
           "svg": ""
          }
         ]
@@ -2132,7 +2132,7 @@
          {
           "question": "ある小数の 小数点をつけ忘れて書いたら、正しい数より 108 大きくなりました。もとの小数はいくつですか。",
           "answer": "12",
-          "meaning": "108÷9＝12です。",
+          "meaning": "小数点をつけ忘れると、数は10倍の大きさになります。10倍したものと もとの数のちがいは、もとの数の10−1＝9こ分です。その9こ分が108なので、もとの数は 108÷9＝12。たしかめると 120−12＝108 でぴったりです。答えは12です。",
           "svg": ""
          }
         ]
@@ -2160,7 +2160,7 @@
          {
           "question": "ある小数の 小数点を 2つ 右にずらして書いたら、正しい数より 693 大きくなりました。もとの小数はいくつですか。",
           "answer": "7",
-          "meaning": "693÷99＝7です。",
+          "meaning": "小数点を右に2つずらすと、数は100倍になります。100倍したものと もとの数のちがいは、もとの数の100−1＝99こ分です。それが693なので 693÷99＝7。たしかめると 700−7＝693 でぴったりです。答えは7です。",
           "svg": ""
          },
          {
@@ -2279,7 +2279,7 @@
          {
           "question": "7月1日が水曜日のとき、7月の水曜日は何回ありますか。",
           "answer": "5",
-          "meaning": "1、8、15、22、29 の5回です。",
+          "meaning": "水曜日は7日ごとにやってきます。1日が水曜なので 1、8、15、22、29 が水曜日。7月は31日まであるので29日も入りますが、次の36日はもうありません。だから5回。答えは5回です。",
           "svg": "<svg viewBox=\"0 0 230 162\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"6\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">1</text><rect x=\"40\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">2</text><rect x=\"70\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">3</text><rect x=\"100\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">4</text><rect x=\"130\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">5</text><rect x=\"160\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">6</text><rect x=\"190\" y=\"6\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"25\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">7</text><rect x=\"10\" y=\"36\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">8</text><rect x=\"40\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">9</text><rect x=\"70\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">10</text><rect x=\"100\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">11</text><rect x=\"130\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">12</text><rect x=\"160\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">13</text><rect x=\"190\" y=\"36\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"55\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">14</text><rect x=\"10\" y=\"66\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">15</text><rect x=\"40\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">16</text><rect x=\"70\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">17</text><rect x=\"100\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">18</text><rect x=\"130\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">19</text><rect x=\"160\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">20</text><rect x=\"190\" y=\"66\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"85\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">21</text><rect x=\"10\" y=\"96\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">22</text><rect x=\"40\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">23</text><rect x=\"70\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">24</text><rect x=\"100\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"115\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">25</text><rect x=\"130\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"145\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">26</text><rect x=\"160\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"175\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">27</text><rect x=\"190\" y=\"96\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"205\" y=\"115\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">28</text><rect x=\"10\" y=\"126\" width=\"30\" height=\"30\" fill=\"#ffe9b8\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"25\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">29</text><rect x=\"40\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"55\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">30</text><rect x=\"70\" y=\"126\" width=\"30\" height=\"30\" fill=\"#f8f9ff\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"85\" y=\"145\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">31</text></svg>"
          }
         ]
@@ -2558,7 +2558,7 @@
          {
           "question": "1 から 300 までの整数のうち、4 または 6 で わり切れる整数は 何こありますか。",
           "answer": "100",
-          "meaning": "75＋50−25＝100こです。",
+          "meaning": "4の倍数の数と6の倍数の数をただたすと、どちらにもあてはまる12の倍数を2回数えてしまいます。だから重なった分を1回ひきます。4の倍数は300÷4＝75こ、6の倍数は300÷6＝50こ、12の倍数は300÷12＝25こ。75＋50−25＝100。答えは100こです。",
           "svg": ""
          },
          {
@@ -2961,7 +2961,7 @@
          {
           "question": "1問 正かいで 5点、まちがえると 2点ひかれます。10問 全部正かいだと 何点ですか。",
           "answer": "50",
-          "meaning": "5×10＝50点です。",
+          "meaning": "まちがえた数が1問もないので、2点ひかれる場面が起きません。だから、ひき算は使わず 5点のかたまりが10問分そろうだけです。5×10＝50。（もし1問まちがえると、5点がもらえないうえに2点ひかれます。）答えは50点です。",
           "svg": ""
          }
         ]
@@ -3056,19 +3056,19 @@
          {
           "question": "内がわの直径が 5cm の わっかを 8こ つないだ くさりの長さは何cmですか。",
           "answer": "40",
-          "meaning": "5×8＝40cmです。",
+          "meaning": "わっかは つなぐと となりのわっかの中に入りこむので、1こふえるごとに くさりは 内がわの直径のぶんだけ長くなります。だから 5cmが8こ分です。5×8＝40。答えは40cmです。",
           "svg": ""
          },
          {
           "question": "内がわの直径が 6cm の わっかを つないで 長さ 48cm のくさりを作ります。わっかは何こいりますか。",
           "answer": "8",
-          "meaning": "48÷6＝8こです。",
+          "meaning": "わっかが1こふえるごとに、くさりは 内がわの直径6cmずつ長くなります。だから「48cmの中に6cmがいくつ入るか」を数えます。48÷6＝8。答えは8こです。",
           "svg": ""
          },
          {
           "question": "内がわの直径が 4cm の わっかを 12こ つないだ くさりの長さは何cmですか。",
           "answer": "48",
-          "meaning": "4×12＝48cmです。",
+          "meaning": "わっかを1こつなぐごとに、くさりは 内がわの直径4cmずつ長くなります。4cmが12こ分なので 4×12＝48。答えは48cmです。",
           "svg": ""
          }
         ]
@@ -3095,19 +3095,19 @@
          {
           "question": "同じ形の台形をならべてリングを作ります。1つの台形の外がわの角が 20° のとき、台形は何こ必要ですか。",
           "answer": "18",
-          "meaning": "360÷20＝18こです。",
+          "meaning": "台形をならべて1周させると、外がわの角がぐるっと集まって1回転＝360°になります。だから「360°の中に20°がいくつ入るか」を数えれば台形の数です。360÷20＝18。答えは18こです。",
           "svg": ""
          },
          {
           "question": "同じ形の台形をならべてリングを作ります。1つの台形の外がわの角が 45° のとき、台形は何こ必要ですか。",
           "answer": "8",
-          "meaning": "360÷45＝8こです。",
+          "meaning": "台形をぐるっとならべて1周させると、外がわの角が集まって1回転＝360°になります。だから「360°の中に45°がいくつ入るか」を数えれば台形の数です。360÷45＝8。答えは8こです。",
           "svg": ""
          },
          {
           "question": "同じ形の台形を 15こ ならべてリングを作りました。1つの台形の外がわの角は何度ですか。",
           "answer": "24",
-          "meaning": "360÷15＝24度です。",
+          "meaning": "台形15こでちょうど1周＝360°ぶんの角をつくります。だから1こ分は360°を15等分した大きさです。360÷15＝24。答えは24度です。",
           "svg": ""
          }
         ]
@@ -3129,13 +3129,13 @@
          {
           "question": "三角形の 2つの角が 40° と 75° のとき、のこりの角は何度ですか。",
           "answer": "65",
-          "meaning": "180−40−75＝65度です。",
+          "meaning": "三角形の3つの角をたすと、どんな三角形でも180°になります。だから180°から わかっている2つの角をひけば のこりが出ます。180−40−75＝65。答えは65度です。",
           "svg": ""
          },
          {
           "question": "二等辺三角形で、底の2つの角がそれぞれ 70° のとき、頂上の角は何度ですか。",
           "answer": "40",
-          "meaning": "180−70×2＝40度です。",
+          "meaning": "二等辺三角形は 底の2つの角が同じ大きさです。70°が2つで 70×2＝140°。3つの角の合計は180°なので、のこりが頂上の角です。180−140＝40。答えは40度です。",
           "svg": ""
          },
          {
@@ -3163,7 +3163,7 @@
          {
           "question": "折り返してできた 同じ大きさの角が2つ、あわせて一直線をつくります。1つが 40° のとき、のこりの角は何度ですか。",
           "answer": "100",
-          "meaning": "180−40×2＝100度です。",
+          "meaning": "一直線は180°です。その中に 同じ大きさの角が2つと のこりの角が入っています。同じ角は40°が2つで 40×2＝80°。180−80＝100。答えは100度です。",
           "svg": ""
          },
          {
@@ -3175,7 +3175,7 @@
          {
           "question": "折り返してできた 同じ大きさの角が2つ、あわせて一直線をつくります。1つが 25° のとき、のこりの角は何度ですか。",
           "answer": "130",
-          "meaning": "180−50＝130度です。",
+          "meaning": "一直線の180°の中に、同じ大きさの角が2つと のこりの角が入っています。同じ角は25°が2つで 25×2＝50°。180−50＝130。答えは130度です。",
           "svg": ""
          }
         ]
@@ -3202,13 +3202,13 @@
          {
           "question": "階段の形で、たての長さの合計が 6cm、よこの長さの合計が 10cm のとき、まわりの長さは何cmですか。",
           "answer": "32",
-          "meaning": "(6＋10)×2＝32cmです。",
+          "meaning": "階段の形でも、でこぼこを外へおし出してそろえると、まわりの長さは長方形のまわりと同じになります。だから たての合計6cmと よこの合計10cmが それぞれ2本ぶんずつあると考えます。(6＋10)×2＝32。答えは32cmです。",
           "svg": "<svg viewBox=\"0 0 240 140.9\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"20,120 20,40 70,40 70,70 120,70 120,100 200,100 200,120\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"118\" y=\"134\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">まわりの長さを考える</text></svg>"
          },
          {
           "question": "たて 5cm・よこ 9cm の長方形の まわりの長さは何cmですか。",
           "answer": "28",
-          "meaning": "(5＋9)×2＝28cmです。",
+          "meaning": "まわりの長さは たて2本とよこ2本を1周たした長さです。たて5cmとよこ9cmで半周ぶんになるので、それを2倍します。(5＋9)×2＝28。答えは28cmです。",
           "svg": ""
          },
          {
@@ -3276,13 +3276,13 @@
          {
           "question": "面積 40cm² と 30cm² の2つの形を重ねたら、重なりが 12cm² でした。全体の面積は何cm²ですか。",
           "answer": "58",
-          "meaning": "40＋30−12＝58cm²です。",
+          "meaning": "40と30をそのままたすと、重なった部分を2回数えてしまいます。だから 多く数えた1回分をひきます。40＋30−12＝58。答えは58cm²です。",
           "svg": ""
          },
          {
           "question": "面積 40cm² と 30cm² の2つの形を重ねたら、全体が 55cm² になりました。重なりの面積は何cm²ですか。",
           "answer": "15",
-          "meaning": "40＋30−55＝15cm²です。",
+          "meaning": "2つをそのままたした 40＋30＝70cm² は、重なりを2回数えた大きさです。本当の全体は55cm²なので、多かった分が 重なり1つ分にあたります。70−55＝15。答えは15cm²です。",
           "svg": ""
          }
         ]
@@ -3315,7 +3315,7 @@
          {
           "question": "①と②の面積が同じで、①＋X＝50、②＋X＝50、①＝32 のとき、Xの面積は何cm²ですか。",
           "answer": "18",
-          "meaning": "50−32＝18cm²です。",
+          "meaning": "①とXを合わせると50cm²になります。だからXは、50cm²から①をとりのぞいたのこりです。①は32cm²とわかっているので 50−32＝18。答えは18cm²です。",
           "svg": ""
          },
          {
@@ -3343,19 +3343,19 @@
          {
           "question": "長方形の紙（面積 48cm²）を折り返して、重なった部分が 15cm² のとき、折ったあとの形の面積は何cm²ですか。",
           "answer": "33",
-          "meaning": "48−15＝33cm²です。",
+          "meaning": "折り返すと、折った部分は下の紙の上にかさなって、その分だけ見える形が小さくなります。へる大きさが 重なった部分です。48−15＝33。答えは33cm²です。",
           "svg": ""
          },
          {
           "question": "長方形の紙（面積 60cm²）を折り返したら、折ったあとの形が 45cm² になりました。重なった部分の面積は何cm²ですか。",
           "answer": "15",
-          "meaning": "60−45＝15cm²です。",
+          "meaning": "折り返すと、折った部分が下の紙にかさなり、その分だけ見える形が小さくなります。だから もとの紙とくらべてへった分が 重なった部分です。60−45＝15。答えは15cm²です。",
           "svg": ""
          },
          {
           "question": "長方形の紙（面積 40cm²）をちょうど半分に折りました。折ったあとの形の面積は何cm²ですか。",
           "answer": "20",
-          "meaning": "40÷2＝20cm²です。",
+          "meaning": "ちょうど半分に折ると、紙は2まいがぴったりかさなり、見える形はもとの半分になります。だから2でわります。40÷2＝20。答えは20cm²です。",
           "svg": ""
          }
         ]
@@ -3382,7 +3382,7 @@
          {
           "question": "勝つと 5点、負けると 2点。8回じゃんけんをしたとき、2人の得点の合計は何点ですか。",
           "answer": "56",
-          "meaning": "1回で 5＋2＝7点。7×8＝56点です。",
+          "meaning": "じゃんけんは1回ごとに かならず勝ちが1人、負けが1人います。だから1回で2人あわせて 5＋2＝7点 が入ります。それが8回くり返されるので 7×8＝56。答えは56点です。",
           "svg": ""
          },
          {
@@ -3456,7 +3456,7 @@
          {
           "question": "はじめの 3分までが 30円、そのあと1分ごとに 10円。ちょうど 3分 話すと料金はいくらですか。",
           "answer": "30",
-          "meaning": "3分までは30円です。",
+          "meaning": "10円がふえていくのは、3分をこえてからです。ちょうど3分では まだ1分もこえていないので、はじめの3分ぶんの料金だけになります。30＋10×0＝30。答えは30円です。",
           "svg": ""
          },
          {
@@ -3563,7 +3563,7 @@
          {
           "question": "さいころ 1この 目の合計はいくつですか。",
           "answer": "21",
-          "meaning": "1＋2＋3＋4＋5＋6＝21です。",
+          "meaning": "さいころには1から6までの目が1つずつあります。だから1から6までをぜんぶたせば目の合計です。1＋2＋3＋4＋5＋6＝21。1と6、2と5、3と4がどれも7になるので 7×3＝21 と考えても出せます。答えは21です。",
           "svg": ""
          },
          {
@@ -3597,7 +3597,7 @@
          {
           "question": "1辺1cmの立方体を 4こ 1れつにくっつけました。色がぬられる面は何面ですか。",
           "answer": "18",
-          "meaning": "24−6＝18面です。",
+          "meaning": "立方体1こには面が6つあるので、バラバラの4こなら 6×4＝24面。でも1れつにくっつけると、くっついたところは内がわにかくれて色がぬれません。くっつけ目は3か所、1か所で2面ずつかくれるので 2×3＝6面 が消えます。24−6＝18。答えは18面です。",
           "svg": ""
          },
          {
@@ -3664,7 +3664,7 @@
          {
           "question": "1辺 3cm の立方体を 1辺1cmの四角いあなでまっすぐくりぬきました。もとの立方体の表面積は何cm²ですか。",
           "answer": "54",
-          "meaning": "3×3×6＝54cm²です。",
+          "meaning": "きかれているのは「もとの立方体」の表面積なので、あなをあける前の外がわだけを考えます。1辺3cmの正方形の面が6つあるので、3×3＝9cm²が6つ分。9×6＝54。答えは54cm²です。",
           "svg": ""
          },
          {
@@ -3704,7 +3704,7 @@
          {
           "question": "たて 3cm、よこ 5cm、高さ 2cm の直方体の表面積は何cm²ですか。",
           "answer": "62",
-          "meaning": "(15＋10＋6)×2＝62cm²です。",
+          "meaning": "直方体の面は6つですが、向かい合う面どうしは同じ大きさなので、ちがう大きさは3種類だけです。3×5＝15、5×2＝10、3×2＝6。それぞれ2まいずつあるので (15＋10＋6)×2＝62。答えは62cm²です。",
           "svg": ""
          },
          {
@@ -3744,7 +3744,7 @@
          {
           "question": "底面が 3辺 5cm・6cm・7cm、高さ 9cm の三角柱の 側面の帯の よこの長さは何cmですか。",
           "answer": "18",
-          "meaning": "5＋6＋7＝18cmです。",
+          "meaning": "側面をひらくと、1本の長方形の帯になります。その帯のよこの長さは、底の三角形のまわりをぐるっと1周した長さと同じです。高さの9cmは帯のたてのほうなので、ここでは使いません。5＋6＋7＝18。答えは18cmです。",
           "svg": ""
          }
         ]
@@ -3805,19 +3805,19 @@
          {
           "question": "たて2つの合計が 10、よこ2つの合計が 14、3つ全部の合計が 18 のとき、まん中のマスの数はいくつですか。",
           "answer": "6",
-          "meaning": "10＋14−18＝6です。",
+          "meaning": "たての合計とよこの合計をたすと 10＋14＝24。このとき まん中のマスは たてにもよこにも入っているので2回数えています。本当の3つの合計は18なので、多く数えた分がまん中の数です。24−18＝6。答えは6です。",
           "svg": ""
          },
          {
           "question": "たて2つの合計が 20、よこ2つの合計が 25、まん中が 8 のとき、3つ全部の合計はいくつですか。",
           "answer": "37",
-          "meaning": "20＋25−8＝37です。",
+          "meaning": "たてとよこをたした 20＋25＝45 は、まん中のマスを2回数えた数です。だから よぶんな1回分の8をひけば、3つ全部の合計になります。45−8＝37。答えは37です。",
           "svg": ""
          },
          {
           "question": "たて2つの合計が 12、よこ2つの合計が 15、まん中が 7 のとき、たてのもう1つのマスの数はいくつですか。",
           "answer": "5",
-          "meaning": "12−7＝5です。",
+          "meaning": "たての2つのマスは「まん中」と「もう1つ」です。その合計が12で、まん中が7とわかっているので、のこりがもう1つのマスになります。よこの15はここでは使いません。12−7＝5。答えは5です。",
           "svg": ""
          }
         ]
@@ -3839,19 +3839,19 @@
          {
           "question": "三角形の6か所に 1〜6 を入れて、どの辺の3つの和も 10 になりました。3つの頂点の合計はいくつですか。",
           "answer": "9",
-          "meaning": "10×3＝30。30−21＝9です。",
+          "meaning": "3つの辺の和をぜんぶたすと 10×3＝30。このとき、頂点にある3つの数は 2つの辺に入っているので2回ずつ数えられています。1〜6をぜんぶたすと21なので、よけいに数えた分が頂点の合計です。30−21＝9。答えは9です。",
           "svg": ""
          },
          {
           "question": "三角形の6か所に 1〜6 を入れて、どの辺の3つの和も 11 になりました。3つの頂点の合計はいくつですか。",
           "answer": "12",
-          "meaning": "11×3＝33。33−21＝12です。",
+          "meaning": "3つの辺の和をたすと 11×3＝33。頂点の数は2つの辺に入るので2回ずつ数えられています。1〜6の合計21をひくと、よけいに数えた1回分＝頂点3つの合計が出ます。33−21＝12。答えは12です。",
           "svg": ""
          },
          {
           "question": "1 から 6 までの数を ぜんぶ たすといくつですか。",
           "answer": "21",
-          "meaning": "1＋2＋3＋4＋5＋6＝21です。",
+          "meaning": "1から6まで順にたします。両はしから組にすると 1と6、2と5、3と4 でどれも7になり、組が3つできます。7×3＝21。1＋2＋3＋4＋5＋6＝21 とたしても同じです。答えは21です。",
           "svg": ""
          }
         ]
@@ -3873,19 +3873,19 @@
          {
           "question": "「a▲b」は a×b−(a＋b) を表します。4▲6 はいくつですか。",
           "answer": "14",
-          "meaning": "24−10＝14です。",
+          "meaning": "▲は「かけ算の答えから たし算の答えをひく」という新しい記号です。前が4、後ろが6なので そのまま入れます。4×6＝24、4＋6＝10。24−10＝14。答えは14です。",
           "svg": ""
          },
          {
           "question": "「a▲b」は a×b−(a＋b) を表します。2▲□＝1 のとき、□はいくつですか。",
           "answer": "3",
-          "meaning": "2×□−(2＋□)＝1 → 2□−2−□＝1 → □−2＝1 → □＝3です。",
+          "meaning": "2▲□は 2×□−(2＋□) です。2×□は□が2こ分、そこから□を1こひくので□が1こ残り、さらに2をひくので □−2 になります。それが1なので、□は2より1大きい数です。□＝3。たしかめは 2×3−(2＋3)＝6−5＝1。答えは3です。",
           "svg": ""
          },
          {
           "question": "「a▲b」は a×b−(a＋b) を表します。5▲5 はいくつですか。",
           "answer": "15",
-          "meaning": "25−10＝15です。",
+          "meaning": "▲は かけ算の答えから たし算の答えをひく記号です。前も後ろも5なので 5×5＝25、5＋5＝10。25−10＝15。答えは15です。",
           "svg": ""
          }
         ]
@@ -4205,7 +4205,7 @@
          {
           "question": "1、2、3、4、5 の5まいから3まいで3けたの整数を作ります。全部で何通りできますか。",
           "answer": "60",
-          "meaning": "5×4×3＝60通りです。",
+          "meaning": "百の位・十の位・一の位の順に、どのカードを置けるか数えます。百の位は5まいのどれでもよいので5通り。十の位は使ったカードがへって4通り、一の位は3通り。位ごとの数はかけ算でつなぎます。5×4×3＝60。答えは60通りです。",
           "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">5</text></svg>"
          },
          {
@@ -4273,13 +4273,13 @@
          {
           "question": "1、2、5、10、17、26、… の 10番目の数はいくつですか。",
           "answer": "82",
-          "meaning": "n番目は (n−1)×(n−1)＋1。9×9＋1＝82です。",
+          "meaning": "となりとの差は 1、3、5、7、9 とふえていきます。そこで各数から1をひくと 0、1、4、9、16、25 となり、同じ数どうしをかけた数がならびます。だから□番目は (□−1)×(□−1)＋1。10番目は 9×9＋1＝82。答えは82です。",
           "svg": ""
          },
          {
           "question": "1、2、5、10、17、26、… の 7番目の数はいくつですか。",
           "answer": "37",
-          "meaning": "6×6＋1＝37です。",
+          "meaning": "それぞれの数から1をひくと 0、1、4、9、16、25 と 同じ数どうしをかけた数になります。だから□番目は (□−1)×(□−1)＋1。7番目は 6×6＋1＝36＋1＝37。答えは37です。",
           "svg": ""
          },
          {
@@ -4318,13 +4318,13 @@
          {
           "question": "たて 6ます、よこ 9ます の方眼に対角線を1本引きます。対角線が通るマスは何こですか。",
           "answer": "12",
-          "meaning": "6＋9−3＝12こです。",
+          "meaning": "対角線は たての線かよこの線をこえるたびに、となりのマスへ入っていきます。だから ふつうは たて＋よこ こ。ただし たての線とよこの線が同じ点で交わるところでは、2本を一度にこえてしまうので1こ分へります。それは6と9の最大公約数の3回。6＋9−3＝12。答えは12こです。",
           "svg": "<svg viewBox=\"0 0 222 146\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"12\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"34\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"56\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"78\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"122\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"144\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"166\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"188\" y=\"8\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"12\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"34\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"56\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"78\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"122\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"144\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"166\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"188\" y=\"30\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"12\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"34\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"56\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"78\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"122\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"144\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"166\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"188\" y=\"52\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"12\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"34\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"56\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"78\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"122\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"144\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"166\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"188\" y=\"74\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"12\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"34\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"56\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"78\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"122\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"144\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"166\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"188\" y=\"96\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"12\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"34\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"56\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"78\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"100\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"122\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"144\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"166\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><rect x=\"188\" y=\"118\" width=\"22\" height=\"22\" fill=\"#eff6ff\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M12 8 L210 140\" stroke=\"#ff6b6b\" stroke-width=\"2.2\" fill=\"none\"/></svg>"
          },
          {
           "question": "たて 8ます、よこ 12ます の方眼に対角線を1本引きます。対角線が通るマスは何こですか。",
           "answer": "16",
-          "meaning": "8＋12−4＝16こです。",
+          "meaning": "通るマスは たて＋よこ から、たての線とよこの線を同じ点で一度にこえてしまう回数をひきます。その回数は8と12の最大公約数で4回。8＋12−4＝16。答えは16こです。",
           "svg": ""
          }
         ]
@@ -4380,19 +4380,19 @@
          {
           "question": "1/(1×2) ＋ 1/(2×3) ＋ 1/(3×4) を計算すると 3/4 になります。分子はいくつですか。",
           "answer": "3",
-          "meaning": "1−1/4＝3/4。分子は3です。",
+          "meaning": "1/(1×2)は 1−1/2、1/(2×3)は 1/2−1/3、1/(3×4)は 1/3−1/4 と書きかえられます。たしていくと まん中の 1/2 と 1/3 が消え合って、はじめの1とおわりの1/4だけがのこります。1−1/4＝3/4。分子は3です。",
           "svg": ""
          },
          {
           "question": "1/(1×2) ＋ 1/(2×3) ＋ … ＋ 1/(9×10) を計算すると □/10 になります。□はいくつですか。",
           "answer": "9",
-          "meaning": "1−1/10＝9/10。□は9です。",
+          "meaning": "それぞれを 1−1/2、1/2−1/3、…、1/9−1/10 と書きかえると、となりどうしが次々に消え合って、はじめの1と おわりの1/10 だけがのこります。1−1/10＝9/10。□は9です。",
           "svg": ""
          },
          {
           "question": "1/(1×2) ＋ 1/(2×3) ＋ … ＋ 1/(19×20) を計算すると □/20 になります。□はいくつですか。",
           "answer": "19",
-          "meaning": "1−1/20＝19/20。□は19です。",
+          "meaning": "それぞれを 1−1/2、1/2−1/3、…、1/19−1/20 と書きかえると、あいだの分数がすべて消え合い、1−1/20 だけがのこります。1−1/20＝19/20。□は19です。",
           "svg": ""
          }
         ]
@@ -4419,19 +4419,19 @@
          {
           "question": "「a★b」は a×b＋a＋b を表します。2★5 はいくつですか。",
           "answer": "17",
-          "meaning": "10＋7＝17です。",
+          "meaning": "★は「かけ算の答えに、2つの数もたす」という新しい記号です。前が2、後ろが5なので 2×5＝10、2＋5＝7。10＋7＝17。答えは17です。",
           "svg": ""
          },
          {
           "question": "「a★b」は a×b＋a＋b を表します。1★□＝11 のとき、□はいくつですか。",
           "answer": "5",
-          "meaning": "1×□＋1＋□＝2□＋1＝11 → □＝5です。",
+          "meaning": "1★□は 1×□＋1＋□ です。1×□は□そのものなので、あわせると□が2こと1になります。それが11なので、□2こ分は 11−1＝10。10÷2＝5。たしかめは 1×5＋1＋5＝11。答えは5です。",
           "svg": ""
          },
          {
           "question": "「a★b」は a×b＋a＋b を表します。(1★2)★3 はいくつですか。",
           "answer": "23",
-          "meaning": "1★2＝2＋3＝5。5★3＝15＋8＝23です。",
+          "meaning": "かっこの中を先に計算します。1★2＝1×2＋1＋2＝2＋3＝5。その5を使って 5★3＝5×3＋5＋3＝15＋8＝23。答えは23です。",
           "svg": ""
          }
         ]
@@ -4459,7 +4459,7 @@
          {
           "question": "「a◎b」は a を b でわったあまりを表します。(50◎7)◎2 はいくつですか。",
           "answer": "1",
-          "meaning": "50◎7＝1。1◎2＝1です。",
+          "meaning": "◎は「わったときのあまり」を答える記号です。かっこの中から先に計算します。50÷7＝7あまり1なので 50◎7＝1。次に 1÷2＝0あまり1なので 1◎2＝1。答えは1です。",
           "svg": ""
          },
          {
@@ -4499,7 +4499,7 @@
          {
           "question": "「n!」は1からnまでをぜんぶかけた数です。5! はいくつですか。",
           "answer": "120",
-          "meaning": "1×2×3×4×5＝120です。",
+          "meaning": "「n!」は1からnまでを順にぜんぶかけるという意味です。5!なら1から5まで使います。1×2＝2、2×3＝6、6×4＝24、24×5＝120。1×2×3×4×5＝120。答えは120です。",
           "svg": ""
          }
         ]
@@ -4526,19 +4526,19 @@
          {
           "question": "1、2、4、8、16 の重さのマスで 21 を表すには マスを何こ黒くぬりますか。",
           "answer": "3",
-          "meaning": "16＋4＋1＝21。3こです。",
+          "meaning": "大きいマスから順に「使えるか」をためします。16は21より小さいので使い、のこりは 21−16＝5。8は5より大きいので使えません。4を使ってのこり1、1を使ってちょうど0。使ったのは16と4と1で 16＋4＋1＝21。答えは3こです。",
           "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">16</text></svg>"
          },
          {
           "question": "1、2、4、8、16 の重さのマスで、16と2と1を黒くぬると いくつを表しますか。",
           "answer": "19",
-          "meaning": "16＋2＋1＝19です。",
+          "meaning": "この書き方では、黒くぬったマスの重さだけをたし、白いマスは数えません。ぬったのは16と2と1なので、8と4は数えないところに気をつけます。16＋2＋1＝19。答えは19です。",
           "svg": "<svg viewBox=\"0 0 274 56\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"10\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"33.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">1</text><rect x=\"62\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"85.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">2</text><rect x=\"114\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"137.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">4</text><rect x=\"166\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#f8f9ff\" stroke=\"#4f7cff\" stroke-width=\"1.5\"/><text x=\"189.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">8</text><rect x=\"218\" y=\"12\" width=\"46\" height=\"32\" rx=\"5\" fill=\"#fff3d6\" stroke=\"#ffb703\" stroke-width=\"2.5\"/><text x=\"241.0\" y=\"34\" font-size=\"17\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">16</text></svg>"
          },
          {
           "question": "1、2、4、8、16、32 の重さのマスで 40 を表すには マスを何こ黒くぬりますか。",
           "answer": "2",
-          "meaning": "32＋8＝40。2こです。",
+          "meaning": "大きいマスから順にためします。32は40より小さいので使い、のこりは 40−32＝8。8はそのまま使えて ちょうど0になります。32＋8＝40。使ったマスは2こです。答えは2こです。",
           "svg": ""
          }
         ]
@@ -4560,7 +4560,7 @@
          {
           "question": "0〜3の数字が出る4つのダイヤルで「0 2 1 0」と出ているとき、はじめから何回すすめたところですか。",
           "answer": "36",
-          "meaning": "2×16＋1×4＋0＝36回です。",
+          "meaning": "0〜3の4つの数字でくり上がるので、右のけたから 1回分、4回分、4×4＝16回分、16×4＝64回分 になります。数は左から 0・2・1・0 なので 0×64＋2×16＋1×4＋0×1＝32＋4＝36。答えは36回です。",
           "svg": ""
          },
          {
@@ -4572,7 +4572,7 @@
          {
           "question": "0〜4の数字が出る3つのダイヤル（5こでくり上がる）で「2 3 4」と出ているとき、はじめから何回すすめたところですか。",
           "answer": "69",
-          "meaning": "2×25＋3×5＋4＝50＋15＋4＝69回です。",
+          "meaning": "0〜4の5つの数字でくり上がるので、右のけたは1回分、まん中は5回分、左は5×5＝25回分です。2×25＋3×5＋4×1＝50＋15＋4＝69。答えは69回です。",
           "svg": ""
          }
         ]
@@ -4594,13 +4594,13 @@
          {
           "question": "1本の線を3等分することを 2回 くり返すと、いちばん小さい1つ分は もとの何分の1ですか。（分母を答えなさい）",
           "answer": "9",
-          "meaning": "3×3＝9。9分の1です。",
+          "meaning": "1回目の3等分で1つ分は1/3。その1つをもう一度3等分するので、さらに3こに分かれます。分ける回数だけ3をかけます。3×3＝9。だから9分の1で、分母は9です。",
           "svg": ""
          },
          {
           "question": "1本の線を3等分することを 4回 くり返すと、いちばん小さい1つ分は もとの何分の1ですか。（分母を答えなさい）",
           "answer": "81",
-          "meaning": "3×3×3×3＝81です。",
+          "meaning": "3等分をするたびに、分かれる数は3倍にふえていきます。4回くり返すので、3を4回かけます。3×3×3×3＝81。分母は81です。",
           "svg": ""
          },
          {
@@ -4633,13 +4633,13 @@
          {
           "question": "内がわの直径が 8cm の わっかを つないで 長さ 72cm のくさりを作ります。わっかは何こいりますか。",
           "answer": "9",
-          "meaning": "72÷8＝9こです。",
+          "meaning": "わっかは1こふえるごとに、くさりが 内がわの直径8cmずつ長くなります。だから「72cmの中に8cmがいくつ入るか」を数えます。72÷8＝9。答えは9こです。",
           "svg": ""
          },
          {
           "question": "内がわの直径が 5cm の わっかを 10こ つないだ くさりの長さは何cmですか。",
           "answer": "50",
-          "meaning": "5×10＝50cmです。",
+          "meaning": "わっかを1こつなぐごとに、くさりは 内がわの直径5cmずつ長くなります。5cmが10こ分なので 5×10＝50。答えは50cmです。",
           "svg": ""
          },
          {
@@ -4954,7 +4954,7 @@
          {
           "question": "1、2、3、4、5、6、7、8 をくり返します。1かたまりの和はいくつですか。",
           "answer": "36",
-          "meaning": "1＋2＋…＋8＝36です。",
+          "meaning": "くり返しの1かたまりは、1から8までの8この数です。両はしから組にすると 1と8、2と7、3と6、4と5 でどれも9になり、組は4つできます。9×4＝36。答えは36です。",
           "svg": ""
          },
          {
@@ -5061,13 +5061,13 @@
          {
           "question": "L字にならべた表で、1列目の上から 6番目 の数はいくつですか。",
           "answer": "36",
-          "meaning": "6×6＝36です。",
+          "meaning": "L字にそって数をならべていくと、1列目には 1×1、2×2、3×3、… と 同じ数どうしをかけた数がならびます。だから上から6番目は 6×6＝36。答えは36です。",
           "svg": ""
          },
          {
           "question": "L字にならべた表で、1列目の上から 10番目 の数はいくつですか。",
           "answer": "100",
-          "meaning": "10×10＝100です。",
+          "meaning": "1列目には 1×1、2×2、3×3、… と 同じ数どうしをかけた数がならびます。だから上から10番目は 10×10＝100。答えは100です。",
           "svg": ""
          },
          {
@@ -5134,7 +5134,7 @@
          {
           "question": "1周すると 5g を表すはかりで、小さいはりが 4、大きいはりが 2 のとき、重さは何gですか。",
           "answer": "22",
-          "meaning": "4×5＋2＝22gです。",
+          "meaning": "大きいはりが1周すると5gで、そのとき小さいはりが1つすすみます。つまり 小さいはりの1つ分が5gのかたまりです。小さいはりが4なので 5×4＝20g。そこへ大きいはりの2gをたして 20＋2＝22。答えは22gです。",
           "svg": "<svg viewBox=\"0 0 170 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"85\" cy=\"82\" r=\"62\" fill=\"#f8f9ff\" stroke=\"#1a2340\" stroke-width=\"2\"/><text x=\"85.0\" y=\"39.0\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">0</text><text x=\"130.7\" y=\"72.2\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">1</text><text x=\"113.2\" y=\"125.8\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">2</text><text x=\"56.8\" y=\"125.8\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">3</text><text x=\"39.3\" y=\"72.2\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#4f7cff\">4</text><path d=\"M85 82 L85 44\" stroke=\"#ff6b6b\" stroke-width=\"2.5\"/><circle cx=\"85\" cy=\"82\" r=\"4\" fill=\"#1a2340\"/></svg>"
          },
          {
@@ -5146,7 +5146,7 @@
          {
           "question": "1周すると 12g を表すはかりで、小さいはりが 3、大きいはりが 7 のとき、重さは何gですか。",
           "answer": "43",
-          "meaning": "3×12＋7＝43gです。",
+          "meaning": "大きいはりが1周すると12gで、そのとき小さいはりが1つすすみます。だから小さいはり1つ分は12gのかたまりです。3×12＝36g。そこへ大きいはりの7gをたして 36＋7＝43。答えは43gです。",
           "svg": ""
          }
         ]
@@ -5275,19 +5275,19 @@
          {
           "question": "日曜だけ休みの店で、1週間に開いているのは何日ですか。",
           "answer": "6",
-          "meaning": "月〜土の6日です。",
+          "meaning": "1週間は7日で、休みは日曜の1日だけです。だから7日から休みの1日をひいたのこりが 開いている日数になります。7−1＝6。月・火・水・木・金・土の6日です。答えは6日です。",
           "svg": ""
          },
          {
           "question": "日曜だけ休みの店で、開いている日が ちょうど 60日 たつのは 何週間後ですか。",
           "answer": "10",
-          "meaning": "60÷6＝10週間です。",
+          "meaning": "1週間に開くのは6日ずつです。だから「60日の中に、6日のかたまりがいくつ入るか」を数えれば週の数になります。60÷6＝10。答えは10週間です。",
           "svg": ""
          },
          {
           "question": "土日が休みの店で、1週間に開いているのは何日ですか。",
           "answer": "5",
-          "meaning": "月〜金の5日です。",
+          "meaning": "1週間は7日あり、そのうち休みは土曜と日曜の2日です。だから開いている日数は、7日から休みの2日をひいたのこりになります。7−2＝5。月・火・水・木・金の5日です。答えは5日です。",
           "svg": ""
          }
         ]
@@ -5314,19 +5314,19 @@
          {
           "question": "ある月の 第1土曜日が 3日 のとき、第5土曜日は何日ですか。",
           "answer": "31",
-          "meaning": "3＋7×4＝31日です。",
+          "meaning": "土曜日は7日ごとにきます。第1から第5までは、7日のジャンプを5回ではなく4回します（1→2、2→3、3→4、4→5）。ここがまちがえやすい所です。7×4＝28。3＋28＝31。答えは31日です。",
           "svg": ""
          },
          {
           "question": "ある月の 第1月曜日が 5日 のとき、第3月曜日は何日ですか。",
           "answer": "19",
-          "meaning": "5＋14＝19日です。",
+          "meaning": "月曜日は7日ごとにきます。第1から第3までは、第1→第2、第2→第3 の2回ジャンプします。3回ではないところがまちがえやすい所です。7×2＝14。5＋14＝19。答えは19日です。",
           "svg": ""
          },
          {
           "question": "ある月の 第4日曜日が 26日 のとき、第1日曜日は何日ですか。",
           "answer": "5",
-          "meaning": "26−21＝5日です。",
+          "meaning": "第1から第4まではジャンプが3回なので、第4日曜は第1日曜より 7×3＝21日 あとです。だから26日から21日もどします。26−21＝5。答えは5日です。",
           "svg": ""
          }
         ]
@@ -5421,7 +5421,7 @@
          {
           "question": "りんご 3こ と みかん 6こ がつりあいます。りんご 1こ は みかん何こ とつりあいますか。",
           "answer": "2",
-          "meaning": "6÷3＝2こです。",
+          "meaning": "りんご3このおもさと みかん6このおもさが同じです。両方を3つの組に同じように分けると、りんご1こと みかん2こが1組になります。6÷3＝2。答えは2こです。",
           "svg": ""
          },
          {
@@ -5495,13 +5495,13 @@
          {
           "question": "A＋B＝10、B＋C＝14、A＋C＝12 のとき、B はいくつですか。",
           "answer": "6",
-          "meaning": "18−（A＋C＝12）＝6です。",
+          "meaning": "3つの式をぜんぶたすと、A・B・Cが2回ずつ出てきます。10＋14＋12＝36 は A＋B＋C の2つ分なので、36÷2＝18 が A＋B＋C です。ここから A＋C＝12 をひけば B だけがのこります。18−12＝6。答えは6です。",
           "svg": ""
          },
          {
           "question": "A＋B＝10、B＋C＝14、A＋C＝12 のとき、C はいくつですか。",
           "answer": "8",
-          "meaning": "18−（A＋B＝10）＝8です。",
+          "meaning": "3つの式をたすと 10＋14＋12＝36。これは A＋B＋C の2つ分なので 36÷2＝18 が A＋B＋C です。Cを出したいので A＋B＝10 をひきます。18−10＝8。答えは8です。",
           "svg": ""
          }
         ]
@@ -5574,7 +5574,7 @@
          {
           "question": "つる・かめ・牛が合わせて15ひき、足48本、角6本です。牛は何頭ですか。",
           "answer": "3",
-          "meaning": "6÷2＝3頭です。",
+          "meaning": "角があるのは牛だけで、牛1頭に角は2本です。だから角の数を2でわれば 牛の数が出ます。足の48本や 合わせて15ひき という数は、ここでは使いません。6÷2＝3。答えは3頭です。",
           "svg": ""
          }
         ]
@@ -5596,7 +5596,7 @@
          {
           "question": "1こ運ぶと 30円、われると 20円はらいます。50こ運んで 1200円 のとき、われたのは何こですか。",
           "answer": "6",
-          "meaning": "300÷50＝6こです。",
+          "meaning": "50こぜんぶ無事なら 30×50＝1500円 もらえるはずです。じっさいは1200円なので 1500−1200＝300円 少ない。1こわれると、もらえる30円がなくなり さらに20円はらうので、1こにつき 30＋20＝50円 へります。300÷50＝6。答えは6こです。",
           "svg": ""
          },
          {
@@ -5608,7 +5608,7 @@
          {
           "question": "1こ運ぶと 30円、われると 20円はらいます。50こ 全部 無事に運ぶと いくらもらえますか。",
           "answer": "1500",
-          "meaning": "30×50＝1500円です。",
+          "meaning": "われた分がないので、はらうお金は0円です。1こ30円が50こ分そろうだけになります。30×50＝1500。答えは1500円です。",
           "svg": ""
          }
         ]
@@ -5635,7 +5635,7 @@
          {
           "question": "家から学校まで 行きは 分速 60m、帰りは 分速 40m。道のり 240m のとき、往復にかかった時間は何分ですか。",
           "answer": "10",
-          "meaning": "4分＋6分＝10分です。",
+          "meaning": "行きと帰りで速さがちがうので、まとめては計算できません。それぞれ時間を出してからたします。行きは 240÷60＝4分、帰りは 240÷40＝6分。4＋6＝10。答えは10分です。",
           "svg": ""
          },
          {
@@ -5669,19 +5669,19 @@
          {
           "question": "A は分速 60m で 12分 かかりました。この道のりは何mですか。",
           "answer": "720",
-          "meaning": "60×12＝720mです。",
+          "meaning": "分速60mは「1分で60m進む」という意味です。それが12分ぶん続くので、60mのかたまりが12こ分になります。60×12＝720。答えは720mです。",
           "svg": ""
          },
          {
           "question": "道のり 720m を 分速 120m で行くと何分かかりますか。",
           "answer": "6",
-          "meaning": "720÷120＝6分です。",
+          "meaning": "1分で120m進むので、「720mの中に120mがいくつ入るか」を数えれば かかる分数が出ます。720÷120＝6。答えは6分です。",
           "svg": ""
          },
          {
           "question": "道のり 720m を 8分 で行くには 分速何m で進めばよいですか。",
           "answer": "90",
-          "meaning": "720÷8＝分速90mです。",
+          "meaning": "8分かけてちょうど720m進むのだから、1分ぶんに進む長さは 全体を8つに等分した長さです。等分するのでわり算を使います。720÷8＝90。たしかめは 90×8＝720。答えは分速90mです。",
           "svg": ""
          }
         ]
@@ -5715,7 +5715,7 @@
          {
           "question": "同じ道のりを 分速 40m で 15分 かかりました。道のりは何mですか。",
           "answer": "600",
-          "meaning": "40×15＝600mです。",
+          "meaning": "分速40mは「1分で40m進む」という意味です。それが15分ぶん続くので、40mのかたまりが15こ分あることになります。40×15＝600。答えは600mです。",
           "svg": ""
          }
         ]
@@ -5748,7 +5748,7 @@
          {
           "question": "まわりが 900m の池を A は分速 80m、B は分速 70m で 反対まわりに進みます。はじめて出会うのは何分後ですか。",
           "answer": "6",
-          "meaning": "80＋70＝150m。900÷150＝6分後です。",
+          "meaning": "反対まわりだと2人は近づき合い、1分ごとに 2人が進んだ長さの合計だけ あいだがちぢみます。1分で 80＋70＝150m ちぢむので、900mがなくなるまでを数えます。900÷150＝6。答えは6分後です。",
           "svg": ""
          },
          {
@@ -5788,7 +5788,7 @@
          {
           "question": "900m 先を歩いている人を 追いかけます。自分は分速 90m、相手は分速 60m。追いつくのは何分後ですか。",
           "answer": "30",
-          "meaning": "差は30m。900÷30＝30分後です。",
+          "meaning": "追いかけるときは、2人のあいだのきょりは 速さの差の分しかちぢみません。1分で 90−60＝30m ちぢみます。だから 900÷30＝30。答えは30分後です。",
           "svg": ""
          }
         ]
@@ -5810,19 +5810,19 @@
          {
           "question": "A は分速 60m、B は分速 90m、C は分速 75m。A と C が 1350m はなれた2地点から向かい合うと、出会うのは何分後ですか。",
           "answer": "10",
-          "meaning": "60＋75＝135m。1350÷135＝10分後です。",
+          "meaning": "向かい合って進むと、1分ごとに 2人が進んだ長さの合計だけ あいだがちぢみます。ここで使うのはAとCの速さだけで、Bは関係ありません。1分で 60＋75＝135m ちぢむので 1350÷135＝10。答えは10分後です。",
           "svg": ""
          },
          {
           "question": "A は分速 60m、B は分速 90m。B が A を 900m 後ろから追いかけると、追いつくのは何分後ですか。",
           "answer": "30",
-          "meaning": "差は30m。900÷30＝30分後です。",
+          "meaning": "同じ向きに追いかけるときは、あいだのきょりは 速さの差の分しかちぢみません。1分で 90−60＝30m。だから 900÷30＝30。答えは30分後です。",
           "svg": ""
          },
          {
           "question": "A は分速 60m で 20分歩きました。何m進みましたか。",
           "answer": "1200",
-          "meaning": "60×20＝1200mです。",
+          "meaning": "分速60mは「1分で60m進む」という意味です。それが20分ぶん続くので、60mのかたまりが20こ分になります。60×20＝1200。答えは1200mです。",
           "svg": ""
          }
         ]
@@ -5844,7 +5844,7 @@
          {
           "question": "1200m はなれた2人が 分速 60m と 分速 40m で同時に出発します。1回目にすれちがうのは何分後ですか。",
           "answer": "12",
-          "meaning": "1200÷100＝12分後です。",
+          "meaning": "向かい合って進むので、1分ごとに 60＋40＝100m ずつ あいだがちぢみます。1200mのすきまがなくなったときが 1回目にすれちがうときです。1200÷100＝12。答えは12分後です。",
           "svg": ""
          },
          {
@@ -5856,7 +5856,7 @@
          {
           "question": "900m はなれた2人が 分速 50m と 分速 40m で往復します。2回目にすれちがうのは何分後ですか。",
           "answer": "30",
-          "meaning": "900×3＝2700m。2700÷90＝30分後です。",
+          "meaning": "1回目に出会うまでに、2人あわせて 900m 進みます。そのあとは それぞれ向こうのはしで折り返してまた出会うので、次に出会うまでに あわせて 900×2＝1800m 進みます。だから2回目までの合計は 900×3＝2700m。1分で 50＋40＝90m 進むので 2700÷90＝30。答えは30分後です。",
           "svg": ""
          }
         ]
@@ -5929,7 +5929,7 @@
          {
           "question": "6と10の最小公倍数はいくつですか。",
           "answer": "30",
-          "meaning": "30です。",
+          "meaning": "最小公倍数は、6の倍数と10の倍数がはじめてそろう数です。6、12、18、24、30…と 10、20、30… をならべると30ではじめて重なります。6＝2×3、10＝2×5 と分けて 2×3×5＝30 と出すこともできます。答えは30です。",
           "svg": ""
          }
         ]
@@ -6024,13 +6024,13 @@
          {
           "question": "1 から 100 までで、3 または 5 でわり切れる数は何こありますか。",
           "answer": "47",
-          "meaning": "33＋20−6＝47こです。",
+          "meaning": "3の倍数と5の倍数をただたすと、両方にあたる15の倍数を2回数えてしまうので、その分を1回ひきます。3の倍数は 100÷3＝33あまり1 で33こ、5の倍数は 100÷5＝20 で20こ、15の倍数は 100÷15＝6あまり10 で6こ。33＋20−6＝47。答えは47こです。",
           "svg": ""
          },
          {
           "question": "1 から 100 までで、3 でも 5 でも わり切れる数（15の倍数）は何こありますか。",
           "answer": "6",
-          "meaning": "100÷15＝6こです。",
+          "meaning": "3でも5でもわり切れる数は、3と5の両方の倍数、つまり15の倍数です。「100の中に15がいくつ入るか」を数えます。100÷15＝6あまり10 なので 15、30、45、60、75、90 の6こ。あまりの10は次の105にとどかないので数えません。答えは6こです。",
           "svg": ""
          },
          {
@@ -6069,13 +6069,13 @@
          {
           "question": "1 から 10 までをぜんぶかけた数は 2 で何回わり切れますか。",
           "answer": "8",
-          "meaning": "5＋2＋1＝8回です。",
+          "meaning": "2で何回わり切れるかは、1から10までの中に2がいくつかくれているかを数えることです。2の倍数（2・4・6・8・10）が5こ。そのうち4の倍数（4・8）はもう1こ2を持つので＋2こ。8はさらにもう1こ持つので＋1こ。5＋2＋1＝8。答えは8回です。",
           "svg": ""
          },
          {
           "question": "1 から 30 までをぜんぶかけた数は 3 で何回わり切れますか。",
           "answer": "14",
-          "meaning": "10＋3＋1＝14回です。",
+          "meaning": "3がいくつかくれているかを数えます。3の倍数は 30÷3＝10こ。そのうち9の倍数（9・18・27）はもう1こ3を持つので＋3こ。27はさらにもう1こ持つので＋1こ。10＋3＋1＝14。答えは14回です。",
           "svg": ""
          }
         ]
@@ -6097,19 +6097,19 @@
          {
           "question": "1 から 30 までをぜんぶかけた数の 一の位から 0 は何こ続きますか。",
           "answer": "7",
-          "meaning": "6＋1＝7こです。",
+          "meaning": "おわりの0は 10＝2×5 の組が1つできるごとに1こふえます。2は5よりずっと多いので、5がいくつあるかで決まります。5の倍数は 30÷5＝6こ、そのうち25はもう1こ5を持つので＋1こ。6＋1＝7。答えは7こです。",
           "svg": ""
          },
          {
           "question": "1 から 10 までをぜんぶかけた数の 一の位から 0 は何こ続きますか。",
           "answer": "2",
-          "meaning": "2こです。",
+          "meaning": "おわりの0の数は 2×5 の組の数で決まり、少ないほうの5の数だけできます。1から10までに5を持つ数は5と10の2こだけ（25のように5を2こ持つ数はありません）。だから0は2こ続きます。答えは2こです。",
           "svg": ""
          },
          {
           "question": "1 から 50 までをぜんぶかけた数の 一の位から 0 は何こ続きますか。",
           "answer": "12",
-          "meaning": "10＋2＝12こです。",
+          "meaning": "0は 2×5 の組が1つできるごとに1こふえ、数の少ない5の個数で決まります。5の倍数は 50÷5＝10こ。そのうち25と50はもう1こ5を持つので＋2こ。10＋2＝12。答えは12こです。",
           "svg": ""
          }
         ]
@@ -6244,7 +6244,7 @@
          {
           "question": "30円のあめ だけで 480円 にするには 何こ買いますか。",
           "answer": "16",
-          "meaning": "480÷30＝16こです。",
+          "meaning": "480円を30円ずつのかたまりに分けると、その数が買えるこ数です。「480の中に30がいくつ入るか」なのでわり算を使います。480÷30＝16。48÷3＝16 と見ると計算しやすいです。答えは16こです。",
           "svg": ""
          },
          {
@@ -6311,7 +6311,7 @@
          {
           "question": "1、2、3、4 のカードで4けたの整数を作り小さい順にならべます。全部で何こできますか。",
           "answer": "24",
-          "meaning": "4×3×2×1＝24こです。",
+          "meaning": "千の位から順に、置けるカードの数を数えます。千の位は4通り、百の位は使った1まいがへって3通り、十の位は2通り、一の位は1通り。位ごとの数はかけ算でつなぎます。4×3×2×1＝24。答えは24こです。",
           "svg": ""
          },
          {
@@ -6345,7 +6345,7 @@
          {
           "question": "1、2、3、4 から3まい選んで3けたの整数を作ります。全部で何こできますか。",
           "answer": "24",
-          "meaning": "4×3×2＝24こです。",
+          "meaning": "百の位から順に置けるカードを数えます。百の位は4通り、十の位は使った分がへって3通り、一の位は2通り。4×3×2＝24。答えは24こです。",
           "svg": ""
          },
          {
@@ -6390,13 +6390,13 @@
          {
           "question": "A、B、C の3人が1れつにならびます。A が B より右にいるならび方は何通りですか。",
           "answer": "3",
-          "meaning": "6÷2＝3通りです。",
+          "meaning": "3人のならび方はぜんぶで 3×2×1＝6通り。その6通りは、AとBの場所を入れかえた相手がかならずあるので、「Aが右」と「Aが左」がちょうど半分ずつになります。6÷2＝3。答えは3通りです。",
           "svg": ""
          },
          {
           "question": "A、B、C、D の4人が1れつにならぶならび方は 全部で何通りですか。",
           "answer": "24",
-          "meaning": "4×3×2×1＝24通りです。",
+          "meaning": "左から順に決めます。いちばん左は4人のだれでもよいので4通り、次は残った3通り、次は2通り、最後は1通り。4×3×2×1＝24。答えは24通りです。",
           "svg": ""
          }
         ]
@@ -6418,19 +6418,19 @@
          {
           "question": "1れつにならんだ 3つの部屋を 3色で となり合う部屋がちがう色になるようにぬります。何通りですか。",
           "answer": "12",
-          "meaning": "3×2×2＝12通りです。",
+          "meaning": "左の部屋から順に決めます。1つめは3色のどれでもよく3通り。2つめは左どなりと同じ色だけがだめなので 3−1＝2通り。3つめも左どなりとちがえばよいので2通り（1つめと同じ色でもかまいません）。3×2×2＝12。答えは12通りです。",
           "svg": ""
          },
          {
           "question": "1れつにならんだ 4つの部屋を 4色で となり合う部屋がちがう色になるようにぬります。何通りですか。",
           "answer": "108",
-          "meaning": "4×3×3×3＝108通りです。",
+          "meaning": "1つめは4色のどれでもよく4通り。2つめからは 左どなりの色だけをさければよいので 4−1＝3通りずつです。となりでない部屋とは同じ色でも大丈夫です。4×3×3×3＝108。答えは108通りです。",
           "svg": ""
          },
          {
           "question": "1れつにならんだ 5つの部屋を 3色で となり合う部屋がちがう色になるようにぬります。何通りですか。",
           "answer": "48",
-          "meaning": "3×2×2×2×2＝48通りです。",
+          "meaning": "1つめの部屋は3色のどれでもよく3通り。2つめからは 左どなりの色だけをさければよいので 3−1＝2通りずつで、それが4回続きます。3×2×2×2×2＝48。答えは48通りです。",
           "svg": ""
          }
         ]
@@ -6457,19 +6457,19 @@
          {
           "question": "正十角形の1つの内角は何度ですか。",
           "answer": "144",
-          "meaning": "外角は36度。180−36＝144度です。",
+          "meaning": "どんな正多角形でも、外角をぜんぶ集めると1回転の360°になります。正十角形は同じ外角が10こなので 360÷10＝36°。内角と外角をあわせると一直線の180°なので 180−36＝144。答えは144度です。",
           "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 133.8,36.6 157.8,69.6 157.8,110.4 133.8,143.4 95.0,156.0 56.2,143.4 32.2,110.4 32.2,69.6 56.2,36.6\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正十角形</text></svg>"
          },
          {
           "question": "正六角形の1つの内角は何度ですか。",
           "answer": "120",
-          "meaning": "外角は60度。180−60＝120度です。",
+          "meaning": "外角の合計はどの正多角形でも360°です。正六角形は同じ外角が6こなので 360÷6＝60°。内角は一直線の180°から外角をひいて 180−60＝120。答えは120度です。",
           "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"95.0,24.0 152.2,57.0 152.2,123.0 95.0,156.0 37.8,123.0 37.8,57.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"95\" y=\"95\" font-size=\"14\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">?</text><text x=\"95\" y=\"184\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正六角形</text></svg>"
          },
          {
           "question": "1つの内角が 165° の正多角形は 正何角形ですか。",
           "answer": "24",
-          "meaning": "外角は180−165＝15度。360÷15＝24。正24角形です。",
+          "meaning": "内角と外角をあわせると一直線の180°なので、外角は 180−165＝15°。外角をぜんぶ集めると360°になるので、「360の中に15がいくつ入るか」が角の数です。360÷15＝24。答えは正24角形です。",
           "svg": ""
          }
         ]
@@ -6491,7 +6491,7 @@
          {
           "question": "正方形の1つの角と 正三角形の1つの角 と 一直線（180°）の のこりの角は何度ですか。",
           "answer": "30",
-          "meaning": "360−90−60−180＝30度です。",
+          "meaning": "1つの点のまわりをぐるっと1周すると360°です。そこに 正方形の角90°、正三角形の角60°、まっすぐな線の180° がならんでいるので、のこりはその分をひいた大きさになります。360−90−60−180＝30。答えは30度です。",
           "svg": ""
          },
          {
@@ -6503,7 +6503,7 @@
          {
           "question": "正六角形の1つの内角と 正方形の1つの角 をたすと何度ですか。",
           "answer": "210",
-          "meaning": "120＋90＝210度です。",
+          "meaning": "まず正六角形の内角を出します。外角は 360÷6＝60°なので、内角は 180−60＝120°。正方形の1つの角は90°です。2つをたして 120＋90＝210。答えは210度です。",
           "svg": ""
          }
         ]
@@ -6576,7 +6576,7 @@
          {
           "question": "たて 6cm、よこ 10cm の長方形の まわりの長さは何cmですか。",
           "answer": "32",
-          "meaning": "(6＋10)×2＝32cmです。",
+          "meaning": "まわりの長さは たて2本とよこ2本の合計です。たて6cmとよこ10cmで半周ぶんになるので、それを2倍します。(6＋10)×2＝32。答えは32cmです。",
           "svg": ""
          }
         ]
@@ -6598,19 +6598,19 @@
          {
           "question": "直径 100cm の円の まわりの長さは何cmですか。（円周率3.14）",
           "answer": "314",
-          "meaning": "100×3.14＝314cmです。",
+          "meaning": "円のまわりの長さ（円周）は、直径のおよそ3.14倍になると決まっています。だから直径に3.14をかけます。100×3.14＝314。答えは314cmです。",
           "svg": "<svg viewBox=\"0 0 190 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"95\" cy=\"88\" r=\"66\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M95 88 L161 88\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"128\" y=\"82\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#ff6b6b\">50</text><text x=\"95\" y=\"179\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">直径100cm</text></svg>"
          },
          {
           "question": "半径 25cm の円の まわりの長さは何cmですか。（円周率3.14）",
           "answer": "157",
-          "meaning": "直径は50cm。50×3.14＝157cmです。",
+          "meaning": "円周をもとめる式は 直径×3.14 なので、半径のままではかけられません。まず2倍して直径にします。25×2＝50cm。50×3.14＝157。答えは157cmです。",
           "svg": ""
          },
          {
           "question": "まわりの長さが 314cm の円の 直径は何cmですか。（円周率3.14）",
           "answer": "100",
-          "meaning": "314÷3.14＝100cmです。",
+          "meaning": "円周は 直径×3.14 でできています。だから直径を出すには反対に、円周を3.14でわります。314÷3.14＝100。たしかめは 100×3.14＝314 でぴったりです。答えは100cmです。",
           "svg": ""
          }
         ]
@@ -6632,19 +6632,19 @@
          {
           "question": "すべての角が120°の六角形で、向かい合う辺が 3cm と 6cm のとき、その和はいくつですか。",
           "answer": "9",
-          "meaning": "3＋6＝9です。",
+          "meaning": "すべての角が120°の六角形では、向かい合う辺どうしがペアになります。ここできかれているのは そのペアをあわせた長さなので、2つをそのままたします。3＋6＝9。答えは9です。",
           "svg": ""
          },
          {
           "question": "すべての角が120°の六角形で、向かい合う辺の和が どれも 9 です。片方が 4cm のとき もう片方は何cmですか。",
           "answer": "5",
-          "meaning": "9−4＝5cmです。",
+          "meaning": "すべての角が120°の六角形では、向かい合う辺の和がどこも同じ9になります。だから9から わかっている4cmをひけば もう片方が出ます。9−4＝5。答えは5cmです。",
           "svg": ""
          },
          {
           "question": "正六角形の 1つの角は何度ですか。",
           "answer": "120",
-          "meaning": "180−360÷6＝120度です。",
+          "meaning": "外角をぜんぶ集めると360°で、正六角形は同じ外角が6つなので 1つは 360÷6＝60°。内角は一直線の180°から外角をひきます。180−60＝120。答えは120度です。",
           "svg": ""
          }
         ]
@@ -6677,13 +6677,13 @@
          {
           "question": "たて 8cm、よこ 12cm の長方形に はば 3cm の帯が ななめに通っています。帯をのぞいた面積は何cm²ですか。",
           "answer": "72",
-          "meaning": "96−24＝72cm²です。",
+          "meaning": "長方形ぜんたいから 帯の分をひきます。帯はななめでも、はしをずらしてそろえると たて8cm・よこ3cm の形と同じ面積になるので 8×3＝24cm²。長方形は 8×12＝96cm²。96−24＝72。答えは72cm²です。",
           "svg": ""
          },
          {
           "question": "たて 6cm、よこ 10cm の長方形の面積は何cm²ですか。",
           "answer": "60",
-          "meaning": "6×10＝60cm²です。",
+          "meaning": "長方形の面積は、1cm²のマスがよこに何こ・たてに何れつならぶかで決まります。よこ10このれつが たてに6れつ分あるので 6×10＝60。答えは60cm²です。",
           "svg": ""
          }
         ]
@@ -6705,7 +6705,7 @@
          {
           "question": "対角線が 10cm と 6cm の ひし形の面積は何cm²ですか。",
           "answer": "30",
-          "meaning": "10×6÷2＝30cm²です。",
+          "meaning": "ひし形は、2本の対角線をたてとよこにした長方形の ちょうど半分の大きさになります。だから対角線どうしをかけて2でわります。10×6÷2＝60÷2＝30。答えは30cm²です。",
           "svg": ""
          },
          {
@@ -6717,7 +6717,7 @@
          {
           "question": "面積が 24cm² のひし形で、1本の対角線が 8cm のとき、もう1本は何cmですか。",
           "answer": "6",
-          "meaning": "24×2÷8＝6cmです。",
+          "meaning": "ひし形の面積は 対角線×対角線÷2 です。まず面積を2倍して ÷2 をもとにもどします。24×2＝48 が 2本の対角線をかけた数。48÷8＝6。答えは6cmです。",
           "svg": ""
          }
         ]
@@ -6739,13 +6739,13 @@
          {
           "question": "底辺が 12cm、高さが 5cm の三角形の面積は何cm²ですか。",
           "answer": "30",
-          "meaning": "12×5÷2＝30cm²です。",
+          "meaning": "三角形は、同じ底辺と高さの長方形の ちょうど半分の大きさです。だから 底辺×高さ をしてから2でわります。12×5＝60、60÷2＝30。答えは30cm²です。",
           "svg": ""
          },
          {
           "question": "面積が 20cm²、底辺が 8cm の三角形の 高さは何cmですか。",
           "answer": "5",
-          "meaning": "20×2÷8＝5cmです。",
+          "meaning": "三角形の面積は 底辺×高さ÷2 です。まず面積を2倍して ÷2 をもとにもどすと 20×2＝40 が 底辺×高さ。これを底辺の8でわれば高さです。40÷8＝5。答えは5cmです。",
           "svg": ""
          },
          {
@@ -6778,7 +6778,7 @@
          {
           "question": "三角形の面積が 36cm²、高さが 9cm のとき、底辺は何cmですか。",
           "answer": "8",
-          "meaning": "36×2÷9＝8cmです。",
+          "meaning": "三角形の面積は 底辺×高さ÷2 なので、まず面積を2倍して ÷2 をもとにもどします。36×2＝72 が 底辺×高さ。72÷9＝8。答えは8cmです。",
           "svg": ""
          },
          {
@@ -6790,7 +6790,7 @@
          {
           "question": "台形の面積が 42cm²、上底と下底の和が 14cm のとき、高さは何cmですか。",
           "answer": "6",
-          "meaning": "(上底＋下底)×高さ÷2＝面積。42×2÷14＝6cmです。",
+          "meaning": "台形の面積は (上底＋下底)×高さ÷2 です。まず面積を2倍して ÷2 をもとにもどすと 42×2＝84 が (上底＋下底)×高さ。それを14でわれば高さが出ます。84÷14＝6。答えは6cmです。",
           "svg": ""
          }
         ]
@@ -6824,7 +6824,7 @@
          {
           "question": "三角形 ABC の面積が 60cm²。辺BCを 4等分した1つ分を底辺にした三角形の面積は何cm²ですか。",
           "answer": "15",
-          "meaning": "60÷4＝15cm²です。",
+          "meaning": "BCを4等分した1つ分を底辺にすると、高さは同じままで底辺だけが4分の1になります。面積は底辺の長さに合わせてかわるので、面積も4分の1です。60÷4＝15。答えは15cm²です。",
           "svg": ""
          }
         ]
@@ -6857,13 +6857,13 @@
          {
           "question": "直径 8cm の円が ぴったり入る 正方形の 1辺は何cmですか。",
           "answer": "8",
-          "meaning": "1辺＝直径で8cmです。",
+          "meaning": "円が正方形にぴったり入ると、円は向かい合う2つの辺にちょうどふれます。そのふれた所からふれた所までの長さが、正方形の1辺でもあり 円の直径でもあります。だから1辺は直径と同じ8cm。答えは8cmです。",
           "svg": ""
          },
          {
           "question": "1辺 10cm の正方形の 面積は何cm²ですか。",
           "answer": "100",
-          "meaning": "10×10＝100cm²です。",
+          "meaning": "正方形はたてとよこが同じ長さです。面積は たて×よこ なので、同じ数どうしをかけます。10×10＝100。答えは100cm²です。",
           "svg": ""
          }
         ]
@@ -6891,13 +6891,13 @@
          {
           "question": "直径 8cm の円にぴったり入る正方形の 対角線は何cmですか。",
           "answer": "8",
-          "meaning": "対角線＝直径で8cmです。",
+          "meaning": "正方形が円の中にぴったり入ると、4つの頂点が円のふちにつきます。向かい合う頂点を結んだ対角線は円の中心を通るので、円の直径と同じ長さになります。だから8cm。答えは8cmです。",
           "svg": ""
          },
          {
           "question": "直径 8cm の円にぴったり入る正方形の 面積は何cm²ですか。",
           "answer": "32",
-          "meaning": "8×8÷2＝32cm²です。",
+          "meaning": "この正方形は、対角線8cmを たてとよこにした大きな正方形の ちょうど半分の大きさです（対角線×対角線÷2 で出せます）。8×8÷2＝64÷2＝32。答えは32cm²です。",
           "svg": ""
          }
         ]
@@ -6930,7 +6930,7 @@
          {
           "question": "面積 40cm² と 30cm² の紙を重ね、重なりが 12cm² のとき、A だけの部分は何cm²ですか。",
           "answer": "28",
-          "meaning": "40−12＝28cm²です。",
+          "meaning": "Aの40cm²の中には、Bと重なっている12cm²もふくまれています。Aだけの部分を知りたいので、その重なりをとりのぞきます。40−12＝28。答えは28cm²です。",
           "svg": ""
          },
          {
@@ -6958,19 +6958,19 @@
          {
           "question": "二等辺三角形の頂上の角が 40° のとき、底の1つの角は何度ですか。",
           "answer": "70",
-          "meaning": "(180−40)÷2＝70度です。",
+          "meaning": "三角形の3つの角の合計は180°です。頂上の40°をひくと、底の2つの角の合計が 180−40＝140°。二等辺三角形は底の2つの角が同じ大きさなので、半分にします。140÷2＝70。答えは70度です。",
           "svg": ""
          },
          {
           "question": "二等辺三角形の 底の1つの角が 75° のとき、頂上の角は何度ですか。",
           "answer": "30",
-          "meaning": "180−150＝30度です。",
+          "meaning": "二等辺三角形は底の2つの角が同じなので、底の角の合計は 75×2＝150°。3つの角の合計180°からひけば 頂上の角が出ます。180−150＝30。答えは30度です。",
           "svg": ""
          },
          {
           "question": "二等辺三角形の頂上の角が 30°、底の角が 75° です。底の角の外がわの角（一直線のこりの角）は何度ですか。",
           "answer": "105",
-          "meaning": "180−75＝105度です。",
+          "meaning": "底の角と その外がわの角は ならんで一直線をつくるので、2つをあわせると180°です。だから180°から底の角75°をひきます。頂上の30°はここでは使いません。180−75＝105。答えは105度です。",
           "svg": ""
          }
         ]
@@ -6997,19 +6997,19 @@
          {
           "question": "5人の平均が 72点。もう1人 84点 の人が入ると、6人の平均は何点になりますか。",
           "answer": "74",
-          "meaning": "合計は360＋84＝444点。444÷6＝74点です。",
+          "meaning": "平均は合計を人数でわった数なので、まず合計にもどします。5人の合計は 72×5＝360点。そこへ84点が入って 360＋84＝444点、人数は6人になります。444÷6＝74。答えは74点です。",
           "svg": ""
          },
          {
           "question": "6人の合計が 444点 のとき、平均は何点ですか。",
           "answer": "74",
-          "meaning": "444÷6＝74点です。",
+          "meaning": "平均は「みんな同じ点だったとしたら1人何点か」という数です。だから合計を人数で等分します。444÷6＝74。答えは74点です。",
           "svg": ""
          },
          {
           "question": "4人の平均が 80点、もう1人が 60点 のとき、5人の平均は何点ですか。",
           "answer": "76",
-          "meaning": "320＋60＝380点。380÷5＝76点です。",
+          "meaning": "まず合計にもどします。4人の合計は 80×4＝320点。60点の人が入って 320＋60＝380点、人数は5人です。380÷5＝76。答えは76点です。",
           "svg": ""
          }
         ]
@@ -7031,19 +7031,19 @@
          {
           "question": "男子 10人の平均が 60点、女子 15人の平均が 70点。全体の合計は何点ですか。",
           "answer": "1650",
-          "meaning": "600＋1050＝1650点です。",
+          "meaning": "平均×人数 でそれぞれの合計にもどしてから、2つをたします。男子は 60×10＝600点、女子は 70×15＝1050点。600＋1050＝1650。答えは1650点です。",
           "svg": ""
          },
          {
           "question": "男子 20人の平均が 65点、女子 10人の平均が 80点。30人の平均は何点ですか。",
           "answer": "70",
-          "meaning": "1300＋800＝2100点。2100÷30＝70点です。",
+          "meaning": "人数がちがうので、平均どうしをたして2でわってはいけません。合計にもどしてから 全体の人数でわります。男子 65×20＝1300点、女子 80×10＝800点、あわせて2100点。2100÷30＝70。答えは70点です。",
           "svg": ""
          },
          {
           "question": "男子 10人 と 女子 15人 の 合計人数は何人ですか。",
           "answer": "25",
-          "meaning": "10＋15＝25人です。",
+          "meaning": "男子と女子を1つのグループにまとめると何人になるか、をきいています。ばらばらの2つを合わせるときはたし算です。10＋15＝25。（平均の点数はここでは使いません。）答えは25人です。",
           "svg": ""
          }
         ]
@@ -7070,19 +7070,19 @@
          {
           "question": "1辺が 10こ の正方形にならべたご石の いちばん外がわは何こですか。",
           "answer": "36",
-          "meaning": "(10−1)×4＝36こです。",
+          "meaning": "外がわを4つの辺に分けて数えると、角のご石を2回ずつ数えてしまいます。そこで1辺から角を1こはずした 10−1＝9こ のまとまりを4つ作ると、重なりなく数えられます。9×4＝36。答えは36こです。",
           "svg": "<svg viewBox=\"0 0 194 184\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"20\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"16\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"33\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"50\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"67\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"84\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"101\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"118\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"135\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"152\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"20\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"37\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"54\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"71\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"88\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"105\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"122\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"139\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"156\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"173\" cy=\"169\" r=\"6\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/></svg>"
          },
          {
           "question": "1辺が 8こ の正方形にならべたご石は 全部で何こですか。",
           "answer": "64",
-          "meaning": "8×8＝64こです。",
+          "meaning": "正方形にきちんとならんでいるので、よこ8このれつが たてに8れつ分そろっています。同じ数のまとまりがいくつ分かなので、かけ算で数えます。8×8＝64。答えは64こです。",
           "svg": ""
          },
          {
           "question": "いちばん外がわが 28こ の正方形にならべたご石の 1辺は何こですか。",
           "answer": "8",
-          "meaning": "28÷4＝7。7＋1＝8こです。",
+          "meaning": "外がわは、角を1こずつはずした「1辺−1」のまとまり4つに分けられます。だから 28÷4＝7 が「1辺−1」の数。1辺はそれより1こ多いので 7＋1＝8。答えは8こです。",
           "svg": ""
          }
         ]
@@ -7104,19 +7104,19 @@
          {
           "question": "外がわの1辺が 9こ、まん中の 5×5 があいている方陣のご石は何こですか。",
           "answer": "56",
-          "meaning": "81−25＝56こです。",
+          "meaning": "まず あなが無いとしたときの数を出し、あいている分をひきます。全部なら 9×9＝81こ、まん中のあなは 5×5＝25こ。81−25＝56。答えは56こです。",
           "svg": "<svg viewBox=\"0 0 186 176\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"21\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"17\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"35\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"53\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"71\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"89\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"107\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"125\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"143\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"21\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"39\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"57\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"75\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"93\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"111\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"129\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"147\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/><circle cx=\"165\" cy=\"161\" r=\"7\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.8\"/></svg>"
          },
          {
           "question": "外がわの1辺が 7こ の正方形にならべたご石は 全部で何こですか。",
           "answer": "49",
-          "meaning": "7×7＝49こです。",
+          "meaning": "正方形にきちんとならんでいるので、よこ7このれつが たてに7れつ分そろっています。同じ数のまとまりがいくつ分かなので、かけ算を使います。7×7＝49。答えは49こです。",
           "svg": ""
          },
          {
           "question": "外がわの1辺が 10こ、まん中の 6×6 があいている方陣のご石は何こですか。",
           "answer": "64",
-          "meaning": "100−36＝64こです。",
+          "meaning": "あなが無いとしたときの数から、あいている分をひきます。全部なら 10×10＝100こ、まん中のあなは 6×6＝36こ。100−36＝64。答えは64こです。",
           "svg": ""
          }
         ]
@@ -7143,7 +7143,7 @@
          {
           "question": "1、2、4、7、11、16、22、… の 8番目の数はいくつですか。",
           "answer": "29",
-          "meaning": "22＋7＝29です。",
+          "meaning": "となりとの差を見ると 1、2、3、4、5、6 と1ずつふえています。7番目が22で、そのつぎの差は7になるはずです。22＋7＝29。答えは29です。",
           "svg": ""
          },
          {
@@ -7155,7 +7155,7 @@
          {
           "question": "3、4、6、9、13、18、… の 7番目の数はいくつですか。",
           "answer": "24",
-          "meaning": "差は1、2、3、4、5、6。18＋6＝24です。",
+          "meaning": "となりとの差は 1、2、3、4、5 と1ずつふえています。6番目が18なので、つぎの差は6です。18＋6＝24。答えは24です。",
           "svg": ""
          }
         ]
@@ -7177,7 +7177,7 @@
          {
           "question": "ピラミッドの形に 1、3、5… とならべます。10だん目までのご石は全部で何こですか。",
           "answer": "100",
-          "meaning": "10×10＝100こです。",
+          "meaning": "1だん目まで1こ、2だん目まで 1＋3＝4こ、3だん目まで 4＋5＝9こ。1、4、9 と、だんの数どうしをかけた数になっています。だから10だん目までは 10×10＝100。答えは100こです。",
           "svg": ""
          },
          {
@@ -7216,7 +7216,7 @@
          {
           "question": "長さ 120m の列車が 長さ 480m の鉄橋を 秒速 20m でわたります。何秒かかりますか。",
           "answer": "30",
-          "meaning": "600÷20＝30秒です。",
+          "meaning": "わたり終わるまでに列車が進むのは、鉄橋の長さだけではありません。先頭が鉄橋に入ってから 最後尾がぬけ切るまでなので、鉄橋＋列車の長さぶん進みます。480＋120＝600m。600÷20＝30。答えは30秒です。",
           "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"14\" y=\"34\" width=\"86\" height=\"26\" rx=\"5\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"57\" y=\"51\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">列車</text><path d=\"M120 64 L286 64\" stroke=\"#8a5cff\" stroke-width=\"4\"/><text x=\"203\" y=\"80\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#8a5cff\">鉄橋</text><path d=\"M104 47 L118 47\" stroke=\"#ff6b6b\" stroke-width=\"2\" marker-end=\"url(#a2)\"/><defs><marker id=\"a2\" markerWidth=\"7\" markerHeight=\"7\" refX=\"5\" refY=\"3\" orient=\"auto\"><path d=\"M0 0 L6 3 L0 6 z\" fill=\"#ff6b6b\"/></marker></defs></svg>"
          },
          {
@@ -7228,7 +7228,7 @@
          {
           "question": "長さ 150m の列車が 長さ 450m の鉄橋をわたるとき、進む長さは何mですか。",
           "answer": "600",
-          "meaning": "450＋150＝600mです。",
+          "meaning": "先頭が入ってから 最後尾がぬけ切るまでを考えるので、進む長さは 鉄橋の長さに列車の長さをたしたものになります。450＋150＝600。答えは600mです。",
           "svg": ""
          }
         ]
@@ -7250,7 +7250,7 @@
          {
           "question": "長さ 120m の列車に乗っている人が 長さ 480m の鉄橋を 秒速 20m でわたるとき、何秒かかりますか。",
           "answer": "24",
-          "meaning": "480÷20＝24秒です。",
+          "meaning": "乗っている人は、鉄橋の入口から出口までの480mを動くだけです。人には長さがないので、列車の120mはたしません。ここが「列車がわたり切る時間」とのちがいです。480÷20＝24。答えは24秒です。",
           "svg": ""
          },
          {
@@ -7295,13 +7295,13 @@
          {
           "question": "流れのないところで 分速 70m の船が、分速 20m の川を 下るときの速さは分速何mですか。",
           "answer": "90",
-          "meaning": "70＋20＝分速90mです。",
+          "meaning": "川を下るときは、流れが船をおしてくれるので、船の速さに流れの速さをたした速さになります。70＋20＝90。答えは分速90mです。",
           "svg": ""
          },
          {
           "question": "流れのないところで 分速 70m の船が、分速 20m の川を 上るときの速さは分速何mですか。",
           "answer": "50",
-          "meaning": "70−20＝分速50mです。",
+          "meaning": "川を上るときは、流れが船をおしもどすので、船の速さから流れの速さをひいた速さになります。70−20＝50。答えは分速50mです。",
           "svg": ""
          }
         ]
@@ -7329,13 +7329,13 @@
          {
           "question": "流れのないところで 分速 80m と 分速 40m の船が 向かい合って進みます。1440m はなれているとき、出会うのは何分後ですか。",
           "answer": "12",
-          "meaning": "80＋40＝120m。1440÷120＝12分後です。",
+          "meaning": "向かい合って進むと、1分ごとに 2そうが進んだ長さの合計だけ あいだがちぢみます。1分で 80＋40＝120m。1440÷120＝12。答えは12分後です。",
           "svg": ""
          },
          {
           "question": "流れのないところで どちらも分速 60m の船が 向かい合い、1800m はなれています。出会うのは何分後ですか。",
           "answer": "15",
-          "meaning": "1800÷120＝15分後です。",
+          "meaning": "向かい合っているので、1分ごとに 60＋60＝120m ずつ あいだがちぢみます。1800÷120＝15。答えは15分後です。",
           "svg": ""
          }
         ]
@@ -7374,7 +7374,7 @@
          {
           "question": "時計の 長い針は 20分間に 何度 進みますか。",
           "answer": "120",
-          "meaning": "6×20＝120度です。",
+          "meaning": "長い針は60分で1周＝360°まわります。だから1分では 360÷60＝6°ずつ進みます。それが20分ぶんなので 6×20＝120。答えは120度です。",
           "svg": ""
          }
         ]
@@ -7469,19 +7469,19 @@
          {
           "question": "たて 3cm、よこ 4cm、高さ 5cm の直方体を 1cm ずつに切り分けると 小立方体は全部で何こですか。",
           "answer": "60",
-          "meaning": "3×4×5＝60こです。",
+          "meaning": "1cmの小立方体は、よこ4こ・たて3こで1だんが 3×4＝12こ。それが高さの5だん分つみ重なっています。12×5＝60。式にすると 3×4×5＝60。答えは60こです。",
           "svg": "<svg viewBox=\"0 0 230 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×4×5</text></svg>"
          },
          {
           "question": "たて 4cm、よこ 5cm、高さ 6cm の直方体で どの面にも色がない小立方体は何こですか。",
           "answer": "24",
-          "meaning": "(4−2)×(5−2)×(6−2)＝2×3×4＝24こです。",
+          "meaning": "色がつくのは外がわの1まいだけなので、色のない立方体は たて・よこ・高さ それぞれから 両はしの2こ分をとりのぞいた中身です。(4−2)×(5−2)×(6−2)＝2×3×4＝24。答えは24こです。",
           "svg": ""
          },
          {
           "question": "たて 3cm、よこ 4cm、高さ 5cm の直方体で 3面に色がある小立方体は何こですか。",
           "answer": "8",
-          "meaning": "頂点の8こです。",
+          "meaning": "3つの面がいちどに集まるのは、直方体のかどのところだけです。かど（頂点）は8か所なので8こ。大きさが3・4・5でも かどの数はかわりません。答えは8こです。",
           "svg": ""
          }
         ]
@@ -7508,19 +7508,19 @@
          {
           "question": "立方体の 面は いくつありますか。",
           "answer": "6",
-          "meaning": "6つです。",
+          "meaning": "立方体はさいころと同じ形です。面は 上と下、前と後ろ、右と左 のように 向かい合わせで2つずつ、それが3組あります。2×3＝6。答えは6つです。",
           "svg": ""
          },
          {
           "question": "立方体の 辺は 何本ありますか。",
           "answer": "12",
-          "meaning": "12本です。",
+          "meaning": "立方体の辺は、上の面のまわりに4本、下の面のまわりに4本、その上下をつなぐ たての辺が4本です。4＋4＋4＝12。答えは12本です。",
           "svg": ""
          },
          {
           "question": "立方体の 頂点は いくつありますか。",
           "answer": "8",
-          "meaning": "8つです。",
+          "meaning": "頂点は かどのことです。立方体を上と下に分けて数えると、上の面のかどが4つ、下の面のかどが4つあります。数えもれをふせぐには、この2つに分けるのがこつです。4＋4＝8。答えは8つです。",
           "svg": ""
          }
         ]
@@ -7542,13 +7542,13 @@
          {
           "question": "向かい合う面の和が7のさいころで、2 の向かい側はいくつですか。",
           "answer": "5",
-          "meaning": "7−2＝5です。",
+          "meaning": "このさいころは、向かい合う2つの面をたすと かならず7になる決まりです。だから 7から見えている面の数をひけば、反対がわの数が出ます。7−2＝5。答えは5です。",
           "svg": ""
          },
          {
           "question": "向かい合う面の和が7のさいころで、3 の向かい側はいくつですか。",
           "answer": "4",
-          "meaning": "7−3＝4です。",
+          "meaning": "向かい合う2つの面をたすと7になる決まりなので、7から見えている3をひけば 反対がわの面が出ます。7−3＝4。（2の裏は5、1の裏は6と、同じように出せます。）答えは4です。",
           "svg": ""
          },
          {
@@ -7581,7 +7581,7 @@
          {
           "question": "1辺 3cm の立方体を たてに 1×1 のあなでくりぬいた立体を 1cm の小立方体で数えると 何こですか。",
           "answer": "24",
-          "meaning": "27−3＝24こです。",
+          "meaning": "あなをあける前の小立方体は 3×3×3＝27こ。たてに1×1のあなをまっすぐ通すと、たて1れつ分の3こがぬけます。27−3＝24。答えは24こです。",
           "svg": "<svg viewBox=\"0 0 230 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,60 140,60 190,30 80,30\" fill=\"rgba(79,124,255,0.22)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"30,60 140,60 140,130 30,130\" fill=\"rgba(79,124,255,0.13)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"140,60 190,30 190,100 140,130\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><text x=\"85\" y=\"100\" font-size=\"13\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\" fill=\"#1a2340\">3×3×3</text></svg>"
          },
          {
@@ -7593,7 +7593,7 @@
          {
           "question": "1辺 3cm の立方体の 体積は何cm³ですか。",
           "answer": "27",
-          "meaning": "3×3×3＝27cm³です。",
+          "meaning": "体積は たて×よこ×高さ でもとめます。立方体は たて・よこ・高さ がぜんぶ同じ長さなので、3を3回かけることになります。3×3×3＝27。答えは27cm³です。",
           "svg": ""
          }
         ]
@@ -7615,19 +7615,19 @@
          {
           "question": "底面積 20cm²・高さ 5cm の円柱の体積は何cm³ですか。",
           "answer": "100",
-          "meaning": "20×5＝100cm³です。",
+          "meaning": "柱の形は、底面と同じ形が高さの分だけ積み上がったものと考えられます。だから 底面積×高さ で体積が出ます。20×5＝100。答えは100cm³です。",
           "svg": ""
          },
          {
           "question": "底面積 8cm²・高さ 3cm の円柱の体積は何cm³ですか。",
           "answer": "24",
-          "meaning": "8×3＝24cm³です。",
+          "meaning": "柱の形は、底面と同じ形が高さの分だけ積み上がったものと考えられます。だから 底面積×高さ で体積が出ます。底面積8cm²が高さ3cm分なので 8×3＝24。答えは24cm³です。",
           "svg": ""
          },
          {
           "question": "底面積 20cm²・高さ 5cm と 底面積 12cm²・高さ 4cm の円柱をかさねた立体の体積は何cm³ですか。",
           "answer": "148",
-          "meaning": "100＋48＝148cm³です。",
+          "meaning": "太さがちがうので、2つの円柱に分けて それぞれの体積を出してからたします。下は 20×5＝100cm³、上は 12×4＝48cm³。100＋48＝148。答えは148cm³です。",
           "svg": ""
          }
         ]
@@ -7654,19 +7654,19 @@
          {
           "question": "たて 10cm、よこ 10cm、高さ 10cm の水そうを 満水にすると 水は何cm³ですか。",
           "answer": "1000",
-          "meaning": "10×10×10＝1000cm³です。",
+          "meaning": "満水なので、水の形は水そうとそっくり同じ大きさになります。だから たて×よこ×高さ でもとめます。10×10×10＝1000。答えは1000cm³です。",
           "svg": "<svg viewBox=\"0 0 230 146\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"40\" y=\"26\" width=\"150\" height=\"100\" fill=\"none\" stroke=\"#1a2340\" stroke-width=\"2.2\"/><rect x=\"40\" y=\"26\" width=\"150\" height=\"100\" fill=\"rgba(79,124,255,0.35)\"/><text x=\"115\" y=\"20\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">満水</text></svg>"
          },
          {
           "question": "たて 10cm、よこ 10cm、高さ 10cm の満水の水そうを かたむけて 半分こぼしました。こぼれた水は何cm³ですか。",
           "answer": "500",
-          "meaning": "1000−500＝500cm³です。",
+          "meaning": "満水のときの水は 10×10×10＝1000cm³。その半分がこぼれたので、2でわります。1000÷2＝500。答えは500cm³です。",
           "svg": ""
          },
          {
           "question": "たて 20cm、よこ 10cm、高さ 10cm の満水の水そうを かたむけて ちょうど半分にしたとき、のこった水は何cm³ですか。",
           "answer": "1000",
-          "meaning": "2000÷2＝1000cm³です。",
+          "meaning": "満水のときの水は 20×10×10＝2000cm³。かたむけて ちょうど半分にしたので、のこりは2でわった量です。2000÷2＝1000。答えは1000cm³です。",
           "svg": ""
          }
         ]
@@ -7805,19 +7805,19 @@
          {
           "question": "1辺 6cm の 正方形の外がわを 円が1周転がるとき、中心が動く線の まっすぐな部分の合計は何cmですか。",
           "answer": "24",
-          "meaning": "6×4＝24cmです。",
+          "meaning": "辺の上をころがっているあいだ、円の中心は 辺と同じ長さだけ まっすぐ動きます。角のところでは曲がるので、まっすぐな部分は4つの辺の分だけです。6×4＝24。答えは24cmです。",
           "svg": "<svg viewBox=\"0 0 200 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"96.0,36.0 148.0,88.0 96.0,140.0 44.0,88.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"96.0\" cy=\"22.0\" r=\"14\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"100\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正方形のまわり</text></svg>"
          },
          {
           "question": "1辺 5cm の 正六角形の外がわを 円が1周転がるとき、中心が動く線の まっすぐな部分の合計は何cmですか。",
           "answer": "30",
-          "meaning": "5×6＝30cmです。",
+          "meaning": "辺の上をころがっているあいだ、円の中心は 辺と同じ長さだけ まっすぐ動きます。正六角形の辺は6本あるので 5×6＝30。答えは30cmです。",
           "svg": "<svg viewBox=\"0 0 200 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"96.0,36.0 141.0,62.0 141.0,114.0 96.0,140.0 51.0,114.0 51.0,62.0\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><circle cx=\"96.0\" cy=\"22.0\" r=\"14\" fill=\"rgba(255,107,107,0.25)\" stroke=\"#ff6b6b\" stroke-width=\"2\"/><text x=\"100\" y=\"174\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">正六角形のまわり</text></svg>"
          },
          {
           "question": "1辺 6cm の正三角形の まわりの長さは何cmですか。",
           "answer": "18",
-          "meaning": "6×3＝18cmです。",
+          "meaning": "正三角形は3つの辺の長さがどれも同じです。だから まわりの長さは 6cmの辺が3本分になります。同じ長さのくり返しなのでかけ算です。6×3＝18。答えは18cmです。",
           "svg": ""
          }
         ]
@@ -7845,13 +7845,13 @@
          {
           "question": "正方形の 外がわを 円が1周転がるとき、1つの角で円が回る角度は何度ですか。",
           "answer": "90",
-          "meaning": "360÷4＝90度です。",
+          "meaning": "角のところでは、円はその場でくるっと向きをかえます。1周する間に かえた向きの合計は1回転の360°で、角は4つとも同じなので4等分します。360÷4＝90。答えは90度です。",
           "svg": ""
          },
          {
           "question": "正六角形の 外がわを 円が1周転がるとき、1つの角で円が回る角度は何度ですか。",
           "answer": "60",
-          "meaning": "360÷6＝60度です。",
+          "meaning": "1周する間に、角のところでかえた向きの合計は1回転の360°になります。正六角形は角が6つで同じ大きさなので 360÷6＝60。答えは60度です。",
           "svg": ""
          }
         ]
@@ -7878,7 +7878,7 @@
          {
           "question": "間かく 8cm の平行な2直線で、上底 3cm・下底 9cm の台形の面積は何cm²ですか。",
           "answer": "48",
-          "meaning": "(3＋9)×8÷2＝48cm²です。",
+          "meaning": "台形は、同じ台形をさかさまにしてくっつけると 平行四辺形になります。その平行四辺形の底辺は 上底＋下底、高さはそのままで、面積は台形2つ分です。だから2でわります。(3＋9)×8÷2＝96÷2＝48。答えは48cm²です。",
           "svg": "<svg viewBox=\"0 0 254.5 150\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"72,34 178,34 210,120 40,120\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><text x=\"125\" y=\"28\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">上底 3cm</text><text x=\"125\" y=\"136\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">下底 9cm</text><text x=\"228\" y=\"80\" font-size=\"12\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#ff6b6b\">高さ8cm</text></svg>"
          },
          {
@@ -7890,7 +7890,7 @@
          {
           "question": "台形の面積が 48cm²、高さが 8cm のとき、上底と下底の和は何cmですか。",
           "answer": "12",
-          "meaning": "48×2÷8＝12cmです。",
+          "meaning": "台形の面積は (上底＋下底)×高さ÷2 です。まず面積を2倍して ÷2 をもとにもどすと 48×2＝96 が (上底＋下底)×高さ。これを高さ8でわります。96÷8＝12。答えは12cmです。",
           "svg": ""
          }
         ]
@@ -7917,13 +7917,13 @@
          {
           "question": "重なりの たてが 4cm、よこが 6cm のとき、重なりの面積は何cm²ですか。",
           "answer": "24",
-          "meaning": "4×6＝24cm²です。",
+          "meaning": "重なった部分も たて4cm・よこ6cm の長方形です。長方形の面積は たて×よこ なので 4×6＝24。答えは24cm²です。",
           "svg": ""
          },
          {
           "question": "長方形 B が 秒速 1cm で動き、6秒で完全に重なりました。B のよこの長さは何cmですか。",
           "answer": "6",
-          "meaning": "1×6＝6cmです。",
+          "meaning": "「完全に重なった」ということは、Bがそのよこの長さのぶんだけ進みきったということです。だから進んだきょりを出せば、それがよこの長さになります。速さ×時間＝きょり なので 1×6＝6cm。1秒で1cmずつ、6秒で6cm進んだと考えます。答えは6cmです。",
           "svg": ""
          },
          {
@@ -8727,7 +8727,7 @@
          {
           "question": "円の まわり 360度 のうち、120度 が 相手の円に 食われるとき、外がわに のこるのは 何度 ですか。",
           "answer": "240",
-          "meaning": "360−120＝240度です。",
+          "meaning": "円のまわりは1周でかならず360度と決まっています。そのうち120度ぶんが相手の円にかくれてしまうので、外がわに見えているのは「全体−かくれたぶん」です。だからひき算をつかって 360−120＝240。答えは240度です。",
           "svg": ""
          }
         ]
@@ -8749,13 +8749,13 @@
          {
           "question": "三角形の形に 10段 ならべると 玉は 全部で 何個 ですか。",
           "answer": "55",
-          "meaning": "(1＋10)×10÷2＝55個です。",
+          "meaning": "1段目1個、2段目2個…と1個ずつふえるので、1＋2＋…＋10 をたすことになります。順にたすのは大変なので、同じならびをさかさまにしてくっつけると、どの段も 1＋10＝11個 のそろった形になります。段は10段あるので 11×10＝110、これは2つぶんなので半分にして (1＋10)×10÷2＝55。答えは55個です。",
           "svg": ""
          },
          {
           "question": "三角形の形に ならべたら 全部で 45個 でした。何段 ですか。",
           "answer": "9",
-          "meaning": "(1＋9)×9÷2＝45。9段です。",
+          "meaning": "段の数が分かれば個数は (1＋段の数)×段の数÷2 で出せます。今回はその逆で、45になる段の数をさがします。8段なら (1＋8)×8÷2＝36 でたりず、9段なら (1＋9)×9÷2＝45 でぴったり合います。答えは9段です。",
           "svg": ""
          },
          {
@@ -8783,13 +8783,13 @@
          {
           "question": "三角すいの形に 5段 積むと 玉は 全部で 何個 ですか。",
           "answer": "35",
-          "meaning": "5段目は15個。20＋15＝35個です。（5×6×7÷6＝35）",
+          "meaning": "三角すいは、三角形にならべた玉を上から順に重ねた形です。だから各段の個数は三角形の数そのもので、上から 1個、3個、6個、10個、15個 となります。ぜんぶたして 1＋3＋6＋10＋15＝35。答えは35個です。",
           "svg": ""
          },
          {
           "question": "三角すいの形に 10段 積むと 玉は 全部で 何個 ですか。",
           "answer": "220",
-          "meaning": "10×11×12÷6＝220個です。",
+          "meaning": "各段は三角形にならべた玉の数なので、上から 1，3，6，10，15，21，28，36，45，55 とふえます。10段ぶんをぜんぶたすと220個。段が多いときは 10×11×12÷6＝220 というまとめ方も使えます。答えは220個です。",
           "svg": ""
          },
          {
@@ -8857,7 +8857,7 @@
          {
           "question": "大正方形の 1辺が 66cm のとき、面積は 何cm² ですか。",
           "answer": "4356",
-          "meaning": "66×66＝4356cm²です。",
+          "meaning": "正方形はたてとよこが同じ長さなので、面積は「1辺×1辺」で出せます。だから 66×66 を計算します。66×60＝3960 と 66×6＝396 に分けてたすと 3960＋396＝4356 とらくです。答えは4356cm²です。",
           "svg": ""
          },
          {
@@ -8936,7 +8936,7 @@
          {
           "question": "4つの整数の和が 80 で 「1番目＋4番目」＝「2番目＋3番目」 のとき、1番目＋4番目 は いくつですか。",
           "answer": "40",
-          "meaning": "80÷2＝40です。",
+          "meaning": "4つの数の和80は、「(1番目＋4番目)＋(2番目＋3番目)」と2つのまとまりに分けられます。この2つが同じ大きさだというのだから、80をちょうど半分ずつ分け合っていることになります。だから 80÷2＝40。答えは40です。",
           "svg": ""
          }
         ]
@@ -8963,13 +8963,13 @@
          {
           "question": "5枚1組1000円、こえたぶん1枚150円。10枚たのむと 1枚あたり 平均 何円 ですか。",
           "answer": "175",
-          "meaning": "1750÷10＝175円です。",
+          "meaning": "平均は「ぜんぶの代金÷枚数」で出すので、先に10枚ぶんの代金を求めます。はじめの5枚は組で1000円、のこりの5枚は1枚150円だから 150×5＝750円。あわせて 1000＋750＝1750円。これを10枚で分けて 1750÷10＝175。答えは175円です。",
           "svg": ""
          },
          {
           "question": "5枚1組1000円、こえたぶん1枚150円。4000円で 何枚 たのめますか。",
           "answer": "25",
-          "meaning": "4000−1000＝3000円。3000÷150＝20枚。5＋20＝25枚です。",
+          "meaning": "はじめの5枚ぶんの1000円はかならずかかるので、先にそれを引いて、のこりのお金で1枚150円のぶんを何枚たのめるかを考えます。4000−1000＝3000円、3000÷150＝20枚。これははじめの5枚のあとの枚数なので 5＋20＝25。答えは25枚です。",
           "svg": ""
          },
          {
@@ -8997,7 +8997,7 @@
          {
           "question": "ある数を 20 でわると 商12あまり15 でした。その数は いくつですか。",
           "answer": "255",
-          "meaning": "20×12＋15＝255です。",
+          "meaning": "わり算は「わる数×商＋あまり」でもとの数にもどせます。20のかたまりが12こあって、そこにあまりの15がのこっている、という意味だからです。20×12＝240、240＋15＝255。あまり15はわる数20より小さいので、これで正しい形です。答えは255です。",
           "svg": ""
          },
          {
@@ -9009,7 +9009,7 @@
          {
           "question": "ある数を 8 でわると あまりが 3 でした。答えの小数の部分は いくつですか。小数で答えなさい。",
           "answer": "0.375",
-          "meaning": "3÷8＝0.375です。",
+          "meaning": "わり算の答えを小数で書いたとき、整数の部分は「8のかたまりがいくつとれたか」、小数の部分は「あまりが8のどれだけにあたるか」を表します。あまりは3なので、小数の部分は 3÷8 で出ます。3÷8＝0.375。答えは0.375です。",
           "svg": ""
          }
         ]
@@ -9031,7 +9031,7 @@
          {
           "question": "10人の平均が 60点。合計は 何点 ですか。",
           "answer": "600",
-          "meaning": "60×10＝600点です。",
+          "meaning": "平均60点というのは「全員が60点だったとしても合計は同じ」という意味です。だから60点が10人ぶんあると考えて、かけ算にします。60×10＝600。平均＝合計÷人数 の逆で、合計＝平均×人数 です。答えは600点です。",
           "svg": ""
          },
          {
@@ -9116,7 +9116,7 @@
          {
           "question": "1 を 何回 かけても 答えは いくつですか。",
           "answer": "1",
-          "meaning": "1です。",
+          "meaning": "1をかけるのは「大きさをそのままにする」ということです。1×1＝1、1×1×1＝1 と、何回くりかえしても大きくも小さくもなりません。だから何回かけても答えは1のままです。答えは1です。",
           "svg": ""
          }
         ]
@@ -9138,19 +9138,19 @@
          {
           "question": "A が 1200円、B が 600円 はらいました。B は A に 何円 わたせばよいですか。",
           "answer": "300",
-          "meaning": "合計1800円。1人900円。900−600＝300円です。",
+          "meaning": "2人が同じ金額ずつ出したことにしたいので、まず合計を出して半分にします。1200＋600＝1800円、1800÷2＝900円が1人ぶんです。Bは600円しか出していないので、たりないぶんをわたします。900−600＝300。答えは300円です。",
           "svg": ""
          },
          {
           "question": "A が 1000円、B が 400円 はらったあと、1人ぶんは 何円 ですか。",
           "answer": "700",
-          "meaning": "1400÷2＝700円です。",
+          "meaning": "「1人ぶん」は、2人が出したお金をいったん合わせて、同じ金額に分け直したものです。まず合計 1000＋400＝1400円。これを2人で等しく分けるのでわり算にして 1400÷2＝700。答えは700円です。",
           "svg": ""
          },
          {
           "question": "3人で 出かけて 合計 4800円 かかりました。1人ぶんは 何円 ですか。",
           "answer": "1600",
-          "meaning": "4800÷3＝1600円です。",
+          "meaning": "3人が同じ金額ずつ出すので、合計を人数で等分します。「4800の中に3等分したかたまりがいくつ分あるか」を出すのでわり算です。4800を48と見て 48÷3＝16、けたをもどして1600。答えは1600円です。",
           "svg": ""
          }
         ]
@@ -9211,7 +9211,7 @@
          {
           "question": "外がわの半径が 3cm、内がわの半径が 2.75cm の わっかの **内がわの直径** は 何cm ですか。",
           "answer": "5.5",
-          "meaning": "2.75×2＝5.5cmです。",
+          "meaning": "きかれているのは内がわの直径なので、外がわの3cmは使いません。直径は半径2つぶんの長さなので、内がわの半径2.75cmを2倍します。2.75×2＝5.5。外がわの数を使ってしまわないよう気をつけましょう。答えは5.5cmです。",
           "svg": ""
          },
          {
@@ -9223,7 +9223,7 @@
          {
           "question": "外がわの直径 6cm、内がわの直径 5.5cm の わっかを 10個 つないだ 長さは 何cm ですか。",
           "answer": "55.5",
-          "meaning": "6＋5.5×9＝55.5cmです。",
+          "meaning": "わっかをつなぐと、2個目からは前のわっかに重なって入るので、ふえる長さは内がわの直径5.5cmずつになります。まるまる6cmぶんなのははじめの1個だけです。だから 6＋5.5×9＝6＋49.5＝55.5。答えは55.5cmです。",
           "svg": ""
          }
         ]
@@ -9251,7 +9251,7 @@
          {
           "question": "99400 と 切り上げた数 100000 の 差は いくつですか。",
           "answer": "600",
-          "meaning": "100000−99400＝600です。",
+          "meaning": "切り上げると、もとの数よりかならず大きくなります。どれだけ大きくなったかを知りたいので、大きい方の100000からもとの99400をひきます。100000−99400＝600。0がならんだ数からのひき算はくり下がりでまちがえやすいので、99400に600をたして100000になるか確かめると安心です。答えは600です。",
           "svg": ""
          },
          {
@@ -9284,13 +9284,13 @@
          {
           "question": "6列の 中空方陣で 穴の1辺が 6個 のとき、外がわの1辺は 何個 ですか。",
           "answer": "18",
-          "meaning": "6＋6×2＝18個です。",
+          "meaning": "中空方陣は、まん中の穴のまわりにご石が6列ぶんの厚さでならんだ形です。外がわの1辺で見ると、穴の1辺の6個の左がわに6列、右がわにも6列がつきます。だから 6＋6×2＝18。片がわだけたして12としないよう気をつけましょう。答えは18個です。",
           "svg": "<svg viewBox=\"0 0 202 194\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"16\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"13\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"23\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"33\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"43\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"53\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"63\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"73\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"83\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"93\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"103\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"113\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"123\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"133\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"143\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"153\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"163\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"173\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"16\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"26\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"36\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"46\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"56\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"66\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"76\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"86\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"96\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"106\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"116\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"126\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"136\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"146\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"156\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"166\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"176\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/><circle cx=\"186\" cy=\"183\" r=\"4\" fill=\"#4f7cff\" fill-opacity=\"0.6\" stroke=\"#1a2340\" stroke-width=\"0.7\"/></svg>"
          },
          {
           "question": "外がわの1辺が 18個、穴の1辺が 6個 の 中空方陣の ご石は 全部で 何個 ですか。",
           "answer": "288",
-          "meaning": "18×18−6×6＝324−36＝288個です。",
+          "meaning": "ならんでいるのはドーナツのような形なので、穴がうまっているとしたときの大きな正方形から、穴のぶんをひけば石の数が出ます。大きい正方形は 18×18＝324個、まん中の穴は 6×6＝36個。324−36＝288。答えは288個です。",
           "svg": ""
          },
          {
@@ -9369,7 +9369,7 @@
          {
           "question": "1個 50円 の つもりが 1個 40円 で 12個 買いました。用意したお金は 何円 ですか。",
           "answer": "600",
-          "meaning": "50×12＝600円です。",
+          "meaning": "用意したお金は「1個50円のつもりで12個ぶん」として持っていった金額です。じっさいのねだんが40円だったことは、用意した金額そのものを変えません。だから50円が12個ぶんで 50×12＝600。40を使わないところがつまずきやすい点です。答えは600円です。",
           "svg": ""
          }
         ]
@@ -9403,7 +9403,7 @@
          {
           "question": "600m の 道に 30mおき に 木を 植えると（両はしにも）何本 いりますか。",
           "answer": "21",
-          "meaning": "600÷30＝20区間。20＋1＝21本です。",
+          "meaning": "まず道を30mずつに区切ると、600の中に30がいくつ入るかで区間の数が出ます。600÷30＝20区間。木は区間の切れ目に立ちますが、両はしにも植えるので、木の数は区間の数より1本多くなります。20＋1＝21。答えは21本です。",
           "svg": ""
          }
         ]
@@ -9425,7 +9425,7 @@
          {
           "question": "歩はばを 60cm だと思って 測ったら 150m でした。歩数は 何歩 ですか。",
           "answer": "250",
-          "meaning": "15000÷60＝250歩です。",
+          "meaning": "歩数は「150mの中に歩はば60cmがいくつ入るか」で出ます。ただし単位がmとcmでちがうままではわれないので、先に150m＝15000cmにそろえます。15000÷60＝250。単位をそろえ忘れるのがいちばんのつまずきです。答えは250歩です。",
           "svg": ""
          },
          {
@@ -9464,13 +9464,13 @@
          {
           "question": "1個 9cm² の 三角形が 12個 で 正十二角形が できます。面積は 何cm² ですか。",
           "answer": "108",
-          "meaning": "9×12＝108cm²です。",
+          "meaning": "正十二角形は、まん中から頂点へ線を引くと、同じ大きさの三角形12個にきれいに分かれます。その1個が9cm²なので、12個ぶんをたす代わりにかけ算でまとめます。9×12＝108。答えは108cm²です。",
           "svg": "<svg viewBox=\"0 0 190 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"95\" cy=\"90\" r=\"66\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><polygon points=\"95.0,24.0 128.0,32.8 152.2,57.0 161.0,90.0 152.2,123.0 128.0,147.2 95.0,156.0 62.0,147.2 37.8,123.0 29.0,90.0 37.8,57.0 62.0,32.8\" fill=\"rgba(79,124,255,0.14)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M95 90 L95.0 24.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L128.0 32.8\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L152.2 57.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L161.0 90.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L152.2 123.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L128.0 147.2\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L95.0 156.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L62.0 147.2\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L37.8 123.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L29.0 90.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L37.8 57.0\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 90 L62.0 32.8\" stroke=\"#9aa3c0\" stroke-width=\"0.8\"/><path d=\"M95 24 L95 156\" stroke=\"#ff6b6b\" stroke-width=\"2.2\"/></svg>"
          },
          {
           "question": "正十二角形の 面積は 「半径×半径×3」 で 出せます。半径 6cm のとき 何cm² ですか。",
           "answer": "108",
-          "meaning": "6×6×3＝108cm²です。",
+          "meaning": "「半径×半径×3」の半径のところには、2回とも同じ数を入れます。ここでつまずきやすいので気をつけましょう。半径は6cmだから 6×6×3。先に 6×6＝36 を出して、36×3＝108。答えは108cm²です。",
           "svg": ""
          },
          {
@@ -9571,19 +9571,19 @@
          {
           "question": "1枚50円、割ると100円はらう。200枚 運んで 8200円 でした。全部 無事なら 何円 ですか。",
           "answer": "10000",
-          "meaning": "50×200＝10000円です。",
+          "meaning": "まず「1枚も割らなかったとしたら」というくらべるもとの金額を作ります。1枚50円がもらえるので、200枚ぶんをかけ算にして 50×200＝10000円。じっさいの8200円との差が、割ってしまったせいだと考えられます。答えは10000円です。",
           "svg": ""
          },
          {
           "question": "1枚50円、割ると100円はらう。200枚 運んで 8200円 でした。何枚 割りましたか。",
           "answer": "12",
-          "meaning": "10000−8200＝1800円。1800÷150＝12枚です。",
+          "meaning": "全部無事なら10000円のはずが8200円なので、10000−8200＝1800円たりません。1枚割ると、もらえるはずの50円がもらえず、さらに100円はらうので、1枚あたり 50＋100＝150円ずつへります。1800の中に150がいくつ入るかで 1800÷150＝12。答えは12枚です。",
           "svg": ""
          },
          {
           "question": "勝つと 10枚 もらい、負けると 6枚 出します。1回 負けると 差は 何枚 ですか。",
           "answer": "16",
-          "meaning": "10＋6＝16枚です。",
+          "meaning": "同じ1回を「勝ったとき」と「負けたとき」でくらべます。勝てば10枚ふえ、負ければ6枚へるので、ふえる側とへる側で反対向きです。だから差はひき算ではなく、10と6を合わせたぶんになります。10＋6＝16。答えは16枚です。",
           "svg": ""
          }
         ]
@@ -9605,7 +9605,7 @@
          {
           "question": "100円と80円の組（2本180円）と 60円を あわせて 20本 1440円。組を x組 とすると 2x＋(60円の本数)＝20 です。ぜんぶ 60円 なら 何円 ですか。",
           "answer": "1200",
-          "meaning": "60×20＝1200円です。",
+          "meaning": "まず「20本ぜんぶが60円だったら」というくらべるもとを作ります。60円が20本ぶんなので 60×20＝1200円。じっさいは1440円なので、この差の240円が高いねだんの本がまじっているせいだ、と次につなげられます。答えは1200円です。",
           "svg": ""
          },
          {
@@ -9617,7 +9617,7 @@
          {
           "question": "100円と80円の 組は 何組 ですか。",
           "answer": "4",
-          "meaning": "240÷60＝4組です。（100円4本・80円4本・60円12本）",
+          "meaning": "ぜんぶ60円なら1200円のはずが、じっさいは1440円なので 1440−1200＝240円多いです。60円2本を「100円と80円の組」1組にとりかえるたびに、180−120＝60円ずつふえます。だから 240÷60＝4。答えは4組です。",
           "svg": ""
          }
         ]
@@ -9656,7 +9656,7 @@
          {
           "question": "高さ:かげ ＝ 3:5 で かげが 10m のとき、高さは 何m ですか。",
           "answer": "6",
-          "meaning": "10÷5×3＝6mです。",
+          "meaning": "3:5 は「かげが5のとき高さが3」という関係です。じっさいのかげ10mは5の2つぶんなので、比の1つぶんは 10÷5＝2m。高さは比で3つぶんだから 2×3＝6。まとめて 10÷5×3＝6 です。かけてからわると数がずれるので、順番に気をつけましょう。答えは6mです。",
           "svg": ""
          }
         ]
@@ -9678,7 +9678,7 @@
          {
           "question": "6km はなれた2人が 向かい合って 分速50mと70m。出会うのは 何分後 ですか。",
           "answer": "50",
-          "meaning": "6000÷120＝50分後です。",
+          "meaning": "向かい合って進むと、2人の間のきょりは1分間に2人の速さを合わせたぶんだけちぢみます。50＋70＝分速120m。単位をそろえて 6km＝6000m にしてから、6000の中に120がいくつ入るかを数えます。6000÷120＝50。答えは50分後です。",
           "svg": ""
          },
          {
@@ -9690,7 +9690,7 @@
          {
           "question": "500m 先を 行く人を 追いかけます。自分は 分速80m、相手は 分速60m。追いつくのは 何分後 ですか。",
           "answer": "25",
-          "meaning": "差は20m。500÷20＝25分後です。",
+          "meaning": "同じ向きに進んで追いかけるときは、1分間に「速さの差」のぶんだけ間がちぢみます。80−60＝20mずつです。はじめの500mが20mずつへっていくので、500の中に20がいくつ入るかを数えて 500÷20＝25。たし算にしないよう気をつけましょう。答えは25分後です。",
           "svg": ""
          }
         ]
@@ -9712,19 +9712,19 @@
          {
           "question": "まわり1200mの池。同じ方向で 40分で 追いつくとき、2人の速さの 差は 分速 何m ですか。",
           "answer": "30",
-          "meaning": "1200÷40＝分速30mです。",
+          "meaning": "同じ方向にまわって追いつくのは、速い人がおそい人よりちょうど1周ぶん、つまり1200m多く進んだときです。その1200mは、1分ごとの「速さの差」が40分間つみ重なってできたもの。だから 1200÷40＝30。答えは分速30mです。",
           "svg": ""
          },
          {
           "question": "速さの 和が 120m、差が 30m のとき、速い方は 分速 何m ですか。",
           "answer": "75",
-          "meaning": "(120＋30)÷2＝75mです。",
+          "meaning": "2人の速さをたすと120m、へだたりは30mです。おそい方に差の30mをたして速い方とそろえると、速い方2つぶんが 120＋30＝150 になります。あとは半分にして 150÷2＝75。答えは分速75mです。",
           "svg": ""
          },
          {
           "question": "速さの 和が 120m、差が 30m のとき、おそい方は 分速 何m ですか。",
           "answer": "45",
-          "meaning": "(120−30)÷2＝45mです。",
+          "meaning": "今度は速い方から差の30mを取りのぞくと、おそい方2つぶんになります。120−30＝90、90÷2＝45。速い方の75と合わせると 75＋45＝120 で和が合うので、正しいと確かめられます。答えは分速45mです。",
           "svg": ""
          }
         ]
@@ -9751,7 +9751,7 @@
          {
           "question": "長さ 320m と 280m の 列車が 向かい合って 10秒で 完全に はなれました。速さの 和は 秒速 何m ですか。",
           "answer": "60",
-          "meaning": "600÷10＝秒速60mです。",
+          "meaning": "出会ってから「完全にはなれる」までに2つの列車が進む長さを合わせると、ちょうど2つの列車の長さの合計になります。320＋280＝600m。それを10秒でこなしたので、1秒あたりは 600÷10＝60。これが2つの速さを合わせた大きさです。答えは秒速60mです。",
           "svg": "<svg viewBox=\"0 0 300 84\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M14 66 L286 66\" stroke=\"#8a5cff\" stroke-width=\"4\"/><rect x=\"20\" y=\"30\" width=\"70\" height=\"24\" rx=\"4\" fill=\"rgba(79,124,255,0.30)\" stroke=\"#4f7cff\" stroke-width=\"1.6\"/><rect x=\"206\" y=\"30\" width=\"70\" height=\"24\" rx=\"4\" fill=\"rgba(255,107,107,0.30)\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><text x=\"55\" y=\"46\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">甲</text><text x=\"241\" y=\"46\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#1a2340\">乙</text><path d=\"M94 42 L108 42\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M202 42 L188 42\" stroke=\"#ff6b6b\" stroke-width=\"2\"/></svg>"
          },
          {
@@ -9763,7 +9763,7 @@
          {
           "question": "速さの 和が 秒速 60m、差が 秒速 10m のとき、速い方は 秒速 何m ですか。",
           "answer": "35",
-          "meaning": "(60＋10)÷2＝秒速35mです。",
+          "meaning": "2つの速さをたすと秒速60m、へだたりは秒速10mです。おそい方に差の10mをたして速い方とそろえると、速い方2つぶんが 60＋10＝70 になります。半分にして 70÷2＝35。答えは秒速35mです。",
           "svg": ""
          }
         ]
@@ -9785,19 +9785,19 @@
          {
           "question": "秒速 25m は 時速 何km ですか。",
           "answer": "90",
-          "meaning": "25×3.6＝時速90kmです。",
+          "meaning": "時速は「1時間に進む長さ」なので、1時間＝3600秒ぶん進む長さを出します。25×3600＝90000m。これをkmになおすため1000でわって90km。まとめると「秒速×3.6＝時速(km)」で 25×3.6＝90 とも出せます。答えは時速90kmです。",
           "svg": ""
          },
          {
           "question": "時速 72km は 秒速 何m ですか。",
           "answer": "20",
-          "meaning": "72÷3.6＝秒速20mです。",
+          "meaning": "秒速は「1秒に進む長さ」なので、1時間ぶんの長さを3600秒で分ければ出ます。まず 72km＝72000m。72000÷3600＝20。まとめると「時速(km)÷3.6＝秒速(m)」で 72÷3.6＝20 とも出せます。答えは秒速20mです。",
           "svg": ""
          },
          {
           "question": "秒速 10m は 時速 何km ですか。",
           "answer": "36",
-          "meaning": "10×3.6＝時速36kmです。",
+          "meaning": "1時間は3600秒なので、1秒に10m進むなら1時間では 10×3600＝36000m 進みます。mをkmになおして1000でわると36km。「秒速×3.6＝時速(km)」を使えば 10×3.6＝36 とすぐ出ます。答えは時速36kmです。",
           "svg": ""
          }
         ]
@@ -9831,7 +9831,7 @@
          {
           "question": "たて 9cm、よこ 15cm の 長方形の 面積は 何cm² ですか。",
           "answer": "135",
-          "meaning": "9×15＝135cm²です。",
+          "meaning": "長方形の面積は、1辺1cmの正方形がいくつならぶかを数えたものです。よこに15個ならんだ列が、たてに9段あるので、たし算のかわりにかけ算でまとめます。9×15＝135。答えは135cm²です。",
           "svg": ""
          }
         ]
@@ -9864,7 +9864,7 @@
          {
           "question": "72km を 3時間で 出会ったとき、真ん中は 出発点から 何km ですか。",
           "answer": "36",
-          "meaning": "72÷2＝36kmです。",
+          "meaning": "きかれているのは道のりのまん中の場所なので、かかった3時間は使いません。2つの出発点の間が72kmで、そのちょうど半分の位置がまん中です。だから 72÷2＝36。答えは36kmです。",
           "svg": ""
          },
          {
@@ -9892,19 +9892,19 @@
          {
           "question": "静水 毎時10km の 船が 下ると 毎時14km でした。流れの 速さは 毎時 何km ですか。",
           "answer": "4",
-          "meaning": "14−10＝毎時4kmです。",
+          "meaning": "川を下るときは、船じたいの速さに川の流れがそのまま足されます。だから「下りの速さ−静水の速さ」がのこった流れの速さです。14−10＝4。たし算にしないよう気をつけましょう。答えは毎時4kmです。",
           "svg": ""
          },
          {
           "question": "静水 毎時14km の 船が 毎時4km の 川を 上ると 毎時 何km ですか。",
           "answer": "10",
-          "meaning": "14−4＝毎時10kmです。",
+          "meaning": "川を上るときは流れにおし返されるので、船じたいの速さから流れのぶんだけおそくなります。だからひき算で 14−4＝10。下るときはたし算、上るときはひき算、と向きで見分けます。答えは毎時10kmです。",
           "svg": ""
          },
          {
           "question": "上る船は 3時間で 何km 進みましたか。（毎時10km）",
           "answer": "30",
-          "meaning": "10×3＝30kmです。",
+          "meaning": "進んだ道のりは「速さ×時間」で出ます。上るときの速さは毎時10kmなので、1時間で10km、それが3時間ぶんです。10×3＝30。答えは30kmです。",
           "svg": ""
          }
         ]
@@ -9926,7 +9926,7 @@
          {
           "question": "35＋39 の 正しい 和は いくつですか。",
           "answer": "74",
-          "meaning": "35＋39＝74です。",
+          "meaning": "たし算は一の位から順に計算します。一の位は 5＋9＝14 なので、4を書いて十の位へ1くり上げます。十の位は 3＋3＝6 に、くり上げた1をたして7。だから74。くり上がりを忘れると64になってしまうので気をつけましょう。答えは74です。",
           "svg": ""
          },
          {
@@ -9960,7 +9960,7 @@
          {
           "question": "237 と、一の位を 見落とした 23 の 差は いくつですか。",
           "answer": "214",
-          "meaning": "237−23＝214です。",
+          "meaning": "一の位を見落とすと、237が23として読まれてしまいます。どれだけずれたかを知りたいので、正しい数から見落とした数をひきます。237−23＝214。位をそろえて書くと計算しやすいです。答えは214です。",
           "svg": ""
          },
          {
@@ -9972,7 +9972,7 @@
          {
           "question": "9×x＋y＝113（y は 0〜9）の とき、x は いくつですか。",
           "answer": "12",
-          "meaning": "9×12＝108。113−108＝5＝y。x＝12です。（B＝125）",
+          "meaning": "yは0から9までしか使えないので、9×x は113をこえない中でいちばん大きい9のかたまりになります。113の中に9がいくつ入るかを数えると、9×12＝108、9×13＝117 は113をこえてしまいます。だから x＝12（このとき y＝113−108＝5）。答えは12です。",
           "svg": ""
          }
         ]
@@ -10079,7 +10079,7 @@
          {
           "question": "1時と 2時の 間で、長い はりと 短い はりが 一直線に なるのは 1時何分ですか。",
           "answer": "38と2/11",
-          "meaning": "210÷5.5＝38と2/11分です。",
+          "meaning": "1時ちょうどでは、短いはりが長いはりより30度先にいます。一直線になるのは、長いはりが短いはりを追いこして180度はなれたときなので、長いはりは 30＋180＝210度 多く進む必要があります。1分で長いはりは6度、短いはりは0.5度進むので、追いつく分は 6−0.5＝5.5度ずつ。210÷5.5＝38と2/11。答えは1時38と2/11分です。",
           "svg": ""
          }
         ]
@@ -10169,7 +10169,7 @@
          {
           "question": "1から 500までで、一の位が 0の 数は 何個 ありますか。",
           "answer": "50",
-          "meaning": "10,20,30,…,500 で 50個です。",
+          "meaning": "一の位が0の数は 10、20、30… と、10ごとにきっちり1つずつ出てきます。つまり「500の中に10のかたまりがいくつ入るか」を数えれば個数になります。500÷10＝50。500も一の位が0なので、ちゃんと数に入っています。答えは50個です。",
           "svg": ""
          },
          {
@@ -10209,7 +10209,7 @@
          {
           "question": "1から 999までの 整数の うち、0の 使われている 数は 何個 ありますか。",
           "answer": "180",
-          "meaning": "999−819＝180個です。",
+          "meaning": "0が使われている数を直接数えるのは大変なので、「ぜんぶの数−0を1つも使わない数」で求めます。1から999までは999個。0を使わない数は、1けたが9個、2けたが9×9＝81個、3けたが9×9×9＝729個で、合わせて819個。999−819＝180。答えは180個です。",
           "svg": ""
          },
          {
@@ -10260,7 +10260,7 @@
          {
           "question": "150 を **四進法** で 書き表すと どうなりますか。",
           "answer": "2112",
-          "meaning": "2112です。（2×64＋1×16＋1×4＋2＝150）",
+          "meaning": "四進法は4つたまるごとに上の位へくり上がる書き方なので、位は右から 1、4、16、64 になります。150の中に64は2つ（128）、のこり22に16は1つ、のこり6に4は1つ、最後に1が2つです。だから2112。たしかめは 2×64＋1×16＋1×4＋2＝150。答えは2112です。",
           "svg": ""
          }
         ]
@@ -10282,19 +10282,19 @@
          {
           "question": "四進法の 1000 を 十進法に なおすと いくつですか。",
           "answer": "64",
-          "meaning": "4×4×4＝64です。",
+          "meaning": "四進法の位は、右から 1、4、16、64 とならびます。1000は左はしの1だけが「64の位」にあって、あとは0なので、64が1つぶんという意味です。4×4×4＝64。答えは64です。",
           "svg": ""
          },
          {
           "question": "四進法の 2222 を 十進法に なおすと いくつですか。",
           "answer": "170",
-          "meaning": "2×64＋2×16＋2×4＋2＝128＋32＋8＋2＝170です。",
+          "meaning": "四進法の位は右から 1、4、16、64。2222はそのどの位にも2つずつあるということなので、位ごとにかけてたします。2×64＋2×16＋2×4＋2×1＝128＋32＋8＋2＝170。答えは170です。",
           "svg": ""
          },
          {
           "question": "五進法の 4444 を 十進法に なおすと いくつですか。",
           "answer": "624",
-          "meaning": "4×125＋4×25＋4×5＋4＝500＋100＋20＋4＝624です。（＝5×5×5×5−1）",
+          "meaning": "五進法は5たまるとくり上がるので、位は右から 1、5、25、125 になります。4444はどの位にも4つずつあるので、4×125＋4×25＋4×5＋4×1＝500＋100＋20＋4＝624。答えは624です。",
           "svg": ""
          }
         ]
@@ -10322,7 +10322,7 @@
          {
           "question": "同じ計器で、表示が 1000 に なるまでに D は 何回転 しますか。",
           "answer": "9",
-          "meaning": "1000（三進法）＝27。27÷3＝9回転です。",
+          "meaning": "この計器は3つたまると上の位へくり上がる三進法の目もりです。位は右から 1、3、9、27 なので、表示の1000は27を表します。Dは3回まわるごとに表示が1ふえるしくみだから、27になるまでの回転数は 27÷3＝9。答えは9回転です。",
           "svg": ""
          },
          {
@@ -10389,19 +10389,19 @@
          {
           "question": "この六角形で、まん中の層を 6マス ぜんぶ ぬると いくつを 表しますか。",
           "answer": "42",
-          "meaning": "7×6＝42です。",
+          "meaning": "この六角形は、内がわの層の1マスが1、まん中の層の1マスが7、外の層の1マスが49を表すしくみです。今回ぬるのはまん中の層なので、7を表すマスが6つということ。7×6＝42。どの層をぬったかで1マスの重みが変わるところがポイントです。答えは42です。",
           "svg": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"100.0,66.0 126.0,81.0 126.0,111.0 100.0,126.0 74.0,111.0 74.0,81.0\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"100.0,38.0 150.2,67.0 150.2,125.0 100.0,154.0 49.8,125.0 49.8,67.0\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><polygon points=\"100.0,12.0 172.7,54.0 172.7,138.0 100.0,180.0 27.3,138.0 27.3,54.0\" fill=\"none\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><path d=\"M100 96 L100.0 12.0\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><path d=\"M100 96 L172.7 54.0\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><path d=\"M100 96 L172.7 138.0\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><path d=\"M100 96 L100.0 180.0\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><path d=\"M100 96 L27.3 138.0\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><path d=\"M100 96 L27.3 54.0\" stroke=\"#9aa3c0\" stroke-width=\"1\"/><text x=\"100\" y=\"192\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#6c7086\">同心3層×各層6マス＝18マス</text></svg>"
          },
          {
           "question": "外の層を 6マス、内の層を 6マス ぬる（まん中は白）と いくつを 表しますか。",
           "answer": "300",
-          "meaning": "49×6＋7×0＋1×6＝294＋6＝300です。",
+          "meaning": "層ごとに1マスの表す大きさがちがうので、層ごとに分けて計算してからたします。外の層は1マス49で6マスだから 49×6＝294。まん中は白なので0。内の層は1マス1で6マスだから 6。294＋0＋6＝300。答えは300です。",
           "svg": ""
          },
          {
           "question": "18マス ぜんぶ ぬると いくつを 表しますか。",
           "answer": "342",
-          "meaning": "49×6＋7×6＋1×6＝294＋42＋6＝342です。（＝7×7×7−1）",
+          "meaning": "18マスは、外の層6マス・まん中の層6マス・内の層6マスをぜんぶぬったということです。層ごとに1マスの大きさがちがうので分けて計算します。49×6＝294、7×6＝42、1×6＝6。294＋42＋6＝342。答えは342です。",
           "svg": ""
          }
         ]
@@ -10435,7 +10435,7 @@
          {
           "question": "1g、3g、9g、27g が 2個ずつ の とき、はかれる いちばん重い 重さは 何g ですか。",
           "answer": "80",
-          "meaning": "(1＋3＋9＋27)×2＝80gです。",
+          "meaning": "いちばん重くはかれるのは、持っているおもりを1つのこらず全部のせたときです。1＋3＋9＋27＝40gが1セットぶん。それが2個ずつあるので2倍します。40×2＝80。答えは80gです。",
           "svg": ""
          }
         ]
@@ -10469,7 +10469,7 @@
          {
           "question": "八進法で 310 は 十進法で いくつですか。",
           "answer": "200",
-          "meaning": "3×64＋1×8＋0＝200です。",
+          "meaning": "八進法は8たまると上の位へくり上がるので、位は右から 1、8、64 になります。310は64の位が3、8の位が1、1の位が0という意味です。3×64＋1×8＋0×1＝192＋8＝200。答えは200です。",
           "svg": ""
          }
         ]
@@ -10496,13 +10496,13 @@
          {
           "question": "面積が どちらも 400cm² の 合同な2枚を 重ね、重なりが 250cm² のとき、片方の はみ出しは 何cm² ですか。",
           "answer": "150",
-          "meaning": "400−250＝150cm²です。",
+          "meaning": "1枚の面積400cm²のうち、250cm²は相手と重なっている部分です。はみ出しは重なっていない残りなので、1枚ぶんから重なりをひきます。400−250＝150。2枚ぶんの800からひかないよう気をつけましょう。答えは150cm²です。",
           "svg": "<svg viewBox=\"0 0 250 156\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"26\" y=\"26\" width=\"140\" height=\"100\" fill=\"rgba(79,124,255,0.16)\" stroke=\"#4f7cff\" stroke-width=\"1.8\"/><rect x=\"86\" y=\"56\" width=\"140\" height=\"100\" fill=\"rgba(255,107,107,0.16)\" stroke=\"#ff6b6b\" stroke-width=\"1.8\"/><rect x=\"86\" y=\"56\" width=\"80\" height=\"70\" fill=\"rgba(138,92,255,0.28)\"/><text x=\"126\" y=\"98\" font-size=\"11\" text-anchor=\"middle\" font-family=\"sans-serif\" fill=\"#8a5cff\">重なり</text></svg>"
          },
          {
           "question": "合同な2枚（どちらも 400cm²）を 重ねたとき、全体の 面積は 何cm² ですか。（重なり250cm²）",
           "answer": "550",
-          "meaning": "400＋400−250＝550cm²です。",
+          "meaning": "2枚をそのままたすと 400＋400＝800cm² ですが、重なった250cm²を2回数えてしまっています。だぶった1回ぶんをひきます。800−250＝550。答えは550cm²です。",
           "svg": ""
          },
          {
@@ -10536,13 +10536,13 @@
          {
           "question": "BE＝39cm、BA′＝36cm、EC＝15cm のとき、AB は 何cm ですか。",
           "answer": "36",
-          "meaning": "AB＝BA′＝36cmです。",
+          "meaning": "A′は折り返してAがうつった場所です。折っても形も大きさも変わらないので、ABとBA′は同じ長さになります。BA′が36cmだから AB＝36cm。BEの39cmやECの15cmは、ここでは使いません。答えは36cmです。",
           "svg": ""
          },
          {
           "question": "BE＝ED＝39cm、EC＝15cm のとき、BC（＝BE＋EC）は 何cm ですか。",
           "answer": "54",
-          "meaning": "39＋15＝54cmです。（AD＝BC＝54cm）",
+          "meaning": "BCはBEとECをまっすぐつないだ長さなので、2つをそのままたします。BEは39cm、ECは15cmだから 39＋15＝54。EDも39cmですが、これはBEと同じ長さだと分かるための手がかりで、もう一度たすものではありません。答えは54cmです。",
           "svg": ""
          }
         ]
@@ -10564,19 +10564,19 @@
          {
           "question": "この分け方（11分の1）で、アメは 全部で 何個 ですか。",
           "answer": "110",
-          "meaning": "11×(11−1)＝110個です。",
+          "meaning": "1人目はそのときのアメの11分の1をとって、さらに1個。2人目はのこりの11分の1をとって、さらに2個…と配り、全員が同じ個数になる分け方です。このときアメの数は 11×(11−1)＝110個。たしかめると1人目は 110÷11＝10 に1をたして11個、2人目はのこり99の11分の1の9に2をたして11個で同じです。答えは110個です。",
           "svg": ""
          },
          {
           "question": "この分け方（11分の1）で、人数は 何人 ですか。",
           "answer": "10",
-          "meaning": "11−1＝10人です。",
+          "meaning": "アメは全部で110個あり、1人あたり11個ずつになる分け方です。人数は「全体÷1人ぶん」で出るので 110÷11＝10。分け方の11から1をひいた 11−1＝10 と同じになります。答えは10人です。",
           "svg": ""
          },
          {
           "question": "**10分の1と□個** の 分け方の とき、アメは 全部で 何個 ですか。",
           "answer": "90",
-          "meaning": "10×(10−1)＝90個です。（1人9個・9人）",
+          "meaning": "分け方が10分の1に変わっただけで、考え方は同じです。アメの数は 10×(10−1)＝90個。たしかめると1人目は 90÷10＝9 に1をたして10個、2人目はのこり80の10分の1の8に2をたして10個で、どちらも同じになります。答えは90個です。",
           "svg": ""
          }
         ]
@@ -10609,7 +10609,7 @@
          {
           "question": "はじめ 赤球が 20個。白2個をとる操作を 6回、赤2個をとる操作を 10回 したとき、赤球は 何個 ですか。",
           "answer": "12",
-          "meaning": "＋2×6−2×10＝12−20＝−8。20−8＝12個です。",
+          "meaning": "白を2個とる操作をすると赤は2個ふえ、赤を2個とる操作をすると赤は2個へります。ふえたぶんは 2×6＝12個、へったぶんは 2×10＝20個。はじめの20個にこれを足し引きして 20＋12−20＝12。答えは12個です。",
           "svg": ""
          },
          {
@@ -10637,7 +10637,7 @@
          {
           "question": "B が 直角、AB＝BC＝20cm の 直角二等辺三角形の 面積は 何cm² ですか。",
           "answer": "200",
-          "meaning": "20×20÷2＝200cm²です。",
+          "meaning": "Bが直角なので、直角をはさむ2つの辺ABとBCが、そのまま底辺と高さになります。だから 20×20÷2。三角形は同じたて・よこの長方形をちょうど半分にした形なので、÷2 を忘れないことがだいじです。400÷2＝200。答えは200cm²です。",
           "svg": ""
          },
          {
@@ -10676,7 +10676,7 @@
          {
           "question": "四角形ABCD の 面積が 600cm²、三角形ABC:三角形ACD＝7:5 のとき、三角形ABC は 何cm² ですか。",
           "answer": "350",
-          "meaning": "600×7÷12＝350cm²です。",
+          "meaning": "四角形は対角線ACで2つの三角形に分かれ、その面積の比が7:5です。だから全体は 7＋5＝12 のかたまりに分けられます。1つぶんは 600÷12＝50cm²。三角形ABCは7つぶんなので 50×7＝350。答えは350cm²です。",
           "svg": "<svg viewBox=\"0 0 240 170.9\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"30,120 120,30 210,80 130,150\" fill=\"rgba(79,124,255,0.12)\" stroke=\"#4f7cff\" stroke-width=\"2\"/><path d=\"M30 120 L210 80\" stroke=\"#ff6b6b\" stroke-width=\"1.6\"/><path d=\"M120 30 L130 150\" stroke=\"#22c55e\" stroke-width=\"1.6\"/><text x=\"26\" y=\"134\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">A</text><text x=\"122\" y=\"26\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">B</text><text x=\"214\" y=\"76\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">C</text><text x=\"132\" y=\"164\" font-size=\"11\" font-family=\"sans-serif\" fill=\"#1a2340\">D</text></svg>"
          },
          {
@@ -10688,7 +10688,7 @@
          {
           "question": "三角形ABC が 350cm²、三角形OBC が 140cm² のとき、三角形OAB は 何cm² ですか。",
           "answer": "210",
-          "meaning": "350−140＝210cm²です。",
+          "meaning": "三角形OBCは三角形ABCの中にふくまれる一部分で、のこった部分が三角形OABにあたります。だから大きい方からふくまれる方をひきます。350−140＝210。答えは210cm²です。",
           "svg": ""
          }
         ]
@@ -10710,13 +10710,13 @@
          {
           "question": "いま 長男18才、三男2才。2年前 の 長男は 何才 ですか。",
           "answer": "16",
-          "meaning": "18−2＝16才です。",
+          "meaning": "2年前は今より2才わかいので、今の年れいから2をひきます。18−2＝16。三男の2才という数がそばにありますが、ここでは使いません。答えは16才です。",
           "svg": ""
          },
          {
           "question": "2年前 の 長男が 16才 で、そのとき 次男の 4倍 でした。2年前 の 次男は 何才 ですか。",
           "answer": "4",
-          "meaning": "16÷4＝4才です。",
+          "meaning": "「長男は次男の4倍」なので、次男を4つぶん集めると16才になるという意味です。1つぶんを知りたいのでわり算にします。16÷4＝4。4倍という言葉につられてかけ算にすると64になってしまうので気をつけましょう。答えは4才です。",
           "svg": ""
          },
          {
@@ -10761,7 +10761,7 @@
          {
           "question": "平行四辺形の 面積が 180cm² で 三角形ECD が その 1/6 のとき、面積は 何cm² ですか。",
           "answer": "30",
-          "meaning": "180÷6＝30cm²です。",
+          "meaning": "「1/6」は、平行四辺形を6等分したうちの1つぶんという意味です。だから全体の面積を6でわります。180÷6＝30。答えは30cm²です。",
           "svg": ""
          }
         ]
@@ -10789,13 +10789,13 @@
          {
           "question": "三角形ABC の 面積が 15cm² の とき、BD＝BA×2 に した 三角形DBC は 何cm² ですか。",
           "answer": "30",
-          "meaning": "15×2＝30cm²です。",
+          "meaning": "三角形DBCは、三角形ABCと高さが同じままで、底辺だけがBAからBDへ2倍にのびた三角形です。高さが変わらずに底辺が2倍になれば、面積もそのまま2倍になります。だから 15×2＝30。答えは30cm²です。",
           "svg": ""
          },
          {
           "question": "三角形ABC の 面積が 15cm² で、3方向に のばして できた 三角形DEF が 6倍 のとき、DEF は 何cm² ですか。",
           "answer": "90",
-          "meaning": "15×6＝90cm²です。",
+          "meaning": "3方向にのばしてできた三角形DEFは、もとの三角形ABCの6倍の広さになる、と問題文が教えてくれています。だから、もとの面積を6倍するだけです。15×6＝90。6でわってしまわないよう気をつけましょう。答えは90cm²です。",
           "svg": ""
          }
         ]
@@ -10817,19 +10817,19 @@
          {
           "question": "ある山の **6分の5** を 移すと、のこりは もとの 何分の1 ですか。分母を 答えなさい。",
           "answer": "6",
-          "meaning": "1−5/6＝1/6。分母は6です。",
+          "meaning": "もとの山ぜんぶを1とすると、移したのは 5/6 です。のこりは「全体−移したぶん」なので 1−5/6＝1/6。6等分したうちの1つぶんがのこったということです。分母は6。答えは6です。",
           "svg": ""
          },
          {
           "question": "ある山の 6分の5 を 移したあと 10本 のこりました。移す前は 何本 ですか。",
           "answer": "60",
-          "meaning": "10÷(1/6)＝60本です。",
+          "meaning": "6分の5を移したので、のこった10本はもとの本数の6分の1にあたります。6分の1が10本なら、全体はその6つぶんです。だから 10×6＝60（10÷(1/6)＝60 と同じ計算です）。5をかけて50としないよう気をつけましょう。答えは60本です。",
           "svg": ""
          },
          {
           "question": "3つの山の 本の 合計が 120本 で 最後に どれも 同じに なったとき、1つの山は 何本 ですか。",
           "answer": "40",
-          "meaning": "120÷3＝40本です。",
+          "meaning": "最後にどの山も同じ本数になったのだから、合計の120本を3つの山で等しく分けたのと同じことです。等分するのでわり算にして 120÷3＝40。答えは40本です。",
           "svg": ""
          }
         ]
@@ -10890,13 +10890,13 @@
          {
           "question": "2人が **2回目** に 出会うまでに 進む 道のりの 合計は A・B間の 何倍 ですか。",
           "answer": "3",
-          "meaning": "(2×2−1)＝3倍です。",
+          "meaning": "1回目に出会うまでに、2人が進んだ道のりの合計はちょうどA・B間1つぶんです。そこからそれぞれが向こうのはしで折り返して次に出会うまでには、さらに2つぶん進みます。だから 1＋2＝3倍。式にまとめると 2×2−1＝3 です。答えは3倍です。",
           "svg": ""
          },
          {
           "question": "2人が **3回目** に 出会うまでに 進む 道のりの 合計は A・B間の 何倍 ですか。",
           "answer": "5",
-          "meaning": "(2×3−1)＝5倍です。",
+          "meaning": "出会うたびに2人の進んだ合計はふえていきます。1回目までが1つぶん、そのあとは1回ごとに2つぶんずつです。3回目までなら 1＋2＋2＝5つぶん。式にまとめると 2×3−1＝5 になります。答えは5倍です。",
           "svg": ""
          },
          {
@@ -10924,7 +10924,7 @@
          {
           "question": "たて 48cm、よこ 102cm。102 から 48 を 2回 切り取ると 何cm のこりますか。",
           "answer": "6",
-          "meaning": "102−48×2＝6cmです。",
+          "meaning": "よこの102cmから、48cmのはばを2回ぶん取り去るということです。先に取り去る長さをまとめて 48×2＝96cm。それから 102−96＝6。かけ算を先にするところがつまずきやすい点です。答えは6cmです。",
           "svg": ""
          },
          {
@@ -10936,7 +10936,7 @@
          {
           "question": "たて 48cm、よこ 102cm の 長方形は、1辺 6cm の 正方形 何枚 で 敷きつめられますか。",
           "answer": "136",
-          "meaning": "(48÷6)×(102÷6)＝8×17＝136枚です。",
+          "meaning": "たてに何枚、よこに何枚ならぶかをそれぞれ数えて、かけ算でまとめます。たては 48÷6＝8枚、よこは 102÷6＝17枚。8×17＝136。どちらもわりきれるので、すきまなくきれいに敷きつめられます。答えは136枚です。",
           "svg": ""
          }
         ]
