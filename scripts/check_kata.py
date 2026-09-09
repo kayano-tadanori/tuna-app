@@ -47,6 +47,10 @@ KANA = re.compile(r"[ぁ-んァ-ヴ]")
 TAG = re.compile(r"<[^>]+>")
 
 
+# 小数計算のゴミ（0が5つ以上／9が5つ以上つづく）。子どもの読む文に出てはいけない
+FLOAT_GOMI = re.compile(r"\d\.\d*(?:0{5,}\d|9{5,}\d)")
+
+
 def texts_of_svg(svg):
     """SVGの<text>の中身だけを返す（図に印字されている文字＝子どもに見えるもの）。"""
     return " ".join(re.findall(r"<text[^>]*>(.*?)</text>", svg or "", re.S))
@@ -254,6 +258,11 @@ def thin_reason(raw, question=""):
     m = TAG.sub("", str(raw or "")).strip()
     if not m:
         return "重", "解説が無い"
+    g = FLOAT_GOMI.search(m)
+    if g:
+        # 生成時に Python の小数計算をそのまま文字にしたゴミ（3000×1.1＝3300.0000000000005）。
+        # 答え欄は正しいのに解説だけが壊れている＝子どもは解説のほうを読む。2026-09-09に9件発見。
+        return "重", "解説に計算ゴミの小数「%s」が出ている" % g.group()
     if len(m) < 12:
         return "中", "解説が%d字しかない「%s」" % (len(m), m)
     if len(KANA.findall(m)) < 4:

@@ -58,10 +58,15 @@ for path in sorted(glob.glob(os.path.join(BASE, "data", "*.json"))):
         for g, gv in d["grades"].items():
             for course, cv in gv.items():
                 packs = []
-                for v in cv.get("fukushu", {}).values():
-                    packs += v
-                for v in cv.get("kokai", {}).values():
-                    packs += v
+                # ⚠ fukushu/kokai は「回番号→大問の配列」の辞書のことも、配列そのもののことも
+                #   ある（じゅくナビの回番号ばなれで形が変わった）。どちらでも読めるようにする
+                for key in ("fukushu", "kokai"):
+                    v = cv.get(key) or {}
+                    if isinstance(v, dict):
+                        for lst in v.values():
+                            packs += lst or []
+                    elif isinstance(v, list):
+                        packs += v
                 for x in packs:
                     for st in x.get("steps", []):
                         tot += 1
