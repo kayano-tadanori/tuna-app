@@ -18,32 +18,18 @@
    止めるのは**新しく増えた重**だけ＝既知の山は `docs/kata_baseline.json` に登録ずみ。
    `HAMA_SKIP=1` で素通りできるが、**素通りしたら本人に必ず言う**）
 
-## ✅ 終わった：通常問題の解説を厚くする（2026-09-09）
+## いま何をすべきか
 
-**大問も通常問題も、薄い解説は0件になった**（`hama.py` で実測できる。ここに数を書かない）。
-やり方は残してある。次に薄いものが増えたら同じ3手順でよい：
-`kaisetsu_packet.py --tsujo all 8 <dir>` → 4体ずつの波 → `apply_kaisetsu.py --tsujo <dir> --write`
-
-## いま進行中：作問待ちの原簿を大問にする
-
-`python scripts/hama.py` の「👉 次の一手」がそのまま指示になる。
-**原簿を grep して設定・設問・答えをそのまま使う**（骨の要約から作らない）。
+`python scripts/hama.py` の「👉 次の一手」がそのまま指示になる。ここに書かない。
+解説を厚くするときは `kaisetsu_packet.py --tsujo` → 4体ずつの波 → `apply_kaisetsu.py --tsujo --write`。
 
 ## 検査の置き場所（増やすときはここに足す。2本目にコピーしない）
 
 `check_kata.py`（過去の監査で出た欠陥の型）／`check_answerable.py`（形式）／
 `audit_questions.js`（全ファイル横断）／`audit_ledger.py`（監査の台帳）／
-`check_shindo.py`（**通常問題の学年タグ vs 浜の進度**。基準は `hama_map.json` の本科の回。
-⛔ じゅくナビの問題（大問・かんたん解説）は原簿どおりなので**対象外**）
+`check_shindo.py`（学年タグ）／`check_tangen.py`（単元タグ）＝**通常問題だけ。じゅくナビは触らない**
 
 **監査で新しい型を見つけたら、その場で `check_kata.py` に足す。**足せば以後タダ、
 足さなければ毎回エージェントに探させることになる。
 
 くわしい経緯は memory の `method_kansa_pipeline` / `feedback_kaisetsu_reader`。
-
-## 🔜 本人が「また今度やる」と言った課題（2026-09-09）
-
-**通常問題25,750問の「中身」の点検。**大問は監査2周で完走ずみだが、通常問題は
-形式（`check_answers.py`）と解説の厚み（K7）しか通っていない。答えを総当たりで
-解き直す・答えが一つに決まらない問題を探す、が中身。やり方は memory の
-`method_kansa_pipeline` の「未着手の課題」節。⛔じゅくナビは対象外。
