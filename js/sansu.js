@@ -2411,11 +2411,88 @@ function endSansuSession() {
 }
 
 // ── 問題への書き込み・計算用紙（算数・理科クイズ／ドリル共通） ──────────
+// ★2026-09-11：線を細くシャープに（CSSの1px基準で太さを決める＋キャンバスを実解像度に合わせる）、
+//   計算用紙に「消しゴム」と「ペンの色」を追加した。
+//   消しゴムは裏キャンバス（インク専用）を destination-out で削るので、方眼や紙の色は消えない。
 function createDrawPad(canvas, opts = {}) {
   const grid = !!opts.grid;
-  const penColor = opts.penColor || '#1a1a1a';
-  const lineWidth = opts.lineWidth || 5;
-  const pad = { canvas, ctx: canvas.getContext('2d'), strokes: [], current: [], drawing: false, suppressed: false };
+  const pad = {
+    canvas,
+    ctx: canvas.getContext('2d'),
+    strokes: [],      // { pts, color, width, erase }
+    current: null,
+    drawing: false,
+    suppressed: false,
+    unit: opts.unit || 1,                    // CSSの1pxが何キャンバスpxぶんか
+    penColor: opts.penColor || '#1a1a1a',
+    penWidth: opts.penWidth || 2,            // CSS px（実際の太さ = penWidth * unit）
+    eraserWidth: opts.eraserWidth || 20,     // CSS px
+    erasing: false,
+  };
+
+  // インク専用の裏キャンバス。書いた線はここに溜め、表には「方眼＋インク」を重ねて出す。
+  // ★裏に分けているのは消しゴムのため。destination-out で消すのはこのインクだけなので、
+  //   方眼や紙の色は消えない。（裏キャンバスは1枚だけ＝古いiPadでもメモリを増やしすぎない）
+  const ink = document.createElement('canvas');
+  const ictx = ink.getContext('2d');
+
+  function syncSize() {
+    ink.width = canvas.width;
+    ink.height = canvas.height;
+  }
+
+  function paintBackground() {
+    const { ctx } = pad;
+    if (!grid) { ctx.clearRect(0, 0, canvas.width, canvas.height); return; }
+    ctx.fillStyle = '#f8f6ef';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(120,120,120,0.18)';
+    ctx.lineWidth = Math.max(1, pad.unit);
+    const step = 24 * pad.unit;
+    for (let x = step; x < canvas.width; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+    for (let y = step; y < canvas.height; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+    // 紙の端をはっきりさせる縁取り（ピクセルとして直接描くのでCSSに左右されない）
+    const bw = Math.max(4, Math.round(canvas.width / 100));
+    ctx.strokeStyle = '#4f7cff';
+    ctx.lineWidth = bw;
+    ctx.strokeRect(bw / 2, bw / 2, canvas.width - bw, canvas.height - bw);
+  }
+
+  // インクに1本ぶん（または途中からの続き）を描く
+  function inkStroke(s, from = 0) {
+    const pts = s.pts;
+    if (!pts.length) return;
+    ictx.globalCompositeOperation = s.erase ? 'destination-out' : 'source-over';
+    ictx.strokeStyle = s.erase ? '#000' : s.color;
+    ictx.lineWidth = s.width;
+    ictx.lineCap = 'round';
+    ictx.lineJoin = 'round';
+    ictx.beginPath();
+    if (pts.length === 1) {
+      // 点（小数点や「・」）も残るように、同じ位置へ線を引いて丸を落とす
+      ictx.moveTo(pts[0].x, pts[0].y);
+      ictx.lineTo(pts[0].x, pts[0].y);
+    } else {
+      const s0 = Math.max(0, from);
+      ictx.moveTo(pts[s0].x, pts[s0].y);
+      for (let i = s0 + 1; i < pts.length; i++) ictx.lineTo(pts[i].x, pts[i].y);
+    }
+    ictx.stroke();
+    ictx.globalCompositeOperation = 'source-over';
+  }
+
+  function compose() {
+    paintBackground();
+    pad.ctx.drawImage(ink, 0, 0);
+  }
+
+  // 全部描き直す（クリア・1つ戻す・サイズ変更のとき）
+  function redrawAll() {
+    ictx.clearRect(0, 0, ink.width, ink.height);
+    pad.strokes.forEach(s => inkStroke(s));
+    if (pad.current) inkStroke(pad.current);
+    compose();
+  }
 
   const pos = e => {
     const r = canvas.getBoundingClientRect();
@@ -2426,60 +2503,71 @@ function createDrawPad(canvas, opts = {}) {
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
     pad.drawing = true;
-    pad.current = [pos(e)];
-    draw();
+    pad.current = {
+      pts: [pos(e)],
+      color: pad.penColor,
+      width: (pad.erasing ? pad.eraserWidth : pad.penWidth) * pad.unit,
+      erase: pad.erasing,
+    };
+    inkStroke(pad.current);
+    compose();
   };
-  canvas.onpointermove = e => { if (!pad.drawing) return; pad.current.push(pos(e)); draw(); };
+  canvas.onpointermove = e => {
+    if (!pad.drawing || !pad.current) return;
+    const s = pad.current;
+    const from = s.pts.length - 1;
+    s.pts.push(pos(e));
+    inkStroke(s, from); // 増えたぶんだけ描き足す（毎回全部引き直さないので軽い）
+    compose();
+  };
   const up = () => {
     if (!pad.drawing) return;
     pad.drawing = false;
-    if (pad.current.length > 1) pad.strokes.push(pad.current);
-    pad.current = [];
-    draw();
+    if (pad.current && pad.current.pts.length >= 1) pad.strokes.push(pad.current);
+    pad.current = null;
+    compose();
   };
   canvas.onpointerup = up;
   canvas.onpointercancel = up;
   canvas.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
   canvas.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
 
-  function draw() {
-    const { ctx } = pad;
-    if (grid) {
-      ctx.fillStyle = '#f8f6ef';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'rgba(120,120,120,0.18)';
-      ctx.lineWidth = 1;
-      const step = 24;
-      for (let x = step; x < canvas.width; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
-      for (let y = step; y < canvas.height; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
-      // 紙の端をはっきりさせる縁取り（ピクセルとして直接描くのでCSSに左右されない）
-      const bw = Math.max(4, Math.round(canvas.width / 100));
-      ctx.strokeStyle = '#4f7cff';
-      ctx.lineWidth = bw;
-      ctx.strokeRect(bw / 2, bw / 2, canvas.width - bw, canvas.height - bw);
-    } else {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    ctx.strokeStyle = penColor;
-    ctx.lineWidth = lineWidth;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    const paint = pts => {
-      if (pts.length < 2) return;
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.stroke();
-    };
-    pad.strokes.forEach(paint);
-    paint(pad.current);
-  }
-  pad.clear = () => { pad.strokes = []; pad.current = []; draw(); };
-  pad.undo = () => { pad.strokes.pop(); draw(); };
+  pad.clear = () => { pad.strokes = []; pad.current = null; redrawAll(); };
+  pad.undo = () => { pad.strokes.pop(); redrawAll(); };
   // 描いている途中のストロークを、履歴に残さず取り消す（2本指ジェスチャー開始時などに使用）
-  pad.cancelCurrent = () => { pad.drawing = false; pad.current = []; draw(); };
-  draw();
+  pad.cancelCurrent = () => { pad.drawing = false; pad.current = null; redrawAll(); };
+  pad.setPen = (color) => { pad.penColor = color; pad.erasing = false; };
+  pad.setEraser = (on) => { pad.erasing = !!on; };
+  // キャンバスの実ピクセル数を変える（書いたものは比率を保って引き継ぐ）
+  pad.resize = (w, h, unit) => {
+    if (!w || !h) return;
+    const newUnit = unit || pad.unit;
+    if (canvas.width === w && canvas.height === h && newUnit === pad.unit) return;
+    const sx = canvas.width ? w / canvas.width : 1;
+    const sy = canvas.height ? h / canvas.height : 1;
+    const wScale = newUnit / pad.unit;
+    canvas.width = w; canvas.height = h;
+    pad.unit = newUnit;
+    pad.strokes.forEach(s => {
+      s.pts = s.pts.map(p => ({ x: p.x * sx, y: p.y * sy }));
+      s.width *= wScale;
+    });
+    syncSize();
+    redrawAll();
+  };
+
+  syncSize();
+  redrawAll();
   return pad;
+}
+
+// 書き込みキャンバスを「実際に表示されている大きさ×画面の解像度」に合わせる。
+// HTMLのwidth/height属性（320×220）のまま引き伸ばすと線がぼやけて太く見えるため。
+function fitWritePad(pad) {
+  const r = pad.canvas.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  pad.resize(Math.round(r.width * dpr), Math.round(r.height * dpr), dpr);
 }
 
 const drawPads = {}; // prefix('sq'|'drill') -> { write }
@@ -2488,7 +2576,8 @@ const drawPads = {}; // prefix('sq'|'drill') -> { write }
 function setupQuizExtras(prefix) {
   if (drawPads[prefix]) return;
   const writeCanvas = document.getElementById(`${prefix}-write-canvas`);
-  const write = createDrawPad(writeCanvas, { penColor: '#ffe066', lineWidth: 4 });
+  const write = createDrawPad(writeCanvas, { penColor: '#ffe066', penWidth: 1.6 });
+  fitWritePad(write);
   drawPads[prefix] = { write };
 
   const questionBox = document.getElementById(`${prefix}-question-box`);
@@ -2499,6 +2588,7 @@ function setupQuizExtras(prefix) {
 
   btnWrite.onclick = () => {
     const active = questionBox.classList.toggle('write-active');
+    if (active) fitWritePad(write); // 表示サイズが変わっている場合に備えて合わせ直す
     btnWrite.classList.toggle('active', active);
     btnWrite.textContent = active ? '✅ 書き込み終了' : '✏️ 書き込み';
     btnErase.classList.toggle('hidden', !active);
@@ -2516,6 +2606,7 @@ function resetQuizExtras(prefix, keepScratch) {
   const pads = drawPads[prefix];
   if (!pads) return;
   pads.write.clear();
+  fitWritePad(pads.write);
   document.getElementById(`${prefix}-question-box`).classList.remove('write-active');
   const btnWrite = document.getElementById(`${prefix}-btn-write`);
   btnWrite.classList.remove('active');
@@ -2591,7 +2682,7 @@ function openScratchFullscreen() {
     const effDpr = rawPixels > MAX_CANVAS_PIXELS ? dpr * Math.sqrt(MAX_CANVAS_PIXELS / rawPixels) : dpr;
     canvas.width = Math.round(virtualW * effDpr);
     canvas.height = Math.round(virtualH * effDpr);
-    scratchPad = createDrawPad(canvas, { grid: true, penColor: '#1a1a1a', lineWidth: 4 * effDpr });
+    scratchPad = createDrawPad(canvas, { grid: true, penColor: '#1a1a1a', unit: effDpr, penWidth: 1.8, eraserWidth: 22 });
 
     // 初期表示：仮想キャンバスの中央が画面中央に来るように配置（zoom=1）
     scratchView = { virtualW, virtualH, vw, vh, panX: -(virtualW - vw) / 2, panY: -(virtualH - vh) / 2, zoom: 1 };
@@ -2600,6 +2691,17 @@ function openScratchFullscreen() {
     document.getElementById('fs-scratch-undo').onclick = () => scratchPad.undo();
     document.getElementById('fs-scratch-clear').onclick = () => scratchPad.clear();
     document.getElementById('fs-scratch-close').onclick = () => closeScratchFullscreen();
+
+    // ── ペンの色・消しゴム（2026-09-11） ──
+    const penBtns = [...document.querySelectorAll('#scratch-fullscreen .scratch-pen')];
+    const eraserBtn = document.getElementById('fs-scratch-eraser');
+    const syncPenUI = () => {
+      penBtns.forEach(b => b.classList.toggle('active', !scratchPad.erasing && b.dataset.color === scratchPad.penColor));
+      eraserBtn.classList.toggle('active', scratchPad.erasing);
+    };
+    penBtns.forEach(b => { b.onclick = () => { scratchPad.setPen(b.dataset.color); syncPenUI(); }; });
+    eraserBtn.onclick = () => { scratchPad.setEraser(!scratchPad.erasing); syncPenUI(); };
+    syncPenUI();
     document.getElementById('fs-scratch-reset').onclick = () => {
       // そのときの実際の画面サイズに合わせて、紙全体が収まる縮小率にする
       const curVw = viewport.clientWidth || scratchView.vw;
