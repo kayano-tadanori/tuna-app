@@ -139,8 +139,15 @@ def check_refs(doc, where, trial, errors, ambiguous):
         # ── 設問・答えの状態と中身
         check_text_field(it.get(u"kaihou_insatsu") or {u"state": u"unread"},
                          u"%s 解法" % w, errors)
-        if se.get(u"state") == u"ok" and not (se.get(u"common") or u"").strip():
-            errors.append(u"%s: 設問 state=ok なのに common が空" % w)
+        # ★リード文（共通文）が**原本に印刷されていない**大問がある。
+        #   小問の文が印刷されていれば、それだけで設問は成り立つ（common は空でよい）。
+        #   ⚠ここを一律に必須にしていたため、担当が
+        #   「【リード文は印刷されていない】」のような**原本に無い文**を入れて通していた。
+        #   その文は原簿にもアプリにも流れる（→feedback_sync_genbo_svg_bug の「判読不能」と同じ型）。
+        #   2026-09-13、No.27の作図問題（リード文なし・小問(1)(2)のみ）で発覚。
+        if se.get(u"state") == u"ok" and not (se.get(u"common") or u"").strip() \
+                and not (se.get(u"questions") or []):
+            errors.append(u"%s: 設問 state=ok なのに、共通文も小問も1つも無い" % w)
         k = it.get(u"kotae") or {}
         if k.get(u"state") == u"ok":
             if not (k.get(u"text") or u"").strip():

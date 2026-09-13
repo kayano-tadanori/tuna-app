@@ -61,8 +61,15 @@ def main():
         return
 
     # ---- ① アプリ ----
+    # ★小問が0本の大問（回答箇所を全部 exclusions にしたもの＝作図・記号の複数えらび など）は
+    #   **アプリに入れない**。入れると画面に中身の無い大問が出る。**原簿には入れる**（下の③）。
+    #   2026-09-13、No.27で12本中6本が0本だった。
     items = []
+    skipped = []
     for i, (it, hg) in enumerate(zip(daimon, hgs), 1):
+        if not it.get('steps'):
+            skipped.append('%s（%s）' % (hg, it['title']))
+            continue
         x = dict(it)
         x['id'] = 'hd5m_t%d_%d' % (no, i)
         x['hg'] = hg
@@ -71,12 +78,16 @@ def main():
     p = os.path.join(BASE, 'data/hama_daimon.json')
     d = json.load(io.open(p, encoding='utf-8'))
     mb = d['grades']['5']['master_bunsatsu']['fukushu']
+    if not items:
+        sys.exit('✗ アプリに入れられる大問が0本（回を作るとボタンだけ出て中身が無い）。原簿だけ入れるなら別の手順で')
     if str(no) in mb:
         sys.exit('✗ すでに No.%d が入っている（入れ直すならバックアップから戻す）' % no)
     shutil.copy(p, '%s.bak-t%d-%s' % (p, no, TS))
     mb[str(no)] = items
     io.open(p, 'w', encoding='utf-8').write(json.dumps(d, ensure_ascii=False, indent=1))
-    print('アプリ: master_bunsatsu/fukushu/%d に入れた' % no)
+    print('アプリ: master_bunsatsu/fukushu/%d に %d本入れた' % (no, len(items)))
+    if skipped:
+        print('  アプリに入れなかった（小問0本＝原簿だけ）: %d本 … %s' % (len(skipped), '／'.join(skipped)))
 
     # ---- ② 回（lessons） ----
     import fitz
