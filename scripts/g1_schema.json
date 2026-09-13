@@ -1,0 +1,410 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "G1出力（原本PDFを読む担当が書く構造化データ）",
+  "description": "本文・読取状態・注記を別フィールドに分ける。小問は安定したqid、図は安定したfidで対応づける。SVGは本文に入れず svg_ref で外に置く。",
+  "type": "object",
+  "required": [
+    "material",
+    "no",
+    "block",
+    "items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "material": {
+      "type": "string"
+    },
+    "no": {
+      "type": "integer"
+    },
+    "block": {
+      "type": "string"
+    },
+    "produced_by": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/item"
+      }
+    }
+  },
+  "definitions": {
+    "state": {
+      "description": "ok=読めて中身がある / none=該当なし / unread=未読(範囲外) / unreadable=判読不能",
+      "enum": [
+        "ok",
+        "none",
+        "unread",
+        "unreadable"
+      ]
+    },
+    "text_field": {
+      "type": "object",
+      "required": [
+        "state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "$ref": "#/definitions/state"
+        },
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "unreadable のとき必須"
+        }
+      }
+    },
+    "question": {
+      "description": "原文に (1)(2)… と印刷されている小問だけ。分けるのは転記であって判断ではない。",
+      "type": "object",
+      "required": [
+        "qid",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "qid": {
+          "type": "string",
+          "pattern": "^q[0-9]+$"
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "(1) など、原文の小問記号"
+        },
+        "text": {
+          "type": "string",
+          "description": "原文そのまま"
+        }
+      }
+    },
+    "answer_slot": {
+      "description": "印刷された答えを、答える場所ごとに分けたもの。アプリの小問はここに ref で結ぶ。",
+      "type": "object",
+      "required": [
+        "aid",
+        "label",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "aid": {
+          "type": "string",
+          "pattern": "^a[0-9]+$"
+        },
+        "label": {
+          "type": "string",
+          "description": "(1) や ㋐ など、答える場所の原文表記"
+        },
+        "text": {
+          "type": "string",
+          "description": "その場所の答え（印刷そのまま）"
+        },
+        "qid": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "対応する小問。無ければ null"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/answer_value"
+          },
+          "description": "案A：印刷ラベルで分けられるときだけ入れる。分けられないときは空"
+        },
+        "unit_index": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "案B：この枠の中で「単位→その単位が付く値」が一意に決まるときの対照表（例 {\"時\":\"2\",\"分\":\"20\"}）。単位の表記は scripts/g1_units.py の表にあるものだけ（長さでは判定しない）。速さは接頭語ごと鍵にする（{\"時速km\":\"3\"}）。同じ鍵が2回以上あるとき・表に無い表記のときは作らず止める"
+        }
+      }
+    },
+    "choice": {
+      "type": "object",
+      "required": [
+        "sym",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sym": {
+          "type": "string",
+          "description": "① ア など"
+        },
+        "text": {
+          "type": "string",
+          "description": "その記号の本文（原文そのまま）"
+        }
+      }
+    },
+    "figure": {
+      "type": "object",
+      "required": [
+        "fid",
+        "scope",
+        "state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fid": {
+          "type": "string",
+          "pattern": "^f[0-9]+$"
+        },
+        "scope": {
+          "type": "string",
+          "pattern": "^(item|q[0-9]+|unknown)$",
+          "description": "item=大問の図 / qN=その小問の図 / unknown=どこの図か確定できない。大問・小問とも複数枚を持てる。★unknown を『たぶん大問共通だろう』で item に丸めてはいけない。unknown の図がある大問は未完成"
+        },
+        "scope_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "scope=unknown のとき必須。なぜ所属が確定できないかを書く"
+        },
+        "order": {
+          "type": "integer",
+          "description": "同じ scope 内での並び"
+        },
+        "state": {
+          "$ref": "#/definitions/state"
+        },
+        "where": {
+          "enum": [
+            "mondai",
+            "kaisetsu",
+            null
+          ],
+          "description": "mondai=問題ページ / kaisetsu=解説側（アプリに入れてはいけない）"
+        },
+        "svg_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "SVGファイルへの相対パス。本文にSVGは書かない"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "match": {
+          "enum": [
+            "explicit",
+            "by_order_legacy",
+            "unresolved"
+          ],
+          "description": "explicit=G1が明示 / by_order_legacy=旧データ変換のときだけ許す順番あわせ / unresolved=決められなかった（scope=unknown と対）"
+        }
+      }
+    },
+    "note": {
+      "type": "object",
+      "required": [
+        "kind",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "scan_right_edge",
+            "handwriting",
+            "label_missing",
+            "nombre_missing",
+            "bleed_through",
+            "print_missing",
+            "figure_mismatch",
+            "other"
+          ]
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": [
+        "label",
+        "setsumon",
+        "kotae",
+        "kaihou_insatsu",
+        "kenzan",
+        "figures",
+        "notes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "解答冊子側の表記（B1 / C4 など）"
+        },
+        "hg": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "既存レコードのHG番号。新規採番はこの版では行わない"
+        },
+        "star": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "object"
+        },
+        "setsumon": {
+          "type": "object",
+          "required": [
+            "state",
+            "common"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "$ref": "#/definitions/state"
+            },
+            "common": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "全小問に共通する文（リード文・条件・選択肢の枠）。ここに小問文を入れない"
+            },
+            "questions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/question"
+              }
+            },
+            "choices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/choice"
+              }
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "kotae": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "$ref": "#/definitions/state"
+            },
+            "text": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "印刷そのまま（分ける前の原文）"
+            },
+            "slots": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/answer_slot"
+              }
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "kaihou_insatsu": {
+          "$ref": "#/definitions/text_field",
+          "description": "印刷されている解法。state=none は『原本に解法が無い』、unread は『まだ読んでいない・取り漏れ』。**unread のまま完成にしない**"
+        },
+        "kenzan": {
+          "type": "object",
+          "required": [
+            "result"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "result": {
+              "enum": [
+                "itchi",
+                "fuitchi",
+                "mi"
+              ]
+            },
+            "memo": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "figures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/figure"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/note"
+          },
+          "description": "既定は空。正常な問題には何も書かせない"
+        }
+      }
+    },
+    "answer_value": {
+      "description": "1つの答え欄の中に、印刷されたラベルつきの値が複数あるとき（例「上り 時速12km　下り 時速18km」）。分けるのは転記の範囲。",
+      "type": "object",
+      "required": [
+        "vid",
+        "label",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "vid": {
+          "type": "string",
+          "pattern": "^v[0-9]+$"
+        },
+        "label": {
+          "type": "string",
+          "description": "印刷されたラベル（上り・下り など）"
+        },
+        "text": {
+          "type": "string",
+          "description": "その値（印刷そのまま）"
+        }
+      }
+    }
+  }
+}
