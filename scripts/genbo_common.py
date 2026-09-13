@@ -56,6 +56,12 @@ COURSE_PAT = [
     #   算数側より先に置いて、国語の分冊だけを先取りする（2026-09-03・全12回59本を追加したときに追加）
     ("kokugo_bunsatsu", re.compile(r"^小(\d)\s*マスター国語")),
     ("master_bunsatsu", re.compile(r"^小(\d)\s*マスター.*分冊")),
+    # ★「演習教材 第N分冊」＝小5算数のテーマ教材と対になる問題集。**マスター（復習テスト）とは別講座**
+    #   なので必ず別コースにする（→ memory の feedback_jukunavi_rule「講座・難易度が違うものは別コース」）。
+    #   見出しは「小5 演習教材 第3分冊 No.21 日暦算 B1（…）」の形で、上のどのパターンにも当たらないため
+    #   2026-09-12に44本を入れた時点で「検査の分母にすら入っていない」と安全弁が鳴った。それで追加した。
+    #   アプリ側にはまだコースが無いので、当面は集計だけ（未収録＝作問待ちとして出る）。
+    ("enshu_bunsatsu", re.compile(r"^小(\d)\s*演習教材")),
     ("master", re.compile(r"^小(\d)\s*(?:マスター|復習|本科|実力|No\.)")),
 ]
 gen = collections.defaultdict(set)
@@ -74,7 +80,7 @@ for k, v in heads.items():
 NADAGO_ID_RANGES = {
     "3": range(1901, 2011),
     "4": range(2301, 2431),
-    "5": range(2201, 2279),
+    "5": range(2201, 2299),   # ★2026-09-09に第7回（本体2279-2288／確認テスト2289-2298）を追加して2279→2299へ広げた
 }
 for grade, rng in NADAGO_ID_RANGES.items():
     for n in rng:
@@ -475,6 +481,7 @@ COURSE_LABEL = {
     "master": "マスター", "master_bunsatsu": "マスター宿題", "sairei": "最レ",
     "nd2": "2nd演習", "rika": "理科", "nadago": "灘合", "kokugo": "国語",
     "kokugo_bunsatsu": "国語のとも",
+    "enshu_bunsatsu": "演習教材",
     # ★アプリ側のキー名でも引けるようにしておく（audit_ledger.py はアプリ側の名前で集計する）
     "master2nd": "2nd演習", "nadago_rika": "灘合理科",
 }
@@ -596,6 +603,34 @@ SVG_FIELD_HDR = re.compile(
     r"^-[ \t]*図SVG(?P<qual>[（(][^\n]*?[)）])?[ \t]*[:：]", re.M)
 
 
+_NL = chr(10)
+
+
+def _field_bound(body, pos):
+    """pos から見て「この欄が終わる所」＝次の欄（行頭の "- "）か次のレコード見出し。"""
+    m = re.compile(r"^(?:- |### )", re.M).search(body, pos)
+    return m.start() if m else len(body)
+
+
+def _fence_after(body, eol):
+    """欄の行の下に ```…``` が続いていれば (info, vs, ve, field_end) を返す。無ければ None。
+
+    ★行に注記を書いて、図そのものは下のフェンスに置く書き方のため（HG-7910）。
+    """
+    fs = eol + 1
+    fence_eol = body.find(_NL, fs)
+    if fence_eol < 0:
+        fence_eol = len(body)
+    if body[fs:fs + 3] != "```":
+        return None
+    info = body[fs + 3:fence_eol].strip()
+    close = body.find(_NL + "```", fence_eol)
+    if close < 0:
+        return info, fence_eol + 1, len(body), len(body)
+    ce = body.find(_NL, close + 1)
+    return info, fence_eol + 1, close, (len(body) if ce < 0 else ce)
+
+
 def find_svg_fields(body):
     """原簿の1レコード本文から「- 図SVG…:」欄をぜんぶ拾い、出てくる順に返す。
 
@@ -608,6 +643,9 @@ def find_svg_fields(body):
       qual    … かっこ書き（"（(1)）" など）。無ければ None
       step_no … かっこ書きから読んだ小問番号（int）。小問を指していなければ None
       style   … "inline" / "fence" / "bare" / "text" / "empty"
+                ★"bare" は見出しと同じ行だけでなく**次の行から始まる生SVG**も含む。
+                ★"fence" は**行に注記があって下がフェンス**の形も含む（注記は note に入る）。
+      note    … 欄の行に書かれた注記（フェンス形式のときだけ。無ければキー無し）
       value   … 欄の中身（切り出したまま。前後の空白は落としていない）
       vs / ve … value の文字位置（body内）。**ここを置きかえれば欄を書きかえられる**
       field_end … 欄まるごとの終わり（fence なら閉じ ``` の行末）
@@ -666,14 +704,43 @@ def find_svg_fields(body):
                     f["vs"], f["ve"] = fence_eol + 1, close
                     ce = body.find("\n", close + 1)
                     f["field_end"] = len(body) if ce < 0 else ce
+            elif body[fs:fs + 4] == "<svg":
+                # ★見出しの行は空でも、次の行から生SVGが始まっている書き方がある（HG-7871）。
+                #   2026-09-13まで "empty"（＝図SVGなし）と読んでいて、
+                #   「原簿側に図が無い」と誤って結論し、図なしで実装した。
+                f["style"] = "bare"
+                bound = _field_bound(body, fs)
+                close = body.rfind("</svg>", fs, bound)
+                if close < 0:
+                    f["unterminated"] = True
+                    f["vs"], f["ve"] = fs, bound
+                else:
+                    f["vs"], f["ve"] = fs, close + len("</svg>")
+                f["field_end"] = f["ve"]
             else:
                 f["style"] = "empty"
                 f["vs"] = f["ve"] = f["field_end"] = eol
-        else:
-            f["style"] = "bare" if s.startswith("<svg") else "text"
+        elif s.startswith("<svg"):
+            f["style"] = "bare"
             f["vs"] = off
             f["ve"] = he + len(rest.rstrip())
             f["field_end"] = f["ve"]
+        else:
+            # ★行に注記だけを書き、その下に ```svg フェンスを置く書き方がある
+            #   （HG-7910「（※(2)のぶんだけ。(1)は実物が白紙なのでSVGは無い）」）。
+            #   注記だけを value にすると図を見落とす（2026-09-13に発覚）。
+            #   注記は f["note"] に分けて残し、value はフェンスの中身にする＝
+            #   style は "fence" のまま＝配る側（sync_genbo_svg）の動きは変えない。
+            fen = _fence_after(body, eol)
+            if fen:
+                f["style"] = "fence"
+                f["note"] = s
+                f["fence_info"], f["vs"], f["ve"], f["field_end"] = fen
+            else:
+                f["style"] = "text"
+                f["vs"] = off
+                f["ve"] = he + len(rest.rstrip())
+                f["field_end"] = f["ve"]
         f["value"] = body[f["vs"]:f["ve"]]
         out.append(f)
     return out
@@ -782,6 +849,76 @@ def match_step_svgs(fields, steps, daimon_svg=""):
     if all(n is not None for n in nos) and any(a >= b for a, b in zip(nos, nos[1:])):
         return None, None, u"図SVG欄の小問番号が設問の順に並んでいない（%s）" % nos
     return list(zip(qs, [v for _, v in steps])), [], None
+
+
+def rec_fields(body):
+    """原簿の1レコード本文から「- 欄名: 中身」をぜんぶ拾って dict で返す。
+
+    ★原簿の欄名は一様ではない。実際にあるもの：
+        - 設問:        - 図: / - 図SVG(1): / - 図SVG（(2)）:
+        - 答え:        - 解法:  - 検算:  - 備考:  - 作問メモ:
+      **「- 図SVG:」だけを正規表現で探すと、括弧つきの欄を丸ごと取りこぼす。**
+      2026-09-13、それで「演習教材に図SVGが1本も無い」と誤った報告をした
+      （実際は112本すべてに入っていた）。
+
+    戻り値: {正規化した欄名: [中身, …]}
+      正規化＝かっこ書きを外した名前。"図SVG(1)" も "図SVG（(2)）" も キー "図SVG" に入る。
+      同じ欄名が複数あれば出てきた順のリストになる（図SVGは小問ごとに複数ある）。
+
+    使い方:
+        f = rec_fields(body)
+        f.get("設問", [""])[0]      # 1つだけの欄
+        f.get("図SVG", [])          # 複数ありうる欄
+    ★原簿の欄を読むときは必ずこれを使う。正規表現を自分で書かない。
+    """
+    out = {}
+    for m in re.finditer(r"^- ([^:：]+?)[:：][ 	]*(.*)$", body, re.M):
+        name = re.sub(r"[（(].*?[）)]", "", m.group(1)).strip()
+        out.setdefault(name, []).append(m.group(2))
+    return out
+
+
+def rec_field(body, name, default=""):
+    """rec_fields の1つ取り版。無ければ default。"""
+    v = rec_fields(body).get(name)
+    return v[0] if v else default
+
+
+def zu_ari(body):
+    """このレコードに「図がある」か。True / False / None（欄が無い）。
+
+    ★「- 図:」の値は自由記述になっていて、実測で100種類以上ある：
+        なし / 無し（実物に図なし） / **なし**（文章のみ） /
+        あり / **あり** / **必須** / **あり（必須）**。六芒星…
+      **だから値そのものを比べてはいけない。判定はこの関数ただ一つに集約する。**
+      2026-09-13、私が `startswith("なし")` を自作して「無し」（漢字）を取りこぼし、
+      さらに検査本体は太字の `**あり**` しか見ていなかった（＝643本を素通りさせていた）。
+
+    決め：**先頭が「なし」「無し」で始まれば図なし。それ以外は図あり。**
+      かっこ書き・太字・説明は先頭語の後ろに来る決まり（→ docs/_genbo/_FIELDS.md）。
+    """
+    z = rec_field(body, "図")
+    if not z:
+        return None
+    head = z.strip().lstrip("*＊ 　")
+    return not (head.startswith("なし") or head.startswith("無し"))
+
+
+def zu_svg_ari(body):
+    """このレコードに図SVGの中身が入っているか（空欄・判読不能は False）。
+
+    ★欄名は「図SVG:」だけでなく「図SVG(1):」「図SVG（(2)）:」もある。
+      自作の正規表現で "- 図SVG:" だけを探すと括弧つきを丸ごと取りこぼす。
+      2026-09-13、それで「演習教材に図SVGが1本も無い」と誤報告した（実際は112本すべてにあった）。
+
+    ★判定は「<svg タグが実際に入っているか」。**欄があること＝図があること、ではない。**
+      欄に「（※(2)のぶんだけ。(1)は実物が白紙なのでSVGは無い）」のような
+      断り書きだけが入っていることがある（HG-7910）。中身を見ないと図があると誤判定する。
+    """
+    for f in find_svg_fields(body):
+        if "<svg" in (f.get("value") or ""):
+            return True
+    return False
 
 
 def split_records(text):

@@ -210,6 +210,49 @@ def _genbo_bodies():
     return {hg: t[s:e] for hg, s, e in G.split_records(t)}
 
 
+# 小問番号として数えてよい丸数字の見分け方 ─────────────────────────
+# ★丸数字が「小問の番号」とはかぎらない。名前にも記号にも使われる。
+#   2026-09-13、この関数を作るまでに4つの型を誤検出した：
+#     ・HG-7960「①の角の大きさは46°」        … 図の角の名前（直後が助詞）
+#     ・HG-6692「①＝1，②＝1×2，③＝…」      … 記号の約束の定義（直後が演算子）
+#     ・HG-0835「（①②③の位置が命）」        … 図の部分の名前（文の切れ目に無い）
+#     ・HG-0960「整数④は」「もとの数④より」  … 変数の名前（文の切れ目に無い）
+#   決め：**小問番号は ①から始まる連番で、文の切れ目の直後にあり、直後が助詞でも演算子でもない。**
+#   → [[feedback_genbo_field_writings]]「番号らしきものは区切りとはかぎらない」
+#   ⚠「／」は設問の区切りに実在する（HG-5838「① …／② …／③ …」）。
+#     これを切れ目に入れ忘れると、**本物の設問の抜けまで黙る**（最初の版でやった）。
+_ATAMA = ("", " ", "　", "。", "）", ")", "】", "」", "／", "/", "	")
+_JOSHI = "のはをがにでと、，より"
+_ENZAN = "＝=÷×＋－−+*/-"
+
+
+def maru_steps(line):
+    """設問の行から「小問番号」として数えてよい丸数字だけを返す。"""
+    # ★太字の「**」は前後の見分けをじゃまするだけなので先に落とす。
+    #   落とさないと「**⑧3時16分**」の⑧（前が*）と「⑥**3列の…**」の⑥（後が*）を
+    #   取りこぼす＝本物の設問の抜けが1〜2問ぶん小さく見える（HG-0052・HG-0091）。
+    line = line.replace("*", "")
+    found = set()
+    for i, c in enumerate(line):
+        if c not in MARU:
+            continue
+        prev = line[i - 1] if i else ""
+        nxt = line[i + 1] if i + 1 < len(line) else ""
+        if prev not in _ATAMA:          # 文の切れ目に無い＝名前
+            continue
+        if nxt and (nxt in _JOSHI or nxt in _ENZAN):
+            continue
+        found.add(c)
+    # ①から始まる連番でなければ小問番号ではない（抜けがあったらそこで止める）
+    out = []
+    for k, c in enumerate(MARU):
+        if c in found and k == len(out):
+            out.append(c)
+        elif c in found:
+            break
+    return out
+
+
 def k5(rs):
     """原簿の小問数・選択肢数と、作った大問が食いちがう。
 
@@ -231,7 +274,7 @@ def k5(rs):
             uncountable += 1
             continue
         line = m.group(1)
-        marks = [c for c in MARU if c in line]
+        marks = maru_steps(line)
         if not marks:
             uncountable += 1
             continue

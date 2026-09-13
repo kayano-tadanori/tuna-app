@@ -54,7 +54,8 @@ def _finish_status_file():
 from genbo_common import (
     heads, recs_body, gen, MOSHI, SAME, CANNOT, KOKUGO_DONE,
     hgof, APP_COURSE_KEY, KINDS, COURSE_LABEL, load_daimon, scan_courses,
-    find_svg_fields, iter_daimon, NO_FIG,
+    find_svg_fields, iter_daimon, NO_FIG, rec_field,
+    zu_ari as gc_zu_ari, zu_svg_ari as gc_zu_svg_ari,
 )
 
 d = load_daimon()
@@ -224,18 +225,49 @@ print("→ 文字が実際に読めるかは python scripts/check_text_contrast.
 #   「図: あり」なのに 図SVG が無い＝まだPDFを見ていない、というサイン。
 print()
 zu_ari = {}      # HG -> True（原簿が図ありと言っている）
+zu_ari_weak = {} # HG -> True（太字でない「図: あり」。下で数だけ出す）
 zu_svg = {}      # HG -> 原簿のSVG（無ければ None、判読不能なら "判読不能"）
 for hg, r in heads.items():
     body = recs_body.get(hg, "")
-    m = re.search(r"^- 図: (.+)$", body, re.M)
-    if m and ("**あり**" in m.group(1) or "**必須**" in m.group(1)):
-        zu_ari[hg] = True
+    # ★図があるかの判定は genbo_common.zu_ari ただ一つ（→ docs/_genbo/_FIELDS.md）。
+    #   ここに条件を写すと、写した時点でゆれが生まれる。
+    z = rec_field(body, "図")
+    if gc_zu_ari(body):
+        if "**あり**" in z or "**必須**" in z:
+            zu_ari[hg] = True          # 太字＝これまでも落としていた分
+        else:
+            zu_ari_weak[hg] = True     # 太字でない「あり」＝2026-08-11からずっと素通りしていた分
     # ★欄を探すのは genbo_common.find_svg_fields ただ一つ（正規表現をここに写さない）
     _fs = find_svg_fields(body)
     if _fs:
         zu_svg[hg] = _fs[0]["value"].strip()
 
-miss_svg = sorted(h for h in zu_ari if h not in zu_svg)
+# ★「答えが図そのもの」の作図問題は図SVGを免除する（本人判断 2026-09-12）。
+#   理由：これらは CANNOT（＝アプリに作れないレコード）に既に入っているのに、
+#   同じ検査が図SVGを要求して恒久的に赤くしていた＝矛盾。
+#   **ゲートが常に赤いと誰も見なくなる**ので、除外側にそろえる。
+#   ★HG番号をここに書かない。CANNOT の理由文で判定する（新しい作図問題が増えても自動で入る）。
+SAKUZU_EXEMPT = {h for h, why in CANNOT.items()
+                 if "答えが図そのもの" in why or "答えが作図そのもの" in why}
+
+# 🚩 太字でない「図: あり」も図はある。2026-08-11からこの検査は太字しか見ておらず、
+#    そのぶんを素通りさせていた（2026-09-13に本人の「ルールが間違ってない？」で発覚）。
+#    いきなり落とす側に入れると数百本が一度に赤くなって誰も見なくなるので、
+#    **落とすのは太字ぶんのまま・数と内わけは必ず出す**。→ docs/_genbo/_FIELDS.md
+miss_weak = sorted(h for h in zu_ari_weak
+                   if not gc_zu_svg_ari(recs_body.get(h, "")) and h not in SAKUZU_EXEMPT)
+if miss_weak:
+    print("🚩 太字でない「図: あり」で図SVGが無い: %d本（落としてはいないが、これも図は要る）" % len(miss_weak))
+    _by = collections.Counter()
+    for h in miss_weak:
+        _t = heads.get(h, "")
+        _by[" ".join(str(_t).split()[:2])] += 1
+    for _k, _v in _by.most_common(6):
+        print("     %-26s %d本" % (_k[:26], _v))
+    print("  → 一覧は python scripts/zu_todo.py（この行の数は docs/_genbo/_FIELDS.md にも書いてある）")
+    print()
+
+miss_svg = sorted(h for h in zu_ari if h not in zu_svg and h not in SAKUZU_EXEMPT)
 if miss_svg:
     # ★2026-08-18 本人指示で「警告」から「落とす」に変えた。
     #   理由：小3マスター第2分冊で、私が「読み取りを先に全部やって、図はあとでまとめて描く」と
@@ -251,6 +283,9 @@ if miss_svg:
         print("   …ほか %d本" % (len(miss_svg) - 12))
 else:
     print("✅ 図がある大問には、原簿に図SVGが入っている")
+if SAKUZU_EXEMPT:
+    print("  （※「答えが図そのもの」の作図問題 %d本は図SVGを免除：%s）"
+          % (len(SAKUZU_EXEMPT), " ".join(sorted(SAKUZU_EXEMPT))))
 
 
 # ── 原簿に図SVG欄があるのに、アプリの大問に svg が無い（2026-09-04 新設）──────
