@@ -82,9 +82,23 @@ def main():
     dump_pages(MONDAI, 'mondai', renshu + kaisetsu, pg_dir)
     dump_pages(KAITOU, 'kaitou', kai, pg_dir)
 
-    # 担当わけ：1担当2テーマ
+    # 担当わけ：既定は1担当2テーマ。
+    # ★`--groups 2,3|4,5|6` のように**テーマ番号**で明示できる。
+    #   すでに取ってあるテーマを飛ばすときは必ず明示する。
+    #   （2026-09-13、No.26でテーマ1だけ再利用して担当を1つずらしたのに
+    #     切り出しは既定のままで、担当Bに別のテーマのOCRが渡った）
     n = len(themes)
-    groups = [list(range(i, min(i + 2, n))) for i in range(0, n, 2)]
+    gopt = next((a.split('=', 1)[1] for a in sys.argv[2:] if a.startswith('--groups=')), None)
+    if gopt is None and '--groups' in sys.argv:
+        gopt = sys.argv[sys.argv.index('--groups') + 1]
+    if gopt:
+        groups = [[int(x) - 1 for x in g.split(',') if x.strip()] for g in gopt.split('|')]
+        for g in groups:
+            for ti in g:
+                if not (0 <= ti < n):
+                    sys.exit('テーマ%d は No.%d に無い（テーマは%d個）' % (ti + 1, no, n))
+    else:
+        groups = [list(range(i, min(i + 2, n))) for i in range(0, n, 2)]
 
     # OCRの切り出し（保存ずみぶんだけ。無いページは「OCRなし」と書かれる）
     import ocr_pages

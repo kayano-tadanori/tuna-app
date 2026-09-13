@@ -325,6 +325,15 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             #    単位の『度』が導入文だけにあり、検査が実物より厳しく止めていた）。
             shown = q_text + (u"" if sole else (it[u"setsumon"].get(u"common") or u""))
             miss = [t for t in meaning_tokens(ukey) if t and t not in shown]
+            # ★単位の字そのものが無くても、**何の量を答えるかが画面に出ている**なら通す。
+            #   例：「九角形の内角の和を求めなさい」→ 答え 1260度。『度』の字は無いが
+            #   『角』があるので、子どもが何を答えるかは画面から消えていない。
+            #   ⚠ゆるめるのは**この1組だけ**（度 ↔ 角）。単位一般には広げない。
+            #   広げると「時速12km→12」のような、量そのものが消える事故を見逃す。
+            if miss == [u"度"] and u"角" in shown:
+                notes.append(u"%s step%d: 単位『度』の字は問いかけに無いが、『角』があるので通した"
+                             % (hg, i))
+                miss = []
             if miss:
                 problems.append(u"%s step%d: 単位「%s」で %r を取り出したのに、問いかけに %s が"
                                 u"出てこない（何の量を答えるのか画面から消える）"
