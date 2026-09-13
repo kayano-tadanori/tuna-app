@@ -485,8 +485,12 @@ async function hamaDaimonWeek(grade, course, no) {
 // ★2026-09-06：最レにも宿題テキストがある（小3最レ 刷新版 No.13・No.14 は『最レ宿題』）。
 //   本人の指摘「これ 最レの宿題だよ」で、復習テストの引き出しに入れていたのを直した。
 //   ⛔宿題と復習テストは別教材。同じ引き出しに混ぜない（→ memory:feedback_hamagakuen_iinkai_rule）
+// ★2026-09-13：算数2ndにも宿題テキストがある（小5 演習教材 第3分冊）。
+//   本人の説明「演習プリントが復習テストで、演習問題は宿題」＝同じ週の別の紙で、順番がある。
+//   宿題（演習教材）を家でやってから、授業で演習プリントを解く。だから宿題は演習プリントの**上**。
+//   ⛔同じ引き出しに混ぜない（→ memory:feedback_hamagakuen_iinkai_rule）
 const BUNSATSU_OF = { master: 'master_bunsatsu', kokugo: 'kokugo_bunsatsu',
-                      sairei_new: 'sairei_new_bunsatsu' };
+                      sairei_new: 'sairei_new_bunsatsu', master2nd: 'master2nd_bunsatsu' };
 async function hamaDaimonBunsatsu(grade, no, course) {
   const key = BUNSATSU_OF[course || 'master'];
   if (!key) return [];
