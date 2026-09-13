@@ -318,7 +318,13 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
         #   「時速12km」から12だけを取り出して問いかけに「時速」も「km」も無ければ、
         #   子どもが読む画面から**速さであることが消える**（本人指摘・2026-09-13）
         if ukey:
-            miss = [t for t in meaning_tokens(ukey) if t and t not in q_text]
+            # ★見るのは「子どもの画面に出る文」ぜんぶ。導入文（設問の共通文）は
+            #   アプリが(2)(3)でも毎回出すので、そこに単位があれば画面から消えていない
+            #   （js/sansu.js の chainIntro。2026-09-13、時計算の
+            #    「次の時刻のときの長針と短針のなす角度の小さい方を求めなさい」＋「(1) 7時」で
+            #    単位の『度』が導入文だけにあり、検査が実物より厳しく止めていた）。
+            shown = q_text + (u"" if sole else (it[u"setsumon"].get(u"common") or u""))
+            miss = [t for t in meaning_tokens(ukey) if t and t not in shown]
             if miss:
                 problems.append(u"%s step%d: 単位「%s」で %r を取り出したのに、問いかけに %s が"
                                 u"出てこない（何の量を答えるのか画面から消える）"
@@ -341,11 +347,24 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             s[u"svg"] = qfigs[0][u"_svg"]
         steps.append(s)
 
+    # ★アプリは図を**設問の下**に出すので、「右の図」「上のグラフ」は指し先が無くなる。
+    #   **実物にそう印刷されていても、アプリの本文では「下の…」に言いかえる**（本人指示）。
+    #   → feedback_zu_wa_setsumon_no_shita。**原簿はここを通らない＝実物のまま残る。**
+    def for_app(t):
+        if not t:
+            return t
+        out = re.sub(u"[右左上](の)?(図|グラフ|表)", lambda m: u"下%s%s" % (m.group(1) or u"", m.group(2)), t)
+        if out != t:
+            notes.append(u"%s: アプリ本文の図の指し方を「下の…」に言いかえた（原簿は実物のまま）" % hg)
+        return out
+
+    for s in steps:
+        s[u"question"] = for_app(s[u"question"])
     x = {u"id": u"trial_%s" % hg.replace(u"-", u"").lower(),
          u"src": u"%s 原簿・%s No.%d %s" % (hg, doc[u"material"], doc[u"no"], it[u"label"]),
          u"hg": hg, u"title": p.get(u"title"), u"category": p.get(u"category"),
          u"unit": p.get(u"unit"), u"grade": 5, u"star": p.get(u"star"),
-         u"intro": None if sole else it[u"setsumon"][u"common"], u"steps": steps}
+         u"intro": None if sole else for_app(it[u"setsumon"][u"common"]), u"steps": steps}
     if item_figs:
         x[u"svg"] = item_figs[0][u"_svg"]
     return x
