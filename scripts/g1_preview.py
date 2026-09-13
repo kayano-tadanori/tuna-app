@@ -83,6 +83,14 @@ def render(daimon):
             q = ws(st[u"question"])
             if x.get(u"intro") and len(q) >= 3 and q in ws(x[u"intro"]):
                 dupes.append(u"%s: 設問文が導入文の中にも出ている（%s…）" % (x[u"hg"], q[:20]))
+            # ★図の中の文（図の下に印刷された注記）が設問文・導入文にも出ていないか。
+            #   No.28で「四角形ABCDは平行四辺形」が図と設問文の両方に入り、この検査が拾えなかった。
+            #   寸法（7cm）や頂点名（A）は二重でも当たり前なので、かな・漢字を含む5字以上だけ見る
+            around = ws(st[u"question"]) + u"|" + ws(x.get(u"intro") or u"")
+            for t in re.findall(u">([^<>]+)<", fig or u""):
+                t = ws(t)
+                if len(t) >= 5 and re.search(u"[ぁ-んァ-ヶ一-龥]", t) and t in around:
+                    dupes.append(u"%s: 図の中の文が設問文か導入文にも出ている（%s）" % (x[u"hg"], t[:20]))
         h.append(u'</div>')
         parts.append(u"".join(h))
     return u"".join(parts), dupes
@@ -125,7 +133,7 @@ def main():
         for t in dupes:
             print(u"   ", t)
         sys.exit(1)
-    print(u"✅ 導入文と設問文の二重表示は無し")
+    print(u"✅ 二重表示は無し（導入文と設問文／図の中の文と設問文）")
 
 
 if __name__ == "__main__":

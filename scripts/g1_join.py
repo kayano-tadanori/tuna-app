@@ -359,21 +359,29 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
     # ★アプリは図を**設問の下**に出すので、「右の図」「上のグラフ」は指し先が無くなる。
     #   **実物にそう印刷されていても、アプリの本文では「下の…」に言いかえる**（本人指示）。
     #   → feedback_zu_wa_setsumon_no_shita。**原簿はここを通らない＝実物のまま残る。**
-    def for_app(t):
+    def for_app(t, has_fig=False):
         if not t:
             return t
         out = re.sub(u"[右左上](の)?(図|グラフ|表)", lambda m: u"下%s%s" % (m.group(1) or u"", m.group(2)), t)
+        # ★「右のおうぎ形」のように図形の名前で図を指すこともある（No.29で出た）。
+        #   ただし「右の三角形」は**図の中の2つのうち右側**の意味にもなるので、
+        #   同じ文に反対側（左の三角形）があるときは言いかえない
+        def shape(m):
+            other = (u"左" if m.group(1) == u"右" else u"右") + u"の" + m.group(2)
+            return m.group(0) if other in out else u"下の" + m.group(2)
+        out = out if not has_fig else re.sub(u"([右左])の(おうぎ形|円|三角形|四角形|正方形|長方形|台形|平行四辺形|図形)",
+                     shape, out)
         if out != t:
             notes.append(u"%s: アプリ本文の図の指し方を「下の…」に言いかえた（原簿は実物のまま）" % hg)
         return out
 
     for s in steps:
-        s[u"question"] = for_app(s[u"question"])
+        s[u"question"] = for_app(s[u"question"], bool(s.get(u"svg") or item_figs))
     x = {u"id": u"trial_%s" % hg.replace(u"-", u"").lower(),
          u"src": u"%s 原簿・%s No.%d %s" % (hg, doc[u"material"], doc[u"no"], it[u"label"]),
          u"hg": hg, u"title": p.get(u"title"), u"category": p.get(u"category"),
          u"unit": p.get(u"unit"), u"grade": 5, u"star": p.get(u"star"),
-         u"intro": None if sole else for_app(it[u"setsumon"][u"common"]), u"steps": steps}
+         u"intro": None if sole else for_app(it[u"setsumon"][u"common"], bool(figs_by_scope)), u"steps": steps}
     if item_figs:
         x[u"svg"] = item_figs[0][u"_svg"]
     return x
