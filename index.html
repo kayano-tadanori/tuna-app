@@ -216,7 +216,7 @@
         <button class="sansu-cat-btn" data-band="V">V<br><span style="font-size:.72em;opacity:.7">チャレンジ＋</span></button>
         <button class="sansu-cat-btn" data-band="">えらばない<br><span style="font-size:.72em;opacity:.7">ぜんぶ</span></button>
       </div>
-      <p class="snd-note">じゅくのテキストは全クラス同じで、「やさしい／難しい／チャレンジ」とページで分かれています。宿題としてやる範囲はクラスごとにちがうので、ここで自分のクラスをえらぶと、じゅくナビの「今週の復習テスト」でその範囲のむずかしさを出します。小さい教室の合同クラス（SHH・VSS など）は、はじめの2文字が合同するクラス、さいごの1文字がその中のどの帯かをあらわします。えらばなければ全部から出ます。</p>
+      <p class="snd-note">じゅくのテキストは全クラス同じで、「やさしい／難しい／チャレンジ」とページで分かれています。宿題としてやる範囲はクラスごとにちがうので、ここで自分のクラスをえらぶと、じゅくナビの「今週の類題」でその範囲のむずかしさを出します。小さい教室の合同クラス（SHH・VSS など）は、はじめの2文字が合同するクラス、さいごの1文字がその中のどの帯かをあらわします。えらばなければ全部から出ます。</p>
     </div>
     <div class="snd-card">
       <div class="snd-row snd-row-head">
@@ -354,7 +354,7 @@
         <table class="help-table">
           <tr><th>ボタン</th><th>中身</th></tr>
           <tr><td>🧩 今週の宿題（大問）</td><td>マスターだけ。<b>復習テストより先にやる宿題テキスト</b>（データがある学年・回だけ出る）</td></tr>
-          <tr><td>📝 今週の復習テスト</td><td>その回で習った単元の問題。<b>ふだんはこれ</b></td></tr>
+          <tr><td>🧠 今週の類題</td><td>その回で習った単元の<b>類題</b>（アプリの問題から単元で集めたもの。塾の実物ではない）。<b>ふだんはこれ</b></td></tr>
           <tr><td>📖 今週のことば</td><td>国語だけ。その回で習う ことばの問題（四択）</td></tr>
           <tr><td>🧩 今週の復習テスト（大問）</td><td><b>塾の実物から起こした本物の大問</b>。3問ひとつづきの誘導つき</td></tr>
           <tr><td>🎯 公開テストのはんい</td><td>次の公開学力テストの<b>出題はんい</b>から、単元で集めて出す</td></tr>
@@ -1248,14 +1248,15 @@
             <span class="hama-act-name">📚 第2講座の宿題（大問）</span>
             <span class="hama-act-sub" id="hama-cnt-kouza2q">—</span>
           </button>
-          <!-- マスターだけ：復習テストの前にやる宿題テキスト（3年マスター算数 第1分冊など）。
-               データがある学年・回だけ自動で出る（本人指示 2026-08-17） -->
+          <!-- 復習テストの前にやる宿題テキスト（3年マスター算数 第1分冊／小5 算数2nd 演習教材など）。
+               ★算数2ndは「演習問題＝宿題／演習プリント＝復習テスト」なので宿題をこの位置に置く
+               （本人指示 2026-09-13）。データがある学年・回だけ自動で出る（本人指示 2026-08-17） -->
           <button class="hama-act-btn hama-act-dq hidden" data-hama-act="bunsatsuq">
             <span class="hama-act-name">🧩 今週の宿題（大問）</span>
             <span class="hama-act-sub" id="hama-cnt-bunsatsuq">—</span>
           </button>
           <button class="hama-act-btn" data-hama-act="week">
-            <span class="hama-act-name">📝 今週の復習テスト</span>
+            <span class="hama-act-name">🧠 今週の類題</span>
             <span class="hama-act-sub" id="hama-cnt-week">—</span>
           </button>
           <!-- 国語だけ：その回で習う「ことば」を四択で出す（文のしくみ）。

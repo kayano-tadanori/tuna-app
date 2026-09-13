@@ -1050,6 +1050,15 @@ async function renderHamaPanel() {
   // 単元モードで書きかえたラベルを戻す。
   // ★算数2nd（木）は復習テストではなく演習プリント＝点数がA表に残らないぶん難度が高い。
   //   名前まで「復習テスト」にすると1stと混ざって見えるので、ここだけ言いかえる（本人指示 2026-08-01）
+  // 🚨2026-09-13：このボタン（week）が出すのは**実物ではない**。全コース共通。
+  //   hamaCollect が hama_map の sel（ID帯）／units で**アプリの通常問題プール**から拾うもので、
+  //   1回で210問・236問（小4最レは全回で2,916問）になる。実物の復習テスト1回にその数は無い。
+  //   実測：sansu_*.json ＋ rika_*.json の14,626問に `src`/`hg` は**1問も無い**＝原簿由来ではない。
+  //   **原簿（＝塾の実物）から起こしてあるのは「（大問）」の引き出しだけ**（weekq/kokaiq/
+  //   bunsatsuq/kouza1q/kouza2q）。国語の「書き取り」だけは通常問題側でも実物（大問4そのまま）。
+  //   本人指摘「演習プリントって出したらだめだよね　今週の類題ぐらいの表記にしよう」
+  //   「復習テストは実際の復習テストから原簿取ってるはずだよ」→ そのとおりで、実物は大問の側。
+  //   → week＝「🧠 今週の類題」（国語の書き取りをのぞく全コース）／大問の名前はさわらない。
   const is2nd = (course === 'master2nd');
   // ★国語は実物の大問4（カタカナ→漢字10問）をそのまま出す＝手書きの書き取り（2026-08-02）
   const isKokugo = (courses[course].subject === 'kokugo');
@@ -1059,7 +1068,7 @@ async function renderHamaPanel() {
   const isNadago = String(courses[course].subject || '').startsWith('nadago');
   // 国語はこのあと、回がきまってから中身を見て名前をつけ直す（回ごとに書くものがちがうため）
   document.querySelector('.hama-act-btn[data-hama-act="week"] .hama-act-name').textContent =
-    isKokugo ? '✍️ 今週の書き取り' : is2nd ? '🔥 今週の演習プリント' : '📝 今週の復習テスト';
+    isKokugo ? '✍️ 今週の書き取り' : '🧠 今週の類題';
   document.querySelector('.hama-act-btn[data-hama-act="weekq"] .hama-act-name').textContent =
     isNadago ? '🔥 この回の問題' : is2nd ? '🔥 今週の演習プリント（大問）' : '🧩 今週の復習テスト（大問）';
   document.querySelector('.hama-act-btn[data-hama-act="week"]').classList.toggle('hidden', isNadago);
@@ -1447,7 +1456,7 @@ async function startHamaSession(kind) {
       const btnName = document.querySelector(`.hama-act-btn[data-hama-act="${kind}"] .hama-act-name`);
       // ★絵文字は文字クラス[]にまとめるとサロゲートペアが分解されて誤マッチする（2026-08-11 発覚）。
       //   交替(|)で1つずつリテラルマッチさせること。
-      const actLabel = (btnName && btnName.textContent.replace(/^(?:🧩|🎯)\s*/, '').replace(/（大問）\s*$/, '')) ||
+      const actLabel = (btnName && btnName.textContent.replace(/^(?:🧩|🎯|🔥|🧠|📚)\s*/, '').replace(/（大問）\s*$/, '')) ||
         (kind === 'weekq' ? '今週の復習テスト' : '公開テストの過去問');
       const rangeLabel = byUnit ? sansuState.hamaUnit : `No.${dno}`;
       openDaimonPicker(sets, grade, hamaSubj, `${hamaCourseLabel(grade, course)} ${rangeLabel}・${actLabel}`);
