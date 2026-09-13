@@ -59,13 +59,17 @@ def render(daimon):
              u'<div class="title">%s</div>' % esc(x.get(u"title"))]
         if x.get(u"intro"):
             h.append(u'<div class="intro">%s</div>' % esc(x[u"intro"]))
-        if x.get(u"svg"):
-            h.append(u'<div class="fig">%s</div>' % x[u"svg"])
+        # ★図は「設問文の下」に出す。アプリの並びがそうなっているため
+        #   （index.html の #sq-question → #sq-figure → #sq-meaning。→feedback_zu_wa_setsumon_no_shita）。
+        #   大問共通の図も、アプリでは設問ごとに設問の下へ出る（js/sansu.js の `step.svg || chain.svg`）。
+        #   2026-09-13までここは設問より前にまとめて出していたので、
+        #   「下図のような」と書かれた問題の確認が実物と食いちがっていた。
         for st in x[u"steps"]:
             h.append(u'<div class="step">')
             h.append(u'<div class="q">%s</div>' % esc(st[u"question"]))
-            if st.get(u"svg"):
-                h.append(u'<div class="fig">%s</div>' % st[u"svg"])
+            fig = st.get(u"svg") or x.get(u"svg")
+            if fig:
+                h.append(u'<div class="fig">%s</div>' % fig)
             if st.get(u"choices"):
                 h.append(u'<div class="ch">%s</div>' %
                          u"".join(u"<span>%s</span>" % esc(c) for c in st[u"choices"]))
