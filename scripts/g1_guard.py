@@ -46,16 +46,13 @@ def assert_safe_out_dir(out_dir):
     if not _under(p, ALLOW_PARENT):
         sys.exit(u"✗ 出力先は docs/_genbo/_trial… の下だけです: %s" % p)
 
-    name = os.path.basename(p.rstrip(os.sep))
-    top = p
-    while os.path.dirname(top) != os.path.abspath(ALLOW_PARENT):
-        nxt = os.path.dirname(top)
-        if nxt == top:
-            break
-        top = nxt
-    if not os.path.basename(top).startswith("_trial"):
-        sys.exit(u"✗ 出力先は `_trial` で始まるフォルダの下だけです: %s（いま %s）"
-                 % (p, os.path.basename(top)))
+    # ★2026-09-13：`_trial` で始まる名前だけ、という縛りは外した。
+    #   G1→G23→親が**標準の作り方**になり、作業フォルダは試行専用ではなくなったため
+    #   （例 docs/_genbo/theme3_no22）。本番を守っているのは上の FORBID と原簿の判定で、
+    #   フォルダ名の綴りではない。ただし **docs/_genbo 直下そのもの**には書かせない
+    #   （共有の _G23_GUIDE.md などを上書きする事故を防ぐ）。
+    if p == os.path.abspath(ALLOW_PARENT):
+        sys.exit(u"✗ 出力先が docs/_genbo 直下そのものです。作業フォルダを1つ作ってください: %s" % p)
     return p
 
 
