@@ -150,14 +150,13 @@ function recognize(cache) {
     同じ置かれ方（xf）で、平らな折り目（crease）だけで互いにつながる面の集まり」として照合する。
     ⚠元の面・faceId・折り目は1つも書きかえない（まとまりは認識の中だけ）。まとまりの中の結びは運動の途中でも一致するかを build が見る。 */
  const mats = cache.faces.map(f => { const mp = f.poly.map(p => invPt(f.xf, p)); return { f, mp, area: Math.abs(polyArea(mp)),
-  c: mp.reduce((s, p) => [s[0] + p[0] / mp.length, s[1] + p[1] / mp.length], [0, 0]) } });
- const inTri = (p, tri, e) => { const sg = polyArea(tri) > 0 ? 1 : -1;
-  return tri.every((a, i) => { const b = tri[(i + 1) % 3]; return sg * ((b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])) / dist(a, b) >= -e }) };
+  } });
  const groupIn = tri => {
-  const members = mats.filter(m => inTri(m.c, tri, -1e-9));
-  if (!members.length) return null;
-  if (members.some(m => !m.mp.every(p => inTri(p, tri, TOL)))) return null;/* 三角形のふちをまたぐ面がある */
-  if (Math.abs(members.reduce((s, m) => s + m.area, 0) - Math.abs(polyArea(tri))) > 1e-9) return null;/* ちょうど敷きつめていない */
+  /* 敷きつめ（1つの条件）：三角形と面積で重なる面は、ぜんぶ三角形の中に収まり（重なりの面積＝面の面積）、合わせて三角形の面積ちょうど。
+     ⚠以前は「重心が中にある面」を集めて、はみ出し・面積を別々に見ていた（同じ性質を2か所で守っていた）→ 重なりの面積で1つにした（2026-09-16）。 */
+  const members = mats.map(m => ({ ...m, cut: areaOf([m.mp, tri]) })).filter(m => m.cut > MIN_AREA);
+  const triArea = Math.abs(polyArea(tri));
+  if (!members.length || members.some(m => Math.abs(m.cut - m.area) > 1e-9) || Math.abs(members.reduce((s, m) => s + m.cut, 0) - triArea) > 1e-9) return null;
   const ids = members.map(m => m.f.faceId), set = new Set(ids);
   if (members.some(m => !near(m.f.xf, members[0].f.xf, 1e-9))) return null;/* 置かれ方がそろっていない */
   const inner = cache.bonds.filter(bd => set.has(bd.faceIds[0]) && set.has(bd.faceIds[1]));
@@ -184,7 +183,7 @@ function recognize(cache) {
   if (!orth || det < 0) continue;
   const G = g0;
   if (!NAMES.every(k => near(faceOf[k].xf, compose(compose(G, canonXf(k)), [Dt[0], Dt[1], Dt[2], Dt[3], 0, 0]), 1e-7))) continue;
-  fail(2, '花弁のまわりの紙の上下が、つる⑦のあとと違います（裏返したあとの反対側の花弁は未対応です）');
+  fail(2, '花弁のまわりの紙の上下が、つる⑦のあとと違います（裏返した側で花弁を折るには、その側にも⑦の折り目が要ります）');
   /* ③ 層：局所の10のまとまりで、面積で重なる面の組の上下が、ぜんぶモデルと同じ */
   let okLayers = true;
   for (let i = 0; i < NAMES.length && okLayers; i++) for (let j = i + 1; j < NAMES.length && okLayers; j++) {

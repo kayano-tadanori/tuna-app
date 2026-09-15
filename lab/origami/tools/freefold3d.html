@@ -71,7 +71,7 @@ const petalBtn=document.getElementById('petalPick'),pocketNote=document.getEleme
 const KIND={squash:{noun:'袋',pick:'袋を選ぶ',stop:'袋を選ぶのをやめる',open:'袋を開いてつぶす',
   note:'🧺 つる③の袋折り（検証ずみの形だけ）｜<b>厚み0</b>で表示・紙どうしの<b>貫通（すり抜け）は未検証</b>'},
  petal:{noun:'花弁',pick:'花弁を選ぶ',stop:'花弁を選ぶのをやめる',open:'花弁を持ち上げてたたむ',
-  note:'🌸 つる⑧⑨の花弁折り（検証ずみの1回目だけ）｜<b>厚み0</b>で表示・動きは検証モデル（剛体）と同じ式'}};
+  note:'🌸 つる⑧⑨・⑪の花弁折り（検証ずみの形だけ：その側に⑦の折り目があるとき）｜<b>厚み0</b>で表示・動きは検証モデル（剛体）と同じ式'}};
 const afterPetal=()=>state.recipe.steps.some(s=>s.op==='petal');
 let pocketReady={ok:false,failed:false,reason:'袋折りの検証器を読みこんでいます'};
 const afterSquash=()=>state.recipe.steps.some(s=>s.op==='squash');
@@ -150,7 +150,7 @@ function drawPocket(){const pv=pocket.preview,t=pocket.t;
    別のものをつかみたいときは、一度離して押し直す。 */
 const HOVER_WHITE='#ffffffaa',HELD_YELLOW='#ffd34e',TARGET_GREEN='#62e6a7',CREASE_LINE='#a8b6d8';
 /* 青は「層の選択」だけの色＝この場所の印と、その枚数で動く面の強調。操作の3色（白・黄・緑）には混ぜない。 */
-const PICK_BLUE='#7fd4ff';
+const PICK_BLUE='#7fd4ff',PICK_AWAY='#ffb454';
 /* 指を離したあとにだけ作る。ドラッグ中は null＝重なりの計算そのものをしない。 */
 let layerPick=null;
 /* 🖐 手応えの印（2026-09-14・本人指示）。**変わった瞬間に一度だけ**出して消える＝保持中は毎フレーム点滅させない。
@@ -330,6 +330,14 @@ function draw(){x.clearRect(0,0,innerWidth,innerHeight);
   if(layerPick.ok&&geom)for(const part of geom.parts)if(part.move){fillPts(part.move,PICK_BLUE+'38');outline(part.move,PICK_BLUE)}
   if(!layerPick.ok)for(const f of ST().cache.faces)if(ids.includes(f.faceId)){const pts=flatPoly(f.poly);fillPts(pts,PICK_BLUE+'2a');outline(pts,PICK_BLUE)}
   frame.pick.show={n:layerPick.n,faces:ids.slice()};
+  /* 🗂 「折線のこの側を全部」は、指の下に無い紙（離れたフラップ・左右に分かれた面）も動く。
+     ゴースト（折ったあとの位置）だけでは「いまどの紙が選ばれたか」が分からないので、動く側の部分を**いまの位置で**縁取る。
+     指の下に無い面は橙、指の下の面は青。面の集合は engine の候補（pending.candidates）をそのまま使う＝画面は選ばない。 */
+  if(layerPick.n==='side'&&ST().pending&&ST().pending.sidePoint){const g=pendingFoldGeom(),under=new Set(layerPick.stack.map(v=>v.faceId)),away=[];
+   for(const f of ST().cache.faces){if(!ids.includes(f.faceId))continue;const c=E.split(f.poly,g.A,g.B)[1];if(!c)continue;
+    const pts=flatPoly(c),far=!under.has(f.faceId);if(far)away.push(f.faceId);
+    fillPts(pts,(far?PICK_AWAY:PICK_BLUE)+'30');outline(pts,far?PICK_AWAY:PICK_BLUE)}
+   frame.pick.show.away=away;frame.pick.show.under=ids.filter(id=>under.has(id))}
   mark(layerPick.at,PICK_BLUE,7)}
  /* 🦴 H1：選んだ背を緑でなぞる（選択の確認だけ）。 */
  if(hingePick){line(hingePick.seg[0],hingePick.seg[1],TARGET_GREEN,7,[]);
@@ -496,6 +504,8 @@ function renderLayers(){if(!layerPick){layersEl.hidden=true;return}
  const sw=snappedWord(),more=layerPick.n!=='side'&&layerPick.n<layerPick.count;
  stackWhyEl.textContent=layerPick.ok?`${pickWord(layerPick.applied)}で折れます（青い紙が動きます・${layerPick.faces.length}面）`
   :sw&&more?`${sw}。重なった紙も一緒に折ってください`:layerPick.n==='side'?'この側の紙ぜんぶでは折れません':'この枚数では折れません';
+ if(layerPick.ok&&layerPick.applied==='side'){const under=new Set(layerPick.stack.map(v=>v.faceId)),far=layerPick.faces.filter(id=>!under.has(id)).length;
+  if(far)stackWhyEl.textContent+=`。指の下に無い紙 ${far}面（橙のふち）も一緒に動きます`}
  stackWhyEl.style.color=layerPick.ok?'#9fe6c0':sw&&more?'#ffd58a':'#ff9b9b';
  /* 詳しい説明（原本に残るのは faceId）と折れない理由は「詳しく」の中。 */
  stackNoteEl.textContent=layerPick.ok
@@ -859,7 +869,7 @@ petalBtn.onclick=()=>{if(dragSession)return;
  const o=petalOptionsUI();if(!o.options.length){error(Error(o.reason||'いまの紙には、選べる花弁がありません'));return}
  discardProposal();clearHingePick();hover=null;
  pocket={kind:'petal',mode:'pick',options:o.options,t:0,dir:0};enablePending(false);cancelBtn.disabled=false;
- ok('花弁をタップすると持ち上げる動きを見られます','緑に光っているのが、選べる花弁です（つる⑦のあとの1回目だけ。選ぶまで何も始まりません）');draw()};
+ ok('花弁をタップすると持ち上げる動きを見られます','緑に光っているのが、選べる花弁です（その側に⑦の折り目がある花弁だけ。裏返した側は凧形の折り目を付けると選べます。選ぶまで何も始まりません）');draw()};
 pocketT.oninput=()=>{if(!pocket||pocket.mode!=='preview')return;pocket.dir=0;pocket.t=Number(pocketT.value)/1000;draw()};
 document.getElementById('pocketOpen').onclick=()=>{if(!pocket||pocket.mode!=='preview')return;pocket.t=0;pocketRun(1)};
 document.getElementById('pocketPlay').onclick=()=>{if(!pocket||pocket.mode!=='preview')return;if(pocket.t>=1)pocket.t=0;pocketRun(1)};

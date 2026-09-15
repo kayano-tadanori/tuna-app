@@ -16,7 +16,7 @@
 import sys, json, math, itertools
 from pathlib import Path
 import numpy as np
-from shapely.geometry import Polygon
+from shapely.geometry import Polygon, Point
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -141,8 +141,10 @@ def main():
     print(f'[照合] {len(cases)}例（test_petal_v2.js --write）')
     worst = dict(frames=0.0, xf=0.0, poly=0.0)
     bad = {k: [] for k in ['recognize', 'faceOf', 'step', 'frames', 'winding', 'xf', 'det', 'bonds', 'layers', 'stack', 'moving']}
-    grouped = []
-    worst['motion'] = 0.0
+    grouped = []; swept = []
+    worst['motion'] = 0.0; worst['minz'] = 0.0
+    for k in ('start', 'axis', 'pierce'):
+        bad[k] = []
     for case in cases:
         lab = case['label']
         bf = case['before']['faces']
@@ -177,6 +179,68 @@ def main():
                 th = math.pi * i / 16
                 for m in (s0, (s0 + s1) / 2, s1):
                     worst['motion'] = max(worst['motion'], float(np.linalg.norm(pose(x, m, th) - pose(y, m, th))))
+        # ── 周囲の紙（2026-09-16・本人指示：モデル内の証明だけで周囲の紙まで保証しない）。JS の判定は使わず、直前の紙の全部の面で数える ──
+        stationary = [f for f in bf if f['faceId'] not in moving]
+        mov_faces = [f for f in bf if f['faceId'] in moving]
+        # (a) 出発の上下：動く面と面積で重なる止まった紙は、ぜんぶその動く面より下（重なる面どうしなので layer の比較に意味がある）
+        for mf in mov_faces:
+            pm = Polygon(mf['poly'])
+            for sf in stationary:
+                if pm.intersection(Polygon(sf['poly'])).area > 1e-9 and not sf['layer'] < mf['layer']:
+                    bad['start'].append((lab, sf['faceId'], mf['faceId']))
+        # (b) 軸上の接触：4本の軸のすぐ両脇（64点×両側）で、その点を含むモデルの面より上に、止まった紙がない
+        def cur_pt(name, owner):
+            m = D @ MATN[name]
+            for fid in groupOf[owner]:
+                Mi = np.linalg.inv(xf_mat(byid[fid]['xf']))
+                if Polygon([app(Mi, q) for q in byid[fid]['poly']]).buffer(1e-9).contains(Point(m[0], m[1])):
+                    return pose(fid, m, 0.0)[:2]
+            raise RuntimeError(f'{lab}: {name} を持つ {owner} の面がない')
+        ax_pts = {'P': cur_pt('P', 'T3R'), "P'": cur_pt("P'", 'T3L'), 'M': cur_pt('M', 'T3R'), 'Q': cur_pt('Q3', 'T2R')}
+        polys = {f['faceId']: Polygon(f['poly']) for f in bf}
+        for a, b, mk, fk in [('P', 'M', 'T2R', 'T3R'), ("P'", 'M', 'T2L', 'T3L'), ('P', 'Q', 'S2R', 'G2R'), ("P'", 'Q', 'S2L', 'G2L')]:
+            A, B = ax_pts[a], ax_pts[b]; d = B - A; nrm = np.array([-d[1], d[0]]) / np.linalg.norm(d)
+            for i in range(64):
+                for sg in (1, -1):
+                    q = A + d * (i + .5) / 64 + nrm * sg * 1e-6; P_ = Point(q[0], q[1])
+                    refs = [fid for fid in groupOf[mk] + groupOf[fk] if polys[fid].contains(P_)]
+                    if not refs:
+                        bad['axis'].append((lab, a + b, 'モデルの面がない')); continue
+                    ref = byid[refs[0]]
+                    for sf in stationary:
+                        if sf['layer'] > ref['layer'] and polys[sf['faceId']].contains(P_):
+                            bad['axis'].append((lab, a + b, sf['faceId']))
+        # (c) 途中の非貫通：θ=kπ/32 で、動く面の三角形の辺が、ほかの面（動く面も止まった紙も）の三角形を突き抜けない（厚み0・接するのは可）
+        def tris_at(th):
+            out = []
+            for f in bf:
+                Mi = np.linalg.inv(xf_mat(f['xf'])); mp = [app(Mi, q) for q in f['poly']]
+                P3 = [pose(f['faceId'], m, th) for m in mp]
+                for j in range(1, len(P3) - 1):
+                    out.append((f['faceId'], np.array([P3[0], P3[j], P3[j + 1]])))
+            return out
+        def pierce(seg, tri, e=1e-9):
+            a, b, c = tri; n = np.cross(b - a, c - a); nn = np.linalg.norm(n)
+            if nn < 1e-12: return False
+            n = n / nn; d0, d1 = n @ (seg[0] - a), n @ (seg[1] - a)
+            if not ((d0 > e and d1 < -e) or (d0 < -e and d1 > e)): return False
+            x = seg[0] + (seg[1] - seg[0]) * (d0 / (d0 - d1))
+            v0, v1, v2 = b - a, c - a, x - a
+            d00, d01, d11, d20, d21 = v0 @ v0, v0 @ v1, v1 @ v1, v2 @ v0, v2 @ v1
+            den = d00 * d11 - d01 * d01; v = (d11 * d20 - d01 * d21) / den; w = (d00 * d21 - d01 * d20) / den
+            return v > 1e-7 and w > 1e-7 and v + w < 1 - 1e-7
+        for k in range(1, 32):
+            T = tris_at(math.pi * k / 32)
+            for fa, ta in T:
+                if fa not in moving: continue
+                worst['minz'] = min(worst['minz'], float(ta[:, 2].min()))
+                lo, hi = ta.min(0), ta.max(0)
+                for fb, tb in T:
+                    if fb == fa: continue
+                    if np.any(tb.max(0) < lo - 1e-9) or np.any(tb.min(0) > hi + 1e-9): continue
+                    if any(pierce((ta[i], ta[(i + 1) % 3]), tb) for i in range(3)) or any(pierce((tb[i], tb[(i + 1) % 3]), ta) for i in range(3)):
+                        bad['pierce'].append((lab, k, fa, fb))
+        swept.append(lab)
         # 手の中身
         st = case['step']
         P, Pl = D @ MATN['P'], D @ MATN["P'"]
@@ -267,6 +331,10 @@ def main():
     check('動く面の集合が JS と同じ', not bad['moving'], str(bad['moving'][:3]))
     check('手の中身（base.faceId・pivots・axes）が Python の花弁と同じ', not bad['step'], str(bad['step'][:3]))
     check('運動の途中（θ=kπ/16）で動く面に触れる結びがぜんぶ両側で一致（余分な折り目を含む）', worst['motion'] < 1e-9, f"最大ずれ {worst['motion']:.1e}")
+    check('出発の上下：動く面と重なる止まった紙はぜんぶ下（全例・全部の面）', not bad['start'], str(bad['start'][:3]))
+    check('軸上の接触：4本の軸の両脇（64点×2）で、モデルの面より上に止まった紙がない（全例）', not bad['axis'], str(bad['axis'][:3]))
+    check('途中の非貫通：θ=kπ/32 で動く面の三角形の辺がほかの面を突き抜けない（全例・止まった紙を含む）', not bad['pierce'] and worst['minz'] > -1e-9, f"{len(swept)}例・動く面の最小 z {worst['minz']:.1e}・{bad['pierce'][:2]}")
+    check('2回目（裏返したあと）の花弁を照合した例がある', sum('2回目' in c['label'] for c in cases) > 0, f"{sum('2回目' in c['label'] for c in cases)}例")
     check('余分な折り目で分かれた面をまとまりで照合した例がある', len(grouped) > 0, f"{len(grouped)}例")
     check('プレビューの途中と両端の座標（t=0,.25,.5,.75,1・面ごとの素材の点）', worst['frames'] < 1e-9, f"最大ずれ {worst['frames']:.1e}")
     check('描画の巻き順が素材の表（素材で左回り）', not bad['winding'], str(bad['winding'][:3]))

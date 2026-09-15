@@ -8,7 +8,7 @@
      C 再生の門：stack の上下／領域・base.faceId・pivots・axes・branch・model・未知の項目・花弁の読み手が無い・v1 の読み手 を断る
      D 確定のあとも通常の操作（裏返し・折り目）→ 保存→再読込
      E 表裏・回転・角の選び方：squash_twice_states.json の34経路（①②の角・1回目の袋折りの表裏・裏返し v/h）ぜんぶで ⑦ → 花弁1つ → 確定 → 再読込
-       ＋ ⑦のあと裏返す（反対側の花弁＝未対応で理由つきで断る）→ もう一度裏返すと戻る
+       ＋ ⑦のあと裏返す（その側に⑦の折り目が無い＝理由つきで断る）→ もう一度裏返すと戻る
        ＋ 裏返してから ⑦（上に来たもう一方のフラップ）→ 受理
        ＋ ⑦が足りない（凧形を上から1枚だけ・上の三角なし）→ 理由つきで断る
    --write で check_petal_engine.py（Python の独立照合）の材料 petal_engine_states.json を書く。
@@ -27,6 +27,7 @@ const snap = st => JSON.stringify({ r: st.recipe, rev: st.revision, h: st.cache.
 const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 const apply = (m, p) => [m[0] * p[0] + m[1] * p[1] + m[4], m[2] * p[0] + m[3] * p[1] + m[5]];
 const invPt = (m, p) => { const d = m[0] * m[3] - m[1] * m[2], x = p[0] - m[4], y = p[1] - m[5]; return [(m[3] * x - m[1] * y) / d, (-m[2] * x + m[0] * y) / d] };
+const SYM_ALL = [[1, 0, 0, 1], [0, -1, 1, 0], [-1, 0, 0, -1], [0, 1, -1, 0], [-1, 0, 0, 1], [1, 0, 0, -1], [0, 1, 1, 0], [0, -1, -1, 0]];
 const VW = { toScreen: p => [p[0] * 240, -p[1] * 240] }, SC = p => VW.toScreen(p);
 
 /* ⑦（凧形の折り目2本を上から2枚・上の三角の折り目を一番上の左右の半分）を、いまの正方基本形の向きから作る（test_crane_progress.js と同じ操作の道） */
@@ -195,7 +196,7 @@ ok('A 代表例：①〜⑦ → 花弁1つ → 候補は正式状態を動かさ
  let accepted = 0;
  for (const c of cases) { const st = step7(load(c.recipe)); throughPetal(st, c.label, accepted < 6 || accepted % 5 === 0); accepted++ }
  ok(`E 34経路（①②の角・袋折りの表裏・裏返し v/h）ぜんぶで ⑦ → 花弁1つ → 確定 → 再読込 → undo/redo（${accepted}経路）`);
- /* ⑦のあと裏返す＝上に来るのは折り目の無いフラップ／反対側の花弁は未対応 → 理由つきで断る。もう一度裏返すと戻る。 */
+ /* ⑦のあと裏返す＝上に来るのは凧形の折り目の無いフラップ → 理由つきで断る（準備すれば H で通る）。もう一度裏返すと戻る。 */
  for (const ax of ['v', 'h']) {
   const st = load(repState); E.flip(st, ax);
   const o = E.petalOptions(st);
@@ -383,6 +384,89 @@ function foldOpen7(st, opt = {}) {
   const cases = JSON.parse(rd('squash_twice_states.json')).cases; let k = 0;
   for (const c of cases) { const { st } = foldOpen7(load(c.recipe)); throughPetal(st, '折って開く：' + c.label, k < 3); k++ }
   ok(`G 34経路（①②の角・袋折りの表裏・裏返し v/h）ぜんぶで 凧形2本を折る→上の三角をこの側を全部で折る→3手を開く→花弁1つ→確定→再読込→undo/redo（${k}経路・${((Date.now() - T0) / 1000).toFixed(1)}s）`);
+ }
+}
+
+/* ================= H 反対側の花弁折り（⑩⑪・2026-09-16・本人指示） =================
+   実物：折り図 ⑩うらがえす→⑪おなじように。動画 bheH5wZckps は⑦の時点で両面に凧形を折っている（2:02〜2:23）・1回目のあと 3:21 裏返して 3:25 すぐ持ち上げる。
+   裏側に既にある折り目＝上の三角 P-P'（⑦を「この側を全部」で折って開いた＝4層）／新しく付ける折り目＝凧形2本（⑦では上2枚だけ）。
+   🚨手番号・固定 faceId・「2回目だから」は使わない：準備は1回目と同じ操作（正方基本形の対称から Q・O・横の角を求め、凧形を上から2枚で折って背を開く）、認識は同じ recognize。 */
+function frameOf(st) {
+ const mats = st.cache.faces.map(f => ({ f, mp: f.poly.map(p => invPt(f.xf, p)) }));
+ const at = m => { const hit = mats.find(v => v.mp.some(q => dist(q, m) < 1e-9)); return hit && apply(hit.f.xf, m) };
+ const O = at([0, 0]);
+ const cs = [[1, 1], [1, -1], [-1, 1], [-1, -1]].map(at);
+ const groups = []; for (const p of cs) { const g = groups.find(g => dist(g.p, p) < 1e-9); if (g) g.n++; else groups.push({ p, n: 1 }) }
+ const Q = groups.sort((a, b) => b.n - a.n)[0].p;
+ const v = [(Q[0] - O[0]) / Math.SQRT2, (Q[1] - O[1]) / Math.SQRT2], r = a => [v[0] * Math.cos(a) - v[1] * Math.sin(a), v[0] * Math.sin(a) + v[1] * Math.cos(a)];
+ return { Q, O, Bs: [r(Math.PI / 4), r(-Math.PI / 4)].map(u => [O[0] + u[0], O[1] + u[1]]), corners: groups.map(g => g.n) };
+}
+/* 凧形2本を上から2枚で折って、背を開く（1回目の foldOpen7 の前半と同じ操作。上の三角は既に折り目があるので折らない） */
+function kitesFoldOpen(st) {
+ /* 花弁のあとの通常の手で engine が断ったら、例外で止めずに理由つきの AssertionError にする（壊し検査の判定を ABORT にしない） */
+ try { return kitesFoldOpenRaw(st) } catch (e) { if (e instanceof assert.AssertionError) throw e; throw new assert.AssertionError({ message: '裏側の凧形の準備が断られた：' + e.message }) }
+}
+function kitesFoldOpenRaw(st) {
+ const { Q, O, Bs } = frameOf(st), t8 = Math.tan(Math.PI / 8);
+ for (const B of Bs) { const P = [O[0] + (B[0] - O[0]) * (1 - t8), O[1] + (B[1] - O[1]) * (1 - t8)], sp = [(Q[0] + B[0] + P[0]) / 3, (Q[1] + B[1] + P[1]) / 3];
+  E.proposeOnFace(st, Q, P, E.stackAt(st, sp)[0].faceId, { layers: 1, op: 'fold' }); st.pending.kind = 'V'; E.setSide(st, sp); E.setLayers(st, 2, st.pending.at);
+  E.select(st, st.pending.candidates); E.confirm(st, { op: 'fold' }) }
+ for (const sid of st.recipe.steps.slice(-2).map(s => s.id).reverse()) {
+  const h = E.hingeIntervals(st).find(h => h.stepId === sid && h.consistent); assert.ok(h, `凧形の背 ${sid} が見えない`);
+  const f = st.cache.faces.filter(f => f.layerPath.some(q => q.stepId === sid && q.side === 'cut')).sort((a, b) => b.layer - a.layer)[0];
+  E.proposeOpen(st, E.hingeIntent(st, h.intervalId), f.poly.reduce((s, p) => [s[0] + p[0] / f.poly.length, s[1] + p[1] / f.poly.length], [0, 0]));
+  const k = E.pendingCheck(st); assert.ok(k.ok, `凧形の背 ${sid} を開けない：${k.reason}`); E.select(st, st.pending.candidates); E.confirm(st, { op: 'fold' }) }
+ return st;
+}
+/* 素材の線分 a-b（原紙の座標）の上に、crease の結びがあるか（折り目が既にあるかの確認） */
+const creaseOnMat = (st, D, a, b) => st.cache.bonds.filter(bd => bd.kind === 'crease').some(bd => { const A = [D[0] * a[0] + D[1] * a[1], D[2] * a[0] + D[3] * a[1]], B = [D[0] * b[0] + D[1] * b[1], D[2] * b[0] + D[3] * b[1]], d = [B[0] - A[0], B[1] - A[1]], L = Math.hypot(...d);
+ return bd.seg.every(q => Math.abs((q[0] - A[0]) * d[1] - (q[1] - A[1]) * d[0]) / L < 1e-7) && dist(bd.seg[0], bd.seg[1]) > 1e-6 });
+{
+ const T0 = Date.now(), S2 = 2 - Math.SQRT2;
+ /* H1 1回目のあと裏返す：花弁は無く、上の三角の折り目は裏側にもある／凧形の折り目は無い → 準備（凧形2本）→ 2回目 */
+ for (const ax of ['v', 'h']) {
+  const st = prelimByUI(); foldOpen7(st); throughPetal(st, `1回目（裏返し${ax}の前）`, false); dump.pop();
+  E.flip(st, ax);
+  const o0 = E.petalOptions(st); assert.equal(o0.options.length, 0, `裏返しただけで花弁が出た（${ax}）`);
+  /* 裏側の折り目：裏の2層の素材は、表の2層と原紙の対称で写り合う。凧形・上の三角の線に crease があるかを8通りの対称で数える */
+  const tri = SYM_ALL.filter(D => creaseOnMat(st, D, [S2, 0], [0, -S2])).length, kite = SYM_ALL.filter(D => creaseOnMat(st, D, [S2, 0], [1, -1])).length;
+  kitesFoldOpen(st);
+  const tri2 = SYM_ALL.filter(D => creaseOnMat(st, D, [S2, 0], [0, -S2])).length, kite2 = SYM_ALL.filter(D => creaseOnMat(st, D, [S2, 0], [1, -1])).length;
+  assert.equal(tri2, tri, `準備で上の三角の折り目が増えた（既にあるはず・${ax}）`); assert.ok(kite2 > kite, `準備で凧形の折り目が増えない（${ax}）`);
+  const rec = PetalV2.recognize(st.cache); assert.equal(rec.bindings.length, 1, `裏側の準備のあと花弁が1つでない（${ax}）：${rec.reason}`);
+  assert.ok(PetalV2.motionBondGap(rec.bindings[0], st.cache).max < 1e-9, '2回目の運動の途中で結びが離れる');
+  const out = throughPetal(st, `2回目（裏返し${ax}のあと準備）`);
+  /* 続けて通常の折り1手（全体を半分に：対角 Q-O で「この側を全部」を谷折り）→ 保存 → undo/redo */
+  /* 線＝中心線 Q-O に直角で、Q-O の中点を通る（面を横切る）。折る側＝O の側 */
+  const { Q, O } = frameOf(out.st), mid = [(Q[0] + O[0]) / 2, (Q[1] + O[1]) / 2], nrm = [-(O[1] - Q[1]) / 2, (O[0] - Q[0]) / 2];
+  const la = [mid[0] - nrm[0], mid[1] - nrm[1]], lb = [mid[0] + nrm[0], mid[1] + nrm[1]], sp = [mid[0] + (O[0] - mid[0]) * .3 + nrm[0] * .03, mid[1] + (O[1] - mid[1]) * .3 + nrm[1] * .03];
+  const hit = E.stackAt(out.st, sp); assert.ok(hit.length, '通常の折りの側に紙がない');
+  E.proposeOnFace(out.st, la, lb, hit[0].faceId, { layers: 1, op: 'fold' }); out.st.pending.kind = 'V'; E.setSide(out.st, sp);
+  assert.doesNotThrow(() => E.setSideAll(out.st), e => { throw new assert.AssertionError({ message: '2回目のあとの通常の折りが断られた：' + e.message }) });
+  const h2 = out.st.cache.hash; E.select(out.st, out.st.pending.candidates); E.confirm(out.st, { op: 'fold' });
+  assert.equal(out.st.recipe.steps.slice(-1)[0].op, 'fold'); assert.equal(X.flatState(out.st.cache).ok, true, '通常の折りのあと平らな状態が成立しない');
+  const saved = C(E.verifiedRecipe(out.st)); assert.equal(load(saved).cache.hash, out.st.cache.hash, '通常の折りのあと保存→再読込で別の紙');
+  const h3 = out.st.cache.hash; E.undo(out.st); assert.equal(out.st.cache.hash, h2); E.redo(out.st); assert.equal(out.st.cache.hash, h3);
+  ok(`H1 裏返し${ax}：裏側に上の三角の折り目は既にある（対称${tri}通り）・凧形は無い（${kite}）→ 凧形2本を折って開く（${kite2}）→ 2回目の花弁1つ・途中の結び一致 → 確定 → 保存→再読込 → undo/redo → 通常の折り1手 → 保存→再読込 → undo/redo`);
+ }
+ /* H2 動画の順：⑦で両面に凧形を折って開いてから1回目 → 裏返す → 準備なしで2回目 */
+ {
+  const st = prelimByUI(); foldOpen7(st); E.flip(st, 'v'); kitesFoldOpen(st); E.flip(st, 'v');
+  throughPetal(st, '動画の順：両面準備のあと1回目');
+  E.flip(st, 'v'); throughPetal(st, '動画の順：裏返してすぐ2回目');
+  ok('H2 動画の順（⑦で両面に凧形→1回目→裏返す→すぐ2回目）も同じ認識で通る');
+ }
+ /* H3 準備が足りない：凧形を折らずに裏返しただけ・凧形を上から1枚だけ → 理由つきで断る */
+ {
+  const st = prelimByUI(); foldOpen7(st); throughPetal(st, '（H3 1回目）', false); dump.pop(); E.flip(st, 'v');
+  assert.equal(E.petalOptions(st).options.length, 0, '凧形の折り目が無い裏側で花弁が出た');
+  ok('H3 裏側に凧形の折り目が無ければ、2回目の花弁は出ない');
+ }
+ /* H4 34経路ぜんぶ：折って開く⑦→1回目→裏返す→凧形→2回目 */
+ {
+  const cases = JSON.parse(rd('squash_twice_states.json')).cases; let k = 0;
+  for (const c of cases) { const st = load(c.recipe); foldOpen7(st); throughPetal(st, '1回目：' + c.label, false); dump.pop(); E.flip(st, 'v'); kitesFoldOpen(st); throughPetal(st, '2回目：' + c.label, k < 2); k++ }
+  ok(`H4 34経路ぜんぶで 1回目→裏返す→凧形2本→2回目（${k}経路・${((Date.now() - T0) / 1000).toFixed(1)}s）`);
  }
 }
 
