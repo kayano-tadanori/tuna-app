@@ -2021,6 +2021,10 @@ for(const m of uiSrc.matchAll(/E\.setLayers\((.*?)\);/g))
 assert.equal(/E\.setSideAll\(/.test(uiSrc),true,'J 画面が setSideAll を呼んでいない');
 for(const m of uiSrc.matchAll(/E\.setSideAll\(([^()]*(?:\(\))?[^()]*)\)/g))
  assert.match(m[1].replace(/\s/g,''),/^(state|ST\(\)),layerPick\.at$/,'J setSideAll に場所以外が渡っている: '+m[1]);
+/* 🪶 「つながっているフラップ」（2026-09-16）も同じ＝渡すのは紙と「この場所」だけ（面の集合は engine の setFlap がたどる）。 */
+assert.equal(/E\.setFlap\(/.test(uiSrc),true,'J 画面が setFlap を呼んでいない');
+for(const m of uiSrc.matchAll(/E\.setFlap\(([^()]*(?:\(\))?[^()]*)\)/g))
+ assert.match(m[1].replace(/\s/g,''),/^(state|ST\(\)),layerPick\.at$/,'J setFlap に場所以外が渡っている: '+m[1]);
 /* ✏️ 2026-09-15（本人判断）：折り目だけ（crease）は候補の操作 op を engine が持ち、提案・枚数選び・プレビュー・確定・再生で同じ芯（creasableSet）を通る。
    画面が proposeOnFace に渡すのは操作の種類（凍結したセッションの asCrease から opOf、線は 'crease'）だけ。成立は E.pendingCheck が決める。 */
 for(const m of uiSrc.matchAll(/E\.proposeOnFace\(state,(.*?)\);/g))

@@ -595,25 +595,83 @@ function sidePointFor(face,axis,src){
       ⚠将来ほんとうに別の紙を扱うときに混ざらないよう、**faceId の根（原紙のID）**で確かめる。
       ⚠同じ紙片かどうかは `sameSheet` として残す＝吸着のときに優先するため（判定は緩めない）。 */
 const paperRootOf=id=>String(id).split('/')[0];
+/* 🦴✋ 見えている外形の背（2026-09-16・本人指示・つる⑫）＝辺合わせの「つかむ元」に加える。
+   条件：①背の区間が一致している（consistent）②**見えている部分**（hingeVisibleParts）③**外形**＝その部分の両脇の片側に紙が1枚も無く、
+   もう片側のいちばん上がその背の面（紙の内部の背・隠れた背はつかまない）。
+   返す形は rimEdges の行と同じ項目（seg・faceId・sheetId・layerPath・edgeId）＋ kind:'hingeEdge'＝辺合わせの幾何（E2/H2/E3）はそのまま使える。 */
+const OUTLINE_PROBE=[.004,.0015];
+function outlineHingeEdges(state){const out=[];
+ for(const h of hingeIntervals(state)){if(!h.consistent||!h.visible)continue;
+  for(const part of h.visibleParts){const a=part.seg[0],b=part.seg[1],d=[b[0]-a[0],b[1]-a[1]],L=Math.hypot(d[0],d[1]);if(L<1e-9)continue;
+   const n=[-d[1]/L,d[0]/L];let owner=null,ok=true;
+   for(const t of[.2,.5,.8]){const m=[a[0]+d[0]*t,a[1]+d[1]*t];let seen=false;
+    for(const eps of OUTLINE_PROBE){const sa=stackAt(state,[m[0]+n[0]*eps,m[1]+n[1]*eps]),sb=stackAt(state,[m[0]-n[0]*eps,m[1]-n[1]*eps]);
+     if(!!sa.length===!!sb.length)continue;/* 両側に紙がある（内部）・両側とも無い＝決めない */
+     const top=(sa.length?sa:sb)[0].faceId;if(!h.faceIds.includes(top))continue;
+     if(owner&&owner!==top){ok=false;break}owner=top;seen=true;break}
+    if(!seen||!ok){ok=false;break}}
+   if(!ok||!owner)continue;
+   const f=state.cache.faces.find(v=>v.faceId===owner);
+   out.push({kind:'hingeEdge',edgeId:`hingeEdge:${h.intervalId}@${part.t0}-${part.t1}`,rimId:null,label:'外形の背',intervalId:h.intervalId,stepId:h.stepId,
+    faceIds:C(h.faceIds),faceId:owner,layerPath:C(f.layerPath),sheetId:sheetKey(state,owner),layer:f.layer,
+    srcSeg:segKey([inv(f.xf,a),inv(f.xf,b)]),partSrcSeg:C(part.srcSeg),seg:[C(a),C(b)]})}}
+ return out.sort((x,y)=>x.edgeId<y.edgeId?-1:x.edgeId>y.edgeId?1:0)}
+/* pointerdown で凍結する意図（rim の edgeIntent と同じ役目）。 */
+function hingeEdgeIntent(state,edgeId){const e=outlineHingeEdges(state).find(v=>v.edgeId===edgeId);
+ if(!e)throw Error('その外形の背はありません');
+ return{kind:'hingeEdge',edgeId:e.edgeId,intervalId:e.intervalId,stepId:e.stepId,faceIds:C(e.faceIds),faceId:e.faceId,
+  layerPath:C(e.layerPath),sheetId:e.sheetId,layer:e.layer,srcSeg:C(e.srcSeg),partSrcSeg:C(e.partSrcSeg),revision:state.revision}}
+/* つかむ元の辺を、いまの紙で見つけ直す。rim は今までどおり resolveRimEdge（1文字も変えない）。
+   外形の背は ①しぐさの最中（revision が同じ）＝edgeId と面がぴたり一致 ②紙が進んだあと＝同じ背（resolveHingeInterval の橋渡し）の外形の部分で、素材の区間が重なるもの。 */
+function resolveSourceEdge(state,ref){if(!ref)return null;
+ if(ref.kind==='edge')return resolveRimEdge(state,ref);
+ if(ref.kind!=='hingeEdge')return null;
+ const all=outlineHingeEdges(state);
+ const exact=all.find(e=>e.edgeId===ref.edgeId&&e.faceId===ref.faceId&&e.sheetId===ref.sheetId);
+ if(exact)return exact;
+ if(ref.revision===state.revision)return null;
+ const h=resolveHingeInterval(state,{kind:'hinge',stepId:ref.stepId,intervalId:ref.intervalId,faceIds:ref.faceIds,partSrcSeg:ref.partSrcSeg,revision:ref.revision});
+ if(!h)return null;
+ const kin=all.filter(e=>e.intervalId===h.intervalId&&overlapLen(ref.partSrcSeg,e.partSrcSeg)>1e-6);
+ return kin.sort((x,y)=>overlapLen(ref.partSrcSeg,y.partSrcSeg)-overlapLen(ref.partSrcSeg,x.partSrcSeg))[0]||null}
+/* 🦴✋ 外形の背から折り目へ合わせるときだけ、合わせ先の折り目の区間を「同じ直線上で途切れずに続く見えている目印」まで延ばす。
+   目印＝折り目の区間（E2 の相手と同じ）と、最上面に見えている外周辺（E3 の相手と同じ rimEdgeVisible）。同じ原紙だけ。
+   つる⑫：中心線は「生のふち」と「折り目」が1点で続いた線＝どちらか1本の区間には外形の背の全体が収まらない。
+   🚨「辺の全体が目印の上に乗る」（checkEdgeToCrease）は変えない＝延ばした線からはみ出る合わせ方は今までどおり断る。
+   ⚠rim（生のふち）をつかむ既存の道では延ばさない＝既存の候補・理由は1文字も変わらない。 */
+function extendGuide(state,seg,root){
+ const u=dirOf(seg);if(!u)return C(seg);
+ const guides=[...creaseIntervals(state).filter(c=>paperRootOf(c.faceId)===root).map(c=>c.seg),
+  ...rimEdges(state).filter(e=>paperRootOf(e.faceId)===root&&rimEdgeVisible(state,e)).map(e=>e.seg)]
+  .filter(g=>onSameLine(seg,g)&&onSameLine(g,seg));
+ const t=p=>(p[0]-seg[0][0])*u[0]+(p[1]-seg[0][1])*u[1];
+ let lo=Math.min(t(seg[0]),t(seg[1])),hi=Math.max(t(seg[0]),t(seg[1])),grew=true;
+ while(grew){grew=false;
+  for(const g of guides){const a=Math.min(t(g[0]),t(g[1])),b=Math.max(t(g[0]),t(g[1]));
+   if(a<lo-1e-9&&b>=lo-1e-9){lo=a;grew=true}
+   if(b>hi+1e-9&&a<=hi+1e-9){hi=b;grew=true}}}
+ const at=v=>[seg[0][0]+u[0]*v,seg[0][1]+u[1]*v];
+ return[at(lo),at(hi)]}
 function edgeToCreaseOptions(state,edgeRef){
- const e=resolveRimEdge(state,edgeRef);
+ const e=resolveSourceEdge(state,edgeRef);
  if(!e)return{source:null,options:[],reason:'つかんだ辺が、いまの紙にありません'};
  const face=state.cache.faces.find(f=>f.faceId===e.faceId);
  if(!face)return{source:null,options:[],reason:'つかんだ辺の面が、いまの紙にありません'};
  const root=paperRootOf(e.faceId),options=[];
  for(const c of creaseIntervals(state)){
   if(paperRootOf(c.faceId)!==root)continue;
+  const tseg=e.kind==='hingeEdge'?extendGuide(state,c.seg,root):c.seg;
   for(const ax of axesEdgeToCrease(e.seg,c.seg)){
-   const v=checkEdgeToCrease(ax.line,e.seg,c.seg);
+   const v=checkEdgeToCrease(ax.line,e.seg,tseg);
    const sp=v.ok?sidePointFor(face,ax.line,e.seg):null;
-   options.push({target:c,axis:ax.line,kind:ax.kind,sidePoint:sp,sameSheet:c.sheetId===e.sheetId,
+   options.push({target:e.kind==='hingeEdge'?{...c,seg:tseg,creaseSeg:C(c.seg)}:c,axis:ax.line,kind:ax.kind,sidePoint:sp,sameSheet:c.sheetId===e.sheetId,
     ...v,ok:!!(v.ok&&sp),reason:v.ok&&!sp?'折線が面を二つに分けません':v.reason})}}
  return{source:e,face,options,reason:null}}
 /* 確定の直前に、凍結した意図から**軸を作り直して**突き合わせる。画面が作った線は信じない。
    🚨`corner` を渡したときだけ、**凍結した角が「合わせる辺の端」であること**も確かめる
       （角セッションから E2 を使う道。辺を直接つかむ道は corner を渡さない＝1文字も変わらない）。 */
 function verifyEdgeToCrease(state,edgeRef,creaseRef,a,b,corner){
- const e=resolveRimEdge(state,edgeRef);if(!e)return{ok:false,reason:'つかんだ辺が、いまの紙にありません'};
+ const e=resolveSourceEdge(state,edgeRef);if(!e)return{ok:false,reason:'つかんだ辺が、いまの紙にありません'};
  if(corner&&!e.seg.some(p=>Math.hypot(p[0]-corner[0],p[1]-corner[1])<1e-6))
   return{ok:false,reason:'つかんだ角が、合わせる辺の端にありません'};
  const c=resolveCreaseInterval(state,creaseRef);if(!c)return{ok:false,reason:'合わせる折り目が、いまの紙にありません'};
@@ -621,7 +679,7 @@ function verifyEdgeToCrease(state,edgeRef,creaseRef,a,b,corner){
  const want=[[a[0],a[1]],[b[0],b[1]]];
  for(const ax of axesEdgeToCrease(e.seg,c.seg)){
   if(distLine(want[0],ax.line)>1e-6||distLine(want[1],ax.line)>1e-6)continue;/* 同じ直線でない */
-  const v=checkEdgeToCrease(ax.line,e.seg,c.seg);
+  const v=checkEdgeToCrease(ax.line,e.seg,e.kind==='hingeEdge'?extendGuide(state,c.seg,paperRootOf(c.faceId)):c.seg);
   if(v.ok)return{ok:true,reason:null,source:e,target:c,axis:ax.line,kind:ax.kind,ends:v.ends,span:v.span,move:v.move};
   return{ok:false,reason:v.reason}}
  return{ok:false,reason:'折軸が、つかんだ辺と折り目から作り直せません'}}
@@ -669,7 +727,7 @@ function hingeStaysUnderFold(seg,faceIds,ids,a,b,kind,sidePoint){
   :{ok:false,reason:'合わせ先の背が、この折りで動いてしまいます',worst}}
 /* 凍結した edgeIntent から、いまの紙で「合わせられる見えている背」を数え上げる。 */
 function edgeToHingeOptions(state,edgeRef){
- const e=resolveRimEdge(state,edgeRef);
+ const e=resolveSourceEdge(state,edgeRef);
  if(!e)return{source:null,options:[],reason:'つかんだ辺が、いまの紙にありません'};
  const face=state.cache.faces.find(f=>f.faceId===e.faceId);
  if(!face)return{source:null,options:[],reason:'つかんだ辺の面が、いまの紙にありません'};
@@ -700,7 +758,7 @@ function edgeToHingeOptions(state,edgeRef){
 /* 確定の直前に、凍結した意図（辺・背・角）から**軸を作り直して**突き合わせる。
    画面が作った線は信じない。背の不変条件も、確定する**対象面の集合そのもの**で見直す。 */
 function verifyEdgeToHinge(state,edgeRef,hingeRef,a,b,corner,ids,kind){
- const e=resolveRimEdge(state,edgeRef);if(!e)return{ok:false,reason:'つかんだ辺が、いまの紙にありません'};
+ const e=resolveSourceEdge(state,edgeRef);if(!e)return{ok:false,reason:'つかんだ辺が、いまの紙にありません'};
  if(corner&&!e.seg.some(p=>Math.hypot(p[0]-corner[0],p[1]-corner[1])<1e-6))
   return{ok:false,reason:'つかんだ角が、合わせる辺の端にありません'};
  const h=resolveHingeInterval(state,hingeRef);
@@ -757,7 +815,7 @@ function rimEdgeVisible(state,e){
    break}}
  return false}
 function edgeToEdgeOptions(state,edgeRef){
- const e=resolveRimEdge(state,edgeRef);
+ const e=resolveSourceEdge(state,edgeRef);
  if(!e)return{source:null,options:[],reason:'つかんだ辺が、いまの紙にありません'};
  const face=state.cache.faces.find(f=>f.faceId===e.faceId);
  if(!face)return{source:null,options:[],reason:'つかんだ辺の面が、いまの紙にありません'};
@@ -784,7 +842,7 @@ function edgeToEdgeOptions(state,edgeRef){
  return{source:e,face,options,reason:null}}
 /* 確定の直前に、凍結した意図（source の辺・target の辺・角）から**軸を作り直して**突き合わせる。 */
 function verifyEdgeToEdge(state,edgeRef,targetRef,a,b,corner,ids,kind){
- const e=resolveRimEdge(state,edgeRef);if(!e)return{ok:false,reason:'つかんだ辺が、いまの紙にありません'};
+ const e=resolveSourceEdge(state,edgeRef);if(!e)return{ok:false,reason:'つかんだ辺が、いまの紙にありません'};
  if(corner&&!e.seg.some(p=>Math.hypot(p[0]-corner[0],p[1]-corner[1])<1e-6))
   return{ok:false,reason:'つかんだ角が、合わせる辺の端にありません'};
  const tg=resolveRimEdge(state,targetRef);
@@ -972,6 +1030,19 @@ function setSideAll(state,at){const q=foldPending(state,'先に折線を引い�
  const ids=sideAllFaces(state,A,B);
  if(!ids.length)throw Error('折線の動く側に紙がありません');
  return applyChoice(state,q,ids,A,B,p,{mode:'side',at:C(p),faceIds:ids.slice().sort()})}
+/* 🪶 「つながっているフラップ」（2026-09-16・本人指示・つる⑫）＝「上からN枚」「この側を全部」とは別の3つめの選び方。
+   指定した折線の動く側で、その場所のいちばん上の面から、**動く側の内部へ入る結び**をたどって集める（背を開くときの movingSetOf と同じ辿り方を共用）。
+   面の数・面ID・手番号は条件にしない。集めたあとの判定は枚数の道と同じ芯（applyChoice＝foldability／creasability・この場所で上から続けて）で、緩めない。 */
+function flapFaces(state,at,a,b){const top=stackAt(state,at)[0];if(!top)throw Error('その場所に紙がありません');
+ return[...movingSetOf(state.cache,top.faceId,a,b)]}
+function setFlap(state,at){const q=foldPending(state,'先に折線を引いてください');
+ if(!q.sidePoint)throw Error('折る側を選択してください');
+ const p=at||q.at;if(!p)throw Error('「この場所」が決まっていません');
+ const f=state.cache.faces.find(x=>x.faceId===q.reference.faceId);
+ let A=q.displayLine[0],B=q.displayLine[1];
+ if(S(apply(f.xf,q.sidePoint),A,B)>0)[A,B]=[B,A];
+ const ids=flapFaces(state,p,A,B);
+ return applyChoice(state,q,ids,A,B,p,{mode:'flap',at:C(p),faceIds:ids.slice().sort()})}
 function applyChoice(state,q,ids,A,B,p,choice){
  const v=q.op==='crease'?creasability(state,ids,A,B,p):foldability(state,ids,A,B,q.kind,p);
  if(!v.ok)throw Error(v.reason);
@@ -1595,5 +1666,5 @@ function verifiedRecipe(state){const fresh=replay(state.recipe);
  if(fresh.hash!==state.cache.hash)throw Error('JSON再生結果と表示状態が一致しないため保存できません');
  return C(state.recipe)}
 return{create,replay,replayDetail,proposeSquash,squashOptions,squashOptionAt,squashPreview,petalOptions,petalOptionAt,proposePetal,petalPreview,propose,proposeOnFace,setSide,select,preview,cancel,confirm,flip,stage,stageSide,confirmStaged,stageFold,confirmStagedFold,proposeOpen,wholeSideOf,undo,redo,verifiedRecipe,hitFaces,split,reflect,inside,side:S,area,sheetOf,sheetIds,assertSupported,outerEdges:C(OUTER),pickOuterEdge,proposeEdgePair,
- stackAt,layersAt,topFaces,rimEdges,creaseIntervals,edgeIntent,creaseIntent,resolveRimEdge,resolveCreaseInterval,hingeIntervals,hingeIntent,resolveHingeInterval,axesEdgeToCrease,checkEdgeToCrease,edgeToCreaseOptions,verifyEdgeToCrease,edgeToHingeOptions,verifyEdgeToHinge,edgeToEdgeOptions,verifyEdgeToEdge,rimEdgeVisible,axisSplitsSheet,hingeStaysUnderFold,fixedHingePart,movingIdsFor,foldRotator,paperRootOf,foldability,foldableSet,creasability,creasableSet,contiguousAt,pendingCheck,recordable,setLayers,setSideAll,sideAllFaces,stageLine,creaseSidePoint,MAX_STEPS,MAX_FACES,polysOverlap,overlapsArea,strictlyInside,detXf,hingeMemoStats:()=>({...hingeMemoStats})};
+ stackAt,layersAt,topFaces,rimEdges,creaseIntervals,edgeIntent,creaseIntent,resolveRimEdge,resolveCreaseInterval,hingeIntervals,hingeIntent,resolveHingeInterval,axesEdgeToCrease,checkEdgeToCrease,edgeToCreaseOptions,verifyEdgeToCrease,edgeToHingeOptions,verifyEdgeToHinge,edgeToEdgeOptions,verifyEdgeToEdge,rimEdgeVisible,axisSplitsSheet,hingeStaysUnderFold,fixedHingePart,movingIdsFor,foldRotator,paperRootOf,foldability,foldableSet,creasability,creasableSet,contiguousAt,pendingCheck,recordable,setLayers,setSideAll,sideAllFaces,stageLine,setFlap,flapFaces,outlineHingeEdges,hingeEdgeIntent,resolveSourceEdge,extendGuide,creaseSidePoint,MAX_STEPS,MAX_FACES,polysOverlap,overlapsArea,strictlyInside,detXf,hingeMemoStats:()=>({...hingeMemoStats})};
 })();

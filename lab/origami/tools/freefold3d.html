@@ -19,7 +19,7 @@
 .pocket input[type=range]{flex:1;min-width:180px;padding:0}
 .pocket .note{width:100%;text-align:center;font-size:12px;opacity:.85}</style></head><body><canvas id="pocketGL" hidden></canvas><canvas id="view"></canvas>
 <div id="pocketHint" class="hint" hidden></div><div class="bar top"><strong>自由折り・B1</strong><span id="steps" class="steps">0手</span><button id="op">角を折る</button><button id="lineMode">折り目を引く：OFF</button><button id="flip">裏返す</button><button id="openHinge" hidden>背を開く</button><button id="squash" hidden>続けてつぶす</button><button id="pocketPick" hidden>袋を選ぶ</button><button id="petalPick" hidden>花弁を選ぶ</button><div id="prep" class="prep" hidden><b>袋折りの準備に失敗しました</b><span id="prepWhy"></span><button id="prepRetry">再試行</button></div><div id="status" class="status">紙の角、または外周の辺をつかんで、置きたい所まで運んでください</div><details id="help" class="help"><summary>操作の説明</summary><div class="unsupported">角＝紙の内側の好きな点へ（折り目・紙のふち・対角に吸いつく）。角を角へ＝別の角へ。外周の辺＝指を通る平行線へ（紙が平らなあいだだけ）。重なった所は指を離すと「この場所の重なり」が出て、上から何枚かだけ選べます（原本に残るのは解決した面の faceId）。「折り目を引く：ON」で、紙の上を2点ドラッグ＝その向きの折り目だけを引きます（紙は平らのまま）。角→辺は未対応。紙の外をドラッグすると視点が回ります。</div></details><details id="detail" class="detail" hidden><summary>詳しく</summary><div id="detailMsg"></div><div id="pocketWhy"></div></details></div>
-<div id="layers" class="stack" hidden><div class="lead">重なった紙を、どこまで折りますか（上から何枚／折線のこの側を全部）</div><div id="stackPick"></div><div id="stackWhy" class="why"></div><details id="stackDetail"><summary>詳しく（この場所の重なり <span id="stackAt"></span>）</summary><div id="stackRows"></div><div id="stackNote" class="why"></div></details></div>
+<div id="layers" class="stack" hidden><div class="lead">重なった紙を、どこまで折りますか（上から何枚／折線のこの側を全部／つながっているフラップ）</div><div id="stackPick"></div><div id="stackWhy" class="why"></div><details id="stackDetail"><summary>詳しく（この場所の重なり <span id="stackAt"></span>）</summary><div id="stackRows"></div><div id="stackNote" class="why"></div></details></div>
 <div id="pocketBar" class="bar pocket" hidden><div id="pocketNote" class="note">🧺 つる③の袋折り（検証ずみの形だけ）｜<b>厚み0</b>で表示・紙どうしの<b>貫通（すり抜け）は未検証</b></div><input id="pocketT" type="range" min="0" max="1000" value="0"><button id="pocketOpen">袋を開いてつぶす</button><button id="pocketPlay">再生</button><button id="pocketBack">逆再生</button><button id="pocketStop">とめる</button></div>
 <div class="bar bottom"><button id="kind">谷折り</button><button id="creaseMode">折る</button><button id="creaseFold" hidden>この折り目で折る</button><button id="lineFold" hidden>この線で折る</button><button id="confirm" class="save" disabled>確定</button><button id="cancel" class="danger" disabled>取消</button><button id="undo" class="danger" disabled>1手戻す</button><button id="redo" class="danger" disabled>やり直す</button><input id="workName" type="text" value="自由折り"><button id="save" class="save" disabled>JSONを保存</button></div>
 <script src="freefold_engine.js"></script><script src="freefold_snap.js"></script><script src="origami_recipe.js"></script><script src="squash_model.js"></script><script src="squash_v2.js"></script><script src="petal_v2.js"></script><script src="squash_gl.js"></script><script src="origami_recipe.schema.js"></script><script>
@@ -333,7 +333,7 @@ function draw(){x.clearRect(0,0,innerWidth,innerHeight);
   /* 🗂 「折線のこの側を全部」は、指の下に無い紙（離れたフラップ・左右に分かれた面）も動く。
      ゴースト（折ったあとの位置）だけでは「いまどの紙が選ばれたか」が分からないので、動く側の部分を**いまの位置で**縁取る。
      指の下に無い面は橙、指の下の面は青。面の集合は engine の候補（pending.candidates）をそのまま使う＝画面は選ばない。 */
-  if(layerPick.n==='side'&&ST().pending&&ST().pending.sidePoint){const g=pendingFoldGeom(),under=new Set(layerPick.stack.map(v=>v.faceId)),away=[];
+  if((layerPick.n==='side'||layerPick.n==='flap')&&ST().pending&&ST().pending.sidePoint){const g=pendingFoldGeom(),under=new Set(layerPick.stack.map(v=>v.faceId)),away=[];
    for(const f of ST().cache.faces){if(!ids.includes(f.faceId))continue;const c=E.split(f.poly,g.A,g.B)[1];if(!c)continue;
     const pts=flatPoly(c),far=!under.has(f.faceId);if(far)away.push(f.faceId);
     fillPts(pts,(far?PICK_AWAY:PICK_BLUE)+'30');outline(pts,far?PICK_AWAY:PICK_BLUE)}
@@ -453,8 +453,8 @@ function computeLayerPick(){
  applyLayers(1)}
 /* 枚数を変えたら、topFaces / foldability（setLayersの中）と recordable を出しなおして理由を画面に出す。 */
 /* 🗂 選び方は2通り：「上からN枚」（n＝数）と「折線のこの側を全部」（n＝'side'）。面の集合はどちらも engine が決める（setLayers／setSideAll）＝画面は面を作らない。 */
-const choose=n=>n==='side'?E.setSideAll(ST(),layerPick.at):E.setLayers(ST(),n,layerPick.at);
-const pickWord=n=>n==='side'?'折線のこの側の紙ぜんぶ':`上から${n}枚`;
+const choose=n=>n==='side'?E.setSideAll(ST(),layerPick.at):n==='flap'?E.setFlap(ST(),layerPick.at):E.setLayers(ST(),n,layerPick.at);
+const pickWord=n=>n==='side'?'折線のこの側の紙ぜんぶ':n==='flap'?'つながっているフラップ':`上から${n}枚`;
 function applyLayers(n){if(!layerPick)return;const prev=layerPick.applied;foldCheck=null;/* 🚧 枚数の道の答えは layerPick が持つ（engine の setLayers／setSideAll が中で foldability／creasability を通している） */
  try{choose(n);
   layerPick.n=n;layerPick.applied=n;layerPick.faces=ST().pending.candidates.map(c=>c.faceId);
@@ -476,9 +476,9 @@ function gateCommit(){if(!layerPick||!pendingProposal)return;
   const verb=pendingProposal&&(pendingProposal.op==='line'||pendingProposal.asCrease)?'折り目をつけます':'折ります';
   ok(`${pickWord(layerPick.applied)}を${verb}。この形でよければ確定してください`,
    `${pickWord(layerPick.applied)}（${layerPick.faces.length}面）。確定すると、この${layerPick.faces.length}面が faceId で原本に記録されます`)}
- else{confirmBtn.disabled=true;const sw=snappedWord(),more=layerPick.n!=='side'&&layerPick.n<layerPick.count;
+ else{confirmBtn.disabled=true;const sw=snappedWord(),more=typeof layerPick.n==='number'&&layerPick.n<layerPick.count;
   if(sw&&more)note(`${sw}。重なった紙も一緒に折ってください（「上から${layerPick.n+1}枚」や「折線のこの側を全部」を選べます）`,'この枚数では折れません：'+(layerPick.reason||''));
-  else error(Error(layerPick.n==='side'?'この側の紙ぜんぶでは折れません':'この枚数では折れません'),(layerPick.reason||'')+(layerPick.n==='side'?'':'（「折線のこの側を全部」も選べます）'))}}
+  else error(Error(typeof layerPick.n==='number'?'この枚数では折れません':`${pickWord(layerPick.n)}では折れません`),(layerPick.reason||'')+(typeof layerPick.n==='number'?'（「折線のこの側を全部」「つながっているフラップ」も選べます）':''))}}
 function renderLayers(){if(!layerPick){layersEl.hidden=true;return}
  layersEl.hidden=false;stackAtEl.textContent='('+layerPick.at.map(v=>v.toFixed(2)).join(', ')+')';
  const chosen=new Set(layerPick.faces);stackRowsEl.textContent='';
@@ -500,11 +500,14 @@ function renderLayers(){if(!layerPick){layersEl.hidden=true;return}
  /* 🗂 別の選び方：折線の動く側にある紙ぜんぶ（指の下に無い面・左右に分かれた面も入る）。「上からN枚」の意味は変えない。 */
  {const b=document.createElement('button');b.className='pick'+(layerPick.n==='side'?' on':'');b.textContent='折線のこの側を全部';b.dataset.n='side';
   b.onclick=()=>applyLayers('side');stackPickEl.appendChild(b)}
+ /* 🪶 3つめの選び方：いちばん上の面から、動く側の内部へ入る結びでたどったフラップ（背を開くときと同じ辿り方・engine の setFlap）。 */
+ {const b=document.createElement('button');b.className='pick'+(layerPick.n==='flap'?' on':'');b.textContent='つながっているフラップ';b.dataset.n='flap';
+  b.onclick=()=>applyLayers('flap');stackPickEl.appendChild(b)}
  /* 「上からN枚」は選び方であって、原本に残るのは解決した面の名前（faceId）だけ。ここを画面で明かしておく。 */
- const sw=snappedWord(),more=layerPick.n!=='side'&&layerPick.n<layerPick.count;
+ const sw=snappedWord(),more=typeof layerPick.n==='number'&&layerPick.n<layerPick.count;
  stackWhyEl.textContent=layerPick.ok?`${pickWord(layerPick.applied)}で折れます（青い紙が動きます・${layerPick.faces.length}面）`
-  :sw&&more?`${sw}。重なった紙も一緒に折ってください`:layerPick.n==='side'?'この側の紙ぜんぶでは折れません':'この枚数では折れません';
- if(layerPick.ok&&layerPick.applied==='side'){const under=new Set(layerPick.stack.map(v=>v.faceId)),far=layerPick.faces.filter(id=>!under.has(id)).length;
+  :sw&&more?`${sw}。重なった紙も一緒に折ってください`:typeof layerPick.n==='number'?'この枚数では折れません':`${pickWord(layerPick.n)}では折れません`;
+ if(layerPick.ok&&(layerPick.applied==='side'||layerPick.applied==='flap')){const under=new Set(layerPick.stack.map(v=>v.faceId)),far=layerPick.faces.filter(id=>!under.has(id)).length;
   if(far)stackWhyEl.textContent+=`。指の下に無い紙 ${far}面（橙のふち）も一緒に動きます`}
  stackWhyEl.style.color=layerPick.ok?'#9fe6c0':sw&&more?'#ffd58a':'#ff9b9b';
  /* 詳しい説明（原本に残るのは faceId）と折れない理由は「詳しく」の中。 */
@@ -583,6 +586,17 @@ c.onpointerdown=ev=>{if(dragSession)return;/* 2本目の指や2つ目のボタ�
    sessionLog.push({at:'down',id:source.id,op:'rim'});hover=null;capture(ev);dragSession.finger=screen.slice();
    addFx('grab',{seg:[source.edge.a,source.edge.b],src:true},HELD_YELLOW);addFx('label',{screen:screen.slice(),text:`${rim.edge.label}をつかみました`});
    ok(`${rim.edge.label}をつかみました。合わせたい折り目へ近づけてください`);draw();return}
+  /* 🦴✋ 見えている外形の背（2026-09-16・つる⑫）：押した時点で「つかんだ」印を出す。
+     離したときに動いていなければ従来の「背を選ぶ」（pickHingeAt）、ドラッグなら辺合わせ（rim と同じセッション・同じ engine の幾何）。 */
+  if(!rim.edge&&!rim.reason){const oh=N.pickOutlineHinge(state,screen,VIEW);
+   if(oh.edge){discardProposal();
+    const source=Object.freeze({type:'rim',id:'rim:'+oh.intent.edgeId,intent:oh.intent,faceId:oh.edge.faceId,outlineHinge:true,
+     edge:{id:null,label:oh.edge.label,a:oh.edge.seg[0],b:oh.edge.seg[1]},grabT:oh.edge.t,origin:screen});
+    clearHingePick();dragSession={kind:'rim',source,op:'rim',asCrease,pointerId:ev.pointerId,button:ev.button,aim:null,aimKey:null,progress:0,half:false,ratio:null};
+    sessionLog.push({at:'down',id:source.id,op:'rim'});hover=null;capture(ev);dragSession.finger=screen.slice();
+    addFx('grab',{seg:[source.edge.a,source.edge.b],src:true},HELD_YELLOW);addFx('label',{screen:screen.slice(),text:'外形の背をつかみました'});
+    ok('外形の背をつかみました。ドラッグで合わせたい折り目へ近づける／そのまま離すと背を選びます');draw();return}
+   if(oh.reason)error(Error(oh.reason))}
   if(rim.reason)error(Error(rim.reason));
   /* 🦴 H1：角も外周辺もつかめなかったときだけ、画面で見えている「折った背」を選んでおく。
      ②このしぐさは今までどおり**視点を回す**＝既存の道は1つも変えない。選んだ背は凍結して残る。 */
@@ -720,7 +734,10 @@ function endSession(){
  if(sess.kind==='line'&&!(state.pending&&sess.progress>0)){sessionLog.push({at:'up',id:sess.source.id});hover=null;
   discardProposal();ok('折り目の線が決まらなかったので、紙は元のままです');draw();return}
  if(sess.kind==='rim'&&!(state.pending&&sess.progress>0)){sessionLog.push({at:'up',id:sess.source.id});hover=null;
-  discardProposal();ok('合わせる折り目が決まらなかったので、紙は元のままです');draw();return}
+  discardProposal();
+  /* 🦴✋ 外形の背を動かさずに離した＝タップ＝従来の「背を選ぶ」（押した所で選ぶ・視点は回さない） */
+  if(sess.source.outlineHinge&&!N.movedEnough(sess.source.origin,sess.finger||sess.source.origin)){pickHingeAt(sess.source.origin);draw();return}
+  ok('合わせる折り目が決まらなかったので、紙は元のままです');draw();return}
  sessionLog.push({at:'up',id:sess.source.id});
  const blocked=statusEl.style.color==='rgb(255, 155, 155)';
  const canCommit=sess.op==='match'?sess.progress>=N.COMMIT:sess.progress>0;/* 部分折りはどこで離しても成果。角合わせだけ半分の決まりを残す。 */

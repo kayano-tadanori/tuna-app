@@ -96,7 +96,7 @@ async function main() {
  const s2 = await status();
  await dropAt([1, -1]);
  const picks = await ev(`[...document.querySelectorAll('#stackPick button')].map(b => b.dataset.n)`);
- assert.deepEqual(picks, ['1', '2', 'side'], '2 上からN枚（と、この側を全部）が出ない（' + s2 + '）: ' + JSON.stringify(picks));
+ assert.deepEqual(picks, ['1', '2', 'side', 'flap'], '2 上からN枚（と、この側を全部・つながっているフラップ）が出ない（' + s2 + '）: ' + JSON.stringify(picks));
  await ev(`[...document.querySelectorAll('#stackPick button')].find(b => b.dataset.n === '2').click()`);
  const pre = await ev(`(() => { const q = freeFoldDebug.state.pending; return { disabled: document.getElementById('confirm').disabled, status: freeFoldDebug.status,
    geomLine: freeFoldDebug.geometry && freeFoldDebug.geometry.line, displayLine: q.displayLine, ref: q.reference.faceId, sidePoint: q.sidePoint,

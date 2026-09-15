@@ -390,9 +390,9 @@ assert.match(rows[0].text,/s1\.(keep|cut)/,'layerPath が読めない: '+rows[0]
 assert.deepEqual(pick.at,await ev('freeFoldDebug.state.pending.layerChoice.at'),'印と pending.layerChoice.at がずれている');
 assert.equal(await countColor(pick.at,10,PICKC)>0,true,'「この場所」の印が画面に出ていない');
 assert.equal(await ev('freeFoldDebug.state.pending.layerChoice.n'),1,'layerChoice.n が残っていない');
-/* 選べるのは「上からN枚」と「折線のこの側を全部」（2026-09-15 本人指示で追加）だけ。面ごとのチェックボックスは作らない。 */
+/* 選べるのは「上からN枚」と「折線のこの側を全部」（2026-09-15）と「つながっているフラップ」（2026-09-16）だけ。本人指示で追加。面ごとのチェックボックスは作らない。 */
 assert.equal(await ev(`document.querySelectorAll('input[type=checkbox]').length`),0,'面ごとのチェックボックスがある');
-assert.equal(await ev(`[...document.querySelectorAll('#stackPick button')].map(b=>b.dataset.n).join(',')`),'1,2,side','選べるのが「上からN枚」と「この側を全部」だけになっていない');
+assert.equal(await ev(`[...document.querySelectorAll('#stackPick button')].map(b=>b.dataset.n).join(',')`),'1,2,side,flap','選べるのが「上からN枚」「この側を全部」「つながっているフラップ」だけになっていない');
 /* 上から2枚へ切りかえ＝強調が変わり、確定はできない（B2c）。原本は1文字も動かない。 */
 await ev(`[...document.querySelectorAll('#stackPick .pick')].find(b=>b.dataset.n==='2').click()`);
 pick=(await frame()).pick;
@@ -1979,7 +1979,7 @@ assert.equal(await ev('freeFoldDebug.geometry===null'),true,'24 N：折れない
 assert.equal((await frame()).ghost,null,'24 N：折れない枚数のゴーストが画面に残っている');
 assert.equal(await disabled('confirm'),true,'24 N：折れない枚数で確定できる');
 assert.deepEqual(await ev("[...document.querySelectorAll('#stackPick button')].map(b=>b.textContent)"),
- ['上から1枚','上から2枚','折線のこの側を全部'],'24 N：枚数のボタンが出ていない');
+ ['上から1枚','上から2枚','折線のこの側を全部','つながっているフラップ'],'24 N：枚数のボタンが出ていない');
 /* 上から2枚にすると成立し、ゴーストも確定も戻る。 */
 await ev("[...document.querySelectorAll('#stackPick button')].filter(b=>b.textContent.includes('2'))[0].click()");
 assert.equal(await ev('freeFoldDebug.layerPick.ok'),true,'24 N：上から2枚でも折れないと言う｜'+(await status()));

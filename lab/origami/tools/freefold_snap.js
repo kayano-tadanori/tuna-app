@@ -449,6 +449,24 @@ function cornerTargetAim(state,source,screen,view,snapped){
    ④TIE_PX の中に**別の区間**が並んだら、理由をつけて選ばない
    ⑤返した intent は画面側で `Object.freeze` して凍結する＝ドラッグ中に再探索しない
    ⚠`hingeIntervals` は両側の重なりを読むので**軽くない**。呼ぶのは pointerdown の1回だけ（ホバーでは呼ばない）。 */
+/* 🦴✋ 見えている外形の背を画面で拾う（2026-09-16・つる⑫）。候補は engine の outlineHingeEdges だけ＝紙の内部の背・隠れた背は入らない。
+   測り方は辺（pickRimEdge）・背（pickVisibleHinge）と同じ画面px（EDGE_PX／TIE_PX）。返す intent は画面側で凍結する。 */
+function pickOutlineHinge(state,screen,view){
+ if(state.pending)return{edge:null,intent:null,reason:null};
+ const eng=E(),near=[];
+ for(const e of eng.outlineHingeEdges(state)){
+  const A=view.toScreen(e.seg[0]),B=view.toScreen(e.seg[1]);
+  if(dist(A,B)<1)continue;
+  const o=onSegment(screen,A,B),px=dist(screen,o.point);
+  if(px>EDGE_PX)continue;
+  near.push({e,px,t:o.t})}
+ if(!near.length)return{edge:null,intent:null,reason:null};
+ near.sort((x,y)=>x.px-y.px||(x.e.edgeId<y.e.edgeId?-1:1));
+ const best=near[0],rival=near.find(v=>v!==best&&v.px-best.px<TIE_PX&&v.e.faceId!==best.e.faceId&&!sameSeg(v.e.seg,best.e.seg));
+ if(rival)return{edge:null,intent:null,reason:'外形の背が重なっていて、どれをつかんだか決まりません'};
+ const e=best.e;
+ return{edge:{edgeId:e.edgeId,label:e.label,faceId:e.faceId,intervalId:e.intervalId,seg:[e.seg[0].slice(),e.seg[1].slice()],px:best.px,t:best.t,layer:e.layer,sheetId:e.sheetId},
+  intent:eng.hingeEdgeIntent(state,e.edgeId),reason:null}}
 function pickVisibleHinge(state,screen,view){
  if(state.pending)return{hinge:null,intent:null,reason:'候補を片づけてから、折った背を選んでください'};
  const eng=E(),near=[];
@@ -609,6 +627,6 @@ function cornerAimWith(state,source,screen,view,snapped,aimFn){
  if(uniq.length>1&&uniq[1].px-uniq[0].px<TIE_PX)
   return{aim:null,hints,reason:'合わせる辺を特定できません'};
  return{aim:uniq[0],hints,reason:null}}
-return{grab,pickRimEdge,pickVisibleHinge,edgeToCreaseAim,edgeToHingeAim,edgeToEdgeAim,rimTargetAim,preferCreaseOverHinge,preferTargetAim,cornerTargetAim,cornerAimWith,cornerRimEdges,cornerEdgeToCreaseAim,preferPointSnap,freeCreaseStart,freeCreaseLine,linePointAim,sheetVertices,sameAxis,sameSeg,aimCorner,edgeProgress,edgeTarget,movedEnough,creaseForCorners,creaseForEdge,diagonalOf,diagonalsOf,outlineCorners,foldTarget,guidePoints,segCross,corners,clip,clipToPoly,clipToSheet,movingArea,area,isFlat,outerSegments,guidesOf,mergeGuides,parallelGuides,rimCorners,onGuideSeg,faceAtCorner,guidesAtCorner,
+return{grab,pickRimEdge,pickOutlineHinge,pickVisibleHinge,edgeToCreaseAim,edgeToHingeAim,edgeToEdgeAim,rimTargetAim,preferCreaseOverHinge,preferTargetAim,cornerTargetAim,cornerAimWith,cornerRimEdges,cornerEdgeToCreaseAim,preferPointSnap,freeCreaseStart,freeCreaseLine,linePointAim,sheetVertices,sameAxis,sameSeg,aimCorner,edgeProgress,edgeTarget,movedEnough,creaseForCorners,creaseForEdge,diagonalOf,diagonalsOf,outlineCorners,foldTarget,guidePoints,segCross,corners,clip,clipToPoly,clipToSheet,movingArea,area,isFlat,outerSegments,guidesOf,mergeGuides,parallelGuides,rimCorners,onGuideSeg,faceAtCorner,guidesAtCorner,
  CORNER_PX,EDGE_PX,TIE_PX,AIM_PX,HOLD_PX,HYST_PX,MIN_CARRY_PX,SNAP_PX,UNSNAP_PX,COMMIT,SAME};
 })();
