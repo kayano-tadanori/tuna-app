@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>背の可視判定の計測（携帯実機用）</title>
+<style>
+body{font:14px/1.5 system-ui,sans-serif;margin:0;padding:12px 16px;background:#0b1226;color:#e8ecf8}
+button{font-size:16px;padding:10px 16px;border-radius:10px;border:0;background:#3b6fe0;color:#fff}
+table{border-collapse:collapse;margin-top:12px;font-size:12px}td,th{border:1px solid #334;padding:4px 6px;text-align:right}th{background:#1a2344}
+pre{white-space:pre-wrap;word-break:break-all;background:#121a33;padding:8px;font-size:11px}
+.wrap{overflow-x:auto}
+</style></head><body>
+<h3>背の可視判定の計測（engine だけ・画面の操作はしない）</h3>
+<p>自由折りの画面（freefold3d.html）とは別のページです。原本の保存も画面の状態も触りません。<br>
+「計測する」を押すと、じゃばら折り（16・32・64面）で、次を5回ずつ測って中央値を出します。</p>
+<ul>
+<li>区間 初回＝紙を作り直した直後の <code>hingeIntervals</code>（可視判定を全部計算する）</li>
+<li>区間 再利用＝同じ紙でもう一度（ためた結果を使う）</li>
+<li>背を選ぶ＝pointerdown と同じ <code>pickVisibleHinge</code>（紙を作り直した直後）</li>
+<li>開く提案＝背を選んだあとの <code>proposeOpen</code>（断る形でも時間は同じ道を通る）</li>
+<li>辺ドラッグ1コマ＝辺をつかんで運ぶときに毎コマ呼ぶ <code>edgeToHingeOptions</code></li>
+</ul>
+<details><summary>携帯実機で開く手順</summary><ol>
+<li>PC と携帯を同じ Wi‑Fi につなぐ。</li>
+<li>PC でこの tools フォルダを開き、アドレス欄に <code>cmd</code> と入れて Enter →<br><code>python -m http.server 8800 --bind 0.0.0.0</code>（Windows の「ネットワークへのアクセスを許可」が出たら、プライベートネットワークを許可）。</li>
+<li>別の cmd で <code>ipconfig</code> → Wi‑Fi の「IPv4 アドレス」（例 192.168.1.23）を見る。</li>
+<li>携帯のブラウザで <code>http://（IPv4アドレス）:8800/bench_hinge.html</code> を開き、「計測する」。画面を消さずに待つ。</li>
+<li>下に出た文字（機種の名前つき）をコピーして送る。終わったら PC の cmd で Ctrl+C（サーバーを止める）。</li>
+</ol><p>⚠古いファイルが残って見えるときは、携帯のブラウザの「シークレット（プライベート）タブ」で開く。</p></details>
+<button id="run">計測する</button> <span id="state"></span>
+<div class="wrap"><table id="out"></table></div>
+<pre id="json"></pre>
+<script src="freefold_engine.js"></script>
+<script src="freefold_snap.js"></script>
+<script>
+'use strict';
+const E=FreeFoldEngine,N=FreeFoldSnap;
+const ref=s=>s.pending.candidates;
+/* 検査（node）と同じ紙：全部の層を、いまの外形の真ん中の縦線で谷折りし続ける＝面が倍々。 */
+function build(k){const s=E.create();
+ for(let i=0;i<k;i++){const fx=s.cache.faces.flatMap(f=>f.poly.map(p=>p[0])),lo=Math.min(...fx),hi=Math.max(...fx),c=lo+(hi-lo)*.5,side=[c-.02,.37];
+  const t=E.stackAt(s,side)[0];E.proposeOnFace(s,[c,-1],[c,1],t.faceId,{layers:1});s.pending.kind='V';E.setSide(s,side);
+  const n=E.layersAt(s,s.pending.at).layers.length;if(n>1)E.setLayers(s,n,s.pending.at);E.select(s,ref(s));E.confirm(s)}
+ return s}
+const view={toScreen:p=>[400+p[0]*300,400-p[1]*300]};
+const med=a=>{const b=a.slice().sort((x,y)=>x-y);return b[Math.floor(b.length/2)]};
+const time=f=>{const t=performance.now();f();return performance.now()-t};
+const tick=()=>new Promise(r=>setTimeout(r,0));
+async function run(){
+ const rows=[],stateEl=document.getElementById('state');
+ for(const k of[4,5,6]){
+  stateEl.textContent=`準備中（${2**k}面）…`;await tick();
+  const s=build(k),fresh=()=>{s.cache=E.replay(s.recipe);s.committed=s.cache;s.pending=null};
+  const hs=E.hingeIntervals(s).filter(h=>h.visible),last=s.recipe.steps[s.recipe.steps.length-1].id,h=hs.filter(v=>v.stepId===last)[0]||hs[0];
+  const part=h.visibleParts[0],mid=[(part.seg[0][0]+part.seg[1][0])/2,(part.seg[0][1]+part.seg[1][1])/2],sc=view.toScreen(mid);
+  const fx=s.cache.faces.flatMap(f=>f.poly.map(p=>p[0])),at=[(Math.min(...fx)+Math.max(...fx))/2,.37];
+  const m={first:[],reuse:[],pick:[],open:[],drag:[]};
+  for(let r=0;r<5;r++){
+   stateEl.textContent=`計測中（${s.cache.faces.length}面・${r+1}/5）…`;await tick();
+   fresh();m.first.push(time(()=>E.hingeIntervals(s)));m.reuse.push(time(()=>E.hingeIntervals(s)));
+   fresh();let it=null;m.pick.push(time(()=>{it=N.pickVisibleHinge(s,sc,view).intent}));
+   m.open.push(time(()=>{try{E.proposeOpen(s,it,at);E.cancel(s)}catch(e){}}));
+   fresh();const e=E.rimEdges(s)[0],ei=E.edgeIntent(s,e.faceId,e.rimId);
+   m.drag.push(time(()=>{for(let i=0;i<20;i++)E.edgeToHingeOptions(s,ei)})/20)}
+  rows.push({面:s.cache.faces.length,背:E.hingeIntervals(s).length,'区間 初回ms':med(m.first),'区間 再利用ms':med(m.reuse),'背を選ぶms':med(m.pick),'開く提案ms':med(m.open),'辺ドラッグ1コマms':med(m.drag)})}
+ const out=document.getElementById('out'),keys=Object.keys(rows[0]);
+ out.innerHTML='<tr>'+keys.map(k=>`<th>${k}</th>`).join('')+'</tr>'+rows.map(r=>'<tr>'+keys.map(k=>`<td>${typeof r[k]==='number'&&!Number.isInteger(r[k])?r[k].toFixed(2):r[k]}</td>`).join('')+'</tr>').join('');
+ const stats=E.hingeMemoStats?E.hingeMemoStats():null;
+ document.getElementById('json').textContent=JSON.stringify({ua:navigator.userAgent,when:new Date().toISOString(),rows,memo:stats},null,1);
+ stateEl.textContent='完了（下の文字をコピーして送ってください）'}
+document.getElementById('run').onclick=()=>run().catch(e=>{document.getElementById('state').textContent='エラー: '+e.message});
+</script>
+</body></html>

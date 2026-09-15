@@ -1,0 +1,206 @@
+{
+ "format": "origami-recipe",
+ "version": 1,
+ "coordinates": "unfolded-normalized-xy",
+ "work": {
+  "id": "squash_probe_2te",
+  "name": "袋折りの下調べ（2手）",
+  "emoji": "🧺",
+  "difficulty": 1
+ },
+ "source": {
+  "note": "つる③ ふくろをひらいてつぶす を、既存の fold 2手で書けるかの下調べ。s4 は JS の再生器に断られる。"
+ },
+ "paper": {
+  "aspectRatio": 1,
+  "colorDown": false
+ },
+ "steps": [
+  {
+   "id": "s1",
+   "diagramStep": "1",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper"
+   },
+   "line": [
+    [
+     -1,
+     1
+    ],
+    [
+     1,
+     -1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.5,
+    -0.5
+   ],
+   "targets": [
+    {
+     "faceId": "paper",
+     "layerPath": []
+    }
+   ],
+   "instruction": "はんぶんに おる"
+  },
+  {
+   "id": "s2",
+   "diagramStep": "2",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.keep"
+   },
+   "line": [
+    [
+     -1,
+     -1
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.2,
+    0.5
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      }
+     ]
+    }
+   ],
+   "instruction": "もう一度 はんぶんに おる"
+  },
+  {
+   "id": "s3",
+   "diagramStep": "3",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.keep/s2.cut"
+   },
+   "line": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.3,
+    0.5
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep/s2.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      }
+     ]
+    }
+   ],
+   "instruction": "ふくろを ひらいて つぶす（1）"
+  },
+  {
+   "id": "s4",
+   "diagramStep": "4",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.keep/s2.cut/s3.keep"
+   },
+   "line": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "movingSidePoint": [
+    0.2,
+    0.8
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ]
+    }
+   ],
+   "instruction": "ふくろを ひらいて つぶす（2）"
+  }
+ ]
+}

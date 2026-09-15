@@ -1,0 +1,543 @@
+{
+ "format": "origami-recipe",
+ "version": 2,
+ "coordinates": "unfolded-normalized-xy",
+ "work": {
+  "id": "freefold_draft",
+  "name": "自由折り",
+  "emoji": "📄",
+  "difficulty": 1
+ },
+ "source": {
+  "note": "3D自由折りで、平らな正方形から一直線の fold を記録。"
+ },
+ "paper": {
+  "aspectRatio": 1,
+  "colorDown": false
+ },
+ "steps": [
+  {
+   "id": "s1",
+   "diagramStep": "1",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper"
+   },
+   "line": [
+    [
+     1,
+     -1
+    ],
+    [
+     -1,
+     1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.7333333333333334,
+    -0.7333333333333334
+   ],
+   "targets": [
+    {
+     "faceId": "paper",
+     "layerPath": []
+    }
+   ],
+   "instruction": "選んだ面を谷折りする"
+  },
+  {
+   "id": "s2",
+   "diagramStep": "2",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.cut"
+   },
+   "line": [
+    [
+     4.440892098500628e-16,
+     -4.440892098500628e-16
+    ],
+    [
+     -1,
+     -1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.8666666666666665,
+    0.5999999999999999
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      }
+     ]
+    }
+   ],
+   "instruction": "選んだ面を谷折りする"
+  },
+  {
+   "id": "s3",
+   "diagramStep": "3",
+   "op": "squash",
+   "model": "degree4-45-tsuru3",
+   "vertex": [
+    0,
+    0
+   ],
+   "base": {
+    "faceId": "paper/s1.keep/s2.keep"
+   },
+   "axes": [
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      0
+     ],
+     "role": "flat"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      1
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      0,
+      1
+     ],
+     "role": "drive"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      1
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      0
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      -1
+     ],
+     "role": "folded"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      0,
+      -1
+     ],
+     "role": "flat"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      -1
+     ],
+     "role": "folded"
+    }
+   ],
+   "branch": {
+    "linkage": "tan-half-product-sqrt2",
+    "sign": 1,
+    "drive": {
+     "fromDeg": 0,
+     "toDeg": 180
+    }
+   },
+   "stack": [
+    [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep",
+     "paper/s1.cut/s2.cut/s3.keep",
+     "paper/s1.cut/s2.cut/s3.cut"
+    ],
+    [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep"
+    ],
+    [
+     "paper/s1.keep/s2.cut/s3.cut",
+     "paper/s1.keep/s2.cut/s3.keep"
+    ]
+   ],
+   "instruction": "ふくろを ひらいて つぶす"
+  },
+  {
+   "id": "s4",
+   "diagramStep": "4",
+   "op": "flip",
+   "axis": "v",
+   "instruction": "紙を左右に裏返す"
+  },
+  {
+   "id": "s5",
+   "diagramStep": "5",
+   "op": "squash",
+   "model": "degree4-45-tsuru3",
+   "vertex": [
+    0,
+    0
+   ],
+   "base": {
+    "faceId": "paper/s1.keep/s2.cut/s3.cut"
+   },
+   "axes": [
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      0
+     ],
+     "role": "drive"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      1
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      0,
+      1
+     ],
+     "role": "flat"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      1
+     ],
+     "role": "folded"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      0
+     ],
+     "role": "flat"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      -1
+     ],
+     "role": "folded"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      0,
+      -1
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      -1
+     ],
+     "role": "link"
+    }
+   ],
+   "branch": {
+    "linkage": "tan-half-product-sqrt2",
+    "sign": 1,
+    "drive": {
+     "fromDeg": 0,
+     "toDeg": 180
+    }
+   },
+   "stack": [
+    [
+     "paper/s1.cut/s2.cut/s3.cut",
+     "paper/s1.cut/s2.cut/s3.keep",
+     "paper/s1.cut/s2.keep/s5.cut",
+     "paper/s1.cut/s2.keep/s5.keep"
+    ],
+    [
+     "paper/s1.keep/s2.cut/s3.keep",
+     "paper/s1.keep/s2.cut/s3.cut",
+     "paper/s1.keep/s2.keep/s5.keep",
+     "paper/s1.keep/s2.keep/s5.cut"
+    ]
+   ],
+   "instruction": "ふくろを ひらいて つぶす"
+  },
+  {
+   "id": "s6",
+   "diagramStep": "6",
+   "op": "crease",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.cut/s2.keep/s5.keep"
+   },
+   "line": [
+    [
+     0,
+     -0.585786437626905
+    ],
+    [
+     1,
+     -0.9999999999999998
+    ]
+   ],
+   "movingSidePoint": [
+    0.43333333333333335,
+    -0.9447715250169205
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.cut/s2.keep/s5.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      },
+      {
+       "stepId": "s5",
+       "side": "cut"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep/s5.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      },
+      {
+       "stepId": "s5",
+       "side": "keep"
+      }
+     ]
+    }
+   ],
+   "instruction": "選んだ面に折り目をつける"
+  },
+  {
+   "id": "s7",
+   "diagramStep": "7",
+   "op": "crease",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.keep/s2.keep/s5.cut"
+   },
+   "line": [
+    [
+     1,
+     -0.9999999999999998
+    ],
+    [
+     0.5857864376269049,
+     1.3007071811330758e-16
+    ]
+   ],
+   "movingSidePoint": [
+    0.9447715250169206,
+    -0.4333333333333331
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep/s2.keep/s5.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      },
+      {
+       "stepId": "s5",
+       "side": "keep"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.keep/s2.keep/s5.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      },
+      {
+       "stepId": "s5",
+       "side": "cut"
+      }
+     ]
+    }
+   ],
+   "instruction": "選んだ面に折り目をつける"
+  },
+  {
+   "id": "s8",
+   "diagramStep": "8",
+   "op": "crease",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.cut/s2.keep/s5.keep/s6.keep"
+   },
+   "line": [
+    [
+     0,
+     -0.585786437626905
+    ],
+    [
+     0.5857864376269049,
+     1.3007071811330758e-16
+    ]
+   ],
+   "movingSidePoint": [
+    0.14644660940672624,
+    -0.2636038969321072
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep/s2.keep/s5.cut/s7.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      },
+      {
+       "stepId": "s5",
+       "side": "cut"
+      },
+      {
+       "stepId": "s7",
+       "side": "keep"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep/s5.keep/s6.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      },
+      {
+       "stepId": "s5",
+       "side": "keep"
+      },
+      {
+       "stepId": "s6",
+       "side": "keep"
+      }
+     ]
+    }
+   ],
+   "instruction": "選んだ面に折り目をつける"
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+{
+  "format": "origami-recipe",
+  "version": 1,
+  "coordinates": "unfolded-normalized-xy",
+  "work": {"id": "recipe_suika2", "name": "すいか2", "emoji": "🍉", "difficulty": 1},
+  "source": {"note": "作・図：©新宮文明（おりがみくらぶ）『すいか2』を参照。画像・パスは同梱しない。原本座標は図の向きのまま、上が+y・右が+x。図①②の折線は紙の高さの3/4・7/8（画像実測 0.747・0.879）。図③⑤の「うらがえす」は左右の裏返し（axis=v）。図④の2本の斜線は上辺中央から左右それぞれの3/4線の端へ引かれており、1手ずつ s4（原本の左側）→ s5（原本の右側）に分けた。図⑤の重なりから、後に折る側が上になる：裏返した図④⑤の画面左のはねが上＝原本では右側なので s5 を後にした。図⑥「たねをかいて できあがり」は絵付けのみで折り操作ではないため手順に含めない。"},
+  "paper": {"aspectRatio": 1, "colorDown": false},
+  "steps": [
+    {
+      "id": "s1", "diagramStep": "1", "op": "crease", "kind": "V",
+      "reference": {"faceId": "paper"},
+      "line": [[-1, -0.5], [1, -0.5]], "movingSidePoint": [0, -0.9],
+      "targets": [{"faceId": "paper"}],
+      "instruction": "図①：下の辺を中央の線に合わせて折り、折り目を付けてもどす"
+    },
+    {
+      "id": "s2", "diagramStep": "2", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper/s1.cut"},
+      "line": [[-1, -0.75], [1, -0.75]], "movingSidePoint": [0, -0.95],
+      "targets": [{"faceId": "paper/s1.cut"}],
+      "instruction": "図②：下の辺を図①の折り目に合わせて、てんせんで上へ折る（すいかの皮になる白い帯）"
+    },
+    {
+      "id": "s3", "diagramStep": "3", "op": "flip", "axis": "v",
+      "instruction": "図③：左右に裏返す（白い帯は下のまま）"
+    },
+    {
+      "id": "s4", "diagramStep": "4a", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper/s1.keep"},
+      "line": [[0, 1], [-1, -0.5]], "movingSidePoint": [-0.66, 0.5],
+      "targets": [{"faceId": "paper/s1.keep"}],
+      "instruction": "図④：上辺の中央から図①の折り目の端へ引いた斜めのてんせんで、片側を内側へ折る（裏返しているので画面では右側のはね）"
+    },
+    {
+      "id": "s5", "diagramStep": "4b", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper/s1.keep/s4.keep"},
+      "line": [[0, 1], [1, -0.5]], "movingSidePoint": [0.66, 0.5],
+      "targets": [{"faceId": "paper/s1.keep/s4.keep"}],
+      "instruction": "図④：反対側も同じ斜めのてんせんで内側へ折る。こちらが上に重なる（裏返しているので画面では左側のはね）"
+    },
+    {
+      "id": "s6", "diagramStep": "5", "op": "flip", "axis": "v",
+      "instruction": "図⑤：もう一度左右に裏返す。三角の実と下の白い皮ができあがり（図⑥のたねは絵付け）"
+    }
+  ]
+}

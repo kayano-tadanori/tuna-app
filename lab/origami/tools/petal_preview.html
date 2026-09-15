@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>花弁折りプレビュー（検証モデル）</title>
+<style>
+ :root{--bg:#f6f5f2;--ink:#222;--mute:#666;--line:#ccc;--accent:#c0392b}
+ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "Yu Gothic","Meiryo",system-ui,sans-serif}
+ .wrap{max-width:1100px;margin:0 auto;padding:12px 16px}
+ h1{font-size:18px;margin:4px 0 8px}
+ .grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px}
+ @media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+ .panel,h1{overflow-wrap:anywhere}
+ .stage{position:relative;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;aspect-ratio:1/1;max-width:100%;touch-action:none}
+ canvas{position:absolute;inset:0;width:100%;height:100%}
+ .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+ button{font:inherit;padding:5px 10px;border:1px solid #bbb;background:#fff;border-radius:6px;cursor:pointer}
+ button.on{background:#222;color:#fff;border-color:#222}
+ input[type=range]{flex:1;min-width:160px}
+ .panel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px}
+ .panel h2{font-size:14px;margin:6px 0}
+ .sw{display:inline-block;width:12px;height:12px;border:1px solid #999;vertical-align:-2px;margin-right:4px}
+ .mute{color:var(--mute)}
+ ol{margin:4px 0 4px 18px;padding:0}
+ code{font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <h1>つる⑧⑨ 花弁折り（1回目）— 検証モデルの座標だけで描くプレビュー</h1>
+ <div class="grid">
+  <div>
+   <div class="stage" id="stage"><canvas id="gl"></canvas><canvas id="labels"></canvas></div>
+   <div class="row">
+    <label for="theta">θ</label><input id="theta" type="range" min="0" max="180" step="1" value="0">
+    <span id="thetaText" style="min-width:150px"></span>
+   </div>
+   <div class="row">
+    <button id="play">▶ 再生</button>
+    <button id="t0">0°</button><button id="t45">45°</button><button id="t90">90°</button><button id="t135">135°</button><button id="t180">180°</button>
+   </div>
+   <div class="row">
+    <span class="mute">視点</span>
+    <button id="vFront" class="on">正面</button><button id="vBack">裏面</button><button id="vSideA">側面（花弁の軸方向）</button><button id="vSideB">側面（対角方向）</button><button id="vObl">斜め</button>
+   </div>
+   <div class="row">
+    <span class="mute">色</span>
+    <button id="cSide" class="on">表裏</button><button id="cRole">役割</button>
+    <label><input type="checkbox" id="showFixed" checked> 止まる紙</label>
+    <label><input type="checkbox" id="showLabels"> 面の名前</label>
+   </div>
+  </div>
+  <div class="panel">
+   <h2>色</h2>
+   <div id="legend"></div>
+   <h2>動き</h2>
+   <div>θ：花弁が P'→P の軸まわり<br>φ：<code>tan(φ/2)=cos67.5°·tan(θ/2)</code><br>T1R は花弁の中で P→Q まわり +φ、S2R は止まる紙の P→Q まわり −φ（左は鏡映）</div>
+   <h2>終端の積み順（検算結果・上から）</h2>
+   <div id="endOrder" class="mute"></div>
+   <h2>注意</h2>
+   <div class="mute">厚み0。同じ高さに重なる面（θ=0 と 180°）は、形だけでは描き順が決まらないので、始点は⑦の層、終点は検証の計算結果（[4e]）の順で描く。表示のためだけで、検査の根拠ではない。<br>表裏の色は Kids Web Japan の図に合わせた割り当て（素材の裏＝ピンク）。<br>ドラッグで回転。</div>
+  </div>
+ </div>
+</div>
+<script src="petal_preview_data.js"></script>
+<script>
+'use strict';
+const D = window.PETAL;
+const F = D.faces, NF = F.length;
+const glc = document.getElementById('gl'), lab = document.getElementById('labels');
+const gl = glc.getContext('webgl', { antialias: true, preserveDrawingBuffer: true });
+const ctx2 = lab.getContext('2d');
+const $ = id => document.getElementById(id);
+const COLORS = { back: [0.93, 0.52, 0.66], front: [0.98, 0.98, 0.97], petal: [0.95, 0.55, 0.65], side3: [0.97, 0.72, 0.36], side2: [0.93, 0.85, 0.35], fixed: [0.82, 0.84, 0.87] };
+const state = { theta: 0, yaw: 0, pitch: 0, color: 'side', showFixed: true, labels: false, playing: false, view: 'front' };
+/* 視点：カメラの向き（見る方向の逆＝カメラ位置の単位ベクトル）と上方向 */
+const VIEWS = {
+ front: { eye: [0, 0, 1], up: [1, -1, 0] },        // 開いた角 Q が下、閉じた角 O が上（折り図と同じ）
+ back: { eye: [0, 0, -1], up: [1, -1, 0] },
+ sideA: { eye: [Math.SQRT1_2, Math.SQRT1_2, 0], up: [0, 0, 1] },   // P'→P の方向から＝花弁の回転が真横から見える
+ sideB: { eye: [Math.SQRT1_2, -Math.SQRT1_2, 0], up: [0, 0, 1] },  // O→Q と直角（対角の方向）
+ obl: { eye: [0.35, -0.75, 0.56], up: [0, 0, 1] },
+};
+const norm = v => { const l = Math.hypot(...v); return v.map(x => x / l) };
+const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+let cam = { eye: VIEWS.front.eye.slice(), up: VIEWS.front.up.slice() };
+function basis() {
+ const w = norm(cam.eye); let r = cross(norm(cam.up), w); if (Math.hypot(...r) < 1e-6) r = cross([0, 1, 0], w); r = norm(r); const u = cross(w, r); return { r, u, w };
+}
+const CENTER = [-0.3, 0.3, 0.25], HALF = 1.05;
+function project(p) {   // 正射影：画面の -1..1 と奥行き
+ const { r, u, w } = basis(), q = sub(p, CENTER);
+ return [dot(q, r) / HALF, dot(q, u) / HALF, -dot(q, w) / 3];
+}
+/* WebGL */
+const vs = `attribute vec3 p; uniform vec3 R,U,W,C; uniform float H; uniform float zbias; void main(){vec3 q=p-C; gl_Position=vec4(dot(q,R)/H,dot(q,U)/H,-dot(q,W)/3.0+zbias,1.0);}`;
+const fs = `precision mediump float; uniform vec3 col; void main(){gl_FragColor=vec4(col,1.0);}`;
+function sh(t, s) { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw Error(gl.getShaderInfoLog(o)); return o }
+const prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); gl.useProgram(prog);
+const loc = n => gl.getUniformLocation(prog, n), aP = gl.getAttribLocation(prog, 'p');
+const buf = gl.createBuffer();
+const matSign = F.map(f => { const m = f.material; return Math.sign((m[1][0] - m[0][0]) * (m[2][1] - m[0][1]) - (m[1][1] - m[0][1]) * (m[2][0] - m[0][0])) });
+function framePts(th) {
+ const i = Math.max(0, Math.min(180, Math.round(th)));
+ return D.frames[i];
+}
+/* 描き順（同じ高さのとき）：始点＝⑦の層、終点＝検証の計算結果。θ<90 は始点、θ≥90 は終点の順位 */
+function rank(k, th) { return th < 90 ? F[k].startLayer * 10 + (F[k].role === 'fixed' ? 0 : 1) : F[k].endRank }
+function visibleSide(tri) {   // 表（素材の +z）がカメラを向くか
+ const n = cross(sub(tri[1], tri[0]), sub(tri[2], tri[0]));
+ return dot(n, cam.eye) > 0;
+}
+function faceColor(k, tri, sign) {
+ if (state.color === 'role') return COLORS[F[k].role];
+ const frontVisible = visibleSide(tri) === (sign > 0);
+ return frontVisible ? COLORS.front : COLORS.back;
+}
+function resize() {
+ const r = $('stage').getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+ for (const c of [glc, lab]) { c.width = Math.round(r.width * dpr); c.height = Math.round(r.height * dpr) }
+ gl.viewport(0, 0, glc.width, glc.height);
+}
+function draw() {
+ const th = state.theta, pts = framePts(th), { r, u, w } = basis();
+ gl.clearColor(1, 1, 1, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+ gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL);
+ gl.uniform3fv(loc('R'), r); gl.uniform3fv(loc('U'), u); gl.uniform3fv(loc('W'), w); gl.uniform3fv(loc('C'), CENTER); gl.uniform1f(loc('H'), HALF);
+ const toward = dot(cam.eye, [0, 0, 1]);   // 正面寄りなら上の面を手前に、裏寄りなら下の面を手前に
+ const order = [...Array(NF).keys()].filter(k => state.showFixed || F[k].role !== 'fixed');
+ const ranks = order.map(k => rank(k, th)), maxR = Math.max(...ranks);
+ order.forEach((k, i) => {
+  const tri = pts[k];
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tri.flat()), gl.DYNAMIC_DRAW);
+  gl.enableVertexAttribArray(aP); gl.vertexAttribPointer(aP, 3, gl.FLOAT, false, 0, 0);
+  const rk = toward >= 0 ? ranks[i] : maxR - ranks[i];
+  gl.uniform1f(loc('zbias'), -rk * 2e-5);
+  gl.uniform3fv(loc('col'), faceColor(k, tri, matSign[k]));
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+ });
+ order.forEach((k, i) => {
+  const tri = pts[k];
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([...tri[0], ...tri[1], ...tri[1], ...tri[2], ...tri[2], ...tri[0]]), gl.DYNAMIC_DRAW);
+  gl.vertexAttribPointer(aP, 3, gl.FLOAT, false, 0, 0);
+  const rk = toward >= 0 ? ranks[i] : maxR - ranks[i];
+  gl.uniform1f(loc('zbias'), -rk * 2e-5 - 1e-3 / 3);
+  gl.uniform3fv(loc('col'), [0.25, 0.25, 0.25]);
+  gl.drawArrays(gl.LINES, 0, 6);
+ });
+ ctx2.clearRect(0, 0, lab.width, lab.height);
+ if (state.labels) {
+  ctx2.font = `${Math.round(lab.width / 55)}px sans-serif`; ctx2.fillStyle = '#111'; ctx2.textAlign = 'center';
+  for (const k of order) { const c = pts[k].reduce((s, p) => [s[0] + p[0] / 3, s[1] + p[1] / 3, s[2] + p[2] / 3], [0, 0, 0]); const q = project(c);
+   ctx2.fillText(F[k].id, (q[0] + 1) / 2 * lab.width, (1 - q[1]) / 2 * lab.height) }
+ }
+ const phi = th >= 180 ? 180 : 2 * Math.atan(Math.cos(67.5 * Math.PI / 180) * Math.tan(th * Math.PI / 360)) * 180 / Math.PI;
+ $('thetaText').textContent = `θ=${th}°　φ=${phi.toFixed(2)}°`;
+}
+function setTheta(v) { state.theta = Math.max(0, Math.min(180, Math.round(v))); $('theta').value = state.theta; draw() }
+function setView(v) { state.view = v; cam = { eye: VIEWS[v].eye.slice(), up: VIEWS[v].up.slice() };
+ for (const [id, name] of [['vFront', 'front'], ['vBack', 'back'], ['vSideA', 'sideA'], ['vSideB', 'sideB'], ['vObl', 'obl']]) $(id).classList.toggle('on', name === v); draw() }
+$('theta').addEventListener('input', e => setTheta(+e.target.value));
+for (const d of [0, 45, 90, 135, 180]) $('t' + d).addEventListener('click', () => setTheta(d));
+$('vFront').onclick = () => setView('front'); $('vBack').onclick = () => setView('back'); $('vSideA').onclick = () => setView('sideA'); $('vSideB').onclick = () => setView('sideB'); $('vObl').onclick = () => setView('obl');
+$('cSide').onclick = () => { state.color = 'side'; $('cSide').classList.add('on'); $('cRole').classList.remove('on'); legend(); draw() };
+$('cRole').onclick = () => { state.color = 'role'; $('cRole').classList.add('on'); $('cSide').classList.remove('on'); legend(); draw() };
+$('showFixed').onchange = e => { state.showFixed = e.target.checked; draw() };
+$('showLabels').onchange = e => { state.labels = e.target.checked; draw() };
+let timer = null;
+$('play').onclick = () => { if (timer) { clearInterval(timer); timer = null; $('play').textContent = '▶ 再生'; return }
+ $('play').textContent = '⏸ 停止'; timer = setInterval(() => setTheta(state.theta >= 180 ? 0 : state.theta + 1), 30) };
+/* ドラッグで回転（カメラの向きを回す） */
+let drag = null;
+$('stage').addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY }; $('stage').setPointerCapture(e.pointerId) });
+$('stage').addEventListener('pointermove', e => { if (!drag) return; const dx = (e.clientX - drag.x) * 0.01, dy = (e.clientY - drag.y) * 0.01; drag = { x: e.clientX, y: e.clientY };
+ const { r, u, w } = basis(); const rot = (v, axis, a) => { const c = Math.cos(a), s = Math.sin(a), k = norm(axis); return v.map((_, i) => v[i] * c + cross(k, v)[i] * s + k[i] * dot(k, v) * (1 - c)) };
+ cam.eye = norm(rot(rot(cam.eye, u, -dx), r, dy)); cam.up = norm(rot(rot(cam.up, u, -dx), r, dy));
+ for (const id of ['vFront', 'vBack', 'vSideA', 'vSideB', 'vObl']) $(id).classList.remove('on'); state.view = 'free'; draw() });
+$('stage').addEventListener('pointerup', () => drag = null);
+function legend() {
+ $('legend').innerHTML = state.color === 'side'
+  ? `<span class="sw" style="background:rgb(237,133,168)"></span>素材の裏が見えている　<span class="sw" style="background:#faf9f7"></span>素材の表が見えている`
+  : `<span class="sw" style="background:rgb(242,140,166)"></span>花弁 T2R・T2L<br><span class="sw" style="background:rgb(247,184,92)"></span>一番上の層の脇 T1R・T1L<br><span class="sw" style="background:rgb(237,217,89)"></span>2枚目の脇 S2R・S2L<br><span class="sw" style="background:rgb(209,214,222)"></span>止まる紙`;
+}
+$('endOrder').textContent = D.endOrderTopFirst.join(' > ');
+window.addEventListener('resize', () => { resize(); draw() });
+legend(); resize(); setView('front');
+window.petalDebug = { get state() { return { ...state } }, pixel(x, y) { const px = new Uint8Array(4); gl.readPixels(Math.round(x * glc.width), Math.round((1 - y) * glc.height), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); return [...px] },
+ project(p) { const q = project(p); return [(q[0] + 1) / 2, (1 - q[1]) / 2] },
+ /* 比較画像を作るときだけ使う（動画の向きに合わせる）。画面の確認には使わない。 */
+ setCamera(eye, up) { cam = { eye: norm(eye), up: norm(up) }; state.view = 'free'; for (const id of ['vFront', 'vBack', 'vSideA', 'vSideB', 'vObl']) $(id).classList.remove('on'); draw() } };
+</script>
+</body>
+</html>

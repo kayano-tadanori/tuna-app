@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ふくろを ひらいて つぶす（ためしの画面）</title>
+<!--
+  つる③「ふくろを ひらいて つぶす」だけを動かす**独立した試作画面**。
+  ⛔ 既存の自由折り画面・エンジン・作品・JSON形式は1文字も触っていない。保存も読込もしない。
+  ★ 面の座標は squash_model.js が作ったものを**そのまま** WebGL へ渡し、検証も同じ配列にかける。
+  ★ 奥行きは depth バッファが決める（面の固定の描画順では並べない）。WebGL は squash_gl.js（自由折り画面と共用）。
+  ⛔ 紙どうしの貫通（すり抜け）は**未検証**。見つけたら検証表示に出す。
+-->
+<style>
+ :root{--ink:#22303a;--paper:#fdfdfb;--line:#d8dee3}
+ *{box-sizing:border-box}
+ html,body{margin:0;height:100%;background:#eef3f6;color:var(--ink);
+  font-family:"Hiragino Maru Gothic ProN","Yu Gothic",system-ui,sans-serif}
+ #wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+ h1{margin:0;padding:10px 14px 6px;font-size:19px;letter-spacing:.02em}
+ #view{flex:1;min-height:0;width:100%;display:block;touch-action:none;background:#c7d9e6;cursor:grab}
+ #view.drag{cursor:grabbing}
+ #bar{padding:8px 14px 14px;background:var(--paper);border-top:1px solid var(--line)}
+ .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+ label{font-size:15px}
+ input[type=range]{flex:1;min-width:180px;height:34px}
+ button{font:inherit;font-size:17px;padding:10px 18px;border-radius:12px;border:2px solid var(--line);
+  background:#fff;color:var(--ink);cursor:pointer;min-width:92px}
+ button:active{transform:translateY(1px)}
+ button.on{background:#ffe9a8;border-color:#e8c45f}
+ #stage{font-size:16px;padding:4px 0 8px}
+ #panel{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:#f4f7f9;
+  border:1px solid var(--line);font-size:12.5px;line-height:1.7;max-height:34vh;overflow:auto}
+ #panel.show{display:block}
+ #panel h2{margin:.4em 0 .2em;font-size:13px}
+ .ok::before{content:"OK  ";color:#1a7f4b;font-weight:700}
+ .ng::before{content:"NG  ";color:#c0392b;font-weight:700}
+ .warn{color:#a8590a}
+ code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 4px}
+ table{border-collapse:collapse}
+ td,th{border:1px solid var(--line);padding:1px 6px;text-align:right;font-variant-numeric:tabular-nums}
+</style></head>
+<body><div id="wrap">
+ <h1>ふくろを ひらいて つぶす</h1>
+ <canvas id="view"></canvas>
+ <div id="bar">
+  <div id="stage">おりがみを ひらいて、ぺたんと つぶします。</div>
+  <div class="row">
+   <label for="t">おりぐあい</label>
+   <input id="t" type="range" min="0" max="1000" value="0">
+  </div>
+  <div class="row" style="margin-top:8px">
+   <button id="play">さいせい</button>
+   <button id="back">ぎゃくさいせい</button>
+   <button id="stop">とめる</button>
+   <button id="reset">さいしょへ</button>
+   <button id="insp" style="margin-left:auto">検証表示</button>
+  </div>
+  <div id="panel"></div>
+ </div>
+</div>
+<script src="squash_model.js"></script>
+<script src="squash_gl.js"></script>
+<script>
+'use strict';
+const M = SquashModel;
+const cv = document.getElementById('view');
+/* ★WebGL（シェーダー・depth バッファ・表裏の描き分け）は squash_gl.js と共用（自由折り画面も同じ描画を通す）。 */
+const GL = SquashGL.create(cv, { front: [0.98,0.86,0.36], back: [0.99,0.99,0.97], clear: [0.78,0.85,0.90,1] });
+if (!GL.ok) { document.getElementById('stage').textContent = GL.reason; throw Error(GL.reason); }
+
+/* ---------------- 見た目の設定 ---------------- */
+/* 🚨ふだんの表示は**素材の幾何そのまま（厚み 0）**。合格基準もこれで見る。
+   平らな両端では面がぴったり同じ高さに重なる＝厚み0の紙の真実なので、そこは depth バッファでは
+   並ばない。見たいときだけ、検証表示の中の**実験設定**で層順どおりに持ち上げて見る。
+   ⚠この持ち上げは描画上の調整で、「紙がつながっている」ことの合格基準には使わない。 */
+const EXP_LIFT = 0.006;                 /* 実験設定でだけ使う値 */
+let lift = 0;                           /* ふだんは 0 */
+let t = 0, dir = 0, showInsp = false;
+const cam = { yaw: 0.62, pitch: 0.62, dist: 3.2 };
+
+/* 行列（列優先） */
+function perspective(f, a, n, fa){ const g = 1/Math.tan(f/2);
+ return [g/a,0,0,0, 0,g,0,0, 0,0,(fa+n)/(n-fa),-1, 0,0,2*fa*n/(n-fa),0]; }
+function lookAt(e, c, up){
+ const z=norm(sub(e,c)), x=norm(cr(up,z)), y=cr(z,x);
+ return [x[0],y[0],z[0],0, x[1],y[1],z[1],0, x[2],y[2],z[2],0,
+         -dot(x,e),-dot(y,e),-dot(z,e),1]; }
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]], dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const norm=a=>{const l=Math.hypot(...a);return [a[0]/l,a[1]/l,a[2]/l]};
+function mul4(a,b){const o=new Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++){let s=0;
+ for(let k=0;k<4;k++)s+=a[k*4+j]*b[i*4+k];o[i*4+j]=s}return o}
+function eye(){ const cp=Math.cos(cam.pitch);
+ return [cam.dist*cp*Math.cos(cam.yaw), cam.dist*cp*Math.sin(cam.yaw), cam.dist*Math.sin(cam.pitch)]; }
+function mvp(){ const a = cv.width/Math.max(1,cv.height);
+ return mul4(perspective(0.9, a, 0.1, 40), lookAt(eye(), [0,0,0], [0,0,1])); }
+
+/* ---------------- 1コマ ---------------- */
+let lastFrame = null;
+function draw(){
+ const w = cv.clientWidth, h = cv.clientHeight, d = window.devicePixelRatio || 1;
+ if (cv.width !== Math.round(w*d) || cv.height !== Math.round(h*d)) { cv.width = Math.round(w*d); cv.height = Math.round(h*d); }
+ /* ★ここが「描画へ渡す座標」。検証もこの rv.panels / rv.positions にかける。 */
+ const rv = M.renderVertices(t, lift);
+ const m = mvp();
+ GL.draw(rv.positions, m);
+ lastFrame = { t, lift, positions: Array.from(rv.positions), mvp: m };
+ if (showInsp) renderPanel(rv);
+ stageText();
+}
+function stageText(){
+ const s = t < 0.02 ? 'まだ おっていません（４まい かさなった 三角）'
+        : t > 0.98 ? 'ぺたんと つぶれました（三角＋四角）'
+        : 'ふくろが ひらいて います';
+ document.getElementById('stage').textContent = s;
+}
+
+/* ---------------- 検証表示 ---------------- */
+function renderPanel(rv){
+ const v = M.verify(t);                 /* ★合格基準は素材の幾何（厚み0）だけ */
+ const rho = M.rhoOf(t).map(r => (r*180/Math.PI).toFixed(2));
+ const lay = M.layerAt(t);
+ let html = '<h2>いま動かしている軸（素材＝原紙の共通座標）</h2><table><tr><th>光線</th>';
+ const names = ['O→E','O→NE','O→N','O→NW','O→W','O→SW','O→S','O→SE'];
+ html += names.map(n=>'<th>'+n+'</th>').join('') + '</tr><tr><th>折り角°</th>'
+      + rho.map(r=>'<td>'+r+'</td>').join('') + '</tr><tr><th>面</th>'
+      + M.SECTOR_FACE.map(f=>'<td>'+f+'</td>').join('') + '</tr><tr><th>層（平らな端）</th>'
+      + lay.map(l=>'<td>'+l+'</td>').join('') + '</tr></table>';
+ html += '<div>駆動 O→N ／ 従属 O→W・O→NE・O→NW ／ 固定 O→SW・O→SE=180°, O→E・O→S=0°<br>'
+      + '連動式 <code>tan(γ1/2)·tan(γ2/2)=√2</code>（γ=π−ρ）</div>';
+ html += '<h2>素材の幾何（厚み0）の検証 ＝ 合格基準</h2>';
+ for (const c of v.checks) html += '<div class="'+(c.ok?'ok':'ng')+'">'+c.name+(c.detail?' … '+c.detail:'')+'</div>';
+ html += '<h2>描画上の調整（実験・合格基準ではない）</h2>'
+      + '<div><label><input type="checkbox" id="expLift"'+(lift?' checked':'')+'> '
+      + '実験：平らな端の重なりを見るために、層順どおり '+EXP_LIFT+' だけ持ち上げる</label></div>';
+ if (lift) { for (const c of M.inspectDisplay(t, lift))
+   html += '<div class="'+(c.ok===null?'warn':(c.ok?'ok':'ng'))+'">'+c.name+(c.detail?' … '+c.detail:'')+'</div>'; }
+ else html += '<div>いまは 素材の幾何そのまま（持ち上げ 0）。'
+      + '平らな両端では面が同じ高さに重なるので、そこは ちらつくことがある（厚み0の紙の真実）。</div>';
+ html += '<h2>言っていないこと</h2>'
+      + '<div class="warn">⛔ <b>非貫通は未検証</b>です。紙どうしの貫通（すり抜け）について、上の行は簡易な見張りで、'
+      + '「無い」ことの保証ではない。見つけたら隠さずここに出す。</div>'
+      + '<div class="warn">⛔ 保存・読込・編集画面への組込みはしていない。実験用の別データ。</div>'
+      + '<div>いまの表示の持ち上げ <code>'+lift+'</code>'
+      + '（0＝素材の幾何そのまま。合格基準は必ず 0 で見る）'
+      + '／奥行きは depth バッファ（面の固定の描画順では並べていない）</div>';
+ document.getElementById('panel').innerHTML = html;
+ const box = document.getElementById('expLift');
+ if (box) box.onchange = () => { lift = box.checked ? EXP_LIFT : 0; draw(); };
+}
+
+/* ---------------- 操作 ---------------- */
+const slider = document.getElementById('t');
+slider.oninput = () => { dir = 0; syncBtns(); t = slider.value/1000; draw(); };
+const setDir = d => { dir = d; syncBtns(); };
+document.getElementById('play').onclick = () => setDir(+1);
+document.getElementById('back').onclick = () => setDir(-1);
+document.getElementById('stop').onclick = () => setDir(0);
+document.getElementById('reset').onclick = () => { dir = 0; t = 0; slider.value = 0; syncBtns(); draw(); };
+document.getElementById('insp').onclick = () => { showInsp = !showInsp;
+ document.getElementById('panel').classList.toggle('show', showInsp);
+ document.getElementById('insp').classList.toggle('on', showInsp); draw(); };
+function syncBtns(){
+ document.getElementById('play').classList.toggle('on', dir > 0);
+ document.getElementById('back').classList.toggle('on', dir < 0);
+}
+/* カメラ：紙の上をドラッグ＝まわす／ホイール＝寄る・ひく */
+let drag = null;
+cv.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY }; cv.classList.add('drag');
+ cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', e => { if (!drag) return;
+ cam.yaw -= (e.clientX - drag.x) * 0.008;
+ cam.pitch = Math.max(-1.45, Math.min(1.45, cam.pitch + (e.clientY - drag.y) * 0.008));
+ drag = { x: e.clientX, y: e.clientY }; draw(); });
+const endDrag = () => { drag = null; cv.classList.remove('drag'); };
+cv.addEventListener('pointerup', endDrag); cv.addEventListener('pointercancel', endDrag);
+cv.addEventListener('wheel', e => { e.preventDefault();
+ cam.dist = Math.max(1.8, Math.min(12, cam.dist * (1 + Math.sign(e.deltaY) * 0.12))); draw(); }, { passive: false });
+window.addEventListener('resize', draw);
+
+/* ---------------- 再生（往復は「とめる」まで続ける） ---------------- */
+let prev = performance.now();
+function tick(now){
+ const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+ if (dir) {
+  t += dir * dt * 0.45;
+  if (t >= 1) { t = 1; dir = -1; syncBtns(); }
+  if (t <= 0) { t = 0; dir = +1; syncBtns(); }
+  slider.value = Math.round(t * 1000);
+  draw();
+ }
+ requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+draw();
+
+/* 検査から見るための窓（画面の持ちものを読むだけ） */
+globalThis.squashDebug = {
+ get t(){ return t }, set t(v){ dir = 0; t = v; slider.value = Math.round(v*1000); draw() },
+ get lift(){ return lift }, set lift(v){ lift = v; draw() }, get expLift(){ return EXP_LIFT },
+ get dir(){ return dir }, get cam(){ return { ...cam } }, get showInsp(){ return showInsp }, get frame(){ return lastFrame },
+ inspectDisplay: () => M.inspectDisplay(t, lift),
+ get stage(){ return document.getElementById('stage').textContent },
+ verify: () => M.verify(t),
+ setCam: (y, p, d) => { cam.yaw = y; cam.pitch = p; cam.dist = d; draw() },
+ project: v => { const m = lastFrame.mvp, w = m[3]*v[0]+m[7]*v[1]+m[11]*v[2]+m[15];
+  return [(m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12])/w, (m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13])/w] },
+ /* 実際に塗られた画素を数える（preserveDrawingBuffer で読める）。表＝きいろ／裏＝しろ。 */
+ colors: () => { const w = cv.width, h = cv.height, px = new Uint8Array(w*h*4);
+  GL.gl.readPixels(0, 0, w, h, GL.gl.RGBA, GL.gl.UNSIGNED_BYTE, px);
+  let front = 0, back = 0, bg = 0;
+  for (let i = 0; i < px.length; i += 4) {
+   const r = px[i], g = px[i+1], b = px[i+2];
+   /* 背景は青みが強い（b > r）。紙はどちらも b <= r。まずそこで分ける。 */
+   if (b > r + 8) bg++;
+   else if (r > 190 && g > 160 && b < 150) front++;   /* おもて＝きいろ */
+   else if (r > 210 && g > 210 && b > 195) back++;    /* うら＝しろ */
+   else bg++;
+  }
+  return { front, back, bg, total: w*h }; },
+};
+</script></body></html>

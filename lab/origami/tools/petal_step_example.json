@@ -1,0 +1,195 @@
+{
+ "note": "python check_petal_fold.py --format-example が書く見本（未実装・保存形式は未変更）。つる⑦のあとの1回目の花弁折り。",
+ "step": {
+  "id": "s9",
+  "diagramStep": "8-9",
+  "op": "petal",
+  "instruction": "はしを もちあげて ふくろを つくり、つぶす",
+  "model": "petal-rhombus-67.5",
+  "base": {
+   "faceId": "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep"
+  },
+  "pivots": [
+   [
+    0.585786437627,
+    0.0
+   ],
+   [
+    0.0,
+    -0.585786437627
+   ]
+  ],
+  "axes": [
+   {
+    "from": [
+     0.0,
+     -0.585786437627
+    ],
+    "to": [
+     0.585786437627,
+     0.0
+    ],
+    "role": "drive"
+   },
+   {
+    "vertex": [
+     0.585786437627,
+     0.0
+    ],
+    "end": [
+     1.0,
+     -1.0
+    ],
+    "role": "petal-kite"
+   },
+   {
+    "vertex": [
+     0.585786437627,
+     0.0
+    ],
+    "end": [
+     1.0,
+     0.0
+    ],
+    "role": "side-hinge"
+   },
+   {
+    "vertex": [
+     0.585786437627,
+     0.0
+    ],
+    "end": [
+     1.0,
+     1.0
+    ],
+    "role": "fixed-kite"
+   },
+   {
+    "vertex": [
+     0.585786437627,
+     0.0
+    ],
+    "end": [
+     0.0,
+     0.0
+    ],
+    "role": "fixed-fold"
+   },
+   {
+    "vertex": [
+     0.0,
+     -0.585786437627
+    ],
+    "end": [
+     1.0,
+     -1.0
+    ],
+    "role": "petal-kite"
+   },
+   {
+    "vertex": [
+     0.0,
+     -0.585786437627
+    ],
+    "end": [
+     0.0,
+     -1.0
+    ],
+    "role": "side-hinge"
+   },
+   {
+    "vertex": [
+     0.0,
+     -0.585786437627
+    ],
+    "end": [
+     -1.0,
+     -1.0
+    ],
+    "role": "fixed-kite"
+   },
+   {
+    "vertex": [
+     0.0,
+     -0.585786437627
+    ],
+    "end": [
+     0.0,
+     0.0
+    ],
+    "role": "fixed-fold"
+   }
+  ],
+  "branch": {
+   "linkage": "tan-half-cos67.5",
+   "name": "petal",
+   "sideFold": "toward-petal-underside",
+   "drive": {
+    "fromDeg": 0,
+    "toDeg": 180
+   }
+  },
+  "stack": [
+   [
+    "paper/s1.keep/s2.cut/s3.keep",
+    "paper/s1.keep/s2.cut/s3.cut",
+    "paper/s1.keep/s2.keep/s5.keep/s7.keep",
+    "paper/s1.keep/s2.keep/s5.keep/s7.cut"
+   ],
+   [
+    "paper/s1.cut/s2.cut/s3.cut",
+    "paper/s1.cut/s2.cut/s3.keep",
+    "paper/s1.cut/s2.keep/s5.cut/s6.keep",
+    "paper/s1.cut/s2.keep/s5.cut/s6.cut"
+   ],
+   [
+    "paper/s1.keep/s2.cut/s3.keep",
+    "paper/s1.keep/s2.cut/s3.cut"
+   ],
+   [
+    "paper/s1.cut/s2.cut/s3.cut",
+    "paper/s1.cut/s2.cut/s3.keep"
+   ],
+   [
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep",
+    "paper/s1.keep/s2.keep/s5.cut/s7.cut"
+   ],
+   [
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep",
+    "paper/s1.cut/s2.keep/s5.keep/s6.cut"
+   ],
+   [
+    "paper/s1.keep/s2.cut/s3.keep",
+    "paper/s1.keep/s2.cut/s3.cut",
+    "paper/s1.keep/s2.keep/s5.keep/s7.keep",
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut",
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep",
+    "paper/s1.keep/s2.keep/s5.cut/s7.cut"
+   ],
+   [
+    "paper/s1.cut/s2.cut/s3.cut",
+    "paper/s1.cut/s2.cut/s3.keep",
+    "paper/s1.cut/s2.keep/s5.cut/s6.keep",
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut",
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep",
+    "paper/s1.cut/s2.keep/s5.keep/s6.cut"
+   ]
+  ]
+ },
+ "faceNames": {
+  "paper/s1.keep/s2.keep/s5.keep/s7.keep": "G2R",
+  "paper/s1.keep/s2.keep/s5.keep/s7.cut": "S2R",
+  "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep": "T2R",
+  "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut": "T3R",
+  "paper/s1.keep/s2.keep/s5.cut/s7.cut": "T1R",
+  "paper/s1.keep/s2.cut/s3.cut": "L1R",
+  "paper/s1.keep/s2.cut/s3.keep": "L0N",
+  "paper/s1.cut/s2.keep/s5.cut/s6.keep": "G2L",
+  "paper/s1.cut/s2.keep/s5.cut/s6.cut": "S2L",
+  "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep": "T2L",
+  "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut": "T3L",
+  "paper/s1.cut/s2.keep/s5.keep/s6.cut": "T1L",
+  "paper/s1.cut/s2.cut/s3.cut": "L0W",
+  "paper/s1.cut/s2.cut/s3.keep": "L1L"
+ }
+}

@@ -1,0 +1,2234 @@
+{
+ "note": "test_crossing_diag.js --write が書く。check_crossing_diag.py が別実装で平らな状態の並びを判定して突き合わせる。",
+ "states": [
+  {
+   "name": "before",
+   "note": "袋折り直後",
+   "faces": [
+    {
+     "faceId": "paper/s1.keep/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      -2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -1,
+      -1,
+      0,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 3
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      -2.220446049250313e-16,
+      0,
+      -1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b2",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "crease",
+     "seg": [
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b4",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s1",
+     "kind": "crease",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b5",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.cut/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ]
+    },
+    {
+     "bondId": "b3",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.keep",
+      "paper/s1.cut/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "hinge",
+     "seg": [
+      [
+       -1,
+       -1
+      ],
+      [
+       4.440892098500626e-16,
+       -4.440892098500626e-16
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.keep",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s1",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       -1
+      ],
+      [
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "js": true
+  },
+  {
+   "name": "afterV",
+   "note": "谷折り",
+   "faces": [
+    {
+     "faceId": "paper/s1.keep/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      -2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       4.440892098500626e-16,
+       4.440892098500626e-16
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1.0000000000000002,
+       2.220446049250313e-16
+      ]
+     ],
+     "xf": [
+      -2.220446049250313e-16,
+      0.9999999999999998,
+      0.9999999999999998,
+      -4.930380657631324e-32,
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     "layer": 5
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       4.440892098500626e-16,
+       4.440892098500626e-16
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1.0000000000000002,
+       2.220446049250313e-16
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      0.9999999999999998,
+      -0.9999999999999998,
+      -4.930380657631324e-32,
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     "layer": 4
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -1,
+      -1,
+      0,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 3
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      -2.220446049250313e-16,
+      0,
+      -1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b2",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b4",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b5",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.cut/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ]
+    },
+    {
+     "bondId": "b3",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.keep",
+      "paper/s1.cut/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "hinge",
+     "seg": [
+      [
+       -1,
+       -1
+      ],
+      [
+       4.440892098500626e-16,
+       -4.440892098500626e-16
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.keep",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s1",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       -1
+      ],
+      [
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "js": true
+  },
+  {
+   "name": "afterM",
+   "note": "山折り",
+   "faces": [
+    {
+     "faceId": "paper/s1.keep/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      -2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       4.440892098500626e-16,
+       4.440892098500626e-16
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1.0000000000000002,
+       2.220446049250313e-16
+      ]
+     ],
+     "xf": [
+      -2.220446049250313e-16,
+      0.9999999999999998,
+      0.9999999999999998,
+      -4.930380657631324e-32,
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     "layer": -1
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       4.440892098500626e-16,
+       4.440892098500626e-16
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1.0000000000000002,
+       2.220446049250313e-16
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      0.9999999999999998,
+      -0.9999999999999998,
+      -4.930380657631324e-32,
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     "layer": -2
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -1,
+      -1,
+      0,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 3
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      -2.220446049250313e-16,
+      0,
+      -1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b2",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b4",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b5",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.cut/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ]
+    },
+    {
+     "bondId": "b3",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.keep",
+      "paper/s1.cut/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "hinge",
+     "seg": [
+      [
+       -1,
+       -1
+      ],
+      [
+       4.440892098500626e-16,
+       -4.440892098500626e-16
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.keep",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s1",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       -1
+      ],
+      [
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "js": true
+  },
+  {
+   "name": "swapped",
+   "note": "谷折りのあと UL0 と P2 の上下を入れかえた（不成立）",
+   "faces": [
+    {
+     "faceId": "paper/s1.keep/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      -2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       4.440892098500626e-16,
+       4.440892098500626e-16
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1.0000000000000002,
+       2.220446049250313e-16
+      ]
+     ],
+     "xf": [
+      -2.220446049250313e-16,
+      0.9999999999999998,
+      0.9999999999999998,
+      -4.930380657631324e-32,
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     "layer": 4
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       4.440892098500626e-16,
+       4.440892098500626e-16
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       1.0000000000000002,
+       2.220446049250313e-16
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      0.9999999999999998,
+      -0.9999999999999998,
+      -4.930380657631324e-32,
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     "layer": 5
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -1,
+      -1,
+      0,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 3
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      -2.220446049250313e-16,
+      0,
+      -1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b2",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b4",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b5",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut",
+      "paper/s1.cut/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ]
+    },
+    {
+     "bondId": "b3",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.keep",
+      "paper/s1.cut/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "hinge",
+     "seg": [
+      [
+       -1,
+       -1
+      ],
+      [
+       4.440892098500626e-16,
+       -4.440892098500626e-16
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.keep",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s1",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       -1
+      ],
+      [
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "js": false
+  },
+  {
+   "name": "pocketBefore",
+   "note": "合成：ポケットの中の紙",
+   "faces": [
+    {
+     "faceId": "T",
+     "poly": [
+      [
+       -1,
+       -1
+      ],
+      [
+       0.5,
+       -1
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "M",
+     "poly": [
+      [
+       -1,
+       -1
+      ],
+      [
+       0.5,
+       -1
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "S",
+     "poly": [
+      [
+       -1,
+       0.2
+      ],
+      [
+       0.5,
+       0.2
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "S",
+      "T"
+     ],
+     "kind": "hinge",
+     "seg": [
+      [
+       0.5,
+       0.2
+      ],
+      [
+       0.5,
+       1
+      ]
+     ]
+    }
+   ],
+   "js": true
+  },
+  {
+   "name": "pocketAfter",
+   "note": "合成：引き抜いたあと（両端は成立）",
+   "faces": [
+    {
+     "faceId": "T",
+     "poly": [
+      [
+       -1,
+       -1
+      ],
+      [
+       0.5,
+       -1
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "S",
+     "poly": [
+      [
+       -1,
+       0.2
+      ],
+      [
+       0.5,
+       0.2
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 2
+    },
+    {
+     "faceId": "M/k",
+     "poly": [
+      [
+       -1,
+       -1
+      ],
+      [
+       0.5,
+       -1
+      ],
+      [
+       0.5,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "M/c",
+     "poly": [
+      [
+       -1,
+       -1
+      ],
+      [
+       0.5,
+       -1
+      ],
+      [
+       0.5,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ],
+     "xf": [
+      1,
+      0,
+      0,
+      -1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "S",
+      "T"
+     ],
+     "kind": "hinge",
+     "seg": [
+      [
+       0.5,
+       0.2
+      ],
+      [
+       0.5,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b2",
+     "faceIds": [
+      "M/k",
+      "M/c"
+     ],
+     "kind": "hinge",
+     "seg": [
+      [
+       -1,
+       0
+      ],
+      [
+       0.5,
+       0
+      ]
+     ]
+    }
+   ],
+   "js": true
+  },
+  {
+   "name": "noBlockM",
+   "note": "①を外した写しで、正方形の上の角を山折り（不成立）",
+   "faces": [
+    {
+     "faceId": "paper/s1.keep/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      -2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "xf": [
+      1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 0
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep/s4.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      },
+      {
+       "stepId": "s4",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       0.75,
+       0.75
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.keep/s2.cut/s3.keep/s4.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      },
+      {
+       "stepId": "s4",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0.75,
+       0.75
+      ],
+      [
+       0.5,
+       0.5
+      ],
+      [
+       0.5000000000000001,
+       0.9999999999999999
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -0.9999999999999998,
+      0.9999999999999998,
+      -4.4408920985006257e-16,
+      1.5,
+      1.5
+     ],
+     "layer": -1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       -1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -1,
+      -1,
+      0,
+      0,
+      0
+     ],
+     "layer": 1
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.cut/s4.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      },
+      {
+       "stepId": "s4",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       0.5
+      ],
+      [
+       0.75,
+       0.75
+      ]
+     ],
+     "xf": [
+      -1,
+      2.220446049250313e-16,
+      0,
+      1,
+      0,
+      0
+     ],
+     "layer": 3
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.cut/s4.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "cut"
+      },
+      {
+       "stepId": "s4",
+       "side": "cut"
+      }
+     ],
+     "poly": [
+      [
+       0.9999999999999999,
+       0.5000000000000001
+      ],
+      [
+       0.5,
+       0.5
+      ],
+      [
+       0.75,
+       0.75
+      ]
+     ],
+     "xf": [
+      2.220446049250313e-16,
+      -0.9999999999999998,
+      0.9999999999999998,
+      -4.4408920985006257e-16,
+      1.5,
+      1.5
+     ],
+     "layer": -2
+    },
+    {
+     "faceId": "paper/s1.cut/s2.cut/s3.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      },
+      {
+       "stepId": "s2",
+       "side": "cut"
+      },
+      {
+       "stepId": "s3",
+       "side": "keep"
+      }
+     ],
+     "poly": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "xf": [
+      -1,
+      -2.220446049250313e-16,
+      0,
+      -1,
+      0,
+      0
+     ],
+     "layer": 2
+    }
+   ],
+   "bonds": [
+    {
+     "bondId": "b2",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "crease",
+     "seg": [
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b4",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.cut",
+      "paper/s1.keep/s2.cut/s3.keep/s4.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut/s4.keep",
+      "paper/s1.keep/s2.cut/s3.keep/s4.keep"
+     ],
+     "stepId": "s1",
+     "kind": "crease",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -0.75,
+       0.75
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut/s4.cut",
+      "paper/s1.keep/s2.cut/s3.keep/s4.cut"
+     ],
+     "stepId": "s1",
+     "kind": "crease",
+     "seg": [
+      [
+       -0.75,
+       0.75
+      ],
+      [
+       -1,
+       1
+      ]
+     ],
+     "openedBy": "s3"
+    },
+    {
+     "bondId": "b5",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut/s4.keep",
+      "paper/s1.cut/s2.cut/s3.keep"
+     ],
+     "stepId": "s3",
+     "kind": "hinge",
+     "seg": [
+      [
+       0,
+       0
+      ],
+      [
+       -1,
+       0
+      ]
+     ]
+    },
+    {
+     "bondId": "b3",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.keep",
+      "paper/s1.cut/s2.keep"
+     ],
+     "stepId": "s2",
+     "kind": "hinge",
+     "seg": [
+      [
+       -1,
+       -1
+      ],
+      [
+       4.440892098500626e-16,
+       -4.440892098500626e-16
+      ]
+     ]
+    },
+    {
+     "bondId": "b1",
+     "faceIds": [
+      "paper/s1.cut/s2.keep",
+      "paper/s1.keep/s2.keep"
+     ],
+     "stepId": "s1",
+     "kind": "hinge",
+     "seg": [
+      [
+       1,
+       -1
+      ],
+      [
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "bondId": "b6",
+     "faceIds": [
+      "paper/s1.keep/s2.cut/s3.keep/s4.keep",
+      "paper/s1.keep/s2.cut/s3.keep/s4.cut"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       -0.7499999999999998,
+       0.75
+      ],
+      [
+       -0.49999999999999967,
+       1
+      ]
+     ]
+    },
+    {
+     "bondId": "b7",
+     "faceIds": [
+      "paper/s1.cut/s2.cut/s3.cut/s4.keep",
+      "paper/s1.cut/s2.cut/s3.cut/s4.cut"
+     ],
+     "stepId": "s4",
+     "kind": "hinge",
+     "seg": [
+      [
+       -0.9999999999999999,
+       0.5
+      ],
+      [
+       -0.7499999999999998,
+       0.75
+      ]
+     ]
+    }
+   ],
+   "js": false
+  }
+ ]
+}

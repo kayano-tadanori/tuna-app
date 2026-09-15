@@ -1,0 +1,222 @@
+{
+ "format": "origami-recipe",
+ "version": 2,
+ "coordinates": "unfolded-normalized-xy",
+ "work": {
+  "id": "squash_tsuru3_v2",
+  "name": "つる③ ふくろをひらいてつぶす（v2試作）",
+  "emoji": "🧺",
+  "difficulty": 2
+ },
+ "source": {
+  "note": "袋折り（degree-4）を v2 の op:squash で書いた試作。⛔非貫通は未検証・厚みは0。既存アプリ・作品・v1スキーマには使わない。"
+ },
+ "paper": {
+  "aspectRatio": 1,
+  "colorDown": false
+ },
+ "steps": [
+  {
+   "id": "s1",
+   "diagramStep": "1",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper"
+   },
+   "line": [
+    [
+     -1,
+     1
+    ],
+    [
+     1,
+     -1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.5,
+    -0.5
+   ],
+   "targets": [
+    {
+     "faceId": "paper",
+     "layerPath": []
+    }
+   ],
+   "instruction": "はんぶんに おる"
+  },
+  {
+   "id": "s2",
+   "diagramStep": "2",
+   "op": "fold",
+   "kind": "V",
+   "reference": {
+    "faceId": "paper/s1.keep"
+   },
+   "line": [
+    [
+     -1,
+     -1
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "movingSidePoint": [
+    -0.2,
+    0.5
+   ],
+   "targets": [
+    {
+     "faceId": "paper/s1.keep",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "keep"
+      }
+     ]
+    },
+    {
+     "faceId": "paper/s1.cut",
+     "layerPath": [
+      {
+       "stepId": "s1",
+       "side": "cut"
+      }
+     ]
+    }
+   ],
+   "instruction": "もう一度 はんぶんに おる"
+  },
+  {
+   "id": "s3",
+   "diagramStep": "3",
+   "op": "squash",
+   "model": "degree4-45-tsuru3",
+   "vertex": [
+    0,
+    0
+   ],
+   "base": {
+    "faceId": "paper/s1.keep/s2.keep"
+   },
+   "axes": [
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      0
+     ],
+     "role": "flat"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      1
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      0,
+      1
+     ],
+     "role": "drive"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      1
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      0
+     ],
+     "role": "link"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      -1,
+      -1
+     ],
+     "role": "folded"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      0,
+      -1
+     ],
+     "role": "flat"
+    },
+    {
+     "vertex": [
+      0,
+      0
+     ],
+     "end": [
+      1,
+      -1
+     ],
+     "role": "folded"
+    }
+   ],
+   "branch": {
+    "linkage": "tan-half-product-sqrt2",
+    "sign": 1,
+    "drive": {
+     "fromDeg": 0,
+     "toDeg": 180
+    }
+   },
+   "stack": [
+    [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep",
+     "paper/s1.cut/s2.cut/s3.keep",
+     "paper/s1.cut/s2.cut/s3.cut"
+    ],
+    [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep"
+    ],
+    [
+     "paper/s1.keep/s2.cut/s3.cut",
+     "paper/s1.keep/s2.cut/s3.keep"
+    ]
+   ],
+   "instruction": "ふくろを ひらいて つぶす"
+  }
+ ]
+}

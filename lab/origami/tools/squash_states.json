@@ -1,0 +1,1001 @@
+{
+ "diagonals": {
+  "faces": [
+   {
+    "faceId": "paper/s1.keep/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      1,
+      -1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 0
+   },
+   {
+    "faceId": "paper/s1.keep/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      1,
+      1
+     ],
+     [
+      1.0000000000000004,
+      -0.9999999999999996
+     ],
+     [
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ]
+    ],
+    "xf": [
+     -2.220446049250313e-16,
+     0.9999999999999998,
+     0.9999999999999998,
+     -2.220446049250313e-16,
+     4.440892098500626e-16,
+     4.440892098500626e-16
+    ],
+    "layer": 3
+   },
+   {
+    "faceId": "paper/s1.cut/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      0.9999999999999996,
+      1.0000000000000004
+     ],
+     [
+      0.9999999999999991,
+      -0.9999999999999991
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "xf": [
+     -2.220446049250313e-16,
+     -0.9999999999999998,
+     -0.9999999999999998,
+     -2.220446049250313e-16,
+     -4.440892098500626e-16,
+     4.440892098500626e-16
+    ],
+    "layer": 1
+   },
+   {
+    "faceId": "paper/s1.cut/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      1.0000000000000004,
+      0.9999999999999996
+     ],
+     [
+      4.440892098500626e-16,
+      4.440892098500626e-16
+     ],
+     [
+      1.0000000000000004,
+      -0.9999999999999996
+     ]
+    ],
+    "xf": [
+     -0.9999999999999996,
+     0,
+     0,
+     -0.9999999999999996,
+     8.881784197001252e-16,
+     0
+    ],
+    "layer": 2
+   }
+  ],
+  "bonds": [
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      1,
+      -1
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.cut",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      0
+     ],
+     [
+      -1,
+      1
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.keep/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.cut/s2.keep",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      -1,
+      -1
+     ],
+     [
+      4.440892098500626e-16,
+      -4.440892098500626e-16
+     ]
+    ]
+   }
+  ]
+ },
+ "medians": {
+  "faces": [
+   {
+    "faceId": "paper/s1.keep/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      -1,
+      -1
+     ],
+     [
+      0,
+      -1
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      -1,
+      0
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 0
+   },
+   {
+    "faceId": "paper/s1.keep/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      -1
+     ],
+     [
+      -1,
+      -1
+     ],
+     [
+      -1,
+      0
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ],
+    "layer": 3
+   },
+   {
+    "faceId": "paper/s1.cut/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      0,
+      -1
+     ],
+     [
+      -1,
+      -1
+     ],
+     [
+      -1,
+      0
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "xf": [
+     -1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 1
+   },
+   {
+    "faceId": "paper/s1.cut/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      -1,
+      0
+     ],
+     [
+      -1,
+      -1
+     ],
+     [
+      0,
+      -1
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "xf": [
+     -1,
+     0,
+     0,
+     -1,
+     0,
+     0
+    ],
+    "layer": 2
+   }
+  ],
+  "bonds": [
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      -1
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.cut",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.keep/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      0
+     ],
+     [
+      -1,
+      0
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.cut/s2.keep",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      1,
+      0
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  ]
+ },
+ "oneFold": {
+  "faces": [
+   {
+    "faceId": "paper/s1.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      1,
+      -1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      -1,
+      1
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 0
+   },
+   {
+    "faceId": "paper/s1.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      0.9999999999999996,
+      1.0000000000000004
+     ],
+     [
+      0.9999999999999991,
+      -0.9999999999999991
+     ],
+     [
+      -1,
+      1
+     ]
+    ],
+    "xf": [
+     -2.220446049250313e-16,
+     -0.9999999999999998,
+     -0.9999999999999998,
+     -2.220446049250313e-16,
+     -4.440892098500626e-16,
+     4.440892098500626e-16
+    ],
+    "layer": 1
+   }
+  ],
+  "bonds": [
+   {
+    "faceIds": [
+     "paper/s1.keep",
+     "paper/s1.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      1,
+      -1
+     ],
+     [
+      -1,
+      1
+     ]
+    ]
+   }
+  ]
+ },
+ "mixed": {
+  "faces": [
+   {
+    "faceId": "paper/s1.keep/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      1,
+      -1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 0
+   },
+   {
+    "faceId": "paper/s1.keep/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      0
+     ]
+    ],
+    "xf": [
+     -1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 3
+   },
+   {
+    "faceId": "paper/s1.cut/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      0.9999999999999996,
+      1.0000000000000004
+     ],
+     [
+      0.9999999999999991,
+      -0.9999999999999991
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      1.0000000000000002
+     ]
+    ],
+    "xf": [
+     -2.220446049250313e-16,
+     -0.9999999999999998,
+     -0.9999999999999998,
+     -2.220446049250313e-16,
+     -4.440892098500626e-16,
+     4.440892098500626e-16
+    ],
+    "layer": 1
+   },
+   {
+    "faceId": "paper/s1.cut/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      0,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1.0000000000000002
+     ]
+    ],
+    "xf": [
+     2.220446049250313e-16,
+     0.9999999999999998,
+     -0.9999999999999998,
+     -2.220446049250313e-16,
+     4.440892098500626e-16,
+     4.440892098500626e-16
+    ],
+    "layer": 2
+   }
+  ],
+  "bonds": [
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      1,
+      -1
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.cut",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      0
+     ],
+     [
+      -1,
+      1
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.keep/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.cut/s2.keep",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      4.440892098500626e-16,
+      -4.440892098500626e-16
+     ],
+     [
+      -1,
+      -2.220446049250313e-16
+     ]
+    ]
+   }
+  ]
+ },
+ "offVertex": {
+  "faces": [
+   {
+    "faceId": "paper/s1.keep/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      -1,
+      -1
+     ],
+     [
+      0,
+      -1
+     ],
+     [
+      0,
+      0.5
+     ],
+     [
+      -1,
+      0.5
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 0
+   },
+   {
+    "faceId": "paper/s1.keep/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "keep"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      0,
+      0.5
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      -1,
+      0
+     ],
+     [
+      -1,
+      0.5
+     ]
+    ],
+    "xf": [
+     1,
+     0,
+     0,
+     -1,
+     0,
+     1
+    ],
+    "layer": 3
+   },
+   {
+    "faceId": "paper/s1.cut/s2.keep",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "keep"
+     }
+    ],
+    "poly": [
+     [
+      0,
+      -1
+     ],
+     [
+      -1,
+      -1
+     ],
+     [
+      -1,
+      0.5
+     ],
+     [
+      0,
+      0.5
+     ]
+    ],
+    "xf": [
+     -1,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "layer": 1
+   },
+   {
+    "faceId": "paper/s1.cut/s2.cut",
+    "layerPath": [
+     {
+      "stepId": "s1",
+      "side": "cut"
+     },
+     {
+      "stepId": "s2",
+      "side": "cut"
+     }
+    ],
+    "poly": [
+     [
+      -1,
+      0.5
+     ],
+     [
+      -1,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0.5
+     ]
+    ],
+    "xf": [
+     -1,
+     0,
+     0,
+     -1,
+     0,
+     1
+    ],
+    "layer": 2
+   }
+  ],
+  "bonds": [
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.cut/s2.keep"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      -1
+     ],
+     [
+      0,
+      0.5
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.cut",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      0.5
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.keep/s2.keep",
+     "paper/s1.keep/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      0,
+      0.5
+     ],
+     [
+      -1,
+      0.5
+     ]
+    ]
+   },
+   {
+    "faceIds": [
+     "paper/s1.cut/s2.keep",
+     "paper/s1.cut/s2.cut"
+    ],
+    "kind": "hinge",
+    "seg": [
+     [
+      1,
+      0.5
+     ],
+     [
+      0,
+      0.5
+     ]
+    ]
+   }
+  ]
+ }
+}

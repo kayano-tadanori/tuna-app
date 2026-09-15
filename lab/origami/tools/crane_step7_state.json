@@ -1,0 +1,660 @@
+{
+ "note": "node test_crane_progress.js --write が書く。check_petal_fold.py が突き合わせの相手として読む。",
+ "faces": [
+  {
+   "faceId": "paper/s1.keep/s2.keep/s5.keep/s7.keep",
+   "xf": [
+    -2.220446049250313e-16,
+    -1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 2,
+   "poly": [
+    [
+     -1,
+     1
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0.5857864376269049
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.keep/s2.keep/s5.keep/s7.cut",
+   "xf": [
+    -2.220446049250313e-16,
+    -1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 2,
+   "poly": [
+    [
+     -1,
+     1
+    ],
+    [
+     0,
+     0.5857864376269049
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep",
+   "xf": [
+    -2.220446049250313e-16,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 3,
+   "poly": [
+    [
+     -1,
+     1
+    ],
+    [
+     -0.2928932188134524,
+     0.2928932188134524
+    ],
+    [
+     0,
+     0.5857864376269049
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut",
+   "xf": [
+    -2.220446049250313e-16,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 3,
+   "poly": [
+    [
+     -0.2928932188134524,
+     0.2928932188134524
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0.5857864376269049
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.keep/s2.keep/s5.cut/s7.cut",
+   "xf": [
+    -2.220446049250313e-16,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 3,
+   "poly": [
+    [
+     -1,
+     1
+    ],
+    [
+     0,
+     0.5857864376269049
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.keep/s2.cut/s3.cut",
+   "xf": [
+    -1,
+    -2.220446049250313e-16,
+    0,
+    1,
+    0,
+    0
+   ],
+   "layer": 1,
+   "poly": [
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.keep/s2.cut/s3.keep",
+   "xf": [
+    1,
+    -2.220446049250313e-16,
+    0,
+    1,
+    0,
+    0
+   ],
+   "layer": 0,
+   "poly": [
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.keep/s5.cut/s6.keep",
+   "xf": [
+    2.220446049250313e-16,
+    1,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "layer": 2,
+   "poly": [
+    [
+     -0.585786437626905,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.keep/s5.cut/s6.cut",
+   "xf": [
+    2.220446049250313e-16,
+    1,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "layer": 2,
+   "poly": [
+    [
+     -1,
+     0
+    ],
+    [
+     -0.585786437626905,
+     0
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep",
+   "xf": [
+    -2.220446049250313e-16,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 3,
+   "poly": [
+    [
+     -0.585786437626905,
+     0
+    ],
+    [
+     -0.2928932188134525,
+     0.2928932188134525
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut",
+   "xf": [
+    -2.220446049250313e-16,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 3,
+   "poly": [
+    [
+     -0.585786437626905,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     -0.2928932188134525,
+     0.2928932188134525
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.keep/s5.keep/s6.cut",
+   "xf": [
+    -2.220446049250313e-16,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   "layer": 3,
+   "poly": [
+    [
+     -1,
+     0
+    ],
+    [
+     -0.585786437626905,
+     0
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.cut/s3.cut",
+   "xf": [
+    1,
+    -2.220446049250313e-16,
+    0,
+    1,
+    0,
+    0
+   ],
+   "layer": 0,
+   "poly": [
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     0
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  },
+  {
+   "faceId": "paper/s1.cut/s2.cut/s3.keep",
+   "xf": [
+    1,
+    2.220446049250313e-16,
+    0,
+    -1,
+    0,
+    0
+   ],
+   "layer": 1,
+   "poly": [
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     0
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  }
+ ],
+ "bonds": [
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut",
+    "paper/s1.keep/s2.keep/s5.keep/s7.keep"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     0,
+     0
+    ],
+    [
+     0.585786437626905,
+     0
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.keep/s5.cut/s7.cut",
+    "paper/s1.keep/s2.keep/s5.keep/s7.cut"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     0.585786437626905,
+     0
+    ],
+    [
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.cut/s3.cut",
+    "paper/s1.keep/s2.keep/s5.keep/s7.keep"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.cut/s3.cut",
+    "paper/s1.keep/s2.cut/s3.keep"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.cut/s3.cut",
+    "paper/s1.keep/s2.cut/s3.keep"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     1
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.cut/s3.cut",
+    "paper/s1.cut/s2.cut/s3.keep"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     0,
+     0
+    ],
+    [
+     -1,
+     0
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.cut/s3.keep",
+    "paper/s1.cut/s2.keep/s5.cut/s6.keep"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     -1,
+     -1
+    ],
+    [
+     4.440892098500626e-16,
+     -4.440892098500626e-16
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.cut/s6.keep",
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     -0.585786437626905
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.cut/s6.cut",
+    "paper/s1.cut/s2.keep/s5.keep/s6.cut"
+   ],
+   "kind": "hinge",
+   "seg": [
+    [
+     0,
+     -0.585786437626905
+    ],
+    [
+     0,
+     -1
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep",
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     1,
+     -1
+    ],
+    [
+     0.2928932188134524,
+     -0.2928932188134525
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut",
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     0.2928932188134524,
+     -0.2928932188134525
+    ],
+    [
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.cut/s6.keep",
+    "paper/s1.cut/s2.keep/s5.cut/s6.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     0,
+     -0.585786437626905
+    ],
+    [
+     -1,
+     -0.9999999999999998
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep",
+    "paper/s1.cut/s2.keep/s5.keep/s6.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     0,
+     -0.585786437626905
+    ],
+    [
+     1,
+     -0.9999999999999998
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.keep/s5.keep/s7.keep",
+    "paper/s1.keep/s2.keep/s5.keep/s7.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     1,
+     0.9999999999999998
+    ],
+    [
+     0.5857864376269049,
+     -1.3007071811330758e-16
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep",
+    "paper/s1.keep/s2.keep/s5.cut/s7.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     1,
+     -0.9999999999999998
+    ],
+    [
+     0.5857864376269049,
+     1.3007071811330758e-16
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep",
+    "paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     0.2928932188134524,
+     -0.2928932188134523
+    ],
+    [
+     0.5857864376269049,
+     1.3007071811330758e-16
+    ]
+   ]
+  },
+  {
+   "faceIds": [
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep",
+    "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut"
+   ],
+   "kind": "crease",
+   "seg": [
+    [
+     0,
+     -0.585786437626905
+    ],
+    [
+     0.2928932188134525,
+     -0.2928932188134524
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+{
+  "format": "origami-recipe",
+  "version": 1,
+  "coordinates": "unfolded-normalized-xy",
+  "work": {"id": "recipe_triangle", "name": "三角の折りたたみ", "emoji": "🔺", "difficulty": 1},
+  "source": {"note": "往復検証用の独立した二手のサンプル。既存作品からの変換ではない。"},
+  "paper": {"aspectRatio": 1, "colorDown": false},
+  "steps": [
+    {
+      "id": "s1", "diagramStep": "1", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper"},
+      "line": [[-1, -1], [1, 1]], "movingSidePoint": [0.75, -0.75],
+      "targets": [{"faceId": "paper"}],
+      "instruction": "右下を左上へ合わせ、対角線で半分に折る"
+    },
+    {
+      "id": "s2", "diagramStep": "2", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper", "layerPath": [{"stepId": "s1", "side": "cut"}]},
+      "line": [[-1, 1], [1, -1]], "movingSidePoint": [0.5, 0.25],
+      "targets": [{"faceId": "paper/s1.keep"}, {"faceId": "paper/s1.cut"}],
+      "instruction": "重なった二枚を一緒に半分に折る"
+    }
+  ]
+}

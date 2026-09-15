@@ -55,7 +55,7 @@
   #audit.good{color:#9fe0a8}
   textarea{width:100%;height:110px;font-size:10px;background:#0e1013;color:#7fdc8a;
     border:1px solid var(--line);border-radius:6px;padding:6px;font-family:ui-monospace,monospace}
-  .row{display:flex;gap:5px;margin:5px 0}
+  .row{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0}
   .row button{flex:1}
   .hint{font-size:11px;color:var(--dim);line-height:1.6;margin:4px 0}
 </style>
@@ -122,6 +122,7 @@
       <div class="legend">山折り＝赤の一点鎖線　／　谷折り＝青の破線</div>
     </div>
     <div id="side">
+      <section id="authoring"></section>
       <h3>いまの操作</h3>
       <div id="status"></div>
 
@@ -145,6 +146,7 @@
       <div class="row">
         <button onclick="dlSteps()">折順を保存</button>
         <button onclick="document.getElementById('fileIn').click()">折順を読み込む</button>
+        <button onclick="dlRecipe()">読み込んだ原本JSONを保存</button>
       </div>
       <input type="file" id="fileIn" accept=".json" style="display:none" onchange="loadSteps(event)">
       <div class="hint">FOLD形式は折り紙の標準フォーマット。書き出したファイルを
@@ -154,6 +156,7 @@
   </div>
 </div>
 
+<script src="origami_recipe.js"></script>
 <script>
 'use strict';
 /* =====================================================================
@@ -313,12 +316,13 @@ class FoldState{
     }
   }
 
-  fold(a,b,kind,onlyContaining,move,name){
+  fold(a,b,kind,onlyContaining,move,name,panelFilter=null){
     const step=this.steps.length;
     const R=reflectAffine(a,b);
     const next=[]; let touched=false;
     for (const p of this.panels){
       const xf=p.xf||ID_XF.slice();
+      if (panelFilter && !panelFilter(p)){ next.push(p); continue; }
       if (onlyContaining && !pointInPolygon(onlyContaining,p.poly)){ next.push(p); continue; }
       const [keep,cut]=splitPolygon(p.poly,a,b);
       const srcPoly=p.poly.map(q=>xfInv(xf,q));
@@ -588,9 +592,13 @@ function resize(){
 window.addEventListener('resize', resize);
 
 function drawFolded(){
-  const ctx=ctxA, vb=viewBox(cA,st);
+  const shown=window.oriAuthor?.displayState || st;
+  const ctx=ctxA, vb=viewBox(cA,shown);
   ctx.clearRect(0,0,cA.width,cA.height);
-  const ps=[...st.panels].sort((p,q)=>p.layer-q.layer);
+  window.oriAuthor?.drawImage(ctx,cA);
+  const ps=[...shown.panels].sort((p,q)=>p.layer-q.layer);
+  ctx.save();
+  if(window.oriAuthor?.imageVisible) ctx.globalAlpha=0.3;
   for (const p of ps){
     ctx.beginPath();
     p.poly.forEach((v,i)=>{ const [x,y]=W2S(vb,v); i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
@@ -600,13 +608,14 @@ function drawFolded(){
     ctx.fill();
     ctx.strokeStyle='rgba(0,0,0,.55)'; ctx.lineWidth=1.2; ctx.stroke();
   }
-  for (const v of allVertices()){
+  ctx.restore();
+  for (const v of allVertices(shown)){
     const [x,y]=W2S(vb,v);
     ctx.beginPath(); ctx.arc(x,y,3,0,7);
     ctx.fillStyle='#fff'; ctx.fill();
     ctx.strokeStyle='#000'; ctx.lineWidth=1; ctx.stroke();
   }
-  if (snapN()>0) for (const v of snapPoints()){
+  if (snapN()>0) for (const v of snapPoints(shown)){
     const [x,y]=W2S(vb,v);
     ctx.beginPath(); ctx.arc(x,y,1.6,0,7);
     ctx.fillStyle='rgba(242,193,78,.55)'; ctx.fill();
@@ -617,7 +626,7 @@ function drawFolded(){
     ctx.strokeStyle=['#7fdc8a','#f2c14e','#c98ae8'][i]||'#fff';
     ctx.lineWidth=3; ctx.stroke();
   });
-  const pv=previewLine();
+  const pv=window.oriAuthor?.active ? null : previewLine();
   if (pv){
     const [A,B]=extendLine(pv[0],pv[1],st);
     const [x1,y1]=W2S(vb,A), [x2,y2]=W2S(vb,B);
@@ -625,19 +634,20 @@ function drawFolded(){
     ctx.strokeStyle='#f2c14e'; ctx.lineWidth=2;
     ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.restore();
   }
+  window.oriAuthor?.drawOverlay(ctx,p=>W2S(vb,p));
 }
 
-function drawCP(){
-  const ctx=ctxB, vb=viewBox(cB,st,true);
+function drawCP(shown=window.oriAuthor?.displayState || st){
+  const ctx=ctxB, vb=viewBox(cB,shown,true);
   ctx.clearRect(0,0,cB.width,cB.height);
-  const b=st.border();
+  const b=shown.border();
   ctx.beginPath();
   b.forEach((v,i)=>{ const [x,y]=W2S(vb,v); i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
   ctx.closePath();
   ctx.fillStyle='rgba(250,247,238,0.96)'; ctx.fill();
   ctx.strokeStyle='#111'; ctx.lineWidth=2; ctx.stroke();
 
-  const cp=st.creasePattern();
+  const cp=shown.creasePattern();
   const hi = hoverStep>=0 ? hoverStep : curStep;
   for (const c of cp){
     const [x1,y1]=W2S(vb,c.a), [x2,y2]=W2S(vb,c.b);
@@ -655,7 +665,7 @@ function drawCP(){
   }
   // 折れない頂点に印
   if (cp.length){
-    const g=buildPlanarGraph(stateSegments(st));
+    const g=buildPlanarGraph(stateSegments(shown));
     for (const bd of checkFlatFoldability(g)){
       const [x,y]=W2S(vb,bd.xy);
       ctx.beginPath(); ctx.arc(x,y,8,0,7);
@@ -672,19 +682,19 @@ function draw(){ drawFolded(); drawCP(); }
 
 // ---------------------------------------------------------------- スナップ
 function snapN(){ return parseInt(document.getElementById('snapSel').value,10); }
-function allVertices(){
+function allVertices(shown=st){
   const m=new Map();
-  for (const p of st.panels) for (const v of p.poly){
+  for (const p of shown.panels) for (const v of p.poly){
     const k=v[0].toFixed(6)+','+v[1].toFixed(6);
     if (!m.has(k)) m.set(k,v);
   }
   return [...m.values()];
 }
-function snapPoints(){
-  const n=snapN(), out=allVertices();
+function snapPoints(shown=st){
+  const n=snapN(), out=allVertices(shown);
   if (n<=1) return out;
   const m=new Map(); out.forEach(v=>m.set(v[0].toFixed(6)+','+v[1].toFixed(6),v));
-  for (const p of st.panels){
+  for (const p of shown.panels){
     for (let i=0;i<p.poly.length;i++){
       const a=p.poly[i], b=p.poly[(i+1)%p.poly.length];
       for (let k=1;k<n;k++){
@@ -723,6 +733,7 @@ function pickPoint(sx,sy){
 // ---- 拡大（ホイール）・移動（右ドラッグ／中ドラッグ／スペース+ドラッグ） ----
 let dragging=false, dragX=0, dragY=0, moved=0;
 cA.addEventListener('wheel', e=>{
+  if(window.oriAuthor?.imageMode) return;
   e.preventDefault();
   const k = e.deltaY<0 ? 1.12 : 1/1.12;
   zoom = Math.min(20, Math.max(0.3, zoom*k));
@@ -730,6 +741,7 @@ cA.addEventListener('wheel', e=>{
 }, {passive:false});
 cA.addEventListener('contextmenu', e=>e.preventDefault());
 cA.addEventListener('pointerdown', e=>{
+  if(window.oriAuthor?.imageMode) return;
   if (e.button===0 && !e.shiftKey) return;      // 左クリックは点を選ぶ操作
   dragging=true; moved=0; dragX=e.clientX; dragY=e.clientY;
   cA.setPointerCapture(e.pointerId);
@@ -743,6 +755,12 @@ cA.addEventListener('pointermove', e=>{
 cA.addEventListener('pointerup', e=>{ dragging=false; });
 
 cA.addEventListener('click', e=>{
+  if(window.oriAuthor?.imageMode) return;
+  if(window.oriAuthor?.active){
+    const r=cA.getBoundingClientRect();
+    window.oriAuthor.pick(pickPoint(e.clientX-r.left,e.clientY-r.top));
+    return;
+  }
   if (moved>3){ moved=0; return; }             // 画面を動かしただけの時は選ばない
   const r=cA.getBoundingClientRect();
   const p=pickPoint(e.clientX-r.left, e.clientY-r.top);
@@ -769,6 +787,7 @@ function pushTimeline(){
   cursor = timeline.length-1;
 }
 function restore(i){
+  if(window.oriAuthor?.active) return;
   cursor=i; st=FoldState.from(JSON.parse(JSON.stringify(timeline[i])));
   sel=[]; curStep=st.steps.length-1; updateSide(); draw();
 }
@@ -776,6 +795,7 @@ function undo(){ if (cursor>0) restore(cursor-1); }
 function redo(){ if (cursor<timeline.length-1) restore(cursor+1); }
 function resetAll(){ newPaper(); }
 function newPaper(){
+  if(window.oriAuthor?.active) return;
   const [hw,hh]=document.getElementById('paperSel').value.split(',').map(Number);
   st=new FoldState(hw,hh); timeline=[st.clone()]; cursor=0; sel=[]; curStep=-1;
   zoom=1; panX=0; panY=0;
@@ -788,6 +808,7 @@ function setMode(m){
   updateSide(); draw();
 }
 function doFold(kind, move){
+  if(window.oriAuthor?.active || window.oriAuthor?.imageMode) return;
   const all=document.getElementById('allLayers').checked;
   let ok=false;
   if (mode==='pt2pt'){
@@ -801,6 +822,7 @@ function doFold(kind, move){
   sel=[]; pushTimeline(); curStep=st.steps.length-1; updateSide(); draw();
 }
 function doFlip(axis){
+  if(window.oriAuthor?.active || window.oriAuthor?.imageMode) return;
   st.flip(axis); sel=[]; pushTimeline(); curStep=st.steps.length-1; updateSide(); draw();
 }
 let flashMsg='';
@@ -846,7 +868,10 @@ function updateSide(){
   st.steps.forEach((sp,i)=>{
     const d=document.createElement('div');
     const tag = sp.op==='flip' ? '裏返す' : (sp.op==='crease'?'折り目だけ':(sp.kind==='V'?'谷折り':'山折り'));
-    d.innerHTML=`<span>${i+1}. ${sp.name||tag}</span><span class="k">${tag}</span>`;
+    const label=document.createElement('span'), kindLabel=document.createElement('span');
+    label.textContent=`${i+1}. ${sp.name||tag}`;
+    kindLabel.textContent=tag; kindLabel.className='k';
+    d.appendChild(label); d.appendChild(kindLabel);
     if (i===cursor-1) d.className='cur';
     d.onmouseenter=()=>{ hoverStep=i; drawCP(); };
     d.onmouseleave=()=>{ hoverStep=-1; drawCP(); };
@@ -914,25 +939,82 @@ function dlSteps(){
   document.getElementById('out').value=s;
   download('fold_steps.json', s);
 }
-function loadSteps(ev){
+const recipeAdapter=OrigamiRecipe.createAdapter({FoldState,xfApply,xfInv,pointInPolygon,sideOfLine,splitPolygon});
+let importedRecipe=null, importedRecipeState='', importSequence=0;
+function prepareImport(o,schema){
+  if (o && Object.hasOwn(o,'format')) {
+    if (o.format!=='origami-recipe') throw new Error('対応していない形式です。原本の .origami.json を選んでください');
+    return recipeAdapter.replay(o,schema);
+  }
+  // Legacy files keep their original format and current-coordinate semantics.
+  const point=p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite);
+  if(!o || !o.paper || !Number.isFinite(o.paper.hw) || !Number.isFinite(o.paper.hh) ||
+     o.paper.hw<=0 || o.paper.hh<=0 || !Array.isArray(o.steps) || o.steps.length>100)
+    throw new Error('折順JSONの紙サイズまたは手順が不正です');
+  const state=new FoldState(o.paper.hw,o.paper.hh), frames=[state.clone()];
+  o.steps.forEach((s,i)=>{
+    if(!s || !['fold','crease','flip'].includes(s.op)) throw new Error(`steps[${i}]: 未対応の操作 ${s?.op}`);
+    if(s.op==='flip') {
+      if(!['v','h'].includes(s.axis)) throw new Error(`steps[${i}]: 裏返しの軸が不正です`);
+      state.flip(s.axis);
+    } else {
+      if(!point(s.a)||!point(s.b)||!['V','M'].includes(s.kind)||(s.only!=null&&!point(s.only))||
+         Math.hypot(s.a[0]-s.b[0],s.a[1]-s.b[1])<1e-8 || (s.name!=null&&typeof s.name!=='string'))
+        throw new Error(`steps[${i}]: 折り線または対象が不正です`);
+      if(!state.fold(s.a,s.b,s.kind,s.only,s.op==='fold',s.name)) throw new Error(`steps[${i}]: 対象の面がありません`);
+    }
+    if(state.panels.length>1024) throw new Error('面数が上限を超えています');
+    frames.push(state.clone());
+  });
+  return {state,timeline:frames,recipe:null};
+}
+function commitImport(result){
+  const previous={st,timeline,cursor,importedRecipe,importedRecipeState,curStep,sel,hoverStep};
+  try {
+    st=result.state; timeline=result.timeline; cursor=timeline.length-1;
+    importedRecipe=result.recipe; importedRecipeState=JSON.stringify(st.clone());
+    curStep=st.steps.length-1; sel=[]; hoverStep=-1; updateSide(); draw();
+  } catch(e) {
+    ({st,timeline,cursor,importedRecipe,importedRecipeState,curStep,sel,hoverStep}=previous);
+    try { updateSide(); draw(); } catch {}
+    throw e;
+  }
+}
+function exportRecipe(){
+  if(!importedRecipe) throw new Error('先に .origami.json を読み込んでください');
+  if(JSON.stringify(st.clone())!==importedRecipeState)
+    throw new Error('読み込み後の編集を原本座標へ変換する保存は第1段階では未対応です。読み込み時の状態に戻してください');
+  return JSON.parse(JSON.stringify(importedRecipe));
+}
+function dlRecipe(){
+  try {
+    const recipe=exportRecipe(), text=JSON.stringify(recipe,null,2);
+    document.getElementById('out').value=text;
+    download(recipe.work.id+'.origami.json',text);
+  } catch(e) { flash(e.message); }
+}
+async function loadSteps(ev){
   const f=ev.target.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{
-    try{
-      const o=JSON.parse(r.result);
-      st=new FoldState(o.paper.hw, o.paper.hh);
-      timeline=[st.clone()]; cursor=0;
-      for (const sp of o.steps){
-        if (sp.op==='flip') st.flip(sp.axis);
-        else st.fold(sp.a, sp.b, sp.kind, sp.only, sp.op==='fold', sp.name);
-        pushTimeline();
-      }
-      curStep=st.steps.length-1; sel=[]; updateSide(); draw();
-      flash(`${o.steps.length}手を読み込みました`);
-    }catch(e){ flash('読み込みに失敗: '+e.message); }
-  };
-  r.readAsText(f);
+  const sequence=++importSequence;
+  const before=JSON.stringify({state:st.clone(),timeline,cursor,sel});
   ev.target.value='';
+  try {
+    if(f.size>2*1024*1024) throw new Error('JSONは2MB以下にしてください');
+    const o=JSON.parse(await f.text());
+    let schema;
+    if(o?.format==='origami-recipe') {
+      const response=await fetch('origami_recipe.schema.json');
+      if(!response.ok) throw new Error('スキーマを読み込めません');
+      schema=await response.json();
+    }
+    const result=prepareImport(o,schema);
+    if(sequence!==importSequence) return;
+    if(before!==JSON.stringify({state:st.clone(),timeline,cursor,sel}))
+      throw new Error('読み込み中に編集されたため、取り込みを中止しました');
+    commitImport(result);
+    window.oriAuthor?.end();
+    flash(`${o.steps.length}手を読み込みました`);
+  } catch(e) { if(sequence===importSequence) flash('読み込みに失敗: '+e.message); }
 }
 
 document.getElementById('snapSel').addEventListener('change', draw);
@@ -942,6 +1024,8 @@ window.addEventListener('keydown', e=>{
 
 // テストから叩けるように外に出しておく
 window.LAB = {get st(){return st;}, FoldState, toFold, buildPlanarGraph, extractFaces,
+              recipeAdapter, prepareImport, commitImport, exportRecipe,
+              get importState(){return {state:st.clone(),timeline,cursor,sel,curStep,importedRecipe};},
               checkFlatFoldability, stateSegments, xfInv, xfApply, polyArea,
               doFold:(k,m)=>doFold(k,m), doFlip, setMode,
               select:(p)=>{ sel.push(p.slice()); updateSide(); draw(); },
@@ -949,6 +1033,14 @@ window.LAB = {get st(){return st;}, FoldState, toFold, buildPlanarGraph, extract
 
 newPaper();
 resize();
+</script>
+<script src="origami_authoring.js"></script>
+<script>
+window.oriAuthor=OrigamiAuthoring.mount(document.getElementById('authoring'),{
+  canvas:cA, redraw:draw, adapter:recipeAdapter, FoldState,
+  commit:commitImport, getState:()=>st, exportRecipe,
+  xfApply,xfInv,reflectPoint, download,
+});
 </script>
 </body>
 </html>

@@ -1,0 +1,61 @@
+{
+  "format": "origami-recipe",
+  "version": 1,
+  "coordinates": "unfolded-normalized-xy",
+  "work": {"id": "recipe_lion", "name": "らいおんのかお", "emoji": "🦁", "difficulty": 1},
+  "source": {"note": "作・図：新宮文明『らいおんのかお』を参照。画像・パスは同梱しない。原本の(1,1)を図の上角とし、図の横=(x-y)/2、縦=(x+y)/2。寸法指定のない図②③④の折線位置は画像からの近似。図④は上部を後ろへ折る山折りで、紙全体の裏返しではない。顔の描画は含めない。"},
+  "paper": {"aspectRatio": 1, "colorDown": false},
+  "steps": [
+    {
+      "id": "s1", "diagramStep": "1a", "op": "crease", "kind": "V",
+      "reference": {"faceId": "paper"},
+      "line": [[-1, -1], [1, 1]], "movingSidePoint": [0.75, -0.75],
+      "targets": [{"faceId": "paper"}],
+      "instruction": "図①：左右の角を合わせて折り筋を付け、開く"
+    },
+    {
+      "id": "s2", "diagramStep": "1b", "op": "crease", "kind": "V",
+      "reference": {"faceId": "paper/s1.cut"},
+      "line": [[-1, 1], [1, -1]], "movingSidePoint": [-0.6, -0.8],
+      "targets": [{"faceId": "paper/s1.keep"}, {"faceId": "paper/s1.cut"}],
+      "instruction": "図①：上下の角を合わせて折り筋を付け、開く"
+    },
+    {
+      "id": "s3", "diagramStep": "2", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper/s1.cut/s2.cut"},
+      "line": [[-1, -0.5], [-0.5, -1]], "movingSidePoint": [-0.9, -0.95],
+      "targets": [{"faceId": "paper/s1.keep/s2.cut"}, {"faceId": "paper/s1.cut/s2.cut"}],
+      "instruction": "図②：下角を点線で上へ折る（図の線位置からの近似）"
+    },
+    {
+      "id": "s4", "diagramStep": "3a", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper/s1.keep/s2.keep"},
+      "line": [[-0.3, 1], [-1, -0.15]], "movingSidePoint": [-0.8, 0.95],
+      "targets": [{"faceId": "paper/s1.keep/s2.keep"}, {"faceId": "paper/s1.keep/s2.cut/s3.keep"}],
+      "instruction": "図③：左角を斜めの点線で内側へ折る（図の線位置からの近似）"
+    },
+    {
+      "id": "s5", "diagramStep": "3b", "op": "fold", "kind": "V",
+      "reference": {"faceId": "paper/s1.cut/s2.keep"},
+      "line": [[1, -0.3], [-0.15, -1]], "movingSidePoint": [0.95, -0.8],
+      "targets": [{"faceId": "paper/s1.cut/s2.keep"}, {"faceId": "paper/s1.cut/s2.cut/s3.keep"}],
+      "instruction": "図③：右角も対称の点線で内側へ折る（図の線位置からの近似）"
+    },
+    {
+      "id": "s6", "diagramStep": "4", "op": "fold", "kind": "M",
+      "reference": {"faceId": "paper/s1.cut/s2.keep/s5.keep"},
+      "line": [[-1, 0.8], [0.8, -1]], "movingSidePoint": [0.85, 0.75],
+      "targets": [
+        {"faceId": "paper/s1.keep/s2.keep/s4.keep"},
+        {"faceId": "paper/s1.keep/s2.keep/s4.cut"},
+        {"faceId": "paper/s1.keep/s2.cut/s3.keep/s4.keep"},
+        {"faceId": "paper/s1.keep/s2.cut/s3.keep/s4.cut"},
+        {"faceId": "paper/s1.cut/s2.keep/s5.keep"},
+        {"faceId": "paper/s1.cut/s2.keep/s5.cut"},
+        {"faceId": "paper/s1.cut/s2.cut/s3.keep/s5.keep"},
+        {"faceId": "paper/s1.cut/s2.cut/s3.keep/s5.cut"}
+      ],
+      "instruction": "図④：点線より上の部分だけを後ろへ山折りする。図②の下角の折り返しは動かさない（折線位置は図からの近似）"
+    }
+  ]
+}
