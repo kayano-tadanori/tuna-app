@@ -20,9 +20,8 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import fitz
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PDF_DIR = r'C:\Users\User\Desktop\浜問題\_結合\小5'
-MONDAI = os.path.join(PDF_DIR, '小5_算数_テーマ教材_第3分冊_No.21-30_問題.pdf')
-KAITOU = os.path.join(PDF_DIR, '小5_算数_テーマ教材_第3分冊_No.21-30_解答.pdf')
+from theme_books import book_of, work_dir, trial_prefix   # noqa: E402
+
 LETTERS = 'ABCDEFGH'
 
 
@@ -61,6 +60,8 @@ def dump_pages(pdf, tag, pages, outdir):
 
 def main():
     no = int(sys.argv[1])
+    # ★どの分冊の本かは回番号で決まる（theme_books.py）。ここに本の名前を書かない
+    BU, BOOK, MONDAI, KAITOU = book_of(no)
     m, k = fitz.open(MONDAI), fitz.open(KAITOU)
     M, K = toc_of(m), toc_of(k)
     if no not in M:
@@ -74,7 +75,7 @@ def main():
         print('  ⚠ テーマ数と練習/解答ページ数が合わない。_TARGET.md を手で直すこと'
               '（例 No.27＝1テーマに練習が2ページ）')
 
-    work = os.path.join(BASE, 'docs/_genbo/theme3_no%d' % no)
+    work = work_dir(BASE, no)
     for sub in ('pages', 'g1', 'svg', 'patch', 'out', 'ocr'):
         os.makedirs(os.path.join(work, sub), exist_ok=True)
     pg_dir = os.path.join(work, 'pages')
@@ -117,18 +118,26 @@ def main():
     for gi, g in enumerate(groups):
         L = LETTERS[gi]
         for ti in g:
-            rows.append('| %s | テーマ%d（題名は解説ページから取る） | `TRIAL-T3-%d-%d-*` | p%d | p%d | p%d |'
-                        % (L, ti + 1, no, ti + 1,
+            # ★題名はしおりから取れる（themes）。「解説ページから取る」と書くと、
+            #   担当が要らないページを開きにいく（2026-09-13〜14の実測）
+            rows.append('| %s | **%s** | `%s%d-*` | p%d | p%d | p%d |'
+                        % (L, themes[ti][0], trial_prefix(no), ti + 1,
                            renshu[ti] if ti < len(renshu) else 0,
                            kai[ti] if ti < len(kai) else 0, kaisetsu[ti]))
-    tgt = """# 小5 算数 テーマ教材 第3分冊 **No.%d %s** の原簿化
+    tgt = """# 小5 算数 テーマ教材 %s **No.%d %s** の原簿化
 
 - 問題 `%s`／解答 `%s`
 - **テーマ%d**（しおりで実測）。1テーマ＝解説1p＋練習問題1p、解答は練習問題1つにつき1p。
-  🚨**練習問題のページには大問が2本**（`1-1` `1-2`）。「練習問題N」の見出しは原本に無い。
-  ⚠**本数は2本とはかぎらない。小問が無くて大問1本＝答え1つのこともある。**
-- ⚠**テーマの題名は回の単元名と別物のことがある**（No.23＝速さ(2)なのに「平均の速さ／比の利用」）。
-  練習問題ページに題名は印刷されていない＝**解説ページの見出し枠を1回だけ開いて取る。**
+  🚨**練習問題のページには大問が2本のことが多い**（`1-1` `1-2`）。
+  ⚠**本数は2本とはかぎらない。小問が無くて大問1本＝答え1つのこともある。印刷ラベルどおりに数える。**
+  ⚠**「練習問題N」の見出しは分冊でちがう**（第3分冊＝印刷されていない／**第1分冊＝実際に印刷されている**。
+  2026-09-18に実測）。**印刷されているものだけ写す。**
+  🚨**解答冊子のページは1つずつずれることがある。**解法が長いと1つの練習問題が解答2ページに
+  またがり、以降がずれる（第1分冊 No.1＝テーマ2の解法が2ページ→テーマ3以降が1つ後ろ）。
+  **下の表の解答ページは目安。担当は開いたページの中身が自分の設問と合っているか必ず確かめ、
+  使ったPDFページ番号をログと `page.kaitou` に書く。**
+- ✅**テーマの題名はしおりから取ってある**（上の表）。**解説ページを開く必要はない。**
+  ⚠題名は回の単元名と別物のことがある（No.23＝速さ(2)なのに「比の利用」）。
 
 ## 担当わけ（G1・1担当2テーマ）
 
@@ -146,26 +155,50 @@ def main():
 2. G23（1担当）→ `g1_join.py` → `g1_preview.py --src out/daimon.json`
 3. HG採番・原簿追記・`data/hama_daimon.json` の `master_bunsatsu/fukushu/%d`・
    `hama_map.json` に回を追加・お知らせ・push・**公開版を数えて確認**
-""" % (no, title, os.path.basename(MONDAI), os.path.basename(KAITOU), n,
+""" % (BOOK, no, title, os.path.basename(MONDAI), os.path.basename(KAITOU), n,
        '\n'.join(rows), len(groups), no)
     io.open(os.path.join(work, '_TARGET.md'), 'w', encoding='utf-8').write(tgt)
 
     # G1指示（前の回のものを流用して回番号だけ差しかえ）
-    prev = os.path.join(BASE, 'docs/_genbo/theme3_no%d/_G1_SHIJI.md' % (no - 1))
+    # ★前の回の指示を流用する。分冊の1回目（No.1・11・21）には前の回が無いので、
+    #   同じ作りの最後に作ったもの（第3分冊のNo.30）を型として使う
+    prev_no = no - 1
+    prev = os.path.join(BASE, 'docs/_genbo/theme%d_no%d/_G1_SHIJI.md' % (BU, prev_no))
+    if not os.path.exists(prev):
+        prev_no = 30
+        prev = os.path.join(BASE, 'docs/_genbo/theme3_no30/_G1_SHIJI.md')
     if os.path.exists(prev):
         t = io.open(prev, encoding='utf-8').read()
         # ★置換は「回番号＋題名」→「回番号＋題名」の順でやる。
         #   正規表現で No.24 のうしろをまとめて飲みこませると、
         #   「No.24は1本も無い＝…」のような文ごと消える（2026-09-13に実際にやった）。
-        prev_title = M.get(no - 1, {}).get('title', '')
+        prev_title = (M.get(prev_no) or {}).get('title', '')
         if prev_title:
-            t = t.replace('No.%d %s' % (no - 1, prev_title), 'No.%d %s' % (no, title))
-        t = t.replace('No.%d' % (no - 1), 'No.%d' % no)
-        t = t.replace('theme3_no%d' % (no - 1), 'theme3_no%d' % no)
-        t = t.replace('"no": %d,' % (no - 1), '"no": %d,' % no)
-        t = t.replace('TRIAL-T3-%d-' % (no - 1), 'TRIAL-T3-%d-' % no)
+            t = t.replace('No.%d %s' % (prev_no, prev_title), 'No.%d %s' % (no, title))
+        t = t.replace('No.%d' % prev_no, 'No.%d' % no)
+        t = t.replace('theme%d_no%d' % (book_of(prev_no)[0], prev_no),
+                      'theme%d_no%d' % (BU, no))
+        t = t.replace('"no": %d,' % prev_no, '"no": %d,' % no)
+        t = t.replace(trial_prefix(prev_no), trial_prefix(no))
+        if BOOK != '第3分冊':
+            t = t.replace('第3分冊', BOOK)
+        # 🚨**前の回の「この回で気をつけること」を持ちこさない。**
+        #   No.29で速さの回の注意が残ったまま担当に渡った（2026-09-14）。
+        #   題名だけ入れた空欄にして、親が必ず書きかえる形にする
+        mark = '# 🚨 この回で気をつけること'
+        if mark in t:
+            stub = [
+                '%s（No.%d %s）' % (mark, no, title), '',
+                '- ✅**テーマの題名はしおりから取ってあります**（解説ページは開かなくてよい）：',
+                '  ' + '／'.join(x[0] for x in themes),
+                '- ⚠**本数は2本とはかぎらない。**練習問題ページの印刷ラベル'
+                '（`1-1` `1-2` …）どおりに数える。', '',
+                '🚨🚨**ここから下は親が書きかえること（前の回の注意をそのまま渡さない）。**',
+                '  この回に出てくるもの（単位・比・図・円周率など）を見て、気をつけることを書く。', '']
+            t = t[:t.index(mark)] + '\n'.join(stub)
         io.open(os.path.join(work, '_G1_SHIJI.md'), 'w', encoding='utf-8').write(t)
-        print('  _G1_SHIJI.md … No.%d から作った（回の題名は目で確かめること）' % (no - 1))
+        print('  _G1_SHIJI.md … No.%d から作った（回の題名と「この回で気をつけること」を目で確かめること）'
+              % prev_no)
     print('できた:', os.path.relpath(work, BASE).replace('\\', '/'))
     print('担当:', ', '.join('%s＝テーマ%s' % (LETTERS[i], '・'.join(str(t + 1) for t in g))
                              for i, g in enumerate(groups)))

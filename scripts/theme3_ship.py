@@ -24,6 +24,9 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TS = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
 
+from theme_books import book_of, work_dir, trial_prefix   # noqa: E402
+
+
 def label_key(lab):
     """'1-1' → (1,1)。印刷順にそろえるため。"""
     m = re.match(r'(\d+)-(\d+)', lab or '')
@@ -39,7 +42,9 @@ def next_hg(genbo_text):
 def main():
     no = int(sys.argv[1])
     dry = '--dry' in sys.argv
-    work = os.path.join(BASE, 'docs/_genbo/theme3_no%d' % no)
+    # ★どの分冊の本かは回番号で決まる（theme_books.py）。ここに本の名前を書かない
+    BU, BOOK, MONDAI, _KAITOU = book_of(no)
+    work = work_dir(BASE, no)
     daimon = json.load(io.open(os.path.join(work, 'out/daimon.json'), encoding='utf-8'))
     records = io.open(os.path.join(work, 'out/genbo_records.md'), encoding='utf-8').read()
 
@@ -73,7 +78,7 @@ def main():
         x = dict(it)
         x['id'] = 'hd5m_t%d_%d' % (no, i)
         x['hg'] = hg
-        x['src'] = '%s 原簿・小5 テーマ教材 第3分冊 No.%d %s' % (hg, no, lab_of(it))
+        x['src'] = '%s 原簿・小5 テーマ教材 %s No.%d %s' % (hg, BOOK, no, lab_of(it))
         items.append(x)
     p = os.path.join(BASE, 'data/hama_daimon.json')
     d = json.load(io.open(p, encoding='utf-8'))
@@ -91,7 +96,7 @@ def main():
 
     # ---- ② 回（lessons） ----
     import fitz
-    toc = fitz.open(r'C:\Users\User\Desktop\浜問題\_結合\小5\小5_算数_テーマ教材_第3分冊_No.21-30_問題.pdf').get_toc()
+    toc = fitz.open(MONDAI).get_toc()
     title = next((re.sub(r'^No\.\d+\s*', '', t) for lv, t, _ in toc
                   if lv == 1 and t.startswith('No.%d ' % no)), '')
     units, seen = [], set()
@@ -119,16 +124,16 @@ def main():
     for it, hg in zip(daimon, hgs):
         b = blocks[it['hg']]
         b = b.replace('【%s】' % it['hg'], '【%s】' % hg, 1)
-        b = re.sub(r'TRIAL-T3-%d-(\d+)-(\d+)' % no, hg, b)     # 本文に残る仮IDの参照
+        b = re.sub(re.escape(trial_prefix(no)) + r'(\d+)-(\d+)', hg, b)   # 本文に残る仮IDの参照
         out.append('### ' + b.rstrip() + '\n')
     nfig = sum(1 for x in items if x.get('svg') or any(s.get('svg') for s in x['steps']))
-    head = ("\n---\n\n# 📗 小5 算数 テーマ教材 第3分冊 No.%d %s ★%s 原簿化（%s〜%s）\n\n"
+    head = ("\n---\n\n# 📗 小5 算数 テーマ教材 %s No.%d %s ★%s 原簿化（%s〜%s）\n\n"
             "**大問%d本／小問%d問。**問題ページに図があったのは%d本。\n"
             "- 1テーマ＝解説1ページ＋練習問題1ページ／練習問題のページに**大問が2本**（`1-1` `1-2`）。\n"
             "  「練習問題N」という見出しは原本に無い。\n"
             "- ⚠**テーマの題名は回の単元名と別物**（この教材の作り）。題名は解説ページの見出しから取っている。\n"
             "- 作り方：G1→G23→親（→ method_g1_g23_genbo）。OCRの下書きを前工程に使った。\n\n"
-            % (no, title, datetime.date.today().isoformat(), hgs[0], hgs[-1],
+            % (BOOK, no, title, datetime.date.today().isoformat(), hgs[0], hgs[-1],
                len(items), sum(len(x['steps']) for x in items), nfig))
     shutil.copy(gpath, '%s.bak-t%d-%s' % (gpath, no, TS))
     g = g.rstrip('\n') + '\n' + head + '\n'.join(out)
@@ -151,11 +156,11 @@ def main():
         "date": datetime.date.today().isoformat(),
         "ver": "v%d" % ver,
         "title": "📗 小5 マスターに テーマ教材 No.%d「%s」が入りました（大問%d本）" % (no, title, len(items)),
-        "body": ("テーマ教材 第3分冊の **No.%d %s** を入れました。**大問%d本・小問%d問**です。\n\n"
+        "body": ("テーマ教材 %sの **No.%d %s** を入れました。**大問%d本・小問%d問**です。\n\n"
                  "● 出る場所 … じゅくナビ → 算数（マスター）→ **No.%d** → 「🧩 今週の宿題（大問）」\n"
                  "● 中身 … %s\n\n"
                  "紙の練習問題を そのまま起こしたものです（類題ではありません）。"
-                 % (no, title, len(items), sum(len(x['steps']) for x in items), no,
+                 % (BOOK, no, title, len(items), sum(len(x['steps']) for x in items), no,
                     "／".join(x['title'] for x in items[:6]) + ("　ほか" if len(items) > 6 else "")))
     })
     json.dump(u, io.open(up, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)

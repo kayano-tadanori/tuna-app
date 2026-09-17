@@ -339,6 +339,13 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
                                 u"出てこない（何の量を答えるのか画面から消える）"
                                 % (hg, i, ukey, ans, u"・".join(miss)))
                 return None
+        # ★アプリのあまりの入力は漢字の「余り」でないと出ない（js/sansu.js の isNumpadAnswer と
+        #   isRemainMode が `余り` を見ている）。原本の印刷が「243あまり12」でも、
+        #   **アプリに渡す答えだけ**言いかえる。**原簿は印刷どおり「あまり」のまま**
+        #   （「右の図→下の図」と同じ、アプリ本文だけの言いかえ。2026-09-18・第1分冊 No.1）
+        if u"あまり" in ans:
+            ans = ans.replace(u"あまり", u"余り")
+            notes.append(u"%s: アプリの答えだけ「あまり」→「余り」に言いかえた（原簿は実物のまま）" % hg)
         s = {u"question": q_text, u"answer": ans}
         if st.get(u"choices"):
             s[u"choices"] = st[u"choices"]
