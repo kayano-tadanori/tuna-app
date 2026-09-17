@@ -13,7 +13,7 @@ r"""小5 テーマ教材 第3分冊の「回ごとの下ごしらえ」を1本�
 ★ページ割りはPDFのしおり（`get_toc()`）から取る。**手で数えない。**
 ★OCRの取得（外部送信）はここではやらない → `scripts/ocr_pages.py plan/fetch`
 """
-import io, json, os, re, sys
+import glob, io, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -39,6 +39,23 @@ def toc_of(doc):
                 out[cur]['themes'].append((t, pg))
             elif '練習問題' in t:
                 out[cur]['renshu'].append((t, pg))
+    return out
+
+
+def renshu_map(entry):
+    u'''しおりの練習問題を **題号ごと** にまとめる … {1: [p], 2: [p, 続きのp], …}
+
+    🚨 解答冊子は「練習問題2(続き)」のように**1つの練習問題が2ページ**になることがある
+      （第1分冊でふつうに出る）。並び順でそのまま zip すると、そこから後ろが
+      1ページずつずれる（2026-09-18・No.1で実際に担当3人に誤ったページを渡した）。
+      **しおりの題号で対応づける。**
+    '''
+    out = {}
+    for label, pg in entry['renshu']:
+        m = re.search(r'練習問題\s*(\d+)', label)
+        if not m:
+            continue
+        out.setdefault(int(m.group(1)), []).append(pg)
     return out
 
 
@@ -68,20 +85,36 @@ def main():
         sys.exit('No.%d がしおりに無い' % no)
     title = M[no]['title']
     themes = M[no]['themes']                      # [(題名, 解説ページ)…]
-    renshu = [pg for _, pg in M[no]['renshu']]    # 練習問題ページ
-    kai = [pg for _, pg in K[no]['renshu']]       # 解答ページ
-    print('No.%d %s … テーマ%d／練習%s／解答%s' % (no, title, len(themes), renshu, kai))
-    if len(renshu) != len(themes) or len(kai) != len(themes):
-        print('  ⚠ テーマ数と練習/解答ページ数が合わない。_TARGET.md を手で直すこと'
+    mmap = renshu_map(M[no])                      # {題号: [問題ページ…]}
+    kmap = renshu_map(K[no]) if no in K else {}    # {題号: [解答ページ…（続き含む）]}
+    renshu = [mmap.get(i + 1, [0])[0] for i in range(len(themes))]
+    kai_all = [kmap.get(i + 1, []) for i in range(len(themes))]      # 題号ごとの全ページ
+    kai = [(v[0] if v else 0) for v in kai_all]
+    print('No.%d %s … テーマ%d／練習%s／解答%s'
+          % (no, title, len(themes), renshu, [v or '—' for v in kai_all]))
+    for i, v in enumerate(kai_all):
+        if len(v) > 1:
+            print('  📄 テーマ%d の解答は %d ページ（%s）＝しおりの「(続き)」。両方わたす'
+                  % (i + 1, len(v), '・'.join('p%d' % x for x in v)))
+    if len(mmap) != len(themes) or (kmap and len(kmap) != len(themes)):
+        print('  ⚠ テーマ数と練習/解答の題号の数が合わない。_TARGET.md を手で直すこと'
               '（例 No.27＝1テーマに練習が2ページ）')
 
     work = work_dir(BASE, no)
+    # 🚨**すでにG1が書いてある回を作り直さない。**`_TARGET.md` と `_G1_SHIJI.md` を上書きしてしまい、
+    #   その回に実際に渡した指示が失われる（docs/_genbo はgitの外なので戻せない）。
+    #   2026-09-18、完成ずみのNo.22で試して実際に上書きした。やり直すときだけ `--force`。
+    done = glob.glob(os.path.join(work, 'g1', '*.json'))
+    if done and '--force' not in sys.argv:
+        sys.exit('✗ %s には、すでにG1の出力が %d 本ある。上書きすると、その回に渡した指示が消える。%s'
+                 '  本当に作り直すなら --force を付ける（指示書のバックアップを取ってから）'
+                 % (os.path.relpath(work, BASE).replace(chr(92), '/'), len(done), chr(10)))
     for sub in ('pages', 'g1', 'svg', 'patch', 'out', 'ocr'):
         os.makedirs(os.path.join(work, sub), exist_ok=True)
     pg_dir = os.path.join(work, 'pages')
     kaisetsu = [pg for _, pg in themes]
     dump_pages(MONDAI, 'mondai', renshu + kaisetsu, pg_dir)
-    dump_pages(KAITOU, 'kaitou', kai, pg_dir)
+    dump_pages(KAITOU, 'kaitou', [x for v in kai_all for x in v], pg_dir)
 
     # 担当わけ：既定は1担当2テーマ。
     # ★`--groups 2,3|4,5|6` のように**テーマ番号**で明示できる。
@@ -108,8 +141,7 @@ def main():
         mp, kp = [], []
         for ti in g:
             mp += [kaisetsu[ti], renshu[ti]] if ti < len(renshu) else [kaisetsu[ti]]
-            if ti < len(kai):
-                kp.append(kai[ti])
+            kp += kai_all[ti] if ti < len(kai_all) else []
         ocr_pages.cmd_slice(MONDAI, sorted(mp), os.path.join(work, 'ocr', '%s_mondai.md' % L))
         ocr_pages.cmd_slice(KAITOU, sorted(kp), os.path.join(work, 'ocr', '%s_kaitou.md' % L))
 
@@ -120,10 +152,11 @@ def main():
         for ti in g:
             # ★題名はしおりから取れる（themes）。「解説ページから取る」と書くと、
             #   担当が要らないページを開きにいく（2026-09-13〜14の実測）
-            rows.append('| %s | **%s** | `%s%d-*` | p%d | p%d | p%d |'
+            pages = kai_all[ti] if ti < len(kai_all) else []
+            rows.append('| %s | **%s** | `%s%d-*` | p%d | %s | p%d |'
                         % (L, themes[ti][0], trial_prefix(no), ti + 1,
                            renshu[ti] if ti < len(renshu) else 0,
-                           kai[ti] if ti < len(kai) else 0, kaisetsu[ti]))
+                           '・'.join('p%d' % x for x in pages) or '—', kaisetsu[ti]))
     tgt = """# 小5 算数 テーマ教材 %s **No.%d %s** の原簿化
 
 - 問題 `%s`／解答 `%s`
@@ -132,10 +165,9 @@ def main():
   ⚠**本数は2本とはかぎらない。小問が無くて大問1本＝答え1つのこともある。印刷ラベルどおりに数える。**
   ⚠**「練習問題N」の見出しは分冊でちがう**（第3分冊＝印刷されていない／**第1分冊＝実際に印刷されている**。
   2026-09-18に実測）。**印刷されているものだけ写す。**
-  🚨**解答冊子のページは1つずつずれることがある。**解法が長いと1つの練習問題が解答2ページに
-  またがり、以降がずれる（第1分冊 No.1＝テーマ2の解法が2ページ→テーマ3以降が1つ後ろ）。
-  **下の表の解答ページは目安。担当は開いたページの中身が自分の設問と合っているか必ず確かめ、
-  使ったPDFページ番号をログと `page.kaitou` に書く。**
+  🚨**解答冊子は1つの練習問題が2ページになることがある**（しおりの「練習問題N(続き)」）。
+  上の表の解答ページは**しおりの題号で対応づけてある**ので、`p13・p14` と2つ書いてあれば両方見る。
+  **それでも中身が自分の設問と合っているかは必ず確かめ、使ったPDFページを `page.kaitou` に書く。**
 - ✅**テーマの題名はしおりから取ってある**（上の表）。**解説ページを開く必要はない。**
   ⚠題名は回の単元名と別物のことがある（No.23＝速さ(2)なのに「比の利用」）。
 
@@ -196,6 +228,23 @@ def main():
                 '🚨🚨**ここから下は親が書きかえること（前の回の注意をそのまま渡さない）。**',
                 '  この回に出てくるもの（単位・比・図・円周率など）を見て、気をつけることを書く。', '']
             t = t[:t.index(mark)] + '\n'.join(stub)
+        # ★OCRが1ページも無い回で「OCRの下書きがあります」と書かない
+        #   （担当が探しにいく。2026-09-18・No.2で3担当とも空ファイルを開いた）
+        got = False
+        for f in sorted(glob.glob(os.path.join(work, 'ocr', '*.md'))):
+            body = io.open(f, encoding='utf-8').read()
+            # ページごとの節（`## mondai PDF p26`）の中身を見る。
+            # 冒頭の決まり文句は毎回入るので、行数では数えない
+            for sec in body.split(chr(10) + '## ')[1:]:
+                text = sec.split(chr(10), 1)[1] if chr(10) in sec else ''
+                if text.strip() and 'OCRなし' not in text:
+                    got = True
+        if not got:
+            t = t.replace('## 📝 OCRの下書きがあります', chr(10).join([
+                '## 📝 この回のOCRはありません（画像から読む）',
+                '**`ocr/` のファイルは中身が空です（全ページ「OCRなし」）。開かなくてよい。**',
+                '以下は、OCRがある回のための説明です。', '',
+                '### （参考）OCRがあるときの決めごと']), 1)
         io.open(os.path.join(work, '_G1_SHIJI.md'), 'w', encoding='utf-8').write(t)
         print('  _G1_SHIJI.md … No.%d から作った（回の題名と「この回で気をつけること」を目で確かめること）'
               % prev_no)
