@@ -39,6 +39,40 @@ def read_svg(trial, ref):
     return s
 
 
+import re  # noqa: E402（下の take_answer の前でも読み込んでいるが、ここで先に要る）
+
+_VIEWBOX_RE = re.compile(u'viewBox="\\s*([-\\d.]+)[\\s,]+([-\\d.]+)[\\s,]+([\\d.]+)[\\s,]+([\\d.]+)\\s*"')
+
+
+def stack_svgs(svgs, gap=16):
+    u"""同じ所に掛かる図が2枚以上あるとき、**縦に並べた1枚のSVG**にする（中身は書きかえない）。
+
+    ★アプリは「大問に図1枚／小問に図1枚」の作り。No.15 `3-1` は円グラフと帯グラフの2枚が
+      大問全体に掛かり、結合が止まった（2026-09-18）。原本ではこの2枚は**並べて1つの図の欄**に
+      印刷されている。1枚を捨てると解けなくなるので、外枠で包んで1枚にする。
+    ★各図は自分の viewBox のまま入れ子の <svg> に入れる＝座標も文字も1字も変えない。
+      横に並べるとスマホで小さくなるので、縦に積んで幅は広いほうに合わせる（中央寄せ）。
+    """
+    parts = []
+    for s in svgs:
+        m = _VIEWBOX_RE.search(s[:s.index(u">") + 1])
+        if not m:
+            return None                      # 寸法が読めない図は重ねない（呼び出し側で止める）
+        x0, y0, w, h = (float(v) for v in m.groups())
+        inner = s[s.index(u">") + 1:s.rindex(u"</svg>")]
+        parts.append((x0, y0, w, h, inner))
+    width = max(p[2] for p in parts)
+    y, body = 0.0, []
+    for x0, y0, w, h, inner in parts:
+        body.append(u'<svg x="%g" y="%g" width="%g" height="%g" viewBox="%g %g %g %g">%s</svg>'
+                    % ((width - w) / 2, y, w, h, x0, y0, w, h, inner))
+        y += h + gap
+    height = y - gap
+    return (u'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %g %g" '
+            u'style="display:block;margin:0 auto;max-width:100%%">%s</svg>'
+            % (width, height, u"".join(body)))
+
+
 def setsumon_text(it):
     u"""原簿の `- 設問:` に入れる原文（共通文＋印刷された小問）。"""
     parts = [it[u"setsumon"][u"common"] or u""]
@@ -253,9 +287,14 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
 
     item_figs = figs_by_scope.get(u"item", [])
     if len(item_figs) > 1:
-        problems.append(u"%s: 大問の図が%d枚あり、アプリの形（大問に1枚）に入りきらない"
-                        % (hg, len(item_figs)))
-        return None
+        # ★2枚以上は縦に積んで1枚にする（stack_svgs）。寸法が読めないときだけ止める
+        merged = stack_svgs([f[u"_svg"] for f in sorted(item_figs, key=lambda f: f.get(u"order") or 0)])
+        if not merged:
+            problems.append(u"%s: 大問の図が%d枚あり、viewBox が読めず1枚にまとめられない"
+                            % (hg, len(item_figs)))
+            return None
+        notes.append(u"%s: 大問の図%d枚を縦に並べて1枚にした" % (hg, len(item_figs)))
+        item_figs = [dict(item_figs[0], _svg=merged)]
 
     sole = False          # 設問全文そのものが問いかけになった大問（下で intro を空にする）
     shared = {}
