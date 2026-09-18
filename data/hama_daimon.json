@@ -133754,6 +133754,11 @@
          "meaning": "百分率は「100のうちいくつか」。小数に100をかければよいので、0.36×100＝36%。"
         },
         {
+         "question": "0.36　［歩合］",
+         "answer": "3割6分",
+         "meaning": "小数の0.1が1割、0.01が1分。0.36は0.3と0.06なので3割6分。"
+        },
+        {
          "question": "3/4　［小数］",
          "answer": "0.75",
          "meaning": "分数は「分子÷分母」なので、3/4＝3÷4＝0.75。"
@@ -133764,6 +133769,11 @@
          "meaning": "小数の0.75に100をかけると75。だから75%。"
         },
         {
+         "question": "3/4　［歩合］",
+         "answer": "7割5分",
+         "meaning": "0.75は0.7と0.05。0.1が1割、0.01が1分なので7割5分。"
+        },
+        {
          "question": "87.5%　［小数］",
          "answer": "0.875",
          "meaning": "%は100のうちいくつかなので、100でわると小数になる。87.5÷100＝0.875。"
@@ -133772,6 +133782,11 @@
          "question": "87.5%　［分数］",
          "answer": "7/8",
          "meaning": "0.875は875/1000。125でわると7/8になるよ（1/8＝0.125はよく出るので覚えておこう）。"
+        },
+        {
+         "question": "87.5%　［歩合］",
+         "answer": "8割7分5厘",
+         "meaning": "87.5%は0.875。0.8が8割、0.07が7分、0.005が5厘なので8割7分5厘。"
         },
         {
          "question": "4割5分　［小数］",
@@ -133797,6 +133812,11 @@
          "question": "3.12　［百分率］",
          "answer": "312",
          "meaning": "1より大きくても同じように100をかける。3.12×100＝312%。100%をこえることもあるよ。"
+        },
+        {
+         "question": "3.12　［歩合］",
+         "answer": "31割2分",
+         "meaning": "3.12は1をこえるけど同じように考える。0.1が1割なので3は30割。3.12＝3＋0.1＋0.02で、30割＋1割＋2分＝31割2分。"
         }
        ],
        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 550 210\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"5\" y1=\"5\" x2=\"545\" y2=\"5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"5\" y1=\"55\" x2=\"545\" y2=\"55\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"5\" y1=\"105\" x2=\"545\" y2=\"105\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"5\" y1=\"155\" x2=\"545\" y2=\"155\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"5\" y1=\"205\" x2=\"545\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"5\" y1=\"5\" x2=\"5\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"95\" y1=\"5\" x2=\"95\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"185\" y1=\"5\" x2=\"185\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"275\" y1=\"5\" x2=\"275\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"365\" y1=\"5\" x2=\"365\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"455\" y1=\"5\" x2=\"455\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"545\" y1=\"5\" x2=\"545\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<text x=\"50\" y=\"30\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">小数</text>\n<text x=\"50\" y=\"80\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">分数</text>\n<text x=\"50\" y=\"130\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">百分率</text>\n<text x=\"50\" y=\"180\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">歩合</text>\n<text x=\"140\" y=\"30\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">0.36</text>\n<text x=\"500\" y=\"30\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">3.12</text>\n<text x=\"320\" y=\"130\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">87.5%</text>\n<text x=\"410\" y=\"180\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\">4割5分</text>\n<text x=\"230\" y=\"76\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\">3</text>\n<line x1=\"222\" y1=\"80\" x2=\"238\" y2=\"80\" stroke=\"#e8ecf8\" stroke-width=\"1.2\"/>\n<text x=\"230\" y=\"83\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"hanging\">4</text>\n</svg>"
@@ -133920,6 +133940,11 @@
          "question": "(2) 昨年の女子の生徒数は何人ですか。",
          "answer": "500",
          "meaning": "男子と区別するため四角で置く。昨年の女子を[100]とすると、2割7分増えた今年は[127]＝635人。[1]＝5人なので昨年は500人。"
+        },
+        {
+         "question": "(3) 今年の生徒数が昨年の生徒数とくらべてどれだけ増えたかを歩合で答えなさい。",
+         "answer": "2分5厘",
+         "meaning": "(1)(2)から昨年は男子700人＋女子500人＝1200人、今年は595人＋635人＝1230人。1230－1200＝30人ふえた。30/1200＝1/40＝0.025なので、歩合で2分5厘。"
         }
        ]
       },

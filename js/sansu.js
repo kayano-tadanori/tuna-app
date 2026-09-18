@@ -128,6 +128,14 @@ function isRatioAnswer(a) {
   return /^\d+(\.\d+)?([:：]\d+(\.\d+)?)+$/.test(String(a).trim());
 }
 
+// 歩合の答え（`3割6分` `2分5厘` `4割`）。テンキーの「割」「分」「厘」キーで打つ（本人判断 2026-09-19）。
+// ★isRatioAnswer と同じく isNumpadAnswer には入れない（choices を持つ既存の歩合の4択はそのまま）。
+const BUAI_UNITS = ['割', '分', '厘'];
+function isBuaiAnswer(a) {
+  const s = String(a).trim();
+  return !!s && /^(\d+割)?(\d+分)?(\d+厘)?$/.test(s);
+}
+
 // 連鎖問題1件（chain）を、フラットな問題オブジェクトの配列に展開する。
 // 数値答えはchoicesを外してテンキー入力にする
 function expandChain(chain, grade) {
@@ -2309,6 +2317,7 @@ function renderSansuQuiz() {
     numpad.querySelector('.numpad-mixed').classList.toggle('hidden', !(q.answer && String(q.answer).includes('と')));
     // ★比の答え（`4:7` `3:7:9`）は「：」キーで打つ（本人判断 2026-09-19：ニセの4択にしない）
     numpad.querySelector('.numpad-ratio').classList.toggle('hidden', !isRatioAnswer(q.answer));
+    numpad.querySelectorAll('.numpad-buai').forEach(b => b.classList.toggle('hidden', !isBuaiAnswer(q.answer)));
     sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputWhole = ''; sansuState.inputPhase = 'main';
     updateNumpadPreview('sq');
     numpad.querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
@@ -2911,15 +2920,27 @@ function handleNumpadKey(prefix, key) {
   if (key === 'frac') {
     // 分数の「／」：分子入力後に1回だけ・小数とは併用不可
     if (!sansuState.inputVal || sansuState.inputVal.includes('/') || sansuState.inputVal.includes('.')
-        || sansuState.inputVal.includes(':')) return;
+        || sansuState.inputVal.includes(':') || /[割分厘]/.test(sansuState.inputVal)) return;
     sansuState.inputVal += '/';
+    updateNumpadPreview(prefix);
+    return;
+  }
+  if (BUAI_UNITS.includes(key)) {
+    // 歩合の「割」「分」「厘」：数のあとに、この順で1回ずつ（`4割5分` `2分5厘`）。
+    // 数を打つ前・同じ字の2度押し・順番の逆もどり（分のあとに割）は受けつけない
+    const v = sansuState.inputVal;
+    if (!v || !/\d$/.test(v) || v.includes('/') || v.includes(':') || v.includes('.')
+        || sansuState.inputWhole || sansuState.inputPhase === 'remain') return;
+    const last = BUAI_UNITS.reduce((m, u, i) => (v.includes(u) ? i : m), -1);
+    if (BUAI_UNITS.indexOf(key) <= last) return;
+    sansuState.inputVal += key;
     updateNumpadPreview(prefix);
     return;
   }
   if (key === 'ratio') {
     // 比の「：」：数のあとに何回でも（3つの比 `3:7:9` があるため）。分数・帯分数・あまりとは併用しない
     const v = sansuState.inputVal;
-    if (!v || v.endsWith(':') || v.endsWith('.') || v.includes('/') || sansuState.inputWhole
+    if (!v || v.endsWith(':') || v.endsWith('.') || v.includes('/') || /[割分厘]/.test(v) || sansuState.inputWhole
         || sansuState.inputPhase === 'remain') return;
     sansuState.inputVal += ':';
     updateNumpadPreview(prefix);
@@ -2955,7 +2976,7 @@ function handleNumpadKey(prefix, key) {
     sansuState.inputRemain += key;
   } else {
     const term = sansuState.inputVal.split(':').pop();   // 比なら最後の項だけを見る
-    if (key === '.' && (term.includes('.') || sansuState.inputVal.includes('/'))) return;
+    if (key === '.' && (term.includes('.') || sansuState.inputVal.includes('/') || /[割分厘]/.test(sansuState.inputVal))) return;
     sansuState.inputVal += key;
   }
   updateNumpadPreview(prefix);
