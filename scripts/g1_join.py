@@ -363,6 +363,12 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             #    「次の時刻のときの長針と短針のなす角度の小さい方を求めなさい」＋「(1) 7時」で
             #    単位の『度』が導入文だけにあり、検査が実物より厳しく止めていた）。
             shown = q_text + (u"" if sole else (it[u"setsumon"].get(u"common") or u""))
+            # ★**図の中の文字も画面に出る**（大問の図＋この小問の図）。グラフのたて軸の「(円)」の
+            #   ように、単位が図にだけ印刷されている問題がある（2026-09-18・第2分冊 No.18 `3-1(1)`
+            #   「10L買ったときの代金はいくらですか」＝単位は軸の「(円)」だけ）。
+            #   見るのは <text> の中身だけ（線や座標の数字は拾わない）
+            for f in item_figs + figs_by_scope.get(qid or slot.get(u"qid") or u"", []):
+                shown += u"".join(re.findall(u"<text[^>]*>([^<]*)</text>", f.get(u"_svg") or u""))
             miss = [t for t in meaning_tokens(ukey) if t and t not in shown]
             # ★単位の字そのものが無くても、**何の量を答えるかが画面に出ている**なら通す。
             #   例：「九角形の内角の和を求めなさい」→ 答え 1260度。『度』の字は無いが
