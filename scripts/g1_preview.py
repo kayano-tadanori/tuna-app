@@ -89,7 +89,10 @@ def render(daimon):
             around = ws(st[u"question"]) + u"|" + ws(x.get(u"intro") or u"")
             for t in re.findall(u">([^<>]+)<", fig or u""):
                 t = ws(t)
-                if len(t) >= 5 and re.search(u"[ぁ-んァ-ヶ一-龥]", t) and t in around:
+                # ★8字以上にしているのは、表の見出し（「ついている」「時間（秒）」など）が
+                #   設問の言葉と重なって誤って拾われたため（2026-09-18・No.9の電球の表）。
+                #   注記の二重表示（「四角形ABCDは平行四辺形」＝12字）は8字以上で拾える
+                if len(t) >= 8 and re.search(u"[ぁ-んァ-ヶ一-龥]", t) and t in around:
                     dupes.append(u"%s: 図の中の文が設問文か導入文にも出ている（%s）" % (x[u"hg"], t[:20]))
         h.append(u'</div>')
         parts.append(u"".join(h))
