@@ -391,6 +391,12 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
         if u"あまり" in ans:
             ans = ans.replace(u"あまり", u"余り")
             notes.append(u"%s: アプリの答えだけ「あまり」→「余り」に言いかえた（原簿は実物のまま）" % hg)
+        # ★「x=7」のように**文字＝数**で印刷された答え（2026-09-19・演習教材 第2分冊 No.13 B6）。
+        #   問いが「x にあてはまる数」なので、**アプリに渡す答えだけ**数にする（原簿は印刷どおり）
+        mx = re.match(u"^\\s*[A-Za-zａ-ｚＡ-Ｚ]\\s*[=＝]\\s*(\\d+(?:\\.\\d+)?(?:/\\d+)?|\\d+と\\d+/\\d+)\\s*$", ans)
+        if mx:
+            notes.append(u"%s: アプリの答えだけ「%s」→「%s」に言いかえた（原簿は実物のまま）" % (hg, ans, mx.group(1)))
+            ans = mx.group(1)
         s = {u"question": q_text, u"answer": ans}
         if st.get(u"choices"):
             s[u"choices"] = st[u"choices"]
