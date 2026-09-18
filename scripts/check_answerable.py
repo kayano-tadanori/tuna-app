@@ -18,6 +18,8 @@ def is_numpad(a):
         re.match(r"^\d+(\.\d+)?$", a) or
         re.match(r"^\d+/\d+$", a) or
         re.match(r"^\d+と\d+/\d+$", a) or
+        # ★比（`4:7` `3:7:9`）はテンキーの「：」キーで打てる（2026-09-19 js/sansu.js isRatioAnswer）
+        re.match(r"^\d+(\.\d+)?([:：]\d+(\.\d+)?)+$", a) or
         ("余り" in a)
     )
 

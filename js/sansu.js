@@ -120,6 +120,14 @@ function isNumpadAnswer(a) {
       || /余り/.test(a);                     // 余りあり
 }
 
+// 比の答え（`4:7` `3:7:9`）。テンキーの「：」キーで打つ（本人判断 2026-09-19）。
+// ★isNumpadAnswer には入れない：既存の比の大問は choices（4択）で作ってあり、
+//   isNumpadAnswer に入れると expandChain がその choices を捨ててしまう。
+//   比でテンキーになるのは「choices を持たない」step だけ。
+function isRatioAnswer(a) {
+  return /^\d+(\.\d+)?([:：]\d+(\.\d+)?)+$/.test(String(a).trim());
+}
+
 // 連鎖問題1件（chain）を、フラットな問題オブジェクトの配列に展開する。
 // 数値答えはchoicesを外してテンキー入力にする
 function expandChain(chain, grade) {
@@ -2299,6 +2307,8 @@ function renderSansuQuiz() {
     numpad.querySelector('.numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
     numpad.querySelector('.numpad-frac').classList.toggle('hidden', !(q.answer && String(q.answer).includes('/')));
     numpad.querySelector('.numpad-mixed').classList.toggle('hidden', !(q.answer && String(q.answer).includes('と')));
+    // ★比の答え（`4:7` `3:7:9`）は「：」キーで打つ（本人判断 2026-09-19：ニセの4択にしない）
+    numpad.querySelector('.numpad-ratio').classList.toggle('hidden', !isRatioAnswer(q.answer));
     sansuState.inputVal = ''; sansuState.inputRemain = ''; sansuState.inputWhole = ''; sansuState.inputPhase = 'main';
     updateNumpadPreview('sq');
     numpad.querySelectorAll('.numpad-btn').forEach(b => b.disabled = false);
@@ -2336,6 +2346,7 @@ function submitSansuAnswer() {
   }
   if (!userAnswer || userAnswer === '余り' || userAnswer === 'と') { showToast('答えを入力してください'); return; }
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
+  if (userAnswer.endsWith(':')) { showToast('「：」のあとの数を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, q.answer);
   document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = true);
@@ -2355,7 +2366,7 @@ function submitChoiceAnswer(chosen, btn) {
 }
 
 function checkSansuAnswer(input, correct) {
-  const normalize = s => String(s).trim().replace(/\s/g, '').replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).toLowerCase();
+  const normalize = s => String(s).trim().replace(/\s/g, '').replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/：/g, ':').toLowerCase();
   return normalize(input) === normalize(correct);
 }
 
@@ -2899,8 +2910,18 @@ function handleNumpadKey(prefix, key) {
   }
   if (key === 'frac') {
     // 分数の「／」：分子入力後に1回だけ・小数とは併用不可
-    if (!sansuState.inputVal || sansuState.inputVal.includes('/') || sansuState.inputVal.includes('.')) return;
+    if (!sansuState.inputVal || sansuState.inputVal.includes('/') || sansuState.inputVal.includes('.')
+        || sansuState.inputVal.includes(':')) return;
     sansuState.inputVal += '/';
+    updateNumpadPreview(prefix);
+    return;
+  }
+  if (key === 'ratio') {
+    // 比の「：」：数のあとに何回でも（3つの比 `3:7:9` があるため）。分数・帯分数・あまりとは併用しない
+    const v = sansuState.inputVal;
+    if (!v || v.endsWith(':') || v.endsWith('.') || v.includes('/') || sansuState.inputWhole
+        || sansuState.inputPhase === 'remain') return;
+    sansuState.inputVal += ':';
     updateNumpadPreview(prefix);
     return;
   }
@@ -2933,7 +2954,8 @@ function handleNumpadKey(prefix, key) {
     if (key === '.' && sansuState.inputRemain.includes('.')) return;
     sansuState.inputRemain += key;
   } else {
-    if (key === '.' && (sansuState.inputVal.includes('.') || sansuState.inputVal.includes('/'))) return;
+    const term = sansuState.inputVal.split(':').pop();   // 比なら最後の項だけを見る
+    if (key === '.' && (term.includes('.') || sansuState.inputVal.includes('/'))) return;
     sansuState.inputVal += key;
   }
   updateNumpadPreview(prefix);
@@ -3173,6 +3195,7 @@ function submitDrillAnswer() {
   else if (sansuState.inputWhole) userAnswer = `${sansuState.inputWhole.trim()}と${sansuState.inputVal.trim()}`;
   if (!userAnswer || userAnswer === '余り' || userAnswer === 'と') { showToast('答えを入力してください'); return; }
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
+  if (userAnswer.endsWith(':')) { showToast('「：」のあとの数を入力してください'); return; }
 
   const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer);
   Snd.answer(correct);
