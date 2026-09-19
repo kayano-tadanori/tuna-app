@@ -39,7 +39,7 @@ const QUESTION_COUNTS = {
 //   ⚠ scripts/sync_question_counts.js が実データから数えて書き戻す。**手で直さない。**
 const EXTRA_COUNTS = {
   kokugo: { chain: 30, daimon: 330 },
-  sansu:  { chain: 501, gachi: 150, daimon: 12887 },
+  sansu:  { chain: 501, gachi: 150, daimon: 12943 },
   rika:   { chain: 260, gachi: 36, daimon: 924 },
   shakai: { chain: 27 },
 };
