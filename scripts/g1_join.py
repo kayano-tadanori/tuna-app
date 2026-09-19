@@ -379,6 +379,12 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
                 notes.append(u"%s step%d: 単位『度』の字は問いかけに無いが、『角』があるので通した"
                              % (hg, i))
                 miss = []
+            # ★「いくつありますか」＝個数を聞く言い方。『個』の字が無くても何を答えるかは消えない
+            #   （2026-09-19・演習教材 第1分冊 No.7 B10(2)）。これも**この1組だけ**（個 ↔ いくつ）
+            if miss == [u"個"] and u"いくつ" in shown:
+                notes.append(u"%s step%d: 単位『個』の字は問いかけに無いが、『いくつ』があるので通した"
+                             % (hg, i))
+                miss = []
             if miss:
                 problems.append(u"%s step%d: 単位「%s」で %r を取り出したのに、問いかけに %s が"
                                 u"出てこない（何の量を答えるのか画面から消える）"

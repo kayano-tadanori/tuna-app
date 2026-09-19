@@ -140232,6 +140232,506 @@
        ],
        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 250\" style=\"display:block;margin:0 auto;max-width:100%\" font-family=\"sans-serif\" font-size=\"20\">\n<text x=\"40\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">A</text>\n<text x=\"90\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">B</text>\n<text x=\"140\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">C</text>\n<text x=\"190\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">D</text>\n<text x=\"240\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">E</text>\n<text x=\"290\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">F</text>\n<text x=\"40\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"90\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"140\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"190\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<text x=\"240\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">5</text>\n<text x=\"290\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">6</text>\n<text x=\"40\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">7</text>\n<text x=\"90\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">8</text>\n<text x=\"140\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">9</text>\n<text x=\"190\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">10</text>\n<text x=\"240\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">11</text>\n<text x=\"290\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">12</text>\n<text x=\"40\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">13</text>\n<text x=\"90\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">14</text>\n<text x=\"140\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">15</text>\n<text x=\"190\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">16</text>\n<text x=\"240\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">17</text>\n<text x=\"290\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">18</text>\n<text x=\"40\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">19</text>\n<text x=\"90\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">20</text>\n<text x=\"140\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">21</text>\n<text x=\"190\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">22</text>\n<text x=\"240\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">23</text>\n<text x=\"290\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">24</text>\n<text x=\"40\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">25</text>\n<text x=\"90\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">26</text>\n<text x=\"140\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">27</text>\n<text x=\"190\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">28</text>\n<text x=\"240\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">29</text>\n<text x=\"290\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">30</text>\n<rect x=\"115\" y=\"83\" width=\"100\" height=\"76\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
       }
+     ],
+     "7": [
+      {
+       "id": "hd5m2nd_e7_1",
+       "src": "HG-8703 原簿・小5 演習教材 第1分冊 No.7 B1",
+       "hg": "HG-8703",
+       "title": "数の並びの規則を読みとる",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 1,
+       "intro": "次の数の並びの規則を読みとり，□にあてはまる数を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 7　11　17　25　□　47",
+         "answer": "35",
+         "meaning": "となりどうしの差を見ると＋4，＋6，＋8，＋10…と2ずつふえている。25の次は＋10なので25＋10＝35。そのあと＋12で47になるのもたしかめよう。"
+        },
+        {
+         "question": "(2) 36　64　□　144",
+         "answer": "100",
+         "meaning": "36＝6×6，64＝8×8，144＝12×12。同じ数を2回かけた数が6，8，…と2ずつふえている。あいだは10×10＝100。"
+        },
+        {
+         "question": "(3) 3　7　10　□　27　44",
+         "answer": "17",
+         "meaning": "3＋7＝10のように、前の2つをたすと次の数になる（フィボナッチ数列と同じ）。7＋10＝17。17＋10＝27，17＋27＝44とうまくつながる。"
+        },
+        {
+         "question": "(4) 1/64　1/32　□　1/8　1/4",
+         "answer": "1/16",
+         "meaning": "1/64の次が1/32（＝2/64）なので2倍ずつふえている。分母を64にそろえると分子は1，2，4，8，16。□は4/64＝1/16。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_2",
+       "src": "HG-8704 原簿・小5 演習教材 第1分冊 No.7 B2",
+       "hg": "HG-8704",
+       "title": "分数の列で何番目か",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の□にあてはまる数を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 4/3，5/5，6/7，7/9，8/11 ……の数の列で，103/201 は□番目です。",
+         "answer": "100",
+         "meaning": "分子は4，5，6，7…と1ずつ、分母は3，5，7…と2ずつふえる。分子だけ見ると、4が1番目なので103は103−4＋1＝100番目。分母も3＋2×99＝201で合う。"
+        },
+        {
+         "question": "(2) 1/2，3/4，5/6，7/8 ……の数の列で，分母と分子の和が103になるのは□番目です。",
+         "answer": "26",
+         "meaning": "分母は2，4，6，8…、分子は分母より1小さい。和が103なら分母は(103＋1)÷2＝52で、分数は51/52。分母が2のとき1番目なので52÷2＝26番目。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_3",
+       "src": "HG-8705 原簿・小5 演習教材 第1分冊 No.7 B3",
+       "hg": "HG-8705",
+       "title": "2ずつへる数列",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 1,
+       "intro": "次のようなきまりで数が並んでいるとき，次の問いに答えなさい。\n576，574，572，570，……",
+       "steps": [
+        {
+         "question": "(1) 480はこの数列の何番目の数ですか。",
+         "answer": "49",
+         "meaning": "576から480まで96へる。1回で2へるので、−2の矢印は96÷2＝48個。数は矢印より1つ多いので48＋1＝49番目。"
+        },
+        {
+         "question": "(2) この数列の248番目の数を求めなさい。",
+         "answer": "82",
+         "meaning": "248番目までの矢印は248−1＝247個。576から2×247＝494へるので576−494＝82。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_4",
+       "src": "HG-8706 原簿・小5 演習教材 第1分冊 No.7 B4",
+       "hg": "HG-8706",
+       "title": "9ずつふえる数列の和",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 1,
+       "intro": "次のようなきまりで数が並んでいるとき，次の問いに答えなさい。\n100，109，118，127，136，……",
+       "steps": [
+        {
+         "question": "(1) 379はこの数列の何番目の数ですか。",
+         "answer": "32",
+         "meaning": "100から379まで279ふえる。＋9の矢印は279÷9＝31個。数は矢印より1つ多いので31＋1＝32番目。"
+        },
+        {
+         "question": "(2) この数列の25番目の数を求めなさい。",
+         "answer": "316",
+         "meaning": "25番目までの矢印は25−1＝24個。100＋9×24＝316。"
+        },
+        {
+         "question": "(3) この数列の17番目までの和を求めなさい。",
+         "answer": "2924",
+         "meaning": "まず17番目は100＋9×16＝244。はじめと終わりを組にすると、どの組も100＋244＝344。それが17個ぶんの半分なので(100＋244)×17÷2＝2924。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_5",
+       "src": "HG-8707 原簿・小5 演習教材 第1分冊 No.7 B5",
+       "hg": "HG-8707",
+       "title": "1からの奇数の和",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の□にあてはまる数を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 1＋3＋5＋7＋9＋11＋13＋15＋17＋19＝□",
+         "answer": "100",
+         "meaning": "1からはじまる奇数をたすと（個数）×（個数）になる（1＝1×1，1＋3＝2×2，1＋3＋5＝3×3…）。1〜19の奇数は(19＋1)÷2＝10個なので10×10＝100。"
+        },
+        {
+         "question": "(2) 1＋3＋5＋7＋……＋97＋99＝□",
+         "answer": "2500",
+         "meaning": "1〜99の奇数は(99＋1)÷2＝50個。だから50×50＝2500。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_6",
+       "src": "HG-8708 原簿・小5 演習教材 第1分冊 No.7 B6",
+       "hg": "HG-8708",
+       "title": "7つの数のまん中は平均",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "7つの整数が小さい方から順に同じ数ずつふえる規則で並んでいます。7つの数を全部たすと658で，いちばん大きい数からいちばん小さい数をひくと42になります。このとき，いちばん小さい数はいくつですか。",
+         "answer": "73",
+         "meaning": "同じ数ずつふえる7つの数では、まん中（4番目）が平均になる。658÷7＝94。いちばん大きい数との差42は、まん中をはさんで左右に同じだけ分かれるので、まん中からいちばん小さい数までは42÷2＝21。94−21＝73。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_7",
+       "src": "HG-8709 原簿・小5 演習教材 第1分冊 No.7 B7",
+       "hg": "HG-8709",
+       "title": "小数第100位の数",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の□にあてはまる数を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 2/13を小数になおしたとき，小数第100位の数は□です。",
+         "answer": "8",
+         "meaning": "2÷13をわり算していくと0.153846153846…で、1，5，3，8，4，6の6個がくりかえす。100÷6＝16あまり4なので、16回くりかえしたあとの4つ目、つまり8。"
+        },
+        {
+         "question": "(2) 16/37を小数になおしたとき，小数第47位の数は□です。",
+         "answer": "3",
+         "meaning": "16÷37＝0.432432…で、4，3，2の3個がくりかえす。47÷3＝15あまり2なので2つ目の3。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_8",
+       "src": "HG-8710 原簿・小5 演習教材 第1分冊 No.7 B8",
+       "hg": "HG-8710",
+       "title": "1＋1，2＋3，3＋5…の式の列",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": "1＋1，2＋3，3＋5，1＋7，2＋9，3＋11，1＋13，2＋15，3＋17，1＋19，……の式の列に関して次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 100番目の式を計算するといくらになりますか。",
+         "answer": "200",
+         "meaning": "式を3つずつ1行に並べると、前の数はどの行も1，2，3。後ろの数は1，3，5，7…と奇数が順に入る。100÷3＝33あまり1なので100番目は34行目の1つ目で前は1。後ろは100番目の奇数で1＋2×99＝199。1＋199＝200。"
+        },
+        {
+         "question": "(2) 計算の結果が65になる式は何番目の式ですか。",
+         "answer": "32",
+         "meaning": "後ろの数はいつも奇数。65から前の数1，2，3をひくと64，63，62で、奇数になるのは前が2のときだけ（2＋63）。63は(63＋1)÷2＝32番目の奇数なので32番目の式。32÷3＝10あまり2で前が2になるのもたしかめよう。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_9",
+       "src": "HG-8711 原簿・小5 演習教材 第1分冊 No.7 B9",
+       "hg": "HG-8711",
+       "title": "4つずつ区切れる数列",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のようなきまりで数が並んでいるとき，次の問いに答えなさい。\n2，4，6，8，3，6，9，12，4，8，12，16，5，10，15，20，……",
+       "steps": [
+        {
+         "question": "(1) この数列の中に25は何回でてきますか。",
+         "answer": "1",
+         "meaning": "4つずつ1行にすると、2列目は1列目の2倍、3列目は3倍、4列目は4倍。25は2でも3でも4でもわれないので、2列目より右には出てこない。1列目（2，3，4，5…）にだけ出るので1回。"
+        },
+        {
+         "question": "(2) 24が3回目にでてくるのはこの数列の何番目ですか。",
+         "answer": "42",
+         "meaning": "24はどの列にも出てくる。4列目，3列目の次、3回目は2列目（4の下の列）。2列目は4，6，8…と2ずつふえるので(24−4)÷2＝10、10＋1＝11行目。10行ぶんで4×10＝40個、11行目の2つ目なので40＋2＝42番目。"
+        },
+        {
+         "question": "(3) この数列の60番目の数を求めなさい。",
+         "answer": "64",
+         "meaning": "60÷4＝15なので、60番目は15行目のいちばん右。4列目は8，12，16…と4ずつふえるので8＋4×(15−1)＝64。"
+        },
+        {
+         "question": "(4) この数列の20番目までの和を求めなさい。",
+         "answer": "200",
+         "meaning": "20番目までは5行ぶん。1行の和は20，30，40，50，60と10ずつふえる。はじめと終わりを組にして(20＋60)×5÷2＝200。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_10",
+       "src": "HG-8712 原簿・小5 演習教材 第1分冊 No.7 B10",
+       "hg": "HG-8712",
+       "title": "フィボナッチ数列と4の倍数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のようなきまりで数が並んでいるとき，次の問いに答えなさい。\n1，1，2，3，5，8，13，21，……",
+       "steps": [
+        {
+         "question": "(1) 15番目の数を求めなさい。",
+         "answer": "610",
+         "meaning": "前の2つをたして次を作る。21の次から34，55，89，144，233，377，610で、15番目は610。"
+        },
+        {
+         "question": "(2) 150番目までに4の倍数はいくつありますか。",
+         "answer": "25",
+         "meaning": "数そのものは大きくなるので、4でわったあまりを調べる。あまりは1，1，2，3，1，0がくりかえす（あまりどうしをたしても次のあまりが出る）。0（4の倍数）は6個ごとに1回なので150÷6＝25個。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_11",
+       "src": "HG-8713 原簿・小5 演習教材 第1分冊 No.7 B11",
+       "hg": "HG-8713",
+       "title": "差が1，2，3…とふえる数列",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のようなきまりで数が並んでいるとき，次の問いに答えなさい。\n1，2，4，7，11，16，……",
+       "steps": [
+        {
+         "question": "(1) 10番目の数を求めなさい。",
+         "answer": "46",
+         "meaning": "差は＋1，＋2，＋3…とふえる。1番目から10番目までは矢印が9本なので、ふえる量は1＋2＋…＋9＝45。1＋45＝46。"
+        },
+        {
+         "question": "(2) 106はこの数列の何番目の数ですか。",
+         "answer": "15",
+         "meaning": "1から106までは105ふえる。1＋2＋…＋□＝105なので(1＋□)×□÷2＝105、(1＋□)×□＝210。となりどうしの数で210になるのは15×14なので□＝14。矢印が14本なら数は14＋1＝15番目。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_12",
+       "src": "HG-8714 原簿・小5 演習教材 第1分冊 No.7 B12",
+       "hg": "HG-8714",
+       "title": "2倍ずつふえる数の和",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の計算をしなさい。",
+       "steps": [
+        {
+         "question": "(1) 10＋20＋40＋80＋……＋1280",
+         "answer": "2550",
+         "meaning": "求める和を①とする。①を2倍した②は20＋40＋…＋1280＋2560で、①と1つずれた同じ並び。②−①をすると20〜1280が消えて、①＝2560−10＝2550。"
+        },
+        {
+         "question": "(2) 1/128＋1/64＋1/32＋……＋1/2＋1",
+         "answer": "1と127/128",
+         "meaning": "和を①として2倍すると②＝1/64＋1/32＋…＋1＋2。②−①で1/64〜1が消え、①＝2−1/128＝1と127/128。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_13",
+       "src": "HG-8715 原簿・小5 演習教材 第1分冊 No.7 C1",
+       "hg": "HG-8715",
+       "title": "三角形のわくに奇数を並べる",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の図のように，三角形のわくの中に1から順に奇数を並べていきます。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 上から3段目までの奇数を全て加えるといくらになりますか。",
+         "answer": "81",
+         "meaning": "図を見ると1段目1個、2段目3個、3段目5個。3段目までで9個の奇数1〜17が並ぶ。1からはじまる奇数の和は（個数）×（個数）なので9×9＝81。"
+        },
+        {
+         "question": "(2) 41は，1から数えて何番目の奇数ですか。",
+         "answer": "21",
+         "meaning": "奇数は1，3，5…と2ずつふえる。41は1から40ふえているので、2ずつの矢印が40÷2＝20本。番号は矢印より1多く21番目。"
+        },
+        {
+         "question": "(3) 11は，上から数えて3段目，左から数えて2番目の数です。11＝(3，2)と表すことにすると，89はどのように表せますか。　［上から数えて何段目］",
+         "answer": "7",
+         "meaning": "89は(89−1)÷2＋1＝45番目の奇数。段ごとの個数は1，3，5…で、n段目までにn×n個。6段目までで6×6＝36個、7段目までだと49個になるので、45番目は7段目にある。"
+        },
+        {
+         "question": "(3) 11は，上から数えて3段目，左から数えて2番目の数です。11＝(3，2)と表すことにすると，89はどのように表せますか。　［左から数えて何番目］",
+         "answer": "9",
+         "meaning": "6段目までで36個並んでいるので、45番目は7段目の45−36＝9個目。だから89＝(7，9)で、左から9番目。"
+        },
+        {
+         "question": "(4) (9，10)と表されるのはどんな数ですか。",
+         "answer": "147",
+         "meaning": "n段目までにはn×n個並ぶ（1＋3＋5＋…はn×n）。8段目までで8×8＝64個。(9，10)は9段目の10個目なので64＋10＝74番目の奇数。1＋2×(74−1)＝147。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 285\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"170.0,12.0 120.0,98.6 220.0,98.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"170.0\" y=\"77.7\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">1</text>\n<polygon points=\"120.0,98.6 70.0,185.2 170.0,185.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"220.0,98.6 170.0,185.2 270.0,185.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"120.0\" y=\"164.3\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">3</text>\n<text x=\"170.0\" y=\"135.5\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">5</text>\n<text x=\"220.0\" y=\"164.3\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">7</text>\n<polygon points=\"70.0,185.2 20.0,271.8 120.0,271.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"170.0,185.2 120.0,271.8 220.0,271.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"270.0,185.2 220.0,271.8 320.0,271.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"70.0\" y=\"250.9\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">9</text>\n<text x=\"120.0\" y=\"222.1\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">11</text>\n<text x=\"170.0\" y=\"250.9\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">13</text>\n<text x=\"220.0\" y=\"222.1\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">15</text>\n<text x=\"270.0\" y=\"250.9\" font-size=\"22\" text-anchor=\"middle\" fill=\"#e8ecf6\">17</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e7_14",
+       "src": "HG-8716 原簿・小5 演習教材 第1分冊 No.7 C2",
+       "hg": "HG-8716",
+       "title": "和から終わりの数を求める",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の□にあてはまる数を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 1＋3＋5＋7＋……＋□＝625",
+         "answer": "49",
+         "meaning": "1からの奇数の和は（個数）×（個数）。625＝25×25なので奇数は25個。25番目の奇数は1＋2×(25−1)＝49。"
+        },
+        {
+         "question": "(2) 1＋2＋3＋4＋……＋□＝3828",
+         "answer": "87",
+         "meaning": "1から□までの和は(1＋□)×□÷2。これが3828なので(1＋□)×□＝7656。となりどうしの数のかけ算で7656になるのは88×87なので□＝87。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_15",
+       "src": "HG-8717 原簿・小5 演習教材 第1分冊 No.7 C3",
+       "hg": "HG-8717",
+       "title": "分子と分母の和が201の分数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": "1/200，3/198，5/196，7/194，9/192……と分数がある規則にしたがって並んでいます。このとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) はじめて1より大きい分数が並ぶのは何番目ですか。",
+         "answer": "51",
+         "meaning": "分子は2ずつふえ、分母は2ずつへるので、分子＋分母はいつも201。1より大きいのは分子が分母より大きいときで、はじめは101/100。分子に注目すると1，3，5…なので(101−1)÷2＋1＝51番目。"
+        },
+        {
+         "question": "(2) 1より小さい分数で，3で約分できるものは何個ありますか。",
+         "answer": "17",
+         "meaning": "1より小さいのは分子が1〜99のとき。201は3の倍数なので、分子が3の倍数なら分母（201−分子）も3の倍数で、必ず3で約分できる。1〜99の奇数で3の倍数は3×1，3×3，…，3×33。1〜33の奇数は17個なので17個。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_16",
+       "src": "HG-8718 原簿・小5 演習教材 第1分冊 No.7 C4",
+       "hg": "HG-8718",
+       "title": "山型にくりかえす数の列",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": "いくつかの数がある規則で，次のように並んでいます。\n1，1，2，1，1，2，3，2，1，1，2，3，4，3，2，1，……\n次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) はじめから150番目に並んでいる数は何ですか。",
+         "answer": "6",
+         "meaning": "1｜1，2，1｜1，2，3，2，1｜…と、いちばん大きい数が1ずつふえる山で区切る。セットの個数は1，3，5，7…の奇数なので、nセット目まででn×n個。150＝12×12＋6なので、13セット目の6番目。13セット目は1，2，3…と上っていくので6。"
+        },
+        {
+         "question": "(2) 14がはじめて出てくるのは，はじめから数えて何番目ですか。",
+         "answer": "183",
+         "meaning": "14がはじめて出るのは14セット目の山のてっぺん、つまり14番目。13セット目まで13×13＝169個なので169＋14＝183番目。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_17",
+       "src": "HG-8719 原簿・小5 演習教材 第1分冊 No.7 C5",
+       "hg": "HG-8719",
+       "title": "1/1，1/2，2/2…の分数の列",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": "ある規則にしたがって並べられた次の分数の列について，□にあてはまる数を求めなさい。\n1/1，1/2，2/2，1/3，2/3，3/3，1/4，2/4，3/4，……",
+       "steps": [
+        {
+         "question": "(1) 1/1から数えて43番目の分数は□で，□番目の分数は5/14です。　［43番目］",
+         "answer": "7/9",
+         "meaning": "分母が同じものを1グループにすると、分母nのグループにはn個ある。1＋2＋…＋8＝36なので8グループまでで36個。43−36＝7なので9グループの7番目で7/9。"
+        },
+        {
+         "question": "(1) 1/1から数えて43番目の分数は□で，□番目の分数は5/14です。　［5/14］",
+         "answer": "96",
+         "meaning": "5/14は分母14のグループの5番目。13グループまでで1＋2＋…＋13＝91個なので91＋5＝96番目。"
+        },
+        {
+         "question": "(2) 1/1から7/7までの分数をすべて加えると□となります。",
+         "answer": "17.5",
+         "meaning": "グループごとの和は1，1.5（1/2＋2/2），2，2.5…と0.5ずつふえ、7グループ目は4。はじめと終わりを組にして(1＋4)×7÷2＝17.5。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_18",
+       "src": "HG-8720 原簿・小5 演習教材 第1分冊 No.7 C6",
+       "hg": "HG-8720",
+       "title": "前2数の和の数列でBを求める",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の数列は，フィボナッチ数列と同じように，前2数の和を次の数とする数列です。それぞれのBにあてはまる数を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) ……，60，A，156，B，……",
+         "answer": "252",
+         "meaning": "前2数の和が次の数なので60＋A＝156、A＝96。BはAと156の和なので96＋156＝252。"
+        },
+        {
+         "question": "(2) ……，74，A，B，296，……",
+         "answer": "185",
+         "meaning": "74＋A＝BなのでBはAより74大きい（差が74）。A＋B＝296なので和が296。和差算で大きいほうのBは(296＋74)÷2＝185。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e7_19",
+       "src": "HG-8721 原簿・小5 演習教材 第1分冊 No.7 C7",
+       "hg": "HG-8721",
+       "title": "正方形で囲んで真ん中が61",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図1，2のように，斜線をひいた正方形のまわりを，これと合同な正方形で囲んでいきます。図1は1回，図2は2回囲んだときのようすを表しています。\n図1，2の場合，それぞれ正方形の中に，図3，4のように，1から順に数字を書き入れます。\n3回以上囲んだときも図3，4に示した方法と同じ方法で，正方形の中に数字を書き入れていくものとします。このようにしていった場合，真ん中の斜線をひいた正方形の中に入る数字が61となるのは，そのまわりを何回囲んだときですか。",
+         "answer": "5",
+         "meaning": "図3では1〜9を書き、真ん中は5。5は最初の1と最後の9のちょうどまん中（平均）で(1＋9)÷2＝5。図4でも真ん中13＝(1＋25)÷2。だから真ん中が61なら最後の数は61×2−1＝121。121＝11×11なので1辺に11個並ぶ。真ん中の1個の左右に5個ずつなので5回囲んだとき。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323 1194\" style=\"display:block;margin:0 auto;max-width:100%\"><svg x=\"56.5\" y=\"0\" width=\"210\" height=\"230\" viewBox=\"0 0 210 230\">\n<text x=\"10\" y=\"22\" font-size=\"16\" fill=\"#e8ecf8\">図1</text>\n<defs><clipPath id=\"cc\"><polygon points=\"104.9,96.6 133.1,124.9 104.9,153.1 76.6,124.9\"/></clipPath></defs>\n<polygon points=\"104.9,96.6 133.1,124.9 104.9,153.1 76.6,124.9\" fill=\"#ffd166\" fill-opacity=\"0.55\"/>\n<g clip-path=\"url(#cc)\" stroke=\"#ffd166\" stroke-width=\"1\">\n<line x1=\"133.1\" y1=\"11.7\" x2=\"20.0\" y2=\"124.9\"/>\n<line x1=\"136.7\" y1=\"15.3\" x2=\"23.5\" y2=\"128.4\"/>\n<line x1=\"140.2\" y1=\"18.8\" x2=\"27.1\" y2=\"131.9\"/>\n<line x1=\"143.7\" y1=\"22.3\" x2=\"30.6\" y2=\"135.5\"/>\n<line x1=\"147.3\" y1=\"25.9\" x2=\"34.1\" y2=\"139.0\"/>\n<line x1=\"150.8\" y1=\"29.4\" x2=\"37.7\" y2=\"142.5\"/>\n<line x1=\"154.4\" y1=\"32.9\" x2=\"41.2\" y2=\"146.1\"/>\n<line x1=\"157.9\" y1=\"36.5\" x2=\"44.7\" y2=\"149.6\"/>\n<line x1=\"161.4\" y1=\"40.0\" x2=\"48.3\" y2=\"153.1\"/>\n<line x1=\"165.0\" y1=\"43.5\" x2=\"51.8\" y2=\"156.7\"/>\n<line x1=\"168.5\" y1=\"47.1\" x2=\"55.4\" y2=\"160.2\"/>\n<line x1=\"172.0\" y1=\"50.6\" x2=\"58.9\" y2=\"163.7\"/>\n<line x1=\"175.6\" y1=\"54.1\" x2=\"62.4\" y2=\"167.3\"/>\n<line x1=\"179.1\" y1=\"57.7\" x2=\"66.0\" y2=\"170.8\"/>\n<line x1=\"182.6\" y1=\"61.2\" x2=\"69.5\" y2=\"174.4\"/>\n<line x1=\"186.2\" y1=\"64.7\" x2=\"73.0\" y2=\"177.9\"/>\n<line x1=\"189.7\" y1=\"68.3\" x2=\"76.6\" y2=\"181.4\"/>\n</g>\n<line x1=\"104.9\" y1=\"40.0\" x2=\"189.7\" y2=\"124.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"104.9\" y1=\"40.0\" x2=\"20.0\" y2=\"124.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"76.6\" y1=\"68.3\" x2=\"161.4\" y2=\"153.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"133.1\" y1=\"68.3\" x2=\"48.3\" y2=\"153.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"48.3\" y1=\"96.6\" x2=\"133.1\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"161.4\" y1=\"96.6\" x2=\"76.6\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"20.0\" y1=\"124.9\" x2=\"104.9\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"189.7\" y1=\"124.9\" x2=\"104.9\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg><svg x=\"0\" y=\"246\" width=\"323\" height=\"343\" viewBox=\"0 0 323 343\">\n<text x=\"10\" y=\"22\" font-size=\"16\" fill=\"#e8ecf8\">図2</text>\n<defs><clipPath id=\"cc\"><polygon points=\"161.4,153.1 189.7,181.4 161.4,209.7 133.1,181.4\"/></clipPath></defs>\n<polygon points=\"161.4,153.1 189.7,181.4 161.4,209.7 133.1,181.4\" fill=\"#ffd166\" fill-opacity=\"0.55\"/>\n<g clip-path=\"url(#cc)\" stroke=\"#ffd166\" stroke-width=\"1\">\n<line x1=\"189.7\" y1=\"68.3\" x2=\"76.6\" y2=\"181.4\"/>\n<line x1=\"193.2\" y1=\"71.8\" x2=\"80.1\" y2=\"185.0\"/>\n<line x1=\"196.8\" y1=\"75.4\" x2=\"83.6\" y2=\"188.5\"/>\n<line x1=\"200.3\" y1=\"78.9\" x2=\"87.2\" y2=\"192.0\"/>\n<line x1=\"203.8\" y1=\"82.4\" x2=\"90.7\" y2=\"195.6\"/>\n<line x1=\"207.4\" y1=\"86.0\" x2=\"94.2\" y2=\"199.1\"/>\n<line x1=\"210.9\" y1=\"89.5\" x2=\"97.8\" y2=\"202.6\"/>\n<line x1=\"214.5\" y1=\"93.0\" x2=\"101.3\" y2=\"206.2\"/>\n<line x1=\"218.0\" y1=\"96.6\" x2=\"104.9\" y2=\"209.7\"/>\n<line x1=\"221.5\" y1=\"100.1\" x2=\"108.4\" y2=\"213.2\"/>\n<line x1=\"225.1\" y1=\"103.6\" x2=\"111.9\" y2=\"216.8\"/>\n<line x1=\"228.6\" y1=\"107.2\" x2=\"115.5\" y2=\"220.3\"/>\n<line x1=\"232.1\" y1=\"110.7\" x2=\"119.0\" y2=\"223.8\"/>\n<line x1=\"235.7\" y1=\"114.2\" x2=\"122.5\" y2=\"227.4\"/>\n<line x1=\"239.2\" y1=\"117.8\" x2=\"126.1\" y2=\"230.9\"/>\n<line x1=\"242.7\" y1=\"121.3\" x2=\"129.6\" y2=\"234.5\"/>\n<line x1=\"246.3\" y1=\"124.9\" x2=\"133.1\" y2=\"238.0\"/>\n</g>\n<line x1=\"161.4\" y1=\"40.0\" x2=\"302.8\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"161.4\" y1=\"40.0\" x2=\"20.0\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"133.1\" y1=\"68.3\" x2=\"274.6\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"189.7\" y1=\"68.3\" x2=\"48.3\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"104.9\" y1=\"96.6\" x2=\"246.3\" y2=\"238.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"218.0\" y1=\"96.6\" x2=\"76.6\" y2=\"238.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"76.6\" y1=\"124.9\" x2=\"218.0\" y2=\"266.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"246.3\" y1=\"124.9\" x2=\"104.9\" y2=\"266.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"48.3\" y1=\"153.1\" x2=\"189.7\" y2=\"294.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"274.6\" y1=\"153.1\" x2=\"133.1\" y2=\"294.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"20.0\" y1=\"181.4\" x2=\"161.4\" y2=\"322.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"302.8\" y1=\"181.4\" x2=\"161.4\" y2=\"322.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg><svg x=\"56.5\" y=\"605\" width=\"210\" height=\"230\" viewBox=\"0 0 210 230\">\n<text x=\"10\" y=\"22\" font-size=\"16\" fill=\"#e8ecf8\">図3</text>\n<defs><clipPath id=\"cc\"><polygon points=\"104.9,96.6 133.1,124.9 104.9,153.1 76.6,124.9\"/></clipPath></defs>\n<polygon points=\"104.9,96.6 133.1,124.9 104.9,153.1 76.6,124.9\" fill=\"#ffd166\" fill-opacity=\"0.55\"/>\n<g clip-path=\"url(#cc)\" stroke=\"#ffd166\" stroke-width=\"1\">\n<line x1=\"133.1\" y1=\"11.7\" x2=\"20.0\" y2=\"124.9\"/>\n<line x1=\"136.7\" y1=\"15.3\" x2=\"23.5\" y2=\"128.4\"/>\n<line x1=\"140.2\" y1=\"18.8\" x2=\"27.1\" y2=\"131.9\"/>\n<line x1=\"143.7\" y1=\"22.3\" x2=\"30.6\" y2=\"135.5\"/>\n<line x1=\"147.3\" y1=\"25.9\" x2=\"34.1\" y2=\"139.0\"/>\n<line x1=\"150.8\" y1=\"29.4\" x2=\"37.7\" y2=\"142.5\"/>\n<line x1=\"154.4\" y1=\"32.9\" x2=\"41.2\" y2=\"146.1\"/>\n<line x1=\"157.9\" y1=\"36.5\" x2=\"44.7\" y2=\"149.6\"/>\n<line x1=\"161.4\" y1=\"40.0\" x2=\"48.3\" y2=\"153.1\"/>\n<line x1=\"165.0\" y1=\"43.5\" x2=\"51.8\" y2=\"156.7\"/>\n<line x1=\"168.5\" y1=\"47.1\" x2=\"55.4\" y2=\"160.2\"/>\n<line x1=\"172.0\" y1=\"50.6\" x2=\"58.9\" y2=\"163.7\"/>\n<line x1=\"175.6\" y1=\"54.1\" x2=\"62.4\" y2=\"167.3\"/>\n<line x1=\"179.1\" y1=\"57.7\" x2=\"66.0\" y2=\"170.8\"/>\n<line x1=\"182.6\" y1=\"61.2\" x2=\"69.5\" y2=\"174.4\"/>\n<line x1=\"186.2\" y1=\"64.7\" x2=\"73.0\" y2=\"177.9\"/>\n<line x1=\"189.7\" y1=\"68.3\" x2=\"76.6\" y2=\"181.4\"/>\n</g>\n<line x1=\"104.9\" y1=\"40.0\" x2=\"189.7\" y2=\"124.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"104.9\" y1=\"40.0\" x2=\"20.0\" y2=\"124.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"76.6\" y1=\"68.3\" x2=\"161.4\" y2=\"153.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"133.1\" y1=\"68.3\" x2=\"48.3\" y2=\"153.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"48.3\" y1=\"96.6\" x2=\"133.1\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"161.4\" y1=\"96.6\" x2=\"76.6\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"20.0\" y1=\"124.9\" x2=\"104.9\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"189.7\" y1=\"124.9\" x2=\"104.9\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"104.9\" y=\"74.3\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">1</text>\n<text x=\"76.6\" y=\"102.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">2</text>\n<text x=\"133.1\" y=\"102.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">3</text>\n<text x=\"48.3\" y=\"130.9\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">4</text>\n<text x=\"104.9\" y=\"130.9\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">5</text>\n<text x=\"161.4\" y=\"130.9\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">6</text>\n<text x=\"76.6\" y=\"159.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">7</text>\n<text x=\"133.1\" y=\"159.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">8</text>\n<text x=\"104.9\" y=\"187.4\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">9</text>\n</svg><svg x=\"0\" y=\"851\" width=\"323\" height=\"343\" viewBox=\"0 0 323 343\">\n<text x=\"10\" y=\"22\" font-size=\"16\" fill=\"#e8ecf8\">図4</text>\n<defs><clipPath id=\"cc\"><polygon points=\"161.4,153.1 189.7,181.4 161.4,209.7 133.1,181.4\"/></clipPath></defs>\n<polygon points=\"161.4,153.1 189.7,181.4 161.4,209.7 133.1,181.4\" fill=\"#ffd166\" fill-opacity=\"0.55\"/>\n<g clip-path=\"url(#cc)\" stroke=\"#ffd166\" stroke-width=\"1\">\n<line x1=\"189.7\" y1=\"68.3\" x2=\"76.6\" y2=\"181.4\"/>\n<line x1=\"193.2\" y1=\"71.8\" x2=\"80.1\" y2=\"185.0\"/>\n<line x1=\"196.8\" y1=\"75.4\" x2=\"83.6\" y2=\"188.5\"/>\n<line x1=\"200.3\" y1=\"78.9\" x2=\"87.2\" y2=\"192.0\"/>\n<line x1=\"203.8\" y1=\"82.4\" x2=\"90.7\" y2=\"195.6\"/>\n<line x1=\"207.4\" y1=\"86.0\" x2=\"94.2\" y2=\"199.1\"/>\n<line x1=\"210.9\" y1=\"89.5\" x2=\"97.8\" y2=\"202.6\"/>\n<line x1=\"214.5\" y1=\"93.0\" x2=\"101.3\" y2=\"206.2\"/>\n<line x1=\"218.0\" y1=\"96.6\" x2=\"104.9\" y2=\"209.7\"/>\n<line x1=\"221.5\" y1=\"100.1\" x2=\"108.4\" y2=\"213.2\"/>\n<line x1=\"225.1\" y1=\"103.6\" x2=\"111.9\" y2=\"216.8\"/>\n<line x1=\"228.6\" y1=\"107.2\" x2=\"115.5\" y2=\"220.3\"/>\n<line x1=\"232.1\" y1=\"110.7\" x2=\"119.0\" y2=\"223.8\"/>\n<line x1=\"235.7\" y1=\"114.2\" x2=\"122.5\" y2=\"227.4\"/>\n<line x1=\"239.2\" y1=\"117.8\" x2=\"126.1\" y2=\"230.9\"/>\n<line x1=\"242.7\" y1=\"121.3\" x2=\"129.6\" y2=\"234.5\"/>\n<line x1=\"246.3\" y1=\"124.9\" x2=\"133.1\" y2=\"238.0\"/>\n</g>\n<line x1=\"161.4\" y1=\"40.0\" x2=\"302.8\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"161.4\" y1=\"40.0\" x2=\"20.0\" y2=\"181.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"133.1\" y1=\"68.3\" x2=\"274.6\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"189.7\" y1=\"68.3\" x2=\"48.3\" y2=\"209.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"104.9\" y1=\"96.6\" x2=\"246.3\" y2=\"238.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"218.0\" y1=\"96.6\" x2=\"76.6\" y2=\"238.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"76.6\" y1=\"124.9\" x2=\"218.0\" y2=\"266.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"246.3\" y1=\"124.9\" x2=\"104.9\" y2=\"266.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"48.3\" y1=\"153.1\" x2=\"189.7\" y2=\"294.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"274.6\" y1=\"153.1\" x2=\"133.1\" y2=\"294.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"20.0\" y1=\"181.4\" x2=\"161.4\" y2=\"322.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"302.8\" y1=\"181.4\" x2=\"161.4\" y2=\"322.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"161.4\" y=\"74.3\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">1</text>\n<text x=\"133.1\" y=\"102.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">2</text>\n<text x=\"189.7\" y=\"102.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">3</text>\n<text x=\"104.9\" y=\"130.9\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">4</text>\n<text x=\"161.4\" y=\"130.9\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">5</text>\n<text x=\"218.0\" y=\"130.9\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">6</text>\n<text x=\"76.6\" y=\"159.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">7</text>\n<text x=\"133.1\" y=\"159.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">8</text>\n<text x=\"189.7\" y=\"159.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">9</text>\n<text x=\"246.3\" y=\"159.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">10</text>\n<text x=\"48.3\" y=\"187.4\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">11</text>\n<text x=\"104.9\" y=\"187.4\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">12</text>\n<text x=\"161.4\" y=\"187.4\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">13</text>\n<text x=\"218.0\" y=\"187.4\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">14</text>\n<text x=\"274.6\" y=\"187.4\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">15</text>\n<text x=\"76.6\" y=\"215.7\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">16</text>\n<text x=\"133.1\" y=\"215.7\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">17</text>\n<text x=\"189.7\" y=\"215.7\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">18</text>\n<text x=\"246.3\" y=\"215.7\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">19</text>\n<text x=\"104.9\" y=\"244.0\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">20</text>\n<text x=\"161.4\" y=\"244.0\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">21</text>\n<text x=\"218.0\" y=\"244.0\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">22</text>\n<text x=\"133.1\" y=\"272.3\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">23</text>\n<text x=\"189.7\" y=\"272.3\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">24</text>\n<text x=\"161.4\" y=\"300.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf8\">25</text>\n</svg></svg>"
+      },
+      {
+       "id": "hd5m2nd_e7_20",
+       "src": "HG-8722 原簿・小5 演習教材 第1分冊 No.7 C8",
+       "hg": "HG-8722",
+       "title": "正方形がふくらむ数の表",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": "図のように，整数を並べていくとき，上から3番目，左から2番目にある数6を(3，2)＝6と表します。\n次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) (A，B)＝70のとき，Aにあてはまる数を求めなさい。",
+         "answer": "9",
+         "meaning": "表の左上から1，4，9，16と見ると、n×nの正方形ができるごとにn×nまで並ぶ。そのあと次の段が左から並びはじめる。70＝8×8＋6なので、1辺8の正方形（64個）の次、9段目の左から6番目。(9，6)なのでA＝9。"
+        },
+        {
+         "question": "(2) (11，5)はどんな数を表しますか。",
+         "answer": "105",
+         "meaning": "(11，5)は11段目の左から5番目。11段目は1辺10の正方形（10×10＝100個）ができたあと、左から101，102…と並ぶので100＋5＝105。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"30\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">1</text>\n<text x=\"90\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">4</text>\n<text x=\"150\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">9</text>\n<text x=\"210\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">16</text>\n<circle cx=\"270\" cy=\"24\" r=\"2.5\" fill=\"#e8ecf8\"/>\n<text x=\"30\" y=\"66\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">2</text>\n<text x=\"90\" y=\"66\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">3</text>\n<text x=\"150\" y=\"66\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">8</text>\n<text x=\"210\" y=\"66\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">15</text>\n<circle cx=\"270\" cy=\"60\" r=\"2.5\" fill=\"#e8ecf8\"/>\n<text x=\"30\" y=\"102\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">5</text>\n<text x=\"90\" y=\"102\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">6</text>\n<text x=\"150\" y=\"102\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">7</text>\n<text x=\"210\" y=\"102\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">14</text>\n<text x=\"30\" y=\"138\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">10</text>\n<text x=\"90\" y=\"138\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">11</text>\n<text x=\"150\" y=\"138\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">12</text>\n<text x=\"210\" y=\"138\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">13</text>\n<circle cx=\"270\" cy=\"132\" r=\"2.5\" fill=\"#e8ecf8\"/>\n<text x=\"30\" y=\"174\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">17</text>\n<text x=\"90\" y=\"174\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">18</text>\n<text x=\"150\" y=\"174\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf8\">19</text>\n<circle cx=\"210\" cy=\"168\" r=\"2.5\" fill=\"#e8ecf8\"/>\n<circle cx=\"270\" cy=\"168\" r=\"2.5\" fill=\"#e8ecf8\"/>\n</svg>"
+      }
      ]
     }
    },
