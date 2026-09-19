@@ -11,8 +11,8 @@ import json
 import math
 from pathlib import Path
 
-from fold2d import (FoldState, xf_apply, xf_inv_apply, point_in_polygon,
-                    side_of_line, split_polygon)
+from fold2d import (FoldState, xf_apply, xf_inv_apply, xf_compose, xf_is_flipped, point_in_polygon,
+                    side_of_line, split_polygon, shared_edge, reflect_point, reflect_affine)
 
 HERE = Path(__file__).resolve().parent
 SCHEMA = json.loads((HERE / 'origami_recipe.schema.json').read_text(encoding='utf-8'))
@@ -77,7 +77,7 @@ def schema_check(value, rule, path='$'):
 def validate(recipe):
     if isinstance(recipe, dict) and isinstance(recipe.get('steps'), list):
         for i, step in enumerate(recipe['steps']):
-            if isinstance(step, dict) and step.get('op') not in ('fold', 'crease', 'flip'):
+            if isinstance(step, dict) and step.get('op') not in ('fold', 'crease', 'flip', 'reverse'):
                 if step.get('op') == 'petal':
                     raise RecipeError(f'steps[{i}] ({step.get("diagramStep", "?")}): unsupported operation "petal" (petal fold is a version 2 step; this reader does not replay it)')
                 raise RecipeError(f'steps[{i}] ({step.get("diagramStep", "?")}): unsupported operation {step.get("op")!r}; squash/open-pocket are not supported in v1')
@@ -88,7 +88,9 @@ def validate(recipe):
             raise RecipeError(f'steps[{i}].id: duplicate step ID')
         seen.add(step['id'])
         allowed = {'id', 'diagramStep', 'op', 'instruction'} | (
-            {'axis'} if step['op'] == 'flip' else {'kind', 'reference', 'line', 'movingSidePoint', 'targets'})
+            {'axis'} if step['op'] == 'flip' else
+            {'reference', 'line', 'movingSidePoint', 'targets', 'hinge'} if step['op'] == 'reverse' else
+            {'kind', 'reference', 'line', 'movingSidePoint', 'targets'})
         if set(step) - allowed:
             raise RecipeError(f'steps[{i}]: fields do not match operation')
     return recipe
@@ -139,6 +141,209 @@ def assign_faces(state, previous, step, a, b):
         panel['recipeFace'] = provenance
 
 
+# ---------------------------------------------------------------------------
+# 中割り（op:'reverse'）の独立した再生（2026-09-19・recipe_crane13.md 第24段）。
+# freefold_engine.js とは別に書いた照合用の読み手。**JS の結び（bonds）は使わない**：
+#   紙のつながり＝素材の形（原紙座標）で辺を共有する2面／背＝hinge.faceIds の2面が素材で共有する辺そのもの。
+# 決めること：背の引き直しと seg の照合・頂点（線が背の線分の内側を横切る）・背の両側（背の線の片側の内部へ入る
+#   つながりだけをたどる）・フラップが両側にまたがり全層を二つに分けること・先の部分は線での鏡・
+#   入れ子（各側の動いた面は自分の側の内側へ順を逆に／下の側の先は上の側の先の下）・背の先の区間の反転。
+# ⚠ foldableSet の関門（下に紙・裂け）はここでは見ない＝成立の判定は engine。ここは「成立した手の結果」を独立に作って照合する。
+# ---------------------------------------------------------------------------
+REV_TOL = 1e-9
+
+
+def _centroid(poly):
+    return (sum(q[0] for q in poly) / len(poly), sum(q[1] for q in poly) / len(poly))
+
+
+def _area(poly):
+    return abs(sum(poly[i][0] * poly[(i + 1) % len(poly)][1] - poly[(i + 1) % len(poly)][0] * poly[i][1]
+                   for i in range(len(poly)))) / 2
+
+
+def _clip_convex(subject, clip):
+    """凸多角形どうしの共通部分（Sutherland–Hodgman）。向きは clip の符号付き面積で合わせる。"""
+    sgn = 1 if sum(clip[i][0] * clip[(i + 1) % len(clip)][1] - clip[(i + 1) % len(clip)][0] * clip[i][1]
+                   for i in range(len(clip))) > 0 else -1
+    out = list(subject)
+    for i in range(len(clip)):
+        a, b = clip[i], clip[(i + 1) % len(clip)]
+        inp, out = out, []
+        if not inp:
+            break
+        for j in range(len(inp)):
+            p, q = inp[j], inp[(j + 1) % len(inp)]
+            sp, sq = sgn * side_of_line(p, a, b), sgn * side_of_line(q, a, b)
+            if sp >= 0:
+                out.append(p)
+            if (sp >= 0) != (sq >= 0):
+                t = sp / (sp - sq)
+                out.append((p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t))
+    return out if len(out) >= 3 else None
+
+
+def overlap_area(p, q):
+    c = _clip_convex(p, q)
+    return _area(c) if c else 0.0
+
+
+def _material_adjacency(panels):
+    """紙のつながり：素材の形で辺を共有する2面（その共有辺＝素材座標）。"""
+    src = [source_polygon(p) for p in panels]
+    adj = {i: [] for i in range(len(panels))}
+    for i in range(len(panels)):
+        for j in range(i + 1, len(panels)):
+            e = shared_edge(src[i], src[j])
+            if e:
+                adj[i].append((j, e))
+                adj[j].append((i, e))
+    return adj
+
+
+def _side_set(panels, adj, start, a, b):
+    """start の面から、背の線 a-b の start の側の内部へ入るつながりだけをたどって集める。"""
+    L = math.dist(a, b)
+    s0 = 1 if side_of_line(_centroid(panels[start]['poly']), a, b) > 0 else -1
+    seen, stack = {start}, [start]
+    while stack:
+        i = stack.pop()
+        for j, e in adj[i]:
+            if j in seen:
+                continue
+            c = [xf_apply(panels[i]['xf'], q) for q in e]
+            d = [s0 * side_of_line(q, a, b) / L for q in c]
+            if d[0] <= REV_TOL and d[1] <= REV_TOL:
+                continue                    # 背の線の上か、反対側
+            if d[0] > REV_TOL and d[1] > REV_TOL:
+                inside = math.dist(*c)
+            else:                           # 片端だけ内部：内部に入っている長さ
+                k = 0 if d[0] > REV_TOL else 1
+                t = d[k] / (d[k] - d[1 - k])
+                x = (c[k][0] + (c[1 - k][0] - c[k][0]) * t, c[k][1] + (c[1 - k][1] - c[k][1]) * t)
+                inside = math.dist(c[k], x)
+            if inside > 1e-7:
+                seen.add(j)
+                stack.append(j)
+    return seen
+
+
+def _static_side(pa, pb):
+    """畳まれた結び a|b で、b が a の表の側(+1)か裏の側(-1)か。開いていれば 0。"""
+    if xf_is_flipped(pa['xf']) == xf_is_flipped(pb['xf']):
+        return 0
+    return (1 if pb['layer'] > pa['layer'] else -1) * (-1 if xf_is_flipped(pa['xf']) else 1)
+
+
+def reverse_step(panels, step, step_index, ratio=1.0):
+    """中割りの1手。返すのは (新しい面の並び, 情報)。層は重なりの上下から振り直す（番号の値は照合しない）。"""
+    by_id = {p['recipeFace']['faceId']: i for i, p in enumerate(panels)}
+    reference = resolve(panels, step['reference'])
+    targets = [resolve(panels, ref) for ref in step['targets']]
+    if len({p['recipeFace']['faceId'] for p in targets}) != len(targets):
+        raise RecipeError('duplicate targets')
+    if reference not in targets:
+        raise RecipeError('reference face must be a target')
+    def current(pt):
+        return xf_apply(reference['xf'], (pt[0], pt[1] / ratio))
+    a, b = map(current, step['line'])
+    moving = current(step['movingSidePoint'])
+    if side_of_line(moving, a, b) > 0:
+        a, b = b, a
+    # 背：hinge.faceIds の2面が素材で共有する辺。保存した seg はそれと一致すること（識別の照合だけ）
+    h = step['hinge']
+    if any(fid not in by_id for fid in h['faceIds']):
+        raise RecipeError('hinge faces are not in the current paper')
+    ix, iy = (by_id[fid] for fid in h['faceIds'])
+    px, py = panels[ix], panels[iy]
+    e = shared_edge(source_polygon(px), source_polygon(py))
+    if not e:
+        raise RecipeError('hinge faces do not share an edge')
+    seg = [tuple(q) for q in h['seg']]
+    if not any(all(math.dist(seg[k], e[m[k]]) <= 1e-12 for k in (0, 1)) for m in ((0, 1), (1, 0))):
+        raise RecipeError('hinge seg does not match the shared edge of its faces')
+    cur = [xf_apply(px['xf'], q) for q in seg]
+    if max(math.dist(cur[k], xf_apply(py['xf'], seg[k])) for k in (0, 1)) > 1e-7:
+        raise RecipeError('hinge seg does not coincide on both faces')
+    if xf_is_flipped(px['xf']) == xf_is_flipped(py['xf']):
+        raise RecipeError('hinge is open (not folded)')
+    # 頂点：線が背の線分の内側を横切る
+    u, v = side_of_line(cur[0], a, b), side_of_line(cur[1], a, b)
+    L = math.dist(a, b)
+    if not ((u / L > REV_TOL and v / L < -REV_TOL) or (u / L < -REV_TOL and v / L > REV_TOL)):
+        raise RecipeError('the line does not cross the hinge (vertex outside)')
+    t = u / (u - v)
+    vertex = (cur[0][0] + (cur[1][0] - cur[0][0]) * t, cur[0][1] + (cur[1][1] - cur[0][1]) * t)
+    # 背の両側
+    adj = _material_adjacency(panels)
+    X, Y = _side_set(panels, adj, ix, *cur), _side_set(panels, adj, iy, *cur)
+    if iy in X or ix in Y or X & Y:
+        raise RecipeError('both sides of the hinge are connected elsewhere (loop)')
+    tids = {by_id[p['recipeFace']['faceId']] for p in targets}
+    if ix not in tids or iy not in tids or not tids <= (X | Y):
+        raise RecipeError('flap is not joined by the hinge')
+    if not (tids & X) or not (tids & Y):
+        raise RecipeError('flap is not split across the hinge')
+    lower = X if px['layer'] < py['layer'] else Y
+    R = reflect_affine(a, b)
+    new, info = [], []   # info[k] = (moved, side ∈ {'L','U',None}, 元の層)
+    for i, p in enumerate(panels):
+        side = ('L' if i in lower else 'U') if i in (X | Y) else None
+        if i not in tids:
+            new.append(p)
+            info.append((False, side, p['layer']))
+            continue
+        keep, cut = split_polygon(p['poly'], a, b)
+        if not (keep and cut and _area(keep) > 1e-9 and _area(cut) > 1e-9):
+            raise RecipeError('the line does not cross every layer of the flap')
+        rf = p['recipeFace']
+        k = dict(p, poly=keep, recipeFace={'faceId': rf['faceId'] + f'/{step["id"]}.keep', 'layerPath': rf['layerPath'] + [{'stepId': step['id'], 'side': 'keep'}]})
+        c = dict(p, poly=[reflect_point(q, a, b) for q in cut], xf=xf_compose(R, p['xf']), hist=p.get('hist', ()) + (step_index,), pre_xf=p['xf'],
+                 recipeFace={'faceId': rf['faceId'] + f'/{step["id"]}.cut', 'layerPath': rf['layerPath'] + [{'stepId': step['id'], 'side': 'cut'}]})
+        new += [k, c]
+        info += [(False, side, p['layer']), (True, side, p['layer'])]
+    # 入れ子：重なり（面積あり）の組ごとに上下を決め、元の層を優先した順に並べる
+    n = len(new)
+    below = {i: set() for i in range(n)}       # below[j] ∋ i ＝ i が j の下
+    for i in range(n):
+        for j in range(i + 1, n):
+            if overlap_area(new[i]['poly'], new[j]['poly']) <= 1e-8:
+                continue
+            (mi, si, li), (mj, sj, lj) = info[i], info[j]
+            if not mi and not mj:
+                lo = i if li < lj else j if lj < li else None
+            elif mi and mj:
+                if si != sj:
+                    lo = i if si == 'L' else j
+                else:
+                    lo = i if li > lj else j if lj > li else None   # 同じ側は順を逆に
+            else:
+                m, o = (i, j) if mi else (j, i)
+                so = info[o][1]
+                lo = o if so == 'L' else m if so == 'U' else (o if info[o][2] < info[m][2] else m)
+            if lo is not None:
+                hi = j if lo == i else i
+                below[hi].add(lo)
+    order, placed = [], set()
+    while len(order) < n:
+        ready = [k for k in range(n) if k not in placed and below[k] <= placed]
+        if not ready:
+            raise RecipeError('nesting order has a cycle')
+        k = min(ready, key=lambda k: (info[k][2] + (.5 if info[k][0] else 0), k))
+        order.append(k)
+        placed.add(k)
+    for r, k in enumerate(order):
+        new[k] = dict(new[k], layer=r)
+    # 背の先の区間の反転：動いた2面（x・y の先の部分）の静的な側が、元の x|y から入れかわること
+    fx_cut = next(q for q in new if q['recipeFace']['faceId'] == px['recipeFace']['faceId'] + f'/{step["id"]}.cut')
+    fy_cut = next(q for q in new if q['recipeFace']['faceId'] == py['recipeFace']['faceId'] + f'/{step["id"]}.cut')
+    before, after = _static_side(px, py), _static_side(fx_cut, fy_cut)
+    if not before or not after or before == after:
+        raise RecipeError('the hinge beyond the vertex is not reversed')
+    return new, {'vertex': vertex, 'reversed': (fx_cut['recipeFace']['faceId'], fy_cut['recipeFace']['faceId']),
+                 'sides': (len(X), len(Y))}
+
+
 def replay(recipe):
     validate(recipe)
     ratio = recipe['paper']['aspectRatio']
@@ -147,7 +352,11 @@ def replay(recipe):
     frames = [copy.deepcopy(state.panels)]
     for i, step in enumerate(recipe['steps']):
         try:
-            if step['op'] == 'flip':
+            if step['op'] == 'reverse':
+                state.panels, _ = reverse_step(state.panels, step, len(state.steps), ratio)
+                state.steps.append({'name': step['instruction'], 'kind': None, 'op': 'reverse', 'partial': True})
+                state._snap()
+            elif step['op'] == 'flip':
                 state.flip(step['axis'])
             else:
                 reference = resolve(state.panels, step['reference'])
@@ -187,6 +396,8 @@ def replay(recipe):
 
 
 def convert(recipe):
+    if any(s['op'] == 'reverse' for s in recipe['steps']):
+        raise RecipeError('convert does not compile reverse (inside reverse fold) yet; replay() reads it')
     from to_work_js import to_work
     state, frames = replay(recipe)
     meta = recipe['work']

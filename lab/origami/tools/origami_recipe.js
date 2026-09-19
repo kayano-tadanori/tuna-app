@@ -37,14 +37,14 @@ globalThis.OrigamiRecipe = (() => {
   }
   function validate(recipe,schema) {
     if (Array.isArray(recipe?.steps)) recipe.steps.forEach((s,i)=> {
-      if (s && !['fold','crease','flip'].includes(s.op)) fail(`steps[${i}] / 図${s.diagramStep??'?'}: 未対応の操作 ${s.op}（つぶし折り・袋を開く操作は第1段階では未対応）`);
+      if (s && !['fold','crease','flip','reverse'].includes(s.op)) fail(`steps[${i}] / 図${s.diagramStep??'?'}: 未対応の操作 ${s.op}（つぶし折り・袋を開く操作は第1段階では未対応）`);
     });
     check(recipe,schema,schema);
     const ids=new Set();
     recipe.steps.forEach((s,i)=> {
       if (ids.has(s.id)) fail(`steps[${i}].id: duplicate step ID`);
       ids.add(s.id);
-      const allowed=['id','diagramStep','op','instruction',...(s.op==='flip'?['axis']:['kind','reference','line','movingSidePoint','targets'])];
+      const allowed=['id','diagramStep','op','instruction',...(s.op==='flip'?['axis']:s.op==='reverse'?['reference','line','movingSidePoint','targets','hinge']:['kind','reference','line','movingSidePoint','targets'])];
       if (Object.keys(s).some(k=>!allowed.includes(k))) fail(`steps[${i}]: fields do not match operation`);
     });
     return recipe;
@@ -115,6 +115,7 @@ globalThis.OrigamiRecipe = (() => {
       const timeline=[state.clone()];
       recipe.steps.forEach((s,i)=> {
         try {
+          if(s.op==='reverse') fail('中割り（op:reverse）はこの読み手では再生しません（freefold_engine の再生器が読みます）');
           if(s.op==='flip') state.flip(s.axis);
           else {
             const ref=resolve(state.panels,s.reference), targets=s.targets.map(r=>resolve(state.panels,r));

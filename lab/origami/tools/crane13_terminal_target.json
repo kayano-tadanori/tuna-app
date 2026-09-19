@@ -1,0 +1,2409 @@
+{
+"condition": "L1-O1・点検した規則・動かない紙の上下は stackAt・(c) は点ごと",
+"names": {
+"paper/s1.keep/s2.keep/s5.keep/s7.keep/s8.keep/s23.keep": "胴-1c",
+"paper/s1.keep/s2.keep/s5.keep/s7.keep/s8.keep/s23.cut": "胴9",
+"paper/s1.keep/s2.keep/s5.keep/s7.keep/s8.cut/s23.keep": "胴-3c",
+"paper/s1.keep/s2.keep/s5.keep/s7.keep/s8.cut/s23.cut": "胴12",
+"paper/s1.keep/s2.keep/s5.keep/s7.cut/s23.keep": "胴0c",
+"paper/s1.keep/s2.keep/s5.keep/s7.cut/s23.cut": "胴7",
+"paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep/s23.keep": "胴-1b",
+"paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.keep/s23.cut": "胴10",
+"paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut/s23.keep": "胴-2c",
+"paper/s1.keep/s2.keep/s5.cut/s7.keep/s8.cut/s23.cut": "胴11",
+"paper/s1.keep/s2.keep/s5.cut/s7.cut/s23.keep": "胴0b",
+"paper/s1.keep/s2.keep/s5.cut/s7.cut/s23.cut": "胴8",
+"paper/s1.keep/s2.cut/s3.cut/s8.keep/s14.keep/s19.keep": "胴-2b",
+"paper/s1.keep/s2.cut/s3.cut/s8.keep/s14.keep/s19.cut": "胴-13",
+"paper/s1.keep/s2.cut/s3.cut/s8.keep/s14.cut/s19.keep": "胴-3b",
+"paper/s1.keep/s2.cut/s3.cut/s8.keep/s14.cut/s19.cut": "胴-12",
+"paper/s1.keep/s2.cut/s3.cut/s8.cut/s19.keep": "胴-4b",
+"paper/s1.keep/s2.cut/s3.cut/s8.cut/s19.cut": "胴-11",
+"paper/s1.keep/s2.cut/s3.keep/s8.keep/s14.keep/s19.keep": "胴-6b",
+"paper/s1.keep/s2.cut/s3.keep/s8.keep/s14.keep/s19.cut": "胴-9",
+"paper/s1.keep/s2.cut/s3.keep/s8.keep/s14.cut/s19.keep": "胴-7b",
+"paper/s1.keep/s2.cut/s3.keep/s8.keep/s14.cut/s19.cut": "胴-8",
+"paper/s1.keep/s2.cut/s3.keep/s8.cut/s19.keep": "胴-5b",
+"paper/s1.keep/s2.cut/s3.keep/s8.cut/s19.cut": "胴-10",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip": "先-1",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base": "元-1",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip": "先3",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base": "元3",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep": "胴-3a",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut": "胴6",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip": "先0",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base": "元0",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip": "先1",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base": "元1",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep": "胴-1a",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut": "胴4",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep": "胴-2a",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut": "胴5",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep": "胴0a",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut": "胴2",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep": "胴-6a",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut": "胴-15",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep": "胴-7a",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut": "胴-14",
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep": "胴-5a",
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut": "胴-16",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip": "先-2",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base": "元-2",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip": "先-19",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base": "元-19",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip": "先-3",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base": "元-3",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip": "先-18",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base": "元-18",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep": "胴-4a",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut": "胴-17"
+},
+"above": [
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+1
+],
+[
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+"paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+-1
+]
+],
+"bonds": [
+{
+"bond": "cut:paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep",
+"kind": "crease",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+"front0": null,
+"front1": -1
+},
+{
+"bond": "cut:paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut",
+"kind": "crease",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"front0": null,
+"front1": 1
+},
+{
+"bond": "cut:paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep",
+"kind": "crease",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"front0": null,
+"front1": 1
+},
+{
+"bond": "cut:paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut",
+"kind": "crease",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"front0": null,
+"front1": -1
+},
+{
+"bond": "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep",
+"kind": "crease",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"front0": null,
+"front1": -1
+},
+{
+"bond": "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut",
+"kind": "crease",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"front0": null,
+"front1": 1
+},
+{
+"bond": "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep",
+"kind": "crease",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"front0": null,
+"front1": 1
+},
+{
+"bond": "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut",
+"kind": "crease",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"front0": null,
+"front1": -1
+},
+{
+"bond": "b5",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b5",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b3@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"front0": -1,
+"front1": 1
+},
+{
+"bond": "b3@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b3",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b7",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b7",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b8@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b8@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b9",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b9",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b17",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b17",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b18",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b18",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b22",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b22",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b23@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b23@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b30",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.keep/s20.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b31",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b32",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.cut/s8.cut/s20.cut",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b33@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b33@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b34@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b34@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b35",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+"b": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b36@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b36@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b37",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b38@0",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b38@1",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+"b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b39",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.keep/s22.cut",
+"front0": 1,
+"front1": 1
+},
+{
+"bond": "b40",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.keep/s8.cut/s22.cut",
+"front0": -1,
+"front1": -1
+},
+{
+"bond": "b41",
+"kind": "hinge",
+"a": "paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+"b": "paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+"front0": -1,
+"front1": -1
+}
+]
+}

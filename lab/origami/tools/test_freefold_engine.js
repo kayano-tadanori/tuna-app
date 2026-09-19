@@ -2851,7 +2851,7 @@ OPr.redoStack[OPr.redoStack.length-1].op='flip';
 E.redo(OPr);
 assert.deepEqual(OPr.recipe.steps.map(v=>v.op),['fold','flip'],'OP5 op を戻してもやり直せない');
 /* OP6 原文＝知っている op はこの1か所にまとまっていて、新しい op を足すと必ずここを通る。 */
-assert.match(engSrc,/const OPS=\['fold','crease','flip'\]/,'OP6 OPS の一覧が engine に無い');
+assert.match(engSrc,/const OPS=\['fold','crease','flip','reverse'\]/,'OP6 OPS の一覧が engine に無い');/* 2026-09-18 中割り（reverse）を足した */
 assert.match(engSrc,/for\(const st of recipe\.steps\)\{\n?\s*assertOp\(st,'JSON再生'\)/,
  'OP6 replay の頭で assertOp を通っていない');
 assert.match(engSrc,/assertOp\(step,'やり直し'\)/,'OP6 redo で assertOp を通っていない');

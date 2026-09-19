@@ -24,7 +24,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const mark = s => console.log(new Date().toISOString().slice(11, 19), s);
 async function poll(fn, label, tries = 150) { for (let i = 0; i < tries; i++) { const v = await fn(); if (v) return v; await sleep(100) } throw Error('timeout ' + label) }
 let browser, ws, server, temp, cdpRef = null;
-async function main() {
+async function main(after) {/* after＝⑫のあとに続ける検査（test_crane13_browser.js）。単独で動かすときは無い */
  temp = await fs.mkdtemp(path.join(os.tmpdir(), 'crane12-ui-')); const downloads = path.join(temp, 'downloads'); await fs.mkdir(downloads);
  server = http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x').pathname; if (u === '/favicon.ico') return res.writeHead(204).end();
@@ -383,12 +383,15 @@ async function main() {
  }
  void sizes;
 
+ if (after) await after({ ev, cdp, point, press, moveTo, release, tap, clickBtn, btn, status, recipe, snapState, shot, shots, downloads, errors, mark, sleep, poll, dist, DIR, SHOTS });
  assert.deepEqual(errors, [], 'ページで例外: ' + JSON.stringify(errors).slice(0, 400));
  console.log('  ok 画面の操作だけで 新しい紙 → ⑪ → 外形の背のタップ（背を選ぶ）・視点 → ⑫ 表裏4本（外形の背を中心線へ・つながっているフラップ）→ engine の⑫と同じ → 保存 → 再読込 → undo/redo → 生のふち（回帰）');
  console.log('  写し：\n    ' + shots.join('\n    '));
 }
-main().then(() => 0, e => { console.error(e); return 1 }).then(async code => {
+function run(after) { return main(after).then(() => 0, e => { console.error(e); return 1 }).then(async code => {
  try { await Promise.race([cdpRef && cdpRef('Browser.close'), sleep(3000)]) } catch {}
  try { ws && ws.close() } catch {} try { browser && browser.kill() } catch {} try { server && server.close() } catch {}
  await sleep(300); if (temp) await fs.rm(temp, { recursive: true, force: true, maxRetries: 7, retryDelay: 300 }).catch(() => {});
- process.exit(code) });
+ process.exit(code) }) }
+if (require.main === module) run();
+module.exports = { run };

@@ -107,7 +107,7 @@ function sheetIds(bonds,faceId){const seen=new Set([faceId]),q=[faceId];
 /* v1スキーマの上限。ここを超える形は原本に書けないので、確定させない。 */
 const MAX_STEPS=100,MAX_FACES=1024;
 const round=n=>Math.round(n*1e9)/1e9;
-function digest(cache){return JSON.stringify({faces:cache.faces.map(f=>({id:f.faceId,path:f.layerPath,poly:f.poly.map(p=>p.map(round)),xf:f.xf.map(round),layer:f.layer})),hinges:cache.hinges,creases:cache.creases.map(c=>({id:c.creaseId,face:c.faceId,seg:c.seg.map(p=>p.map(round)),kind:c.kind})),bonds:cache.bonds.map(b=>({faces:b.faceIds,kind:b.kind,seg:b.seg.map(p=>p.map(round)),...(b.openedBy?{opened:b.openedBy}:{}),...(b.closedBy?{closed:b.closedBy}:{})})),
+function digest(cache){return JSON.stringify({faces:cache.faces.map(f=>({id:f.faceId,path:f.layerPath,poly:f.poly.map(p=>p.map(round)),xf:f.xf.map(round),layer:f.layer})),hinges:cache.hinges,creases:cache.creases.map(c=>({id:c.creaseId,face:c.faceId,seg:c.seg.map(p=>p.map(round)),kind:c.kind})),bonds:cache.bonds.map(b=>({faces:b.faceIds,kind:b.kind,seg:b.seg.map(p=>p.map(round)),...(b.openedBy?{opened:b.openedBy}:{}),...(b.closedBy?{closed:b.closedBy}:{}),...(b.reversedBy?{rev:b.reversedBy}:{})})),
  ...(cache.squash?{squash:{step:cache.squash.stepId,model:cache.squash.model,branch:cache.squash.branch,sectorFace:cache.squash.sectorFace,moving:cache.squash.moving,
   regions:cache.squash.regions.map(r=>({faces:r.faces,order:r.order,area:round(r.area)}))}}:{}),
  ...(cache.squashes?{squashes:cache.squashes.map(q=>({step:q.stepId,moving:q.moving,sectorFace:q.sectorFace,regions:q.regions.map(r=>({faces:r.faces,order:r.order,area:round(r.area)}))}))}:{}),
@@ -123,7 +123,7 @@ function baseRecipe(meta={}){return{format:'origami-recipe',version:1,coordinate
    ⚠これは**幾何の再生器**であって JSON スキーマの検査ではない。
      format／version／余分な項目は見ていない（そこは origami_recipe の validate の仕事）。
    🚨新しい op を足すときは、まずここに足すこと。 */
-const OPS=['fold','crease','flip'];
+const OPS=['fold','crease','flip','reverse'];/* 🪝 reverse＝中割り（2026-09-18・第22段）。v1 の手（fold と同じ項目＋hinge） */
 function assertOp(st,where){
  if(!st||typeof st!=='object')throw Error(`${where}で手が読めません`);
  if(!Object.prototype.hasOwnProperty.call(st,'op'))throw Error(`${where}で op がありません`);
@@ -164,7 +164,10 @@ for(const st of recipe.steps){
  /* 🚨targets は「紙片ひとつ」でなくてよい（重なった上からN枚は別の紙片にまたがる）。
     かわりに、原本を再生するたびに「その集合で一貫して折れるか」を見る＝上に乗った紙を置き去りにしない、
     折り目でつながった紙を置き去りにしない。B1の「別の紙片は不可」はこれに置きかわった（2026-09-12）。 */
- if(st.op!=='crease'){const chk=foldableSet(faces,bonds,ids,A,B,st.kind);
+ let rv=null;/* 🪝 中割り：背の照合・頂点・両側・全層（reverseSetup）→ ①②④（reverseFoldable）。割る・運ぶ・結びは fold と同じ道 */
+ if(st.op==='reverse'){try{rv=reverseSetup(faces,bonds,st,ids,A,B)}catch(e){throw Error('JSON再生で'+e.message)}
+  const chk=reverseFoldable(faces,bonds,ids,A,B,rv);if(!chk.ok)throw Error('JSON再生で'+chk.reason)}
+ else if(st.op!=='crease'){const chk=foldableSet(faces,bonds,ids,A,B,st.kind);
   if(!chk.ok)throw Error('JSON再生で'+chk.reason)}
  else{const chk=creasableSet(faces,bonds,ids,A,B);/* ✏️ 折り目だけも、提案・確定と同じ芯で見る */
   if(!chk.ok)throw Error('JSON再生で'+chk.reason)}
@@ -188,14 +191,17 @@ for(const st of recipe.steps){
    bonds.push({bondId:`b${++bn}`,faceIds:[kf.faceId,cf.faceId],stepId:st.id,kind:flat?'crease':'hinge',seg:useg||[C(ia),C(ib)]});
    if(flat){const seg=lineInPoly(f.poly,A,B);if(!seg)throw Error('JSON再生で折り目が面の中に入りません');
     creases.push({creaseId:`c-${st.id}-${creases.length+1}`,stepId:st.id,faceId:kf.faceId,seg,kind:st.kind})}
-   else hinges.push({hingeId:`h-${st.id}-${hinges.length+1}`,stepId:st.id,faceIds:[kf.faceId,cf.faceId],sourceLine:C(st.line),kind:st.kind})}
+   else hinges.push({hingeId:`h-${st.id}-${hinges.length+1}`,stepId:st.id,faceIds:[kf.faceId,cf.faceId],sourceLine:C(st.line),kind:rv?rv.kindOf.get(f.faceId):st.kind})}
   else if(cut){/* 丸ごと動く。二つに分かれていないので faceId も layerPath も変えない（origami_recipe.py の assign_faces と同じ）。 */
    const mf=flat?f:{...f,poly:f.poly.map(p=>apply(R,p)),xf:compose(R,f.xf)};
    next.push(mf);kids.set(f.faceId,{keep:null,cut:mf});moved=true;if(!flat)movedSet.add(mf)}
   else{next.push(f);kids.set(f.faceId,{keep:f,cut:null});stayed=true}}
  if(!moved)throw Error('JSON再生で動く面がありません');
  if(!stayed)throw Error('JSON再生で折線が紙片を二つに分けていません');
- if(!flat)restack(next,movedSet,st.kind);/* 層は積み直しだけから決まる（面ごとの±1はしない）。 */
+ if(rv){const parentOf=id=>{for(const k of['keep','cut']){const t='/'+st.id+'.'+k;if(id.endsWith(t))return id.slice(0,-t.length)}return id},
+   sideOfFace=g=>rv.sideOf.get(g.faceId)||rv.sideOf.get(parentOf(g.faceId))||null;
+  nestStack(next,movedSet,sideOfFace,rv.lower)}/* 🪝 入れ子：各側は自分の内側へ逆順に */
+ else if(!flat)restack(next,movedSet,st.kind);/* 層は積み直しだけから決まる（面ごとの±1はしない）。 */
  /* 既にある折り目は紙といっしょに運ぶ。折線をまたぐものは切り分け、動いた側は同じ変換をかける。 */
  creases=creases.flatMap(c=>{const k=kids.get(c.faceId);if(!k)return[c];
   if(k.keep&&k.cut){const part=cutSegment(c.seg,A,B),out=[];
@@ -226,6 +232,10 @@ for(const st of recipe.steps){
    const hb={...bd,faceIds:[fx,fy],kind:'hinge',stepId:st.id};delete hb.openedBy;return[hb]}
   return[{...bd,faceIds:[fx,fy]}]});
  faces=next;
+ /* 🪝 頂点から先の背の区間の山谷を反転（結びに reversedBy を足す＝由来の手は変えない）。 */
+ if(rv){const mvIds=new Set([...movedSet].map(g=>g.faceId)),pieces=bonds.filter(b=>b.bondId===rv.bd.bondId&&b.faceIds.every(id=>mvIds.has(id)));
+  if(pieces.length!==1)throw Error('JSON再生で中割りの背の先の区間が1つに決まりません');
+  bonds=bonds.map(b=>b===pieces[0]?{...b,reversedBy:[...(b.reversedBy||[]),st.id]}:b)}
  /* 🔓 開いた背（2026-09-15・本人指示）：この手で動いた面に触れる背（hinge）を、**両側の素材の対応と向き（xf）**で分ける。
     同じ平面にあるだけでは 0°に開いた背と 180°に畳まれた背は区別できない（どちらも z=0）。
     - 両側の xf が同じ ＝ 素材が同じ所・同じ向きへ写る ＝ 0°に開いた → 折り目（crease）として扱う
@@ -510,7 +520,7 @@ function computeHingeIntervals(state){
    faceIds:[x,y],sides:[sideInfo(fx),sideInfo(fy)],
    srcSeg:segKey(b.seg),seg:sx?C(sx):null,
    len:sx?round(Math.hypot(sx[1][0]-sx[0][0],sx[1][1]-sx[0][1])):0,
-   paperRoot:paperRootOf(x),diagramStep:st.diagramStep||null,foldKind:st.kind||null,
+   paperRoot:paperRootOf(x),diagramStep:st.diagramStep||null,foldKind:(st.kind&&b.reversedBy&&b.reversedBy.length%2)?(st.kind==='V'?'M':'V'):(st.kind||null),
    consistent,gap:consistent?0:round(gap)}});
  const probe=hingeProbe(state);
  const by=new Map();for(const r of rows){if(!by.has(r.stepId))by.set(r.stepId,[]);by.get(r.stepId).push(r)}
@@ -932,7 +942,7 @@ function bondInMovingSide(all,bd,a,b){
  if(sideN(cur[0])>=-1e-9&&sideN(cur[1])>=-1e-9)return false;/* 動く側の内部に入っていない */
  const part=cutSegment(cur,a,b);
  return!!(part.cut&&Math.hypot(part.cut[0][0]-part.cut[1][0],part.cut[0][1]-part.cut[1][1])>1e-7)}
-function foldableSet(all,bonds,ids,a,b,kind){const set=new Set(ids);
+function foldableSet(all,bonds,ids,a,b,kind,opt){const set=new Set(ids);/* opt は中割りだけが渡す（kindOf＝面ごとの向き／exempt＝入れ子の相手は障害に数えない）。fold は渡さない＝判定は1文字も変わらない */
  const missing=[...set].filter(i=>!all.some(f=>f.faceId===i));
  if(missing.length)return{ok:false,reason:'いまの紙にない面が選ばれています',blocking:missing};
  const area2=poly=>{let n=0;for(let i=0,j=poly.length-1;i<poly.length;j=i++)n+=poly[j][0]*poly[i][1]-poly[i][0]*poly[j][1];return Math.abs(n)/2};
@@ -942,12 +952,14 @@ function foldableSet(all,bonds,ids,a,b,kind){const set=new Set(ids);
  if(idle.length===parts.length)return{ok:false,reason:'折線の動く側に、選んだ紙がありません',blocking:[]};
  if(idle.length)return{ok:false,reason:'動く側に面積のない面が選ばれています',blocking:idle};
  /* ①上に乗っている紙を置き去りにしない。谷折りなら選ばなかった紙は必ず下、山折りなら必ず上。 */
- const block=[];
+ const block=[];let blockKind=kind;
  for(const{f,p}of parts)for(const u of all){if(set.has(u.faceId))continue;
   if(!overlapsArea(p,u.poly))continue;
-  if(u.layer===f.layer||(kind==='V'?u.layer>f.layer:u.layer<f.layer))block.push(u.faceId)}
+  if(opt&&opt.exempt&&opt.exempt(f,u))continue;
+  const kf=opt&&opt.kindOf?opt.kindOf(f.faceId):kind;
+  if(u.layer===f.layer||(kf==='V'?u.layer>f.layer:u.layer<f.layer)){block.push(u.faceId);blockKind=kf}}
  if(block.length)return{ok:false,blocking:[...new Set(block)],
-  reason:kind==='V'?'上に乗っている紙があります（その紙も一緒に選んでください）':'下に敷かれている紙があります（その紙も一緒に選んでください）'};
+  reason:blockKind==='V'?'上に乗っている紙があります（その紙も一緒に選んでください）':'下に敷かれている紙があります（その紙も一緒に選んでください）'};
  /* ②紙片はちぎれない＝折り目でつながっていて動く側に面積がある面は、全部入っていること。 */
  const miss=[];
  for(const f of chosen)for(const q of sheetIds(bonds,f.faceId)){if(set.has(q))continue;
@@ -1166,6 +1178,7 @@ function cancel(state){state.pending=null}
 function confirm(state,meta={}){const q=state.pending;
  if(q&&q.inputMode==='squash')return confirmSquash(state,meta);
  if(q&&q.inputMode==='petal')return confirmPetal(state,meta);
+ if(q&&q.inputMode==='reverse')return confirmReverse(state,meta);
  if(!q||q.revision!==state.revision)throw Error('確定候補が古くなっています');
  if(!q.sidePoint||!q.selected.length)throw Error('対象面または折る側が未選択です');
  const f=state.cache.faces.find(x=>x.faceId===q.reference.faceId);
@@ -1549,6 +1562,342 @@ function confirmSquash(state,meta={}){const q=state.pending;
    袋折りと同じ規則：候補を作るだけでは原本・revision・cache・redoStack を動かさない（pending だけ）。
    手の中身（base・pivots・axes・branch・stack）は PetalV2 がいまの cache から組み、共通入口で先頭から再生して通ったものだけを候補にする。
    確定は原子的（原本を複製して v2 にし、1手足して再生・上限・ハッシュ再照合・候補との一致を見てから入れかえる）。 */
+/* ================= 🪝 中割り（op:'reverse'・閉じた紙から1手・2026-09-18・本人承認 recipe_crane13.md 第22段） =================
+   入力＝背（hinge の結び）と折る線1本だけ。engine が決めるもの：
+     頂点＝線と背の交点／動く面＝頂点から先の「つながっているフラップ」（flapFaces と同じ辿り方）／
+     各面の線＝いまの座標の線を各面の素材へ戻したもの（左右の層で鏡になるのは xf から自然に出る）／
+     終端の位置＝同じフラップを同じ線で fold したときと同一／
+     背の両側＝背の両側の面から、背を開くと同じ辿り方（movingSetOf）で集めた2つの集合／
+     層の並び＝各側の動いた面は、自分の側の内側へ、順を逆にして入る（両側のあいだに入れ子）／
+     頂点から先の背の区間の山谷を反転（結びに reversedBy を足す）。
+   🚨保存した hinge.seg は**識別のためだけ**：再生では stepId＋faceIds で背を引き直し、その結びの素材線分と一致しなければ断る。計算には使わない。
+   🚨θ は「先の側で測った鋭角」（0°<θ≤90°）。内側／外側の枝は nest だけが決める（今は inside だけ＝nest は予約。書けば知らない項目）。
+   ⛔つる専用の分岐は無い（面ID・手番号・枚数では決めない）。 */
+const REV_SEG_TOL=1e-12;
+/* 背の結び bd の両側：x 側・y 側の集合（movingSetOf）と、どちらが下か。輪なら loop=true。 */
+function reverseSides(faces,bonds,bd){
+ const cache={faces,bonds},[x,y]=bd.faceIds,fx=faces.find(f=>f.faceId===x),fy=faces.find(f=>f.faceId===y);
+ if(!fx||!fy)return{ok:false,reason:'背の両側の面がいまの紙にありません'};
+ const s0=apply(fx.xf,bd.seg[0]),s1=apply(fx.xf,bd.seg[1]);
+ if(bd.seg.some(q=>{const u=apply(fx.xf,q),v=apply(fy.xf,q);return Math.hypot(u[0]-v[0],u[1]-v[1])>1e-7}))return{ok:false,reason:'背の結びの線が両側で一致しません'};
+ const wx=wholeSideOf(fx.poly,s0,s1),wy=wholeSideOf(fy.poly,s0,s1);
+ if(!wx||!wy)return{ok:false,reason:'背の片側の面が、背の両側にまたがっています'};
+ const X=movingSetOf(cache,x,wx[0],wx[1]),Y=movingSetOf(cache,y,wy[0],wy[1]);
+ if(X.has(y)||Y.has(x)||[...X].some(id=>Y.has(id)))return{ok:false,loop:true,reason:'背の両側が、背の外でもつながっています（この背では中割りにできません）'};
+ return{ok:true,X,Y,seg:[s0,s1],lowerIsX:fx.layer<fy.layer,fx,fy}}
+/* 線 A→B（動く側 S<0）が背の線分を内側で横切る点。横切らなければ null。 */
+function reverseVertex(seg,A,B){const u=S(seg[0],A,B),v=S(seg[1],A,B);
+ if(!((u>E&&v<-E)||(u<-E&&v>E)))return null;
+ const t=u/(u-v);return[seg[0][0]+(seg[1][0]-seg[0][0])*t,seg[0][1]+(seg[1][1]-seg[0][1])*t]}
+/* θ＝先の側で測った鋭角（背の先の向きと、線の向きのうち先へ向く方のなす角）。 */
+/* wedge＝つかんだフラップの側のくさびの角（背の先の向きと、紙の中の線の半直線のなす角）。90°を越えると、剛体の枝では入れ子の内側にできない
+   （先を内側へ起こすと上の側が下から閉じて突き抜ける＝提案の数値検査で断る。同じ線でも反対の側をつかめば鋭角になる）。 */
+function reverseTheta(seg,V,A,B,inPaper){const tipEnd=S(seg[0],A,B)<0?seg[0]:seg[1];
+ const d=[tipEnd[0]-V[0],tipEnd[1]-V[1]],Ld=Math.hypot(...d),u=[B[0]-A[0],B[1]-A[1]],Lu=Math.hypot(...u);
+ const dot=(d[0]*u[0]+d[1]*u[1])/(Ld*Lu),c=Math.abs(dot);
+ let wedge=null;if(inPaper){const w=(d[0]*inPaper[0]+d[1]*inPaper[1])/Ld;wedge=Math.acos(Math.max(-1,Math.min(1,w)))}
+ return{theta:Math.acos(Math.min(1,c)),wedge,d:[d[0]/Ld,d[1]/Ld],u:dot>=0?[u[0]/Lu,u[1]/Lu]:[-u[0]/Lu,-u[1]/Lu]}}
+/* 紙の中の線の半直線（V から、背の下の側の面の中へ向かう方）の向き */
+function reverseInPaperRay(face,V,A,B,seg){const u=[B[0]-A[0],B[1]-A[1]],L=Math.hypot(...u),e=[u[0]/L,u[1]/L];
+ const c=face.poly.reduce((s,p)=>[s[0]+p[0]/face.poly.length,s[1]+p[1]/face.poly.length],[0,0]);
+ const sd=[seg[1][0]-seg[0][0],seg[1][1]-seg[0][1]];let f=[-sd[1],sd[0]];/* 背に直角で、紙のある側（背の下の側の面の重心の側） */
+ if((c[0]-V[0])*f[0]+(c[1]-V[1])*f[1]<0)f=[-f[0],-f[1]];
+ return e[0]*f[0]+e[1]*f[1]>=0?e:[-e[0],-e[1]]}
+/* 再生の芯（replayV1 と提案が同じここを通る）。断るときは Error。 */
+function reverseSetup(faces,bonds,st,ids,A,B){
+ const h=st.hinge;
+ if(!h||typeof h!=='object'||Array.isArray(h))throw Error('中割りの背（hinge）がありません');
+ const hk=Object.keys(h).sort().join();
+ if(hk!=='faceIds,seg,stepId')throw Error(`中割りの背（hinge）は { stepId, faceIds, seg } です（${hk}）`);
+ if(!Array.isArray(h.faceIds)||h.faceIds.length!==2||!h.faceIds.every(v=>typeof v==='string'))throw Error('中割りの背の faceIds は面2つです');
+ if(!Array.isArray(h.seg)||h.seg.length!==2||!h.seg.every(p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite)))throw Error('中割りの背の seg は2点です');
+ const same=b=>b.kind==='hinge'&&b.stepId===h.stepId&&b.faceIds.length===2&&((b.faceIds[0]===h.faceIds[0]&&b.faceIds[1]===h.faceIds[1])||(b.faceIds[0]===h.faceIds[1]&&b.faceIds[1]===h.faceIds[0]));
+ const cand=bonds.filter(same);
+ if(!cand.length)throw Error('中割りの背が、いまの紙にありません（手と面で引き直せません）');
+ /* 持ち主照合：引き直した結びの素材線分と、保存した seg が一致すること（squash の「折り目の持ち主照合」と同じ）。 */
+ const bd=cand.find(b=>b.seg.every((p,i)=>Math.abs(p[0]-h.seg[i][0])<=REV_SEG_TOL&&Math.abs(p[1]-h.seg[i][1])<=REV_SEG_TOL));
+ if(!bd)throw Error('中割りの背の線が、原本の背と一致しません');
+ const sd=reverseSides(faces,bonds,bd);if(!sd.ok)throw Error(sd.reason);
+ const V=reverseVertex(sd.seg,A,B);if(!V)throw Error('線が背をまたいでいません（頂点が背の外です）');
+ const sideOf=new Map();for(const id of sd.X)sideOf.set(id,'x');for(const id of sd.Y)sideOf.set(id,'y');
+ if(!ids.includes(bd.faceIds[0])||!ids.includes(bd.faceIds[1])||ids.some(id=>!sideOf.has(id)))throw Error('フラップが背でつながっていません');
+ if(!ids.some(id=>sideOf.get(id)==='x')||!ids.some(id=>sideOf.get(id)==='y'))throw Error('フラップが背の両側に分かれていません');
+ for(const id of ids){const f=faces.find(v=>v.faceId===id),p=split(f.poly,A,B);
+  if(!(p[0]&&p[1]&&area(p[0])>1e-9&&area(p[1])>1e-9))throw Error('線が全層をまたいでいません（線で二つに分かれない面があります）')}
+ const lower=sd.lowerIsX?'x':'y',kindOf=new Map();
+ for(const id of ids)kindOf.set(id,sideOf.get(id)===lower?'V':'M');
+ const th=reverseTheta(sd.seg,V,A,B,reverseInPaperRay(sd.lowerIsX?sd.fx:sd.fy,V,A,B,sd.seg));
+ return{bd,V,sideOf,lower,kindOf,theta:th.theta,wedge:th.wedge,d:th.d,u:th.u,X:sd.X,Y:sd.Y}}
+/* 関門①（下に紙）：各側は自分の内側へ折れる。反対側の集合の紙は障害に数えない（入れ子の相手）。②④は fold と同じ。 */
+function reverseFoldable(faces,bonds,ids,A,B,rv){
+ return foldableSet(faces,bonds,ids,A,B,'V',{kindOf:id=>rv.kindOf.get(id),
+  exempt:(f,u)=>{const s=rv.sideOf.get(f.faceId),t=rv.sideOf.get(u.faceId);return!!(s&&t&&s!==t)}})}
+/* 層の入れ子：各側の動いた面を、自分の側の内側へ順を逆にして入れる。
+   層の番号が意味を持つのは「重なる（ふれあう）2枚の上下」だけ（restack と同じ polysOverlap）。つるの胴のように、背の両側の
+   止まった面の番号が入り組んでいても入れられるよう、上下の関係を有向グラフにして、いまの番号を優先したトポロジカル順で振り直す。
+   関係（面積のある重なりの組だけ＝overlapsArea）：止まった面どうし＝いまの順／下の側の止まった面 → 動いた面 → 上の側の止まった面／
+   動いた面どうし＝下の側は元の順を逆に・上の側も逆に・下の側の動いた面 → 上の側の動いた面／
+   どちらの側でもない面＝動いた面の元の番号との大小のまま。輪ができたら断る。 */
+function nestStack(next,movedSet,sideOfFace,lower){
+ const N=next.length,idx=new Map(next.map((f,i)=>[f,i])),orig=next.map(f=>f.layer),side=next.map(f=>sideOfFace(f)),mv=next.map(f=>movedSet.has(f));
+ for(let i=0;i<N;i++)if(mv[i]&&!side[i])throw Error('中割りで動いた面の側が決まりません');
+ const out=Array.from({length:N},()=>new Set()),indeg=new Array(N).fill(0);
+ const edge=(a,b)=>{if(a===b||out[a].has(b))return;out[a].add(b);indeg[b]++};/* a が b の下 */
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+  if(!overlapsArea(next[i].poly,next[j].poly)&&!overlapsArea(next[j].poly,next[i].poly))continue;/* 面積のある重なりだけ（辺で触れるだけの組に上下は要らない） */
+  const I=mv[i],J=mv[j];
+  if(!I&&!J){if(orig[i]<orig[j])edge(i,j);else if(orig[j]<orig[i])edge(j,i);continue}
+  if(I&&J){const li=side[i]===lower,lj=side[j]===lower;
+   if(li&&!lj){edge(i,j);continue}if(lj&&!li){edge(j,i);continue}
+   /* 同じ側：順を逆に（下の側＝元の番号が大きいほど下へ／上の側も同じく逆） */
+   if(orig[i]>orig[j])edge(i,j);else if(orig[j]>orig[i])edge(j,i);continue}
+  const m=I?i:j,o=I?j:i;
+  if(side[o]===lower)edge(o,m);else if(side[o])edge(m,o);
+  else{if(orig[o]<orig[m])edge(o,m);else edge(m,o)}}
+ /* いまの番号を優先したトポロジカル順（同じ番号なら並びの順） */
+ const ready=[];for(let i=0;i<N;i++)if(!indeg[i])ready.push(i);
+ const key=i=>mv[i]?orig[i]+.5:orig[i];
+ const order=[];
+ while(ready.length){ready.sort((a,b)=>key(a)-key(b)||a-b);const k=ready.shift();order.push(k);
+  for(const t of out[k]){if(--indeg[t]===0)ready.push(t)}}
+ if(order.length!==N){const left=[...Array(N).keys()].filter(i=>indeg[i]>0);
+  throw Error(`中割りの入れ子が作れません（重なりの上下が輪になります：${left.slice(0,6).map(i=>(mv[i]?'動':'止')+(side[i]||'-')+':'+next[i].faceId.split('/').slice(-2).join('/')+'@'+orig[i]).join(' ')}）`)}
+ order.forEach((k,r)=>{const f=next[k];if(mv[k])f.layer=r;else next[k]={...f,layer:r}})}
+/* 候補（読むだけ）：線（いまの座標2点）と「つかんだ所」at から、フラップと、そのフラップを背でつなぐ・両側が輪にならない背。 */
+function reverseOptions(state,a,b,at){
+ if(!at||!Array.isArray(at))return{options:[],reason:'どこを折るか、紙の上で指してください'};
+ if(!a||!b||Math.hypot(a[0]-b[0],a[1]-b[1])<.03)return{options:[],reason:'折線が短すぎます'};
+ let A=a,B=b;if(S(at,A,B)>0)[A,B]=[B,A];
+ if(Math.abs(S(at,A,B))/Math.hypot(B[0]-A[0],B[1]-A[1])<.03)return{options:[],reason:'折線から離れた所を指してください'};
+ const top=stackAt(state,at)[0];if(!top)return{options:[],reason:'そこには紙がありません'};
+ const flap=[...movingSetOf(state.cache,top.faceId,A,B)];
+ const options=[],skipped=[];
+ for(const bd of state.cache.bonds){if(bd.kind!=='hinge')continue;
+  const[x,y]=bd.faceIds;if(!flap.includes(x)||!flap.includes(y))continue;
+  const fx=state.cache.faces.find(f=>f.faceId===x);if(!fx)continue;
+  const cur=bd.seg.map(q=>apply(fx.xf,q)),V=reverseVertex(cur,A,B);if(!V)continue;
+  const sd=reverseSides(state.cache.faces,state.cache.bonds,bd);
+  if(!sd.ok){skipped.push({bondId:bd.bondId,stepId:bd.stepId,reason:sd.reason});continue}
+  const side=new Set([...sd.X,...sd.Y]);
+  if(!flap.every(id=>side.has(id))){skipped.push({bondId:bd.bondId,stepId:bd.stepId,reason:'フラップが背の両側に分かれません'});continue}
+  const th=reverseTheta(cur,V,A,B,reverseInPaperRay(sd.lowerIsX?sd.fx:sd.fy,V,A,B,cur));
+  options.push({hinge:{stepId:bd.stepId,faceIds:C(bd.faceIds),seg:C(bd.seg)},bondId:bd.bondId,vertex:V,seg:cur,theta:th.theta,thetaDeg:th.theta*180/Math.PI,wedgeDeg:th.wedge*180/Math.PI,
+   targets:flap.slice().sort(),sides:{x:[...sd.X].filter(id=>flap.includes(id)).length,y:[...sd.Y].filter(id=>flap.includes(id)).length}})}
+ return{line:[A,B],at:C(at),top:top.faceId,flap:flap.slice().sort(),options,skipped,reason:options.length?null:'このフラップを背でつなぐ、中割りにできる背がありません'}}
+/* 候補から原本の1手を作る（書けるかは recordable、成立は再生の芯が決める）。 */
+function reverseStep(state,opt,line,at){
+ const ids=opt.targets.slice(),top=state.cache.faces.filter(f=>ids.includes(f.faceId)&&strictlyInside(at,f.poly)).sort((x,y)=>y.layer-x.layer)[0];
+ if(!top)throw Error('指した所に、フラップの紙がありません');
+ const[A,B]=line,rec=recordable(state,ids,top.faceId,A,B,at,[inv(top.xf,A),inv(top.xf,B)]);
+ if(!rec.ok)throw Error(rec.reason);
+ const n=state.recipe.steps.length+1;
+ return{id:`s${n}`,diagramStep:String(n),op:'reverse',
+  reference:{faceId:top.faceId},line:rec.line,movingSidePoint:inv(top.xf,at),
+  targets:[top.faceId,...ids.filter(id=>id!==top.faceId)].map(id=>({faceId:id,layerPath:C(state.cache.faces.find(f=>f.faceId===id).layerPath)})),
+  hinge:C(opt.hinge),instruction:'中割り折りにする'}}
+function proposeReverse(state,a,b,at,pick){
+ if(state.pending)throw Error('確定か取消をしてから中割りを選んでください');
+ if(state.recipe.steps.length>=MAX_STEPS)throw Error(`原本は${MAX_STEPS}手までです`);
+ const before={rec:JSON.stringify(state.recipe),rev:state.revision,hash:state.cache.hash,redo:JSON.stringify(redoOf(state))};
+ const o=reverseOptions(state,a,b,at);
+ if(!o.options.length)throw Error(o.reason);
+ const opt=pick===undefined?(o.options.length===1?o.options[0]:null)
+  :o.options.find(v=>v.bondId===pick||(v.hinge.stepId===(pick&&pick.stepId)&&JSON.stringify(v.hinge.faceIds)===JSON.stringify(pick&&pick.faceIds)));
+ if(!opt)throw Error(pick===undefined?'背が1つに決まりません（選んでください）':'選んだ背が、候補にありません');
+ const step=reverseStep(state,opt,o.line,at);
+ const trial=C(state.recipe);trial.steps.push(step);
+ const cache=replay(trial);/* 再生の芯が ①②④・背の照合・頂点・両側・全層をぜんぶ見る */
+ if(cache.faces.length>MAX_FACES)throw Error(`面が${MAX_FACES}枚を超えます`);
+ if(digest(replay(trial))!==cache.hash)throw Error('JSON再生結果が安定しません');
+ const motion=reverseMotion(state.cache,step,null,{recipe:state.recipe});
+ const tr=motion.tear();/* 根元の頂点といっしょに動かすときだけ見る（普通の背は null） */
+ if(tr)throw Error(`途中で紙が裂けます（${tr.at}：${tr.a} × ${tr.b}・${tr.gap.toExponential(1)}）`);
+ const pen=motion.penetration();
+ if(pen)throw Error(`途中で紙が突き抜けます（${pen.at}：${pen.a} × ${pen.b}）`+(opt.wedgeDeg>90+1e-9?`。つかんだ側のくさびの角が ${opt.wedgeDeg.toFixed(1)}° で90°を越えています。反対側の先をつかんでください（同じ線で ${(180-opt.wedgeDeg).toFixed(1)}°）`:''));
+ if(JSON.stringify(state.recipe)!==before.rec||state.revision!==before.rev||state.cache.hash!==before.hash||JSON.stringify(redoOf(state))!==before.redo)
+  throw Error('中割りの候補が正式な状態を変えました');
+ state.pending={inputMode:'reverse',revision:state.revision,step,hash:cache.hash,options:o.options.map(v=>({bondId:v.bondId,hinge:C(v.hinge),thetaDeg:v.thetaDeg,vertex:C(v.vertex)})),
+  chosen:opt.bondId,thetaDeg:opt.thetaDeg,vertex:C(opt.vertex),line:C(o.line)};
+ return C(state.pending)}
+/* プレビュー（読むだけ）：degree-4 の運動。途中を偽らない＝終わりの姿は確定の再生結果と同じ（検査で照合）。 */
+function reversePreview(state){const q=state.pending;
+ if(!q||q.inputMode!=='reverse')throw Error('中割りの候補がありません');
+ if(q.revision!==state.revision)throw Error('確定候補が古くなっています');
+ const trial=C(state.recipe);trial.steps.push(C(q.step));const after=replay(trial);
+ if(after.hash!==q.hash)throw Error('中割りの候補を作ったときと再生結果が違います');
+ const m=reverseMotion(state.cache,q.step,null,{recipe:state.recipe});
+ return{root:m.root,before:C(state.cache.faces),after:C(after.faces),thetaDeg:m.thetaDeg,stages:m.stages,blocks:m.blockOf,frame:m.frame,points:m.points,note:'厚み0。開く→折れる→閉じる（θ=90°は 開く→折る→閉じる の3区間）'}}
+function confirmReverse(state,meta={}){const q=state.pending;
+ if(!q||q.inputMode!=='reverse')throw Error('中割りの候補がありません');
+ if(q.revision!==state.revision)throw Error('確定候補が古くなっています');
+ const trial=C(state.recipe);if(meta.name)trial.work.name=meta.name;if(meta.id)trial.work.id=meta.id;
+ trial.steps.push(C(q.step));
+ if(trial.steps.length>MAX_STEPS)throw Error(`原本は${MAX_STEPS}手までです`);
+ const cache=replay(trial);
+ if(cache.faces.length>MAX_FACES)throw Error(`面が${MAX_FACES}枚を超えます`);
+ if(digest(replay(trial))!==cache.hash)throw Error('JSON再生結果が安定しません');
+ if(cache.hash!==q.hash)throw Error('中割りの候補を作ったときと再生結果が違います');
+ state.recipe=trial;state.redoStack=[];state.revision++;state.pending=null;state.cache=cache;state.cacheRevision=state.revision;state.committed=cache;
+ return C(cache)}
+/* ---- 運動（単独模型の式を、背の角へ写す。check_crane13_sp_motion.py と同じ写し方） ----
+   単独模型：曲がり角 O・背＝x 軸（先が +x）・紙のある側＝+y。元A＝固定（下の側）、元B＝R(x,c⁻)、先A＝R(a,z)、先B＝R(a,z)R(x,c⁺)。
+   a＝線の向きのうち先へ向く方（(cosθ, ±sinθ)：符号は紙の側で決まる。閉じの式は符号に依らない）。
+   中割り（nest inside）：c⁺=−c⁻・tan(c⁻/2)=cosθ·tan(z/2)。出発 c=π・z=0。θ=90°は c が z=π まで0のまま＝3区間。
+   z の向きと、開く向き（写像の z 軸の向き）は「出発の上下」と「先は内側へ」で決める（候補ごとに数値で確かめる）。 */
+function reverseMotion(cache,step,dbg,hist){/* dbg は調べる検査だけが渡す（{sgZ} で先の向きを固定）。本番は渡さない。hist＝{recipe}（この cache を作った原本・根元の頂点を引くのに使う） */
+ const faces=cache.faces,bonds=cache.bonds;
+ const ref=faces.find(f=>f.faceId===step.reference.faceId);
+ let A=apply(ref.xf,step.line[0]),B=apply(ref.xf,step.line[1]);const mv=apply(ref.xf,step.movingSidePoint);if(S(mv,A,B)>0)[A,B]=[B,A];
+ const ids=step.targets.map(t=>t.faceId),rv=reverseSetup(faces,bonds,step,ids,A,B);
+ const V=rv.V,d=rv.d,cosT=Math.cos(rv.theta),sinT=Math.sin(rv.theta);
+ const lowF=rv.lower==='x'?rv.bd.faceIds[0]:rv.bd.faceIds[1],lf=faces.find(f=>f.faceId===lowF);
+ /* 紙のある側 f（背から下の側の面の重心へ） */
+ const cL=lf.poly.reduce((s,p)=>[s[0]+p[0]/lf.poly.length,s[1]+p[1]/lf.poly.length],[0,0]);
+ let f=[-d[1],d[0]];if((cL[0]-V[0])*f[0]+(cL[1]-V[1])*f[1]<0)f=[-f[0],-f[1]];
+ const aY=rv.u[0]*f[0]+rv.u[1]*f[1];/* 線の先向きの成分（紙の側 ±） */
+ const aS=[cosT,aY>=0?sinT:-sinT];
+ const blockOf=new Map();/* 'LB' 下の元・'LT' 下の先・'UB' 上の元・'UT' 上の先・固定 */
+ for(const g of faces){const s=rv.sideOf.get(g.faceId);if(!s){blockOf.set(g.faceId,'F');continue}
+  const low=s===rv.lower,tipPart=ids.includes(g.faceId);blockOf.set(g.faceId,(low?'L':'U')+(tipPart?'X':'B'))}
+ /* 3次元の回転（軸は原点を通る） */
+ const rot=(ax,t)=>{const L=Math.hypot(...ax),k=ax.map(v=>v/L),c=Math.cos(t),s=Math.sin(t),v=1-c;
+  return[[c+k[0]*k[0]*v,k[0]*k[1]*v-k[2]*s,k[0]*k[2]*v+k[1]*s],[k[1]*k[0]*v+k[2]*s,c+k[1]*k[1]*v,k[1]*k[2]*v-k[0]*s],[k[2]*k[0]*v-k[1]*s,k[2]*k[1]*v+k[0]*s,c+k[2]*k[2]*v]]};
+ const mul=(P,Q)=>P.map(r=>[0,1,2].map(j=>r[0]*Q[0][j]+r[1]*Q[1][j]+r[2]*Q[2][j]));
+ const mv3=(P,v)=>[P[0][0]*v[0]+P[0][1]*v[1]+P[0][2]*v[2],P[1][0]*v[0]+P[1][1]*v[1]+P[1][2]*v[2],P[2][0]*v[0]+P[2][1]*v[1]+P[2][2]*v[2]];
+ const I3=[[1,0,0],[0,1,0],[0,0,1]];
+ /* 単独模型の角 → 各ブロックの回転（単独模型の座標で） */
+ const single=(cm,cp,z)=>{const RA=rot([aS[0],aS[1],0],z);return{LB:I3,UB:rot([1,0,0],cm),LX:RA,UX:mul(RA,rot([1,0,0],cp))}};
+ /* 写像：単独模型 (x,y,z) → いま (V + x·d + y·f, sz·z) */
+ const toWorld=(M,sz)=>{const F=[[d[0],f[0],0],[d[1],f[1],0],[0,0,sz]],Fi=[[d[0],d[1],0],[f[0],f[1],0],[0,0,sz]];return mul(mul(F,M),Fi)};
+ const theta90=Math.abs(cosT)<1e-12;
+ const stagesOf=t=>{/* t∈[0,1]：段1 開く（0〜1/3）→ 段2・3（1/3〜1）。θ=90° は段2 折る（1/3〜2/3）・段3 閉じる（2/3〜1） */
+  if(t<=1/3){const c=Math.PI*(1-t*3);return{cm:c,cp:c,z:0,stage:'開く'}}
+  if(!theta90){const z=Math.PI*Math.min(1,(t-1/3)*1.5),cm=z>=Math.PI?Math.PI:2*Math.atan(cosT*Math.tan(z/2));return{cm,cp:-cm,z,stage:'折れる・閉じる'}}
+  if(t<=2/3)return{cm:0,cp:0,z:Math.PI*(t-1/3)*3,stage:'折る'};
+  const c=Math.PI*(t-2/3)*3;return{cm:c,cp:-c,z:Math.PI,stage:'閉じる'}};
+ /* 出発の上下：上の側（U）は下の側の上＝写像の z 軸の向き sz を、開き始めで U の元が +z へ離れる向きに。
+    先の向き sgZ：先の下の側（LX）は、平らに開いた姿から +z（上の側が閉じて来る側＝内側）へ起きる向き。 */
+ const Uspine=rot([d[0],d[1],0],Math.PI);/* 上の側の面（畳まれている）を広げた紙の位置へ戻す＝背のまわりに π（単独模型の角は広げた紙から） */
+ const atAngles=(sz,sgZ,cm,cp,z)=>{const Ms=single(cm,cp,sgZ*z),W={};for(const k of['LB','UB','LX','UX']){W[k]=toWorld(Ms[k],sz);if(k[0]==='U')W[k]=mul(W[k],Uspine)}return W};
+ const probe=(sz,sgZ,t)=>{const s=stagesOf(t);return atAngles(sz,sgZ,s.cm,s.cp,s.z)};
+ const lowTipPt=(()=>{/* 下の側の先の面の中の1点（線から離れた所） */const g=faces.find(v=>blockOf.get(v.faceId)==='LX');const p=split(g.poly,A,B)[1];return p.reduce((s,q)=>[s[0]+q[0]/p.length,s[1]+q[1]/p.length],[0,0])})();
+ const upBasePt=(()=>{/* 上の側の元の紙の1点（丸ごと元の面か、動く面の線より手前の部分） */const g=faces.find(v=>blockOf.get(v.faceId)==='UB')||faces.find(v=>blockOf.get(v.faceId)==='UX');const p=blockOf.get(g.faceId)==='UB'?g.poly:split(g.poly,A,B)[0];return p.reduce((s,q)=>[s[0]+q[0]/p.length,s[1]+q[1]/p.length],[0,0])})();
+ const zOf=(Mw,p)=>mv3(Mw,[p[0]-V[0],p[1]-V[1],0])[2];
+ /* 🪝 背の根元の頂点（reverseRoot）。鎖のときは、開く向き sz を根元が決める：この手の背の上の側の面が、根元の運動で下の側の面から
+    離れる向き（下の側の面から見た相対の回転）と、この手の単独模型の上の元（UB）の回転が一致する方。どちらも合わなければ断る。 */
+ const root=hist?reverseRoot(cache,rv,A,B,hist):null;
+ let sz=null;
+ if(root){const lo=rv.lower==='x'?0:1,gL=faces.find(v=>v.faceId===rv.bd.faceIds[lo]),gU=faces.find(v=>v.faceId===rv.bd.faceIds[1-lo]);
+  const pp=split(gU.poly,A,B)[0]||gU.poly,p=pp.reduce((s,q)=>[s[0]+q[0]/pp.length,s[1]+q[1]/pp.length],[0,0]);
+  const Rr=root.rel(Math.PI/2),Mu=root.blockOf(gU.faceId)==='F'?I3:Rr[root.blockOf(gU.faceId)],Ml=root.blockOf(gL.faceId)==='F'?I3:Rr[root.blockOf(gL.faceId)];
+  const Vr=root.V3,u=mv3(Mu,[p[0]-Vr[0],p[1]-Vr[1],0]),w=mv3(Ml.map((r,i)=>[Ml[0][i],Ml[1][i],Ml[2][i]]),u),rel=[w[0]+Vr[0],w[1]+Vr[1],w[2]];
+  for(const c of[1,-1]){const W=atAngles(c,1,Math.PI/2,Math.PI/2,0),h=mv3(W.UB,[p[0]-V[0],p[1]-V[1],0]);
+   if(Math.hypot(h[0]+V[0]-rel[0],h[1]+V[1]-rel[1],h[2]-rel[2])<1e-9){sz=c;break}}
+  if(sz===null)throw Error('中割りの根元の頂点の開きと、この手の背の開きが合いません')}
+ else for(const c of[1,-1]){const W=probe(c,1,0.02);if(zOf(W.UB,upBasePt)>0){sz=c;break}}
+ if(sz===null)throw Error('中割りの開く向きが決まりません');
+ let sgZ=dbg&&dbg.sgZ?dbg.sgZ:null;if(sgZ===null)for(const c of[1,-1]){const W=probe(sz,c,1/3+0.02);if(zOf(W.LX,lowTipPt)>0){sgZ=c;break}}
+ if(sgZ===null)throw Error('中割りの先の起きる向きが決まりません');
+ /* 各面の置かれ方（いまの2D座標 → 3D。z はいまの紙の面から上） */
+ const place=t=>{const W=probe(sz,sgZ,t),out={};
+  for(const g of faces){const k=blockOf.get(g.faceId),M=k==='F'?I3:W[k==='LX'?'LX':k==='UX'?'UX':k==='LB'?'LB':'UB'];out[g.faceId]=M}
+  return out};
+ /* 動く面の多角形：動いた面（targets）は、線の先の部分だけが先のブロック、手前は元のブロック */
+ const polysAt=t=>{const P=place(t),W=probe(sz,sgZ,t),out=[];
+  for(const g of faces){const k=blockOf.get(g.faceId);
+   if(k==='LX'||k==='UX'){const[keep,cut]=split(g.poly,A,B);const base=k==='LX'?W.LB:W.UB,tip=W[k];
+    if(keep)out.push({faceId:g.faceId,part:'keep',block:k[0]+'B',pts:keep.map(p=>{const v=mv3(base,[p[0]-V[0],p[1]-V[1],0]);return[v[0]+V[0],v[1]+V[1],v[2]]})});
+    if(cut)out.push({faceId:g.faceId,part:'cut',block:k,pts:cut.map(p=>{const v=mv3(tip,[p[0]-V[0],p[1]-V[1],0]);return[v[0]+V[0],v[1]+V[1],v[2]]})})}
+   else{const M=P[g.faceId];out.push({faceId:g.faceId,part:'whole',block:k,pts:g.poly.map(p=>{const v=mv3(M,[p[0]-V[0],p[1]-V[1],0]);return[v[0]+V[0],v[1]+V[1],v[2]]})})}}
+  return out};
+ /* すり抜け（数値）：ブロックの違う2枚だけを見る（同じブロックは相対が動かない）。板を1%縮めて共有の辺・頂点を外す。 */
+ /* 🪝 背の根元の頂点へ開きを伝える（2026-09-19・本人指示・recipe_crane13.md 第24段）＝鎖の運動は reverseRoot が決め、ここは写すだけ。
+    根元が普通の背なら root=null で、下の3つ（polysAt・points・penetration）は今までと1文字も同じ道を通る。 */
+ const chain=root?(()=>{const I=[[1,0,0],[0,1,0],[0,0,1]],T=M=>[0,1,2].map(i=>[0,1,2].map(j=>M[j][i])),V3=[V[0],V[1],0];
+  const aff=(M,O)=>{const q=mv3(M,O);return{M,t:[O[0]-q[0],O[1]-q[1],O[2]-q[2]]}},cmp=(a,b)=>{const q=mv3(a.M,b.t);return{M:mul(a.M,b.M),t:[q[0]+a.t[0],q[1]+a.t[1],q[2]+a.t[2]]}},
+   ap=(a,p)=>{const q=mv3(a.M,[p[0],p[1],0]);return[q[0]+a.t[0],q[1]+a.t[1],q[2]+a.t[2]]},Id={M:I,t:[0,0,0]};
+  /* 時刻 t の各面：元の部分（base）と、この手の先の部分（tip）の置かれ方。c＝この手の背の開き（単独模型の c⁻） */
+  const maps=t=>{const s=stagesOf(t),W=probe(sz,sgZ,t),Rr=root.rel(s.cm),out=new Map();
+   for(const g of faces){const k=blockOf.get(g.faceId),rb=root.blockOf(g.faceId),base=rb==='F'?Id:aff(Rr[rb],root.V3);
+    const tip=(k==='LX'||k==='UX')?cmp(base,aff(mul(T(W[k[0]+'B']),W[k]),V3)):null;
+    out.set(g.faceId,{base,tip,kb:rb+':'+(tip?k[0]+'B':k),kt:rb+':'+k})}
+   return out};
+  const polys=t=>{const m=maps(t),out=[];
+   for(const g of faces){const e=m.get(g.faceId);
+    if(e.tip){const[keep,cut]=split(g.poly,A,B);
+     if(keep)out.push({faceId:g.faceId,part:'keep',block:e.kb,pts:keep.map(p=>ap(e.base,p))});
+     if(cut)out.push({faceId:g.faceId,part:'cut',block:e.kt,pts:cut.map(p=>ap(e.tip,p))})}
+    else out.push({faceId:g.faceId,part:'whole',block:e.kb,pts:g.poly.map(p=>ap(e.base,p))})}
+   return out};
+  const pts=(t,faceId,ps)=>{const e=maps(t).get(faceId);return ps.map(p=>ap(e.tip&&S(p,A,B)<0?e.tip:e.base,p))};
+  /* 裂け（数値）：結びの両側の面が、結びの線の点（両端と中点）を同じ所へ運ぶこと */
+  const tear=(n=48)=>{for(let i=1;i<n;i++){const t=i/n,m=maps(t);
+    for(const b of bonds){const ga=faces.find(v=>v.faceId===b.faceIds[0]),gb=faces.find(v=>v.faceId===b.faceIds[1]);if(!ga||!gb)continue;
+     const q=b.seg.map(x=>apply(ga.xf,x)),Q=[q[0],q[1],[(q[0][0]+q[1][0])/2,(q[0][1]+q[1][1])/2]];
+     for(const p of Q){const ea=m.get(ga.faceId),eb=m.get(gb.faceId),side=S(p,A,B)<0;
+      const u=ap(ea.tip&&side?ea.tip:ea.base,p),w=ap(eb.tip&&side?eb.tip:eb.base,p),gap=Math.hypot(u[0]-w[0],u[1]-w[1],u[2]-w[2]);
+      if(gap>1e-9)return{at:`t=${t.toFixed(3)}`,a:ga.faceId,b:gb.faceId,gap}}}}return null};
+  return{polys,pts,tear}})():null;
+ const polysNow=t=>chain?chain.polys(t):polysAt(t);
+ const penetration=(n=48)=>{for(let i=1;i<n;i++){const t=i/n,ps=polysNow(t);const r=penAt(ps);if(r)return{at:`t=${t.toFixed(3)}`,frame:i,a:r.a,b:r.b,depth:r.depth}}return null};
+ return{thetaDeg:rv.theta*180/Math.PI,stages:theta90?['開く','折る','閉じる']:['開く','折れる・閉じる'],blockOf:Object.fromEntries(blockOf),
+  root:root?{stepId:root.stepId,vertex:C(root.V),thetaDeg:root.thetaDeg}:null,tear:chain?chain.tear:()=>null,
+  at:(cm,cp,z)=>atAngles(sz,sgZ,cm,cp,z),line:[C(A),C(B)],
+  frame:t=>polysNow(Math.max(0,Math.min(1,t))),points:(t,faceId,pts)=>{if(chain)return chain.pts(t,faceId,pts);const g=faces.find(v=>v.faceId===faceId),k=blockOf.get(faceId),W=probe(sz,sgZ,t);
+   return pts.map(p=>{let M=k==='F'?I3:k==='LB'?W.LB:k==='UB'?W.UB:(S(p,A,B)<0?W[k]:(k==='LX'?W.LB:W.UB));const v=mv3(M,[p[0]-V[0],p[1]-V[1],0]);return[v[0]+V[0],v[1]+V[1],v[2]]})},
+  penetration,sz,sgZ,V,d,f,aS}}
+/* 🪝 背の根元の頂点（2026-09-19・本人指示・recipe_crane13.md 第24段）＝中割りの運動に足した規則はこれ1つ。
+   規則：背の根元が、畳まれた degree-4 の頂点（中割りでできた頂点）なら、背の両側の集合を根元で止めず、根元の頂点も同じ関係で動かす。
+     この背の開きを c とすると、根元の単独模型で c⁻_root＝c・c⁺_root＝−c・tan(c/2)＝cosθ_root·tan(z_root/2)
+     （根元の中割りの運動を、同じ式のまま巻き戻す。θ_root＝90° は z_root＝π のまま）。根元の向こう（止まっていた紙も）は、
+     根元の単独模型のブロックとして剛体で回る。この手の頂点と根元の頂点が背1本を共有する2頂点の鎖・自由度1。閉じた式だけ（探索しない）。
+   根元の判定は頂点の構造だけ：この背の区間を反転させた中割り（結びの reversedBy）の頂点が、区間の根元の端（先でない方）にあること。
+     面数・面ID・作品の名前は見ない。根元が普通の背（反転の印が無い・頂点が根元の端に無い）なら null＝今までと同じ運動。
+   根元の単独模型は、その中割りの直前の紙を原本から再生して作る（reverseMotion と同じ式・hist は渡さない＝鎖は1段）。
+   🚨その中割りのあとで根元のまわりの紙が動いていたら（いまの面の置かれ方が、根元の中割りの終わりの置かれ方と違う）、断る。 */
+function reverseRoot(cache,rv,A,B,hist){
+ const bd=rv.bd,rs=bd.reversedBy||[];if(!rs.length||!hist||!hist.recipe)return null;
+ const fx=cache.faces.find(f=>f.faceId===bd.faceIds[0]),seg=bd.seg.map(q=>apply(fx.xf,q));
+ const P=S(seg[0],A,B)<0?seg[1]:seg[0];/* 区間の根元の端（この手の先でない方） */
+ const steps=hist.recipe.steps;
+ for(let k=rs.length-1;k>=0;k--){const i=steps.findIndex(s=>s.id===rs[k]);if(i<0||steps[i].op!=='reverse')continue;
+  const sr=steps[i],pre=replay({...hist.recipe,steps:steps.slice(0,i)}),m=reverseMotion(pre,sr);
+  if(Math.hypot(m.V[0]-P[0],m.V[1]-P[1])>1e-7)continue;
+  const preById=new Map(pre.faces.map(f=>[f.faceId,f])),R=reflMat(m.line[0],m.line[1]),blk=new Map();
+  for(const g of cache.faces){let anc=g.faceId;while(anc&&!preById.has(anc)){const j=anc.lastIndexOf('/');anc=j>0?anc.slice(0,j):''}
+   if(!anc)throw Error('中割りの根元の頂点：いまの面の元の面が、根元の中割りの直前の紙にありません');
+   const pk=m.blockOf[anc],pf=preById.get(anc);let b=pk;
+   if(pk==='LX'||pk==='UX'){const rest=g.faceId.slice(anc.length);
+    const tipPart=rest.startsWith('/'+sr.id+'.cut')?true:rest.startsWith('/'+sr.id+'.keep')?false:!split(pf.poly,m.line[0],m.line[1])[0];
+    b=tipPart?pk:pk[0]+'B'}
+   if(b!=='F'){const want=(b==='LX'||b==='UX')?compose(R,pf.xf):pf.xf;
+    if(want.some((v,j)=>Math.abs(v-g.xf[j])>1e-9))throw Error('中割りの根元の頂点が、その中割りのあとで動いています（根元といっしょに開けません）')}
+   blk.set(g.faceId,b)}
+  const th=m.thetaDeg*Math.PI/180,cz=Math.cos(th),Mt=m.at(Math.PI,-Math.PI,Math.PI);
+  const T=M=>[0,1,2].map(a=>[0,1,2].map(b=>M[b][a])),mul3=(P,Q)=>P.map(r=>[0,1,2].map(j=>r[0]*Q[0][j]+r[1]*Q[1][j]+r[2]*Q[2][j]));
+  /* c（この手の背の開き）→ 根元の各ブロックの「いまの位置からの」回転（根元の頂点のまわり） */
+  const rel=c=>{const z=Math.abs(cz)<1e-12?Math.PI:2*Math.atan(Math.tan(c/2)/cz),W=m.at(c,-c,z),out={};
+   for(const b of['LB','UB','LX','UX'])out[b]=mul3(W[b],T(Mt[b]));return out};
+  return{stepId:sr.id,V:C(m.V),V3:[m.V[0],m.V[1],0],thetaDeg:m.thetaDeg,blockOf:id=>blk.get(id),rel}}
+ return null}
+/* 3D の多角形どうしの交わり（凸・同じブロックでない組）。見つけたら最初の組を返す。 */
+function penAt(ps){
+ const shr=q=>{const c=q.reduce((s,p)=>[s[0]+p[0]/q.length,s[1]+p[1]/q.length,s[2]+p[2]/q.length],[0,0,0]);return q.map(p=>[c[0]+(p[0]-c[0])*.99,c[1]+(p[1]-c[1])*.99,c[2]+(p[2]-c[2])*.99])};
+ const sub3=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dt=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+ const Q=ps.map(p=>{const q=shr(p.pts);let n=[0,0,0];for(let i=1;i+1<q.length;i++){const c=cr(sub3(q[i],q[0]),sub3(q[i+1],q[0]));n=[n[0]+c[0],n[1]+c[1],n[2]+c[2]]}
+  const L=Math.hypot(...n)||1;n=n.map(v=>v/L);const lo=[0,1,2].map(k=>Math.min(...q.map(p=>p[k]))),hi=[0,1,2].map(k=>Math.max(...q.map(p=>p[k])));return{...p,q,n,lo,hi}});
+ const clip=(q,n,dd)=>{const s=q.map(p=>dt(n,p)-dd),out=[];for(let i=0;i<q.length;i++){const a=q[i],b=q[(i+1)%q.length],sa=s[i],sb=s[(i+1)%q.length];
+  if(Math.abs(sa)<1e-12)out.push(a);if((sa<-1e-12&&sb>1e-12)||(sa>1e-12&&sb<-1e-12)){const t=sa/(sa-sb);out.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t])}}return out.length>=2?out:null};
+ for(let i=0;i<Q.length;i++)for(let j=i+1;j<Q.length;j++){const a=Q[i],b=Q[j];if(a.block===b.block)continue;
+  if([0,1,2].some(k=>a.hi[k]<b.lo[k]-1e-9||b.hi[k]<a.lo[k]-1e-9))continue;
+  const nn=cr(a.n,b.n);
+  /* 同じ平面（平行）＝厚み0では「接触」。突き抜けは前後のコマで交わりとして出るので、ここでは数えない。 */
+  if(Math.hypot(...nn)<1e-9)continue;
+  const sa=clip(a.q,b.n,dt(b.n,b.q[0])),sb=clip(b.q,a.n,dt(a.n,a.q[0]));if(!sa||!sb)continue;
+  const L=nn.map(v=>v/Math.hypot(...nn)),ta=sa.map(p=>dt(L,p)).sort((x,y)=>x-y),tb=sb.map(p=>dt(L,p)).sort((x,y)=>x-y);
+  const ov=Math.min(ta[ta.length-1],tb[tb.length-1])-Math.max(ta[0],tb[0]);if(ov>1e-7)return{a:a.faceId,b:b.faceId,depth:ov}}
+ return null}
+
 function buildPetals(state){
  if(state.recipe.steps.length>=MAX_STEPS)throw Error(`原本は${MAX_STEPS}手までです`);
  const P=globalThis.PetalV2;
@@ -1624,7 +1973,7 @@ function redo(state){if(state.pending)throw Error('確定か取消をしてか�
  const step=stack[stack.length-1];
  /* 🧺 袋折りの手＝折線を持たないので折りの関門は通さない。共通入口で先頭から再生し、上限とハッシュ再照合を通してから入れかえる。
     ⚠原本の version は変えない（undo で squash が0手になった v2 は v2 のまま戻ってくる）。 */
- if(step&&(step.op==='squash'||step.op==='petal')){const trial=C(state.recipe);trial.steps.push(C(step));
+ if(step&&(step.op==='squash'||step.op==='petal'||step.op==='reverse')){const trial=C(state.recipe);trial.steps.push(C(step));/* 🪝 中割りも折線の関門は再生の芯（reverseSetup＋①②④）が見る */
   if(trial.steps.length>MAX_STEPS)throw Error(`原本は${MAX_STEPS}手までです`);
   const sc=replay(trial);
   if(sc.faces.length>MAX_FACES)throw Error(`面が${MAX_FACES}枚を超えます`);
@@ -1665,6 +2014,6 @@ function verifiedRecipe(state){const fresh=replay(state.recipe);
  if(state.recipe.steps.length>MAX_STEPS)throw Error(`原本は${MAX_STEPS}手までです`);
  if(fresh.hash!==state.cache.hash)throw Error('JSON再生結果と表示状態が一致しないため保存できません');
  return C(state.recipe)}
-return{create,replay,replayDetail,proposeSquash,squashOptions,squashOptionAt,squashPreview,petalOptions,petalOptionAt,proposePetal,petalPreview,propose,proposeOnFace,setSide,select,preview,cancel,confirm,flip,stage,stageSide,confirmStaged,stageFold,confirmStagedFold,proposeOpen,wholeSideOf,undo,redo,verifiedRecipe,hitFaces,split,reflect,inside,side:S,area,sheetOf,sheetIds,assertSupported,outerEdges:C(OUTER),pickOuterEdge,proposeEdgePair,
+return{create,replay,replayDetail,reverseOptions,proposeReverse,reversePreview,confirmReverse,reverseMotion,reverseSetup,proposeSquash,squashOptions,squashOptionAt,squashPreview,petalOptions,petalOptionAt,proposePetal,petalPreview,propose,proposeOnFace,setSide,select,preview,cancel,confirm,flip,stage,stageSide,confirmStaged,stageFold,confirmStagedFold,proposeOpen,wholeSideOf,undo,redo,verifiedRecipe,hitFaces,split,reflect,inside,side:S,area,sheetOf,sheetIds,assertSupported,outerEdges:C(OUTER),pickOuterEdge,proposeEdgePair,
  stackAt,layersAt,topFaces,rimEdges,creaseIntervals,edgeIntent,creaseIntent,resolveRimEdge,resolveCreaseInterval,hingeIntervals,hingeIntent,resolveHingeInterval,axesEdgeToCrease,checkEdgeToCrease,edgeToCreaseOptions,verifyEdgeToCrease,edgeToHingeOptions,verifyEdgeToHinge,edgeToEdgeOptions,verifyEdgeToEdge,rimEdgeVisible,axisSplitsSheet,hingeStaysUnderFold,fixedHingePart,movingIdsFor,foldRotator,paperRootOf,foldability,foldableSet,creasability,creasableSet,contiguousAt,pendingCheck,recordable,setLayers,setSideAll,sideAllFaces,stageLine,setFlap,flapFaces,outlineHingeEdges,hingeEdgeIntent,resolveSourceEdge,extendGuide,creaseSidePoint,MAX_STEPS,MAX_FACES,polysOverlap,overlapsArea,strictlyInside,detXf,hingeMemoStats:()=>({...hingeMemoStats})};
 })();

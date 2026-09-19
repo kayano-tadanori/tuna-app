@@ -15,13 +15,16 @@
 .stack .lead{font-size:13px;font-weight:700;margin:0 0 6px}
 .stack details{margin-top:6px}.stack summary{cursor:pointer;opacity:.75}
 #pocketGL{pointer-events:none}
+#revBar{bottom:140px}
 .pocket{bottom:74px;z-index:3}
 .pocket input[type=range]{flex:1;min-width:180px;padding:0}
 .pocket .note{width:100%;text-align:center;font-size:12px;opacity:.85}</style></head><body><canvas id="pocketGL" hidden></canvas><canvas id="view"></canvas>
 <div id="pocketHint" class="hint" hidden></div><div class="bar top"><strong>自由折り・B1</strong><span id="steps" class="steps">0手</span><button id="op">角を折る</button><button id="lineMode">折り目を引く：OFF</button><button id="flip">裏返す</button><button id="openHinge" hidden>背を開く</button><button id="squash" hidden>続けてつぶす</button><button id="pocketPick" hidden>袋を選ぶ</button><button id="petalPick" hidden>花弁を選ぶ</button><div id="prep" class="prep" hidden><b>袋折りの準備に失敗しました</b><span id="prepWhy"></span><button id="prepRetry">再試行</button></div><div id="status" class="status">紙の角、または外周の辺をつかんで、置きたい所まで運んでください</div><details id="help" class="help"><summary>操作の説明</summary><div class="unsupported">角＝紙の内側の好きな点へ（折り目・紙のふち・対角に吸いつく）。角を角へ＝別の角へ。外周の辺＝指を通る平行線へ（紙が平らなあいだだけ）。重なった所は指を離すと「この場所の重なり」が出て、上から何枚かだけ選べます（原本に残るのは解決した面の faceId）。「折り目を引く：ON」で、紙の上を2点ドラッグ＝その向きの折り目だけを引きます（紙は平らのまま）。角→辺は未対応。紙の外をドラッグすると視点が回ります。</div></details><details id="detail" class="detail" hidden><summary>詳しく</summary><div id="detailMsg"></div><div id="pocketWhy"></div></details></div>
 <div id="layers" class="stack" hidden><div class="lead">重なった紙を、どこまで折りますか（上から何枚／折線のこの側を全部／つながっているフラップ）</div><div id="stackPick"></div><div id="stackWhy" class="why"></div><details id="stackDetail"><summary>詳しく（この場所の重なり <span id="stackAt"></span>）</summary><div id="stackRows"></div><div id="stackNote" class="why"></div></details></div>
+<div id="revPanel" class="stack" hidden><div class="lead">中割りにする背（線がまたぐ背のうち、つかんだフラップをつなぐもの）</div><div id="revPick"></div><div id="revWhy" class="why"></div></div>
+<div id="revBar" class="bar pocket" hidden><div class="note">🪝 中割り（<b>厚み0</b>で表示・途中は engine の運動そのもの）</div><input id="revT" type="range" min="0" max="1000" value="0"><button id="revPlay">再生</button><button id="revBack">逆再生</button><button id="revStop">とめる</button></div>
 <div id="pocketBar" class="bar pocket" hidden><div id="pocketNote" class="note">🧺 つる③の袋折り（検証ずみの形だけ）｜<b>厚み0</b>で表示・紙どうしの<b>貫通（すり抜け）は未検証</b></div><input id="pocketT" type="range" min="0" max="1000" value="0"><button id="pocketOpen">袋を開いてつぶす</button><button id="pocketPlay">再生</button><button id="pocketBack">逆再生</button><button id="pocketStop">とめる</button></div>
-<div class="bar bottom"><button id="kind">谷折り</button><button id="creaseMode">折る</button><button id="creaseFold" hidden>この折り目で折る</button><button id="lineFold" hidden>この線で折る</button><button id="confirm" class="save" disabled>確定</button><button id="cancel" class="danger" disabled>取消</button><button id="undo" class="danger" disabled>1手戻す</button><button id="redo" class="danger" disabled>やり直す</button><input id="workName" type="text" value="自由折り"><button id="save" class="save" disabled>JSONを保存</button></div>
+<div class="bar bottom"><button id="kind">谷折り</button><button id="creaseMode">折る</button><button id="creaseFold" hidden>この折り目で折る</button><button id="lineFold" hidden>この線で折る</button><button id="reverseFold" hidden>この線で中割り</button><button id="confirm" class="save" disabled>確定</button><button id="cancel" class="danger" disabled>取消</button><button id="undo" class="danger" disabled>1手戻す</button><button id="redo" class="danger" disabled>やり直す</button><input id="workName" type="text" value="自由折り"><button id="save" class="save" disabled>JSONを保存</button></div>
 <script src="freefold_engine.js"></script><script src="freefold_snap.js"></script><script src="origami_recipe.js"></script><script src="squash_model.js"></script><script src="squash_v2.js"></script><script src="petal_v2.js"></script><script src="squash_gl.js"></script><script src="origami_recipe.schema.js"></script><script>
 'use strict';
 const E=FreeFoldEngine,N=FreeFoldSnap,state=E.create(),c=document.getElementById('view'),x=c.getContext('2d');
@@ -57,6 +60,14 @@ let staged=null,stagedAt=null;
    正式な state には1文字も入れない。見せている紙も、背を選ぶ相手も、開く提案の相手も、この派生。 */
 let squash=null;
 const ST=()=>staged||squash||state;
+/* 🪝 中割り（op:'reverse'・2026-09-19・recipe_crane13.md 第22〜24段）。画面が持つのは「引いた線（いまの座標）・指した所・いまの段」だけ。
+   🚨背の候補・θ・動く紙・運動・層順は engine（reverseOptions／proposeReverse／reversePreview）が決める＝画面で幾何を作らない。
+   段：grab＝先の側を指す／choose＝背を選ぶ（1本なら自動で次へ）／preview＝運動を見る（確定するまで原本は変わらない）。 */
+let rev=null,revAnim=0,revPrev=0,revTiming=null;
+/* 🪝 折り目にならない線（「折り目を引く」の関門で断られた線）でも、中割りの線としては持っておく（2026-09-19・入口の手直し）。
+   🚨折り目を引く判定は変えない＝この線で折り目の候補は作らない。使い道は「この線で中割り」だけ。 */
+let lineDraft=null;
+const reverseBtn=document.getElementById('reverseFold'),revPanel=document.getElementById('revPanel'),revPickEl=document.getElementById('revPick'),revWhyEl=document.getElementById('revWhy'),revBar=document.getElementById('revBar'),revT=document.getElementById('revT');
 /* 🧺 つる③の袋折り（v2・2026-09-14）。画面が持つのは「いま袋を選んでいるか／プレビュー中か」と、
    プレビューの t・再生の向きだけ。🚨袋・軸・対象面・層順・途中の座標は engine（squashOptions／squashOptionAt／
    proposeSquash／squashPreview）が返したものを使う＝画面で組み立てない。原本が変わるのは確定のときだけ。
@@ -84,7 +95,7 @@ function petalOptionsUI(){if(!pocketReady.ok)return{options:[],reason:pocketRead
  if(petalMemo.key!==key)petalMemo={key,res:E.petalOptions(state)};
  return petalMemo.res}
 function syncPocket(){const lock=!!pocket,o=pocket?{options:[]}:pocketOptions(),po=pocket?{options:[]}:petalOptionsUI();
- const idle=!dragSession&&!state.pending&&!staged&&!squash&&!lineMode;
+ const idle=!dragSession&&!state.pending&&!staged&&!squash&&!lineMode&&!rev;
  /* 袋と花弁は同時に選ばない：選んでいる間は、選んでいるほうのボタン（やめる）だけを出す。 */
  pocketBtn.hidden=pocket?pocket.kind!=='squash':!o.options.length;pocketBtn.disabled=!pocket&&!idle;
  petalBtn.hidden=pocket?pocket.kind!=='petal':!po.options.length;petalBtn.disabled=!pocket&&!idle;
@@ -300,6 +311,7 @@ function follow(){const f=dragSession&&dragSession.finger;if(!f)return;
 function owner(){return(dragSession&&dragSession.source)||(pendingProposal&&pendingProposal.source)||null}
 function draw(){x.clearRect(0,0,innerWidth,innerHeight);
  if(pocket&&pocket.mode==='preview'){drawPocket();return}
+ if(rev&&rev.phase==='preview'){pocketCanvas.hidden=true;drawRev();return}
  pocketCanvas.hidden=true;
  const o=owner(),live=dragSession||pendingProposal;
  frame={fx:[],follow:null,chips:[],owner:o&&o.id,kind:o&&o.type,intent:(o&&o.intent)||null,op:(live&&live.op)||null,edgeTo:(()=>{const a=(dragSession&&(dragSession.edgeAim||dragSession.aim))||(pendingProposal&&(pendingProposal.edgeAim||pendingProposal.aim));if(!(a&&a.target&&(a.target.intervalId||a.target.edgeId)))return null;const e=a.edge||(o&&o.edge)||null;return{edgeId:e?(e.edgeId||e.id):null,label:e?e.label:null,intervalId:a.target.intervalId||a.target.edgeId,targetKind:a.targetKind||'crease',cut:!!a.target.cut,sameSheet:!!a.sameSheet}})(),phase:dragSession?dragSession.kind:pendingProposal?'pending':'idle',hover:o?null:hover&&hover.id,handles:[],ghost:null,crease:null,axis:null,hingePick:null};
@@ -355,7 +367,93 @@ function draw(){x.clearRect(0,0,innerWidth,innerHeight);
   frame.pocket=pocket.kind==='petal'?{kind:'petal',mode:'pick',options:pocket.options.map(o=>({petalId:o.petalId,faceIds:o.faceIds.slice()}))}
    :{mode:'pick',options:pocket.options.map(o=>({pocketId:o.pocketId,faceIds:o.faceIds.slice()}))}}
  else if(afterSquash()||afterPetal())frame.pocket={mode:'after'};
+ if(rev)drawRevMarks();
+ else if(lineDraft){line(lineDraft.line[0],lineDraft.line[1],'#57a5ff');frame.lineDraft={line:lineDraft.line.map(q=>q.slice()),reason:lineDraft.reason}}
  drawHandles();drawFx()}
+/* 🪝 中割りの印（色の約束は同じ：白＝ホバー・黄＝つかんだ・緑＝行き先）。frame.reverse に描いたものを残す。 */
+function revLine(){const[a,b]=rev.line,d=[b[0]-a[0],b[1]-a[1]],segs=[];
+ for(const f of state.cache.faces){const sg=N.clipToPoly(f.poly,a,d);if(sg&&Math.hypot(sg[1][0]-sg[0][0],sg[1][1]-sg[0][1])>1e-9)segs.push(sg)}
+ for(const sg of segs)line(sg[0],sg[1],'#57a5ff');return segs}
+function revFrame(){return frame.reverse={phase:rev.phase,line:rev.line.map(p=>p.slice()),at:rev.at&&rev.at.slice(),hoverAt:rev.hoverAt&&rev.hoverAt.slice(),
+ flap:rev.flap?rev.flap.slice():null,options:(rev.options||[]).map(o=>({bondId:o.bondId,stepId:o.hinge.stepId,faceIds:o.hinge.faceIds.slice(),thetaDeg:o.thetaDeg,wedgeDeg:o.wedgeDeg})),
+ chosen:rev.chosen,t:rev.t,dir:rev.dir,root:rev.pv?rev.pv.root:null,paint:[],drawnBy:null,polys:null}}
+function revPaint(role,color,what){frame.reverse.paint.push({role,color,what})}
+function drawRevMarks(){const fr=revFrame();fr.axis=revLine();
+ if(rev.phase==='grab'&&rev.hoverAt&&!dragSession){mark(rev.hoverAt,HOVER_WHITE,11);chip(project([rev.hoverAt[0],.02,-rev.hoverAt[1]]),'ここを指すと、この側が中割りで動きます');revPaint('hover',HOVER_WHITE,'point')}
+ if(rev.flap){for(const f of state.cache.faces)if(rev.flap.includes(f.faceId))outline(flatPoly(f.poly),HELD_YELLOW);revPaint('grab',HELD_YELLOW,'flap')}
+ if(rev.at){mark(rev.at,HELD_YELLOW,12);revPaint('grab',HELD_YELLOW,'point')}
+ if(rev.phase==='choose')for(const o of rev.options||[]){line(o.seg[0],o.seg[1],HOVER_WHITE,6,[]);revPaint('choice',HOVER_WHITE,o.bondId)}}
+/* プレビュー：t=0 は いまの紙・t=1 は 確定の再生結果（どちらも層の順に塗る）。途中は engine の運動（frame(t)）を奥から塗る（厚み0）。 */
+function drawRev(){const fr=revFrame(),t=rev.t,pv=rev.pv,sid=ST().pending&&ST().pending.step&&ST().pending.step.id;
+ frame={fx:[],follow:null,chips:[],owner:null,kind:null,intent:null,op:'reverse',edgeTo:null,phase:'reverse',hover:null,handles:[],creases:[],pick:null,reverse:fr};
+ if(t<=0||t>=1){const faces=t>=1?pv.after:pv.before;
+  for(const f of[...faces].sort((a,b)=>a.layer-b.layer))poly(flatPoly(f.poly),paperFill(isBack(f)));
+  fr.drawnBy='engine-layers';fr.faces=faces.map(f=>({faceId:f.faceId,layer:f.layer,back:isBack(f)}))}
+ else{const cy=Math.cos(camera.yaw),sy=Math.sin(camera.yaw),cp=Math.cos(camera.pitch),sp=Math.sin(camera.pitch),w=[cp*sy,-cp*cy,sp];
+  const byId=new Map(pv.before.map(f=>[f.faceId,f])),ps=pv.frame(t),items=[];
+  for(const q of ps){const f=byId.get(q.faceId),P=q.pts,n=[0,0,0];
+   for(let i=1;i+1<P.length;i++){const u=[P[i][0]-P[0][0],P[i][1]-P[0][1],P[i][2]-P[0][2]],v=[P[i+1][0]-P[0][0],P[i+1][1]-P[0][1],P[i+1][2]-P[0][2]];
+    n[0]+=u[1]*v[2]-u[2]*v[1];n[1]+=u[2]*v[0]-u[0]*v[2];n[2]+=u[0]*v[1]-u[1]*v[0]}
+   const a2=f.poly.reduce((s,p,i)=>{const r=f.poly[(i+1)%f.poly.length];return s+p[0]*r[1]-r[0]*p[1]},0);
+   const front=(n[0]*w[0]+n[1]*w[1]+n[2]*w[2])*Math.sign(a2)*Math.sign(E.detXf(f.xf))>0;
+   const c=P.reduce((s,p)=>[s[0]+p[0]/P.length,s[1]+p[1]/P.length,s[2]+p[2]/P.length],[0,0,0]);
+   items.push({pts:P.map(p=>[p[0],p[2],-p[1]]),depth:c[0]*w[0]+c[1]*w[1]+c[2]*w[2],fill:front?paperFill(false):paperFill(true)})}
+  items.sort((a,b)=>a.depth-b.depth);for(const it of items)poly(it.pts,it.fill);
+  fr.drawnBy='engine-frame';fr.polys=ps.map(q=>({faceId:q.faceId,part:q.part,pts:q.pts.map(p=>p.slice())}))}
+ /* 緑＝行き先：この手で動く紙の、確定後の位置（再生結果の面）。 */
+ if(sid){for(const f of pv.after)if(f.faceId.includes('/'+sid+'.cut'))outline(flatPoly(f.poly),TARGET_GREEN);revPaint('target',TARGET_GREEN,'after')}
+ if(rev.at){mark(rev.at,HELD_YELLOW,12);revPaint('grab',HELD_YELLOW,'point')}
+ drawFx()}
+function revTick(now){if(!rev||rev.phase!=='preview'||!rev.dir){revAnim=0;return}
+ const dt=Math.min(.05,(now-revPrev)/1000);revPrev=now;rev.t=clamp(rev.t+rev.dir*dt*.35,0,1);
+ if((rev.dir>0&&rev.t>=1)||(rev.dir<0&&rev.t<=0))rev.dir=0;
+ revT.value=String(Math.round(rev.t*1000));draw();revAnim=rev.dir?requestAnimationFrame(revTick):0}
+function revRun(dir){if(!rev||rev.phase!=='preview')return;rev.dir=dir;revPrev=performance.now();if(!revAnim)revAnim=requestAnimationFrame(revTick)}
+/* 背の候補の枠（2本以上のときだけ選ぶ。1本なら自動）。 */
+function renderRevPick(){if(!rev||!rev.options||!rev.options.length){revPanel.hidden=true;revPickEl.textContent='';revWhyEl.textContent='';revBar.hidden=!(rev&&rev.phase==='preview');return}
+ revPanel.hidden=false;revPickEl.textContent='';
+ rev.options.forEach((o,i)=>{const b=document.createElement('button');b.className='pick'+(rev.chosen===i?' on':'');b.dataset.bond=o.bondId;
+  b.textContent=`${o.hinge.stepId} の背（θ=${o.thetaDeg.toFixed(1)}°・両側 ${o.sides.x}／${o.sides.y}）`;b.onclick=()=>{revChoose(i);draw()};revPickEl.appendChild(b)});
+ revWhyEl.textContent=rev.options.length===1?'背は1本に決まりました':'白い線が、選べる背です';
+ revBar.hidden=rev.phase!=='preview'}
+/* 先の側を指した：engine に背の候補を聞く（1本なら自動で提案まで進む）。 */
+/* 🪝 フラップの中で、線から最も遠い頂点を遠い順に（頂点は面のふちの上なので、重心へ 2%→10%→25% と寄せて、そこのいちばん上がフラップの面になる所）。
+   ids＝フラップの面、sg＝先の側（指した点の側）。UI の導出だけ。 */
+function revFarPoints(ids,sg){const[a,b]=rev.line,L=Math.hypot(b[0]-a[0],b[1]-a[1]),vs=[],out=[];
+ const cen=q=>q.reduce((s,v)=>[s[0]+v[0]/q.length,s[1]+v[1]/q.length],[0,0]);
+ for(const f of state.cache.faces){if(!ids.includes(f.faceId))continue;
+  const part=E.split(f.poly,a,b).find(q=>q&&Math.sign(E.side(cen(q),a,b))===sg);if(!part)continue;
+  const c=cen(part);for(const v of part)vs.push({v,c,d:Math.abs(E.side(v,a,b))/L})}
+ for(const{v,c}of vs.sort((x,y)=>y.d-x.d).slice(0,12))for(const k of[.02,.1,.25]){const q=[v[0]+(c[0]-v[0])*k,v[1]+(c[1]-v[1])*k],t=E.stackAt(state,q)[0];
+  if(t&&ids.includes(t.faceId)){out.push(q);break}}
+ return out}
+function revGrabAt(p){if(state.pending)E.cancel(state);
+ let o=E.reverseOptions(state,rev.line[0],rev.line[1],p);rev.grab=p.slice();
+ /* 指した所が線に近すぎて候補が出ないとき（engine の「折線から離れた所」）：指した所のいちばん上の紙のフラップ（engine の flapFaces）の中で、
+    線から最も遠い頂点で聞き直す。フラップの決め方・関門は engine のまま。 */
+ if(!o.options.length&&E.stackAt(state,p).length){let[a,b]=rev.line;if(E.side(p,a,b)>0)[a,b]=[b,a];
+  let ids=[];try{ids=E.flapFaces(state,p,a,b)}catch{}
+  for(const q of revFarPoints(ids,Math.sign(E.side(p,rev.line[0],rev.line[1])))){const o2=E.reverseOptions(state,rev.line[0],rev.line[1],q);if(o2.options.length){o=o2;rev.grab=q;break}}}
+ rev.at=p.slice();rev.hoverAt=null;rev.flap=o.flap||null;rev.options=o.options||[];rev.chosen=null;rev.pv=null;rev.t=0;rev.dir=0;
+ if(!rev.options.length){rev.phase='grab';renderRevPick();refresh();error(Error(o.reason||'中割りにできる背がありません'),(o.skipped||[]).map(v=>v.stepId+'：'+v.reason).join('／'));return}
+ rev.phase='choose';renderRevPick();refresh();
+ if(rev.options.length===1)revChoose(0);
+ else ok(`線がまたぐ背が${rev.options.length}本あります。どの背で中割りにするか選んでください`)}
+/* 🪝 動く側の印（movingSidePoint）：指した点そのものでなく、つかんだフラップの先の部分のうち線から最も遠い頂点（重心へ2%だけ寄せる）。
+   その点で同じフラップ・同じ背の候補になるものだけを使う（UI の導出だけ。engine の「折線から離れた側」の関門はそのまま）。見つからなければ指した点。 */
+function revSidePoint(at,opt){const[a,b]=rev.line,flap=opt.targets.slice().sort().join('|');
+ for(const q of revFarPoints(opt.targets,Math.sign(E.side(at,a,b)))){const r=E.reverseOptions(state,a,b,q);if(r.options.length&&(r.flap||[]).slice().sort().join('|')===flap&&r.options.some(v=>v.bondId===opt.bondId))return q}
+ return at}
+function revChoose(i){const o=rev.options[i];if(state.pending)E.cancel(state);rev.chosen=i;
+ try{const t0=performance.now();rev.side=revSidePoint(rev.grab||rev.at,o);
+  const t1=performance.now();E.proposeReverse(state,rev.line[0],rev.line[1],rev.side,o.bondId);const t2=performance.now();
+  rev.pv=E.reversePreview(state);const t3=performance.now();
+  revTiming={side:t1-t0,propose:t2-t1,preview:t3-t2,confirm:null,faces:state.cache.faces.length,root:rev.pv.root?rev.pv.root.stepId:null};
+  console.log(`[中割り] 動く側の印 ${(t1-t0).toFixed(0)}ms・提案 ${(t2-t1).toFixed(0)}ms（再生＋途中48コマの突き抜け・裂けの検査込み）・プレビュー ${(t3-t2).toFixed(0)}ms・面 ${revTiming.faces}${revTiming.root?'・根元の頂点 '+revTiming.root:''}`);
+  rev.phase='preview';rev.t=0;rev.dir=0;revT.value='0';
+  enablePending(true);renderRevPick();
+  ok(`中割りにします（${o.hinge.stepId} の背・θ=${o.thetaDeg.toFixed(1)}°${rev.pv.root?`・根元の頂点（${rev.pv.root.stepId}）もいっしょに動きます`:''}）。「再生」で動きを見て、よければ確定してください`,'確定するまで原本は変わりません')}
+ catch(e){if(state.pending)E.cancel(state);rev.pv=null;rev.phase=rev.options.length>1?'choose':'grab';enablePending(false);renderRevPick();refresh();error(e)}}
 /* 📐 折軸の破線は、**いま表示している紙面と交わる区間だけ**を描く（2026-09-13・本人が画像で指摘）。
    症状：計算用の線（E2 の軸は交点のまわりの単位線分）をそのまま引いていたので、紙の外へ破線が伸びていた。
    🚨直すのは描画だけ：計算用の無限直線・原本の line・反射軸は1文字も変えない（`geom.line`も`frame.crease`もそのまま）。
@@ -387,7 +485,12 @@ function refresh(){stepsEl.textContent=state.recipe.steps.length+'手';const bus
  creaseFoldBtn.disabled=!!staged;
  /* ✋ 引いた線でそのまま折る（折り1手）：「折り目を引く」で線を引いたあとだけ出す。 */
  lineFoldBtn.hidden=!(staged&&staged.staged.mode==='line-fold')&&!(!staged&&state.pending&&pendingProposal&&pendingProposal.op==='line');
- lineFoldBtn.disabled=!!staged;syncOpenBtn();syncSquashBtn();syncPocket()}
+ lineFoldBtn.disabled=!!staged;
+ /* 🪝 引いた線で中割り：「折り目を引く」で線を引いたあとだけ出す（中割りの途中は出さない）。 */
+ reverseBtn.hidden=!(!staged&&!rev&&((state.pending&&pendingProposal&&pendingProposal.op==='line')||lineDraft));
+ if(lineDraft&&!rev)cancelBtn.disabled=false;
+ syncOpenBtn();syncSquashBtn();syncPocket();
+ if(rev){flipBtn.disabled=true;undoBtn.disabled=true;redoBtn.disabled=true;saveBtn.disabled=true;cancelBtn.disabled=false;lineFoldBtn.hidden=true}}
 function clearLayerPick(){layerPick=null;layersEl.hidden=true;stackRowsEl.textContent='';stackPickEl.textContent='';stackWhyEl.textContent='';stackNoteEl.textContent=''}
 /* 🧵 指した側を engine に渡して、折りの候補を作る。ゴースト・判定・「上からN枚」は既存のまま。 */
 function stageSideAt(p){E.stageSide(staged,p);stagedAt=p.slice();clearLayerPick();
@@ -411,7 +514,7 @@ function openSideAt(p){if(!squash)discardProposal();
   +(squash?'／確定すると折りが2手入ります':''));
  if(tear)statusEl.style.color='#ff9b9b';
  applyFoldability();refresh()}
-function discardProposal(){if(state.pending)E.cancel(state);pocket=null;staged=null;stagedAt=null;squash=null;pendingProposal=null;geom=null;foldCheck=null;enablePending(false);clearLayerPick()}
+function discardProposal(){if(state.pending)E.cancel(state);if(rev)rev.dir=0;rev=null;lineDraft=null;renderRevPick();pocket=null;staged=null;stagedAt=null;squash=null;pendingProposal=null;geom=null;foldCheck=null;enablePending(false);clearLayerPick()}
 /* いまの候補から、原本に書くときの折線と折る側の点を出す（engineが持っている値だけを使う）。 */
 function pendingFoldGeom(){const q=ST().pending,f=ST().cache.faces.find(v=>v.faceId===q.reference.faceId);
  const ap=(m,v)=>[m[0]*v[0]+m[1]*v[1]+m[4],m[2]*v[0]+m[3]*v[1]+m[5]],sp=ap(f.xf,q.sidePoint);
@@ -548,6 +651,10 @@ c.onpointerdown=ev=>{if(dragSession)return;/* 2本目の指や2つ目のボタ�
  if(pocket){
   if(pocket.mode==='pick'){const at=paperPoint(ev),opt=pocket.kind==='petal'?E.petalOptionAt(state,at):E.squashOptionAt(state,at);if(opt){selectPocket(opt);draw();return}}
   hover=null;dragSession={kind:'camera',source:null,pointerId:ev.pointerId,button:ev.button,x:ev.clientX,y:ev.clientY,yaw:camera.yaw,pitch:camera.pitch};capture(ev);draw();return}
+ /* 🪝 中割りのあいだ：紙の上を指す＝先の側（preview 中は視点を回すだけ）。紙の外はこれまでどおり視点が回る。 */
+ if(rev){const p=paperPoint(ev);
+  if(rev.phase!=='preview'&&E.stackAt(state,p).length){try{revGrabAt(p);addFx('grab',{point:p},HELD_YELLOW)}catch(e){error(e)}draw();return}
+  hover=null;dragSession={kind:'camera',source:null,pointerId:ev.pointerId,button:ev.button,x:ev.clientX,y:ev.clientY,yaw:camera.yaw,pitch:camera.pitch};capture(ev);draw();return}
  /* 🧵 staged のあいだは、紙の上を指す＝折り目のどちら側を折るかを決める。紙の外はこれまでどおり視点が回る。 */
  if(staged){const p=paperPoint(ev);
   if(E.stackAt(staged,p).length){try{stageSideAt(p)}catch(e){error(e)}draw();return}}
@@ -623,6 +730,7 @@ c.onpointerdown=ev=>{if(dragSession)return;/* 2本目の指や2つ目のボタ�
 c.onpointermove=ev=>{if(dragSession&&ev.pointerId!==dragSession.pointerId)return;
  if(dragSession&&dragSession.kind==='camera'){camera.yaw=dragSession.yaw+(ev.clientX-dragSession.x)*.008;camera.pitch=clamp(dragSession.pitch+(ev.clientY-dragSession.y)*.008,.2,1.35);draw();return}
  const screen=at(ev),p=paperPoint(ev);
+ if(!dragSession&&rev){if(rev.phase==='grab'){const on=E.stackAt(state,p).length>0,prev=rev.hoverAt;rev.hoverAt=on?p.slice():null;if(on||prev)draw()}return}
  if(!dragSession){if(pendingProposal||pocket)return;/* まだ片づけていない候補があるならホバーは見ない。 */
   if(lineMode){const st=N.freeCreaseStart(state,screen,p,VIEW),kk=st.point?'line:'+ptKey(st.point):null;
    if(kk!==(hover&&hover.id)){hover=st.point?{type:'line',id:kk,point:st.point,snapped:st.snapped,
@@ -651,13 +759,21 @@ c.onpointermove=ev=>{if(dragSession&&ev.pointerId!==dragSession.pointerId)return
   else if(s.type==='line'){/* 🖊 2点は線の向きだけを決める。折り目は紙片のふちからふちまで通り、紙は動かない。 */
    if(!N.movedEnough(s.origin,screen)){clearAim('引きたい向きの、もう一方の点まで運んでください')}
    else{const a=N.linePointAim(s.corners,s.guides,screen,p,VIEW,dragSession.snapped===true);
-    const cr=N.freeCreaseLine(state,s,a.point);discardProposal();
-    E.proposeOnFace(state,cr.line[0],cr.line[1],cr.faceId,{layers:1,op:'crease'});
+    dragSession.lineDraft=null;let cr=null,why=null;try{cr=N.freeCreaseLine(state,s,a.point)}catch(err){why=err.message}
+    discardProposal();
+    if(cr){E.proposeOnFace(state,cr.line[0],cr.line[1],cr.faceId,{layers:1,op:'crease'});
     state.pending.kind=kindValue;E.setSide(state,cr.sidePoint);
     dragSession.snapped=a.snapped;dragSession.progress=1;dragSession.proposedBy=s.id;
     dragSession.aim={target:a.point,snapped:a.snapped,snapKind:a.snapKind,snapOn:a.snapOn,snapAtCreaseEnd:a.snapAtCreaseEnd};
     geom=E.preview(state,0);/* 紙は0°のまま。動くのは折線と緑の点だけ。 */
-    ok(`${lineWhere(s)}から${lineWhere(a)}へ折り目を引きます（紙は平らのまま）`)}}
+    ok(`${lineWhere(s)}から${lineWhere(a)}へ折り目を引きます（紙は平らのまま）`)}
+    else{/* 🪝 折り目にはならない線：同じ2点の直線を紙片に切って持つだけ（入力層の clipToSheet）。短すぎる・紙に入らない線は今までどおり断る。 */
+     const d=[a.point[0]-s.point[0],a.point[1]-s.point[1]],ln=Math.hypot(d[0],d[1])>=.03?N.clipToSheet(E.sheetOf(state,s.faceId),s.point,d):null;
+     if(!ln)throw Error(why);
+     dragSession.snapped=a.snapped;dragSession.progress=0;dragSession.proposedBy=s.id;
+     dragSession.aim={target:a.point,snapped:a.snapped,snapKind:a.snapKind,snapOn:a.snapOn,snapAtCreaseEnd:a.snapAtCreaseEnd};
+     dragSession.lineDraft={line:ln,reason:why};
+     note(`この線では折り目は引けません（${why}）。離すと「この線で中割り」に使えます`)}}}
   else if(s.type==='corner'&&dragSession.op==='fold'){/* 角を折る：行き先は指のいる点。ただし対角だけは吸いつく。 */
    if(!N.movedEnough(s.origin,screen)){clearAim('つかんだ角を、置きたい所まで運んでください')}
    else{const t=N.foldTarget(state,s,screen,p,VIEW,dragSession.snapped===true);
@@ -732,7 +848,9 @@ function endSession(){
  fx=fx.filter(f=>f.kind!=='grab'&&f.kind!=='label');/* つかんだ瞬間の印は、離したら残さない */
  if(sess.kind==='camera'){draw();return}
  if(sess.kind==='line'&&!(state.pending&&sess.progress>0)){sessionLog.push({at:'up',id:sess.source.id});hover=null;
-  discardProposal();ok('折り目の線が決まらなかったので、紙は元のままです');draw();return}
+  discardProposal();
+  if(sess.lineDraft){lineDraft=sess.lineDraft;refresh();note(`折り目にはならない線です（${lineDraft.reason}）。「この線で中割り」なら使えます`);draw();return}
+  ok('折り目の線が決まらなかったので、紙は元のままです');draw();return}
  if(sess.kind==='rim'&&!(state.pending&&sess.progress>0)){sessionLog.push({at:'up',id:sess.source.id});hover=null;
   discardProposal();
   /* 🦴✋ 外形の背を動かさずに離した＝タップ＝従来の「背を選ぶ」（押した所で選ぶ・視点は回さない） */
@@ -772,6 +890,7 @@ opBtn.onclick=()=>{if(lineMode)return;if(dragSession)return;if(pocket)return;opM
 creaseBtn.onclick=()=>{if(lineMode)return;if(dragSession)return;if(pocket)return;asCrease=!asCrease;creaseBtn.textContent=asCrease?'折り目だけ':'折る';
  discardProposal();clearHingePick();hover=null;ok(asCrease?'この操作は折り目だけをつけます（紙は平らのまま）':'この操作は紙を折ります');draw()};
 kindBtn.onclick=()=>{if(pocket)return;
+ if(rev){ok('中割りの山谷は、入れ子の向きで engine が決めます（画面からは変えません）');return}
  /* 🫱 背を開く候補の山谷は engine が決めている（開くのが上の紙なら谷・下の紙なら山）＝画面から変えない。 */
  if(pendingProposal&&pendingProposal.op==='open'){ok('背を開くときの山谷は、どちらの紙を開くかで決まります（画面からは変えません）');return}
  /* 🥟 派生にはもう1手目が入っている＝ここで山谷だけ変えると、見せている紙と食い違う。 */
@@ -795,6 +914,13 @@ confirmBtn.onclick=()=>{fx=[];/* 🖐 確定したら手応えの印は残さな
    pocket.dir=0;const kind=pocket.kind;E.confirm(state,{name:document.getElementById('workName').value||'自由折り'});
    pocket=null;pendingProposal=null;geom=null;clearHingePick();clearLayerPick();enablePending(false);refresh();
    ok(kind==='petal'?`${state.recipe.steps.length}手目で花弁を持ち上げてたたみました（v2 の1手）。続けて折れます`:`${state.recipe.steps.length}手目で袋を開いてつぶしました（v2 の1手）。続けて折れます`);draw()}
+  catch(e){error(e);draw()}return}
+ /* 🪝 中割りの確定＝engine が再生の芯を通して1手入れかえる。断られたら正式な状態も候補もそのまま。 */
+ if(rev){if(rev.phase!=='preview')return;try{rev.dir=0;
+   const t0=performance.now();E.confirm(state,{name:document.getElementById('workName').value||'自由折り'});
+   if(revTiming){revTiming.confirm=performance.now()-t0;console.log(`[中割り] 確定 ${revTiming.confirm.toFixed(0)}ms・提案から確定まで（操作の待ちを除く） ${(revTiming.side+revTiming.propose+revTiming.preview+revTiming.confirm).toFixed(0)}ms`)}
+   rev=null;renderRevPick();pendingProposal=null;geom=null;clearHingePick();clearLayerPick();enablePending(false);refresh();
+   ok(`${state.recipe.steps.length}手目を中割りで確定しました（op:'reverse' の1手）`);draw()}
   catch(e){error(e);draw()}return}
  /* 🥟 S3＝派生の上で2手目まで決まっている。engine が2手をまとめて原子的に入れかえる（revision は1回だけ）。 */
  if(squash){try{
@@ -853,6 +979,20 @@ lineFoldBtn.onclick=()=>{if(dragSession||staged)return;
   enablePending(true);confirmBtn.disabled=true;refresh();
   ok('線のどちら側を折るか、紙の上で指してください（確定すると折り1手が入ります・折り目の手は入りません）');draw()}
  catch(e){error(e)}};
+/* 🪝 引いた線で中割り：線（いまの座標）を持って、先の側を指してもらう。折り目の候補は片づける（原本は変わらない）。 */
+reverseBtn.onclick=()=>{if(dragSession||staged||rev)return;
+ try{const ln0=lineDraft?lineDraft.line.map(q=>q.slice()):(()=>{const g=pendingFoldGeom();return[g.A.slice(),g.B.slice()]})();
+  /* 🪝 engine へ渡す線は、同じ直線のまま長さ3にそろえる（紙片に切った線は細い所では短い＝engine の「折線から離れた側」の距離は線の長さを掛けた値なので、
+     短い線ではどこを指しても届かない。原本に書く線は engine が基準面に切りなおすので、結果は変わらない）。 */
+  const mid=[(ln0[0][0]+ln0[1][0])/2,(ln0[0][1]+ln0[1][1])/2],len=Math.hypot(ln0[1][0]-ln0[0][0],ln0[1][1]-ln0[0][1]),u=[(ln0[1][0]-ln0[0][0])/len,(ln0[1][1]-ln0[0][1])/len];
+  const ln=[[mid[0]-u[0]*1.5,mid[1]-u[1]*1.5],[mid[0]+u[0]*1.5,mid[1]+u[1]*1.5]];discardProposal();clearHingePick();hover=null;
+  rev={phase:'grab',line:ln,at:null,hoverAt:null,options:null,flap:null,chosen:null,pv:null,t:0,dir:0};
+  refresh();ok('中割りで動かす先の側の紙を、画面で指してください（背は、線がまたぐ背から engine が選びます）');draw()}
+ catch(e){error(e)}};
+revT.oninput=()=>{if(!rev||rev.phase!=='preview')return;rev.dir=0;rev.t=Number(revT.value)/1000;draw()};
+document.getElementById('revPlay').onclick=()=>{if(!rev||rev.phase!=='preview')return;if(rev.t>=1)rev.t=0;revRun(1)};
+document.getElementById('revBack').onclick=()=>{if(!rev||rev.phase!=='preview')return;if(rev.t<=0)rev.t=1;revRun(-1)};
+document.getElementById('revStop').onclick=()=>{if(rev)rev.dir=0;draw()};
 cancelBtn.onclick=()=>{fx=[];if(pocket&&pocket.dir)pocket.dir=0;discardProposal();clearHingePick();hover=null;ok('取り消しました。正式データは変更されていません');draw()};
 /* 🫱 S2：H1で背を選んだときだけ出るボタン。もう一度押すとやめる（押しているあいだ幅は変わらない）。 */
 openBtn.onclick=()=>{if(dragSession||staged||ST().pending||!hingePick)return;
@@ -919,5 +1059,5 @@ preparePocket();
 globalThis.freeFoldDebug={get pocket(){return pocket&&{kind:pocket.kind,mode:pocket.mode,t:pocket.t,dir:pocket.dir,pocketId:pocket.preview?pocket.preview.pocketId||null:null,petalId:pocket.preview?pocket.preview.petalId||null:null,options:(pocket.options||[]).map(o=>o.pocketId||o.petalId)}},
  get pocketReady(){return{...pocketReady}},get prep(){return prepEl.hidden?null:prepEl.textContent},preparePocket,pocketPixelAt:(px,py)=>pocketGL&&pocketGL.ok?pocketGL.pixelAt(Math.round(px*devicePixelRatio),Math.round(py*devicePixelRatio)):null,
  get pocketCanvasHidden(){return pocketCanvas.hidden},get pocketWhy(){return pocketWhy.textContent||null},get pocketHint(){return pocketHint.hidden?null:pocketHint.textContent},get detail(){return detailEl.hidden?null:detailMsgEl.textContent+(pocketWhy.textContent?'｜'+pocketWhy.textContent:'')},pocketMVP,
- pocketColors:()=>pocketGL&&pocketGL.ok?pocketGL.pixels((r,g,b,al)=>al<10?'empty':(r>190&&g<130&&b<130)?'front':(r>200&&g>200&&b>200)?'back':'other'):null,state,camera,sessionLog,get geometry(){return geom},get dragSession(){return dragSession},get pendingProposal(){return pendingProposal},get hover(){return hover},get frame(){return frame},get status(){return statusEl.textContent},get kind(){return kindValue},get op(){return opMode},get asCrease(){return asCrease},get lineMode(){return lineMode},get hingePick(){return hingePick},get openMode(){return openMode},get openPoint(){return openPoint},get layerPick(){return layerPick},get foldCheck(){return foldCheck},get staged(){return staged},get squash(){return squash},get stagedAt(){return stagedAt},apiCalls,setLayersArgs,paperPoint,project};resize();refresh();refreshModes();
+ pocketColors:()=>pocketGL&&pocketGL.ok?pocketGL.pixels((r,g,b,al)=>al<10?'empty':(r>190&&g<130&&b<130)?'front':(r>200&&g>200&&b>200)?'back':'other'):null,state,camera,sessionLog,get geometry(){return geom},get dragSession(){return dragSession},get pendingProposal(){return pendingProposal},get hover(){return hover},get frame(){return frame},get status(){return statusEl.textContent},get kind(){return kindValue},get op(){return opMode},get asCrease(){return asCrease},get lineMode(){return lineMode},get hingePick(){return hingePick},get openMode(){return openMode},get openPoint(){return openPoint},get layerPick(){return layerPick},get foldCheck(){return foldCheck},get staged(){return staged},get squash(){return squash},get stagedAt(){return stagedAt},get lineDraft(){return lineDraft},get revTiming(){return revTiming},get reverse(){return rev&&{phase:rev.phase,line:rev.line,at:rev.at,side:rev.side||null,t:rev.t,dir:rev.dir,chosen:rev.chosen,options:(rev.options||[]).map(o=>({bondId:o.bondId,stepId:o.hinge.stepId,thetaDeg:o.thetaDeg})),root:rev.pv?rev.pv.root:null}},apiCalls,setLayersArgs,paperPoint,project};resize();refresh();refreshModes();
 </script></body></html>
