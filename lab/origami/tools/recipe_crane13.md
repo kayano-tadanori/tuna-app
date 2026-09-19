@@ -1,5 +1,18 @@
 # つる⑬（脚の中割り折り）独立モデル・第1段（2026-09-16）
 
+## 📦 gitの外に置いたもの（2026-09-19・指紋＝sha1 先頭8桁・作り方）
+- `crane13_open_path_outer-first.npy` bd2c5e90 ＝ `python check_crane13_open_path.py --order outer-first`（第10段・89歩で止まった姿。`_step89.npy` と同じ中身）
+- `crane13_open_path_outer-first_step89.npy` bd2c5e90 ＝ 上の出力を改名して控えたもの
+- `crane13_open_path_outer-first_resumed.npy` 924ab6d0 ＝ `python check_crane13_open_path.py --order outer-first --resume crane13_open_path_outer-first_step89.npy --start-step 89 --max-steps 180`（ログ `open_path_outer_first_to180.log`）
+- `crane13_open_path_outer-first_step180.npy` 924ab6d0 ＝ 上の出力を改名して控えたもの（第11〜13段の出発点）
+- `crane13_open_path_outer-first_step181.npy` 90c33b43 ＝ 同じ追い方を181歩まで（ログ `open_path_outer_first_resume.log`）
+- `crane13_open_path_inner-first.npy` a887e693 ＝ `python check_crane13_open_path.py --order inner-first`（ログ `open_path_inner_first.log`）
+- `crane13_open_path_last.npy` 399838bb ＝ `python check_crane13_open_path.py`（uniform・ログ `open_path_run1.log`）の最後の姿
+- `crane13_stack_tests.json` d8121cd3（1.4MB）＝ `node export_crane13_stacks.js tests`
+- `figs/crane13_s1_target.png` 979a4a1d ＝ `python make_crane13_s1_target_fig.py`
+- `figs/crane13_stage_S1.png` f727b1ad ＝ `python make_crane13_stage_figs.py`
+- `figs/crane13_video_pa27/*.png`（9枚・計27MB）＝ 動画の切り出し。作り方と一覧は同じ場所の `README.md`（yt-dlp＋ffmpeg crop）。指紋：head a663e573／leg1_6fps c28f0a60／leg1_13.2 8bccece4／leg1_14.2 fc2119e1／leg2 cbb3bf67／overview_11m20 101a900a／overview_9m20 2fd626b3／own_0-7s 41c3f15b／own_7-12s f15bf683
+
 **本体・UI・保存形式は1文字も変えていない**。ここは検証の入力を固定し、「どこが動けるか」を独立に（JS の判定を使わずに）調べた記録。
 
 ## 工程番号の対応

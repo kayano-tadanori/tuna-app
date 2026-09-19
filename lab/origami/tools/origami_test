@@ -1,0 +1,16 @@
+#!/bin/sh
+# つる⑬ の検査ラッパ（2026-09-18）。--mode leg_to_body だけ受ける＝check_crane13_body_receive.py を呼ぶ。
+mode=""
+args=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --mode) mode="$2"; shift 2;;
+    *) args="$args $1"; shift;;
+  esac
+done
+if [ "$mode" != "leg_to_body" ]; then
+  echo "origami_test: --mode leg_to_body だけ使えます（指定: $mode）" >&2
+  exit 2
+fi
+cd "$(dirname "$0")" || exit 2
+PYTHONHASHSEED=0 PYTHONIOENCODING=utf-8 exec python check_crane13_body_receive.py $args

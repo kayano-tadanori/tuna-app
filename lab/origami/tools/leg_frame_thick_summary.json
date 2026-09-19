@@ -1,0 +1,133 @@
+{
+ "model": "SL8（脚8層・16枚）・胴なし",
+ "thickness": 0.0001,
+ "rule": "zero_thickness_tie=true の組だけ 厚み EPS×（面の法線×層順）で決める。ほかの組は dz だけで決める。",
+ "max_tie_error": 1.6662594659381951e-15,
+ "self_intersection": false,
+ "self_intersection_pairs": [],
+ "shared_plate_max_diff": 1.4918621893400541e-15,
+ "target_pos_max_diff": 9.280455781938394e-16,
+ "face_flip": {
+  "sides": "16/16",
+  "stack": "120/120",
+  "stack_decided_by_tie_rule": 24,
+  "delta_unstable": 0
+ },
+ "cumulative_rotations": {
+  "先-1|元-1": {
+   "kind": "⑬",
+   "branch_point_deg": 0.0,
+   "end_deg": -180.0
+  },
+  "先3|元3": {
+   "kind": "⑬",
+   "branch_point_deg": 0.0,
+   "end_deg": -180.0
+  },
+  "先0|元0": {
+   "kind": "⑬",
+   "branch_point_deg": -0.0,
+   "end_deg": -180.0
+  },
+  "先1|元1": {
+   "kind": "⑬",
+   "branch_point_deg": 0.0,
+   "end_deg": -180.0
+  },
+  "先-2|元-2": {
+   "kind": "⑬",
+   "branch_point_deg": 0.0,
+   "end_deg": 180.0
+  },
+  "先-19|元-19": {
+   "kind": "⑬",
+   "branch_point_deg": -0.0,
+   "end_deg": 180.0
+  },
+  "先-3|元-3": {
+   "kind": "⑬",
+   "branch_point_deg": 0.0,
+   "end_deg": 180.0
+  },
+  "先-18|元-18": {
+   "kind": "⑬",
+   "branch_point_deg": -0.0,
+   "end_deg": 180.0
+  },
+  "先-2|先-1": {
+   "kind": "背",
+   "branch_point_deg": -180.0,
+   "end_deg": -360.0
+  },
+  "元-2|元-1": {
+   "kind": "背",
+   "branch_point_deg": -180.0,
+   "end_deg": -0.0
+  },
+  "元3|元1": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  },
+  "先3|先1": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": 0.0
+  },
+  "元-19|元-18": {
+   "kind": "背",
+   "branch_point_deg": 0.0,
+   "end_deg": 0.0
+  },
+  "先-19|先-18": {
+   "kind": "背",
+   "branch_point_deg": 0.0,
+   "end_deg": -0.0
+  },
+  "先-2|先-19": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  },
+  "元-2|元-19": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  },
+  "元-3|元-18": {
+   "kind": "背",
+   "branch_point_deg": 0.0,
+   "end_deg": 0.0
+  },
+  "先-3|先-18": {
+   "kind": "背",
+   "branch_point_deg": 0.0,
+   "end_deg": 0.0
+  },
+  "元-1|元3": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  },
+  "先-1|先3": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  },
+  "元0|元1": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  },
+  "先0|先1": {
+   "kind": "背",
+   "branch_point_deg": -0.0,
+   "end_deg": -0.0
+  }
+ },
+ "changed_by_thickness": [],
+ "body_moved_faces": null,
+ "body_note": "この模型に胴は入っていない（胴受けテスト check_crane13_body_receive.py は未完）",
+ "accepted": true,
+ "ng": []
+}

@@ -1,0 +1,1161 @@
+{
+ "fingerprint": "9f88c3552cc61d4bee9018dd2715e86aebfe09e8",
+ "definition": {
+  "what": "つる⑬の分岐点（背だけを平らに開き、ほかの角は畳んだまま・⑬の角は0）の姿。胴との結びの共通基準面。",
+  "origin": [
+   -0.3749999999999958,
+   0.3749999999999958
+  ],
+  "spineDir": [
+   -0.707106781186548,
+   0.707106781186547
+  ],
+  "cutSeg": [
+   [
+    -0.3749999999999952,
+    0.3749999999999961
+   ],
+   [
+    -0.5230386094481367,
+    0.28617683433111757
+   ]
+  ],
+  "normal": "出発の紙の +z",
+  "anchor": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+  "plane": "z=0",
+  "path": "背の角＝中割りの枝（z=0）／ほかの6つの角＝外へ折る枝（背は畳んだまま）",
+  "thickness": "厚み0。厚みを考える位置は crane13_stack_flags.json の印と --thickness で切りかえる"
+ },
+ "legChainLayers": [
+  -3,
+  -18,
+  -19,
+  -2,
+  -1,
+  3,
+  1,
+  0
+ ],
+ "spineVertex": [
+  -2,
+  -1
+ ],
+ "faces": {
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base": {
+   "name": "元-18",
+   "layer": -18,
+   "moves": false,
+   "placement": [
+    [
+     1.0000000000000004,
+     3.3035697525393596e-16,
+     3.2893725216456867e-32,
+     1.1102230246251562e-16
+    ],
+    [
+     2.2339617788269347e-16,
+     1.0000000000000002,
+     4.254077373590159e-32,
+     -5.5511151231257815e-17
+    ],
+    [
+     -3.697785493223494e-32,
+     -4.930380657631326e-32,
+     1.0000000000000004,
+     -8.065845954502792e-33
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.23463313526982063,
+     0.23463313526981971
+    ],
+    [
+     -0.43354550264947833,
+     0.15224093497742625
+    ],
+    [
+     -0.5230386094481276,
+     0.28617683433112295
+    ],
+    [
+     -0.37499999999999606,
+     0.37499999999999545
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip": {
+   "name": "先-18",
+   "layer": -18,
+   "moves": true,
+   "placement": [
+    [
+     1.0000000000000004,
+     3.3035697525393596e-16,
+     3.2893725216456867e-32,
+     1.1102230246251562e-16
+    ],
+    [
+     2.2339617788269347e-16,
+     1.0000000000000002,
+     4.254077373590159e-32,
+     -5.5511151231257815e-17
+    ],
+    [
+     -3.697785493223494e-32,
+     -4.930380657631326e-32,
+     1.0000000000000004,
+     -8.065845954502793e-33
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.5230386094481276,
+     0.28617683433112295
+    ],
+    [
+     -0.9999999999999998,
+     1.0000000000000004
+    ],
+    [
+     -0.37499999999999606,
+     0.37499999999999545
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base": {
+   "name": "元-3",
+   "layer": -3,
+   "moves": false,
+   "placement": [
+    [
+     1.0000000000000007,
+     5.543015079846821e-16,
+     -2.0365131985892066e-16,
+     1.6653345369377346e-16
+    ],
+    [
+     2.437917467617681e-17,
+     1.0000000000000002,
+     -1.360754615138011e-16,
+     -1.1102230246251564e-16
+    ],
+    [
+     2.0365131985892053e-16,
+     1.3607546151380111e-16,
+     1.0000000000000004,
+     6.757585834511948e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.4335455026494783,
+     0.1522409349774263
+    ],
+    [
+     -0.292893218813452,
+     0.2928932188134528
+    ],
+    [
+     -0.37499999999999517,
+     0.374999999999996
+    ],
+    [
+     -0.5230386094481276,
+     0.286176834331123
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip": {
+   "name": "先-3",
+   "layer": -3,
+   "moves": true,
+   "placement": [
+    [
+     1.0000000000000007,
+     5.543015079846821e-16,
+     -2.0365131985892066e-16,
+     1.6653345369377346e-16
+    ],
+    [
+     2.437917467617681e-17,
+     1.0000000000000002,
+     -1.360754615138011e-16,
+     -1.1102230246251564e-16
+    ],
+    [
+     2.0365131985892053e-16,
+     1.3607546151380111e-16,
+     1.0000000000000004,
+     6.757585834511948e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.37499999999999517,
+     0.374999999999996
+    ],
+    [
+     -1.0000000000000002,
+     1.0000000000000007
+    ],
+    [
+     -0.5230386094481276,
+     0.286176834331123
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base": {
+   "name": "元-19",
+   "layer": -19,
+   "moves": false,
+   "placement": [
+    [
+     1.0000000000000002,
+     1.3750732233726591e-16,
+     3.2893725216456867e-32,
+     1.1102230246251565e-16
+    ],
+    [
+     2.1449429858947105e-16,
+     1.0,
+     5.48667253799799e-32,
+     1.232595164407831e-32
+    ],
+    [
+     -2.465190328815662e-32,
+     0.0,
+     1.0000000000000004,
+     -1.8488927466117464e-32
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.23463313526982021,
+     0.23463313526982038
+    ],
+    [
+     -0.37499999999999556,
+     0.37499999999999584
+    ],
+    [
+     -0.5230386094481276,
+     0.28617683433112295
+    ],
+    [
+     -0.43354550264947844,
+     0.1522409349774265
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip": {
+   "name": "先-19",
+   "layer": -19,
+   "moves": true,
+   "placement": [
+    [
+     1.0000000000000002,
+     1.3750732233726591e-16,
+     3.2893725216456867e-32,
+     1.1102230246251565e-16
+    ],
+    [
+     2.1449429858947105e-16,
+     1.0,
+     5.48667253799799e-32,
+     1.232595164407831e-32
+    ],
+    [
+     -2.465190328815662e-32,
+     0.0,
+     1.0000000000000004,
+     -1.8488927466117464e-32
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.37499999999999556,
+     0.37499999999999584
+    ],
+    [
+     -0.9999999999999996,
+     0.9999999999999998
+    ],
+    [
+     -0.5230386094481276,
+     0.28617683433112295
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base": {
+   "name": "元-2",
+   "layer": -2,
+   "moves": false,
+   "placement": [
+    [
+     1.0,
+     -1.0146536357569773e-17,
+     0.0,
+     0.0
+    ],
+    [
+     1.0087576610494588e-16,
+     1.0,
+     0.0,
+     -5.551115123125783e-17
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.3749999999999958,
+     0.37499999999999567
+    ],
+    [
+     -0.29289321881345254,
+     0.2928932188134524
+    ],
+    [
+     -0.43354550264947844,
+     0.15224093497742647
+    ],
+    [
+     -0.5230386094481276,
+     0.28617683433112295
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip": {
+   "name": "先-2",
+   "layer": -2,
+   "moves": true,
+   "placement": [
+    [
+     1.0,
+     -1.0146536357569773e-17,
+     0.0,
+     0.0
+    ],
+    [
+     1.0087576610494588e-16,
+     1.0,
+     0.0,
+     -5.551115123125783e-17
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -1.0,
+     0.9999999999999999
+    ],
+    [
+     -0.3749999999999958,
+     0.37499999999999567
+    ],
+    [
+     -0.5230386094481276,
+     0.28617683433112295
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base": {
+   "name": "元1",
+   "layer": 1,
+   "moves": false,
+   "placement": [
+    [
+     1.377918114267813e-15,
+     -0.9999999999999999,
+     3.9586227838444843e-16,
+     3.8857805861880513e-16
+    ],
+    [
+     -1.0,
+     -1.3724990449524128e-15,
+     4.634381367295691e-16,
+     3.885780586188043e-16
+    ],
+    [
+     -4.634381367295684e-16,
+     -3.958622783844491e-16,
+     -1.0,
+     -6.757585834511944e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.15224093497742672,
+     0.4335455026494786
+    ],
+    [
+     -0.23463313526982013,
+     0.23463313526982074
+    ],
+    [
+     -0.3749999999999957,
+     0.3749999999999959
+    ],
+    [
+     -0.28617683433112323,
+     0.5230386094481276
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip": {
+   "name": "先1",
+   "layer": 1,
+   "moves": true,
+   "placement": [
+    [
+     1.377918114267813e-15,
+     -0.9999999999999999,
+     3.9586227838444843e-16,
+     3.8857805861880513e-16
+    ],
+    [
+     -1.0,
+     -1.3724990449524128e-15,
+     4.634381367295691e-16,
+     3.885780586188043e-16
+    ],
+    [
+     -4.634381367295684e-16,
+     -3.958622783844491e-16,
+     -1.0,
+     -6.757585834511944e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.3749999999999957,
+     0.3749999999999959
+    ],
+    [
+     -1.0000000000000016,
+     0.9999999999999994
+    ],
+    [
+     -0.28617683433112323,
+     0.5230386094481276
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base": {
+   "name": "元0",
+   "layer": 0,
+   "moves": false,
+   "placement": [
+    [
+     1.1795578381822582e-15,
+     -0.9999999999999999,
+     3.958622783844486e-16,
+     2.775557561562895e-16
+    ],
+    [
+     -1.0000000000000002,
+     -1.7369275204652777e-15,
+     4.634381367295693e-16,
+     3.8857805861880415e-16
+    ],
+    [
+     -4.634381367295686e-16,
+     -3.9586227838444917e-16,
+     -1.0000000000000004,
+     -6.757585834511951e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.29289321881345304,
+     0.29289321881345237
+    ],
+    [
+     -0.15224093497742683,
+     0.4335455026494787
+    ],
+    [
+     -0.2861768343311233,
+     0.5230386094481277
+    ],
+    [
+     -0.3749999999999961,
+     0.3749999999999952
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip": {
+   "name": "先0",
+   "layer": 0,
+   "moves": true,
+   "placement": [
+    [
+     1.1795578381822582e-15,
+     -0.9999999999999999,
+     3.958622783844486e-16,
+     2.775557561562895e-16
+    ],
+    [
+     -1.0000000000000002,
+     -1.7369275204652777e-15,
+     4.634381367295693e-16,
+     3.8857805861880415e-16
+    ],
+    [
+     -4.634381367295686e-16,
+     -3.9586227838444917e-16,
+     -1.0000000000000004,
+     -6.757585834511951e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.2861768343311233,
+     0.5230386094481277
+    ],
+    [
+     -1.0000000000000013,
+     0.9999999999999998
+    ],
+    [
+     -0.3749999999999961,
+     0.3749999999999952
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base": {
+   "name": "元3",
+   "layer": 3,
+   "moves": false,
+   "placement": [
+    [
+     1.3717166339623826e-15,
+     -0.9999999999999999,
+     2.2267106713734997e-16,
+     4.996003610813205e-16
+    ],
+    [
+     -1.0,
+     -1.5531240910558948e-15,
+     2.902469254824702e-16,
+     3.885780586188048e-16
+    ],
+    [
+     -2.9024692548246984e-16,
+     -2.226710671373504e-16,
+     -1.0,
+     -6.757585834511948e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.23463313526982035,
+     0.23463313526982035
+    ],
+    [
+     -0.15224093497742647,
+     0.4335455026494785
+    ],
+    [
+     -0.2861768343311231,
+     0.5230386094481275
+    ],
+    [
+     -0.3749999999999957,
+     0.3749999999999955
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip": {
+   "name": "先3",
+   "layer": 3,
+   "moves": true,
+   "placement": [
+    [
+     1.3717166339623826e-15,
+     -0.9999999999999999,
+     2.2267106713734997e-16,
+     4.996003610813205e-16
+    ],
+    [
+     -1.0,
+     -1.5531240910558948e-15,
+     2.902469254824702e-16,
+     3.885780586188048e-16
+    ],
+    [
+     -2.9024692548246984e-16,
+     -2.226710671373504e-16,
+     -1.0,
+     -6.757585834511948e-17
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": -1,
+   "side_frame": 1,
+   "polygon": [
+    [
+     -0.2861768343311231,
+     0.5230386094481275
+    ],
+    [
+     -1.0000000000000004,
+     0.9999999999999991
+    ],
+    [
+     -0.3749999999999957,
+     0.3749999999999955
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base": {
+   "name": "元-1",
+   "layer": -1,
+   "moves": false,
+   "placement": [
+    [
+     1.4534364683702734e-15,
+     -1.0,
+     8.659560562354927e-17,
+     5.551115123125783e-16
+    ],
+    [
+     -1.0,
+     -1.4331433956551336e-15,
+     8.65956056235494e-17,
+     4.440892098500627e-16
+    ],
+    [
+     -8.659560562354927e-17,
+     -8.659560562354939e-17,
+     -1.0,
+     4.6399654949045257e-32
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.15224093497742658,
+     0.43354550264947866
+    ],
+    [
+     -0.29289321881345237,
+     0.2928932188134525
+    ],
+    [
+     -0.3749999999999958,
+     0.37499999999999567
+    ],
+    [
+     -0.2861768343311233,
+     0.5230386094481276
+    ]
+   ]
+  },
+  "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip": {
+   "name": "先-1",
+   "layer": -1,
+   "moves": true,
+   "placement": [
+    [
+     1.4534364683702734e-15,
+     -1.0,
+     8.659560562354927e-17,
+     5.551115123125783e-16
+    ],
+    [
+     -1.0,
+     -1.4331433956551336e-15,
+     8.65956056235494e-17,
+     4.440892098500627e-16
+    ],
+    [
+     -8.659560562354927e-17,
+     -8.659560562354939e-17,
+     -1.0,
+     4.6399654949045257e-32
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "side_start": 1,
+   "side_frame": -1,
+   "polygon": [
+    [
+     -0.3749999999999958,
+     0.37499999999999567
+    ],
+    [
+     -1.0000000000000009,
+     0.999999999999999
+    ],
+    [
+     -0.2861768343311233,
+     0.5230386094481276
+    ]
+   ]
+  }
+ },
+ "bondsToBody": [
+  {
+   "bondId": "b5",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+   "legName": "元-3",
+   "body": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.keep",
+   "seg": [
+    [
+     -0.43354550264947844,
+     0.15224093497742652
+    ],
+    [
+     -0.29289321881345176,
+     0.2928932188134531
+    ]
+   ],
+   "legMoved": false,
+   "legRotationAboutSpineDeg": -1.3763770393742961e-14,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b5",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+   "legName": "元-18",
+   "body": "paper/s1.cut/s2.cut/s3.cut/s8.keep/s15.cut/s20.cut",
+   "seg": [
+    [
+     -0.23463313526982144,
+     0.23463313526982027
+    ],
+    [
+     -0.43354550264947833,
+     0.15224093497742663
+    ]
+   ],
+   "legMoved": false,
+   "legRotationAboutSpineDeg": 3.275903201607784e-30,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b7",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+   "legName": "元0",
+   "body": "paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.keep",
+   "seg": [
+    [
+     -0.43354550264947833,
+     0.1522409349774268
+    ],
+    [
+     -0.2928932188134524,
+     0.29289321881345304
+    ]
+   ],
+   "legMoved": true,
+   "legRotationAboutSpineDeg": 179.99999999999997,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b7",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+   "legName": "元1",
+   "body": "paper/s1.cut/s2.keep/s5.keep/s6.cut/s22.cut",
+   "seg": [
+    [
+     -0.23463313526982077,
+     0.2346331352698204
+    ],
+    [
+     -0.43354550264947855,
+     0.15224093497742652
+    ]
+   ],
+   "legMoved": true,
+   "legRotationAboutSpineDeg": 179.99999999999997,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b16",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+   "legName": "元-1",
+   "body": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.keep",
+   "seg": [
+    [
+     -0.43354550264947844,
+     0.1522409349774265
+    ],
+    [
+     -0.2928932188134525,
+     0.2928932188134525
+    ]
+   ],
+   "legMoved": true,
+   "legRotationAboutSpineDeg": 180.0,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b16",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+   "legName": "元3",
+   "body": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.cut/s22.cut",
+   "seg": [
+    [
+     -0.23463313526982033,
+     0.23463313526982055
+    ],
+    [
+     -0.43354550264947833,
+     0.1522409349774264
+    ]
+   ],
+   "legMoved": true,
+   "legRotationAboutSpineDeg": 179.99999999999997,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b19",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+   "legName": "元-2",
+   "body": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.keep",
+   "seg": [
+    [
+     -0.43354550264947844,
+     0.15224093497742658
+    ],
+    [
+     -0.2928932188134525,
+     0.29289321881345254
+    ]
+   ],
+   "legMoved": false,
+   "legRotationAboutSpineDeg": 0.0,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  },
+  {
+   "bondId": "b19",
+   "kind": "crease",
+   "leg": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+   "legName": "元-19",
+   "body": "paper/s1.cut/s2.cut/s3.keep/s8.cut/s20.cut",
+   "seg": [
+    [
+     -0.2346331352698203,
+     0.23463313526982044
+    ],
+    [
+     -0.43354550264947844,
+     0.15224093497742652
+    ]
+   ],
+   "legMoved": false,
+   "legRotationAboutSpineDeg": 2.277150217648336e-30,
+   "note": "胴側の面は、この結びを保つならこの回転に合わせて動く必要がある（胴はこの模型に入っていない）"
+  }
+ ],
+ "coplanarPairsAtFrame": [
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+   "name": "元-18|元-3",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+   "name": "元-18|元-19",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#base",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+   "name": "元-18|元-2",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+   "name": "先-18|先-3",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+   "name": "先-18|先-19",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+   "name": "先-18|先-2",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+   "name": "元-3|元-19",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+   "name": "元-3|元-2",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+   "name": "先-3|先-19",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+   "name": "先-3|先-2",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base",
+   "name": "元-19|元-2",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip",
+   "b": "paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip",
+   "name": "先-19|先-2",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+   "name": "元1|元0",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+   "name": "元1|元3",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#base",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+   "name": "元1|元-1",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+   "name": "先1|先0",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+   "name": "先1|先3",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+   "name": "先1|先-1",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+   "name": "元0|元3",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+   "name": "元0|元-1",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+   "name": "先0|先3",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+   "name": "先0|先-1",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base",
+   "name": "元3|元-1",
+   "same_placement": true
+  },
+  {
+   "a": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip",
+   "b": "paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip",
+   "name": "先3|先-1",
+   "same_placement": true
+  }
+ ],
+ "windingAtFrameDeg": {
+  "cut:paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep|paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip": 0.0,
+  "cut:paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut|paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip": 0.0,
+  "cut:paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep|paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip": -9.436766382157238e-32,
+  "cut:paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut|paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.cut#tip": 1.2111658961075605e-30,
+  "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip": 0.0,
+  "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip": -8.741984717269836e-47,
+  "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip": 7.874079823035001e-31,
+  "cut:paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.cut#tip": -8.741984717269869e-47,
+  "b3@0|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip": -180.0,
+  "b3@1|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base": -180.0,
+  "b8@0|paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#base": -1.403341859706975e-14,
+  "b8@1|paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.cut#tip": -1.4033418597069755e-14,
+  "b23@0|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#base": 9.987529839594485e-31,
+  "b23@1|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.cut#tip": 9.987529839594485e-31,
+  "b33@0|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#tip": -2.2439823528228385e-30,
+  "b33@1|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.keep/s20.keep#base": -2.2439823528228385e-30,
+  "b34@0|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#base": 1.403341859706975e-14,
+  "b34@1|paper/s1.cut/s2.cut/s3.keep/s8.keep/s15.cut/s20.keep#tip": 1.403341859706975e-14,
+  "b36@0|paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#base": -1.4033418597069755e-14,
+  "b36@1|paper/s1.cut/s2.keep/s5.cut/s6.keep/s8.keep/s22.keep#tip": -1.4033418597069755e-14,
+  "b38@0|paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#base": -9.209116604106748e-31,
+  "b38@1|paper/s1.cut/s2.keep/s5.cut/s6.cut/s22.keep#tip": -9.20911660410675e-31
+ }
+}
