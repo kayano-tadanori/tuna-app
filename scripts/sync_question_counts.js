@@ -80,6 +80,50 @@ for (const [subj, cats] of Object.entries(MAP)) {
   changes.push(`${subj}: ${subjTotal.toLocaleString('en-US')}`);
 }
 
+// ── EXTRA_COUNTS（通常問題の外＝大問・連鎖・ガチの「小問」の数）を実データから数える ──
+//   ★表示専用（科目カード・使い方ガイド）。達成率の QUESTION_COUNTS／ACH_BASE とは別。
+//   daimon の科目わけ＝コースのキーで決める（rika/nadago_rika＝理科、kokugo/kokugo_bunsatsu＝国語、他＝算数）
+{
+  const steps = (o) => {           // steps を持つもの（大問・連鎖1本）の小問を数える
+    let n = 0;
+    const walk = (x) => {
+      if (Array.isArray(x)) return x.forEach(walk);
+      if (!x || typeof x !== 'object') return;
+      if (Array.isArray(x.steps)) { n += x.steps.length; return; }
+      Object.values(x).forEach(walk);
+    };
+    walk(o);
+    return n;
+  };
+  const load = (f) => JSON.parse(fs.readFileSync(path.join(DATA, f + '.json'), 'utf8'));
+  const RIKA = new Set(['rika', 'nadago_rika']), KOKUGO = new Set(['kokugo', 'kokugo_bunsatsu']);
+  const dm = { kokugo: 0, sansu: 0, rika: 0 };
+  for (const G of Object.values(load('hama_daimon').grades)) {
+    for (const [course, C] of Object.entries(G)) {
+      const subj = RIKA.has(course) ? 'rika' : KOKUGO.has(course) ? 'kokugo' : 'sansu';
+      dm[subj] += steps(C);
+    }
+  }
+  const ex = {
+    kokugo: { chain: steps(load('kokugo_chain')), daimon: dm.kokugo },
+    sansu:  { chain: steps(load('sansu_chain')), gachi: steps(load('sansu_gachi')), daimon: dm.sansu },
+    rika:   { chain: steps(load('rika_chain')), gachi: steps(load('rika_gachi')), daimon: dm.rika },
+    shakai: { chain: steps(load('shakai_chain')) },
+  };
+  const fmt = (o) => '{ ' + Object.entries(o).map(([k, v]) => k + ': ' + v).join(', ') + ' }';
+  const NL = String.fromCharCode(10);
+  const exBlock = 'const EXTRA_COUNTS = {' + NL
+    + Object.entries(ex).map(([k, v]) => '  ' + (k + ':').padEnd(7) + ' ' + fmt(v) + ',').join(NL) + NL + '};';
+  const em = src.match(/const EXTRA_COUNTS = \{[\s\S]*?\n\};/);
+  if (!em) { console.error('EXTRA_COUNTS が見つかりません（js/gamify.js）'); process.exit(1); }
+  if (em[0] !== exBlock) {
+    src = src.replace(em[0], exBlock);
+    fs.writeFileSync(APP, src, 'utf8');
+    console.log('EXTRA_COUNTS を更新しました。');
+  }
+  console.log('大問・連鎖・ガチの小問:', Object.entries(ex).map(([k, v]) => k + ' ' + JSON.stringify(v)).join(' / '));
+}
+
 if (block !== orig) {
   src = src.replace(orig, block);
   fs.writeFileSync(APP, src, 'utf8');

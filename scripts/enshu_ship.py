@@ -184,6 +184,11 @@ def main():
     })
     json.dump(u, io.open(up, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
     print('お知らせ v%d ／ sw.js も v%d' % (ver, ver))
+    # ★科目カード・使い方ガイドの総問題数（大問の小問を含む）を実データに合わせる（2026-09-19 本人指摘）
+    import subprocess
+    r = subprocess.run(['node', os.path.join(BASE, 'scripts', 'sync_question_counts.js')],
+                       capture_output=True, text=True, encoding='utf-8')
+    print('問題数の同期:', (r.stdout or r.stderr).strip().splitlines()[0] if (r.stdout or r.stderr) else r.returncode)
     print('→ このあと: python scripts/hama.py gate → commit → push → 公開版を数えて確認')
 
 

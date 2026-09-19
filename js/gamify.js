@@ -31,6 +31,26 @@ const QUESTION_COUNTS = {
             daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,118（2026-07-28 小4理科の全42回を30問以上に）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
+// 通常問題の表（QUESTION_COUNTS）の外にある問題の「小問」の数（本人指摘 2026-09-19：
+//   「科目選択画面の総問題数に、追加した大問の数が加算されていない」）。
+//   daimon＝じゅくナビの大問（data/hama_daimon.json）／chain＝灘レベルの連鎖問題／gachi＝ガチ問題。
+//   ★表示（科目カード・使い方ガイド・「新しい問題」の知らせ）だけに使う。**達成率の計算には入れない**
+//     （入れると、大問を1問も解いていない子の達成率が下がる）。
+//   ⚠ scripts/sync_question_counts.js が実データから数えて書き戻す。**手で直さない。**
+const EXTRA_COUNTS = {
+  kokugo: { chain: 30, daimon: 330 },
+  sansu:  { chain: 501, gachi: 150, daimon: 12770 },
+  rika:   { chain: 260, gachi: 36, daimon: 924 },
+  shakai: { chain: 27 },
+};
+// 科目の総問題数＝通常問題＋大問・連鎖・ガチの小問。画面に出す合計は必ずここから取る（1か所にまとめる）
+function subjectQuestionTotal(subj) {
+  const sum = o => Object.values(o || {}).reduce((a, b) => a + b, 0);
+  return sum(QUESTION_COUNTS[subj]) + sum(EXTRA_COUNTS[subj]);
+}
+function allQuestionTotal() {
+  return Object.keys(QUESTION_COUNTS).reduce((a, s) => a + subjectQuestionTotal(s), 0);
+}
 const SUBJECT_LABELS = { kokugo: '国語', sansu: '算数', rika: '理科', shakai: '社会' };
 // 達成率は4教科ぜんぶ（社会をやったぶんも のびる）
 const TITLE_SUBJECTS = ['kokugo', 'sansu', 'rika', 'shakai'];
@@ -440,8 +460,8 @@ function checkLoginBonus() {
 
 // ── 問題追加の検知（総問題数が増えたらトースト） ──────────
 function checkNewQuestions() {
-  const total = Object.values(QUESTION_COUNTS)
-    .reduce((a, cats) => a + Object.values(cats).reduce((x, y) => x + y, 0), 0);
+  // ★大問・連鎖の追加も知らせる（科目カードと同じ合計を使う）
+  const total = allQuestionTotal();
   const seen = Number(localStorage.getItem('qTotalSeen') || 0);
   if (seen && total > seen) {
     showToast(`🎉 新しい問題が${(total - seen).toLocaleString()}問追加されたで！`, 3500);

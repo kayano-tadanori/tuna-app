@@ -1200,9 +1200,9 @@ async function boot() {
 // 科目カードの問題数を QUESTION_COUNTS から自動計算して表示（ハードコードしない）
 function refreshSubjectCounts() {
   document.querySelectorAll('.subject-card[data-subject]').forEach(card => {
-    const cats = QUESTION_COUNTS[card.dataset.subject];
-    if (!cats) return;
-    const total = Object.values(cats).reduce((a, b) => a + b, 0);
+    if (!QUESTION_COUNTS[card.dataset.subject]) return;
+    // ★通常問題＋大問・連鎖・ガチの小問（js/gamify.js subjectQuestionTotal に1か所でまとめてある）
+    const total = subjectQuestionTotal(card.dataset.subject);
     const el = card.querySelector('.subject-count');
     if (el) el.textContent = `${total.toLocaleString()}問`;
   });
@@ -1461,9 +1461,14 @@ function refreshHelpGuideCounts() {
     const el = document.getElementById(id);
     if (el && typeof n === 'number') el.textContent = n.toLocaleString();
   };
+  // ★科目の合計は科目カードと同じ関数から取る（ガイドとカードで数が食いちがわないように）
   for (const subj of Object.keys(QUESTION_COUNTS)) {
-    const total = Object.values(QUESTION_COUNTS[subj]).reduce((a, b) => a + b, 0);
-    setTxt('hg-cnt-' + subj, total);
+    setTxt('hg-cnt-' + subj, subjectQuestionTotal(subj));
+    // 内わけ：通常問題／大問の小問／連鎖・ガチの小問（HTMLに要素があるものだけ埋まる）
+    const ex = EXTRA_COUNTS[subj] || {};
+    setTxt('hg-cnt-' + subj + '-normal', Object.values(QUESTION_COUNTS[subj]).reduce((a, b) => a + b, 0));
+    setTxt('hg-cnt-' + subj + '-daimon', ex.daimon || 0);
+    setTxt('hg-cnt-' + subj + '-chain', (ex.chain || 0) + (ex.gachi || 0));
   }
   for (const [subj, cats] of Object.entries(QUESTION_COUNTS)) {
     for (const [cat, n] of Object.entries(cats)) {
