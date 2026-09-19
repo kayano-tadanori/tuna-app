@@ -9,6 +9,7 @@ Python（origami_recipe.py の reverse_step＝JS の結び bonds を使わない
 照合するもの：面ID の集合／面ごとの素材の形（原紙座標）といまの形・表裏／重なる組（面積あり）ぜんぶの上下／背の先の区間の反転（面の組）
 
 使い方： python -B test_reverse_python.py   （node が要る）
+        python -B test_reverse_python.py --crane-dump PATH   （test_crane_progress.js の E④ から呼ばれる）
 """
 import sys
 sys.dont_write_bytecode = True
@@ -65,6 +66,18 @@ def compare(label, py_panels, js_faces, js_rev=None, py_rev=None):
     return len(ids), pairs
 
 
+def crane_chain(c):
+    """JS の⑫の面（c['start']）から、中割りの手（c['steps']）を Python が続けて作り、手ごとに JS の結果（c['results']）と照合する。行の説明を返す。"""
+    panels = [{'poly': [tuple(q) for q in f['poly']], 'xf': tuple(f['xf']), 'layer': f['layer'], 'hist': (), 'pre_xf': tuple(f['xf']),
+               'recipeFace': {'faceId': f['faceId'], 'layerPath': f['layerPath']}} for f in c['start']]
+    rows = []
+    for k, (step, res) in enumerate(zip(c['steps'], c['results'])):
+        panels, info = reverse_step(panels, step, 100 + k, 1.0)
+        n, pairs = compare(f'つる {step["id"]}', panels, res['faces'], res['rev'], info['reversed'])
+        rows.append(f'{step["id"]}：面 {n}・上下 {pairs}組・両側 {info["sides"][0]}／{info["sides"][1]}')
+    return rows
+
+
 class ReverseAgainstJS(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -94,14 +107,7 @@ class ReverseAgainstJS(unittest.TestCase):
 
     def test_crane_from_step12(self):
         """つる：JS の⑫の面から、⑬脚1・脚2・⑭を Python が続けて作る"""
-        c = next(c for c in self.cases if c['kind'] == 'start')
-        panels = [{'poly': [tuple(q) for q in f['poly']], 'xf': tuple(f['xf']), 'layer': f['layer'], 'hist': (), 'pre_xf': tuple(f['xf']),
-                   'recipeFace': {'faceId': f['faceId'], 'layerPath': f['layerPath']}} for f in c['start']]
-        rows = []
-        for k, (step, res) in enumerate(zip(c['steps'], c['results'])):
-            panels, info = reverse_step(panels, step, 100 + k, 1.0)
-            n, pairs = compare(f'つる {step["id"]}', panels, res['faces'], res['rev'], info['reversed'])
-            rows.append(f'{step["id"]}：面 {n}・上下 {pairs}組・両側 {info["sides"][0]}／{info["sides"][1]}')
+        rows = crane_chain(next(c for c in self.cases if c['kind'] == 'start'))
         self.assertEqual(len(rows), 3, 'つるの中割りが3手（⑬2本・⑭）でない')
         print('\n  つる ' + ' ／ '.join(rows) + '：JS と一致')
 
@@ -116,4 +122,13 @@ class ReverseAgainstJS(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    # --crane-dump PATH：test_crane_progress.js の E④ が書いた「つる完成の原本」の⑫と中割り3手だけを照合する（unittest は回さない）
+    if '--crane-dump' in sys.argv:
+        c = json.loads(Path(sys.argv[sys.argv.index('--crane-dump') + 1]).read_text(encoding='utf-8'))
+        try:
+            rows = crane_chain(c)
+            assert len(rows) == 3, 'つるの中割りが3手（⑬2本・⑭）でない'
+        except (AssertionError, RecipeError) as e:
+            print('NG ' + str(e)); sys.exit(1)
+        print('OK ' + ' ／ '.join(rows)); sys.exit(0)
     unittest.main(verbosity=1)

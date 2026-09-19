@@ -9,7 +9,7 @@
    🚨線・タップ・確定・保存・undo/redo はボタンと紙のしぐさで行う。線の端やタップの場所は engine の読み取り（素材の線を写す・面の重心）で決める。
      コンソールで書くのは「再読込したページへ保存原本を入れる」1か所だけ（test_crane12_browser と同じ）。
    ⛔ 厚みは0。
-   使い方： node test_crane13_browser.js   （⑫までの操作を含むので数分かかる）
+   使い方： node test_crane13_browser.js [--write]   （⑫までの操作を含むので数分かかる／--write で 18 の保存ファイルを crane_full_recipe.json に置く）
 */
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const DIR = process.env.ORIGAMI_SRC_DIR || __dirname;
@@ -85,6 +85,9 @@ require(path.join(DIR, 'test_crane12_browser.js')).run(async c => {
   assert.equal(r.steps.slice(-1)[0].op, 'reverse', `${label}：中割りの1手が入らない: ` + await status());
   assert.equal(await ev('FreeFoldEngine.replay(freeFoldDebug.state.recipe).hash === freeFoldDebug.state.cache.hash'), true, `${label}：表示と原本の再生が違う`);
   const tm = await ev('freeFoldDebug.revTiming');
+  /* 実機で読める時間の表示（状態表示の欄の下の1行・表示だけ） */
+  const ms = await ev('(() => { const e = document.getElementById("revMs"); return { hidden: e.hidden, text: e.textContent } })()');
+  assert.ok(!ms.hidden && ms.text === `[中割り] 提案 ${tm.propose.toFixed(0)}ms／確定 ${tm.confirm.toFixed(0)}ms`, `${label}：時間の表示が出ない: ` + JSON.stringify(ms));
   return { off: d.off, side: rv.side, RL: near.RL, root: near.root, tm, line: r.steps.slice(-1)[0].line };
  };
  /* ⑬のつかむ所（R3 と同じ決め方）：脚の面の、線より先の部分の重心で、いちばん上が脚の面の所 */
@@ -194,6 +197,8 @@ require(path.join(DIR, 'test_crane12_browser.js')).run(async c => {
  const f18 = await poll(async () => (await fsp.readdir(downloads)).find(v => v.endsWith('.origami.json') && !v.startsWith('old')), 'download14');
  const saved = JSON.parse(await fsp.readFile(path.join(downloads, f18), 'utf8'));
  assert.equal(await ev(`FreeFoldEngine.replay(${JSON.stringify(saved)}).hash`), h14, '18 保存した原本を再生すると違う');
+ /* --write：この保存ファイルそのもの（新しい紙→⑫→⑬脚2本→⑭を画面で折って「保存」）を、つる完成の原本として置く（test_crane_progress.js の E・F が読む） */
+ if (process.argv.includes('--write')) { await fsp.copyFile(path.join(downloads, f18), path.join(DIR, 'crane_full_recipe.json')); console.log('    書き出し：crane_full_recipe.json（画面の「保存」で落ちたファイルそのもの）') }
  await cdp('Page.reload', {});
  await sleep(300); await poll(() => ev('!!window.freeFoldDebug && freeFoldDebug.pocketReady.ok'), 'reload14');
  await ev(`(() => { const st = freeFoldDebug.state, r = ${JSON.stringify(saved)}; st.recipe = r; st.cache = FreeFoldEngine.replay(r);

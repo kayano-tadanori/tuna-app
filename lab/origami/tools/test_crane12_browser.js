@@ -24,7 +24,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const mark = s => console.log(new Date().toISOString().slice(11, 19), s);
 async function poll(fn, label, tries = 150) { for (let i = 0; i < tries; i++) { const v = await fn(); if (v) return v; await sleep(100) } throw Error('timeout ' + label) }
 let browser, ws, server, temp, cdpRef = null;
-async function main(after) {/* after＝⑫のあとに続ける検査（test_crane13_browser.js）。単独で動かすときは無い */
+async function main(after, only) {/* after＝⑫のあとに続ける検査（test_crane13_browser.js）。単独で動かすときは無い／only＝⑫を折らず、開いたページで行う検査（test_crane_progress.js） */
  temp = await fs.mkdtemp(path.join(os.tmpdir(), 'crane12-ui-')); const downloads = path.join(temp, 'downloads'); await fs.mkdir(downloads);
  server = http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x').pathname; if (u === '/favicon.ico') return res.writeHead(204).end();
@@ -74,6 +74,7 @@ async function main(after) {/* after＝⑫のあとに続ける検査（test_cra
  await poll(() => ev('freeFoldDebug.pocketReady.ok'), 'validators');
  const shots = [];
  const t8 = Math.tan(Math.PI / 8), dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+ if (only) { await only({ ev, cdp, clickBtn, btn, status, recipe, snapState, shot, shots, downloads, errors, mark, sleep, poll, DIR, SHOTS }); assert.deepEqual(errors, [], 'ページで例外: ' + JSON.stringify(errors).slice(0, 400)); return }
 
  mark('1 画面で ①〜⑥（2回折る → 袋 → 裏返す → 反対側の袋）');
  await grabAt([-1, -1]); await carryTo([.1, 0]); await carryTo([1, 1]); await dropAt([1, 1]); await clickBtn('confirm');
@@ -388,10 +389,10 @@ async function main(after) {/* after＝⑫のあとに続ける検査（test_cra
  console.log('  ok 画面の操作だけで 新しい紙 → ⑪ → 外形の背のタップ（背を選ぶ）・視点 → ⑫ 表裏4本（外形の背を中心線へ・つながっているフラップ）→ engine の⑫と同じ → 保存 → 再読込 → undo/redo → 生のふち（回帰）');
  console.log('  写し：\n    ' + shots.join('\n    '));
 }
-function run(after) { return main(after).then(() => 0, e => { console.error(e); return 1 }).then(async code => {
+function run(after, only) { return main(after, only).then(() => 0, e => { console.error(e); return 1 }).then(async code => {
  try { await Promise.race([cdpRef && cdpRef('Browser.close'), sleep(3000)]) } catch {}
  try { ws && ws.close() } catch {} try { browser && browser.kill() } catch {} try { server && server.close() } catch {}
  await sleep(300); if (temp) await fs.rm(temp, { recursive: true, force: true, maxRetries: 7, retryDelay: 300 }).catch(() => {});
  process.exit(code) }) }
 if (require.main === module) run();
-module.exports = { run };
+module.exports = { run, open: only => run(null, only) };

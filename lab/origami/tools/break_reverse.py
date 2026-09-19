@@ -2,7 +2,7 @@
 """中割り（op:'reverse'）と「背の根元の頂点へ開きを伝える」規則の「わざと壊して確認」（2026-09-19・recipe_crane13.md 第24段）。
    engine を1か所だけ壊して node test_reverse_fold.js を回し、**それぞれ単独で**落ちることを確かめる。
 ★判定：PASS（鳴らない）／DETECTED（AssertionError か timeout で止まり、期待した文言がある）／WRONG／ABORT（それ以外の例外）
-★使い方： python break_reverse.py [--browser] [G番号…]   （--browser で画面の G393〜G396 も＝実 Chrome・1本30秒ほど）
+★使い方： python break_reverse.py [--browser] [G番号…]   （--browser で画面の G393〜G396 も＝実 Chrome・1本30秒ほど／G397＝原本 crane_full_recipe.json を壊す）
 """
 import os, sys, shutil, subprocess, tempfile
 from pathlib import Path
@@ -24,6 +24,9 @@ ENGINE = [
   " const root=hist?reverseRoot(cache,rv,A,B,hist):null;", " const root=null;", 'test_reverse_fold.js', 'DETECTED', '提案で断られた：途中で紙が突き抜けます'),
  ('G392', '鎖の開く向きを根元から決めない（単独の模型の決め方のまま）', 'freefold_engine.js',
   " if(root){const lo=rv.lower==='x'?0:1,", " if(false&&root){const lo=rv.lower==='x'?0:1,", 'test_reverse_fold.js', 'DETECTED', '裂け'),
+ # 原本（2026-09-19）：つる完成の原本の⑭（s26）の hinge.seg を1桁（小数第10位 9→8＝差 1e-10・照合は 1e-12）変える
+ ('G397', 'つる完成の原本の⑭の hinge.seg を1桁変える', 'crane_full_recipe.json',
+  "-0.3749999949927137,", "-0.3749999948927137,", 'test_crane_progress.js', 'DETECTED', '中割りの背の線が、原本の背と一致しません'),
 ]
 # 画面（入口の手直し・2026-09-19）：node test_crane13_browser.js（⑫までの操作を含む・実 Chrome）
 BROWSER = [

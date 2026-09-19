@@ -12,12 +12,18 @@
      C ⑦のあと：保存→再読込・undo/redo で同じ紙。flatState 成立。
      D ⑧⑨ 花弁折りは既存の操作では出せない：袋を選ぶ＝局所照合の前提（面が頂点まわりの区間の合併）に合わず断る／
           背を開く＝1本の軸（同じ背の上）でしか動かせない＝花弁の軸 P-P' と、2枚目の脇の三角の軸 Q-P が同時に動く運動は候補にならない。
-   使い方： node test_crane_progress.js
+     E つる完成の原本 crane_full_recipe.json（新しい紙→⑫→⑬脚2本→⑭を画面で折って「保存」したファイルそのもの＝`node test_crane13_browser.js --write` が置く。手で組まない）
+          ① 再生一致：2回再生して同じ／⑫までは engine の⑫（crane12_state.json）と素材の点ごとに同じ／
+             ⑫から画面と同じ道（線を長さ3にそろえて proposeReverse→confirm）で3手を作り直すと、手の数値は ulp の差・面ID・上下・素材の点の位置が同じ
+          ② digest 固定（⑫・⑭）③ flatState 成立
+          ④ Python 照合（⑫の袋折り・花弁折りは Python で再生できない＝JS の⑫の面から reverse 3手を test_reverse_python.py --crane-dump で）
+     F ⑤ 実 Chrome：原本を読み込む → 再生（node と同じ digest）→ undo/redo → 保存 → 再読込 → undo/redo（test_crane12_browser.js の open＝⑫は折らない）
+   使い方： node test_crane_progress.js [--no-browser]
 */
 const fs = require('node:fs'), vm = require('node:vm'), path = require('node:path'), assert = require('node:assert/strict');
 const DIR = process.env.ORIGAMI_SRC_DIR || __dirname;
 const rd = f => fs.readFileSync(path.join(DIR, f), 'utf8');
-for (const f of ['freefold_engine.js', 'freefold_snap.js', 'origami_recipe.js', 'squash_model.js', 'squash_v2.js', 'fold_crossing.js']) vm.runInThisContext(rd(f));
+for (const f of ['freefold_engine.js', 'freefold_snap.js', 'origami_recipe.js', 'squash_model.js', 'squash_v2.js', 'petal_v2.js', 'fold_crossing.js']) vm.runInThisContext(rd(f));
 const E = FreeFoldEngine, N = FreeFoldSnap, V2 = SquashV2, X = FoldCrossing;
 V2.useV1Validator(OrigamiRecipe.validate, JSON.parse(rd('origami_recipe.schema.json')));
 const C = x => JSON.parse(JSON.stringify(x));
@@ -118,4 +124,89 @@ if (process.argv.includes('--write')) {
  fs.writeFileSync(path.join(DIR, 'crane_step7_state.json'), JSON.stringify({ note: 'node test_crane_progress.js --write が書く。check_petal_fold.py が突き合わせの相手として読む。',
   faces: st.cache.faces.map(f => ({ faceId: f.faceId, xf: f.xf, layer: f.layer, poly: f.poly })), bonds: st.cache.bonds.map(b => ({ faceIds: b.faceIds, kind: b.kind, seg: b.seg })) }, null, 1));
 }
-console.log(`\n${n} checks passed`);
+/* E つる完成の原本 */
+const FULL = JSON.parse(rd('crane_full_recipe.json')), sha1 = x => require('node:crypto').createHash('sha1').update(x).digest('hex');
+const DIGEST12 = 'd17e1a3e0b07d8dddc86f5aa26a9edf0b1648c46', DIGEST14 = '22f9013f7b4f25a62e9cb07367772542c506a829';
+const ap = (m, p) => [m[0] * p[0] + m[1] * p[1] + m[4], m[2] * p[0] + m[3] * p[1] + m[5]], inv = (m, p) => { const d = m[0] * m[3] - m[1] * m[2], x = p[0] - m[4], y = p[1] - m[5]; return [(m[3] * x - m[1] * y) / d, (-m[2] * x + m[0] * y) / d] };
+/* 素材の点ごとの位置・面ID・重なる組の上下（読むだけ） */
+const samePaper = (a, b) => {
+ let worst = 0, n2 = 0, idDiff = 0;
+ for (let i = 0; i < 81; i++) for (let j = 0; j < 81; j++) { const m = [-1 + i / 40 + 1e-4, -1 + j / 40 + 2e-4];
+  const fa = a.faces.filter(f => E.inside(m, f.poly.map(p => inv(f.xf, p)))), fb = b.faces.filter(f => E.inside(m, f.poly.map(p => inv(f.xf, p))));
+  if (fa.length !== 1 || fb.length !== 1) continue; n2++; if (fa[0].faceId !== fb[0].faceId) idDiff++;
+  const u = ap(fa[0].xf, m), v = ap(fb[0].xf, m); worst = Math.max(worst, Math.hypot(u[0] - v[0], u[1] - v[1])) }
+ const la = new Map(a.faces.map(f => [f.faceId, f.layer])), lb = new Map(b.faces.map(f => [f.faceId, f.layer])), ids = [...la.keys()].sort();
+ let order = 0; for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) if (Math.sign(la.get(ids[i]) - la.get(ids[j])) !== Math.sign(lb.get(ids[i]) - lb.get(ids[j]))) order++;
+ return { worst, n: n2, idDiff, sameIds: JSON.stringify(ids) === JSON.stringify([...lb.keys()].sort()), order };
+};
+const numDiff = (x, y) => { let m = 0; const rec = (a, b) => { if (typeof a === 'number') { m = Math.max(m, typeof b === 'number' ? Math.abs(a - b) : Infinity); return }
+ if (typeof a !== 'object' || a === null) { if (a !== b) m = Infinity; return } if (typeof b !== 'object' || b === null || Object.keys(a).join() !== Object.keys(b).join()) { m = Infinity; return } for (const k of Object.keys(a)) rec(a[k], b[k]) }; rec(x, y); return m };
+let full;
+try { full = load(FULL) } catch (e) { assert.fail('E① 原本を再生できない（' + e.message + '）') }
+const K = FULL.steps.findIndex(s => s.op === 'reverse'), pre = { ...C(FULL), steps: C(FULL.steps.slice(0, K)) }, c12 = E.replay(pre);
+{
+ assert.deepEqual(FULL.steps.slice(K).map(s => s.op), ['reverse', 'reverse', 'reverse'], 'E① ⑫のあとが中割り3手（⑬脚2本・⑭）でない');
+ assert.equal(E.replay(C(FULL)).hash, full.cache.hash, 'E① 2回再生して違う');
+ const e12 = E.replay(C(JSON.parse(rd('crane12_state.json')).recipe)), s12 = samePaper(c12, e12);
+ assert.ok(s12.worst < 1e-9 && s12.idDiff === 0 && s12.sameIds && s12.order === 0, 'E① 画面の⑫が engine の⑫（crane12_state.json）と違う: ' + JSON.stringify(s12));
+ /* ⑫から画面と同じ道で作り直す：保存した線（基準面の素材）をいまの位置へ写し、同じ直線のまま長さ3にそろえ、同じ動く側の印・同じ背で */
+ const t = load(pre);
+ for (const s of FULL.steps.slice(K)) {
+  const ref = t.cache.faces.find(f => f.faceId === s.reference.faceId); assert.ok(ref, `E① ${s.id} の基準面が⑫からの紙に無い`);
+  let A = ap(ref.xf, s.line[0]), B = ap(ref.xf, s.line[1]); const at = ap(ref.xf, s.movingSidePoint);
+  const L = Math.hypot(B[0] - A[0], B[1] - A[1]), u = [(B[0] - A[0]) / L, (B[1] - A[1]) / L], mid = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2];
+  A = [mid[0] - u[0] * 1.5, mid[1] - u[1] * 1.5]; B = [mid[0] + u[0] * 1.5, mid[1] + u[1] * 1.5];
+  const o = E.reverseOptions(t, A, B, at).options.filter(v => v.hinge.stepId === s.hinge.stepId);
+  assert.equal(o.length, 1, `E① ${s.id} の背の候補が1本に決まらない`);
+  E.proposeReverse(t, A, B, at, o[0].bondId); E.confirm(t);
+  const got = C(t.recipe.steps.slice(-1)[0]); if (Math.hypot(got.line[0][0] - s.line[0][0], got.line[0][1] - s.line[0][1]) > 1e-6) got.line.reverse();
+  assert.ok(numDiff(got, s) < 1e-12, `E① ${s.id}：作り直した手が原本の手と違う（${numDiff(got, s)}）`);
+ }
+ const sp = samePaper(t.cache, full.cache);
+ assert.ok(sp.worst < 1e-12 && sp.idDiff === 0 && sp.sameIds && sp.order === 0, 'E① 作り直した⑭が原本の⑭と違う: ' + JSON.stringify(sp));
+ ok(`E① 再生一致：2回再生して同じ／⑫＝engine の⑫（位置の差 ${s12.worst.toExponential(1)}・点 ${s12.n}）／⑫から画面と同じ道で3手を作り直すと、手の数値の差 1e-12 未満・面ID・上下・位置の差 ${sp.worst.toExponential(1)}`);
+ assert.equal(sha1(c12.hash), DIGEST12, 'E② ⑫の digest が違う'); assert.equal(sha1(full.cache.hash), DIGEST14, 'E② ⑭の digest が違う');
+ ok(`E② digest 固定：⑫ ${DIGEST12.slice(0, 8)}・⑭ ${DIGEST14.slice(0, 8)}（面 ${full.cache.faces.length}）`);
+ assert.equal(X.flatState(full.cache).ok, true, 'E③ ⑭の平らな状態が成立しない'); assert.equal(X.flatState(c12).ok, true, 'E③ ⑫の平らな状態が成立しない');
+ ok('E③ flatState 成立（⑫・⑭）');
+ /* ④ Python：JS の⑫の面から reverse 3手を作り、手ごとに JS の再生と照合 */
+ const faceDump = cache => cache.faces.map(f => ({ faceId: f.faceId, layerPath: f.layerPath, poly: f.poly, xf: f.xf, layer: f.layer }));
+ const dump = { name: 'つる完成の原本', kind: 'start', start: faceDump(c12), steps: C(FULL.steps.slice(K)), results: [] };
+ for (let k = K; k < FULL.steps.length; k++) { const cc = E.replay({ ...C(FULL), steps: C(FULL.steps.slice(0, k + 1)) }), sid = FULL.steps[k].id;
+  dump.results.push({ faces: faceDump(cc), rev: cc.bonds.filter(b => b.reversedBy && b.reversedBy.includes(sid)).map(b => b.faceIds.slice()) }) }
+ const tmp = path.join(require('node:os').tmpdir(), `crane_full_dump_${process.pid}.json`); fs.writeFileSync(tmp, JSON.stringify(dump));
+ const py = require('node:child_process').spawnSync(process.env.ORIGAMI_PYTHON || 'python', ['-B', 'test_reverse_python.py', '--crane-dump', tmp], { cwd: DIR, encoding: 'utf8', env: { ...process.env, PYTHONIOENCODING: 'utf-8' } });
+ fs.rmSync(tmp, { force: true });
+ assert.equal(py.status, 0, 'E④ Python の照合が通らない: ' + (py.stdout + py.stderr).trim().slice(-400));
+ ok('E④ Python 照合（JS の⑫の面から）：' + py.stdout.trim().replace(/^OK /, ''));
+}
+console.log(`\n${n} checks passed（node）`);
+/* F ⑤ 実 Chrome（⑫は折らずにページを開く） */
+if (!process.argv.includes('--no-browser')) require(path.join(DIR, 'test_crane12_browser.js')).open(async c => {
+ const { ev, cdp, clickBtn, recipe, downloads, mark, sleep, poll } = c, fsp = require('node:fs/promises');
+ const hashNow = () => ev('freeFoldDebug.state.cache.hash');
+ const inject = r => ev(`(() => { const st = freeFoldDebug.state, r = ${JSON.stringify(r)}; st.recipe = r; st.cache = FreeFoldEngine.replay(r);
+  st.revision = 0; st.cacheRevision = 0; st.committed = st.cache; st.redoStack = []; st.pending = null; return true })()`);
+ mark('F⑤ 原本を読み込む → 再生 → undo/redo');
+ await inject(FULL); await clickBtn('op'); await clickBtn('op');
+ assert.equal(await hashNow(), full.cache.hash, 'F⑤ 画面で再生した⑭が node の⑭と違う');
+ for (let i = 0; i < 3; i++) await clickBtn('undo');
+ assert.equal(await hashNow(), c12.hash, 'F⑤ undo 3回で⑫に戻らない');
+ for (let i = 0; i < 3; i++) await clickBtn('redo');
+ assert.equal(await hashNow(), full.cache.hash, 'F⑤ redo 3回で⑭に戻らない');
+ mark('F⑤ 保存 → 再読込 → undo/redo');
+ await clickBtn('save');
+ const f = await poll(async () => (await fsp.readdir(downloads)).find(v => v.endsWith('.origami.json')), 'download');
+ const saved = JSON.parse(await fsp.readFile(path.join(downloads, f), 'utf8'));
+ assert.equal(JSON.stringify(saved), JSON.stringify(FULL), 'F⑤ 保存した原本の文字が読み込んだ原本と違う');
+ await cdp('Page.reload', {});
+ await sleep(300); await poll(() => ev('!!window.freeFoldDebug && freeFoldDebug.pocketReady.ok'), 'reload');
+ await inject(saved); await clickBtn('op'); await clickBtn('op');
+ assert.equal(await hashNow(), full.cache.hash, 'F⑤ 再読込で同じ紙にならない');
+ for (let i = 0; i < 3; i++) await clickBtn('undo');
+ assert.equal(await hashNow(), c12.hash, 'F⑤ 再読込後の undo 3回で⑫に戻らない');
+ for (let i = 0; i < 3; i++) await clickBtn('redo');
+ assert.equal(await hashNow(), full.cache.hash, 'F⑤ 再読込後の redo 3回で⑭に戻らない');
+ assert.equal(JSON.stringify(await recipe()), JSON.stringify(FULL), 'F⑤ undo/redo で原本の文字が変わった');
+ console.log('  ok F⑤ 実 Chrome：原本を読み込む → 再生（node と同じ）→ undo/redo → 保存（同じ文字）→ 再読込 → undo/redo');
+});

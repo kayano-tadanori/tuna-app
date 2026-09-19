@@ -1,5 +1,15 @@
 # 中割り（op:'reverse'）仕様（2026-09-19）
 
+## 🕊 まず読む：つるを画面で折る手順（freefold3d.html・完成の原本＝`crane_full_recipe.json`）
+1. ①〜⑥ 角をつかんで対角に2回折る →「袋を選ぶ」→ 裏返す → 反対側の袋（正方基本形）
+2. ⑦ 凧形2本を辺ドラッグ＋上から2枚／上の三角は「折り目を引く」で P→P' →「この線で折る」→ 背を3本選んで「背を開く」
+3. ⑧⑨ 「花弁を選ぶ」→ 確定 →（裏返して）⑩⑪ 同じ
+4. ⑫ 脚の外形の背を中心線へ運ぶ →「つながっているフラップ」→ 確定（表2本 → 裏返す → 裏2本）
+5. ⑬ 「折り目を引く」で脚の線を2点 →「この線で中割り」→ 脚の先を指す（背は自動）→ 途中 → 確定 ×2
+6. ⑭ 首の上から頭の線を引く（折り目にならない線でも可）→「この線で中割り」→ 首の先を指す（根元の頂点もいっしょに動く）→ 確定
+- 手順の全部は `test_crane12_browser.js`（1〜12）と `test_crane13_browser.js`（16・17）が画面の操作だけで通す。`--write` で18の保存ファイルを原本に置く
+- 常設の検査は `node test_crane_progress.js`（E①〜④・F⑤）と `python break_reverse.py G397`。⑮（羽を広げる・整形）は未着手
+
 経緯は `recipe_crane13.md` 第21〜25段（ここは結論だけ）。本体＝`freefold_engine.js`（reverseSetup・reverseFoldable・nestStack・reverseOptions・proposeReverse・reverseMotion・reverseRoot）。
 
 ## 1. 保存形式（v1 のまま op を1つ足す）
