@@ -139570,6 +139570,668 @@
         }
        ]
       }
+     ],
+     "6": [
+      {
+       "id": "hd5m2nd_e6_1",
+       "src": "HG-8683 原簿・小5 演習教材 第1分冊 No.6 B1",
+       "hg": "HG-8683",
+       "title": "1から148までの偶数と奇数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "1から148までの整数に関して次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 偶数は何個ありますか。",
+         "answer": "74",
+         "meaning": "偶数は2，4，6，…で、1番目は2×1、2番目は2×2、3番目は2×3のように「2×番号」になっている。最後の偶数148は2×74なので、148は74番目の偶数。だから偶数は74個。"
+        },
+        {
+         "question": "(2) 54番目の偶数を求めなさい。",
+         "answer": "108",
+         "meaning": "偶数は「2×番号」だから、54番目の偶数は2×54＝108。"
+        },
+        {
+         "question": "(3) 47番目の奇数を求めなさい。",
+         "answer": "93",
+         "meaning": "奇数1，3，5，7，…は、それぞれ偶数2，4，6，8より1小さい。だから奇数は「2×番号－1」。47番目の奇数は2×47－1＝93。"
+        },
+        {
+         "question": "(4) すべての偶数の和とすべての奇数の和を比べたとき，どちらがどれだけ大きいですか。　［どちら］",
+         "answer": "偶数の和",
+         "choices": [
+          "偶数の和",
+          "奇数の和"
+         ],
+         "meaning": "1と2、3と4、5と6、…、147と148のように、となりどうしの奇数と偶数を1組にする。どの組も偶数の方が1大きいので、偶数の和の方が大きい。"
+        },
+        {
+         "question": "(4) すべての偶数の和とすべての奇数の和を比べたとき，どちらがどれだけ大きいですか。　［どれだけ］",
+         "answer": "74",
+         "meaning": "組は①から数えて最後の147，148が74組目。差1が74個集まった大きさなので、1×74＝74だけ大きい。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_2",
+       "src": "HG-8684 原簿・小5 演習教材 第1分冊 No.6 B2",
+       "hg": "HG-8684",
+       "title": "2けたの整数の偶数と奇数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 1,
+       "intro": "2けたの整数に関して次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 偶数は何個ありますか。",
+         "answer": "45",
+         "meaning": "2けたの整数は10から99まで。10，11／12，13／…／98，99と2つずつ組にして段に並べると、全部で99－10＋1＝90個なので90÷2＝45段。どの段にも偶数が1つずつあるから、偶数は45個。"
+        },
+        {
+         "question": "(2) すべての偶数の和とすべての奇数の和を比べると，どちらがどれだけ大きいですか。　［どちら］",
+         "answer": "奇数の和",
+         "choices": [
+          "偶数の和",
+          "奇数の和"
+         ],
+         "meaning": "10，11／12，13／…／98，99と、偶数とその次の奇数を1段に並べる。どの段も奇数の方が1大きいので、奇数の和の方が大きい。"
+        },
+        {
+         "question": "(2) すべての偶数の和とすべての奇数の和を比べると，どちらがどれだけ大きいですか。　［どれだけ］",
+         "answer": "45",
+         "meaning": "(1)の表で段は45段。1段ごとに差が1なので、1×45＝45だけ大きい。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_3",
+       "src": "HG-8685 原簿・小5 演習教材 第1分冊 No.6 B3",
+       "hg": "HG-8685",
+       "title": "偶数か奇数か",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の計算の結果が偶数になるならA，奇数になるならBと答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 偶数＋偶数＋奇数",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "偶数に0、奇数に1のような数を入れてためすと、0＋0＋1＝1で奇数。偶数を何回たしても偶数のままで、最後に奇数をたすと奇数になる。だからB。"
+        },
+        {
+         "question": "(2) 偶数－(偶数－奇数)",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "偶数に2、奇数に1を入れてみると、かっこの中は2－1＝1で奇数。2－1＝1でまた奇数。偶数から奇数をひくと奇数になるので、答えは奇数でB。"
+        },
+        {
+         "question": "(3) 偶数×{(偶数－奇数)×奇数＋偶数}",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "いちばん前に「偶数×」がある。偶数（たとえば0）に何をかけても偶数になるので、{ }の中を計算しなくても答えは偶数。だからA。"
+        },
+        {
+         "question": "(4) 奇数×(偶数＋奇数－偶数)",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B"
+         ],
+         "meaning": "かっこの中に偶数0、奇数1を入れると0＋1－0＝1で奇数。奇数×奇数は奇数なので、答えは奇数でB。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_4",
+       "src": "HG-8686 原簿・小5 演習教材 第1分冊 No.6 B4",
+       "hg": "HG-8686",
+       "title": "三角形のタイルの枚数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 1,
+       "intro": "三角形のタイルを図のように並べて大きな三角形を作ります。図の大きな三角形は三角形のタイルを9枚使って作った3段の三角形になります。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 7段の三角形では1番下の段に何枚の三角形のタイルが並びますか。",
+         "answer": "13",
+         "meaning": "図を上の段から数えると1枚、3枚、5枚…と奇数が並ぶ。7段目は7番目の奇数なので2×7－1＝13枚。"
+        },
+        {
+         "question": "(2) 7段の三角形を作るには何枚の三角形のタイルが必要ですか。",
+         "answer": "49",
+         "meaning": "1から始まる奇数を●番目までたすと●×●になる（図の3段なら1＋3＋5＝9＝3×3）。7段なら7×7＝49枚。"
+        },
+        {
+         "question": "(3) 144枚の三角形のタイルが必要になるのは何段の三角形を作る場合ですか。",
+         "answer": "12",
+         "meaning": "●段の三角形のタイルは●×●枚。●×●＝144となる●をさがすと12×12＝144なので12段。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 176\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"100,10 70,62 130,62\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<polygon points=\"70,62 40,114 100,114\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<polygon points=\"130,62 100,114 160,114\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<polygon points=\"40,114 10,166 70,166\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<polygon points=\"100,114 70,166 130,166\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n<polygon points=\"160,114 130,166 190,166\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e6_5",
+       "src": "HG-8687 原簿・小5 演習教材 第1分冊 No.6 B5",
+       "hg": "HG-8687",
+       "title": "○□△の並び",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 1,
+       "intro": "次のようなきまりで○，□，△を並べるとき，次の問いに答えなさい。\n○□△□○△○□△□○△○□△□○△○□……",
+       "steps": [
+        {
+         "question": "(1) 51番目に並ぶ記号を答えなさい。",
+         "answer": "△",
+         "choices": [
+          "○",
+          "□",
+          "△"
+         ],
+         "meaning": "○□△□○△の6個が1セットでくり返している。51÷6＝8あまり3なので、8セット並べたあとの3番目。セットの3番目は△。"
+        },
+        {
+         "question": "(2) 51番目までに，□は何個並びますか。",
+         "answer": "17",
+         "meaning": "1セットの中に□は2個。8セットで2×8＝16個。あまりの3個○□△にも□が1個あるので16＋1＝17個。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_6",
+       "src": "HG-8688 原簿・小5 演習教材 第1分冊 No.6 B6",
+       "hg": "HG-8688",
+       "title": "1，2，5，3，2のくり返し",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 1,
+       "intro": "次のようなきまりで数を並べるとき，次の問いに答えなさい。\n1，2，5，3，2，1，2，5，3，2，1，2，5，3，2，1，2，……",
+       "steps": [
+        {
+         "question": "(1) 100番目に並ぶ数字を求めなさい。",
+         "answer": "2",
+         "meaning": "1，2，5，3，2の5個が1セット。100÷5＝20あまり0で、ちょうど20セット目の最後が100番目。セットの最後の数は2。"
+        },
+        {
+         "question": "(2) 100番目までに2は何個並びますか。",
+         "answer": "40",
+         "meaning": "100番目までに5個ずつのセットがちょうど20セット。1セットに2は2個あるので2×20＝40個。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_7",
+       "src": "HG-8689 原簿・小5 演習教材 第1分冊 No.6 B7",
+       "hg": "HG-8689",
+       "title": "1，3，5，5，3，1のくり返し",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のようなきまりで数を並べるとき，次の問いに答えなさい。\n1，3，5，5，3，1，1，3，5，5，3，1，1，3，5，5，3，1，1，……",
+       "steps": [
+        {
+         "question": "(1) 100番目までに5は何個並びますか。",
+         "answer": "34",
+         "meaning": "1，3，5，5，3，1の6個が1セット。100÷6＝16あまり4なので16セットと4個（1，3，5，5）。5は1セットに2個、はんぱの4個にも2個あるので2×16＋2＝34個。"
+        },
+        {
+         "question": "(2) はじめて1が23個並ぶのは，何番目まで並べたときですか。",
+         "answer": "67",
+         "meaning": "1は1セットに2個。23÷2＝11あまり1なので、11セットで22個、そのあと1個。次のセットの1番目がちょうど1なので、6×11＋1＝67番目。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_8",
+       "src": "HG-8690 原簿・小5 演習教材 第1分冊 No.6 B8",
+       "hg": "HG-8690",
+       "title": "3が53個出るまでの和",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "次のようなきまりで3が53個出てくるまで数を並べるとき，並べた数の和はいくらになりますか。\n1，3，5，7，3，1，3，5，7，3，1，3，5，7，3，1，……",
+         "answer": "498",
+         "meaning": "(1，3，5，7，3)の5個をセットにすると、1セットに3は2つ。53÷2＝26あまり1なので、26セットのあと27セット目の最初の1，3までで3が53個になる。1セットの和は1＋3＋5＋7＋3＝19だから、19×26＋1＋3＝498。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_9",
+       "src": "HG-8691 原簿・小5 演習教材 第1分冊 No.6 B9",
+       "hg": "HG-8691",
+       "title": "5つのグループに分ける",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 1,
+       "intro": "次のようなきまりで1から153までの整数をグループ分けしました。\n〔表〕A　B　C　D　E\n1　2　3　4　5\n6　7　8　9　10\n⋮\n次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 32はどのグループにはいりますか。",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+         ],
+         "meaning": "1段に5個ずつ並ぶので、5でわったあまりが1ならA、2ならB、…と決まる。32÷5＝6あまり2なのでB。"
+        },
+        {
+         "question": "(2) 150はどのグループにはいりますか。",
+         "answer": "E",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+         ],
+         "meaning": "150÷5＝30でわり切れる。わり切れる数（5，10，…）は段の最後のEに並ぶのでE。"
+        },
+        {
+         "question": "(3) Bにはいる整数は何個ありますか。",
+         "answer": "31",
+         "meaning": "150はEの30段目なので、150までは30段あり、Bは1段に1個で30個。そのあと151，152，153がA，B，Cの下に並ぶので、Bにもう1個。30＋1＝31個。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 200\" style=\"display:block;margin:0 auto;max-width:100%\"><g font-size=\"24\" text-anchor=\"middle\"><text x=\"40\" y=\"36\" fill=\"#e8ecf8\">A</text><text x=\"95\" y=\"36\" fill=\"#e8ecf8\">B</text><text x=\"150\" y=\"36\" fill=\"#e8ecf8\">C</text><text x=\"205\" y=\"36\" fill=\"#e8ecf8\">D</text><text x=\"260\" y=\"36\" fill=\"#e8ecf8\">E</text><text x=\"40\" y=\"80\" fill=\"#e8ecf8\">1</text><text x=\"95\" y=\"80\" fill=\"#e8ecf8\">2</text><text x=\"150\" y=\"80\" fill=\"#e8ecf8\">3</text><text x=\"205\" y=\"80\" fill=\"#e8ecf8\">4</text><text x=\"260\" y=\"80\" fill=\"#e8ecf8\">5</text><text x=\"40\" y=\"122\" fill=\"#e8ecf8\">6</text><text x=\"95\" y=\"122\" fill=\"#e8ecf8\">7</text><text x=\"150\" y=\"122\" fill=\"#e8ecf8\">8</text><text x=\"205\" y=\"122\" fill=\"#e8ecf8\">9</text><text x=\"260\" y=\"122\" fill=\"#e8ecf8\">10</text></g><g fill=\"#e8ecf8\"><circle cx=\"150\" cy=\"140\" r=\"2\"/><circle cx=\"150\" cy=\"152\" r=\"2\"/><circle cx=\"150\" cy=\"164\" r=\"2\"/><circle cx=\"150\" cy=\"176\" r=\"2\"/><circle cx=\"150\" cy=\"188\" r=\"2\"/></g></svg>"
+      },
+      {
+       "id": "hd5m2nd_e6_10",
+       "src": "HG-8692 原簿・小5 演習教材 第1分冊 No.6 B10",
+       "hg": "HG-8692",
+       "title": "あまりで班分け",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 1,
+       "intro": "50人の学級を7班に分けたいと思います。50人の生徒には座席番号が1番から50番までついています。班に分けるのに座席番号を7でわり，わったときのあまりの数が1ならば第1班に，2ならば第2班にと，あまりで分けていきました。\n次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 29番の生徒は第何班ですか。",
+         "answer": "1",
+         "meaning": "班は座席番号を7でわったあまりで決まる。29÷7＝4あまり1なので第1班。"
+        },
+        {
+         "question": "(2) 第5班の生徒は何人いますか。",
+         "answer": "7",
+         "meaning": "50÷7＝7あまり1なので、1〜50番は7人ずつ7回まわって、あと1人（あまり1の第1班）。第5班は7人。"
+        },
+        {
+         "question": "(3) 第3班の生徒で座席番号の小さい方から3番目の生徒の座席番号は何番ですか。",
+         "answer": "17",
+         "meaning": "第3班はあまりが3の番号。いちばん小さいのは3番で、そこから7ずつ増える。3→10→17なので、3番目は17番。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_11",
+       "src": "HG-8693 原簿・小5 演習教材 第1分冊 No.6 B11",
+       "hg": "HG-8693",
+       "title": "7gで1回転するはかり",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "7gで針(はり)が1回転する，目もりがついたはかりがあり，この針は何回転でもできます。いろいろな重さのおもりをこのはかりにのせ，\n0gの目もりをさしたおもりはAの箱に\n1gの目もりをさしたおもりはBの箱に\n2gの目もりをさしたおもりはCの箱に\n3gの目もりをさしたおもりはDの箱に\n4gの目もりをさしたおもりはEの箱に\n5gの目もりをさしたおもりはFの箱に\n6gの目もりをさしたおもりはGの箱に 分類します。\n次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 100gのおもりはどの箱にはいりますか。",
+         "answer": "C",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+         ],
+         "meaning": "7gで1回転するので、7gごとに目もりは0にもどる。はかりがさす目もりは重さを7でわったあまり。100は7の倍数の98より2大きいので、あまりは2。目もり2のおもりはCの箱。"
+        },
+        {
+         "question": "(2) 1gから100gのおもり100個を分類したとき，Gの箱には何個はいりますか。",
+         "answer": "14",
+         "meaning": "箱A〜Gの下に、目もり0〜6に合わせて1〜100を順に並べる表を考える。100は目もり2（C）なので、最後の段は98，99，100がA，B，Cの下に並ぶだけでGには入らない。Gの箱には、その前までの14段に1個ずつで14個。"
+        },
+        {
+         "question": "(3) Cの箱とDの箱からおもりを1個ずつとりだしてはかりにのせると何gの目もりをさしますか。",
+         "answer": "5",
+         "meaning": "Cの箱のおもりは目もり2、Dの箱のおもりは目もり3をさしたもの。何回転分かはのせても目もりは変わらないので、あまりの2＋3＝5gの目もりをさす。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_12",
+       "src": "HG-8694 原簿・小5 演習教材 第1分冊 No.6 B12",
+       "hg": "HG-8694",
+       "title": "月をまたぐ曜日",
+       "category": "kazu",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 5月7日が火曜日のとき，同じ年の6月13日は何曜日ですか。",
+         "answer": "木曜日",
+         "choices": [
+          "日曜日",
+          "月曜日",
+          "火曜日",
+          "水曜日",
+          "木曜日",
+          "金曜日",
+          "土曜日"
+         ],
+         "meaning": "7÷7＝1あまり0なので、5月は「7でわったあまりが0の日」が火曜日。あまり1が水、2が木…と表を作る。5月は31日まであるので、6月13日は5月の31＋13＝44日と同じ。44÷7＝6あまり2で、あまり2は木曜日。"
+        },
+        {
+         "question": "(2) 4月13日が月曜日のとき，同じ年の8月21日は何曜日ですか。",
+         "answer": "金曜日",
+         "choices": [
+          "日曜日",
+          "月曜日",
+          "火曜日",
+          "水曜日",
+          "木曜日",
+          "金曜日",
+          "土曜日"
+         ],
+         "meaning": "13÷7＝1あまり6なので、4月は「あまり6の日」が月曜日。あまり0が火、1が水、2が木、3が金…と表を作る。8月21日は4月の30＋31＋30＋31＋21＝143日と同じ。143÷7＝20あまり3で、あまり3は金曜日。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_13",
+       "src": "HG-8695 原簿・小5 演習教材 第1分冊 No.6 C1",
+       "hg": "HG-8695",
+       "title": "51から149までの偶数と奇数",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 2,
+       "intro": "51から149までの整数に関して次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 偶数は何個ありますか。",
+         "answer": "49",
+         "meaning": "50までに偶数は50÷2＝25個。149までに偶数は149÷2＝74あまり1より74個。51から149までの偶数は、その差で74－25＝49個。"
+        },
+        {
+         "question": "(2) すべての偶数の和とすべての奇数の和を比べるとどちらがどれだけ大きいですか。　［どちら］",
+         "answer": "奇数の和",
+         "choices": [
+          "偶数の和",
+          "奇数の和"
+         ],
+         "meaning": "51と52、53と54、…、147と148を組にすると、どの組も偶数が1大きく、①〜㊾の49組で偶数が49大きい。でも最後の149は組になれず、奇数だけが1つ余る。149は49よりずっと大きいので、奇数の和の方が大きい。"
+        },
+        {
+         "question": "(2) すべての偶数の和とすべての奇数の和を比べるとどちらがどれだけ大きいですか。　［どれだけ］",
+         "answer": "100",
+         "meaning": "組の分で偶数が49大きいが、残った奇数149がそれを取りかえす。149－49＝100だけ奇数の和が大きい。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_14",
+       "src": "HG-8696 原簿・小5 演習教材 第1分冊 No.6 C2",
+       "hg": "HG-8696",
+       "title": "3でわったあまりのグループ",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 2,
+       "intro": "0より大きい整数を3でわったときのあまりで次のように分けます。\nあまりが0となる整数の集まりをAグループ\nあまりが1となる整数の集まりをBグループ\nあまりが2となる整数の集まりをCグループ\n次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 83はどのグループに入りますか。",
+         "answer": "C",
+         "choices": [
+          "A",
+          "B",
+          "C"
+         ],
+         "meaning": "83÷3＝27あまり2。あまりが2の数はCグループ。"
+        },
+        {
+         "question": "(2) Aグループの数とBグループの数を加えることをA＋B，かけることをA×Bとすると，次のそれぞれの計算の結果の数はA，B，Cのどのグループに入りますか。\n①　A＋B　　②　B×B　　③　B＋C　　④　A×C　［①］",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B",
+          "C"
+         ],
+         "meaning": "たし算のあまりは、あまりどうしをたせば分かる。Aはあまり0、Bはあまり1なので、A＋Bは0＋1＝1で、あまり1のB。"
+        },
+        {
+         "question": "(2) Aグループの数とBグループの数を加えることをA＋B，かけることをA×Bとすると，次のそれぞれの計算の結果の数はA，B，Cのどのグループに入りますか。\n①　A＋B　　②　B×B　　③　B＋C　　④　A×C　［②］",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B",
+          "C"
+         ],
+         "meaning": "かけ算のあまりも、あまりどうしをかければ分かる。B×Bは1×1＝1で、あまり1のB。"
+        },
+        {
+         "question": "(2) Aグループの数とBグループの数を加えることをA＋B，かけることをA×Bとすると，次のそれぞれの計算の結果の数はA，B，Cのどのグループに入りますか。\n①　A＋B　　②　B×B　　③　B＋C　　④　A×C　［③］",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B",
+          "C"
+         ],
+         "meaning": "B＋Cはあまりどうしで1＋2＝3。3は3でわり切れるのであまり0と同じ。だからA。"
+        },
+        {
+         "question": "(2) Aグループの数とBグループの数を加えることをA＋B，かけることをA×Bとすると，次のそれぞれの計算の結果の数はA，B，Cのどのグループに入りますか。\n①　A＋B　　②　B×B　　③　B＋C　　④　A×C　［④］",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B",
+          "C"
+         ],
+         "meaning": "A×Cはあまりどうしで0×2＝0。あまり0なのでA。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_15",
+       "src": "HG-8697 原簿・小5 演習教材 第1分冊 No.6 C3",
+       "hg": "HG-8697",
+       "title": "9gで1回転するはかり",
+       "category": "kazu",
+       "unit": "数の性質",
+       "grade": 5,
+       "star": 3,
+       "intro": "下の図は9gで1回転するはかりです。このはかりで品物Aをはかったら，何回転かして5の目もりをさし，品物Bをはかったら何回転かして5の目もりをさし，品物Cをはかったら品物Aのときより1回転多くまわって7の目もりをさしました。",
+       "steps": [
+        {
+         "question": "(1) AとBの品物をいっしょにはかると，どの目もりをさしますか。",
+         "answer": "1",
+         "meaning": "何回転していても、いっしょにのせたときの目もりは目もりどうしのたし算で決まる。5＋5＝10で、9をこえた分は1回転してもう一度0から進むので、10－9＝1の目もり。"
+        },
+        {
+         "question": "(2) AとCの品物をいっしょにはかったら，20回転してある目もりをさしました。Cの品物の重さは何gですか。",
+         "answer": "97",
+         "meaning": "Aを「○回転と5目もり」、Cを「○＋1回転と7目もり」として筆算のようにたす。目もりは5＋7＝12で、1回転と3目もり。全部で20回転なので、回転の部分は○＋○＋1＝19、○＝9。Cは10回転と7目もりなので9×10＋7＝97g。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 240\" style=\"display:block;margin:0 auto;max-width:100%\">\n<circle cx=\"120\" cy=\"120\" r=\"95\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"120.0\" y1=\"33.0\" x2=\"120.0\" y2=\"17.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"120.0\" y=\"53.0\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">0</text>\n<line x1=\"175.9\" y1=\"53.4\" x2=\"186.2\" y2=\"41.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"166.9\" y=\"70.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">1</text>\n<line x1=\"205.7\" y1=\"104.9\" x2=\"221.4\" y2=\"102.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"191.9\" y=\"113.3\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">2</text>\n<line x1=\"195.3\" y1=\"163.5\" x2=\"209.2\" y2=\"171.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"183.2\" y=\"162.5\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">3</text>\n<line x1=\"149.8\" y1=\"201.8\" x2=\"155.2\" y2=\"216.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"145.0\" y=\"194.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">4</text>\n<line x1=\"90.2\" y1=\"201.8\" x2=\"84.8\" y2=\"216.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"95.0\" y=\"194.6\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">5</text>\n<line x1=\"44.7\" y1=\"163.5\" x2=\"30.8\" y2=\"171.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"56.8\" y=\"162.5\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">6</text>\n<line x1=\"34.3\" y1=\"104.9\" x2=\"18.6\" y2=\"102.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"48.1\" y=\"113.3\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">7</text>\n<line x1=\"64.1\" y1=\"53.4\" x2=\"53.8\" y2=\"41.1\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"73.1\" y=\"70.1\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e6e9f2\">8</text>\n<line x1=\"120\" y1=\"130\" x2=\"120\" y2=\"62\" stroke=\"#e6e9f2\" stroke-width=\"2.5\"/>\n<polygon points=\"120,54 114,66 126,66\" fill=\"#e6e9f2\"/>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e6_16",
+       "src": "HG-8698 原簿・小5 演習教材 第1分冊 No.6 C4",
+       "hg": "HG-8698",
+       "title": "2，3，2，5，4のくり返しの和",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のようなきまりで数を並べていったとき，次の問いに答えなさい。\n2，3，2，5，4，2，3，2，5，4，2，3，2，5，4，2，……",
+       "steps": [
+        {
+         "question": "(1) 74番目の数を求めなさい。",
+         "answer": "5",
+         "meaning": "(2，3，2，5，4)の5個が1セット。74÷5＝14あまり4なので、14セットのあとの4番目。セットの4番目は5。"
+        },
+        {
+         "question": "(2) 74番目までの和を求めなさい。",
+         "answer": "236",
+         "meaning": "1セットの和は2＋3＋2＋5＋4＝16。14セットと、はんぱの4個2，3，2，5をたして16×14＋2＋3＋2＋5＝236。"
+        },
+        {
+         "question": "(3) x番目までの和が199のとき，xを求めなさい。",
+         "answer": "63",
+         "meaning": "こんどは和から逆にたどる。199÷16＝12あまり7なので12セットで192、残り7。7＝2＋3＋2で、13セット目の3番目までたしたところ。5×12＋3＝63番目。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_17",
+       "src": "HG-8699 原簿・小5 演習教材 第1分冊 No.6 C5",
+       "hg": "HG-8699",
+       "title": "3月7日が月曜日の年",
+       "category": "kazu",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "ある年の3月7日が月曜日であるとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) この年の5月4日は何曜日ですか。",
+         "answer": "水曜日",
+         "choices": [
+          "日曜日",
+          "月曜日",
+          "火曜日",
+          "水曜日",
+          "木曜日",
+          "金曜日",
+          "土曜日"
+         ],
+         "meaning": "3月7日は7でわってあまり0の日で月曜日。3月の日付を7でわったあまりが0なら月、1なら火、2なら水…。5月4日は3月の31＋30＋4＝65日と同じ。65÷7＝9あまり2で、あまり2は水曜日。"
+        },
+        {
+         "question": "(2) この年の7月1日は何曜日ですか。",
+         "answer": "金曜日",
+         "choices": [
+          "日曜日",
+          "月曜日",
+          "火曜日",
+          "水曜日",
+          "木曜日",
+          "金曜日",
+          "土曜日"
+         ],
+         "meaning": "7月1日は3月の31＋30＋31＋30＋1＝123日と同じ（3月・4月・5月・6月の日数をたす）。123÷7＝17あまり4で、あまり4は金曜日。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e6_18",
+       "src": "HG-8700 原簿・小5 演習教材 第1分冊 No.6 C6",
+       "hg": "HG-8700",
+       "title": "折り返しに並べた数",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "1から100までの整数を図のように並べたとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 100は，A，B，C，D，Eのどの列の下に並びますか。",
+         "answer": "E",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+         ],
+         "meaning": "図では1〜4が上の段のB〜Eに、5〜8が次の段のA〜Dに並び、9からまたBから始まる。だから8個で1グループ。100÷8＝12あまり4なので、100は13グループ目の4個目。4個目は4と同じ位置でE。"
+        },
+        {
+         "question": "(2) Dの20番目の数を求めなさい。",
+         "answer": "80",
+         "meaning": "1グループの中でDには2つの数（上段の3と下段の8）が入る。20÷2＝10あまり0なので、Dの20番目は10グループ目の下段のD。下段のDはグループの最後の数（8，16，…）なので、8×10＝80。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 260 250\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"30\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">A</text>\n<text x=\"80\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">B</text>\n<text x=\"130\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">C</text>\n<text x=\"180\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">D</text>\n<text x=\"230\" y=\"30\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">E</text>\n<text x=\"80\" y=\"64\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">1</text>\n<text x=\"130\" y=\"64\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">2</text>\n<text x=\"180\" y=\"64\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">3</text>\n<text x=\"230\" y=\"64\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">4</text>\n<text x=\"30\" y=\"98\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">5</text>\n<text x=\"80\" y=\"98\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">6</text>\n<text x=\"130\" y=\"98\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">7</text>\n<text x=\"180\" y=\"98\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">8</text>\n<text x=\"80\" y=\"132\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">9</text>\n<text x=\"130\" y=\"132\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">10</text>\n<text x=\"180\" y=\"132\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">11</text>\n<text x=\"230\" y=\"132\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">12</text>\n<text x=\"30\" y=\"166\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">13</text>\n<text x=\"80\" y=\"166\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">14</text>\n<text x=\"130\" y=\"166\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">15</text>\n<text x=\"180\" y=\"166\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">16</text>\n<text x=\"80\" y=\"200\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">17</text>\n<text x=\"130\" y=\"200\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">18</text>\n<text x=\"180\" y=\"200\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">19</text>\n<text x=\"230\" y=\"200\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e6e9f2\">20</text>\n<circle cx=\"130\" cy=\"208\" r=\"1.6\" fill=\"#e6e9f2\"/>\n<circle cx=\"130\" cy=\"216\" r=\"1.6\" fill=\"#e6e9f2\"/>\n<circle cx=\"130\" cy=\"224\" r=\"1.6\" fill=\"#e6e9f2\"/>\n<circle cx=\"130\" cy=\"232\" r=\"1.6\" fill=\"#e6e9f2\"/>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e6_19",
+       "src": "HG-8701 原簿・小5 演習教材 第1分冊 No.6 C7",
+       "hg": "HG-8701",
+       "title": "4列に並べた1から6",
+       "category": "kisoku",
+       "unit": "周期算",
+       "grade": 5,
+       "star": 2,
+       "intro": "1から6までの整数を図のように，90行まで並べます。",
+       "steps": [
+        {
+         "question": "(1) 2は全部で何回出てきますか。",
+         "answer": "60",
+         "meaning": "図の7行目は1行目と同じ1，2，3，4にもどっているので、6行4列が1セット。1セットの中に2は4回出てくる。90行までは90÷6＝15セットなので4×15＝60回。"
+        },
+        {
+         "question": "(2) 77行3列の数を求めなさい。",
+         "answer": "1",
+         "meaning": "6行ごとに同じ並びをくり返す。77÷6＝12あまり5なので、77行は5行と同じ並び。図の5行は5，6，1，2で、3列目は1。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 330\" style=\"display:block;margin:0 auto;max-width:100%\" font-family=\"sans-serif\" font-size=\"18\">\n<text x=\"110\" y=\"28\" fill=\"#e8ecf8\" text-anchor=\"middle\">1列</text>\n<text x=\"170\" y=\"28\" fill=\"#e8ecf8\" text-anchor=\"middle\">2列</text>\n<text x=\"230\" y=\"28\" fill=\"#e8ecf8\" text-anchor=\"middle\">3列</text>\n<text x=\"290\" y=\"28\" fill=\"#e8ecf8\" text-anchor=\"middle\">4列</text>\n<text x=\"40\" y=\"62\" fill=\"#e8ecf8\" text-anchor=\"middle\">1行</text>\n<text x=\"110\" y=\"62\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"170\" y=\"62\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"230\" y=\"62\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"290\" y=\"62\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<text x=\"40\" y=\"96\" fill=\"#e8ecf8\" text-anchor=\"middle\">2行</text>\n<text x=\"110\" y=\"96\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"170\" y=\"96\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"230\" y=\"96\" fill=\"#e8ecf8\" text-anchor=\"middle\">6</text>\n<text x=\"290\" y=\"96\" fill=\"#e8ecf8\" text-anchor=\"middle\">5</text>\n<text x=\"40\" y=\"130\" fill=\"#e8ecf8\" text-anchor=\"middle\">3行</text>\n<text x=\"110\" y=\"130\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"170\" y=\"130\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<text x=\"230\" y=\"130\" fill=\"#e8ecf8\" text-anchor=\"middle\">5</text>\n<text x=\"290\" y=\"130\" fill=\"#e8ecf8\" text-anchor=\"middle\">6</text>\n<text x=\"40\" y=\"164\" fill=\"#e8ecf8\" text-anchor=\"middle\">4行</text>\n<text x=\"110\" y=\"164\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<text x=\"170\" y=\"164\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"230\" y=\"164\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"290\" y=\"164\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"40\" y=\"198\" fill=\"#e8ecf8\" text-anchor=\"middle\">5行</text>\n<text x=\"110\" y=\"198\" fill=\"#e8ecf8\" text-anchor=\"middle\">5</text>\n<text x=\"170\" y=\"198\" fill=\"#e8ecf8\" text-anchor=\"middle\">6</text>\n<text x=\"230\" y=\"198\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"290\" y=\"198\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"40\" y=\"232\" fill=\"#e8ecf8\" text-anchor=\"middle\">6行</text>\n<text x=\"110\" y=\"232\" fill=\"#e8ecf8\" text-anchor=\"middle\">6</text>\n<text x=\"170\" y=\"232\" fill=\"#e8ecf8\" text-anchor=\"middle\">5</text>\n<text x=\"230\" y=\"232\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<text x=\"290\" y=\"232\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"40\" y=\"266\" fill=\"#e8ecf8\" text-anchor=\"middle\">7行</text>\n<text x=\"110\" y=\"266\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"170\" y=\"266\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"230\" y=\"266\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"290\" y=\"266\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<circle cx=\"40\" cy=\"280\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"40\" cy=\"290\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"40\" cy=\"300\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"40\" cy=\"310\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"110\" cy=\"280\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"110\" cy=\"290\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"110\" cy=\"300\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"110\" cy=\"310\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"170\" cy=\"280\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"170\" cy=\"290\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"170\" cy=\"300\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"170\" cy=\"310\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"230\" cy=\"280\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"230\" cy=\"290\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"230\" cy=\"300\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"230\" cy=\"310\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"290\" cy=\"280\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"290\" cy=\"290\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"290\" cy=\"300\" r=\"1.8\" fill=\"#e8ecf8\"/>\n<circle cx=\"290\" cy=\"310\" r=\"1.8\" fill=\"#e8ecf8\"/>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e6_20",
+       "src": "HG-8702 原簿・小5 演習教材 第1分冊 No.6 C8",
+       "hg": "HG-8702",
+       "title": "数表のわくの中の和",
+       "category": "kisoku",
+       "unit": "規則性・数列",
+       "grade": 5,
+       "star": 3,
+       "intro": "1から200までの整数を図のように並べたとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 図のようにたてに2個，よこに2個並ぶ長方形のわくをつくります。\nこの場合，この長方形のわくの中の数の和は50となります。わくの中の4つの数の和が98となるとき，長方形のわくの中で一番小さい数を答えなさい。",
+         "answer": "21",
+         "meaning": "1段に6個並ぶので、すぐ下の数は6大きい。わくの一番小さい数を○とすると、4つの数は○、○＋1、○＋6、○＋7。合計は○×4＋14なので、4×○＋14＝98。(98－14)÷4＝21。"
+        },
+        {
+         "question": "(2) たてに3個，横に3個並ぶ長方形のわくの中の9個の整数の和が306になるとき，長方形のわくの中で一番小さい数を求めなさい。",
+         "answer": "27",
+         "meaning": "3×3のわくの真ん中を△とすると、まわりは△－7，△－6，△－5，△－1，△＋1，△＋5，△＋6，△＋7で、ひいた分とたした分が打ち消し合う。だから△は9つの数の平均で、306÷9＝34。一番小さい数は左上の34－7＝27。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 250\" style=\"display:block;margin:0 auto;max-width:100%\" font-family=\"sans-serif\" font-size=\"20\">\n<text x=\"40\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">A</text>\n<text x=\"90\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">B</text>\n<text x=\"140\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">C</text>\n<text x=\"190\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">D</text>\n<text x=\"240\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">E</text>\n<text x=\"290\" y=\"30\" fill=\"#e8ecf8\" text-anchor=\"middle\">F</text>\n<text x=\"40\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">1</text>\n<text x=\"90\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">2</text>\n<text x=\"140\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">3</text>\n<text x=\"190\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">4</text>\n<text x=\"240\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">5</text>\n<text x=\"290\" y=\"70\" fill=\"#e8ecf8\" text-anchor=\"middle\">6</text>\n<text x=\"40\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">7</text>\n<text x=\"90\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">8</text>\n<text x=\"140\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">9</text>\n<text x=\"190\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">10</text>\n<text x=\"240\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">11</text>\n<text x=\"290\" y=\"108\" fill=\"#e8ecf8\" text-anchor=\"middle\">12</text>\n<text x=\"40\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">13</text>\n<text x=\"90\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">14</text>\n<text x=\"140\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">15</text>\n<text x=\"190\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">16</text>\n<text x=\"240\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">17</text>\n<text x=\"290\" y=\"146\" fill=\"#e8ecf8\" text-anchor=\"middle\">18</text>\n<text x=\"40\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">19</text>\n<text x=\"90\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">20</text>\n<text x=\"140\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">21</text>\n<text x=\"190\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">22</text>\n<text x=\"240\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">23</text>\n<text x=\"290\" y=\"184\" fill=\"#e8ecf8\" text-anchor=\"middle\">24</text>\n<text x=\"40\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">25</text>\n<text x=\"90\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">26</text>\n<text x=\"140\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">27</text>\n<text x=\"190\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">28</text>\n<text x=\"240\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">29</text>\n<text x=\"290\" y=\"222\" fill=\"#e8ecf8\" text-anchor=\"middle\">30</text>\n<rect x=\"115\" y=\"83\" width=\"100\" height=\"76\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+      }
      ]
     }
    },
