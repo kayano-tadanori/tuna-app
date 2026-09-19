@@ -90,6 +90,14 @@ def dump_pages(pdf, tag, pages, outdir):
 def check(no):
     u"""G1が出そろったか。B1..Bn・C1..Cm が抜けも重なりも無く並んでいるか数える。"""
     work = work_dir(BASE, no)
+    ok = True
+    # ★担当表のどの担当にも出力があるか。最後の担当を投げ忘れると、ラベルは C1〜C6 と
+    #   すき間なく続いてしまい、下の「抜け」の検査では気づけない（2026-09-19・第1分冊 No.9 担当E）
+    tgt = io.open(os.path.join(work, '_TARGET.md'), encoding='utf-8').read()
+    for L in re.findall(r'`g1/(no\d+_[A-Z])\.json`', tgt):
+        if not os.path.exists(os.path.join(work, 'g1', L + '.json')):
+            print('  ✗ 担当 %s の出力が無い（g1/%s.json）＝まだ投げていないか、終わっていない' % (L[-1], L))
+            ok = False
     seen = {}
     for f in sorted(glob.glob(os.path.join(work, 'g1', '*.json'))):
         doc = json.load(io.open(f, encoding='utf-8'))
@@ -99,7 +107,6 @@ def check(no):
             ks = (it.get('kotae') or {}).get('state')
             if ks != 'ok':
                 print('  ⚠ %s の答えが %s（%s）' % (lab, ks, os.path.basename(f)))
-    ok = True
     for L in 'BC':
         ns = sorted(int(x[1:]) for x in seen if re.match(r'^%s\d+$' % L, x))
         if not ns:
