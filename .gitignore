@@ -49,20 +49,15 @@ scripts/_g4b1_shots/
 scripts/svg_check_g4b1.html
 scripts/svg_findings_g4b1.json
 
-# 折ON（lab/origami）のうち、リポジトリに入れないもの。
-#  ・oripa_sample＝三谷研ORIPAの配布サンプル（外部の配布物なので再配布はしない。手元には残す）
-#  ・preview／__pycache__＝作り直せる生成物
-lab/origami/tools/oripa_sample/
-lab/origami/tools/preview/
+# 自由折りは折ONとは別物。独立した git ＋ Googleドライブで管理する（本人 2026-09-20）
+# （tools/ の中身＝自由折りのエンジン・道具・記録。折ON本体 lab/origami/index.html・js/・作品は今までどおり公開）
+lab/origami/tools/
 # 折り図（おりがみくらぶの著作物）と実測の道具。手元だけに置く
 lab/origami/_zu/
 # 作り直す前のJSの控え（生成物）
 lab/origami/js/works/_old/
 # 作りかけの作品（完成まで git の外に置く。→ feedback_wip_no_commit）
 lab/origami/js/works/_test_*.js
-lab/origami/tools/__pycache__/
-lab/origami/tools/nada_test/_out/
-lab/origami/tools/nada_test/__pycache__/
 
 # 監査パケット（塾講師エージェントに渡す作業用の切り出し。生成物なので追跡しない）
 docs/_audit/
