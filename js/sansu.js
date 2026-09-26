@@ -2334,8 +2334,15 @@ function showSqFeedback(q, correct) {
 
   const fb = document.getElementById('sq-feedback');
   document.getElementById('sq-feedback-text').textContent = correct ? '✅ 正解！' : '❌ 不正解';
-  document.getElementById('sq-feedback-ans').innerHTML = correct ? sqEm(q.meaning)
-    : '正解：' + sqEm(q.answer) + '　' + sqEm(q.meaning);
+  // ★解説の改行（\n）は行に分けて出す。kaisetsu_svg は「答えたあとだけ」出す図
+  //   （設問の svg は答える前から出ているので、答えにつながる図はこちらに置く）
+  const multi = String(q.meaning || '').includes('\n');
+  const mText = multi
+    ? '<span class="sq-kaisetsu-text">' + sqEm(q.meaning).replace(/\n/g, '<br>') + '</span>'
+    : sqEm(q.meaning);
+  const mFig = q.kaisetsu_svg ? '<div class="sq-kaisetsu-fig">' + q.kaisetsu_svg + '</div>' : '';
+  document.getElementById('sq-feedback-ans').innerHTML = (correct ? mText
+    : '正解：' + sqEm(q.answer) + (multi ? '' : '　') + mText) + mFig;
   document.getElementById('sq-meaning').textContent = '';
   fb.classList.remove('hidden');
 
