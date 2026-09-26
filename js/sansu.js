@@ -2250,7 +2250,7 @@ function renderSansuQuiz() {
   if (q.chainIntro) { introEl.innerHTML = sqEm(q.chainIntro, 'sq-em'); introEl.classList.remove('hidden'); }
   else { introEl.textContent = ''; introEl.classList.add('hidden'); }
   const figEl = document.getElementById('sq-figure');
-  if (q.svg) { figEl.innerHTML = q.svg; figEl.classList.remove('hidden'); }
+  if (q.svg) { figEl.innerHTML = q.svg; figEl.classList.remove('hidden'); addFigZoomButton(figEl); }
   else { figEl.innerHTML = ''; figEl.classList.add('hidden'); }
   // ★大問の(2)(3)では、前の設問と その答えを上に残す（2026-07-29）。
   //   紙のテストなら①の問題と自分の書き込みは目の前にある。アプリでは消えていた。
@@ -2916,6 +2916,52 @@ function openDiagramViewer(svgEl) {
   }
   diagramViewerController.reset();
   overlay.classList.remove('hidden');
+  // ★数字がまだ小さいまま開くと、けっきょく読めない。いちばん小さい数字が
+  //   FIG_ZOOM_TARGET px になるところまで、最初から拡大して開く（左上から。指でずらして見る）
+  if (innerSvg) {
+    const min = svgMinNumFontPx(innerSvg);
+    if (min < FIG_ZOOM_TARGET) {
+      const st = diagramViewerController.state;
+      st.zoom = Math.min(st.maxZoom, FIG_ZOOM_TARGET / min);
+      st.panX = 0; st.panY = 0;
+      diagramViewerController.apply();
+    }
+  }
+}
+
+// ── 図の数字が小さすぎるときの「大きくする」ボタン（2026-09-26） ──
+// 🐛 小5の子から「図が大きくて どこが何センチか見えない」と報告（問題は不明）。
+//    実測（アプリと同じ幅342px）で、数字の字が8.5px未満になる図が算数だけで395枚あった。
+//    原因は ①図の中の字の設定がもともと小さい ②縦長の図が高さ260pxの上限で縮む の2つ。
+//    図のデータは原簿から配るもので、一律に書きかえると過去に図を壊した（method_svg_check）。
+//    そこで図は触らず、**画面で測って小さいときだけ**ボタンを出し、読める大きさで開く。
+//    （図をタップしても開くが、それを子どもが知らなかった）
+const FIG_SMALL_PX = 10;      // これより小さい数字があればボタンを出す
+const FIG_ZOOM_TARGET = 16;   // 拡大したとき、いちばん小さい数字をこの大きさにする
+function svgMinNumFontPx(svg) {
+  let min = Infinity;
+  svg.querySelectorAll('text').forEach(t => {
+    if (!/[0-9０-９]/.test(t.textContent || '')) return;   // 寸法・角度など数字の入った字だけ
+    const m = t.getScreenCTM && t.getScreenCTM();
+    if (!m) return;
+    const fs = parseFloat(getComputedStyle(t).fontSize) || 16;
+    const px = fs * Math.hypot(m.a, m.b);
+    if (px > 0 && px < min) min = px;
+  });
+  return min;
+}
+function addFigZoomButton(figEl) {
+  requestAnimationFrame(() => {
+    const svg = figEl.querySelector('svg');
+    if (!svg || figEl.querySelector('.fig-zoom-btn')) return;
+    if (!(svgMinNumFontPx(svg) < FIG_SMALL_PX)) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'fig-zoom-btn';
+    btn.textContent = '🔍 図を大きくして見る';
+    btn.onclick = e => { e.stopPropagation(); openDiagramViewer(svg); };
+    figEl.appendChild(btn);
+  });
 }
 // ★クイズ画面の図もタップで拡大できるようにした（2026-09-06）。
 //   .sq-figure svg には max-height:260px が かかっているので、たてに長い図
