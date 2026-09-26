@@ -89,6 +89,21 @@
   .fb-status-btn.on { background: #4f7cff; border-color: #4f7cff; color: #fff; }
   .fb-note-input { width: 100%; min-height: 70px; padding: 10px 12px; border-radius: 8px; border: 1px solid #2a3466;
                    background: #10142a; color: #eef2ff; font-size: 0.9rem; font-family: inherit; resize: vertical; }
+  /* 問題番号のボタン（押すとその問題を開く）と、問題の表示 */
+  .fb-qid-btn { background: none; border: 1px solid #38499a; color: #9db8ff; border-radius: 7px; padding: 4px 8px;
+                font-size: 0.8rem; font-weight: 700; cursor: pointer; font-family: ui-monospace, Consolas, monospace; }
+  .fb-qid-btn:hover { background: #23306a; color: #fff; }
+  .qv-panel { width: min(94vw, 620px); }
+  .qv-block { background: #1a2247; border: 1px solid #2f3d7d; border-radius: 9px; padding: 12px 14px; margin: 8px 0;
+              font-size: 0.95rem; line-height: 1.75; white-space: pre-line; word-break: break-word; }
+  .qv-block p { margin: 0 0 6px; }
+  .qv-intro { border-left: 3px solid #7aa2ff; }
+  .qv-fig { text-align: center; margin: 10px 0; background: #101f3f; border-radius: 9px; padding: 8px; }
+  .qv-fig svg { width: 100%; max-width: 480px; height: auto; }
+  .qv-choice { display: block; background: #171c3d; border: 1px solid #2a3466; border-radius: 8px; padding: 8px 12px; margin: 5px 0; }
+  .qv-choice.ok { border-color: #28c88a; color: #6be0b0; font-weight: 700; }
+  .qv-ans { font-size: 1.15rem; font-weight: 800; color: #ffd166; }
+  .qv-block em, .qv-block b { color: #67e8f9; font-style: normal; font-weight: 800; }
   .fb-copy-btn { background: #23306a; border: 1px solid #38499a; color: #dfe6ff; border-radius: 8px;
                  padding: 7px 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; margin-top: 6px; }
 
@@ -221,7 +236,7 @@
     </div>
     <table>
       <thead>
-        <tr><th>種類</th><th>状態</th><th>受験番号</th><th>教科・単元</th><th>理由</th><th>コメント</th><th>日時</th><th></th></tr>
+        <tr><th>種類</th><th>状態</th><th>受験番号</th><th>教科・単元</th><th>問題番号</th><th>理由</th><th>コメント</th><th>日時</th><th></th></tr>
       </thead>
       <tbody id="fb-body"></tbody>
     </table>
@@ -240,6 +255,16 @@
       <button id="btn-delete" class="btn btn-del" onclick="deleteCurrentNickname()" disabled>🗑 この受験番号を削除する</button>
       <p id="delete-note" class="sub" style="margin:8px 0 0; font-size:0.78rem"></p>
     </div>
+  </div>
+</div>
+
+<!-- 通報された問題そのもの（問題番号を押すと開く） -->
+<div id="qv-overlay" class="overlay hidden" style="z-index:60">
+  <div class="panel qv-panel">
+    <button class="close" onclick="closeQuestionView()">×</button>
+    <h2 id="qv-title">問題</h2>
+    <p class="sub" id="qv-sub"></p>
+    <div id="qv-body"></div>
   </div>
 </div>
 
@@ -1653,12 +1678,15 @@ function renderFeedback() {
       <td data-label="状態">${FB_STATUS_LABEL[f.status || 'new']}</td>
       <td data-label="受験番号">${esc(f.nickname || '')}</td>
       <td data-label="教科・単元">${esc(where) || '—'}</td>
+      <td data-label="問題番号">${f.qid ? `<button class="fb-qid-btn" title="押すと この問題を ひらきます">${esc(f.qid)}</button>` : '—'}</td>
       <td data-label="理由">${FB_REASON_LABEL[f.reason] || esc(f.reason || '')}</td>
       <td data-label="コメント" class="fb-comment-cell">${esc((f.comment || '').slice(0, 40)) || '—'}</td>
       <td data-label="日時">${fmtDate(f.createdAt)}</td>
       <td data-label=""><button class="btn btn-view">詳細</button></td>
     `;
     tr.querySelector('.btn-view').onclick = () => showFbDetail(f.id);
+    const qb = tr.querySelector('.fb-qid-btn');
+    if (qb) qb.onclick = () => openQuestionView(f);
     body.appendChild(tr);
   });
 }
@@ -1694,7 +1722,8 @@ function showFbDetail(id) {
     rows.push('<div class="section-title">通報された問題</div>');
     rows.push(`<div class="fb-qbox">${esc(f.question || '（問題文なし）')}</div>`);
     if (f.qid) {
-      rows.push(`<button class="fb-copy-btn" onclick="copyQid()">📋 問題ID（${esc(f.qid)}）をコピー</button>`);
+      rows.push(`<button class="fb-copy-btn" onclick="openQuestionView(currentFb)">👁 この問題を ひらく（${esc(f.qid)}）</button> `);
+      rows.push(`<button class="fb-copy-btn" onclick="copyQid()">📋 問題IDをコピー</button>`);
     }
     if (f.answer)  rows.push(row('正解', f.answer));
   }
@@ -1787,6 +1816,120 @@ async function sendFbReply() {
   } catch (e) {
     msg.textContent = 'おへんじを送れませんでした：' + (e.message || e.code);
   }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  👁 通報された問題を、その場で ひらく（2026-09-26・本人要望）
+//  問題番号 → qindex.js の files（バケツ→データファイル）でファイルを決め、
+//  アプリの公開データ（data/*.json）を読んで、その問題をさがして出す。
+//  ★PC版は file:// で開くので相対パスでは読めない。公開版（GitHub Pages）から読む
+//    （Access-Control-Allow-Origin: * なので file:// からでも読める）。
+//  ★大問の小問は `${大問ID}_s${番号}`（アプリの expandChain と同じ形）で届く。
+//  ★見つからない問題（かんたん解説 kx_… など索引に無いもの）は、通報に残った問題文を出す。
+// ════════════════════════════════════════════════════════════════
+const QV_DATA_BASE = location.protocol === 'file:'
+  ? 'https://kayano-tadanori.github.io/tuna-app/data/'
+  : new URL('../data/', location.href).href;
+const qvFileCache = new Map();
+function qvLoadFile(file) {
+  if (!qvFileCache.has(file)) {
+    qvFileCache.set(file, fetch(QV_DATA_BASE + file + '?t=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error(file + ' が読めません（' + r.status + '）'); return r.json(); })
+      .catch(e => { qvFileCache.delete(file); throw e; }));
+  }
+  return qvFileCache.get(file);
+}
+// 入れ子のデータの中から、id が一致するものをさがす
+function qvFind(node, id, wantSteps) {
+  const stack = [node];
+  while (stack.length) {
+    const o = stack.pop();
+    if (Array.isArray(o)) { for (const v of o) if (v && typeof v === 'object') stack.push(v); continue; }
+    if (!o || typeof o !== 'object') continue;
+    if (o.id === id && (!wantSteps || Array.isArray(o.steps))) return o;
+    for (const v of Object.values(o)) if (v && typeof v === 'object') stack.push(v);
+  }
+  return null;
+}
+async function qvLocate(qid, subject) {
+  const idx = await loadQIndex();
+  const m = String(qid).match(/^(.*)_s(\d+)$/);
+  // その問題番号を持つバケツ（教科が分かっていれば、その教科を先に）
+  let buckets = Object.keys(idx.q).filter(b => idx.q[b] && Object.prototype.hasOwnProperty.call(idx.q[b], qid));
+  if (subject) buckets.sort((a, b) => (b.startsWith(subject + '_') ? 1 : 0) - (a.startsWith(subject + '_') ? 1 : 0));
+  const files = [];
+  buckets.forEach(b => ((idx.files || {})[b] || []).forEach(f => { if (!files.includes(f)) files.push(f); }));
+  for (const file of files) {
+    const data = await qvLoadFile(file);
+    if (m) {
+      const chain = qvFind(data, m[1], true);
+      if (chain && chain.steps[Number(m[2]) - 1]) {
+        return { file, bucket: buckets[0], chain, item: chain.steps[Number(m[2]) - 1], n: Number(m[2]) };
+      }
+    }
+    const item = qvFind(data, qid, false);
+    if (item) return { file, bucket: buckets[0], item };
+  }
+  return { bucket: buckets[0] || null, item: null };
+}
+// アプリと同じ **強調** と 改行 だけを HTML にする（データは自前の問題ファイル）
+function qvText(s) {
+  return String(s == null ? '' : s)
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+    .replace(/__(.+?)__/g, '<u>$1</u>');
+}
+async function openQuestionView(f) {
+  if (!f || !f.qid) return;
+  const ov = document.getElementById('qv-overlay');
+  const body = document.getElementById('qv-body');
+  document.getElementById('qv-title').textContent = '問題 ' + f.qid;
+  document.getElementById('qv-sub').textContent = 'よみこみ中…';
+  body.innerHTML = '';
+  ov.classList.remove('hidden');
+  try {
+    const r = await qvLocate(f.qid, f.subject);
+    const idx = window.OTON_QINDEX || {};
+    const label = (r.bucket && idx.labels && idx.labels[r.bucket]) || [FB_SUBJECT_LABEL[f.subject] || f.subject, f.unit || f.cat].filter(Boolean).join('・');
+    const q = r.item;
+    if (!q) {
+      document.getElementById('qv-sub').textContent = label || '';
+      body.innerHTML = '<p class="sub">この問題は いまのデータに見つかりませんでした（かんたん解説や、消した問題など）。通報に残っていた問題文を出します。</p>'
+        + `<div class="qv-block">${esc(f.question || '（問題文なし）')}</div>`
+        + (f.answer ? `<div class="section-title">正解</div><div class="qv-ans">${esc(f.answer)}</div>` : '');
+      return;
+    }
+    const grade = q.grade || (r.chain && r.chain.grade);
+    document.getElementById('qv-sub').textContent =
+      [label, grade ? '小' + grade : '', q.difficulty ? '難しさ' + q.difficulty : '', r.file].filter(Boolean).join('　/　');
+    const H = [];
+    if (r.chain) {
+      if (r.chain.title) H.push(`<div class="section-title">大問：${esc(r.chain.title)}（(${r.n}) / 全${r.chain.steps.length}問）</div>`);
+      if (r.chain.intro) H.push(`<div class="qv-block qv-intro">${qvText(r.chain.intro)}</div>`);
+    }
+    H.push('<div class="section-title">問題</div>');
+    H.push(`<div class="qv-block">${r.chain ? `(${r.n}) ` : ''}${qvText(q.question)}</div>`);
+    const svg = q.svg || (r.chain && r.chain.svg);
+    if (svg) H.push(`<div class="qv-fig">${svg}</div>`);
+    if (Array.isArray(q.choices) && q.choices.length) {
+      H.push('<div class="section-title">選択肢</div>');
+      q.choices.forEach(c => H.push(`<span class="qv-choice${String(c) === String(q.answer) ? ' ok' : ''}">${String(c) === String(q.answer) ? '✅ ' : ''}${qvText(c)}</span>`));
+    }
+    H.push('<div class="section-title">正解</div>');
+    H.push(`<div class="qv-ans">${esc(String(q.answer ?? ''))}${q.okuri ? `<span style="font-size:0.85em;color:#c4cdef">（送りがな：${esc(q.okuri)}）</span>` : ''}</div>`);
+    if (q.meaning) {
+      H.push('<div class="section-title">解説</div>');
+      H.push(`<div class="qv-block">${qvText(q.meaning)}</div>`);
+    }
+    if (q.kaisetsu_svg) H.push(`<div class="qv-fig">${q.kaisetsu_svg}</div>`);
+    body.innerHTML = H.join('');
+  } catch (e) {
+    document.getElementById('qv-sub').textContent = '';
+    body.innerHTML = `<p class="sub">問題を読みこめませんでした：${esc(e.message || String(e))}</p>`
+      + `<div class="qv-block">${esc(f.question || '')}</div>`;
+  }
+}
+function closeQuestionView() {
+  document.getElementById('qv-overlay').classList.add('hidden');
 }
 
 async function deleteFeedback() {

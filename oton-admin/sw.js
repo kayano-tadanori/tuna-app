@@ -4,7 +4,7 @@
 //   ・同一オリジンのファイル（画面本体・アイコン）だけをキャッシュ対象にし、
 //   ・Firebase / gstatic など外部通信には一切介入しない（＝常に最新を取得）。
 //   ・画面本体(HTML)はネットワーク優先。更新がすぐ反映され、圏外のときだけキャッシュを使う。
-const CACHE_NAME = 'oton-admin-v1';
+const CACHE_NAME = 'oton-admin-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -36,6 +36,9 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   // 外部（Firebase/Firestore/gstatic 等）には介入しない＝常に最新データを取りにいく
   if (url.origin !== location.origin) return;
+  // ★アプリの問題データ（../data/*.json）にも介入しない。通報の「問題番号」を押して
+  //   問題を開くときに読む（2026-09-26）。直したばかりの問題を見たいので、常に最新を取りにいく
+  if (url.pathname.includes('/data/')) return;
 
   // 画面本体（HTML）はネットワーク優先。オフラインのときだけキャッシュから返す。
   // ★qindex.js（学習の中身の対応表）も同じ扱いにする。問題を足すたびに作り直すファイルなので、

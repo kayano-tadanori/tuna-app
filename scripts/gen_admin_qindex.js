@@ -96,10 +96,16 @@ function unitNo(name) {
 }
 
 const q = {};          // "教科_カテゴリ" → { 問題ID: "学年,単元番号" }
+// ★バケツごとの「問題の本体が入っているファイル」。管理ツールの通報一覧で、問題番号から
+//   問題そのものを開くのに使う（2026-09-26）。1つのバケツが複数のファイルにまたがることがある
+//   （sansu_zu＝sansu_zu.json と hama_daimon.json の大問 など）
+const files = {};
+let curFile = '';
 let count = 0, skipped = 0;
 function put(subject, cat, id, grade, unit) {
   if (!id) { skipped++; return; }
   const bucket = `${subject}_${cat}`;
+  if (curFile) { const f = (files[bucket] = files[bucket] || []); if (!f.includes(curFile)) f.push(curFile); }
   (q[bucket] = q[bucket] || {})[id] = `${Number(grade) || 0},${unitNo(unit)}`;
   count++;
 }
@@ -125,6 +131,7 @@ for (const [subject, cats] of Object.entries(CATS)) {
   for (const [cat, [file, label]] of Object.entries(cats)) {
     const list = readJSON(file);
     if (!Array.isArray(list)) continue;
+    curFile = file;
     list.forEach(item => item && item.id && putItem(subject, cat, item, label, 0));
   }
 }
@@ -133,6 +140,7 @@ for (const [subject, cats] of Object.entries(CATS)) {
 for (const [subject, file] of EXTRA_FILES) {
   const list = readJSON(file);
   if (!Array.isArray(list)) continue;
+  curFile = file;
   list.forEach(item => {
     if (!item || !item.id) return;
     const cat = item.category || 'その他';
@@ -167,6 +175,7 @@ function walkDaimon(node, subjectHint) {
 }
 for (const file of DAIMON_FILES) {
   const j = readJSON(file);
+  curFile = file;
   if (j) walkDaimon(j.grades || j, 'sansu');
 }
 
@@ -178,6 +187,7 @@ for (const file of DAIMON_FILES) {
 //    ・★最レ（sairei_kokugo）は年度で回の中身が入れかわるので、回番号にひもづけない
 {
   const j = readJSON('hama_kokugo.json');
+  curFile = 'hama_kokugo.json';
   for (const [grade, courses] of Object.entries((j && j.grades) || {})) {
     for (const [course, cv] of Object.entries(courses)) {
       if (course.startsWith('_')) continue;
@@ -206,7 +216,7 @@ Object.assign(labels, {
   sansu_null: 'カテゴリ不明', rika_null: 'カテゴリ不明', kokugo_null: 'カテゴリ不明',
 });
 const stamp = process.env.QINDEX_DATE || new Date().toISOString().slice(0, 10);
-const out = { ver: stamp, units, labels, q };
+const out = { ver: stamp, units, labels, files, q };
 const js = 'window.OTON_QINDEX = ' + JSON.stringify(out) + ';\n';
 
 console.log('問題ID:', count, '件 ／ 単元:', units.length, '種 ／ バケツ:', Object.keys(q).length);
