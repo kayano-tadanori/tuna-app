@@ -1392,7 +1392,7 @@ async function startHamaSession(kind) {
     //   を追加したあとも kokaiq クリックがここで横取りされ、大問ピッカーに一生たどりつけなかった
     //   （本人指摘 2026-08-15「そうはなってないよ」）。'week' のときだけ手書き画面へ流すように直した。
     if (kind === 'kotoba') { await startKokugoKotobaSession(grade, course); return; }
-    if (kind === 'week') { await startKokugoHamaSession(grade, course); return; }
+    if (kind === 'week') { await startKokugoHamaSession(grade, course, null); return; }
   }
 
   // かんたん解説モード：例題→類題の順にそのまま出す（シャッフルしない。順番が意味を持つ）
@@ -1490,6 +1490,13 @@ async function startHamaSession(kind) {
       const all = filterByBand(await hamaCollectUnit(grade, course, await hamaPoolUnit(grade, course, sansuState.hamaUnit)));
       if (!all.length) { showToast('この単元にはまだ問題がありません'); hideLoading(); return; }
       const want = Number(document.getElementById('sansu-q-count').value) || 10;
+      if (hamaSubj === 'kokugo') {   // ★国語の漢字は手書きの画面へ（テンキーに落とさない）
+        state.grade = grade; state.selectedCat = 'hama_kokugo'; state.selectedMode = 'kaki'; state.selectedDiff = null;
+        coinSessionEarned = 0; hideLoading();
+        const qs = shuffle(all).slice(0, want === 0 ? all.length : want);
+        startKanji(qs, `じゅくナビ ${sansuState.hamaUnit}（${qs.length}問）`);
+        return;
+      }
       sansuState.subject = hamaSubj;
       sansuState.cat = 'hama';
       sansuState.questions = shuffle(all).slice(0, want === 0 ? all.length : want);
@@ -1509,6 +1516,8 @@ async function startHamaSession(kind) {
     : kind === 'kokai' ? [Math.max(minNo, no - HAMA_WINDOW), no]
       : [no + 1, Math.min(maxNo, no + HAMA_WINDOW)];
   if (range[0] > range[1]) { showToast('この範囲にはまだ問題がありません'); return; }
+  // ★国語の漢字は手書きの画面へ（ここから下の算数用の画面に落とすと、書く欄がテンキーになる）
+  if (hamaSubj === 'kokugo') { await startKokugoHamaSession(grade, course, range); return; }
   showLoading();
   try {
     const raw = await hamaCollect(grade, course, range[0], range[1]);
@@ -1531,19 +1540,31 @@ async function startHamaSession(kind) {
 // 国語のじゅくナビ：その回の漢字を、原簿の順のまま手書きの画面へ流す。
 // 実物の大問4は1〜10がひとつづきの1セットなので、まぜない・数を減らさない・クラス帯でしぼらない。
 // 状態は「ナビ側＝sansuState／出題側＝state」で分ける（既存の関数がそれぞれを直に読むため）。
-async function startKokugoHamaSession(grade, course) {
+// ★range=[から,まで] を渡すと、複数の回（公開テストのはんい・先どり）から出す。
+//   🐛 2026-09-26：以前は 'week' だけをここへ回していたため、国語の「公開テストのはんい」
+//   などは算数・理科と同じ出題画面に落ち、**漢字を書く欄がテンキーになっていた**（本人指摘）。
+//   複数の回のときは、算数と同じく出題数えらびの数だけ まぜて出す。
+//   もう一度（btn-result-retry）で同じ範囲に戻れるよう、範囲を sansuState に憶えておく。
+async function startKokugoHamaSession(grade, course, range) {
+  if (range === undefined) range = sansuState.hamaKokugoRange;   // もう一度 → 前と同じ範囲
+  sansuState.hamaKokugoRange = range || null;
   showLoading();
   try {
     const no = hamaCurrent(grade, course);
-    const qs = await hamaCollect(grade, course, no, no);
+    const [a, b] = range || [no, no];
+    let qs = await hamaCollect(grade, course, a, b);
     if (!qs.length) { showToast('この回の書き取りはまだ用意していません'); hideLoading(); return; }
+    if (a !== b) {
+      const want = Number(document.getElementById('sansu-q-count').value) || 10;
+      qs = shuffle(qs).slice(0, want === 0 ? qs.length : want);
+    }
     state.grade = grade;
     state.selectedCat = 'hama_kokugo';   // CATEGORIES には入れない（結果画面・記録の振り分けキー）
     state.selectedMode = 'kaki';
     state.selectedDiff = null;
     coinSessionEarned = 0;
     hideLoading();
-    startKanji(qs, `じゅくナビ No.${no}（${qs.length}問）`);
+    startKanji(qs, a === b ? `じゅくナビ No.${a}（${qs.length}問）` : `じゅくナビ No.${a}〜${b}（${qs.length}問）`);
   } catch (e) { showToast('問題の読み込みに失敗しました'); hideLoading(); }
 }
 
