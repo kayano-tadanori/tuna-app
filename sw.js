@@ -1,6 +1,6 @@
 ﻿// Service Worker — オフライン対応
 
-const CACHE_NAME = 'oton-gakuen-v727';
+const CACHE_NAME = 'oton-gakuen-v729';
 
 // GitHub Pagesの /tuna-app/ 配下でも動くよう相対パスで指定
 const ASSETS = [
@@ -85,6 +85,8 @@ const ASSETS = [
   './lab/chicchi-jump-3d/js/shaders.js',
   // 🎏 おりがみアプリ（みんなで作ろう・灘中対策コーナー）。本体からは iframe で開く。
   //    ★読み込み順は lab/origami/index.html と同じにしてある（順番を変えない）。
+  './js/solaris-embed.js',          // 宇宙探究 SOLARIS の橋渡し（本体は /solaris/ ・ここではキャッシュしない）
+  './images/solaris-banner.webp',
   './js/origami-embed.js',
   './lab/origami/index.html',
   './lab/origami/style.css',

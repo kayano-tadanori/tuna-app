@@ -116,6 +116,17 @@
       </button>
     </div>
 
+    <!-- 宇宙探究 SOLARIS（2026-10-06 本人指示：折ONの上に、絵を大きく使ったバナー）。
+         中身は別の置き場（GitHub Pages /solaris/）。やりとりは js/solaris-embed.js の postMessage。遊び券は消費しない。 -->
+    <button id="btn-solaris" class="solaris-banner" aria-label="宇宙探究 SOLARIS">
+      <img class="solaris-banner-img" src="images/solaris-banner.webp" alt="" width="1080" height="608" decoding="async">
+      <span class="solaris-banner-text">
+        <span class="solaris-banner-title">宇宙探究 SOLARIS<span class="solaris-banner-new">NEW</span></span>
+        <span class="solaris-banner-sub">太陽・惑星・月を 本物の 動きで 見よう</span>
+      </span>
+      <span class="game-arrow">›</span>
+    </button>
+
     <!-- 折り紙アプリ：科目グリッドと息抜きタイムの間に、他と別格に見える専用バナーとして配置。
          灘中入試には毎年折り紙がらみの図形問題が出る＝このアプリの最大の目的（2026-08-29本人指示）。
          遊び券は消費しない。中身は lab/origami/ が原本、やりとりは js/origami-embed.js の postMessage。 -->
@@ -2095,6 +2106,12 @@
   <iframe id="cj-frame" title="チッチジャンプ3D" allow="autoplay; fullscreen"></iframe>
 </div>
 
+<!-- =============== 宇宙探究 SOLARIS ===============
+     中身は別の置き場（GitHub Pages /solaris/）。やりとりは js/solaris-embed.js の postMessage。 -->
+<div id="screen-solaris" class="screen">
+  <iframe id="sol-frame" title="宇宙探究 SOLARIS" allow="autoplay; fullscreen"></iframe>
+</div>
+
 <!-- =============== 折り紙アプリ(みんなで作ろう) ===============
      中身は lab/origami/ が原本。やりとりは js/origami-embed.js の postMessage。
      遊び券は消費しない（灘中対策コーナーが真の目的のため、誰でも何度でも使える）。 -->
@@ -2452,6 +2469,7 @@
 <script src="js/jadepanic-embed.js"></script>
 <script src="js/okatazuke-embed.js"></script>  <!-- ジェイドパニック（iframeの橋渡し） -->
 <script src="js/origami-embed.js"></script>  <!-- 折り紙アプリ（iframeの橋渡し） -->
+<script src="js/solaris-embed.js"></script>  <!-- 宇宙探究 SOLARIS（iframeの橋渡し） -->
 <script src="js/jump3d-embed.js"></script>  <!-- チッチジャンプ3D（iframeの橋渡し） -->
 <script>
   // 3Dのオットン（js/otton3d.js）を読む。

@@ -1264,6 +1264,8 @@ function initSubject() {
 
   // 折り紙アプリは専用バナー（.subject-cardではない見た目）なので個別に配線
   document.getElementById('btn-origami').onclick = () => { initOrigami(); showScreen('origami'); };
+  // 宇宙探究 SOLARIS も専用バナー（遊び券は消費しない・2026-10-06）
+  document.getElementById('btn-solaris').onclick = () => { initSolaris(); showScreen('solaris'); };
 
   document.querySelectorAll('#screen-subject .subject-card').forEach(btn => {
     if (btn.id === 'btn-record') return; // 記録カードは専用ハンドラ

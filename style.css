@@ -77,6 +77,8 @@ body {
       lab/origami/style.css の .ori-back-btn のコメント参照）。 */
 #screen-origami { padding: var(--safe-t) 0 var(--safe-b); overflow: hidden; background: #060a16; }
 #screen-origami iframe { display: block; width: 100%; height: 100%; border: 0; background: #060a16; }
+#screen-solaris { padding: var(--safe-t) 0 var(--safe-b); overflow: hidden; background: #03050c; }
+#screen-solaris iframe { display: block; width: 100%; height: 100%; border: 0; background: #03050c; }
 .subject-card-cj3d { background: linear-gradient(135deg, #0f3d63, #1b2a6b); border-color: rgba(150,220,255,.45); }
 .t2-new { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 8px;
   font-size: 10px; font-weight: 900; letter-spacing: .06em; color: #05121f;
@@ -1191,6 +1193,25 @@ canvas.otton3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%;
   box-shadow: 0 0 10px rgba(255,120,170,.6);
 }
 .subject-card-oz .subject-detail { color: rgba(255,240,246,.94); text-shadow: 0 1px 6px rgba(0,0,0,.95); }
+
+/* 宇宙探究 SOLARIS：折ONの上のバナー（2026-10-06）。絵を大きく使う（本人指示「少し大きめでもいい」）。
+   絵は横長のまま全部見せる（ロゴ・子ども2人・鳥・地球）。文字は絵の下の帯に置いて絵にかぶせない */
+.solaris-banner {
+  display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; width: 100%; padding: 0; margin: 4px 0 12px;
+  box-sizing: border-box; cursor: pointer; overflow: hidden; border-radius: var(--radius);
+  background: #070c1d; border: 1.5px solid rgba(120,160,255,0.65);
+  box-shadow: 0 0 0 1px rgba(120,160,255,0.2), 0 6px 22px rgba(0,0,0,0.55), 0 0 24px rgba(70,120,255,0.18);
+}
+.solaris-banner-img { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 608; object-fit: cover; }
+.solaris-banner-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex: 1; min-width: 0; padding: 10px 0 12px 16px; text-align: left; }
+.solaris-banner-title { font-size: 1.05rem; font-weight: 900; color: #e8f0ff; letter-spacing: .03em; text-shadow: 0 0 12px rgba(120,160,255,.45); }
+.solaris-banner-new {
+  margin-left: 8px; padding: 1px 7px; border-radius: 6px; font-size: .62em; font-weight: 900;
+  background: linear-gradient(180deg,#9cc2ff,#4f7fe0); color: #04102a; letter-spacing: .04em;
+  box-shadow: 0 0 10px rgba(120,160,255,.6);
+}
+.solaris-banner-sub { font-size: 0.78rem; color: rgba(200,215,245,0.88); }
+.solaris-banner .game-arrow { padding-right: 14px; color: #bcd0ff; }
 
 /* 折り紙アプリ：科目グリッドと息抜きタイムの間の専用バナー。他のカードと別格に見せる
    （灘中入試の折り紙対策が真の目的のため。2026-08-29本人指示） */
