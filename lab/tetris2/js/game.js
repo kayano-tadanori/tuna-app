@@ -24,7 +24,9 @@ const WELL_EDGE = hex2rgb('#2A46C8');
 const GRID_COL = hex2rgb('#161f4a');
 const SLOW_EDGE = hex2rgb('#8FE9FF');   // I駒・S駒と混ざらない氷色
 
-// 本体ではガチャの在庫を読む。試作では毎回この数だけ配る
+// 単体で開いたとき（試作）は毎回この数だけ配る。
+// オトン学園の中（embed）では、勉強でもらったお助けアイテム（本体の財布）を使う（2026-10-15）。
+//   数は親から 't2-items' で届き、使ったら 't2-use-item' で親に減らしてもらう。
 const ITEM_START = { bomb: 2, slow: 2 };
 
 const G = {
@@ -84,6 +86,12 @@ function requestStart() {
 window.addEventListener('message', e => {
   const d = e.data || {};
   if (d.type === 't2-start-ok') { G.waitingStart = false; startGame(); }
+  else if (d.type === 't2-items') {
+    // 🎒 本体の財布の数。★親が減らしたあとの本当の数なので、届いたら必ず上書きする
+    G.wallet = { bomb: (d.items && d.items.bomb) | 0, slow: (d.items && d.items.slow) | 0 };
+    G.items = { bomb: G.wallet.bomb, slow: G.wallet.slow };
+    updateItemUI();
+  }
   else if (d.type === 't2-start-deny') {
     G.waitingStart = false;
     const t = document.getElementById('cost-note');
@@ -289,7 +297,8 @@ function startGame() {
   Snd.setLevel(1);
   Snd.startBgm();
   Cheer.reset(G.t);
-  G.items = { bomb: ITEM_START.bomb, slow: ITEM_START.slow };
+  G.items = EMBED ? { bomb: (G.wallet || {}).bomb | 0, slow: (G.wallet || {}).slow | 0 }
+                  : { bomb: ITEM_START.bomb, slow: ITEM_START.slow };
   G.slowT = 0; G.slowMax = SLOW_MS / 1000;
   G.bombArmed = false; clearTimeout(G.bombTimer);
   document.querySelectorAll('.item-btn').forEach(b => b.classList.remove('armed'));
@@ -772,7 +781,11 @@ function useItem(kind) {
   if (G.mode !== 'play' || !G.core || G.core.over) return;
   // 演出で止まっているあいだは、他の操作と同じくキューに積む
   if (G.hitstop > 0) { if (G.queueIn.length < 6) G.queueIn.push('item:' + kind); return; }
-  if (G.items[kind] <= 0) { Snd.sfx('move'); return; }
+  if (G.items[kind] <= 0) {
+    Snd.sfx('move');
+    if (EMBED) say('べんきょうで ゲットしよう！', 1400);
+    return;
+  }
   const btn = document.querySelector(`.item-btn[data-item="${kind}"]`);
   const fire = () => { if (!btn) return; btn.classList.remove('fire'); void btn.offsetWidth; btn.classList.add('fire'); };
 
@@ -799,6 +812,7 @@ function useItem(kind) {
     for (let r = BOARD_H - 2; r < BOARD_H; r++) if (c.board[r].some(v => v)) rows.push(r);
     if (!rows.length) { say('まだ消すものが無いで', 1400); return; }
     G.items.bomb--; fire(); updateItemUI();
+    post({ type: 't2-use-item', kind: 'bomb' });
     buzz([16, 24, 40]);
 
     G.snapshot = c.board.map(r => r.slice());
@@ -816,6 +830,7 @@ function useItem(kind) {
 
   } else if (kind === 'slow') {
     G.items.slow--; fire(); updateItemUI();
+    post({ type: 't2-use-item', kind: 'slow' });
     buzz(30);
     G.core.slowLeft = Math.min(G.core.slowLeft + SLOW_MS / 1000, 30);   // 重ねがけは30秒まで
     G.slowT = G.core.slowLeft;

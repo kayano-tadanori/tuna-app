@@ -133,12 +133,12 @@ const TITLES = [
 ];
 
 const ITEM_DEFS = {
-  bomb:   { icon: '💣', label: 'ボム',     desc: 'テトリス：下2行を消す' },
-  slow:   { icon: '🐢', label: 'スロー',   desc: 'テトリス：15秒ゆっくり' },
+  bomb:   { icon: '💣', label: 'ボム',     desc: 'テトリス2：下2行を消す' },
+  slow:   { icon: '🐢', label: 'スロー',   desc: 'テトリス2：15秒ゆっくり' },
   search: { icon: '🔍', label: 'サーチ',   desc: 'スイーパー：安全なマスを1つ開く' },
   shield: { icon: '🛡', label: 'おまもり', desc: 'スイーパー：ゴキブリを1回セーフ' },
-  wing:   { icon: '🪽', label: 'つばさ',   desc: 'チッチジャンプ：6秒ミス無効で浮く' },
-  rocket: { icon: '🚀', label: 'ロケット', desc: 'チッチジャンプ：一気に高くジャンプ' },
+  wing:   { icon: '🪽', label: 'つばさ',   desc: 'チッチジャンプ3D：しばらく落ちない' },
+  rocket: { icon: '🚀', label: 'ロケット', desc: 'チッチジャンプ3D：ひとっとびで上へ' },
 };
 
 // IDから、旧素ID→カテゴリの振り分けに使うプレフィックスを取り出す。
@@ -324,9 +324,9 @@ function addItem(kind, n) {
   return items[kind];
 }
 // ボーナスで配るのは、いま遊べるゲームで使えるものだけ（2026-10-15）。
-//   オトンテトリス（ボム・スロー）とおかんスイーパー（サーチ・おまもり）は一覧から外したので、
-//   チッチジャンプ3Dで使える つばさ・ロケット だけにした。持っている分は消さない。
-const BONUS_ITEM_KINDS = ['wing', 'rocket'];
+//   おかんスイーパー（サーチ・おまもり）は一覧から外したので配らない。持っている分は消さない。
+//   ボム・スローは おとんテトリス2、つばさ・ロケットは チッチジャンプ3D で使う。
+const BONUS_ITEM_KINDS = ['bomb', 'slow', 'wing', 'rocket'];
 function randomItemKind() {
   const kinds = BONUS_ITEM_KINDS;
   return kinds[Math.floor(Math.random() * kinds.length)];
@@ -506,7 +506,7 @@ function checkLoginBonus() {
   showGamiModal({
     emoji: '🔥',
     title: lb.streak >= 2 ? `${lb.streak}日連続ログイン！` : 'ログインボーナス！',
-    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'チッチジャンプ3Dで使えるで！'],
+    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'テトリス2やチッチジャンプ3Dで使えるで！'],
   });
 }
 
@@ -547,7 +547,7 @@ function maybeAwardPerfect(pct, totalQ) {
   const kind = randomItemKind();
   addItem(kind, 1);
   if (banner) {
-    banner.textContent = `${ITEM_DEFS[kind].icon} 満点ボーナス！チッチジャンプ3Dで使える「${ITEM_DEFS[kind].label}」をゲット！`;
+    banner.textContent = `${ITEM_DEFS[kind].icon} 満点ボーナス！${ITEM_DEFS[kind].desc.split('：')[0]}で使える「${ITEM_DEFS[kind].label}」をゲット！`;
     banner.classList.remove('hidden');
   }
 }
@@ -922,7 +922,8 @@ function initRecord() {
   const items = getItems();
   const itemsEl = document.getElementById('record-items');
   itemsEl.innerHTML = '';
-  for (const [kind, def] of Object.entries(ITEM_DEFS)) {
+  for (const kind of BONUS_ITEM_KINDS) {   // いま使えるものだけ出す
+    const def = ITEM_DEFS[kind];
     const div = document.createElement('div');
     div.className = 'record-item';
     div.innerHTML = `<span class="ri-icon"></span><span class="ri-count"></span><span class="ri-desc"></span>`;
