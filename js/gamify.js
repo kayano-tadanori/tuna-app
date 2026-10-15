@@ -259,11 +259,46 @@ function formatMinutes(sec) {
 function flushPlayTime() {
   if (playStart) { addPlayTime((Date.now() - playStart) / 1000); playStart = null; }
 }
+// ゲームごとの遊んだ時間（2026-10-12）。画面を開いてから出るまでを測る。
+//   保存は playTime の中の games（{ゲーム: {total, byDate}}）。新しい保存キーを作らないので
+//   firestore.rules の hasOnly を触らずに、今のクラウドバックアップへそのまま乗る。
+//   勉強時間（total / byDate）には混ぜない。
+//   SOLARIS は入れない：2026-10-15 から別の公開先へページごと移動する形になり、
+//   オトン学園の側では遊んでいる時間を測れない（移動した時点でこのページは閉じる）。
+const GAME_SCREENS = ['tetris', 'tetris2', 'jump', 'jump3d', 'mine', 'jadepanic',
+  'okatazuke', 'origami', 'map-quiz', 'timeline-game'];
+function addGameTime(game, sec) {
+  sec = Math.min(Math.max(0, Math.round(sec)), 3600); // 放置ガード
+  if (!sec) return;
+  const pt = getPlayTimeData();
+  const games = pt.games || (pt.games = {});
+  const g = games[game] || (games[game] = { total: 0, byDate: {} });
+  g.total += sec;
+  const t = todayStr();
+  g.byDate[t] = (g.byDate[t] || 0) + sec;
+  const keys = Object.keys(g.byDate).sort();
+  while (keys.length > 30) delete g.byDate[keys.shift()]; // 直近30日のみ保持
+  localStorage.setItem('playTime', JSON.stringify(pt));
+}
+function flushGameTime() {
+  if (gameStart && gameScreenId) addGameTime(gameScreenId, (Date.now() - gameStart) / 1000);
+  gameStart = null;
+}
+function trackGameScreen(id) {
+  if (id === gameScreenId && gameStart) return;
+  flushGameTime();
+  gameScreenId = GAME_SCREENS.includes(id) ? id : null;
+  if (gameScreenId) gameStart = Date.now();
+}
+
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { flushPlayTime(); backupLocalData(); }
-  else if (PLAY_SCREENS.includes(currentScreenId) && !playStart) playStart = Date.now();
+  if (document.hidden) { flushPlayTime(); flushGameTime(); backupLocalData(); }
+  else {
+    if (PLAY_SCREENS.includes(currentScreenId) && !playStart) playStart = Date.now();
+    if (gameScreenId && !gameStart) gameStart = Date.now();
+  }
 });
-window.addEventListener('pagehide', () => { flushPlayTime(); backupLocalData(); });
+window.addEventListener('pagehide', () => { flushPlayTime(); flushGameTime(); backupLocalData(); });
 
 // ── アイテム ──────────────────────────────────────────────
 function getItems() {

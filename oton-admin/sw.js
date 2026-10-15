@@ -4,7 +4,7 @@
 //   ・同一オリジンのファイル（画面本体・アイコン）だけをキャッシュ対象にし、
 //   ・Firebase / gstatic など外部通信には一切介入しない（＝常に最新を取得）。
 //   ・画面本体(HTML)はネットワーク優先。更新がすぐ反映され、圏外のときだけキャッシュを使う。
-const CACHE_NAME = 'oton-admin-v2';
+const CACHE_NAME = 'oton-admin-v3';
 const ASSETS = [
   './',
   './index.html',

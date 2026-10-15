@@ -35,6 +35,10 @@ const KANJI_CATS = ['kanji_kaki', 'kanji_yomi'];
 const PLAY_SCREENS = ['quiz', 'fill', 'kanji', 'sansu-quiz', 'drill'];
 let playStart = null;
 let currentScreenId = '';
+// ゲームごとの遊んだ時間（2026-10-12）。中身は js/gamify.js の trackGameScreen()。
+// 宣言をここに置く理由は playStart と同じ（gamify.js より先に showScreen() が走る）
+let gameStart = null;
+let gameScreenId = null;
 
 const MODES = {
   quiz: '四択クイズ'
@@ -258,6 +262,7 @@ function showScreen(id) {
   } else {
     flushPlayTime();
   }
+  if (typeof trackGameScreen === 'function') trackGameScreen(id);
   updateScratchDock();
   if (window.Snd) Snd.onScreen(id);
   if (window.Otton3D) Otton3D.onScreen(id);   // 3Dのオットンを、出ている画面へ引っ越しさせる
