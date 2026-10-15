@@ -239,7 +239,7 @@ function okStartLevel(i) {
   OKG.game = new OKZ.Game(L.rows.join('\n'));
   OKG.anim = null; OKG.queue.length = 0; OKG.fx.length = 0;
   OKG.cheer = 0; OKG.stuckMsgShown = false;
-  OKG.helped = false; OKG.pullArmed = false; OKG.hint = null;
+  OKG.helped = false; OKG.pullArmed = false; OKG.hint = null; OKG.undoGoal = null;
   okHintCache = null;
   const g = OKG.game;
   const floor = g.floorCells();
@@ -570,6 +570,19 @@ function okFindHint() {
   };
   return search('', 2);
 }
+// 1手ずつ もどしていって、答えの手順の形（＋そこまで歩ける）に もどるまでの回数。見つからなければ 0
+function okUndoCountToHint() {
+  const c = okHintStates();
+  if (!c.map) return 0;
+  const t = new OKZ.Game(OK_LEVELS[OKG.level].rows.join('\n'));
+  t.replay(OKG.game.pathString());
+  for (let n = 1; t.history.length; n++) {
+    t.undo();
+    const hit = c.map.get(okBoxKey(t));
+    if (hit && okWalkPath(t, hit.sx, hit.sy) !== null) return n;
+  }
+  return 0;
+}
 const OK_DIR_ARROW = { U: '▲', D: '▼', L: '◀', R: '▶' };
 function okHintButton() {
   if (OKG.screen !== 'play' || OKG.anim) return;
@@ -580,9 +593,17 @@ function okHintButton() {
     return;
   }
   const h = okFindHint();
-  if (!h || h.none) {
-    okSay(h && h.none ? 'この面は まだ ヒントが 用意できてへんねん…ごめんな'
-                      : 'いまの形からは わからへん。「もどす」で すこし 戻すと 出せるかも', 3600);
+  if (h && h.none) { okSay('この面は まだ ヒントが 用意できてへんねん…ごめんな', 3600); return; }
+  if (!h) {
+    // にもつは 引けないので、手順から ずれると 戻れないことが多い。
+    // 「もどす」を あと何回 おせば ヒントの出せる形に もどるかを 教える（アイテムは へらさない）
+    const n = okUndoCountToHint();
+    okSay(n > 0 ? `いまの形からは わからへん。「もどす」を あと ${n}回 おすと ヒントが 出せるで`
+                : 'いまの形からは わからへん。「やりなおし」から なら 出せるで', 4200);
+    if (n > 0) {
+      OKG.undoGoal = OKG.game.history.length - n;
+      document.getElementById('btn-undo').classList.add('blink');
+    }
     return;
   }
   // 光らせる にもつは「いま その場所にある にもつ」（ずれていたときは 1手目の にもつ）
@@ -606,6 +627,12 @@ function okUndo() {
   OKG.stuckMsgShown = false;
   if (u.box) OKG.hint = null;
   okSay('', 0);
+  // 🔍「あと N回 もどすと」と言ったところまで もどった
+  if (OKG.undoGoal != null && g.history.length <= OKG.undoGoal) {
+    OKG.undoGoal = null;
+    document.getElementById('btn-undo').classList.remove('blink');
+    okSay('ここからなら 🔍ヒントが 出せるで！', 2600);
+  }
   if (window.OKSnd) OKSnd.undo();
   okUpdateHUD();
   okSaveNow();
@@ -616,7 +643,8 @@ function okReset() {
   OKG.game.reset();
   OKG.anim = null; OKG.queue.length = 0;
   OKG.stuckMsgShown = false;
-  OKG.helped = false; OKG.pullArmed = false; OKG.hint = null; okUpdateItems();
+  OKG.helped = false; OKG.pullArmed = false; OKG.hint = null; OKG.undoGoal = null; okUpdateItems();
+  document.getElementById('btn-undo').classList.remove('blink');
   okSay('', 0);
   const p = OKG.game.player;
   OKG.rig.pos = [okWX(p.x), 0, okWZ(p.y)];

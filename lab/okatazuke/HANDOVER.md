@@ -588,3 +588,22 @@ PROP_TEX=1024 python tools/import_prop_glb.py renga  "G:/…/3dモデル レン�
 
 関連：[[project_oton_gakuen]] / [[project_chicchi_jump_3d]] / [[oton_app_structure]] /
 [[feedback_wip_no_commit]] / [[method_oton_local_preview]] / [[feedback_local_test_writes_cloud]]
+
+---
+
+## 🔍🛡 お助けアイテム（2026-10-15）
+
+旧おかんスイーパーの アイテムを おかたづけへ移した。財布は本体（`getItems()`）。
+`okz-items`（親→子：数）／`okz-use-item`（子→親：1つ使った）。チッチジャンプ3D・テトリス2と同じ形。
+
+| アイテム | はたらき | 中身 |
+|---|---|---|
+| 🔍 サーチ | 次に おす にもつを 水色に光らせ、向きを言う | 答えの手順 `js/hints.js` と いまの形を照らし合わせる。ずれていたら 2手まで探す。だめなら「もどすを あと N回」と案内（**アイテムは減らさない**） |
+| 🛡 おまもり | かまえてから 1マス ひっぱれる | `core.pull()`。もどす で戻せる。とちゅう保存は ひっぱった手だけ小文字（udlr） |
+
+- **使った面は ★2まで・じぶんの記録（L）も残さない**（★3は自分の力で）
+- 答えの手順 `js/hints.js` は**生成物。手で書かない**：
+  - 取りこんだ105面＝配られた解答集から：`tools/hints_from_solved.js`（出どころ＝うえぽんSW局 SG-1000solved.zip・Shift_JIS→UTF-8 にしてから）
+  - 自作の36面＝PCで解く：`tools/make_hints.js`（最良優先探索。取りこんだ面の むずかしいものは この探索では解けない）
+  - どちらも `tools/_hints.json` にためて、`node tools/make_hints.js --write` で `js/hints.js` を書く。**面ごとにハッシュで照合**するので、面を作りなおしたら流しなおす
+- ★解答集の面の名前には印が付く（`[ROUND 087+]`）。印を外して引かないと、次の面の手順が前の面にくっつく
