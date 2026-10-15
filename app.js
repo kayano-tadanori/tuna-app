@@ -1185,7 +1185,20 @@ function renderNicknameHistory() {
 // 起動時処理
 // ============================================================
 
+// バナーの「NEW」は 公開日から NEW_BADGE_DAYS 日で ひとりでに消す（2026-10-15）。
+//   ★新しいゲームを足したら、NEW の span に data-new="公開日(YYYY-MM-DD)" を付けるだけ。
+const NEW_BADGE_DAYS = 30;
+function hideOldNewBadges() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());   // ★todayStr は gamify.js（あとで読まれる）なので使わない
+  document.querySelectorAll('[data-new]').forEach(el => {
+    const d = new Date(el.dataset.new + 'T00:00:00');
+    if (isNaN(d) || (today - d) / 86400000 >= NEW_BADGE_DAYS) el.remove();
+  });
+}
+
 async function boot() {
+  hideOldNewBadges();
   const name = getNickname();
   if (name) {
     state.nickname = name;
