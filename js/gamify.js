@@ -280,6 +280,18 @@ function addGameTime(game, sec) {
   while (keys.length > 30) delete g.byDate[keys.shift()]; // 直近30日のみ保持
   localStorage.setItem('playTime', JSON.stringify(pt));
 }
+// 時間を測れないもの（SOLARIS）は、開いた回数だけ数える。playTime.opens（{ゲーム: {total, byDate}}）
+function countGameOpen(game) {
+  const pt = getPlayTimeData();
+  const opens = pt.opens || (pt.opens = {});
+  const o = opens[game] || (opens[game] = { total: 0, byDate: {} });
+  o.total += 1;
+  const t = todayStr();
+  o.byDate[t] = (o.byDate[t] || 0) + 1;
+  const keys = Object.keys(o.byDate).sort();
+  while (keys.length > 30) delete o.byDate[keys.shift()]; // 直近30日のみ保持
+  localStorage.setItem('playTime', JSON.stringify(pt));
+}
 function flushGameTime() {
   if (gameStart && gameScreenId) addGameTime(gameScreenId, (Date.now() - gameStart) / 1000);
   gameStart = null;

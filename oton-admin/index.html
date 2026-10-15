@@ -676,27 +676,36 @@ const GAME_TIME_LABELS = {
 };
 //   累計は本体の total（端末を替えてもバックアップで引き継がれる）。
 //   日ごとの分は本体が30日で捨てるので、このPCに貯めた分（GTIME_KEY）と合わせて数える。
-function gameTimeHtml(playTime, nickname) {
-  const games = (playTime && playTime.games) || {};
-  const stored = loadJSON(GTIME_KEY)[nickname] || {};
+// 本体の {ゲーム: {total, byDate}} と、このPCに貯めた日ごとの分を合わせて
+// 「直近7日」と「累計」にする（時間でも回数でも同じ形）
+function gameStatRows(src, stored) {
   const since = new Date(); since.setDate(since.getDate() - 6);
   const from = dayStr(since);
-  const ids = new Set([...Object.keys(games), ...Object.keys(stored)]);
-  const rows = [...ids].map(id => {
-    const g = games[id] || {};
+  const ids = new Set([...Object.keys(src), ...Object.keys(stored)]);
+  return [...ids].map(id => {
+    const g = src[id] || {};
     const days = Object.assign({}, stored[id] || {}, g.byDate || {});
     const sum = Object.values(days).reduce((a, v) => a + v, 0);
     const week = Object.entries(days)
       .filter(([d]) => d >= from).reduce((a, [, v]) => a + v, 0);
     return { id, total: Math.max(g.total || 0, sum), week };
   }).filter(r => r.total > 0).sort((a, b) => b.total - a.total);
+}
+function gameTimeHtml(playTime, nickname) {
+  const rows = gameStatRows((playTime && playTime.games) || {}, loadJSON(GTIME_KEY)[nickname] || {});
+  // SOLARIS は別の公開先へ移動するので時間は測れない＝開いた回数だけ（2026-10-15）
+  const opens = gameStatRows((playTime && playTime.opens) || {}, loadJSON(GOPEN_KEY)[nickname] || {});
   let h = `<div class="section-title">🎮 ゲームごとの遊んだ時間</div>`;
   h += `<p class="sub">2026年10月から記録しています（それより前の分はありません）。</p>`;
-  if (!rows.length) return h + `<div class="row"><span class="sub">まだ記録がありません</span><span></span></div>`;
+  if (!rows.length && !opens.length) return h + `<div class="row"><span class="sub">まだ記録がありません</span><span></span></div>`;
   h += `<div class="row"><span class="sub">ゲーム</span><span class="sub">直近7日 ／ 累計</span></div>`;
   for (const r of rows) {
     h += `<div class="row"><span>${GAME_TIME_LABELS[r.id] || r.id}</span>`
        + `<span>${fmtMinutes(r.week)} ／ ${fmtMinutes(r.total)}</span></div>`;
+  }
+  for (const r of opens) {
+    h += `<div class="row"><span>${GAME_TIME_LABELS[r.id] || r.id}<span class="sub">（開いた回数）</span></span>`
+       + `<span>${r.week}回 ／ ${r.total}回</span></div>`;
   }
   return h;
 }
@@ -719,6 +728,7 @@ function fmtMinutes(sec) {
 const HIST_KEY  = 'otonAdminHistory';   // { 受験番号: { 'YYYY-MM-DD': スナップショット } }
 const PTIME_KEY = 'otonAdminPlayTime';  // { 受験番号: { 'YYYY-MM-DD': 秒 } }
 const GTIME_KEY = 'otonAdminGameTime';  // { 受験番号: { ゲーム: { 'YYYY-MM-DD': 秒 } } }（2026-10-12）
+const GOPEN_KEY = 'otonAdminGameOpens'; // { 受験番号: { ゲーム: { 'YYYY-MM-DD': 回 } } }（SOLARIS など・2026-10-15）
 const HIST_MAX_DAYS = 900;              // 1受験番号あたりの保持日数
 
 function loadJSON(key) { try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) { return {}; } }
@@ -770,16 +780,18 @@ function recordSnapshot(nickname, backup) {
     }
   } catch (e) {}
 
-  // ゲームごとの時間も同じ流儀で吸い出す（本体は playTime.games[ゲーム].byDate を30日で捨てる）
+  // ゲームごとの時間・開いた回数も同じ流儀で吸い出す（本体は byDate を30日で捨てる）
   try {
-    const games = JSON.parse(backup.playTime || '{}').games || {};
-    if (Object.keys(games).length) {
-      const gt = loadJSON(GTIME_KEY);
-      const mine = gt[nickname] = gt[nickname] || {};
-      for (const [id, g] of Object.entries(games)) {
+    const pt = JSON.parse(backup.playTime || '{}');
+    for (const [field, key] of [['games', GTIME_KEY], ['opens', GOPEN_KEY]]) {
+      const src = pt[field] || {};
+      if (!Object.keys(src).length) continue;
+      const all = loadJSON(key);
+      const mine = all[nickname] = all[nickname] || {};
+      for (const [id, g] of Object.entries(src)) {
         mine[id] = Object.assign(mine[id] || {}, g.byDate || {});
       }
-      localStorage.setItem(GTIME_KEY, JSON.stringify(gt));
+      localStorage.setItem(key, JSON.stringify(all));
     }
   } catch (e) {}
 }
@@ -800,7 +812,7 @@ async function snapshotAll(entries) {
 function exportHistory() {
   const data = { kind: 'oton-admin-history', savedAt: new Date().toISOString(),
                  history: loadJSON(HIST_KEY), playtime: loadJSON(PTIME_KEY),
-                 gametime: loadJSON(GTIME_KEY) };
+                 gametime: loadJSON(GTIME_KEY), gameopens: loadJSON(GOPEN_KEY) };
   const url = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }));
   const a = document.createElement('a');
   a.href = url; a.download = `オトン学園-のびの記録-${dayStr()}.json`;
@@ -833,19 +845,22 @@ function importHistory(input) {
           if (!pt[nick][d] || sec > pt[nick][d]) pt[nick][d] = sec;
         }
       }
-      const gt = loadJSON(GTIME_KEY);
-      for (const [nick, games] of Object.entries(data.gametime || {})) {
-        gt[nick] = gt[nick] || {};
-        for (const [id, days] of Object.entries(games)) {
-          const cur = gt[nick][id] = gt[nick][id] || {};
-          for (const [d, sec] of Object.entries(days)) {
-            if (!cur[d] || sec > cur[d]) cur[d] = sec;
+      const gt = loadJSON(GTIME_KEY), go = loadJSON(GOPEN_KEY);
+      for (const [store, src] of [[gt, data.gametime], [go, data.gameopens]]) {
+        for (const [nick, games] of Object.entries(src || {})) {
+          store[nick] = store[nick] || {};
+          for (const [id, days] of Object.entries(games)) {
+            const cur = store[nick][id] = store[nick][id] || {};
+            for (const [d, n] of Object.entries(days)) {
+              if (!cur[d] || n > cur[d]) cur[d] = n;
+            }
           }
         }
       }
       localStorage.setItem(HIST_KEY, JSON.stringify(h));
       localStorage.setItem(PTIME_KEY, JSON.stringify(pt));
       localStorage.setItem(GTIME_KEY, JSON.stringify(gt));
+      localStorage.setItem(GOPEN_KEY, JSON.stringify(go));
       msg.textContent = `📥 ${added}日分を取り込みました`;
       if (currentNickname) renderGrowth(currentNickname);
     } catch (e) {
