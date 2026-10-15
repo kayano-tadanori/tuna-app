@@ -135,8 +135,8 @@ const TITLES = [
 const ITEM_DEFS = {
   bomb:   { icon: '💣', label: 'ボム',     desc: 'テトリス2：下2行を消す' },
   slow:   { icon: '🐢', label: 'スロー',   desc: 'テトリス2：15秒ゆっくり' },
-  search: { icon: '🔍', label: 'サーチ',   desc: 'スイーパー：安全なマスを1つ開く' },
-  shield: { icon: '🛡', label: 'おまもり', desc: 'スイーパー：ゴキブリを1回セーフ' },
+  search: { icon: '🔍', label: 'サーチ',   desc: 'おかたづけ：つぎに おす にもつが 光る' },
+  shield: { icon: '🛡', label: 'おまもり', desc: 'おかたづけ：にもつを1マス ひっぱれる' },
   wing:   { icon: '🪽', label: 'つばさ',   desc: 'チッチジャンプ3D：しばらく落ちない' },
   rocket: { icon: '🚀', label: 'ロケット', desc: 'チッチジャンプ3D：ひとっとびで上へ' },
 };
@@ -324,9 +324,9 @@ function addItem(kind, n) {
   return items[kind];
 }
 // ボーナスで配るのは、いま遊べるゲームで使えるものだけ（2026-10-15）。
-//   おかんスイーパー（サーチ・おまもり）は一覧から外したので配らない。持っている分は消さない。
-//   ボム・スローは おとんテトリス2、つばさ・ロケットは チッチジャンプ3D で使う。
-const BONUS_ITEM_KINDS = ['bomb', 'slow', 'wing', 'rocket'];
+//   ボム・スローは おとんテトリス2、つばさ・ロケットは チッチジャンプ3D、
+//   サーチ・おまもりは オカンの おかたづけ で使う（もとは おかんスイーパー用・2026-10-15 に移した）。
+const BONUS_ITEM_KINDS = ['bomb', 'slow', 'wing', 'rocket', 'search', 'shield'];
 function randomItemKind() {
   const kinds = BONUS_ITEM_KINDS;
   return kinds[Math.floor(Math.random() * kinds.length)];
@@ -506,7 +506,7 @@ function checkLoginBonus() {
   showGamiModal({
     emoji: '🔥',
     title: lb.streak >= 2 ? `${lb.streak}日連続ログイン！` : 'ログインボーナス！',
-    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'テトリス2やチッチジャンプ3Dで使えるで！'],
+    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'ゲームで使えるで！'],
   });
 }
 

@@ -17,6 +17,12 @@ const OKG = {
   board: null,
   stuckMsgShown: false,
   embed: false, paid: false,
+  // 🔍🛡 お助けアイテム（2026-10-15）。オトン学園の中では本体の財布の数が 'okz-items' で届く。
+  //   単体で開いたとき（ためし用）は 3こずつ。
+  items: { search: 3, shield: 3 },
+  helped: false,      // この面で お助けを使った＝★3にしない
+  pullArmed: false,   // 🛡を押して「ひっぱる」をかまえている
+  hint: null,         // 🔍 光らせている にもつ { box, dir, until }
 };
 
 const OKG_KEY = 'okatazukeSave';
@@ -44,7 +50,7 @@ function okSaveNow() {
   try {
     if (!g.history.length) { localStorage.removeItem(OKG_NOW); return; }
     localStorage.setItem(OKG_NOW, JSON.stringify({
-      i: OKG.level, p: g.history.map(h => h.dir).join(''),
+      i: OKG.level, p: g.pathString(), h: OKG.helped ? 1 : 0,
     }));
   } catch (e) {}
 }
@@ -233,6 +239,8 @@ function okStartLevel(i) {
   OKG.game = new OKZ.Game(L.rows.join('\n'));
   OKG.anim = null; OKG.queue.length = 0; OKG.fx.length = 0;
   OKG.cheer = 0; OKG.stuckMsgShown = false;
+  OKG.helped = false; OKG.pullArmed = false; OKG.hint = null;
+  okHintCache = null;
   const g = OKG.game;
   const floor = g.floorCells();
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
@@ -263,7 +271,8 @@ function okStartLevel(i) {
   // とちゅうまでやってあれば、そこまで だまって もどす
   const now = okLoadNow();
   if (now && now.i === i && now.p && !OKG.skipResume) {
-    for (const ch of now.p) if (!OKG.game.move(ch)) break;
+    OKG.game.replay(now.p);
+    OKG.helped = !!now.h || /[a-z]/.test(now.p);
     const q = OKG.game.player;
     OKG.rig.pos = [okWX(q.x), 0, okWZ(q.y)];
     OKG.rig.yaw = okDirYaw(OKG.game.face || 'D');
@@ -271,6 +280,7 @@ function okStartLevel(i) {
   OKG.skipResume = false;
   okShow('play');
   okUpdateHUD();
+  okUpdateItems();
   const L2 = OK_LEVELS[i];
   okSay(L2.hint || '', 2600);
 }
@@ -393,6 +403,7 @@ function okTryMove(dir) {
   if (OKG.anim) { if (OKG.queue.length < 5) OKG.queue.push(dir); return; }
   const g = OKG.game;
   const before = { x: g.player.x, y: g.player.y };
+  if (OKG.pullArmed) { okTryPull(dir, before); return; }
   const res = g.move(dir);
   OKG.rig.yaw = okDirYaw(dir);
   if (!res) {
@@ -409,8 +420,175 @@ function okTryMove(dir) {
     onGoal: !!res.onGoal, wasOnGoal: !!res.wasOnGoal, cleared: res.cleared,
   };
   if (window.OKSnd) res.pushed ? OKSnd.push() : OKSnd.step();
+  if (res.pushed) OKG.hint = null;
   okUpdateHUD();
   okSaveNow();
+}
+
+// ---- 🛡 おまもり：にもつを1マス ひっぱる --------------------------------
+//   かまえてから、にもつに せなかを むけたまま はなれる向きへ うごくと、にもつが ついてくる。
+//   ★ひっぱれない向きでは うごかない（まちがって ふつうに歩いて おまもりを むだにしないように）
+function okTryPull(dir, before) {
+  const g = OKG.game;
+  const res = g.pull(dir);
+  if (!res) {
+    if (window.OKSnd) OKSnd.bump();
+    OKG.cam.shake = 0.05;
+    okSay('にもつの となりに 立って、にもつから はなれる むきに うごいてな', 3200);
+    return;
+  }
+  OKG.pullArmed = false;
+  okUseItem('shield');
+  OKG.hint = null;
+  OKG.anim = {
+    t: 0, dur: 0.26, kind: 'pull', dir,
+    from: before, to: { x: g.player.x, y: g.player.y },
+    box: { i: res.boxIndex, from: res.from, to: res.to },
+    onGoal: !!res.onGoal, wasOnGoal: !!res.wasOnGoal, cleared: res.cleared,
+  };
+  OKG.rig.yaw = okDirYaw(dir) + Math.PI;     // にもつの ほうを 向いて うしろへ さがる
+  if (window.OKSnd) OKSnd.push();
+  okSay('よいしょっ！', 1200);
+  okUpdateHUD();
+  okSaveNow();
+}
+
+// アイテムを1つ使う。持ち主は本体なので、オトン学園の中では本体に減らしてもらう
+function okUseItem(kind) {
+  OKG.items[kind] = Math.max(0, (OKG.items[kind] || 0) - 1);
+  OKG.helped = true;
+  if (OKG.embed) parent.postMessage({ type: 'okz-use-item', kind }, '*');
+  okUpdateItems();
+}
+function okUpdateItems() {
+  for (const k of ['search', 'shield']) {
+    const el = document.getElementById('it-' + k);
+    if (el) el.textContent = OKG.items[k] || 0;
+  }
+  const bh = document.getElementById('btn-hint');
+  if (bh) bh.classList.toggle('empty', !(OKG.items.search > 0));
+  const bp = document.getElementById('btn-pull');
+  if (bp) {
+    bp.classList.toggle('on', OKG.pullArmed);
+    bp.classList.toggle('empty', !(OKG.items.shield > 0));
+  }
+}
+function okPullButton() {
+  if (OKG.screen !== 'play') return;
+  if (OKG.pullArmed) { OKG.pullArmed = false; okUpdateItems(); okSay('', 0); return; }
+  if (!(OKG.items.shield > 0)) { okSay('おまもりは べんきょうで ゲットしよう！', 2600); return; }
+  OKG.pullArmed = true;
+  OKG.queue.length = 0;
+  okUpdateItems();
+  okSay('🛡 にもつの となりで、にもつから はなれる むきへ うごくと ひっぱれるで（もう一回おすと やめる）', 4200);
+}
+
+// ---- 🔍 サーチ：次に おす にもつを 光らせる -----------------------------
+//   答えの手順は js/hints.js（PCで前もって解いたもの・tools/make_hints.js が作る）。
+//   いまの形が その手順の とちゅうの形と同じなら、そこから次の1手を出す。
+//   ずれていたら おす手を2手まで ためして、手順の形に もどれる1手を出す。
+//   どちらも だめなら 出さない（アイテムは へらさない）。
+let okHintCache = null;
+function okHash(str) {
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+}
+function okBoxKey(g) {
+  return g.boxes.map(b => b.y * g.w + b.x).sort((a, b) => a - b).join(',');
+}
+function okHintStates() {
+  if (okHintCache && okHintCache.level === OKG.level) return okHintCache;
+  const L = OK_LEVELS[OKG.level];
+  const H = (typeof OK_HINTS !== 'undefined') ? OK_HINTS[OKG.level] : null;
+  const text = L.rows.join('\n');
+  okHintCache = { level: OKG.level, map: null };
+  if (!H || H.h !== okHash(text)) return okHintCache;   // 面が作りなおされていたら使わない
+  const g = new OKZ.Game(text);
+  const map = new Map();       // にもつの形 → その形で 次に おす手 { bx, by, dir, sx, sy }
+  for (const ch of H.s) {
+    const p = g.player, d = OKZ.DIRS[ch];
+    const bx = p.x + d.dx, by = p.y + d.dy;
+    if (g.boxAt(bx, by) >= 0) {
+      const key = okBoxKey(g);
+      if (!map.has(key)) map.set(key, { bx, by, dir: ch, sx: p.x, sy: p.y });
+    }
+    if (!g.move(ch)) return okHintCache;     // 手順が合わない＝使わない
+  }
+  if (!g.isClear()) return okHintCache;
+  okHintCache.map = map;
+  return okHintCache;
+}
+// (tx,ty) まで にもつを よけて 歩く道（行けなければ null）
+function okWalkPath(g, tx, ty) {
+  const w = g.w, prev = new Map([[g.player.y * w + g.player.x, null]]);
+  const q = [[g.player.x, g.player.y]];
+  while (q.length) {
+    const [x, y] = q.shift();
+    if (x === tx && y === ty) break;
+    for (const k in OKZ.DIRS) {
+      const d = OKZ.DIRS[k], nx = x + d.dx, ny = y + d.dy, key = ny * w + nx;
+      if (prev.has(key) || g.isWall(nx, ny) || g.boxAt(nx, ny) >= 0) continue;
+      prev.set(key, [x, y, k]); q.push([nx, ny]);
+    }
+  }
+  if (!prev.has(ty * w + tx)) return null;
+  let s = '', cur = [tx, ty];
+  for (;;) { const p = prev.get(cur[1] * w + cur[0]); if (!p) break; s = p[2] + s; cur = [p[0], p[1]]; }
+  return s;
+}
+function okFindHint() {
+  const c = okHintStates();
+  if (!c.map) return { none: true };
+  const g = OKG.game;
+  const here = c.map.get(okBoxKey(g));
+  if (here && okWalkPath(g, here.sx, here.sy) !== null) return here;
+  // ずれている：おす手を2手まで ためして、手順の形に もどれる1手を さがす
+  const text = OK_LEVELS[OKG.level].rows.join('\n');
+  const base = g.pathString();
+  const at = pre => { const t = new OKZ.Game(text); t.replay(base + pre); return t; };
+  const search = (pre, depth) => {
+    const t = at(pre);
+    for (const b of t.boxes.map(b => ({ x: b.x, y: b.y }))) {
+      for (const k in OKZ.DIRS) {
+        const d = OKZ.DIRS[k];
+        const sx = b.x - d.dx, sy = b.y - d.dy;
+        const walk = okWalkPath(t, sx, sy);
+        if (walk === null) continue;
+        const u = at(pre);
+        u.replay(walk);
+        const r = u.move(k);
+        if (!r || !r.pushed) continue;
+        const hit = c.map.get(okBoxKey(u));
+        if (hit && okWalkPath(u, hit.sx, hit.sy) !== null) return { bx: b.x, by: b.y, dir: k, sx, sy };
+        if (depth > 1 && !u.deadlockedBoxes().length && search(pre + walk + k, depth - 1)) {
+          return { bx: b.x, by: b.y, dir: k, sx, sy };
+        }
+      }
+    }
+    return null;
+  };
+  return search('', 2);
+}
+const OK_DIR_ARROW = { U: '▲', D: '▼', L: '◀', R: '▶' };
+function okHintButton() {
+  if (OKG.screen !== 'play' || OKG.anim) return;
+  if (!(OKG.items.search > 0)) { okSay('サーチは べんきょうで ゲットしよう！', 2600); return; }
+  const g = OKG.game;
+  if (g.deadlockedBoxes().length) {
+    okSay('もう 詰んでるで。「もどす」で 戻してから つかってな', 3600);
+    return;
+  }
+  const h = okFindHint();
+  if (!h || h.none) {
+    okSay(h && h.none ? 'この面は まだ ヒントが 用意できてへんねん…ごめんな'
+                      : 'いまの形からは わからへん。「もどす」で すこし 戻すと 出せるかも', 3600);
+    return;
+  }
+  // 光らせる にもつは「いま その場所にある にもつ」（ずれていたときは 1手目の にもつ）
+  OKG.hint = { box: g.boxAt(h.bx, h.by), dir: h.dir, until: OKG.time + 12 };
+  okUseItem('search');
+  okSay(`🔍 光ってる にもつを ${OK_DIR_ARROW[h.dir]} に おしてみ！`, 5000);
 }
 
 function okUndo() {
@@ -426,6 +604,7 @@ function okUndo() {
   };
   OKG.rig.yaw = okDirYaw(u.dir) + Math.PI;
   OKG.stuckMsgShown = false;
+  if (u.box) OKG.hint = null;
   okSay('', 0);
   if (window.OKSnd) OKSnd.undo();
   okUpdateHUD();
@@ -437,6 +616,7 @@ function okReset() {
   OKG.game.reset();
   OKG.anim = null; OKG.queue.length = 0;
   OKG.stuckMsgShown = false;
+  OKG.helped = false; OKG.pullArmed = false; OKG.hint = null; okUpdateItems();
   okSay('', 0);
   const p = OKG.game.player;
   OKG.rig.pos = [okWX(p.x), 0, okWZ(p.y)];
@@ -451,6 +631,7 @@ function okDirYaw(d) {
 
 // タップした場所まで 歩く（にもつは動かさない道すじ）
 function okWalkTo(tx, ty) {
+  if (OKG.pullArmed) return;                  // ひっぱる かまえ中は タップで歩かない
   const g = OKG.game;
   if (g.isWall(tx, ty) || g.boxAt(tx, ty) >= 0) return;
   const start = g.player;
@@ -494,8 +675,11 @@ function okClear() {
   OKG.cheer = 1;
   OKG.rig.cheer = 1;
   okClearNow();
-  const best = okRecord(OKG.level, g.moves, g.pushes);
-  const star = g.pushes <= L.par ? 3 : g.pushes <= Math.ceil(L.par * 1.4) ? 2 : 1;
+  // ★お助けアイテム（🔍🛡）を使った面は ★2まで。じぶんの記録（おした数）も残さない。
+  //   ★3＝自分の力だけで とったもの、という形を のこす（チッチジャンプ3Dと同じ考え）
+  const best = OKG.helped ? (okLoad()['L' + OKG.level] || null) : okRecord(OKG.level, g.moves, g.pushes);
+  let star = g.pushes <= L.par ? 3 : g.pushes <= Math.ceil(L.par * 1.4) ? 2 : 1;
+  if (OKG.helped) star = Math.min(star, 2);
   const d = okLoad(); d['S' + OKG.level] = Math.max(star, d['S' + OKG.level] || 0); okSave(d);
   for (let i = 0; i < 90; i++) okSpark(okWX(g.boxes[i % g.boxes.length].x),
                                       0.9, okWZ(g.boxes[i % g.boxes.length].y), 1.4);
@@ -506,7 +690,8 @@ function okClear() {
   document.getElementById('clear-stars').textContent = '★★★'.slice(0, star) + '☆☆☆'.slice(0, 3 - star);
   document.getElementById('clear-detail').innerHTML =
     `おした数 <b>${g.pushes}</b>（さいたん ${L.par}）　あるいた数 <b>${g.moves}</b>` +
-    (best ? `<br>じぶんの さいこう記録：おした数 ${best.p}／あるいた数 ${best.m}` : '');
+    (best ? `<br>じぶんの さいこう記録：おした数 ${best.p}／あるいた数 ${best.m}` : '') +
+    (OKG.helped ? '<br>🔍🛡 おたすけを つかったので ★2まで。じぶんの力で ★3を ねらってみ！' : '');
   document.getElementById('btn-next').style.display =
     (OKG.level + 1 < OK_LEVELS.length) ? '' : 'none';
   el.classList.add('show');
@@ -569,7 +754,7 @@ function okStep(dt) {
     a.t += dt;
     if (a.t >= a.dur) {
       // 動きおわり
-      if (a.kind === 'push') {
+      if (a.kind === 'push' || a.kind === 'pull') {
         okDust(okWX(a.box.to.x), 0.05, okWZ(a.box.to.y));
         if (a.onGoal && !a.wasOnGoal) {
           for (let i = 0; i < 16; i++) okSpark(okWX(a.box.to.x), 0.8, okWZ(a.box.to.y), 0.7);
@@ -596,7 +781,7 @@ function okStep(dt) {
     px = OKG.anim.from.x + (OKG.anim.to.x - OKG.anim.from.x) * e;
     py = OKG.anim.from.y + (OKG.anim.to.y - OKG.anim.from.y) * e;
     walk = 1;
-    push = OKG.anim.kind === 'push' ? 1 : 0;
+    push = (OKG.anim.kind === 'push' || OKG.anim.kind === 'pull') ? 1 : 0;
   }
   rig.pos = [okWX(px), 0, okWZ(py)];
   rig.walk += ((OKG.screen === 'clear' ? 0 : walk) - rig.walk) * Math.min(1, dt * 16);
@@ -604,7 +789,7 @@ function okStep(dt) {
   rig.cheer += ((OKG.screen === 'clear' ? 1 : 0) - rig.cheer) * Math.min(1, dt * 6);
   rig.sad += ((OKG.stuckMsgShown && OKG.screen === 'play' ? 1 : 0) - rig.sad) * Math.min(1, dt * 5);
   if (OKG.anim) {
-    const target = okDirYaw(OKG.anim.dir) + (OKG.anim.kind === 'undo' ? Math.PI : 0);
+    const target = okDirYaw(OKG.anim.dir) + ((OKG.anim.kind === 'undo' || OKG.anim.kind === 'pull') ? Math.PI : 0);
     let d = target - rig.yaw;
     while (d > Math.PI) d -= Math.PI * 2;
     while (d < -Math.PI) d += Math.PI * 2;
@@ -739,11 +924,14 @@ function okDraw() {
     }
     const on = g.isGoal(bx.x, bx.y);
     const isStuck = stuck.includes(i);
+    // 🔍 ヒントの にもつは 水色に ゆっくり 光って はずむ
+    const hinted = OKG.hint && OKG.hint.box === i && OKG.time < OKG.hint.until;
+    const pul = hinted ? 0.5 + 0.5 * Math.sin(OKG.time * 7) : 0;
     boxes.push({
-      x, y, z, sx, sy, sz: sx,
+      x, y: y + pul * 0.08, z, sx, sy, sz: sx,
       // にもつは 明るく黄色側へ（かべと 見分けるため）
-      col: isStuck ? [1.30, 0.62, 0.55] : on ? [1.25, 0.86, 0.92] : [1.22, 1.06, 0.86],
-      glow: on ? 0.10 : 0,
+      col: hinted ? [1.0 - 0.3 * pul, 1.25, 1.45] : isStuck ? [1.30, 0.62, 0.55] : on ? [1.25, 0.86, 0.92] : [1.22, 1.06, 0.86],
+      glow: hinted ? 0.18 + 0.2 * pul : on ? 0.10 : 0,
     });
   }
   R.drawInstanced(OKG.mesh.box, boxes, { outlineWidth: 0.0028, outlineCol: [0.40, 0.24, 0.14] });
@@ -1075,6 +1263,11 @@ function okBindUI() {
     okContinue();
   };
   document.getElementById('btn-undo').onclick = okUndo;
+  const bhint = document.getElementById('btn-hint');
+  if (bhint) bhint.onclick = okHintButton;
+  const bpull = document.getElementById('btn-pull');
+  if (bpull) bpull.onclick = okPullButton;
+  okUpdateItems();
   document.getElementById('btn-reset').onclick = okReset;
   document.getElementById('btn-list').onclick = () => okShow('select');
   document.getElementById('btn-next').onclick = okNext;
@@ -1232,6 +1425,11 @@ addEventListener('message', e => {
   if (d.type === 'okz-name') {
     OKG.nickname = d.name || '';
     OKG.cost = d.cost || 1;
+  } else if (d.type === 'okz-items') {
+    // 🎒 本体の財布の数（★本体が減らしたあとの本当の数なので、届いたら上書きする）
+    const it = d.items || {};
+    OKG.items = { search: it.search | 0, shield: it.shield | 0 };
+    okUpdateItems();
   } else if (d.type === 'okz-start-ok') {
     OKG.paid = true;
     okTitleMsg('');

@@ -84,6 +84,11 @@
       <button id="pad-D" class="pad-btn pd">▼</button>
     </div>
     <div class="acts">
+      <!-- 🔍🛡 お助けアイテム（勉強でもらう・オトン学園の財布から使う） -->
+      <div class="item-row">
+        <button id="btn-hint" class="act-btn item" title="サーチ：つぎに おす にもつを 光らせる">🔍<small>ヒント</small><b id="it-search">0</b></button>
+        <button id="btn-pull" class="act-btn item" title="おまもり：にもつを 1マス ひっぱる">🛡<small>ひっぱる</small><b id="it-shield">0</b></button>
+      </div>
       <button id="btn-undo" class="act-btn undo">もどす</button>
       <button id="btn-reset" class="act-btn">やりなおし</button>
     </div>
@@ -116,6 +121,7 @@
 <script src="js/renderer.js"></script>
 <script src="js/core.js"></script>
 <script src="js/levels.js"></script>
+<script src="js/hints.js"></script>   <!-- 🔍 ヒント用の答え（tools/make_hints.js が作る。手で書かない） -->
 <script src="js/audio.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/game.js"></script>

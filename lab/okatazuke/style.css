@@ -169,6 +169,13 @@ html, body {
 .act-btn.go { background: linear-gradient(#ff7aa8, #e8447c); color: #fff; box-shadow: 0 3px 0 #b12a58; }
 @keyframes blink { 0%,100% { transform: scale(1); } 50% { transform: scale(1.09); background: #ffd0e2; } }
 .act-btn.blink { animation: blink .7s ease-in-out infinite; }
+/* 🔍🛡 お助けアイテム */
+.item-row { display: flex; gap: 6px; }
+.act-btn.item { padding: 7px 9px; font-size: 16px; line-height: 1.1; display: flex; flex-direction: column; align-items: center; min-width: 58px; }
+.act-btn.item small { font-size: 10px; font-weight: 700; }
+.act-btn.item b { font-size: 12px; color: #c2306a; }
+.act-btn.item.empty { opacity: .45; }
+.act-btn.item.on { background: #d8f3ff; color: #1677a8; animation: blink .7s ease-in-out infinite; }
 
 /* ---------- クリア ---------- */
 .clear-panel {

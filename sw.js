@@ -64,6 +64,7 @@ const ASSETS = [
   './lab/okatazuke/js/renderer.js',
   './lab/okatazuke/js/core.js',
   './lab/okatazuke/js/levels.js',
+  './lab/okatazuke/js/hints.js',
   './lab/okatazuke/js/audio.js',
   './lab/okatazuke/js/bgm.js',
   './lab/okatazuke/js/game.js',

@@ -8,6 +8,8 @@
 //   ・おきば ぜんぶに にもつが乗ったら クリア（自動判定）
 //   ・もどす（1手ずつ）と やりなおし（最初から）は かならず用意する
 //   ・手数は「歩数(moves)」と「おした数(pushes)」の2本立て
+//   ・🛡おまもり（お助けアイテム）を使ったときだけ、にもつを1マス「ひっぱれる」（pull）。
+//     おした数にも1と数える。もどす で元にもどせる（2026-10-15）
 // ============================================================
 'use strict';
 
@@ -113,7 +115,34 @@ OKZ.Game = class {
     return { pushed: false, dir: dirKey, cleared: this.isClear() };
   }
 
+  // ---- ひっぱる（🛡おまもりを使ったときだけ）----------------------------
+  //   dirKey の向きへ1歩うごき、せなかがわ（反対の向きの となり）の にもつを ついてこさせる。
+  //   返り値 null=ひっぱれない（せなかに にもつが無い／うごく先が ふさがっている）
+  pull(dirKey) {
+    const d = OKZ.DIRS[dirKey];
+    if (!d) return null;
+    const px = this.player.x, py = this.player.y;
+    const nx = px + d.dx, ny = py + d.dy;            // オカンの うごく先
+    const bx = px - d.dx, by = py - d.dy;            // せなかの にもつ
+    const bi = this.boxAt(bx, by);
+    if (bi < 0 || this.isWall(nx, ny) || this.boxAt(nx, ny) >= 0) return null;
+    const wasOn = this.isGoal(bx, by);
+    const nowOn = this.isGoal(px, py);
+    this.history.push({ dir: dirKey, box: bi, from: { x: bx, y: by }, pull: true });
+    this.boxes[bi].x = px; this.boxes[bi].y = py;
+    this.player.x = nx; this.player.y = ny;
+    this.face = dirKey;
+    this.moves++; this.pushes++;
+    return {
+      pulled: true, boxIndex: bi, dir: dirKey,
+      from: { x: bx, y: by }, to: { x: px, y: py },
+      wasOnGoal: wasOn, onGoal: nowOn,
+      cleared: this.isClear(),
+    };
+  }
+
   // ---- 1手 もどす ----------------------------------------------------
+  //   ★おした手も ひっぱった手も、オカンは うごいた向きの逆へ1歩、にもつは もとの場所へ。
   undo() {
     const h = this.history.pop();
     if (!h) return null;
@@ -129,7 +158,23 @@ OKZ.Game = class {
       this.pushes--;
     }
     this.face = h.dir;
-    return { dir: h.dir, box, player: { x: this.player.x, y: this.player.y } };
+    return { dir: h.dir, box, pull: !!h.pull, player: { x: this.player.x, y: this.player.y } };
+  }
+
+  // とちゅうの保存用。おした・あるいた手は大文字、ひっぱった手は小文字（UDLR / udlr）
+  pathString() {
+    return this.history.map(h => h.pull ? h.dir.toLowerCase() : h.dir).join('');
+  }
+  // 保存した手順を再生する。うまく再生できた手の数を返す
+  replay(path) {
+    let n = 0;
+    for (const ch of path) {
+      const up = ch.toUpperCase();
+      const ok = (ch === up) ? this.move(ch) : this.pull(up);
+      if (!ok) break;
+      n++;
+    }
+    return n;
   }
 
   isClear() {
