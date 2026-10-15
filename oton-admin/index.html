@@ -171,6 +171,15 @@
     .grant-grid { grid-template-columns: 1fr 1fr; }
     .grant-btn { padding: 12px 8px; }
   }
+  /* 畳めるゲーム記録（ジェイドパニック・チッチジャンプ3D）2026-10-15 */
+  details.fold { border-bottom: 1px solid #262c52; }
+  details.fold > summary { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.9rem; cursor: pointer; list-style: none; }
+  details.fold > summary::-webkit-details-marker { display: none; }
+  details.fold > summary span:first-child { color: #8b98c9; }
+  details.fold > summary span:first-child::before { content: '▸ '; }
+  details.fold[open] > summary span:first-child::before { content: '▾ '; }
+  details.fold .row { padding-left: 14px; font-size: 0.85rem; }
+  details.fold .row:last-child { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -486,6 +495,10 @@ const ITEM_DEFS = {
   search: { icon: '🔍', label: 'サーチ' }, shield: { icon: '🛡', label: 'おまもり' },
   wing: { icon: '🪽', label: 'つばさ' }, rocket: { icon: '🚀', label: 'ロケット' },
 };
+// いま遊べるゲームで使えるアイテム（本体 js/gamify.js の BONUS_ITEM_KINDS と同じ）。
+//   ボム・スロー（オトンテトリス）とサーチ・おまもり（おかんスイーパー）は、
+//   ゲームを一覧から外したので表示もプレゼントもしない（2026-10-15）。
+const LIVE_ITEM_KINDS = ['wing', 'rocket'];
 // 図鑑の総数。本体 app.js の GACHA_CHARS と二重管理なので、増やしたらここも直す。
 // ownedCount はシークレットも数えるため、こちらもシークレット込みの総数にする。
 const GACHA_TOTAL = 157; // シークレット4体を含む総数（2026-08-01時点。排出対象は153体）
@@ -658,6 +671,36 @@ async function fetchGameScores(nickname) {
   return results;
 }
 
+// ジェイドパニック（6表）とチッチジャンプ3D（5表）は1行に畳み、押すと中身が開く（2026-10-15）。
+//   畳んだ行には、ジェイドパニックは6表の最高点、チッチジャンプ3Dはベストを出す。
+const SCORE_FOLDS = [
+  { prefix: 'jadepanic_', label: '🦜 ジェイドパニック', head: rows => maxScore(rows), headNote: '最高' },
+  { prefix: 'jump3d',     label: '🐦 チッチジャンプ3D', head: rows => (rows.find(r => r.id === 'jump3d') || {}).value, headNote: 'ベスト' },
+];
+function maxScore(rows) {
+  const vs = rows.map(r => r.value).filter(v => v != null);
+  return vs.length ? Math.max(...vs) : null;
+}
+function gameScoreHtml(rows) {
+  const fmt = g => g.value != null ? Number(g.value).toLocaleString() + g.unit : (g.error ? '取得エラー' : '—');
+  const row = g => `<div class="row"><span>${g.label}</span><span>${fmt(g)}</span></div>`;
+  let h = '';
+  const done = new Set();
+  for (const g of rows) {
+    if (done.has(g.id)) continue;
+    const f = SCORE_FOLDS.find(f => g.id.startsWith(f.prefix));
+    if (!f) { h += row(g); continue; }
+    const group = rows.filter(r => r.id.startsWith(f.prefix));
+    group.forEach(r => done.add(r.id));
+    const top = f.head(group);
+    const headStr = top != null ? `${f.headNote} ${Number(top).toLocaleString()}点` : '—';
+    h += `<details class="fold"><summary><span>${f.label}</span><span>${headStr}</span></summary>`
+       + group.map(r => row({ ...r, label: r.label.replace(/(🦜 )?ジェイドパニック|(🐦 )?チッチジャンプ3D ?/, '').trim().replace(/^（(.*)）$/, '$1') || r.label })).join('')
+       + `</details>`;
+  }
+  return h;
+}
+
 function fmtDate(ts) {
   if (!ts) return '—';
   const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -667,9 +710,8 @@ function fmtDate(ts) {
 //   {画面ID: {total, byDate(直近30日)}} で貯める（js/gamify.js の addGameTime）。
 //   ★本体の GAME_SCREENS を足したら、ここの名前も足す（無い画面IDはIDのまま出る）
 const GAME_TIME_LABELS = {
-  'tetris': '🎮 オトンテトリス', 'tetris2': '🧱 テトリス2',
-  'jump': '🐣 チッチジャンプ2', 'jump3d': '🐥 チッチジャンプ3D',
-  'mine': '💣 おかんスイーパー', 'jadepanic': '💎 ジェイドパニック',
+  'tetris2': '🧊 おとんテトリス2', 'jump3d': '🐦 チッチジャンプ3D',
+  'jadepanic': '🦜 ジェイドパニック',
   'okatazuke': '🧹 オカンの おかたづけ', 'origami': '🦢 折ON',
   'solaris': '🪐 SOLARIS', 'map-quiz': '🗾 ニッポン地図たんけん',
   'timeline-game': '⏳ タイムトラベル日本史',
@@ -1160,14 +1202,14 @@ async function showDetail(nickname) {
       html += `<div class="section-title">ガチャ・アイテム</div>`;
       html += `<div class="row"><span>🪙 所持コイン</span><span>${coins}枚</span></div>`;
       html += `<div class="row"><span>📖 図鑑コンプ</span><span>${ownedCount} / ${GACHA_TOTAL}体</span></div>`;
-      const itemStr = Object.entries(ITEM_DEFS).map(([k, def]) => `${def.icon}${items[k] || 0}`).join('　');
+      const itemStr = LIVE_ITEM_KINDS.map(k => `${ITEM_DEFS[k].icon}${items[k] || 0}`).join('　');
       html += `<div class="row"><span>🎁 お助けアイテム</span><span>${itemStr}</span></div>`;
 
       // ── プレゼント付与（次回アプリ起動時に反映）──
       html += `<div class="section-title">🎁 プレゼントを送る</div>`;
       html += `<p class="sub">押すと「予約」され、お子さんが次にアプリを開いたときに反映されます（何回でも押せます）。</p>`;
       html += `<div class="grant-grid">`;
-      html += Object.entries(ITEM_DEFS).map(([k, def]) =>
+      html += LIVE_ITEM_KINDS.map(k => [k, ITEM_DEFS[k]]).map(([k, def]) =>
         `<button class="grant-btn" data-gt="items" data-gk="${k}" data-gn="1">${def.icon}${def.label} +1</button>`).join('');
       html += `<button class="grant-btn" data-gt="coins" data-gn="10">🪙 コイン +10</button>`;
       html += `<button class="grant-btn" data-gt="coins" data-gn="50">🪙 コイン +50</button>`;
@@ -1181,11 +1223,8 @@ async function showDetail(nickname) {
       html += `<div class="row"><span>🔥 連続ログイン</span><span>${loginBonus.streak || 0}日（最長${loginBonus.best || 0}日）</span></div>`;
       html += `<div class="row"><span>⏱ 累計プレイ時間</span><span>${fmtMinutes(playTime.total)}</span></div>`;
       html += gameTimeHtml(playTime, nickname);
-      html += `<div class="row"><span>🎮 テトリスベスト</span><span>${backup.tetrisBest || 0}点</span></div>`;
-      html += `<div class="row"><span>🐣 ジャンプベスト</span><span>${backup.jumpBest || 0}点</span></div>`;
-      html += `<div class="row"><span>💣 スイーパー(かんたん)</span><span>${backup.mineBest_easy ? backup.mineBest_easy + '秒' : '—'}</span></div>`;
-      html += `<div class="row"><span>💣 スイーパー(ふつう)</span><span>${backup.mineBest_normal ? backup.mineBest_normal + '秒' : '—'}</span></div>`;
-      html += `<div class="row"><span>💣 スイーパー(むずかしい)</span><span>${backup.mineBest_hard ? backup.mineBest_hard + '秒' : '—'}</span></div>`;
+      // 🗄 オトンテトリス・チッチジャンプ2・おかんスイーパーのベストは出さない（一覧から外したゲーム・2026-10-15）。
+      //    記録はクラウドに残っている（backup.tetrisBest など）。削除の対象（GAME_IDS）からは外していない。
 
       // 🧹 オカンの おかたづけ（2026-08-28）。141面ぶんの★とクリア数。
       //   ★backup.okatazukeSave は 8/28 にようやく BACKUP_KEYS へ入れた（それまで端末のみ）。
@@ -1214,10 +1253,7 @@ async function showDetail(nickname) {
     if (!anyGameScore) {
       html += `<p class="sub">まだ おとんテトリス2・ジェイドパニックの記録がありません。</p>`;
     }
-    gameScoreRows.forEach(g => {
-      const v = g.value != null ? Number(g.value).toLocaleString() + g.unit : (g.error ? '取得エラー' : '—');
-      html += `<div class="row"><span>${g.label}</span><span>${v}</span></div>`;
-    });
+    html += gameScoreHtml(gameScoreRows);
 
     document.getElementById('detail-body').innerHTML = html;
     renderUnitSection(nickname);

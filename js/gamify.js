@@ -265,7 +265,8 @@ function flushPlayTime() {
 //   勉強時間（total / byDate）には混ぜない。
 //   SOLARIS は入れない：2026-10-15 から別の公開先へページごと移動する形になり、
 //   オトン学園の側では遊んでいる時間を測れない（移動した時点でこのページは閉じる）。
-const GAME_SCREENS = ['tetris', 'tetris2', 'jump', 'jump3d', 'mine', 'jadepanic',
+//   オトンテトリス・チッチジャンプ2・おかんスイーパーは一覧から外したので入れない（2026-10-15）。
+const GAME_SCREENS = ['tetris2', 'jump3d', 'jadepanic',
   'okatazuke', 'origami', 'map-quiz', 'timeline-game'];
 function addGameTime(game, sec) {
   sec = Math.min(Math.max(0, Math.round(sec)), 3600); // 放置ガード
@@ -322,8 +323,12 @@ function addItem(kind, n) {
   localStorage.setItem('items', JSON.stringify(items));
   return items[kind];
 }
+// ボーナスで配るのは、いま遊べるゲームで使えるものだけ（2026-10-15）。
+//   オトンテトリス（ボム・スロー）とおかんスイーパー（サーチ・おまもり）は一覧から外したので、
+//   チッチジャンプ3Dで使える つばさ・ロケット だけにした。持っている分は消さない。
+const BONUS_ITEM_KINDS = ['wing', 'rocket'];
 function randomItemKind() {
-  const kinds = Object.keys(ITEM_DEFS);
+  const kinds = BONUS_ITEM_KINDS;
   return kinds[Math.floor(Math.random() * kinds.length)];
 }
 
@@ -501,7 +506,7 @@ function checkLoginBonus() {
   showGamiModal({
     emoji: '🔥',
     title: lb.streak >= 2 ? `${lb.streak}日連続ログイン！` : 'ログインボーナス！',
-    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'テトリスで使えるで！'],
+    lines: [note, `お助けアイテム ${got.join(' ')} をゲット！`, '🪙10まいもらった！', 'チッチジャンプ3Dで使えるで！'],
   });
 }
 
@@ -542,7 +547,7 @@ function maybeAwardPerfect(pct, totalQ) {
   const kind = randomItemKind();
   addItem(kind, 1);
   if (banner) {
-    banner.textContent = `${ITEM_DEFS[kind].icon} 満点ボーナス！テトリスで使える「${ITEM_DEFS[kind].label}」をゲット！`;
+    banner.textContent = `${ITEM_DEFS[kind].icon} 満点ボーナス！チッチジャンプ3Dで使える「${ITEM_DEFS[kind].label}」をゲット！`;
     banner.classList.remove('hidden');
   }
 }

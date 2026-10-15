@@ -164,18 +164,9 @@
       </span>
       <span class="game-arrow">›</span>
     </button>
-    <!-- 🔙 オトンテトリス（初代）を一覧に戻した（本人の指示 2026-08-22「やっぱり出しといて」）。
-         ★2 のすぐ下に置く。チッチジャンプ3D→2 と同じ並べかたで、
-           シリーズが となりあうようにしてある。 -->
-    <button class="subject-card subject-card-game" data-subject="game">
-      <span class="game-blocks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      <span class="game-icon">🎮</span>
-      <span class="game-text">
-        <span class="subject-name">オトンテトリス</span>
-        <span class="subject-detail">勉強のあいまにハイスコアに挑戦！</span>
-      </span>
-      <span class="game-arrow">›</span>
-    </button>
+    <!-- 🗄 オトンテトリス（初代）と チッチジャンプ2 は 一覧から外した（本人の指示 2026-10-15）。
+         ★コードもデータも消していない（js/tetris.js・js/jump.js・#screen-tetris・#screen-jump・
+           tetrisBest・jumpBest は そのまま）。戻すときは git の履歴からボタンを戻すだけ。 -->
     <!-- 🗄 おかんスイーパーは 一覧から外したまま（本人の指示 2026-08-21）。
          ★コードもデータも消していない（js/sweeper.js・#screen-mine・mineBest_* は そのまま）。 -->
     <button class="subject-card subject-card-game subject-card-cj" data-subject="jump3d">
@@ -183,14 +174,6 @@
       <span class="game-text">
         <span class="subject-name cj-name"><b>チッチ</b><i>ジャンプ3D</i><span class="cj-new">NEW</span></span>
         <span class="subject-detail">宇宙のはてまで！ボイジャーに会いにいく</span>
-      </span>
-      <span class="game-arrow">›</span>
-    </button>
-    <button class="subject-card subject-card-game subject-card-jump" data-subject="jump">
-      <span class="game-icon">🐣</span>
-      <span class="game-text">
-        <span class="subject-name">チッチジャンプ2</span>
-        <span class="subject-detail">月をこえて火星まで！どこまで高くいけるか</span>
       </span>
       <span class="game-arrow">›</span>
     </button>
@@ -526,12 +509,8 @@
         <p class="help-note"><b>5問以上のセッションを1回おわらせると 1まい</b>。1日8まいまで。<b>勉強せんとゲームで遊べへん</b>しくみやで。</p>
         <p class="help-sub">🎁 お助けアイテム</p>
         <ul class="help-list">
-          <li>💣 <b>ボム</b>　テトリス：下2行を消す</li>
-          <li>🐢 <b>スロー</b>　テトリス：15秒ゆっくり</li>
-          <li>🔍 <b>サーチ</b>　スイーパー：安全なマスを1つ開く</li>
-          <li>🛡 <b>おまもり</b>　スイーパー：ゴキブリを1回セーフ</li>
-          <li>🪽 <b>つばさ</b>　チッチジャンプ：6秒ミス無効で浮く</li>
-          <li>🚀 <b>ロケット</b>　チッチジャンプ：一気に高くジャンプ</li>
+          <li>🪽 <b>つばさ</b>　チッチジャンプ3D：しばらく落ちない</li>
+          <li>🚀 <b>ロケット</b>　チッチジャンプ3D：ひとっとびで上へ</li>
         </ul>
         <p class="help-note">100点満点か ログインボーナスでもらえるで。</p>
       </div>
@@ -551,10 +530,8 @@
         <p class="help-sub">🎮 息抜きゲーム（遊び券が1まい必要）</p>
         <ul class="help-list">
           <li><b>🦜 ジェイドパニック</b>　ジェイドで データのバグを撃ちまくる（横向きで遊ぶで）</li>
-          <li><b>🎮 オトンテトリス</b>　ブロックを積んで消す定番</li>
           <li><b>🧊 おとんテトリス2</b>　フル3Dのハデなやつ。同じテトリスでも見た目と演出が別物</li>
           <li><b>🪳 おかんスイーパー</b>　ゴキブリをよけて ぜんぶ開ける</li>
-          <li><b>🐣 チッチジャンプ2</b>　月をこえて火星まで！どこまで高く跳べるか</li>
         </ul>
       </div>
     </details>
@@ -1068,7 +1045,7 @@
     <section class="record-section">
       <h3 class="record-h">🎁 お助けアイテム</h3>
       <div id="record-items" class="record-items"></div>
-      <p class="record-note">100点満点かログインボーナスでもらえるで！テトリスで使おう！</p>
+      <p class="record-note">100点満点かログインボーナスでもらえるで！チッチジャンプ3Dで使おう！</p>
     </section>
   </div>
 </div>
