@@ -2335,7 +2335,10 @@ function renderSansuQuiz() {
     remainWrap.classList.toggle('hidden', !sansuState.isRemainMode);
     numpad.querySelector('.numpad-rem').classList.toggle('hidden', !sansuState.isRemainMode);
     numpad.querySelector('.numpad-frac').classList.toggle('hidden', !(q.answer && String(q.answer).includes('/')));
-    numpad.querySelector('.numpad-mixed').classList.toggle('hidden', !(q.answer && String(q.answer).includes('と')));
+    // 「と」キーは帯分数の答えのほか、1より大きい仮分数の答え（40/9 → 4と4/9 でも正解）にも出す
+    const improperAns = String(q.answer || '').match(/^(\d+)\/(\d+)$/);
+    const canMixed = !!improperAns && +improperAns[1] > +improperAns[2] && allowsMixedOrImproper(q.question);
+    numpad.querySelector('.numpad-mixed').classList.toggle('hidden', !(q.answer && (String(q.answer).includes('と') || canMixed)));
     // ★比の答え（`4:7` `3:7:9`）は「：」キーで打つ（本人判断 2026-09-19：ニセの4択にしない）
     numpad.querySelector('.numpad-ratio').classList.toggle('hidden', !isRatioAnswer(q.answer));
     numpad.querySelectorAll('.numpad-buai').forEach(b => b.classList.toggle('hidden', !isBuaiAnswer(q.answer)));
@@ -2385,14 +2388,14 @@ function submitSansuAnswer() {
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
   if (userAnswer.endsWith(':')) { showToast('「：」のあとの数を入力してください'); return; }
 
-  const correct = checkSansuAnswer(userAnswer, q.answer);
+  const correct = checkSansuAnswer(userAnswer, q.answer, q.question);
   document.getElementById('sq-numpad').querySelectorAll('.numpad-btn').forEach(b => b.disabled = true);
   showSqFeedback(q, correct);
 }
 
 function submitChoiceAnswer(chosen, btn) {
   const q = sansuState.questions[sansuState.current];
-  const correct = checkSansuAnswer(chosen, q.answer);
+  const correct = checkSansuAnswer(chosen, q.answer, q.question);
   // 全ボタンを無効化し、正解を緑・誤答を赤で示す
   document.querySelectorAll('#sq-choices .sq-choice-btn').forEach(b => {
     b.disabled = true;
@@ -2402,9 +2405,21 @@ function submitChoiceAnswer(chosen, btn) {
   showSqFeedback(q, correct);
 }
 
-function checkSansuAnswer(input, correct) {
+// 帯分数・仮分数のどちらで答えてもよい問題か（「仮分数になおしなさい」のように形を問う問題は除く）
+function allowsMixedOrImproper(question) {
+  return !/仮分数|帯分数/.test(String(question || ''));
+}
+
+function checkSansuAnswer(input, correct, question) {
   const normalize = s => String(s).trim().replace(/\s/g, '').replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/：/g, ':').toLowerCase();
-  return normalize(input) === normalize(correct);
+  if (!allowsMixedOrImproper(question)) return normalize(input) === normalize(correct);
+  // 帯分数は仮分数に直して比べる（4と4/9 も 40/9 も正解・本人要望 2026-10-19）。約分していない形は今までどおり不正解
+  const toImproper = s => {
+    const m = s.match(/^(\d+)と(\d+)\/(\d+)$/);
+    if (!m || +m[2] >= +m[3]) return s;
+    return `${+m[1] * +m[3] + +m[2]}/${+m[3]}`;
+  };
+  return toImproper(normalize(input)) === toImproper(normalize(correct));
 }
 
 function endSansuSession() {
@@ -3292,7 +3307,7 @@ function submitDrillAnswer() {
   if (userAnswer.endsWith('/')) { showToast('分母を入力してください'); return; }
   if (userAnswer.endsWith(':')) { showToast('「：」のあとの数を入力してください'); return; }
 
-  const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer);
+  const correct = checkSansuAnswer(userAnswer, _currentDrillQ.answer, _currentDrillQ.question);
   Snd.answer(correct);
 
   if (correct) {
