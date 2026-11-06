@@ -11122,5 +11122,253 @@
     "unit": "平面図形（面積）",
     "src": "HG-8840",
     "svg": "<svg viewBox=\"0 0 220 218\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"110\" cy=\"105\" r=\"88.1\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M110,19.9 L69.5,49.3 A50,50 0 0,0 150.5,49.3 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M29.1,78.7 L44.5,126.3 A50,50 0 0,0 69.5,49.3 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M60,173.8 L110,173.8 A50,50 0 0,0 44.5,126.3 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M160,173.8 L175.5,126.3 A50,50 0 0,0 110,173.8 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M190.9,78.7 L150.5,49.3 A50,50 0 0,0 175.5,126.3 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polygon points=\"110,19.9 29.1,78.7 60,173.8 160,173.8 190.9,78.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"110\" y1=\"105\" x2=\"110\" y2=\"19.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/><line x1=\"110\" y1=\"105\" x2=\"29.1\" y2=\"78.7\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/><line x1=\"110\" y1=\"105\" x2=\"60\" y2=\"173.8\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/><line x1=\"110\" y1=\"105\" x2=\"160\" y2=\"173.8\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/><line x1=\"110\" y1=\"105\" x2=\"190.9\" y2=\"78.7\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/><text x=\"118\" y=\"100\" font-size=\"11\" fill=\"#e8e8e8\" text-anchor=\"middle\">O</text><text x=\"110\" y=\"210\" font-size=\"10\" fill=\"#e8e8e8\" text-anchor=\"middle\">正五角形の1辺は4cm</text></svg>"
+  },
+  {
+    "id": "skw07102",
+    "question": "縮尺□分の1の地図の上で10cm²の土地は，実際の面積が1000m²です。□にあてはまる数を答えましょう。",
+    "answer": "1000",
+    "meaning": "縮尺は長さの比です。面積は「たて×よこ」なので，面積の比は縮尺の数を2回かけたものになります。まず単位をcm²にそろえます。1m²＝10000cm²なので1000m²＝10000000cm²。10000000÷10＝1000000で，面積は1000000倍。1000×1000＝1000000なので，長さは1000倍です。1000000分の1と答えないように。答えは1000です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8931"
+  },
+  {
+    "id": "skw07104",
+    "question": "下の図で，あの角は何度ですか。\nあ＝□°",
+    "answer": "45",
+    "meaning": "あをふくむ上の小さな三角形の角がわかれば求められます。まず80°と25°がある大きな三角形を見ると，左の辺の上の点の角は180−80−25＝75°。その点で左の辺は一直線なので，上の小さな三角形のその点の角は180−75＝105°。小さな三角形の角は30°，105°，あなので，あ＝180−30−105＝45°。答えは45°です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（角度）",
+    "src": "HG-8931",
+    "svg": "<svg viewBox=\"0 0 280 210\" style=\"display:block;margin:0 auto;max-width:100%\"><polyline points=\"11.9,30.3 70.0,190.0 235.4,94.5\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"11.9\" y1=\"30.3\" x2=\"148.3\" y2=\"144.8\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"41.4\" y1=\"111.5\" x2=\"235.4\" y2=\"94.5\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"29.9\" y=\"38.3\" fill=\"#333\" font-size=\"14\">30°</text><text x=\"72.0\" y=\"176.0\" fill=\"#333\" font-size=\"14\">80°</text><text x=\"187.4\" y=\"98.5\" fill=\"#333\" font-size=\"14\">25°</text><text x=\"78.3\" y=\"98.1\" fill=\"#333\" font-size=\"14\">あ</text></svg>"
+  },
+  {
+    "id": "skw07105",
+    "question": "図の大きな三角形は，直角をはさむ2つの辺が15cm（下の辺は10cm＋5cm）の直角二等辺三角形です。下の辺の10cmのところの点から斜めの辺に垂直な線をひき，そこから下の辺に平行な線を左の辺までひきます。その左の辺の点から斜めの辺に垂直な線をひいた点をBとし，Bから下の辺に平行な線を左の辺までひいた点をAとします。ABの長さは何cmですか。\nAB＝□cm",
+    "answer": "6と1/4",
+    "meaning": "斜めの辺は45°にかたむいているので，斜めの辺に垂直な線や下の辺に平行な線でできる三角形は，どれも直角二等辺三角形です。右はしの5cmの所にできる三角形の高さは5÷2＝2.5cm。その高さで横にひいた線は15−2.5＝12.5cm。左の辺のその点から斜めの辺へ垂直にひくと，Bは左の辺から横に12.5÷2＝6.25cmの所。ABはこの長さです。答えは6と1/4cmです。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8931",
+    "svg": "<svg viewBox=\"0 0 330 310\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"40.0,270.0 280.0,270.0 40.0,30.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"40.0,130.0 140.0,130.0 40.0,230.0 240.0,230.0 200.0,270.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"240\" y1=\"230\" x2=\"240\" y2=\"270\" stroke=\"#4f9eff\" stroke-dasharray=\"4,3\"/><text x=\"24\" y=\"135\" fill=\"#333\" font-size=\"14\">A</text><text x=\"146\" y=\"126\" fill=\"#333\" font-size=\"14\">B</text><text x=\"44\" y=\"70\" fill=\"#333\" font-size=\"14\">45°</text><text x=\"100\" y=\"296\" fill=\"#333\" font-size=\"14\">10cm</text><text x=\"228\" y=\"296\" fill=\"#333\" font-size=\"14\">5cm</text><path d=\"M40,276 Q120,290 200,276\" stroke=\"#4f9eff\" fill=\"none\"/><path d=\"M200,276 Q240,286 280,276\" stroke=\"#4f9eff\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "skw07108",
+    "question": "半径5cmの円が，1辺20cmの正三角形ABCの外側を，辺からはなれないように転がって1周します。円の通ったあとの面積は□cm²です。円周率は3.14とします。",
+    "answer": "914",
+    "meaning": "円の通ったあとは，各辺にそった長方形3つと，頂点のまわりのおうぎ形3つに分けられます。長方形はたてが円の直径10cm，横が辺の20cmで，20×10×3＝600cm²。頂点のおうぎ形は半径10cmで，3つの中心角を合わせると360°，ちょうど円1つ分です。10×10×3.14＝314cm²。半径を5cmとまちがえないように。600＋314＝914。答えは914cm²です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（面積）",
+    "src": "HG-8931",
+    "svg": "<svg viewBox=\"0 0 400 230\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"200.0,60.0 130.7,20.0 65.7,132.6 135.0,172.6\" fill=\"#ffd166\" stroke=\"#4f9eff\"/><polygon points=\"200.0,60.0 120.0,198.6 280.0,198.6\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><path d=\"M200.0,60.0 A160,160 0 0 1 280.0,198.6\" stroke=\"#4f9eff\" fill=\"none\"/><circle cx=\"100.4\" cy=\"152.6\" r=\"40\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"#fff\"/><line x1=\"100.4\" y1=\"152.6\" x2=\"60.4\" y2=\"152.6\" stroke=\"#4f9eff\" stroke-dasharray=\"4,3\"/><circle cx=\"100.4\" cy=\"152.6\" r=\"2\" fill=\"#333\"/><text x=\"64.4\" y=\"146.6\" fill=\"#333\" font-size=\"13\">5cm</text><text x=\"104.4\" y=\"168.6\" fill=\"#333\" font-size=\"14\">O</text><text x=\"194\" y=\"52\" fill=\"#333\" font-size=\"14\">A</text><text x=\"108\" y=\"218\" fill=\"#333\" font-size=\"14\">B</text><text x=\"282\" y=\"218\" fill=\"#333\" font-size=\"14\">C</text><text x=\"262\" y=\"120\" fill=\"#333\" font-size=\"14\">20cm</text><text x=\"240\" y=\"30\" fill=\"#333\" font-size=\"12\">円が正三角形ABCの辺上を1周する</text></svg>"
+  },
+  {
+    "id": "skw07109",
+    "question": "下の図で，AB＝BC＝CD＝DEです。大きい円の直径はAE，中くらいの円の直径はBE，小さい円の直径はCEです。斜線部分（黄色）の面積は，かげをつけた部分（灰色）の面積の□倍です。",
+    "answer": "5/7",
+    "meaning": "円の面積は「半径×半径×3.14」なので，半径の比がわかれば3.14をかけずに比べられます。ABを1とすると，半径は大きい円2，中の円1.5，小さい円1。面積の比は4，2.25，1です。斜線は中−小で2.25−1＝1.25，かげは大−中で4−2.25＝1.75。どちらをもとにするか逆にしないように。1.25÷1.75＝5/7。答えは5/7倍です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8931",
+    "svg": "<svg viewBox=\"0 0 300 260\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"150\" cy=\"120\" r=\"100\" fill=\"#e6e6e6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"175\" cy=\"120\" r=\"75\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"200\" cy=\"120\" r=\"50\" fill=\"#fff\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"30\" y1=\"120\" x2=\"280\" y2=\"120\" stroke=\"#4f9eff\"/><text x=\"38\" y=\"138\" fill=\"#333\" font-size=\"14\">A</text><text x=\"92\" y=\"138\" fill=\"#333\" font-size=\"14\">B</text><text x=\"142\" y=\"138\" fill=\"#333\" font-size=\"14\">C</text><text x=\"192\" y=\"138\" fill=\"#333\" font-size=\"14\">D</text><text x=\"252\" y=\"138\" fill=\"#333\" font-size=\"14\">E</text><text x=\"90\" y=\"250\" fill=\"#333\" font-size=\"14\">AB＝BC＝CD＝DE</text><text x=\"5\" y=\"16\" fill=\"#333\" font-size=\"12\">灰色＝かげ　黄＝斜線</text></svg>"
+  },
+  {
+    "id": "skw07201",
+    "question": "下の図は，半径3cm，面積9.42cm²のおうぎ形です。中心角aは何度ですか。円周率は3.14とします。\na＝□°",
+    "answer": "120",
+    "meaning": "おうぎ形の面積は，同じ半径の円の面積の「中心角/360」です。だから，円全体の何分のいくつかを調べれば中心角がわかります。半径3cmの円は3×3×3.14＝28.26cm²。9.42÷28.26＝1/3なので，中心角は360°の1/3です。360×1/3＝120。答えは120°です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（面積）",
+    "src": "HG-8932",
+    "svg": "<svg viewBox=\"0 0 300 220\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M150,190 L279.9,115.0 A150,150 0 0 0 20.1,115.0 Z\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><path d=\"M136,182 A16,16 0 0 1 164,182\" stroke=\"#4f9eff\" fill=\"none\"/><text x=\"145\" y=\"168\" fill=\"#333\" font-size=\"14\">a</text><text x=\"120\" y=\"100\" fill=\"#333\" font-size=\"14\">9.42cm²</text><text x=\"225\" y=\"170\" fill=\"#333\" font-size=\"14\">3cm</text></svg>"
+  },
+  {
+    "id": "skw07202",
+    "question": "下の図で，三角形OABはOA＝OBの二等辺三角形です。同じ印のついた5本の線の長さは，すべて等しいです。xは何度ですか。\nx＝□°",
+    "answer": "20",
+    "meaning": "同じ長さの2辺があれば二等辺三角形で，底の2つの角が等しくなります。それと「三角形の外の角＝となりでない2つの角の和」を使い，Oから順にたどります。いちばん上の三角形は角がxとxなので，外の角は2x。次の三角形の底の角が2xで，外の角は3x。次は3xで，外の角は4x。最後の三角形で角Bも4x。OA＝OBなので角Aも4xです。x＋4x＋4x＝180より9x＝180，x＝20。答えは20°です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（角度）",
+    "src": "HG-8932",
+    "svg": "<svg viewBox=\"0 0 330 270\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"150.0,20.0 110.0,246.9 190.0,246.9\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"163.9,98.8 123.9,168.1 185.2,219.5 110.0,246.9\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"161.4\" y1=\"56.1\" x2=\"151.6\" y2=\"57.8\" stroke=\"#333\"/><line x1=\"162.3\" y1=\"61.0\" x2=\"152.5\" y2=\"62.7\" stroke=\"#333\"/><line x1=\"149.5\" y1=\"133.8\" x2=\"140.8\" y2=\"128.8\" stroke=\"#333\"/><line x1=\"147.0\" y1=\"138.1\" x2=\"138.3\" y2=\"133.1\" stroke=\"#333\"/><line x1=\"155.8\" y1=\"188.3\" x2=\"149.4\" y2=\"196.0\" stroke=\"#333\"/><line x1=\"159.7\" y1=\"191.6\" x2=\"153.2\" y2=\"199.2\" stroke=\"#333\"/><line x1=\"151.6\" y1=\"237.0\" x2=\"148.2\" y2=\"227.6\" stroke=\"#333\"/><line x1=\"146.9\" y1=\"238.7\" x2=\"143.5\" y2=\"229.3\" stroke=\"#333\"/><line x1=\"147.5\" y1=\"241.9\" x2=\"147.5\" y2=\"251.9\" stroke=\"#333\"/><line x1=\"152.5\" y1=\"241.9\" x2=\"152.5\" y2=\"251.9\" stroke=\"#333\"/><path d=\"M147.9,31.8 A12,12 0 0 0 152.1,31.8\" stroke=\"#333\" fill=\"none\"/><text x=\"144\" y=\"14\" fill=\"#333\" font-size=\"14\">O</text><text x=\"94.0\" y=\"260.9\" fill=\"#333\" font-size=\"14\">A</text><text x=\"194.0\" y=\"260.9\" fill=\"#333\" font-size=\"14\">B</text><line x1=\"120\" y1=\"46\" x2=\"146\" y2=\"36\" stroke=\"#333\"/><text x=\"108\" y=\"52\" fill=\"#333\" font-size=\"14\">x</text><text x=\"210\" y=\"30\" fill=\"#333\" font-size=\"13\">三角形OABは</text><text x=\"210\" y=\"48\" fill=\"#333\" font-size=\"13\">二等辺三角形</text></svg>"
+  },
+  {
+    "id": "skw07204",
+    "question": "下の図のように，角Cが直角の直角三角形ABC（AB＝5cm，AC＝4cm，BC＝3cm）を，頂点Aを中心に60°回転させました。辺BCが通ったあと（斜線部分）の面積は□cm²です。円周率は3.14とします。",
+    "answer": "4.71",
+    "meaning": "辺BCの中でAからいちばん遠いのはB（5cm），いちばん近いのはC（4cm）です。だから通ったあとは，半径5cmのおうぎ形から半径4cmのおうぎ形を除いた形になります（回転前と後の三角形は同じ大きさなので，出入りが打ち消し合います）。5×5×3.14×60/360−4×4×3.14×60/360＝(25−16)×3.14÷6＝4.71。答えは4.71cm²です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（面積）",
+    "src": "HG-8932",
+    "svg": "<svg viewBox=\"0 0 330 330\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M280.0,300.0 A250,250 0 0 0 155.0,83.5 L6.1,101.4 A200,200 0 0 1 190.0,180.0 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\"/><polygon points=\"30,300 280.0,300.0 190.0,180.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polygon points=\"30,300 155.0,83.5 6.1,101.4\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"18\" y=\"318\" fill=\"#333\" font-size=\"14\">A</text><text x=\"280.0\" y=\"318\" fill=\"#333\" font-size=\"14\">B</text><text x=\"176.0\" y=\"172.0\" fill=\"#333\" font-size=\"14\">C</text><text x=\"130\" y=\"318\" fill=\"#333\" font-size=\"14\">5cm</text><text x=\"130\" y=\"225\" fill=\"#333\" font-size=\"14\">4cm</text><text x=\"250\" y=\"240\" fill=\"#333\" font-size=\"14\">3cm</text><text x=\"90\" y=\"285\" fill=\"#333\" font-size=\"14\">60°</text><text x=\"190\" y=\"30\" fill=\"#333\" font-size=\"13\">Aを中心に60°回転</text></svg>"
+  },
+  {
+    "id": "skw07208",
+    "question": "面積18cm²の正方形ABCDを，頂点Dを中心に60°回転させて，正方形A′B′C′Dにしました。斜線部分の面積は□cm²です。円周率は3.14とします。",
+    "answer": "18.84",
+    "meaning": "斜線部分は，おうぎ形DBB′に三角形DB′C′をたし，三角形DBCを引いた形です。2つの三角形は同じ大きさなので，斜線部分は「半径DB，中心角60°のおうぎ形」と同じ面積です。DBの長さはわかりませんが，正方形の面積＝対角線×対角線÷2なので，DB×DB＝18×2＝36。おうぎ形は36×3.14×60/360＝18.84。答えは18.84cm²です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（面積）",
+    "src": "HG-8932",
+    "svg": "<svg viewBox=\"0 0 380 230\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M90.0,140.0 A155.6,155.6 0 0 0 240.3,180.3 L295.3,85.0 L200,30 L200.0,140.0 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\"/><polygon points=\"200,30 90.0,30.0 90.0,140.0 200.0,140.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polygon points=\"200,30 145.0,125.3 240.3,180.3 295.3,85.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"200\" y1=\"30\" x2=\"90.0\" y2=\"140.0\" stroke=\"#4f9eff\" stroke-dasharray=\"4,3\"/><line x1=\"200\" y1=\"30\" x2=\"240.3\" y2=\"180.3\" stroke=\"#4f9eff\" stroke-dasharray=\"4,3\"/><text x=\"76.0\" y=\"34.0\" fill=\"#333\" font-size=\"14\">A</text><text x=\"76.0\" y=\"144.0\" fill=\"#333\" font-size=\"14\">B</text><text x=\"203.0\" y=\"137.0\" fill=\"#333\" font-size=\"14\">C</text><text x=\"196\" y=\"24\" fill=\"#333\" font-size=\"14\">D</text><text x=\"129.0\" y=\"129.3\" fill=\"#333\" font-size=\"14\">A′</text><text x=\"240.3\" y=\"196.3\" fill=\"#333\" font-size=\"14\">B′</text><text x=\"299.3\" y=\"89.0\" fill=\"#333\" font-size=\"14\">C′</text><text x=\"165\" y=\"55\" fill=\"#333\" font-size=\"14\">60°</text><text x=\"240\" y=\"20\" fill=\"#333\" font-size=\"12\">面積18cm²の正方形</text><text x=\"240\" y=\"36\" fill=\"#333\" font-size=\"12\">ABCDを60°回転</text></svg>"
+  },
+  {
+    "id": "skw07301",
+    "question": "縮尺1/25000の地図の上で，7.6kmの距離は□cmです。",
+    "answer": "30.4",
+    "meaning": "地図の上の長さは「実際の長さ×縮尺」です。答えをcmで出すので，先に7.6kmをcmに直します。1km＝100000cmなので7.6km＝760000cm。760000÷25000＝30.4。kmのまま計算すると0の数がずれやすいので，単位を先にそろえましょう。答えは30.4cmです。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8933"
+  },
+  {
+    "id": "skw07302",
+    "question": "下の図は，長方形と，30°・60°・90°の三角じょうぎを重ねたものです。xは何度ですか。\nx＝□°",
+    "answer": "160",
+    "meaning": "長方形の下の辺の下にはみ出した，30°の角をふくむ小さな三角形を使います。130°の角と向かい合う角（対頂角）も130°なので，小さな三角形の2つの角は130°と30°です。xはこの三角形の外側の角なので，となりでない2つの角の和になります。130＋30＝160。xは鈍角（90°より大きい角）なので，20°と答えないように。答えは160°です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（角度）",
+    "src": "HG-8933",
+    "svg": "<svg viewBox=\"0 0 440 270\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20\" y=\"55\" width=\"330\" height=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polygon points=\"40.0,120.0 177.9,4.3 378.3,243.1\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"171.0,10.1 176.8,17.0 183.7,11.2\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"72.0\" y=\"118.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">60°</text><text x=\"356.3\" y=\"223.1\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">30°</text><path d=\"M 252.5 198.0 A 22 22 0 0 1 295.5 205.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"269.5\" y=\"177.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\"><tspan font-style=\"italic\">x</tspan></text><path d=\"M 335.3 191.0 A 18 18 0 0 1 364.3 205.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"376.3\" y=\"183.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">130°</text></svg>"
+  },
+  {
+    "id": "skw07303",
+    "question": "下の図の四角形ABCDは，角Aと角Cが直角です。点Eは辺BC上，点Fは辺AD上にあります。斜線部分（四角形BEDF）の面積は□cm²です。",
+    "answer": "53",
+    "meaning": "斜線部分をBとDを結ぶ線で2つの三角形に分けます。三角形BFDは，底辺をFD（5cm）とすると，角Aが直角なのでABがそのまま高さ（14cm）になります。三角形BEDは，底辺をBE（6cm）とすると，角Cが直角なのでDCが高さ（6cm）です。高さは三角形の外にあってもよいのがポイントです。5×14÷2＝35，6×6÷2＝18，35＋18＝53。答えは53cm²です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（面積）",
+    "src": "HG-8933",
+    "svg": "<svg viewBox=\"0 0 360 260\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"40.0,220.0 235.4,114.5 300.0,150.0 130.0,220.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"#ffd166\"/><polygon points=\"130.0,56.5 40.0,220.0 300.0,220.0 300.0,150.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"125.7,64.4 133.6,68.7 137.9,60.8\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"291.0,220.0 291.0,211.0 300.0,211.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"130.0\" y=\"48.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"28.0\" y=\"226.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"304.0\" y=\"240.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"312.0\" y=\"146.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"237.4\" y=\"105.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">F</text><text x=\"130.0\" y=\"240.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"70.0\" y=\"125.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">14cm</text><text x=\"255.0\" y=\"108.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">5cm</text><text x=\"322.0\" y=\"190.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">6cm</text><text x=\"85.0\" y=\"240.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">6cm</text></svg>"
+  },
+  {
+    "id": "skw07305",
+    "question": "まわりの長さが6cmの正三角形の面積は，まわりの長さが6cmの正六角形の面積の□倍です。",
+    "answer": "2/3",
+    "meaning": "どちらも「1辺1cmの正三角形」が何個分かで比べると，面積を計算しなくてすみます。正三角形は1辺2cmで，1辺1cmの正三角形4個に分けられます。正六角形は1辺1cmで，中心から6つの1辺1cmの正三角形に分けられます。「正六角形の何倍か」なので正六角形がもとにする量です。4÷6＝2/3。答えは2/3倍です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（面積）",
+    "src": "HG-8933"
+  },
+  {
+    "id": "skw07307",
+    "question": "下の図で，半円Aは点Aを中心とする半径10cmの半円です。半円Bは，半円Aを点Cを中心に60°回転させたものです。斜線部分の面積は□cm²です。円周率は3.14とします。",
+    "answer": "209と1/3",
+    "meaning": "斜線部分は「半円B＋Cを中心とするおうぎ形−半円A」と見られます。半円Aと半円Bは同じ大きさなので，たし引きで消え，残るのはCを中心とする中心角60°のおうぎ形だけです。半径は半円の直径の20cmです（10cmとまちがえないように）。20×20×3.14×60/360＝209.33…で，分数で書くと209と1/3です。答えは209と1/3cm²です。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（面積）",
+    "src": "HG-8933",
+    "svg": "<svg viewBox=\"0 0 300 260\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M 60.0 230.0 A 90.0 90.0 0 0 1 150.0 74.1 A 180.0 180.0 0 0 1 240.0 230.0 A 90.0 90.0 0 0 0 60.0 230.0 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M 60.0 230.0 A 90.0 90.0 0 0 1 240.0 230.0 Z\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"60.0\" y1=\"230.0\" x2=\"150.0\" y2=\"74.1\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5,4\"/><text x=\"54.0\" y=\"248.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"150.0\" y=\"248.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"117.0\" y=\"156.1\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"90.0\" y=\"222.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">60°</text><text x=\"105.0\" y=\"248.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">10cm</text></svg>"
+  },
+  {
+    "id": "skw07310",
+    "question": "下の図で，四角形ABCDは長方形です。辺CDをDの方へのばした線上に点Eをとり，BとEを結ぶ直線が辺ADと交わる点をFとします。三角形EFDの面積が，三角形ABFの面積より6cm²大きいとき，EDの長さは□cmです。",
+    "answer": "6",
+    "meaning": "差がわかっている2つの三角形に，同じ図形（四角形FBCD）をたしても差は変わりません。三角形EFD＋四角形FBCD＝三角形EBC，三角形ABF＋四角形FBCD＝長方形ABCDです。長方形は4×6＝24cm²なので，三角形EBCは24＋6＝30cm²。底辺BC＝6cmから，高さEC＝30×2÷6＝10cm。ECとEDをまちがえないように。ED＝10−4＝6。答えは6cmです。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（面積）",
+    "src": "HG-8933",
+    "svg": "<svg viewBox=\"0 0 260 260\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"60.0,142.0 60.0,230.0 192.0,230.0 192.0,142.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"60.0\" y1=\"230.0\" x2=\"192.0\" y2=\"10.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"192.0\" y1=\"142.0\" x2=\"192.0\" y2=\"10.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"50.0\" y=\"138.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"50.0\" y=\"244.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"202.0\" y=\"244.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"204.0\" y=\"146.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"204.0\" y=\"16.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"108.8\" y=\"136.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">F</text><text x=\"34.0\" y=\"190.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">4cm</text><text x=\"126.0\" y=\"250.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">6cm</text><polyline points=\"69.0,142.0 69.0,151.0 60.0,151.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"69.0,230.0 69.0,221.0 60.0,221.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"183.0,230.0 183.0,221.0 192.0,221.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"183.0,142.0 183.0,151.0 192.0,151.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "skw07401",
+    "question": "次の□にあてはまる数を答えましょう。\n(0.068km²−15.2a×24)÷8＝□m²",
+    "answer": "3940",
+    "meaning": "単位がちがうままでは計算できないので，先に全部m²にそろえます。1km²＝1000000m²なので0.068km²＝68000m²。1a＝100m²なので15.2a＝1520m²。かけ算を先にして1520×24＝36480。68000−36480＝31520，31520÷8＝3940。kmは1000mでも，km²は1000000m²になる点に注意。答えは3940m²です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（面積）",
+    "src": "HG-8934"
+  },
+  {
+    "id": "skw07402",
+    "question": "下の図の四角形ABCDは，ADとBCが平行な台形です。対角線ACとBDは点Eで垂直に交わっています。AD＝3cm，BC＝6cm，BE＝4.8cm，AC＝5.4cmのとき，台形ABCDの面積は□cm²です。",
+    "answer": "19.44",
+    "meaning": "対角線が垂直に交わる四角形の面積は「対角線×対角線÷2」で求められます。ACは5.4cmなので，BDを求めます。ADとBCが平行なので，三角形EADと三角形ECBは同じ形で，辺の比はAD：BC＝3：6＝1：2。だからDE：BE＝1：2となり，DE＝4.8÷2＝2.4cm，BD＝4.8＋2.4＝7.2cm。5.4×7.2÷2＝19.44。答えは19.44cm²です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8934",
+    "svg": "<svg viewBox=\"0 0 270 199\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"122.8,30.0 40.0,159.6 220.0,159.6 212.8,30.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"122.8\" y1=\"30.0\" x2=\"220.0\" y2=\"159.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"40.0\" y1=\"159.6\" x2=\"212.8\" y2=\"30.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polyline points=\"159.4,78.8 165.0,74.6 160.8,69.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"112.8\" y=\"26.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"222.8\" y=\"26.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"28.0\" y=\"165.6\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"232.0\" y=\"165.6\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"141.2\" y=\"77.2\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"167.8\" y=\"24.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"130.0\" y=\"179.6\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">6cm</text><text x=\"93.6\" y=\"134.4\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">4.8cm</text><text x=\"201.4\" y=\"88.8\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">5.4cm</text></svg>"
+  },
+  {
+    "id": "skw07403",
+    "question": "下の図は1辺15cmの正方形です。点Bは左の辺の上，点Cは下の辺の上にあり，直線BCと下の辺のつくる角は45°です。アとイの面積の比が7：2のとき，ABの長さは□cmです。",
+    "answer": "5",
+    "meaning": "イは45°の角をもつ直角三角形なので，直角をはさむ2つの辺が等しい直角二等辺三角形です。まず面積から辺を求めます。正方形は15×15＝225cm²。比の和は7＋2＝9なので，イ＝225×2/9＝50cm²。等しい辺を□とすると□×□÷2＝50で，□×□＝100，□＝10cm。10cmはBから下の角までなので，AB＝15−10＝5。答えは5cmです。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（面積）",
+    "src": "HG-8934",
+    "svg": "<svg viewBox=\"0 0 260 250\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"40.0,30.0 220.0,30.0 220.0,210.0 40.0,210.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"40.0\" y1=\"90.0\" x2=\"160.0\" y2=\"210.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"28.0\" y=\"34.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"28.0\" y=\"94.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"160.0\" y=\"228.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"130.0\" y=\"22.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">15cm</text><text x=\"140.0\" y=\"100.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">ア</text><text x=\"70.0\" y=\"170.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">イ</text><path d=\"M 138.0 210.0 A 22 22 0 0 0 144.4 194.4\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"122.0\" y=\"204.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">45°</text></svg>"
+  },
+  {
+    "id": "skw07405",
+    "question": "底辺が120cm，高さが40cmの二等辺三角形の中に，大小2つの正方形を図のようにかきます。2つの正方形は底辺の上にとなり合ってならび，小さい正方形の左上の頂点は三角形の左の辺の上に，大きい正方形の左上の頂点は左の辺の上，右上の頂点は右の辺の上にあります。斜線の部分の面積は□cm²となります。",
+    "answer": "243",
+    "meaning": "左の辺は横60cmで40cm上がるので「横3に対して高さ2」のかたむきで，右の辺も同じです。小さい正方形の1辺を⑥とすると，左はしからのすき間は⑨。大きい正方形の左はしは左から⑮の所なので1辺は⑮×2/3＝⑩，右はしは㉕の所。右の辺では右はしまで⑩×3/2＝⑮あるので，㉕＋⑮＝㊵が120cm，①＝3cm。すき間27cm，小さい正方形18cm。27×18÷2＝243。答えは243cm²です。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8934",
+    "svg": "<svg viewBox=\"0 0 400 160\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"20.0,140.0 101.0,140.0 101.0,86.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"#ffd166\"/><polygon points=\"20.0,140.0 380.0,140.0 200.0,20.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><rect x=\"101.0\" y=\"86.0\" width=\"54.0\" height=\"54.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><rect x=\"155.0\" y=\"50.0\" width=\"90.0\" height=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "skw07406",
+    "question": "下の図で，頂点から底辺へひいた直線の上に点をとり，その点と底辺の両はしを結んで，三角形を4つに分けました。図の数はそれぞれの三角形の面積です。xにあてはまる面積は何cm²ですか。\nx＝□cm²",
+    "answer": "60",
+    "meaning": "高さが同じ三角形は，面積の比が底辺の比になります。下の40cm²と30cm²の三角形は，上の点からの高さが同じなので，底辺の比は40：30＝4：3です。頂点からひいた直線の左右にある大きな三角形も，頂点からの高さが同じなので，面積の比は同じ4：3。右は45＋30＝75cm²なので，左はx＋40＝75×4/3＝100。x＝100−40＝60。答えは60cm²です。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8934",
+    "svg": "<svg viewBox=\"0 0 360 240\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"150.0,20.0 30.0,220.0 330.0,220.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"150.0\" y1=\"20.0\" x2=\"201.4\" y2=\"220.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"30.0\" y1=\"220.0\" x2=\"182.4\" y2=\"146.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"330.0\" y1=\"220.0\" x2=\"182.4\" y2=\"146.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"118.0\" y=\"120.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\"><tspan font-style=\"italic\">x</tspan></text><text x=\"205.0\" y=\"115.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">45cm²</text><text x=\"135.0\" y=\"200.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">40cm²</text><text x=\"220.0\" y=\"195.0\" fill=\"#333\" font-size=\"14\" text-anchor=\"middle\">30cm²</text></svg>"
+  },
+  {
+    "id": "skw07501",
+    "question": "縮尺1/50000の地図で，面積が3.6cm²の土地の実際の面積は□km²です。",
+    "answer": "0.9",
+    "meaning": "縮尺は長さの比なので，面積は50000×50000倍になります。cm²のまま計算すると0が多すぎるので，長さで考えます。地図の1cmは，実際は50000cm＝500m＝0.5kmです。だから地図の1cm²は，実際は0.5×0.5＝0.25km²。3.6×0.25＝0.9。50000倍を1回だけかけないように。答えは0.9km²です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8935"
+  },
+  {
+    "id": "skw07504",
+    "question": "正方形ABCDの土地に，図のように，たてに2本，横に3本，どれもはば2mの道路があります。斜線の部分の道路の面積が216m²のとき，正方形ABCDの1辺の長さは□mです。",
+    "answer": "24",
+    "meaning": "正方形の1辺を□mとして，道路の面積を表します。たての道路2本は2×□×2，横の道路3本は2×□×3で，合わせて□×10。ただし，たてと横が交わる所（2m×2mの正方形）は2回数えているので引きます。交わる所は2×3＝6か所で4×6＝24m²。□×10−24＝216より□×10＝240，□＝24。答えは24mです。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（面積）",
+    "src": "HG-8935",
+    "svg": "<svg viewBox=\"0 0 260 280\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"20\" y=\"20\" width=\"200\" height=\"200\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><rect x=\"70.0\" y=\"20\" width=\"16.66666666666667\" height=\"200\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1\"/><rect x=\"153.33333333333334\" y=\"20\" width=\"16.66666666666667\" height=\"200\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1\"/><rect x=\"20\" y=\"61.666666666666664\" width=\"200\" height=\"16.66666666666667\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1\"/><rect x=\"20\" y=\"120.0\" width=\"200\" height=\"16.66666666666667\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1\"/><rect x=\"20\" y=\"178.33333333333334\" width=\"200\" height=\"16.66666666666667\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n<text x=\"5\" y=\"16\" fill=\"#333\" font-size=\"13\">A</text><text x=\"225\" y=\"16\" fill=\"#333\" font-size=\"13\">D</text><text x=\"5\" y=\"232\" fill=\"#333\" font-size=\"13\">B</text><text x=\"225\" y=\"232\" fill=\"#333\" font-size=\"13\">C</text>\n<text x=\"70.0\" y=\"15\" fill=\"#333\" font-size=\"13\">2m</text><text x=\"153.33333333333334\" y=\"15\" fill=\"#333\" font-size=\"13\">2m</text>\n<text x=\"225\" y=\"74.0\" fill=\"#333\" font-size=\"13\">2m</text><text x=\"225\" y=\"132.33333333333331\" fill=\"#333\" font-size=\"13\">2m</text><text x=\"225\" y=\"190.66666666666666\" fill=\"#333\" font-size=\"13\">2m</text>\n<text x=\"40\" y=\"250\" fill=\"#333\" font-size=\"13\">斜線の部分の道路</text><text x=\"40\" y=\"268\" fill=\"#333\" font-size=\"13\">の面積は216m²</text></svg>"
+  },
+  {
+    "id": "skw07507",
+    "question": "下の図は，ある土地を1/1000に縮めてかいた縮図です。五角形ABCDEで，AB＝AE，角Bと角Eは135°，角Cと角Dは直角，BC＝3cm，CD＝8cmです。この土地の実際の面積は□m²です。",
+    "answer": "4000",
+    "meaning": "点線BEで，長方形BCDEと三角形ABEに分けます。角Bの135°のうち90°は長方形の角なので，三角形ABEの角Bは45°，角Eも45°。だから三角形ABEは直角二等辺三角形で，BE＝8cmを底辺とすると高さは8÷2＝4cm。縮図の面積は3×8＋8×4÷2＝24＋16＝40cm²。実際は長さが1000倍なので面積は1000×1000倍で，40000000cm²＝4000m²。答えは4000m²です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8935",
+    "svg": "<svg viewBox=\"0 0 260 210\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"130,20 50,100 50,148 210,148 210,100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"50\" y1=\"100\" x2=\"210\" y2=\"100\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4,3\"/>\n<line x1=\"86\" y1=\"56\" x2=\"92\" y2=\"62\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"166\" y1=\"54\" x2=\"162\" y2=\"62\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"172\" y1=\"58\" x2=\"168\" y2=\"66\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<polyline points=\"50,138 60,138 60,148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"210,138 200,138 200,148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"125\" y=\"14\" fill=\"#333\" font-size=\"13\">A</text><text x=\"36\" y=\"98\" fill=\"#333\" font-size=\"13\">B</text><text x=\"215\" y=\"98\" fill=\"#333\" font-size=\"13\">E</text>\n<text x=\"36\" y=\"162\" fill=\"#333\" font-size=\"13\">C</text><text x=\"215\" y=\"162\" fill=\"#333\" font-size=\"13\">D</text>\n<text x=\"56\" y=\"118\" fill=\"#333\" font-size=\"13\">135°</text><text x=\"170\" y=\"118\" fill=\"#333\" font-size=\"13\">135°</text>\n<text x=\"14\" y=\"128\" fill=\"#333\" font-size=\"13\">3cm</text><text x=\"118\" y=\"166\" fill=\"#333\" font-size=\"13\">8cm</text>\n<text x=\"80\" y=\"195\" fill=\"#333\" font-size=\"13\">図は1/1000の縮図</text></svg>"
   }
 ]

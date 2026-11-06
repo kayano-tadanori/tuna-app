@@ -25,8 +25,8 @@ const QUESTION_COUNTS = {
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
             tantei: 123, youyaku: 128 },                                                     // 6,955
-  sansu:  { bakuhatsu: 160, keisan: 1642, bun: 826, zu: 1149, kisoku: 988, tokusan: 655, baai: 557, kazu: 596,
-            wariai: 583, hayasa: 278, rittai: 447 },                                         // 7,881（2026-07-31 比例・反比例40問）
+  sansu:  { bakuhatsu: 160, keisan: 1642, bun: 826, zu: 1172, kisoku: 988, tokusan: 655, baai: 557, kazu: 596,
+            wariai: 598, hayasa: 278, rittai: 460 },                                         // 7,932（2026-07-31 比例・反比例40問）
   rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
             daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,118（2026-07-28 小4理科の全42回を30問以上に）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
