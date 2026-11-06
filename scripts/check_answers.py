@@ -13,9 +13,14 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def numpad(a):
+    # ★比（4:7）と歩合（3割6分）は 2026-09-19 から「：」「割・分・厘」キーで打てる
+    #   （js/sansu.js の isRatioAnswer / isBuaiAnswer）。判定もそれと同じにする。
+    #   scripts/check_wiring.js の numpadOK とも同期していること
     a = str(a).strip()
     return bool(re.fullmatch(r"\d+(\.\d+)?", a) or re.fullmatch(r"\d+/\d+", a)
-                or re.fullmatch(r"\d+と\d+/\d+", a) or "余り" in a)
+                or re.fullmatch(r"\d+と\d+/\d+", a) or "余り" in a
+                or re.fullmatch(r"\d+(\.\d+)?([:：]\d+(\.\d+)?)+", a)           # 比
+                or (a and re.fullmatch(r"(\d+割)?(\d+分)?(\d+厘)?", a)))        # 歩合
 
 
 bad, nch, tot = [], 0, 0

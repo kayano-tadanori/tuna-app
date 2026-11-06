@@ -43,9 +43,15 @@ for (const a of swAssets) {
   if (!exists(a)) fail(`sw.js の ASSETS にある ${a} が無い`);
 }
 // js/ に置いたのに index.html に足し忘れていないか
+// ★<script src> だけでなく動的読込も認める（js/otton3d.js は el.src='js/otton3d.js' で遅延読込）。
+//   動的読込のファイルもオフラインでは要るので、sw.js の ASSETS 側は別途確かめる
 for (const f of (fs.existsSync(path.join(ROOT, 'js')) ? fs.readdirSync(path.join(ROOT, 'js')) : [])) {
-  if (f.endsWith('.js') && !scriptSrcs.includes('js/' + f)) {
+  if (!f.endsWith('.js')) continue;
+  const p = 'js/' + f;
+  if (!scriptSrcs.includes(p) && !html.includes(p)) {
     fail(`js/${f} を作ったのに index.html が読んでいない`);
+  } else if (!scriptSrcs.includes(p) && !swAssets.includes(p)) {
+    fail(`${p} が sw.js の ASSETS に無い（動的読込でもオフラインで落ちる）`);
   }
 }
 if (!ng) console.log(`  ✓ スクリプト${scriptSrcs.length}本・ASSETS${swAssets.length}件とも実在し、両方に載っている`);
@@ -99,7 +105,14 @@ for (const g of Object.keys(map.grades)) {
   const c = coursesOf(g, 'kokugo').kokugo;
   if (!c) continue;
   const node = (kok.grades[g] || {}).kokugo;
-  if (!node) { fail(`小${g} に国語コースがあるのに hama_kokugo.json にデータが無い`); continue; }
+  if (!node) {
+    // ★小5国語（公開テスト型）はデータを hama_daimon.json（grades[g].kokugo.kokai）に持つ。
+    //   書き取り（hama_kokugo.json）が無いのは設計どおりで、ボタンは自動で「まだ問題なし」になる。
+    //   大問側にも無いときだけ本当の載せ忘れ
+    const dnode = (J('data/hama_daimon.json').grades[g] || {}).kokugo;
+    if (!dnode) fail(`小${g} に国語コースがあるのに hama_kokugo.json にも hama_daimon.json にもデータが無い`);
+    continue;
+  }
   const empty = c.lessons.filter(l => !(node.lessons[String(l.no)] || {}).kanji?.length);
   if (empty.length) fail(`小${g} 国語：問題が0問の回 ${empty.map(l => 'No.' + l.no).join(',')}`);
   // 回に units を書いたなら、その単元の問題が実在すること
@@ -143,8 +156,14 @@ sec('⑤ 大問モード：正しく答えたら正解になるか');
 const daimon = J('data/hama_daimon.json');
 // ★「テンキーで打てるか」の判定は scripts/check_answers.py の numpad() と同じにする。
 //   自分で書き直すと基準が2つになって食いちがう（帯分数「2と1/4」を打てないと誤判定した）
-const numpadOK = (a) =>
-  /^\d+(\.\d+)?$/.test(a) || /^\d+\/\d+$/.test(a) || /^\d+と\d+\/\d+$/.test(a) || a.includes('余り');
+// ★比（4:7）と歩合（3割6分）は 2026-09-19 から「：」「割・分・厘」キーで打てる
+//   （js/sansu.js の isRatioAnswer / isBuaiAnswer）。判定もそれと同じにする
+const numpadOK = (a) => {
+  a = String(a).trim();
+  return /^\d+(\.\d+)?$/.test(a) || /^\d+\/\d+$/.test(a) || /^\d+と\d+\/\d+$/.test(a) || a.includes('余り')
+    || /^\d+(\.\d+)?([:：]\d+(\.\d+)?)+$/.test(a)                 // 比（isRatioAnswer と同じ）
+    || (!!a && /^(\d+割)?(\d+分)?(\d+厘)?$/.test(a));             // 歩合（isBuaiAnswer と同じ）
+};
 let steps = 0;
 const walkDaimon = (n) => {
   if (Array.isArray(n)) return n.forEach(walkDaimon);
