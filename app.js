@@ -1729,6 +1729,12 @@ function initDebugTool() {
 // ============================================================
 let latestAppVer = ''; // 使い方ガイドのクレジットに出す版数
 
+// 本文（**太字**・行頭 ● の箇条書き・空行で段落）を HTML にする。タイトルを押すと開く
+function updateBodyHtml(body) {
+  const esc = String(body).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return esc.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+
 async function initUpdateBanner() {
   try {
     const res = await fetch('data/updates.json');
@@ -1753,7 +1759,9 @@ async function initUpdateBanner() {
       <div class="update-item">
         <div class="update-item-date">${d.date}${d.ver ? ` <span class="update-item-ver">${d.ver}</span>` : ''}</div>
         <ul class="update-day-list" style="margin:6px 0 0;padding-left:1.15em;line-height:1.6">
-          ${d.items.map(u => `<li style="margin:3px 0">${u.title}</li>`).join('')}
+          ${d.items.map(u => u.body
+            ? `<li style="margin:3px 0"><details class="update-detail"><summary>${u.title}</summary><div class="update-item-body">${updateBodyHtml(u.body)}</div></details></li>`
+            : `<li style="margin:3px 0">${u.title}</li>`).join('')}
         </ul>
       </div>
     `).join('');
