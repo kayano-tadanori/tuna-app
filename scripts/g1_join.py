@@ -406,6 +406,15 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
         s = {u"question": q_text, u"answer": ans}
         if st.get(u"choices"):
             s[u"choices"] = st[u"choices"]
+            # ★選択肢が記号だけで、原本には記号ごとの中身（「(ア) 三角柱」）が印刷されているとき、
+            #   記号だけ並べると画面から中身が消えて解けない（2026-11-10・テーマ教材 第4分冊 No.33 1-1）。
+            #   **アプリに渡す選択肢と答えだけ**「記号 中身」にする（原簿は印刷どおり）
+            named = {c.get(u"sym"): c.get(u"text") for c in (it[u"setsumon"].get(u"choices") or [])
+                     if isinstance(c, dict) and c.get(u"sym") and c.get(u"text")}
+            if named and all(c in named for c in s[u"choices"]) and ans in named:
+                s[u"choices"] = [u"%s %s" % (c, named[c]) for c in s[u"choices"]]
+                s[u"answer"] = u"%s %s" % (ans, named[ans])
+                notes.append(u"%s step%d: 選択肢に原本の中身を付けた（%s）" % (hg, i, s[u"answer"]))
         if st.get(u"meaning"):
             s[u"meaning"] = st[u"meaning"]
         # ★図は「小問(n)の図」。設問文が印刷されていない小問にも図はある
