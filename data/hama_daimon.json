@@ -146100,6 +146100,11 @@
        "intro": "次の問いに答えなさい。",
        "steps": [
         {
+         "question": "(1) 40kmのキョリを時速8kmで進むのにかかる時間と時速4kmで進むのにかかる時間の比を求めなさい。",
+         "answer": "1：2",
+         "meaning": "同じキョリを進むとき、速いほど時間は短くなる。40kmを時速8kmで進むと 40÷8＝5時間、時速4kmで進むと 40÷4＝10時間なので、時間の比は 5：10＝1：2。速さの比 8：4＝2：1 をひっくり返した形になっている。これが「速さの逆比」で、キョリが同じなら時間の比は 1/8：1/4 のように速さの逆数の比になる。"
+        },
+        {
          "question": "(2) 甲乙両地間を甲地から時速6kmで乙地に向かい，乙地につくとすぐに時速8kmで甲地に向かいます。往復の所要時間が14時間だとすると行きにかかった時間は何時間ですか。",
          "answer": "8",
          "meaning": "同じキョリを進むとき、速さが2倍になれば時間は半分。つまり時間の比は速さの比のぎゃく（逆比）になる。行きが時速6km、帰りが時速8kmなので、時間の比は 8：6＝④：③。往復の合計 ④＋③＝⑦ が14時間だから ①＝2時間。行きは④なので 2×4 でもとめる。"
@@ -147766,6 +147771,11 @@
        "star": 1,
        "intro": "下の図のように，相似な2つの三角形ABCと三角形DEFがあります。",
        "steps": [
+        {
+         "question": "(1) 三角形ABCと三角形DEFの相似比を求めなさい。",
+         "answer": "5：3",
+         "meaning": "相似比は、対応する辺どうしの長さの比のこと。直角のしるしと同じ角のしるしを見て、向きのそろう辺を組にする。三角形ABCのABと組になるのは三角形DEFのDEで、長さは30cmと18cm。30：18 を、両方を6でわって いちばん簡単な整数の比にする。"
+        },
         {
          "question": "(2) EFの長さは何cmですか。",
          "answer": "24",
@@ -151185,6 +151195,118 @@
      ],
      "12": [
       {
+       "id": "hd5m_t12_1",
+       "src": "HG-8261 原簿・小5 テーマ教材 第2分冊 No.12 1-1",
+       "hg": "HG-8261",
+       "title": "AとBの比を求める",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 1,
+       "intro": "次のAとBの比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) A＝30kg，B＝40kgのとき",
+         "answer": "3：4",
+         "meaning": "比は「同じ大きさのかたまりがいくつ分か」でくらべるもの。30kgと40kgは、どちらも10kgのかたまりで数えられる。30kgは10kgが3つ、40kgは10kgが4つなので、その「いくつ分」をならべたものがAとBの比になる。"
+        },
+        {
+         "question": "(2) A＝5km，B＝10kmのとき",
+         "answer": "1：2",
+         "meaning": "5kmと10kmは、どちらも5kmのかたまりで数えられる。5kmは5kmが1つ、10kmは5kmが2つ。かたまりの数を「：」でならべれば比になる。できるだけ大きなかたまりで数えると、いちばん簡単な比になる。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_2",
+       "src": "HG-8262 原簿・小5 テーマ教材 第2分冊 No.12 1-2",
+       "hg": "HG-8262",
+       "title": "AとBの比を求める",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のAとBの比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) A＝50m，B＝75mのとき",
+         "answer": "2：3",
+         "meaning": "50mと75mを、どちらもわりきれる同じ長さのかたまりでまとめる。25mずつまとめると、50÷25＝2、75÷25＝3。2つと3つなので、この数をならべたものが比。25mは50と75の両方をわりきれるいちばん大きな数なので、これ以上簡単にならない。"
+        },
+        {
+         "question": "(2) A＝6000円，B＝4500円のとき",
+         "answer": "4：3",
+         "meaning": "6000円と4500円を1500円ずつまとめる。6000÷1500＝4、4500÷1500＝3で、4つと3つ。数が大きいときは、両方をわりきれるいちばん大きなかたまり（最大公約数）を見つけると、1回で簡単な比になる。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_3",
+       "src": "HG-8263 原簿・小5 テーマ教材 第2分冊 No.12 2-1",
+       "hg": "HG-8263",
+       "title": "比を簡単にする",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の比を簡単にしなさい。",
+       "steps": [
+        {
+         "question": "(1) 48：42",
+         "answer": "8：7",
+         "meaning": "比は前と後ろを同じ数でわっても、くらべた関係は変わらない。48と42の最大公約数は6なので、両方を6でわると48÷6＝8、42÷6＝7。8と7はもう同じ数でわれないので、これが一番簡単な比。"
+        },
+        {
+         "question": "(2) 57：38",
+         "answer": "3：2",
+         "meaning": "57と38の公約数はすぐには見つけにくい。そこで「2つの数の差」に注目する。両方をわりきれる数は差もわりきれるので、差の57－38＝19の約数でわれないか調べる。19でわると57÷19＝3、38÷19＝2になる。"
+        },
+        {
+         "question": "(3) 0.04：0.09",
+         "answer": "4：9",
+         "meaning": "小数のままでは比べにくいので、まず整数に直す。前と後ろを同じだけ（ここでは100倍）大きくしても比は変わらないので、0.04×100＝4、0.09×100＝9。4と9は同じ数でわれないので、これで完成。"
+        },
+        {
+         "question": "(4) 5/6：1/3",
+         "answer": "5：2",
+         "meaning": "分数どうしは、分母をそろえる（通分する）と分子だけでくらべられる。1/3は2/6なので、5/6：2/6。分母が同じなら、分子の5と2をならべたものが比になる。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_4",
+       "src": "HG-8264 原簿・小5 テーマ教材 第2分冊 No.12 2-2",
+       "hg": "HG-8264",
+       "title": "比を簡単にする",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "次の比を簡単にしなさい。",
+       "steps": [
+        {
+         "question": "(1) 126：54",
+         "answer": "7：3",
+         "meaning": "126と54の最大公約数を見つけて、両方をわる。最大公約数は18なので、126÷18＝7、54÷18＝3。一度で一番簡単な比になる。"
+        },
+        {
+         "question": "(2) 221：247",
+         "answer": "17：19",
+         "meaning": "大きな2数の最大公約数は、2つの数の差にかくされている。221と247の差は26なので、26の約数（2や13）でわれないか調べる。13でわると221÷13＝17、247÷13＝19になり、17と19はもうわれない。"
+        },
+        {
+         "question": "(3) 0.125：0.5",
+         "answer": "1：4",
+         "meaning": "基本は整数に直す。1000倍すると125：500になり、両方を125でわれば簡単になる。ただ、0.125は1/8、0.5は1/2と分数に直すと、1/8：4/8になって分子をくらべるだけですむので、こちらのほうが速いこともある。"
+        },
+        {
+         "question": "(4) 3と1/5：3/7",
+         "answer": "112：15",
+         "meaning": "帯分数と分数の比も、基本は通分。分母を5と7の最小公倍数35にそろえると、3と1/5は3と7/35で、仮分数にすると112/35。3/7は15/35。分母がそろえば、分子の112と15をならべたものが比になる。"
+        }
+       ]
+      },
+      {
        "id": "hd5m_t12_5",
        "src": "HG-8265 原簿・小5 テーマ教材 第2分冊 No.12 3-1",
        "hg": "HG-8265",
@@ -151209,6 +151331,85 @@
          "question": "(3) 2.1：1.4",
          "answer": "1と1/2",
          "meaning": "小数どうしのわり算は、前と後ろを同じだけ（ここでは10倍ずつ）大きくしても答えが変わらない。整数どうしのわり算 21÷14 に直してから分数にし、約分して帯分数になおす。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_6",
+       "src": "HG-8266 原簿・小5 テーマ教材 第2分冊 No.12 3-2",
+       "hg": "HG-8266",
+       "title": "比の値からA：Bにもどす",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "AとBに次のような関係があるとき，A：Bの比を最も簡単な整数の比で答えなさい。",
+       "steps": [
+        {
+         "question": "(1) A：Bの比の値が2/3のとき。",
+         "answer": "2：3",
+         "meaning": "比の値は「A÷B」のこと。A÷B＝2/3で、2/3は2÷3と同じなので、Aを2、Bを3と見ればよい。わり算の「わられる数：わる数」がそのままA：Bになる。"
+        },
+        {
+         "question": "(2) A：Bの比の値が3のとき。",
+         "answer": "3：1",
+         "meaning": "A÷B＝3。整数の3も、3/1と分数で書けば3÷1と同じ。だからAを3、Bを1と見ればよい。比の値が整数のときは、後ろに1を置くと考える。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_7",
+       "src": "HG-8267 原簿・小5 テーマ教材 第2分冊 No.12 4-1",
+       "hg": "HG-8267",
+       "title": "関係からA：Bを作る",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "AとBの間に次のような関係があるとき，A：Bの比を最も簡単な整数の比で答えなさい。",
+       "steps": [
+        {
+         "question": "(1) Aの4倍がBと等しいとき。",
+         "answer": "1：4",
+         "meaning": "「Aの4倍がBと等しい」は A×4＝B。Aにかんたんな数1を入れてみると、Bは4になる。このときのAとBをならべれば比になる。"
+        },
+        {
+         "question": "(2) AはBの3/8であるとき。",
+         "answer": "3：8",
+         "meaning": "「AはBの3/8」は A＝B×3/8。分母の8をBに入れると、Aは8×3/8＝3で整数になる。分数の倍のときは、分母の数を入れると分数が消える。"
+        },
+        {
+         "question": "(3) Aの7倍がBの2倍と等しいとき。",
+         "answer": "2：7",
+         "meaning": "「Aの7倍がBの2倍と等しい」は A×7＝B×2。この等しい値を、7でも2でもわりきれる最小公倍数の14と決める。するとAは14÷7＝2、Bは14÷2＝7。かけた数とは前後が入れかわることに気をつける。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_8",
+       "src": "HG-8268 原簿・小5 テーマ教材 第2分冊 No.12 4-2",
+       "hg": "HG-8268",
+       "title": "関係からA：Bを作る",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "AとBの間に次のような関係があるとき，A：Bの比を最も簡単な整数の比で答えなさい。",
+       "steps": [
+        {
+         "question": "(1) Aの2/3がBと等しいとき。",
+         "answer": "3：2",
+         "meaning": "「Aの2/3がBと等しい」は A×2/3＝B。Aに分母の3を入れると、3×2/3＝2でBは2になる。3を入れたら2になる、という対応をそのままならべたものがA：B。"
+        },
+        {
+         "question": "(2) Aの5倍がBと等しいとき。",
+         "answer": "1：5",
+         "meaning": "「Aの5倍がBと等しい」は A×5＝B。Aを1とすると、Bは5。このAとBをならべれば比になる。"
+        },
+        {
+         "question": "(3) Aの6倍がBの7倍と等しいとき。",
+         "answer": "7：6",
+         "meaning": "A×6＝B×7。この等しい値を6と7の最小公倍数42と決めると、Aは42÷6＝7、Bは42÷7＝6。かけた数（6と7）とは前後が逆になる。"
         }
        ]
       },
@@ -151267,9 +151468,154 @@
          "meaning": "Aを③、Bを⑦、Cを⑤とみる。AとBの和は③＋⑦＝⑩で、そこからCの⑤をひくと残りは⑤。この⑤にあたるのが分かっている数なので、5でわって①を出し、Aの③ぶんをもとめる。丸数字どうしのたし算・ひき算をしてから①にもどすのが山。"
         }
        ]
+      },
+      {
+       "id": "hd5m_t12_11",
+       "src": "HG-8271 原簿・小5 テーマ教材 第2分冊 No.12 6-1",
+       "hg": "HG-8271",
+       "title": "比の逆比を求める",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "次の比の逆比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 4：3",
+         "answer": "3：4",
+         "meaning": "逆比は、それぞれの数の逆数（1/4、1/3のように、分子と分母をひっくりかえした数）をならべた比。2つの数の比なら、前と後ろを入れかえるだけで逆比になる。"
+        },
+        {
+         "question": "(2) 2：5：6",
+         "answer": "15：6：5",
+         "meaning": "3つの数のときは入れかえではできないので、逆数をならべる。2：5：6の逆数は1/2：1/5：1/6。分母を2・5・6の最小公倍数30にそろえて通分すると、15/30：6/30：5/30になり、分子だけをならべれば整数の比になる。"
+        },
+        {
+         "question": "(3) 1/4：2/5：1と1/3",
+         "answer": "16：10：3",
+         "meaning": "まず1と1/3を4/3と仮分数にする。それぞれの逆数をならべると、1/4は4/1、2/5は5/2、4/3は3/4。分母を4にそろえると16/4：10/4：3/4なので、分子をならべれば整数の比になる。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t12_12",
+       "src": "HG-8272 原簿・小5 テーマ教材 第2分冊 No.12 6-2",
+       "hg": "HG-8272",
+       "title": "比の逆比を求める",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 3,
+       "intro": "次の比の逆比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) 5：9",
+         "answer": "9：5",
+         "meaning": "逆比は、逆数をならべた比。5：9の逆数は1/5：1/9。2つの数なら、これを整数にすると前と後ろが入れかわった形になる。"
+        },
+        {
+         "question": "(2) 3：4：5",
+         "answer": "20：15：12",
+         "meaning": "3：4：5の逆数は1/3：1/4：1/5。分母を3・4・5の最小公倍数60にそろえると20/60：15/60：12/60。分母がそろえば、分子をならべたものが整数の比になる。"
+        },
+        {
+         "question": "(3) 1/13：1/17",
+         "answer": "13：17",
+         "meaning": "1/13：1/17の逆数は、分子と分母をひっくりかえして13/1：17/1、つまり13と17。分子が1の分数の逆比は、分母をそのままならべればよい。"
+        },
+        {
+         "question": "(4) 1/3：2/5：3/7",
+         "answer": "18：15：14",
+         "meaning": "1/3：2/5：3/7の逆数は3/1：5/2：7/3。分母を1・2・3の最小公倍数6にそろえると18/6：15/6：14/6。分子をならべれば整数の比になる。"
+        }
+       ]
       }
      ],
      "13": [
+      {
+       "id": "hd5m_t13_1",
+       "src": "HG-8273 原簿・小5 テーマ教材 第2分冊 No.13 1-1",
+       "hg": "HG-8273",
+       "title": "2つの比をA：B：Cにつなぐ",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 1,
+       "intro": "次の比からA：B：Cを求めなさい。",
+       "steps": [
+        {
+         "question": "(1) A：B＝3：5\n　　A：C＝3：8",
+         "answer": "3：5：8",
+         "meaning": "2つの比のどちらにもAが出てきて、どちらもAは3。Aの数がもうそろっているので、A：B：Cの表に2つの比をそのまま並べて書けばつながる。Aは3のまま1つにまとめ、Bの下に5、Cの下に8を書けばよい。"
+        },
+        {
+         "question": "(2) A：B＝4：3\n　　B：C＝9：5",
+         "answer": "12：9：5",
+         "meaning": "2つの比のどちらにも出てくるのはB。でもBは一方では3、もう一方では9で、そろっていない。比は両方に同じ数をかけても大きさが変わらないので、Bを3と9の最小公倍数9にそろえる。A：B＝4：3を3倍すればBが9になる。B：C＝9：5はそのままでよい。Bがそろったら、A・B・Cの順に1本の比に並べる。"
+        },
+        {
+         "question": "(3) A：B＝4：1\n　　A：C＝12：7",
+         "answer": "12：3：7",
+         "meaning": "2つの比のどちらにも出てくるのはA。Aは一方では4、もう一方では12。Aを4と12の最小公倍数12にそろえるため、A：B＝4：1を3倍する。A：C＝12：7はそのままでよい。Aがそろえば、BとCをそれぞれの場所に書きこんで1本の比になる。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t13_2",
+       "src": "HG-8274 原簿・小5 テーマ教材 第2分冊 No.13 1-2",
+       "hg": "HG-8274",
+       "title": "2つの比をA：B：Cにつなぐ（分数・小数）",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の比からA：B：Cを求めなさい。",
+       "steps": [
+        {
+         "question": "(1) A：B＝2：3\n　　B：C＝3：4",
+         "answer": "2：3：4",
+         "meaning": "2つの比のどちらにも出てくるのはB。Bはどちらも3でもうそろっているので、A：B：Cの表に2つの比をそのまま並べて書けばつながる。"
+        },
+        {
+         "question": "(2) A：B＝5：4\n　　B：C＝2：7",
+         "answer": "5：4：14",
+         "meaning": "どちらにも出てくるのはB。Bは一方では4、もう一方では2なので、4にそろえる。比は両方に同じ数をかけても変わらないから、B：C＝2：7を2倍すればBが4になる。そろったBをまん中にして、A・B・Cの順に並べる。"
+        },
+        {
+         "question": "(3) A：B＝5：9\n　　B：C＝6：5",
+         "answer": "10：18：15",
+         "meaning": "どちらにも出てくるのはB。Bは一方では9、もう一方では6。9と6の最小公倍数18にそろえるため、A：B＝5：9を2倍、B：C＝6：5を3倍する。Bが18でそろえば、AとCもそれぞれ書きこめる。"
+        },
+        {
+         "question": "(4) A：B＝1/2：1/5\n　　A：C＝1/4：1/6",
+         "answer": "15：6：10",
+         "meaning": "まず分数の比を整数の比に直す。比は両方に同じ数をかけても変わらないので、1/2：1/5には分母の公倍数10を、1/4：1/6には12をかける。するとA：B＝5：2、A：C＝3：2になる。どちらにも出てくるのはAで、5と3の最小公倍数15にそろえる。A：Bを3倍、A：Cを5倍すればAが15になり、1本の比につながる。"
+        },
+        {
+         "question": "(5) A：C＝0.3：0.4\n　　B：C＝0.8：0.5",
+         "answer": "15：32：20",
+         "meaning": "まず小数の比を、両方を10倍して整数の比に直す。A：C＝3：4、B：C＝8：5になる。どちらにも出てくるのはCで、4と5の最小公倍数20にそろえる。A：Cを5倍、B：Cを4倍すればCが20になる。最後はA・B・Cの順に並べることに注意。Cが2つの比のうしろにあるので、まん中に入れないこと。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t13_3",
+       "src": "HG-8275 原簿・小5 テーマ教材 第2分冊 No.13 2-1",
+       "hg": "HG-8275",
+       "title": "重なりを仲立ちにして円の面積の比を出す",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "大小2つの円が重なっています。重なった部分の面積は，大きい方の円の2/7にあたり，小さい方の円の3/5にあたります。大きい方の円の面積と小さい方の円の面積の比を求めなさい。",
+         "answer": "21：10",
+         "meaning": "重なった部分は、大きい円にも小さい円にも入っている共通の部分。そこで重なりを使って比をつなぐ。重なりが大きい円の2/7なので、大：重なり＝7：2。重なりが小さい円の3/5なので、小：重なり＝5：3。重なりが2と3でそろっていないので、最小公倍数6にそろえる。前の比を3倍、後の比を2倍する。大：小：重なりの1本の比ができたら、その中から大と小だけを取り出せばよい。"
+        }
+       ]
+      },
       {
        "id": "hd5m_t13_4",
        "src": "HG-8276 原簿・小5 テーマ教材 第2分冊 No.13 2-2",
@@ -151417,6 +151763,11 @@
        "intro": "次の問いに答えなさい。",
        "steps": [
         {
+         "question": "(1) 2つの長方形A，Bのたての長さの比が3：5で横の長さの比が3：2のとき，A，Bの面積の比を求めなさい。",
+         "answer": "9：10",
+         "meaning": "長方形の面積は「たて×横」でできている。だから面積の比は、たての比と横の比を、AどうしBどうしでかけ合わせれば出る。Aは3×3、Bは5×2になる。"
+        },
+        {
          "question": "(2) 50円玉と100円玉の枚数の比は3：1で，あわせて2500円になります。100円玉の枚数は何枚ですか。",
          "answer": "10",
          "meaning": "合計金額は「1枚あたりの金額×枚数」でできている。だから金額の比は、1枚あたりの金額の比と枚数の比をかけ合わせれば出る。1枚あたりの金額の比は 50円：100円＝1：2、枚数の比は3：1なので、金額の比は (1×3)：(2×1)＝3：2。合わせた⑤が2500円だから①が出て、100円玉の分は②。その金額を100でわれば枚数になる。"
@@ -151438,6 +151789,11 @@
          "question": "(1) 100円玉と50円玉の枚数の比が2：3で合計金額が4900円のとき，100円玉は何枚ですか。",
          "answer": "28",
          "meaning": "合計金額は「1枚あたりの金額×枚数」でできている。1枚あたりの金額の比は 100円：50円＝2：1、枚数の比は2：3なので、金額の比は (2×2)：(1×3)＝4：3。合わせた⑦が4900円だから①が出て、100円玉の分は④。その金額を100でわれば枚数になる。"
+        },
+        {
+         "question": "(2) 2つの長方形A，Bのたての長さの比が4：3で面積の比が2：1のとき，横の長さの比を求めなさい。",
+         "answer": "3：2",
+         "meaning": "面積は「たて×横」なので、横は「面積÷たて」で出せる。Aの横を□、Bの横を△とすると、4×□が面積の2に、3×△が面積の1にあたる。だから□＝2÷4、△＝1÷3で、どちらも分数になる。この2つの分数の比を、両方に分母の公倍数6をかけて整数の比に直す。"
         }
        ]
       },
@@ -151456,6 +151812,24 @@
          "question": "姉と妹の所持金の比は5：7でしたが，お母さんからもらったお金を姉と妹で5：7に分けたところ，姉の所持金は3000円になりました。妹の所持金はいくらになりましたか。",
          "answer": "4200",
          "meaning": "はじめの所持金の比も、もらったお金を分けた比も、どちらも5：7で同じ。同じ比どうしをたしても比は変わらないので、あとの所持金の比も5：7のまま（加比の理）。だから姉の3000円が⑤にあたる。①を出して⑦をかければ、妹のあとの所持金が求められる。"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t13_12",
+       "src": "HG-8284 原簿・小5 テーマ教材 第2分冊 No.13 6-2",
+       "hg": "HG-8284",
+       "title": "残金の比から使った金額の比を出す",
+       "category": "wariai",
+       "unit": "比",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "兄は5000円，弟は3000円持っていましたが，いくらか使ったので，残金の比が5：3になりました。\n兄と弟の使った金額の比を求めなさい。",
+         "answer": "5：3",
+         "meaning": "残金の比が5：3なので、兄の残金を⑤、弟の残金を③とおく。使った金は、はじめの所持金から残金をひいたものだから、兄は5000－⑤、弟は3000－③。ここで、5000円は1000円の5つ分、3000円は1000円の3つ分で、はじめの所持金もちょうど5：3になっている。兄の使った金は「1000－①」の5つ分、弟は「1000－①」の3つ分になるので、使った金の比も、はじめや残金と同じ比になる。"
         }
        ]
       }
@@ -151858,6 +152232,11 @@
          "question": "(1) 両方好きな人は何人ですか。",
          "answer": "18",
          "meaning": "肉の好きな人は全体32人の7割5分なので、32×0.75。両方好きな人は、その肉の好きな人の75%なので、肉の好きな人数にもう一度0.75をかける。"
+        },
+        {
+         "question": "(2) 両方ともきらいな人は全体の何割何分何厘ですか。",
+         "answer": "1割2分5厘",
+         "meaning": "たてに魚の好き・きらい、よこに肉の好き・きらいをとった表をかいて考える。(1)で肉の好きな人は24人、そのうち両方好きな人が18人だから、肉は好きで魚はきらいな人は24－18で出る。魚のきらいな人は全体から魚の好きな22人をひいた32－22。両方きらいな人は、魚のきらいな人から、肉は好きで魚はきらいな人をひけば出る。その人数を全体の32人でわって割合を小数で出し、小数第1位を割、第2位を分、第3位を厘として読む。"
         }
        ]
       },
@@ -153217,6 +153596,44 @@
        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 450\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"260.0,405.0 4.2,277.1 132.1,21.3 387.9,149.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/>\n<polygon points=\"100.0,405.0 300.0,405.0 300.0,205.0 100.0,205.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/>\n<path d=\"M100.0,405.0 Q76.0,365.0 100.0,325.0\" fill=\"none\" stroke=\"#9fb3c8\" stroke-width=\"1.3\"/>\n<text x=\"64.0\" y=\"365.0\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\" fill=\"#e6edf7\" font-family=\"sans-serif\">4 cm</text>\n<path d=\"M100.0,405.0 Q180.0,429.0 260.0,405.0\" fill=\"none\" stroke=\"#9fb3c8\" stroke-width=\"1.3\"/>\n<text x=\"180.0\" y=\"427.0\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\" fill=\"#e6edf7\" font-family=\"sans-serif\">8 cm</text>\n<path d=\"M260.0,405.0 Q280.0,421.0 300.0,405.0\" fill=\"none\" stroke=\"#9fb3c8\" stroke-width=\"1.3\"/>\n<text x=\"280.0\" y=\"425.0\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\" fill=\"#e6edf7\" font-family=\"sans-serif\">2 cm</text>\n<path d=\"M300.0,405.0 Q324.0,365.0 300.0,325.0\" fill=\"none\" stroke=\"#9fb3c8\" stroke-width=\"1.3\"/>\n<text x=\"336.0\" y=\"365.0\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\" fill=\"#e6edf7\" font-family=\"sans-serif\">x cm</text>\n</svg>"
       },
       {
+       "id": "hd5m_t31_5",
+       "src": "HG-9025 原簿・小5 テーマ教材 第4分冊 No.31 3-1",
+       "hg": "HG-9025",
+       "title": "ピラミッド型と砂時計型（比を求める）",
+       "category": "zu",
+       "unit": "相似",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の図でDEとBCは平行でAD：DB＝3：5のとき，EF：FBを求めなさい。",
+       "steps": [
+        {
+         "question": "3-1",
+         "answer": "3：8",
+         "meaning": "DEとBCが平行なので、三角形ADEと三角形ABCは相似（ピラミッドの形）。AD：DB＝3：5 だから AD：AB＝3：(3＋5)＝3：8 で、DE：BC も 3：8。次に、三角形FDEと三角形FCBを見ると、これも平行線がつくる相似（砂時計の形）で、DEとCBが組になる辺。だから EF：FB は DE：BC と同じ 3：8 になる。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 400 440\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"200.0\" y1=\"50.0\" x2=\"60.0\" y2=\"390.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"200.0\" y1=\"50.0\" x2=\"340.0\" y2=\"385.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"60.0\" y1=\"390.0\" x2=\"340.0\" y2=\"385.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"148.2\" y1=\"175.8\" x2=\"251.8\" y2=\"173.9\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"148.2\" y1=\"175.8\" x2=\"340.0\" y2=\"385.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"251.8\" y1=\"173.9\" x2=\"60.0\" y2=\"390.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<text x=\"200.0\" y=\"38.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">A</text>\n<text x=\"50.0\" y=\"420.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">B</text>\n<text x=\"352.0\" y=\"411.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">C</text>\n<text x=\"138.2\" y=\"179.8\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"end\">D</text>\n<text x=\"261.8\" y=\"177.9\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"start\">E</text>\n<text x=\"200.0\" y=\"272.3\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">F</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t31_6",
+       "src": "HG-9026 原簿・小5 テーマ教材 第4分冊 No.31 3-2",
+       "hg": "HG-9026",
+       "title": "砂時計型からピラミッド型へ（比を求める）",
+       "category": "zu",
+       "unit": "相似",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の図でDEとBCは平行でEF：FB＝2：5のとき，AD：DBを求めなさい。",
+       "steps": [
+        {
+         "question": "3-2",
+         "answer": "2：3",
+         "meaning": "3-1とは逆の順にたどる。まず砂時計の形の三角形FDEと三角形FCBで、EF：FB＝2：5 だから、組になる辺 DE：BC も 2：5。次にピラミッドの形の三角形ADEと三角形ABCで、AD：AB も DE：BC と同じ 2：5。ABのうちADが2なので、残りのDBは 5－2＝3。だから AD：DB＝2：(5－2) になる。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 400 440\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"200.0\" y1=\"50.0\" x2=\"60.0\" y2=\"390.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"200.0\" y1=\"50.0\" x2=\"340.0\" y2=\"385.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"60.0\" y1=\"390.0\" x2=\"340.0\" y2=\"385.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"139.8\" y1=\"196.2\" x2=\"260.2\" y2=\"194.1\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"139.8\" y1=\"196.2\" x2=\"340.0\" y2=\"385.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<line x1=\"260.2\" y1=\"194.1\" x2=\"60.0\" y2=\"390.0\" stroke=\"#4f9eff\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n<text x=\"200.0\" y=\"38.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">A</text>\n<text x=\"50.0\" y=\"420.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">B</text>\n<text x=\"352.0\" y=\"411.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">C</text>\n<text x=\"129.8\" y=\"200.2\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"end\">D</text>\n<text x=\"270.2\" y=\"198.1\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"start\">E</text>\n<text x=\"200.0\" y=\"293.0\" fill=\"#e8eeff\" font-size=\"24\" font-family=\"serif\" text-anchor=\"middle\">F</text>\n</svg>"
+      },
+      {
        "id": "hd5m_t31_7",
        "src": "HG-9027 原簿・小5 テーマ教材 第4分冊 No.31 4-1",
        "hg": "HG-9027",
@@ -153227,6 +153644,11 @@
        "star": 3,
        "intro": "下の図でABとCDとEFは平行です。\n次の問いに答えなさい。",
        "steps": [
+        {
+         "question": "(1) BD：DFを求めなさい。",
+         "answer": "1：2",
+         "meaning": "ABとEFが平行なので、三角形CABと三角形CFEは相似（砂時計の形）で、比はAB：EF＝4：8＝1：2。CDもABやEFと平行なので、平行な線にはさまれたBDとDFの長さの比は、AC：CF と同じになる。だから BD：DF は 4：8 を簡単にした比になる。"
+        },
         {
          "question": "(2) CDの長さは何cmですか。",
          "answer": "2と2/3",
@@ -153246,6 +153668,11 @@
        "star": 3,
        "intro": "下の図でABとCDとEFは平行です。\n次の問いに答えなさい。",
        "steps": [
+        {
+         "question": "(1) BD：DFを求めなさい。",
+         "answer": "2：3",
+         "meaning": "三角形FABと三角形FCDは相似（ピラミッドの形）で、FD：FB＝CD：AB＝3：5。FBを⑤とすると、そのうちFDが③なので、残りのBDは ⑤－③＝②。だから BD：DF＝(5－3)：3 になる。"
+        },
         {
          "question": "(2) EFの長さは何cmですか。",
          "answer": "7.5",
@@ -153307,6 +153734,25 @@
      ],
      "32": [
       {
+       "id": "hd5m_t32_1",
+       "src": "HG-9031 原簿・小5 テーマ教材 第4分冊 No.32 1-1",
+       "hg": "HG-9031",
+       "title": "2つの三角形の面積の比",
+       "category": "zu",
+       "unit": "平面図形（面積比）",
+       "grade": 5,
+       "star": 1,
+       "intro": null,
+       "steps": [
+        {
+         "question": "図の三角形Aと三角形Bの面積の比を求めなさい。",
+         "answer": "15：8",
+         "meaning": "三角形の面積は「底辺×高さ÷2」なので、面積の比は（底辺の比）×（高さの比）でくらべられる。底辺は 9m と 12m で 3：4、高さは 20m と 8m で 5：2。面積の比は (3×5)：(4×2) になる。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 460 280\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"70,20 20,220 130,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"70\" y1=\"20\" x2=\"70\" y2=\"220\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/>\n  <path d=\"M 56 220 L 56 206 L 70 206\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <path d=\"M 70 20 Q 96.0 120.0 70 220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"118.0\" y=\"85.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">20 m</text>\n  <text x=\"50.0\" y=\"140.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <path d=\"M 20 220 Q 75.0 242.0 130 220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"75.0\" y=\"248.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">9 m</text>\n  <polygon points=\"300,90 205,220 395,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"300\" y1=\"90\" x2=\"300\" y2=\"220\" stroke=\"#4f9eff\" stroke-width=\"1.8\"/>\n  <path d=\"M 286 220 L 286 206 L 300 206\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <path d=\"M 300 90 Q 314.0 155.0 300 220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"326.0\" y=\"157.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">8 m</text>\n  <text x=\"270.0\" y=\"180.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <path d=\"M 205 220 Q 300.0 246.0 395 220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"300.0\" y=\"252.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">12 m</text>\n</svg>"
+      },
+      {
        "id": "hd5m_t32_2",
        "src": "HG-9032 原簿・小5 テーマ教材 第4分冊 No.32 1-2",
        "hg": "HG-9032",
@@ -153317,6 +153763,11 @@
        "star": 2,
        "intro": "下の図は台形ABCDを3つの部分に分けたものです。次の問いに答えなさい。",
        "steps": [
+        {
+         "question": "(1) アとイの面積の比を求めなさい。",
+         "answer": "3：4",
+         "meaning": "ア・イ・ウは、どれも台形ABCDと同じ高さ（等高図形）。高さが同じなら、面積は（上底＋下底）の大きさで決まる。アは三角形なので上底を0と見て 0＋6＝6、イは上底5cm・下底3cmで 5＋3＝8。アとイの面積の比は 6：8 を簡単にした比になる。"
+        },
         {
          "question": "(2) アとウの面積が等しいとき，xの大きさを求めなさい。",
          "answer": "4",
@@ -153372,6 +153823,94 @@
          "answer": "1/3",
          "meaning": "2回に分けて考えます。まず、Aと下の辺の点を結んだ線の左側の三角形は、三角形ABCと高さが同じで、底辺は 8cm と 8＋4＝12cm。だから三角形ABCの 8/12＝2/3 です。次に、その三角形の中で、斜線の三角形は左の辺の 5cm と 5＋5＝10cm を底辺にくらべると高さが同じなので 5/10＝1/2 です。割合×割合で 2/3×1/2＝1/3 です。",
          "svg": "<svg viewBox=\"0 0 340 270\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <defs><pattern id=\"h222\" patternUnits=\"userSpaceOnUse\" width=\"10\" height=\"10\" patternTransform=\"rotate(45)\"><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"10\" stroke=\"#ffd166\" stroke-width=\"2\"/></pattern></defs>\n  <polygon points=\"184,50 126,134 221,217\" fill=\"url(#h222)\"/>\n  <polygon points=\"184,50 68,217 300,217\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"126\" y1=\"134\" x2=\"221\" y2=\"217\" stroke=\"#4f9eff\" stroke-width=\"2.4\"/>\n  <line x1=\"184\" y1=\"50\" x2=\"221\" y2=\"217\" stroke=\"#4f9eff\" stroke-width=\"2.4\"/>\n  <text x=\"184.0\" y=\"32.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"50.0\" y=\"217.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <text x=\"320.0\" y=\"217.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n  <path d=\"M 184 50 Q 138.5 80.6 126 134\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"122.0\" y=\"80.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">5 cm</text>\n  <path d=\"M 126 134 Q 80.6 164.0 68 217\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"62.0\" y=\"162.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">5 cm</text>\n  <path d=\"M 68 217 Q 144.5 243.0 221 217\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"145.0\" y=\"248.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">8 cm</text>\n  <path d=\"M 221 217 Q 260.5 239.0 300 217\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n  <text x=\"262.0\" y=\"248.0\" fill=\"#e8eeff\" font-size=\"20\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">4 cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m_t32_5",
+       "src": "HG-9035 原簿・小5 テーマ教材 第4分冊 No.32 3-1",
+       "hg": "HG-9035",
+       "title": "へこんだ四角形と三角形の面積の比",
+       "category": "zu",
+       "unit": "平面図形（面積比）",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図で三角形ABCと四角形ABDCの面積の比を求めなさい。",
+         "answer": "5：2",
+         "meaning": "まず三角形ABCと三角形DBCをくらべる。2つとも底辺がBCで同じなので、面積の比は高さの比になる。AとDからBCへ垂線を引くと、高さの比は AE：DE と同じで、AE＝4＋6＝10cm、DE＝6cm なので 10：6＝5：3。四角形ABDCは、三角形ABCから三角形DBCをひいた残りなので、5：(5－3) になる。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 450 430\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"300.0,52.0 45.0,393.0 398.0,390.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"45.0\" y1=\"393.0\" x2=\"259.0\" y2=\"191.8\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"259.0\" y1=\"191.8\" x2=\"398.0\" y2=\"390.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"300.0\" y1=\"52.0\" x2=\"200.0\" y2=\"393.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <path d=\"M 300.0 52.0 Q 306.4 129.8 259.0 191.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"308.3\" y=\"130.3\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">4 cm</text>\n  <path d=\"M 259.0 191.8 Q 260.2 301.4 200.0 393.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"260.2\" y=\"301.4\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">6 cm</text>\n  <text x=\"300.0\" y=\"28.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"27.0\" y=\"399.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <text x=\"418.0\" y=\"396.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n  <text x=\"235.0\" y=\"185.8\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n  <text x=\"186.0\" y=\"373.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t32_6",
+       "src": "HG-9036 原簿・小5 テーマ教材 第4分冊 No.32 3-2",
+       "hg": "HG-9036",
+       "title": "底辺が共通な2つの三角形",
+       "category": "zu",
+       "unit": "平面図形（面積比）",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図で三角形ABCと三角形BDCの面積の比を求めなさい。",
+         "answer": "2：3",
+         "meaning": "三角形ABCと三角形BDCは、底辺BCが共通。底辺が同じなら、面積の比は高さの比になる。AとDからBC（またはその延長）へ垂線を引くと、その高さの比は、ADがBCで分けられた2cmと3cmの比と同じになる。だから面積の比は (1×2)：(1×3)。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 420 460\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"300.0,50.0 52.0,192.0 95.0,425.0 375.0,185.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"52.0\" y1=\"192.0\" x2=\"375.0\" y2=\"185.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"300.0\" y1=\"50.0\" x2=\"95.0\" y2=\"425.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"300.0\" y1=\"50.0\" x2=\"375.0\" y2=\"185.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <path d=\"M 300.0 50.0 Q 234.1 103.8 224.4 188.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"234.1\" y=\"103.8\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">2 cm</text>\n  <path d=\"M 224.4 188.3 Q 128.1 289.4 95.0 425.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"129.9\" y=\"290.3\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">3 cm</text>\n  <text x=\"304.0\" y=\"28.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"30.0\" y=\"192.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <text x=\"397.0\" y=\"185.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n  <text x=\"95.0\" y=\"449.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t32_7",
+       "src": "HG-9037 原簿・小5 テーマ教材 第4分冊 No.32 4-1",
+       "hg": "HG-9037",
+       "title": "相似な三角形の面積比",
+       "category": "zu",
+       "unit": "平面図形（相似）",
+       "grade": 5,
+       "star": 1,
+       "intro": null,
+       "steps": [
+        {
+         "question": "次の相似な2つの三角形AとBの面積比を求めなさい。",
+         "answer": "4：9",
+         "meaning": "相似な2つの三角形では、底辺の比も高さの比も相似比と同じになる。底辺が8cmと12cmなので相似比は 2：3、高さも 2：3。面積は底辺×高さで決まるので、面積の比は (2×2)：(3×3)。相似比を2回かける（2乗する）と覚えておくとよい。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 540 275\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"30.0,230.0 206.0,230.0 135.9,118.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <polygon points=\"270.0,230.0 501.0,230.0 451.5,38.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <path d=\"M 135.9 118.2 Q 62.6 154.8 30.0 230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"61.2\" y=\"153.5\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">7 cm</text>\n  <path d=\"M 206.0 230.0 Q 194.7 159.2 135.9 118.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"196.4\" y=\"158.1\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">6 cm</text>\n  <path d=\"M 30.0 230.0 Q 118.0 254.0 206.0 230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"118.0\" y=\"258.0\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">8 cm</text>\n  <path d=\"M 451.5 38.3 Q 337.5 112.1 270.0 230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"337.5\" y=\"112.1\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">12 cm</text>\n  <path d=\"M 501.0 230.0 Q 503.4 127.1 451.5 38.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"505.3\" y=\"126.6\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">9 cm</text>\n  <path d=\"M 270.0 230.0 Q 385.5 254.0 501.0 230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"385.5\" y=\"258.0\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">10.5 cm</text>\n  <text x=\"50.4\" y=\"221.9\" fill=\"#e8eeff\" font-size=\"14\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text>\n  <text x=\"132.4\" y=\"139.9\" fill=\"#e8eeff\" font-size=\"14\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text>\n  <text x=\"186.0\" y=\"220.9\" fill=\"#e8eeff\" font-size=\"14\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">×</text>\n  <text x=\"290.0\" y=\"220.7\" fill=\"#e8eeff\" font-size=\"14\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text>\n  <text x=\"482.8\" y=\"217.6\" fill=\"#e8eeff\" font-size=\"14\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text>\n  <text x=\"444.3\" y=\"59.1\" fill=\"#e8eeff\" font-size=\"14\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">×</text>\n  <text x=\"124.0\" y=\"192.7\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"407.5\" y=\"166.1\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t32_8",
+       "src": "HG-9038 原簿・小5 テーマ教材 第4分冊 No.32 4-2",
+       "hg": "HG-9038",
+       "title": "斜線部分と三角形ABCの面積比",
+       "category": "zu",
+       "unit": "平面図形（相似）",
+       "grade": 5,
+       "star": 2,
+       "intro": "次のそれぞれの図で斜線部分と三角形ABCの面積の比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "4：25",
+         "meaning": "斜線の三角形ADEと三角形ABCは相似で、組になる辺はADとAB。AD＝2cm、AB＝2＋3＝5cm なので相似比は 2：5。相似な三角形では底辺の比も高さの比も 2：5 になるので、面積の比は (2×2)：(5×5)。",
+         "svg": "<svg viewBox=\"0 0 290 270\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"140.0,40.0 100.0,116.0 180.0,116.0\" fill=\"#ffd166\" fill-opacity=\"0.45\" stroke=\"none\"/>\n  <polygon points=\"140.0,40.0 40.0,230.0 240.0,230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"100.0\" y1=\"116.0\" x2=\"180.0\" y2=\"116.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <polyline points=\"141.0,224.6 150.0,230.0 141.0,235.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M 140.0 40.0 Q 98.8 66.8 100.0 116.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"95.2\" y=\"65.0\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">2 cm</text>\n  <path d=\"M 100.0 116.0 Q 45.2 160.0 40.0 230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"43.5\" y=\"159.0\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">3 cm</text>\n  <text x=\"140.0\" y=\"20.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"24.0\" y=\"236.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <text x=\"258.0\" y=\"234.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n  <text x=\"80.0\" y=\"114.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n  <text x=\"198.0\" y=\"114.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "4：1",
+         "meaning": "斜線の三角形CDEと三角形ABCは相似（砂時計の形）で、組になる辺はCDとCB。CD＝8cm、CB＝4cm なので相似比は 8：4＝2：1。底辺の比も高さの比も 2：1 なので、面積の比は (2×2)：(1×1)。斜線のほうが大きい三角形であることに気をつける。",
+         "svg": "<svg viewBox=\"0 0 340 335\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"163.5,124.5 40.0,300.0 300.0,300.0\" fill=\"#ffd166\" fill-opacity=\"0.45\" stroke=\"none\"/>\n  <line x1=\"90.0\" y1=\"30.0\" x2=\"230.0\" y2=\"30.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"40.0\" y1=\"300.0\" x2=\"300.0\" y2=\"300.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"90.0\" y1=\"30.0\" x2=\"300.0\" y2=\"300.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <line x1=\"230.0\" y1=\"30.0\" x2=\"40.0\" y2=\"300.0\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <polyline points=\"165.0,24.6 174.0,30.0 165.0,35.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <polyline points=\"187.0,294.6 196.0,300.0 187.0,305.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M 163.5 124.5 Q 216.4 91.1 230.0 30.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"219.6\" y=\"93.4\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">4 cm</text>\n  <path d=\"M 40.0 300.0 Q 75.6 193.8 163.5 124.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"75.6\" y=\"193.8\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">8 cm</text>\n  <text x=\"72.0\" y=\"26.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"248.0\" y=\"26.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <text x=\"143.5\" y=\"118.5\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n  <text x=\"22.0\" y=\"308.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n  <text x=\"318.0\" y=\"308.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "9：25",
+         "meaning": "斜線の三角形ABDと三角形ABCは、どちらも直角があり、Aの角が共通なので相似。直角をはさむ辺どうしではなく、ABDのABと、ABCのACが組になる（どちらも直角の向かいの辺）。AB＝6cm、AC＝10cm なので相似比は 6：10＝3：5。面積の比は (3×3)：(5×5)。",
+         "svg": "<svg viewBox=\"0 0 340 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <polygon points=\"70.0,56.0 70.0,200.0 139.1,107.8\" fill=\"#ffd166\" fill-opacity=\"0.45\" stroke=\"none\"/>\n  <polygon points=\"70.0,56.0 70.0,200.0 262.0,200.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n  <line x1=\"70.0\" y1=\"200.0\" x2=\"139.1\" y2=\"107.8\" stroke=\"#4f9eff\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n  <path d=\"M 70.0 189.0 L 81.0 189.0 L 81.0 200.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <path d=\"M 133.7 115.0 L 140.9 120.4 L 146.3 113.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <path d=\"M 70.0 200.0 Q 42.0 128.0 70.0 56.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"40.0\" y=\"128.0\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">6 cm</text>\n  <path d=\"M 262.0 200.0 Q 166.0 224.0 70.0 200.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"166.0\" y=\"228.0\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">8 cm</text>\n  <path d=\"M 70.0 56.0 Q 192.4 92.8 262.0 200.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"188.8\" y=\"97.6\" fill=\"#e8eeff\" font-size=\"18\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">10 cm</text>\n  <text x=\"66.0\" y=\"36.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n  <text x=\"66.0\" y=\"222.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n  <text x=\"282.0\" y=\"204.0\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n  <text x=\"143.1\" y=\"85.8\" fill=\"#e8eeff\" font-size=\"22\" font-family=\"serif\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n</svg>"
         }
        ]
       },
