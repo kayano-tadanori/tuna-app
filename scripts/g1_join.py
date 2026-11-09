@@ -385,6 +385,15 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
                 notes.append(u"%s step%d: 単位『個』の字は問いかけに無いが、『いくつ』があるので通した"
                              % (hg, i))
                 miss = []
+            # ★「体積と表面積を求めなさい」＋長さが cm で書かれた立体（2026-11-10・テーマ教材 第4分冊 No.34 4-1）。
+            #   『体積』『表面積』の語と cm の長さが画面にあれば、答えが cm³・cm² なのは消えない。
+            #   これも**この2組だけ**（cm³ ↔ 体積／cm² ↔ 面積）で、**cm の長さが出ているときだけ**
+            #   （m や km の立体で cm³ と取り違えないため）
+            for uk, word in ((u"cm³", u"体積"), (u"cm²", u"面積")):
+                if miss == [uk] and word in shown and re.search(u"\\d\\s*cm(?![²³])", shown):
+                    notes.append(u"%s step%d: 単位『%s』の字は問いかけに無いが、『%s』と cm の長さがあるので通した"
+                                 % (hg, i, uk, word))
+                    miss = []
             if miss:
                 problems.append(u"%s step%d: 単位「%s」で %r を取り出したのに、問いかけに %s が"
                                 u"出てこない（何の量を答えるのか画面から消える）"
