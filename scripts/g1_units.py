@@ -181,6 +181,10 @@ def unit_index(text):
         rest = word[len(hit.group(1)):] if hit else None
         if rest in FOLLOW_WORDS:
             rest = u""                       # 単位はここまで。うしろは別の語
+        # ★添え字のうしろに区切りの「と」が続く形（`3秒後と11秒後`＝2つの時こくを並べた答え。
+        #   2026-11-10・テーマ教材 第4分冊 No.39 1-1(2)）。「と」を剥がして添え字だけ残す
+        if rest and rest.endswith(u"と") and rest[:-1] in SUFFIX:
+            rest = rest[:-1]
         if not hit or (rest and rest not in SUFFIX):
             return {}, (UNSUPPORTED_PREFIX + u"（数「%s」のうしろが %r）。"
                         u"scripts/g1_units.py の表に足すか、G1で書き方をそろえる"
