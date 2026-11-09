@@ -155163,6 +155163,213 @@
        ],
        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 580 330\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <defs><marker id=\"ah52\" markerWidth=\"10\" markerHeight=\"8\" refX=\"9\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L10,4 L0,8 z\" fill=\"#e8eef6\"/></marker></defs>\n  <line x1=\"110\" y1=\"22\" x2=\"165\" y2=\"22\" stroke=\"#e8eef6\" stroke-width=\"2\" marker-end=\"url(#ah52)\"/>\n  <line x1=\"40\" y1=\"280\" x2=\"555\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"32\" y=\"286\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"end\">X</text>\n  <text x=\"562\" y=\"286\" font-size=\"16\" fill=\"#e8eef6\">Y</text>\n  <polygon points=\"80,40 80,280 200,280\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <rect x=\"340\" y=\"120\" width=\"180\" height=\"160\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <text x=\"80\" y=\"34\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">P</text>\n  <text x=\"80\" y=\"304\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">Q</text>\n  <text x=\"200\" y=\"304\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">R</text>\n  <text x=\"340\" y=\"304\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">B</text>\n  <text x=\"520\" y=\"304\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">C</text>\n  <text x=\"340\" y=\"112\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">A</text>\n  <text x=\"520\" y=\"112\" font-size=\"16\" fill=\"#e8eef6\" text-anchor=\"middle\">D</text>\n  <path d=\"M 76,44 Q 34,160 76,276\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n  <text x=\"50\" y=\"166\" font-size=\"15\" fill=\"#e8eef6\" text-anchor=\"end\">12 cm</text>\n  <path d=\"M 84,284 Q 140,312 196,284\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n  <text x=\"140\" y=\"322\" font-size=\"15\" fill=\"#e8eef6\" text-anchor=\"middle\">6 cm</text>\n  <path d=\"M 204,284 Q 270,312 336,284\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n  <text x=\"270\" y=\"322\" font-size=\"15\" fill=\"#e8eef6\" text-anchor=\"middle\">7 cm</text>\n  <path d=\"M 344,284 Q 430,312 516,284\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n  <text x=\"430\" y=\"322\" font-size=\"15\" fill=\"#e8eef6\" text-anchor=\"middle\">9 cm</text>\n  <path d=\"M 336,124 Q 304,200 336,276\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n  <text x=\"314\" y=\"206\" font-size=\"15\" fill=\"#e8eef6\" text-anchor=\"end\">8 cm</text>\n</svg>"
       }
+     ],
+     "40": [
+      {
+       "id": "hd5m_t40_1",
+       "src": "HG-9117 原簿・小5 テーマ教材 第4分冊 No.40 1-1",
+       "hg": "HG-9117",
+       "title": "直角三角形の回転移動",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の図は直角三角形ABCを頂点Cのまわりに90度，時計の針と同じ方向に回転させたものです。\n次の問いに答えなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1) 斜線部分のまわりの長さは何cmですか。",
+         "answer": "41.12",
+         "meaning": "図の長さから、もとの三角形はBC＝6cm、AB＝8cm、AC＝10cm。Cを中心に90度回すと、点Aは半径10cm、点Bは半径6cmで、どちらも中心角90度の弧をえがく。斜線部分のまわりは、この弧2本と、まっすぐな辺2本（もとの辺ABと回転後の辺。どちらも8cm）。曲線部分は 6×2×3.14×1/4＋10×2×3.14×1/4＝8×3.14＝25.12(cm)。直線部分は 8×2＝16(cm)。合わせて 25.12＋16＝41.12(cm)。"
+        },
+        {
+         "question": "(2) 斜線部分の面積は何cm²ですか。",
+         "answer": "50.24",
+         "meaning": "斜線部分は「半径10cmのおうぎ形＋もとの三角形」から「回転後の三角形＋半径6cmのおうぎ形」をのぞいた形。2つの三角形は同じ大きさなので打ち消し合い、半径10cm・中心角90度のおうぎ形から、半径6cm・中心角90度のおうぎ形をひくだけになる。10×10×3.14×1/4－6×6×3.14×1/4＝(100－36)×3.14÷4＝50.24(cm²)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 290\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <defs>\n    <pattern id=\"h40_11\" patternUnits=\"userSpaceOnUse\" width=\"7\" height=\"7\" patternTransform=\"rotate(45)\">\n      <line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"7\" stroke=\"#ffd166\" stroke-width=\"1.6\"/>\n    </pattern>\n  </defs>\n  <path d=\"M80 90 A200 200 0 0 1 360 130 L200 130 A120 120 0 0 0 80 250 Z\" fill=\"url(#h40_11)\" stroke=\"none\"/>\n  <path d=\"M80 90 A200 200 0 0 1 360 130\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M80 250 A120 120 0 0 1 200 130\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <polygon points=\"80,90 80,250 200,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <polygon points=\"200,250 200,130 360,130\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M206 136 Q222 190 206 244\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <text x=\"214\" y=\"196\" font-size=\"16\" fill=\"#ffffff\">6 cm</text>\n  <path d=\"M206 140 Q280 160 354 136\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <text x=\"282\" y=\"152\" font-size=\"16\" fill=\"#ffffff\" text-anchor=\"middle\">8 cm</text>\n  <path d=\"M206 252 Q330 240 362 140\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <text x=\"318\" y=\"226\" font-size=\"16\" fill=\"#ffffff\">10 cm</text>\n  <text x=\"64\" y=\"86\" font-size=\"18\" fill=\"#ffffff\" text-anchor=\"middle\">A</text>\n  <text x=\"64\" y=\"270\" font-size=\"18\" fill=\"#ffffff\" text-anchor=\"middle\">B</text>\n  <text x=\"200\" y=\"278\" font-size=\"18\" fill=\"#ffffff\" text-anchor=\"middle\">C</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_2",
+       "src": "HG-9118 原簿・小5 テーマ教材 第4分冊 No.40 1-2",
+       "hg": "HG-9118",
+       "title": "半円の回転移動",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": "直径6cmの半円を図のように点Oのまわりに30度回転させたとき，次の各問いに答えなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1) 斜線部分のまわりの長さは何cmですか。",
+         "answer": "21.98",
+         "meaning": "斜線部分のまわりは、もとの半円の弧と回転後の半円の弧、それに直径の端が点Oのまわりを動いた弧の3本。半円の弧2つで直径6cmの円1つ分になるので 6×3.14(cm)。直径の端は半径6cm・中心角30度の弧をえがくので 12×3.14×1/12＝3.14(cm)。合わせて 6×3.14＋3.14＝7×3.14＝21.98(cm)。"
+        },
+        {
+         "question": "(2) 斜線部分の面積は何cm²ですか。",
+         "answer": "9.42",
+         "meaning": "斜線部分＝おうぎ形＋回転後の半円－もとの半円。2つの半円は同じ大きさなので打ち消し合い、半径6cm・中心角30度のおうぎ形だけが残る。6×6×3.14×1/12＝3×3.14＝9.42(cm²)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 280 220\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <defs>\n    <pattern id=\"h40_12\" patternUnits=\"userSpaceOnUse\" width=\"7\" height=\"7\" patternTransform=\"rotate(45)\">\n      <line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"7\" stroke=\"#ffd166\" stroke-width=\"1.6\"/>\n    </pattern>\n  </defs>\n  <path d=\"M50 180 A180 180 0 0 1 74.12 90 A90 90 0 0 1 230 180 A90 90 0 0 0 50 180 Z\" fill=\"url(#h40_12)\" stroke=\"none\"/>\n  <path d=\"M50 180 A180 180 0 0 1 74.12 90\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M74.12 90 A90 90 0 0 1 230 180\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M50 180 A90 90 0 0 1 230 180\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"50\" y1=\"180\" x2=\"230\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"74.12\" y1=\"90\" x2=\"230\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M202 180 A28 28 0 0 1 205.75 166\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n  <text x=\"196\" y=\"174\" font-size=\"15\" fill=\"#ffffff\" text-anchor=\"end\">30°</text>\n  <text x=\"232\" y=\"202\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">O</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_3",
+       "src": "HG-9119 原簿・小5 テーマ教材 第4分冊 No.40 2-1",
+       "hg": "HG-9119",
+       "title": "正三角形の転がり移動",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "1辺12cmの正三角形ABCを直線ℓ上をすべらないように辺BCがふたたび直線ℓ上に重なるまで転がしました。\n点Bの動いたあとの長さは何cmですか。（円周率は3.14とします。）",
+         "answer": "50.24",
+         "meaning": "正三角形は、直線上にある頂点を中心にして 180－60＝120度ずつ回る。辺BCがふたたび直線上にくるまでに、中心がC→A→Bと変わって3回回る。点Bが動くのは、Cが中心のときとAが中心のときの2回で、どちらも半径12cm・中心角120度の弧をえがく（Bが中心のときは、Bは動かない）。24×3.14×120/360×2＝16×3.14＝50.24(cm)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 170\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <defs>\n    <marker id=\"ar40_21\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"5\" orient=\"auto\">\n      <path d=\"M0 0 L10 5 L0 10 Z\" fill=\"#4f9eff\"/>\n    </marker>\n  </defs>\n  <polygon points=\"40,130 130,130 85,52\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"130\" y1=\"130\" x2=\"560\" y2=\"130\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M100 42 Q130 34 152 58\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.5\" marker-end=\"url(#ar40_21)\"/>\n  <text x=\"85\" y=\"42\" font-size=\"18\" fill=\"#ffffff\" text-anchor=\"middle\">A</text>\n  <text x=\"26\" y=\"136\" font-size=\"18\" fill=\"#ffffff\" text-anchor=\"middle\">B</text>\n  <text x=\"132\" y=\"155\" font-size=\"18\" fill=\"#ffffff\" text-anchor=\"middle\">C</text>\n  <text x=\"572\" y=\"136\" font-size=\"18\" font-style=\"italic\" fill=\"#ffffff\" text-anchor=\"middle\">ℓ</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_4",
+       "src": "HG-9120 原簿・小5 テーマ教材 第4分冊 No.40 2-2",
+       "hg": "HG-9120",
+       "title": "長方形の転がり移動",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "図のような長方形ABCDを直線ℓ上をすべらないように辺BCがふたたび直線ℓ上に重なるまで転がしました。\n点Aの動いたあとの長さは何cmですか。（円周率は3.14とします。）",
+         "answer": "18.84",
+         "meaning": "長方形は、直線上の頂点を中心に90度ずつ回る。辺BCがふたたび直線上にくるまでに、中心がC→D→A→Bと変わって4回回る。点Aは、そのときの中心からの長さを半径とする四分円をえがく。Cが中心のとき半径5cm（対角線）、Dが中心のとき半径3cm、Aが中心のときAは動かない、Bが中心のとき半径4cm。10×3.14×1/4＋6×3.14×1/4＋8×3.14×1/4＝6×3.14＝18.84(cm)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 590 215\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <rect x=\"40\" y=\"58\" width=\"84\" height=\"112\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <rect x=\"124\" y=\"86\" width=\"112\" height=\"84\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <rect x=\"236\" y=\"58\" width=\"84\" height=\"112\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <rect x=\"320\" y=\"86\" width=\"112\" height=\"84\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <rect x=\"432\" y=\"58\" width=\"84\" height=\"112\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"40\" y1=\"58\" x2=\"124\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"40\" y1=\"170\" x2=\"550\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <path d=\"M40 58 Q12 114 40 170\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <text x=\"20\" y=\"119\" font-size=\"14\" fill=\"#ffffff\" text-anchor=\"end\">4 cm</text>\n  <path d=\"M40 58 Q100 98 124 170\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <text x=\"96\" y=\"96\" font-size=\"14\" fill=\"#ffffff\">5 cm</text>\n  <path d=\"M40 170 Q82 194 124 170\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/>\n  <text x=\"82\" y=\"206\" font-size=\"14\" fill=\"#ffffff\" text-anchor=\"middle\">3 cm</text>\n  <text x=\"40\" y=\"50\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">A</text>\n  <text x=\"124\" y=\"50\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">D</text>\n  <text x=\"30\" y=\"190\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">B</text>\n  <text x=\"134\" y=\"190\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">C</text>\n  <text x=\"432\" y=\"50\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">A</text>\n  <text x=\"516\" y=\"50\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">D</text>\n  <text x=\"432\" y=\"192\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">B</text>\n  <text x=\"516\" y=\"192\" font-size=\"17\" fill=\"#ffffff\" text-anchor=\"middle\">C</text>\n  <text x=\"562\" y=\"176\" font-size=\"18\" font-style=\"italic\" fill=\"#ffffff\" text-anchor=\"middle\">ℓ</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_5",
+       "src": "HG-9121 原簿・小5 テーマ教材 第4分冊 No.40 3-1",
+       "hg": "HG-9121",
+       "title": "正方形の内側を転がる円",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "半径2cmの円が1辺9cmの正方形の辺の内側にそって1周したとき，中心の通ったあとの長さは何cmですか。",
+         "answer": "20",
+         "meaning": "円は辺にくっついて転がるので、中心はいつも辺から半径2cm内側を通る。正方形のすみでは、円はすみに入りこめず、中心は曲がらずに向きを変えるだけ。だから中心の通ったあとは、1辺が 9－2－2＝5(cm) の正方形になる。5×4＝20(cm)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390 360\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"40\" y=\"70\" width=\"270\" height=\"270\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.5\"/>\n<path d=\"M40,70 Q175.0,34 310,70\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"175.0\" y=\"46\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">9 cm</text>\n<circle cx=\"175.0\" cy=\"130\" r=\"60\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.5\"/>\n<line x1=\"175.0\" y1=\"130\" x2=\"175.0\" y2=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M178.0,100.0 Q211.0,92.0 249.0,104.0\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"253.0\" y=\"110.0\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">2cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_6",
+       "src": "HG-9122 原簿・小5 テーマ教材 第4分冊 No.40 3-2",
+       "hg": "HG-9122",
+       "title": "正方形の内側で円が通らない部分",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "半径1cmの円が1辺5cmの正方形の辺の内側にそって1周したとき，円の通らなかった部分の面積は何cm²ですか。（円周率は3.14とします。）",
+         "answer": "1.86",
+         "meaning": "円（直径2cm）は辺にそって、はば2cmの帯の中を通る。通らないのは、まん中の正方形と、四すみの小さな部分の2種類。まん中の正方形は1辺 5－2－2＝1(cm) なので 1×1＝1(cm²)。四すみは、1辺1cmの正方形から半径1cmの四分円をのぞいた形で、4つ集めると1辺2cmの正方形から半径1cmの円をのぞいた形になる。2×2－1×1×3.14＝0.86(cm²)。合わせて 1＋0.86＝1.86(cm²)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 370 340\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"40\" y=\"70\" width=\"250\" height=\"250\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.5\"/>\n<path d=\"M40,70 Q165.0,34 290,70\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"165.0\" y=\"46\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">5 cm</text>\n<circle cx=\"165.0\" cy=\"120\" r=\"50\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.5\"/>\n<line x1=\"165.0\" y1=\"120\" x2=\"165.0\" y2=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M168.0,95.0 Q195.0,87.0 229.0,99.0\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"233.0\" y=\"105.0\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">1cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_7",
+       "src": "HG-9123 原簿・小5 テーマ教材 第4分冊 No.40 4-1",
+       "hg": "HG-9123",
+       "title": "正方形の外側を転がる円",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "半径2cmの円が，1辺9cmの正方形の辺上を転がりながら1周します。このとき円の中心の通ったあとの長さは何cmですか。（円周率は3.14とします。）",
+         "answer": "48.56",
+         "meaning": "辺の上を転がる間、中心は辺と平行に、辺と同じ9cmずつ進む。4辺で 9×4＝36(cm)。正方形の角では、円は角の頂点を中心に90度回るので、中心は半径2cmの四分円をえがく。角は4つあるので、四分円4つで直径4cmの円周1つ分 4×3.14×1/4×4＝12.56(cm)。合わせて 12.56＋36＝48.56(cm)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 375 375\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"60\" y=\"130\" width=\"225\" height=\"225\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.5\"/>\n<circle cx=\"60\" cy=\"80\" r=\"50\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.5\"/>\n<line x1=\"60\" y1=\"80\" x2=\"110\" y2=\"80\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M85.0,78 Q105.0,58 130,68\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"134\" y=\"74\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">2cm</text>\n<path d=\"M285,130 Q325,242.5 285,355\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"309\" y=\"248.5\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">9 cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_8",
+       "src": "HG-9124 原簿・小5 テーマ教材 第4分冊 No.40 4-2",
+       "hg": "HG-9124",
+       "title": "おうぎ形の転がり移動",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 3,
+       "intro": "下の図のように，中心角が45度で半径が4cmのおうぎ形ABCを直線ℓにそってすべらないように，①→②→③→④の順に転がします。\n次の問いに答えなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1) 点Aの動いたあとの線の長さは何cmですか。",
+         "answer": "15.7",
+         "meaning": "点Aはおうぎ形の中心。はじめは点Bを中心に、半径ABが直線と垂直に立つまで90度回るので、Aは半径4cmの四分円をえがく。次に、おうぎ形の弧が直線の上を転がって③の位置になる。このときAは直線から4cmの高さを、弧の長さと同じだけまっすぐ進む。弧の長さは 4×2×3.14×45/360＝3.14(cm)。最後に③→④で点Cを中心に90度回り、また半径4cmの四分円。4×2×3.14×90/360×2＋4×2×3.14×45/360＝5×3.14＝15.7(cm)。"
+        },
+        {
+         "question": "(2) 点Aの動いたあとの線と直線とで囲まれた部分の面積は何cm²ですか。",
+         "answer": "37.68",
+         "meaning": "(1)の線と直線で囲まれた部分は、左右の半径4cmの四分円2つと、まん中の長方形に分かれる。長方形は、たてが4cm、横が弧の長さと同じ 3.14cm。4×4×3.14×1/4×2＋4×3.14＝8×3.14＋4×3.14＝12×3.14＝37.68(cm²)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 360\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"20\" y1=\"300\" x2=\"770\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"778\" y=\"306\" font-style=\"italic\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">ℓ</text>\n<path d=\"M90.1,183.6 L320.8,117.5 A240,240 0 0 1 300,300 Z\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2\" stroke-dasharray=\"7,5\"/>\n<path d=\"M488.5,60 L318.8,229.7 A240,240 0 0 0 488.5,300 Z\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2\" stroke-dasharray=\"7,5\"/>\n<path d=\"M728.5,300 L558.8,130.3 A240,240 0 0 0 488.5,300 Z\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2\" stroke-dasharray=\"7,5\"/>\n<path d=\"M60,300 L229.7,130.3 A240,240 0 0 1 300,300 Z\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"2.8\"/>\n<path d=\"M94,300 A34,34 0 0 0 84.0,276.0\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"100\" y=\"290\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">45°</text>\n<path d=\"M60,300 Q180.0,340 300,300\" stroke=\"#4f9eff\" fill=\"none\" stroke-width=\"1.5\"/>\n<text x=\"180.0\" y=\"336\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">4 cm</text>\n<text x=\"56\" y=\"340\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">A</text>\n<text x=\"304\" y=\"340\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">B</text>\n<text x=\"229.7\" y=\"118.30000000000001\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\">C</text>\n<text x=\"240\" y=\"215\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\" font-size=\"22\">①</text>\n<text x=\"300\" y=\"150\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\" font-size=\"22\">②</text>\n<text x=\"410\" y=\"215\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\" font-size=\"22\">③</text>\n<text x=\"600\" y=\"230\" text-anchor=\"middle\" fill=\"#e8eef7\" font-size=\"18\" font-family=\"sans-serif\" font-size=\"22\">④</text>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_9",
+       "src": "HG-9125 原簿・小5 テーマ教材 第4分冊 No.40 5-1",
+       "hg": "HG-9125",
+       "title": "円の内側を転がる円",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "半径10cmの大円の内側を半径2cmの小円が転がりながら1周します。小円の中心が通ったあとの長さは何cmですか。（円周率は3.14とします。）",
+         "answer": "50.24",
+         "meaning": "小円はいつも大円に内側からくっついているので、大円の中心から小円の中心までは、いつも 10－2＝8(cm)。だから小円の中心は、半径8cmの円をえがく。8×2×3.14＝50.24(cm)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 240\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <circle cx=\"120\" cy=\"120\" r=\"100\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n  <circle cx=\"120\" cy=\"40\" r=\"20\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n</svg>"
+      },
+      {
+       "id": "hd5m_t40_10",
+       "src": "HG-9126 原簿・小5 テーマ教材 第4分冊 No.40 5-2",
+       "hg": "HG-9126",
+       "title": "円の外側を転がる円",
+       "category": "zu",
+       "unit": "図形の移動",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "半径10cmの大円の外側を半径2cmの小円が転がりながら1周します。小円の通ったあとの面積は何cm²ですか。（円周率は3.14とします。）",
+         "answer": "301.44",
+         "meaning": "小円は大円の外側にくっついて回る。大円の中心から見て、小円のいちばん近いところは10cm、いちばん遠いところは 10＋2×2＝14(cm)。だから小円の通ったあとは、半径14cmの円から半径10cmの円をのぞいた輪になる。14×14×3.14－10×10×3.14＝96×3.14＝301.44(cm²)。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 280\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <circle cx=\"120\" cy=\"160\" r=\"100\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n  <circle cx=\"120\" cy=\"40\" r=\"20\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n</svg>"
+      }
      ]
     }
    }
