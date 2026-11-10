@@ -394,7 +394,8 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             #   これも**この2組だけ**（cm³ ↔ 体積／cm² ↔ 面積）で、**cm の長さが出ているときだけ**
             #   （m や km の立体で cm³ と取り違えないため）
             for uk, word in ((u"cm³", u"体積"), (u"cm³", u"容積"), (u"cm²", u"面積")):
-                if miss == [uk] and word in shown and re.search(u"\\d\\s*cm(?![²³])", shown):
+                # ★cm³ だけが書かれた問い（「底面積と高さ」・容器の体積が cm³ で与えられる）も cm の量の問い（2026-11-10 最レNo.37 大問12）
+                if miss == [uk] and word in shown and re.search(u"\\d\\s*cm", shown):
                     notes.append(u"%s step%d: 単位『%s』の字は問いかけに無いが、『%s』と cm の長さがあるので通した"
                                  % (hg, i, uk, word))
                     miss = []
