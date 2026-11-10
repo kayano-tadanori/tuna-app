@@ -395,6 +395,10 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             if miss and all(x in SPEED and SPEED[x] in shown for x in miss) and u"速さ" in shown:
                 notes.append(u"%s step%d: 『%s』の字は問いかけに無いが、『速さ』と時間の単位があるので通した" % (hg, i, u"・".join(miss)))
                 miss = []
+            # ★「何はい」で問うて答えが「10ぱい」（助数詞の音の変化。2026-11-10・小3最レ No.23 大問3）。この1組だけ
+            if miss == [u"ぱい"] and (u"はい" in shown or u"杯" in shown):
+                notes.append(u"%s step%d: 単位『ぱい』の字は問いかけに無いが、『はい』があるので通した" % (hg, i))
+                miss = []
             # ★「兄の年令を求めなさい」＝才で答える問い（2026-11-10・最レ第2講座 No.32 大問1）。この1組だけ（才 ↔ 年令/年齢）
             if miss == [u"才"] and (u"年令" in shown or u"年齢" in shown):
                 notes.append(u"%s step%d: 単位『才』の字は問いかけに無いが、『年令』があるので通した" % (hg, i))
