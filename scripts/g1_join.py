@@ -389,6 +389,12 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             if miss and set(miss) <= {u"時", u"分"} and u"時刻" in shown:
                 notes.append(u"%s step%d: 単位『%s』の字は問いかけに無いが、『時刻』があるので通した" % (hg, i, u"・".join(miss)))
                 miss = []
+            # ★「P，Qの速さをそれぞれ求めなさい」＋問題に秒・cm が出ている（2026-11-10・最レ第1講座 No.40 大問16）。
+            #   毎秒/秒速 ↔ 「速さ」と「秒」、毎分/分速 ↔ 「速さ」と「分」の組だけ。長さの単位は別に問いかけにあること
+            SPEED = {u"毎秒": u"秒", u"秒速": u"秒", u"毎分": u"分", u"分速": u"分"}
+            if miss and all(x in SPEED and SPEED[x] in shown for x in miss) and u"速さ" in shown:
+                notes.append(u"%s step%d: 『%s』の字は問いかけに無いが、『速さ』と時間の単位があるので通した" % (hg, i, u"・".join(miss)))
+                miss = []
             # ★「兄の年令を求めなさい」＝才で答える問い（2026-11-10・最レ第2講座 No.32 大問1）。この1組だけ（才 ↔ 年令/年齢）
             if miss == [u"才"] and (u"年令" in shown or u"年齢" in shown):
                 notes.append(u"%s step%d: 単位『才』の字は問いかけに無いが、『年令』があるので通した" % (hg, i))
