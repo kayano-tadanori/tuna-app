@@ -108188,6 +108188,428 @@
        ],
        "svg": "<svg viewBox=\"0 0 1080 1010\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"265\" y1=\"210\" x2=\"665\" y2=\"85\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"665\" y1=\"85\" x2=\"815\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"815\" y1=\"230\" x2=\"380\" y2=\"360\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"380\" y1=\"360\" x2=\"265\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"70\" y1=\"965\" x2=\"265\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"70\" y1=\"965\" x2=\"380\" y2=\"360\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"380\" y1=\"360\" x2=\"650\" y2=\"965\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"650\" y1=\"965\" x2=\"815\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"815\" y1=\"230\" x2=\"1015\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"70\" y1=\"965\" x2=\"650\" y2=\"965\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"650\" y1=\"965\" x2=\"1015\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/>\n<line x1=\"60\" y1=\"360\" x2=\"435\" y2=\"85\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"435\" y1=\"85\" x2=\"1010\" y2=\"88\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"1010\" y1=\"88\" x2=\"645\" y2=\"360\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"60\" y1=\"360\" x2=\"645\" y2=\"360\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"60\" y1=\"360\" x2=\"70\" y2=\"965\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"435\" y1=\"85\" x2=\"435\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"645\" y1=\"360\" x2=\"650\" y2=\"965\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"1010\" y1=\"88\" x2=\"1015\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"435\" y1=\"690\" x2=\"1015\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"435\" y1=\"690\" x2=\"70\" y2=\"965\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"265\" y1=\"210\" x2=\"435\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"665\" y1=\"85\" x2=\"435\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<line x1=\"665\" y1=\"85\" x2=\"1015\" y2=\"690\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"9 7\"/>\n<circle cx=\"265\" cy=\"210\" r=\"11\" fill=\"#4f9eff\"/>\n<circle cx=\"380\" cy=\"360\" r=\"11\" fill=\"#4f9eff\"/>\n<circle cx=\"815\" cy=\"230\" r=\"11\" fill=\"#4f9eff\"/>\n<circle cx=\"665\" cy=\"85\" r=\"11\" fill=\"#4f9eff\"/>\n</svg>"
       }
+     ],
+     "34": [
+      {
+       "id": "hd5s_34k1_1",
+       "src": "HG-9233 原簿・小5最レ 第4分冊 第1講座 No.34 大問1",
+       "hg": "HG-9233",
+       "title": "長方形・直角三角形を回した体積",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図の形（(1)は長方形，(2)は直角三角形）を直線のまわりに1回転させたときにできる立体の体積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "904.32",
+         "meaning": "長方形を回すと円柱になる。軸からはなれた辺6cmが半径、軸にくっついた辺8cmが高さ。円柱の体積は底面積×高さなので、6×6×3.14×8＝288×3.14＝904.32cm³。",
+         "svg": "<svg viewBox=\"0 0 216 339\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-340,-563)\" font-family=\"sans-serif\">\n<line x1=\"495\" y1=\"575\" x2=\"495\" y2=\"890\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"352,645 495,645 495,853 352,853\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M495,645 Q523.0,749.0 495,853\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"528\" y=\"757\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">8cm</text>\n<path d=\"M352,853 Q423.5,869.0 495,853\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"423\" y=\"882\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">6cm</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "1271.7",
+         "meaning": "直角三角形を回すと円すいになる。半径9cm・高さ15cm。円すいは同じ底面・高さの円柱の1/3なので、9×9×3.14×15×1/3＝405×3.14＝1271.7cm³。",
+         "svg": "<svg viewBox=\"0 0 234 336\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-785,-566)\" font-family=\"sans-serif\">\n<line x1=\"945\" y1=\"578\" x2=\"945\" y2=\"890\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"945,648 945,853 797,853\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M945,648 Q973.0,750.5 945,853\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"985\" y=\"765\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">15cm</text>\n<path d=\"M797,853 Q871.0,869.0 945,853\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"866\" y=\"882\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">9cm</text>\n</g>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_2",
+       "src": "HG-9234 原簿・小5最レ 第4分冊 第1講座 No.34 大問2",
+       "hg": "HG-9234",
+       "title": "円柱と円すいを組み合わせた回転体の体積",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図の形を直線のまわりに1回転させたときにできる立体の体積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "15.7",
+         "meaning": "軸に垂直な線で2つの長方形に分けると、2つの円柱を重ねた形になる。上は半径1cm・高さ1cmで1×1×3.14×1＝1×3.14、下は半径2cm・高さ1cmで2×2×3.14×1＝4×3.14。3.14はまとめて最後にかけると楽なので、(1＋4)×3.14＝5×3.14＝15.7cm³。",
+         "svg": "<svg viewBox=\"0 0 252 288\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-234,-1070)\" font-family=\"sans-serif\">\n<line x1=\"474\" y1=\"1095\" x2=\"474\" y2=\"1345\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"380,1125 474,1125 474,1308 298,1308 298,1220 380,1220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"389,1125 389,1134 380,1134\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"465,1125 465,1134 474,1134\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"465,1308 465,1299 474,1299\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"307,1308 307,1299 298,1299\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"307,1220 307,1229 298,1229\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M380,1125 Q427.0,1109.0 474,1125\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"428\" y=\"1102\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">1cm</text>\n<path d=\"M380,1125 Q364.0,1172.5 380,1220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"355\" y=\"1178\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">1cm</text>\n<path d=\"M298,1220 Q282.0,1264.0 298,1308\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"262\" y=\"1272\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">1cm</text>\n<path d=\"M298,1308 Q386.0,1324.0 474,1308\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"388\" y=\"1342\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "301.44",
+         "meaning": "長方形と直角三角形に分けると、円柱の上に円すいがのった形になる。円すいは半径6cm・高さ2cmで6×6×3.14×2×1/3＝24×3.14、円柱は半径6cm・高さ2cmで6×6×3.14×2＝72×3.14。合わせて(24＋72)×3.14＝96×3.14＝301.44cm³。",
+         "svg": "<svg viewBox=\"0 0 307 266\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-540,-1076)\" font-family=\"sans-serif\">\n<line x1=\"783\" y1=\"1088\" x2=\"783\" y2=\"1330\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"783,1112 600,1200 600,1293 783,1293\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"609,1293 609,1284 600,1284\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"774,1293 774,1284 783,1284\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M783,1112 Q811.0,1202.5 783,1293\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"818\" y=\"1218\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">4cm</text>\n<path d=\"M600,1200 Q584.0,1246.5 600,1293\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"568\" y=\"1256\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<path d=\"M600,1293 Q691.5,1309.0 783,1293\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"690\" y=\"1324\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">6cm</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "401.92",
+         "meaning": "軸からいちばんはなれた頂点から軸に垂直な線をひくと、2つの直角三角形に分かれ、底面を合わせた2つの円すいになる。どちらも半径8cm・高さ3cmなので1つ8×8×3.14×3×1/3＝64×3.14。2つで(64＋64)×3.14＝128×3.14＝401.92cm³。",
+         "svg": "<svg viewBox=\"0 0 319 271\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-872,-1071)\" font-family=\"sans-serif\">\n<line x1=\"1128\" y1=\"1083\" x2=\"1128\" y2=\"1330\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"1128,1107 935,1197 1128,1290\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"935\" y1=\"1197\" x2=\"935\" y2=\"1290\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n<line x1=\"935\" y1=\"1290\" x2=\"1128\" y2=\"1290\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n<polyline points=\"944,1290 944,1281 935,1281\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"1119,1290 1119,1281 1128,1281\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M1128,1107 Q1156.0,1198.5 1128,1290\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"1162\" y=\"1208\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">6cm</text>\n<path d=\"M935,1197 Q919.0,1243.5 935,1290\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"900\" y=\"1253\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">3cm</text>\n<path d=\"M935,1290 Q1031.5,1306.0 1128,1290\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"1032\" y=\"1320\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">8cm</text>\n</g>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_3",
+       "src": "HG-9235 原簿・小5最レ 第4分冊 第1講座 No.34 大問3",
+       "hg": "HG-9235",
+       "title": "円すい台・くりぬいた立体の体積",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図の形を直線のまわりに1回転させたときにできる立体の体積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "87.92",
+         "meaning": "台形を回すと円すい台になる。上にのばして大きい円すいにすると、上に足した小さい円すい（半径2cm・高さ3cm）と大きい円すいは相似比1:2なので、体積比は1×1×1：2×2×2＝1：8。小さい円すいを①とすると、①＝2×2×3.14×3×1/3＝4×3.14。円すい台は⑧－①＝⑦なので、4×3.14×7＝28×3.14＝87.92cm³。",
+         "svg": "<svg viewBox=\"0 0 292 339\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-218,-1518)\" font-family=\"sans-serif\">\n<line x1=\"450\" y1=\"1530\" x2=\"450\" y2=\"1845\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"345,1608 450,1608 450,1772 230,1772\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"441,1608 441,1617 450,1617\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"441,1772 441,1763 450,1763\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M345,1608 Q397.5,1592.0 450,1608\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"408\" y=\"1585\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<path d=\"M450,1608 Q474.0,1690.0 450,1772\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"482\" y=\"1698\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">3cm</text>\n<path d=\"M230,1772 Q340.0,1788.0 450,1772\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"346\" y=\"1802\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">4cm</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "125.6",
+         "meaning": "軸からはなれた長方形を回すと、まん中が空いた円柱（つつ）になる。底面は半径3cmの円から半径1cmの円を引いたドーナツ形で、高さは5cm。(3×3×3.14－1×1×3.14)×5＝8×3.14×5＝40×3.14＝125.6cm³。",
+         "svg": "<svg viewBox=\"0 0 218 284\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-588,-1523)\" font-family=\"sans-serif\">\n<line x1=\"795\" y1=\"1535\" x2=\"795\" y2=\"1795\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"652,1587 760,1587 760,1770 652,1770\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"661,1587 661,1596 652,1596\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"751,1587 751,1596 760,1596\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"751,1770 751,1761 760,1761\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<polyline points=\"661,1770 661,1761 652,1761\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<line x1=\"760\" y1=\"1587\" x2=\"795\" y2=\"1587\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n<polyline points=\"786,1587 786,1596 795,1596\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M652,1587 Q706.0,1571.0 760,1587\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"703\" y=\"1566\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<path d=\"M760,1587 Q777.5,1575.0 795,1587\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\" stroke-dasharray=\"4 3\"/>\n<text x=\"775\" y=\"1568\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">1cm</text>\n<path d=\"M652,1587 Q628.0,1678.5 652,1770\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"617\" y=\"1690\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">5cm</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "628",
+         "meaning": "半径5cm・高さ12cmの円柱から、同じ底面・高さの円すいをくりぬいた形になる。円すいは円柱の1/3なので、5×5×3.14×12－5×5×3.14×12×1/3＝300×3.14－100×3.14＝200×3.14＝628cm³。",
+         "svg": "<svg viewBox=\"0 0 196 354\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-944,-1498)\" font-family=\"sans-serif\">\n<line x1=\"1128\" y1=\"1510\" x2=\"1128\" y2=\"1840\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"1020,1540 1020,1783 1128,1783\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"1029,1783 1029,1774 1020,1774\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M1020,1540 Q1055.7,1669.6 1128,1783\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"1058\" y=\"1678\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">13</text>\n<text x=\"1058\" y=\"1700\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">cm</text>\n<path d=\"M1020,1540 Q996.0,1661.5 1020,1783\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"978\" y=\"1665\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">12cm</text>\n<path d=\"M1020,1783 Q1074.0,1799.0 1128,1783\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"1074\" y=\"1812\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">5cm</text>\n</g>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_4",
+       "src": "HG-9236 原簿・小5最レ 第4分冊 第1講座 No.34 大問4",
+       "hg": "HG-9236",
+       "title": "軸に平行にずらして体積を求める",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図の形を直線のまわりに1回転させたときにできる立体の体積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1) 3つの四角形は同じ大きさの長方形",
+         "answer": "678.24",
+         "meaning": "回転軸に平行に上下にずらしても、軸からの距離は変わらないので体積は変わらない。3つの長方形（よこ2cm・たて6cm）をずらして横一列にそろえると、よこ6cm・たて6cmの長方形になり、回すと半径6cm・高さ6cmの円柱。6×6×3.14×6＝678.24cm³。",
+         "svg": "<svg viewBox=\"0 0 340 488\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-176,-18)\" font-family=\"sans-serif\">\n<line x1=\"478\" y1=\"40\" x2=\"478\" y2=\"455\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"247,70 324,70 324,303 247,303\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"324,186 401,186 401,422 324,422\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"401,110 478,110 478,345 401,345\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M247,70 Q285.5,54.0 324,70\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"283\" y=\"50\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<path d=\"M247,70 Q223.0,186.5 247,303\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"205\" y=\"193\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">6cm</text>\n<path d=\"M324,186 Q362.5,170.0 401,186\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"362\" y=\"166\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<path d=\"M401,110 Q439.5,94.0 478,110\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"438\" y=\"90\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<path d=\"M324,303 Q304.0,362.5 324,422\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"290\" y=\"377\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">3cm</text>\n<path d=\"M401,345 Q421.0,383.5 401,422\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"440\" y=\"392\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">2cm</text>\n<text x=\"365\" y=\"490\" font-size=\"18\" text-anchor=\"middle\" fill=\"#e8ecf5\">3つの四角形は同じ大きさの長方形</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(2) 四角形ABCDは平行四辺形",
+         "answer": "1570",
+         "meaning": "平行四辺形を、軸に平行な細い帯に切って考えると、どの帯もたての長さはAB（＝DC）と同じ5cm。帯を上下にずらしてそろえると、たて5cm・よこ10cmの長方形になり、回すと半径10cm・高さ5cmの円柱。ずらしても体積は変わらないので、10×10×3.14×5＝1570cm³。",
+         "svg": "<svg viewBox=\"0 0 239 505\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-780,4)\" font-family=\"sans-serif\">\n<line x1=\"940\" y1=\"15\" x2=\"940\" y2=\"445\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"818,330 818,398 940,97 940,38\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"818\" y1=\"398\" x2=\"940\" y2=\"398\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n<polyline points=\"931,398 931,389 940,389\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"948\" y=\"28\" font-size=\"20\" text-anchor=\"start\" fill=\"#e8ecf5\">D</text>\n<text x=\"948\" y=\"105\" font-size=\"20\" text-anchor=\"start\" fill=\"#e8ecf5\">C</text>\n<text x=\"798\" y=\"340\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n<text x=\"798\" y=\"408\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<path d=\"M940,38 Q956.0,67.5 940,97\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"985\" y=\"72\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">5cm</text>\n<path d=\"M940,38 Q853.2,173.2 818,330\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"830\" y=\"175\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">26cm</text>\n<path d=\"M940,97 Q968.0,247.5 940,398\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"985\" y=\"250\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">24cm</text>\n<path d=\"M818,398 Q879.0,414.0 940,398\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"876\" y=\"440\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">10cm</text>\n<text x=\"893\" y=\"485\" font-size=\"18\" text-anchor=\"middle\" fill=\"#e8ecf5\">四角形ABCDは平行四辺形</text>\n</g>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_5",
+       "src": "HG-9237 原簿・小5最レ 第4分冊 第1講座 No.34 大問5",
+       "hg": "HG-9237",
+       "title": "三角形を回す（円すいの差と和）",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図の形を直線のまわりに1回転させたときにできる立体の体積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "753.6",
+         "meaning": "回してできる立体は、半径12cm・高さ10cmの大きい円すいから、半径12cm・高さ5cmの円すいをくりぬいた形。底面が同じ円すいの体積は高さに比例するので、差は高さ10－5＝5cmの円すい1つ分になる。12×12×3.14×5×1/3＝753.6cm³。",
+         "svg": "<svg viewBox=\"0 0 304 294\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-168,-793)\" font-family=\"sans-serif\">\n<line x1=\"405\" y1=\"805\" x2=\"405\" y2=\"1075\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"180,1038 405,852 405,941\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"180\" y1=\"1038\" x2=\"405\" y2=\"1038\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n<polyline points=\"396,1038 396,1029 405,1029\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M180,1038 Q275.1,949.1 405,941\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<line x1=\"300\" y1=\"958\" x2=\"285\" y2=\"935\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"245\" y=\"925\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">13cm</text>\n<path d=\"M405,852 Q425.0,896.5 405,941\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"444\" y=\"900\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">5cm</text>\n<path d=\"M405,941 Q425.0,989.5 405,1038\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"440\" y=\"1000\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">5cm</text>\n<path d=\"M180,1038 Q292.5,1058.0 405,1038\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"300\" y=\"1068\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">12cm</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "1507.2",
+         "meaning": "軸からいちばんはなれた頂点から軸に垂直な線をひくと、半径12cmの底面を合わせた2つの円すいになる。2つの高さの和は10cmなので、高さ10cmの円すい1つ分と同じ。12×12×3.14×10×1/3＝1507.2cm³。",
+         "svg": "<svg viewBox=\"0 0 320 319\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-806,-783)\" font-family=\"sans-serif\">\n<line x1=\"1032\" y1=\"795\" x2=\"1032\" y2=\"1090\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"1032,825 818,934 1032,1043\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"818\" y1=\"934\" x2=\"1032\" y2=\"934\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n<polyline points=\"1023,934 1023,925 1032,925\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M1032,825 Q1064.0,934.0 1032,1043\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"1092\" y=\"937\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">10cm</text>\n<path d=\"M818,934 Q925.0,950.0 1032,934\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<text x=\"935\" y=\"970\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">12cm</text>\n</g>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_6",
+       "src": "HG-9238 原簿・小5最レ 第4分冊 第1講座 No.34 大問6",
+       "hg": "HG-9238",
+       "title": "正方形を並べた図形を回す",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": "一辺の長さが2cmの正方形6個を下図のように配置した図形を直線のまわりに1回転させたときにできる立体の体積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "452.16",
+         "meaning": "回転軸に平行にずらしても体積は変わらない。軸からの距離0〜2cm、2〜4cm、4〜6cmの列に正方形が2個ずつあるので、下へずらしてそろえると、よこ6cm・たて4cm（2段×3列）の長方形になる。回すと半径6cm・高さ4cmの円柱なので、6×6×3.14×4＝452.16cm³。",
+         "svg": "<svg viewBox=\"0 0 186 314\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(-248,-1528)\" font-family=\"sans-serif\">\n<line x1=\"422\" y1=\"1540\" x2=\"422\" y2=\"1830\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"260,1575 314,1575 314,1629 260,1629\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"260,1629 314,1629 314,1683 260,1683\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"314,1629 368,1629 368,1683 314,1683\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"314,1683 368,1683 368,1737 314,1737\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"368,1683 422,1683 422,1737 368,1737\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"368,1737 422,1737 422,1791 368,1791\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</g>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_7",
+       "src": "HG-9239 原簿・小5最レ 第4分冊 第1講座 No.34 大問7",
+       "hg": "HG-9239",
+       "title": "円柱・円すい・円すい台の表面積",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図の形（(1)は長方形，(2)は直角三角形，(3)は台形）を直線のまわりに1回転させたときにできる立体の表面積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "282.6",
+         "meaning": "半径3cm・高さ12cmの円柱になる。底面は2つで3×3×3.14×2＝18×3.14、側面は底面の円周（直径6cm×3.14）×高さで6×3.14×12＝72×3.14。合わせて(18＋72)×3.14＝90×3.14＝282.6cm²。",
+         "svg": "<svg viewBox=\"0 0 200 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"130\" y1=\"20\" x2=\"130\" y2=\"270\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"65,50 130,50 130,224 65,224\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M65,50 Q97.5,30.0 130,50\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"97\" y=\"25\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">3cm</text>\n<path d=\"M65,50 Q41.0,137.0 65,224\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"28\" y=\"137\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">12cm</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "235.5",
+         "meaning": "母線10cm・半径5cmの円すいになる。円すいの側面積は母線×半径×3.14で求められる。底面5×5×3.14＝25×3.14、側面10×5×3.14＝50×3.14。合わせて(25＋50)×3.14＝75×3.14＝235.5cm²。",
+         "svg": "<svg viewBox=\"0 0 240 320\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"190\" y1=\"15\" x2=\"190\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"190,50 44,248 190,248\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M44,248 Q94.5,132.4 190,50\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"60\" y=\"130\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">10cm</text>\n<path d=\"M44,248 Q117.0,268.0 190,248\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"118\" y=\"278\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "376.8",
+         "meaning": "円すい台になる。上にのばして大きい円すいにすると、上に足す小さい円すいとの相似比は2：6＝1：3なので、小さい円すいの母線は10÷(3－1)＝5cm、大きい円すいの母線は5＋10＝15cm。円すい台の側面は大きい円すいの側面から小さい円すいの側面を引いて15×6×3.14－5×2×3.14。上下の底面2×2×3.14と6×6×3.14を足すと、(4＋36＋90－10)×3.14＝120×3.14＝376.8cm²。",
+         "svg": "<svg viewBox=\"0 0 300 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"250\" y1=\"20\" x2=\"250\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"186,64 250,64 250,241 35,241\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"241,64 241,73 250,73\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"241,241 241,232 250,232\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M186,64 Q218.0,44.0 250,64\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"220\" y=\"40\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<path d=\"M35,241 Q89.2,134.3 186,64\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"70\" y=\"140\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">10cm</text>\n<path d=\"M35,241 Q142.5,261.0 250,241\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"142\" y=\"270\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">6cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_8",
+       "src": "HG-9240 原簿・小5最レ 第4分冊 第1講座 No.34 大問8",
+       "hg": "HG-9240",
+       "title": "段のある回転体の表面積",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図の形を直線のまわりに1回転させたときにできる立体の表面積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "175.84",
+         "meaning": "下が半径4cm、上が半径2cmの2段の円柱（高さは各2cm）。上から見える面（上の段の上面と、下の段のはみ出した輪）を合わせると半径4cmの円になるので、上面と下面で4×4×3.14×2＝32×3.14。2階の側面は直径4cmの円周×高さで4×3.14×2＝8×3.14、1階の側面は8×3.14×2＝16×3.14。合わせて(32＋8＋16)×3.14＝56×3.14＝175.84cm²。",
+         "svg": "<svg viewBox=\"-30 0 280 320\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"230\" y1=\"15\" x2=\"230\" y2=\"298\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"133,68 230,68 230,260 34,260 34,164 133,164\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"142,68 142,77 133,77\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"221,68 221,77 230,77\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"43,164 43,173 34,173\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"43,260 43,251 34,251\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"221,260 221,251 230,251\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M133,68 Q181.5,48.0 230,68\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"180\" y=\"38\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<path d=\"M133,68 Q113.0,116.0 133,164\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"92\" y=\"116\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<path d=\"M34,164 Q14.0,212.0 34,260\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"-2\" y=\"216\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<path d=\"M34,260 Q132.0,280.0 230,260\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"128\" y=\"287\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">4cm</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "188.4",
+         "meaning": "半径4cm・高さ3cmの円柱の上に、母線5cm・半径4cmの円すいがのった形。下面4×4×3.14＝16×3.14、2階（円すい）の側面は母線×半径×3.14で5×4×3.14＝20×3.14、1階の側面は直径8cmの円周×高さで8×3.14×3＝24×3.14。合わせて(16＋20＋24)×3.14＝60×3.14＝188.4cm²。",
+         "svg": "<svg viewBox=\"-25 0 330 320\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"226\" y1=\"15\" x2=\"226\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"50,165 226,55 226,262 50,262\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"59,262 59,253 50,253\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"217,262 217,253 226,253\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M50,165 Q125.3,89.6 226,55\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"120\" y=\"90\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n<path d=\"M50,165 Q30.0,213.5 50,262\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"12\" y=\"218\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">3cm</text>\n<path d=\"M226,55 Q250.0,158.5 226,262\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"262\" y=\"168\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">6cm</text>\n<path d=\"M50,262 Q138.0,282.0 226,262\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"138\" y=\"285\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">4cm</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "395.64",
+         "meaning": "半径6cm・高さ4cmの円柱の上に、母線5cm・半径3cmの円すいがのった形。下面は6×6×3.14、上から見える輪は半径6cmの円から円すいの底面（半径3cm）を引いて6×6×3.14－3×3×3.14なので、上面と下面で63×3.14。2階（円すい）の側面は5×3×3.14＝15×3.14、1階の側面は12×3.14×4＝48×3.14。合わせて(63＋15＋48)×3.14＝126×3.14＝395.64cm²。",
+         "svg": "<svg viewBox=\"0 0 320 320\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"240\" y1=\"10\" x2=\"240\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"59,152 149,152 240,53 240,260 59,260\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"68,152 68,161 59,161\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"68,260 68,251 59,251\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"231,260 231,251 240,251\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M59,152 Q104.0,132.0 149,152\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"100\" y=\"125\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">3cm</text>\n<path d=\"M149,152 Q176.8,86.3 240,53\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"162\" y=\"78\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n<path d=\"M59,152 Q39.0,206.0 59,260\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"22\" y=\"214\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">4cm</text>\n<path d=\"M240,53 Q268.0,156.5 240,260\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"278\" y=\"146\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">8cm</text>\n<path d=\"M59,260 Q149.5,280.0 240,260\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"150\" y=\"283\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">6cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_9",
+       "src": "HG-9241 原簿・小5最レ 第4分冊 第1講座 No.34 大問9",
+       "hg": "HG-9241",
+       "title": "くぼみ・穴のある回転体の表面積",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図の形を直線のまわりに1回転させたときにできる立体の表面積を求めなさい。（円周率は3.14とします。）",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "263.76",
+         "meaning": "半径4cm・高さ6cmの円柱の上を、すりばちのように円すいの形（母線5cm・半径4cm）にくりぬいた立体。上の面はなく、そのかわりにくぼみの面（円すいの側面）がある。下面4×4×3.14＝16×3.14、外側の側面8×3.14×6＝48×3.14、内側の側面5×4×3.14＝20×3.14。合わせて(16＋48＋20)×3.14＝84×3.14＝263.76cm²。",
+         "svg": "<svg viewBox=\"-25 0 300 360\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"236\" y1=\"10\" x2=\"236\" y2=\"350\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"45,50 236,147 236,245 45,245\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"54,245 54,236 45,236\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"227,245 227,236 236,236\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M45,50 Q151.4,77.1 236,147\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"150\" y=\"70\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n<path d=\"M45,50 Q21.0,147.5 45,245\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"8\" y=\"140\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">6cm</text>\n<path d=\"M236,147 Q212.0,196.0 236,245\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"196\" y=\"196\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">3cm</text>\n<path d=\"M45,245 Q140.5,265.0 236,245\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"135\" y=\"268\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">4cm</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "175.84",
+         "meaning": "外の半径3cm・内の半径1cm・高さ5cmの、まん中に穴のあいた円柱。上面と下面はドーナツ形で(3×3×3.14－1×1×3.14)×2＝16×3.14。外側の側面は直径6cmの円周×高さで6×3.14×5＝30×3.14、穴の内側の側面は直径2cmの円周×高さで2×3.14×5＝10×3.14。合わせて(16＋30＋10)×3.14＝56×3.14＝175.84cm²。",
+         "svg": "<svg viewBox=\"-25 0 240 320\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"200\" y1=\"10\" x2=\"200\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"44,60 160,60 160,257 44,257\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"160\" y1=\"60\" x2=\"200\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5,4\"/>\n<polyline points=\"53,60 53,69 44,69\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"151,60 151,69 160,69\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"191,60 191,69 200,69\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"53,257 53,248 44,248\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"151,257 151,248 160,248\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M44,60 Q102.0,40.0 160,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"100\" y=\"33\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<path d=\"M160,60 Q180.0,44.0 200,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"182\" y=\"33\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">1cm</text>\n<path d=\"M44,60 Q20.0,158.5 44,257\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"8\" y=\"160\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "803.84",
+         "meaning": "半径6cm・高さ10cmの円柱から、半径4cm・深さ8cmの円柱をくりぬいた入れ物の形。上から見える面（上のふちの輪と穴の底）を合わせると半径6cmの円になるので、上面と下面で6×6×3.14×2＝72×3.14。外側の側面12×3.14×10＝120×3.14、内側の側面8×3.14×8＝64×3.14。合わせて(72＋120＋64)×3.14＝256×3.14＝803.84cm²。",
+         "svg": "<svg viewBox=\"0 0 280 380\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"225\" y1=\"10\" x2=\"225\" y2=\"340\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"62,47 115,47 115,263 225,263 225,313 62,313\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"71,47 71,56 62,56\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"106,47 106,56 115,56\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"216,263 216,272 225,272\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"216,313 216,304 225,304\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"71,313 71,304 62,304\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M62,47 Q38.0,180.0 62,313\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"18\" y=\"185\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">10cm</text>\n<path d=\"M115,263 Q170.0,247.0 225,263\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"172\" y=\"242\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">4cm</text>\n<path d=\"M225,263 Q209.0,288.0 225,313\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"190\" y=\"288\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<path d=\"M62,313 Q143.5,333.0 225,313\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"143\" y=\"340\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">6cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_10",
+       "src": "HG-9242 原簿・小5最レ 第4分冊 第1講座 No.34 大問10",
+       "hg": "HG-9242",
+       "title": "長方形をちがう辺で回したときの体積比",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "長方形ABCDをDCを回転軸として1回転させたときにできる立体を㋐，BCを回転軸として1回転させたときにできる立体を㋑とします。㋐と㋑の体積比を求めなさい。",
+         "answer": "2:1",
+         "meaning": "DCを軸にすると、軸からはなれた辺の長さAD＝20cmが半径、DC＝10cmが高さの円柱になり、20×20×3.14×10＝4000×3.14。BCを軸にすると、半径AB＝10cm・高さBC＝20cmの円柱になり、10×10×3.14×20＝2000×3.14。どちらにも×3.14がつくので、3.14をかけずに比べてよい。4000×3.14：2000×3.14＝2:1。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"70,60 257,60 257,190 70,190\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"52\" y=\"56\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n<text x=\"276\" y=\"56\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n<text x=\"276\" y=\"196\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n<text x=\"52\" y=\"196\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n<path d=\"M70,60 Q163.5,40.0 257,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"165\" y=\"25\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">20cm</text>\n<path d=\"M70,60 Q50.0,125.0 70,190\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"28\" y=\"125\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">10cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_34k1_11",
+       "src": "HG-9243 原簿・小5最レ 第4分冊 第1講座 No.34 大問11",
+       "hg": "HG-9243",
+       "title": "正方形4個を2本の軸で回したときの体積比",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "一辺の長さが2cmの正方形4個を下図のように配置した図形を直線ℓを回転軸として1回転させたときにできる立体を㋐，直線mを回転軸として1回転させたときにできる立体を㋑とします。㋐と㋑の体積比を求めなさい。",
+         "answer": "1:2",
+         "meaning": "ℓを軸にすると、正方形の段ごとに3つの円柱が重なった形になる。上の段は半径2cm・高さ2cmで2×2×3.14×2＝8×3.14、まん中の段は正方形が2個ならぶので半径4cmで4×4×3.14×2＝32×3.14、下の段は2×2×3.14×2＝8×3.14。合わせて48×3.14。mを軸にすると、ℓぞいの3個の列は半径6cm・高さ2cmの円柱で6×6×3.14×2＝72×3.14、はなれた1個はmから2〜4cmのところにあるのでドーナツ形の柱で(4×4－2×2)×3.14×2＝24×3.14。合わせて96×3.14。よって48×3.14：96×3.14＝1:2。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 280 290\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"208\" y1=\"30\" x2=\"208\" y2=\"270\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"206\" y=\"16\" fill=\"#e8ecf5\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"middle\">ℓ</text>\n<line x1=\"53\" y1=\"220\" x2=\"248\" y2=\"220\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"36\" y=\"222\" fill=\"#e8ecf5\" font-size=\"22\" text-anchor=\"middle\" dominant-baseline=\"middle\">m</text>\n<rect x=\"155\" y=\"60\" width=\"53\" height=\"53\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"155\" y=\"113\" width=\"53\" height=\"53\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"155\" y=\"166\" width=\"53\" height=\"53\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"102\" y=\"113\" width=\"53\" height=\"53\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+      },
+      {
+       "id": "hd5s_34k1_12",
+       "src": "HG-9244 原簿・小5最レ 第4分冊 第1講座 No.34 大問12",
+       "hg": "HG-9244",
+       "title": "直角三角形を中点で分けた部分の体積比",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図で，Dは辺ABの真ん中の点です。この図を，次のようにして1回転させたとき，㋐と㋑の部分がつくる立体の体積比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) ACを回転軸としたとき。",
+         "answer": "1:7",
+         "meaning": "ACを軸にすると、全体は大きい円すい、㋐はその上の小さい円すいになる。DはABの真ん中なので相似比は1：2、体積比は1×1×1：2×2×2＝1：8。㋐を①とすると全体は⑧なので、㋐：㋑＝①：(⑧－①)＝1:7。"
+        },
+        {
+         "question": "(2) BCを回転軸としたとき。",
+         "answer": "1:1",
+         "meaning": "BCを軸にすると、全体は半径AC・高さBCの円すい。㋑は、B側の小さい円すい（Dまで。これを[イ]とする）と、その先の円柱に分けられる。[イ]は全体と相似比1：2なので、[イ]を①とすると全体は⑧。全体から[イ]を引いた⑦が、円柱と㋐を合わせたもの。円柱は[イ]と底面積も高さも同じなので体積は3倍の③。よって㋐＝⑦－③＝④、㋑＝①＋③＝④で、㋐：㋑＝4：4＝1:1。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 340 320\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"290,40 171,157 290,157\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"171,157 52,277 290,277 290,157\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"281,157 281,166 290,166\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<polyline points=\"281,277 281,268 290,268\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M171,157 Q216.5,84.2 290,40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"200\" y=\"70\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\"></text>\n<path d=\"M52,277 Q97.3,202.9 171,157\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"80\" y=\"190\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\"></text>\n<line x1=\"214\" y1=\"90\" x2=\"222\" y2=\"82\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"218\" y1=\"92\" x2=\"226\" y2=\"84\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<line x1=\"96\" y1=\"209\" x2=\"104\" y2=\"201\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/><line x1=\"98\" y1=\"211\" x2=\"106\" y2=\"203\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"290\" y=\"22\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n<text x=\"155\" y=\"145\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n<text x=\"38\" y=\"285\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n<text x=\"306\" y=\"285\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n<text x=\"238\" y=\"128\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋐</text>\n<text x=\"230\" y=\"215\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋑</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_34k1_13",
+       "src": "HG-9245 原簿・小5最レ 第4分冊 第1講座 No.34 大問13",
+       "hg": "HG-9245",
+       "title": "半円とおうぎ形を回す（球と半球）",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図の形（(1)は半径3cmの半円，(2)は半径3cm，中心角90°のおうぎ形）を直線のまわりに1回転させたときにできる立体の体積と表面積を円周率は3.14として求めなさい。ただし，\n球の体積は半径×半径×半径×円周率×4/3\n球の表面積は半径×半径×円周率×4\nで求めることにします。",
+       "steps": [
+        {
+         "question": "(1)　［体積］",
+         "answer": "113.04",
+         "meaning": "半円を直径のまわりに回すと、半径3cmの球になる。あたえられた式「半径×半径×半径×円周率×4/3」に入れて、3×3×3×3.14×4/3＝36×3.14＝113.04cm³。",
+         "svg": "<svg viewBox=\"0 0 240 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"160\" y1=\"10\" x2=\"160\" y2=\"288\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M160,50 A100,100 0 0 0 160,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+        },
+        {
+         "question": "(1)　［表面積］",
+         "answer": "113.04",
+         "meaning": "半径3cmの球の表面積は、あたえられた式「半径×半径×円周率×4」に入れて、3×3×3.14×4＝36×3.14＝113.04cm²。",
+         "svg": "<svg viewBox=\"0 0 240 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"160\" y1=\"10\" x2=\"160\" y2=\"288\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M160,50 A100,100 0 0 0 160,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+        },
+        {
+         "question": "(2)　［体積］",
+         "answer": "56.52",
+         "meaning": "中心角90°のおうぎ形を半径のまわりに回すと、半径3cmの球をちょうど半分にした半球になる。体積は球の半分で、3×3×3×3.14×4/3×1/2＝18×3.14＝56.52cm³。",
+         "svg": "<svg viewBox=\"0 0 240 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"160\" y1=\"10\" x2=\"160\" y2=\"286\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M160,50 A100,100 0 0 0 60,150 L160,150\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+        },
+        {
+         "question": "(2)　［表面積］",
+         "answer": "84.78",
+         "meaning": "半球の表面は、球の表面の半分（丸い部分）と、切り口の円の2つ。丸い部分は3×3×3.14×4×1/2＝18×3.14、切り口は半径3cmの円で3×3×3.14＝9×3.14。合わせて(18＋9)×3.14＝27×3.14＝84.78cm²。",
+         "svg": "<svg viewBox=\"0 0 240 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"160\" y1=\"10\" x2=\"160\" y2=\"286\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M160,50 A100,100 0 0 0 60,150 L160,150\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_34k1_14",
+       "src": "HG-9246 原簿・小5最レ 第4分冊 第1講座 No.34 大問14",
+       "hg": "HG-9246",
+       "title": "直角三角形を中点を結ぶ線で回す",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 4,
+       "intro": "下図で，三角形ABCは直角三角形で，辺の長さはAB＝10cm，BC＝8cm，CA＝6cmです。点M，Nは，それぞれ辺AB，BCを二等分する点です。三角形ABCを直線MNを軸にして回転させたときにできる立体について，次の問いに答えなさい。ただし，円周率は3.14とします。",
+       "steps": [
+        {
+         "question": "(1) 360°回転させたときの体積を求めなさい。",
+         "answer": "251.2",
+         "meaning": "MNより左の四角形を回すと、半径4cm（CN）・高さ6cm（CA）の円柱から、Mを頂点とする半径4cm・高さ3cmの円すいをくりぬいた形になる。MNより右の三角形NBMを回すと、半径4cm・高さ3cmの円すいになるが、これは左の部分がつくる立体の中にすっぽり入るので、体積には加えない。4×4×3.14×6－4×4×3.14×3×1/3＝96×3.14－16×3.14＝80×3.14＝251.2cm³。"
+        },
+        {
+         "question": "(2) 180°回転させたときの体積を求めなさい。",
+         "answer": "150.72",
+         "meaning": "180°だけ回すと、左の四角形と右の三角形は、軸をはさんで反対側の半周をえがくので重ならない。左の部分は「円柱から円すいをくりぬいた形」の半分、右の部分は円すいの半分なので、4×4×3.14×1/2×6－4×4×3.14×1/2×3×1/3＋4×4×3.14×1/2×3×1/3。引いて足す円すいの半分が同じなので、残るのは4×4×3.14×1/2×6＝48×3.14＝150.72cm³。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"60,60 260,60 60,210\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"160\" y1=\"28\" x2=\"160\" y2=\"225\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M60,68 L68,68 L68,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M160,68 L168,68 L168,60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<text x=\"60\" y=\"44\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n<text x=\"174\" y=\"44\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">N</text>\n<text x=\"268\" y=\"44\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n<text x=\"60\" y=\"228\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n<text x=\"178\" y=\"149\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">M</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_34k1_15",
+       "src": "HG-9247 原簿・小5最レ 第4分冊 第1講座 No.34 大問15",
+       "hg": "HG-9247",
+       "title": "4つの正三角形の図形を回したときの体積比",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図は一辺が5cmである4つの正三角形からできています。XYを回転の軸として正三角形ABCを回転させたときにできる立体の体積を㋐，正三角形BDEを回転させたときにできる立体の体積を㋑，四角形AEDFを回転させたときにできる立体の体積を㋒とします。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) ㋐と㋑の比をできるだけかんたんな整数の比で求めなさい。",
+         "answer": "8:1",
+         "meaning": "正三角形ABCとBDEは形が同じで、辺の長さは10cmと5cmなので相似比2：1。どちらも一辺が回転軸XYの上にあるので、回してできる立体も相似比2：1になり、体積比は2×2×2：1×1×1＝8:1。"
+        },
+        {
+         "question": "(2) ㋐と㋒の比をできるだけかんたんな整数の比で求めなさい。",
+         "answer": "4:3",
+         "meaning": "正三角形BDEを回した立体を①とすると、ABCを回した立体は⑧。正三角形DCFもBDEと同じ大きさで一辺が軸の上にあるので、回すと同じ①。ABCは上の三角形・下の三角形・四角形AEDFに分かれるので、AEDFを回した立体は⑧－①×2＝⑥。よって㋐：㋒＝8：6＝4:3。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 260 310\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"60\" y1=\"30\" x2=\"60\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"60,50 215.9,140 60,230\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"60,140 137.9,95.0 137.9,185.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"60\" y=\"18\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text>\n<text x=\"60\" y=\"262\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text>\n<text x=\"46\" y=\"50\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text>\n<text x=\"46\" y=\"230\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text>\n<text x=\"46\" y=\"140\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text>\n<text x=\"229.9\" y=\"140\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text>\n<text x=\"137.9\" y=\"77.0\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text>\n<text x=\"137.9\" y=\"205.0\" fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_34k1_16",
+       "src": "HG-9248 原簿・小5最レ 第4分冊 第1講座 No.34 大問16",
+       "hg": "HG-9248",
+       "title": "3等分した直角三角形の部分の体積比",
+       "category": "rittai",
+       "unit": "回転体の求積",
+       "grade": 5,
+       "star": 4,
+       "intro": "下図を次のようにして1回転させたとき，㋐と㋑と㋒の部分がつくる立体の体積比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1) ℓを回転の軸としたとき。",
+         "answer": "1:7:19",
+         "meaning": "ℓを軸にすると、上から順に㋐、㋐＋㋑、㋐＋㋑＋㋒が、どれも上の頂点を共有する円すいになる。相似比は1：2：3なので、体積比は1×1×1：2×2×2：3×3×3＝1：8：27。㋐：㋑：㋒＝1：(8－1)：(27－8)＝1:7:19。"
+        },
+        {
+         "question": "(2) mを回転の軸としたとき。",
+         "answer": "7:13:7",
+         "meaning": "たて・よこをそれぞれ3等分したマス目で考える。mを軸にすると、いちばん左のとがった頂点を共有する三角形（よこ1・2・3目もり分）は相似比1：2：3の円すいになるので、ℓから遠い順にたての帯の体積は①・⑦（8－1）・⑲（27－8）。mにくっついた正方形1マスを回すと、①と底面積も高さも同じ円柱なので③。その上の正方形は、軸からのはなれ方が2倍の円から1倍の円を引いたドーナツ形の柱なので(2×2－1×1)×③＝⑨。すると、まん中の帯⑦＝正方形③＋三角形④、ℓ側の帯⑲＝正方形③＋正方形⑨＋三角形⑦。横の帯ごとに集めると、㋐＝⑦、㋑＝⑨＋④＝⑬、㋒＝③＋③＋①＝⑦。よって㋐：㋑：㋒＝7:13:7。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"230\" y1=\"20\" x2=\"230\" y2=\"276\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"32\" y1=\"258\" x2=\"272\" y2=\"258\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"230,60 77,258 230,258\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"179.0\" y1=\"126\" x2=\"230\" y2=\"126\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"128.0\" y1=\"192\" x2=\"230\" y2=\"192\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M222,126 L222,118 L230,118\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M222,192 L222,184 L230,184\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M222,258 L222,250 L230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<path d=\"M230,60 Q254,93.0 230,126\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<line x1=\"240\" y1=\"93.0\" x2=\"245\" y2=\"93.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M230,126 Q254,159.0 230,192\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<line x1=\"240\" y1=\"159.0\" x2=\"245\" y2=\"159.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M230,192 Q254,225.0 230,258\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.3\"/>\n<line x1=\"240\" y1=\"225.0\" x2=\"245\" y2=\"225.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<text x=\"216\" y=\"104.88\" fill=\"#e8ecf5\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋐</text>\n<text x=\"192\" y=\"162.3\" fill=\"#e8ecf5\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋑</text>\n<text x=\"180\" y=\"228.29999999999998\" fill=\"#e8ecf5\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋒</text>\n<text x=\"230\" y=\"8\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">ℓ</text>\n<text x=\"19\" y=\"258\" fill=\"#e8ecf5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"middle\">m</text>\n</svg>"
+      }
      ]
     },
     "kouza2": {
