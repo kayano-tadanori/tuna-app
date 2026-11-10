@@ -191,6 +191,10 @@ def unit_index(text):
         #   2026-11-10・テーマ教材 第4分冊 No.39 1-1(2)）。「と」を剥がして添え字だけ残す
         if rest and rest.endswith(u"と") and rest[:-1] in SUFFIX:
             rest = rest[:-1]
+        # ★添え字のうしろに範囲の「から」「まで」（`6と2/3秒後から11と1/9秒後まで`。2026-11-10・最レ第1講座 No.40 大問5(1)）
+        for tail in (u"から", u"まで"):
+            if rest and rest.endswith(tail) and rest[:-len(tail)] in SUFFIX:
+                rest = rest[:-len(tail)]
         # ★添え字なしで「と」が続く形（`6時28分と6時68分`。2026-11-10・最レ第2講座 No.39 大問4(2)）
         if rest == u"と":
             rest = u""
