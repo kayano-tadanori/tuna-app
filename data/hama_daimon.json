@@ -110981,6 +110981,267 @@
         }
        ]
       }
+     ],
+     "42": [
+      {
+       "id": "hd5s_42k1_1",
+       "src": "HG-9481 原簿・小5最レ 第4分冊 第1講座 No.42 大問1",
+       "hg": "HG-9481",
+       "title": "長方形に重なる直角二等辺三角形",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 2,
+       "intro": "図形(あ)は長方形，図形(い)は直角二等辺三角形です。図形(あ)を固定して，図形(い)を毎秒1cmの速さで図の位置から矢印の方向に動かします。そのときの図形(あ)と図形(い)の重なった部分をSとします。",
+       "steps": [
+        {
+         "question": "(1) 21秒後のSの面積を求めなさい。",
+         "answer": "40.5",
+         "meaning": "21秒後、三角形(い)の左はしは21cm進んでいる。長方形(あ)の左の辺は、(い)の左はしのスタート位置から14＋10＝24cmのところなので、(い)は左に24－21＝3cmはみ出す。また(い)の高さは14÷2＝7cmで、長方形の高さ5cmより7－5＝2cm上にはみ出す。はみ出した部分はどちらも直角二等辺三角形で、左は3×3÷2、上は底辺4cm・高さ2cmで4×2÷2。だから重なりSは三角形全体からこの2つをひいて、14×7÷2－3×3÷2－4×2÷2＝49－4.5－4＝40.5cm²。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 610 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<line x1=\"20\" y1=\"150\" x2=\"590\" y2=\"150\"/>\n<polygon points=\"20,150 118,52 216,150\"/>\n<polyline points=\"111,59 118,66 125,59\" stroke-width=\"1.2\"/>\n<rect x=\"356\" y=\"80\" width=\"168\" height=\"70\"/>\n<line x1=\"175\" y1=\"22\" x2=\"233\" y2=\"22\"/><polyline points=\"225,17 233,22 225,27\"/>\n<text x=\"118\" y=\"118\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">い</text>\n<circle cx=\"118\" cy=\"113\" r=\"10\" stroke-width=\"1.2\"/>\n<text x=\"440\" y=\"123\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">あ</text>\n<circle cx=\"440\" cy=\"118\" r=\"10\" stroke-width=\"1.2\"/>\n<path d=\"M20,160 Q20,166 28,166 L208,166 Q216,166 216,160\" stroke-width=\"1.2\"/><text x=\"118.0\" y=\"182\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">14cm</text>\n<path d=\"M216,160 Q216,166 224,166 L348,166 Q356,166 356,160\" stroke-width=\"1.2\"/><text x=\"286.0\" y=\"182\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">10cm</text>\n<path d=\"M356,160 Q356,166 364,166 L516,166 Q524,166 524,160\" stroke-width=\"1.2\"/><text x=\"440.0\" y=\"182\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">12cm</text>\n<path d=\"M524,80 Q530,80 530,88 L530,142 Q530,150 524,150\" stroke-width=\"1.2\"/><text x=\"552\" y=\"120.0\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">5cm</text>\n</g>\n</svg>"
+      },
+      {
+       "id": "hd5s_42k1_2",
+       "src": "HG-9482 原簿・小5最レ 第4分冊 第1講座 No.42 大問2",
+       "hg": "HG-9482",
+       "title": "重なりのグラフから図形の長さを読む",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の（図1）の位置からAがBの方向に動きます。そのときのAとBが重なった部分の面積と時間の関係を表したのが（図2）のグラフです。x，yの値を求めなさい。",
+       "steps": [
+        {
+         "question": "［x］",
+         "answer": "15",
+         "meaning": "グラフが3秒で折れるのは、Aの上の部分（高さ8cmのところ）が全部Bに入りきったときで、そこから先は増え方がゆるくなる。だから上の部分の横はば□は、3秒で進む長さ3×3＝9cm。xは左の6cmと合わせて、6＋9＝15cm。"
+        },
+        {
+         "question": "［y］",
+         "answer": "12",
+         "meaning": "面積がいちばん大きい150cm²になるのは、Aが全部Bの中に入ったとき。下の部分は横15cm・高さ7cmで15×7＝105cm²なので、上の部分のうちBに入っているのは150－105＝45cm²。上の部分の横はばは9cmなので、Bに入っている高さ△は△×9＝45より△＝5cm。Bのたてyは、下の7cmと合わせて5＋7＝12cm。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 560 606\" style=\"display:block;margin:0 auto;max-width:100%\"><svg x=\"0\" y=\"0\" width=\"560\" height=\"260\" viewBox=\"0 0 560 260\">\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<text x=\"40\" y=\"20\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">（図1）</text>\n<line x1=\"15\" y1=\"213\" x2=\"530\" y2=\"213\"/>\n<polygon points=\"70,213 70,145 130,145 130,62 218,62 218,213\"/>\n<rect x=\"218\" y=\"90\" width=\"258\" height=\"123\"/>\n<text x=\"170\" y=\"40\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">3cm/秒</text>\n<text x=\"96\" y=\"105\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">8cm</text>\n<text x=\"90\" y=\"130\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">6cm</text>\n<path d=\"M70,145 Q64,145 64,153 L64,205 Q64,213 70,213\" stroke-width=\"1.2\"/><text x=\"42\" y=\"184.0\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">7cm</text>\n<text x=\"140\" y=\"170\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">A→</text>\n<text x=\"357\" y=\"165\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">B</text>\n<path d=\"M476,90 Q482,90 482,98 L482,205 Q482,213 476,213\" stroke-width=\"1.2\"/><text x=\"504\" y=\"156.5\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">ycm</text>\n<path d=\"M70,223 Q70,229 78,229 L210,229 Q218,229 218,223\" stroke-width=\"1.2\"/><text x=\"144.0\" y=\"245\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">xcm</text>\n<path d=\"M218,223 Q218,229 226,229 L468,229 Q476,229 476,223\" stroke-width=\"1.2\"/><text x=\"347.0\" y=\"245\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">24cm</text>\n</g>\n</svg><svg x=\"105\" y=\"276\" width=\"350\" height=\"330\" viewBox=\"0 0 350 330\">\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<text x=\"175\" y=\"20\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">（図2）</text>\n<line x1=\"80\" y1=\"297\" x2=\"80\" y2=\"25\"/><line x1=\"80\" y1=\"297\" x2=\"305\" y2=\"297\"/>\n<text x=\"45\" y=\"40\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"13\" text-anchor=\"middle\">(cm²)</text>\n<polyline points=\"80,297 130,133 152,70 218,70 268,213 303,297\"/>\n<line x1=\"80\" y1=\"70\" x2=\"152\" y2=\"70\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"80\" y1=\"133\" x2=\"130\" y2=\"133\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"80\" y1=\"213\" x2=\"268\" y2=\"213\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"130\" y1=\"133\" x2=\"130\" y2=\"297\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"152\" y1=\"70\" x2=\"152\" y2=\"297\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"218\" y1=\"70\" x2=\"218\" y2=\"297\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"268\" y1=\"213\" x2=\"268\" y2=\"297\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<circle cx=\"80\" cy=\"297\" r=\"3\" fill=\"#4f9eff\"/>\n<circle cx=\"130\" cy=\"133\" r=\"3\" fill=\"#4f9eff\"/>\n<circle cx=\"152\" cy=\"70\" r=\"3\" fill=\"#4f9eff\"/>\n<circle cx=\"218\" cy=\"70\" r=\"3\" fill=\"#4f9eff\"/>\n<circle cx=\"268\" cy=\"213\" r=\"3\" fill=\"#4f9eff\"/>\n<text x=\"70\" y=\"75\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"end\">150</text>\n<text x=\"70\" y=\"218\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"end\">42</text>\n<text x=\"130\" y=\"316\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">3</text>\n<text x=\"268\" y=\"316\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">11</text>\n<text x=\"310\" y=\"316\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"13\" text-anchor=\"start\">(秒)</text>\n</g>\n</svg></svg>"
+      },
+      {
+       "id": "hd5s_42k1_4",
+       "src": "HG-9484 原簿・小5最レ 第4分冊 第1講座 No.42 大問4",
+       "hg": "HG-9484",
+       "title": "台形の辺を往復する2点と面積のグラフ",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": "（図1）のような高さ2cmの台形ABCDと，その辺の上を動く2つの点E，Fがあります。点EはAを出発して，秒速1cmでAとDの間を何回も往復し，点Fは，点Eと同時にBを出発して，秒速2cmでBとCの間を何回も往復します。x秒後の四角形ABFEの面積をycm²として，xとyの関係をグラフで表すと，（図2）のようになりました。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 3秒後の四角形ABFEの面積を求めなさい。",
+         "answer": "9",
+         "meaning": "四角形ABFEは、AEを上底、BFを下底とする台形。3秒後、Eは秒速1cmで1×3＝3cm、Fは秒速2cmで2×3＝6cm進んでいる。高さは2cmなので、面積は(3＋6)×2÷2＝9cm²。"
+        },
+        {
+         "question": "(2) 辺ADの長さを求めなさい。",
+         "answer": "4",
+         "meaning": "グラフは3秒後から面積が減っている。もしEが折り返してFがまだ右へ進んでいるなら、上底＋下底は毎秒1cmずつ増えて面積も増えるはずなので、ありえない。Fが折り返してEがまだ右へ進んでいるなら、上底＋下底は毎秒1cmずつ減るので、グラフと合う。だから3秒後はFがCに着いたとき、次の折れ目の4秒後はEがDに着いたとき。AD＝1×4＝4cm。"
+        },
+        {
+         "question": "(3) [ア]，[イ]の値を求めなさい。　［ア］",
+         "answer": "8",
+         "meaning": "アは4秒後の面積。EはDに着いたところでAE＝4cm。BC＝2×3＝6cmで、Fは3秒後にCで折り返して1秒もどったので、BF＝6－2×1＝4cm。面積は(4＋4)×高さ÷2で、高さが2cmなので4×2＝8cm²。だからアは8。"
+        },
+        {
+         "question": "(3) [ア]，[イ]の値を求めなさい。　［イ］",
+         "answer": "2",
+         "meaning": "4秒後のあと、面積の変わり方が次に変わるのは、EがAにもどる8秒後か、FがBにもどる6秒後のどちらか早いほう。だからイは6秒後の面積。6秒後、FはBに着いてBF＝0cm、EはDから2秒もどってAE＝4－1×2＝2cm。四角形ABFEは底辺2cm・高さ2cmの三角形になり、面積は2×2÷2＝2cm²。だからイは2。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 490 591\" style=\"display:block;margin:0 auto;max-width:100%\"><svg x=\"0\" y=\"0\" width=\"490\" height=\"240\" viewBox=\"0 0 490 240\">\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<text x=\"40\" y=\"30\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">（図1）</text>\n<polygon points=\"83,46 238,46 365,210 29,210\"/>\n<line x1=\"138\" y1=\"46\" x2=\"148\" y2=\"210\"/>\n<line x1=\"238\" y1=\"46\" x2=\"465\" y2=\"46\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/><line x1=\"365\" y1=\"210\" x2=\"465\" y2=\"210\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"427\" y1=\"50\" x2=\"427\" y2=\"206\" stroke-width=\"1.2\"/><polyline points=\"422,58 427,48 432,58\" stroke-width=\"1.2\"/><polyline points=\"422,198 427,208 432,198\" stroke-width=\"1.2\"/>\n<text x=\"427\" y=\"132\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">2cm</text>\n<text x=\"83\" y=\"38\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">A</text>\n<text x=\"146\" y=\"38\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">E→</text>\n<text x=\"238\" y=\"38\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">D</text>\n<text x=\"25\" y=\"228\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">B</text>\n<text x=\"156\" y=\"228\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">F→</text>\n<text x=\"368\" y=\"228\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">C</text>\n</g>\n</svg><svg x=\"10\" y=\"256\" width=\"470\" height=\"335\" viewBox=\"0 0 470 335\">\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<text x=\"30\" y=\"20\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">（図2）</text>\n<text x=\"78\" y=\"20\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">y</text>\n<text x=\"40\" y=\"52\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"13\" text-anchor=\"middle\">(cm²)</text>\n<line x1=\"77\" y1=\"295\" x2=\"77\" y2=\"40\"/><line x1=\"77\" y1=\"295\" x2=\"432\" y2=\"295\"/>\n<polyline points=\"77,295 238,95 282,123 365,235 425,195\"/>\n<line x1=\"77\" y1=\"123\" x2=\"282\" y2=\"123\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"77\" y1=\"235\" x2=\"365\" y2=\"235\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"238\" y1=\"95\" x2=\"238\" y2=\"295\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<line x1=\"282\" y1=\"123\" x2=\"282\" y2=\"295\" stroke-dasharray=\"4,3\" stroke-width=\"1.2\"/>\n<rect x=\"44\" y=\"113\" width=\"20\" height=\"20\" stroke-width=\"1.2\"/><text x=\"54\" y=\"128\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"13\" text-anchor=\"middle\">ア</text>\n<rect x=\"44\" y=\"225\" width=\"20\" height=\"20\" stroke-width=\"1.2\"/><text x=\"54\" y=\"240\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"13\" text-anchor=\"middle\">イ</text>\n<text x=\"73\" y=\"315\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">0</text>\n<text x=\"238\" y=\"315\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">3</text>\n<text x=\"282\" y=\"315\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">4</text>\n<text x=\"445\" y=\"300\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"14\" text-anchor=\"middle\">x</text>\n<text x=\"425\" y=\"322\" fill=\"#e8ecf5\" stroke=\"none\" font-size=\"13\" text-anchor=\"middle\">(秒後)</text>\n</g>\n</svg></svg>"
+      },
+      {
+       "id": "hd5s_42k1_5",
+       "src": "HG-9485 原簿・小5最レ 第4分冊 第1講座 No.42 大問5",
+       "hg": "HG-9485",
+       "title": "回して作る直角二等辺三角形",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下図で，AB＝AD，角Aと角Cは90°，AC＝3cmのとき，四角形ABCDの面積を求めなさい。",
+         "answer": "4.5",
+         "meaning": "四角形の4つの角の和は360°で、角Aと角Cが90°なので、角Bと角Dの和は180°。そこで三角形ACDを点Aを中心に回して、ADをABにぴったり重ねる（AB＝ADなので重なる）。Cが移った点をC’とすると、角Dと角Bの和が180°なのでC’・B・Cは一直線に並ぶ。AC’＝AC＝3cmで、角C’ACは角BADと同じ90°なので、三角形AC’Cは直角二等辺三角形。四角形ABCDの面積はこの三角形と同じで、3×3÷2＝4.5cm²。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 340 280\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"38,35 257,33 292,105 37,238\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"38\" y1=\"35\" x2=\"292\" y2=\"105\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<polyline points=\"38,45 48,45 48,35\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/>\n<path d=\"M282,92 L276,104 L286,111\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/>\n<line x1=\"145\" y1=\"29\" x2=\"145\" y2=\"39\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/><line x1=\"150\" y1=\"29\" x2=\"150\" y2=\"39\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/>\n<line x1=\"32\" y1=\"134\" x2=\"43\" y2=\"134\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"139\" x2=\"43\" y2=\"139\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/>\n<path d=\"M195,100 Q250,108 288,107\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1\"/>\n<text x=\"113\" y=\"98\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">3cm</text>\n<text x=\"22\" y=\"30\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">A</text><text x=\"268\" y=\"32\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">D</text><text x=\"298\" y=\"124\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">C</text><text x=\"22\" y=\"258\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">B</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_42k1_6",
+       "src": "HG-9486 原簿・小5最レ 第4分冊 第1講座 No.42 大問6",
+       "hg": "HG-9486",
+       "title": "正方形の中の45度と三角形の面積",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下図のように一辺の長さが12cmの正方形があり，辺BC，辺CD上にそれぞれ2点E，Fをとると，角FAEは45度，EFの長さは10cmになりました。三角形FECの面積を求めなさい。",
+         "answer": "24",
+         "meaning": "三角形FECは、正方形から三角形ABE・三角形AEF・三角形AFDをひいたもの。三角形AFDを点Aのまわりに回して、ADをABに重ねる（三角形AF’B）。角BAEと角DAFの和は90－45＝45°なので、角F’AE＝45°で角FAEと同じ。AF’＝AF、AEは共通なので、三角形AF’Eと三角形AFEは合同で、F’E＝FE＝10cm。三角形AF’E（＝三角形ABE＋三角形AFD）は底辺10cm・高さ12cmで12×10÷2＝60cm²、合同な三角形AEFも60cm²。だから三角形FECは12×12－(60＋60)＝144－120＝24cm²。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 320 310\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(30,30)\">\n<rect x=\"0\" y=\"0\" width=\"250\" height=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"0\" y1=\"0\" x2=\"81\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"0\" y1=\"0\" x2=\"250\" y2=\"125\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"81\" y1=\"250\" x2=\"250\" y2=\"125\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"-14\" y=\"-8\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">A</text><text x=\"256\" y=\"-8\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">D</text><text x=\"258\" y=\"130\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">F</text>\n<text x=\"-14\" y=\"272\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">B</text><text x=\"75\" y=\"272\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">E</text><text x=\"256\" y=\"272\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">C</text>\n</g></svg>"
+      },
+      {
+       "id": "hd5s_42k1_7",
+       "src": "HG-9487 原簿・小5最レ 第4分冊 第1講座 No.42 大問7",
+       "hg": "HG-9487",
+       "title": "階段を転がる正三角形",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "一辺の長さが1cmの正三角形を図のAの位置からBの位置まで階段を転がしていきます。このときの正三角形の回転数を求めなさい。",
+         "answer": "1と1/3",
+         "meaning": "地面が一直線なら、正三角形は1回転がるごとに180－60＝120°回り、AからBまでは4回転がる。でも階段では、出っぱった角（地面がかんぼつする所）を回るとき90°よけいに回り、へこんだ角（地面がせり上がる所）では90°少なくてすむ。出っぱった角とへこんだ角を2回ずつ通るので、回る角の合計は120×4＋90－90＋90－90＝480°。360°で1回転なので、480÷360＝1と1/3回転。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 470 500\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(20,20)\">\n<polygon points=\"0,121 140,121 70,0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<polygon points=\"280,401 420,401 350,280\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<polyline points=\"140,121 140,261 280,261 280,401\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"62\" y=\"80\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\" font-size=\"26\">A</text><text x=\"340\" y=\"370\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\" font-size=\"26\">B</text>\n<path d=\"M2,125 Q70,150 138,125\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1\"/><text x=\"56\" y=\"160\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">1cm</text>\n<path d=\"M136,124 Q110,191 136,258\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1\"/><text x=\"85\" y=\"195\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">1cm</text>\n<path d=\"M142,264 Q210,290 278,264\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1\"/><text x=\"196\" y=\"300\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">1cm</text>\n<path d=\"M276,264 Q250,331 276,398\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1\"/><text x=\"224\" y=\"335\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">1cm</text>\n<path d=\"M282,405 Q350,430 418,405\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1\"/><text x=\"336\" y=\"440\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\">1cm</text>\n</g></svg>"
+      },
+      {
+       "id": "hd5s_42k1_8",
+       "src": "HG-9488 原簿・小5最レ 第4分冊 第1講座 No.42 大問8",
+       "hg": "HG-9488",
+       "title": "円の外側と内側を転がる円",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": "半径5cmの円の内側と外側を，図のように半径1cmの円がすべることなく転がってもとの位置にもどるとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 円Aがもとの位置にもどるまで何回転しますか。",
+         "answer": "6",
+         "meaning": "曲がった地面でも、接しながら転がるしくみは直線と同じと考える。半径5cmの円周の長さだけ直線を転がるなら、10×3.14÷(2×3.14)＝5回転。円Aは外側を回るので、地面がかんぼつしていく分だけよけいに回り、1周すると合わせて360°＝1回転たされる。だから5＋1＝6回転。"
+        },
+        {
+         "question": "(2) 円Bがもとの位置にもどるまで何回転しますか。",
+         "answer": "4",
+         "meaning": "直線なら(1)と同じく10×3.14÷(2×3.14)＝5回転。円Bは内側を回るので、地面がせり上がっていく分だけ逆にもどされ、1周すると合わせて360°＝1回転ひかれる。だから5－1＝4回転。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 300 370\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<circle cx=\"150\" cy=\"225\" r=\"125\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<circle cx=\"150\" cy=\"67\" r=\"33\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><circle cx=\"220\" cy=\"160\" r=\"33\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"140\" y=\"76\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\" font-size=\"26\">A</text><text x=\"210\" y=\"170\" fill=\"#e8ecf5\" font-size=\"16\" font-family=\"sans-serif\" font-size=\"26\">B</text>\n<path d=\"M200,208 Q222,218 245,200\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/><polyline points=\"236,199 245,200 243,209\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"1.5\"/>\n</svg>"
+      },
+      {
+       "id": "hd5s_42k1_9",
+       "src": "HG-9489 原簿・小5最レ 第4分冊 第1講座 No.42 大問9",
+       "hg": "HG-9489",
+       "title": "対角線にそって動く2つの長方形",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図のように，大きな画用紙に長方形Aと直線B，Cがかいてあり，別の画用紙でつくった長方形㋑，㋺がその上においてあります。この長方形㋑，㋺を，直線B，Cにそって，図の位置から同時に矢印の方向に，それぞれ毎秒5/4cmの速さで動かしていきます。㋑または㋺でかくされているAの部分をSとするとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 動かしはじめてから5秒後のSの面積を求めなさい。",
+         "answer": "30と3/4",
+         "meaning": "直線B・Cは、長方形Aのたて15cm・対角線25cmの向き（たて：横：ななめ＝3：4：5）なので、ななめに5/4cm進むと、たてに3/4cm、横に4/4＝1cm動く。5秒後、㋑は右に1×5＝5cm、下に3/4×5＝15/4cm動き、横4cm・たて3cmがまるごとAの中に入るので4×3＝12cm²。㋺は左に5cm、下に15/4cm動き、Aと重なるのは横5cm・たて15/4cmで5×15/4cm²。合わせて4×3＋5×15/4＝12＋75/4＝30と3/4cm²。"
+        },
+        {
+         "question": "(3) Sの面積がもっとも大きくなるのは，動かしはじめてから何秒後ですか。",
+         "answer": "20",
+         "meaning": "Sがいちばん大きくなるのは、㋑がAの右下のかどに、㋺がAの左下のかどにぴったり入って、2つとも全部Aの中にあり重なりもないとき。㋑が横に20cm（Aの横の長さ）動けば、たてには3/4×20＝15cm動いてちょうど右下のかどに着き、㋺も左下のかどに着く。横には毎秒1cmずつ動くので、20÷1＝20秒後。"
+        },
+        {
+         "question": "(2) 動かしはじめてから23秒後のSの面積を求めなさい。",
+         "answer": "127と1/2",
+         "meaning": "23秒後、2つの長方形は横に23cm、たてに3/4×23cm動いている。Aの横は20cmなので、㋺は左に23－20＝3cmはみ出し、下にも3/4×23－15＝9/4cmはみ出す。だから㋺とAの重なりは(16－3)×(12－9/4)。㋑も右に3cm・下に9/4cmはみ出すので、重なりは(4－3)×(3－9/4)。合わせて13×39/4＋1×3/4＝507/4＋3/4＝510/4＝127と1/2cm²。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 820 640\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g transform=\"translate(0,30)\">\n<rect x=\"150\" y=\"240\" width=\"320\" height=\"240\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"86\" y=\"192\" width=\"64\" height=\"48\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<rect x=\"470\" y=\"48\" width=\"256\" height=\"192\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"30\" y1=\"150\" x2=\"86\" y2=\"192\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"86\" y1=\"192\" x2=\"150\" y2=\"240\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"240\" x2=\"590\" y2=\"570\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"30\" y1=\"570\" x2=\"470\" y2=\"240\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"470\" y1=\"240\" x2=\"726\" y2=\"48\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"6 4\"/>\n<line x1=\"726\" y1=\"48\" x2=\"766\" y2=\"18\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"190\" y1=\"290\" x2=\"212\" y2=\"306.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"212,306.5 208.6,297.7 202.6,305.7\" fill=\"#4f9eff\"/>\n<line x1=\"440\" y1=\"290\" x2=\"418\" y2=\"306.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"418,306.5 427.4,305.7 421.4,297.7\" fill=\"#4f9eff\"/>\n<text x=\"45\" y=\"140\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">B</text>\n<text x=\"780\" y=\"40\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">C</text>\n<text x=\"310\" y=\"228\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">A</text>\n<text x=\"598\" y=\"-6\" fill=\"#e8ecf5\" font-size=\"24\" font-family=\"sans-serif\" text-anchor=\"middle\">㋺</text>\n<line x1=\"76\" y1=\"192\" x2=\"76\" y2=\"240\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"70\" y=\"222\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"end\">3cm</text>\n<line x1=\"86\" y1=\"250\" x2=\"150\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"118\" y=\"272\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"middle\">4cm</text>\n<text x=\"128\" y=\"180\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"middle\">5cm</text>\n<text x=\"340\" y=\"300\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"middle\">25cm</text>\n<line x1=\"150\" y1=\"492\" x2=\"470\" y2=\"492\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"310\" y=\"515\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"middle\">20cm</text>\n<line x1=\"482\" y1=\"240\" x2=\"482\" y2=\"480\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"492\" y=\"330\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"start\">15cm</text>\n<line x1=\"470\" y1=\"252\" x2=\"726\" y2=\"252\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"598\" y=\"275\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"middle\">16cm</text>\n<line x1=\"738\" y1=\"48\" x2=\"738\" y2=\"240\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"748\" y=\"150\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"start\">12cm</text>\n<text x=\"560\" y=\"110\" fill=\"#e8ecf5\" font-size=\"18\" font-family=\"sans-serif\" text-anchor=\"middle\">20cm</text>\n</g>\n</svg>"
+      },
+      {
+       "id": "hd5s_42k1_10",
+       "src": "HG-9490 原簿・小5最レ 第4分冊 第1講座 No.42 大問10",
+       "hg": "HG-9490",
+       "title": "向かい合って歩く2人の影",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図のように，高さ4.8mの街燈PQがあり，そこから13.6m離れた地点をRとします。身長120cmのA君が地点Qから，また身長160cmのB君が地点Rから，A君，B君ともに同じ速さで，向かい合って，同時に歩き始めました。電燈PによるA君の影の長さは，毎秒30cmずつのびています。",
+       "steps": [
+        {
+         "question": "(1) A君の歩く速さは毎秒何cmですか。",
+         "answer": "90",
+         "meaning": "街燈4.8mとA君1.2mの比は4：1。相似な三角形で、Qから影の先端までを④とすると、A君の影は①、QからA君までは③になる。影①が毎秒30cmのびるので、A君の位置③は毎秒30×3＝90cmずつ進む。だからA君の速さは毎秒90cm。"
+        },
+        {
+         "question": "(2) 電燈PによるA君の影の先端をC，B君の影の先端をDとします。同時に歩き始めてから何秒後にCとDは重なりますか。",
+         "answer": "8",
+         "meaning": "A君の影の先端Cは、④にあたるので毎秒30×4＝120cmずつ街燈から遠ざかる。B君は街燈4.8mと1.6mの比が3：1なので、QからB君まで[2]、影[1]、影の先端まで[3]。B君も毎秒90cmで歩くので、影の先端Dは毎秒90×3/2＝135cmずつQに近づく。出発のとき、CはQの位置、DはQから1360×3/2＝2040cmのところ。2つの先端は毎秒120＋135＝255cmずつ近づくので、2040÷255＝8秒後に重なる。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 1000 380\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"20\" y1=\"280\" x2=\"990\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"40\" x2=\"150\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"4\"/>\n<line x1=\"150\" y1=\"40\" x2=\"360.66666666666663\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"40\" x2=\"922.5\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"308\" y1=\"220\" x2=\"308\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"665\" y1=\"200\" x2=\"665\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"308\" y1=\"280\" x2=\"360.66666666666663\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"4\"/>\n<line x1=\"665\" y1=\"280\" x2=\"922.5\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"4\"/>\n<circle cx=\"308\" cy=\"220\" r=\"5\" fill=\"#4f9eff\"/>\n<circle cx=\"665\" cy=\"200\" r=\"5\" fill=\"#4f9eff\"/>\n<circle cx=\"830\" cy=\"280\" r=\"5\" fill=\"#4f9eff\"/>\n<text x=\"150\" y=\"30\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">P</text>\n<text x=\"150\" y=\"308\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">Q</text>\n<text x=\"318\" y=\"208\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">A</text>\n<text x=\"376.66666666666663\" y=\"268\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">C</text>\n<text x=\"665\" y=\"188\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">B</text>\n<text x=\"942.5\" y=\"268\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">D</text>\n<text x=\"844\" y=\"308\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">R</text>\n<line x1=\"313\" y1=\"300\" x2=\"335\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"335,300 327.0,295.0 327.0,305.0\" fill=\"#4f9eff\"/>\n<line x1=\"690\" y1=\"300\" x2=\"668\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polygon points=\"668,300 676.0,305.0 676.0,295.0\" fill=\"#4f9eff\"/>\n<line x1=\"135\" y1=\"40\" x2=\"135\" y2=\"280\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"128\" y=\"165\" fill=\"#e8ecf5\" font-size=\"20\" font-family=\"sans-serif\" text-anchor=\"end\">4.8m</text>\n<path d=\"M 150 285 Q 490.0 370 830 285\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4 3\"/>\n<text x=\"490.0\" y=\"350\" fill=\"#e8ecf5\" font-size=\"20\" font-family=\"sans-serif\" text-anchor=\"middle\">13.6m</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_42k1_11",
+       "src": "HG-9491 原簿・小5最レ 第4分冊 第1講座 No.42 大問11",
+       "hg": "HG-9491",
+       "title": "円板のまわりを転がる矢印つきの円板",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 4,
+       "intro": null,
+       "steps": [
+        {
+         "question": "円板Aの半径は4cm，円板Bの半径は3cmで，図のように円板Bの上には矢印がかいてあります。円板Aを動かさないで，矢印と円板Bの両方がもとの位置にくるまで，円板Bを円板Aの円周にそって時計回りにすべることなく転がしていくとき円板Bは円板Bの中心のまわりを何回転しますか。",
+         "answer": "7",
+         "meaning": "円周率をπとする。円板Bの円周は6×πcmで、矢印がもとの向きにもどるのは、この長さの倍数だけ転がったとき。円板Aの円周は8×πcmで、円板Bがもとの位置にもどるのは、この長さの倍数だけ進んだとき。両方がそろうのは、6×πと8×πの最小公倍数24×πcm進んだとき。そのとき、直線を転がる分が24×π÷(6×π)＝4回転、Aのまわりを回ることでたされる分が24×π÷(8×π)＝3回転なので、合わせて4＋3＝7回転。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 220 310\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<circle cx=\"110\" cy=\"210\" r=\"80\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"110\" cy=\"70\" r=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"110\" y1=\"95\" x2=\"110\" y2=\"130\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"110\" cy=\"130\" r=\"4\" fill=\"#4f9eff\"/>\n<text x=\"110\" y=\"88\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">B</text>\n<text x=\"110\" y=\"218\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">A</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_42k1_12",
+       "src": "HG-9492 原簿・小5最レ 第4分冊 第1講座 No.42 大問12",
+       "hg": "HG-9492",
+       "title": "円板のまわりを転がる円板とO・P・Qの並び",
+       "category": "zu",
+       "unit": "図形のまとめ",
+       "grade": 5,
+       "star": 4,
+       "intro": "図1のような，大小2つの円板があり，小さい円板は大きい円板のまわりをすべることなく，時計回りに転がりながら動きます。円板の中心をそれぞれO，Pとし，また小さい円板上には点Qがあります。いま，図2のように，O，P，Qがこの順で一直線上に並んだところから出発したところ，小さい円板が転がり点Qが一周して真上にくるのに15分，点Pが大きい円板を一周して真上にくるのに60分かかるとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 小さい円板が転がりはじめてから6分後に，OPとPQを結んだときにできる角の大きさを求めなさい。",
+         "answer": "72",
+         "meaning": "Pは60分で大きい円板を1周するので、15分では1/4周する。円板のまわりを回ると、まわる分の回転がたされるので、15分で1回転したうち、地面を転がった分は直線にすると1－1/4＝3/4回転＝270°。だから1分に270÷15＝18°ずつ転がる。角OPQは、Qが地面（大きい円板との接点）からどれだけはなれたかで決まり、出発時は180°。6分で18×6＝108°転がるので、180－18×6＝72°。"
+        },
+        {
+         "question": "(2) 出発してから初めてO，P，Qがこの順で一直線上に並ぶのは，小さい円板が転がりはじめてから何分後ですか。",
+         "answer": "20",
+         "meaning": "O，P，Qがこの順にまた一直線に並ぶのは、出発と同じく、Qが接点からいちばん遠い所にもどったとき＝地面をちょうど1回転（360°）転がったとき。1分に18°転がるので、360÷18＝20分後。"
+        },
+        {
+         "question": "(3) (2)のようになった後，初めてO，Q，Pがこの順で一直線上に並ぶのは，小さい円板が転がりはじめてから何分後ですか。",
+         "answer": "30",
+         "meaning": "O，Q，Pの順に並ぶのは、Qが接点（O側）に来たとき＝そこからさらに地面を1/2回転転がったとき。1回転に20分かかるので、1/2回転は20×1/2＝10分。だから20＋10＝30分後。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 966\" style=\"display:block;margin:0 auto;max-width:100%\"><svg x=\"0\" y=\"0\" width=\"400\" height=\"450\" viewBox=\"0 0 400 450\">\n<text x=\"14\" y=\"30\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"start\">図1</text>\n<circle cx=\"173\" cy=\"280\" r=\"152\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"306\" cy=\"100\" r=\"68\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"173\" cy=\"280\" r=\"4\" fill=\"#4f9eff\"/><circle cx=\"306\" cy=\"100\" r=\"4\" fill=\"#4f9eff\"/><circle cx=\"350\" cy=\"152\" r=\"4\" fill=\"#4f9eff\"/>\n<text x=\"150\" y=\"292\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">O</text>\n<text x=\"283\" y=\"104\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">P</text>\n<text x=\"368\" y=\"178\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">Q</text>\n</svg><svg x=\"40\" y=\"466\" width=\"320\" height=\"500\" viewBox=\"0 0 320 500\">\n<text x=\"14\" y=\"30\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"start\">図2</text>\n<circle cx=\"155\" cy=\"343\" r=\"148\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"155\" cy=\"118\" r=\"66\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"155\" y1=\"48\" x2=\"155\" y2=\"343\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"/>\n<circle cx=\"155\" cy=\"343\" r=\"4\" fill=\"#4f9eff\"/><circle cx=\"155\" cy=\"118\" r=\"4\" fill=\"#4f9eff\"/><circle cx=\"155\" cy=\"48\" r=\"4\" fill=\"#4f9eff\"/>\n<text x=\"178\" y=\"355\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">O</text>\n<text x=\"176\" y=\"126\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">P</text>\n<text x=\"155\" y=\"38\" fill=\"#e8ecf5\" font-size=\"22\" font-family=\"sans-serif\" text-anchor=\"middle\">Q</text>\n</svg></svg>"
+      }
      ]
     },
     "kouza2": {
