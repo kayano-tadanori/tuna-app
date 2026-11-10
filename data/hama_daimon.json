@@ -153678,6 +153678,632 @@
         }
        ]
       }
+     ],
+     "35": [
+      {
+       "id": "hd5m2nd_e35_1",
+       "src": "HG-9641 原簿・小5 演習教材 第4分冊 No.35 B1",
+       "hg": "HG-9641",
+       "title": "すい体の体積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の立体の体積を求めなさい。ただし，円周率は3.14とします。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "126",
+         "meaning": "三角すいの体積は、底面積×高さ×1/3。底面は直角をはさむ辺が12cmと7cmの直角三角形なので、12×7÷2＝42cm²。高さは9cmなので、42×9×1/3＝126cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 340\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"190\" y1=\"40\" x2=\"40\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"190\" y1=\"40\" x2=\"237\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"190\" y1=\"40\" x2=\"300\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"40\" y1=\"290\" x2=\"237\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"237\" y1=\"290\" x2=\"300\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"40\" y1=\"290\" x2=\"300\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"190\" y1=\"40\" x2=\"195\" y2=\"227\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"205.0,227.0 205.0,217.0 195.0,217.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<polyline points=\"227.0,290.0 231.6,281.1 241.6,281.1\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M190,40 Q222.5,132.7 195,227\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"150\" y=\"140\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"end\">9cm</text>\n<path d=\"M40,290 Q138.5,318.0 237,290\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"138\" y=\"325\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">12cm</text>\n<path d=\"M237,290 Q293.3,243.0 300,170\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"305\" y=\"245\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">7cm</text>\n</svg>"
+        },
+        {
+         "question": "(2) （底面は長方形）",
+         "answer": "70",
+         "meaning": "四角すいも、底面積×高さ×1/3。底面は6cm×5cmの長方形で30cm²。高さ7cmなので、30×7×1/3＝70cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 360\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"180\" y1=\"30\" x2=\"40\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"180\" y1=\"30\" x2=\"240\" y2=\"295\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"180\" y1=\"30\" x2=\"325\" y2=\"188\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"180\" y1=\"30\" x2=\"118\" y2=\"188\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"40\" y1=\"290\" x2=\"240\" y2=\"295\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"240\" y1=\"295\" x2=\"325\" y2=\"188\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"40\" y1=\"290\" x2=\"118\" y2=\"188\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"118\" y1=\"188\" x2=\"325\" y2=\"188\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"180\" y1=\"30\" x2=\"178\" y2=\"228\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"188.0,228.0 188.0,218.0 178.0,218.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M180,30 Q203.0,129.2 178,228\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"118\" y=\"100\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"end\">7cm</text>\n<path d=\"M40,290 Q139.3,320.5 240,295\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"140\" y=\"330\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">6cm</text>\n<path d=\"M240,295 Q304.4,258.9 325,188\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"310\" y=\"270\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">5cm</text>\n<text x=\"190\" y=\"352\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">（底面は長方形）</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "200.96",
+         "meaning": "円すいの体積は、底面の円の面積×高さ×1/3。3.14は最後にかけると楽。4×4×3.14×12×1/3＝4×4×4×3.14＝64×3.14＝200.96cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 320\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"150\" y1=\"30\" x2=\"70\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"30\" x2=\"230\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,250 A80,20 0 0,0 230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,250 A80,20 0 0,1 230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"30\" x2=\"150\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"250\" x2=\"230\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"160.0,250.0 160.0,240.0 150.0,240.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M150,30 Q194.0,140.0 150,250\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"95\" y=\"140\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"end\">12cm</text>\n<path d=\"M150,250 Q190.0,270.0 230,250\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"215\" y=\"288\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">4cm</text>\n</svg>"
+        },
+        {
+         "question": "(4)",
+         "answer": "392.5",
+         "meaning": "これも円すいなので、底面の円の面積×高さ×1/3。底面は半径5cmの円、高さ15cm。5×5×3.14×15×1/3＝25×5×3.14＝125×3.14＝392.5cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 320\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"150\" y1=\"30\" x2=\"70\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"30\" x2=\"230\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,250 A80,20 0 0,0 230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,250 A80,20 0 0,1 230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"30\" x2=\"150\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"250\" x2=\"230\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"160.0,250.0 160.0,240.0 150.0,240.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M150,30 Q194.0,140.0 150,250\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"95\" y=\"140\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"end\">15cm</text>\n<path d=\"M150,250 Q190.0,270.0 230,250\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"215\" y=\"288\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">5cm</text>\n</svg>"
+        },
+        {
+         "question": "(5)",
+         "answer": "640.56",
+         "meaning": "これも円すいなので、底面の円の面積×高さ×1/3。6×6＝36と1/3のように、3でわりきれる数を先に約分すると計算が楽。底面は半径6cmの円、高さ17cm。6×6×3.14×17×1/3＝12×17×3.14＝204×3.14＝640.56cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 320\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"150\" y1=\"30\" x2=\"70\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"30\" x2=\"230\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,250 A80,20 0 0,0 230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,250 A80,20 0 0,1 230,250\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"30\" x2=\"150\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"150\" y1=\"250\" x2=\"230\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"160.0,250.0 160.0,240.0 150.0,240.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M150,30 Q194.0,140.0 150,250\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"95\" y=\"140\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"end\">17cm</text>\n<path d=\"M150,250 Q190.0,270.0 230,250\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"215\" y=\"288\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">6cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_2",
+       "src": "HG-9642 原簿・小5 演習教材 第4分冊 No.35 B2",
+       "hg": "HG-9642",
+       "title": "正四角すいの表面積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 1,
+       "intro": "次の立体の表面積はそれぞれ何cm²ですか。",
+       "steps": [
+        {
+         "question": "(1) 底面は正方形",
+         "answer": "1400",
+         "meaning": "側面は底辺20cm・高さ25cmの三角形が4つ。1つは20×25÷2＝250cm²なので、4つで1000cm²。底面は20×20＝400cm²の正方形が1つ。1000＋400＝1400cm²。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 320\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"165\" y1=\"30\" x2=\"80\" y2=\"225\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"165\" y1=\"30\" x2=\"217\" y2=\"255\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"165\" y1=\"30\" x2=\"295\" y2=\"133\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"80\" y1=\"225\" x2=\"217\" y2=\"255\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"217\" y1=\"255\" x2=\"295\" y2=\"133\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"165\" y1=\"30\" x2=\"162\" y2=\"102\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"162\" y1=\"102\" x2=\"80\" y2=\"225\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"162\" y1=\"102\" x2=\"295\" y2=\"133\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"165\" y1=\"30\" x2=\"148.5\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"158.3,242.1 159.1,232.2 149.3,230.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M165,30 Q184.7,137.2 148.5,240.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"85\" y=\"110\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"end\">25cm</text>\n<path d=\"M80,225 Q143.4,263.4 217,255\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"130\" y=\"280\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">20cm</text>\n<path d=\"M217,255 Q279.6,209.1 295,133\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"275\" y=\"220\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">20cm</text>\n<text x=\"190\" y=\"312\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">底面は正方形</text>\n</svg>"
+        },
+        {
+         "question": "(2) 底面は正方形",
+         "answer": "1360",
+         "meaning": "側面の三角形の高さは24cm（26cmは側面の辺の長さで、面積には使わない）。1つは20×24÷2＝240cm²、4つで960cm²。底面400cm²を足して、960＋400＝1360cm²。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 330\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"140\" y1=\"20\" x2=\"25\" y2=\"245\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"140\" y1=\"20\" x2=\"172\" y2=\"278\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"140\" y1=\"20\" x2=\"252\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"25\" y1=\"245\" x2=\"172\" y2=\"278\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"172\" y1=\"278\" x2=\"252\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"140\" y1=\"20\" x2=\"105\" y2=\"173\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"105\" y1=\"173\" x2=\"25\" y2=\"245\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"105\" y1=\"173\" x2=\"252\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"140\" y1=\"20\" x2=\"212.0\" y2=\"241.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<polyline points=\"204.6,248.2 201.5,238.7 208.9,232.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<path d=\"M140,20 Q165.2,131.1 252,205\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"262\" y=\"85\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">26cm</text>\n<path d=\"M190,150 Q240,160 280,135\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"284\" y=\"135\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">24cm</text>\n<path d=\"M252,205 Q230.9,262.2 172,278\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"250\" y=\"285\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">20cm</text>\n<text x=\"150\" y=\"322\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">底面は正方形</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_3",
+       "src": "HG-9643 原簿・小5 演習教材 第4分冊 No.35 B3",
+       "hg": "HG-9643",
+       "title": "円すいの展開図の半径と中心角",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の(図1)，(図2)は，それぞれ円すいの展開図です。",
+       "steps": [
+        {
+         "question": "(1) (図1)の円すいの底面の円の半径は何cmですか。",
+         "answer": "2",
+         "meaning": "おうぎ形の弧の長さと、底面の円周は【等しい】。12×2×3.14×60/360＝□×2×3.14。両方の「×2×3.14」を消すと、12×60＝□×360。360は60の6倍なので、□は12の1/6で、12×1/6＝2cm。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 260 260\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"20\" y=\"22\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">（図1）</text>\n<line x1=\"120\" y1=\"40\" x2=\"45.0\" y2=\"169.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"120\" y1=\"40\" x2=\"195.0\" y2=\"169.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M45.0,169.9 A150,150 0 0,0 195.0,169.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"195.0\" cy=\"196.9\" r=\"25.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M111,55.6 A18,18 0 0,0 129,55.6\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"120\" y=\"80\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\">60°</text>\n<path d=\"M120,40 Q181.7,90.9 195.0,169.9\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"185\" y=\"95\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">12cm</text>\n</svg>"
+        },
+        {
+         "question": "(2) (図2)のおうぎ形の中心角は何度ですか。",
+         "answer": "144",
+         "meaning": "これも弧の長さ＝底面の円周なので、15×2×3.14×中心角/360＝6×2×3.14。消すと15×中心角＝6×360。15と6の比は5:2なので、中心角は360の2/5。360×2/5＝144度。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"10\" y=\"22\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">（図2）</text>\n<line x1=\"150\" y1=\"40\" x2=\"7.3\" y2=\"86.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"40\" x2=\"292.7\" y2=\"86.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M7.3,86.4 A150,150 0 0,0 292.7,86.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"310.9\" cy=\"175.0\" r=\"60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"250.89999999999998\" y1=\"175.0\" x2=\"370.9\" y2=\"175.0\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<circle cx=\"310.9\" cy=\"175.0\" r=\"3\" fill=\"#4f9eff\"/>\n<path d=\"M250.89999999999998,175.0 Q310.9,155.0 370.9,175.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"310.9\" y=\"215.0\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"middle\">12cm</text>\n<path d=\"M150,40 Q230.0,36.6 292.7,86.4\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"255\" y=\"55\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">15cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_4",
+       "src": "HG-9644 原簿・小5 演習教材 第4分冊 No.35 B4",
+       "hg": "HG-9644",
+       "title": "展開図から円すいの表面積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図は円すいの展開図です。この展開図を組み立てたときにできる円すいの表面積は何cm²ですか。ただし，円周率は3.14とします。",
+         "answer": "200.96",
+         "meaning": "底面は半径4cmの円で、4×4×3.14＝16×3.14。おうぎ形の弧は底面の円周と同じで、4×2×3.14＝8×3.14。おうぎ形の面積は「弧の長さ×半径÷2」なので、8×3.14×12÷2＝48×3.14。合わせて48×3.14＋16×3.14＝64×3.14＝200.96cm²。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 300\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"150\" y1=\"30\" x2=\"20.1\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"30\" x2=\"279.9\" y2=\"105.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M20.1,105.0 A150,150 0 0,0 279.9,105.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"303.2\" cy=\"158.6\" r=\"50.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"303.2\" y1=\"158.6\" x2=\"353.2\" y2=\"158.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<circle cx=\"303.2\" cy=\"158.6\" r=\"3\" fill=\"#4f9eff\"/>\n<path d=\"M303.2,158.6 Q328.2,146.6 353.2,158.6\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"328.2\" y=\"186.6\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\">4cm</text>\n<path d=\"M150,30 Q229.0,43.3 279.9,105.0\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"245\" y=\"40\" fill=\"#e8ecf8\" font-size=\"16\" text-anchor=\"start\">12cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_5",
+       "src": "HG-9645 原簿・小5 演習教材 第4分冊 No.35 B5",
+       "hg": "HG-9645",
+       "title": "円すいの表面積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の立体の表面積はそれぞれ何cm²ですか。ただし，円周率は3.14とします。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "452.16",
+         "meaning": "展開図を書く。側面のおうぎ形の弧は底面の円周と【等しい】から、8×2×3.14＝16×3.14。側面＝弧×母線÷2＝16×3.14×10÷2＝80×3.14。底面＝8×8×3.14＝64×3.14。合わせて144×3.14＝452.16cm²。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 220\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M40,150 A160,26 0 0 0 360,150\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M40,150 A160,26 0 0 1 360,150\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"40,150 200,40 360,150\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"200\" y1=\"150\" x2=\"360\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<circle cx=\"200\" cy=\"150\" r=\"2.5\" fill=\"#4f9eff\"/>\n<line x1=\"200\" y1=\"40\" x2=\"200\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"200,140 210,140 210,150\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M200,40 Q144.0,95.0 200,150\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"148.0\" y=\"109.0\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"middle\">6cm</text>\n<path d=\"M200,40 Q295.9,71.9 360,150\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"317.93140352041894\" y=\"77.46341306120885\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">10cm</text>\n<path d=\"M200,150 Q280.0,166.0 360,150\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"280.0\" y=\"198\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">8cm</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "282.6",
+         "meaning": "母線は13cm（高さ12cmは表面積には使わない）。弧は5×2×3.14＝10×3.14。側面＝10×3.14×13÷2＝65×3.14。底面＝5×5×3.14＝25×3.14。合わせて90×3.14＝282.6cm²。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 300\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M50,230 A100,24 0 0 0 250,230\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M50,230 A100,24 0 0 1 250,230\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"50,230 150,30 250,230\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"150\" y1=\"230\" x2=\"250\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<circle cx=\"150\" cy=\"230\" r=\"2.5\" fill=\"#4f9eff\"/>\n<line x1=\"150\" y1=\"30\" x2=\"150\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"150,220 160,220 160,230\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M150,30 Q115.0,130.0 150,230\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"108.5\" y=\"144.0\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"middle\">12cm</text>\n<path d=\"M150,30 Q225.0,117.5 250,230\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"242.52198067399883\" y=\"117.73900966300059\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">13cm</text>\n<path d=\"M150,230 Q200.0,246.0 250,230\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"200.0\" y=\"276\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "785",
+         "meaning": "弧は10×2×3.14＝20×3.14。側面＝20×3.14×15÷2＝150×3.14。底面＝10×10×3.14＝100×3.14。合わせて250×3.14＝785cm²。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 250\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M40,190 A170,24 0 0 0 380,190\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M40,190 A170,24 0 0 1 380,190\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"40,190 210,30 380,190\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"210\" y1=\"190\" x2=\"380\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<circle cx=\"210\" cy=\"190\" r=\"2.5\" fill=\"#4f9eff\"/>\n<path d=\"M210,30 Q314.2,89.6 380,190\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"334.5951057860699\" y=\"93.80520010230076\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">15cm</text>\n<path d=\"M210,190 Q295.0,206.0 380,190\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"295.0\" y=\"236\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">10cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_6",
+       "src": "HG-9646 原簿・小5 演習教材 第4分冊 No.35 B6",
+       "hg": "HG-9646",
+       "title": "立体の体積の比",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の2つの立体(ア)と(イ)の体積の比を求めなさい。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "1:12",
+         "meaning": "どちらも円すいなので、3.14と1/3は比では消える。底面積の比は2×2:4×4、高さの比は5:15。かけて2×2×5:4×4×15＝20:240。20でわると1:12。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 500 270\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"30\" y=\"25\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">(ア)</text>\n<path d=\"M75,200 A55,16 0 0 0 185,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M75,200 A55,16 0 0 1 185,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"75,200 130,40 185,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130\" y1=\"200\" x2=\"185\" y2=\"200\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"130\" cy=\"200\" r=\"2.5\" fill=\"#4f9eff\"/>\n<line x1=\"130\" y1=\"40\" x2=\"130\" y2=\"200\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"130,190 140,190 140,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M130,40 Q108.0,120.0 130,200\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"95.0\" y=\"134.0\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n<path d=\"M130,200 Q157.5,216.0 185,200\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"157.5\" y=\"238\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<text x=\"290\" y=\"25\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">(イ)</text>\n<path d=\"M340,220 A50,14 0 0 0 440,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M340,220 A50,14 0 0 1 440,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"340,220 390,20 440,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"390\" y1=\"220\" x2=\"440\" y2=\"220\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"390\" cy=\"220\" r=\"2.5\" fill=\"#4f9eff\"/>\n<line x1=\"390\" y1=\"20\" x2=\"390\" y2=\"220\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"390,210 400,210 400,220\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M390,20 Q368.0,120.0 390,220\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"355.0\" y=\"134.0\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"middle\">15cm</text>\n<path d=\"M390,220 Q415.0,236.0 440,220\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"415.0\" y=\"256\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">4cm</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "1:3",
+         "meaning": "(ア)は円すい、(イ)は同じ底面・同じ高さの円柱。すい体の体積は、底面積と高さが同じ柱体の体積の1/3なので、(ア):(イ)＝1:3。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 500 260\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"30\" y=\"25\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">(ア)</text>\n<path d=\"M75,200 A55,16 0 0 0 185,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M75,200 A55,16 0 0 1 185,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"75,200 130,50 185,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130\" y1=\"200\" x2=\"185\" y2=\"200\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"130\" cy=\"200\" r=\"2.5\" fill=\"#4f9eff\"/>\n<line x1=\"130\" y1=\"50\" x2=\"130\" y2=\"200\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<polyline points=\"130,190 140,190 140,200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/>\n<path d=\"M130,50 Q108.0,125.0 130,200\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"95.0\" y=\"139.0\" fill=\"#e8ecf8\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n<path d=\"M130,200 Q157.5,216.0 185,200\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"157.5\" y=\"238\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n<text x=\"290\" y=\"25\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">(イ)</text>\n<ellipse cx=\"390\" cy=\"70\" rx=\"55\" ry=\"16\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M335,210 A55,16 0 0 0 445,210\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M335,210 A55,16 0 0 1 445,210\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"6 4\"/>\n<line x1=\"335\" y1=\"70\" x2=\"335\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"445\" y1=\"70\" x2=\"445\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"390\" y1=\"70\" x2=\"445\" y2=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"390\" cy=\"70\" r=\"2.5\" fill=\"#4f9eff\"/>\n<path d=\"M335,70 Q357.0,140.0 335,210\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"318.0\" y=\"140.0\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">5cm</text>\n<path d=\"M390,70 Q417.5,60.0 445,70\" fill=\"none\" stroke=\"#9aa3c0\" stroke-width=\"1.2\"/>\n<text x=\"417.5\" y=\"32\" fill=\"#e8ecf8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"middle\">2cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_7",
+       "src": "HG-9647 原簿・小5 演習教材 第4分冊 No.35 B7",
+       "hg": "HG-9647",
+       "title": "円すいの容器の水",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "右のような円すいの容器があります。これにまず，いっぱいの水を入れます。次の問いに答えなさい。ただし，円周率は3として計算しなさい。",
+       "steps": [
+        {
+         "question": "(1) 水は何L入りますか。",
+         "answer": "0.432",
+         "meaning": "円周率は3で計算する。容器の体積は6×6×3×12×1/3＝144×3＝432cm³。1L＝1000cm³なので、432cm³＝0.432L。"
+        },
+        {
+         "question": "(2) 中の水をこぼして水の深さを3cmにします。残った水は最初の何倍にあたりますか。",
+         "answer": "1/64",
+         "meaning": "深さ3cmの水は、容器と同じ形の小さな円すい。深さの比（相似比）は3:12＝1:4。体積の比は相似比を3回かけて、1×1×1:4×4×4＝1:64。だから最初の1/64倍。"
+        },
+        {
+         "question": "(3) 水を全部こぼし，16cm³の水を入れます。水の深さは何cmになりますか。",
+         "answer": "4",
+         "meaning": "16cm³は全体432cm³のどれだけかを考える。16/432＝1/27なので体積比は1:27。1×1×1＝1、3×3×3＝27だから相似比は1:3。深さは12cmの1/3で、12×1/3＝4cm。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 260\" style=\"display:block;margin:0 auto;max-width:100%\">\n<ellipse cx=\"190\" cy=\"60\" rx=\"85\" ry=\"22\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"105\" y1=\"60\" x2=\"180\" y2=\"235\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"275\" y1=\"60\" x2=\"180\" y2=\"235\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190\" y1=\"60\" x2=\"275\" y2=\"60\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M190,60 Q235,46 275,60\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M235,53 Q238,36 250,28\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"252\" y=\"28\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">6cm</text>\n<line x1=\"105\" y1=\"60\" x2=\"60\" y2=\"60\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"5,4\"/>\n<line x1=\"180\" y1=\"235\" x2=\"60\" y2=\"235\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"5,4\"/>\n<path d=\"M60,60 Q42,100 42,130 M42,165 Q42,195 60,235\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"20\" y=\"152\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">12cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_8",
+       "src": "HG-9648 原簿・小5 演習教材 第4分冊 No.35 B8",
+       "hg": "HG-9648",
+       "title": "切り取った三角すいの表面積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図は，1辺が10cmの立方体で，M，Nはそれぞれ辺AB，BCの真ん中の点です。いま，3つの点M，N，Fを通る平面でこの立方体を切りました。切り取った三角すいの表面積を求めなさい。",
+         "answer": "100",
+         "meaning": "三角すいの3つの面（MBN・MBF・NBF）を、三角形MNFのまわりに折り開く。BM＝BN＝5cm、BF＝10cmなので、開くとBの3か所がそれぞれ角になり、1辺10cmの正方形がぴったりできる【展開図は正方形】。表面積はこの正方形の面積で、10×10＝100cm²。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 340\" style=\"display:block;margin:0 auto;max-width:100%\">\n<polygon points=\"77,95 202,30 345,82 222,145\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"77\" y1=\"95\" x2=\"75\" y2=\"248\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"222\" y1=\"145\" x2=\"222\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"345\" y1=\"82\" x2=\"345\" y2=\"237\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"75\" y1=\"248\" x2=\"222\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"222\" y1=\"300\" x2=\"345\" y2=\"237\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"149.5\" y1=\"120\" x2=\"283.5\" y2=\"113.5\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"149.5\" y1=\"120\" x2=\"222\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"283.5\" y1=\"113.5\" x2=\"222\" y2=\"300\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"52\" y=\"98\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text><text x=\"138\" y=\"108\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">M</text><text x=\"272\" y=\"102\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">N</text>\n<text x=\"353\" y=\"85\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">C</text><text x=\"228\" y=\"168\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">B</text>\n<text x=\"52\" y=\"256\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">E</text><text x=\"353\" y=\"242\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">G</text><text x=\"216\" y=\"324\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">F</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_9",
+       "src": "HG-9649 原簿・小5 演習教材 第4分冊 No.35 B9",
+       "hg": "HG-9649",
+       "title": "円すいの表面積と最短距離",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の図のような円すいについて答えなさい。ただし，円周率は3.14とします。",
+       "steps": [
+        {
+         "question": "(1) 表面積を求めなさい。",
+         "answer": "351.68",
+         "meaning": "底面は4×4×3.14＝16×3.14。側面のおうぎ形の弧は底面の円周で8×3.14、母線は24cmなので、側面は8×3.14×24×1/2＝96×3.14。合わせて112×3.14＝351.68cm²。"
+        },
+        {
+         "question": "(2) 底面の円周上の1点から図のように側面上を通り1周してもどる最短距離を求めなさい。",
+         "answer": "24",
+         "meaning": "側面の展開図のおうぎ形の中心角は、360×底面の半径/母線＝360×4/24＝60度。1周してもどる道は、展開図ではおうぎ形の両はしを結ぶ線になり、最短はまっすぐな線。2辺が24cmで間の角が60度の三角形は正三角形なので、最短距離は24cm。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 360\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"200\" y1=\"10\" x2=\"200\" y2=\"350\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"6,4\"/>\n<path d=\"M100,290 A100,25 0 0 0 300,290\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M100,290 A100,25 0 0 1 300,290\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"6,4\"/>\n<line x1=\"200\" y1=\"40\" x2=\"100\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"200\" y1=\"40\" x2=\"300\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M100,292 C170,285 245,225 251,168\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M251,168 C225,150 150,195 104,280\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"6,4\"/>\n<line x1=\"200\" y1=\"290\" x2=\"300\" y2=\"290\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<polyline points=\"200,282 208,282 208,290\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M200,292 Q250,312 300,292\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M250,302 Q258,322 280,326\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"282\" y=\"331\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">4cm</text>\n<path d=\"M195,44 Q130,90 120,145 M112,185 Q100,240 100,286\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"80\" y=\"170\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">24cm</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_10",
+       "src": "HG-9650 原簿・小5 演習教材 第4分冊 No.35 B10",
+       "hg": "HG-9650",
+       "title": "糸の長さから円すいの表面積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "母線ABの長さが12cmである円すい(下の図)で，糸をBから側面にそって最短になるようにして巻き，その1まわりの糸の長さを測ったらちょうど12cmでした。この円すいの表面積を求めなさい。ただし，円周率は3.14として計算しなさい。",
+         "answer": "87.92",
+         "meaning": "側面を展開すると、最短の糸はBとBを結ぶまっすぐな線。AB＝12、AB＝12、BB＝12で【正三角形】なので、中心角は60度。底面の半径は母線×中心角/360で、12×60/360＝2cm。底面＝2×2×3.14＝4×3.14、側面＝弧4×3.14×12÷2＝24×3.14。合わせて28×3.14＝87.92cm²。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 300\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M85,250 A105,22 0 0 0 295,250\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M85,250 A105,22 0 0 1 295,250\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"6,4\"/>\n<line x1=\"190\" y1=\"30\" x2=\"85\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190\" y1=\"30\" x2=\"295\" y2=\"250\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M85,252 C140,240 225,185 233,120\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M233,120 C205,105 125,165 88,244\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"6,4\"/>\n<text x=\"183\" y=\"22\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text><text x=\"62\" y=\"268\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">B</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_11",
+       "src": "HG-9651 原簿・小5 演習教材 第4分冊 No.35 B11",
+       "hg": "HG-9651",
+       "title": "ころがした円すい",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 2,
+       "intro": "下の図のように底面の半径が10cmの円すいを平面上にころがします。円すいはOを中心に回転してもとの場所にもどるまでに2回転しました。円周率を3.14として次の各問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 円すいの母線(OA)の長さを求めなさい。",
+         "answer": "20",
+         "meaning": "円すいがOのまわりを1周してもどる間に、底面の円が2回転した。だから、母線を半径とする円の円周は、半径10cmの円周の2倍。円周が2倍なら半径も2倍なので、10×2＝20cm。"
+        },
+        {
+         "question": "(2) 円すいの側面の展開図をかくと，そのおうぎ形の中心角は何度ですか。",
+         "answer": "180",
+         "meaning": "【中心角の比は半径の比の逆比】。おうぎ形の弧＝底面の円周なので、中心角は360×底面の半径/母線＝360×10/20＝180度。"
+        },
+        {
+         "question": "(3) 円すいの側面積を求めなさい。",
+         "answer": "628",
+         "meaning": "側面のおうぎ形の弧は底面の円周で、20×3.14。半径（母線）は20cm。側面積は弧×半径÷2で、20×3.14×20÷2＝200×3.14＝628cm²。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 150\" style=\"display:block;margin:0 auto;max-width:100%\">\n<path d=\"M78,42 A130,55 0 1 1 78,98\" stroke=\"#9aa3c0\" stroke-width=\"1.5\" stroke-dasharray=\"6,4\" fill=\"none\"/>\n<ellipse cx=\"78\" cy=\"70\" rx=\"20\" ry=\"28\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"78\" y1=\"42\" x2=\"190\" y2=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"78\" y1=\"98\" x2=\"190\" y2=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"38\" y1=\"42\" x2=\"78\" y2=\"42\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"4,3\"/>\n<line x1=\"38\" y1=\"70\" x2=\"58\" y2=\"70\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"4,3\"/>\n<line x1=\"70\" y1=\"70\" x2=\"80\" y2=\"70\" stroke=\"#9aa3c0\" stroke-width=\"1\"/>\n<line x1=\"46\" y1=\"44\" x2=\"46\" y2=\"68\" stroke=\"#9aa3c0\" stroke-width=\"1\"/>\n<polyline points=\"42,50 46,44 50,50\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/><polyline points=\"42,62 46,68 50,62\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"20\" y=\"32\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">10cm</text>\n<text x=\"196\" y=\"76\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">O</text><text x=\"66\" y=\"122\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_12",
+       "src": "HG-9652 原簿・小5 演習教材 第4分冊 No.35 B12",
+       "hg": "HG-9652",
+       "title": "回転させてできる立体",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 1,
+       "intro": "次の(1)～(4)の図形を直線ABを軸として1回転させるとき，できる立体を(ア)～(カ)の中から選び，記号で答えなさい。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "(カ) 円すい",
+         "choices": [
+          "(ア) 円すい台",
+          "(イ) 円すいと円柱を組み合わせた立体",
+          "(ウ) 三角すいと直方体を組み合わせた立体",
+          "(エ) 円すいと円すいを組み合わせた立体",
+          "(オ) 三角すい",
+          "(カ) 円すい"
+         ],
+         "meaning": "直角三角形の、直角をはさむ1辺が軸ABの上にある。軸にななめの辺が円すいの側面、軸に垂直な辺が底面の円になるので、円すい。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 140 230\" style=\"display:block;margin:0 auto;max-width:100%\">\n\n<line x1=\"95\" y1=\"30\" x2=\"95\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"89\" y=\"24\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text><text x=\"89\" y=\"224\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">B</text>\n<polyline points=\"95,55 25,55 95,135\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"87,55 87,63 95,63\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "(ア) 円すい台",
+         "choices": [
+          "(ア) 円すい台",
+          "(イ) 円すいと円柱を組み合わせた立体",
+          "(ウ) 三角すいと直方体を組み合わせた立体",
+          "(エ) 円すいと円すいを組み合わせた立体",
+          "(オ) 三角すい",
+          "(カ) 円すい"
+         ],
+         "meaning": "台形の上の辺と下の辺が軸に垂直なので、どちらも円（上の面と底面）になる。ななめの辺はまわって側面になり、上が小さく下が大きい形＝円すい台。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 140 230\" style=\"display:block;margin:0 auto;max-width:100%\">\n\n<line x1=\"95\" y1=\"30\" x2=\"95\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"89\" y=\"24\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text><text x=\"89\" y=\"224\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">B</text>\n<polyline points=\"95,60 50,60 25,160 95,160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "(イ) 円すいと円柱を組み合わせた立体",
+         "choices": [
+          "(ア) 円すい台",
+          "(イ) 円すいと円柱を組み合わせた立体",
+          "(ウ) 三角すいと直方体を組み合わせた立体",
+          "(エ) 円すいと円すいを組み合わせた立体",
+          "(オ) 三角すい",
+          "(カ) 円すい"
+         ],
+         "meaning": "下の長方形は軸に平行な辺がまわって円柱になり、上の三角形はななめの辺がまわって円すいになる。円すいと円柱を組み合わせた立体。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 140 230\" style=\"display:block;margin:0 auto;max-width:100%\">\n\n<line x1=\"95\" y1=\"30\" x2=\"95\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"89\" y=\"24\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text><text x=\"89\" y=\"224\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">B</text>\n<polyline points=\"95,50 55,110 95,110\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"55,110 55,160 95,160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n</svg>"
+        },
+        {
+         "question": "(4)",
+         "answer": "(エ) 円すいと円すいを組み合わせた立体",
+         "choices": [
+          "(ア) 円すい台",
+          "(イ) 円すいと円柱を組み合わせた立体",
+          "(ウ) 三角すいと直方体を組み合わせた立体",
+          "(エ) 円すいと円すいを組み合わせた立体",
+          "(オ) 三角すい",
+          "(カ) 円すい"
+         ],
+         "meaning": "三角形の1辺が軸の上にあり、残りの頂点から軸へ2本のななめの辺がのびる。上のななめの辺も下のななめの辺も円すいの側面になるので、底面どうしを合わせた2つの円すい。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 140 230\" style=\"display:block;margin:0 auto;max-width:100%\">\n\n<line x1=\"95\" y1=\"30\" x2=\"95\" y2=\"205\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"89\" y=\"24\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">A</text><text x=\"89\" y=\"224\" fill=\"#e6e9f5\" font-size=\"15\" font-family=\"sans-serif\">B</text>\n<polyline points=\"95,45 45,110 95,185\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_13",
+       "src": "HG-9653 原簿・小5 演習教材 第4分冊 No.35 C1",
+       "hg": "HG-9653",
+       "title": "円すいを切った立体の体積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の立体の体積を求めなさい。ただし，円周率は3.14とします。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "157",
+         "meaning": "この立体は、底面の半径5cm・高さ12cmの円すいを、頂点と底面の中心を通る面で半分に切ったもの。円すいの体積の1/2なので、5×5×3.14×12×1/3×1/2＝50×3.14＝157cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 320\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"20.0\" y=\"25.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">(1)</text>\n<line x1=\"150.0\" y1=\"30.0\" x2=\"68.4\" y2=\"259.9\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"150.0\" y1=\"30.0\" x2=\"231.6\" y2=\"280.1\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"150.0\" y1=\"30.0\" x2=\"240.0\" y2=\"270.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"68.4\" y1=\"259.9\" x2=\"231.6\" y2=\"280.1\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M68.4,259.9 L70.7,258.6 L73.2,257.5 L76.0,256.3 L79.0,255.3 L82.2,254.2 L85.7,253.2 L89.3,252.3 L93.2,251.4 L97.2,250.6 L101.4,249.8 L105.7,249.1 L110.2,248.5 L114.8,247.9 L119.5,247.4 L124.3,247.0 L129.2,246.6 L134.2,246.4 L139.2,246.2 L144.3,246.0 L149.3,246.0 L154.4,246.0 L159.5,246.1 L164.5,246.3 L169.5,246.6 L174.4,246.9 L179.2,247.3 L184.0,247.8 L188.6,248.3 L193.1,248.9 L197.5,249.6 L201.8,250.4 L205.8,251.2 L209.7,252.0 L213.4,253.0 L216.9,253.9 L220.2,255.0 L223.3,256.1 L226.1,257.2 L228.7,258.3 L231.0,259.5 L233.1,260.8 L234.9,262.0 L236.5,263.3 L237.7,264.6 L238.7,266.0 L239.4,267.3 L239.9,268.6 L240.0,270.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<path d=\"M240.0,270.0 L240.0,270.2 L240.0,270.4 L240.0,270.7 L239.9,270.9 L239.9,271.1 L239.9,271.3 L239.8,271.5 L239.8,271.7 L239.7,272.0 L239.6,272.2 L239.6,272.4 L239.5,272.6 L239.4,272.8 L239.3,273.0 L239.2,273.3 L239.0,273.5 L238.9,273.7 L238.8,273.9 L238.7,274.1 L238.5,274.3 L238.4,274.6 L238.2,274.8 L238.0,275.0 L237.9,275.2 L237.7,275.4 L237.5,275.6 L237.3,275.8 L237.1,276.0 L236.9,276.3 L236.7,276.5 L236.5,276.7 L236.2,276.9 L236.0,277.1 L235.7,277.3 L235.5,277.5 L235.2,277.7 L235.0,277.9 L234.7,278.1 L234.4,278.3 L234.1,278.5 L233.8,278.7 L233.5,278.9 L233.2,279.1 L232.9,279.3 L232.6,279.5 L232.2,279.7 L231.9,279.9 L231.6,280.1\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"150.0\" y1=\"30.0\" x2=\"150.0\" y2=\"270.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<circle cx=\"150.0\" cy=\"270.0\" r=\"3\" fill=\"#4f9eff\"/>\n<path d=\"M150.0,261.0 L159.0,261.0 L159.0,270.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M150.0,30.0 Q122.0,150.0 150.0,270.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"136.0\" y1=\"150.0\" x2=\"60.0\" y2=\"130.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"40.0\" y=\"128.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">12cm</text>\n<path d=\"M150.0,270.0 Q188.1,296.9 231.6,280.1\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"183.4\" y=\"304.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">5cm</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "200.96",
+         "meaning": "底面の半径6cm・高さ8cmの円すいのうち、底面の中心角240°ぶん。240/360＝2/3なので、6×6×3.14×8×1/3×2/3＝64×3.14＝200.96cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 290\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"20.0\" y=\"25.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">(2)</text>\n<line x1=\"190.0\" y1=\"40.0\" x2=\"50.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190.0\" y1=\"40.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190.0\" y1=\"40.0\" x2=\"260.0\" y2=\"261.2\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190.0\" y1=\"40.0\" x2=\"330.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190.0\" y1=\"230.0\" x2=\"50.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"190.0\" y1=\"230.0\" x2=\"260.0\" y2=\"261.2\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M50.0,230.0 L50.3,227.6 L51.2,225.3 L52.7,223.0 L54.8,220.7 L57.4,218.4 L60.7,216.2 L64.4,214.1 L68.8,212.0 L73.6,210.0 L78.9,208.1 L84.7,206.3 L91.0,204.5 L97.7,202.9 L104.8,201.4 L112.2,200.1 L120.0,198.8 L128.1,197.7 L136.4,196.7 L145.0,195.9 L153.8,195.2 L162.7,194.7 L171.7,194.3 L180.8,194.1 L190.0,194.0 L199.2,194.1 L208.3,194.3 L217.3,194.7 L226.2,195.2 L235.0,195.9 L243.6,196.7 L251.9,197.7 L260.0,198.8 L267.8,200.1 L275.2,201.4 L282.3,202.9 L289.0,204.5 L295.3,206.3 L301.1,208.1 L306.4,210.0 L311.2,212.0 L315.6,214.1 L319.3,216.2 L322.6,218.4 L325.2,220.7 L327.3,223.0 L328.8,225.3 L329.7,227.6 L330.0,230.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<path d=\"M330.0,230.0 L330.0,230.8 L329.9,231.6 L329.7,232.4 L329.5,233.1 L329.2,233.9 L328.8,234.7 L328.4,235.5 L327.9,236.3 L327.3,237.0 L326.7,237.8 L326.0,238.6 L325.2,239.3 L324.4,240.1 L323.5,240.8 L322.6,241.6 L321.6,242.3 L320.5,243.0 L319.3,243.8 L318.1,244.5 L316.9,245.2 L315.6,245.9 L314.2,246.6 L312.7,247.3 L311.2,248.0 L309.7,248.7 L308.1,249.3 L306.4,250.0 L304.7,250.6 L302.9,251.3 L301.1,251.9 L299.2,252.5 L297.2,253.1 L295.3,253.7 L293.2,254.3 L291.1,254.9 L289.0,255.5 L286.8,256.0 L284.6,256.5 L282.3,257.1 L280.0,257.6 L277.6,258.1 L275.2,258.6 L272.8,259.0 L270.3,259.5 L267.8,259.9 L265.2,260.4 L262.6,260.8 L260.0,261.2\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M50.0,230.0 Q99.1,119.6 190.0,40.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"85.5\" y=\"123.3\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">10cm</text>\n<path d=\"M190.0,40.0 Q208.0,135.0 190.0,230.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"175.0\" y=\"139.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">8cm</text>\n<path d=\"M50.0,230.0 Q120.0,252.0 190.0,230.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"120.0\" y=\"261.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">6cm</text>\n<path d=\"M174.0,230.0 L174.1,229.0 L174.2,227.9 L174.5,226.9 L175.0,225.9 L175.5,224.9 L176.1,224.0 L176.9,223.1 L177.7,222.3 L178.7,221.5 L179.7,220.8 L180.8,220.2 L182.0,219.6 L183.2,219.1 L184.5,218.7 L185.9,218.4 L187.2,218.2 L188.6,218.0 L190.0,218.0 L191.4,218.0 L192.8,218.2 L194.1,218.4 L195.5,218.7 L196.8,219.1 L198.0,219.6 L199.2,220.2 L200.3,220.8 L201.3,221.5 L202.3,222.3 L203.1,223.1 L203.9,224.0 L204.5,224.9 L205.0,225.9 L205.5,226.9 L205.8,227.9 L205.9,229.0 L206.0,230.0 L205.9,231.0 L205.8,232.1 L205.5,233.1 L205.0,234.1 L204.5,235.1 L203.9,236.0 L203.1,236.9 L202.3,237.7 L201.3,238.5 L200.3,239.2 L199.2,239.8 L198.0,240.4\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"214.0\" y=\"236.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">240°</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_14",
+       "src": "HG-9654 原簿・小5 演習教材 第4分冊 No.35 C2",
+       "hg": "HG-9654",
+       "title": "半円を丸めた円すい",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図1のように，半径20cmの円を2つに切って，図2のような形をつくりました。AからBまでの長さ(図2の太線部分)は何cmになりますか。ただし，円周率は3.14とします。",
+         "answer": "31.4",
+         "meaning": "半径20cmの円を半分にした半円を丸めると円すいになり、半円の弧が底面の円周になる。もとの円周は40×3.14なので、底面の円周はその1/2。ABは底面の円の半周だから、さらに1/2で、もとの円周の1/4。40×3.14×1/4＝10×3.14＝31.4cm。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 200\" style=\"display:block;margin:0 auto;max-width:100%\">\n<circle cx=\"90\" cy=\"90\" r=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"20.0\" y1=\"90.0\" x2=\"160.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M20.0,90.0 Q55.0,68.0 90.0,90.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"55.0\" y=\"73.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">20cm</text>\n<text x=\"90.0\" y=\"190.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">図1</text>\n<line x1=\"290.0\" y1=\"10.0\" x2=\"250.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"290.0\" y1=\"10.0\" x2=\"330.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"290.0\" y1=\"170.0\" x2=\"250.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"290.0\" y1=\"170.0\" x2=\"330.0\" y2=\"90.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M250.0,90.0 L250.1,89.2 L250.3,88.4 L250.8,87.7 L251.4,86.9 L252.1,86.1 L253.0,85.4 L254.1,84.7 L255.4,84.0 L256.7,83.3 L258.3,82.7 L259.9,82.1 L261.7,81.5 L263.6,81.0 L265.6,80.5 L267.8,80.0 L270.0,79.6 L272.3,79.2 L274.7,78.9 L277.1,78.6 L279.6,78.4 L282.2,78.2 L284.8,78.1 L287.4,78.0 L290.0,78.0 L292.6,78.0 L295.2,78.1 L297.8,78.2 L300.4,78.4 L302.9,78.6 L305.3,78.9 L307.7,79.2 L310.0,79.6 L312.2,80.0 L314.4,80.5 L316.4,81.0 L318.3,81.5 L320.1,82.1 L321.7,82.7 L323.3,83.3 L324.6,84.0 L325.9,84.7 L327.0,85.4 L327.9,86.1 L328.6,86.9 L329.2,87.7 L329.7,88.4 L329.9,89.2 L330.0,90.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<path d=\"M330.0,90.0 L329.9,90.8 L329.7,91.6 L329.2,92.3 L328.6,93.1 L327.9,93.9 L327.0,94.6 L325.9,95.3 L324.6,96.0 L323.3,96.7 L321.7,97.3 L320.1,97.9 L318.3,98.5 L316.4,99.0 L314.4,99.5 L312.2,100.0 L310.0,100.4 L307.7,100.8 L305.3,101.1 L302.9,101.4 L300.4,101.6 L297.8,101.8 L295.2,101.9 L292.6,102.0 L290.0,102.0 L287.4,102.0 L284.8,101.9 L282.2,101.8 L279.6,101.6 L277.1,101.4 L274.7,101.1 L272.3,100.8 L270.0,100.4 L267.8,100.0 L265.6,99.5 L263.6,99.0 L261.7,98.5 L259.9,97.9 L258.3,97.3 L256.7,96.7 L255.4,96.0 L254.1,95.3 L253.0,94.6 L252.1,93.9 L251.4,93.1 L250.8,92.3 L250.3,91.6 L250.1,90.8 L250.0,90.0\" stroke=\"#4f9eff\" stroke-width=\"4.5\" fill=\"none\"/>\n<text x=\"238.0\" y=\"95.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">A</text>\n<text x=\"342.0\" y=\"95.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">B</text>\n<text x=\"290.0\" y=\"190.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">図2</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_15",
+       "src": "HG-9655 原簿・小5 演習教材 第4分冊 No.35 C3",
+       "hg": "HG-9655",
+       "title": "展開図・投影図から円すいの体積",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 3,
+       "intro": "次の展開図や投影図で表される立体の体積を求めなさい。ただし，円周率は3.14とします。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "1695.6",
+         "meaning": "投影図から、高さ20cm、底面の直径18cm＝半径9cmの円すい。9×9×3.14×20×1/3＝540×3.14＝1695.6cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 270 380\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"15.0\" y=\"25.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">(1)</text>\n<line x1=\"110.0\" y1=\"30.0\" x2=\"40.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"110.0\" y1=\"30.0\" x2=\"180.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"40.0\" y1=\"190.0\" x2=\"180.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"110.0\" y1=\"30.0\" x2=\"110.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<path d=\"M110.0,181.0 L119.0,181.0 L119.0,190.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M110.0,30.0 Q134.0,110.0 110.0,190.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"122.0\" y1=\"110.0\" x2=\"150.0\" y2=\"80.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"152.0\" y=\"80.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">20cm</text>\n<path d=\"M40.0,190.0 Q110.0,176.0 180.0,190.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"110.0\" y1=\"183.0\" x2=\"200.0\" y2=\"170.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"202.0\" y=\"172.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">18cm</text>\n<circle cx=\"110\" cy=\"300\" r=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<circle cx=\"110.0\" cy=\"300.0\" r=\"3\" fill=\"#4f9eff\"/>\n<line x1=\"40.0\" y1=\"190.0\" x2=\"40.0\" y2=\"300.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"180.0\" y1=\"190.0\" x2=\"180.0\" y2=\"300.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"110.0\" y1=\"190.0\" x2=\"110.0\" y2=\"300.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "301.44",
+         "meaning": "展開図から、母線10cm・底面の半径6cmの円すい。高さ・半径・母線でできる直角三角形は3:4:5の2倍の6:8:10なので、高さは8cm。6×6×3.14×8×1/3＝96×3.14＝301.44cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 240\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"15.0\" y=\"25.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">(2)</text>\n<path d=\"M130,120 L99.1,24.9 A100,100 0 1 1 99.1,215.1 Z\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M130.0,120.0 Q97.4,162.0 99.1,215.1\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"72.0\" y=\"164.8\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">10cm</text>\n<circle cx=\"290\" cy=\"120\" r=\"60\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<circle cx=\"290.0\" cy=\"120.0\" r=\"3\" fill=\"#4f9eff\"/>\n<line x1=\"290.0\" y1=\"120.0\" x2=\"350.0\" y2=\"120.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<text x=\"318.0\" y=\"110.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">6cm</text>\n</svg>"
+        },
+        {
+         "question": "(3)",
+         "answer": "18.84",
+         "meaning": "おうぎ形の弧は10×3.14×108/360＝3×3.14で、半径3cmの円周（6×3.14）のちょうど半分。だからこれは、底面の半径3cm・高さ4cmの円すいを縦に半分にした立体（三角形が切り口）。3×3×3.14×4×1/3×1/2＝6×3.14＝18.84cm³。",
+         "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 290 330\" style=\"display:block;margin:0 auto;max-width:100%\">\n<text x=\"15.0\" y=\"25.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">(3)</text>\n<path d=\"M140,30 L59.1,88.8 A100,100 0 0 0 220.9,88.8 Z\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M127.1,39.4 A16,16 0 0 0 152.9,39.4\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"140.0\" y=\"66.0\" font-size=\"13\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">108°</text>\n<path d=\"M140.0,30.0 Q189.9,46.4 220.9,88.8\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"215.2\" y=\"46.9\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">5cm</text>\n<path d=\"M80,190 A60,60 0 0 1 200,190\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"80.0\" y1=\"190.0\" x2=\"200.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"80.0\" y1=\"190.0\" x2=\"140.0\" y2=\"270.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"200.0\" y1=\"190.0\" x2=\"140.0\" y2=\"270.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"140.0\" y1=\"190.0\" x2=\"140.0\" y2=\"270.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<path d=\"M140.0,199.0 L149.0,199.0 L149.0,190.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M140.0,190.0 Q118.0,230.0 140.0,270.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"95.0\" y=\"238.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">4cm</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5m2nd_e35_16",
+       "src": "HG-9656 原簿・小5 演習教材 第4分冊 No.35 C4",
+       "hg": "HG-9656",
+       "title": "投影図から四角すい",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 2,
+       "intro": "右の投影図で表される立体について，次のそれぞれの問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) この立体の体積は何cm³ですか。",
+         "answer": "384",
+         "meaning": "正面から見ると三角形、真上から見ると正方形の中に対角線→底面が1辺12cmの正方形の四角すい。高さは正面図の8cm。12×12×8×1/3＝384cm³。"
+        },
+        {
+         "question": "(2) この立体の表面積は何cm²ですか。",
+         "answer": "384",
+         "meaning": "正面図のななめの辺10cmは、手前の側面の三角形を横から見た長さで、側面の三角形の高さにあたる（立体の高さ8cmとは別）。底面は12×12＝144cm²、側面は12×10×1/2×4＝240cm²。144＋240＝384cm²。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 425\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"170.0\" y1=\"30.0\" x2=\"80.0\" y2=\"150.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"170.0\" y1=\"30.0\" x2=\"260.0\" y2=\"150.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"80.0\" y1=\"150.0\" x2=\"260.0\" y2=\"150.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"170.0\" y1=\"30.0\" x2=\"170.0\" y2=\"150.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"170.0\" y1=\"30.0\" x2=\"300.0\" y2=\"30.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"260.0\" y1=\"150.0\" x2=\"300.0\" y2=\"150.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"290.0\" y1=\"32.0\" x2=\"290.0\" y2=\"148.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"298.0\" y=\"95.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">8cm</text>\n<path d=\"M80.0,150.0 Q107.4,76.8 170.0,30.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"86.2\" y=\"83.4\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">10cm</text>\n<rect x=\"80\" y=\"200\" width=\"180\" height=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"80.0\" y1=\"200.0\" x2=\"260.0\" y2=\"380.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"260.0\" y1=\"200.0\" x2=\"80.0\" y2=\"380.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"80.0\" y1=\"150.0\" x2=\"80.0\" y2=\"200.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"260.0\" y1=\"150.0\" x2=\"260.0\" y2=\"200.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"170.0\" y1=\"150.0\" x2=\"170.0\" y2=\"290.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<path d=\"M260.0,200.0 Q282.0,290.0 260.0,380.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"301.0\" y=\"295.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">12cm</text>\n<path d=\"M80.0,380.0 Q170.0,396.0 260.0,380.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"170.0\" y=\"410.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">12cm</text>\n<text x=\"25.0\" y=\"85.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">正</text>\n<text x=\"25.0\" y=\"103.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">面</text>\n<text x=\"25.0\" y=\"285.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">真</text>\n<text x=\"25.0\" y=\"303.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">上</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_17",
+       "src": "HG-9657 原簿・小5 演習教材 第4分冊 No.35 C5",
+       "hg": "HG-9657",
+       "title": "円すいをくりぬいた円柱",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 3,
+       "intro": "下の図の立体は，円柱から円すいをくりぬいてできたものです。円周率を3.14として，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) くりぬいた円すいの側面積は何cm²ですか。",
+         "answer": "423.9",
+         "meaning": "くりぬいた円すいは、底面の直径18cm＝半径9cm、母線15cm。側面のおうぎ形の弧は底面の円周で18×3.14。側面積＝弧×母線÷2＝18×3.14×15×1/2＝135×3.14＝423.9cm²。"
+        },
+        {
+         "question": "(2) 右の立体の表面積は何cm²ですか。",
+         "answer": "2204.28",
+         "meaning": "表面を4つに分ける。①穴の内側は(1)の円すいの側面で135×3.14。②上面は半径12cmの円から半径9cmの穴を引いて、12×12×3.14－9×9×3.14＝63×3.14。③下の底面は12×12×3.14＝144×3.14。④円柱の側面は円周24×3.14×高さ15＝360×3.14。合わせて(135＋63＋144＋360)×3.14＝702×3.14＝2204.28cm²。"
+        },
+        {
+         "question": "(3) くりぬいた円すいと，残った下図の立体の体積比を求めなさい。",
+         "answer": "3:17",
+         "meaning": "3.14は比で消える。くりぬいた円すいともとの円柱を比べると、底面積の比9×9:12×12、高さの比12:15、円すいは×1/3。9×9×12×1/3:12×12×15＝324:2160＝3:20。残った立体は20－3＝17なので、3:17。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 420 521\" style=\"display:block;margin:0 auto;max-width:100%\"><svg x=\"80\" y=\"0\" width=\"260\" height=\"230\" viewBox=\"0 0 260 230\">\n<text x=\"130.0\" y=\"20.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">見取り図</text>\n<path d=\"M230.0,60.0 L229.1,62.9 L226.6,65.7 L222.4,68.4 L216.6,71.0 L209.3,73.4 L200.7,75.6 L190.9,77.5 L180.0,79.1 L168.3,80.3 L155.9,81.3 L143.1,81.8 L130.0,82.0 L116.9,81.8 L104.1,81.3 L91.7,80.3 L80.0,79.1 L69.1,77.5 L59.3,75.6 L50.7,73.4 L43.4,71.0 L37.6,68.4 L33.4,65.7 L30.9,62.9 L30.0,60.0 L30.9,57.1 L33.4,54.3 L37.6,51.6 L43.4,49.0 L50.7,46.6 L59.3,44.4 L69.1,42.5 L80.0,40.9 L91.7,39.7 L104.1,38.7 L116.9,38.2 L130.0,38.0 L143.1,38.2 L155.9,38.7 L168.3,39.7 L180.0,40.9 L190.9,42.5 L200.7,44.4 L209.3,46.6 L216.6,49.0 L222.4,51.6 L226.6,54.3 L229.1,57.1 L230.0,60.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M205.0,60.0 L204.4,62.0 L202.4,63.9 L199.3,65.7 L195.0,67.5 L189.5,69.1 L183.0,70.6 L175.7,71.9 L167.5,73.0 L158.7,73.9 L149.4,74.5 L139.8,74.9 L130.0,75.0 L120.2,74.9 L110.6,74.5 L101.3,73.9 L92.5,73.0 L84.3,71.9 L77.0,70.6 L70.5,69.1 L65.0,67.5 L60.7,65.7 L57.6,63.9 L55.6,62.0 L55.0,60.0 L55.6,58.0 L57.6,56.1 L60.7,54.3 L65.0,52.5 L70.5,50.9 L77.0,49.4 L84.3,48.1 L92.5,47.0 L101.3,46.1 L110.6,45.5 L120.2,45.1 L130.0,45.0 L139.8,45.1 L149.4,45.5 L158.7,46.1 L167.5,47.0 L175.7,48.1 L183.0,49.4 L189.5,50.9 L195.0,52.5 L199.3,54.3 L202.4,56.1 L204.4,58.0 L205.0,60.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"30.0\" y1=\"60.0\" x2=\"30.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"230.0\" y1=\"60.0\" x2=\"230.0\" y2=\"190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M230.0,190.0 L229.8,191.4 L229.1,192.9 L228.1,194.3 L226.6,195.7 L224.7,197.1 L222.4,198.4 L219.7,199.7 L216.6,201.0 L213.1,202.2 L209.3,203.4 L205.2,204.5 L200.7,205.6 L195.9,206.5 L190.9,207.5 L185.6,208.3 L180.0,209.1 L174.2,209.7 L168.3,210.3 L162.1,210.8 L155.9,211.3 L149.5,211.6 L143.1,211.8 L136.5,212.0 L130.0,212.0 L123.5,212.0 L116.9,211.8 L110.5,211.6 L104.1,211.3 L97.9,210.8 L91.7,210.3 L85.8,209.7 L80.0,209.1 L74.4,208.3 L69.1,207.5 L64.1,206.5 L59.3,205.6 L54.8,204.5 L50.7,203.4 L46.9,202.2 L43.4,201.0 L40.3,199.7 L37.6,198.4 L35.3,197.1 L33.4,195.7 L31.9,194.3 L30.9,192.9 L30.2,191.4 L30.0,190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M30.0,190.0 L30.2,188.6 L30.9,187.1 L31.9,185.7 L33.4,184.3 L35.3,182.9 L37.6,181.6 L40.3,180.3 L43.4,179.0 L46.9,177.8 L50.7,176.6 L54.8,175.5 L59.3,174.4 L64.1,173.5 L69.1,172.5 L74.4,171.7 L80.0,170.9 L85.8,170.3 L91.7,169.7 L97.9,169.2 L104.1,168.7 L110.5,168.4 L116.9,168.2 L123.5,168.0 L130.0,168.0 L136.5,168.0 L143.1,168.2 L149.5,168.4 L155.9,168.7 L162.1,169.2 L168.3,169.7 L174.2,170.3 L180.0,170.9 L185.6,171.7 L190.9,172.5 L195.9,173.5 L200.7,174.4 L205.2,175.5 L209.3,176.6 L213.1,177.8 L216.6,179.0 L219.7,180.3 L222.4,181.6 L224.7,182.9 L226.6,184.3 L228.1,185.7 L229.1,187.1 L229.8,188.6 L230.0,190.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"58.0\" y1=\"64.0\" x2=\"130.0\" y2=\"200.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n<line x1=\"202.0\" y1=\"64.0\" x2=\"130.0\" y2=\"200.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"6 4\"/>\n</svg><svg x=\"0\" y=\"246\" width=\"420\" height=\"275\" viewBox=\"0 0 420 275\">\n<text x=\"160.0\" y=\"20.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">断面図</text>\n<path d=\"M70,85 L40,85 L40,235 L280,235 L280,85 L250,85 L160,205 Z\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"70.0\" y1=\"55.0\" x2=\"70.0\" y2=\"81.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"250.0\" y1=\"55.0\" x2=\"250.0\" y2=\"81.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"70.0\" y1=\"65.0\" x2=\"250.0\" y2=\"65.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"160.0\" y=\"60.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">18cm</text>\n<line x1=\"160.0\" y1=\"205.0\" x2=\"330.0\" y2=\"205.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"5 4\" fill=\"none\"/>\n<line x1=\"280.0\" y1=\"85.0\" x2=\"370.0\" y2=\"85.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"5 4\" fill=\"none\"/>\n<line x1=\"280.0\" y1=\"235.0\" x2=\"370.0\" y2=\"235.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" stroke-dasharray=\"5 4\" fill=\"none\"/>\n<line x1=\"310.0\" y1=\"85.0\" x2=\"310.0\" y2=\"205.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"314.0\" y=\"150.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">12cm</text>\n<line x1=\"360.0\" y1=\"85.0\" x2=\"360.0\" y2=\"235.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"364.0\" y=\"180.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"start\" font-family=\"sans-serif\">15cm</text>\n<line x1=\"40.0\" y1=\"239.0\" x2=\"40.0\" y2=\"265.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"280.0\" y1=\"239.0\" x2=\"280.0\" y2=\"265.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<line x1=\"40.0\" y1=\"257.0\" x2=\"280.0\" y2=\"257.0\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"160.0\" y=\"253.0\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">24cm</text>\n<line x1=\"58.8\" y1=\"93.4\" x2=\"148.8\" y2=\"213.4\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"85.8\" y=\"158.4\" font-size=\"15\" fill=\"#e6e9f5\" text-anchor=\"middle\" font-family=\"sans-serif\">15cm</text>\n</svg></svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_18",
+       "src": "HG-9658 原簿・小5 演習教材 第4分冊 No.35 C6",
+       "hg": "HG-9658",
+       "title": "3つの容器と水を移す回数",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 3,
+       "intro": "内のりが下の図のような3つの容器A，B，Cがあります。",
+       "steps": [
+        {
+         "question": "(1) 容器Bに水をいっぱい入れて，容器Aに移していきました。このとき，容器Bから何はい移せば，容器Aをいっぱいにできますか。",
+         "answer": "8",
+         "meaning": "AもBも円すいなので、3.14と1/3は比で消える。底面積の比12×12:6×6、高さの比20:10。12×12×20:6×6×10＝2880:360＝8:1。AはBの8倍入るので、8÷1＝8はい。"
+        },
+        {
+         "question": "(2) いったん容器をすべてからにした後，容器Aで4はいの水を容器Cに入れました。続いて容器Bを使って容器Cに水を入れていきます。容器Bの何はいめで容器Cがいっぱいになりますか。",
+         "answer": "6",
+         "meaning": "Bは円すい、Cは円柱。6×6×10×1/3:15×15×20＝120:4500＝2:75。A:B＝8:1を2倍して16:2にそろえると、A:B:C＝16:2:75。Aで4はい入れると16×4＝64、残りは75－64＝11。Bは1ぱい2なので、11÷2＝5あまり1。5はいではまだ1たりないので、もう1ぱい入れた5＋1＝6はいめでいっぱいになる。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 690 270\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g font-family=\"sans-serif\" font-size=\"15\">\n<text x=\"20\" y=\"30\" fill=\"#e6e9f5\">A</text>\n<ellipse cx=\"110\" cy=\"80\" rx=\"70\" ry=\"18\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"40\" y1=\"80\" x2=\"110\" y2=\"235\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"180\" y1=\"80\" x2=\"110\" y2=\"235\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"40\" y1=\"80\" x2=\"110\" y2=\"80\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"6,4\"/>\n<line x1=\"110\" y1=\"80\" x2=\"110\" y2=\"235\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"6,4\"/>\n<path d=\"M40,80 Q75,55 110,80\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M62,68 Q62,48 80,42\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"82\" y=\"44\" fill=\"#e6e9f5\">12cm</text>\n<path d=\"M110,80 Q135,155 110,235\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M128,170 Q145,165 152,185\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"150\" y=\"200\" fill=\"#e6e9f5\">20cm</text>\n<text x=\"235\" y=\"30\" fill=\"#e6e9f5\">B</text>\n<ellipse cx=\"300\" cy=\"85\" rx=\"35\" ry=\"9\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"265\" y1=\"85\" x2=\"300\" y2=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"335\" y1=\"85\" x2=\"300\" y2=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"265\" y1=\"85\" x2=\"300\" y2=\"85\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"5,3\"/>\n<line x1=\"300\" y1=\"85\" x2=\"300\" y2=\"160\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"5,3\"/>\n<path d=\"M265,85 Q282,72 300,85\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M276,78 Q276,62 290,58\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"290\" y=\"60\" fill=\"#e6e9f5\">6cm</text>\n<path d=\"M300,85 Q318,122 300,160\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M313,125 Q330,122 336,138\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"338\" y=\"148\" fill=\"#e6e9f5\">10cm</text>\n<text x=\"420\" y=\"30\" fill=\"#e6e9f5\">C</text>\n<ellipse cx=\"530\" cy=\"85\" rx=\"90\" ry=\"18\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"440\" y1=\"85\" x2=\"440\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"620\" y1=\"85\" x2=\"620\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M440,210 A90,18 0 0 0 620,210\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M440,210 A90,18 0 0 1 620,210\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\" stroke-dasharray=\"6,4\"/>\n<line x1=\"440\" y1=\"85\" x2=\"530\" y2=\"85\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"6,4\"/>\n<path d=\"M440,85 Q490,62 530,85\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<path d=\"M470,73 Q472,55 490,50\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"492\" y=\"52\" fill=\"#e6e9f5\">15cm</text>\n<path d=\"M620,85 Q640,148 620,210\" stroke=\"#9aa3c0\" stroke-width=\"1\" fill=\"none\"/>\n<text x=\"638\" y=\"153\" fill=\"#e6e9f5\">20cm</text>\n</g>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_19",
+       "src": "HG-9659 原簿・小5 演習教材 第4分冊 No.35 C7",
+       "hg": "HG-9659",
+       "title": "ころがした円すいがえがく円",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 2,
+       "intro": "底面の円の半径が6cmの円すいを，平面の上でころがすと，ちょうど5回転して下の図のような円をえがきました。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) この円の半径を求めなさい。",
+         "answer": "30",
+         "meaning": "えがいた円の半径は円すいの母線。底面が5回転して1周したので、えがいた円の円周は底面の円周の5倍。円周が5倍なら半径も5倍なので、6×5＝30cm。"
+        },
+        {
+         "question": "(2) この円の上を円すいが，ちょうど3回転で一周するようにするには，円すいの底面の半径を何cm長くしたらよいですか。",
+         "answer": "4",
+         "meaning": "同じ円（半径30cm）を3回転で1周するには、底面の円周がえがく円の円周の1/3、つまり底面の半径が30÷3＝10cmであればよい。いまは6cmなので、10－6＝4cm長くする。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 170\" style=\"display:block;margin:0 auto;max-width:100%\">\n<ellipse cx=\"160\" cy=\"85\" rx=\"145\" ry=\"70\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<ellipse cx=\"75\" cy=\"105\" rx=\"22\" ry=\"29\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"75\" y1=\"76\" x2=\"150\" y2=\"76\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"87\" y1=\"129\" x2=\"150\" y2=\"76\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_20",
+       "src": "HG-9660 原簿・小5 演習教材 第4分冊 No.35 C8",
+       "hg": "HG-9660",
+       "title": "正方形の紙から四角すい",
+       "category": "rittai",
+       "unit": "立体図形（体積・表面積）",
+       "grade": 5,
+       "star": 4,
+       "intro": "下の図のように，1辺が12cmの正方形ABCDから，合同な4つの二等辺三角形である三角形ABE，三角形BCF，三角形CDG，三角形DAHを切り取って，残りの部分を組み立てて四角すいを作ります。このとき，次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) この四角すいの表面積は何cm²ですか。",
+         "answer": "72",
+         "meaning": "組み立てた四角すいの表面は、切り取ったあとに残った部分そのもの。正方形の面積から、底辺12cm・高さ3cmの二等辺三角形4つを引く。12×12－12×3÷2×4＝144－72＝72cm²。"
+        },
+        {
+         "question": "(2) この四角すいの体積は何cm³ですか。",
+         "answer": "36",
+         "meaning": "底面はEFGHの正方形。EとGは向かい合う辺から3cm内側なので、対角線EGは12－3×2＝6cm。底面積は対角線×対角線÷2で6×6÷2＝18cm²。高さ：ABの真ん中をMとすると、直角三角形AMEはAM＝6、ME＝3。組み立てると、頂点・底面の中心・Eでできる直角三角形は、ななめの辺がAEと同じで、短い辺が3cm。同じ形・同じ大きさなので、高さはAMと同じ6cm。18×6×1/3＝36cm³。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 310\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"70.0\" y1=\"50.0\" x2=\"310.0\" y2=\"50.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"310.0\" y1=\"50.0\" x2=\"310.0\" y2=\"290.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"310.0\" y1=\"290.0\" x2=\"70.0\" y2=\"290.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"70.0\" y1=\"290.0\" x2=\"70.0\" y2=\"50.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"70.0\" y1=\"50.0\" x2=\"130.0\" y2=\"170.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"70.0\" y1=\"290.0\" x2=\"130.0\" y2=\"170.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"70.0\" y1=\"50.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"310.0\" y1=\"50.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"310.0\" y1=\"50.0\" x2=\"250.0\" y2=\"170.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"310.0\" y1=\"290.0\" x2=\"250.0\" y2=\"170.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"310.0\" y1=\"290.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"70.0\" y1=\"290.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130.0\" y1=\"170.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"190.0\" y1=\"110.0\" x2=\"250.0\" y2=\"170.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"250.0\" y1=\"170.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"190.0\" y1=\"230.0\" x2=\"130.0\" y2=\"170.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M70,50 Q190,22 310,50\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<rect x=\"166\" y=\"26\" width=\"48\" height=\"16\" fill=\"#0b1020\"/>\n<text x=\"190.0\" y=\"40.0\" fill=\"#e8ecf7\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\">12cm</text>\n<path d=\"M70,50 Q38,170 70,290\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<rect x=\"18\" y=\"161\" width=\"44\" height=\"18\" fill=\"#0b1020\"/>\n<text x=\"40.0\" y=\"175.0\" fill=\"#e8ecf7\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\">12cm</text>\n<line x1=\"70.0\" y1=\"170.0\" x2=\"130.0\" y2=\"170.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"4,3\"/>\n<path d=\"M70,160 L80,160 L80,170\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<path d=\"M76,172 Q100,186 128,174\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<text x=\"100.0\" y=\"200.0\" fill=\"#e8ecf7\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\">3cm</text>\n<text x=\"58.0\" y=\"44.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">A</text>\n<text x=\"324.0\" y=\"46.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">D</text>\n<text x=\"58.0\" y=\"308.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">B</text>\n<text x=\"324.0\" y=\"308.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">C</text>\n<text x=\"132.0\" y=\"158.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">E</text>\n<text x=\"190.0\" y=\"100.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">H</text>\n<text x=\"264.0\" y=\"176.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">G</text>\n<text x=\"190.0\" y=\"252.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">F</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_21",
+       "src": "HG-9661 原簿・小5 演習教材 第4分冊 No.35 C9",
+       "hg": "HG-9661",
+       "title": "円すいにまきつけたひもの最短",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下の図のように底面の半径3cm，母線の長さ24cmの円すいの点Aから側面を2回転させて，OA上にある点Oから10cmはなれた点Bまでひもをまきつけました。ひもの長さが最も短いとき，ひもの長さは何cmですか。ただし，3辺の長さの比が5：12：13の三角形は直角三角形です。",
+         "answer": "26",
+         "meaning": "側面の展開図のおうぎ形の中心角は、360×3/24＝45度。【2周】するので、側面を2面ならべてかくと、角AOBは45×2＝90度。最短のひもは展開図でAとBを結ぶまっすぐな線。OB＝10、OA＝24は5:12の2倍なので、三角形OABは【5:12:13】の直角三角形。AB＝10×13/5＝26cm。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 260 380\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"160.0\" y1=\"40.0\" x2=\"100.0\" y2=\"340.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"160.0\" y1=\"40.0\" x2=\"220.0\" y2=\"340.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<path d=\"M100,340 A60,15 0 0 0 220,340\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M100,340 A60,15 0 0 1 220,340\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"5,4\"/>\n<path d=\"M100.0,340.0 Q155.8,343.2 211.6,298.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M211.6,298.0 Q164.2,256.5 116.8,256.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"5,4\"/>\n<path d=\"M116.8,256.0 Q155.8,251.9 194.8,214.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<path d=\"M194.8,214.0 Q164.9,176.5 135.0,165.0\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"5,4\"/>\n<circle cx=\"135.0\" cy=\"165.0\" r=\"2.5\" fill=\"#4f9eff\"/>\n<text x=\"160.0\" y=\"30.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">O</text>\n<text x=\"86.0\" y=\"348.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">A</text>\n<text x=\"121.0\" y=\"171.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">B</text>\n<path d=\"M160,40 Q50,190.0 100,340\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<rect x=\"77\" y=\"180\" width=\"26\" height=\"18\" fill=\"#0b1020\"/>\n<text x=\"90.0\" y=\"195.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">24</text>\n<path d=\"M160,40 Q120,102.5 135.0,165.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<text x=\"122.0\" y=\"100.0\" fill=\"#e8ecf7\" font-size=\"15\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text>\n<line x1=\"160.0\" y1=\"340.0\" x2=\"220.0\" y2=\"340.0\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n<path d=\"M162,344 Q190,358 218,344\" stroke=\"#9aa3c0\" stroke-width=\"1.2\" fill=\"none\"/>\n<text x=\"190.0\" y=\"370.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text>\n</svg>"
+      },
+      {
+       "id": "hd5m2nd_e35_22",
+       "src": "HG-9662 原簿・小5 演習教材 第4分冊 No.35 C10",
+       "hg": "HG-9662",
+       "title": "立方体の折れ線を回転させた立体",
+       "category": "rittai",
+       "unit": "展開図・投影図",
+       "grade": 5,
+       "star": 4,
+       "intro": "ある立方体の頂点を使って，下の図のような4つの辺AB，BC，CD，DAでできた図形(太線の部分)を考えます。\n4点A，B，C，Dから2点選び，その2点を結んだ直線を軸として，この図形を1回転させます。\n軸が直線AB，BCの2つの場合に，それぞれどのような立体ができますか。下の10個の見取り図の中から適するものを選んで，記号で答えなさい。\n(図の寸法はかならずしも正しくない)",
+       "steps": [
+        {
+         "question": "［AB］",
+         "answer": "8",
+         "choices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10"
+         ],
+         "meaning": "軸がAB。DAとBCはどちらも軸に垂直で、長さは立方体の1辺。まわすと、Aのはしと Bのはしに同じ大きさの円（ふた）ができる。CDは軸に平行でなく、ねじれた向きにのびる線。CもDも軸から1辺の長さだけはなれているが、CDの真ん中（立方体の中心）は軸から面の対角線の半分しかはなれていない（1辺より短い）。だから真ん中ほど細くなり、側面がくびれた円柱になる。"
+        },
+        {
+         "question": "［BC］",
+         "answer": "2",
+         "choices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10"
+         ],
+         "meaning": "軸がBC。Cは軸の上にあるので動かず、とがった頂点になる。ABとDAは、Bを通り軸に垂直な面の中にある。この面の中でBからいちばん遠いのはDで、その長さは正方形の対角線BD。だからABとDAをまわすと、半径BDの円板（底面）をうめる。CDは頂点Cと底面のふちのDを結ぶまっすぐな線なので、まわすと円すいの側面になる。だから円すい。"
+        }
+       ],
+       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 570 600\" style=\"display:block;margin:0 auto;max-width:100%\"><svg x=\"130\" y=\"0\" width=\"310\" height=\"270\" viewBox=\"0 0 310 270\">\n<line x1=\"60.0\" y1=\"240.0\" x2=\"60.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"60.0\" y1=\"240.0\" x2=\"200.0\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"60.0\" y1=\"100.0\" x2=\"130.0\" y2=\"40.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"200.0\" y1=\"100.0\" x2=\"270.0\" y2=\"40.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130.0\" y1=\"40.0\" x2=\"270.0\" y2=\"40.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"270.0\" y1=\"40.0\" x2=\"270.0\" y2=\"180.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130.0\" y1=\"180.0\" x2=\"130.0\" y2=\"40.0\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5,4\"/>\n<line x1=\"130.0\" y1=\"180.0\" x2=\"270.0\" y2=\"180.0\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5,4\"/>\n<line x1=\"130.0\" y1=\"180.0\" x2=\"60.0\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"2\" stroke-dasharray=\"5,4\"/>\n<line x1=\"60.0\" y1=\"100.0\" x2=\"200.0\" y2=\"100.0\" stroke=\"#4f9eff\" stroke-width=\"5\"/>\n<line x1=\"200.0\" y1=\"100.0\" x2=\"200.0\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"5\"/>\n<line x1=\"200.0\" y1=\"240.0\" x2=\"270.0\" y2=\"180.0\" stroke=\"#4f9eff\" stroke-width=\"5\"/>\n<line x1=\"60.0\" y1=\"100.0\" x2=\"270.0\" y2=\"180.0\" stroke=\"#4f9eff\" stroke-width=\"5\"/>\n<text x=\"44.0\" y=\"106.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">D</text>\n<text x=\"216.0\" y=\"116.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">A</text>\n<text x=\"204.0\" y=\"264.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">B</text>\n<text x=\"286.0\" y=\"188.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">C</text>\n</svg><svg x=\"0\" y=\"286\" width=\"570\" height=\"314\" viewBox=\"0 0 570 314\">\n<rect x=\"10\" y=\"10\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"10\" y=\"36\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"65.0\" y=\"29.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text>\n<line x1=\"65.0\" y1=\"51.0\" x2=\"25.0\" y2=\"91.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"65.0\" y1=\"51.0\" x2=\"105.0\" y2=\"91.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"25.0\" y1=\"91.0\" x2=\"65.0\" y2=\"133.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"105.0\" y1=\"91.0\" x2=\"65.0\" y2=\"133.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M25.0,91 A40,9 0 0 0 105.0,91\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M25.0,91 A40,9 0 0 1 105.0,91\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<rect x=\"120\" y=\"10\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"120\" y=\"36\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"175.0\" y=\"29.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text>\n<line x1=\"175.0\" y1=\"54.0\" x2=\"137.0\" y2=\"121.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"175.0\" y1=\"54.0\" x2=\"213.0\" y2=\"121.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M137.0,121 A38,9 0 0 0 213.0,121\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M137.0,121 A38,9 0 0 1 213.0,121\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<rect x=\"230\" y=\"10\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"230\" y=\"36\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"285.0\" y=\"29.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text>\n<ellipse cx=\"285.0\" cy=\"61\" rx=\"38\" ry=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<line x1=\"247.0\" y1=\"61.0\" x2=\"285.0\" y2=\"92.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"323.0\" y1=\"61.0\" x2=\"285.0\" y2=\"92.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"285.0\" y1=\"92.0\" x2=\"247.0\" y2=\"124.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"285.0\" y1=\"92.0\" x2=\"323.0\" y2=\"124.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M247.0,124 A38,9 0 0 0 323.0,124\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M247.0,124 A38,9 0 0 1 323.0,124\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<rect x=\"340\" y=\"10\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"340\" y=\"36\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"395.0\" y=\"29.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text>\n<line x1=\"395.0\" y1=\"48.0\" x2=\"369.0\" y2=\"74.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"395.0\" y1=\"48.0\" x2=\"421.0\" y2=\"74.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M369.0,74 A26,6 0 0 0 421.0,74\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M369.0,74 A26,6 0 0 1 421.0,74\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<path d=\"M369.0,74 Q377.0,93.0 369.0,112\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M421.0,74 Q413.0,93.0 421.0,112\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M369.0,112 A26,6 0 0 0 421.0,112\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M369.0,112 A26,6 0 0 1 421.0,112\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<line x1=\"369.0\" y1=\"112.0\" x2=\"395.0\" y2=\"136.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"421.0\" y1=\"112.0\" x2=\"395.0\" y2=\"136.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<rect x=\"450\" y=\"10\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"450\" y=\"36\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"505.0\" y=\"29.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text>\n<ellipse cx=\"505.0\" cy=\"64\" rx=\"38\" ry=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<line x1=\"467.0\" y1=\"64.0\" x2=\"505.0\" y2=\"124.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"543.0\" y1=\"64.0\" x2=\"505.0\" y2=\"124.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<ellipse cx=\"505.0\" cy=\"124\" rx=\"38\" ry=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<rect x=\"10\" y=\"146\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"10\" y=\"172\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"65.0\" y=\"165.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text>\n<ellipse cx=\"65.0\" cy=\"202\" rx=\"40\" ry=\"10\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<line x1=\"25.0\" y1=\"202.0\" x2=\"25.0\" y2=\"257.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"105.0\" y1=\"202.0\" x2=\"105.0\" y2=\"257.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M25.0,257 A40,10 0 0 0 105.0,257\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M25.0,257 A40,10 0 0 1 105.0,257\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<rect x=\"120\" y=\"146\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"120\" y=\"172\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"175.0\" y=\"165.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text>\n<line x1=\"175.0\" y1=\"180.0\" x2=\"153.0\" y2=\"203.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"175.0\" y1=\"180.0\" x2=\"197.0\" y2=\"203.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"153.0\" y1=\"203.0\" x2=\"175.0\" y2=\"226.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"197.0\" y1=\"203.0\" x2=\"175.0\" y2=\"226.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M153.0,203 A22,5 0 0 0 197.0,203\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M153.0,203 A22,5 0 0 1 197.0,203\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<line x1=\"175.0\" y1=\"226.0\" x2=\"153.0\" y2=\"249.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"175.0\" y1=\"226.0\" x2=\"197.0\" y2=\"249.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"153.0\" y1=\"249.0\" x2=\"175.0\" y2=\"272.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"197.0\" y1=\"249.0\" x2=\"175.0\" y2=\"272.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M153.0,249 A22,5 0 0 0 197.0,249\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M153.0,249 A22,5 0 0 1 197.0,249\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<rect x=\"230\" y=\"146\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"230\" y=\"172\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"285.0\" y=\"165.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text>\n<ellipse cx=\"285.0\" cy=\"200\" rx=\"40\" ry=\"10\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M245.0,200 Q257.0,230.0 245.0,260\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M325.0,200 Q313.0,230.0 325.0,260\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M245.0,260 A40,10 0 0 0 325.0,260\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M245.0,260 A40,10 0 0 1 325.0,260\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<rect x=\"340\" y=\"146\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"340\" y=\"172\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"395.0\" y=\"165.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text>\n<ellipse cx=\"395.0\" cy=\"194\" rx=\"32\" ry=\"8\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<line x1=\"363.0\" y1=\"194.0\" x2=\"371.0\" y2=\"234.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"427.0\" y1=\"194.0\" x2=\"419.0\" y2=\"234.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M371.0,234 A24,6 0 0 0 419.0,234\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M371.0,234 A24,6 0 0 1 419.0,234\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<ellipse cx=\"395.0\" cy=\"238\" rx=\"38\" ry=\"8\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<line x1=\"357.0\" y1=\"238.0\" x2=\"395.0\" y2=\"276.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"433.0\" y1=\"238.0\" x2=\"395.0\" y2=\"276.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<rect x=\"450\" y=\"146\" width=\"110\" height=\"26\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<rect x=\"450\" y=\"172\" width=\"110\" height=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"505.0\" y=\"165.0\" fill=\"#e8ecf7\" font-size=\"16\" text-anchor=\"middle\" font-family=\"sans-serif\">10</text>\n<line x1=\"505.0\" y1=\"184.0\" x2=\"475.0\" y2=\"212.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"505.0\" y1=\"184.0\" x2=\"535.0\" y2=\"212.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M475.0,212 A30,6 0 0 0 535.0,212\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M475.0,212 A30,6 0 0 1 535.0,212\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<line x1=\"475.0\" y1=\"212.0\" x2=\"475.0\" y2=\"248.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"535.0\" y1=\"212.0\" x2=\"535.0\" y2=\"248.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<path d=\"M475.0,248 A30,6 0 0 0 535.0,248\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\"/>\n<path d=\"M475.0,248 A30,6 0 0 1 535.0,248\" stroke=\"#4f9eff\" stroke-width=\"1.6\" fill=\"none\" stroke-dasharray=\"4,3\"/>\n<line x1=\"475.0\" y1=\"248.0\" x2=\"505.0\" y2=\"274.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n<line x1=\"535.0\" y1=\"248.0\" x2=\"505.0\" y2=\"274.0\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/>\n\n</svg></svg>"
+      }
      ]
     }
    },
