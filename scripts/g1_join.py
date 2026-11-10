@@ -385,6 +385,10 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
                 notes.append(u"%s step%d: 単位『個』の字は問いかけに無いが、『いくつ』があるので通した"
                              % (hg, i))
                 miss = []
+            # ★「時刻を求めなさい」＝何時何分で答える問い（2026-11-10・最レ第2講座 No.39 大問5・6・14）。この1組だけ（時・分 ↔ 時刻）
+            if miss and set(miss) <= {u"時", u"分"} and u"時刻" in shown:
+                notes.append(u"%s step%d: 単位『%s』の字は問いかけに無いが、『時刻』があるので通した" % (hg, i, u"・".join(miss)))
+                miss = []
             # ★「兄の年令を求めなさい」＝才で答える問い（2026-11-10・最レ第2講座 No.32 大問1）。この1組だけ（才 ↔ 年令/年齢）
             if miss == [u"才"] and (u"年令" in shown or u"年齢" in shown):
                 notes.append(u"%s step%d: 単位『才』の字は問いかけに無いが、『年令』があるので通した" % (hg, i))
