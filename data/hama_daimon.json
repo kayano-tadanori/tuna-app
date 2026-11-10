@@ -120571,6 +120571,376 @@
         }
        ]
       }
+     ],
+     "35": [
+      {
+       "id": "hd5s_35k2_1",
+       "src": "HG-9265 原簿・小5最レ 第4分冊 第2講座 No.35 大問1",
+       "hg": "HG-9265",
+       "title": "道の選び方と1往復",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 下図でA地点からC地点に進む方法は何通りありますか。ただしあともどりはしません。",
+         "answer": "6",
+         "meaning": "AからBへ行く道は3本。そのどれを通っても、BからCへ行く道が2本ずつあるので、道の数をかけ算する。3×2＝6（通り）。",
+         "svg": "<svg viewBox=\"0 0 330 120\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<defs><marker id=\"ah\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,0 L10,5 L0,10\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/></marker></defs>\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<path d=\"M42,44 Q95,-2 148,44\" marker-end=\"url(#ah)\"/>\n<path d=\"M38,62 L150,60\" marker-end=\"url(#ah)\"/>\n<path d=\"M42,80 Q95,126 148,76\" marker-end=\"url(#ah)\"/>\n<path d=\"M190,44 Q238,-2 286,44\" marker-end=\"url(#ah)\"/>\n<path d=\"M190,78 Q238,124 286,76\" marker-end=\"url(#ah)\"/>\n</g>\n<g fill=\"#e8ecf5\" font-size=\"18\" text-anchor=\"middle\">\n<text x=\"20\" y=\"68\" fill=\"#e8ecf5\">A</text>\n<text x=\"169\" y=\"66\" fill=\"#e8ecf5\">B</text>\n<text x=\"310\" y=\"66\" fill=\"#e8ecf5\">C</text>\n</g>\n</svg>"
+        },
+        {
+         "question": "(2) 下図で西町を出発して西町と東町の間を1往復する方法は何通りありますか。ただし，行きに通った道は帰りには通ることはできません。",
+         "answer": "6",
+         "meaning": "行きは3本の道のどれでも通れるので3通り。帰りは行きに通った道が使えないので、残りの2本から選んで2通り。行きの3通りのそれぞれに帰りが2通りずつあるので、3×2＝6（通り）。",
+         "svg": "<svg viewBox=\"0 0 300 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<g fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\">\n<path d=\"M88,32 Q150,-10 212,32\"/>\n<path d=\"M82,50 L218,50\"/>\n<path d=\"M88,68 Q150,110 212,68\"/>\n</g>\n<text x=\"40\" y=\"56\" font-size=\"16\" text-anchor=\"middle\" fill=\"#e8ecf5\">西町</text>\n<text x=\"260\" y=\"56\" font-size=\"16\" text-anchor=\"middle\" fill=\"#e8ecf5\">東町</text>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_2",
+       "src": "HG-9266 原簿・小5最レ 第4分冊 第2講座 No.35 大問2",
+       "hg": "HG-9266",
+       "title": "リレーの順番と5人の並び方",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) リレーでA, B, C, Dの走る順番は何通り考えられますか。",
+         "answer": "24",
+         "meaning": "1番目に走る人はA, B, C, Dの4人のだれでもよいので4通り。2番目は残り3人から3通り、3番目は残り2人から2通り、4番目は残った1人に決まる。かけ算して、4×3×2×1＝24（通り）。"
+        },
+        {
+         "question": "(2) A, B, C, D, Eの5人が一列にならぶ並び方は何通り考えられますか。",
+         "answer": "120",
+         "meaning": "(1)と同じように、先頭から5人・残り4人・残り3人・残り2人・残り1人と選べるので、5×4×3×2×1＝120（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_3",
+       "src": "HG-9267 原簿・小5最レ 第4分冊 第2講座 No.35 大問3",
+       "hg": "HG-9267",
+       "title": "カードで作る整数（0のカードがあるとき）",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": "次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) [1], [2], [3], [4]の4枚のカードで2けたの整数を作ります。全部で何通りできますか。",
+         "answer": "12",
+         "meaning": "十の位は4枚のどれでもよいので4通り。一の位は十の位に使ったカード以外の残り3枚のどれでもよいので3通り。4×3＝12（通り）。"
+        },
+        {
+         "question": "(2) [1], [2], [3], [4], [5]の5枚のカードで3けたの整数を作ります。全部で何通りできますか。",
+         "answer": "60",
+         "meaning": "百の位は5枚のどれでも5通り、十の位は残り4枚で4通り、一の位は残り3枚で3通り。5×4×3＝60（通り）。"
+        },
+        {
+         "question": "(3) [0], [1], [2], [3], [4]の5枚のカードで3けたの整数を作ります。全部で何通りできますか。",
+         "answer": "48",
+         "meaning": "0を百の位（先頭）に置くと3けたにならないので、百の位は0以外の4枚から4通り。十の位は0も使えるので、残り4枚のどれでも4通り。一の位は残り3枚で3通り。4×4×3＝48（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_4",
+       "src": "HG-9268 原簿・小5最レ 第4分冊 第2講座 No.35 大問4",
+       "hg": "HG-9268",
+       "title": "カードで作る奇数・4の倍数",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 3,
+       "intro": "次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) [1], [2], [3], [4]の4枚のカードで3けたの奇数を作ります。全部で何通りできますか。",
+         "answer": "12",
+         "meaning": "奇数は一の位が奇数なので、一の位から考える。一の位は1か3の2通り。十の位は残り3枚のどれでも3通り、百の位は残り2枚のどれでも2通り。2×3×2＝12（通り）。"
+        },
+        {
+         "question": "(2) [1], [2], [3], [4], [5]の5枚のカードで3けたの4の倍数を作ります。全部で何通りできますか。",
+         "answer": "12",
+         "meaning": "4の倍数は下2けたが4の倍数になる数なので、下2けたから考える。1〜5のちがうカードで作れる下2けたの4の倍数は、12, 24, 32, 52の4通り。百の位は残り3枚のどれでも3通り。4×3＝12（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_5",
+       "src": "HG-9269 原簿・小5最レ 第4分冊 第2講座 No.35 大問5",
+       "hg": "HG-9269",
+       "title": "男女の並び方（たがいちがい・となりあう）",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": "A君，B君，Cさん，Dさん，Eさんの男2人，女3人が1列に並んで行進します。",
+       "steps": [
+        {
+         "question": "(1) 5人の並び方は全部で何通りありますか。",
+         "answer": "120",
+         "meaning": "先頭から5人・残り4人・残り3人・残り2人・残り1人と選べるので、5×4×3×2×1＝120（通り）。"
+        },
+        {
+         "question": "(2) 男女がたがいちがいになるような並び方は何通りありますか。",
+         "answer": "12",
+         "meaning": "男2人・女3人がたがいちがいになるのは、女男女男女の形だけ。女の3か所に女3人を並べるのが3×2×1＝6（通り）、男の2か所に男2人を並べるのが2×1＝2（通り）。女の並べ方のそれぞれに男の並べ方があるので、6×2＝12（通り）。"
+        },
+        {
+         "question": "(3) 男2人がとなりあうような並び方は何通りありますか。",
+         "answer": "48",
+         "meaning": "となりあう男2人を1つのかたまり（男男）と見ると、（男男）と女3人の4つを並べることになり、4×3×2×1通り。かたまりの中の男2人の入れかわりが2×1通りあるので、2×1×4×3×2×1＝48（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_6",
+       "src": "HG-9270 原簿・小5最レ 第4分冊 第2講座 No.35 大問6",
+       "hg": "HG-9270",
+       "title": "運転する人が決まっている自動車の座り方",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "A, B, C, Dの4人が前に2人，後に3人乗ることができる自動車に乗ります。自動車の運転ができるのはAとBの2人だけだとすると座り方は何通りありますか。",
+         "answer": "48",
+         "meaning": "運転席に座れるのはAかBなので、まず運転席の人で2パターンに分ける。どちらのパターンでも、残り4つの席に残り3人が座る。1つ席があくので、「お化け」を1人入れて4人を4つの席に並べると考える（お化けの席が空席）。4×3×2×1＝24（通り）。運転席に座る人が2パターンあるので、24×2＝48（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_7",
+       "src": "HG-9271 原簿・小5最レ 第4分冊 第2講座 No.35 大問7",
+       "hg": "HG-9271",
+       "title": "一列に並んだ部分のぬり分け",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": "下図を赤，青，黄，黒の4色のうち何色かを使ってぬり分けます。",
+       "steps": [
+        {
+         "question": "(1) 4色全部を使ってぬり分けるとぬり分け方は何通りありますか。",
+         "answer": "24",
+         "meaning": "左からぬっていく。いちばん左は4色のどれでも4通り、次は残り3色で3通り、その次は残り2色で2通り、いちばん右は残り1色に決まる。4×3×2×1＝24（通り）。"
+        },
+        {
+         "question": "(2) 何色を使ってもかまわないときぬり分け方は何通りありますか。",
+         "answer": "108",
+         "meaning": "何色使ってもよいので、気をつけるのは「となりとちがう色」だけ。いちばん左は4通り。その右は左のとなりとちがう色なので3通り。その次も、すぐ左のとなりとちがえばよいので3通り、いちばん右も3通り。4×3×3×3＝108（通り）。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 302 158\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"282\" height=\"138\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"115\" y1=\"10\" x2=\"80\" y2=\"148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"172\" y1=\"10\" x2=\"190\" y2=\"148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"267\" y1=\"10\" x2=\"245\" y2=\"148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n</svg>"
+      },
+      {
+       "id": "hd5s_35k2_8",
+       "src": "HG-9272 原簿・小5最レ 第4分冊 第2講座 No.35 大問8",
+       "hg": "HG-9272",
+       "title": "5つの部分のぬり分け",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 3,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下図のA，B，C，D，Eの５つの部分に赤，青，黄，茶，緑の5色のうち何色かを使って色分けします。そのぬり方は何通りありますか。",
+         "answer": "540",
+         "meaning": "AはB, C, D, Eのすべてととなりあうので、Aから先にぬる。Aは5色のどれでも5通り。BはAとちがう色で4通り。CはAとBの2つとちがう色で3通り。DはAとCとちがう色で3通り、EはAとDとちがう色で3通り。5×4×3×3×3＝540（通り）。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 393 222\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"373\" height=\"202\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"10\" y1=\"122\" x2=\"383\" y2=\"83\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"94\" y1=\"114\" x2=\"84\" y2=\"212\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"170\" y1=\"106\" x2=\"189\" y2=\"212\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"292\" y1=\"93\" x2=\"292\" y2=\"212\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<text x=\"187\" y=\"57\" fill=\"#e8ecf5\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-family=\"sans-serif\">A</text>\n<text x=\"44\" y=\"171\" fill=\"#e8ecf5\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-family=\"sans-serif\">B</text>\n<text x=\"132\" y=\"171\" fill=\"#e8ecf5\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-family=\"sans-serif\">C</text>\n<text x=\"237\" y=\"171\" fill=\"#e8ecf5\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-family=\"sans-serif\">D</text>\n<text x=\"337\" y=\"171\" fill=\"#e8ecf5\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-family=\"sans-serif\">E</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_35k2_9",
+       "src": "HG-9273 原簿・小5最レ 第4分冊 第2講座 No.35 大問9",
+       "hg": "HG-9273",
+       "title": "3色で図をぬり分ける",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 3,
+       "intro": "下図を赤，青，黄の3色を使ってぬり分けるときぬり分け方は何通りありますか。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "6",
+         "meaning": "左上・右上・右下の3つは、どの2つもとなりあっている。左上は3通り、右上は左上とちがう2通り、右下は左上とも右上ともちがう1通り。左下は左上と右下の両方ととなりあうので、残る色は右上と同じ色しかなく、自動的に決まる。3×2×1＝6（通り）。",
+         "svg": "<svg viewBox=\"0 0 220 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"200\" height=\"200\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"109\" y1=\"10\" x2=\"109\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"10\" y1=\"114\" x2=\"109\" y2=\"114\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"109\" y1=\"77\" x2=\"210\" y2=\"77\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "12",
+         "meaning": "まん中の縦長の部分は、左右の6つの部分すべてととなりあう。まず、まん中を3通りでぬる。左の列の3つは、まん中とちがう残り2色を上中下で交互にぬる。真ん中の色を決めれば2通りで、上と下は自動的に決まる。右の列も同じく2通り。3×2×2＝12（通り）。",
+         "svg": "<svg viewBox=\"0 0 294 175\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"274\" height=\"155\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"126\" y1=\"10\" x2=\"126\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"180\" y1=\"10\" x2=\"180\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"10\" y1=\"62\" x2=\"126\" y2=\"62\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"180\" y1=\"62\" x2=\"284\" y2=\"62\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"10\" y1=\"114\" x2=\"126\" y2=\"114\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"180\" y1=\"114\" x2=\"284\" y2=\"114\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_10",
+       "src": "HG-9274 原簿・小5最レ 第4分冊 第2講座 No.35 大問10",
+       "hg": "HG-9274",
+       "title": "丸いテーブルの座り方（まどがある・ない）",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": "A君，B君，C君，D君が次の(1)，(2)のように，丸いテーブルにつきます。それぞれの場合，異なったすわり方は何通りありますか。",
+       "steps": [
+        {
+         "question": "(1)",
+         "answer": "24",
+         "meaning": "まどがあるので、まどに近い席などで席が区別できる。つまり4つの席に4人を並べるのと同じで、4×3×2×1＝24（通り）。",
+         "svg": "<svg viewBox=\"0 0 262 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"175\" height=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<circle cx=\"98\" cy=\"93\" r=\"28\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<rect x=\"72\" y=\"38\" width=\"52\" height=\"8\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<rect x=\"72\" y=\"140\" width=\"52\" height=\"8\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<rect x=\"41\" y=\"67\" width=\"8\" height=\"52\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<rect x=\"146\" y=\"67\" width=\"8\" height=\"52\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"187\" y1=\"40\" x2=\"187\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-width=\"4\"/>\n<line x1=\"182\" y1=\"40\" x2=\"192\" y2=\"40\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"182\" y1=\"150\" x2=\"192\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<line x1=\"195\" y1=\"67\" x2=\"217\" y2=\"67\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" />\n<polyline points=\"201,61 195,67 201,73\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"237\" y=\"67\" fill=\"#e8ecf5\" font-size=\"16\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-family=\"sans-serif\">まど</text>\n</svg>"
+        },
+        {
+         "question": "(2)",
+         "answer": "6",
+         "meaning": "まどが無いと席が区別できず、4人を回転させて同じになる並びは同じすわり方になる。1つのすわり方を回転させると4つの並びができるので、一列に並べた数を4で割る。4×3×2×1÷4＝6（通り）。",
+         "svg": "<svg viewBox=\"0 0 187 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"167\" height=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<circle cx=\"93\" cy=\"95\" r=\"28\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<rect x=\"67\" y=\"40\" width=\"52\" height=\"8\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<rect x=\"67\" y=\"142\" width=\"52\" height=\"8\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<rect x=\"36\" y=\"69\" width=\"8\" height=\"52\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<rect x=\"141\" y=\"69\" width=\"8\" height=\"52\" fill=\"#ffd166\" fill-opacity=\"0.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n</svg>"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_11",
+       "src": "HG-9275 原簿・小5最レ 第4分冊 第2講座 No.35 大問11",
+       "hg": "HG-9275",
+       "title": "丸いテーブルをかこむ5人",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 2,
+       "intro": null,
+       "steps": [
+        {
+         "question": "まるいテーブルがあって5人がそれをかこんですわるとき，何通りのすわり方がありますか。",
+         "answer": "24",
+         "meaning": "5人を一列に並べると5×4×3×2×1通り。丸いテーブルでは、回転させて同じになる5つの並びが同じすわり方になるので、5で割る。5×4×3×2×1÷5＝24（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_12",
+       "src": "HG-9276 原簿・小5最レ 第4分冊 第2講座 No.35 大問12",
+       "hg": "HG-9276",
+       "title": "父と母がとなりあう座り方（一列と円形）",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 3,
+       "intro": "A君の家族は，A君と兄と弟と妹と父と母の6人です。",
+       "steps": [
+        {
+         "question": "(1) 長いいすがあって，6人が一列にならんですわるとき，必ず父と母がとなりあってすわるとすると，何通りのすわり方がありますか。",
+         "answer": "240",
+         "meaning": "となりあう父と母を1つのかたまり（父母）と見て、（父母）・A・兄・弟・妹の5つを一列に並べると、5×4×3×2×1＝120（通り）。かたまりの中が（母父）の順でも同じだけあるので、120×2＝240（通り）。"
+        },
+        {
+         "question": "(2) まるいテーブルがあって6人がそれをかこんですわるとき，必ず父と母がとなりあってすわるとすると，何通りのすわり方がありますか。",
+         "answer": "48",
+         "meaning": "（父母）のかたまりと、A・兄・弟・妹の5つを円形に並べる。回転して同じものは同じすわり方なので、（父母）の場所を固定して考えると、残り4人の並べ方は4×3×2×1＝24（通り）。（母父）の順でも同じだけあるので、24×2＝48（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_13",
+       "src": "HG-9277 原簿・小5最レ 第4分冊 第2講座 No.35 大問13",
+       "hg": "HG-9277",
+       "title": "6の倍数の個数とすべての整数の和",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 3,
+       "intro": "[1]，[2]，[3]，[4]，[5]の5枚のカードのうち3枚を並べて3けたの整数を作ります。",
+       "steps": [
+        {
+         "question": "(1) 6の倍数は全部で何通りできますか。",
+         "answer": "8",
+         "meaning": "6の倍数は、3の倍数でしかも2の倍数の数。3の倍数は各位の数字の和が3の倍数なので、そうなる3枚の組を選ぶと、(1,2,3)、(1,3,5)、(2,3,4)、(3,4,5)の4組。2の倍数にするには一の位を偶数にする。(1,2,3)は一の位が2で、残り2枚の並べ方が2通り。(1,3,5)は偶数が無いので0通り。(2,3,4)は一の位が2か4で、それぞれ2通りずつの4通り。(3,4,5)は一の位が4で2通り。2＋4＋2＝8（通り）。"
+        },
+        {
+         "question": "(2) できる全ての整数の和を求めなさい。",
+         "answer": "19980",
+         "meaning": "百の位に1が来る数は、残りの十の位・一の位の並べ方が4×3＝12（通り）ずつある。2〜5も同じで、どの数字も百の位に12回ずつ出る。だから百の位の合計は（1＋2＋3＋4＋5）×100×12。十の位・一の位も同じく、どの数字も12回ずつ出るので、十の位の合計は（1＋2＋3＋4＋5）×10×12、一の位の合計は（1＋2＋3＋4＋5）×1×12。まとめると（1＋2＋3＋4＋5）×（100＋10＋1）×12＝15×111×12＝1665×12＝19980。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_14",
+       "src": "HG-9278 原簿・小5最レ 第4分冊 第2講座 No.35 大問14",
+       "hg": "HG-9278",
+       "title": "払える金額と、同じ数字があるカードの整数",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 4,
+       "intro": "次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) さいふの中に50円玉が3個，10円玉が3個，1円玉が3個はいっています。この9個のお金を使っておつりなしで支払うことのできる金額は全部で何通りありますか。",
+         "answer": "63",
+         "meaning": "50円玉は0, 1, 2, 3個の4通り、10円玉も1円玉も4通りずつ使い方がある。50円玉1個は、10円玉3個と1円玉3個を合わせた33円より大きいので、使う個数の組がちがえば金額も必ずちがう。だから金額の数は個数の組の数と同じで4×4×4通り。ただし全部0個の0円は支払いにならないので引く。4×4×4−1＝63（通り）。"
+        },
+        {
+         "question": "(2) 9枚のカード[2]，[2]，[3]，[3]，[3]，[4]，[4]，[4]，[4]のうちの4枚を取り出してできる4けたの整数は全部で何通りありますか。",
+         "answer": "71",
+         "meaning": "どの位にも使えるカードは2, 3, 4の3種類。もしどれも4枚ずつあれば、3×3×3×3＝81（通り）作れる。でも2は2枚、3は3枚しかないので、「2を3枚以上使う数」と「3を4枚使う数」は作れない。2を3枚使う数は、2でない位（4か所）に3か4のどちらかが入るので4×2＝8通り、2222を加えて9通り。3を4枚使う数は3333の1通り。81−（9＋1）＝71（通り）。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_35k2_15",
+       "src": "HG-9279 原簿・小5最レ 第4分冊 第2講座 No.35 大問15",
+       "hg": "HG-9279",
+       "title": "正方形の中の4つの部分のぬり分け",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 4,
+       "intro": null,
+       "steps": [
+        {
+         "question": "下図を赤，白，黄，黒の4色のうち何色かを使ってぬり分けるときぬり分け方は何通りありますか。",
+         "answer": "84",
+         "meaning": "4つの部分は、左→上→右の三角→右下→左と輪のようにとなりあい、左の部分と右の三角の部分はとなりあわない。そこで、この2つが同じ色のときとちがう色のときに分ける。同じ色のとき：左（＝右の三角）が4通り、上はその色とちがう3通り、右下もその色とちがう3通りで、4×3×3＝36（通り）。ちがう色のとき：左が4通り、右の三角は左とちがう3通り、上と右下はどちらも左とも右の三角ともちがう色で2通りずつ。4×3×2×2＝48（通り）。合わせて、36＋48＝84（通り）。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 220 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <rect x=\"10\" y=\"10\" width=\"200\" height=\"200\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"10\" y1=\"10\" x2=\"124.8\" y2=\"210\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"210\" y1=\"10\" x2=\"84\" y2=\"139\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"84\" y1=\"139\" x2=\"210\" y2=\"127.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+      },
+      {
+       "id": "hd5s_35k2_16",
+       "src": "HG-9280 原簿・小5最レ 第4分冊 第2講座 No.35 大問16",
+       "hg": "HG-9280",
+       "title": "回転できる円形のボール紙のぬり分け",
+       "category": "baai",
+       "unit": "場合の数(2)",
+       "grade": 5,
+       "star": 4,
+       "intro": "円形のボール紙を下図のように5つに分け，これらの部分に色をぬってぬり分けます。ただしとなりあう部分は異なった色をぬるものとし，このボール紙は自由に回転できるものとします。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(1) 白，赤，黒，青，黄の5色全部を用いてぬり分ける方法は何通りありますか。",
+         "answer": "30",
+         "meaning": "真ん中の部分はまわりの4つ全部ととなりあうので、先に決める。真ん中のぬり方は5通り。まわりの4つは残り4色を1色ずつぬる。ボール紙は回転できるので、回転させて同じになる4つのぬり方は1通りと数える。よって、5×4×3×2×1÷4＝30（通り）。"
+        },
+        {
+         "question": "(2) 赤，黒，青，黄の4色全部を用いてぬり分ける方法は何通りありますか。",
+         "answer": "12",
+         "meaning": "真ん中のぬり方は4通り。まわりの4つは残り3色でぬるので、どれか1色を2回使う。同じ色はとなりあえないので、2回使う色は向かい合う2か所にぬる。2回使う色の決め方は3通り。それを決めてしまえば、残りの2色を残りの向かい合う2か所にぬる置き方は、回転させると同じになるので考えなくてよい。4×3＝12（通り）。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 240 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n  <circle cx=\"120\" cy=\"120\" r=\"110\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <circle cx=\"120\" cy=\"120\" r=\"68\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"120\" y1=\"10\" x2=\"120\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"120\" y1=\"188\" x2=\"120\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"10\" y1=\"120\" x2=\"52\" y2=\"120\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n  <line x1=\"188\" y1=\"120\" x2=\"230\" y2=\"120\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n</svg>"
+      }
      ]
     }
    },
