@@ -45,6 +45,13 @@ def main():
         if '--allow-gap' not in sys.argv:
             sys.exit('✗ 止めた。わざとなら --allow-gap')
 
+    # ★テンキーに乗らない答え（「6通り」のように単位が残ったまま・choices なし）を止める（2026-11-10 No.36で出かけた）
+    NUM = re.compile(r'^(\d+(\.\d+)?|\d+/\d+|\d+と\d+/\d+|\d+(\.\d+)?([:：]\d+(\.\d+)?)+|(\d+割)?(\d+分)?(\d+厘)?)$')
+    bad = ['%s %s' % (it['hg'], st['answer']) for it in daimon for st in it['steps']
+           if not st.get('choices') and not NUM.match(st['answer']) and '余り' not in st['answer']]
+    if bad:
+        sys.exit('✗ テンキーに乗らない答え（take_unit 忘れ？）: %s' % '／'.join(bad))
+
     gpath = find_genbo()
     g = io.open(gpath, encoding='utf-8').read()
     start = max(int(x) for x in re.findall(r'^### 【HG-(\d{4})】', g, re.M)) + 1
