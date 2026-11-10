@@ -104,6 +104,13 @@ def genbo_gap():
     for r in G.iter_daimon(d):
         for h in (G.hgof(r["x"]) or []):
             used.add(h)
+    # ★2026-11-11：国語（hama_kokugo.json 等＝KOKUGO_DONE）と通常問題（計算問題の特訓など）に
+    #   入れたものも「作問待ち」に数えていた（453本のうち約190本がこれ）。どちらも作ってあるので外す。
+    for fn in glob.glob(os.path.join(G.BASE, "data", "*.json")):
+        if os.path.basename(fn) == "hama_daimon.json":
+            continue
+        used.update(re.findall(r"HG-\d{4}", io.open(fn, encoding="utf-8").read()))
+    used |= G.KOKUGO_DONE
     todo = [h for h in bodies
             if h not in used and h not in G.CANNOT and h not in G.SAME]
     nokensan = [h for h in bodies
