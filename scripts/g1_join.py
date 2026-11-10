@@ -455,6 +455,16 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
             return None
         if qfigs:
             s[u"svg"] = qfigs[0][u"_svg"]
+            # ★アプリは `step.svg || chain.svg`＝小問の図があると**大問の図が出ない**。
+            #   No.33 B10（右の立方体の展開図を(1)〜(5)で判定）で立方体が消えていた（2026-11-10）。
+            #   両方あるときは大問の図を上に積んで1枚にする
+            if item_figs:
+                both = stack_svgs([item_figs[0][u"_svg"], qfigs[0][u"_svg"]])
+                if not both:
+                    problems.append(u"%s step%d: 大問の図と小問の図を1枚にできない（viewBox が読めない）" % (hg, i))
+                    return None
+                s[u"svg"] = both
+                notes.append(u"%s step%d: 大問の図の下に小問の図を積んだ" % (hg, i))
         steps.append(s)
 
     # ★アプリは図を**設問の下**に出すので、「右の図」「上のグラフ」は指し先が無くなる。
@@ -478,11 +488,18 @@ def build_daimon(doc, it, g3, problems, notes, rows=None):
 
     for s in steps:
         s[u"question"] = for_app(s[u"question"], bool(s.get(u"svg") or item_figs))
+    intro_app = None if sole else for_app(it[u"setsumon"][u"common"], bool(figs_by_scope))
+    # ★大問の図を小問の図の上に積んだときは、「右にある立方体」が積んだ図の**上側**を指す（No.33 B10）
+    if intro_app and item_figs and any(figs_by_scope.get(k) for k in figs_by_scope if k != u"item"):
+        intro2 = re.sub(u"[右左]にある", u"上にある", intro_app)
+        if intro2 != intro_app:
+            notes.append(u"%s: 積んだ図に合わせて「右にある」を「上にある」に言いかえた（原簿は実物のまま）" % hg)
+            intro_app = intro2
     x = {u"id": u"trial_%s" % hg.replace(u"-", u"").lower(),
          u"src": u"%s 原簿・%s No.%d %s" % (hg, doc[u"material"], doc[u"no"], it[u"label"]),
          u"hg": hg, u"title": p.get(u"title"), u"category": p.get(u"category"),
          u"unit": p.get(u"unit"), u"grade": 5, u"star": p.get(u"star"),
-         u"intro": None if sole else for_app(it[u"setsumon"][u"common"], bool(figs_by_scope)), u"steps": steps}
+         u"intro": intro_app, u"steps": steps}
     if item_figs:
         x[u"svg"] = item_figs[0][u"_svg"]
     return x
