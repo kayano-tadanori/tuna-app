@@ -122918,6 +122918,373 @@
         }
        ]
       }
+     ],
+     "38": [
+      {
+       "id": "hd5s_38k2_1",
+       "src": "HG-9373 原簿・小5最レ 第4分冊 第2講座 No.38 大問1",
+       "hg": "HG-9373",
+       "title": "じゃんけんの得点",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 2,
+       "intro": "A君とB君がじゃんけんをします。はじめの2人の点数はどちらも30点です。じゃんけんをして，勝てば5点ふやし，負ければ3点減らし，引き分けのときは，2人とも1点ずつふやします。",
+       "steps": [
+        {
+         "question": "(1) 5回じゃんけんをした結果A君は2勝1敗2引き分けでした。B君の得点は何点ですか。",
+         "answer": "31",
+         "meaning": "A君が2勝1敗2引き分けなら、B君はその逆で1勝2敗2引き分け。B君の得点は30＋5×1−3×2＋1×2＝31点。"
+        },
+        {
+         "question": "(2) 何回かじゃんけんをした結果，A君の得点は78点，B君の得点は62点になりました。2人は何回じゃんけんをしましたか。",
+         "answer": "40",
+         "meaning": "勝ち負けが決まると2人の得点の和は5−3＝2点ふえ、引き分けでも1＋1＝2点ふえる。つまり1回ごとに和は必ず2点ふえる。はじめの和は30×2＝60点、最後の和は78＋62＝140点なので、（140−60）÷2＝40回。"
+        },
+        {
+         "question": "(3) (2)のときA君とB君の引き分けはなかったとすると，A君は何勝何敗でしたか。　［勝］",
+         "answer": "21",
+         "meaning": "引き分けがないので、A君が1回勝つとA君は＋5点・B君は−3点で、2人の差は5＋3＝8点開く。負けるとその逆で8点ちぢむ。最後の差は78−62＝16点なので、勝ちの数は負けの数より16÷8＝2回多い。40回のうち勝ちは（40＋2）÷2＝21回。"
+        },
+        {
+         "question": "(3) (2)のときA君とB君の引き分けはなかったとすると，A君は何勝何敗でしたか。　［敗］",
+         "answer": "19",
+         "meaning": "(2)より全部で40回、勝ちは21回なので、負けは40−21＝19回。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_38k2_2",
+       "src": "HG-9374 原簿・小5最レ 第4分冊 第2講座 No.38 大問2",
+       "hg": "HG-9374",
+       "title": "カードを配って捨てる操作",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 2,
+       "intro": "1から100までの数の書かれたカード100枚を上から小さい順に並べます。これをそのまま手に持って，上から順に左，右，左，右……と交互に配ります。\nそして100枚のカードを2つの山に分け終わったら，左側の山を捨て，右側の山にあるカードを上から小さい順に並べ直します。ここまでの操作を1回として，このような操作を2回，3回……と続けます。",
+       "steps": [
+        {
+         "question": "(1) この操作を3回繰り返すと何枚のカードが残りますか。",
+         "answer": "12",
+         "meaning": "左・右・左・右…と配ると、右の山には2番目・4番目…のカードが入る。1回目は2，4，6，…，100の2の倍数が残り、2回目はその中の偶数番目で4の倍数、3回目は8の倍数が残る。100までの8の倍数は100÷8＝12あまり4より、12枚。"
+        },
+        {
+         "question": "(2) この操作を繰り返して最後に残るカードに書かれた数字を求めなさい。",
+         "answer": "64",
+         "meaning": "3回目で8の倍数が残ったので、4回目は16の倍数（16，32，48，64，80，96）、5回目は32の倍数（32，64，96）、6回目は64の倍数で、100までには64の1つだけになる。最後に残るカードは64。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_38k2_3",
+       "src": "HG-9375 原簿・小5最レ 第4分冊 第2講座 No.38 大問3",
+       "hg": "HG-9375",
+       "title": "4チームの順位あて",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 2,
+       "intro": "A，B，C，Dの4チームがサッカーの試合をして，1位から4位までの順位を決めましたが，4チームは次のように言いました。それぞれの順位を求めなさい。\nA「優勝できなかったが，3位以内に入れた。」\nB「Aチームより順位が悪かった。」\nC「残念なことに3位以内に入れなかった。」\nD「Bチームより順位はよかった。」",
+       "steps": [
+        {
+         "question": "［C］",
+         "answer": "4",
+         "meaning": "Cは「3位以内に入れなかった」ので最下位の4位。"
+        },
+        {
+         "question": "［B］",
+         "answer": "3",
+         "meaning": "Cが4位なので、残りのA・B・Dが1位〜3位。BはAより下、DもBより上なので、BはAとDの両方より下になり、Bは3位。"
+        },
+        {
+         "question": "［A］",
+         "answer": "2",
+         "meaning": "Cが4位、Bが3位。Aは優勝できなかったので1位ではない。残る2位がA。"
+        },
+        {
+         "question": "［D］",
+         "answer": "1",
+         "meaning": "Cが4位、Bが3位、Aが2位なので、残りの1位がD。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_38k2_7",
+       "src": "HG-9379 原簿・小5最レ 第4分冊 第2講座 No.38 大問7",
+       "hg": "HG-9379",
+       "title": "総当たり戦の勝敗",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 3,
+       "intro": "A，B，C，Dの4つのチームが，どのチームとも1回ずつ対戦しました。AはBに勝ち，BはCに勝ち，CはDに勝ちました。4チームのうち3チームが2勝1敗でした。Aは何勝何敗でしたか。",
+       "steps": [
+        {
+         "question": "［勝］",
+         "answer": "2",
+         "meaning": "4チームの総当たりは4×3÷2＝6試合で、勝ちの合計も6。3チームが2勝ずつだとそれだけで2×3＝6勝になるので、残りの1チームは1勝もしていない。AはBに、BはCに、CはDに勝っていて、A・B・Cにはもう勝ちがあるので、全敗はD。AはDにも勝つので、AはBとDに勝って2勝。"
+        },
+        {
+         "question": "［敗］",
+         "answer": "1",
+         "meaning": "Aは2勝で、試合は3つなので、負けは3−2＝1敗。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 240 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<line x1=\"10\" y1=\"10\" x2=\"230\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"10\" x2=\"10\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"54\" x2=\"230\" y2=\"54\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"54\" y1=\"10\" x2=\"54\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"98\" x2=\"230\" y2=\"98\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"98\" y1=\"10\" x2=\"98\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"142\" x2=\"230\" y2=\"142\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"142\" y1=\"10\" x2=\"142\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"186\" x2=\"230\" y2=\"186\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"186\" y1=\"10\" x2=\"186\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"230\" x2=\"230\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"230\" y1=\"10\" x2=\"230\" y2=\"230\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"10\" y1=\"10\" x2=\"54\" y2=\"54\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"54\" y1=\"54\" x2=\"98\" y2=\"98\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"98\" y1=\"98\" x2=\"142\" y2=\"142\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<text x=\"76\" y=\"39\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n<text x=\"32\" y=\"83\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n<text x=\"120\" y=\"39\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<text x=\"32\" y=\"127\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<text x=\"164\" y=\"39\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">C</text>\n<text x=\"32\" y=\"171\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">C</text>\n<text x=\"208\" y=\"39\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">D</text>\n<text x=\"32\" y=\"215\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">D</text>\n<text x=\"120\" y=\"83\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">○</text>\n<text x=\"76\" y=\"127\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">×</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_38k2_8",
+       "src": "HG-9380 原簿・小5最レ 第4分冊 第2講座 No.38 大問8",
+       "hg": "HG-9380",
+       "title": "村対抗すもうの勝敗",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 4,
+       "intro": "甲，乙2つの村が3人ずつ選手を出して，すもうの対抗試合をしました。総当たり戦で9試合行い，引き分けはありませんでした。甲村の選手をA，B，C，乙村の選手をP，Q，Rとします。すると，AはBに勝った乙村の選手全員に勝ちました。BはCに勝った乙村の選手全員に勝ちました。CはAに勝った乙村の選手全員に勝ちました。また，AはQに勝ち，RはBに勝ちました。そして，3勝した選手は1人もいませんでした。次の問いに答えなさい。",
+       "steps": [
+        {
+         "question": "(2) Cはだれに勝ちましたか。（1人とは限りません。）",
+         "answer": "PとR",
+         "choices": [
+          "P",
+          "Q",
+          "R",
+          "PとQ",
+          "PとR",
+          "QとR",
+          "PとQとR"
+         ],
+         "meaning": "「AはBに勝った乙村の選手全員に勝った」は「Bを負かした相手には、Aは必ず勝つ」ということ。RはBに勝ったので、AはRに勝つ。AはQにも勝っていて、3勝した選手はいないので、AはPに負ける。PがAを負かしたので、CはPに勝つ。CがRに負けたとすると、Cを負かしたRにBは勝たなければならないが、BはRに負けているので合わない。だからCはRにも勝つ。CはPとRに勝っていて、3勝はしていないのでQには負ける。Cが勝ったのはPとR。"
+        },
+        {
+         "question": "(1) 甲村は何勝何敗でしたか。　［勝］",
+         "answer": "6",
+         "meaning": "AはQとRに勝ち、Pに負け。CはPとRに勝ち、Qに負け。BはRに負けている。BがPに負けたとすると、Bを負かしたPにAは勝たなければならないが、AはPに負けているので合わない。だからBはPに勝つ。また、QはCを負かしたので、BはQに勝つ。甲村の勝ちはAが2、Bが2、Cが2で、2＋2＋2＝6勝。"
+        },
+        {
+         "question": "(1) 甲村は何勝何敗でしたか。　［敗］",
+         "answer": "3",
+         "meaning": "全部で3×3＝9試合で、甲村は6勝なので、負けは9−6＝3敗。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_38k2_9",
+       "src": "HG-9381 原簿・小5最レ 第4分冊 第2講座 No.38 大問9",
+       "hg": "HG-9381",
+       "title": "右にある小さい数の得点",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 3,
+       "intro": "1から9までの数字をそれぞれ1つだけ書いた9枚のカードがあります。この9枚のカードを袋の中にいれてよくかきまぜ，袋の中から1枚ずつ全部取り出し，左から順に横に1列に並べたものを考えます。この並べ方で，特定の1枚にかかれた数を見て，そのカードより右でその数より小さい数が書かれているカードの枚数を数えます。ただし，右端のカードの場合はこれより右のカードはないのでこの場合は0枚とします。このことをすべてのカードについて行い，得られた枚数の合計を表す数をこの並べ方の得点とします。",
+       "steps": [
+        {
+         "question": "(1) カードが [2][3][5][1][8][4][9][7][6] と並んだときの得点を求めなさい。",
+         "answer": "10",
+         "meaning": "左から順に、右にある自分より小さいカードを数える。2→1の1枚、3→1の1枚、5→1，4の2枚、1→0枚、8→4，7，6の3枚、4→0枚、9→7，6の2枚、7→6の1枚、6→0枚。合計は1＋1＋2＋0＋3＋0＋2＋1＋0＝10点。"
+        },
+        {
+         "question": "(2) カードが [4]□□□□□□□[6] と並んだときの得点をAとし，この並べ方で[4]と[6]だけを取りかえ，他のカードはそのままにした [6]□□□□□□□[4] の並べ方の得点をBとする。このときAとBとどちらがどれだけ大きいですか。",
+         "answer": "3",
+         "meaning": "間の7枚は1，2，3，5，7，8，9で、間の7枚どうしの数え方は入れかえても変わらない。左はしの4は間の1，2，3の3点だったのがなくなり、右はしの4は間の5，7，8，9から4点もらう。右はしの6は間の7，8，9から3点だったのがなくなり、左はしの6は間の1，2，3，5の4点になる。4と6どうしは0点から1点になる。BはAより（4−3）＋（4−3）＋1＝3点大きい。"
+        }
+       ]
+      },
+      {
+       "id": "hd5s_38k2_10",
+       "src": "HG-9382 原簿・小5最レ 第4分冊 第2講座 No.38 大問10",
+       "hg": "HG-9382",
+       "title": "円形テーブルの席順",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 3,
+       "intro": "A, B, C, D, E, F, G, Hの8人が図のような円形テーブルに向かい，ア～クの席について食事をしました。\nその席順についての発言は次のようでした。\nA「Gは自分のとなりにいなかった。」\nB「Aの左どなりではなく，また正面でもなかった。」\nC「Aの正面ではなかった。」\nD「Fの正面の席だった。」\nE「Dのとなりの席だった。」\nF「Aの右どなりの席だった。」\nG「Dのとなりではなかった。」\nH「Fのとなりであった。」\nこれらの発言はすべて正しいものとして8人の席順を決め，記号で書きなさい。ただし，Aはアの席とします。",
+       "steps": [
+        {
+         "question": "［A］",
+         "answer": "ア",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "Aはアの席と決められている。"
+        },
+        {
+         "question": "［F］",
+         "answer": "イ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "テーブルの中を向いて座るので、アのAから見て右どなりの席はイ。FはAの右どなりなので、Fはイ。"
+        },
+        {
+         "question": "［H］",
+         "answer": "ウ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "Fはイの席。HはFのとなりで、イのとなりはアとウ。アはAなので、Hはウ。"
+        },
+        {
+         "question": "［D］",
+         "answer": "カ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "DはFの正面。8つの席で、イの正面はカなので、Dはカ。"
+        },
+        {
+         "question": "［E］",
+         "answer": "オ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "残りの席はエ・オ・キ・クで、残りの人はB・C・E・G。Aの正面のオには、BもCも入らない（発言より）。オはカのDのとなりなので、Gも入らない（Gの発言）。残りのEがオ。"
+        },
+        {
+         "question": "［C］",
+         "answer": "ク",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "残りの席はエ・キ・クで、残りの人はB・C・G。クはAのとなり（左どなり）なので、Gは入らず（Aの発言）、Bも入らない（Bの発言）。残りのCがク。"
+        },
+        {
+         "question": "［B］",
+         "answer": "キ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "残りの席はエ・キで、残りの人はB・G。キはカのDのとなりなので、Gは入らない。Bがキ。"
+        },
+        {
+         "question": "［G］",
+         "answer": "エ",
+         "choices": [
+          "ア",
+          "イ",
+          "ウ",
+          "エ",
+          "オ",
+          "カ",
+          "キ",
+          "ク"
+         ],
+         "meaning": "ほかの7人の席が決まり、最後に残った席がエ。Gはエ。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 260 260\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<circle cx=\"130\" cy=\"130\" r=\"110\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<circle cx=\"130\" cy=\"130\" r=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"164.0\" y1=\"130.0\" x2=\"240.0\" y2=\"130.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"154.0\" y1=\"106.0\" x2=\"207.8\" y2=\"52.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130.0\" y1=\"96.0\" x2=\"130.0\" y2=\"20.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"106.0\" y1=\"106.0\" x2=\"52.2\" y2=\"52.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"96.0\" y1=\"130.0\" x2=\"20.0\" y2=\"130.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"106.0\" y1=\"154.0\" x2=\"52.2\" y2=\"207.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"130.0\" y1=\"164.0\" x2=\"130.0\" y2=\"240.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"154.0\" y1=\"154.0\" x2=\"207.8\" y2=\"207.8\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<text x=\"157.6\" y=\"203.5\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">ア</text>\n<text x=\"196.5\" y=\"164.6\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">イ</text>\n<text x=\"196.5\" y=\"109.4\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">ウ</text>\n<text x=\"157.6\" y=\"70.5\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">エ</text>\n<text x=\"102.4\" y=\"70.5\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">オ</text>\n<text x=\"63.5\" y=\"109.4\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">カ</text>\n<text x=\"63.5\" y=\"164.6\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">キ</text>\n<text x=\"102.4\" y=\"203.5\" font-size=\"20\" text-anchor=\"middle\" fill=\"#e8ecf5\">ク</text>\n</svg>"
+      },
+      {
+       "id": "hd5s_38k2_11",
+       "src": "HG-9383 原簿・小5最レ 第4分冊 第2講座 No.38 大問11",
+       "hg": "HG-9383",
+       "title": "順位予想から本当の順位",
+       "category": "baai",
+       "unit": "整理と推理",
+       "grade": 5,
+       "star": 3,
+       "intro": "A, B, C, Dの4人が輪投げ遊びをし，点数を競い合いました。始める前に順位予想をしたところ，下の表のようになりました。このうちAとBの予想は2つあたり，CとDの予想は1つしかあたりませんでした。正しい順位を求めなさい。",
+       "steps": [
+        {
+         "question": "［3位］",
+         "answer": "A",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "AとBのあてた2つずつに重なりがないと、2人で1位〜4位を全部あてたことになる。ところが2人とも3位をAと予想しているので、重ならないことはありえない。だから2人の重なりがあり、それは3位のA。"
+        },
+        {
+         "question": "［4位］",
+         "answer": "B",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "3位はAなので、Cの予想の2位A・3位D、Dの予想の3位D・4位Aははずれ。Cの残りは1位Cと4位B、Dの残りは1位Bと2位C。Cが1位をあてるとCが1位になり、Dの1位B・2位Cがどちらもはずれる。Dが1位をあてるとBが1位になり、Cの1位C・4位Bがどちらもはずれる。どちらも1つあたりにならないので、Cは4位Bをあてた。4位はB。"
+        },
+        {
+         "question": "［2位］",
+         "answer": "C",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "Cが4位をあてたので、Dは1位Bではなく2位Cをあてた。2位はC。"
+        },
+        {
+         "question": "［1位］",
+         "answer": "D",
+         "choices": [
+          "A",
+          "B",
+          "C",
+          "D"
+         ],
+         "meaning": "3位A、4位B、2位Cと決まったので、残りの1位はD。"
+        }
+       ],
+       "svg": "<svg viewBox=\"0 0 480 190\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\">\n<rect x=\"10\" y=\"10\" width=\"460\" height=\"170\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/>\n<line x1=\"70\" y1=\"10\" x2=\"70\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"170\" y1=\"10\" x2=\"170\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"270\" y1=\"10\" x2=\"270\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"370\" y1=\"10\" x2=\"370\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"10\" y1=\"44\" x2=\"470\" y2=\"44\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"10\" y1=\"78\" x2=\"470\" y2=\"78\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"10\" y1=\"112\" x2=\"470\" y2=\"112\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"10\" y1=\"146\" x2=\"470\" y2=\"146\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<text x=\"120.0\" y=\"33\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">Aの予想</text>\n<text x=\"220.0\" y=\"33\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">Bの予想</text>\n<text x=\"320.0\" y=\"33\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">Cの予想</text>\n<text x=\"420.0\" y=\"33\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">Dの予想</text>\n<text x=\"40.0\" y=\"67\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">1位</text>\n<text x=\"120.0\" y=\"67\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<text x=\"220.0\" y=\"67\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">D</text>\n<text x=\"320.0\" y=\"67\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">C</text>\n<text x=\"420.0\" y=\"67\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<text x=\"40.0\" y=\"101\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">2位</text>\n<text x=\"120.0\" y=\"101\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">C</text>\n<text x=\"220.0\" y=\"101\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<text x=\"320.0\" y=\"101\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n<text x=\"420.0\" y=\"101\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">C</text>\n<text x=\"40.0\" y=\"135\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">3位</text>\n<text x=\"120.0\" y=\"135\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n<text x=\"220.0\" y=\"135\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n<text x=\"320.0\" y=\"135\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">D</text>\n<text x=\"420.0\" y=\"135\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">D</text>\n<text x=\"40.0\" y=\"169\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">4位</text>\n<text x=\"120.0\" y=\"169\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">D</text>\n<text x=\"220.0\" y=\"169\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">C</text>\n<text x=\"320.0\" y=\"169\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">B</text>\n<text x=\"420.0\" y=\"169\" font-size=\"17\" text-anchor=\"middle\" fill=\"#e8ecf5\">A</text>\n</svg>"
+      }
      ]
     }
    },

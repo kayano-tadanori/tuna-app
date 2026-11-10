@@ -191,6 +191,9 @@ def unit_index(text):
         #   2026-11-10・テーマ教材 第4分冊 No.39 1-1(2)）。「と」を剥がして添え字だけ残す
         if rest and rest.endswith(u"と") and rest[:-1] in SUFFIX:
             rest = rest[:-1]
+        # ★添え字なしで「と」が続く形（`6時28分と6時68分`。2026-11-10・最レ第2講座 No.39 大問4(2)）
+        if rest == u"と":
+            rest = u""
         if not hit or (rest and rest not in SUFFIX):
             return {}, (UNSUPPORTED_PREFIX + u"（数「%s」のうしろが %r）。"
                         u"scripts/g1_units.py の表に足すか、G1で書き方をそろえる"
