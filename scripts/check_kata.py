@@ -286,7 +286,9 @@ def k5(rs):
         gk = [c for c in KIGO if ("%s " % c) in line or ("%s．" % c) in line or ("%s." % c) in line]
         for i, s in enumerate(x.get("steps") or []):
             ch = s.get("choices")
-            if ch and gk and len(ch) != len(gk):
+            # 選択肢がア〜の記号のときだけくらべる。ことばの4択・A/B の2択がまざった大問で
+            # 「原簿のア〜カの数」とくらべて誤検知した（2026-11-11 小5理科 No.22 大問1）
+            if ch and gk and all(c in KIGO for c in ch) and len(ch) != len(gk):
                 out.append((r, "重", "小問%d の選択肢 %d個／原簿は%d個（記号ズレ？）"
                             % (i + 1, len(ch), len(gk))))
     return out, uncountable
