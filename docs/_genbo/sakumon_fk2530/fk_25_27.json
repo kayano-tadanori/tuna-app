@@ -1,0 +1,642 @@
+{
+ "25": [
+  {
+   "id": "hd5m_25_1",
+   "src": "HG-9817 原簿・小5 復習テスト No.25 大問1",
+   "hg": "HG-9817",
+   "title": "時刻から長針と短針の角度",
+   "category": "hayasa",
+   "unit": "時計算",
+   "grade": 5,
+   "star": 1,
+   "intro": "次の時刻のときの長針と短針のなす角度のうち，小さいほうを求めなさい。",
+   "steps": [
+    {
+     "question": "(1) 6時24分",
+     "answer": "48",
+     "meaning": "6時ちょうど、両針の間は180°です。長針は1分に6°、短針は0.5°進むので、1分に6−0.5＝5.5°ずつ長針が短針に近づきます。24分で5.5×24＝132°近づくので、180−(6−0.5)×24＝48°です。"
+    },
+    {
+     "question": "(2) 9時53分",
+     "answer": "21.5",
+     "meaning": "9時ちょうど、短針は長針より270°先にいます。53分で長針は (6−0.5)×53＝291.5°だけ短針に追いつき、270°をこえて追いこしています。こえた分が間の角なので、291.5−270＝21.5°です。"
+    },
+    {
+     "question": "(3) 11時17分",
+     "answer": "123.5",
+     "meaning": "11時ちょうど、長針（12）は短針（11）より30°先にいます。そこから1分に5.5°ずつ差が開いていくので、30＋(6−0.5)×17＝30＋93.5＝123.5°です。"
+    },
+    {
+     "question": "(4) 8時44分",
+     "answer": "2",
+     "meaning": "8時ちょうど、短針は長針より240°先にいます。44分で長針は (6−0.5)×44＝242°追いつくので、240°をちょうど2°こえたところ。(6−0.5)×44−240＝2°です。"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_25_2",
+   "src": "HG-9818 原簿・小5 復習テスト No.25 大問2",
+   "hg": "HG-9818",
+   "title": "針が重なる・90度・65度・60度になる時刻",
+   "category": "hayasa",
+   "unit": "時計算",
+   "grade": 5,
+   "star": 2,
+   "intro": "次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) 4時と5時の間で長針と短針が重なるのは4時何分ですか。",
+     "answer": "21と9/11",
+     "meaning": "4時ちょうど、短針は長針より30×4＝120°先にいます。長針は1分に6−0.5＝5.5°ずつ追いつくので、120°の差が0になるのは 120÷(6−0.5)＝21 9/11分。4時21 9/11分です。"
+    },
+    {
+     "question": "(2) 10時と11時の間で長針と短針の間の角度が1回目に90度になるのは10時何分何秒ですか。「分」のほうの数を答えなさい。",
+     "answer": "5",
+     "meaning": "10時ちょうどの小さいほうの角は、10と12の間で60°。ここから長針は短針から離れていくので、角は1分に5.5°ずつ大きくなります。90°まであと30°なので (90−60)÷(6−0.5)＝5 5/11分。5分と、あと5/11分です。"
+    },
+    {
+     "question": "(2) 同じ時刻の「秒」のほうの数を答えなさい。",
+     "answer": "27と3/11",
+     "meaning": "前の問いで出した 5 5/11分 のうち、5分のあとに残った 5/11分 を秒に直します。1分は60秒なので 5/11×60＝300/11＝27 3/11秒。10時5分27 3/11秒です。"
+    },
+    {
+     "question": "(3) 7時と8時の間で長針と短針の間の角度が2回目に65度になるのは7時何分ですか。",
+     "answer": "50",
+     "meaning": "7時ちょうど、短針は長針より210°先。1回目の65°は追いつく前、2回目の65°は長針が短針を追いこして65°先に出たときです。だから長針は短針に対して 210＋65＝275°進めばよく、(210＋65)÷(6−0.5)＝50分。7時50分です。"
+    },
+    {
+     "question": "(4) 5時から6時の間で長針と短針の間の角度が1回目に60度になってから2回目に60度になるまでに何分かかりますか。",
+     "answer": "21と9/11",
+     "meaning": "1回目の60°は長針が短針の60°手前にいるとき、2回目は追いこして60°先に出たときです。その間に長針は短針に対して 60×2＝120°進むので、60×2÷(6−0.5)＝21 9/11分かかります。"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_25_3",
+   "src": "HG-9819 原簿・小5 復習テスト No.25 大問3",
+   "hg": "HG-9819",
+   "title": "24時間で180度・60度になる回数",
+   "category": "hayasa",
+   "unit": "時計算",
+   "grade": 5,
+   "star": 2,
+   "intro": "午前0時から翌日の午前0時までの24時間について，次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) 長針と短針の間の角度が180度になるのは何回ありますか。",
+     "answer": "22",
+     "meaning": "24時間で長針は24周、短針は2周します。長針が短針より多く回った周の数だけ追いつくので、24−2＝22回追いつきます。1回追いつくまでの間に、180°になるときがちょうど1回あるので、180°になるのも22回です。"
+    },
+    {
+     "question": "(2) 長針と短針の間の角度が60度になるのは何回ありますか。",
+     "answer": "44",
+     "meaning": "追いついてから180°になるまで（離れていく間）に1回、180°になってから次に追いつくまで（近づく間）にもう1回、60°になるときがあります。1回追いつくごとに2回なので、22×2＝44回です。"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_25_4",
+   "src": "HG-9820 原簿・小5 復習テスト No.25 大問4",
+   "hg": "HG-9820",
+   "title": "12がどこか分からない時計",
+   "category": "hayasa",
+   "unit": "時計算",
+   "grade": 5,
+   "star": 3,
+   "intro": "図のような，どの目盛りが12か分からない時計があります。あるとき，この時計を見ると，長針がちょうど文字盤の時刻を示す目盛りのところを指しており，長針と短針の間の角度が65度でした。それぞれの時刻を求めなさい。",
+   "steps": [
+    {
+     "question": "(1) 左の時計の時刻は何時何分ですか。「分」のほうの数を答えなさい。",
+     "answer": "10",
+     "meaning": "長針が目盛りちょうどなので、短針がもとの時刻の目盛りからどれだけ進んだかを見ます。短針は長針から時計回りに65°。目盛り2つ分は60°なので、短針は目盛りから 65−60＝5°進んでいます。短針は1分に0.5°なので 5÷0.5＝10分です。",
+     "svg": "<svg viewBox=\"0 0 200 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100\" cy=\"95\" r=\"78\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"165\" x2=\"100\" y2=\"181\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"155.6\" x2=\"57\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"130\" x2=\"25.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"30\" y1=\"95\" x2=\"14\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"60\" x2=\"25.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"34.4\" x2=\"57\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"25\" x2=\"100\" y2=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"34.4\" x2=\"143\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"60\" x2=\"174.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"170\" y1=\"95\" x2=\"186\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"130\" x2=\"174.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"155.6\" x2=\"143\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"95\" x2=\"100\" y2=\"159\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"100,167 103.8,158.8 96.2,158.8\" fill=\"#4f9eff\"/><line x1=\"100\" y1=\"95\" x2=\"62.8\" y2=\"112.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"56.5,115.3 65.5,115.3 62.3,108.4\" fill=\"#4f9eff\"/><path d=\"M100 111 A16 16 0 0 1 85.5 101.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"82.8\" y=\"122\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">65°</text><circle cx=\"100\" cy=\"95\" r=\"2.5\" fill=\"#4f9eff\"/></svg>"
+    },
+    {
+     "question": "(1) 同じ時計の「時」のほうの数を答えなさい。",
+     "answer": "4",
+     "meaning": "10分なので、長針が指している目盛りは2です。短針はそこから時計回りに目盛り2つ分とあと5°の所にあるので、4と5の間。だから4時10分です。",
+     "svg": "<svg viewBox=\"0 0 200 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100\" cy=\"95\" r=\"78\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"165\" x2=\"100\" y2=\"181\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"155.6\" x2=\"57\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"130\" x2=\"25.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"30\" y1=\"95\" x2=\"14\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"60\" x2=\"25.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"34.4\" x2=\"57\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"25\" x2=\"100\" y2=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"34.4\" x2=\"143\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"60\" x2=\"174.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"170\" y1=\"95\" x2=\"186\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"130\" x2=\"174.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"155.6\" x2=\"143\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"95\" x2=\"100\" y2=\"159\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"100,167 103.8,158.8 96.2,158.8\" fill=\"#4f9eff\"/><line x1=\"100\" y1=\"95\" x2=\"62.8\" y2=\"112.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"56.5,115.3 65.5,115.3 62.3,108.4\" fill=\"#4f9eff\"/><path d=\"M100 111 A16 16 0 0 1 85.5 101.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"82.8\" y=\"122\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">65°</text><circle cx=\"100\" cy=\"95\" r=\"2.5\" fill=\"#4f9eff\"/></svg>"
+    },
+    {
+     "question": "(2) 右の時計の時刻は何時何分ですか。「分」のほうの数を答えなさい。",
+     "answer": "50",
+     "meaning": "こんどは短針が長針から反時計回りに65°の所にあります。反時計回りに目盛り3つ分（90°）の目盛りから見ると、短針はそこから時計回りに 90−65＝25°進んでいます。25÷0.5＝50分です。",
+     "svg": "<svg viewBox=\"0 0 200 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100\" cy=\"95\" r=\"78\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"165\" x2=\"100\" y2=\"181\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"155.6\" x2=\"57\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"130\" x2=\"25.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"30\" y1=\"95\" x2=\"14\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"60\" x2=\"25.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"34.4\" x2=\"57\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"25\" x2=\"100\" y2=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"34.4\" x2=\"143\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"60\" x2=\"174.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"170\" y1=\"95\" x2=\"186\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"130\" x2=\"174.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"155.6\" x2=\"143\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"95\" x2=\"100\" y2=\"159\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"100,167 103.8,158.8 96.2,158.8\" fill=\"#4f9eff\"/><line x1=\"100\" y1=\"95\" x2=\"137.2\" y2=\"112.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"143.5,115.3 137.7,108.4 134.5,115.3\" fill=\"#4f9eff\"/><path d=\"M114.5 101.8 A16 16 0 0 1 100 111\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"117.2\" y=\"122\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">65°</text><circle cx=\"100\" cy=\"95\" r=\"2.5\" fill=\"#4f9eff\"/></svg>"
+    },
+    {
+     "question": "(2) 同じ時計の「時」のほうの数を答えなさい。",
+     "answer": "7",
+     "meaning": "50分なので、長針が指している目盛りは10です。短針はそこから反時計回りに目盛り3つ分もどった目盛りより25°進んだ所なので、7と8の間。だから7時50分です。",
+     "svg": "<svg viewBox=\"0 0 200 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"100\" cy=\"95\" r=\"78\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"165\" x2=\"100\" y2=\"181\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"155.6\" x2=\"57\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"130\" x2=\"25.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"30\" y1=\"95\" x2=\"14\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"39.4\" y1=\"60\" x2=\"25.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"65\" y1=\"34.4\" x2=\"57\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"25\" x2=\"100\" y2=\"9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"34.4\" x2=\"143\" y2=\"20.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"60\" x2=\"174.5\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"170\" y1=\"95\" x2=\"186\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"160.6\" y1=\"130\" x2=\"174.5\" y2=\"138\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"135\" y1=\"155.6\" x2=\"143\" y2=\"169.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"100\" y1=\"95\" x2=\"100\" y2=\"159\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"100,167 103.8,158.8 96.2,158.8\" fill=\"#4f9eff\"/><line x1=\"100\" y1=\"95\" x2=\"137.2\" y2=\"112.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"143.5,115.3 137.7,108.4 134.5,115.3\" fill=\"#4f9eff\"/><path d=\"M114.5 101.8 A16 16 0 0 1 100 111\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"117.2\" y=\"122\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">65°</text><circle cx=\"100\" cy=\"95\" r=\"2.5\" fill=\"#4f9eff\"/></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_25_5",
+   "src": "HG-9821 原簿・小5 復習テスト No.25 大問5",
+   "hg": "HG-9821",
+   "title": "同心円の道を逆向きに回る2人",
+   "category": "hayasa",
+   "unit": "時計算",
+   "grade": 5,
+   "star": 3,
+   "intro": "図のような，中心が同じで，半径300mと半径600mの円状の道があります。Pさんは図のA地点から時計回りに72分で1周し，Qさんは図のB地点から反時計回りに48分で1周します。この速さでPさんとQさんが同時に出発した後，2人の間の距離がはじめて最大になったとき，Qさんだけ進む向きを変え，時計回りにはじめの2倍の速さでまわりはじめました。このとき，次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) PさんとQさんの間の距離がはじめて最大になったのは，2人が同時に出発してから何分後ですか。",
+     "answer": "14.4",
+     "meaning": "半径がちがうので、道のりではなく中心のまわりの角度で考えます。Pは 360÷72＝5°/分、Qは 360÷48＝7.5°/分。距離が最大になるのは、中心をはさんで反対側＝間の角度が180°のとき。逆向きなので角度の和で開き、180÷(5＋7.5)＝14.4分後です。"
+    },
+    {
+     "question": "(2) PさんとQさんの間の距離がはじめて最小になるのは，2人が同時に出発してから何分後ですか。ただし，0分後はのぞきます。",
+     "answer": "32.4",
+     "meaning": "向きを変えたあとのQは 7.5×2＝15°/分 で、Pと同じ時計回りです。最小になるのは間の角度が0°（中心から見て同じ向きに並ぶ）とき。180°の差を、同じ向きなので速さの差で縮めて 180÷(15−5)＝18分。14.4＋18＝32.4分後です。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 260 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"130\" cy=\"135\" r=\"105\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><circle cx=\"130\" cy=\"135\" r=\"52\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"130\" y1=\"30\" x2=\"130\" y2=\"135\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><circle cx=\"130\" cy=\"30\" r=\"3.5\" fill=\"#4f9eff\"/><circle cx=\"130\" cy=\"83\" r=\"3.5\" fill=\"#4f9eff\"/><circle cx=\"130\" cy=\"135\" r=\"3\" fill=\"#4f9eff\"/><text x=\"130\" y=\"19\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"141\" y=\"92\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"179.3\" cy=\"42.3\" r=\"3.5\" fill=\"#4f9eff\"/><text x=\"190.3\" y=\"36.3\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">P</text><polygon points=\"162.4,35.1 156.6,29.7 154.5,36.1\" fill=\"#4f9eff\"/><circle cx=\"91.4\" cy=\"100.2\" r=\"3.5\" fill=\"#4f9eff\"/><text x=\"80.4\" y=\"93.2\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">Q</text><polygon points=\"82.9,113 89,107.9 82.9,105\" fill=\"#4f9eff\"/></svg>"
+  },
+  {
+   "id": "hd5m_25_6",
+   "src": "HG-9822 原簿・小5 復習テスト No.25 大問6",
+   "hg": "HG-9822",
+   "title": "休憩をはさむ徒歩と自転車のグラフ",
+   "category": "hayasa",
+   "unit": "ダイヤグラム（旅人算）",
+   "grade": 5,
+   "star": 1,
+   "intro": "春奈さんは学校から2400m離れた公園まで歩いて行きました。春奈さんは途中で何分か休憩し，また同じ速さで歩いて公園へ向かいました。夏生さんは春奈さんから34分遅れて学校を出発し，春奈さんと同じ道のりを自転車で公園へ向かいました。下のグラフは，そのときの時間と道のりの関係を表したものです。このとき，次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) 春奈さんの歩く速さは毎分何mですか。",
+     "answer": "48",
+     "meaning": "グラフの平らな所（12分〜22分）が休憩で、22−12＝10分です。春奈さんは60分で公園に着きますが、そのうち10分は止まっているので、歩いたのは60−10＝50分。2400÷(60−10)＝48で毎分48mです。"
+    },
+    {
+     "question": "(2) グラフのアにあてはまる数を求めなさい。",
+     "answer": "1440",
+     "meaning": "アは夏生さんが春奈さんに追いつく所です。夏生さんは34分から44分の10分で2400m進むので 2400÷(44−34)＝240m/分。夏生さんが出発する34分には、春奈さんは休憩をのぞいて34−10＝24分歩いていて 48×24＝1152m先。追いかけは速さの差で縮むので 1152÷(240−48)＝6分で追いつき、240×6＝1440mです。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 345 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"55\" y1=\"215\" x2=\"305\" y2=\"215\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"215\" x2=\"55\" y2=\"40\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"55,215 103,176.6 143,176.6 295,55\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"191\" y1=\"215\" x2=\"231\" y2=\"55\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"55\" x2=\"295\" y2=\"55\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"295\" y1=\"55\" x2=\"295\" y2=\"215\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"231\" y1=\"55\" x2=\"231\" y2=\"215\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"55\" y1=\"176.6\" x2=\"143\" y2=\"176.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"103\" y1=\"176.6\" x2=\"103\" y2=\"215\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"143\" y1=\"176.6\" x2=\"143\" y2=\"215\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"55\" y1=\"119\" x2=\"215\" y2=\"119\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"215\" y1=\"119\" x2=\"215\" y2=\"215\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><text x=\"40\" y=\"10\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">道のり</text><text x=\"40\" y=\"23\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(m)</text><text x=\"30\" y=\"42\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">公園</text><text x=\"30\" y=\"55\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">2400</text><text x=\"43\" y=\"119\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">ア</text><text x=\"32\" y=\"215\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">学校</text><text x=\"55\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">0</text><text x=\"103\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">12</text><text x=\"143\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">22</text><text x=\"191\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">34</text><text x=\"231\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">44</text><text x=\"295\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">60</text><text x=\"328\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">時間</text><text x=\"328\" y=\"227\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(分)</text></svg>"
+  },
+  {
+   "id": "hd5m_25_7",
+   "src": "HG-9823 原簿・小5 復習テスト No.25 大問7",
+   "hg": "HG-9823",
+   "title": "24分おきのバスと自転車のすれ違い",
+   "category": "hayasa",
+   "unit": "ダイヤグラム（旅人算）",
+   "grade": 5,
+   "star": 3,
+   "intro": "A地点からB地点まで行くバスが24分おきに出ています。秋雄さんが自転車で同じ道をB地点からA地点まで走ると，何回かバスとすれ違いました。次のグラフはそのときの様子を表したものです。バスと自転車の速さの比は3：1です。このとき，次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) 秋雄さんはバスと何回すれ違いましたか。",
+     "answer": "4",
+     "meaning": "速さの比が3：1なら、同じ距離にかかる時間の比は逆になって1：3です。28分に出たバスは42分にすれ違うので、すれ違う地点までバスは42−28＝14分＝①。自転車はその地点からA地点まで③＝42分かかり、42＋42＝84分にA地点に着きます。84分までに出るバスは4分・28分・52分・76分の4台なので、4回すれ違います。"
+    },
+    {
+     "question": "(2) A地点からB地点までの道のりは何kmですか。",
+     "answer": "33.6",
+     "meaning": "4分に出たバスとは24kmの地点ですれ違います。バスがA地点からそこまでにかかる時間を①とすると、自転車はそこからA地点まで③かかり、4分から84分までの80分が①＋③＝④です。①＝20分なので、バスは20分で24km、自転車はその1/3の速さ。自転車は84分でAB間を走ったので 24÷20÷3×84＝33.6kmです。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 320 215\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"55\" y1=\"190\" x2=\"312\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"190\" x2=\"55\" y2=\"32\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"40\" x2=\"312\" y2=\"40\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"40\" x2=\"307\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"67\" y1=\"190\" x2=\"151\" y2=\"40\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"139\" y1=\"190\" x2=\"223\" y2=\"40\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"82.9\" x2=\"127\" y2=\"82.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"181\" y1=\"115\" x2=\"181\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><text x=\"60\" y=\"22\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"start\" dominant-baseline=\"middle\">道のり(km)</text><text x=\"30\" y=\"40\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">B地点</text><text x=\"40\" y=\"82.9\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">24</text><text x=\"30\" y=\"190\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">A地点</text><text x=\"55\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">0</text><text x=\"67\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">4</text><text x=\"139\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">28</text><text x=\"181\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">42</text><text x=\"290\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">時間(分)</text></svg>"
+  },
+  {
+   "id": "hd5m_25_8",
+   "src": "HG-9824 原簿・小5 復習テスト No.25 大問8",
+   "hg": "HG-9824",
+   "title": "2人の間の距離のグラフ",
+   "category": "hayasa",
+   "unit": "ダイヤグラム（旅人算）",
+   "grade": 5,
+   "star": 2,
+   "intro": "Aさんの家から学校へ行く一直線の道があります。この道の途中にBさんの家があり，Aさんの家とBさんの家は500m離れています。2人はそれぞれの家から学校に向かいます。下のグラフは，Aさんが7時50分に家を出てからBさんが学校に着くまでの経過時間と，2人の間の距離の関係を表したものです。2人はそれぞれ一定の速さで歩くものとして，次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) Bさんの歩く速さは毎分何mですか。",
+     "answer": "60",
+     "meaning": "グラフの0〜4分は、Aさんだけが歩いて間が500mから180mにちぢんだ所です。だからAさんの速さは (500−180)÷4＝80m/分。4分からはBさんも同じ向きに歩くので、間は速さの差でちぢみ、13分で0になります。差は 180÷(13−4)＝20m/分 なので、80−20＝60で毎分60mです。"
+    },
+    {
+     "question": "(2) Bさんは何時何分に学校に着きましたか。「時」のほうの数を答えなさい。",
+     "answer": "8",
+     "meaning": "13分でAさんがBさんに追いつき、そのあとはAさんが前に出て間が速さの差20m/分で広がります。間が240mでいちばん大きくなるのはAさんが学校に着いたときで、追いついてから 240÷20＝12分後。Aさんは13＋12＝25分で学校に着くので、7時50分＋25分＝8時15分。Bさんはそれより後に着くので8時台です。"
+    },
+    {
+     "question": "(2) 同じ時刻の「分」のほうの数を答えなさい。",
+     "answer": "19",
+     "meaning": "Aさんが学校に着いたとき（8時15分）、Bさんは240m手前にいて、そこから 240÷60＝4分で学校に着きます。7時50分＋25分＋4分で8時19分です。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 300 215\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"55\" y1=\"190\" x2=\"290\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"55\" y1=\"190\" x2=\"55\" y2=\"25\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"55,40 83,136 146,190 230,118 258,190\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><circle cx=\"55\" cy=\"40\" r=\"2.5\" fill=\"#4f9eff\"/><circle cx=\"83\" cy=\"136\" r=\"2.5\" fill=\"#4f9eff\"/><circle cx=\"146\" cy=\"190\" r=\"2.5\" fill=\"#4f9eff\"/><circle cx=\"230\" cy=\"118\" r=\"2.5\" fill=\"#4f9eff\"/><line x1=\"55\" y1=\"136\" x2=\"83\" y2=\"136\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"83\" y1=\"136\" x2=\"83\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"55\" y1=\"118\" x2=\"230\" y2=\"118\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><line x1=\"230\" y1=\"118\" x2=\"230\" y2=\"190\" stroke=\"#4f9eff\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\"/><text x=\"60\" y=\"12\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"start\" dominant-baseline=\"middle\">2人の間の距離</text><text x=\"70\" y=\"24\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(m)</text><text x=\"38\" y=\"40\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">500</text><text x=\"38\" y=\"118\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">240</text><text x=\"38\" y=\"136\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">180</text><text x=\"55\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">0</text><text x=\"83\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">4</text><text x=\"146\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">13</text><text x=\"262\" y=\"203\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">時間(分)</text></svg>"
+  }
+ ],
+ "26": [
+  {
+   "id": "hd5m_26_1",
+   "src": "HG-9825 原簿・小5 復習テスト No.26 大問1",
+   "hg": "HG-9825",
+   "title": "内角の和・正多角形・対角線の本数",
+   "category": "zu",
+   "unit": "平面図形",
+   "grade": 5,
+   "star": 1,
+   "intro": "次の□にあてはまる数を求め，算用数字で答えなさい。",
+   "steps": [
+    {
+     "question": "(1) 十角形の内角の和は□度です。",
+     "answer": "1440",
+     "meaning": "多角形は1つの頂点から対角線を引くと (辺の数−2)個の三角形に分かれます。十角形なら8個なので、180×(10−2)＝1440°です。"
+    },
+    {
+     "question": "(2) 正□角形の1つの内角の大きさは171度です。",
+     "answer": "40",
+     "meaning": "内角と外角を合わせると180°なので、1つの外角は 180−171＝9°。外角の和はどんな多角形でも360°で、正多角形は外角がみな等しいので、360÷(180−171)＝40。正四十角形です。"
+    },
+    {
+     "question": "(3) 正十五角形の対角線の本数は□本です。",
+     "answer": "90",
+     "meaning": "1つの頂点からは、自分ととなりの2つをのぞいた (15−3)本の対角線が引けます。15個の頂点でかけると同じ対角線を両はしから2回数えるので2でわって、(15−3)×15÷2＝90本です。"
+    },
+    {
+     "question": "(4) 正□角形の対角線の本数は324本です。",
+     "answer": "27",
+     "meaning": "(3)と同じ式で (□−3)×□÷2＝324 なので、(□−3)×□＝648。□と□−3は3ちがいの2つの数で、その積が648になるものをさがすと 648＝24×27。だから□＝27です。"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_26_2",
+   "src": "HG-9826 原簿・小5 復習テスト No.26 大問2",
+   "hg": "HG-9826",
+   "title": "図の角xを求める8問",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 2,
+   "intro": "次の図の角xの大きさを求めなさい。",
+   "steps": [
+    {
+     "question": "(1) 直線ℓとmは平行です。",
+     "answer": "115",
+     "meaning": "折れ曲がった点を通って、ℓ・mに平行な線を引いて考えます。115°の点では、上の部分がℓとの錯角で30°なので下の部分は 115−30＝85°。xの点では、上の部分が 180−85＝95°（平行線にはさまれた同じ側の角の和は180°）、下の部分がmとの錯角で20°。x＝95＋20＝115°です。",
+     "svg": "<svg viewBox=\"0 0 240 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"20\" y1=\"30\" x2=\"215\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"178.9,26.5 185,30 178.9,33.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"225\" y=\"30\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">ℓ</text><line x1=\"20\" y1=\"165\" x2=\"215\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"178.9,161.5 185,165 178.9,168.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"226\" y=\"165\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">m</text><polyline points=\"140,30 79.4,65 85.9,139.7 155.4,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M126.1 38 A16 16 0 0 1 124 30\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"107.2\" y=\"38.8\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">30°</text><path d=\"M90.6 58.5 A13 13 0 0 1 80.5 78\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"108.6\" y=\"80.2\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">115°</text><path d=\"M84.8 126.8 A13 13 0 0 1 98.1 144.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"105.7\" y=\"124.5\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><path d=\"M137.4 165 A18 18 0 0 1 138.5 158.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"119.9\" y=\"158.7\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">20°</text><text x=\"95\" y=\"188\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(直線ℓとmは平行)</text></svg>"
+    },
+    {
+     "question": "(2)",
+     "answer": "102",
+     "meaning": "へこんだ角をもつ四角形（ブーメラン形）では、へこんだ所の角xは、ほかの3つの角の和になります。だから x＝61＋23＋18＝102°です。",
+     "svg": "<svg viewBox=\"0 0 220 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"110,18 19.9,168 119.8,95.4 192.5,160.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M118 31.9 A16 16 0 0 1 101.8 31.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"109.7\" y=\"48\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">61°</text><path d=\"M31.2 149.1 A22 22 0 0 1 37.7 155.1\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"45.5\" y=\"140\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">23°</text><path d=\"M176.2 146.2 A22 22 0 0 1 181.5 141.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"168.6\" y=\"131.4\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">18°</text><path d=\"M128.7 103.4 A12 12 0 0 1 110.1 102.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"118.5\" y=\"119.4\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text></svg>"
+    },
+    {
+     "question": "(3)",
+     "answer": "73",
+     "meaning": "xは上の小さな三角形の角です。その三角形の左の角は、下の三角形（50°と27°をもつ）の外角なので 50＋27°。上の小さな三角形の角は30°・(50＋27)°・xなので、x＝180−(30＋50＋27)＝73°です。",
+     "svg": "<svg viewBox=\"0 0 240 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"15,170 143.6,16.8 225,170\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"143.6\" y1=\"16.8\" x2=\"116.5\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"225\" y1=\"170\" x2=\"77.9\" y2=\"95\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M25.3 157.7 A16 16 0 0 1 31 170\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"42.2\" y=\"157.3\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">50°</text><path d=\"M140.4 34.5 A18 18 0 0 1 132 30.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"129.2\" y=\"47.6\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">30°</text><path d=\"M203 170 A22 22 0 0 1 205.4 160\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"188\" y=\"161.1\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">27°</text><path d=\"M115.7 114.3 A11 11 0 0 1 127.4 108.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"116.1\" y=\"100.5\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text></svg>"
+    },
+    {
+     "question": "(4)",
+     "answer": "303",
+     "meaning": "この形は六角形なので、内角の和は 180×(6−2)＝720°。xはへこんだ所の内側の大きな角（180°より大きい角）です。720°からほかの5つの角を引いて、x＝720−(142＋91＋105＋39＋40)＝303°です。",
+     "svg": "<svg viewBox=\"0 0 235 175\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"15,72 123,18 223,38 143,104 211,168 57,168\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M25.7 66.6 A12 12 0 0 1 19.8 83\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"41.3\" y=\"81.5\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">91°</text><path d=\"M134.8 20.4 A12 12 0 0 1 112.3 23.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"126.7\" y=\"45.8\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">142°</text><path d=\"M213.7 45.6 A12 12 0 0 1 211.2 35.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"195.8\" y=\"44.8\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">40°</text><path d=\"M150.3 110.9 A10 10 0 1 1 150.7 97.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"121\" y=\"103.3\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><path d=\"M199 168 A12 12 0 0 1 202.3 159.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"185\" y=\"157.7\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">39°</text><path d=\"M52.2 157 A12 12 0 0 1 69 168\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"72.3\" y=\"144.6\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">105°</text></svg>"
+    },
+    {
+     "question": "(5) 2つの三角形ABCとDBEは正三角形です。",
+     "answer": "158",
+     "meaning": "正三角形の角はどれも60°なので、角ABE＝60−22＝38°。A・B・E とxの点を頂点とする形はへこんだ四角形（ブーメラン形）なので、xはほかの3つの角の和で、x＝60＋38＋60＝158°です。",
+     "svg": "<svg viewBox=\"0 0 240 245\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"110,62.8 25,210 195,210\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polygon points=\"50.1,31.8 25,210 191.9,142.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M49.1 200.3 A26 26 0 0 1 51 210\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"66.2\" y=\"202\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">22°</text><path d=\"M121.6 82.9 A10 10 0 0 1 134.5 97.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"141.7\" y=\"78.5\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><text x=\"110\" y=\"51.8\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"17\" y=\"220\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"203\" y=\"220\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"44.1\" y=\"21.8\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"203.9\" y=\"142.6\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"115\" y=\"234\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(2つの三角形ABCとDBEは正三角形)</text></svg>"
+    },
+    {
+     "question": "(6)",
+     "answer": "37",
+     "meaning": "2本の直線が交わってできる上下の三角形（ちょうちょ形）は、交わった所の角（向かい合う角）が等しいので、残りの2つの角の和も等しくなります。x＋34＝35＋36 なので、x＝35＋36−34＝37°です。",
+     "svg": "<svg viewBox=\"0 0 240 185\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"66.7\" y1=\"14.1\" x2=\"188.5\" y2=\"171.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"14.2\" y1=\"127.5\" x2=\"228.4\" y2=\"45.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"66.7\" y1=\"14.1\" x2=\"228.4\" y2=\"45.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"14.2\" y1=\"127.5\" x2=\"188.5\" y2=\"171.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M82.4 17.2 A16 16 0 0 1 76.5 26.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"90.5\" y=\"28.8\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><path d=\"M213.5 51.3 A16 16 0 0 1 212.7 42.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"196.5\" y=\"48.4\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">34°</text><path d=\"M29.1 121.8 A16 16 0 0 1 29.7 131.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"46.1\" y=\"125.6\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">35°</text><path d=\"M173 167.7 A16 16 0 0 1 178.7 158.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"161.7\" y=\"154.1\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">36°</text></svg>"
+    },
+    {
+     "question": "(7) ○印，△印の角の大きさはそれぞれ等しいです。",
+     "answer": "135",
+     "meaning": "大きな三角形の下の2つの角は○○と△△で、合わせて 180−90＝90°。だから○△の1組はその半分の45°です。xをもつ下の三角形の角は○・△・xなので、x＝180−45＝135°です。",
+     "svg": "<svg viewBox=\"0 0 270 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"15,165 155.8,46.8 255,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"15,165 149.8,115.9 255,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M164.8 57.5 A14 14 0 0 1 145.1 55.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"153.4\" y=\"74.7\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">90°</text><path d=\"M159.8 120.6 A11 11 0 0 1 139.5 119.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"148.8\" y=\"137.9\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><text x=\"44.4\" y=\"148\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text><text x=\"48.5\" y=\"159.1\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text><text x=\"227.8\" y=\"144.5\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text><text x=\"221.9\" y=\"157.4\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text><text x=\"135\" y=\"190\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(○印，△印の角の大きさはそれぞれ等しい)</text></svg>"
+    },
+    {
+     "question": "(8) ○印，△印の角の大きさはそれぞれ等しいです。",
+     "answer": "35",
+     "meaning": "大きな三角形の外角△△は、はなれた2つの内角の和なので 70＋○○＝△△。半分にすると 35＋○＝△。xの三角形でも外角△＝○＋x なので、xは35°です。",
+     "svg": "<svg viewBox=\"0 0 270 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"15\" y1=\"165\" x2=\"265\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"15\" y1=\"165\" x2=\"80.2\" y2=\"52\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"80.2\" y1=\"52\" x2=\"175\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"15\" y1=\"165\" x2=\"233.9\" y2=\"38.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"175\" y1=\"165\" x2=\"233.9\" y2=\"38.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M89.2 62.8 A14 14 0 0 1 73.2 64.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"82.7\" y=\"79.9\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">70°</text><path d=\"M227.2 53.1 A16 16 0 0 1 220.1 46.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"215\" y=\"59.2\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><text x=\"35.5\" y=\"137.8\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text><text x=\"47.8\" y=\"156.2\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text><text x=\"171.9\" y=\"143.2\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text><text x=\"191.3\" y=\"150.3\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text><text x=\"135\" y=\"190\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">(○印，△印の角の大きさはそれぞれ等しい)</text></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_26_3",
+   "src": "HG-9827 原簿・小5 復習テスト No.26 大問3",
+   "hg": "HG-9827",
+   "title": "二等分線と三等分線で x・y",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 3,
+   "intro": "下の図のx，yの角の大きさを求めなさい。ただし，○印，△印の角の大きさはそれぞれ等しい大きさを示すものとします。",
+   "steps": [
+    {
+     "question": "xの角の大きさは何度ですか。",
+     "answer": "78.4",
+     "meaning": "112°をもつ三角形から ○○△＝180−112＝68°。76°は○と△△△をもつ三角形の外角なので ○△△△＝76°。こちらを2倍すると ○○△△△△△△＝152°で、152−68＝84°が△5つ分。△＝84÷5＝16.8°、○＝(68−16.8)÷2＝25.6°。大きな三角形の下の角は○○と△△△なので、x＝180−25.6×2−16.8×3＝78.4°です。"
+    },
+    {
+     "question": "yの角の大きさは何度ですか。",
+     "answer": "137.6",
+     "meaning": "yをもつ下の三角形の角は、○1つ・△1つ・yです。前の問いで ○＝25.6°、△＝16.8° と分かったので、y＝180−25.6−16.8＝137.6°です。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 320 230\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"158,43.4 20,215 300,215\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"20\" y1=\"215\" x2=\"220.5\" y2=\"118.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"300\" y1=\"215\" x2=\"74.7\" y2=\"147\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"300\" y1=\"215\" x2=\"117.5\" y2=\"93.7\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><path d=\"M168.2 55.7 A16 16 0 0 1 148 55.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"158.2\" y=\"71.4\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><path d=\"M207.9 125 A14 14 0 0 1 211.6 108.1\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"191.2\" y=\"112.5\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">76°</text><path d=\"M88.1 151 A14 14 0 0 1 65.9 157.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"84.2\" y=\"177.5\" fill=\"#e6edf5\" font-size=\"11\" text-anchor=\"middle\" dominant-baseline=\"middle\">112°</text><path d=\"M139.7 166.6 A12 12 0 0 1 117.4 168.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"130.1\" y=\"187.1\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">y</text><text x=\"51.3\" y=\"190.2\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text><text x=\"59\" y=\"206.1\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">○</text><text x=\"256.5\" y=\"208.6\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text><text x=\"260.2\" y=\"196.3\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text><text x=\"267.3\" y=\"185.6\" fill=\"#e6edf5\" font-size=\"9\" text-anchor=\"middle\" dominant-baseline=\"middle\">△</text></svg>"
+  },
+  {
+   "id": "hd5m_26_4",
+   "src": "HG-9828 原簿・小5 復習テスト No.26 大問4",
+   "hg": "HG-9828",
+   "title": "等しい長さが5本続く直角三角形",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 3,
+   "intro": "下の図のような直角三角形ABCで，AD，DE，EF，FG，GCの長さがすべて等しくなっています。このとき，次の問いに答えなさい。",
+   "steps": [
+    {
+     "question": "(1) ㋐と㋑の角の大きさが等しいとき，xの角の大きさは何度ですか。",
+     "answer": "90",
+     "meaning": "㋐を①とします。GC＝FGの二等辺三角形で角GFCも①、その外角で角EGFは②。FG＝EFで角FEGも②、外角で角EFDは③。EF＝DEで角EDFも③なので x＝180−③×2＝180−⑥。さらに外角で角AEDは④、AD＝DEで角DAEも④なので、㋑＝90−①−④＝90−⑤。㋐＝㋑なら ①＝90−⑤ で ⑥＋90＝180、⑥＝90。x＝180−90＝90°です。"
+    },
+    {
+     "question": "(2) ㋑の角の大きさが㋐の角の大きさより12度大きいとき，xの角の大きさは何度ですか。",
+     "answer": "102",
+     "meaning": "(1)と同じく、㋐を①とすると ㋑＝90−⑤、x＝180−⑥ です。㋑が㋐より12°大きいので ①＋12＝90−⑤、つまり ⑥＋12＋90＝180 で ⑥＝78。x＝180−78＝102°です。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 350 205\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"62.1,108.2 62.1,185 330,185\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"62.1,108.2 75.7,185 127.9,127 180,185 255,163.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><polyline points=\"62.1,177 70.1,177 70.1,185\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1\"/><path d=\"M135.9 136 A12 12 0 0 1 119.8 136\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"127.9\" y=\"150\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><path d=\"M300 185 A30 30 0 0 1 301.2 176.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><path d=\"M66.3 131.8 A24 24 0 0 1 62.1 132.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"288.2\" y=\"180.6\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋐</text><text x=\"51.8\" y=\"146.8\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">㋑</text><text x=\"62.1\" y=\"98.2\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"52.1\" y=\"191\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"340\" y=\"185\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"75.7\" y=\"197\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"127.9\" y=\"116\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"180\" y=\"197\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"257\" y=\"152.5\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text></svg>"
+  },
+  {
+   "id": "hd5m_26_5",
+   "src": "HG-9829 原簿・小5 復習テスト No.26 大問5",
+   "hg": "HG-9829",
+   "title": "黒印の角の和（うず巻き形と星形）",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 3,
+   "intro": "下のそれぞれの図について，黒印のついた角の大きさの和を求めなさい。",
+   "steps": [
+    {
+     "question": "(1) うず巻きのような形",
+     "answer": "900",
+     "meaning": "外側の6つの頂点を順に結ぶと六角形、内側の3つの頂点を結ぶと三角形ができます。線が交わる所はちょうちょ形なので、六角形で黒印より多くなる分と、三角形で黒印より少なくなる分が等しく、黒印の和は2つの内角の和を合わせたものです。六角形 180×(6−2)＝720° と三角形180°で、720＋180＝900°です。",
+     "svg": "<svg viewBox=\"0 0 225 215\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M173.8 206.2 L164.8 206.2 A9 9 0 0 1 171.6 197.4 Z\" fill=\"#ffd166\"/><path d=\"M68.5 207 L64.4 198.9 A9 9 0 0 1 77.4 206.9 Z\" fill=\"#ffd166\"/><path d=\"M22.6 115.7 L25.7 107.3 A9 9 0 0 1 26.6 123.7 Z\" fill=\"#ffd166\"/><path d=\"M59 18 L68 18 A9 9 0 0 1 55.9 26.4 Z\" fill=\"#ffd166\"/><path d=\"M168.4 18 L174.5 24.5 A9 9 0 0 1 159.4 18 Z\" fill=\"#ffd166\"/><path d=\"M217 69.8 L209.7 75.2 A9 9 0 0 1 210.8 63.2 Z\" fill=\"#ffd166\"/><path d=\"M111.7 148.1 L109.3 139.4 A9 9 0 0 1 118.9 142.7 Z\" fill=\"#ffd166\"/><path d=\"M91.4 74.7 L100.4 73.9 A9 9 0 0 1 93.8 83.3 Z\" fill=\"#ffd166\"/><path d=\"M140 70.3 L142.2 79.1 A9 9 0 0 1 131 71.1 Z\" fill=\"#ffd166\"/><polygon points=\"173.8,206.2 68.5,207 22.6,115.7 59,18 168.4,18 217,69.8 111.7,148.1 91.4,74.7 140,70.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/></svg>"
+    },
+    {
+     "question": "(2) 7つの頂点の星のような形",
+     "answer": "540",
+     "meaning": "まん中にできる七角形のまわりに、とがった先ごとに三角形が7つあります。7つの三角形の角を全部たすと180×7。その中には黒印の角のほかに、七角形の外角が2回ずつ入っています（外角の和は360°）。だから 180×7−360×2＝540°です。",
+     "svg": "<svg viewBox=\"0 0 215 165\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><path d=\"M45.5 9.5 L53.7 13.3 A9 9 0 0 1 45.3 18.5 Z\" fill=\"#ffd166\"/><path d=\"M209.8 86 L202.5 91.3 A9 9 0 0 1 201.6 82.2 Z\" fill=\"#ffd166\"/><path d=\"M110.8 158 L104.6 151.4 A9 9 0 0 1 118 152.7 Z\" fill=\"#ffd166\"/><path d=\"M11.8 52.2 L20.7 51.2 A9 9 0 0 1 17.9 58.8 Z\" fill=\"#ffd166\"/><path d=\"M167 34.2 L169.2 43 A9 9 0 0 1 158.1 35.3 Z\" fill=\"#ffd166\"/><path d=\"M194 142.2 L185 141.6 A9 9 0 0 1 191.8 133.5 Z\" fill=\"#ffd166\"/><path d=\"M43.2 131 L43.4 122 A9 9 0 0 1 52.2 131.7 Z\" fill=\"#ffd166\"/><polygon points=\"45.5,9.5 209.8,86 110.8,158 11.8,52.2 167,34.2 194,142.2 43.2,131\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_26_6",
+   "src": "HG-9830 原簿・小5 復習テスト No.26 大問6",
+   "hg": "HG-9830",
+   "title": "正八角形の対角線がつくる角",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 2,
+   "intro": "下の図のような正八角形ABCDEFGHがあります。x，yの角の大きさをそれぞれ求めなさい。",
+   "steps": [
+    {
+     "question": "xの角の大きさは何度ですか。",
+     "answer": "67.5",
+     "meaning": "中心とAを結ぶと、中心から頂点までは等しいので二等辺三角形ができます。中心のまわりは 360÷8＝45°ずつに分かれ、AからDまでは3つ分で 45×3＝135°。二等辺三角形の底角○は (180−135)÷2＝22.5°。CGは中心を通り、AからCまでの中心の角は 45×2＝90°。だから x＝180−90−22.5＝67.5°です。"
+    },
+    {
+     "question": "yの角の大きさは何度ですか。",
+     "answer": "22.5",
+     "meaning": "DとHは中心をはさんで反対の頂点なので、三角形DFHは直角二等辺三角形で、Fの角DFHは90°です。CGとDFは平行なので、ADとDFがつくる角もxと同じ67.5°。図は左右対称なので、Fの側の角AFDも67.5°です。y＝90−67.5＝22.5°です。"
+    }
+   ],
+   "svg": "<svg viewBox=\"0 0 250 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"125,25 57.8,52.8 30,120 57.8,187.2 125,215 192.2,187.2 220,120 192.2,52.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"125\" y1=\"25\" x2=\"57.8\" y2=\"187.2\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"125\" y1=\"25\" x2=\"192.2\" y2=\"187.2\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"57.8\" y1=\"187.2\" x2=\"192.2\" y2=\"52.8\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"192.2\" y1=\"52.8\" x2=\"192.2\" y2=\"187.2\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"30\" y1=\"120\" x2=\"220\" y2=\"120\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"57.8\" y1=\"187.2\" x2=\"192.2\" y2=\"187.2\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"125\" y=\"12\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"48.6\" y=\"43.6\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"17\" y=\"120\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"48.6\" y=\"196.4\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"125\" y=\"228\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"201.4\" y=\"196.4\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"233\" y=\"120\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><text x=\"201.4\" y=\"43.6\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><path d=\"M90.2 108.9 A12 12 0 0 1 97.6 120\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"103.9\" y=\"107.8\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">x</text><path d=\"M182.2 163.2 A26 26 0 0 1 192.2 161.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.2\"/><text x=\"184.8\" y=\"149.9\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">y</text></svg>"
+  }
+ ],
+ "27": [
+  {
+   "id": "hd5m_27_1",
+   "src": "HG-9831 原簿・小5 復習テスト No.27 大問1",
+   "hg": "HG-9831",
+   "title": "小数の計算と逆算",
+   "category": "keisan",
+   "unit": "計算のくふう",
+   "grade": 5,
+   "star": 1,
+   "intro": "次の□にあてはまる数を求めなさい。",
+   "steps": [
+    {
+     "question": "(1) 1.4×1.15−0.625×0.32＝□",
+     "answer": "1.41",
+     "meaning": "かけ算を先にします。1.4×1.15＝1.61。0.625は5/8なので、0.625×0.32＝0.32×5/8＝0.2 と軽く計算できます。1.61−0.2＝1.41 です。"
+    },
+    {
+     "question": "(2) (25.8＋0.8×2.2−7.8×3.2)÷□＝20",
+     "answer": "0.13",
+     "meaning": "まずかっこの中を出します。かけ算が先なので 0.8×2.2＝1.76、7.8×3.2＝24.96。25.8＋1.76−24.96＝2.6。2.6÷□＝20 なので、わる数はわられる数÷答えで □＝2.6÷20＝0.13 です。"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_27_2",
+   "src": "HG-9832 原簿・小5 復習テスト No.27 大問2",
+   "hg": "HG-9832",
+   "title": "点対称・線対称・対称の軸の本数",
+   "category": "zu",
+   "unit": "平面図形（対称）",
+   "grade": 5,
+   "star": 1,
+   "intro": "次のア〜コの10個の図形について，次の問いに答えなさい。　ア．等脚台形　イ．長方形　ウ．平行四辺形　エ．ひし形　オ．正方形　カ．正三角形　キ．二等辺三角形　ク．直角二等辺三角形　ケ．正五角形　コ．正十二角形",
+   "steps": [
+    {
+     "question": "(3) 線対称な図形の対称の軸の本数をすべてたすと何本になりますか。",
+     "answer": "31",
+     "meaning": "正多角形の対称の軸は辺の数と同じ本数です。ア1本、イ2本、エ2本、オ4本、カ3本、キ1本、ク1本、ケ5本、コ12本。たして 1＋2＋2＋4＋3＋1＋1＋5＋12＝31本です。"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_27_3",
+   "src": "HG-9833 原簿・小5 復習テスト No.27 大問3",
+   "hg": "HG-9833",
+   "title": "対角線から四角形の名前を当てる",
+   "category": "zu",
+   "unit": "図形の性質",
+   "grade": 5,
+   "star": 2,
+   "intro": "下の図の2本の直線は四角形の対角線を表しています。それぞれ何という四角形の対角線ですか。下のア〜オの中から最も正確なものを選び，その記号を答えなさい。　ア．等脚台形　イ．長方形　ウ．ひし形　エ．正方形　オ．平行四辺形",
+   "steps": [
+    {
+     "question": "(1)",
+     "answer": "オ",
+     "meaning": "対角線は「たがいの真ん中で交わるか」「長さが等しいか」「垂直か」の3つで見分けます。この図は4cmずつ・3cmずつに分かれるので真ん中で交わりますが、長さは8cmと6cmでちがい、垂直でもありません。だから平行四辺形です。",
+     "choices": [
+      "ア",
+      "イ",
+      "ウ",
+      "エ",
+      "オ"
+     ],
+     "svg": "<svg viewBox=\"-134 -90 268 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"-103.9\" y1=\"-60.0\" x2=\"103.9\" y2=\"60.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-90.0\" y1=\"0.0\" x2=\"90.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"-40.0\" y=\"-38.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">4cm</text><text x=\"42.0\" y=\"48.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">4cm</text><text x=\"-45.0\" y=\"18.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"45.0\" y=\"-6.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text></svg>"
+    },
+    {
+     "question": "(2)",
+     "answer": "ア",
+     "meaning": "2本とも3cm＋6cm＝9cmで長さは等しいですが、3cmと6cmに分かれるので真ん中で交わっていません。長さが等しくて真ん中で交わらない対角線は、等脚台形です。",
+     "choices": [
+      "ア",
+      "イ",
+      "ウ",
+      "エ",
+      "オ"
+     ],
+     "svg": "<svg viewBox=\"-108 -95 217 255\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"37.5\" y1=\"-65.0\" x2=\"-75.0\" y2=\"129.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-37.5\" y1=\"-65.0\" x2=\"75.0\" y2=\"129.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"-42.7\" y=\"-32.5\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"42.8\" y=\"-32.5\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"-61.5\" y=\"65.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">6cm</text><text x=\"61.5\" y=\"65.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">6cm</text></svg>"
+    },
+    {
+     "question": "(3)",
+     "answer": "エ",
+     "meaning": "4つとも3cmなので、真ん中で交わり、長さも等しく、さらに垂直に交わっています。3つの性質がすべてそろうのは正方形です。",
+     "choices": [
+      "ア",
+      "イ",
+      "ウ",
+      "エ",
+      "オ"
+     ],
+     "svg": "<svg viewBox=\"-104 -104 208 208\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"0.0\" y1=\"0.0\" x2=\"13.0\" y2=\"-73.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"-73.9\" y2=\"-13.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"-13.0\" y2=\"73.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"73.9\" y2=\"13.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"1.7\" y1=\"-9.8\" x2=\"-8.1\" y2=\"-11.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"-8.1\" y1=\"-11.6\" x2=\"-9.8\" y2=\"-1.7\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"28.9\" y=\"-39.4\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"-39.4\" y=\"-14.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"-30.9\" y=\"39.4\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text><text x=\"39.4\" y=\"24.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">3cm</text></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_27_4",
+   "src": "HG-9834 原簿・小5 復習テスト No.27 大問4",
+   "hg": "HG-9834",
+   "title": "円の中心と二等辺三角形",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 2,
+   "intro": "次のそれぞれの図においてxの値を求めなさい。ただし，図の点Oは円の中心です。",
+   "steps": [
+    {
+     "question": "(1)",
+     "answer": "56",
+     "meaning": "中心Oから円周までは半径で等しいので、Oと結んだ三角形は二等辺三角形です。34°の三角形では34°の角がもう1つでき、Oの角は 180−34×2＝112°。この112°は、直径の上でとなり合うxの三角形の外角です。xの三角形も二等辺三角形なので、外角112°は等しい2つの角の和で、x＝(180−34×2)÷2＝56°です。",
+     "svg": "<svg viewBox=\"-110 -110 220 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"0.0\" cy=\"0.0\" r=\"80.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-75.2\" y1=\"27.4\" x2=\"75.2\" y2=\"-27.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-75.2\" y1=\"27.4\" x2=\"53.5\" y2=\"59.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"53.5\" y1=\"59.5\" x2=\"75.2\" y2=\"-27.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"53.5\" y2=\"59.5\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"0.0\" cy=\"0.0\" r=\"3\" fill=\"#4f9eff\"/><text x=\"0.0\" y=\"-8.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">O</text><path d=\"M-61.2,30.8 A14.4,14.4 0 0 0 -61.6,22.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-41.6\" y=\"30.6\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">34°</text><path d=\"M56.2,48.6 A11.2,11.2 0 0 0 46.0,51.1\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"47.7\" y=\"41.2\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">x°</text></svg>"
+    },
+    {
+     "question": "(2)",
+     "answer": "42",
+     "meaning": "半径が等しいので、上の頂点と左下の点・Oでできる二等辺三角形には18°の角がもう1つでき、xの三角形ではxの角が上の頂点にもう1つできます。この形はへこんだ四角形（ブーメラン形）で、中心の120°は 18＋18＋x＋x になるので、x＝(120−18×2)÷2＝42°です。",
+     "svg": "<svg viewBox=\"-110 -110 220 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"0.0\" cy=\"0.0\" r=\"80.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-80.0\" x2=\"-47.0\" y2=\"64.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-80.0\" x2=\"79.6\" y2=\"8.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-80.0\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"-47.0\" y2=\"64.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"79.6\" y2=\"8.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"0.0\" cy=\"0.0\" r=\"3\" fill=\"#4f9eff\"/><text x=\"12.0\" y=\"-4.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">O</text><path d=\"M-6.2,-61.0 A20.0,20.0 0 0 0 0.0,-60.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-5.3\" y=\"-41.8\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">18°</text><path d=\"M-7.1,9.7 A12.0,12.0 0 0 0 11.9,1.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"11.4\" y=\"30.6\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">120°</text><path d=\"M68.9,-3.5 A16.0,16.0 0 0 0 63.6,6.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"53.2\" y=\"-0.1\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">x°</text></svg>"
+    },
+    {
+     "question": "(3)",
+     "answer": "84",
+     "meaning": "Oと上の2点でできる三角形は半径2本の二等辺三角形なので、左上の点の角も73°で、中心の角は 180−73×2＝34°。65°は、左上の点・O・2本の線の交わる点でできる三角形の外角なので、左上の点の角は 65−34＝31°。Oと左上の点・右の点の三角形も二等辺三角形で、右の点の角も31°。xをもつ三角形の角は65°（向かい合う角）・31°・xなので、x＝180−(65＋31)＝84°です。",
+     "svg": "<svg viewBox=\"-150 -150 300 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><circle cx=\"0.0\" cy=\"0.0\" r=\"120.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-48.8\" y1=\"-109.6\" x2=\"20.8\" y2=\"-118.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"20.8\" y1=\"-118.2\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-48.8\" y1=\"-109.6\" x2=\"119.7\" y2=\"8.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-48.8\" y1=\"-109.6\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"119.7\" y2=\"8.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><circle cx=\"0.0\" cy=\"0.0\" r=\"3\" fill=\"#4f9eff\"/><text x=\"0.0\" y=\"20.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">O</text><path d=\"M8.9,-116.7 A12.0,12.0 0 0 0 18.8,-106.4\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"1.7\" y=\"-95.0\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\">73°</text><path d=\"M13.1,-74.2 A7.2,7.2 0 0 0 5.9,-71.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"4.0\" y=\"-81.0\" fill=\"#e6edf5\" font-size=\"12\" text-anchor=\"middle\">65°</text><path d=\"M14.4,1.0 A14.4,14.4 0 0 0 2.5,-14.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"25.5\" y=\"-14.9\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">x°</text></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_27_5",
+   "src": "HG-9835 原簿・小5 復習テスト No.27 大問5",
+   "hg": "HG-9835",
+   "title": "正方形・正五角形・平行四辺形と正三角形",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 3,
+   "intro": "次のそれぞれの図のア，イ，ウ，エ，オ，カの値を求めなさい。　［図1］四角形ABCDは正方形　三角形EBC，BFCは正三角形　［図2］五角形ABCDEは正五角形　三角形FCD，CGDは正三角形　［図3］四角形ABCDは平行四辺形　三角形ECDは正三角形　三角形EBCは二等辺三角形",
+   "steps": [
+    {
+     "question": "［図1］アの値を求めなさい。",
+     "answer": "75",
+     "meaning": "正方形の辺と正三角形の辺はみな等しいので、BA＝BE で三角形ABEは二等辺三角形です。Bの角は 90−60＝30°なので、ア＝(180−30)÷2＝75°です。",
+     "svg": "<svg viewBox=\"-48 -148 195 287\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"0.0\" y1=\"-100.0\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"100.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"0.0\" x2=\"100.0\" y2=\"-100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"-100.0\" x2=\"0.0\" y2=\"-100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"50.0\" y1=\"-86.6\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"50.0\" y1=\"-86.6\" x2=\"100.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-100.0\" x2=\"50.0\" y2=\"-86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"50.0\" y2=\"86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"0.0\" x2=\"50.0\" y2=\"86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"-100.0\" x2=\"50.0\" y2=\"86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"-8.0\" y=\"-104.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-12.0\" y=\"4.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"112.0\" y=\"14.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"110.0\" y=\"-104.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"64.0\" y=\"-78.6\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"50.0\" y=\"104.6\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">F</text><path d=\"M0.0,-82.0 A18.0,18.0 0 0 0 17.4,-95.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"19.5\" y=\"-69.6\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">ア°</text><path d=\"M85.2,-25.6 A7.0,7.0 0 0 0 83.5,-38.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"101.5\" y=\"-29.3\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">イ°</text></svg>"
+    },
+    {
+     "question": "［図1］イの値を求めなさい。",
+     "answer": "135",
+     "meaning": "CD＝CF なので三角形CDFも二等辺三角形で、角CDF＝(180−90−60)÷2＝15°。また角DCE＝90−60＝30°。イはDFとECが交わってできる三角形の角なので、イ＝180−(15＋30)＝135°です。",
+     "svg": "<svg viewBox=\"-48 -148 195 287\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"0.0\" y1=\"-100.0\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"100.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"0.0\" x2=\"100.0\" y2=\"-100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"-100.0\" x2=\"0.0\" y2=\"-100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"50.0\" y1=\"-86.6\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"50.0\" y1=\"-86.6\" x2=\"100.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-100.0\" x2=\"50.0\" y2=\"-86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"50.0\" y2=\"86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"0.0\" x2=\"50.0\" y2=\"86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.0\" y1=\"-100.0\" x2=\"50.0\" y2=\"86.6\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"-8.0\" y=\"-104.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-12.0\" y=\"4.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"112.0\" y=\"14.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"110.0\" y=\"-104.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"64.0\" y=\"-78.6\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"50.0\" y=\"104.6\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">F</text><path d=\"M0.0,-82.0 A18.0,18.0 0 0 0 17.4,-95.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"19.5\" y=\"-69.6\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">ア°</text><path d=\"M85.2,-25.6 A7.0,7.0 0 0 0 83.5,-38.5\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"101.5\" y=\"-29.3\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">イ°</text></svg>"
+    },
+    {
+     "question": "［図2］ウの値を求めなさい。",
+     "answer": "54",
+     "meaning": "正五角形も正三角形FCDも、Aと辺CDの真ん中を通る直線で線対称です。AFはこの直線の上にあるので、正五角形の内角108°をちょうど半分に分けます。ウ＝108÷2＝54°です。",
+     "svg": "<svg viewBox=\"-143 -152 285 387\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"0.0\" y1=\"-100.0\" x2=\"-95.1\" y2=\"-30.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-95.1\" y1=\"-30.9\" x2=\"-58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-58.8\" y1=\"80.9\" x2=\"58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"58.8\" y1=\"80.9\" x2=\"95.1\" y2=\"-30.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"95.1\" y1=\"-30.9\" x2=\"0.0\" y2=\"-100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-100.0\" x2=\"0.0\" y2=\"-20.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-95.1\" y1=\"-30.9\" x2=\"0.0\" y2=\"-20.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-20.9\" x2=\"-58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-20.9\" x2=\"58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-58.8\" y1=\"80.9\" x2=\"-0.0\" y2=\"182.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"58.8\" y1=\"80.9\" x2=\"-0.0\" y2=\"182.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"95.1\" y1=\"-30.9\" x2=\"-0.0\" y2=\"182.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"0.0\" y=\"-108.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-107.1\" y=\"-26.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"-70.8\" y=\"88.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"70.8\" y=\"90.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"107.1\" y=\"-26.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"-0.0\" y=\"200.7\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">G</text><text x=\"0.0\" y=\"-28.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">F</text><path d=\"M-16.2,-88.2 A20.0,20.0 0 0 0 0.0,-80.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-16.3\" y=\"-62.9\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">ウ°</text><path d=\"M54.4,60.4 A8.0,8.0 0 0 0 47.2,60.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"50.0\" y=\"50.8\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">エ°</text></svg>"
+    },
+    {
+     "question": "［図2］エの値を求めなさい。",
+     "answer": "54",
+     "meaning": "DE＝DG なので三角形DEGは二等辺三角形で、Dの角は 108＋60＝168°。角DEG＝{180−(108＋60)}÷2＝6°。角EDF＝108−60＝48°。エはEGとDFが交わってできる三角形の外角なので、エ＝6＋48＝54°です。",
+     "svg": "<svg viewBox=\"-143 -152 285 387\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"0.0\" y1=\"-100.0\" x2=\"-95.1\" y2=\"-30.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-95.1\" y1=\"-30.9\" x2=\"-58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-58.8\" y1=\"80.9\" x2=\"58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"58.8\" y1=\"80.9\" x2=\"95.1\" y2=\"-30.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"95.1\" y1=\"-30.9\" x2=\"0.0\" y2=\"-100.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-100.0\" x2=\"0.0\" y2=\"-20.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-95.1\" y1=\"-30.9\" x2=\"0.0\" y2=\"-20.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-20.9\" x2=\"-58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"-20.9\" x2=\"58.8\" y2=\"80.9\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-58.8\" y1=\"80.9\" x2=\"-0.0\" y2=\"182.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"58.8\" y1=\"80.9\" x2=\"-0.0\" y2=\"182.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"95.1\" y1=\"-30.9\" x2=\"-0.0\" y2=\"182.7\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"0.0\" y=\"-108.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-107.1\" y=\"-26.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"-70.8\" y=\"88.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"70.8\" y=\"90.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"107.1\" y=\"-26.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><text x=\"-0.0\" y=\"200.7\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">G</text><text x=\"0.0\" y=\"-28.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">F</text><path d=\"M-16.2,-88.2 A20.0,20.0 0 0 0 0.0,-80.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-16.3\" y=\"-62.9\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">ウ°</text><path d=\"M54.4,60.4 A8.0,8.0 0 0 0 47.2,60.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"50.0\" y=\"50.8\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">エ°</text></svg>"
+    },
+    {
+     "question": "［図3］オの値を求めなさい。",
+     "answer": "78",
+     "meaning": "三角形EBCは二等辺三角形なので、角ECB＝角EBC＝(180−84)÷2＝48°。平行四辺形のとなり合う角の和は180°なので、角ABE＝180−(60＋48×2)＝24°。AB＝DC＝EC＝EB なので三角形ABEは二等辺三角形で、オ＝(180−24)÷2＝78°です。",
+     "svg": "<svg viewBox=\"-48 -202 359 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"49.4\" y1=\"-152.2\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"214.1\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"214.1\" y1=\"0.0\" x2=\"263.6\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"263.6\" y1=\"-152.2\" x2=\"49.4\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"49.4\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"214.1\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"263.6\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"184.6\" y1=\"-127.2\" x2=\"181.3\" y2=\"-142.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"189.3\" y1=\"-128.2\" x2=\"186.0\" y2=\"-143.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"232.0\" y1=\"-80.8\" x2=\"247.2\" y2=\"-75.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"230.5\" y1=\"-76.3\" x2=\"245.7\" y2=\"-71.3\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"41.4\" y=\"-158.2\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-12.0\" y=\"6.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"224.1\" y=\"14.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"275.6\" y=\"-156.2\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"123.1\" y=\"-108.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><path d=\"M97.4,-108.2 A14.4,14.4 0 0 0 116.7,-108.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"107.1\" y=\"-81.9\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">84°</text><path d=\"M119.6,-121.6 A12.8,12.8 0 0 0 96.0,-125.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"112.1\" y=\"-145.5\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">カ°</text><path d=\"M43.5,-133.9 A19.2,19.2 0 0 0 66.1,-142.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"63.2\" y=\"-111.3\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">オ°</text></svg>"
+    },
+    {
+     "question": "［図3］カの値を求めなさい。",
+     "answer": "138",
+     "meaning": "Eのまわりの4つの角を合わせると360°です。角CEDは正三角形で60°、角BECは84°、角AEBは三角形ABEの底角でオと同じ78°。カ＝360−(60＋84＋78)＝138°です。",
+     "svg": "<svg viewBox=\"-48 -202 359 250\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"49.4\" y1=\"-152.2\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"214.1\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"214.1\" y1=\"0.0\" x2=\"263.6\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"263.6\" y1=\"-152.2\" x2=\"49.4\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"49.4\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"214.1\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"107.1\" y1=\"-118.9\" x2=\"263.6\" y2=\"-152.2\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"184.6\" y1=\"-127.2\" x2=\"181.3\" y2=\"-142.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"189.3\" y1=\"-128.2\" x2=\"186.0\" y2=\"-143.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"232.0\" y1=\"-80.8\" x2=\"247.2\" y2=\"-75.9\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"230.5\" y1=\"-76.3\" x2=\"245.7\" y2=\"-71.3\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"41.4\" y=\"-158.2\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-12.0\" y=\"6.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"224.1\" y=\"14.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"275.6\" y=\"-156.2\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"123.1\" y=\"-108.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><path d=\"M97.4,-108.2 A14.4,14.4 0 0 0 116.7,-108.2\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"107.1\" y=\"-81.9\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">84°</text><path d=\"M119.6,-121.6 A12.8,12.8 0 0 0 96.0,-125.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"112.1\" y=\"-145.5\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">カ°</text><path d=\"M43.5,-133.9 A19.2,19.2 0 0 0 66.1,-142.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"63.2\" y=\"-111.3\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">オ°</text></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_27_6",
+   "src": "HG-9836 原簿・小5 復習テスト No.27 大問6",
+   "hg": "HG-9836",
+   "title": "正三角形2つの合同",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 3,
+   "intro": "次のそれぞれの図においてxの値を求めなさい。",
+   "steps": [
+    {
+     "question": "(1) 三角形ABC，DCEは正三角形です。",
+     "answer": "42",
+     "meaning": "DC＝EC、BC＝AC です。角BCA＝角DCE＝60°なので、どちらからも角ACDを引いた 角BCD＝角ACE も等しくなります。2つの辺とその間の角が等しいので、三角形BCDと三角形ACEは合同。だから x＝角CAE は角CBD と同じ42°です。",
+     "svg": "<svg viewBox=\"-48 -182 243 230\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"75.0\" y1=\"-129.9\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"150.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"75.0\" y1=\"-129.9\" x2=\"150.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"0.0\" y1=\"0.0\" x2=\"125.9\" y2=\"-113.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"39.8\" y1=\"-35.8\" x2=\"150.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"0.0\" x2=\"125.9\" y2=\"-113.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"75.0\" y1=\"-129.9\" x2=\"125.9\" y2=\"-113.4\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"75.0\" y=\"-137.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-12.0\" y=\"6.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"160.0\" y=\"14.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"33.8\" y=\"-43.8\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"137.9\" y=\"-113.4\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><path d=\"M19.5,-0.0 A19.5,19.5 0 0 0 14.5,-13.0\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"35.0\" y=\"-8.4\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">42°</text><path d=\"M82.5,-116.9 A15.0,15.0 0 0 0 89.3,-125.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"98.3\" y=\"-106.0\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">x</text></svg>"
+    }
+   ]
+  },
+  {
+   "id": "hd5m_27_7",
+   "src": "HG-9837 原簿・小5 復習テスト No.27 大問7",
+   "hg": "HG-9837",
+   "title": "三角形を移動して角を求める",
+   "category": "zu",
+   "unit": "平面図形（角度）",
+   "grade": 5,
+   "star": 3,
+   "intro": "右の図で，Cは辺AD上の点で，①の角の大きさは51度，②の角の大きさは97度，ABの長さとDEの長さ，ACの長さとECの長さはそれぞれ等しくなっています。",
+   "steps": [
+    {
+     "question": "このとき，③の角の大きさは何度になりますか。",
+     "answer": "23",
+     "meaning": "AC＝EC なので、三角形EDCを、ECがACにぴったり重なるように移します（EがAに、DがD'に重なる）。すると AD'＝ED＝AB で、三角形ABD'は二等辺三角形。角ACD'（＝角ECD）と角ACBを合わせると180°なので、D'は直線BCの上にきます。角CED＝180−97＝83°で、これがAのところに移るので、頂角は 51＋83°。③は底角と同じなので {180−(51＋83)}÷2＝23°です。"
+    }
+   ],
+   "svg": "<svg viewBox=\"-207 -129 264 376\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display:block;margin:0 auto;max-width:100%\"><line x1=\"22.1\" y1=\"-76.9\" x2=\"-159.1\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-159.1\" y1=\"0.0\" x2=\"0.0\" y2=\"0.0\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"22.1\" y1=\"-76.9\" x2=\"-56.0\" y2=\"195.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"-80.0\" y1=\"0.0\" x2=\"-56.0\" y2=\"195.3\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"22.1\" y=\"-84.9\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">A</text><text x=\"-171.1\" y=\"5.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">B</text><text x=\"12.0\" y=\"-6.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">C</text><text x=\"-56.0\" y=\"213.3\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">D</text><text x=\"-84.0\" y=\"-8.0\" fill=\"#e6edf5\" font-size=\"14\" text-anchor=\"middle\">E</text><path d=\"M3.6,-69.1 A20.0,20.0 0 0 0 16.5,-57.7\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-0.2\" y=\"-46.7\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">①</text><path d=\"M-94.4,-0.0 A14.4,14.4 0 0 0 -78.2,14.3\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-99.1\" y=\"26.6\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">②</text><path d=\"M-48.3,168.4 A28.0,28.0 0 0 0 -59.4,167.6\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><text x=\"-52.6\" y=\"156.5\" fill=\"#e6edf5\" font-size=\"13\" text-anchor=\"middle\">③</text></svg>"
+  }
+ ]
+}
