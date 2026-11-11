@@ -4442,5 +4442,124 @@
     "unit": "立体図形（体積・表面積）",
     "src": "HG-8935",
     "svg": "<svg viewBox=\"0 0 300 180\" style=\"display:block;margin:0 auto;max-width:100%\"><text x=\"10\" y=\"20\" fill=\"#333\" font-size=\"13\">㋑</text>\n<ellipse cx=\"50\" cy=\"110\" rx=\"28\" ry=\"7\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"50\" cy=\"160\" rx=\"28\" ry=\"7\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"22\" y1=\"110\" x2=\"22\" y2=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"78\" y1=\"110\" x2=\"78\" y2=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"22\" y1=\"110\" x2=\"50\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"78\" y1=\"110\" x2=\"50\" y2=\"30\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<ellipse cx=\"50\" cy=\"135\" rx=\"28\" ry=\"7\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/>\n<text x=\"82\" y=\"150\" fill=\"#333\" font-size=\"13\">xcm</text>\n<text x=\"110\" y=\"20\" fill=\"#333\" font-size=\"13\">㋺</text>\n<ellipse cx=\"125\" cy=\"110\" rx=\"9\" ry=\"26\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"175\" cy=\"110\" rx=\"9\" ry=\"26\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"125\" y1=\"84\" x2=\"175\" y2=\"84\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"125\" y1=\"136\" x2=\"175\" y2=\"136\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"175\" y1=\"84\" x2=\"250\" y2=\"110\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"175\" y1=\"136\" x2=\"250\" y2=\"110\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"116\" y1=\"110\" x2=\"250\" y2=\"110\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<text x=\"258\" y=\"20\" fill=\"#333\" font-size=\"13\">㋩</text>\n<ellipse cx=\"270\" cy=\"40\" rx=\"22\" ry=\"6\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"270\" cy=\"90\" rx=\"22\" ry=\"6\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"248\" y1=\"40\" x2=\"248\" y2=\"90\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"292\" y1=\"40\" x2=\"292\" y2=\"90\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"248\" y1=\"90\" x2=\"270\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"292\" y1=\"90\" x2=\"270\" y2=\"165\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<ellipse cx=\"270\" cy=\"77\" rx=\"22\" ry=\"6\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/></svg>"
+  },
+  {
+    "id": "skz06802",
+    "question": "内のりが縦0.45m、横30cmの直方体の容器に、深さの2/3まで水を入れると、水の体積は0.0135m³になります。この容器の深さは何cmですか。",
+    "answer": "15",
+    "meaning": "まず単位をcmにそろえます。縦0.45m＝45cm。1m³＝1000000cm³なので、0.0135m³＝13500cm³。水の深さは、体積÷底面積で13500÷(45×30)＝13500÷1350＝10cm。この10cmが容器の深さの2/3にあたるので、容器の深さは10÷2/3＝15。答えは15cmです。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8850"
+  },
+  {
+    "id": "skz06803",
+    "question": "縦10cm、横15cm、高さ20cmの直方体の容器に15cmの高さまで水が入っています。この容器に高さ20cmの四角柱の棒を、まっすぐに静かに底に立てたら、水面が18cmになりました。この四角柱の棒の底面積は何cm²ですか。",
+    "answer": "25",
+    "meaning": "棒を立てても水の量は変わらず、棒の分だけ水の入る場所がせまくなります。水は10×15×15＝2250cm³。棒を立てたあとの深さは18cmなので、水が入っている部分の底面積は2250÷18＝125cm²。容器の底面積150cm²からこれを引くと、150－125＝25が棒の底面積です（棒は高さ20cmなので水面から出ています）。答えは25cm²です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8850"
+  },
+  {
+    "id": "skz06804",
+    "question": "図のような三角柱の容器に、水を8cmの深さまで入れました（図は面BCFEを下にしたところで、角Bは直角です）。このとき、面ACFDを下にすると、水の深さは何cmになりますか。",
+    "answer": "4.8",
+    "meaning": "容器の長さは変わらないので、三角形の面だけで考えます。三角形ABCは12×9÷2＝54cm²。図では高さ12cmのうち上の4cmが空気で、空気の部分は三角形ABCと同じ形の小さい三角形です。辺の比は4：12＝1：3なので、面積の比は1×1：3×3＝1：9。空気は54÷9＝6cm²です。面ACFDを下にすると、ACを底辺とした高さは54×2÷15＝7.2cm。空気の部分はやはり6cm²でABCの1/9なので、同じ形で高さは7.2の1/3＝2.4cm。水の深さは7.2－2.4＝4.8。答えは4.8cmです。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8850",
+    "svg": "<svg viewBox=\"0 0 320 210\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,67 40,175 112,175\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"40\" y1=\"67\" x2=\"220\" y2=\"23\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"112\" y1=\"175\" x2=\"292\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"220\" y1=\"23\" x2=\"292\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"40\" y1=\"175\" x2=\"220\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"220\" y1=\"131\" x2=\"220\" y2=\"23\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"220\" y1=\"131\" x2=\"292\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"40\" y1=\"103\" x2=\"64\" y2=\"103\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"64\" y1=\"103\" x2=\"244\" y2=\"59\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"40\" y1=\"103\" x2=\"220\" y2=\"59\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"220\" y1=\"59\" x2=\"244\" y2=\"59\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><polyline points=\"40,167 48,167 48,175\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"28\" y=\"63\" fill=\"#333\" font-size=\"13\">A</text><text x=\"26\" y=\"187\" fill=\"#333\" font-size=\"13\">B</text><text x=\"110\" y=\"191\" fill=\"#333\" font-size=\"13\">C</text><text x=\"216\" y=\"17\" fill=\"#333\" font-size=\"13\">D</text><text x=\"206\" y=\"127\" fill=\"#333\" font-size=\"13\">E</text><text x=\"297\" y=\"141\" fill=\"#333\" font-size=\"13\">F</text><text x=\"2\" y=\"125\" fill=\"#333\" font-size=\"13\">12cm</text><text x=\"64\" y=\"203\" fill=\"#333\" font-size=\"13\">9cm</text><text x=\"262\" y=\"77\" fill=\"#333\" font-size=\"13\">15cm</text><text x=\"192\" y=\"171\" fill=\"#333\" font-size=\"13\">20cm</text></svg>"
+  },
+  {
+    "id": "skz06903",
+    "question": "上は真正面から見た図、下は真上から見た図です。この角柱の表面積は何cm²ですか。",
+    "answer": "272",
+    "meaning": "真上から見た図が底面の形で、上の辺8cm・下の辺5cm・高さ4cm（右の辺）の台形です。真正面の図から、角柱の高さは10cm。底面2つ分は(8＋5)×4÷2×2＝52cm²。側面は、底面のまわりの長さ8＋4＋5＋5＝22cmを横、10cmを縦とする長方形と同じで22×10＝220cm²。合計52＋220＝272。答えは272cm²です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "展開図・投影図",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 240 210\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"60\" y=\"10\" width=\"110\" height=\"80\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"100\" y1=\"10\" x2=\"100\" y2=\"90\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"40\" y1=\"100\" x2=\"190\" y2=\"100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polygon points=\"60,120 170,120 170,170 100,170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"10\" y=\"55\" fill=\"#333\" font-size=\"13\">真正面</text><text x=\"10\" y=\"150\" fill=\"#333\" font-size=\"13\">真上</text><text x=\"176\" y=\"55\" fill=\"#333\" font-size=\"13\">10cm</text><text x=\"100\" y=\"114\" fill=\"#333\" font-size=\"13\">8cm</text><text x=\"176\" y=\"150\" fill=\"#333\" font-size=\"13\">4cm</text><text x=\"40\" y=\"160\" fill=\"#333\" font-size=\"13\">5cm</text><text x=\"120\" y=\"188\" fill=\"#333\" font-size=\"13\">5cm</text></svg>"
+  },
+  {
+    "id": "skz06904",
+    "question": "図は円すいの展開図で、側面のおうぎ形の中心角は直角、底面の円の半径は5cmです。xの長さは何cmですか。",
+    "answer": "20",
+    "meaning": "組み立てると、おうぎ形の弧と底面の円周がぴったり重なるので、長さが同じです。底面の円周は5×2×3.14。中心角90°のおうぎ形の弧は、半径xの円の円周の90/360＝1/4です。x×2×3.14×1/4＝5×2×3.14 なので、x×1/4＝5、x＝20。xはおうぎ形の半径（母線）です。答えは20cmです。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "展開図・投影図",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 240 230\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M120,20 L35.1,104.9 A120,120 0 0 0 204.9,104.9 Z\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"114.3,25.7 120,31.3 125.7,25.7\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><circle cx=\"120\" cy=\"180\" r=\"40\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"120\" y1=\"180\" x2=\"80\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><circle cx=\"120\" cy=\"180\" r=\"3\" fill=\"#4f9eff\"/><text x=\"126\" y=\"184\" fill=\"#333\" font-size=\"13\">O</text><text x=\"84\" y=\"174\" fill=\"#333\" font-size=\"13\">5cm</text><text x=\"62\" y=\"56\" fill=\"#333\" font-size=\"13\">x</text></svg>"
+  },
+  {
+    "id": "skz06905",
+    "question": "図のような円すい形の容器Aと円柱形の容器B、Cがあります。容器Aに水を入れると深さが12cmになりました。容器Aの水を全部B、Cに同じ深さになるように入れると、深さは何cmになりますか。",
+    "answer": "3.2",
+    "meaning": "Aの水は、深さ12cmの円すいの形です。容器Aは深さ15cm・半径5cmで、水の円すいは同じ形なので、水面の半径は5×12/15＝4cm。水の体積は4×4×3.14×12÷3＝64×3.14cm³。BとCの底面積の合計は4×4×3.14＋2×2×3.14＝20×3.14cm²。同じ深さに入れるので、深さは64×3.14÷(20×3.14)＝64÷20＝3.2。答えは3.2cmです。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 320 200\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"70\" cy=\"40\" rx=\"50\" ry=\"10\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"40\" x2=\"70\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"120\" y1=\"40\" x2=\"70\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"70\" cy=\"64\" rx=\"40\" ry=\"8\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><rect x=\"150\" y=\"40\" width=\"80\" height=\"130\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"190\" cy=\"40\" rx=\"40\" ry=\"8\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><rect x=\"260\" y=\"40\" width=\"40\" height=\"130\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"280\" cy=\"40\" rx=\"20\" ry=\"5\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"66\" y=\"14\" fill=\"#333\" font-size=\"13\">A</text><text x=\"186\" y=\"14\" fill=\"#333\" font-size=\"13\">B</text><text x=\"276\" y=\"14\" fill=\"#333\" font-size=\"13\">C</text><text x=\"50\" y=\"28\" fill=\"#333\" font-size=\"13\">10cm</text><text x=\"174\" y=\"28\" fill=\"#333\" font-size=\"13\">8cm</text><text x=\"266\" y=\"28\" fill=\"#333\" font-size=\"13\">4cm</text><text x=\"0\" y=\"110\" fill=\"#333\" font-size=\"13\">15cm</text><text x=\"96\" y=\"120\" fill=\"#333\" font-size=\"13\">12cm</text></svg>"
+  },
+  {
+    "id": "skz06906",
+    "question": "底面積が50cm²で、少しの水が入った直方体の水そうがあります。この水そうに図の三角柱のおもりを面ABCDが水そうの底につくように入れたところ、水面が1.2cm上がりました。水そうに入っている水の体積は何cm³ですか。",
+    "answer": "90",
+    "meaning": "水面が上がった分の50×1.2＝60cm³が、おもりの水につかった部分の体積です。おもり全体は6×9÷2×4＝108cm³なので、水から出ている部分は108－60＝48cm³。出ている部分は、三角形の面がもとと同じ形の小さい直角三角形で、長さは同じ4cmの三角柱です。その三角形は48÷4＝12cm²で、もとの27cm²の12/27＝4/9。面積が(2×2)/(3×3)倍なので、辺は2/3倍。出ている高さは9×2/3＝6cm、水の深さは9－6＝3cm。深さ3cmまでの50×3＝150cm³から、おもりの60cm³を引いて90。答えは90cm³です。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 240 200\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,170 140,170 40,40\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"40\" y1=\"40\" x2=\"100\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"140\" y1=\"170\" x2=\"200\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"100\" y1=\"10\" x2=\"200\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"40\" y1=\"170\" x2=\"100\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"100\" y1=\"140\" x2=\"100\" y2=\"10\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"100\" y1=\"140\" x2=\"200\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><polyline points=\"40,162 48,162 48,170\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"30\" y=\"186\" fill=\"#333\" font-size=\"13\">A</text><text x=\"136\" y=\"186\" fill=\"#333\" font-size=\"13\">B</text><text x=\"204\" y=\"140\" fill=\"#333\" font-size=\"13\">C</text><text x=\"86\" y=\"136\" fill=\"#333\" font-size=\"13\">D</text><text x=\"22\" y=\"110\" fill=\"#333\" font-size=\"13\">9</text><text x=\"86\" y=\"186\" fill=\"#333\" font-size=\"13\">6</text><text x=\"176\" y=\"166\" fill=\"#333\" font-size=\"13\">4</text><text x=\"150\" y=\"20\" fill=\"#333\" font-size=\"13\">単位はcm</text></svg>"
+  },
+  {
+    "id": "skz07003",
+    "question": "図は、直方体の一部を切り取った立体です。この立体の体積は何cm³ですか。",
+    "answer": "594",
+    "meaning": "もとの直方体から、切り取った直方体を引きます。もとの直方体は横10cm・おく行き6cm・高さ12cmで、10×6×12＝720cm³。切り取った部分は右・手前・上にある直方体で、横は10－4＝6cm、おく行きは6－3＝3cm、高さは12－5＝7cm。6×3×7＝126cm³。720－126＝594。答えは594cm³です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 300 222\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,200 170,200 170,135 92,135 92,44 40,44\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"40,44 92,44 113,26 191,26 212,8 82,8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"170,200 212,164 212,8 191,26 191,117 170,135\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"92,135 170,135 191,117 113,117\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"113,117 191,117 191,26 113,26\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"92,135 113,117 113,26 92,44\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"133\" y=\"2\" fill=\"#333\" font-size=\"13\">10cm</text><text x=\"205.5\" y=\"19\" fill=\"#333\" font-size=\"13\">3cm</text><text x=\"54\" y=\"60\" fill=\"#333\" font-size=\"13\">4cm</text><text x=\"218\" y=\"90\" fill=\"#333\" font-size=\"13\">12cm</text><text x=\"132\" y=\"171.5\" fill=\"#333\" font-size=\"13\">5cm</text><text x=\"197\" y=\"194\" fill=\"#333\" font-size=\"13\">6cm</text><text x=\"80\" y=\"218\" fill=\"#333\" font-size=\"13\">直方体の一部を切り取る</text></svg>"
+  },
+  {
+    "id": "skz07007",
+    "question": "図のように、Aは直径20cm・高さ40cmの円柱の容器、Bは直角をはさむ2辺が30cmと40cmの直角三角形を底面とする高さ60cmの三角柱の容器です。Aの容器の3/4の深さまで水を入れ、それをBに移すと深さは何cmになりますか。円周率は3.14とします。",
+    "answer": "15.7",
+    "meaning": "Aの水の深さは40×3/4＝30cm。Aの半径は10cmなので、水の体積は10×10×3.14×30＝9420cm³。Bの底面積は30×40÷2＝600cm²。移しても水の体積は同じなので、深さは9420÷600＝15.7。答えは15.7cmです。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 320 200\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"60\" cy=\"60\" rx=\"30\" ry=\"8\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><ellipse cx=\"60\" cy=\"170\" rx=\"30\" ry=\"8\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"30\" y1=\"60\" x2=\"30\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"90\" y1=\"60\" x2=\"90\" y2=\"170\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polygon points=\"140,30 180,45 220,25 220,160 180,180 140,165\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"180\" y1=\"45\" x2=\"180\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"140\" y1=\"30\" x2=\"220\" y2=\"25\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"56\" y=\"44\" fill=\"#333\" font-size=\"13\">A</text><text x=\"176\" y=\"16\" fill=\"#333\" font-size=\"13\">B</text><text x=\"0\" y=\"120\" fill=\"#333\" font-size=\"13\">40cm</text><text x=\"40\" y=\"194\" fill=\"#333\" font-size=\"13\">20cm</text><text x=\"120\" y=\"24\" fill=\"#333\" font-size=\"13\">30cm</text><text x=\"190\" y=\"58\" fill=\"#333\" font-size=\"13\">40cm</text><text x=\"226\" y=\"100\" fill=\"#333\" font-size=\"13\">60cm</text></svg>"
+  },
+  {
+    "id": "skz07008",
+    "question": "図は、直方体を組み合わせた立体です。この立体の体積は何cm³ですか。",
+    "answer": "2928",
+    "meaning": "おくの大きな直方体と、手前のL字の部分に分けます。手前の部分のおく行きは6cmなので、おくの直方体のおく行きは20－6＝14cm。おくの直方体は横14cm・おく行き14cm・高さ12cmで14×14×12＝2352cm³。手前の部分は、前から見るとL字形で、上の段は横14－8＝6cm・高さ6cm、下の段は横14－4＝10cm・高さ12－6＝6cm。(6×6＋10×6)×6＝576cm³。合計2352＋576＝2928。答えは2928cm³です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 320 225\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"45,205 135,205 135,151 99,151 99,97 45,97\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"129,77.8 201,77.8 201,185.8 165,185.8 165,131.8 129,131.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"45,97 99,97 129,77.8 201,77.8 271,33 145,33\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"99,151 135,151 165,131.8 129,131.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"201,185.8 271,141 271,33 201,77.8\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"135,205 165,185.8 165,131.8 135,151\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"99,151 129,131.8 129,77.8 99,97\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"65\" y=\"50.6\" fill=\"#333\" font-size=\"13\">20cm</text><text x=\"194\" y=\"27\" fill=\"#333\" font-size=\"13\">14cm</text><text x=\"112\" y=\"97.4\" fill=\"#333\" font-size=\"13\">6cm</text><text x=\"155\" y=\"71.8\" fill=\"#333\" font-size=\"13\">8cm</text><text x=\"63\" y=\"128\" fill=\"#333\" font-size=\"13\">6cm</text><text x=\"9\" y=\"155\" fill=\"#333\" font-size=\"13\">12cm</text><text x=\"177\" y=\"201.8\" fill=\"#333\" font-size=\"13\">4cm</text></svg>"
+  },
+  {
+    "id": "skz07009",
+    "question": "図のように、直角をはさむ2辺が9cmと6cmの直角三角形を底面とする長さ20cmの三角柱の容器を横にたおして、水を深さ3cmまで入れました。水の体積は何cm³ですか。",
+    "answer": "300",
+    "meaning": "水の部分は、三角形の面（断面）が台形で、長さ20cmの柱です。三角形の面は縦9cm・横6cmの直角三角形で、水面より上は、もとと同じ形の小さい直角三角形になります。その縦は9－3＝6cmで、もとの6/9＝2/3倍なので、横（水面の長さ）も6×2/3＝4cm。水の断面は上底4cm・下底6cm・高さ3cmの台形で、(4＋6)×3÷2＝15cm²。体積は15×20＝300。答えは300cm³です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "立体図形（体積・表面積）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 330 190\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"32,131 252,131 238,171 18,171\" fill=\"#ffd166\" stroke=\"none\" fill-opacity=\"0.6\"/><polygon points=\"280,117 252,131 238,171 280,150\" fill=\"#ffd166\" stroke=\"none\" fill-opacity=\"0.6\"/><line x1=\"60\" y1=\"51\" x2=\"280\" y2=\"51\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"18\" y1=\"171\" x2=\"238\" y2=\"171\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"60\" y1=\"51\" x2=\"18\" y2=\"171\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"280\" y1=\"51\" x2=\"238\" y2=\"171\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"280\" y1=\"51\" x2=\"280\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"280\" y1=\"150\" x2=\"238\" y2=\"171\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"60\" y1=\"150\" x2=\"280\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"60\" y1=\"51\" x2=\"60\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"60\" y1=\"150\" x2=\"18\" y2=\"171\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"32\" y1=\"131\" x2=\"252\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"280\" y1=\"117\" x2=\"252\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"60\" y1=\"117\" x2=\"280\" y2=\"117\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"60\" y1=\"117\" x2=\"32\" y2=\"131\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><polyline points=\"280,142 272.8,145.6 272.8,153.6\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"114\" y=\"189\" fill=\"#333\" font-size=\"13\">20cm</text><text x=\"255\" y=\"178.5\" fill=\"#333\" font-size=\"13\">6cm</text><text x=\"294\" y=\"90.5\" fill=\"#333\" font-size=\"13\">9cm</text><text x=\"290\" y=\"141.5\" fill=\"#333\" font-size=\"13\">3cm</text></svg>"
   }
 ]

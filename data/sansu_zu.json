@@ -11370,5 +11370,179 @@
     "unit": "平面図形（相似・比）",
     "src": "HG-8935",
     "svg": "<svg viewBox=\"0 0 260 210\" style=\"display:block;margin:0 auto;max-width:100%\"><polygon points=\"130,20 50,100 50,148 210,148 210,100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<line x1=\"50\" y1=\"100\" x2=\"210\" y2=\"100\" stroke=\"#4f9eff\" stroke-width=\"1\" stroke-dasharray=\"4,3\"/>\n<line x1=\"86\" y1=\"56\" x2=\"92\" y2=\"62\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<line x1=\"166\" y1=\"54\" x2=\"162\" y2=\"62\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/><line x1=\"172\" y1=\"58\" x2=\"168\" y2=\"66\" stroke=\"#4f9eff\" stroke-width=\"1.5\"/>\n<polyline points=\"50,138 60,138 60,148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"210,138 200,138 200,148\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/>\n<text x=\"125\" y=\"14\" fill=\"#333\" font-size=\"13\">A</text><text x=\"36\" y=\"98\" fill=\"#333\" font-size=\"13\">B</text><text x=\"215\" y=\"98\" fill=\"#333\" font-size=\"13\">E</text>\n<text x=\"36\" y=\"162\" fill=\"#333\" font-size=\"13\">C</text><text x=\"215\" y=\"162\" fill=\"#333\" font-size=\"13\">D</text>\n<text x=\"56\" y=\"118\" fill=\"#333\" font-size=\"13\">135°</text><text x=\"170\" y=\"118\" fill=\"#333\" font-size=\"13\">135°</text>\n<text x=\"14\" y=\"128\" fill=\"#333\" font-size=\"13\">3cm</text><text x=\"118\" y=\"166\" fill=\"#333\" font-size=\"13\">8cm</text>\n<text x=\"80\" y=\"195\" fill=\"#333\" font-size=\"13\">図は1/1000の縮図</text></svg>"
+  },
+  {
+    "id": "skz06801",
+    "question": "縮尺25万分の1の地図で8cmの距離は、実際は何kmですか。",
+    "answer": "20",
+    "meaning": "縮尺25万分の1は、地図の上の1cmが、実際には250000cmという意味です。8cmなら8×250000＝2000000cm。100cm＝1m、1000m＝1kmなので、2000000cm＝20000m＝20km。0の数をまちがえないように、1つずつ単位をなおしましょう。答えは20kmです。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8850"
+  },
+  {
+    "id": "skz06805",
+    "question": "図のように、角Cが直角で角Aが40°の直角三角形ABCを、点Cを中心にして30°回転させました。回転したあとの三角形の斜辺と、辺ACとが交わってできる角xは何度ですか。",
+    "answer": "70",
+    "meaning": "回転しても角の大きさは変わりません。もとの角Bは180－90－40＝50°なので、Bが移った点の角も50°です。辺CBは30°回転したので、Bが移った点とCを結ぶ辺と、辺CAの間の角は90－30＝60°。Bが移った点・C・交わる点の3つでできる三角形を見ると、xは180－50－60＝70。答えは70°です。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（角度）",
+    "src": "HG-8850",
+    "svg": "<svg viewBox=\"0 0 260 205\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"170,33.9 60,165 170,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polygon points=\"235.5,51.5 74.7,110 170,165\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><polyline points=\"162,165 162,157 170,157\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"166\" y=\"27.9\" fill=\"#333\" font-size=\"13\">A</text><text x=\"46\" y=\"179\" fill=\"#333\" font-size=\"13\">B</text><text x=\"166\" y=\"183\" fill=\"#333\" font-size=\"13\">C</text><text x=\"130\" y=\"51.9\" fill=\"#333\" font-size=\"13\">40°</text><text x=\"118\" y=\"158\" fill=\"#333\" font-size=\"13\">30°</text><text x=\"150\" y=\"118\" fill=\"#333\" font-size=\"13\">x</text><text x=\"40\" y=\"198\" fill=\"#333\" font-size=\"13\">直角三角形ABCを30°回転</text></svg>"
+  },
+  {
+    "id": "skz06806",
+    "question": "図で、角Bと角Dは直角です。色をぬった部分（四角形ABCE）の面積が27cm²のとき、xの長さ（AE）は何cmですか。",
+    "answer": "4",
+    "meaning": "AとCを結んで、色の部分を三角形ABCと三角形ACEに分けます。三角形ABCは、角Bが直角なので底辺10cm・高さ3cmで10×3÷2＝15cm²。三角形ACEは27－15＝12cm²です。三角形ACEのAEを底辺とすると、角Dが直角なので、高さはCDの6cm。AE×6÷2＝12なので、AE＝12×2÷6＝4。答えは4cmです。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（面積）",
+    "src": "HG-8850",
+    "svg": "<svg viewBox=\"0 0 300 185\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,112 40,160 200,160 100.7,91.8\" fill=\"#ffd166\" stroke=\"none\"/><polygon points=\"40,112 40,160 200,160 169.7,68.9\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"100.7\" y1=\"91.8\" x2=\"200\" y2=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"40,152 48,152 48,160\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"162.1,71.4 164.7,79 172.3,76.5\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"26\" y=\"110\" fill=\"#333\" font-size=\"13\">A</text><text x=\"26\" y=\"174\" fill=\"#333\" font-size=\"13\">B</text><text x=\"202\" y=\"176\" fill=\"#333\" font-size=\"13\">C</text><text x=\"171.7\" y=\"62.9\" fill=\"#333\" font-size=\"13\">D</text><text x=\"96.7\" y=\"83.8\" fill=\"#333\" font-size=\"13\">E</text><text x=\"62.4\" y=\"91.9\" fill=\"#333\" font-size=\"13\">x</text><text x=\"4\" y=\"141\" fill=\"#333\" font-size=\"13\">3cm</text><text x=\"106\" y=\"178\" fill=\"#333\" font-size=\"13\">10cm</text><text x=\"192.9\" y=\"114.4\" fill=\"#333\" font-size=\"13\">6cm</text><text x=\"80\" y=\"140\" fill=\"#333\" font-size=\"13\">27cm²</text></svg>"
+  },
+  {
+    "id": "skz06807",
+    "question": "図の四角形ABCDは正方形で、AC＝CEです。Eは辺BCをのばした線の上の点で、Fは直線AEと辺DCの交わる点、Gは直線AEと対角線BDの交わる点、Hは2本の対角線の交わる点です。DGとDFの長さの比を求めなさい。",
+    "answer": "1:1",
+    "meaning": "AC＝CEなので、三角形ACEは二等辺三角形です。角ACEは90＋45＝135°なので、角CAE＝(180－135)÷2＝22.5°。角DACは45°なので、角DAF＝45－22.5＝22.5°。三角形ADFで、角AFD＝180－90－22.5＝67.5°。三角形DGFを見ると、角GDF＝45°（対角線）、角DFG＝67.5°なので、角DGF＝180－45－67.5＝67.5°。2つの角が等しいので二等辺三角形で、DG＝DF。答えは1：1です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8850",
+    "svg": "<svg viewBox=\"0 0 320 170\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"20\" y=\"20\" width=\"120\" height=\"120\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"20\" x2=\"140\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"140\" x2=\"140\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"140\" y1=\"140\" x2=\"310\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"20\" x2=\"310\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"8\" y=\"18\" fill=\"#333\" font-size=\"13\">A</text><text x=\"8\" y=\"156\" fill=\"#333\" font-size=\"13\">B</text><text x=\"136\" y=\"158\" fill=\"#333\" font-size=\"13\">C</text><text x=\"144\" y=\"18\" fill=\"#333\" font-size=\"13\">D</text><text x=\"300\" y=\"158\" fill=\"#333\" font-size=\"13\">E</text><text x=\"144\" y=\"72\" fill=\"#333\" font-size=\"13\">F</text><text x=\"112\" y=\"62\" fill=\"#333\" font-size=\"13\">G</text><text x=\"74\" y=\"96\" fill=\"#333\" font-size=\"13\">H</text></svg>"
+  },
+  {
+    "id": "skz06808",
+    "question": "図の四角形ABCDは正方形で、AC＝CEです。Eは辺BCをのばした線の上の点で、Fは直線AEと辺DCの交わる点、Gは直線AEと対角線BDの交わる点、Hは2本の対角線の交わる点です。GHとFCの長さの比を求めなさい。",
+    "answer": "1:2",
+    "meaning": "三角形AHGと三角形ECFをくらべます。正方形の対角線は直角に交わるので角AHG＝90°、角ECF＝90°。三角形ACEはAC＝CEの二等辺三角形なので、角HAG（＝角CAE）と角CEF（＝角CEA）はどちらも22.5°。2つの角が等しいので、この2つの三角形は同じ形です。GHとFCはどちらも22.5°の角に向かい合う辺、AHとECはどちらも22.5°の角と直角の間の辺なので、GH：FC＝AH：EC。AHは対角線ACの半分で、EC＝ACなので、AH：EC＝1：2。答えは1：2です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8850",
+    "svg": "<svg viewBox=\"0 0 320 170\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"20\" y=\"20\" width=\"120\" height=\"120\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"20\" x2=\"140\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"140\" x2=\"140\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"140\" y1=\"140\" x2=\"310\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"20\" x2=\"310\" y2=\"140\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"8\" y=\"18\" fill=\"#333\" font-size=\"13\">A</text><text x=\"8\" y=\"156\" fill=\"#333\" font-size=\"13\">B</text><text x=\"136\" y=\"158\" fill=\"#333\" font-size=\"13\">C</text><text x=\"144\" y=\"18\" fill=\"#333\" font-size=\"13\">D</text><text x=\"300\" y=\"158\" fill=\"#333\" font-size=\"13\">E</text><text x=\"144\" y=\"72\" fill=\"#333\" font-size=\"13\">F</text><text x=\"112\" y=\"62\" fill=\"#333\" font-size=\"13\">G</text><text x=\"74\" y=\"96\" fill=\"#333\" font-size=\"13\">H</text></svg>"
+  },
+  {
+    "id": "skz06809",
+    "question": "図の台形ABCD（ADとBCが平行）で、ABを2：1に分ける点をE（AE：EB＝2：1）、CDを2：1に分ける点をF（CF：FD＝2：1）とします。直線FEとBCをのばした線が交わる点をGとします。AD＝3cm、BC＝6cmとすると、GBの長さは何cmですか。",
+    "answer": "4",
+    "meaning": "台形の高さを3つに分けて考えます。EはBCから高さの1/3、FはBCから高さの2/3の所にあります。Fを通りBCに平行な線をひき、ABと交わる点をPとします。台形の横はばは、上の3cmから下の6cmまで一定の割合で広がるので、上から1/3の所のPFは3＋(6－3)×1/3＝4cm。EB、EPはどちらも高さの1/3分なので長さが等しく、GBとPFは平行です。三角形EBGと三角形EPFは同じ形で、辺の比はEB：EP＝1：1。だからGB＝PF＝4。答えは4cmです。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8850",
+    "svg": "<svg viewBox=\"0 0 320 150\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"150,20 210,20 240,130 120,130\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"10\" y1=\"130\" x2=\"120\" y2=\"130\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"10\" y1=\"130\" x2=\"220\" y2=\"57\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"146\" y=\"16\" fill=\"#333\" font-size=\"13\">A</text><text x=\"210\" y=\"16\" fill=\"#333\" font-size=\"13\">D</text><text x=\"116\" y=\"146\" fill=\"#333\" font-size=\"13\">B</text><text x=\"238\" y=\"146\" fill=\"#333\" font-size=\"13\">C</text><text x=\"120\" y=\"88\" fill=\"#333\" font-size=\"13\">E</text><text x=\"226\" y=\"60\" fill=\"#333\" font-size=\"13\">F</text><text x=\"4\" y=\"146\" fill=\"#333\" font-size=\"13\">G</text></svg>"
+  },
+  {
+    "id": "skz06902",
+    "question": "図は、半径12cm・中心角135°のおうぎ形から、一方の半径を直径とする半円をのぞいた形です。色をぬった部分のまわりの長さは何cmですか。円周率は3.14とします。",
+    "answer": "59.1",
+    "meaning": "まわりは3つの部分でできています。①おうぎ形の弧は24×3.14×135/360＝9×3.14。②半円がない方の半径12cm。③半円の弧は直径12cmの円周の半分で12×3.14÷2＝6×3.14。半円の直径は半径と重なっているので、まわりには入りません。①＋③＝(9＋6)×3.14＝47.1、②を足して47.1＋12＝59.1。答えは59.1cmです。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（面積）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 300 175\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M150,145 L270,145 A120,120 0 0 0 65.1,60.1 Z\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"2\"/><path d=\"M150,145 A60,60 0 0 1 270,145 Z\" fill=\"#fff\" stroke=\"#4f9eff\" stroke-width=\"2\"/><text x=\"156\" y=\"131\" fill=\"#333\" font-size=\"13\">135°</text><text x=\"194\" y=\"165\" fill=\"#333\" font-size=\"13\">12cm</text></svg>"
+  },
+  {
+    "id": "skz06907",
+    "question": "図の平行四辺形ABCDで、EはADをのばした線の上の点、FはBEとCDの交わる点です。四角形ABFDの面積は三角形CEFの面積の8/3倍です。このとき、CFの長さは何cmですか。",
+    "answer": "4.8",
+    "meaning": "三角形BCEは、底辺BCで高さが平行四辺形と同じなので、平行四辺形の半分です。だから平行四辺形＝(三角形BCF＋三角形CEF)×2。四角形ABFDは平行四辺形から三角形BCFを引いた形なので、三角形BCF＋三角形CEF×2になります。これがCEFの8/3倍なので、BCF＝CEF×(8/3－2)＝CEF×2/3で、BCF：CEF＝2：3。この2つは高さが共通なので、BF：FE＝2：3。BCとDEは平行なので三角形FBCと三角形FEDは同じ形で、CF：FD＝BF：FE＝2：3。CD＝AB＝12cmなので、CF＝12×2/5＝4.8。答えは4.8cmです。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 300 170\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"70,20 160,20 120,150 30,150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"160\" y1=\"20\" x2=\"260\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"30\" y1=\"150\" x2=\"260\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"120\" y1=\"150\" x2=\"260\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"120\" y1=\"150\" x2=\"260\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"260\" y1=\"20\" x2=\"260\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><text x=\"64\" y=\"16\" fill=\"#333\" font-size=\"13\">A</text><text x=\"156\" y=\"16\" fill=\"#333\" font-size=\"13\">D</text><text x=\"262\" y=\"16\" fill=\"#333\" font-size=\"13\">E</text><text x=\"20\" y=\"166\" fill=\"#333\" font-size=\"13\">B</text><text x=\"116\" y=\"166\" fill=\"#333\" font-size=\"13\">C</text><text x=\"262\" y=\"166\" fill=\"#333\" font-size=\"13\">G</text><text x=\"140\" y=\"80\" fill=\"#333\" font-size=\"13\">F</text><text x=\"10\" y=\"90\" fill=\"#333\" font-size=\"13\">12cm</text><text x=\"62\" y=\"166\" fill=\"#333\" font-size=\"13\">5cm</text></svg>"
+  },
+  {
+    "id": "skz06908",
+    "question": "図の平行四辺形ABCDで、EはADをのばした線の上の点、FはBEとCDの交わる点です。四角形ABFDの面積は三角形CEFの面積の8/3倍です。三角形CEFの面積が13.2cm²であるとき、平行四辺形ABCDの高さEGは何cmですか。GはBCをのばした線の上の点で、EGはBCに垂直です。",
+    "answer": "8.8",
+    "meaning": "三角形BCEは平行四辺形の半分なので、平行四辺形＝(三角形BCF＋三角形CEF)×2。四角形ABFD＝平行四辺形－三角形BCF＝三角形BCF＋三角形CEF×2。これがCEFの8/3倍なので、BCF＝CEF×2/3。三角形BCFは13.2×2/3＝8.8cm²、三角形BCEは8.8＋13.2＝22cm²。三角形BCEは底辺BC＝5cm、高さEGなので、5×EG÷2＝22、EG＝22×2÷5＝8.8。答えは8.8cmです。",
+    "grade": 5,
+    "difficulty": 3,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 300 170\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"70,20 160,20 120,150 30,150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"160\" y1=\"20\" x2=\"260\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"30\" y1=\"150\" x2=\"260\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"120\" y1=\"150\" x2=\"260\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"120\" y1=\"150\" x2=\"260\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><line x1=\"260\" y1=\"20\" x2=\"260\" y2=\"150\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\" stroke-dasharray=\"4 3\"/><text x=\"64\" y=\"16\" fill=\"#333\" font-size=\"13\">A</text><text x=\"156\" y=\"16\" fill=\"#333\" font-size=\"13\">D</text><text x=\"262\" y=\"16\" fill=\"#333\" font-size=\"13\">E</text><text x=\"20\" y=\"166\" fill=\"#333\" font-size=\"13\">B</text><text x=\"116\" y=\"166\" fill=\"#333\" font-size=\"13\">C</text><text x=\"262\" y=\"166\" fill=\"#333\" font-size=\"13\">G</text><text x=\"140\" y=\"80\" fill=\"#333\" font-size=\"13\">F</text><text x=\"10\" y=\"90\" fill=\"#333\" font-size=\"13\">12cm</text><text x=\"62\" y=\"166\" fill=\"#333\" font-size=\"13\">5cm</text></svg>"
+  },
+  {
+    "id": "skz06909",
+    "question": "図で、角Bと角Dは直角、角EBC＝45°、角DGC＝60°で、EIとACはHで垂直に交わっています。xの角度は何度ですか。",
+    "answer": "105",
+    "meaning": "まず三角形GDCで、角C＝180－90－60＝30°。xは、BEとACが交わる点Fの角AFEで、向かい合う角BFCと同じ大きさです。三角形FBCで、角FBC＝45°、角FCB＝30°なので、角BFC＝180－45－30＝105°。答えは105°です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（角度）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 300 210\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"20,34.9 20,185 280,185\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"202\" y1=\"3\" x2=\"202\" y2=\"185\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"185\" x2=\"202\" y2=\"3\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"96.9\" y1=\"185\" x2=\"202\" y2=\"3\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"20,177 28,177 28,185\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"202,177 194,177 194,185\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"135.8,101.7 139.8,94.8 146.7,98.8\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"8\" y=\"32.9\" fill=\"#333\" font-size=\"13\">A</text><text x=\"8\" y=\"199\" fill=\"#333\" font-size=\"13\">B</text><text x=\"278\" y=\"201\" fill=\"#333\" font-size=\"13\">C</text><text x=\"198\" y=\"201\" fill=\"#333\" font-size=\"13\">D</text><text x=\"198\" y=\"-3\" fill=\"#333\" font-size=\"13\">E</text><text x=\"206\" y=\"134\" fill=\"#333\" font-size=\"13\">G</text><text x=\"101.2\" y=\"101.8\" fill=\"#333\" font-size=\"13\">F</text><text x=\"140.7\" y=\"121.7\" fill=\"#333\" font-size=\"13\">H</text><text x=\"92.9\" y=\"201\" fill=\"#333\" font-size=\"13\">I</text><text x=\"46\" y=\"201\" fill=\"#333\" font-size=\"13\">45°</text><text x=\"228\" y=\"136\" fill=\"#333\" font-size=\"13\">60°</text><text x=\"113.2\" y=\"77.8\" fill=\"#333\" font-size=\"13\">x</text><text x=\"74.9\" y=\"177\" fill=\"#333\" font-size=\"13\">y</text></svg>"
+  },
+  {
+    "id": "skz06910",
+    "question": "図で、角Bと角Dは直角、角EBC＝45°、角DGC＝60°で、EIとACはHで垂直に交わっています。yの角度は何度ですか。",
+    "answer": "120",
+    "meaning": "まず三角形GDCで、角C＝180－90－60＝30°。次に三角形IHCで、角IHC＝90°、角C＝30°なので、角HIC＝180－90－30＝60°。yは、一直線BCの上で角HICのとなりにある角なので、180－60＝120°。答えは120°です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（角度）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 300 210\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"20,34.9 20,185 280,185\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"202\" y1=\"3\" x2=\"202\" y2=\"185\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"185\" x2=\"202\" y2=\"3\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"96.9\" y1=\"185\" x2=\"202\" y2=\"3\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><polyline points=\"20,177 28,177 28,185\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"202,177 194,177 194,185\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><polyline points=\"135.8,101.7 139.8,94.8 146.7,98.8\" stroke=\"#4f9eff\" stroke-width=\"1.5\" fill=\"none\"/><text x=\"8\" y=\"32.9\" fill=\"#333\" font-size=\"13\">A</text><text x=\"8\" y=\"199\" fill=\"#333\" font-size=\"13\">B</text><text x=\"278\" y=\"201\" fill=\"#333\" font-size=\"13\">C</text><text x=\"198\" y=\"201\" fill=\"#333\" font-size=\"13\">D</text><text x=\"198\" y=\"-3\" fill=\"#333\" font-size=\"13\">E</text><text x=\"206\" y=\"134\" fill=\"#333\" font-size=\"13\">G</text><text x=\"101.2\" y=\"101.8\" fill=\"#333\" font-size=\"13\">F</text><text x=\"140.7\" y=\"121.7\" fill=\"#333\" font-size=\"13\">H</text><text x=\"92.9\" y=\"201\" fill=\"#333\" font-size=\"13\">I</text><text x=\"46\" y=\"201\" fill=\"#333\" font-size=\"13\">45°</text><text x=\"228\" y=\"136\" fill=\"#333\" font-size=\"13\">60°</text><text x=\"113.2\" y=\"77.8\" fill=\"#333\" font-size=\"13\">x</text><text x=\"74.9\" y=\"177\" fill=\"#333\" font-size=\"13\">y</text></svg>"
+  },
+  {
+    "id": "skz06911",
+    "question": "図で、三角形ABCは二等辺三角形、四角形ABDEは平行四辺形で、角CAE＝57°、角CEA＝40°、角D＝73°です。xの角度は何度ですか。",
+    "answer": "58",
+    "meaning": "平行四辺形の向かい合う角は等しいので、角BAE＝角D＝73°。だから角CAB＝57＋73＝130°。二等辺三角形で130°の角が2つあることはないので、130°が頂角で、AB＝AC。角ACB＝(180－130)÷2＝25°。三角形ACEで、角ACE＝180－57－40＝83°。xは角ACEから角ACBを引いた角なので、83－25＝58。答えは58°です。",
+    "grade": 5,
+    "difficulty": 4,
+    "unit": "平面図形（角度）",
+    "src": "HG-8851",
+    "svg": "<svg viewBox=\"0 0 320 195\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,100 64.9,181.3 196.1,181.3 171.3,100\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/><line x1=\"40\" y1=\"100\" x2=\"86.3\" y2=\"28.7\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"86.3\" y1=\"28.7\" x2=\"171.3\" y2=\"100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"86.3\" y1=\"28.7\" x2=\"64.9\" y2=\"181.3\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"82.3\" y=\"22.7\" fill=\"#333\" font-size=\"13\">C</text><text x=\"26\" y=\"104\" fill=\"#333\" font-size=\"13\">A</text><text x=\"175.3\" y=\"104\" fill=\"#333\" font-size=\"13\">E</text><text x=\"56.9\" y=\"197.3\" fill=\"#333\" font-size=\"13\">B</text><text x=\"198.1\" y=\"197.3\" fill=\"#333\" font-size=\"13\">D</text><text x=\"32\" y=\"76\" fill=\"#333\" font-size=\"13\">57°</text><text x=\"131.3\" y=\"94\" fill=\"#333\" font-size=\"13\">40°</text><text x=\"160.1\" y=\"173.3\" fill=\"#333\" font-size=\"13\">73°</text><text x=\"90.3\" y=\"52.7\" fill=\"#333\" font-size=\"13\">x</text><text x=\"215\" y=\"40\" fill=\"#333\" font-size=\"13\">三角形ABCは</text><text x=\"215\" y=\"58\" fill=\"#333\" font-size=\"13\">二等辺三角形，</text><text x=\"215\" y=\"76\" fill=\"#333\" font-size=\"13\">四角形ABDEは</text><text x=\"215\" y=\"94\" fill=\"#333\" font-size=\"13\">平行四辺形</text></svg>"
+  },
+  {
+    "id": "skz07001",
+    "question": "正十八角形の1つの内角の大きさは何度ですか。",
+    "answer": "160",
+    "meaning": "多角形の外角の和は、いつも360°です。正十八角形は18個の外角がすべて等しいので、1つの外角は360÷18＝20°。となり合う内角と外角を合わせると180°なので、内角は180－20＝160°。答えは160°です。",
+    "grade": 5,
+    "difficulty": 1,
+    "unit": "平面図形（角度）",
+    "src": "HG-8852"
+  },
+  {
+    "id": "skz07004",
+    "question": "図で、四角形ABCDは正方形です。EはCDを2等分する点、F、GはADを3等分する点で、HはBEとFC、IはBGとFCの交わる点です。BHとHEの長さの比を求めなさい。",
+    "answer": "3:1",
+    "meaning": "正方形の1辺を6とします（AF＝FG＝GD＝2）。BEをのばして、ADをのばした線と交わる点をPとします。EはCDのまん中なので、三角形ECBと三角形EDPは合同で、DP＝BC＝6、BE＝EPです。FPとBCは平行なので、三角形HBCと三角形HPFは同じ形で、BH：HP＝BC：FP＝6：(4＋6)＝3：5。BPを8とすると、BH＝3、BE＝4なので、HE＝4－3＝1。答えは3：1です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 200 200\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"20\" y=\"20\" width=\"160\" height=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"180\" x2=\"180\" y2=\"100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"180\" x2=\"126.7\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"73.3\" y1=\"20\" x2=\"180\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"6\" y=\"18\" fill=\"#333\" font-size=\"13\">A</text><text x=\"6\" y=\"196\" fill=\"#333\" font-size=\"13\">B</text><text x=\"184\" y=\"196\" fill=\"#333\" font-size=\"13\">C</text><text x=\"184\" y=\"18\" fill=\"#333\" font-size=\"13\">D</text><text x=\"184\" y=\"104\" fill=\"#333\" font-size=\"13\">E</text><text x=\"68\" y=\"14\" fill=\"#333\" font-size=\"13\">F</text><text x=\"122\" y=\"14\" fill=\"#333\" font-size=\"13\">G</text><text x=\"106\" y=\"76\" fill=\"#333\" font-size=\"13\">I</text><text x=\"140\" y=\"140\" fill=\"#333\" font-size=\"13\">H</text></svg>"
+  },
+  {
+    "id": "skz07005",
+    "question": "図で、四角形ABCDは正方形です。EはCDを2等分する点、F、GはADを3等分する点で、HはBEとFC、IはBGとFCの交わる点です。三角形BHIの面積は正方形ABCDの面積の何倍ですか。分数で答えなさい。",
+    "answer": "3/16",
+    "meaning": "正方形の1辺を6とすると面積は36。HとIはどちらもFCの上にあるので、三角形BHIは三角形BFC（底辺6・高さ6で18）のうち、FCのHIの部分にあたります。FGとBCは平行なので、FI：IC＝FG：BC＝2：6＝1：3で、FIはFCの1/4。BEをのばしてADをのばした線と交わる点をPとすると、DP＝6、FP＝10で、FH：HC＝FP：BC＝10：6＝5：3、FHはFCの5/8。HIはFCの5/8－1/4＝3/8。三角形BHI＝18×3/8＝27/4。27/4÷36＝3/16。答えは3/16倍です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（相似・比）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 200 200\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"20\" y=\"20\" width=\"160\" height=\"160\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"180\" x2=\"180\" y2=\"100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"180\" x2=\"126.7\" y2=\"20\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"73.3\" y1=\"20\" x2=\"180\" y2=\"180\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"6\" y=\"18\" fill=\"#333\" font-size=\"13\">A</text><text x=\"6\" y=\"196\" fill=\"#333\" font-size=\"13\">B</text><text x=\"184\" y=\"196\" fill=\"#333\" font-size=\"13\">C</text><text x=\"184\" y=\"18\" fill=\"#333\" font-size=\"13\">D</text><text x=\"184\" y=\"104\" fill=\"#333\" font-size=\"13\">E</text><text x=\"68\" y=\"14\" fill=\"#333\" font-size=\"13\">F</text><text x=\"122\" y=\"14\" fill=\"#333\" font-size=\"13\">G</text><text x=\"106\" y=\"76\" fill=\"#333\" font-size=\"13\">I</text><text x=\"140\" y=\"140\" fill=\"#333\" font-size=\"13\">H</text></svg>"
+  },
+  {
+    "id": "skz07006",
+    "question": "図の長方形ABCDで、AEとFGは平行で、ア、イ、ウの面積の比は1：3：5です。GCとBCの長さの比を求めなさい。",
+    "answer": "4:9",
+    "meaning": "長方形のたての長さ（高さ）はどこも同じなので、「横の長さ×高さ」で面積をくらべます。全体は1＋3＋5＝9。アは三角形で、BE×高さ÷2＝1なので、BE×高さ＝2。イはAEとFGが平行な平行四辺形で、EG×高さ＝3。全体はBC×高さ＝9。だからGC×高さ＝9－2－3＝4。高さは共通なので、GC：BC＝4：9。答えは4：9です。",
+    "grade": 5,
+    "difficulty": 2,
+    "unit": "平面図形（面積）",
+    "src": "HG-8852",
+    "svg": "<svg viewBox=\"0 0 280 170\" style=\"display:block;margin:0 auto;max-width:100%\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"20\" y=\"20\" width=\"240\" height=\"100\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"20\" y1=\"20\" x2=\"60\" y2=\"120\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><line x1=\"100\" y1=\"20\" x2=\"140\" y2=\"120\" stroke=\"#4f9eff\" stroke-width=\"2\" fill=\"none\"/><text x=\"8\" y=\"18\" fill=\"#333\" font-size=\"13\">A</text><text x=\"96\" y=\"16\" fill=\"#333\" font-size=\"13\">F</text><text x=\"264\" y=\"18\" fill=\"#333\" font-size=\"13\">D</text><text x=\"8\" y=\"134\" fill=\"#333\" font-size=\"13\">B</text><text x=\"56\" y=\"134\" fill=\"#333\" font-size=\"13\">E</text><text x=\"136\" y=\"134\" fill=\"#333\" font-size=\"13\">G</text><text x=\"264\" y=\"134\" fill=\"#333\" font-size=\"13\">C</text><text x=\"30\" y=\"96\" fill=\"#333\" font-size=\"13\">ア</text><text x=\"76\" y=\"70\" fill=\"#333\" font-size=\"13\">イ</text><text x=\"190\" y=\"70\" fill=\"#333\" font-size=\"13\">ウ</text><text x=\"20\" y=\"150\" fill=\"#333\" font-size=\"13\">AEとFGは平行，面積ア：イ：ウは1：3：5</text></svg>"
   }
 ]
