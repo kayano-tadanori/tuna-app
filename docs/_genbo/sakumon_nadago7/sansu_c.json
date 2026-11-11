@@ -1,0 +1,186 @@
+[
+ {
+  "id": "hd5n_07_11",
+  "src": "HG-2289 原簿・小5灘合 第7回 確認テスト 大問1",
+  "hg": "HG-2289",
+  "star": 2,
+  "title": "回数と目の積を8でわった余りを7回そろえる",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "さいころを投げるごとに、投げた回数と出た目の数の積を8で割った余りを求め記録します。たとえば、1回目に6の目，2回目に4の目，3回目に3の目が出たときは、6，0，1と記録します。さいころを7回投げます。",
+  "steps": [
+   {
+    "question": "記録した7個の数字がすべて同じになるような目の出方は何通りありますか。",
+    "answer": "12",
+    "meaning": "回数(1〜7回目)と目(1〜6)の表を作って、余りを書きこんでみます。1回目は目そのものなので余りは1〜6のどれかで、0にはなりません。4回目は 4，8，12，… なので余りは4か0しか出ません。両方に出てくるのは**4だけ**なので、7個そろえる数は4に決まります。\nあとは、各回で余りが4になる目が何個あるかを数えます。1回目は4の目の1個、2回目は2・6の2個、3回目は4の1個、4回目は1・3・5の3個、5回目は4の1個、6回目は2・6の2個、7回目は4の1個です。\nどの回もそれぞれ選べるので、かけ算で 1×2×1×3×1×2×1＝**12通り**です。"
+   }
+  ],
+  "grade": 5
+ },
+ {
+  "id": "hd5n_07_12",
+  "src": "HG-2290 原簿・小5灘合 第7回 確認テスト 大問2",
+  "hg": "HG-2290",
+  "star": 3,
+  "title": "階段のようにつながった9個のサイコロの表面の和",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "向かい合った面の目の数の和が7となるサイコロ9個を、下の図のように貼り合わせました。",
+  "steps": [
+   {
+    "question": "表面に出ている（底面も含む）目の数の和は、何通りありますか。",
+    "answer": "45",
+    "meaning": "9個のサイコロの目の合計は決まっているので、表面の和が何通りあるかは「貼り合わせてかくれた面の和」が何通りあるかと同じです。\n図をよく見ると、かくれ方は3種類です。1面だけかくれるサイコロが4個、となり合う2面がかくれるサイコロが3個、向かい合う2面がかくれるサイコロが2個。向かい合う2面の和はいつも7なので、この2個は**和を動かさない＝考えなくてよい**のです。\n1面だけかくれる4個は、最小1・最大6。となり合う2面は、最小1＋2＝3・最大5＋6＝11。\nかくれた面の和の最小は 1×4＋3×3＝13、最大は 6×4＋11×3＝57。13から57までのどの数も作れるので、57−13＋1＝**45通り**です。"
+   }
+  ],
+  "grade": 5,
+  "svg": "<svg viewBox=\"60 25 360 220\" style=\"display:block;margin:0 auto;max-width:100%\"> <polygon points=\"120,66 160,89 160,135 120,112\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"160,89 200,66 200,112 160,135\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"160,43 200,66 160,89 120,66\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"240,89 280,112 280,158 240,135\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"280,112 320,89 320,135 280,158\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"280,66 320,89 280,112 240,89\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"160,89 200,112 200,158 160,135\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"200,112 240,89 240,135 200,158\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"200,66 240,89 200,112 160,89\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"280,112 320,135 320,181 280,158\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"320,135 360,112 360,158 320,181\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"320,89 360,112 320,135 280,112\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"200,112 240,135 240,181 200,158\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"240,135 280,112 280,158 240,181\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"240,89 280,112 240,135 200,112\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"120,112 160,135 160,181 120,158\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"160,135 200,112 200,158 160,181\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"160,89 200,112 160,135 120,112\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"320,135 360,158 360,204 320,181\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"360,158 400,135 400,181 360,204\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"360,112 400,135 360,158 320,135\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"80,135 120,158 120,204 80,181\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"120,158 160,135 160,181 120,204\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"120,112 160,135 120,158 80,135\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"280,158 320,181 320,227 280,204\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"320,181 360,158 360,204 320,227\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"320,135 360,158 320,181 280,158\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/></svg>"
+ },
+ {
+  "id": "hd5n_07_13",
+  "src": "HG-2291 原簿・小5灘合 第7回 確認テスト 大問3",
+  "hg": "HG-2291",
+  "star": 3,
+  "title": "オセロの駒3枚をちょうど5回で交互にする",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "オセロゲームの駒（表と裏が白と黒にぬり分けてある）が、白を表にして1列に3枚並べてあります。1回につき、この3枚のどれか1枚だけをその位置で裏返します。",
+  "steps": [
+   {
+    "question": "5回の裏返しによって白と黒とが交互に並んでいる状態にするには、何通りの異なるしかたがありますか。ただし、裏返した駒の順序でも区別して数えることにします。",
+    "answer": "61",
+    "meaning": "1枚の駒は、奇数回裏返すと黒、偶数回なら白にもどります。交互にするには「真ん中だけ奇数回・両はしは偶数回」（白黒白）か「両はしが奇数回・真ん中は偶数回」（黒白黒）ですが、後のほうは回数の合計が偶数になり、5回にはなりません。だから**真ん中を奇数回、両はしを偶数回**にふり分けます。\n・真ん中5回：1通り\n・真ん中3回、右（または左）2回：5回のうち、はしを裏返す2回を選んで10通り。右と左で×2＝20通り\n・真ん中1回、右（または左）4回：真ん中の1回を何回目にするかで5通り。×2＝10通り\n・真ん中1回、右2回、左2回：真ん中の1回の選び方5通り×残り4回から右の2回を選ぶ6通り＝30通り\n合わせて 1＋20＋10＋30＝**61通り**です。"
+   }
+  ],
+  "grade": 5
+ },
+ {
+  "id": "hd5n_07_14",
+  "src": "HG-2292 原簿・小5灘合 第7回 確認テスト 大問4",
+  "hg": "HG-2292",
+  "star": 3,
+  "title": "正三角形のタイルで2枚以上にまたがるコイン",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "高さ6cmの正三角形のタイルが、すきまなくしきつめてあります。ここに直径1cmのコインを落とします。コインが落ちるのは、どの場所も同じ確からしさとします。",
+  "steps": [
+   {
+    "question": "コインが2枚以上のタイルにまたがる確からしさはいくつですか。分数で答えなさい。",
+    "answer": "7/16",
+    "meaning": "コインの**中心**がどこに落ちるかで考えます。どのタイルも同じ形なので、1枚のタイルで考えれば十分です。直径1cmなので**半径は0.5cm**です。\nコインがまたがらないのは、中心がタイルのどの辺からも0.5cm以上はなれているとき。その場所は、内がわにできる小さい正三角形です。正三角形の真ん中から辺までの長さは高さの3分の1なので、辺が0.5cmずつ内に入ると高さは0.5×3だけ低くなり、6−0.5×3＝4.5cmです。\n高さの比は 6：4.5＝4：3 なので、面積の比は 4×4：3×3＝16：9。またがらない確からしさは 9/16 です。\n聞かれているのは「またがる」ほうなので、1−9/16＝**7/16** です。"
+   }
+  ],
+  "grade": 5
+ },
+ {
+  "id": "hd5n_07_15",
+  "src": "HG-2293 原簿・小5灘合 第7回 確認テスト 大問5",
+  "hg": "HG-2293",
+  "star": 2,
+  "title": "身長の差が3cm・3cm・6cmの4人の並べ方",
+  "category": "baai",
+  "unit": "推理・論理",
+  "intro": "A，B，C，Dの4人がいて、AとBの身長の差は3cm、AとCの身長の差は3cm、CとDの身長の差は6cm ということがわかっています。4人の身長はすべて異なります。",
+  "steps": [
+   {
+    "question": "A，B，C，Dを身長の高い順に並べようと思います。並べ方は何通り考えることができますか。",
+    "answer": "2",
+    "meaning": "AとBの差もAとCの差も3cmなので、BとCがAの同じがわにあると**同じ身長になってしまいます**。「すべて異なる」なので、ここで枝が消えます。\n**AがCより高いとき**：CはAより3cm低いので、BはAより3cm高いほうに決まります。DはCより6cm高いとBと同じ身長になるので、Cより6cm低いほうに決まります。高い順はB，A，C，Dの1通り。\n**AがCより低いとき**：同じように考えると、ちょうど逆のD，C，A，Bの1通り。\n1×2＝**2通り**です。"
+   }
+  ],
+  "grade": 5
+ },
+ {
+  "id": "hd5n_07_16",
+  "src": "HG-2294 原簿・小5灘合 第7回 確認テスト 大問6",
+  "hg": "HG-2294",
+  "star": 3,
+  "title": "逆順の数が7になる5つの数の並べ方",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "1，2，3，4の4数を1列に並べます。例えば「2,4,1,3」と並べたとき、2数の組で、大きい方の数が小さい方の数より左側にあるものは、「2と1」、「4と1」、「4と3」の3つなので、『「2,4,1,3」の逆順の数は3である』ということにします。下の表は、1，2，3，4の4数を並べるすべての並べ方24通りについて逆順の数を調べ、逆順の数ごとに並べ方の数をかいたものです。",
+  "steps": [
+   {
+    "question": "1，2，3，4，5の5数を1列に並べる場合も、4数の場合と同じように逆順の数を考えます。上の表を参考にして、1，2，3，4，5のすべての並べ方120通りについて、逆順の数が7のものは何通りありますか。",
+    "answer": "15",
+    "meaning": "5数の並べ方は、1〜4の並べ方の中に5を1つ入れたものと考えられます。5はいちばん大きいので、**5より右にある数の個数だけ**逆順の数が増えます。\n5を一番左に置くと＋4、左から2番目で＋3、3番目で＋2、4番目で＋1、右端で＋0です。\n逆順の数を7にするには、1〜4の並べ方の逆順の数が 3（5を一番左）、4（2番目）、5（3番目）、6（4番目）であればよく、右端に置くには7が必要ですが4数では最大6なのでありません。\n表から 6＋5＋3＋1＝**15通り**です。"
+   }
+  ],
+  "grade": 5,
+  "svg": "<svg viewBox=\"0 0 592 96\" style=\"display:block;margin:0 auto;max-width:100%\"><rect x=\"8\" y=\"14\" width=\"88\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"52.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"15\" text-anchor=\"middle\" dominant-baseline=\"central\">逆順の数</text><rect x=\"8\" y=\"48\" width=\"88\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"52.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"14\" text-anchor=\"middle\" dominant-baseline=\"central\">並べ方の数</text><rect x=\"96\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"126.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">0</text><rect x=\"96\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"126.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text><rect x=\"156\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"186.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text><rect x=\"156\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"186.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">3</text><rect x=\"216\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"246.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">2</text><rect x=\"216\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"246.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">5</text><rect x=\"276\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"306.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">3</text><rect x=\"276\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"306.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">6</text><rect x=\"336\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"366.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">4</text><rect x=\"336\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"366.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">5</text><rect x=\"396\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"426.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">5</text><rect x=\"396\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"426.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">3</text><rect x=\"456\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"486.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">6</text><rect x=\"456\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"486.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text><rect x=\"516\" y=\"14\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"546.0\" y=\"31.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">計</text><rect x=\"516\" y=\"48\" width=\"60\" height=\"34\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"1.6\"/><text x=\"546.0\" y=\"65.0\" fill=\"#e8e8e8\" font-size=\"17\" text-anchor=\"middle\" dominant-baseline=\"central\">24</text></svg>"
+ },
+ {
+  "id": "hd5n_07_17",
+  "src": "HG-2295 原簿・小5灘合 第7回 確認テスト 大問7",
+  "hg": "HG-2295",
+  "star": 3,
+  "title": "25点満点・4問の配点の決め方",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "ある25点満点のテストは1番から4番までの4問からなっています。このテストの4問の配点を決めます。ただし、1問の配点の差が4点以上になってはいけません。",
+  "steps": [
+   {
+    "question": "配点の決め方は全部で何通りありますか。",
+    "answer": "44",
+    "meaning": "まず、何点と何点の組にするか（順番は考えない）を出します。25÷4＝6あまり1 なので、4問とも同じ点にはできず、6点前後に散らばります。差は3点までOKです。\n組は (6,6,6,7)・(5,6,7,7)・(5,6,6,8)・(5,5,7,8)・(4,7,7,7) の5種類です。\n次に、1番〜4番にどう割りふるかを数えます。\n・3つ同じで1つちがう組 (6,6,6,7)・(4,7,7,7)：ちがう1つを何番にするかで4通り\n・2つ同じで2つちがう組 (5,6,7,7)・(5,6,6,8)・(5,5,7,8)：ちがう2つの数を入れる問題の決め方が 4×3＝12通り\n4×2＋12×3＝**44通り**です。"
+   }
+  ],
+  "grade": 5
+ },
+ {
+  "id": "hd5n_07_18",
+  "src": "HG-2296 原簿・小5灘合 第7回 確認テスト 大問8",
+  "hg": "HG-2296",
+  "star": 3,
+  "title": "1をちょうど3回使う6けたの整数",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "1，2，3，4の4種類の数字で6けたの整数を作ります。1はちょうど3回使い、2，3，4は使わないものがあってもよく、くり返し使うものがあってもよいとします。",
+  "steps": [
+   {
+    "question": "このうち、同じ数字が隣り合わない6けたの整数は何通りできますか。",
+    "answer": "90",
+    "meaning": "1どうしもとなり合えないので、3つの1の置き方は **1□1□1□・1□1□□1・1□□1□1・□1□1□1 の4パターン**だけです。□には2，3，4のどれかが入ります。\n・1□1□1□ と □1□1□1：□どうしがとなり合わないので、3×3×3＝27通りずつ\n・1□1□□1 と 1□□1□1：□□がとなり合っているところに同じ数字を入れてはいけません。27通りから、□□が同じ数字になる 3×3＝9通りを引いて 27−9＝18通りずつ\n27×2＋18×2＝**90通り**です。"
+   }
+  ],
+  "grade": 5
+ },
+ {
+  "id": "hd5n_07_19",
+  "src": "HG-2297 原簿・小5灘合 第7回 確認テスト 大問9",
+  "hg": "HG-2297",
+  "star": 3,
+  "title": "時計板の針・奇数2回と偶数3回で12にもどる",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "時計板があり、最初は針が12を指しています。さいころを投げて、偶数の目が出れば、出た目の数だけ針を時計回りに回転させ、奇数の目が出れば、出た目の数だけ針を反時計回りに回転させます。例えば、4の目が出ると、針は4を指します。5の目が出ると、針は7を指します。また、さいころを2回投げて5の目，4の目の順に出れば、針の指す数字は、12→7→11と変わります。",
+  "steps": [
+   {
+    "question": "さいころを5回投げるとき、そのうち2回は奇数の目、3回は偶数の目が出て、最後に針の指す数字が12になるようなさいころの目の出方は何通りありますか。",
+    "answer": "300",
+    "meaning": "12にもどるのは、時計回り（偶数の目の和）と反時計回り（奇数の目の和）の**差が0か12**のときです。奇数2回の和は最大10なので、反時計回りが12多くなることはありません。\n**差が0のとき**（奇数の和＝偶数の和）。目の組と、5回の順番の数は\n(3,3｜2,2,2)＝10通り、(1,5｜2,2,2)＝20通り、(3,5｜4,2,2)＝60通り、(5,5｜6,2,2)＝30通り、(5,5｜4,4,2)＝30通り。合わせて150通り。\n**差が12のとき**（偶数の和が12多い）：差が0の組の、偶数の目の2と6、奇数の目の1と5を入れかえると、ちょうど差が12の組になります（例：(3,3｜2,2,2)→(3,3｜6,6,6)）。だから対称に、こちらも150通りです。\n合わせて 150＋150＝**300通り**です。差が12の側を忘れると半分になってしまいます。"
+   }
+  ],
+  "grade": 5,
+  "svg": "<svg viewBox=\"0 0 300 300\" style=\"display:block;margin:0 auto;max-width:100%\"> <circle cx=\"150\" cy=\"150\" r=\"120\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2.5\"/> <text x=\"198\" y=\"67\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text> <text x=\"233\" y=\"102\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">2</text> <text x=\"246\" y=\"150\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">3</text> <text x=\"233\" y=\"198\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">4</text> <text x=\"198\" y=\"233\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">5</text> <text x=\"150\" y=\"246\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">6</text> <text x=\"102\" y=\"233\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">7</text> <text x=\"67\" y=\"198\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">8</text> <text x=\"54\" y=\"150\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">9</text> <text x=\"67\" y=\"102\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">10</text> <text x=\"102\" y=\"67\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">11</text> <text x=\"150\" y=\"54\" fill=\"#dbe6f5\" font-size=\"20\" text-anchor=\"middle\" dominant-baseline=\"central\">12</text> <line x1=\"150\" y1=\"150\" x2=\"150\" y2=\"72\" stroke=\"#4f9eff\" stroke-width=\"3\"/> <polygon points=\"150,48 141,80 159,80\" fill=\"#ffd166\" stroke=\"#4f9eff\" stroke-width=\"1\"/></svg>"
+ },
+ {
+  "id": "hd5n_07_20",
+  "src": "HG-2298 原簿・小5灘合 第7回 確認テスト 大問10",
+  "hg": "HG-2298",
+  "star": 3,
+  "title": "印が0・1・4・9・12・13の立方体9個でBが最大のときのA",
+  "category": "baai",
+  "unit": "場合の数",
+  "intro": "同じ大きさの立方体が9個あり、どの立方体の6つの面にも図①のような印がかいてあり、それらは左から順に0，1，4，9，12，13を表します。どの立方体の展開図も図②です。これら9個の立方体を、たて，横3個ずつすき間なく並べてできた直方体の上の面に現れる印の表す9個の数の和をAとします。また、4つの側面に現れる印の表す12個の数の和をBとします。図③では、A＝40となります。",
+  "steps": [
+   {
+    "question": "Bが最も大きいとき、Aの値のうち、最も大きい値はいくつですか。",
+    "answer": "97",
+    "meaning": "図②の展開図を組み立てると、向かい合う面は 9と4、1と12、13と0 で、**和はどれも13**です。向かい合う2面は同時に外へは出せません。\n**Bを最大にする**：角の4個は側面に2面出るので、となり合う大きい2面 13と12 を出します（13と12は向かい合っていないので両方出せます）。辺のまん中の4個は側面に1面だけ出るので13を出します。B＝(13＋12)×4＋13×4＝152。\n**そのときのAを最大にする**：角の上の面は、13・12とその向かいの0・1が使えないので9か4 → 9。辺のまん中の上の面は、13とその向かいの0以外から選べるので12。まん中の1個は側面に出ないので、上を13にできます。\nA＝9×4＋12×4＋13＝**97**です。"
+   }
+  ],
+  "grade": 5,
+  "svg": "<div style=\"display:flex;flex-direction:column;gap:10px;align-items:center;max-width:100%\"><div style=\"width:100%\"><div style=\"text-align:center;font-size:14px;color:#dbe6f5;margin:4px 0\">図①</div><svg viewBox=\"-8 -8 446 76\" style=\"display:block;margin:0 auto;max-width:100%\"> <rect x=\"0\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <rect x=\"74\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"104\" cy=\"30\" r=\"4.6\" fill=\"#ffd166\"/> <rect x=\"148\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"164.8\" cy=\"16.8\" r=\"4.6\" fill=\"#ffd166\"/><circle cx=\"164.8\" cy=\"43.2\" r=\"4.6\" fill=\"#ffd166\"/> <circle cx=\"191.2\" cy=\"16.8\" r=\"4.6\" fill=\"#ffd166\"/><circle cx=\"191.2\" cy=\"43.2\" r=\"4.6\" fill=\"#ffd166\"/> <rect x=\"222\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"235.2\" cy=\"13.2\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"235.2\" cy=\"30\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"235.2\" cy=\"46.8\" r=\"4\" fill=\"#ffd166\"/> <circle cx=\"252\" cy=\"13.2\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"252\" cy=\"30\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"252\" cy=\"46.8\" r=\"4\" fill=\"#ffd166\"/> <circle cx=\"268.8\" cy=\"13.2\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"268.8\" cy=\"30\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"268.8\" cy=\"46.8\" r=\"4\" fill=\"#ffd166\"/> <rect x=\"296\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"306.8\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"306.8\" cy=\"23.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"306.8\" cy=\"36.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"306.8\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"319.4\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"319.4\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"332.6\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"332.6\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"345.2\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"345.2\" cy=\"23.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"345.2\" cy=\"36.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"345.2\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <rect x=\"370\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"380.8\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"380.8\" cy=\"23.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"380.8\" cy=\"36.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"380.8\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"393.4\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"393.4\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"406.6\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"406.6\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"419.2\" cy=\"10.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"419.2\" cy=\"23.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"419.2\" cy=\"36.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"419.2\" cy=\"49.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"400\" cy=\"30\" r=\"3.4\" fill=\"#ffd166\"/></svg></div><div style=\"width:100%\"><div style=\"text-align:center;font-size:14px;color:#dbe6f5;margin:4px 0\">図②</div><svg viewBox=\"-10 -10 260 200\" style=\"display:block;margin:0 auto;max-width:100%\"> <rect x=\"0\" y=\"60\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"30\" cy=\"90\" r=\"4.6\" fill=\"#ffd166\"/> <rect x=\"60\" y=\"0\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"73.2\" cy=\"13.2\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"73.2\" cy=\"30\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"73.2\" cy=\"46.8\" r=\"4\" fill=\"#ffd166\"/> <circle cx=\"90\" cy=\"13.2\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"90\" cy=\"30\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"90\" cy=\"46.8\" r=\"4\" fill=\"#ffd166\"/> <circle cx=\"106.8\" cy=\"13.2\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"106.8\" cy=\"30\" r=\"4\" fill=\"#ffd166\"/><circle cx=\"106.8\" cy=\"46.8\" r=\"4\" fill=\"#ffd166\"/> <rect x=\"60\" y=\"60\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"70.8\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"70.8\" cy=\"83.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"70.8\" cy=\"96.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"70.8\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"83.4\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"83.4\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"96.6\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"96.6\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"109.2\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"109.2\" cy=\"83.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"109.2\" cy=\"96.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"109.2\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"90\" cy=\"90\" r=\"3.4\" fill=\"#ffd166\"/> <rect x=\"120\" y=\"60\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"130.8\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"130.8\" cy=\"83.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"130.8\" cy=\"96.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"130.8\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"143.4\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"143.4\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"156.6\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"156.6\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <circle cx=\"169.2\" cy=\"70.8\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"169.2\" cy=\"83.4\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"169.2\" cy=\"96.6\" r=\"3.4\" fill=\"#ffd166\"/><circle cx=\"169.2\" cy=\"109.2\" r=\"3.4\" fill=\"#ffd166\"/> <rect x=\"180\" y=\"60\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <rect x=\"60\" y=\"120\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#4f9eff\" stroke-width=\"2\"/> <circle cx=\"76.8\" cy=\"136.8\" r=\"4.6\" fill=\"#ffd166\"/><circle cx=\"76.8\" cy=\"163.2\" r=\"4.6\" fill=\"#ffd166\"/> <circle cx=\"103.2\" cy=\"136.8\" r=\"4.6\" fill=\"#ffd166\"/><circle cx=\"103.2\" cy=\"163.2\" r=\"4.6\" fill=\"#ffd166\"/></svg></div><div style=\"width:100%\"><div style=\"text-align:center;font-size:14px;color:#dbe6f5;margin:4px 0\">図③</div><svg viewBox=\"30 5 300 220\" style=\"display:block;margin:0 auto;max-width:100%\"> <polygon points=\"180,20 222,44 180,68 138,44\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"180\" cy=\"28.6\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"171.2\" cy=\"33.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"161.9\" cy=\"39\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"153.1\" cy=\"44\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"188.8\" cy=\"33.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"161.9\" cy=\"49\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"198.1\" cy=\"39\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"171.2\" cy=\"54.3\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"206.9\" cy=\"44\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"198.1\" cy=\"49\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"188.8\" cy=\"54.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"180\" cy=\"59.4\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"180\" cy=\"44\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"222,44 264,68 222,92 180,68\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"138,44 180,68 138,92 96,68\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"306,92 264,116 264,164 306,140\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"294.2\" cy=\"112.2\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"294.2\" cy=\"133.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"275.8\" cy=\"122.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"275.8\" cy=\"143.8\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"264,68 306,92 264,116 222,92\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"264\" cy=\"92\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"180,68 222,92 180,116 138,92\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"180\" cy=\"92\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"54,92 96,116 96,164 54,140\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"96,68 138,92 96,116 54,92\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"96\" cy=\"76.6\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"87.2\" cy=\"81.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"77.9\" cy=\"87\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"69.1\" cy=\"92\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"104.8\" cy=\"81.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"77.9\" cy=\"97\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"114.1\" cy=\"87\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"87.2\" cy=\"102.3\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"122.9\" cy=\"92\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"114.1\" cy=\"97\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"104.8\" cy=\"102.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"96\" cy=\"107.4\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"264,116 222,140 222,188 264,164\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"243\" cy=\"152\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"222,92 264,116 222,140 180,116\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"222\" cy=\"105.4\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"203.5\" cy=\"116\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"240.5\" cy=\"116\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"222\" cy=\"126.6\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"96,116 138,140 138,188 96,164\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"107.8\" cy=\"136.2\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"107.8\" cy=\"157.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"126.2\" cy=\"146.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"126.2\" cy=\"167.8\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"138,92 180,116 138,140 96,116\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <polygon points=\"138,140 180,164 180,212 138,188\" fill=\"#1e2b3f\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"145.6\" cy=\"153\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"145.6\" cy=\"163\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"145.6\" cy=\"173.6\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"145.6\" cy=\"183.7\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"154.4\" cy=\"158\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"154.4\" cy=\"188.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"163.6\" cy=\"163.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"163.6\" cy=\"194\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"172.4\" cy=\"168.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"172.4\" cy=\"178.4\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"172.4\" cy=\"189\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"172.4\" cy=\"199\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"159\" cy=\"176\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"222,140 180,164 180,212 222,188\" fill=\"#16202e\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"214.4\" cy=\"153\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"214.4\" cy=\"163\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"214.4\" cy=\"173.6\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"214.4\" cy=\"183.7\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"205.6\" cy=\"158\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"205.6\" cy=\"188.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"196.4\" cy=\"163.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"196.4\" cy=\"194\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"187.6\" cy=\"168.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"187.6\" cy=\"178.4\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"187.6\" cy=\"189\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"187.6\" cy=\"199\" r=\"2.7\" fill=\"#ffd166\"/> <polygon points=\"180,116 222,140 180,164 138,140\" fill=\"#2c3e5a\" stroke=\"#4f9eff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"/> <circle cx=\"180\" cy=\"126.6\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"168.2\" cy=\"133.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"156.5\" cy=\"140\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"191.8\" cy=\"133.3\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"180\" cy=\"140\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"168.2\" cy=\"146.7\" r=\"2.7\" fill=\"#ffd166\"/> <circle cx=\"203.5\" cy=\"140\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"191.8\" cy=\"146.7\" r=\"2.7\" fill=\"#ffd166\"/><circle cx=\"180\" cy=\"153.4\" r=\"2.7\" fill=\"#ffd166\"/></svg></div></div>"
+ }
+]
