@@ -36,7 +36,7 @@ def label_key(lab):
 
 def next_hg(genbo_text):
     """原簿の**レコード見出し**の最大＋1。表でなく実データを数える。"""
-    ns = [int(x) for x in re.findall(r'^### 【HG-(\d{4})】', genbo_text, re.M)]
+    ns = [int(x) for x in re.findall(r'^### 【HG-(\d+)】', genbo_text, re.M)]
     return max(ns) + 1
 
 

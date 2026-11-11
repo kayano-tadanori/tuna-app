@@ -45,7 +45,7 @@ LESSONS_NEW = [
 ]
 
 def hg_of(rec):
-    m = re.search(r"HG-(\d{4})", rec.get("src") or "")
+    m = re.search(r"HG-(\d+)", rec.get("src") or "")
     return int(m.group(1)) if m else 10 ** 9
 
 def main():

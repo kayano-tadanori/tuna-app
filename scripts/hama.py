@@ -109,7 +109,7 @@ def genbo_gap():
     for fn in glob.glob(os.path.join(G.BASE, "data", "*.json")):
         if os.path.basename(fn) == "hama_daimon.json":
             continue
-        used.update(re.findall(r"HG-\d{4}", io.open(fn, encoding="utf-8").read()))
+        used.update(re.findall(r"HG-\d+", io.open(fn, encoding="utf-8").read()))
     used |= G.KOKUGO_DONE
     todo = [h for h in bodies
             if h not in used and h not in G.CANNOT and h not in G.SAME]

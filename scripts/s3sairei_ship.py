@@ -50,7 +50,7 @@ def main():
 
     gpath = find_genbo()
     g = io.open(gpath, encoding='utf-8').read()
-    start = max(int(x) for x in re.findall(r'^### 【HG-(\d{4})】', g, re.M)) + 1
+    start = max(int(x) for x in re.findall(r'^### 【HG-(\d+)】', g, re.M)) + 1
     hgs = ['HG-%d' % (start + i) for i in range(len(daimon))]
     print('小3最レ（刷新版）No.%d %s … 大問 %d本／小問 %d問' % (no, title, len(daimon),
                                                   sum(len(x['steps']) for x in daimon)))
