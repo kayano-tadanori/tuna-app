@@ -2848,6 +2848,53 @@ function openScratchFullscreen() {
     };
     viewport.addEventListener('pointerup', endPointer, { capture: true });
     viewport.addEventListener('pointercancel', endPointer, { capture: true });
+
+    // ── Mac のトラックパッド・マウスホイール（2026-11-11 いけんばこ「ノート（計算用紙）がうまく動かない」）──
+    // 2本指で動かす操作はタッチ画面の指2本でしか拾っていなかったので、Mac では紙が1ミリも動かず、
+    // 画面の2倍ある紙の一部しか使えなかった。
+    //   2本指スクロール／ホイール → 紙を動かす
+    //   ピンチ（Chrome等は ctrl付きホイール、Safari は gesture イベント）→ 指の位置を中心に拡大・縮小
+    const zoomAt = (x, y, newZoom) => {
+      const v = scratchView;
+      newZoom = Math.min(SCRATCH_MAX_ZOOM, Math.max(SCRATCH_MIN_ZOOM, newZoom));
+      v.panX = x - (newZoom / v.zoom) * (x - v.panX);
+      v.panY = y - (newZoom / v.zoom) * (y - v.panY);
+      v.zoom = newZoom;
+      scratchClampView();
+      scratchApplyTransform(canvas);
+    };
+    viewport.addEventListener('wheel', e => {
+      e.preventDefault();
+      const k = e.deltaMode === 1 ? 16 : (e.deltaMode === 2 ? viewport.clientHeight : 1);
+      if (e.ctrlKey) {
+        const p = viewportPos(e);
+        // マウスのホイール1目もり（100前後）で一気に飛ばないよう、1回ぶんの変化をおさえる
+        const d = Math.max(-30, Math.min(30, e.deltaY * k));
+        zoomAt(p.x, p.y, scratchView.zoom * Math.exp(-d * 0.01));
+      } else {
+        const dx = e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX; // shift+ホイールで横に動かす
+        const dy = e.shiftKey && !e.deltaX ? 0 : e.deltaY;
+        scratchView.panX -= dx * k;
+        scratchView.panY -= dy * k;
+        scratchClampView();
+        scratchApplyTransform(canvas);
+      }
+    }, { passive: false });
+    // Safari（Mac）のトラックパッドのピンチ。iPad の指2本は上の pointer で処理しているので、
+    // 指が画面にふれている間（pointers が空でない）は何もしない（二重に拡大しないため）
+    let gestureStartZoom = 1;
+    viewport.addEventListener('gesturestart', e => {
+      if (pointers.size) return;
+      e.preventDefault();
+      gestureStartZoom = scratchView.zoom;
+    });
+    viewport.addEventListener('gesturechange', e => {
+      if (pointers.size) return;
+      e.preventDefault();
+      const p = viewportPos(e);
+      zoomAt(p.x, p.y, gestureStartZoom * e.scale);
+    });
+    viewport.addEventListener('gestureend', e => { if (!pointers.size) e.preventDefault(); });
   }
 
   overlay.classList.remove('hidden');
