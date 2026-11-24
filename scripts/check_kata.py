@@ -40,6 +40,9 @@ sys.stdout.reconfigure(encoding="utf-8")
 NAIWA = [
     "灘度", "衣装", "味つけ", "を収録した", "収録しました",
     "原簿", "HG-", "作問メモ", "コア発見", "本稿", "※作問", "クローン",
+    # ★解答冊子を指す言い回し（2026-11-24 小5理科テキストの監査で157＋70か所）。
+    #   アプリの解説そのものが「解説」なので、子どもには何を指すのか分からない
+    "解説のとおり", "解説より", "解説の図", "解説の表",
 ]
 
 NUM = re.compile(r"\d+(?:\.\d+)?")
@@ -354,9 +357,37 @@ def k6(rs):
     return out
 
 
+MOJI_N = re.compile(r"(?:ひらがな|カタカナ|漢字)\s*([0-9０-９一二三四五六七八九十]+)\s*字")
+_KANSUJI = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9, "十": 10}
+
+
+def k8(rs):
+    """「ひらがなN字で答えなさい」なのに、4択で N字の選択肢が答えだけ＝字数を数えれば答えが分かる。
+
+    ★2026-11-24 小5理科テキストの監査で見つかった型（t1_7・t1_9・t4_5）。
+      まちがいの選択肢も同じ字数にそろえる（同じ回に出てくる語から選ぶ）。
+    """
+    out = []
+    for r in rs:
+        for i, s in enumerate(r["x"].get("steps") or []):
+            ch = s.get("choices") or []
+            m = MOJI_N.search(s.get("question") or "")
+            if not m or len(ch) < 2:
+                continue
+            t = m.group(1).translate(str.maketrans("０１２３４５６７８９", "0123456789"))
+            n = int(t) if t.isdigit() else _KANSUJI.get(t)
+            if not n:
+                continue
+            fit = [c for c in ch if len(str(c)) == n]
+            if fit == [s.get("answer")]:
+                out.append((r, "重", "小問%d は「%d字で」なのに %d字の選択肢が答えだけ" % (i + 1, n, n)))
+    return out
+
+
 CHECKS = [("K1", "図が答えを見せている", k1),
           ("K2", "答え先出し", k2),
           ("K3", "内輪語・制作メモ", k3),
+          ("K8", "字数で答えが分かる", k8),
           ("K4", "本文に無い引用", k4),
           ("K6", "解説が無い・薄い・式だけ", k6)]
 

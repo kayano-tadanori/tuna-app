@@ -510,7 +510,8 @@ async function hamaDaimonWeek(grade, course, no) {
 //   宿題（演習教材）を家でやってから、授業で演習プリントを解く。だから宿題は演習プリントの**上**。
 //   ⛔同じ引き出しに混ぜない（→ memory:feedback_hamagakuen_iinkai_rule）
 const BUNSATSU_OF = { master: 'master_bunsatsu', kokugo: 'kokugo_bunsatsu',
-                      sairei_new: 'sairei_new_bunsatsu', master2nd: 'master2nd_bunsatsu' };
+                      sairei_new: 'sairei_new_bunsatsu', master2nd: 'master2nd_bunsatsu',
+                      rika: 'rika_bunsatsu' };   // 小5マスター理科の宿題（テキスト第1分冊〜・2026-11-24）
 async function hamaDaimonBunsatsu(grade, no, course) {
   const key = BUNSATSU_OF[course || 'master'];
   if (!key) return [];

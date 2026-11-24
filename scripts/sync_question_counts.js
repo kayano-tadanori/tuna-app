@@ -96,7 +96,7 @@ for (const [subj, cats] of Object.entries(MAP)) {
     return n;
   };
   const load = (f) => JSON.parse(fs.readFileSync(path.join(DATA, f + '.json'), 'utf8'));
-  const RIKA = new Set(['rika', 'nadago_rika']), KOKUGO = new Set(['kokugo', 'kokugo_bunsatsu']);
+  const RIKA = new Set(['rika', 'nadago_rika', 'rika_bunsatsu']), KOKUGO = new Set(['kokugo', 'kokugo_bunsatsu']);
   const dm = { kokugo: 0, sansu: 0, rika: 0 };
   for (const G of Object.values(load('hama_daimon').grades)) {
     for (const [course, C] of Object.entries(G)) {
