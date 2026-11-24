@@ -153,7 +153,9 @@ function expandChain(chain, grade) {
     //   （①を間違えた子も、正しい足場から②に進める）
     prevSteps: chain.steps.slice(0, i).map((s, j) => ({ n: j + 1, question: s.question, answer: s.answer })),
     // 図：設問ごとのsvg優先。無ければchainの共通図を全設問(①②③)で表示（②③でも図を見て考えられるように）
-    svg: step.svg || chain.svg || '',
+    // ★step.withMainSvg＝小問の図と大問の図の両方が要る小問（2026-11-24 小5理科 No.30 大問6：
+    //   小問の図があると大問のグラフが一度も出ず、グラフを読む5問が解けなかった）。印のある小問だけ両方出す
+    svg: (step.svg && step.withMainSvg && chain.svg) ? chain.svg + step.svg : (step.svg || chain.svg || ''),
     answer: step.answer,
     choices: isNumpadAnswer(step.answer) ? undefined : step.choices,
     meaning: step.meaning,

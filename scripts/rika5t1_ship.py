@@ -10,13 +10,30 @@
 import io, json, os, re, sys, shutil, datetime
 sys.stdout.reconfigure(encoding="utf-8")
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-W = os.path.join(BASE, "docs", "_genbo", "rika5_text1")
 GENBO = os.path.expanduser(r"~\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md")
 FREDDY = os.path.join(os.path.dirname(BASE), "freddy_data", "manual_app", "app_g5r_text1.json")
-SECTION = "# 🧪 小5 マスター理科 テキスト第1分冊（宿題・No.1〜10）"
+# ★2026-11-24 理科の復習テスト No.24〜33 にも同じ流れを使う（--set fuku）。
+#   fuku はアプリの rika（復習テスト）に入れる＝既存の No.1〜23 は触らず、材料のある回だけ置きかえる
+SETS = {
+    "text": dict(W=os.path.join(BASE, "docs", "_genbo", "rika5_text1"), course="rika_bunsatsu", idp="hd_5r_t%d_",
+                 head=r"^### 【(HG-\d+)】小5マスター理科第1分冊 No\.(\d+) (レベル\d-\d+)",
+                 section="# 🧪 小5 マスター理科 テキスト第1分冊（宿題・No.1〜10）",
+                 note="結合した本 `_結合/小5/小5_理科_テキスト_第1分冊_No.01-10_問題.pdf`（・`_解答.pdf`）から G1 が原本を見て起こした。"
+                      "OCRは使っていない（本人判断）。作問は `docs/_genbo/rika5_text1/sakumon/`、アプリは `rika_bunsatsu`（じゅくナビ理科の「今週の宿題」）。\n"
+                      "> 印刷ラベルは「レベルN-大問番号」（大問番号はレベルごとに1から）。"),
+    "fuku": dict(W=os.path.join(BASE, "docs", "_genbo", "rika5_fuku2433"), course="rika", idp="hd_5r_f%d_",
+                 head=r"^### 【(HG-\d+)】小5理科 No\.(\d+) (大問\d+)",
+                 section="# 🧪 小5 理科 復習テスト No.24〜33 ★2026-11-24 原簿化（HG-10501〜）",
+                 note="結合した本 `_結合/小5/小5_理科_復習テスト_実力〜No.33.pdf` の p77〜126 から G1 が原本を見て起こした（OCRなし）。"
+                      "作問は `docs/_genbo/rika5_fuku2433/sakumon/`、アプリは `rika`（じゅくナビ理科の復習テスト）。"),
+}
+_SET = sys.argv[sys.argv.index("--set") + 1] if "--set" in sys.argv else "text"
+CFG = SETS[_SET]
+W = CFG["W"]
+SECTION = CFG["section"]
 NUMPAD = re.compile(r"^(\d+(\.\d+)?|\d+/\d+|\d+と\d+/\d+|\d+(\.\d+)?([:：]\d+(\.\d+)?)+)$")
 APP_KEYS = ["id", "src", "hg", "title", "category", "unit", "grade", "star", "intro", "svg", "steps"]
-STEP_KEYS = ["question", "answer", "choices", "meaning", "svg"]
+STEP_KEYS = ["question", "answer", "choices", "meaning", "svg", "withMainSvg"]
 
 
 def nos():
@@ -33,14 +50,14 @@ def check():
     bad = 0; tot = [0, 0, 0]
     for no in nos():
         sk, md = load(no)
-        heads = re.findall(r"^### 【(HG-\d+)】小5マスター理科第1分冊 No\.(\d+) (レベル\d-\d+)", md, re.M)
+        heads = re.findall(CFG["head"], md, re.M)
         if len(heads) != len(sk):
             print(f"!! No.{no} 原簿{len(heads)}本と作問{len(sk)}本がちがう"); bad += 1
         if [h[0] for h in heads] != [x["hg"] for x in sk]:
             print(f"!! No.{no} HGの並びが原簿と作問でちがう"); bad += 1
         for x in sk:
             tot[0] += 1
-            if not x.get("id", "").startswith("hd_5r_t%d_" % no): print("!! id", x.get("id")); bad += 1
+            if not x.get("id", "").startswith(CFG["idp"] % no): print("!! id", x.get("id")); bad += 1
             for s in x["steps"]:
                 tot[1] += 1
                 if not (s.get("meaning") or "").strip(): print("!! meaningなし", x["id"], s.get("sub")); bad += 1
@@ -73,7 +90,7 @@ def app_items(no):
 def app(write):
     p = os.path.join(BASE, "data", "hama_daimon.json")
     d = json.load(io.open(p, encoding="utf-8"))
-    node = d["grades"]["5"].setdefault("rika_bunsatsu", {}).setdefault("fukushu", {})
+    node = d["grades"]["5"].setdefault(CFG["course"], {}).setdefault("fukushu", {})
     for no in nos():
         items = app_items(no)
         node[str(no)] = items
@@ -103,9 +120,7 @@ def genbo(write):
     if SECTION in t:
         i = t.index(SECTION); j = t.find("\n# ", i + 1); j = len(t) if j < 0 else j + 1
         t = t[:i] + t[j:]
-    body = (SECTION + "\n\n> 2026-11-24 結合した本 `_結合/小5/小5_理科_テキスト_第1分冊_No.01-10_問題.pdf`（・`_解答.pdf`）から G1 が原本を見て起こした。"
-            "OCRは使っていない（本人判断）。作問は `docs/_genbo/rika5_text1/sakumon/`、アプリは `rika_bunsatsu`（じゅくナビ理科の「今週の宿題」）。\n"
-            "> 印刷ラベルは「レベルN-大問番号」（大問番号はレベルごとに1から）。\n\n" + "\n".join(recs) + "\n")
+    body = (SECTION + "\n\n> 2026-11-24 " + CFG["note"] + "\n\n" + "\n".join(recs) + "\n")
     t = t.rstrip("\n") + "\n\n" + body
     if write:
         shutil.copy(GENBO, GENBO + ".bak-rika5t1")
@@ -134,4 +149,5 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "check"
     wr = "--write" in sys.argv
     if cmd == "check": sys.exit(0 if check() else 1)
+    if cmd == "freddy" and _SET != "text": sys.exit("フレディ用は宿題テキストだけ")
     {"app": app, "genbo": genbo, "freddy": freddy}[cmd](wr)
