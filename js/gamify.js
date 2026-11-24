@@ -25,10 +25,10 @@ const QUESTION_COUNTS = {
             //   kanji_yomi(ky001…)・rika:kitai(kt001…)と同じ"ky"/"kt"だったせいで、
             //   その2カテゴリの達成率に誤って積み上がっていた（2026-08-02に発覚・修正）
             tantei: 123, youyaku: 128 },                                                     // 6,955
-  sansu:  { bakuhatsu: 160, keisan: 1784, bun: 826, zu: 1188, kisoku: 1085, tokusan: 655, baai: 646, kazu: 804,
-            wariai: 599, hayasa: 299, rittai: 471 },                                         // 8,517（2026-07-31 比例・反比例40問）
-  rika:   { shokubutsu: 987, doubutsu: 1021, jintai: 250, sora: 781, tenki: 490, mono: 874, kitai: 298,
-            daichi: 490, suiyoueki: 507, denki: 518, chikara: 594, hikari_oto: 308 },        // 7,118（2026-07-28 小4理科の全42回を30問以上に）
+  sansu:  { bakuhatsu: 160, keisan: 1790, bun: 828, zu: 1191, kisoku: 1091, tokusan: 657, baai: 646, kazu: 808,
+            wariai: 606, hayasa: 302, rittai: 471 },                                         // 8,550（2026-07-31 比例・反比例40問）
+  rika:   { shokubutsu: 997, doubutsu: 1024, jintai: 250, sora: 786, tenki: 496, mono: 882, kitai: 298,
+            daichi: 490, suiyoueki: 515, denki: 518, chikara: 596, hikari_oto: 314 },        // 7,166（2026-07-28 小4理科の全42回を30問以上に）
   shakai: { kokudo: 640, sangyo: 649, rekishi: 640, komin: 645 },                            // 2,574
 };
 // 通常問題の表（QUESTION_COUNTS）の外にある問題の「小問」の数（本人指摘 2026-09-19：
@@ -39,8 +39,8 @@ const QUESTION_COUNTS = {
 //   ⚠ scripts/sync_question_counts.js が実データから数えて書き戻す。**手で直さない。**
 const EXTRA_COUNTS = {
   kokugo: { chain: 30, daimon: 330 },
-  sansu:  { chain: 555, gachi: 150, daimon: 15911 },
-  rika:   { chain: 260, gachi: 36, daimon: 2172 },
+  sansu:  { chain: 594, gachi: 150, daimon: 15911 },
+  rika:   { chain: 283, gachi: 36, daimon: 2172 },
   shakai: { chain: 27 },
 };
 // 科目の総問題数＝通常問題＋大問・連鎖・ガチの小問。画面に出す合計は必ずここから取る（1か所にまとめる）
