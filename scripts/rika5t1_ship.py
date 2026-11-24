@@ -11,7 +11,7 @@ import io, json, os, re, sys, shutil, datetime
 sys.stdout.reconfigure(encoding="utf-8")
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GENBO = os.path.expanduser(r"~\.claude\projects\c--Users-User-Desktop-Claude\memory\hamagakuen_ryomon_genbo.md")
-FREDDY = os.path.join(os.path.dirname(BASE), "freddy_data", "manual_app", "app_g5r_text1.json")
+FREDDY_DIR = os.path.join(os.path.dirname(BASE), "freddy_data", "manual_app")
 # ★2026-11-24 理科の復習テスト No.24〜33 にも同じ流れを使う（--set fuku）。
 #   fuku はアプリの rika（復習テスト）に入れる＝既存の No.1〜23 は触らず、材料のある回だけ置きかえる
 SETS = {
@@ -21,6 +21,14 @@ SETS = {
                  note="結合した本 `_結合/小5/小5_理科_テキスト_第1分冊_No.01-10_問題.pdf`（・`_解答.pdf`）から G1 が原本を見て起こした。"
                       "OCRは使っていない（本人判断）。作問は `docs/_genbo/rika5_text1/sakumon/`、アプリは `rika_bunsatsu`（じゅくナビ理科の「今週の宿題」）。\n"
                       "> 印刷ラベルは「レベルN-大問番号」（大問番号はレベルごとに1から）。"),
+    # ★2026-11-24 第2分冊（No.11〜20）も同じ流れ。アプリは rika_bunsatsu の No.11〜20（第1分冊の回は触らない）
+    "text2": dict(W=os.path.join(BASE, "docs", "_genbo", "rika5_text2"), course="rika_bunsatsu", idp="hd_5r_t%d_",
+                  head=r"^### 【(HG-\d+)】小5マスター理科第2分冊 No\.(\d+) (レベル\d-\d+)",
+                  section="# 🧪 小5 マスター理科 テキスト第2分冊（宿題・No.11〜20）",
+                  freddy="app_g5r_text2.json",
+                  note="結合した本 `_結合/小5/小5_理科_テキスト_第2分冊_No.11-20_問題.pdf`（・`_解答.pdf`）から G1 が原本を見て起こした。"
+                       "OCRは使っていない。作問は `docs/_genbo/rika5_text2/sakumon/`、アプリは `rika_bunsatsu`（じゅくナビ理科の「今週の宿題」）。\n"
+                       "> 印刷ラベルは「レベルN-大問番号」（大問番号はレベルごとに1から）。"),
     "fuku": dict(W=os.path.join(BASE, "docs", "_genbo", "rika5_fuku2433"), course="rika", idp="hd_5r_f%d_",
                  head=r"^### 【(HG-\d+)】小5理科 No\.(\d+) (大問\d+)",
                  section="# 🧪 小5 理科 復習テスト No.24〜33 ★2026-11-24 原簿化（HG-10501〜）",
@@ -29,6 +37,7 @@ SETS = {
 }
 _SET = sys.argv[sys.argv.index("--set") + 1] if "--set" in sys.argv else "text"
 CFG = SETS[_SET]
+FREDDY = os.path.join(FREDDY_DIR, CFG.get("freddy", "app_g5r_text1.json"))
 W = CFG["W"]
 SECTION = CFG["section"]
 NUMPAD = re.compile(r"^(\d+(\.\d+)?|\d+/\d+|\d+と\d+/\d+|\d+(\.\d+)?([:：]\d+(\.\d+)?)+)$")
@@ -55,6 +64,12 @@ def check():
             print(f"!! No.{no} 原簿{len(heads)}本と作問{len(sk)}本がちがう"); bad += 1
         if [h[0] for h in heads] != [x["hg"] for x in sk]:
             print(f"!! No.{no} HGの並びが原簿と作問でちがう"); bad += 1
+        # ★制御文字（U+0001 など）が入ると、画面では見えないまま「④」や「。」が消えている（2026-11-24 第2分冊 No.11 で91か所。
+        #   置きかえで \1 を書いた跡）。json.load は通るので、ここで止める
+        #   json.dumps は制御文字を \u0001 の形で書くので、その形で数える（改行 \n・タブ \t は別の書き方なので数えない）
+        ctl = re.findall(r"\\u00[01][0-9a-fA-F]", json.dumps(sk, ensure_ascii=False))
+        if ctl:
+            print(f"!! No.{no} 制御文字 {len(ctl)}か所（文が欠けている。g1 を見て直す）"); bad += 1
         for x in sk:
             tot[0] += 1
             if not x.get("id", "").startswith(CFG["idp"] % no): print("!! id", x.get("id")); bad += 1
@@ -149,5 +164,5 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "check"
     wr = "--write" in sys.argv
     if cmd == "check": sys.exit(0 if check() else 1)
-    if cmd == "freddy" and _SET != "text": sys.exit("フレディ用は宿題テキストだけ")
+    if cmd == "freddy" and _SET == "fuku": sys.exit("フレディ用は宿題テキストだけ")
     {"app": app, "genbo": genbo, "freddy": freddy}[cmd](wr)
