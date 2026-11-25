@@ -40,7 +40,7 @@ const QUESTION_COUNTS = {
 const EXTRA_COUNTS = {
   kokugo: { chain: 30, daimon: 330 },
   sansu:  { chain: 594, gachi: 150, daimon: 15911 },
-  rika:   { chain: 283, gachi: 36, daimon: 3854 },
+  rika:   { chain: 283, gachi: 36, daimon: 4746 },
   shakai: { chain: 27 },
 };
 // 科目の総問題数＝通常問題＋大問・連鎖・ガチの小問。画面に出す合計は必ずここから取る（1か所にまとめる）

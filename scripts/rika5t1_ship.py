@@ -37,6 +37,14 @@ SETS = {
                   note="結合した本 `_結合/小5/小5_理科_テキスト_第3分冊_No.21-30_問題.pdf`（・`_解答.pdf`）から G1 が原本を見て起こした。"
                        "OCRは使っていない。作問は `docs/_genbo/rika5_text3/sakumon/`、アプリは `rika_bunsatsu`（じゅくナビ理科の「今週の宿題」）。\n"
                        "> 印刷ラベルは「レベルN-大問番号」（大問番号はレベルごとに1から）。"),
+    # ★2026-11-25（夜）第4分冊（No.31〜42＝12回）。アプリは rika_bunsatsu の No.31〜42。No.34〜42 は hama_map に回を足した
+    "text4": dict(W=os.path.join(BASE, "docs", "_genbo", "rika5_text4"), course="rika_bunsatsu", idp="hd_5r_t%d_",
+                  head=r"^### 【(HG-\d+)】小5マスター理科第4分冊 No\.(\d+) (レベル\d-\d+)",
+                  section="# 🧪 小5 マスター理科 テキスト第4分冊（宿題・No.31〜42）",
+                  freddy="app_g5r_text4.json",
+                  note="結合した本 `_結合/小5/小5_理科_テキスト_第4分冊_No.31-42_問題.pdf`（・`_解答.pdf`）から G1 が原本を見て起こした。"
+                       "OCRは使っていない。作問は `docs/_genbo/rika5_text4/sakumon/`、アプリは `rika_bunsatsu`（じゅくナビ理科の「今週の宿題」）。\n"
+                       "> 印刷ラベルは「レベルN-大問番号」（大問番号はレベルごとに1から）。"),
     "fuku": dict(W=os.path.join(BASE, "docs", "_genbo", "rika5_fuku2433"), course="rika", idp="hd_5r_f%d_",
                  head=r"^### 【(HG-\d+)】小5理科 No\.(\d+) (大問\d+)",
                  section="# 🧪 小5 理科 復習テスト No.24〜33 ★2026-11-24 原簿化（HG-10501〜）",
