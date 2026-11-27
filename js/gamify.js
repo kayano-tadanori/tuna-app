@@ -38,9 +38,9 @@ const QUESTION_COUNTS = {
 //     （入れると、大問を1問も解いていない子の達成率が下がる）。
 //   ⚠ scripts/sync_question_counts.js が実データから数えて書き戻す。**手で直さない。**
 const EXTRA_COUNTS = {
-  kokugo: { chain: 30, daimon: 330 },
-  sansu:  { chain: 594, gachi: 150, daimon: 15911 },
-  rika:   { chain: 283, gachi: 36, daimon: 4746 },
+  kokugo: { chain: 30, daimon: 350 },
+  sansu:  { chain: 594, gachi: 150, daimon: 16035 },
+  rika:   { chain: 283, gachi: 36, daimon: 5050 },
   shakai: { chain: 27 },
 };
 // 科目の総問題数＝通常問題＋大問・連鎖・ガチの小問。画面に出す合計は必ずここから取る（1か所にまとめる）
